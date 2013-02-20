@@ -1,0 +1,239 @@
+/***********
+/*
+/* portal.css
+/* special design elements for pub portals
+/* created by sebastian wolf, bielefeld university, oct 2012
+/* last update: nov 2012 by sebastian wolf
+/*
+***********/
+
+/***********
+*
+* navigation list
+*
+***********/
+
+.pub_pagination {
+padding:0 !important;
+margin:1em 0 !important;
+}
+
+.pub_pagination li {
+list-style:none !important;
+display:inline !important;
+margin:0 !important;
+}
+
+.pub_pagination li a {
+color:#20496e !important;  
+padding:1px 0.5em !important;
+margin:0 !important;
+border:1px solid #ccc !important;
+background:#fff !important;
+}
+
+.pub_pagination li:first-child {
+margin-left:0 !important;
+}
+
+.pub_pagination li.current a {
+font-weight:bold !important;
+color:#111 !important;
+background:#eee !important;
+}
+
+
+/***********
+*
+* hit list
+*
+***********/
+
+ul.pub_hitlist {
+zoom:1; /* zeigt die listenpunkte im ie 6 an */
+margin:0;
+padding:0;
+list-style-type:none;
+}
+
+ul.pub_hitlist li {
+background:url(/images/pfeil_orange_12p.gif) no-repeat 0 4px;
+font-weight:normal;
+display:block;
+padding:0 0 6px 20px;
+list-style-type:none;
+}
+
+/***********
+*
+* left column in iframe
+*
+***********/
+
+#LeftCol, #LeftColSmall, #LeftColMini {
+float:left !important;
+}
+
+#LeftCol {
+width:484px !important;
+}
+
+#LeftColSmall {
+width:450px !important;
+}
+
+#LeftColMini {
+width:380px !important;
+}
+
+/***********
+*
+* right column in iframe
+*
+***********/
+
+#RightCol, #RightColSmall, #RightColMini {
+float:left !important; 
+}
+
+#RightCol {
+width:209px !important; 
+padding-left:32px !important;
+}
+
+#RightColSmall {
+width:189px !important; 
+padding-left:20px !important;
+}
+
+#RightColMini {
+width:150px !important; 
+padding-left:15px !important;
+}
+
+/* Selectboxen im Filter */
+
+#Filter select { 
+margin-top:10px !important; 
+font-weight:normal !important;
+color:#333 !important;
+}
+
+/* Breite der Selectboxen im Filter, abhaengig vom uebergeordneten ID-Bereich */
+
+#seitenbox #Filter select, #menuboxrechts #Filter select, #RightCol #Filter select {
+width:210px;
+}
+
+#infoboxrechts #Filter select, #RightCol .Box #Filter select {
+width:193px !important;
+}
+
+#extra #Filter select, #menulinks #Filter select, .moduletable #Filter select, #RightColSmall #Filter select {
+width:180px !important;
+}
+
+#menulinks2 #Filter select, #RightColSmall .Box #Filter select {
+width:170px !important;
+}
+
+#RightColMini #Filter select {
+width:150px !important;
+}
+
+#RightColMini .Box #Filter select {
+width:140px !important;
+}
+
+/* Breite des Eingabefelds im Filter */
+
+#seitenbox #Filter input#id_ftext, #infoboxrechts #Filter input#id_ftext, #menuboxrechts #Filter input#id_ftext, #RightCol #Filter input#id_ftext {
+width:138px;
+}
+
+#RightCol .Box #Filter input#id_ftext {
+width:120px;
+}
+
+#extra #Filter input#id_ftext,  #menulinks #Filter input#id_ftext, .moduletable #Filter input#id_ftext {
+width:108px !important;
+}
+
+#menulinks2 #Filter input#id_ftext, #RightColSmall #Filter input#id_ftext {
+width:103px !important;
+}
+
+#RightColMini #Filter input#id_ftext {
+width:79px !important;
+}
+
+#RightColMini .Box #Filter input#id_ftext {
+width:71px !important;
+}
+
+#RightColMini #Filter input, #RightColMini #Filter select, #RightColMini #Filter option {
+font-size:8pt !important;
+}
+
+/* Farbe und Breite des Submit-Buttons im Filter */
+
+#seitenbox #Filter input#id_submit, #infoboxrechts #Filter input#id_submit, #menuboxrechts #Filter input#id_submit, #RightCol #Filter input#id_submit, #RightColSmall #Filter input#id_submit, #RightColMini #Filter input#id_submit {
+color:#333 !important;
+}
+
+#seitenbox #Filter input#id_submit, #infoboxrechts #Filter input#id_submit, #menuboxrechts #Filter input#id_submit, #RightCol #Filter input#id_submit {
+width:63px !important;
+}
+
+#RightColSmall #Filter input#id_submit, #RightColMini #Filter input#id_submit {
+width:58px !important;
+}
+
+/* Tabellen */
+
+.PubListTable {
+border-top:1px solid #ccc;
+border-left:1px solid #ccc;
+padding:0;
+margin:10px 0;
+border-collapse:collapse;
+}
+
+.PubListTable thead, .PubListTable tfoot {
+background-color:#eee;
+}
+
+.PubListTable th, .PubListTable td {
+border-right:1px solid #ccc;
+border-bottom:1px solid #ccc;
+margin:0;
+}
+
+.PubListTable th {
+font-weight:bold;
+vertical-align:middle;
+padding:0.2em;
+}
+
+.PubListTable td {
+vertical-align:top;
+padding:0.2em 0.5em;
+}
+
+.Zebra tr:nth-child(2n) {
+background-color:#eee;
+}
+
+.PubListTable td:first-child {
+text-align:left;
+}
+
+.PubListTable td:nth-child(n+2) {
+text-align:center;
+}
+
+/***********
+/*
+/* end of file
+/*
+***********/

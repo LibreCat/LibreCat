@@ -1,0 +1,1050 @@
+/***********
+/*
+/* pub.css
+/* special design elements for pub websites, overriding unistandard_2009.css
+/* created by sebastian wolf, bielefeld university, oct 2010
+/* last update: nov 2012 by sebastian wolf
+/*
+***********/
+
+/***********
+*
+* main column
+*
+***********/
+
+#contentwide, #menubereich {
+top:263px;
+}
+
+#menulinks {
+padding-top:0;
+}
+
+#contenthauptspalte {
+min-height:70em;
+}
+
+#LeftCol {
+float:left; 
+width:600px;
+}
+
+#Publication #LeftCol {
+border-top:1px solid #ccc;
+margin-top:10px;
+padding-top:10px;
+}
+
+#RightCol {
+float:right; 
+width:212px;
+}
+
+.LeftIndent {
+margin-left:-114px; 
+width:600px;
+}
+
+/***********
+*
+* lean header
+*
+***********/
+
+#kopf1 {
+position:absolute;
+left:0;
+top:110px;
+width:734px;
+height:30px;
+background-color:#b6c828;
+z-index:1;
+}
+
+#kopf2 {
+position:absolute;
+left:250px;
+top:84px;
+width:726px;
+height:30px;
+background-color:#b6c828;
+z-index:1;
+}
+
+#kopf2 h1 {
+position:relative;
+top:15px;
+left:5px;
+width:auto;
+height:40px;
+border:0;
+padding:0;
+margin:0;
+color:#fff;
+font-size:1.5em;
+}
+
+#kopf2 h1 a {
+font-family:Arial,Helvetica,sans-serif !important;
+color:#fff !important;
+font-size:1.5em !important;
+text-decoration:none !important;
+}
+
+#tophistory {
+position:absolute;
+left:734px;
+width:240px;
+height:13px;
+z-index:100;
+text-align:right;
+font-size:8pt;
+top:120px;
+}
+
+#tophistory a {
+font-weight:normal;
+text-decoration:none;
+}
+
+#topcontentwide {
+position:absolute;
+top:140px;
+left:10px;
+height:auto;
+z-index:10;
+margin-top:0;
+padding:0;
+margin-left:85px;
+width:881px;
+}
+
+#piktogramm h1 {
+margin-top:10px;
+}
+
+/***********
+*
+* right side
+*
+***********/
+
+#seitenbox
+{
+left:518px;
+top:-10px;
+padding:0;
+width:208px;
+}
+
+/***********
+/*
+/* headlines
+/*
+***********/
+
+h1 {
+font-size:11pt;
+}
+
+h1.underline, #Publication h1, #ProjectInfo h1, #ProjectHitlist h1, #Person h1 {
+border-bottom-width:4px; 
+border-bottom-style:solid; 
+border-bottom-color:#b6c828; 
+padding-top:0;  
+padding-bottom:4px; 
+}
+
+h1#pub, h1#pubtheses, h1#puboa {
+color:#fff !important;
+text-align:right !important;
+}
+
+h1#pub, h1#puboa {
+font-size:36pt !important;
+margin-top:10px !important;
+}
+
+h1#pub {
+margin-left:40px !important;
+}
+
+h1#puboa {
+font-size:36pt !important;
+margin-left:-45px !important;
+}
+
+h1#pubtheses {
+font-size:28pt !important;
+margin-top:15px !important;
+margin-left:-75px !important;
+}
+
+#piktogramm  h1 a {
+font-family:Arial,Helvetica,sans-serif !important;
+color:#fff !important;
+font-size:36pt !important;
+text-decoration:none !important;
+}
+
+h2 {
+color:#333;
+font-size:10.5pt;
+}
+
+h2.abstand {
+margin-top:20px;
+}
+
+h2.overline, #RightCol h2 {
+border-top:1px solid #ccc;
+margin-top:10px;
+padding-top:10px;
+}
+
+h2.underline {
+border-bottom:1px dashed #b6c828;
+padding-top:0;
+padding-bottom:4px;
+margin-top:0;
+}
+
+h3 {
+color:#333;
+font-size:10pt;
+}
+
+h3.underline {
+border-bottom-width:1px;
+border-bottom-style:dashed; 
+border-bottom-color:#b6c828; 
+padding-top:0;
+padding-bottom:4px; 
+margin-bottom:4px;  
+margin-top:-3px;
+}
+
+h3.overline {
+border-top:1px solid #ccc; 
+padding:10px 0;
+}
+
+h3.abstand {
+margin-top:16px;
+}
+
+h4 {
+color:#333;
+font:size:10pt;
+margin-top:10px;
+}
+
+h4.underline {
+border-bottom-width: 1px; 
+border-bottom-style: dashed; 
+border-bottom-color: #b6c828; 
+padding-top:0px;  
+padding-bottom:4px; 
+margin-top:32px;
+}
+
+/***********
+*
+* images
+*
+***********/
+
+img { 
+border:0;
+}
+
+.PlusLink, .MinusLink {
+padding:5px 0 5px 20px;
+}
+
+.PlusLink {
+background:url(/images/bullet_pluszeichen.jpg) no-repeat 0 4px;
+}
+
+.MinusLink {
+background:url(/images/bullet_minuszeichen.jpg) no-repeat 0 4px;
+}
+
+
+/***********
+*
+* tables
+*
+***********/
+
+.Table {
+border-top:1px solid #ccc;
+border-left:1px solid #ccc;
+padding:0;
+margin:0;
+border-collapse:collapse;
+}
+
+.Table thead, .Table tfoot {
+background-color:#eee;
+}
+
+.Table th, .Table td {
+border-right:1px solid #ccc;
+border-bottom:1px solid #ccc;
+margin:0;
+}
+
+.Table th {
+font-weight:bold;
+vertical-align:middle;
+padding:0.2em;
+}
+
+.Table td {
+vertical-align:top;
+padding:0.2em 0.5em;
+}
+
+.Zebra tr:nth-child(2n) {
+background-color:#eee;
+}
+
+.Table td:first-child {
+text-align:right;
+}
+
+.Table td:nth-child(n+2) {
+text-align:center;
+}
+
+/***********
+*
+* List
+*
+***********/
+
+#ProjectHitlist {
+  margin-top:20px;
+}
+
+#ProjectHitlist ul {
+zoom:1; /* zeigt die listenpunkte im ie 6 an */
+margin:10px 0 0 5px;
+padding:0;
+list-style-type:none;
+}
+
+#ProjectHitlist li {
+background:url(/images/dreieck_orange_8p.gif) no-repeat 0 4px;
+display:block;
+padding:0 0 6px 16px;
+}
+
+/***********
+*
+* 3-D-Effekte
+*
+***********/
+
+.Shadow {
+-moz-box-shadow:6px 6px 10px 0 #ccc;
+-webkit-box-shadow:6px 6px 10px 0 #ccc;
+-o-box-shadow:6px 6px 10px 0 #ccc;
+box-shadow:6px 6px 10px 0 #ccc;
+}
+
+img.Shadow {
+border:1px solid #eee;
+}
+
+/***********
+*
+* links in pub-theses (former selectbox)
+*
+***********/
+
+.publish a {
+margin:0 0 0 5px;
+background-image:url(/images/einpunkt_gruen_4p.gif);
+background-position:left;
+background-repeat:no-repeat;
+padding:0 5px 0 10px;
+}
+
+/***********
+*
+* fulltext links in frontdoor 
+*
+***********/
+
+.FulltextLink {
+border:1px solid #928f8c;
+border-radius:3px;
+color:#333 !important; 
+text-align:right;
+/* background:linear-gradient(0,#fff 50%,#eff3d7 50%);
+background:-moz-linear-gradient(0,#fff 45px,#e0eb98 0%); */
+background:url(/images/pfeil_41x28.gif) no-repeat -5px -2px #fff;
+padding:5px 5px 5px 28px;
+}
+
+.FulltextLink:after {  
+clear:              both;
+content:            ".";
+display:            block;
+height:             0;
+visibility:         hidden;
+}
+
+.BlockLink, .BlockLink2 { /* Display several links in a row */
+float:left;
+display:block;
+}
+
+.BlockLink {
+min-width:180px;
+}
+
+/* Links in Download Field */
+
+.BlockLink2 {
+overflow:hidden;
+margin-right:20px;
+width:150px;
+white-space:nowrap;
+}
+
+.BlockLink2:only-child {
+overflow:visible;
+}
+
+/* link on the right side without right margin */
+
+.BlockLink2:nth-child(3n) {
+margin-right:0 !important;
+}
+
+/* Links like Buttons */
+
+.ButtonLink {
+border:1px solid #928f8c;
+border-radius:3px;
+font-size:11pt !important;
+padding:5px 5px 5px 25px;
+width:200px;
+height:28px;
+}
+
+.ButtonLink a {
+font-size:inherit !important;
+}
+
+/* Hintergrundgrafiken fuer Buttons */
+
+.Movedown {
+background:url(/images/movedown.png) no-repeat 2px 6px #fff;
+}
+
+.Moveup {
+background:url(/images/moveup.png) no-repeat 2px 6px #fff;
+}
+
+.Pfeil {
+background:url(/images/pfeil_41x28.gif) no-repeat -6px -1px #fff;
+}
+
+.Edit {
+background:url(/images/edit.png) no-repeat 2px 6px #eee;
+}
+
+.EditLink {
+margin-left:-75px;
+margin-bottom:-30px;
+}
+
+
+
+/***********
+*
+* footer
+*
+***********/
+
+/*
+#fussstrich {
+margin-top:200px;
+}
+
+#fussmenu {
+border-top:1px dashed #b6c828;
+margin-top:50px;
+text-align:right; 
+width:100%;
+}
+*/
+
+#fussmenu li {
+padding-right:14px;
+}
+
+#fussmenu li:last-child {
+padding-right:0;
+}
+
+/***********
+/*
+/* navigation in green bar
+/*
+***********/
+
+#Navigation li:hover ul ul, #Navigation li:hover ul ul ul,
+#Navigation li.sfhover ul ul, #Navigation li.sfhover ul ul ul {
+left: -999em;
+}
+
+
+/* This "unhides" the sub-menus (left: -999em is what hides them) */
+
+#Navigation li:hover ul, #Navigation li li:hover ul, #Navigation li li li:hover ul,
+#Navigation li.sfhover ul, #Navigation li li.sfhover ul, #Navigation li li li.sfhover ul {
+left: auto;
+}
+
+ul#Navigation {
+padding: 0;
+margin: 0;
+font-weight: bold;
+}
+
+ul#Navigation li {
+list-style: none;
+float: left;  /* ohne width - nach CSS 2.1 erlaubt */
+position: relative;
+margin: 0;
+padding: 0;
+}
+
+* HTML ul#Navigation li {
+margin-bottom: -0.4em;
+}
+
+*:first-child + HTML ul#Navigation li {
+margin-bottom: -0.1em;
+}
+
+ul#Navigation li ul {
+height: auto;
+width: 15.4em;
+w\idth: 14.9em;
+padding: 2pt;
+display: none;
+left: -0.4em;
+margin: 0px;
+position: absolute;
+top: 1.6em;
+}
+
+* HTML ul#Navigation li ul {
+left: -0.4em;
+}
+
+*:first-child + HTML UL#Navigation UL {
+padding-bottom: 0.4em;
+background-color: white;
+}
+
+ul#Navigation li:hover ul {
+display: block;
+background-color: white;
+border: 1px solid black;
+margin-top: 5px;
+}
+
+ul#Navigation li ul li {
+display: block;
+float: none;
+margin-bottom: 0.2em
+}
+
+ul#Navigation a {
+display: block;
+color: #333333;
+text-decoration: none;
+padding: 0.25em 0px 3px 0px;
+}
+
+* HTML UL#Navigation A {
+WIDTH: 6.4em
+}
+
+ul#Navigation a:hover {
+}
+
+/***********
+/*
+/* view record (pubfront)
+/*
+***********/
+
+.margin1 {
+margin:5px 0 0 0;
+}
+
+.citation {
+margin-bottom:10px;
+}
+
+.frontdoor {
+margin:             0 0 5px 0;
+height:             1%;
+/*clear:            both;*/
+}
+
+.frontdoor:after {  
+clear:              both;
+content:            ".";
+display:            block;
+height:             0;
+visibility:         hidden;
+}
+
+div.frontdoor_left {
+	min-width: 15%; max-width: 15%;
+}
+div.frontdoor_right {
+	min-width: 85%; max-width: 85%;
+}
+
+#contenthauptspaltelang .frontdoor_left {
+float:              left;   
+/* font-weight:        bold; */
+color:				#999;
+}
+
+#contenthauptspaltelang .frontdoor_right {
+float:              left;   
+}
+
+#Publication .frontdoor_left {
+width:              15%;
+}  
+
+#Publication .frontdoor_right {
+width:              84%;
+}
+
+#ProjectInfo .frontdoor_left {
+width:              20%;
+}  
+
+#ProjectInfo .frontdoor_right {
+width:              79%;
+}
+
+
+/***********
+/*
+/* two columns in workshop programme
+/*
+***********/
+
+#contenthauptspalte .frontdoor_left {
+float:              left;   
+width:              118px;
+font-weight:        bold;
+background-color:   #e0eb98;
+padding:            2px;
+border:             1px solid #e0eb98;
+}
+
+#contenthauptspalte .frontdoor_right {
+float:              left;   
+width:              354px;
+background-color:   #fff;
+border:             1px solid #e0eb98;
+padding:            2px;
+}
+
+/***********
+/*
+/* access/share box on pubfront
+/*
+***********/
+
+#menuboxrechts h1 {
+background:#e0eb98;
+text-align:center;
+padding:2px;
+margin:0;
+border-radius:5px 5px 0 0;      /* rounded corners for browser with css 3 support */
+-moz-border-radius:5px 5px 0 0; /* rounded corners for mozilla */
+-webkit-border-radius:5px 5px 0 0; /* rounded corners for safari */
+-o-border-radius:5px 5px 0 0; /* rounded corners for opera */
+}
+
+#menuboxrechts img {
+border:0;
+}
+
+#menuboxrechts a {
+font-weight:bold !important;
+color:#20496e !important;
+text-decoration:none !important;
+border:0 !important;
+font-size:9pt !important;
+white-space:nowrap;
+}
+
+.textright {
+padding:0 3px 3px 0;
+vertical-align:middle;
+}
+
+/***********
+/*
+/* lists
+/*
+***********/
+
+div#listenbox {
+top:0;
+}
+
+/***********
+/*
+/* access in hit list / csl
+/*
+***********/
+
+.access {
+background-color:#e0eb98;
+}
+
+#Publication .csl-bib-body {
+margin:0 0 10px 0;
+}
+
+/***********
+/*
+/* embedding twitter
+/*
+***********/
+
+ul#twitter_update_list {
+list-style-type: none;
+margin: 0;
+padding: 0;
+}
+
+ul#twitter_update_list li {
+display: block;
+padding: 0;
+padding-bottom: 10px;
+}
+
+#twitter_update_list li a {
+color: #333333;
+font-weight:normal;
+}
+
+#twitter_update_list li span a {
+color: rgb(32, 73, 110);
+font-weight:bold;
+}
+
+/***********
+/*
+/* search form
+/*
+***********/
+
+.Form form {
+margin:0;
+padding:0;
+}
+
+.Form fieldset {
+border:1px solid #e0eb98;
+margin:0;
+padding:0;
+}
+
+.Form legend {
+border:1px solid #e0eb98;
+font-weight:bold;
+margin:0 5px 5px;
+padding:2px;
+}
+
+.Form select, .Form input {
+border:1px solid #999;
+}
+
+.Form .Field {
+clear:both;
+padding:5px 0;
+margin:0;
+}
+
+.Form .Label, .Form .Label2 {
+float:left;
+margin:0 5px;
+text-align:right;
+}
+
+.Form .Label {
+width:140px;
+}
+
+.Form .Label2 {
+width:100px;
+}
+
+.Form .Input, .Form .Input1, .Form .Input2, .Form textarea {
+font-family:'Courier New',Monospace;
+font-size:10pt;
+}
+
+.Form .Input, .Form textarea, .Form .Select {
+width:315px;
+}
+
+.Form .Input2, .Form .Select2 { 
+width:270px;
+}
+
+.Form .Submit {
+margin-left:150px;
+}
+
+.Form .Submit2 {
+margin-left:110px;
+}
+
+/***********
+/*
+/* links in hit list
+/*
+***********/
+
+#metr_1 {
+}
+
+/***********
+*
+* Tab-like lists
+*
+***********/
+
+ul.tabs {
+display: block;
+margin: 0;
+padding: 0;
+border-bottom: solid 1px #ddd; 
+}
+
+ul.tabs li {
+display: block;
+width: auto;
+height: 30px;
+padding: 0;
+float: left;
+margin-bottom: 0; 
+}
+
+ul.tabs li a {
+display: block;
+text-decoration: none;
+width: auto;
+height: 29px;
+padding: 0px 20px;
+line-height: 30px;
+border:1px solid #ddd;
+border-width: 1px 1px 0 0;
+margin: 0;
+background: #f5f5f5;
+font-size: 13px; 
+outline:0 !important;
+}
+
+
+ul.tabs li a.active {
+background: #fff;
+height: 30px;
+position: relative;
+top: -4px;
+padding-top: 4px;
+border-left-width: 1px;
+margin: 0 0 0 -1px;
+color: #333;
+-moz-border-radius-topleft: 2px;
+-webkit-border-top-left-radius: 2px;
+border-top-left-radius: 2px;
+-moz-border-radius-topright: 2px;
+-webkit-border-top-right-radius: 2px;
+border-top-right-radius: 2px; 
+}
+
+* html ul.tabs li a.active, * + html ul.tabs li a.active { /* nur ie 6 und 7 */
+margin:0;
+}
+
+ul.tabs li:first-child a.active {
+margin-left: 0; 
+}
+
+ul.tabs li:first-child a {
+border-width: 1px 1px 0 1px;
+-moz-border-radius-topleft: 2px;
+-webkit-border-top-left-radius: 2px;
+border-top-left-radius: 2px; 
+}
+
+ul.tabs li:last-child a {
+-moz-border-radius-topright: 2px;
+-webkit-border-top-right-radius: 2px;
+border-top-right-radius: 2px; 
+}
+
+ul.tabs-content { 
+margin: 0; 
+display: block; 
+list-style-type:none; 
+border:1px solid #ddd; 
+border-top:0; 
+box-shadow:6px 6px 10px 0 #ccc;
+}
+
+ul.tabs-content > li { 
+display:none; 
+}
+
+ul.tabs-content > li.active { 
+display: block; 
+margin:0 0 30px -20px; 
+padding-top:10px;
+}
+
+* html ul.tabs-content > li.active, * + html ul.tabs-content > li.active { /* nur ie 6 und 7 */
+margin:0 0 0 20px;
+}
+
+
+/* Clearfixing tabs for beautiful stacking */
+ul.tabs:before, ul.tabs:after {
+content: '\0020';
+display: block;
+overflow: hidden;
+visibility: hidden;
+width: 0;
+height: 0; 
+}
+
+ul.tabs:after {
+clear: both; 
+}
+
+ul.tabs {
+zoom: 1; 
+}
+
+#preloader {
+text-align:	center; 
+width:		auto;
+border:		1px solid #ddd; 
+border-top:	0; 
+box-shadow:	6px 6px 10px 0 #ccc;
+height: 	55px;
+display: 	block; 
+padding: 	35px 0 0 0;
+}
+
+/***********
+*
+* navigation list
+*
+***********/
+
+.pub_pagination {
+padding:0;
+margin:1em 0;
+}
+
+.pub_pagination li {
+list-style-type:none !important;
+display:inline;
+margin:0;
+}
+
+.pub_pagination li a {
+padding:1px 0.5em;
+margin:0;
+border:1px solid #ccc;
+background:#fff;
+text-decoration:none !important;
+}
+
+.pub_pagination li:first-child {
+margin-left:0 !important;
+}
+
+.pub_pagination li.current a {
+font-weight:bold;
+color:#111;
+background:#eee;
+}
+
+
+/***********
+*
+* hit list
+*
+***********/
+
+ul.pub_hitlist {
+zoom:1; /* zeigt die listenpunkte im ie 6 an */
+margin:0;
+padding:0;
+list-style-type:none;
+}
+
+ul.pub_hitlist li {
+background:url(/images/pfeil_orange_12p.gif) no-repeat;
+font-weight:normal;
+background-position:0 4px;
+display:block;
+padding:0 0 6px 20px;
+list-style-type:none;
+}
+
+
+/***********
+*
+* contentbox
+*
+***********/
+
+#contenthauptspalte div.contentbox {
+top:0 !important;
+border:0 !important;
+padding:0 !important;
+margin:0 0 25px !important;
+}
+
+#contenthauptspalte div.contentbox img {
+margin:0; 
+border: 1px solid #ccc;
+-moz-box-shadow:6px 6px 10px 0 #ccc;
+-webkit-box-shadow:6px 6px 10px 0 #ccc;
+-o-box-shadow:6px 6px 10px 0 #ccc;
+box-shadow:6px 6px 10px 0 #ccc;
+}
+
+
+/***********
+/*
+/* end of file
+/*
+***********/

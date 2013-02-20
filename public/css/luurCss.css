@@ -1,0 +1,969 @@
+/***********
+/*
+/* luurCss.css
+/* created by lund university
+/* edited by sebastian wolf, bielefeld university
+/* last update: nov 2012
+/*
+***********/
+
+/***********
+*
+* body
+*
+***********/
+
+body {
+background-color:#fff;
+color:#333;
+font-family:Arial,Helvetica,sans-serif;
+font-size:9pt;
+line-height:1.5;
+margin:5px;
+padding:0;
+}
+
+
+/***********
+*
+* headings
+*
+***********/
+
+h1 {
+border-bottom:4px solid #b6c828;
+color:#333;
+font-size:13pt;
+margin-top:0;
+padding:0;
+}
+
+h1#headline { 
+border:0;
+margin:0;
+}
+
+h2 {
+color:#333;
+font-size:12pt;
+border-bottom:1px dashed #b6c828;
+padding-top:0;
+padding-bottom:4px;
+margin-top:0;
+}
+
+h3 {
+color:#333;
+font-size:11pt;
+margin-top:10px;
+}
+
+h4 {
+color:#333;
+font-size:10pt;
+margin-top:10px;
+}
+
+
+/***********
+*
+* images
+*
+***********/
+
+img { 
+  border:0;
+}
+
+/***********
+*
+* list items
+*
+***********/
+
+ul.List {
+zoom:1; /* zeigt die listenpunkte im ie 6 an */
+margin:0 0 0 5px;
+padding:0;
+list-style-type:none;
+}
+
+ul.List li {
+background:url(/images/dreieck_orange_8p.gif) no-repeat;
+font-weight:normal;
+background-position:0 4px;
+display:block;
+padding:0 0 6px 16px;
+list-style-type:none;
+}
+
+ul.List li ul {
+padding:0;
+margin-left:0;
+}
+
+ul.List li ul li {
+background:url(/images/einpunkt_orange_4p.gif) no-repeat;
+background-position:0 9px;
+padding:2px 0 0 11px;
+}
+
+
+/***********
+*
+* text mark up
+*
+***********/
+
+.windowHeading {
+text-align:center;
+}
+
+.infoText, .smallLabel {
+font-size:8pt;
+}
+
+.important, .important1 {
+font-size:10pt;
+font-weight:bold;
+}
+
+.important1 {
+text-decoration:none !important;
+}
+
+.important2 {
+background-image:url(/images/pfeil-rechts_o_18x18.gif);
+background-position:left;
+background-repeat:no-repeat;
+padding:5px 0 5px 23px;
+}
+
+.white {
+color:#fff;
+}
+
+.okmessage {
+font-weight:bold;
+color:#007556; 
+background:url(/images/icon_accept.gif) no-repeat 0 0;
+padding:2px 0 2px 20px;
+}
+
+.errormessage {
+font-weight:bold;
+color:#ff0000;
+/* background:url(/images/icon_cancel.gif) no-repeat 0 0;
+padding:2px 0 2px 20px; */
+}
+
+.starMandatory { 
+font-weight:bold;
+color:#ff0000;
+}
+
+.highlight {
+background-color:#eff3d7; 
+padding:1px 5px;
+}
+
+/***********
+*
+* special design elements
+*
+***********/
+
+.greenline {
+border-bottom:4px solid #b6c828;
+margin:0 0 10px 0;
+padding:4px 0 0 0;
+clear:both;
+}
+
+/***********
+*
+* links
+*
+***********/
+
+a:link, a:visited, a:link:hover, a:visited:hover, a:active, a:focus {
+color:#20496e;
+}
+
+/***********
+*
+* links, that look like buttons
+*
+***********/
+
+.button, .button1, .button2, .button3 { 
+border:1px solid #928f8c;
+margin:0;
+text-decoration:none;
+color:#141312 !important; 
+cursor:pointer;
+}
+
+.button, .button1, .button2 {
+background-image:url(/images/button_bg1.png);
+border-radius:3px;      /* rounded corners for browser with css 3 support */
+-moz-border-radius:3px; /* rounded corners for mozilla */
+-webkit-border-radius:3px; /* rounded corners for safari */
+-o-border-radius:3px; /* rounded corners for opera */
+}
+
+.button {
+padding:3px 10px 2px;
+}
+
+.button1 {
+padding:3px 5px 2px;
+}
+
+.button2 {
+background-image:url(/images/button_bg2.png);
+padding:10px;
+margin:0 5px;
+}
+
+.button3 {
+background-color:#eee;
+min-width:80px;
+max-width:80px;
+min-height:25px;
+display:block;
+text-align:left;
+padding:5px 0 0 25px;
+color:#000 !important;
+}
+
+/***********
+*
+* input fields
+*
+***********/
+
+input[readonly] {
+background:#e0dfde;
+border:1px solid #8c8a88;
+font-size:10pt;
+}
+
+/***********
+*
+* navigation bar on left hand side
+*
+***********/
+
+#sidenav  { 
+margin:0 10px 0 0;
+padding:0;
+width:180px;
+}
+
+#sidenav h2 {
+font-size:11pt;
+border:0;
+padding-bottom:0;
+}
+
+#sidenav h3 {
+font-size:10pt;
+margin-bottom:5px;
+}
+
+#sidenav p {
+margin:0;
+}
+
+#sidenav p select, #sidenav p a, #sidenav p.infoText { 
+/* border:1px solid #e0eb98; */
+display:block;
+padding:3px 0 3px 4px;
+text-decoration:none;
+width:168px; /* width of #sidenav -12px */
+overflow:hidden;
+}
+
+#sidenav p select, #sidenav p a { 
+/* background-color:#eff3d7; */
+font-weight:bold; 
+}
+
+#sidenav p select:hover, #sidenav p a:hover, #sidenav #doctypes a:hover { 
+background-color:#e0eb98;
+}
+
+#sidenav p select {
+border:0;
+color:#20496e;
+font-family:Arial,Helvetica,sans-serif;
+font-size:9pt;
+padding-left:0;
+width:155px !important;
+}
+
+#sidenav p.infoText {
+margin-top:20px;
+}
+
+#sidenav p.infoText a { 
+border:0;
+display:inline;
+background-color:#fff;
+padding:0;
+margin:0;
+}
+
+#sidenav #doctypes a {
+display:block;
+margin:0 0 0 5px;
+text-decoration:none;
+width:153px; /* width of #sidenav -27px */
+overflow:hidden;
+font-size:8pt;
+background-image:url(/images/einpunkt_gruen_4p.gif);
+background-position:left;
+background-repeat:no-repeat;
+padding:0 5px 0 10px !important;
+}
+
+/***********
+*
+* footer
+*
+***********/
+
+.footer {
+color:#909090;
+font-size:8pt;
+font-weight:normal;
+text-decoration:none;
+}
+
+#fussmenu {
+border-top:1px dashed #b6c828;
+margin-top:50px;
+text-align:right; 
+width:100%;
+}
+
+#fussmenu a {
+color:#999;
+font-family:Arial,Helvetica,sans-serif;
+font-size:8pt;
+font-weight:normal;
+text-decoration:none;
+}
+
+#fussmenu li, #fussmenu li.copy, #fussmenu li.copyeng {
+display:inline;
+list-style-type:none;
+padding:0 18px 0 0;
+}
+
+/***********
+*
+* tables
+*
+***********/
+
+caption {
+font-weight:bold;
+font-size:10pt;
+}
+
+.contentTD { /* main table for content */
+width:100%;
+}
+
+/* 
+Table = one size fits all
+formSection = around tabs on 'add / edit publication'
+formTable = login / register page
+infoTable = search or input forms
+labelTable = ???
+listTable = search results
+multiTable = view record page
+rmtable = add related material on 'add / edit publication'
+rmTable2 = add related material on 'view publication'
+udTable = upload main document on 'add / edit publication'
+userTable = search results
+*/
+
+.Table, #rmtable, #rmTable2, #udTable {
+border-top:1px solid #ccc;
+border-left:1px solid #ccc;
+padding:0;
+margin:0; 
+border-collapse:collapse;
+empty-cells:show;
+}
+
+#rmtable, #rmTable2, #udTable {
+margin:10px 0;
+}
+
+.Table thead, .Table tfoot {
+background-color:#eee;
+}
+
+.Table th, .Table td, #rmtable td, #rmtable th, #rmTable2 td, #rmTable2 th, #udTable td, #udTable th {
+border-right:1px solid #ccc;
+border-bottom:1px solid #ccc;
+margin:0;
+}
+
+.Table th, #rmtable th, #rmTable2 th, #udTable th {
+font-weight:bold;
+padding:0.2em;
+/* vertical-align:middle; */
+}
+
+.Table th {
+background-color:#eee;
+}
+
+.Table td, #rmtable td, #rmTable2 td, #udTable td {
+padding:0.2em 0.5em;
+vertical-align:top;
+}
+
+#rmtable td, #rmTable2 td, #udTable td {
+font-size:8pt;
+}
+
+.labelTable {
+empty-cells:show;
+}
+
+.labelTable th  {
+background-color:#eee;
+padding:0;
+text-align:center;
+}
+
+.labelTable td {
+padding:0;
+}
+
+.formTable {
+empty-cells:show;
+}
+
+.formTable th  {
+background-color:#eee;
+padding:0;
+text-align:center;
+}
+
+.formTable td {
+padding:5px;
+}
+
+.infoTable, .listTable {
+border:1px solid #b6c828;
+border-collapse:collapse;
+empty-cells:show;
+margin:10px 0 0 0;
+}
+
+.infoTable th, .listTable th, .infoTable td, .listTable td, .userTable th, .userTable td {
+vertical-align:top;
+}
+
+.infoTable th, .listTable th, .infoTable td, .listTable td, .userTable th {
+padding:2px;
+}
+
+.infoTable th {
+text-align:right;
+}
+
+.listTable th  {
+background-color:#eee;
+text-align:center;
+}
+
+.userTable {
+border:0;
+border-collapse:collapse;
+empty-cells:show;
+margin-bottom:10px;
+}
+
+.userTable th {
+border:0;
+background-color:#eff3d7;
+text-align:left;
+padding-left:0;
+color:#333;
+}
+
+.userTable td {
+padding:15px 15px 0 0;
+}
+
+.userTable a {
+text-decoration:none;
+}
+
+.multiTable {
+border:1px solid #ccc;
+width:100%;
+}
+
+.multiTable td  { 
+border:none;
+}
+
+/***********
+*
+* 'add new publication' pages
+*
+***********/
+
+/* tab navigation on top of page */
+
+#docFormTabs {
+background:transparent;
+margin-left:auto;
+margin-right:auto;
+padding-left:5px;
+}
+
+#docFormTabs ul {
+font-weight:bold;
+font-size:11pt;
+list-style:none;
+margin:0;
+padding:0;
+}
+
+#docFormTabs li {
+display:inline;
+margin:0;
+padding:0;
+}
+
+#docFormTabs a {
+background:#eee no-repeat left top;
+border:1px solid #ccc;
+border-radius:10px 10px 0 0;      /* rounded corners for browser with css 3 support */
+-moz-border-radius:10px 10px 0 0; /* rounded corners for mozilla */
+-webkit-border-radius:10px 10px 0 0; /* rounded corners for safari */
+-o-border-radius:10px 10px 0 0; /* rounded corners for opera */
+color:#333;
+float:left;
+margin:0 2px 0 0;
+padding:5px;
+text-decoration:none;
+}
+
+#docFormTabs a span {
+background:transparent no-repeat right top;
+display:block;
+float:left;
+padding:5px 10px;
+}
+
+#docFormTabs a span {
+float:none;
+}
+
+#docFormTabs a:hover {
+background-color:#ccc;
+}
+
+#docFormTabs a:hover span {
+background-color:#ccc;
+}
+
+#docFormTabs #current a, 
+#docFormTabs #current span { /*currently selected tab*/
+background-color:#ccc;
+}
+
+/* table around tabs */
+
+.formSection {
+background-color:#fff;
+border:1px solid #ccc;
+border-collapse:collapse;
+margin:0 5px;
+padding:0;
+}
+
+.formSection th, .formSection td {
+padding:2px;
+}
+
+.formSection th { 
+vertical-align:top;
+font-size:9pt;
+font-weight:bold;
+text-align:left;
+padding:5px;
+}
+
+.formSection img {
+vertical-align:middle;
+}
+
+/* heading for tabs */
+
+.sectionHeading {
+background-color:#ccc;
+color:#333;
+font-size:11pt;
+font-weight:bold;
+padding:5px 0;
+text-align:center;
+}
+
+/* numbering for fields with more than one entry, e.g. authors */
+
+.fieldNumber {
+font-size:8pt;
+text-align:right;
+}
+
+/* line beetween fields */
+
+.docFormTabsLine {
+background-color:#eee;
+clear:both;
+line-height:1px;
+height:1px;
+margin:0;
+padding:0;
+width:100%;
+}
+
+/* class in td tags around input fields in edit form */
+
+.fieldGroup {
+border:1px solid #ccc;
+}
+
+/* question mark image */
+
+.info    { 
+cursor:pointer;
+}
+
+/* navigation buttons (prev, next) on bottom of page */
+
+.tabnav {
+display:none;
+background-color:#fff;
+padding:0;
+margin:20px 0 0 0;
+text-align:center;
+}
+
+/* buttons (save, delete ...) */
+
+.rsubmit, .rsubmit2 {
+background-color:#fff;
+border-radius:3px;      /* rounded corners for browser with css 3 support */
+-moz-border-radius:3px; /* rounded corners for mozilla */
+-webkit-border-radius:3px; /* rounded corners for safari */
+-o-border-radius:3px; /* rounded corners for opera */
+border:1px solid #928f8c;
+color:#141312 !important; 
+font-size:11pt;
+margin:0;
+text-align:right;
+text-decoration:none;
+cursor:pointer;
+}
+
+.rsubmit {
+padding:3px 5px 3px 25px;
+}
+
+* html input.rsubmit, * + html input.rsubmit { /* for ie 6 and higher */
+padding-left:10px;
+}
+
+.rsubmit2 {
+padding:3px;
+}
+
+.rsubmitsmall {
+background-color:#fff;
+border-radius:3px;      /* rounded corners for browser with css 3 support */
+-moz-border-radius:3px; /* rounded corners for mozilla */
+-webkit-border-radius:3px; /* rounded corners for safari */
+-o-border-radius:3px; /* rounded corners for opera */
+border:1px solid #928f8c;
+color:#141312 !important; 
+font-size:8pt;
+margin:0;
+text-align:right;
+text-decoration:none;
+cursor:pointer;
+padding:2px;
+}
+
+/***********
+/*
+/* view record
+/*
+***********/
+
+.frontdoor {
+    margin:             0 0 5px 0;
+    height:             1%;
+    /*clear:            both;*/
+}
+
+.frontdoor:after {  
+    clear:              both;
+    content:            ".";
+    display:            block;
+    height:             0;
+    visibility:         hidden;
+}
+
+.frontdoor_left {
+    float:              left;   
+    width:              20%;
+    font-weight:        bold;
+}
+
+.frontdoor_right {
+    float:              left;   
+    width:              79%;
+}
+
+/***********
+/*
+/* forms
+/*
+***********/
+
+.Form form {
+margin:0;
+padding:0;
+}
+
+.Form fieldset {
+border:1px solid #e0eb98;
+margin:0;
+padding:0;
+}
+
+.Form legend {
+border:1px solid #e0eb98;
+font-weight:bold;
+margin:0 5px 5px;
+padding:2px;
+}
+
+.Form .Field {
+clear:both;
+padding:5px 0;
+margin:0;
+}
+
+.Form .Label, .Form .Label2 {
+float:left;
+margin:0 5px;
+text-align:right;
+}
+
+.Form .Label {
+width:140px;
+}
+
+.Form .Label2 {
+width:100px;
+}
+
+.Form .Input, .Form .Input1, .Form .Input2, .Form .Input3, .Form textarea {
+font-family:'Courier New',Monospace;
+font-size:10pt;
+}
+
+.Form .Input, .Form textarea, .Form .Select {
+width:315px;
+}
+
+.Form .Input2, .Form .Select2 { 
+width:270px;
+}
+
+.Form .Input3, .Form .Select3 {
+width:100px;
+}
+
+.Form .Submit {
+margin-left:150px;
+}
+
+.Form .Submit2 {
+margin-left:110px;
+}
+
+/***********
+/*
+/* Inhalte allgemein
+/*
+***********/
+
+.versteckt {
+display:none;
+}
+
+/***********
+/*
+/* ddc suggest button
+/*
+***********/
+
+#dw_dwDdcOId_1 option, #dw_dwDdcOId_1 optgroup {
+color:  #000;
+}
+
+#loader-mask {
+position:   relative;
+}
+
+#loader {
+background-color:#FFFFFF;
+left:           0;
+filter:         Alpha(opacity=80); /* IE */
+-moz-opacity:   0.8; /* Gecko-Browser */
+opacity:        0.8; /* Opera 9+ */
+position:       absolute;
+position:       absolute;
+text-align:     center;
+top:            0;
+}
+
+.loadergif {
+position:       absolute;
+}
+
+/***********
+*
+* Tab-like lists
+*
+***********/
+
+ul.tabs {
+display: block;
+margin: 0;
+padding: 0;
+border-bottom: solid 1px #ddd; 
+}
+
+ul.tabs li {
+display: block;
+width: auto;
+height: 30px;
+padding: 0;
+float: left;
+margin-bottom: 0; 
+}
+
+ul.tabs li a {
+display: block;
+text-decoration: none;
+width: auto;
+height: 29px;
+padding: 0px 20px;
+line-height: 30px;
+border: solid 1px #ddd;
+border-width: 1px 1px 0 0;
+margin: 0;
+background: #f5f5f5;
+font-size: 13px; 
+}
+
+ul.tabs li a.active {
+background: #fff;
+height: 30px;
+position: relative;
+top: -4px;
+padding-top: 4px;
+border-left-width: 1px;
+margin: 0 0 0 -1px;
+color: #111;
+-moz-border-radius-topleft: 2px;
+-webkit-border-top-left-radius: 2px;
+border-top-left-radius: 2px;
+-moz-border-radius-topright: 2px;
+-webkit-border-top-right-radius: 2px;
+border-top-right-radius: 2px; 
+}
+
+* html ul.tabs li a.active, * + html ul.tabs li a.active { /* nur ie 6 und 7 */
+  margin:0;
+}
+
+ul.tabs li:first-child a.active {
+margin-left: 0; 
+}
+
+ul.tabs li:first-child a {
+border-width: 1px 1px 0 1px;
+-moz-border-radius-topleft: 2px;
+-webkit-border-top-left-radius: 2px;
+border-top-left-radius: 2px; 
+}
+
+ul.tabs li:last-child a {
+-moz-border-radius-topright: 2px;
+-webkit-border-top-right-radius: 2px;
+border-top-right-radius: 2px; 
+}
+
+ul.tabs-content { 
+  margin: 0; 
+  display: block; 
+  list-style-type:none; 
+  border:1px solid #ddd; 
+  border-top:0; 
+}
+
+ul.tabs-content > li { 
+  display:none; 
+}
+
+ul.tabs-content > li.active { 
+  display: block; 
+  margin:0 0 30px -20px; 
+  padding-top:10px;
+}
+
+* html ul.tabs-content > li.active, * + html ul.tabs-content > li.active { /* nur ie 6 und 7 */
+  margin:0 0 0 20px;
+}
+
+
+/* Clearfixing tabs for beautiful stacking */
+ul.tabs:before, ul.tabs:after {
+content: '\0020';
+display: block;
+overflow: hidden;
+visibility: hidden;
+width: 0;
+height: 0; 
+}
+
+ul.tabs:after {
+clear: both; 
+}
+
+ul.tabs {
+zoom: 1; 
+}
+
+/***********
+/*
+/* end of file
+/*
+***********/

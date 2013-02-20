@@ -1,0 +1,51 @@
+/***********
+/*
+/* pubdev.css
+/* special design elements for pub-dev website, overriding nav.css or pub.css
+/* created by sebastian wolf, bielefeld university, nov 2012
+/* last update: nov 2012 by sebastian wolf
+/*
+***********/
+ 
+#kopf, #kopf1, #kopf2, .bgunigruen1 {
+background-color:#2a9ddf !important;
+}
+
+.contentbox, .contentboxlinksr, .contentboxrechtsr, .boxenrahmen1, .infoTable, .listTable, #listenbox {
+border-color:#2a9ddf !important;
+}
+
+#fussmenu {
+border-top-color:#2a9ddf !important;
+}
+
+h1, h1.underline, #Publication h1, #ProjectInfo h1, #ProjectHitlist h1, #Person h1, h2, h2.underline, h3, h3.underline, h4.underline, #menulinks a, #menulinks a.active, #menulinks div.Button2 a, #menulinks div.Buttonactive2 a, .greenline, .Formular .Submit4, #fussstrich {
+border-bottom-color:#2a9ddf !important; 
+}
+
+#history a {
+color:#2a9ddf !important;
+}
+
+input:focus, select:focus {
+outline-color:#2a9ddf !important;
+}
+
+div.frontdoor_left {
+	min-width: 15%; max-width: 15%;
+}
+div.frontdoor_right {
+	min-width: 85%; max-width: 85%;
+}
+
+#menulinks div.Buttonactive, .Formular .active, #menulinks div.Buttonactive, #contenthauptspalte .details.frontdoor_left, #contenthauptspalte .details.frontdoor_left, #menuboxrechts h1, .access, .bgunigruen2, #sidenav p select:hover, #sidenav p a:hover, #sidenav #doctypes a:hover, #listenbox {
+background-color:#a8c8e0 !important;
+}
+
+.Formular fieldset, .Formular legend, #contenthauptspalte .details.frontdoor_left, #contenthauptspalte .details.frontdoor_right, .Form fieldset, .Form legend  {
+border-color:#a8c8e0 !important;
+}
+
+.Formular .Farbig, .Formular .Submit3, #menulinks div.Button, .bgunigruen3, .highlight, .userTable th {
+background-color:#d3ddef !important;
+}
