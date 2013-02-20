@@ -1,4 +1,7 @@
 #!/usr/bin/env perl
 use Dancer;
-use App::Catalog;
+use App;
+
+set environment => "development";
+
 dance;

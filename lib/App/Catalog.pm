@@ -3,8 +3,6 @@ use Catmandu;
 use Catmandu::Sane;
 use Dancer ':syntax';
 
-our $VERSION = '0.1';
-
 sub store {
   state $store = Catmandu->store;
 }
@@ -17,4 +15,4 @@ get '/' => sub {
     template 'index';
 };
 
-true;
+1;
