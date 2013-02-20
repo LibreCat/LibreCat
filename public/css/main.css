@@ -1,0 +1,9 @@
+body {
+    font-family: "Lucida Grande";
+    font-size: 14px;
+}
+
+.container {
+    width: 960px;
+    margin: 0 auto;
+}
