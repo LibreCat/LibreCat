@@ -1,0 +1,11 @@
+<h5>Search Publications</h5>
+
+<form>
+  <div class="span8">
+    <div class="input-append">
+      <input type="text" placeholder="search">
+      <input type="button" class="btn" value="Go!">
+    </div>
+  </div>
+    
+</form>

@@ -12,7 +12,14 @@ sub bag {
 }
 
 get '/' => sub {
-    template 'index';
+	my $newRec;
+	
+	$newRec = params->{newRec} if params->{newRec};
+	
+	my $hits;
+	$hits->{newRec} = $newRec if $newRec;
+	
+    template 'backend/index', $hits;
 };
 
 1;

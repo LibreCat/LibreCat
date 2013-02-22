@@ -1,0 +1,38 @@
+[% INCLUDE backend/header.tt %]
+
+<div class="row">
+
+<div class="span12 offset2">
+<h4>Manage Publications</h4>
+</div>
+
+<div class="span2">
+<h5>PUB Control Panel</h5>
+<ul>
+<li><a href="/">Home</a></li>
+<li>This menu</li>
+<li>is visible to all</li>
+<li><a href="?newRec=1">New Publication</a></li>
+</ul>
+
+<h5>Admin menu</h5>
+<ul>
+<li>this menu</li>
+<li>is only visible</li>
+<li>to admins</li>
+</ul>
+</div>
+
+<div class="span9">
+[% IF !newRec %]
+[% INCLUDE backend/bnbSearch.tt %]
+[% ELSIF newRec == "1" %]
+[% INCLUDE backend/bnbInputId.tt %]
+[% ELSIF newRec == "empty" OR newRec == "filled" %]
+[% INCLUDE backend/bnbInputForm.tt %]
+[% END %]
+</div>
+
+</div><!-- row -->
+
+[% INCLUDE backend/footer.tt %]

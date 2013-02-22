@@ -1,0 +1,30 @@
+<h5>Add a new publication</h5>
+
+<form>
+  <div class="span8">
+    If you have a Publication Identifier (DOI, ArXiV ID, PubmedID), enter it below and we'll do the rest.
+  </div>
+    
+  <div class="span8">
+  &nbsp;
+  </div>
+  
+  <div class="span1">
+    <span class="muted">Publication Identifier</span>
+  </div>
+  <div class="span7">
+    <div class="input-append">
+      <input type="text" placeholder="DOI, ArXiV ID, Pubmed ID, ISBN" class="span4">
+      <input type="button" class="btn" value="submit">
+    </div>
+  </div>
+    
+  <div class="span8">
+  &nbsp;
+  </div>
+  
+  <div class="span8">
+    If you don't have an identifier, fill out the <a href="?newRec=empty">empty form</a> yourself.
+  </div>
+    
+</form>
