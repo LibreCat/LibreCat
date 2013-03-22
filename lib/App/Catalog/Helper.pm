@@ -2,11 +2,38 @@ package App::Catalog::Helper::Helpers;
 
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
-use Catmandu::Util qw(:is :array);
+use Catmandu::Util qw(:is :array trim);
 use Dancer qw(:syntax vars params request);
 use Template;
 use Moo;
 
+sub bag {
+	state $bag = Catmandu->store->bag;
+}
+
+sub add_publication {
+	my ($self, $pub) = @_;
+	$self->validate($pub);
+	bag->add($rec);
+}
+
+# or clean record?
+sub validate {
+	my ($self, $pub) = @_;
+	# trim
+	foreach (keys %$pub) {
+		trim $pub->{$_};
+	}
+	#check ISSN, ISBN
+
+	# kill ugly chars
+	return $pub;
+}
+
+sub classifyId {
+	my ($self, $id) = @_;
+	
+}
 
 
 package PUBSearch::Helper;
