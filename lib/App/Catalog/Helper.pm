@@ -32,7 +32,16 @@ sub validate {
 
 sub classifyId {
 	my ($self, $id) = @_;
-	
+	my $package;
+  	given ($id) {
+    	when (/^\d{4}\.\d{4}/) { $package = 'arxiv'}
+    	when (/^10\.\d{4}/){ $package = 'doi'}
+    	when (/^\d{1,8}$/) { $package = 'pubmed'}
+  #  	when (is_isbn($id)) {$package = 'isbn'}
+    	default {$package = ''}
+  }
+
+  return $package;
 }
 
 
