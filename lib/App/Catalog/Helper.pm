@@ -44,6 +44,10 @@ sub classifyId {
   return $package;
 }
 
+sub registerDoi {
+	my ($self, $pub) = @_;
+	#do something ... datacite stuff, Xtian's RESTful API...
+}
 
 package PUBSearch::Helper;
 

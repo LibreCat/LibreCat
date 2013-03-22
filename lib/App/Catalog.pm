@@ -3,7 +3,8 @@ package App::Catalog;
 use Catmandu;
 use Catmandu::Sane;
 use Dancer ':syntax';
-use Dancer::Plugin::Auth::RBAC::Credentials::Catmandu; # the longest module name known to me
+# the longest module name known to me
+use Dancer::Plugin::Auth::RBAC::Credentials::Catmandu; 
 
 # hook before
 ## login!

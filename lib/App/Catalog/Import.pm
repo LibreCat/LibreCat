@@ -20,7 +20,12 @@ get '/import/:id' => sub {
 }
 
 post '/save' => sub {
-	
+	my $pub = params;
+	h->add_publication($pub);
+
+	if ($pub->{type} eq 'researchData' && !$pub->{doi}) {
+		h->registerDoi($pub);
+	}
 };
 
 1;
