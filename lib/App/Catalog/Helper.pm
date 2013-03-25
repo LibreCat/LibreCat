@@ -14,7 +14,7 @@ sub bag {
 sub add_publication {
 	my ($self, $pub) = @_;
 	$self->validate($pub);
-	bag->add($rec);
+	bag->add($pub);
 }
 
 # or clean record?
@@ -49,9 +49,9 @@ sub registerDoi {
 	#do something ... datacite stuff, Xtian's RESTful API...
 }
 
-package PUBSearch::Helper;
+package App::Catalog::Helper;
 
-my $h = PUBSearch::Helper::Helpers->new;
+my $h = App::Catalog::Helper::Helpers->new;
 
 use Catmandu::Sane;
 use Dancer qw(:syntax hook);

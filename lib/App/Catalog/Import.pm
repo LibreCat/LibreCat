@@ -4,7 +4,7 @@ use Dancer ':syntax';
 
 get '/' => sub {
 	template 'backend/index';
-}
+};
 
 get '/new' => sub {
 	template 'backen/bnbInputId'; 
@@ -17,7 +17,7 @@ get '/import/:id' => sub {
 	my $pub =$importer->take(1);
 	my $type = $pub->{type};
 	template "backend/$type", $pub;	
-}
+};
 
 post '/save' => sub {
 	my $pub = params;
