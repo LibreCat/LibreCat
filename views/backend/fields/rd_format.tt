@@ -1,0 +1,1 @@
+<div class="controls controls-row"><select name="format_' + index + '" id="format_' + index + '" class="span5"><option value="">-- select --</option><option value="text/plain">Text</option><option value="text/html">HTML</option><option value="text/xml">XML</option><option value="application/pdf">PDF</option></select> &nbsp;<i class="icon-minus single"></i></div>

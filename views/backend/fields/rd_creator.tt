@@ -1,0 +1,1 @@
+<div class="controls control-group"><div class="controls controls-row"><input type="text" name="firstName_' + index + '" placeholder="First Names" class="span2"><input type="text" name="lastName_' + index + '" placeholder="Last Name" class="span3"> &nbsp;<i class="icon-minus group"></i></div></div>

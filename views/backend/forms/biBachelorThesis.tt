@@ -1,0 +1,232 @@
+<h5>Add a new Bielefeld Bachelor thesis</h5>
+
+  <ul class="nav nav-tabs" id="tabs-left">
+    <li class="active">
+      <a href="#stepOne" data-toggle="tab">Mandatory fields</a>
+    </li>
+    <li visible="hide">
+      <a href="#stepTwo" data-toggle="tab">Research data upload</a>
+    </li>
+    <li>
+      <a href="#stepThree" data-toggle="tab">Supplementary fields</a>
+    </li>
+    <li>
+      <a href="#stepFour" data-toggle="tab">Check input</a>
+    </li>
+  </ul>
+  
+  <div class="tab tab-content">
+  
+    <div class="tab-pane active slide-left in" id="stepOne">
+      <div class="span1">
+        DOI<span class="starMandatory">*</span>
+      </div>
+      <div class="span7">
+        <input type="text" name="doi_1" id="doi_1" placeholder="Will be generated automatically" class="span6" readonly="readonly">
+      </div>
+
+      <div class="span1">
+        Title<span class="starMandatory">*</span>
+      </div>
+      <div class="span7">
+        <input type="text" placeholder="Publication Title" class="span6">
+      </div>
+
+      <div class="span1">
+        Creator<span class="starMandatory">*</span>
+      </div>
+      <div class="span7">
+        <div class="controls controls-row">
+        <input type="text" placeholder="First Names" class="span3">
+        <input type="text" placeholder="Last Name" class="span3">
+        </div>
+      </div>
+  
+      <div class="span1">
+        Publisher<span class="starMandatory">*</span>
+      </div>
+      <div class="span7">
+        <input type="text" placeholder="Bielefeld University" value="Bielefeld University" class="span6">
+      </div>
+
+      <div class="span1">
+        Year<span class="starMandatory">*</span>
+      </div>
+      <div class="span7">
+        <input type="text" maxlength="4" placeholder="YYYY" class="span1">
+      </div>
+    </div><!-- tab-pane -->
+  
+    <div class="tab-pane slide-left" id="stepTwo">
+      Upload research data
+    </div><!-- tab-pane -->
+  
+    <div class="tab-pane slide-left" id="stepThree">
+      <div class="span1">
+        Subtitle
+      </div>
+      <div class="span7">
+        <input type="text" placeholder="Publication Subtitle (optional)" class="span6">
+        <input type="hidden" name="titleType" value="Subtitle">
+      </div>
+      
+      <div class="span1">
+        Subject
+      </div>
+      <div class="span7">
+        <input type="text" placeholder="Subject" class="span6">
+      </div>
+      
+      <div class="span1">
+        DDC
+      </div>
+      <div class="span7">
+        <input type="text" placeholder="Subject (will be select box)" class="span6">
+        <input type="hidden" name="subjectScheme" value="DDC">
+      </div>
+      
+      <div class="span1">
+        Contributor
+      </div>
+      <div class="span7">
+        <div class="controls controls-row">
+        <select name="contributorType" class="span2">
+          <option>ContactPerson</option>
+          <option>DataManager</option>
+        </select>
+        <input type="text" class="span4" placeholder="'Organisation Name' or 'Last name, First name'">
+        </div>
+      </div>
+      
+      <div class="span1">
+        Date
+      </div>
+      <div class="span7">
+        <div class="controls controls-row">
+        <select name="dateType" class="span2">
+          <option>Valid</option>
+          <option>Accepted</option>
+        </select>
+        <input type="text" class="span4" placeholder="YYYY-MM-DD">
+        </div>
+      </div>
+      
+      <div class="span1">
+        Language
+      </div>
+      <div class="span7">
+        <select name="language" class="span2">
+          <option value="ger">German</option>
+          <option value="eng">English</option>
+          <option value="swe">Swedish</option>
+        </select>
+      </div>
+      
+      <div class="span1">
+        Type
+      </div>
+      <div class="span7">
+        <div class="controls controls-row">
+        <select name="resourceTypeGeneral" class="span2">
+          <option>Image</option>
+          <option>Interview</option>
+          <option>Cup of Tea</option>
+        </select>
+        <input type="text" class="span4" placeholder="Resource Type">
+        </div>
+      </div>
+      
+      <div class="span1">
+        Alt. ID
+      </div>
+      <div class="span7">
+        <div class="controls controls-row">
+        <select name="alternateIdentifierType" class="span2">
+          <option>ISBN</option>
+          <option>ISSN</option>
+          <option>eISSN</option>
+        </select>
+        <input type="text" class="span4" placeholder="Alternative Identifier">
+        </div>
+      </div>
+      
+      <div class="span1">
+        Rel. ID
+      </div>
+      <div class="span7">
+        <div class="controls controls-row">
+        <select name="relatedIdentifierType" class="span1">
+          <option>DOI</option>
+          <option>URN</option>
+        </select>
+        <select name="relationType" class="span1">
+          <option>This publication cites</option>
+          <option>This publication is cited by</option>
+        </select>
+        <input type="text" class="span4" placeholder="Related Identifier">
+        </div>
+      </div>
+      
+      <div class="span1">
+        Size
+      </div>
+      <div class="span7">
+        <div class="controls controls-row">
+        <input type="text" class="span2" placeholder="Size">
+        <select name="unit" class="span2">
+          <option>pages</option>
+          <option>kB</option>
+          <option>MB</option>
+          <option>GB</option>
+        </select>
+        </div>
+      </div>
+      
+      <div class="span1">
+        Format
+      </div>
+      <div class="span7">
+        <div class="controls controls-row">
+        <select name="format" class="span2">
+          <option>text/plain</option>
+          <option>text/html</option>
+          <option>text/xml</option>
+          <option>application/pdf</option>
+        </select>
+        </div>
+      </div>
+      
+      <div class="span1">
+        Version
+      </div>
+      <div class="span7">
+        <input type="text" placeholder="Version" class="span2">
+      </div>
+      
+      <div class="span1">
+        Rights
+      </div>
+      <div class="span7">
+        <select name="rights" class="span6">
+          <option>Open Database License [ODbL]</option>
+        </select>
+      </div>
+      
+      <div class="span1">
+        Description
+      </div>
+      <div class="span7">
+        <div class="controls controls-row">
+        <select name="descriptionType" class="span2">
+          <option>other</option>
+        </select>
+        <textarea rows="3" class="span4"></textarea>
+        </div>
+      </div>
+    </div><!-- tab-pane -->
+  
+    <div class="tab-pane slide-left" id="stepFour">
+      Check input
+    </div><!-- tab-pane -->
+  
+  </div><!-- tab-content -->
