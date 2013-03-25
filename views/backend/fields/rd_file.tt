@@ -1,0 +1,1 @@
+<input name="file_' + index + '" id="file_' + index + '" type="file" /><br />
