@@ -2,7 +2,7 @@
 
 <div class="row">
 
-<div class="span12 offset2">
+<div class="span10 offset2">
 <h4>Manage Publications</h4>
 </div>
 
@@ -12,7 +12,7 @@
 <li><a href="/">Home</a></li>
 <li>This menu</li>
 <li>is visible to all</li>
-<li><a href="?newRec=1">New Publication</a></li>
+<li><a href="http://pub-dev.ub.uni-bielefeld.de:3000?newRec=1">New Publication</a></li>
 </ul>
 
 <h5>Admin menu</h5>
@@ -26,10 +26,53 @@
 <div class="span9">
 [% IF !newRec %]
 [% INCLUDE backend/bnbSearch.tt %]
-[% ELSIF newRec == "1" %]
+[% ELSE %]
+[% SWITCH newRec %]
+[% CASE "1" %]
 [% INCLUDE backend/bnbInputId.tt %]
-[% ELSIF newRec == "empty" OR newRec == "filled" %]
-[% INCLUDE backend/bnbInputForm.tt %]
+[% CASE "book" %]
+[% INCLUDE backend/forms/book.tt %]
+[% CASE "bookChapter" %]
+[% INCLUDE backend/forms/bookChapter.tt %]
+[% CASE "bookReview" %]
+[% INCLUDE backend/forms/bookReview.tt %]
+[% CASE "caseStudy" %]
+[% INCLUDE backend/forms/caseStudy.tt %]
+[% CASE "conference" %]
+[% INCLUDE backend/forms/conference.tt %]
+[% CASE "conferenceAbstract" %]
+[% INCLUDE backend/forms/conferenceAbstract.tt %]
+[% CASE "dissertation" %]
+[% INCLUDE backend/forms/dissertation.tt %]
+[% CASE "encyclopediaArticle" %]
+[% INCLUDE backend/forms/encycloplediaArticle.tt %]
+[% CASE "journalArticle" %]
+[% INCLUDE backend/forms/journalArticle.tt %]
+[% CASE "newspaperArticle" %]
+[% INCLUDE backend/forms/newspaperArticle.tt %]
+[% CASE "patent" %]
+[% INCLUDE backend/forms/patent.tt %]
+[% CASE "preprint" %]
+[% INCLUDE backend/forms/preprint.tt %]
+[% CASE "report" %]
+[% INCLUDE backend/forms/report.tt %]
+[% CASE "translation" %]
+[% INCLUDE backend/forms/translation.tt %]
+[% CASE "workingPaper" %]
+[% INCLUDE backend/forms/workingPaper.tt %]
+[% CASE "biDissertation" %]
+[% INCLUDE backend/forms/biDissertation.tt %]
+[% CASE "biBachelorThesis" %]
+[% INCLUDE backend/forms/biBachelorThesis.tt %]
+[% CASE "biMasterThesis" %]
+[% INCLUDE backend/forms/biMasterThesis.tt %]
+[% CASE "biPostdocThesis" %]
+[% INCLUDE backend/forms/biPostdocThesis.tt %]
+[% CASE "researchData" %]
+[% INCLUDE backend/forms/researchData.tt %]
+[% CASE "stored" %]
+[% INCLUDE backend/stored.tt %]
+[% END %]
 [% END %]
 </div>
 
