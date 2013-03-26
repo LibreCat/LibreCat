@@ -12,7 +12,8 @@
 <li><a href="/">Home</a></li>
 <li>This menu</li>
 <li>is visible to all</li>
-<li><a href="http://pub-dev.ub.uni-bielefeld.de:3000?newRec=1">New Publication</a></li>
+<li><a href="/new">New Publication</a></li>
+<li><a href="/preferences">Preferences</a></li>
 </ul>
 
 <h5>Admin menu</h5>

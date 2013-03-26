@@ -10,10 +10,10 @@
 <meta name="robots" content="noindex,nofollow,noimageindex">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="http://pub-dev.ub.uni-bielefeld.de:3000/css/bootstrapBackend.css">
+<link rel="stylesheet" type="text/css" href="/css/bootstrapBackend.css">
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="http://pub-dev.ub.uni-bielefeld.de:3000/javascripts/bootstrap.js"></script>
+<script src="/javascripts/bootstrap.js"></script>
 
 </head>
 <body>

@@ -2,12 +2,8 @@ package App::Catalog::Import;
 
 use Dancer ':syntax';
 
-get '/' => sub {
-	template 'backend/index';
-};
-
 get '/new' => sub {
-	template 'backen/bnbInputId'; 
+	template 'backend/bnbInputId'; 
 };
 
 get '/import/:id' => sub {

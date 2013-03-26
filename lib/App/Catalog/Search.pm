@@ -6,4 +6,6 @@ get '/search' => sub {
 	template 'backend/list', $hits;
 };
 
+
+
 1;
