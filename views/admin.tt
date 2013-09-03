@@ -1,0 +1,10 @@
+[% INCLUDE navbar.tt %]
+
+<!-- BEGIN admin.tt -->
+
+
+
+<!-- END admin.tt -->
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+[% INCLUDE navbar.tt %]
+
+<!-- BEGIN profile.tt -->
+
+
+
+<!-- END profile.tt -->
+
+</body>
+</html>
+
