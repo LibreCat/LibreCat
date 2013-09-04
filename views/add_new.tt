@@ -1,0 +1,24 @@
+[% INCLUDE navbar.tt %]
+
+<!-- BEGIN add_new.tt -->
+
+<div class="row">
+  <div class="col-md-7">
+	<h3>Enter ID</h3>
+	<form class="form-inline" role="search" action="/import" method="GET">
+      <div class="form-group">
+        <input type="text" class="form-control" id="id" placeholder="10.324/JHEP287432">
+      </div>
+      <button type="search" class="btn btn-info">Search</button>
+    </form>
+    <h3>or choose document type</h3>
+    Book<br />
+    Journal Article<br />
+    Research Data<br />
+  </div><!-- col-md-7 -->
+  <div class="col-md-4">
+
+  </div><!-- col-md-4 -->
+</div>
+
+<!-- END add_new.tt -->

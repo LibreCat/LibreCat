@@ -1,0 +1,13 @@
+[% INCLUDE navbar.tt %]
+
+<!- BEGIN list.tt -->
+
+<div class="row">
+	<div class="col-md-4">
+	[% FOREACH hit IN hits %]
+	
+	[% END %]
+	</div>
+</div>
+
+<!-- END list.tt -->
