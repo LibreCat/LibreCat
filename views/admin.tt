@@ -1,8 +1,22 @@
 [% INCLUDE navbar.tt %]
 
 <!-- BEGIN admin.tt -->
+<div class="row">
+&nbsp;
+</div>
 
-
+<div class="container bs-docs-container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="bs-sidebar hidden-print" role="complementary">
+        <ul class="nav bs-sidenav">
+        <li><a href="/admin/update">Update Service</a></li>
+        <li><a href="/admin/accounts">User Accounts</a></li>
+        </ul>
+      </div>  
+    </div>
+  </div>
+</div>
 
 <!-- END admin.tt -->
 

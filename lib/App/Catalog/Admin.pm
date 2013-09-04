@@ -3,17 +3,24 @@ package App::Catalog::Admin;
 use Catmandu::Sane;
 use Dancer ':syntax';
 
-get '/admin' => sub {
-	my $p = params;
+prefix '/admin' => sub {
 
-};
+	get '/' => sub {
+		template 'admin';
+	};
 
-get '/admin/authority' => sub {
-	#dfs
-};
+	get '/update' => sub {
+		template 'admin_update';
+	};
 
-get '/admin/curate' => sub {
-	# my curator
+	get '/accounts' => sub {
+		template 'accounts'
+	};
+
+	get '/curate' => sub {
+		template 'curate';
+	};
+
 };
 
 1;
