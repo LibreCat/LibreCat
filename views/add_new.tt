@@ -12,10 +12,11 @@
       <button type="search" class="btn btn-info">Search</button>
     </form>
     <h3>or choose document type</h3>
-    Book<br />
-    Journal Article<br />
-    Research Data<br />
+    [% FOREACH type IN h.config.lists.publicationTypes.keys %]
+    	<a href="/add/[% type %]">[% h.config.lists.publicationTypes.$type.label %]</a><br />
+    [% END %]
   </div><!-- col-md-7 -->
+  
   <div class="col-md-4">
 
   </div><!-- col-md-4 -->

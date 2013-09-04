@@ -24,20 +24,27 @@
   </div><!-- col-md-5 -->
   <div class="col-md-5">
   	<h3>Add your Author IDs</h3>
-  	<form role="form">
+  	<form role="form" action="/profile/save" method="POST">
+      <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-floppy-save"></span> Save</button>
+        <button type="reset" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> Reset</button>
+      <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-warning-sign"></span> Cancel</button>
   	[% FOREACH id IN h.config.profile.source.keys %]
   	  <div class="form-group">
     	<label for="[% id %]">[% h.config.profile.source.$id.label %]</label>
-    	<input type="number" class="form-control" id="[% id %]" placeholder="12345">
+    	<input type="number" class="form-control" name="[% id %]" placeholder="12345">
   	  </div>
   	[% END %]
-  	  <button type="submit" class="btn btn-info">Submit</button>
+  	  <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-floppy-save"></span> Save</button>
+      <button type="reset" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> Reset</button>
+      <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-warning-sign"></span> Cancel</button>
 	</form>
   </div><!-- col-md-5 -->
 </div><!-- class row -->
 
 <!-- END profile.tt -->
 
-</body>
+</body>s
 </html>
 

@@ -62,11 +62,6 @@ sub classifyId {
   return $package;
 }
 
-sub registerDoi {
-	my ($self, $pub) = @_;
-	#do something ... datacite stuff, Xtian's RESTful API...
-}
-
 package App::Catalog::Helper;
 
 my $h = App::Catalog::Helper::Helpers->new;
