@@ -5,13 +5,15 @@ use Catmandu::Sane;
 use Dancer ':syntax';
 #use Dancer::Plugin::Auth::RBAC::Credentials::Catmandu; 
 
-# hook before
-## login!
+# hook before: login!
 
 use App::Catalog::Import;
 use App::Catalog::Helper;
 use App::Catalog::Admin;
 use App::Catalog::Profile;
+use App::Catalog::Publication;
+
+Catmandu->load;
 
 get '/' => sub {
 

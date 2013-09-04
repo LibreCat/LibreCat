@@ -4,7 +4,7 @@ use App::Catalog::Helper;
 use Dancer ':syntax';
 
 get '/profile' => sub {
-	template 'profile.tt';
+	template 'profile';
 };
 
 1;

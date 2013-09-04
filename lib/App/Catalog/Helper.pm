@@ -17,6 +17,18 @@ sub config {
 	state $config = Catmandu->config;
 }
 
+sub authority {
+    state $bag = Catmandu->store('authority')->bag;
+}
+
+sub getPerson {
+	if($_[1] =~ /\d{1,}/){
+		$_[0]->authority->get($_[1]);
+	} else {
+    	$_[0]->authority->select("fullName", qr/$_[1]/i)->to_array;
+    }
+}
+
 sub add_publication {
 	my ($self, $pub) = @_;
 	$self->validate($pub);
