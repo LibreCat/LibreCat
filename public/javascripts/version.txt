@@ -1,3 +1,0 @@
-Aktuelle jQuery Versionen:
-
-jQuery: 1.8.2
