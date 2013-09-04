@@ -1,8 +1,44 @@
 [% INCLUDE navbar.tt %]
 
 <!-- BEGIN profile.tt -->
+<div class="row">
+Hi there!
+</div>
+<div class="row">
+hi there!
+</div>
 
-
+<div class="row offset-2">
+  <div class="col-md-2">
+  	<h3>Your ugly face</h3>
+  	<a href="/" class="thumbnail">
+      <img data-src="images/dummy.jpg" alt="...">
+    </a>
+  </div><!-- col-md-2 -->
+  <div class="col-md-5">
+  	<h3>Data from BIS</h3>
+  	<form class="form-horizontal" role="form">
+  	  <div class="form-group">
+    	<label class="col-lg-2 control-label">[% key %]</label>
+    	<div class="col-lg-10">
+      	<p class="form-control-static">[% person.$key %]</p>
+    	</div>
+  	  </div>
+  	</form>
+  </div><!-- col-md-5 -->
+  <div class="col-md-5">
+  	<h3>Add your Author IDs</h3>
+  	<form role="form">
+  	[% FOREACH id IN h.config.profile.source.keys %]
+  	  <div class="form-group">
+    	<label for="[% id %]">[% h.config.profile.source.$id.label %]</label>
+    	<input type="number" class="form-control" id="[% id %]" placeholder="12345">
+  	  </div>
+  	[% END %]
+  	  <button type="submit" class="btn btn-default">Submit</button>
+	</form>
+  </div><!-- col-md-5 -->
+</div><!-- class row -->
 
 <!-- END profile.tt -->
 

@@ -7,8 +7,14 @@ use Dancer qw(:syntax vars params request);
 use Template;
 use Moo;
 
+Catmandu->load;
+
 sub bag {
 	state $bag = Catmandu->store->bag;
+}
+
+sub config {
+	state $config = Catmandu->config;
 }
 
 sub add_publication {
@@ -67,4 +73,4 @@ hook before_template => sub {
 
 register_plugin;
 
-"This is truth";
+1;

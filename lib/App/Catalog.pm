@@ -3,7 +3,6 @@ package App::Catalog;
 use Catmandu;
 use Catmandu::Sane;
 use Dancer ':syntax';
-# the longest module name known to me
 #use Dancer::Plugin::Auth::RBAC::Credentials::Catmandu; 
 
 # hook before
@@ -11,6 +10,22 @@ use Dancer ':syntax';
 
 use App::Catalog::Import;
 use App::Catalog::Helper;
+use App::Catalog::Admin;
+use App::Catalog::Profile;
+
+get '/' => sub {
+
+	template 'index.html';
+	# my $newRec;
+	
+	# $newRec = params->{newRec} if params->{newRec};
+	
+	# my $hits;
+	# $hits->{parameters} = params;
+	# $hits->{newRec} = $newRec if $newRec;
+	
+ #    #template 'index.t', $hits;
+};
 
 get '/submitForm' => sub {
 	my $params = params;
@@ -32,17 +47,9 @@ get '/importId' => sub {
 	template "backend/header.tt";
 };
 
-
-get '/' => sub {
-	my $newRec;
-	
-	$newRec = params->{newRec} if params->{newRec};
-	
-	my $hits;
-	$hits->{parameters} = params;
-	$hits->{newRec} = $newRec if $newRec;
-	
-    template 'backend/index.tt', $hits;
+get '/logout' => sub {
+	# do logout
+	redirect h->config->{host};
 };
 
-"The truth is out there";
+1;
