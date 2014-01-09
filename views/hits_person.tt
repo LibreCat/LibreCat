@@ -1,0 +1,43 @@
+<!-- BEGIN hits_person.tt -->
+
+<!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->
+[% num = total; n = 0 %]
+
+[% FOREACH entry IN hits %]
+<div class="row">&nbsp;</div>
+<div class="row">
+  [% bag = entry.documentType == "researchData" ? "data" : "publication" %]
+  <div class="col-md-1" style="text-align:right">
+    [% SWITCH entry.submissionStatus %]
+    [% CASE "public" %]
+      <span style="font-weight:bold;color:green;">Public</span>
+    [% CASE "unsubmitted" %]
+      <span style="font-weight:bold;color:gray;">Private</span>
+    [% CASE "returned" %]
+      <span style="font-weight:bold;color:red;">Re-<br />turned</span>
+    [% CASE "submitted" %]
+      <span style="font-weight:bold;color:gray;">Sub-<br />mitted</span>
+    [% CASE "invalid" %]
+      <span style="font-weight:bold;color:red;">Invalid</span>
+    [% CASE "pdeleted" %]
+      <span style="font-weight:bold;color:red;">Deleted</span>
+    [% END %]
+  </div> 
+  <div class="col-md-10">
+    <i>[% entry.publishingYear %] | [% h.display_doctypes(entry.documentType) %] | PUB-ID: <span class="pubid">[% entry.oId %]</span></i><br />
+    [% IF style == 'frontShort' %]
+	<a href="[% h.host %]/[% bag %]/[% entry.oId %]">[% entry.mainTitle %]</a><br />
+    [% END %]
+    [% entry.citation.$style %][% IF style != "apa_indent" %]<br />[% END %]
+    [% INCLUDE links.tt %]
+    [% INCLUDE rec_details.tt %]
+  </div>
+  
+  <div class="col-md-1" style="text-align:right;">
+    <i><a href="[% h.host %]/missioncontrol/edit/[% entry.oId %]"><span class="glyphicon glyphicon-pencil"></span></a></i>
+  </div>
+</div>
+
+
+[% END %]
+<!-- END hits_person.tt -->

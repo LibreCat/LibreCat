@@ -1,0 +1,33 @@
+<!-- BEGIN person/profile.tt -->
+<h5>[% IF thisPerson.bis_personTitle %]<span itemprop="honorificPrefix">[% thisPerson.bis_personTitle %]</span>[% END %] <span itemprop="name">[% thisPerson.givenName %] [% thisPerson.surname %]</span></h5>
+[% IF thisPerson.bis_email %]
+<a href="mailto:[% thisPerson.bis_email %]" itemprop="email">[% thisPerson.bis_email.replace('@|&#64;', ' [at] ') %]</a><br />
+[% END %]
+[% IF total OR researchhits.total %]
+  [% IF !thisPerson %]
+    <p>No info found.</p>
+  [% ELSE %]
+    [% IF thisPerson.bis_former == "1" %]
+      <p>Former Bielefeld University Researcher</p>
+    [% ELSE %]
+      View in <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% id %]&lang=en">Directory of Staff and Departments</a>
+      [% IF thisPerson.sfb882_profile %]
+      <br /><br />View <a href="http://www.sfb882.uni-bielefeld.de/en/staff/[% id %]">SFB882-GK Profile</a><br />
+      [% END %]
+      <br /><br />
+      <div class="row">
+      [% IF thisPerson.googleScholarId %]<div class="span2">Google Scholar Profile:</div><div class="span3"><a href="http://scholar.google.de/citations?user=[% thisPerson.googleScholarId %]" target="_blank">[% thisPerson.googleScholarId %]</a></div>[% END %]
+      [% IF thisPerson.researcherId %]<div class="span2">Researcher ID:</div><div class="span3"><a href="http://www.researcherid.com/rid/[% thisPerson.researcherId %]" target="_blank">[% thisPerson.researcherId %]</a></div>[% END %]
+      [% IF thisPerson.authorClaim %]<div class="span2">Author Claim:</div><div class="span3"><a href="http://authorclaim.org/profile/[% thisPerson.authorClaim %]" target="_blank">[% thisPerson.authorClaim %]</a></div>[% END %]
+      [% IF thisPerson.scopusId %]<div class="span2">Scopus Author ID:</div><div class="span3"><a href="http://www.scopus.com/authid/detail.url?authorId=[% thisPerson.scopusId %]" target="_blank">[% thisPerson.scopusId %]</a></div>[% END %]
+      [% IF thisPerson.orcidId %]<div class="span2">ORCID:</div><div class="span3"><a href="http://orcid.org/[% thisPerson.orcidId %]" target="_blank">[% thisPerson.orcidId %]</a></div>[% END %]
+      [% IF thisPerson.githubId %]<div class="span2">GitHub:</div><div class="span3"><a href="http://github.com/[% thisPerson.githubId %]" target="_blank">[% thisPerson.githubId %]</a></div>[% END %]
+      [% IF thisPerson.arxivId %]<div class="span2">arXiv:</div><div class="span3"><a href="http://arxiv.org/a/[% thisPerson.arxivId %]" target="_blank">[% thisPerson.arxivId %]</a></div>[% END %]
+      [% IF thisPerson.inspireId %]<div class="span2">Inspire:</div><div class="span3"><a href="http://inspirehep.net/record/[% thisPerson.inspireId %]" target="_blank">[% thisPerson.inspireId %]</a></div>[% END %]
+      </div>
+    [% END %]
+  [% END %]
+[% ELSE %]
+<p>No info found.</p>
+[% END %]
+<!-- END person/profile.tt -->

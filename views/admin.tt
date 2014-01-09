@@ -1,24 +1,74 @@
 [% INCLUDE navbar.tt %]
 
 <!-- BEGIN admin.tt -->
-<div class="row">
-&nbsp;
-</div>
+[% USE date(format => '%Y') %]
 
-<div class="container bs-docs-container">
-  <div class="row">
-    <div class="col-md-3">
-      <div class="bs-sidebar hidden-print" role="complementary">
-        <ul class="nav bs-sidenav">
-        <li><a href="/admin/update">Update Service</a></li>
-        <li><a href="/admin/accounts">User Accounts</a></li>
+[% thisPerson = h.getPerson(bisId) %]
+
+<div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->  
+  <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->
+    
+    <div class="row"> <!-- row span8 picture, email -->
+      <div class="col-md-2">
+        [% IF thisPerson.bis_photo %]
+        <object data="[% thisPerson.bis_photo %]" class="img-thumbnail" style="max-width:140px;" itemprop="image">
+          <img src="/images/dummy.png" style="width:10px;" class="img-polaroid">
+        </object>
+        [% ELSE %]
+        <img src="/images/dummy.png" class="img-thumbnail">
+        [% END %]
+      </div> <!-- span 2 -->
+  
+      <div class="col-md-6">
+        [% INCLUDE person_profile.tt %]
+      </div> <!-- span6 -->
+
+    </div> <!-- row span8 picture, email -->
+    
+    <div class="row"> <!-- empty row span8 -->
+      <div class="col-md-11">&nbsp;</div>
+    </div> <!-- empty row span8 -->
+
+    [% IF total != 0 OR researchhits.total != 0 %]
+    <div class="row"> <!-- row span11 publications, projects, departments -->
+      <div class="col-md-10">
+        <ul class="nav nav-tabs" id="myTab">
+          <li class="active"><a href="#publ">Personal Publications</a></li>
         </ul>
-      </div>  
-    </div>
-  </div>
-</div>
+      </div>
+      
+      <div class="col-md-11">
+        <div class="tab-content">
+          <div class="tab-pane[% IF total != 0 %] active[% END %]" id="publ">
+            <div class="col-md-8">
+              [% INCLUDE hits_person.tt %]
+            </div>
+            <div class="col-md-3">
+              [% INCLUDE right_menu_publ.tt %]
+            </div>
+          </div>
+        </div>  
+        <script>
+        $('#myTab a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show');
+        })
+        </script>
+        [% END %]
+      </div>
+    </div> <!-- row span8 publications, projects, departments -->
+  </div> <!-- span8 main content -->
+
+</div><!-- row outer border -->
+
+[% INCLUDE footer.tt %]
 
 <!-- END admin.tt -->
 
 </body>
+<script>
+$('[data-toggle="collapse"] a').click(function(e){
+  e.preventDefault();
+});
+</script>
 </html>

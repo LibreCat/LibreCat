@@ -1,0 +1,52 @@
+<!-- BEGIN rec_details.tt --> 
+<div id="collapse[% entry.oId %]" class="panel-collapse collapse" style="padding-top:5px;">
+[% IF entry.author %]
+  <div class="frontdoor">
+    <div class="frontdoor_left">Authors</div>
+    <div class="frontdoor_right">
+    [% FOREACH auth IN entry.author %]
+      [% IF auth.personNumber %]
+        <a href="#">[% auth.fullName %]</a><sup class="text-muted">UniBi</sup>;<br />
+      [% ELSE %]
+        <a href="#">[% auth.fullName %]</a>;<br />
+      [% END %]
+    [% END %]
+    </div>
+  </div>
+[% END %]
+
+[% IF entry.editor %]
+  <div class="frontdoor">
+    <div class="frontdoor_left">Editors</div>
+    <div class="frontdoor_right">
+    [% FOREACH ed IN entry.editor %]
+      [% IF ed.personNumber %]
+        <a href="#">[% ed.fullName %]</a><sup class="text-muted">UniBi</sup>;<br />
+      [% ELSE %]
+        <a href="#">[% ed.fullName %]</a>;<br />
+      [% END %]
+    [% END %]
+    </div>
+  </div>
+[% END %]
+
+[% IF entry.department %]
+  <div class="frontdoor">
+    <div class="frontdoor_left">Departments</div>
+    <div class="frontdoor_right">
+    [% FOREACH dept IN entry.department %]
+      [% IF dept.allDepartments.0 != dept.organizationNumber %]
+        [% parentDept = h.getDepartment(dept.allDepartments.0) %]
+        [% parentDept.name %] - 
+      [% END %]
+      [% IF dept.allDepartments.1 AND dept.allDepartments.1 != dept.organizationNumber %]
+        [% parentDept = h.getDepartment(dept.allDepartments.1) %]
+        [% parentDept.name %] - 
+      [% END %]
+      [% dept.name.0.text %],<br />
+    [% END %]
+    </div>
+  </div>
+[% END %]
+</div>
+<!-- END rec_details.tt --> 
