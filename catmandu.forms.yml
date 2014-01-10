@@ -1,0 +1,137 @@
+publicationTypes:
+  book:
+    tmpl: book.tt
+  bookChapter:
+    tmpl: bookChapter.tt
+  bookEditor:
+    tmpl: bookEditor.tt
+  caseStudy:
+    tmpl: caseStudy.tt
+  conferenceAbstract:
+    tmpl: conferenceAbstract.tt
+  conferenceEditor:
+    tmple: conferenceEditor.tt
+  conference:
+    tmpl: conference.tt
+  dissertation:
+    tmpl: dissertation.tt
+  encyclopediaArticle:
+    tmpl: encyclopediaArticle.tt
+  journalArticle:
+    tmpl: journalArticle.tt
+  journalEditor:
+    tmpl: journalEditor.tt
+  newspaperarticle:
+    tmpl: newspaperaArticle.tt
+  patent:
+    tmpl: patent.tt
+  preprint:
+    tmpl: preprint.tt
+  report:
+    tmpl: report.tt
+  review:
+    tmpl: bookReview.tt
+  researchdata:
+    tmpl: researchData.tt
+    fields:
+      basicFields:
+        tabName: "Basic Fields"
+        doi:
+          mandatory: 1
+          multiple: 0
+          label: "DOI"
+          readonly: 1
+        mainTitle:
+          mandatory: 1
+          multiple: 0
+          label: "Title"
+          readonly: 0
+        authors:
+          mandatory: 1
+          multiple: 1
+          label: "Creator"
+          readonly: 0
+        departments:
+          mandatory: 1
+          multiple: 1
+          label: "Departments"
+          readonly: 0
+        projects:
+          mandatory: 0
+          multiple: 1
+          label: "Projects"
+          readonly: 0
+        researchGroups:
+          mandatory: 0
+          multiple: 1
+          label: "Research Groups"
+          readonly: 0
+        publisher:
+          mandatory: 1
+          multiple: 0
+          label: "Publisher"
+          readonly: 0
+        year:
+          mandatory: 1
+          multiple: 0
+          label: "Year"
+          readonly: 0
+      fileUpload:
+        tabName: "Research data upload"
+        externalFiles:
+          mandatory: 0
+          multiple: 0
+          label: "Files available at"
+          readonly: 0
+        dropzone:
+          mandatory: 0
+          multiple: 0
+          label: "Upload files"
+          readonly: 0
+        licenses:
+          dataReuseLicense:
+            mandatory: 1
+            multiple: 0
+            label: "Data Re-Use License"
+            readonly: 0
+          openDataRelease:
+            mandatory: 1
+            multiple: 0
+            label: "Open Data Release - Declaration"
+            readonly: 0
+      supplementaryFields:
+        tabName: "Supplementary fields"
+        abstract:
+          mandatory: 0
+          multiple: 1
+          label: "Abstract"
+          readonly: 0
+        xddcs:
+          mandatory: 0
+          multiple: 0
+          label: "DDC"
+          readonly: 0
+        keyword:
+          mandatory: 0
+          multiple: 0
+          label: "Keywords"
+          readonly: 0
+      relatedMaterial:
+        tabName: "Link to publications"
+        connectPubl:
+          mandatory: 0
+          multiple: 0
+          label: "Link Publications"
+          readonly: 0
+  translation:
+    tmpl: translation.tt
+  workingpaper:
+    tmpl: workingPaper.tt
+  bidissertation:
+    tmpl: biDissertation.tt
+  bibachelorthesis:
+    tmpl: biBachelorThesis.tt
+  bimasterthesis:
+    tmpl: biMasterThesis.tt
+  bipostdocthesis:
+    tmpl: biPostdocThesis.tt

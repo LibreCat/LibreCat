@@ -1,0 +1,24 @@
+[% INCLUDE navbar.tt %]
+<!-- BEGIN /backend/forms/[% tmpl %] -->
+
+[% IF fields.basicFields %]
+
+[% END %]
+
+
+[% IF fields.fileUpload %]
+
+[% END %]
+
+
+[% IF fields.supplementaryFields %]
+
+[% END %]
+
+
+[% IF fields.relatedMaterial %]
+
+[% END %]
+
+<!-- END /backend/forms/[% tmpl %] -->
+[% INCLUDE footer.tt %]
