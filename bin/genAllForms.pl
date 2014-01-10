@@ -7,7 +7,7 @@ use Template;
 Catmandu->load;
 my $conf = Catmandu->config;
 
-my $forms = $conf->{forms};
+my $forms = $conf->{forms}->{publicationTypes};
 my $path = $conf->{'path_to_forms'};
 
 my $tt = Template->new(
@@ -21,6 +21,6 @@ my $tt = Template->new(
 foreach my $type (keys %$forms) {
 
 	my $type_hash = $forms->{$type};
-	$tt->process("master.tt", $type_hash, "$type.tt");
+	$tt->process("master.tt", $type_hash, "$type_hash->{tmpl}");
 
 }
