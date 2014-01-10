@@ -6944,14 +6944,6 @@ h4 {
 	border-bottom: 1px solid lightgray;min-height:200px;padding-bottom:5px;
 }
 
-.dropzone{
-	min-height:30px;padding-left:0px;padding-right:0px;margin-left:0px;
-}
-
-.dz-preview,.dz-file-preview{
-	position:relative;min-height:35px;
-}
-
 .reuse-license{
 	padding-left: 18px;padding-right:18px;
 }
@@ -6966,6 +6958,40 @@ div.frontdoor_right {
 	min-width: 85%;
 	max-width: 85%;
 	float: left;
+}
+
+.placeholder{
+	color:#aaa !important;
+}
+
+.form-group.has-error input{
+	background-color:#ffcfce;
+}
+
+.tab-pane.active {
+	padding-top:25px;
+}
+
+.dropzone {
+	padding-left:0px;
+	padding-right:0px;
+	margin-left:0px;
+}
+
+.dz-preview,.dz-file-preview{
+	position:relative;
+	margin-left:15px;
+	padding-left:40px;
+}
+
+.back-button, .next-button {
+	background-color: lightgray;
+	min-height: 36px;
+	color: #000;
+}
+
+.buttonrow {
+	margin-left: 5px;
 }
 
 /**

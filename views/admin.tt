@@ -61,14 +61,6 @@
 
 </div><!-- row outer border -->
 
-[% INCLUDE footer.tt %]
-
 <!-- END admin.tt -->
 
-</body>
-<script>
-$('[data-toggle="collapse"] a').click(function(e){
-  e.preventDefault();
-});
-</script>
-</html>
+[% INCLUDE footer.tt %]
