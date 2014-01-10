@@ -1,0 +1,1106 @@
+[% INCLUDE navbar.tt %]
+
+<!-- BEGIN /tt_templates/backend/edit_researchData -->
+
+<div class="row">
+
+<div class="col-md-9 col-md-offset-1">
+
+  [% IF mainTitle %]
+  <h3>[% mainTitle %]</h3>
+  [% ELSE %]
+  <h3>Add new research data</h3>
+  [% END %]
+
+  [% IF errorMessages %]
+  <span class="errormessage">[% errorMessages %]</span>
+  [% END %]
+
+  <ul class="nav nav-tabs" id="tabs-left">
+    <li id="li_basicFields" class="active">
+      <a href="#basicFields" data-toggle="tab">Basic fields</a>
+    </li>
+    <li id="li_fileUpload" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
+      <a href="#fileUpload" data-toggle="tab">Research data upload</a>
+    </li>
+    <li id="li_supplementaryFields" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
+      <a href="#supplementaryFields" data-toggle="tab">Supplementary fields</a>
+    </li>
+    <li id="li_relatedMaterial" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
+      <a href="#relatedMaterial" data-toggle="tab">Link to Publications</a>
+    </li>
+  </ul>
+  
+  <form action="/luur/record" method="get" name="reLoad">
+  <input type="hidden" name="recordType" value="researchData">
+  
+  <input type="hidden" name="recordOId" value="[% recordOId %]">
+  <input type="hidden" name="errorMessages" value="[% errorMessages %]">
+  <input type="hidden" name="tab" value="[% tab %]">
+  <input type="hidden" name="authorFixed" value="[% authorFixed %]">
+  <input type="hidden" name="infoFetched" value="[% infoFetched %]">
+  <input type="hidden" name="func" value="updateRecord">
+  <input type="hidden" name="reviewerRights" value="[% reviewerRights %]">
+  <input type="hidden" name="adminRights" value="[% adminRights %]">
+  <input type="hidden" name="submissionStatus" value="[% submissionStatus %]">
+  
+  <div class="tab tab-content edit-form">
+    
+    <!-- STEP 1 -->
+    <div class="tab-pane active" id="basicFields">
+      [% IF doi %]
+      <div class="col-md-2">
+        <label for="id_doi"
+          DOI
+        </label>
+      </div>
+      <div class="col-md-10">
+        <div class="controls control-group">
+          <input type="text" name="doi" id="id_doi" value="[% doi %]" class="col-md-5" readonly="readonly">
+        </div>
+      </div>
+      [% END %]
+      
+      <div class="col-md-2">
+        <label for="id_mainTitle">
+          Title<span class="starMandatory">*</span>
+        </label>
+      </div>
+      <div class="col-md-10">
+        <span class="form-group col-md-9">
+          <input type="text" name="mainTitle" id="id_mainTitle" value="[% mainTitle %]" placeholder="Publication Title" class="form-control required">
+        </span>
+      </div>
+      
+      <div class="col-md-2">
+        <label for="creator">
+          Creator<span class="starMandatory">*</span> <i class="glyphicon glyphicon-plus" id="plusCreator"></i>
+        </label>
+      </div>
+      <div class="col-md-10" id="creator">
+        [% IF !authors %]
+        <div class="control-group">
+          <input type="hidden" name="au_auLuAuthorOId_0" value="[% auLuAuthorOId %]"/>
+          <input type="hidden" name="au_auPersonNumber_0" id="id_au_auPersonNumber_0" value="[% aupersonNumber %]" />
+          <input name="au_auLuLdapId_0" type="hidden" value="[% auLuLdapId %]" />
+          <input name="au_auEndDate_0" type="hidden" value="[% auEndDate %]" />
+          <input type="hidden" id="auSel0" name="searchAuthors" onclick="javascript:selectAuthor(this.form.au_auSurname_0, this.form.au_auGivenName_0, 0)" value="Link to PEVZ Account" class="button1"/>
+            
+          <span class="form-group col-md-3">
+            <input type="text" name="au_auGivenName_0" placeholder="First Name" id="id_au_auGivenName_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] value="[% auGivenName %]" class="form-control" />
+          </span>
+          <span class="form-group col-md-4">
+            <input type="text" name="au_auSurname_0" placeholder="Last Name" id="id_au_auSurname_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] value="[% auSurname %]" class="form-control" />
+          </span>
+          <span class="form-group col-md-2">
+            <input type="text" name="au_auPersonTitle_0" placeholder="Title" id="id_au_auPersonTitle_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] value="[% auPersonTitle %]" class="form-control" />
+          </span>
+          
+          <span class="col-md-1">
+            <i class="glyphicon glyphicon-minus"></i>
+          </span>
+          
+          <span class="col-md2">
+            <input name="au_auLuMarked_0" id="id_au_auLuMarked_0" value="1" type="checkbox" onclick="auSelToggle('0', this)" onchange="if (this.form.au_auLuMarked_0.checked==true) selectAuthor(this.form.au_auSurname_0, this.form.au_auGivenName_0, 0)" [% IF name.auLuMarked %]checked="checked"[% END %]/>
+            <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+          </span>
+        </div>
+        [% ELSE %]
+        [% FOREACH name IN authors %]
+          <div class="controls control-group">
+            <input type="hidden" name="au_auLuAuthorOId_[% loop.index %]" value="[% name.auLuAuthorOId %]"/>
+            <input type="hidden" name="au_auPersonNumber_[% loop.index %]" id="id_au_auPersonNumber_[% loop.index %]" value="[% name.aupersonNumber %]" />
+            <input name="au_auLuLdapId_[% loop.index %]" type="hidden" value="[% name.auLuLdapId %]" />
+            <span class="control-group">
+              <input name="au_auGivenName_[% loop.index %]" placeholder="First Name" type="text" id="id_au_auGivenName_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auGivenName %]" class="col-md-2"/>
+            </span>
+            <input name="au_auEndDate_[% loop.index %]" type="hidden" value="[% name.auEndDate %]" />
+            <span class="control-group">
+              <input name="au_auSurname_[% loop.index %]" placeholder="Last Name" type="text" id="id_au_auSurname_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auSurname %]" class="col-md-2" />
+            </span>
+            <input name="au_auPersonTitle_[% loop.index %]" placeholder="Title" type="text" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auPersonTitle %]" class="col-md-1"/>
+            <input name="au_auLuMarked_[% loop.index %]" id="id_au_auLuMarked_[% loop.index %]" value="1" type="checkbox" onclick="auSelToggle('[% loop.index %]', this)" onchange="if (this.form.au_auLuMarked_[% loop.index %].checked==true) selectAuthor(this.form.au_auSurname_[% loop.index %], this.form.au_auGivenName_[% loop.index %], [% loop.index %])" [% IF name.auLuMarked %]checked="checked"[% END %]/>
+            <input type="hidden" id="auSel[% loop.index %]" name="searchAuthors" onclick="javascript:selectAuthor(this.form.au_auSurname_[% loop.index %], this.form.au_auGivenName_[% loop.index %], [% loop.index %])" value="Link to PEVZ Account" class="button1"/>
+            [% IF name.auLuAuthorOId OR name.auLuLdapId %]
+              <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+            [% ELSE %]
+              <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>
+            [% END %]
+            [% IF loop.index == 0 %]
+            <i class="icon-minus author"></i>
+            [% ELSE %]
+            <i class="icon-minus single"></i>
+            [% END %]
+          </div>
+        [% END %]
+        [% END %]
+      </div>
+      
+      <div class="col-md-2">
+        <label for="department">
+          Department <i class="glyphicon glyphicon-plus" id="plusDepartment"></i>
+        </label>
+      </div>
+      <div class="col-md-10" id="department">
+      [% IF !departments %]
+        <span class="form-group col-md-7">
+          <input type="text" name="dp_departmentName_0" class="form-control" id="dp_autocomplete_0" value="" />
+        </span>
+        
+        <span class="form-group col-md-2">
+          <input type="button" onclick="javascript:selectOrganization('dp_departmentName_0', 'dp_departmentOId_0')" class="btn" value="Select"/>
+        </span>
+        
+        <span class="col-md-1">
+          <i class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></i>
+        </span>
+        
+        <input type="hidden" name="dp_departmentOId_0" id="dp_idautocomplete_0" value="" />
+        <script>
+          $(function() {
+            $( "#dp_autocomplete_0" ).autocomplete({
+              source: "/luur/authority_organization?func=get_dp_Json",
+              minLength: 2,
+              select: function( event, ui ) {
+                $( "#dp_autocomplete_0" ).val( ui.item.label );
+                $( "#dp_idautocomplete_0" ).val( ui.item.id );
+              }
+            });
+          });
+        </script>
+      [% ELSE %]
+      [% FOREACH dept IN departments %]
+        <div class="controls control-group">
+          <input type="text" name="dp_departmentName_[% loop.index %]" class="col-md-4" id="dp_autocomplete_[% loop.index %]" value="[% dept.departmentName %]" />
+          <input type="button" onclick="javascript:selectOrganization('dp_departmentName_[% loop.index %]', 'dp_departmentOId_[% loop.index %]')" class="btn" value="Select"/>
+          <input type="hidden" name="dp_departmentOId_[% loop.index %]" id="dp_idautocomplete_[% loop.index %]" value="[% dept.departmentOId %]" />
+          [% IF loop.index == 0 %]
+          <i class="icon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></i>
+          [% ELSE %]
+          <i class="icon-minus single"></i>
+          [% END %]
+          <script>
+            $(function() {
+              $( "#dp_autocomplete_[% loop.index %]" ).autocomplete({
+                source: "/luur/authority_organization?func=get_dp_Json",
+                minLength: 2,
+                select: function( event, ui ) {
+                  $( "#dp_autocomplete_[% loop.index %]" ).val( ui.item.label );
+                  $( "#dp_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+                }
+              });
+            });
+          </script>
+        </div>
+      [% END %]
+      [% END %]
+      </div>
+      
+      <div class="col-md-2">
+        <label for="project">
+          Project <i class="glyphicon glyphicon-plus" id="plusProject"></i>
+        </label>
+      </div>
+      <div class="col-md-10" id="project">
+      [% IF !projects %]
+        <span class="form-group col-md-7">
+          <input type="text" name="pj_projectName_0" class="form-control" id="pj_autocomplete_0" value="" />
+        </span>
+        
+        <span class="col-md-2">
+          <input type="button" onclick="javascript:selectProject('pj_projectName_0', 'pj_projectOId_0')" class="btn" value="Select"/>
+        </span>
+        
+        <span class="col-md-1">
+          <i class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></i>
+        </span>
+        
+        <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
+        <script>
+          $(function() {
+            $( "#pj_autocomplete_0" ).autocomplete({
+              source: "/luur/authority_organization?func=get_pj_Json",
+              minLength: 2,
+              select: function( event, ui ) {
+                $( "#pj_autocomplete_0" ).val( ui.item.label );
+                $( "#pj_idautocomplete_0" ).val( ui.item.id );
+              }
+            });
+          });
+        </script>
+      [% ELSE %]
+      [% FOREACH proj IN projects %]
+        <div class="controls control-group">
+          <input type="text" name="pj_projectName_[% loop.index %]" class="col-md-4" id="pj_autocomplete_[% loop.index %]" value="[% proj.projectName %]" />
+          <input type="button" onclick="javascript:selectProject('pj_projectName_[% loop.index %]', 'pj_projectOId_[% loop.index %]')" class="btn" value="Select"/>
+          <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.projectOId %]" />
+          [% IF loop.index == 0 %]
+          <i class="icon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></i>
+          [% ELSE %]
+          <i class="icon-minus single"></i>
+          [% END %]
+          <script>
+            $(function() {
+              $( "#pj_autocomplete_[% loop.index %]" ).autocomplete({
+                source: "/luur/authority_organization?func=get_pj_Json",
+                minLength: 2,
+                select: function( event, ui ) {
+                  $( "#pj_autocomplete_[% loop.index %]" ).val( ui.item.label );
+                  $( "#pj_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+                }
+              });
+            });
+          </script>
+        </div>
+      [% END %]
+      [% END %]
+      </div>
+      
+      <div class="col-md-2">
+        <label for="researchgroup">
+          Research Group <i class="glyphicon glyphicon-plus" id="plusResearchgroup"></i>
+        </label>
+      </div>
+      <div class="col-md-10" id="researchgroup">
+      [% IF !researchGroups %]
+        <span class="form-group col-md-7">
+          <input type="text" name="rg_researchGroupName_0" class="form-control" id="rg_autocomplete_0" value="" />
+        </span>
+        
+        <span class="col-md-2">
+          <input type="button" onclick="javascript:selectResearchGroup('rg_researchGroupName_0', 'rg_researchGroupOId_0')" class="btn" value="Select"/>
+        </span>
+        
+        <span class="col-md-1">
+          <i class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rg_autocomplete_0').value = '';document.getElementById('rg_idautocomplete_0').value='';"></i>
+        </span>
+        
+        <input type="hidden" name="rg_researchGroupOId_0" id="rg_idautocomplete_0" value="" />
+        <script>
+          $(function() {
+            $( "#rg_autocomplete_0" ).autocomplete({
+              source: "/luur/authority_organization?func=get_rg_Json",
+              minLength: 2,
+              select: function( event, ui ) {
+                $( "#rg_autocomplete_0" ).val( ui.item.label );
+                $( "#rg_idautocomplete_0" ).val( ui.item.id );
+              }
+            });
+          });
+        </script>
+      [% ELSE %]
+      [% FOREACH res IN researchGroups %]
+        <div class="controls control-group">
+          <input type="text" name="rg_researchGroupName_[% loop.index %]" class="col-md-4" id="rg_autocomplete_[% loop.index %]" value="[% res.researchGroupName %]" />
+          <input type="button" onclick="javascript:selectResearchGroup('rg_researchGroupName_[% loop.index %]', 'rg_researchGroupOId_[% loop.index %]')" class="btn" value="Select"/>
+          <input type="hidden" name="rg_researchGroupOId_[% loop.index %]" id="rg_idautocomplete_[% loop.index %]" value="[% res.researchGroupOId %]" />
+          [% IF loop.index == 0 %]
+          <i class="icon-minus" onclick="javascript:document.getElementById('rg_autocomplete_0').value = '';document.getElementById('rg_idautocomplete_0').value='';"></i>
+          [% ELSE %]
+          <i class="icon-minus single"></i>
+          [% END %]
+          <script>
+            $(function() {
+              $( "#rg_autocomplete_[% loop.index %]" ).autocomplete({
+                source: "/luur/authority_organization?func=get_rg_Json",
+                minLength: 2,
+                select: function( event, ui ) {
+                  $( "#rg_autocomplete_[% loop.index %]" ).val( ui.item.label );
+                  $( "#rg_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+                }
+              });
+            });
+          </script>
+        </div>
+      [% END %]
+      [% END %]
+      </div>
+  
+      <div class="col-md-2">
+        <label for="id_publisher">
+          Publisher<span class="starMandatory">*</span>
+        </label>
+      </div>
+      <div class="col-md-10">
+        <span class="form-group col-md-9">
+          <input type="text" name="publisher" id="id_publisher" value="[% publisher OR 'Bielefeld University' %]" class="form-control required">
+        </span>
+      </div>
+
+      <div class="col-md-2">
+        <label for="id_publishingYear">
+          Year<span class="starMandatory">*</span>
+        </label>
+      </div>
+      <div class="col-md-10">
+        <span class="form-group col-md-3">
+          <input type="text" name="publishingYear" id="id_publishingYear" value="[% publishingYear %]" maxlength="4" placeholder="YYYY" class="form-control required">
+        </span>
+      </div>
+      
+      <div class="col-md-12 buttonrow">
+        <span class="form-group col-md-2">
+          <a class="btn btn-small back-button" style="display:none;"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+        </span>
+        <span class="form-group col-md-2">
+          <button type="button" class="btn btn-small cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+        </span>
+        [% IF submissionStatus != "public" %]
+        <span class="form-group col-md-2">
+          <button type="submit" class="btn btn-small" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+        </span>
+        [% END %]
+        <span class="form-group col-md-2">
+          <a class="btn btn-small next-button" id="oneToTwo" href="#fileUpload">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+        </span>
+      </div>
+      
+      <input type="hidden" name="docType" value="researchData" />
+    </div><!-- tab-pane -->
+    
+    
+  
+    <!-- STEP 2 -->
+    <div class="tab-pane" id="fileUpload">
+    
+      [% IF externalFiles == "1" OR doi %]
+      <div class="col-md-8">
+        <label class="checkbox">
+          <input type="checkbox" value="1" name="externalFiles"[% IF externalFiles == "1" %] checked="checked"[% END %] />
+          Files available at <strong><a href="http://doi.org/[% doi %]" target="_blank">[% doi %]</a></strong>
+        </label>
+      </div>
+      
+      <div class="col-md-8">
+        <hr />
+      </div>
+      [% END %]
+      
+      <div class="col-md-12">
+        <strong>Upload files</strong><br /><br />
+        
+        <script type="text/javascript">
+          jQuery(document).ready(function() {
+            var myDropzone = new Dropzone("div#uploadFiles", {
+              url: "http://pub-dev.ub.uni-bielefeld.de/luur/record_material",
+              params: {func : "uploadDocumentUpdate", recordOId: "[% recordOId %]", itype: "file", accessLevel: "openAccess", cancel: "", accept: 1, finalSubmit: "Accept and Submit"},
+              createImageThumbnails: false,
+            });
+            myDropzone.on("success", function(file,response){
+              var resp = response;
+              var regexp = /<body onload=\"javascript:updateOpener\(\)\">(.*?)<span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span>/g;
+              var match = regexp.exec(resp);
+              if(match){
+                var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-2 text-muted\">Upload Date:</div><div class=\"col-md-1 text-muted\">User:</div></div>");
+                file.previewElement.appendChild(tagsRow);
+                
+                var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\"><a href=\"[% h.shost %]/download/[% recordOId %]/" + match[1] + "\" target=\"_blank\">" + file.name + "</a></div></div>");
+                file.previewElement.appendChild(fileName);
+                
+                var accessString = Dropzone.createElement("<div class=\"col-md-2\"><span>" + match[4] + "</span></div>");
+                file.previewElement.childNodes[1].appendChild(accessString);
+                
+                var dateString = Dropzone.createElement("<div class=\"col-md-2\"><span>" + match[2] + "</span></div>");
+                file.previewElement.childNodes[1].appendChild(dateString);
+                
+                var userString = Dropzone.createElement("<div class=\"col-md-1\"><span>" + match[3] + "</span></div>");
+                file.previewElement.childNodes[1].appendChild(userString);
+
+                var removeLink = Dropzone.createElement("<div class=\"corner_up\"><a href=\"#\"><i class=\"icon-remove\"></i></a></div>");
+                removeLink.addEventListener("click", function(e) {
+                  window.deleteUploadedDocument(match[1], this);
+                });
+                file.previewElement.appendChild(removeLink);
+                
+                var editLink = Dropzone.createElement("<div class=\"corner_down\"><a href=\"#\"><i class=\"icon icon-pencil\"></i></a></div>");
+                editLink.addEventListener("click", function(e) {
+                  window.editFile(match[1],[% recordOId %],file.name,match[4],"","");
+                });
+                file.previewElement.appendChild(editLink);
+                
+                var licenses = document.getElementById('licenses');
+                var liClass = licenses.className;
+                var regexp = /collapse in/;
+                var limatch = regexp.exec(liClass);
+                if(!limatch){
+                  licenses.setAttribute("class", "collapse in");
+                }
+                
+                file.previewElement.setAttribute("id", match[1]);
+              }
+              else {
+                var prevClass = file.previewElement;
+                var regex = /(.*?)alert-success(.*)/g;
+                var match = regex.exec(prevClass.className);
+                match.shift();
+                prevClass.className = "";
+                prevClass.className = match.join("");
+                prevClass.className += " alert-error";
+                
+                var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-5\"><b>File not uploaded!</b></div></div>");
+                file.previewElement.appendChild(tagsRow);
+                
+                var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\">" + file.name + "</div><div class=\"col-md-5\">" + resp + "</div></div>");
+                file.previewElement.appendChild(fileName);
+                
+                var removeLink = Dropzone.createElement("<div class=\"corner_up\"><a href=\"#\"><i class=\"icon-remove\"></i></a></div>");
+                removeLink.addEventListener("click", function(e) {
+                  this.parentNode.parentNode.removeChild(this.parentNode);
+                });
+                file.previewElement.appendChild(removeLink);
+              }
+            });
+            myDropzone.on("error", function(file,response){
+              var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-5\"><b>File not uploaded!</b></div></div>");
+              file.previewElement.appendChild(tagsRow);
+                
+              var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\">" + file.name + "</div><div class=\"col-md-5\">" + response + "</div></div>");
+              file.previewElement.appendChild(fileName);
+              
+              var removeLink = Dropzone.createElement("<div class=\"corner_up\"><a href=\"#\"><i class=\"icon-remove\"></i></a></div>");
+              removeLink.addEventListener("click", function(e) {
+                this.parentNode.parentNode.removeChild(this.parentNode);
+              });
+              file.previewElement.appendChild(removeLink);
+            });
+          });
+        </script>
+        
+        <div class="dropzone alert alert-warning col-md-10" id="uploadFiles">
+      
+          <div class="fallback">
+            <div class="col-md-7">&nbsp;</div>
+            <div class="col-md-7">
+              <a href="#" class="btn" onclick="javascript:editFile('','[% recordOId %]','','openAccess','','','','')" title="Add new file">Add a new file</a>
+            </div>
+            <div class="col-md-7">&nbsp;</div>
+          </div>
+          
+          [% IF file %]
+          [% FOREACH fi IN file %]
+          <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.fileOId %]">
+            <div class="row">
+              <div class="col-md-3 padded text-muted">Filename:</div>
+              <div class="col-md-3 text-muted">Access Level:</div>
+              <div class="col-md-3 text-muted">Upload Date:</div>
+              <div class="col-md-2 text-muted">User:</div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 padded">
+                <a href="[% h.shost %]/download/[% recordOId %]/[% fi.fileOId %]" target="_blank" title="[% fi.fileName %]">[% fi.fileName %]</a>
+              </div>
+              <div class="col-md-3">
+                [% SWITCH fi.accessLevel %]
+                [% CASE "admin" %]
+                Author/Admin/Reviewer
+                
+                [% CASE "lu" %]
+                UniBi Only
+                
+                [% CASE "openAccess" %]
+                Open Access
+                
+                [% END %]
+              </div>
+              <div class="col-md-3">
+                [% fi.dateLastUploaded %]
+              </div>
+              <div class="col-md-2">
+                [% fi.isUploadedBy.login %]
+              </div>
+            </div>
+            <div class="corner_up" onclick="javascript:deleteUploadedDocument([% fi.fileOId %], this);"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></div>
+            <div class="corner_down" onclick="javascript:editFile('[% fi.fileOId %]','[% recordOId %]','[% fi.fileName %]','[% fi.accessLevel %]','[% fi.accessEmbargo %]','[% fi.openAccessLevel %]','[% fi.fileTitle %]','[% fi.description | replace("'","\\'") | replace('"','&quot;') %]');"><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
+          </div>
+          [% END %]
+          [% END %]
+        </div>
+      </div>
+      
+      <div class="col-md-12">&nbsp;</div>
+      
+      <div class="col-md-10">
+        <a data-target="#licenses" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> <strong>Licenses</strong></a><br />
+        
+        <div id="licenses" class="collapse[% IF file %] in[% END %]">
+        
+          <strong>Data Re-Use License</strong>[% IF file %]<span class="starMandatory">*</span>[% END %]
+          <div class="alert alert-info">
+          Choose a license under which your uploaded data will be available:<br />
+          <select name="dataReuseLicense" id="id_dataReuseLicense" class="form-control">
+            <option value="">Select a license</option>
+            <option value="PDDL"[% IF dataReuseLicense == "PDDL" %] selected="selected"[% END %]>No restrictions - PDDL</option>
+            <option value="ODC-By"[% IF dataReuseLicense == "ODC-By" %] selected="selected"[% END %]>Attribution required - ODC-By</option>
+            <option value="ODbL"[% IF dataReuseLicense == "ODbL" %] selected="selected"[% END %]>Share alike - ODbL</option>
+          </select><br />
+        
+          <a data-target="#PDDL" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> The Open Data Commons Public Domain Dedication and License (PDDL) v1.0</a><br />
+          <div id="PDDL" class="collapse reuse-license">
+            Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data<br />
+            <a href="http://opendatacommons.org/licenses/pddl/" target="_blank">http://opendatacommons.org/licenses/pddl/</a>
+          </div>
+        
+          <a data-target="#ODCBy" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> The Open Data Commons Attribution License (ODC-By) v1.0</a><br />
+          <div id="ODCBy" class="collapse reuse-license">
+            Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data<br />
+            <a href="http://opendatacommons.org/licenses/by/" target="_blank">http://opendatacommons.org/licenses/by/</a>
+          </div>
+        
+          <a data-target="#ODbL" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> The Open Database License (ODbL) v1.0</a>
+          <div id="ODbL" class="collapse reuse-license">
+            Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br />
+            <a href="http://opendatacommons.org/licenses/odbl/" target="_blank">http://opendatacommons.org/licenses/odbl/</a>
+          </div>
+          </div>
+          
+          <br />
+          
+          <strong>Open Data Release - Declaration</strong>[% IF file %]<span class="starMandatory">*</span>[% END %]<br />
+          
+          <div class="alert alert-info" id="odralert">
+            I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br /><br />
+            Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br /><br />
+            I am aware, that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br />
+            I declare, that I do not violate these rules.<br />
+            I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.
+          </div>
+          <label class="checkbox">
+            <input type="checkbox" value="1" id="id_openDataRelease" name="openDataRelease"[% IF openDataRelease == "1" %] checked="checked"[% END %] /> <strong>I have read and agree with the information above about releasing data under the selected license.</strong>
+          </label>
+          <br />
+            
+            If you have any questions, please contact:<br />
+            <strong>
+            <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713" target="_blank">Dr. Johanna Vompras</a><br />
+            0521 106-2694<br />
+            <a href="mailto:data@uni-bielefeld.de">data@uni-bielefeld.de</a><br />
+            </strong>
+        </div>
+      </div>
+      
+      <div class="col-md-12 buttonrow">
+        <span class="form-group col-md-2">
+          <a class="btn btn-small back-button" id="twoToOne" data-toggle="tab" href="#basicFields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+        </span>
+        <span class="form-group col-md-2">
+          <button type="button" class="btn btn-small cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+        </span>
+        [% IF submissionStatus != "public" %]
+        <span class="form-group col-md-2">
+          <button type="submit" class="btn btn-small" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+        </span>
+        [% END %]
+        <span class="form-group col-md-2">
+          <a class="btn btn-small next-button" id="twoToThree" href="#supplementaryFields">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+        </span>
+      </div>
+    </div>
+    <!-- tab-pane -->
+    
+    <!-- STEP 3 -->
+    <div class="tab-pane" id="supplementaryFields">
+      <div class="col-md-2">
+        Abstract
+      </div>
+      <div class="col-md-6" id="abstract">
+        <div class="controls controls-row">
+        [% IF !abstract %]
+          <textarea rows="3" name="ab_abAbstract_0" id="id_ab_abAbstract_0" class="col-md-5" onkeyup="checkForm4Ddc();"></textarea>
+          <select name="ab_abLanguageOId_0" id="id_ab_abLanguageOId_0">
+            [% FOREACH lang IN xlanguages %]
+            <option value="[% lang.langOId %]" [% IF lang.abLanguageOId == lang.langOId %]selected="selected"[% END %]>[% lang.langName %]</option>
+            [% END %]
+            </select>
+        [% ELSE %]
+          [% FOREACH abs IN abstract %]
+            <textarea rows="3" name="ab_abAbstract_[% loop.index %]" id="id_ab_abAbstract_[% loop.index %]" class="col-md-5" onkeyup="checkForm4Ddc();">[% abs.text %]</textarea>
+            <select name="ab_abLanguageOId_[% loop.index %]" id="id_ab_abLanguageOId_[% loop.index %]">
+            [% FOREACH lang IN xlanguages %]
+            <option value="[% lang.langOId %]" [% IF lang.abLanguageOId == lang.langOId %]selected="selected"[% END %]>[% lang.langName %]</option>
+            [% END %]
+            </select>
+          [% END %]
+        [% END %]
+        </div>
+      </div>
+      
+      <div class="col-md-8">&nbsp;</div>
+      
+      <div class="col-md-2">
+        DDC
+      </div>
+      <div class="col-md-6">
+        <select name="dw_dwDdcOId_0" class="col-md-5" id="dw_dwDdcOId_0" onchange="changeSelectColor()">
+          <option value=""[% IF !hasDdc %]selected="selected"[% END %]>--- Select DDC ---</option>
+          [% FOREACH ddcs IN xddcs %]
+            [% IF ddcs.ddcGroup == 1 %]
+            <optgroup label="[% ddcs.ddcLabel %]">
+            [% ELSE %]
+            <option id="ddc[% ddcs.ddcNumber %]" value="[% ddcs.ddcOId %]"[% IF ddcs.ddcOId == hasDdc.oId %] selected="selected"[% END %]>[% ddcs.ddcLabel %]</option>
+            [% END %]
+            [% IF ddcs.ddcGroup == '1' %]
+            </optgroup>
+            [% END %]
+          [% END %]
+        </select>
+        <label class="input">
+          <input type="button" class="btn" name="suggestDdc" id="suggestDdc" value="Suggest DDC" disabled="disabled" onclick="ajaxRequest();">
+          <span class="text-muted">(available for English and German abstracts with 500 words or more)</span>
+        </label>
+      </div>
+      
+      <div class="col-md-2">
+        Keywords
+      </div>
+      <div class="col-md-6" id="keywords">
+        <div class="controls controls-row">
+          <textarea rows="3" name="keyword" class="col-md-5">[% keyword %]</textarea>
+        </div>
+      </div>
+      
+      <div class="col-md-8">
+        <a class="btn btn-small back-button" id="threeToTwo" data-toggle="tab" href="#stepTwo"><i class="icon-chevron-left"></i> Back</a>
+        <button type="button" class="btn btn-small cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+        [% IF submissionStatus != "public" %]
+        <button type="submit" class="btn btn-small" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+        [% END %]
+        <a class="btn btn-small next-button" id="threeToFour" data-toggle="tab" href="#stepFour">Next <i class="icon-chevron-right"></i></a>
+      </div>
+    </div>
+    <!-- tab-pane -->
+    
+    <!-- STEP 4 -->
+    <div class="tab-pane" id="relatedMaterial">
+      <div class="col-md-8">
+        <a href="#connectPubl" role="button" class="btn" data-toggle="modal">Link Publications</a>
+      </div>
+      
+      <div class="col-md-8">&nbsp;</div>
+      
+      <div class="col-md-8" id="relatesTo">
+      <span[% IF !relatesTo %] style="display:none"[% END %]><strong>Linked Publications:</strong></span>
+      [% IF relatesTo %]
+        [% FOREACH rel IN relatesTo %]
+          [% IF rel.isOfMaterialRelationType.oId == "2632526" %]
+          <div class="row" id="[% rel.relatesFrom.relatedMaterialOId %]">
+            <div class="col-md-5">
+              <i class="icon-file"></i> <a href="/publication/[% rel.relatesFrom.oId %]" target="_blank">[% rel.relatesFrom.mainTitle %]</a><br />
+            </div>
+            <div class="col-md-1">
+              [% rel.relatesFrom.oId %]
+            </div>
+            <div class="col-md-1">
+              <a href="javascript:deleteRelMat([% rel.relatesFrom.relatedMaterialOId %],[% rel.relatesFrom.oId %])">Remove</a>
+            </div>
+          </div>
+          [% END %]
+        [% END %]
+      [% END %]
+      </div>
+      
+      <div class="col-md-8"><hr /></div>      
+      
+      
+      <div class="col-md-8">
+        <a class="btn btn-small back-button" id="fourToThree" data-toggle="tab" href="#stepThree"><i class="icon-chevron-left"></i> Back</a>
+        <button type="button" class="btn btn-small cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+        [% IF submissionStatus != "public" %] 
+        <button type="submit" class="btn btn-small" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+        [% END %]
+        [% IF submissionStatus == "public" AND userRole == "superAdmin" %]
+        <button type="submit" class="btn btn-small" name="withdrawSubmit" value="Return">Return <img src="/images/edit-withdraw.png"/></button>
+        [% END %]
+        <button type="submit" name="finalSubmit" value="rdSave" class="btn btn-small">Save <img src="/images/edit-save.png"/></button>
+        [% IF (submissionStatus != "public" AND submissionStatus != "submitted") %]
+          <button type="submit" name="finalSubmit" value="rdPublish" class="btn btn-small">Publish <img src="/images/edit-submit.png"/></button>
+        [% END %]
+      </div>
+    </div>
+    <!-- tab-pane -->
+  
+  </div><!-- tab-content -->
+  </form>
+  
+  [% INCLUDE backend/fields/rd_fileupload.tt %]
+  
+</div>
+</div>
+
+[% INCLUDE backend/fields/rd_connectPubl.tt %]
+
+<script>
+
+if(navigator.userAgent.indexOf('MSIE') != -1){
+  $('[placeholder]').focus(function() {
+    var input = $(this);
+    if (input.val() == input.attr('placeholder')) {
+      input.val('');
+      input.removeClass('placeholder');
+    }
+  }).blur(function() {
+    var input = $(this);
+    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+      input.addClass('placeholder');
+      input.val(input.attr('placeholder'));
+    }
+  }).blur();
+  $('[placeholder]').parents('form').submit(function() {
+    $(this).find('[placeholder]').each(function() {
+      var input = $(this);
+      if (input.val() == input.attr('placeholder')) {
+        input.val('');
+      }
+    })
+  });
+}
+
+$('#oneToTwo').click(function(){
+  var check = 1;
+  var oneauthor = 0;
+  var numauthors = $('#creator').children('div.control-group').length;
+  $('#creator').children('div.control-group').each(function(){
+    if(!$(this).children('span').eq(0).children().eq(0).val()){
+      $(this).children('span').eq(0).addClass("has-error");
+    }
+    if(!$(this).children('span').eq(1).children().eq(0).val()){
+      $(this).children('span').eq(1).addClass("has-error");
+    }
+    if($(this).children('span').eq(0).children().eq(0).val() && $(this).children('span').eq(1).children().eq(0).val()){
+      oneauthor = 1;
+    }
+  });
+  if(!oneauthor){
+    check = 0;
+  }
+  
+  $('.required').each(function(){
+    if(!$(this).val()){
+      $(this).parents('span.form-group').addClass('has-error');
+      check = 0;
+    }
+    else if($(this).val() && ($(this).val() == "Publication Title" || $(this).val() == "First Name" || $(this).val() == "Last Name" || $(this).val() == "YYYY")){
+      $(this).parents('span.form-group').addClass('has-error');
+      check = 0;
+    }
+    else{
+      $(this).parents('span.form-group').removeClass('has-error');
+    }
+  });
+  if(check){
+    $('#creator .has-error').each(function(){
+      $(this).removeClass('has-error');
+    });
+    $('#basicFields').removeClass('active');
+    $('#fileUpload').addClass('active');
+    $('button[href=#fileUpload]').attr('data-toggle','tab');
+    $('#li_basicFields').removeClass('active');
+    $('#li_fileUpload').css('visibility','visible');
+    $('#li_fileUpload').addClass('active');
+  }
+});
+
+$('#id_openDataRelease').click(function(){
+  if(!$('#id_openDataRelease').is(':checked')){
+    if ($('.dropzone').first().children().length > 1){
+      $('#liStepThree').css('visibility','hidden');
+      $('#liStepFour').css('visibility','hidden');
+      $('#odralert').removeClass('alert-info');
+      $('#odralert').addClass('alert-error');
+    }
+  }
+  else {
+    $('#odralert').removeClass('alert-error');
+    $('#odralert').addClass('alert-info');
+  }
+});
+
+$('#id_dataReuseLicense').change(function(){
+  if($('#id_dataReuseLicense').val() == ''){
+    if ($('.dropzone').first().children().length > 1){
+      $('#liStepThree').css('visibility','hidden');
+      $('#liStepFour').css('visibility','hidden');
+      $('#id_dataReuseLicense').parent().removeClass('alert-info');
+      $('#id_dataReuseLicense').parent().addClass('alert-error');
+    }
+  }
+  else {
+    $('#id_dataReuseLicense').parent().removeClass('alert-error');
+    $('#id_dataReuseLicense').parent().addClass('alert-info');
+  }
+});
+
+$('#twoToThree').click(function(e){
+  if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_openDataRelease').is(':checked') || $('#id_dataReuseLicense').val() == '')){
+    if(!$('#id_openDataRelease').is(':checked')) {
+      $('#odralert').removeClass('alert-info');
+      $('#odralert').addClass('alert-error');
+      alert('You need to accept the Open Data Release Statement because you have attached files to this record.');
+      document.location.href = "#stepTwo";
+      e.stopImmediatePropagation();
+    }
+    if($('#id_dataReuseLicense').val() == ''){
+      $('#id_dataReuseLicense').parent().removeClass('alert-info');
+      $('#id_dataReuseLicense').parent().addClass('alert-error');
+      alert('You need to choose a Data Re-Use License because you have attached files to this record.');
+      e.stopImmediatePropagation();
+    }
+  }
+  else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && (!$('#id_openDataRelease').is(':checked') || $('#id_dataReuseLicense').val() == '')){
+    if(!$('#id_openDataRelease').is(':checked')) {
+      $('#odralert').removeClass('alert-info');
+      $('#odralert').addClass('alert-error');
+      alert('You need to accept the Open Data Release Statement because you have attached files to this record.');
+      document.location.href = "#stepTwo";
+      e.stopImmediatePropagation();
+    }
+    if($('#id_dataReuseLicense').val() == ''){
+      $('#id_dataReuseLicense').parent().removeClass('alert-info');
+      $('#id_dataReuseLicense').parent().addClass('alert-error');
+      alert('You need to choose a Data Re-Use License because you have attached files to this record.');
+      e.stopImmediatePropagation();
+    }
+  }
+  else {
+    if($('.dropzone').first().children().length == 1){
+      if($('#id_openDataRelease').is(':checked')){
+        $('#id_openDataRelease').prop("checked", false);
+      }
+      if($('#id_dataReuseLicense').val() != ''){
+        $('#id_dataReuseLicense').val('');
+      }
+    }
+
+    $('#stepTwo').removeClass('active');
+    $('#stepThree').addClass('active');
+    $('a[href=#stepThree]').attr('data-toggle','tab');
+    $('#liStepTwo').removeClass('active');
+    $('#liStepThree').css('visibility','visible');
+    $('#liStepThree').addClass('active');
+  }
+});
+
+$('#threeToFour').click(function(){
+  var check = 1;
+  $('.required').each(function(){
+    if(!$(this).val()){
+      $(this).parents('div.control-group').addClass('error');
+      check = 0;
+    }
+  });
+  if(check){
+    var urlstr = '';
+    $('input').each(function(){
+      urlstr = urlstr + '<span id="inputSpan"><div class="col-md-2">' + $(this).attr('name') + '</div><div class="col-md-5">';
+      if($(this).val()){
+        urlstr = urlstr + $(this).val();
+      }
+      else {
+        urlstr = urlstr + '&nbsp;';
+      }
+      urlstr = urlstr + '</div>'; 
+    });
+    $('select').each(function(){
+      urlstr = urlstr + '<div class="col-md-2">' + $(this).attr('name') + '</div><div class="col-md-5">';
+      if($(this).val()){
+        urlstr = urlstr + $(this).val();
+      }
+      else {
+        urlstr = urlstr + '&nbsp;';
+      }
+      urlstr = urlstr + '</div></span>';
+    });
+
+    $('#liStepFour').css('visibility','visible');
+    $('#liStepThree').removeClass('active');
+    $('#liStepFour').addClass('active');
+    $('a[href=#stepFour]').attr('data-toggle','tab');
+    $('#inputSpan').remove();
+    $('#checkInput').append(urlstr);
+  }
+});
+
+$('#fourToThree').click(function(){
+  $('#liStepFour').removeClass('active');
+  $('#liStepThree').addClass('active');
+});
+
+$('#threeToTwo').click(function(){
+  $('#liStepThree').removeClass('active');
+  $('#liStepTwo').addClass('active');
+});
+
+$('#twoToOne').click(function(){
+  $('#liStepTwo').removeClass('active');
+  $('#liStepOne').addClass('active');
+});
+
+// minus
+$(document).on('click', '.group', function(){
+  var index = $(this).parent().parent().index();
+  if(parseInt(index) != 0){
+    $(this).parent().parent().remove();
+  }
+});
+$(document).on('click', '.single', function(){
+  var index = $(this).parent().index();
+  if(parseInt(index) != 0){
+    $(this).parent().remove();
+  }
+});
+$(document).on('click', '.author', function(){
+  var container = $(this).parent();
+  container.children('input').each(function(){
+    if($(this).value != "Link to PEVZ Account"){
+      if($(this).attr("readonly")){
+        $(this).removeAttr("readonly");
+      }
+      if($(this).attr("checked")){
+        $(this).removeAttr("checked");
+      }
+      this.value = "";
+    }
+  });
+  container.children('span').children('input').each(function(){
+    if($(this).attr("readonly")){
+      $(this).removeAttr("readonly");
+    }
+    if($(this).attr("checked")){
+      $(this).removeAttr("checked");
+    }
+    this.value = "";
+  });
+  container.children('img').each(function(){
+    this.title = "";
+    this.src = "/images/biNotAuthorized.png";
+  });  
+});
+
+
+function editFile(fileOId, recordOId, fileName, accessLevel, accessEmbargo, openAccessDate, fileTitle, fileDescription){
+  var fileid = self.document.getElementById('id_uploadedFileOId');
+  fileid.value = fileOId;
+  var recid = self.document.getElementById('id_recordOId');
+  recid.value = recordOId;
+  var name = self.document.getElementById('id_fileName');
+  name.value = fileName;
+  var title = self.document.getElementById('id_fileTitle');
+  if(fileTitle){title.value = fileTitle;}
+  var description = self.document.getElementById('id_fileDescription');
+  if(fileDescription){description.value = fileDescription;}
+  var access;
+  if(accessLevel == "Open Access" || accessLevel == "openAccess"){
+    access = self.document.getElementById('id_accessLevel_openAccess');
+    self.document.getElementById('id_accessEmbargo').disabled="disabled";
+  }
+  else if(accessLevel == "UniBi Only" || accessLevel == "lu"){
+    access = self.document.getElementById('id_accessLevel_lu');
+    self.document.getElementById('id_accessEmbargo').disabled="";
+  }
+  else if(accessLevel == "Author/Admin/Reviewer" || accessLevel == "admin"){
+    access = self.document.getElementById('id_accessLevel_admin');
+    self.document.getElementById('id_accessEmbargo').disabled="";
+  }
+  access.checked = "checked";
+  var embargo = self.document.getElementById('id_accessEmbargo');
+  embargo.value = accessEmbargo;
+  var accdate = self.document.getElementById('id_openAccessDate');
+  accdate.value = openAccessDate;
+  
+  var fileNameTag = self.document.getElementById('fileNameTag');
+  fileNameTag.style.display = "block";
+
+  $('#fileUpload').modal('show'); 
+  
+}
+
+function deleteRelMat(materialOId, otherOId) {
+   if (confirm("Are you sure you want to delete this related material/relation")) {
+     $('#' + materialOId).children('.col-md-1').last().remove();
+     $('#' + materialOId).append('<div class="col-md-1"><img src="/images/preloader_circle.gif" /></div>');
+     var xmlhttp;
+     if (window.XMLHttpRequest) {
+       // code for IE7+, Firefox, Chrome, Opera, Safari
+       xmlhttp = new XMLHttpRequest();
+     } else {
+       // code for IE6, IE5
+       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+     }
+     
+     xmlhttp.onreadystatechange = function() {
+       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+         $('#' + materialOId).remove();
+       }
+     }
+     
+     var url = "/luur/record_material?func=deleteRelatedMaterial&recordOId=[% recordOId %]&otherObjectOId=" + otherOId + "&deleteRelatedMaterialOId=" + materialOId;
+     xmlhttp.open("GET", url, true);
+     xmlhttp.send();
+
+   }
+}
+
+$('#plusCreator').click(function(){
+  var items = $('#creator div.control-group');
+  var index = items.index($('#creator div.control-group:last')) + 1;
+  $('#creator').append('[% INCLUDE backend/fields/rd_creator.tt %]');
+});
+
+$('#plusDepartment').click(function(){
+  var items = $('#department div.control-group');
+  var index = items.index($('#department div.control-group:last')) + 1;
+  $('#department').append('[% INCLUDE backend/fields/rd_department.tt %]');
+  $('#department').bind("click", function(){
+    $( "#dp_autocomplete_" + index ).autocomplete({
+      source: "/luur/authority_organization?func=get_dp_Json",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#dp_autocomplete_" + index ).val( ui.item.label );
+        $( "#dp_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+
+$('#plusProject').click(function(){
+  var items = $('#project div.control-group');
+  var index = items.index($('#project div.control-group:last')) + 1;
+  $('#project').append('[% INCLUDE backend/fields/rd_project.tt %]');
+  $('#project').bind("click", function(){
+    $( "#pj_autocomplete_" + index ).autocomplete({
+      source: "/luur/authority_organization?func=get_pj_Json",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#pj_autocomplete_" + index ).val( ui.item.label );
+        $( "#pj_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+
+$('#plusResearchgroup').click(function(){
+  var items = $('#researchgroup div.control-group');
+  var index = items.index($('#researchgroup div.control-group:last')) + 1;
+  $('#researchgroup').append('[% INCLUDE backend/fields/rd_researchgroup.tt %]');
+  $('#researchgroup').bind("click", function(){
+    $( "#rg_autocomplete_" + index ).autocomplete({
+      source: "/luur/authority_organization?func=get_rg_Json",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#rg_autocomplete_" + index ).val( ui.item.label );
+        $( "#rg_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+
+$('button.cancel-button').click(function() {
+  window.location.href = '/luur';
+});
+<!--
+<!-- INCLUDE jsUpload.tmpl -->
+// -->
+</script>
+
+<!-- END /tt_templates/backend/edit_researchData -->
+
+[% INCLUDE footer.tt %]
