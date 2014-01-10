@@ -84,14 +84,14 @@ sub display_styles {
 }
 
 sub host {
-	my $serverIP = request->address();
-	my $host = config->{env}->{$serverIP}->{host};
+	#my $serverIP = request->address();
+	my $host = config->{host};
 	return $host;
 }
 
 sub shost {
-	my $serverIP = request->address();
-	my $host = config->{env}->{$serverIP}->{host};
+	#my $serverIP = request->address();
+	my $host = config->{host};
 	$host =~ s/http/https/g;
 	return $host;
 }
