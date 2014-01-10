@@ -1,0 +1,135 @@
+<div id="fileUpload" class="modal hide" style="z-index:1041;">
+  
+  <form enctype="multipart/form-data" name="upLoad" id="upLoad">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Edit Uploaded File</h3>
+    </div>
+  
+    <div class="modal-body">
+      <input type="hidden" name="func" value="uploadDocumentUpdate" />
+      <input type="hidden" name="uploadedFileOId" id="id_uploadedFileOId" value="[% uploadedFileOId %]" />
+      <input type="hidden" name="recordOId" id="id_recordOId" value="[% recordOId %]" />
+      <input type="hidden" name="cancel" value="" />
+      
+      <strong>File</strong>
+      <div class="control-group">
+        <label class="text" id="fileNameTag" style="display:none">
+          Current file:
+          <input type="text" name="fileName" id="id_fileName" value="[% fileName %]" readonly="readonly" class="span5"/>
+        </label>
+        <input type="file" name="file" id="id_file" size="40" />
+        <input type="hidden" name="itype" value="file" />
+      </div>
+
+      <div class="control-group">
+        <strong>Access Level</strong><br />
+        
+        <script type="text/javascript">
+        <!--
+        function oamode(f, flag) {
+          if (flag) {
+            f.accessEmbargo.checked=false;
+            f.accessEmbargo.disabled=true;
+            f.openAccessDate.disabled=true;
+          } else {
+            f.accessEmbargo.disabled=false;
+          }
+        }
+        
+        function toggleTextBox(f) {
+          if (f.accessEmbargo.checked) {
+            f.openAccessDate.disabled=false;
+          } else {
+            f.openAccessDate.disabled=true;
+          }
+        }
+        //-->
+        </script>
+        
+        [% IF !openAccessCheck AND !luCheck AND !adminCheck %]
+        [% openAccessCheck = 'checked="checked"' %]
+        [% END %]
+        <label class="radio">
+          <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="openAccess" [% openAccessCheck %] onclick="oamode(this.form, true)"/> Open access (the file is freely available, effective immediately)
+        </label>
+        <label class="radio">
+          <input type="radio" name="accessLevel" id="id_accessLevel_lu" value="lu" onclick="oamode(this.form,false)" [% luCheck %] /> UniBi
+        </label>
+        <label class="radio">
+          <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false)" [% adminCheck %] /> Only Author/Reviewer/Administrator
+        </label>
+        <label class="checkbox control-label">
+          <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" onclick="toggleTextBox(this.form)" [% IF openAccessCheck %]disabled="disabled"[% ELSE %][% embargoCheck %][% END %] />Switch to open access on:<br />
+        </label>
+        <input type="text" size="10" name="openAccessDate" id="id_openAccessDate" placeholder="YYYY-MM-DD" value="[% openAccessDate %]" [% IF openAccessCheck OR !embargoCheck %]disabled="disabled"[% END %]>
+        <input type="hidden" name="accept" value="1" />
+        
+        <div class="control-group">
+        <strong>Title</strong><br />
+        <input type="text" name="fileTitle" id="id_fileTitle" value="[% fileTitle %]" class="span5" />
+      </div>
+      
+      <div class="control-group">
+        <strong>Description</strong><br />
+        <textarea name="description" id="id_fileDescription" class="span5" rows="6">[% description %]</textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <input type="submit" class="btn" value="Submit" name="finalSubmit" id="fileSubmit" />
+      <input type=button class="btn" data-dismiss="modal" aria-hidden="true" value="Cancel" />
+    </div>
+  </form>
+</div>
+
+<script>
+
+if(navigator.userAgent.indexOf('MSIE') == -1){
+  $('#fileSubmit').click( function() {
+    $('#fileSubmit').removeAttr('type');
+    $('#fileSubmit').addClass('span1');
+    $.ajax({
+        url: '[% luurBase %]/record_material',
+        type: 'post',
+        dataType: 'html',
+        data: $('#upLoad').serialize(),
+        success: function(response) {
+          var regexp = /<body onload=\"javascript:updateOpener\(\)\">(.*?)<span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span>/g;
+          var match = regexp.exec(response);
+          
+          $('#' + match[1]).remove();
+          $('#uploadFiles').append('<div id="' + match[1] + '" class="span7 alert alert-success dz-preview dz-file-preview" style="position:relative;min-height:35px;"><div class="row"><div class="span2 padded muted">Filename:</div><div class="span2 muted">Access Level:</div><div class="span2 muted">Upload Date:</div><div class="span1 muted">User:</div></div></div>');
+          $('#' + match[1]).append('<div class="row"><div class="span2 padded"><a href="[% h.shost %]/download/[% recordOId %]/' + match[1] + '" title="' + match[7] + '">' + match[7] + '</a></div><div class="span2"><span>' + match[4] + '</span></div><div class="span2">' + match[2] + '</div><div class="span1">' + match[3] + '</div></div>');
+          $('#' + match[1]).append('<div class="corner_up" onclick="deleteUploadedDocument(' + match[1] + ', this);"><a href="#"><i class="icon-remove"></i></a></div>');
+          var description = match[9].replace("'","\\'").replace('"','&quot;');
+          $('#' + match[1]).append('<div class="corner_down" onclick="javascript:editFile(\'' + match[1] + '\',\'[% recordOId %]\',\'' + match[7] + '\',\'' + match[4] + '\',\'' + match[6] + '\',\'' + match[5] + '\',\'' + match[8] + '\',\'' + description + '\');"><a href="#"><i class="icon icon-pencil"></i></a></div>');
+          
+          if(!$('#licenses').hasClass('collapse in')){
+            $('#licenses').addClass('collapse in');
+          }
+          
+          $('#upLoad')[0].reset();
+          $('#fileUpload').modal('hide');
+        }
+    });
+  });
+}
+else {
+  $('#upLoad').attr('target','_blank');
+  $('#upLoad').attr('action','[% luurBase %]/record_material');
+  $('#upLoad').attr('method','post');
+}
+
+  //$('#finalSubmit').click( function(){
+  //  $('#fileUpload').modal('hide');
+  //});
+  //$('#finalSubmit2').click( function(){
+  //  $('#fileEdit').modal('hide');
+  //});
+  $('body').on('hidden', '.modal', function () {
+    $('#id_file').val('');
+    $('#id_fileName').val('');
+    $('#id_fileTitle').val('');
+    $('#id_fileDescription').val('');
+  });
+</script>
