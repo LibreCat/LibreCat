@@ -6,6 +6,10 @@ use App::Catalog::Helper;
 
 prefix '/admin' => sub {
     
+    get '/add' => sub {
+		template 'edit_researchData.tmpl', {recordOId => "123456789", file => [{fileOId => 1, fileName => "file", accessLevel => "admin", dateLastUploaded => "2014-01-10", isUploadedBy => {login => "kohorst"}}]};
+	};
+	
 	get '/:id' => sub {
 		my $id = params->{id};
 		my $personInfo = h->getPerson($id);
