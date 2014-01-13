@@ -50,13 +50,13 @@
     <div class="tab-pane active" id="basicFields">
       [% IF doi %]
       <div class="col-md-2">
-        <label for="id_doi"
+        <label for="id_doi">
           DOI
         </label>
       </div>
       <div class="col-md-10">
-        <div class="controls control-group">
-          <input type="text" name="doi" id="id_doi" value="[% doi %]" class="col-md-5" readonly="readonly">
+        <div class="form-group col-md-5">
+          <input type="text" name="doi" id="id_doi" value="[% doi %]" class="form-control" readonly="readonly">
         </div>
       </div>
       [% END %]
@@ -79,7 +79,7 @@
       </div>
       <div class="col-md-10" id="creator">
         [% IF !authors %]
-        <div class="control-group">
+        <div class="form-group">
           <input type="hidden" name="au_auLuAuthorOId_0" value="[% auLuAuthorOId %]"/>
           <input type="hidden" name="au_auPersonNumber_0" id="id_au_auPersonNumber_0" value="[% aupersonNumber %]" />
           <input name="au_auLuLdapId_0" type="hidden" value="[% auLuLdapId %]" />
@@ -87,50 +87,58 @@
           <input type="hidden" id="auSel0" name="searchAuthors" onclick="javascript:selectAuthor(this.form.au_auSurname_0, this.form.au_auGivenName_0, 0)" value="Link to PEVZ Account" class="button1"/>
             
           <span class="form-group col-md-3">
-            <input type="text" name="au_auGivenName_0" placeholder="First Name" id="id_au_auGivenName_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] value="[% auGivenName %]" class="form-control" />
+            <input type="text" name="au_auGivenName_0" placeholder="First Name" id="id_au_auGivenName_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] value="[% auGivenName %]" class="form-control required" />
           </span>
           <span class="form-group col-md-4">
-            <input type="text" name="au_auSurname_0" placeholder="Last Name" id="id_au_auSurname_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] value="[% auSurname %]" class="form-control" />
+            <input type="text" name="au_auSurname_0" placeholder="Last Name" id="id_au_auSurname_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] value="[% auSurname %]" class="form-control required" />
           </span>
           <span class="form-group col-md-2">
             <input type="text" name="au_auPersonTitle_0" placeholder="Title" id="id_au_auPersonTitle_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] value="[% auPersonTitle %]" class="form-control" />
           </span>
           
           <span class="col-md-1">
-            <i class="glyphicon glyphicon-minus"></i>
+            <span class="glyphicon glyphicon-minus author"></span>
           </span>
           
-          <span class="col-md2">
-            <input name="au_auLuMarked_0" id="id_au_auLuMarked_0" value="1" type="checkbox" onclick="auSelToggle('0', this)" onchange="if (this.form.au_auLuMarked_0.checked==true) selectAuthor(this.form.au_auSurname_0, this.form.au_auGivenName_0, 0)" [% IF name.auLuMarked %]checked="checked"[% END %]/>
-            <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+          <span class="col-md-2">
+            <img id="auAuthorized0" class="linkPevz" src="/images/biNotAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
           </span>
         </div>
         [% ELSE %]
         [% FOREACH name IN authors %]
-          <div class="controls control-group">
+          <div class="form-group">
             <input type="hidden" name="au_auLuAuthorOId_[% loop.index %]" value="[% name.auLuAuthorOId %]"/>
             <input type="hidden" name="au_auPersonNumber_[% loop.index %]" id="id_au_auPersonNumber_[% loop.index %]" value="[% name.aupersonNumber %]" />
             <input name="au_auLuLdapId_[% loop.index %]" type="hidden" value="[% name.auLuLdapId %]" />
-            <span class="control-group">
-              <input name="au_auGivenName_[% loop.index %]" placeholder="First Name" type="text" id="id_au_auGivenName_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auGivenName %]" class="col-md-2"/>
-            </span>
             <input name="au_auEndDate_[% loop.index %]" type="hidden" value="[% name.auEndDate %]" />
-            <span class="control-group">
-              <input name="au_auSurname_[% loop.index %]" placeholder="Last Name" type="text" id="id_au_auSurname_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auSurname %]" class="col-md-2" />
-            </span>
-            <input name="au_auPersonTitle_[% loop.index %]" placeholder="Title" type="text" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auPersonTitle %]" class="col-md-1"/>
-            <input name="au_auLuMarked_[% loop.index %]" id="id_au_auLuMarked_[% loop.index %]" value="1" type="checkbox" onclick="auSelToggle('[% loop.index %]', this)" onchange="if (this.form.au_auLuMarked_[% loop.index %].checked==true) selectAuthor(this.form.au_auSurname_[% loop.index %], this.form.au_auGivenName_[% loop.index %], [% loop.index %])" [% IF name.auLuMarked %]checked="checked"[% END %]/>
             <input type="hidden" id="auSel[% loop.index %]" name="searchAuthors" onclick="javascript:selectAuthor(this.form.au_auSurname_[% loop.index %], this.form.au_auGivenName_[% loop.index %], [% loop.index %])" value="Link to PEVZ Account" class="button1"/>
-            [% IF name.auLuAuthorOId OR name.auLuLdapId %]
-              <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
-            [% ELSE %]
-              <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>
-            [% END %]
-            [% IF loop.index == 0 %]
-            <i class="icon-minus author"></i>
-            [% ELSE %]
-            <i class="icon-minus single"></i>
-            [% END %]
+
+            <span class="form-group col-md-3">
+              <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="First Name" id="id_au_auGivenName_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auGivenName %]" class="form-control required"/>
+            </span>
+            <span class="form-group col-md-4">
+              <input type="text" name="au_auSurname_[% loop.index %]" placeholder="Last Name" id="id_au_auSurname_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auSurname %]" class="form-control required" />
+            </span>
+            <span class="form-group col-md-2">
+              <input type="text" name="au_auPersonTitle_[% loop.index %]" placeholder="Title" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auPersonTitle %]" class="form-control"/>
+            </span>
+            
+            <span class="col-md-1">
+              [% IF loop.index == 0 %]
+                <span class="glyphicon glyphicon-minus author"></span>
+              [% ELSE %]
+                <span class="glyphicon glyphicon-minus single"></span>
+              [% END %]
+            </span>
+            
+            <span class="col-md-2">
+              <input name="au_auLuMarked_[% loop.index %]" id="id_au_auLuMarked_[% loop.index %]" value="1" type="checkbox" onclick="auSelToggle('[% loop.index %]', this)" onchange="if (this.form.au_auLuMarked_[% loop.index %].checked==true) selectAuthor(this.form.au_auSurname_[% loop.index %], this.form.au_auGivenName_[% loop.index %], [% loop.index %])" [% IF name.auLuMarked %]checked="checked"[% END %]/>
+              [% IF name.auLuAuthorOId OR name.auLuLdapId %]
+                <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+              [% ELSE %]
+                <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>
+              [% END %]
+            </span>
           </div>
         [% END %]
         [% END %]
@@ -340,18 +348,18 @@
       
       <div class="col-md-12 buttonrow">
         <span class="form-group col-md-2">
-          <a class="btn btn-small back-button" style="display:none;"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+          <a class="btn btn-default back-button" style="display:none;"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
         </span>
         <span class="form-group col-md-2">
-          <button type="button" class="btn btn-small cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+          <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
         </span>
         [% IF submissionStatus != "public" %]
         <span class="form-group col-md-2">
-          <button type="submit" class="btn btn-small" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+          <button type="submit" class="btn btn-default" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
         </span>
         [% END %]
         <span class="form-group col-md-2">
-          <a class="btn btn-small next-button" id="oneToTwo" href="#fileUpload">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+          <a class="btn btn-default next-button" id="oneToTwo" href="#fileUpload">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
         </span>
       </div>
       
@@ -580,18 +588,18 @@
       
       <div class="col-md-12 buttonrow">
         <span class="form-group col-md-2">
-          <a class="btn btn-small back-button" id="twoToOne" data-toggle="tab" href="#basicFields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+          <a class="btn btn-default back-button" id="twoToOne" data-toggle="tab" href="#basicFields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
         </span>
         <span class="form-group col-md-2">
-          <button type="button" class="btn btn-small cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+          <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
         </span>
         [% IF submissionStatus != "public" %]
         <span class="form-group col-md-2">
-          <button type="submit" class="btn btn-small" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+          <button type="submit" class="btn btn-default" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
         </span>
         [% END %]
         <span class="form-group col-md-2">
-          <a class="btn btn-small next-button" id="twoToThree" href="#supplementaryFields">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+          <a class="btn btn-default next-button" id="twoToThree" href="#supplementaryFields">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
         </span>
       </div>
     </div>
@@ -600,84 +608,113 @@
     <!-- STEP 3 -->
     <div class="tab-pane" id="supplementaryFields">
       <div class="col-md-2">
-        Abstract
-      </div>
-      <div class="col-md-6" id="abstract">
-        <div class="controls controls-row">
-        [% IF !abstract %]
-          <textarea rows="3" name="ab_abAbstract_0" id="id_ab_abAbstract_0" class="col-md-5" onkeyup="checkForm4Ddc();"></textarea>
-          <select name="ab_abLanguageOId_0" id="id_ab_abLanguageOId_0">
-            [% FOREACH lang IN xlanguages %]
-            <option value="[% lang.langOId %]" [% IF lang.abLanguageOId == lang.langOId %]selected="selected"[% END %]>[% lang.langName %]</option>
-            [% END %]
-            </select>
-        [% ELSE %]
-          [% FOREACH abs IN abstract %]
-            <textarea rows="3" name="ab_abAbstract_[% loop.index %]" id="id_ab_abAbstract_[% loop.index %]" class="col-md-5" onkeyup="checkForm4Ddc();">[% abs.text %]</textarea>
-            <select name="ab_abLanguageOId_[% loop.index %]" id="id_ab_abLanguageOId_[% loop.index %]">
-            [% FOREACH lang IN xlanguages %]
-            <option value="[% lang.langOId %]" [% IF lang.abLanguageOId == lang.langOId %]selected="selected"[% END %]>[% lang.langName %]</option>
-            [% END %]
-            </select>
-          [% END %]
-        [% END %]
-        </div>
-      </div>
-      
-      <div class="col-md-8">&nbsp;</div>
-      
-      <div class="col-md-2">
-        DDC
-      </div>
-      <div class="col-md-6">
-        <select name="dw_dwDdcOId_0" class="col-md-5" id="dw_dwDdcOId_0" onchange="changeSelectColor()">
-          <option value=""[% IF !hasDdc %]selected="selected"[% END %]>--- Select DDC ---</option>
-          [% FOREACH ddcs IN xddcs %]
-            [% IF ddcs.ddcGroup == 1 %]
-            <optgroup label="[% ddcs.ddcLabel %]">
-            [% ELSE %]
-            <option id="ddc[% ddcs.ddcNumber %]" value="[% ddcs.ddcOId %]"[% IF ddcs.ddcOId == hasDdc.oId %] selected="selected"[% END %]>[% ddcs.ddcLabel %]</option>
-            [% END %]
-            [% IF ddcs.ddcGroup == '1' %]
-            </optgroup>
-            [% END %]
-          [% END %]
-        </select>
-        <label class="input">
-          <input type="button" class="btn" name="suggestDdc" id="suggestDdc" value="Suggest DDC" disabled="disabled" onclick="ajaxRequest();">
-          <span class="text-muted">(available for English and German abstracts with 500 words or more)</span>
+        <label for="abstract">
+          Abstract
         </label>
       </div>
+      <div class="col-md-10" id="abstract">
+        [% IF !abstract %]
+          <span class="form-group col-md-6">
+            <textarea rows="3" name="ab_abAbstract_0" id="id_ab_abAbstract_0" class="form-control" onkeyup="checkForm4Ddc();"></textarea>
+          </span>
+          <span class="col-md-6">
+            <label for="id_ab_abLanguageOId0">
+              Abstract Language:
+            </label>
+          </span>
+          <span class="form-group col-md-3">
+            <select name="ab_abLanguageOId_0" id="id_ab_abLanguageOId_0" class="form-control">
+              [% FOREACH lang IN h.xlanguages_preselect.keys.sort %]
+              <option value="[% h.xlanguages_preselect.$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
+              [% END %]
+              <option value="2436687"></option>
+              [% FOREACH lang IN h.xlanguages.keys.sort %]
+              <option value="[% h.xlanguages.$lang %]" [% IF abLanguageOId == h.xlanguages.$lang %]selected="selected"[% END %]>[% lang %]</option>
+              [% END %]
+            </select>
+          </span>
+        [% ELSE %]
+          [% FOREACH abs IN abstract %]
+            <textarea rows="3" name="ab_abAbstract_[% loop.index %]" id="id_ab_abAbstract_[% loop.index %]" class="form-control" onkeyup="checkForm4Ddc();">[% abs.text %]</textarea>
+            <select name="ab_abLanguageOId_[% loop.index %]" id="id_ab_abLanguageOId_[% loop.index %]" class="form-control">
+            [% FOREACH lang IN h.xlanguages %]
+            <option value="[% lang.langOId %]" [% IF lang.abLanguageOId == lang.langOId %]selected="selected"[% END %]>[% lang.langName %]</option>
+            [% END %]
+            </select>
+          [% END %]
+        [% END %]
+      </div>
       
       <div class="col-md-2">
-        Keywords
+        <label for="ddc">
+          DDC
+        </label>
       </div>
-      <div class="col-md-6" id="keywords">
-        <div class="controls controls-row">
-          <textarea rows="3" name="keyword" class="col-md-5">[% keyword %]</textarea>
+      <div class="col-md-10" id="ddc">
+        <span class="col-md-6">
+          <select name="dw_dwDdcOId_0" class="form-control" id="dw_dwDdcOId_0" onchange="changeSelectColor()">
+            <option value=""[% IF !hasDdc %] selected="selected"[% END %]>--- Select DDC ---</option>
+            [% FOREACH group IN h.xddcs.keys.sort %]
+              <optgroup label="[% h.xddcs.$group.optgroup %]">
+                [% FOREACH ddc IN h.xddcs.$group.keys %]
+                  [% NEXT IF ddc == "optgroup" %]
+                  <option id="[% ddc %]" value="[% h.xddcs.$group.$ddc.value %]"[% IF h.xddcs.$group.$ddc.value == hasDdc.oId %] selected="selected"[% END %]>[% h.xddcs.$group.$ddc.label %]</option>
+                [% END %]
+              </optgroup>
+            [% END %]
+          </select>
+        </span>
+        <span class="col-md-3">
+          <input type="button" class="btn" name="suggestDdc" id="suggestDdc" value="Suggest DDC*" disabled="disabled" onclick="ajaxRequest();">
+        </span>
+        <span class="col-md-3">
+          <span class="text-muted">(* Suggest DDC is available for English and German abstracts with 500 words or more)</span>
+        </span>
+      </div>
+      
+      <div class="col-md-2">
+        <label for="keywords">
+          Keywords
+        </label>
+      </div>
+      <div class="col-md-10" id="keywords">
+        <div class="col-md-6">
+          <textarea rows="3" name="keyword" class="form-control">[% keyword %]</textarea>
         </div>
       </div>
       
-      <div class="col-md-8">
-        <a class="btn btn-small back-button" id="threeToTwo" data-toggle="tab" href="#stepTwo"><i class="icon-chevron-left"></i> Back</a>
-        <button type="button" class="btn btn-small cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+      <div class="col-md-12">
+      &nbsp;
+      </div>
+      
+      <div class="col-md-12 buttonrow">
+        <span class="form-group col-md-2">
+          <a class="btn btn-default back-button" id="threeToTwo" data-toggle="tab" href="#fileUpload"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+        </span>
+        <span class="form-group col-md-2">
+          <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+        </span>
         [% IF submissionStatus != "public" %]
-        <button type="submit" class="btn btn-small" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+        <span class="form-group col-md-2">
+          <button type="submit" class="btn btn-default" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+        </span>
         [% END %]
-        <a class="btn btn-small next-button" id="threeToFour" data-toggle="tab" href="#stepFour">Next <i class="icon-chevron-right"></i></a>
+        <span class="from-group col-md-2">
+          <a class="btn btn-default next-button" id="threeToFour" data-toggle="tab" href="#relatedMaterial">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+        </span>
       </div>
     </div>
     <!-- tab-pane -->
     
     <!-- STEP 4 -->
     <div class="tab-pane" id="relatedMaterial">
-      <div class="col-md-8">
-        <a href="#connectPubl" role="button" class="btn" data-toggle="modal">Link Publications</a>
+      <div class="col-md-12 form-group buttonrow">
+        <div class="col-md-12">
+          <a href="#connectPubl" type="button" class="btn btn-default" data-toggle="modal">Link Publications</a>
+        </div>
       </div>
       
-      <div class="col-md-8">&nbsp;</div>
-      
-      <div class="col-md-8" id="relatesTo">
+      <div class="col-md-12" id="relatesTo">
       <span[% IF !relatesTo %] style="display:none"[% END %]><strong>Linked Publications:</strong></span>
       [% IF relatesTo %]
         [% FOREACH rel IN relatesTo %]
@@ -696,23 +733,36 @@
           [% END %]
         [% END %]
       [% END %]
+      </div>      
+      
+      <div class="col-md-12">
+      &nbsp;
       </div>
       
-      <div class="col-md-8"><hr /></div>      
-      
-      
-      <div class="col-md-8">
-        <a class="btn btn-small back-button" id="fourToThree" data-toggle="tab" href="#stepThree"><i class="icon-chevron-left"></i> Back</a>
-        <button type="button" class="btn btn-small cancel-button">Close <img src="/images/edit-cancel.png"/></button>
-        [% IF submissionStatus != "public" %] 
-        <button type="submit" class="btn btn-small" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+      <div class="col-md-12 buttonrow">
+        <span class="form-group col-md-2">
+          <a class="btn btn-default back-button" id="fourToThree" data-toggle="tab" href="#supplementaryFields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+        </span>
+        <span class="form-group col-md-2">
+          <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+        </span>
+        [% IF submissionStatus != "public" %]
+        <span class="form-group col-md-2">
+          <button type="submit" class="btn btn-default" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+        </span>
         [% END %]
         [% IF submissionStatus == "public" AND userRole == "superAdmin" %]
-        <button type="submit" class="btn btn-small" name="withdrawSubmit" value="Return">Return <img src="/images/edit-withdraw.png"/></button>
+        <span class="form-group col-md-2">
+          <button type="submit" class="btn btn-default" name="withdrawSubmit" value="Return">Return <img src="/images/edit-withdraw.png"/></button>
+        </span>
         [% END %]
-        <button type="submit" name="finalSubmit" value="rdSave" class="btn btn-small">Save <img src="/images/edit-save.png"/></button>
+        <span class="form-group col-md-2">
+          <button type="submit" name="finalSubmit" value="rdSave" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
+        </span>
         [% IF (submissionStatus != "public" AND submissionStatus != "submitted") %]
-          <button type="submit" name="finalSubmit" value="rdPublish" class="btn btn-small">Publish <img src="/images/edit-submit.png"/></button>
+        <span class="form-group col-md-2">
+          <button type="submit" name="finalSubmit" value="rdPublish" class="btn btn-default">Publish <img src="/images/edit-submit.png"/></button>
+        </span>
         [% END %]
       </div>
     </div>
@@ -757,14 +807,13 @@ if(navigator.userAgent.indexOf('MSIE') != -1){
 $('#oneToTwo').click(function(){
   var check = 1;
   var oneauthor = 0;
-  var numauthors = $('#creator').children('div.control-group').length;
-  $('#creator').children('div.control-group').each(function(){
-    if(!$(this).children('span').eq(0).children().eq(0).val()){
-      $(this).children('span').eq(0).addClass("has-error");
-    }
-    if(!$(this).children('span').eq(1).children().eq(0).val()){
-      $(this).children('span').eq(1).addClass("has-error");
-    }
+  $('#creator').children('div.form-group').each(function(){
+    //if(!$(this).children('span').eq(0).children().eq(0).val()){
+    //  $(this).children('span').eq(0).addClass("has-error");
+    //}
+    //if(!$(this).children('span').eq(1).children().eq(0).val()){
+    //  $(this).children('span').eq(1).addClass("has-error");
+    //}
     if($(this).children('span').eq(0).children().eq(0).val() && $(this).children('span').eq(1).children().eq(0).val()){
       oneauthor = 1;
     }
@@ -805,11 +854,11 @@ $('#id_openDataRelease').click(function(){
       $('#liStepThree').css('visibility','hidden');
       $('#liStepFour').css('visibility','hidden');
       $('#odralert').removeClass('alert-info');
-      $('#odralert').addClass('alert-error');
+      $('#odralert').addClass('alert-danger');
     }
   }
   else {
-    $('#odralert').removeClass('alert-error');
+    $('#odralert').removeClass('alert-danger');
     $('#odralert').addClass('alert-info');
   }
 });
@@ -820,62 +869,62 @@ $('#id_dataReuseLicense').change(function(){
       $('#liStepThree').css('visibility','hidden');
       $('#liStepFour').css('visibility','hidden');
       $('#id_dataReuseLicense').parent().removeClass('alert-info');
-      $('#id_dataReuseLicense').parent().addClass('alert-error');
+      $('#id_dataReuseLicense').parent().addClass('alert-danger');
     }
   }
   else {
-    $('#id_dataReuseLicense').parent().removeClass('alert-error');
+    $('#id_dataReuseLicense').parent().removeClass('alert-danger');
     $('#id_dataReuseLicense').parent().addClass('alert-info');
   }
 });
 
 $('#twoToThree').click(function(e){
   if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_openDataRelease').is(':checked') || $('#id_dataReuseLicense').val() == '')){
-    if(!$('#id_openDataRelease').is(':checked')) {
-      $('#odralert').removeClass('alert-info');
-      $('#odralert').addClass('alert-error');
-      alert('You need to accept the Open Data Release Statement because you have attached files to this record.');
-      document.location.href = "#stepTwo";
-      e.stopImmediatePropagation();
-    }
     if($('#id_dataReuseLicense').val() == ''){
       $('#id_dataReuseLicense').parent().removeClass('alert-info');
-      $('#id_dataReuseLicense').parent().addClass('alert-error');
+      $('#id_dataReuseLicense').parent().addClass('alert-danger');
       alert('You need to choose a Data Re-Use License because you have attached files to this record.');
+      e.stopImmediatePropagation();
+    }
+    if(!$('#id_openDataRelease').is(':checked')) {
+      $('#odralert').removeClass('alert-info');
+      $('#odralert').addClass('alert-danger');
+      alert('You need to accept the Open Data Release Statement because you have attached files to this record.');
+      document.location.href = "#stepTwo";
       e.stopImmediatePropagation();
     }
   }
   else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && (!$('#id_openDataRelease').is(':checked') || $('#id_dataReuseLicense').val() == '')){
-    if(!$('#id_openDataRelease').is(':checked')) {
-      $('#odralert').removeClass('alert-info');
-      $('#odralert').addClass('alert-error');
-      alert('You need to accept the Open Data Release Statement because you have attached files to this record.');
-      document.location.href = "#stepTwo";
-      e.stopImmediatePropagation();
-    }
     if($('#id_dataReuseLicense').val() == ''){
       $('#id_dataReuseLicense').parent().removeClass('alert-info');
-      $('#id_dataReuseLicense').parent().addClass('alert-error');
+      $('#id_dataReuseLicense').parent().addClass('alert-danger');
       alert('You need to choose a Data Re-Use License because you have attached files to this record.');
+      e.stopImmediatePropagation();
+    }
+    if(!$('#id_openDataRelease').is(':checked')) {
+      $('#odralert').removeClass('alert-info');
+      $('#odralert').addClass('alert-danger');
+      alert('You need to accept the Open Data Release Statement because you have attached files to this record.');
+      document.location.href = "#stepTwo";
       e.stopImmediatePropagation();
     }
   }
   else {
     if($('.dropzone').first().children().length == 1){
-      if($('#id_openDataRelease').is(':checked')){
-        $('#id_openDataRelease').prop("checked", false);
-      }
       if($('#id_dataReuseLicense').val() != ''){
         $('#id_dataReuseLicense').val('');
       }
+      if($('#id_openDataRelease').is(':checked')){
+        $('#id_openDataRelease').prop("checked", false);
+      }
     }
 
-    $('#stepTwo').removeClass('active');
-    $('#stepThree').addClass('active');
-    $('a[href=#stepThree]').attr('data-toggle','tab');
-    $('#liStepTwo').removeClass('active');
-    $('#liStepThree').css('visibility','visible');
-    $('#liStepThree').addClass('active');
+    $('#fileUpload').removeClass('active');
+    $('#supplementaryFields').addClass('active');
+    $('a[href=#supplementaryFields]').attr('data-toggle','tab');
+    $('#li_fileUpload').removeClass('active');
+    $('#li_supplementaryFields').css('visibility','visible');
+    $('#li_supplementaryFields').addClass('active');
   }
 });
 
@@ -910,28 +959,28 @@ $('#threeToFour').click(function(){
       urlstr = urlstr + '</div></span>';
     });
 
-    $('#liStepFour').css('visibility','visible');
-    $('#liStepThree').removeClass('active');
-    $('#liStepFour').addClass('active');
-    $('a[href=#stepFour]').attr('data-toggle','tab');
+    $('#li_relatedMaterial').css('visibility','visible');
+    $('#li_supplementaryFields').removeClass('active');
+    $('#li_relatedMaterial').addClass('active');
+    $('a[href=#relatedMaterial]').attr('data-toggle','tab');
     $('#inputSpan').remove();
     $('#checkInput').append(urlstr);
   }
 });
 
 $('#fourToThree').click(function(){
-  $('#liStepFour').removeClass('active');
-  $('#liStepThree').addClass('active');
+  $('#li_relatedMaterial').removeClass('active');
+  $('#li_supplementaryFields').addClass('active');
 });
 
 $('#threeToTwo').click(function(){
-  $('#liStepThree').removeClass('active');
-  $('#liStepTwo').addClass('active');
+  $('#li_supplementaryFields').removeClass('active');
+  $('#li_fileUpload').addClass('active');
 });
 
 $('#twoToOne').click(function(){
-  $('#liStepTwo').removeClass('active');
-  $('#liStepOne').addClass('active');
+  $('#li_fileUpload').removeClass('active');
+  $('#li_basicFields').addClass('active');
 });
 
 // minus
@@ -948,7 +997,7 @@ $(document).on('click', '.single', function(){
   }
 });
 $(document).on('click', '.author', function(){
-  var container = $(this).parent();
+  var container = $(this).parent().parent();
   container.children('input').each(function(){
     if($(this).value != "Link to PEVZ Account"){
       if($(this).attr("readonly")){
@@ -1096,6 +1145,14 @@ $('#plusResearchgroup').click(function(){
 $('button.cancel-button').click(function() {
   window.location.href = '/luur';
 });
+
+$('.linkPevz').click(function(){
+  var lineId = $(this).id;
+  var firstName = $('#au_auGivenName_' + lineId).val();
+  var lastName = $('#au_auSurname_' + lineId).val();
+  
+});
+
 <!--
 <!-- INCLUDE jsUpload.tmpl -->
 // -->
