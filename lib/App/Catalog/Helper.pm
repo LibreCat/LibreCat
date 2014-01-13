@@ -60,14 +60,29 @@ sub getDepartment {
 	}
 }
 
+sub xlanguages {
+	my $map = config->{lists}{xlanguages};
+	$map;
+}
+
+sub xlanguages_preselect {
+	my $map = config->{lists}{xlanguages_preselect};
+	$map;
+}
+
+sub xddcs {
+	my $map = config->{lists}{xddcs};
+	$map;
+}
+
 sub display_doctypes {
-	my $map = config->{lists}{publicationTypes};
+	my $map = config->{forms}{publicationTypes};
 	my $doctype = $map->{lc $_[1]}->{label};
 	$doctype;
 }
 
 sub display_gs_doctypes {
-	my $map = config->{lists}{display_gs_docs};
+	my $map = config->{forms}{display_gs_docs};
 	my $doctype = $map->{lc $_[1]};
 	$doctype;
 }
@@ -79,7 +94,7 @@ sub display_publstatus {
 }
 
 sub display_styles {
-	my $map = luurConf->{citation_db}->{styles_public};
+	my $map = config->{lists}{styles_public};
 	$map;
 }
 
@@ -135,6 +150,24 @@ sub search_publication {
     }
 	
 	return $hits;
+}
+
+sub search_researcher {
+	my ($self, $p) = @_;
+	my $q = $p->{q};
+	#$q .= $q eq "" ? "publCount>0" : " AND publCount>0";
+	
+	my $hits = researcher->search(
+	  cql_query => $q,
+	  limit => $p->{limit} ||= 20,
+	  start => $p->{start} ||= 0,
+	  sru_sortkeys => $p->{sorting} || "fullName,,1",
+	);
+	
+	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+        $hits->{$_} = $hits->$_;
+    }
+    return $hits;
 }
 
 #sub search_project {
