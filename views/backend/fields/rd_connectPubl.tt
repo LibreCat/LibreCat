@@ -1,51 +1,25 @@
-<div id="connectPubl" class="modal hide">
+<div id="connectPubl" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
   
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Link Publications</h3>
-    </div>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Link Publications</h3>
+      </div>
   
-    <div class="modal-body">
-      <div class="span5">
-        <div class="input-append">
-          <input type="text" id="searchPublInput" placeholder="Search your public publications" class="span4" />
-          <input type="button" id="searchPubl" class="btn span1" value="Go!"/>
-        </div>
-      </div>
-      
-      <div class="span5">
-       <!-- <strong>Connect this data publication to an existing publication:</strong> -->
-      </div>
-      
-      <div class="span5">&nbsp;</div>
-      
-      <div id="results">
-      
-      [% FOREACH pub IN linkPubls %]
-        [% skip = 0 %]
-        [% IF pub.relatedMaterial %]
-          [% FOREACH relations IN pub.relatedMaterial %]
-            [% IF recordOId == relations.relatesTo.oId %]
-              [% skip = 1 %]
-              [% LAST %]
-            [% END %]
-          [% END %]
-        [% END %]
-        
-        [% NEXT IF skip %]
-      
-      <div>
-      <div class="span5">
-        <a href="#" onclick="javascript:connect([% pub.oId %],[% recordOId %])"><i class="icon-plus"></i>
-        <strong>[% pub.mainTitle %]</strong></a><br />
-        [% pub.citation.frontShort %]
-      </div>
-      <div class="span3">&nbsp;</div>
-      </div>
-      [% END %]
+      <div class="modal-body">
+        <span class="col-md-12">
+          <span class="form-group col-md-8">
+            <input type="text" class="form-control" id="searchPublInput" placeholder="Search your public publications" />
+          </span>
+          <span class="form-group col-md-2">
+            <button type="button" id="searchPubl" class="btn btn-default">Go!</button>
+          </span>
+        </span>
+        <p>&nbsp;</p>
       </div>
     </div>
-  </form>
+  </div>
 </div>
 
 <script>
