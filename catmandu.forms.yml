@@ -1,37 +1,54 @@
 publicationTypes:
   book:
+    label: "Book"
     tmpl: book.tt
   bookChapter:
+    label: "Book Chapter"
     tmpl: bookChapter.tt
   bookEditor:
+    label: "Book Editor"
     tmpl: bookEditor.tt
   caseStudy:
+    label: "Case Study"
     tmpl: caseStudy.tt
   conferenceAbstract:
+    label: "Conference Abstract"
     tmpl: conferenceAbstract.tt
   conferenceEditor:
+    label: "Conference Editor"
     tmple: conferenceEditor.tt
   conference:
+    label: "Conference Proceeding/Paper"
     tmpl: conference.tt
   dissertation:
+    label: "Dissertation"
     tmpl: dissertation.tt
   encyclopediaArticle:
+    label: "Encyclopedia Article"
     tmpl: encyclopediaArticle.tt
   journalArticle:
+    label: "Journal Article"
     tmpl: journalArticle.tt
   journalEditor:
+    label: "Journal Editor"
     tmpl: journalEditor.tt
   newspaperarticle:
+    label: "Newspaper Article"
     tmpl: newspaperaArticle.tt
   patent:
+    label: "Patent"
     tmpl: patent.tt
   preprint:
+    label: "Preprint"
     tmpl: preprint.tt
   report:
+    label: "Report"
     tmpl: report.tt
   review:
+    label: "Book Review"
     tmpl: bookReview.tt
   researchdata:
+    label: "Research Data"
     tmpl: researchData.tt
     fields:
       basicFields:
@@ -124,14 +141,20 @@ publicationTypes:
           label: "Link Publications"
           readonly: 0
   translation:
+    label: "Translation"
     tmpl: translation.tt
   workingpaper:
+    label: "Working Paper"
     tmpl: workingPaper.tt
   bidissertation:
+    label: "Bielefeld Doctoral Thesis"
     tmpl: biDissertation.tt
   bibachelorthesis:
+    label: "Bielefeld Bachelor Thesis"
     tmpl: biBachelorThesis.tt
   bimasterthesis:
+    label: "Bielefeld Master Thesis"
     tmpl: biMasterThesis.tt
   bipostdocthesis:
+    label: "Bielefeld Postdoctoral Thesis/ Habilitation"
     tmpl: biPostdocThesis.tt
