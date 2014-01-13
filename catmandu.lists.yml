@@ -1,0 +1,415 @@
+styles_public:
+  ama:
+    label: 'AMA'
+  apa:
+    label: 'APA (6th ed.)'
+  apa_indent:
+    label: 'APA with indent'
+  bio1:
+    label: 'bio1'
+  ewi:
+    label: 'EWI'
+  frontiers:
+    label: 'Frontiers'
+  harvard1:
+    label: 'Harvard'
+  ieee:
+    label: 'IEEE'
+  lncs:
+    label: 'LNCS'
+  mla:
+    label: 'MLA'
+  wels:
+    label: 'Wels'
+
+styles:
+  - ama
+  - apa
+  - apa_indent
+  - aps
+  - bio1
+  - ewi
+  - frontiers
+  - frontShort
+  - frontShortTitle
+  - harvard1
+  - ieee
+  - lncs
+  - mla
+  - pub
+  - wels
+  - sfb882
+
+xlanguages_preselect:
+  "English": 190 
+  "German": 196 
+  
+xlanguages:
+  "Arabic": 185 
+  "Chinese": 187
+  "Croatian": 2459065
+  "Czech": 2561692
+  "Danish": 189
+  "Dutch": 2309957
+  "Finnish": 192
+  "French": 194
+  "Greek": 198
+  "Hebrew": 200
+  "Hungarian": 1706791
+  "Icelandic": 202
+  "Italian": 204
+  "Japanese": 206
+  "Korean": 2309964
+  "Latin": 208
+  "Latvian": 2428385
+  "Mongolian": 2309960
+  "Norwegian": 210
+  "Polish": 212
+  "Portuguese": 206541
+  "Romanian": 214
+  "Russian": 216
+  "Serbian": 2428389
+  "Spanish": 218
+  "Swedish": 219
+  "Turkish": 2561691
+  "Other": 221
+
+xddcs:
+  000: 
+    optgroup: "000 Computer science, information & general works"
+    ddc000:
+      value: 2036059
+      label: "-- 000 Computer science, knowledge & systems"
+    ddc004:
+      value: 2036165
+      label: "---- 004 Data processing, computer science, computer systems"
+    ddc006:
+      value: 2036166
+      label: "---- 006 Computer science, knowledge & systems"
+    ddc010:
+      value: 2036060
+      label: "-- 010 Bibliographies"
+    ddc020:
+      value: 2036061
+      label: "-- 020 Library & information sciences"
+    ddc030:
+      value: 2036062
+      label: "-- 030 Encyclopedias & books of facts"
+    ddc040:
+      value: 2036063
+      label: "-- 040 [Unassigned]"
+    ddc050:
+      value: 2036064
+      label: "-- 050 Magazines, journals & serials"
+    ddc060:
+      value: 2036065
+      label: "-- 060 Associations, organizations & museums"
+    ddc070:
+      value: 2036066
+      label: "-- 070 News media, journalism & publishing"
+    ddc080:
+      value: 2036067
+      label: "-- 080 Quotations"
+    ddc090:
+      value: 2036068
+      label: "-- 090 Manuscripts & rare books"
+  100:
+    optgroup: "100 Philosophy & psychology"
+    ddc100:
+      value: 2036069
+      label: "-- 100 Philosophy"
+    ddc110:
+      value: 2036070
+      label: "-- 110 Metaphysics"
+    ddc120:
+      value: 2036071
+      label: "-- 120 Epistemology"
+    ddc130:
+      value: 2036072
+      label: "-- 130 Parapsychology & occultism"
+    ddc140:
+      value: 2036073
+      label: "-- 140 Philosophical schools of thought"
+    ddc150:
+      value: 2036074
+      label: "-- 150 Psychology"
+    ddc160:
+      value: 2036075
+      label: "-- 160 Logic"
+    ddc170: 
+      value: 2036076
+      label: "-- 170 Ethics"
+    ddc180:
+      value: 2036077
+      label: "-- 180 Ancient, medieval & eastern philosophy"
+    ddc190:
+      value: 2036078
+      label: "-- 190 Modern western philosophy"
+  200:
+    optgroup: "200 Religion"
+    ddc200:
+      value: 2036079
+      label: "-- 200 Religion"
+    ddc210:
+      value: 2036080
+      label: "-- 210 Philosophy & theory of religion"
+    ddc220:
+      value: 2036081
+      label: "-- 220 The Bible"
+    ddc230:
+      value: 2036082
+      label: "-- 230 Christianity & Christian theology"
+    ddc240:
+      value: 2036083
+      label: "-- 240 Christian practice & observance"
+    ddc250:
+      value: 2036084
+      label: "-- 250 Christian pastoral practice & religious orders"
+    ddc260:
+      value: 2036085
+      label: "-- 260 Christian organization, social work & worship"
+    ddc270:
+      value: 2036086
+      label: "-- 270 History of Christianity"
+    ddc280:
+      value: 2036087
+      label: "-- 280 Christian denominations"
+    ddc290:
+      value: 2036088
+      label: "-- 290 Other religions"
+  300:
+    optgroup: "300 Social sciences"
+    ddc300:
+      value: 2036089
+      label: "-- 300 Social sciences, sociology & anthropology"
+    ddc310:
+      value: 2036090
+      label: "-- 310 Statistics"
+    ddc320:
+      value: 2036091
+      label: "-- 320 Political science"
+    ddc330:
+      value: 2036092
+      label: "-- 330 Economics"
+    ddc340:
+      value: 2036093
+      label: "-- 340 Law"
+    ddc350:
+      value: 2036094
+      label: "-- 350 Public administration & military science"
+    ddc360:
+      value: 2036095
+      label: "-- 360 Social problems & social services"
+    ddc370:
+      value: 2036096
+      label: "-- 370 Education"
+    ddc380:
+      value: 2036097
+      label: "-- 380 Commerce, communications & transportation"
+    ddc390:
+      value: 2036098
+      label: "-- 390 Customs, etiquette & folklore"
+  400:
+    optgroup: "400 Language"
+    ddc400:
+      value: 2036099
+      label: "-- 400 Language"
+    ddc410:
+      value: 2036100
+      label: "-- 410 Linguistics"
+    ddc420:
+      value: 2036101
+      label: "-- 420 English & Old English languages"
+    ddc430:
+      value: 2036102
+      label: "-- 430 German & related languages"
+    ddc440:
+      value: 2036103
+      label: "-- 440 French & related languages"
+    ddc450:
+      value: 2036104
+      label: "-- 450 Italian, Romanian & related languages"
+    ddc460:
+      value: 2036105
+      label: "-- 460 Spanish & Portuguese languages"
+    ddc470:
+      value: 2036106
+      label: "-- 470 Latin & Italic languages"
+    ddc480:
+      value: 2036107
+      label: "-- 480 Classical & modern Greek languages"
+    ddc490:
+      value: 2036108
+      label: "-- 490 Other languages"
+  500:
+    optgroup: "500 Science"
+    ddc510:
+      value: 2036109
+      label: "-- 510 Mathematics"
+    ddc520:
+      value: 2036110
+      label: "-- 520 Astronomy"
+    ddc530:
+      value: 2036111
+      label: "-- 530 Physics"
+    ddc540:
+      value: 2036112
+      label: "-- 540 Chemistry"
+    ddc550:
+      value: 2036113
+      label: "-- 550 Earth sciences & geology"
+    ddc560:
+      value: 2036114
+      label: "-- 560 Fossils & prehistoric life"
+    ddc570:
+      value: 2036115
+      label: "-- 570 Life sciences; biology"
+    ddc572:
+      value: 2036167
+      label: "---- 572 Biochemistry"
+    ddc580:
+      value: 2036116
+      label: "-- 580 Plants (Botany)"
+    ddc590:
+      value: 2036117
+      label: "-- 590 Animals (Zoology)"
+  600:
+    optgroup: "600 Technology"
+    ddc600:
+      value: 2036118
+      label: "-- 600 Technology"
+    ddc610:
+      value: 2036119
+      label: "-- 610 Medicine & health"
+    ddc620:
+      value: 2036120
+      label: "-- 620 Engineering"
+    ddc630:
+      value: 2036121
+      label: "-- 630 Agriculture"
+    ddc640:
+      value: 2036122
+      label: "-- 640 Home & family management"
+    ddc650:
+      value: 2036123
+      label: "-- 650 Management & public relations"
+    ddc660:
+      value: 2036124
+      label: "-- 660 Chemical engineering"
+    ddc660.6:
+      value: 2036168
+      label: "---- 660.6 Biotechnology"
+    ddc670:
+      value: 2036125
+      label: "-- 670 Manufacturing"
+    ddc680:
+      value: 2036126
+      label: "-- 680 Manufacture for specific uses"
+    ddc690:
+      value: 2036127
+      label: "-- 690 Building & construction"
+  700:
+    optgroup: "700 Arts & recreation"
+    ddc700:
+      value: 2036128
+      label: "-- 700 Arts"
+    ddc710:
+      value: 2036129
+      label: "-- 710 Landscaping & area planning"
+    ddc720:
+      value: 2036130
+      label: "-- 720 Architecture"
+    ddc730:
+      value: 2036131
+      label: "-- 730 Sculpture, ceramics & metalwork"
+    ddc740:
+      value: 2036132
+      label: "-- 740 Drawing & decorative arts"
+    ddc750:
+      value: 2036133
+      label: "-- 750 Painting"
+    ddc760:
+      value: 2036134
+      label: "-- 760 Graphic arts"
+    ddc770:
+      value: 2036135
+      label: "-- 770 Photography & computer art"
+    ddc780:
+      value: 2036136
+      label: "-- 780 Music"
+    ddc790:
+      value: 2036137
+      label: "-- 790 Sports, games & entertainment"
+    ddc791:
+      value: 2299243
+      label: "---- 791 Public performances"
+    ddc796:
+      value: 2036169
+      label: "---- 796 Sports and games"
+  800:
+    optgroup: "800 Literature"
+    ddc800:
+      value: 2036138
+      label: "-- 800 Literature, rhetoric & criticism"
+    ddc810:
+      value: 2036139
+      label: "-- 810 American literature in English"
+    ddc820:
+      value: 2036140
+      label: "-- 820 English & Old English literatures"
+    ddc830:
+      value: 2036141
+      label: "-- 830 German & related literatures"
+    ddc840:
+      value: 2036142
+      label: "-- 840 French & related literatures"
+    ddc850:
+      value: 2036143
+      label: "-- 850 Italian, Romanian & related literatures"
+    ddc860:
+      value: 2036144
+      label: "-- 860 Spanish & Portuguese literatures"
+    ddc870:
+      value: 2036145
+      label: "-- 870 Latin & Italic literatures"
+    ddc880:
+      value: 2036146
+      label: "-- 880 Classical & modern Greek literatures"
+    ddc890:
+      value: 2036147
+      label: "-- 890 Other literatures"
+  900:
+    optgroup: "900 History & geography"
+    ddc900:
+      value: 2036148
+      label: "-- 900 History"
+    ddc910:
+      value: 2036149
+      label: "-- 910 Geography & travel"
+    ddc920:
+      value: 2036150
+      label: "-- 920 Biography & genealogy"
+    ddc930:
+      value: 2036151
+      label: "-- 930 History of ancient world (to ca. 499)"
+    ddc940:
+      value: 2036152
+      label: "-- 940 History of Europe"
+    ddc943:
+      value: 2299244
+      label: "---- 943 History of Germany"
+    ddc950:
+      value: 2036153
+      label: "-- 950 History of Asia"
+    ddc960:
+      value: 2036154
+      label: "-- 960 History of Africa"
+    ddc970:
+      value: 2036155
+      label: "-- 970 History of North America"
+    ddc980:
+      value: 2036156
+      label: "-- 980 History of South America"
+    ddc990:
+      value: 2036157
+      label: "-- 990 History of other areas"
