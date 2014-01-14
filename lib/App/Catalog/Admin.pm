@@ -50,22 +50,28 @@ get '/admin/curate' => sub {
 };
 	
 get '/admin/search_researcher' => sub {
-	my $q = params->{'q'};
+	my $q = params->{'ftext'};
 	my $hits = h->search_researcher({q => $q});
 		
-	to_dumper $hits;
-		
-		#my $jsonstring = "[";
-		#foreach (@{$hits->{hits}}){
-		#	my $mainTitle = $_->{mainTitle};
-		#	$mainTitle =~ s/"/\\"/g;
-		#	my $citation = $_->{citation}->{$style};
-		#	$citation =~ s/"/\\"/g;
-		#	$jsonstring .= "{oId:\"" . $_->{oId} . "\", title:\"" . $mainTitle . "\", citation:\"" . $citation . "\"},";
-		#}
-		#$jsonstring =~ s/,$//g;
-		#$jsonstring .= "]";
-		#return $jsonstring;
+	my $jsonstring = "[";
+	foreach (@{$hits->{hits}}){
+		my $pevzId = $_->{_id};
+		my $sbcatId = $_->{sbcatId};
+		my $firstName = $_->{givenName};
+		$firstName =~ s/"/\\"/g;
+		my $lastName = $_->{surname};
+		$lastName =~ s/"/\\"/g;
+		my $title = $_->{bis_personTitle} || "";
+		$jsonstring .= "{pevzId:\"" . $pevzId . "\"";
+		$jsonstring .= ", sbcatId:\"" . $sbcatId . "\"";
+		$jsonstring .= ", firstName:\"" . $firstName . "\"";
+		$jsonstring .= ", lastName:\"" . $lastName . "\"";
+		$jsonstring .= ", title:\"" . $title ."\"";
+		$jsonstring .= "},";
+	}
+	$jsonstring =~ s/,$//g;
+	$jsonstring .= "]";
+	return $jsonstring;
 };
 
 1;

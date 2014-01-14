@@ -77,7 +77,7 @@ sub xddcs {
 
 sub display_doctypes {
 	my $map = config->{forms}{publicationTypes};
-	my $doctype = $map->{lc $_[1]}->{label};
+	my $doctype = $map->{$_[1]}->{label};
 	$doctype;
 }
 
@@ -154,8 +154,14 @@ sub search_publication {
 
 sub search_researcher {
 	my ($self, $p) = @_;
-	my $q = $p->{q};
-	#$q .= $q eq "" ? "publCount>0" : " AND publCount>0";
+	my $q;
+	if ($p->{q}) {
+		my @textbits = split " ", $p->{q};
+		foreach (@textbits){
+			$q .= " AND " . $_;
+		}
+		$q =~ s/^ AND //g;
+    }
 	
 	my $hits = researcher->search(
 	  cql_query => $q,
@@ -164,9 +170,6 @@ sub search_researcher {
 	  sru_sortkeys => $p->{sorting} || "fullName,,1",
 	);
 	
-	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-        $hits->{$_} = $hits->$_;
-    }
     return $hits;
 }
 

@@ -45,16 +45,19 @@ if($status =~ /"status":404}$/){
 
 my $command_1 = "$perl_version $sb_home/bin/index_publication.pl";
 my $command_2 = "$perl_version $sb_home/bin/index_project.pl";
+my $command_3 = "$perl_version $sb_home/bin/index_researcher.pl";
 my $command_4 = "$perl_version $sb_home/bin/index_award.pl";
 
 if($newPub eq "backend2"){
 	$command_1 .= " -m backend2";
 	$command_2 .= " -m backend2";
+	$command_3 .= " -m backend2";
 	$command_4 .= " -m backend2";
 }
 elsif($newPub eq "backend1"){
 	$command_1 .= " -m backend1";
 	$command_2 .= " -m backend1";
+	$command_3 .= " -m backend1";
 	$command_4 .= " -m backend1";
 }
 
@@ -63,6 +66,9 @@ my $result_1 = `$command_1`;
 
 print "Indexing projects.\n";
 my $result_2 = `$command_2`;
+
+print "Indexing researchers.\n";
+my $result_3 = `$command_3`;
 
 print "Indexing awards.\n";
 my $result_4 = `$command_4`;

@@ -95,6 +95,23 @@ if ($opt_i) {
 	my $q = "id=$opt_i";
 	my $results = $db->find($q);
 	while (my $rec = $results->next) {
+		
+		if($rec->{isAuthoredBy}){
+    		foreach(@{$rec->{isAuthoredBy}}){
+    			if($_->{personNumber}){
+    				$authors->{$_->{personNumber}} = "true";
+    			}
+    		}
+    	}
+
+    	if($rec->{isEditedBy}){
+    		foreach(@{$rec->{isEditedBy}}){
+    			if($_->{personNumber}){
+    				$authors->{$_->{personNumber}} = "true";
+    			}
+    		}
+
+    	}
 
 		$pre_fixer->fix($rec);
     	$rec->{citation} = $citbag->get($rec->{_id}) if $rec->{_id};
@@ -107,6 +124,13 @@ if ($opt_i) {
 		$bag->add($rec);
 		$bag->commit;
 		
+		if($authors){
+			foreach my $key (keys %$authors){
+				`/srv/www/app-catalog/bin/index_researcher.pl -i $key`;
+			}
+			$authors = ();
+		}
+		
     	exit;
     }
 }
@@ -116,6 +140,20 @@ if ($opt_u)  { # update process
 	my $q = "dateLastChanged > \"$opt_u\"";
     my $results = $db->find($q);
     while (my $rec = $results->next) {
+    	if($rec->{isAuthoredBy}){
+    		foreach(@{$rec->{isAuthoredBy}}){
+    			if($_->{personNumber}){
+    				$authors->{$_->{personNumber}} = "true";
+    			}
+    		}
+    	}
+    	if($rec->{isEditedBy}){
+    		foreach(@{$rec->{isEditedBy}}){
+    			if($_->{personNumber}){
+    				$authors->{$_->{personNumber}} = "true";
+    			}
+    		}
+    	}
     	add_to_index($rec);
     }
     
@@ -139,6 +177,18 @@ if ($opt_u)  { # update process
 }
 
 $bag->commit;
+
+if($authors){
+	foreach my $key (keys %$authors){
+		if($opt_m){
+			`/srv/www/app-catalog/bin/index_researcher.pl -m $opt_m -i $key`;
+		}
+		else {
+			`/srv/www/app-catalog/bin/index_researcher.pl -i $key`;
+		}
+	}
+	$authors = ();
+}
 
 =head1 SYNOPSIS
 
