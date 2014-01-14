@@ -73,27 +73,26 @@
       </div>
       
       <div class="col-md-2">
-        <label for="creator">
-          Creator<span class="starMandatory">*</span> <i class="glyphicon glyphicon-plus" id="plusCreator"></i>
+        <label for="author">
+          Creator<span class="starMandatory">*</span> <i class="glyphicon glyphicon-plus" id="plusAuthor"></i>
         </label>
       </div>
-      <div class="col-md-10" id="creator">
+      <div class="col-md-10" id="author">
         [% IF !authors %]
         <div class="form-group">
-          <input type="hidden" name="au_auLuAuthorOId_0" value="[% auLuAuthorOId %]"/>
+          <input type="hidden" name="au_auLuAuthorOId_0" id="id_au_auLuAuthorOId_0" value="[% auLuAuthorOId %]"/>
           <input type="hidden" name="au_auPersonNumber_0" id="id_au_auPersonNumber_0" value="[% aupersonNumber %]" />
           <input name="au_auLuLdapId_0" type="hidden" value="[% auLuLdapId %]" />
           <input name="au_auEndDate_0" type="hidden" value="[% auEndDate %]" />
-          <input type="hidden" id="auSel0" name="searchAuthors" onclick="javascript:selectAuthor(this.form.au_auSurname_0, this.form.au_auGivenName_0, 0)" value="Link to PEVZ Account" class="button1"/>
             
           <span class="form-group col-md-3">
-            <input type="text" name="au_auGivenName_0" placeholder="First Name" id="id_au_auGivenName_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] value="[% auGivenName %]" class="form-control required" />
+            <input type="text" name="au_auGivenName_0" placeholder="First Name" id="id_au_auGivenName_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control required" />
           </span>
           <span class="form-group col-md-4">
-            <input type="text" name="au_auSurname_0" placeholder="Last Name" id="id_au_auSurname_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] value="[% auSurname %]" class="form-control required" />
+            <input type="text" name="au_auSurname_0" placeholder="Last Name" id="id_au_auSurname_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control required" />
           </span>
           <span class="form-group col-md-2">
-            <input type="text" name="au_auPersonTitle_0" placeholder="Title" id="id_au_auPersonTitle_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] value="[% auPersonTitle %]" class="form-control" />
+            <input type="text" name="au_auPersonTitle_0" placeholder="Title" id="id_au_auPersonTitle_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" />
           </span>
           
           <span class="col-md-1">
@@ -101,17 +100,17 @@
           </span>
           
           <span class="col-md-2">
-            <img id="auAuthorized0" class="linkPevz" src="/images/biNotAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+            <input name="linkPevz_0" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
+            <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
           </span>
         </div>
         [% ELSE %]
         [% FOREACH name IN authors %]
           <div class="form-group">
-            <input type="hidden" name="au_auLuAuthorOId_[% loop.index %]" value="[% name.auLuAuthorOId %]"/>
+            <input type="hidden" name="au_auLuAuthorOId_[% loop.index %]" id="id_au_auLuAuthorOId_[% loop.index %]" value="[% name.auLuAuthorOId %]"/>
             <input type="hidden" name="au_auPersonNumber_[% loop.index %]" id="id_au_auPersonNumber_[% loop.index %]" value="[% name.aupersonNumber %]" />
             <input name="au_auLuLdapId_[% loop.index %]" type="hidden" value="[% name.auLuLdapId %]" />
             <input name="au_auEndDate_[% loop.index %]" type="hidden" value="[% name.auEndDate %]" />
-            <input type="hidden" id="auSel[% loop.index %]" name="searchAuthors" onclick="javascript:selectAuthor(this.form.au_auSurname_[% loop.index %], this.form.au_auGivenName_[% loop.index %], [% loop.index %])" value="Link to PEVZ Account" class="button1"/>
 
             <span class="form-group col-md-3">
               <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="First Name" id="id_au_auGivenName_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auGivenName %]" class="form-control required"/>
@@ -132,7 +131,7 @@
             </span>
             
             <span class="col-md-2">
-              <input name="au_auLuMarked_[% loop.index %]" id="id_au_auLuMarked_[% loop.index %]" value="1" type="checkbox" onclick="auSelToggle('[% loop.index %]', this)" onchange="if (this.form.au_auLuMarked_[% loop.index %].checked==true) selectAuthor(this.form.au_auSurname_[% loop.index %], this.form.au_auGivenName_[% loop.index %], [% loop.index %])" [% IF name.auLuMarked %]checked="checked"[% END %]/>
+              <input name="linkPevz_[% loop.index %]" class="linkPevz" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
               [% IF name.auLuAuthorOId OR name.auLuLdapId %]
                 <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
               [% ELSE %]
@@ -142,6 +141,20 @@
           </div>
         [% END %]
         [% END %]
+        
+        <div class="modal" id="linkPevzModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Several PEVZ Accounts found... make a choice</h4>
+              </div>
+              <div class="modal-body">
+              </div>
+            </div>
+          </div>
+        </div>
+        
       </div>
       
       <div class="col-md-2">
@@ -780,6 +793,7 @@
 
 <script>
 
+// Placeholder for MSIE
 if(navigator.userAgent.indexOf('MSIE') != -1){
   $('[placeholder]').focus(function() {
     var input = $(this);
@@ -804,16 +818,12 @@ if(navigator.userAgent.indexOf('MSIE') != -1){
   });
 }
 
+
+// Tab forward functions
 $('#oneToTwo').click(function(){
   var check = 1;
   var oneauthor = 0;
-  $('#creator').children('div.form-group').each(function(){
-    //if(!$(this).children('span').eq(0).children().eq(0).val()){
-    //  $(this).children('span').eq(0).addClass("has-error");
-    //}
-    //if(!$(this).children('span').eq(1).children().eq(0).val()){
-    //  $(this).children('span').eq(1).addClass("has-error");
-    //}
+  $('#author').children('div.form-group').each(function(){
     if($(this).children('span').eq(0).children().eq(0).val() && $(this).children('span').eq(1).children().eq(0).val()){
       oneauthor = 1;
     }
@@ -836,7 +846,7 @@ $('#oneToTwo').click(function(){
     }
   });
   if(check){
-    $('#creator .has-error').each(function(){
+    $('#author .has-error').each(function(){
       $(this).removeClass('has-error');
     });
     $('#basicFields').removeClass('active');
@@ -845,36 +855,6 @@ $('#oneToTwo').click(function(){
     $('#li_basicFields').removeClass('active');
     $('#li_fileUpload').css('visibility','visible');
     $('#li_fileUpload').addClass('active');
-  }
-});
-
-$('#id_openDataRelease').click(function(){
-  if(!$('#id_openDataRelease').is(':checked')){
-    if ($('.dropzone').first().children().length > 1){
-      $('#liStepThree').css('visibility','hidden');
-      $('#liStepFour').css('visibility','hidden');
-      $('#odralert').removeClass('alert-info');
-      $('#odralert').addClass('alert-danger');
-    }
-  }
-  else {
-    $('#odralert').removeClass('alert-danger');
-    $('#odralert').addClass('alert-info');
-  }
-});
-
-$('#id_dataReuseLicense').change(function(){
-  if($('#id_dataReuseLicense').val() == ''){
-    if ($('.dropzone').first().children().length > 1){
-      $('#liStepThree').css('visibility','hidden');
-      $('#liStepFour').css('visibility','hidden');
-      $('#id_dataReuseLicense').parent().removeClass('alert-info');
-      $('#id_dataReuseLicense').parent().addClass('alert-danger');
-    }
-  }
-  else {
-    $('#id_dataReuseLicense').parent().removeClass('alert-danger');
-    $('#id_dataReuseLicense').parent().addClass('alert-info');
   }
 });
 
@@ -929,45 +909,15 @@ $('#twoToThree').click(function(e){
 });
 
 $('#threeToFour').click(function(){
-  var check = 1;
-  $('.required').each(function(){
-    if(!$(this).val()){
-      $(this).parents('div.control-group').addClass('error');
-      check = 0;
-    }
-  });
-  if(check){
-    var urlstr = '';
-    $('input').each(function(){
-      urlstr = urlstr + '<span id="inputSpan"><div class="col-md-2">' + $(this).attr('name') + '</div><div class="col-md-5">';
-      if($(this).val()){
-        urlstr = urlstr + $(this).val();
-      }
-      else {
-        urlstr = urlstr + '&nbsp;';
-      }
-      urlstr = urlstr + '</div>'; 
-    });
-    $('select').each(function(){
-      urlstr = urlstr + '<div class="col-md-2">' + $(this).attr('name') + '</div><div class="col-md-5">';
-      if($(this).val()){
-        urlstr = urlstr + $(this).val();
-      }
-      else {
-        urlstr = urlstr + '&nbsp;';
-      }
-      urlstr = urlstr + '</div></span>';
-    });
-
     $('#li_relatedMaterial').css('visibility','visible');
     $('#li_supplementaryFields').removeClass('active');
     $('#li_relatedMaterial').addClass('active');
     $('a[href=#relatedMaterial]').attr('data-toggle','tab');
     $('#inputSpan').remove();
-    $('#checkInput').append(urlstr);
-  }
 });
 
+
+// Tab back functions
 $('#fourToThree').click(function(){
   $('#li_relatedMaterial').removeClass('active');
   $('#li_supplementaryFields').addClass('active');
@@ -983,6 +933,16 @@ $('#twoToOne').click(function(){
   $('#li_basicFields').addClass('active');
 });
 
+
+// plus
+$('#plusAuthor').click(function(){
+  var items = $('#author div.form-group');
+  var index = items.index($('#author div.form-group:last')) + 1;
+  $('#author').append('[% INCLUDE backend/fields/field_author.tt %]');
+  $('#id_linkPevz_'+index).bind("click", function() { return linkPevz($('#id_linkPevz_'+index))});
+});
+
+
 // minus
 $(document).on('click', '.group', function(){
   var index = $(this).parent().parent().index();
@@ -991,38 +951,69 @@ $(document).on('click', '.group', function(){
   }
 });
 $(document).on('click', '.single', function(){
-  var index = $(this).parent().index();
+  var index = $(this).parent().parent().index();
   if(parseInt(index) != 0){
-    $(this).parent().remove();
+    $(this).parent().parent().remove();
   }
 });
 $(document).on('click', '.author', function(){
   var container = $(this).parent().parent();
   container.children('input').each(function(){
-    if($(this).value != "Link to PEVZ Account"){
-      if($(this).attr("readonly")){
-        $(this).removeAttr("readonly");
-      }
-      if($(this).attr("checked")){
-        $(this).removeAttr("checked");
-      }
-      this.value = "";
+    if($(this).attr("readonly")){
+      $(this).removeAttr("readonly");
     }
+    if($(this).is(':checked')){
+      $(this).removeAttr("checked");
+    }
+    this.value = "";
   });
   container.children('span').children('input').each(function(){
     if($(this).attr("readonly")){
       $(this).removeAttr("readonly");
     }
-    if($(this).attr("checked")){
+    if($(this).is(':checked')){
       $(this).removeAttr("checked");
     }
     this.value = "";
   });
-  container.children('img').each(function(){
+  container.find('img').each(function(){
     this.title = "";
     this.src = "/images/biNotAuthorized.png";
   });  
 });
+
+
+// Research Data License checks
+$('#id_openDataRelease').click(function(){
+  if(!$('#id_openDataRelease').is(':checked')){
+    if ($('.dropzone').first().children().length > 1){
+      $('#liStepThree').css('visibility','hidden');
+      $('#liStepFour').css('visibility','hidden');
+      $('#odralert').removeClass('alert-info');
+      $('#odralert').addClass('alert-danger');
+    }
+  }
+  else {
+    $('#odralert').removeClass('alert-danger');
+    $('#odralert').addClass('alert-info');
+  }
+});
+
+$('#id_dataReuseLicense').change(function(){
+  if($('#id_dataReuseLicense').val() == ''){
+    if ($('.dropzone').first().children().length > 1){
+      $('#liStepThree').css('visibility','hidden');
+      $('#liStepFour').css('visibility','hidden');
+      $('#id_dataReuseLicense').parent().removeClass('alert-info');
+      $('#id_dataReuseLicense').parent().addClass('alert-danger');
+    }
+  }
+  else {
+    $('#id_dataReuseLicense').parent().removeClass('alert-danger');
+    $('#id_dataReuseLicense').parent().addClass('alert-info');
+  }
+});
+
 
 
 function editFile(fileOId, recordOId, fileName, accessLevel, accessEmbargo, openAccessDate, fileTitle, fileDescription){
@@ -1088,11 +1079,7 @@ function deleteRelMat(materialOId, otherOId) {
    }
 }
 
-$('#plusCreator').click(function(){
-  var items = $('#creator div.control-group');
-  var index = items.index($('#creator div.control-group:last')) + 1;
-  $('#creator').append('[% INCLUDE backend/fields/rd_creator.tt %]');
-});
+
 
 $('#plusDepartment').click(function(){
   var items = $('#department div.control-group');
@@ -1143,15 +1130,45 @@ $('#plusResearchgroup').click(function(){
 });
 
 $('button.cancel-button').click(function() {
-  window.location.href = '/luur';
+  window.location.href = '/admin';
 });
 
-$('.linkPevz').click(function(){
-  var lineId = $(this).id;
-  var firstName = $('#au_auGivenName_' + lineId).val();
-  var lastName = $('#au_auSurname_' + lineId).val();
-  
+
+$('#searchPubl').click(function() {
+
+  $.get(puburl,function(response) {
+    var objJSON = eval("(function(){return " + response + ";})()");
+    $('#results').html("");
+    for(var i=0;i<objJSON.length;i++){
+      var data = objJSON[i];
+      var control = "";
+      var oId = "";
+      var title = "";
+      var citation = "";
+      $.each(data, function(key, value){
+        if(key == "oId"){
+          oId = value;
+        }
+        if(key == "title"){
+          title = value;
+        }
+        if(key == "citation"){
+          citation = value;
+        }
+      });
+        $('#results').append("<div class=\"span5\"><a href=\"#\" onclick=\"javascript:connect(" + oId + ",[% recordOId %])\"><i class=\"icon-plus\"></i> <strong>" + title + "</strong></a><br />" + citation + "</div><div class=\"span3\">&nbsp;</div>");
+      oId = "";
+      title = "";
+      citation = "";
+      control = "";
+    }
+    if($.trim($('#results').html())==''){
+      $('#results').html("<div><div class=\"span4 alert alert-error\">No results found or all matching results have already been connected.</div></div>");
+    }
+  });
 });
+
+
 
 <!--
 <!-- INCLUDE jsUpload.tmpl -->
