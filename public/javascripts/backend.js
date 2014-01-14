@@ -5,11 +5,8 @@ function linkPevz(element){
   if(!$(element).is(':checked')){
     // So, release input fields and change img back to gray
     $('#auAuthorized' + lineId).attr('src','/images/biNotAuthorized.png');
-    $('#id_au_auLuAuthorOId_' + lineId).val("");
-    $('#id_au_auPersonNumber_' + lineId).val("");
-    $('#id_au_auGivenName_' + lineId).removeAttr("readonly");
-    $('#id_au_auSurname_' + lineId).removeAttr("readonly");
-    $('#id_au_auPersonTitle_' + lineId).removeAttr("readonly");
+    $('#id_au_auLuAuthorOId_' + lineId + ', #id_au_auPersonNumber_' + lineId).val("");
+    $('#id_au_auGivenName_' + lineId + ', #id_au_auSurname_' + lineId + ', #id_au_auPersonTitle_' + lineId).removeAttr("readonly");
   }
   
   // Someone checked the "Link to PEVZ Account" checkbox
@@ -52,15 +49,13 @@ function linkPevz(element){
         $('#id_au_auLuAuthorOId_' + lineId).val(sbcatId);
         $('#id_au_auPersonNumber_' + lineId).val(pevzId);
         $('#id_au_auGivenName_' + lineId).val(firstName);
-        $('#id_au_auGivenName_' + lineId).attr("readonly","readonly");
         $('#id_au_auSurname_' + lineId).val(lastName);
-        $('#id_au_auSurname_' + lineId).attr("readonly","readonly");
         if(title != ""){
           $('#id_au_auPersonTitle_' + lineId).val(title);
         }
-        $('#id_au_auPersonTitle_' + lineId).attr("readonly","readonly");
-      
+        $('#id_au_auGivenName_' + lineId + ', #id_au_auSurname_' + lineId + ', #id_au_auPersonTitle_' + lineId).attr("readonly","readonly");
         $('#auAuthorized' + lineId).attr('src','/images/biAuthorized.png');
+        $('#id_au_auGivenName_' + lineId + ', #id_au_auSurname_' + lineId).parent().removeClass("has-error");
       
         pevzId = "";
         sbcatId = "";
@@ -115,15 +110,14 @@ function linkPevz(element){
           
           $('#id_au_auPersonNumber_' + lineId).val(pevzId);
           $('#id_au_auGivenName_' + lineId).val(firstName);
-          $('#id_au_auGivenName_' + lineId).attr("readonly","readonly");
           $('#id_au_auSurname_' + lineId).val(lastName);
-          $('#id_au_auSurname_' + lineId).attr("readonly","readonly");
           if(title != ""){
             $('#id_au_auPersonTitle_' + lineId).val(title);
           }
-          $('#id_au_auPersonTitle_' + lineId).attr("readonly","readonly");
-          
+          $('#id_au_auGivenName_' + lineId + ', #id_au_auSurname_' + lineId + ', #id_au_auPersonTitle_' + lineId).attr("readonly","readonly");
+                    
           $('#auAuthorized' + lineId).attr('src','/images/biAuthorized.png');
+          $('#id_au_auGivenName_' + lineId + ', #id_au_auSurname_' + lineId).parent().removeClass("has-error");
           $('#linkPevzModal').modal("hide");
           $('#linkPevzModal').find('.modal-body').first().html('');
         });

@@ -86,10 +86,10 @@
           <input name="au_auEndDate_0" type="hidden" value="[% auEndDate %]" />
             
           <span class="form-group col-md-3">
-            <input type="text" name="au_auGivenName_0" placeholder="First Name" id="id_au_auGivenName_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control required" />
+            <input type="text" name="au_auGivenName_0" placeholder="First Name" id="id_au_auGivenName_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" value="" />
           </span>
           <span class="form-group col-md-4">
-            <input type="text" name="au_auSurname_0" placeholder="Last Name" id="id_au_auSurname_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control required" />
+            <input type="text" name="au_auSurname_0" placeholder="Last Name" id="id_au_auSurname_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" value="" />
           </span>
           <span class="form-group col-md-2">
             <input type="text" name="au_auPersonTitle_0" placeholder="Title" id="id_au_auPersonTitle_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" />
@@ -113,10 +113,10 @@
             <input name="au_auEndDate_[% loop.index %]" type="hidden" value="[% name.auEndDate %]" />
 
             <span class="form-group col-md-3">
-              <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="First Name" id="id_au_auGivenName_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auGivenName %]" class="form-control required"/>
+              <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="First Name" id="id_au_auGivenName_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auGivenName %]" class="form-control"/>
             </span>
             <span class="form-group col-md-4">
-              <input type="text" name="au_auSurname_[% loop.index %]" placeholder="Last Name" id="id_au_auSurname_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auSurname %]" class="form-control required" />
+              <input type="text" name="au_auSurname_[% loop.index %]" placeholder="Last Name" id="id_au_auSurname_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auSurname %]" class="form-control" />
             </span>
             <span class="form-group col-md-2">
               <input type="text" name="au_auPersonTitle_[% loop.index %]" placeholder="Title" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auPersonTitle %]" class="form-control"/>
@@ -824,6 +824,12 @@ $('#oneToTwo').click(function(){
   var check = 1;
   var oneauthor = 0;
   $('#author').children('div.form-group').each(function(){
+    if(!$(this).children('span').eq(0).children().eq(0).val()){
+      $(this).children('span').eq(0).addClass("has-error");
+    }
+    if(!$(this).children('span').eq(1).children().eq(0).val()){
+      $(this).children('span').eq(1).addClass("has-error");
+    }
     if($(this).children('span').eq(0).children().eq(0).val() && $(this).children('span').eq(1).children().eq(0).val()){
       oneauthor = 1;
     }
@@ -846,15 +852,13 @@ $('#oneToTwo').click(function(){
     }
   });
   if(check){
-    $('#author .has-error').each(function(){
+    $('#author.has-error').each(function(){
       $(this).removeClass('has-error');
     });
-    $('#basicFields').removeClass('active');
-    $('#fileUpload').addClass('active');
+    $('#basicFields, #li_basicFields').removeClass('active');
+    $('#fileUpload, #li_fileUpload').addClass('active');
     $('button[href=#fileUpload]').attr('data-toggle','tab');
-    $('#li_basicFields').removeClass('active');
     $('#li_fileUpload').css('visibility','visible');
-    $('#li_fileUpload').addClass('active');
   }
 });
 
@@ -899,12 +903,10 @@ $('#twoToThree').click(function(e){
       }
     }
 
-    $('#fileUpload').removeClass('active');
-    $('#supplementaryFields').addClass('active');
+    $('#fileUpload, #li_fileUpload').removeClass('active');
+    $('#supplementaryFields, #li_supplementaryFields').addClass('active');
     $('a[href=#supplementaryFields]').attr('data-toggle','tab');
-    $('#li_fileUpload').removeClass('active');
     $('#li_supplementaryFields').css('visibility','visible');
-    $('#li_supplementaryFields').addClass('active');
   }
 });
 
@@ -987,8 +989,7 @@ $(document).on('click', '.author', function(){
 $('#id_openDataRelease').click(function(){
   if(!$('#id_openDataRelease').is(':checked')){
     if ($('.dropzone').first().children().length > 1){
-      $('#liStepThree').css('visibility','hidden');
-      $('#liStepFour').css('visibility','hidden');
+      $('#liStepThree, #liStepFour').css('visibility','hidden');
       $('#odralert').removeClass('alert-info');
       $('#odralert').addClass('alert-danger');
     }
@@ -1002,8 +1003,7 @@ $('#id_openDataRelease').click(function(){
 $('#id_dataReuseLicense').change(function(){
   if($('#id_dataReuseLicense').val() == ''){
     if ($('.dropzone').first().children().length > 1){
-      $('#liStepThree').css('visibility','hidden');
-      $('#liStepFour').css('visibility','hidden');
+      $('#liStepThree, #liStepFour').css('visibility','hidden');
       $('#id_dataReuseLicense').parent().removeClass('alert-info');
       $('#id_dataReuseLicense').parent().addClass('alert-danger');
     }
