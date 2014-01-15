@@ -18,16 +18,7 @@ Catmandu->load;
 
 get '/' => sub {
 
-	template 'index.html';
-	# my $newRec;
-	
-	# $newRec = params->{newRec} if params->{newRec};
-	
-	# my $hits;
-	# $hits->{parameters} = params;
-	# $hits->{newRec} = $newRec if $newRec;
-	
- #    #template 'index.t', $hits;
+	redirect h->host;
 };
 
 get '/submitForm' => sub {
