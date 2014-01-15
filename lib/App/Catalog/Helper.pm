@@ -34,6 +34,10 @@ sub researcher {
 	state $bag = Catmandu->store('search')->bag('researcher');
 }
 
+sub department {
+	state $bag = Catmandu->store('search')->bag('department');
+}
+
 sub authority {
     state $bag = Catmandu->store('authority')->bag;
 }
@@ -55,8 +59,11 @@ sub getDepartment {
 	if($_[1] =~ /\d{1,}/){
 		$_[0]->authority->get($_[1]);
 	}
-	else {
+	elsif($_[1] ne "") {
 		$_[0]->authority->select("name_lc", lc $_[1])->to_array;
+	}
+	else{
+		$_[0]->authority->select("type", "organization")->to_array;
 	}
 }
 
@@ -125,25 +132,14 @@ sub search_publication {
 	
 	my $sort = $p->{'sort'} ||= $default_sort;
 	my $bag = $p->{'bag'} ||= "publicationItem";
-	
-	#if($bag eq "publicationItem"){
-		$hits = publications->search(
-		  cql_query => $p->{q},
-		  sru_sortkeys => $sort,
-		  limit => $p->{limit} ||= config->{default_page_size},
-		  start => $p->{start} ||= 0,
-		  facets => $p->{facets} ||= {},
-		);
-	#}
-	#else {
-	#	$hits = research->search(
-	#	  cql_query => $p->{q},
-	#	  sru_sortkeys => $sort,
-	#	  limit => $p->{limit} ||= config->{default_page_size},
-	#	  start => $p->{start} ||= 0,
-	#	  facets => $p->{facets} ||= {},
-	#	);
-	#}
+
+	$hits = publications->search(
+	    cql_query => $p->{q},
+		sru_sortkeys => $sort,
+		limit => $p->{limit} ||= config->{default_page_size},
+		start => $p->{start} ||= 0,
+		facets => $p->{facets} ||= {},
+	);
        	
     foreach (qw(next_page last_page page previous_page pages_in_spread)) {	
     	$hits->{$_} = $hits->$_;
@@ -155,13 +151,14 @@ sub search_publication {
 sub search_researcher {
 	my ($self, $p) = @_;
 	my $q;
-	if ($p->{q}) {
-		my @textbits = split " ", $p->{q};
-		foreach (@textbits){
-			$q .= " AND " . $_;
-		}
-		$q =~ s/^ AND //g;
-    }
+	#if ($p->{q}) {
+	#	my @textbits = split " ", $p->{q};
+	#	foreach (@textbits){
+	#		$q .= " AND fullname=" . $_ ;
+	#	}
+	#	$q =~ s/^ AND //g;
+    #}
+    $q = $p->{q};
 	
 	my $hits = researcher->search(
 	  cql_query => $q,
@@ -171,6 +168,21 @@ sub search_researcher {
 	);
 	
     return $hits;
+}
+
+sub search_department {
+	my ($self, $p) = @_;
+	my $q;
+	
+	$q = $p->{q};
+	
+	my $hits = department->search(
+	  cql_query => $q,
+	  limit => $p->{limit} ||= 20,
+	  start => $p->{start} ||= 0,
+	);
+	
+	return $hits;
 }
 
 #sub search_project {

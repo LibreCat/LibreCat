@@ -6816,6 +6816,36 @@ td.visible-print {
 Modifications for PUB
 */
 
+.ui-autocomplete {
+	position: absolute;
+	cursor: default;
+}
+.ui-menu {
+	list-style:none;
+	padding: 2px;
+	margin: 0;
+	display:block;
+	float: left;
+}
+.ui-menu .ui-menu-item a.ui-state-hover,
+.ui-menu .ui-menu-item a.ui-state-active {
+	background: lightgray;
+}
+.ui-widget-content {
+	border: 1px solid black;
+	background: white;
+	color: #222222;
+}
+.ui-autocomplete {
+	max-height: 100px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 20px;
+}
+* html .ui-autocomplete {
+	height: 100px;
+}
+
 .greenline {
 	border-bottom:4px solid #b6c828;
 	margin:0 0 10px 0;

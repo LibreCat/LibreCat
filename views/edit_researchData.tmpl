@@ -164,42 +164,54 @@
       </div>
       <div class="col-md-10" id="department">
       [% IF !departments %]
-        <span class="form-group col-md-7">
-          <input type="text" name="dp_departmentName_0" class="form-control" id="dp_autocomplete_0" value="" />
-        </span>
+        <div class="form-group">
+          <input type="hidden" name="dp_departmentOId_0" id="dp_idautocomplete_0" value="" />
         
-        <span class="form-group col-md-2">
-          <input type="button" onclick="javascript:selectOrganization('dp_departmentName_0', 'dp_departmentOId_0')" class="btn" value="Select"/>
-        </span>
+          <span class="form-group col-md-7">
+            <input type="text" name="dp_departmentName_0" class="form-control" id="dp_autocomplete_0" value="" />
+          </span>
         
-        <span class="col-md-1">
-          <i class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></i>
-        </span>
+          <span class="form-group col-md-2">
+            <input type="button" onclick="javascript:selectOrganization('dp_departmentName_0', 'dp_departmentOId_0')" class="btn" value="Select"/>
+          </span>
         
-        <input type="hidden" name="dp_departmentOId_0" id="dp_idautocomplete_0" value="" />
-        <script>
-          $(function() {
-            $( "#dp_autocomplete_0" ).autocomplete({
-              source: "/luur/authority_organization?func=get_dp_Json",
-              minLength: 2,
-              select: function( event, ui ) {
-                $( "#dp_autocomplete_0" ).val( ui.item.label );
-                $( "#dp_idautocomplete_0" ).val( ui.item.id );
-              }
+          <span class="col-md-1">
+            <i class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></i>
+          </span>
+        
+          <script>
+            $(function() {
+              $( "#dp_autocomplete_0" ).autocomplete({
+                source: "/myPUB/search_department?",
+                minLength: 2,
+                select: function( event, ui ) {
+                  $( "#dp_autocomplete_0" ).val( ui.item.label );
+                  $( "#dp_idautocomplete_0" ).val( ui.item.id );
+                }
+              });
             });
-          });
-        </script>
+          </script>
+        </div>
       [% ELSE %]
       [% FOREACH dept IN departments %]
-        <div class="controls control-group">
-          <input type="text" name="dp_departmentName_[% loop.index %]" class="col-md-4" id="dp_autocomplete_[% loop.index %]" value="[% dept.departmentName %]" />
-          <input type="button" onclick="javascript:selectOrganization('dp_departmentName_[% loop.index %]', 'dp_departmentOId_[% loop.index %]')" class="btn" value="Select"/>
+        <div class="form-group">
           <input type="hidden" name="dp_departmentOId_[% loop.index %]" id="dp_idautocomplete_[% loop.index %]" value="[% dept.departmentOId %]" />
-          [% IF loop.index == 0 %]
-          <i class="icon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></i>
-          [% ELSE %]
-          <i class="icon-minus single"></i>
+          
+          <span class="form-group col-md-7">
+            <input type="text" name="dp_departmentName_[% loop.index %]" class="form-control" id="dp_autocomplete_[% loop.index %]" value="[% dept.departmentName %]" />
+          </span>
+          
+          <span class="form-group col-md-2">
+            <input type="button" onclick="javascript:selectOrganization('dp_departmentName_[% loop.index %]', 'dp_departmentOId_[% loop.index %]')" class="btn" value="Select"/>
+          </span>
+          
+          <span class="col-md-1">
+            [% IF loop.index == 0 %]
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
+            [% ELSE %]
+            <span class="glyphicon glyphicon-minus single"></span>
           [% END %]
+          
           <script>
             $(function() {
               $( "#dp_autocomplete_[% loop.index %]" ).autocomplete({
@@ -1084,7 +1096,7 @@ function deleteRelMat(materialOId, otherOId) {
 $('#plusDepartment').click(function(){
   var items = $('#department div.control-group');
   var index = items.index($('#department div.control-group:last')) + 1;
-  $('#department').append('[% INCLUDE backend/fields/rd_department.tt %]');
+  $('#department').append('[% INCLUDE backend/fields/field_department.tt %]');
   $('#department').bind("click", function(){
     $( "#dp_autocomplete_" + index ).autocomplete({
       source: "/luur/authority_organization?func=get_dp_Json",
