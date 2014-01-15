@@ -5,15 +5,15 @@ use Dancer ':syntax';
 use Dancer::Request;
 use App::Catalog::Helper;
     
-get '/admin' => sub {
-	forward '/admin/86212';
+get '/myPUB' => sub {
+	forward '/myPUB/86212';
 };
 	
-get '/admin/add' => sub {
+get '/myPUB/add' => sub {
 	template 'edit_researchData.tmpl', {recordOId => "123456789"};#, file => [{fileOId => 1, fileName => "file", accessLevel => "admin", dateLastUploaded => "2014-01-10", isUploadedBy => {login => "kohorst"}}]};
 };
 	
-get qr{/admin/(\d{1,})/*} => sub {
+get qr{/myPUB/(\d{1,})/*} => sub {
 	my ($id) = splat;
 	my $personInfo = h->getPerson($id);
 	my $sbcatId = $personInfo->{sbcatId};
@@ -37,19 +37,19 @@ get qr{/admin/(\d{1,})/*} => sub {
 	template 'admin.tt', $hits;
 };
 
-get '/admin/update' => sub {
+get '/myPUB/update' => sub {
 	template 'admin_update';
 };
 
-get '/admin/accounts' => sub {
+get '/myPUB/accounts' => sub {
 	template 'accounts'
 };
 
-get '/admin/curate' => sub {
+get '/myPUB/curate' => sub {
 	template 'curate';
 };
 	
-get '/admin/search_researcher' => sub {
+get '/myPUB/search_researcher' => sub {
 	my $q = params->{'ftext'};
 	my $hits = h->search_researcher({q => $q});
 		
@@ -69,6 +69,37 @@ get '/admin/search_researcher' => sub {
 		$jsonstring .= ", title:\"" . $title ."\"";
 		$jsonstring .= "},";
 	}
+	$jsonstring =~ s/,$//g;
+	$jsonstring .= "]";
+	return $jsonstring;
+};
+
+get '/myPUB/search_department' => sub {
+	my $q = params->{'term'} || "";
+	$q = $q . "*" if $q ne "";
+	my $hits = h->search_department({q => $q, limit => 1000});
+	
+	#to_dumper($hits);
+	
+	my $jsonstring = "[";
+	foreach (@{$hits->{hits}}){
+		my $label = "";
+		$label = $_->{name};
+		
+		if($_->{parent}){
+			$label .= " (";
+			if($_->{parent_of_parent}){
+				$label .= $_->{parent_of_parent}->{name} . " | ";
+			}
+			$label .=  $_->{parent}->{name} . ")";
+		}
+		
+		$jsonstring .= "{";
+		$jsonstring .= "\"id\":\"$_->{oId}\", ";
+		$jsonstring .= "\"label\":\"$label\"";
+		$jsonstring .= "},";
+	}
+	
 	$jsonstring =~ s/,$//g;
 	$jsonstring .= "]";
 	return $jsonstring;
