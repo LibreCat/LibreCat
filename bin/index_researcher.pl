@@ -47,8 +47,8 @@ else { # initial indexing
 
 	my $allResearchers = $mongoBag->select("type", "person")->to_array;
 	foreach(@$allResearchers){
-		#add_to_index($_);
-		print Dumper $_;
+		add_to_index($_);
+		#print Dumper $_;
 	}
 }
 
