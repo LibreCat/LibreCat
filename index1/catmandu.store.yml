@@ -1018,6 +1018,22 @@ search:
                 'exact': {field: 'fullName.exact'}
               field: fullName
               sort: {field: 'fullName.exact'}
+            surname:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+                'exact': true
+              field: surname
+            givenname:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+                'exact': true
+              field: givenName
             id:
               op:
                 '=': true
@@ -1041,7 +1057,33 @@ search:
                 '<': true
               field: combined_hits
               sort: true
-
+              
+      department:
+        cql_mapping:
+          default_index: basic
+          indexes:
+            basic:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+              field: '_all'
+              description: "index with common fields..."
+            name:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+                'exact': {field: 'name.exact'}
+              field: name
+              sort: {field: 'name.exact'}
+            parent:
+              op:
+                '=': true
+                'exact': true
+                
     transport: httptiny
     index_name: backend1
     index_settings:
@@ -1404,6 +1446,17 @@ search:
             fields:
               date: {type: date, format: "yyy-MM-dd HH:mm:ss||yyyy-MM-dd||yyyy||yyyy-MM"}
               str: {type: string, analyzer: datestring}
+              
+      department:
+        include_in_all: false
+        properties:
+          _id: {type: string, include_in_all: true}
+          name:
+            type: multi_field
+            fields:
+              name: {type: string}
+              exact: {type: string, analyzer: tag}
+          parent: {type: string, analyzer: tag}
 
 default_page_size: 100
 default_searchpage_size: 10
