@@ -172,7 +172,7 @@
           </span>
         
           <span class="form-group col-md-2">
-            <input type="button" onclick="javascript:selectOrganization('dp_departmentName_0', 'dp_departmentOId_0')" class="btn" value="Select"/>
+            <input type="button" class="btn select_button department" value="Select"/>
           </span>
         
           <span class="col-md-1">
@@ -182,7 +182,7 @@
           <script>
             $(function() {
               $( "#dp_autocomplete_0" ).autocomplete({
-                source: "/myPUB/search_department?",
+                source: "/myPUB/search_department?fmt=autocomplete",
                 minLength: 2,
                 select: function( event, ui ) {
                   $( "#dp_autocomplete_0" ).val( ui.item.label );
@@ -227,6 +227,18 @@
         </div>
       [% END %]
       [% END %]
+      <div class="modal" id="selectModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Choose a </h4>
+              </div>
+              <div class="modal-body">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       
       <div class="col-md-2">
@@ -1177,6 +1189,22 @@ $('#searchPubl').click(function() {
     if($.trim($('#results').html())==''){
       $('#results').html("<div><div class=\"span4 alert alert-error\">No results found or all matching results have already been connected.</div></div>");
     }
+  });
+});
+
+$('.select_button').click(function(){
+  var type = $(this).attr('class').replace('btn select_button', '').trim();
+  var url = 'http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/search_' + type + '?fmt=standard';
+  var modal = $('#selectModal');
+  var container = $('#selectModal').find('.modal-body').first();
+  modal.find('h4').first().append(type);
+  $.get(url, function(response) {
+    var objJSON = eval("(function(){return " + response + ";})()");
+    //for(var key in objJSON){
+    for(var i=0;i<objJSON.length;i++){
+      container.append('<p>' + objJSON[i] + ' id: ' + objJSON[key].oId + '</p>');
+    }
+    $('#selectModal').modal("show");
   });
 });
 

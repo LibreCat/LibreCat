@@ -76,33 +76,80 @@ get '/myPUB/search_researcher' => sub {
 
 get '/myPUB/search_department' => sub {
 	my $q = params->{'term'} || "";
+	my $fmt = params->{fmt} || "autocomplete";
 	$q = $q . "*" if $q ne "";
-	my $hits = h->search_department({q => $q, limit => 1000});
+	my $hits = h->search_department({q => $q, limit => 1000, sort => "oId,,1"});
+	my $jsonhash = ();
 	
 	#to_dumper($hits);
 	
-	my $jsonstring = "[";
-	foreach (@{$hits->{hits}}){
-		my $label = "";
-		$label = $_->{name};
-		
-		if($_->{parent}){
-			$label .= " (";
-			if($_->{parent_of_parent}){
-				$label .= $_->{parent_of_parent}->{name} . " | ";
+	if($fmt eq "autocomplete"){
+		foreach (@{$hits->{hits}}){
+			my $label = "";
+			$label = $_->{name};
+			
+			if($_->{parent}){
+				$label .= " (";
+				if($_->{parent_of_parent}){
+					$label .= $_->{parent_of_parent}->{name} . " | ";
+				}
+				$label .=  $_->{parent}->{name} . ")";
 			}
-			$label .=  $_->{parent}->{name} . ")";
+			
+			$label =~ s/"/\\"/g;
+			push @$jsonhash, {id => $_->{oId}, label => $label};
+			#$jsonstring .= "{";
+			#$jsonstring .= "\"id\":\"$_->{oId}\", ";
+			#$jsonstring .= "\"label\":\"$label\"";
+			#$jsonstring .= "},";
+		}
+	}
+	else{
+		my $sorted;
+		my $fullsort;
+		foreach (@{$hits->{hits}}){
+			if($_->{parent_of_parent}){
+				$sorted->{$_->{name}}->{parent_of_parent} = {name => $_->{parent_of_parent}->{name}, oId => $_->{parent_of_parent}->{oId}};
+				$sorted->{$_->{name}}->{parent} = {name => $_->{parent}->{name}, oId => $_->{parent}->{oId}};
+				$sorted->{$_->{name}}->{id} = $_->{oId};
+			}
+			elsif($_->{parent}){
+				$sorted->{$_->{name}}->{parent} = {name => $_->{parent}->{name}, oId => $_->{parent}->{oId}};
+				$sorted->{$_->{name}}->{id} = $_->{oId};
+			}
+			else {
+				$sorted->{$_->{name}}->{id} = $_->{oId};
+			}
 		}
 		
-		$jsonstring .= "{";
-		$jsonstring .= "\"id\":\"$_->{oId}\", ";
-		$jsonstring .= "\"label\":\"$label\"";
-		$jsonstring .= "},";
+		foreach my $key (keys %$sorted){
+			if(!$sorted->{$key}->{parent}){
+				$fullsort->{$key} = {oId => $sorted->{$key}->{id}};
+			}
+		}
+		foreach my $key (keys %$sorted){
+			if($sorted->{$key}->{parent} and !$sorted->{$key}->{parent_of_parent}){
+				$fullsort->{$sorted->{$key}->{parent}->{name}}->{$key} = {oId => $sorted->{$key}->{id}};
+			}
+		}
+		
+		foreach my $key (keys %$sorted){
+			if($sorted->{$key}->{parent_of_parent}){
+				$fullsort->{$sorted->{$key}->{parent_of_parent}->{name}}->{$sorted->{$key}->{parent}->{name}}->{$key} = {oId => $sorted->{$key}->{id}};
+			}
+		}
+		
+		foreach my $key (sort { $b cmp $a} keys %$fullsort) {
+			$jsonhash->{$key} = $fullsort->{$key};
+		}
 	}
 	
-	$jsonstring =~ s/,$//g;
-	$jsonstring .= "]";
-	return $jsonstring;
+	my $json = to_json($jsonhash);
+	return $json;
+	
+	#$jsonstring =~ s/,$//g;
+	#$jsonstring .= "]";
+	#return $jsonstring;
 };
 
 1;
