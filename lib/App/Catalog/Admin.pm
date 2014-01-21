@@ -78,8 +78,10 @@ get '/myPUB/search_department' => sub {
 	my $q = params->{'term'} || "";
 	my $fmt = params->{fmt} || "autocomplete";
 	$q = $q . "*" if $q ne "";
-	my $hits = h->search_department({q => $q, limit => 1000, sort => "oId,,1"});
+	my $hits = h->search_department({q => $q, limit => 1000, sort => "name,,0"});
 	my $jsonhash = ();
+	my $sorted;
+	my $fullsort;
 	
 	#to_dumper($hits);
 	
@@ -105,47 +107,47 @@ get '/myPUB/search_department' => sub {
 		}
 	}
 	else{
-		my $sorted;
-		my $fullsort;
-		foreach (@{$hits->{hits}}){
-			if($_->{parent_of_parent}){
-				$sorted->{$_->{name}}->{parent_of_parent} = {name => $_->{parent_of_parent}->{name}, oId => $_->{parent_of_parent}->{oId}};
-				$sorted->{$_->{name}}->{parent} = {name => $_->{parent}->{name}, oId => $_->{parent}->{oId}};
-				$sorted->{$_->{name}}->{id} = $_->{oId};
+		my $firstlevel;
+		my $secondlevel;
+		my $thirdlevel;
+		my $onelevel;
+		my $twolevel;
+		my $threelevel;
+		
+		foreach my $hit (@{$hits->{hits}}){
+			if($hit->{parent_of_parent}){
+				$thirdlevel->{$hit->{name}} = {oId => $hit->{oId}, parent => $hit->{parent}->{name}};
 			}
-			elsif($_->{parent}){
-				$sorted->{$_->{name}}->{parent} = {name => $_->{parent}->{name}, oId => $_->{parent}->{oId}};
-				$sorted->{$_->{name}}->{id} = $_->{oId};
+			elsif($hit->{parent} && !$hit->{parent_of_parent}){
+				#$secondlevel->{$hit->{name}} = {oId => $hit->{oId}, parent => $hit->{parent}->{name}};
+				push @{$secondlevel->{$hit->{name}}}, {oId => $hit->{oId}, parent => $hit->{parent}->{name}};
 			}
-			else {
-				$sorted->{$_->{name}}->{id} = $_->{oId};
+			elsif(!$hit->{parent}){
+				#$firstlevel->{$hit->{name}} = {oId => $hit->{oId}};
+				push @{$firstlevel->{$hit->{name}}}, {oId => $hit->{oId}};
 			}
 		}
 		
-		foreach my $key (keys %$sorted){
-			if(!$sorted->{$key}->{parent}){
-				$fullsort->{$key} = {oId => $sorted->{$key}->{id}};
-			}
-		}
-		foreach my $key (keys %$sorted){
-			if($sorted->{$key}->{parent} and !$sorted->{$key}->{parent_of_parent}){
-				$fullsort->{$sorted->{$key}->{parent}->{name}}->{$key} = {oId => $sorted->{$key}->{id}};
-			}
+
+		foreach my $hit (sort {$a cmp $b} keys %$thirdlevel){
+			push @{$secondlevel->{$thirdlevel->{$hit}->{parent}}}, {$hit => $thirdlevel->{$hit}};
 		}
 		
-		foreach my $key (keys %$sorted){
-			if($sorted->{$key}->{parent_of_parent}){
-				$fullsort->{$sorted->{$key}->{parent_of_parent}->{name}}->{$sorted->{$key}->{parent}->{name}}->{$key} = {oId => $sorted->{$key}->{id}};
-			}
+		foreach my $hit (sort {$a cmp $b} keys %$secondlevel){
+			push @{$firstlevel->{$secondlevel->{$hit}->[0]->{parent}}}, {$hit => $secondlevel->{$hit}};
 		}
 		
-		foreach my $key (sort { $b cmp $a} keys %$fullsort) {
-			$jsonhash->{$key} = $fullsort->{$key};
+		foreach my $hit (sort {$a cmp $b} keys %$firstlevel){
+			push @$jsonhash, {$hit => $firstlevel->{$hit}};
 		}
+
+		#to_dumper($jsonhash);
 	}
 	
 	my $json = to_json($jsonhash);
 	return $json;
+	
+	
 	
 	#$jsonstring =~ s/,$//g;
 	#$jsonstring .= "]";

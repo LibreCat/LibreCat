@@ -172,7 +172,7 @@
           </span>
         
           <span class="form-group col-md-2">
-            <input type="button" class="btn select_button department" value="Select"/>
+            <input type="button" class="btn select_button department" id="department_select_0" value="Select"/>
           </span>
         
           <span class="col-md-1">
@@ -227,7 +227,8 @@
         </div>
       [% END %]
       [% END %]
-      <div class="modal" id="selectModal">
+      
+        <div class="modal" id="selectModal">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -239,6 +240,7 @@
             </div>
           </div>
         </div>
+
       </div>
       
       <div class="col-md-2">
@@ -1194,18 +1196,12 @@ $('#searchPubl').click(function() {
 
 $('.select_button').click(function(){
   var type = $(this).attr('class').replace('btn select_button', '').trim();
-  var url = 'http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/search_' + type + '?fmt=standard';
+  var index = $(this).attr('id').replace('department_select_','').trim();
   var modal = $('#selectModal');
   var container = $('#selectModal').find('.modal-body').first();
   modal.find('h4').first().append(type);
-  $.get(url, function(response) {
-    var objJSON = eval("(function(){return " + response + ";})()");
-    //for(var key in objJSON){
-    for(var i=0;i<objJSON.length;i++){
-      container.append('<p>' + objJSON[i] + ' id: ' + objJSON[key].oId + '</p>');
-    }
-    $('#selectModal').modal("show");
-  });
+  container.append('[% INCLUDE backend/fields/field_select.tt %]');
+  modal.modal('show');
 });
 
 
