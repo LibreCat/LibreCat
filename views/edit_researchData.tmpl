@@ -131,7 +131,7 @@
             </span>
             
             <span class="col-md-2">
-              <input name="linkPevz_[% loop.index %]" class="linkPevz" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
+              <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
               [% IF name.auLuAuthorOId OR name.auLuLdapId %]
                 <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
               [% ELSE %]
@@ -172,11 +172,11 @@
           </span>
         
           <span class="form-group col-md-2">
-            <input type="button" class="btn select_button department" id="department_select_0" value="Select"/>
+            <input type="button" onclick="selectButtonDept(this);" class="btn select_button department" id="department_select_0" value="Select"/>
           </span>
         
           <span class="col-md-1">
-            <i class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></i>
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
           </span>
         
           <script>
@@ -202,7 +202,7 @@
           </span>
           
           <span class="form-group col-md-2">
-            <input type="button" onclick="javascript:selectOrganization('dp_departmentName_[% loop.index %]', 'dp_departmentOId_[% loop.index %]')" class="btn" value="Select"/>
+            <input type="button" onclick="selectButtonDept(this);" class="btn select_button department" id="department_select_[% loop.index %] value="Select"/>
           </span>
           
           <span class="col-md-1">
@@ -234,6 +234,7 @@
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Choose a </h4>
+                <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
               </div>
               <div class="modal-body">
               </div>
@@ -429,7 +430,7 @@
         <script type="text/javascript">
           jQuery(document).ready(function() {
             var myDropzone = new Dropzone("div#uploadFiles", {
-              url: "http://pub-dev.ub.uni-bielefeld.de/luur/record_material",
+              //url: "http://pub-dev.ub.uni-bielefeld.de/luur/record_material",
               params: {func : "uploadDocumentUpdate", recordOId: "[% recordOId %]", itype: "file", accessLevel: "openAccess", cancel: "", accept: 1, finalSubmit: "Accept and Submit"},
               createImageThumbnails: false,
             });
@@ -1108,8 +1109,8 @@ function deleteRelMat(materialOId, otherOId) {
 
 
 $('#plusDepartment').click(function(){
-  var items = $('#department div.control-group');
-  var index = items.index($('#department div.control-group:last')) + 1;
+  var items = $('#department div.form-group');
+  var index = items.index($('#department div.form-group').last()) + 1;
   $('#department').append('[% INCLUDE backend/fields/field_department.tt %]');
   $('#department').bind("click", function(){
     $( "#dp_autocomplete_" + index ).autocomplete({
@@ -1194,16 +1195,24 @@ $('#searchPubl').click(function() {
   });
 });
 
-$('.select_button').click(function(){
-  var type = $(this).attr('class').replace('btn select_button', '').trim();
-  var index = $(this).attr('id').replace('department_select_','').trim();
+
+function selectButtonDept(element){
+  var type = $(element).attr('class').replace('btn select_button', '').trim();
+  var index = $(element).attr('id').replace('department_select_','').trim();
   var modal = $('#selectModal');
   var container = $('#selectModal').find('.modal-body').first();
-  modal.find('h4').first().append(type);
-  container.append('[% INCLUDE backend/fields/field_select.tt %]');
+  modal.find('h4').first().append('department');
+  container.append('[% INCLUDE backend/fields/field_department_select.tt %]');
+  $('.selectme').bind("click", function(){
+    var id = $(this).attr('id');
+    var name = $(this).html();
+    var index = $(this).attr('data-index');
+    $('#dp_idautocomplete_' + index).val(id);
+    $('#dp_autocomplete_' + index).val(name);
+    $('#selectModal').modal('hide');
+  });
   modal.modal('show');
-});
-
+}
 
 
 <!--

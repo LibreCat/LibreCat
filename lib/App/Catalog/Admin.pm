@@ -77,7 +77,7 @@ get '/myPUB/search_researcher' => sub {
 get '/myPUB/search_department' => sub {
 	my $q = params->{'term'} || "";
 	my $fmt = params->{fmt} || "autocomplete";
-	$q = $q . "*" if $q ne "";
+	$q = "name=" . $q . "*" if $q ne "";
 	my $hits = h->search_department({q => $q, limit => 1000, sort => "name,,0"});
 	my $jsonhash = ();
 	my $sorted;
