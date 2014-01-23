@@ -7,14 +7,35 @@ function linkPevz(element){
 		$('#auAuthorized' + lineId).attr('src','/images/biNotAuthorized.png');
 		$('#id_au_auLuAuthorOId_' + lineId + ', #id_au_auPersonNumber_' + lineId).val("");
 		$('#id_au_auGivenName_' + lineId + ', #id_au_auSurname_' + lineId + ', #id_au_auPersonTitle_' + lineId).removeAttr("readonly");
+		var origGivenName = $('#id_au_origGivenName_' + lineId).val();
+		var origSurname = $('#id_au_origLastName_' + lineId).val();
+		var origTitle = $('#id_au_origTitle_' + lineId).val();
+		if(origGivenName){
+			$('#id_au_auGivenName_' + lineId).val(origGivenName);
+			$('#id_au_origGivenName_' + lineId).val("");
+		}
+		if(origSurname){
+			$('#id_au_auSurname_' + lineId).val(origSurname);
+			$('#id_au_origLastName_' + lineId).val("");
+		}
+		if(origTitle){
+			$('#id_au_auTitle_' + lineId).val(origTitle);
+			$('#id_au_origTitle_' + lineId).val("");
+		}
 	}
 	
 	// Someone checked the "Link to PEVZ Account" checkbox
 	else{
 		var puburl = 'http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/search_researcher?ftext=';
 		var narrowurl = puburl;
-		var givenname = $('#id_au_auGivenName_' + lineId).val().toLowerCase();
-		var surname = $('#id_au_auSurname_' + lineId).val().toLowerCase();
+		var givenName = $('#id_au_auGivenName_' + lineId).val();
+		$('#id_au_origGivenName_' + lineId).val(givenName);
+		var givenname = givenName.toLowerCase();
+		var surName = $('#id_au_auSurname_' + lineId).val();
+		$('#id_au_origLastName_' + lineId).val(surName);
+		var surname = surName.toLowerCase();
+		var Title = $('#id_au_auTitle_' + lineId).val();
+		$('#id_au_origTitle_' + lineId).val(Title);
 		if(givenname){
 			narrowurl += "givenname=" + givenname + "*";
 		}
