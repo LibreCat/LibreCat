@@ -185,22 +185,41 @@ sub search_department {
 	return $hits;
 }
 
-#sub search_project {
-#	my ($self, $p) = @_;
-#
-#	my $hits;
-#	$hits = projects->search (
-#		cql_query => $p->{q},
-#		limit => $p->{limit} ||= config->{default_page_size},
-#		facets => $p->{facets} ||= {},
-#       	start => $p->{start} ||= 0,
-#       	sru_sortkeys => $p->{sorting} ||= "name,,1",
-#	);
-#	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-#        $hits->{$_} = $hits->$_;
-#    }
-#    return $hits;
-#}
+sub search_project {
+	my ($self, $p) = @_;
+
+	my $hits;
+	$hits = projects->search (
+		cql_query => $p->{q},
+		limit => $p->{limit} ||= config->{default_page_size},
+	#	facets => $p->{facets} ||= {},
+      	start => $p->{start} ||= 0,
+       	sru_sortkeys => $p->{sorting} ||= "name,,1",
+	);
+	#foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+    #    $hits->{$_} = $hits->$_;
+    #}
+    return $hits;
+}
+
+sub search_researchgroup {
+	my ($self, $p) = @_;
+	
+	my $hits;
+	my $query = $p->{q};
+	my $researchgroups = config->{lists}->{xresearchgroups};
+	my $counter = 0;
+    
+    foreach my $key (keys %$researchgroups){
+    	if(index(lc($key), lc($query)) != -1){
+    		push @{$hits->{hits}}, {_id => $researchgroups->{$key}->{oId}, oId => $researchgroups->{$key}->{oId}, name => $key};
+    		$counter++;
+    	}		
+    }
+    $hits->{total} = $counter;
+    
+    return $hits;
+}
 
 sub embed_string {
 	my ($self, $query, $bag, $id, $style, %params) = @_;

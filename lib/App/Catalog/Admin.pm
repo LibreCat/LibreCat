@@ -74,11 +74,22 @@ get '/myPUB/search_researcher' => sub {
 	return $jsonstring;
 };
 
-get '/myPUB/search_department' => sub {
+get '/myPUB/autocomplete_hierarchy' => sub {
 	my $q = params->{'term'} || "";
 	my $fmt = params->{fmt} || "autocomplete";
-	$q = "name=" . $q . "*" if $q ne "";
-	my $hits = h->search_department({q => $q, limit => 1000, sort => "name,,0"});
+	my $type = params->{type} || "department";
+	$q = "name=" . $q . "*" if ($q ne "" and $type ne "researchgroup");
+	my $hits;
+	
+	if($type eq "department"){
+		$hits = h->search_department({q => $q, limit => 1000, sort => "name,,0"});
+	}
+	elsif($type eq "project"){
+		$hits = h->search_project({q => $q, limit => 1000});
+	}
+	elsif($type eq "researchgroup"){
+		$hits = h->search_researchgroup({q => $q});
+	}
 	my $jsonhash = ();
 	my $sorted;
 	my $fullsort;
@@ -100,58 +111,17 @@ get '/myPUB/search_department' => sub {
 			
 			$label =~ s/"/\\"/g;
 			push @$jsonhash, {id => $_->{oId}, label => $label};
-			#$jsonstring .= "{";
-			#$jsonstring .= "\"id\":\"$_->{oId}\", ";
-			#$jsonstring .= "\"label\":\"$label\"";
-			#$jsonstring .= "},";
 		}
 	}
 	else{
-		my $firstlevel;
-		my $secondlevel;
-		my $thirdlevel;
-		my $onelevel;
-		my $twolevel;
-		my $threelevel;
-		
-		foreach my $hit (@{$hits->{hits}}){
-			if($hit->{parent_of_parent}){
-				$thirdlevel->{$hit->{name}} = {oId => $hit->{oId}, parent => $hit->{parent}->{name}};
-			}
-			elsif($hit->{parent} && !$hit->{parent_of_parent}){
-				#$secondlevel->{$hit->{name}} = {oId => $hit->{oId}, parent => $hit->{parent}->{name}};
-				push @{$secondlevel->{$hit->{name}}}, {oId => $hit->{oId}, parent => $hit->{parent}->{name}};
-			}
-			elsif(!$hit->{parent}){
-				#$firstlevel->{$hit->{name}} = {oId => $hit->{oId}};
-				push @{$firstlevel->{$hit->{name}}}, {oId => $hit->{oId}};
-			}
+		foreach (@{$hits->{hits}}){
+			push @$jsonhash, {id => $_->{_id}, label => $_->{name}};
 		}
-		
-
-		foreach my $hit (sort {$a cmp $b} keys %$thirdlevel){
-			push @{$secondlevel->{$thirdlevel->{$hit}->{parent}}}, {$hit => $thirdlevel->{$hit}};
-		}
-		
-		foreach my $hit (sort {$a cmp $b} keys %$secondlevel){
-			push @{$firstlevel->{$secondlevel->{$hit}->[0]->{parent}}}, {$hit => $secondlevel->{$hit}};
-		}
-		
-		foreach my $hit (sort {$a cmp $b} keys %$firstlevel){
-			push @$jsonhash, {$hit => $firstlevel->{$hit}};
-		}
-
-		#to_dumper($jsonhash);
 	}
 	
 	my $json = to_json($jsonhash);
 	return $json;
-	
-	
-	
-	#$jsonstring =~ s/,$//g;
-	#$jsonstring .= "]";
-	#return $jsonstring;
+
 };
 
 1;

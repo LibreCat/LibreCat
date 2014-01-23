@@ -1,0 +1,1 @@
+[% xresearchgroups = h.config.lists.xresearchgroups %][% FOREACH res IN xresearchgroups.keys.sort %]<a href="#" class="selectme" data-index="' + index + '" id="[% xresearchgroups.$res.oId %]">[% res %]</a><br />[% END %]

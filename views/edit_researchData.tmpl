@@ -74,7 +74,7 @@
       
       <div class="col-md-2">
         <label for="author">
-          Creator<span class="starMandatory">*</span> <i class="glyphicon glyphicon-plus" id="plusAuthor"></i>
+          Creator<span class="starMandatory">*</span> <span class="glyphicon glyphicon-plus" id="plusAuthor"></span>
         </label>
       </div>
       <div class="col-md-10" id="author">
@@ -159,7 +159,7 @@
       
       <div class="col-md-2">
         <label for="department">
-          Department <i class="glyphicon glyphicon-plus" id="plusDepartment"></i>
+          Department <span class="glyphicon glyphicon-plus" id="plusDepartment"></span>
         </label>
       </div>
       <div class="col-md-10" id="department">
@@ -172,7 +172,7 @@
           </span>
         
           <span class="form-group col-md-2">
-            <input type="button" onclick="selectButtonDept(this);" class="btn select_button department" id="department_select_0" value="Select"/>
+            <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0" value="Select"/>
           </span>
         
           <span class="col-md-1">
@@ -182,7 +182,7 @@
           <script>
             $(function() {
               $( "#dp_autocomplete_0" ).autocomplete({
-                source: "/myPUB/search_department?fmt=autocomplete",
+                source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
                 minLength: 2,
                 select: function( event, ui ) {
                   $( "#dp_autocomplete_0" ).val( ui.item.label );
@@ -202,7 +202,7 @@
           </span>
           
           <span class="form-group col-md-2">
-            <input type="button" onclick="selectButtonDept(this);" class="btn select_button department" id="department_select_[% loop.index %] value="Select"/>
+            <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]" value="Select"/>
           </span>
           
           <span class="col-md-1">
@@ -215,7 +215,7 @@
           <script>
             $(function() {
               $( "#dp_autocomplete_[% loop.index %]" ).autocomplete({
-                source: "/luur/authority_organization?func=get_dp_Json",
+                source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
                 minLength: 2,
                 select: function( event, ui ) {
                   $( "#dp_autocomplete_[% loop.index %]" ).val( ui.item.label );
@@ -233,7 +233,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Choose a </h4>
+                <h4 class="modal-title"></h4>
                 <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
               </div>
               <div class="modal-body">
@@ -246,51 +246,64 @@
       
       <div class="col-md-2">
         <label for="project">
-          Project <i class="glyphicon glyphicon-plus" id="plusProject"></i>
+          Project <span class="glyphicon glyphicon-plus" id="plusProject"></span>
         </label>
       </div>
       <div class="col-md-10" id="project">
       [% IF !projects %]
-        <span class="form-group col-md-7">
-          <input type="text" name="pj_projectName_0" class="form-control" id="pj_autocomplete_0" value="" />
-        </span>
+        <div class="form-group">
+          <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
+          
+          <span class="form-group col-md-7">
+            <input type="text" name="pj_projectName_0" class="form-control" id="pj_autocomplete_0" value="" />
+          </span>
         
-        <span class="col-md-2">
-          <input type="button" onclick="javascript:selectProject('pj_projectName_0', 'pj_projectOId_0')" class="btn" value="Select"/>
-        </span>
+          <span class="form-group col-md-2">
+            <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_0" value="Select"/>
+          </span>
         
-        <span class="col-md-1">
-          <i class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></i>
-        </span>
+          <span class="col-md-1">
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
+          </span>
         
-        <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
-        <script>
-          $(function() {
-            $( "#pj_autocomplete_0" ).autocomplete({
-              source: "/luur/authority_organization?func=get_pj_Json",
-              minLength: 2,
-              select: function( event, ui ) {
-                $( "#pj_autocomplete_0" ).val( ui.item.label );
-                $( "#pj_idautocomplete_0" ).val( ui.item.id );
-              }
+          <script>
+            $(function() {
+              $( "#pj_autocomplete_0" ).autocomplete({
+                source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
+                minLength: 2,
+                select: function( event, ui ) {
+                  $( "#pj_autocomplete_0" ).val( ui.item.label );
+                  $( "#pj_idautocomplete_0" ).val( ui.item.id );
+                }
+              });
             });
-          });
-        </script>
+          </script>
+        </div>
       [% ELSE %]
       [% FOREACH proj IN projects %]
-        <div class="controls control-group">
-          <input type="text" name="pj_projectName_[% loop.index %]" class="col-md-4" id="pj_autocomplete_[% loop.index %]" value="[% proj.projectName %]" />
-          <input type="button" onclick="javascript:selectProject('pj_projectName_[% loop.index %]', 'pj_projectOId_[% loop.index %]')" class="btn" value="Select"/>
+        <div class="form-group">
           <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.projectOId %]" />
-          [% IF loop.index == 0 %]
-          <i class="icon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></i>
-          [% ELSE %]
-          <i class="icon-minus single"></i>
-          [% END %]
+          
+          <span class="form-group col-md-7">
+            <input type="text" name="pj_projectName_[% loop.index %]" class="form-control" id="pj_autocomplete_[% loop.index %]" value="[% proj.projectName %]" />
+          </span>
+          
+          <span class="form-group col-md-2">
+            <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_[% loop.index %]" value="Select"/>
+          </span>
+          
+          <span class="col-md-1">
+            [% IF loop.index == 0 %]
+            <span class="icon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
+            [% ELSE %]
+            <span class="icon-minus single"></span>
+            [% END %]
+          </span>
+          
           <script>
             $(function() {
               $( "#pj_autocomplete_[% loop.index %]" ).autocomplete({
-                source: "/luur/authority_organization?func=get_pj_Json",
+                source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
                 minLength: 2,
                 select: function( event, ui ) {
                   $( "#pj_autocomplete_[% loop.index %]" ).val( ui.item.label );
@@ -306,51 +319,64 @@
       
       <div class="col-md-2">
         <label for="researchgroup">
-          Research Group <i class="glyphicon glyphicon-plus" id="plusResearchgroup"></i>
+          Research Group <span class="glyphicon glyphicon-plus" id="plusResearchgroup"></span>
         </label>
       </div>
       <div class="col-md-10" id="researchgroup">
       [% IF !researchGroups %]
-        <span class="form-group col-md-7">
-          <input type="text" name="rg_researchGroupName_0" class="form-control" id="rg_autocomplete_0" value="" />
-        </span>
+        <div class="form-group">
+          <input type="hidden" name="rg_researchGroupOId_0" id="rg_idautocomplete_0" value="" />
+          
+          <span class="form-group col-md-7">
+            <input type="text" name="rg_researchGroupName_0" class="form-control" id="rg_autocomplete_0" value="" />
+          </span>
         
-        <span class="col-md-2">
-          <input type="button" onclick="javascript:selectResearchGroup('rg_researchGroupName_0', 'rg_researchGroupOId_0')" class="btn" value="Select"/>
-        </span>
-        
-        <span class="col-md-1">
-          <i class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rg_autocomplete_0').value = '';document.getElementById('rg_idautocomplete_0').value='';"></i>
-        </span>
-        
-        <input type="hidden" name="rg_researchGroupOId_0" id="rg_idautocomplete_0" value="" />
-        <script>
-          $(function() {
-            $( "#rg_autocomplete_0" ).autocomplete({
-              source: "/luur/authority_organization?func=get_rg_Json",
-              minLength: 2,
-              select: function( event, ui ) {
-                $( "#rg_autocomplete_0" ).val( ui.item.label );
-                $( "#rg_idautocomplete_0" ).val( ui.item.id );
-              }
+          <span class="col-md-2">
+            <input type="button" onclick="selectButton(this);" class="btn select_button researchgroup" id="researchgroup_select_0" value="Select"/>
+          </span>
+
+          <span class="col-md-1">
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rg_autocomplete_0').value = '';document.getElementById('rg_idautocomplete_0').value='';"></span>
+          </span>
+
+          <script>
+            $(function() {
+              $( "#rg_autocomplete_0" ).autocomplete({
+                source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=researchgroup",
+                minLength: 2,
+                select: function( event, ui ) {
+                  $( "#rg_autocomplete_0" ).val( ui.item.label );
+                  $( "#rg_idautocomplete_0" ).val( ui.item.id );
+                }
+              });
             });
-          });
-        </script>
+          </script>
+        </div>
       [% ELSE %]
       [% FOREACH res IN researchGroups %]
-        <div class="controls control-group">
-          <input type="text" name="rg_researchGroupName_[% loop.index %]" class="col-md-4" id="rg_autocomplete_[% loop.index %]" value="[% res.researchGroupName %]" />
-          <input type="button" onclick="javascript:selectResearchGroup('rg_researchGroupName_[% loop.index %]', 'rg_researchGroupOId_[% loop.index %]')" class="btn" value="Select"/>
+        <div class="form-group">
           <input type="hidden" name="rg_researchGroupOId_[% loop.index %]" id="rg_idautocomplete_[% loop.index %]" value="[% res.researchGroupOId %]" />
-          [% IF loop.index == 0 %]
-          <i class="icon-minus" onclick="javascript:document.getElementById('rg_autocomplete_0').value = '';document.getElementById('rg_idautocomplete_0').value='';"></i>
-          [% ELSE %]
-          <i class="icon-minus single"></i>
-          [% END %]
+          
+          <span class="form-group col-md-7">
+            <input type="text" name="rg_researchGroupName_[% loop.index %]" class="form-control" id="rg_autocomplete_[% loop.index %]" value="[% res.researchGroupName %]" />
+          </span>
+          
+          <span class="form-group col-md-2">
+            <input type="button" onclick="selectButton(this);" class="btn select_button researchgroup" id="researchgroup_select_[% loop.index %]" value="Select"/>
+          </span>
+          
+          <span class="col-md-1">
+            [% IF loop.index == 0 %]
+            <span class="icon-minus" onclick="javascript:document.getElementById('rg_autocomplete_0').value = '';document.getElementById('rg_idautocomplete_0').value='';"></span>
+            [% ELSE %]
+            <span class="icon-minus single"></span>
+            [% END %]
+          </span>
+          
           <script>
             $(function() {
               $( "#rg_autocomplete_[% loop.index %]" ).autocomplete({
-                source: "/luur/authority_organization?func=get_rg_Json",
+                source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=researchgroup",
                 minLength: 2,
                 select: function( event, ui ) {
                   $( "#rg_autocomplete_[% loop.index %]" ).val( ui.item.label );
@@ -971,6 +997,54 @@ $('#plusAuthor').click(function(){
   $('#id_linkPevz_'+index).bind("click", function() { return linkPevz($('#id_linkPevz_'+index))});
 });
 
+$('#plusDepartment').click(function(){
+  var items = $('#department div.form-group');
+  var index = items.index($('#department div.form-group').last()) + 1;
+  $('#department').append('[% INCLUDE backend/fields/field_department.tt %]');
+  $('#department').bind("click", function(){
+    $( "#dp_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#dp_autocomplete_" + index ).val( ui.item.label );
+        $( "#dp_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+
+$('#plusProject').click(function(){
+  var items = $('#project div.form-group');
+  var index = items.index($('#project div.form-group').last()) + 1;
+  $('#project').append('[% INCLUDE backend/fields/field_project.tt %]');
+  $('#project').bind("click", function(){
+    $( "#pj_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#pj_autocomplete_" + index ).val( ui.item.label );
+        $( "#pj_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+
+$('#plusResearchgroup').click(function(){
+  var items = $('#researchgroup div.form-group');
+  var index = items.index($('#researchgroup div.form-group').last()) + 1;
+  $('#researchgroup').append('[% INCLUDE backend/fields/field_researchgroup.tt %]');
+  $('#researchgroup').bind("click", function(){
+    $( "#rg_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=researchGroup",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#rg_autocomplete_" + index ).val( ui.item.label );
+        $( "#rg_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+
 
 // minus
 $(document).on('click', '.group', function(){
@@ -1012,6 +1086,46 @@ $(document).on('click', '.author', function(){
 });
 
 
+// Select button (dept, proj, rg)
+function selectButton(element){
+	var type = $(element).attr('class').replace('btn select_button', '').trim();
+	var type_short;
+	var type_name;
+	
+	var index = $(element).attr('id').replace(type + '_select_','').trim();
+	var modal = $('#selectModal');
+	var container = $('#selectModal').find('.modal-body').first();
+	container.html("");
+	if(type == "department"){
+	    container.append('[% INCLUDE backend/fields/field_department_select.tt %]');
+	    type_short = "dp";
+	    type_name = "Department";
+	}
+	else if(type == "project"){
+	    container.append('[% INCLUDE backend/fields/field_project_select.tt %]');
+	    type_short = "pj";
+	    type_name = "Project";
+	}
+	else if(type == "researchgroup"){
+	    container.append('[% INCLUDE backend/fields/field_researchgroup_select.tt %]');
+	    type_short = "rg";
+	    type_name = "Research Group";
+	}
+	var heading = modal.find('h4').first();
+	heading.html("");
+	heading.append('Choose a ' + type_name);
+	$('.selectme').bind("click", function(){
+		var id = $(this).attr('id');
+	    var name = $(this).html();
+	    var index = $(this).attr('data-index');
+	    $('#' + type_short + '_idautocomplete_' + index).val(id);
+	    $('#' + type_short + '_autocomplete_' + index).val(name);
+	    $('#selectModal').modal('hide');
+	});
+	modal.modal('show');
+}
+
+
 // Research Data License checks
 $('#id_openDataRelease').click(function(){
   if(!$('#id_openDataRelease').is(':checked')){
@@ -1040,6 +1154,7 @@ $('#id_dataReuseLicense').change(function(){
     $('#id_dataReuseLicense').parent().addClass('alert-info');
   }
 });
+
 
 
 
@@ -1107,55 +1222,6 @@ function deleteRelMat(materialOId, otherOId) {
 }
 
 
-
-$('#plusDepartment').click(function(){
-  var items = $('#department div.form-group');
-  var index = items.index($('#department div.form-group').last()) + 1;
-  $('#department').append('[% INCLUDE backend/fields/field_department.tt %]');
-  $('#department').bind("click", function(){
-    $( "#dp_autocomplete_" + index ).autocomplete({
-      source: "/luur/authority_organization?func=get_dp_Json",
-      minLength: 2,
-      select: function( event, ui ) {
-        $( "#dp_autocomplete_" + index ).val( ui.item.label );
-        $( "#dp_idautocomplete_" + index ).val( ui.item.id );
-      }
-    });
-  });
-});
-
-$('#plusProject').click(function(){
-  var items = $('#project div.control-group');
-  var index = items.index($('#project div.control-group:last')) + 1;
-  $('#project').append('[% INCLUDE backend/fields/rd_project.tt %]');
-  $('#project').bind("click", function(){
-    $( "#pj_autocomplete_" + index ).autocomplete({
-      source: "/luur/authority_organization?func=get_pj_Json",
-      minLength: 2,
-      select: function( event, ui ) {
-        $( "#pj_autocomplete_" + index ).val( ui.item.label );
-        $( "#pj_idautocomplete_" + index ).val( ui.item.id );
-      }
-    });
-  });
-});
-
-$('#plusResearchgroup').click(function(){
-  var items = $('#researchgroup div.control-group');
-  var index = items.index($('#researchgroup div.control-group:last')) + 1;
-  $('#researchgroup').append('[% INCLUDE backend/fields/rd_researchgroup.tt %]');
-  $('#researchgroup').bind("click", function(){
-    $( "#rg_autocomplete_" + index ).autocomplete({
-      source: "/luur/authority_organization?func=get_rg_Json",
-      minLength: 2,
-      select: function( event, ui ) {
-        $( "#rg_autocomplete_" + index ).val( ui.item.label );
-        $( "#rg_idautocomplete_" + index ).val( ui.item.id );
-      }
-    });
-  });
-});
-
 $('button.cancel-button').click(function() {
   window.location.href = '/admin';
 });
@@ -1194,25 +1260,6 @@ $('#searchPubl').click(function() {
     }
   });
 });
-
-
-function selectButtonDept(element){
-  var type = $(element).attr('class').replace('btn select_button', '').trim();
-  var index = $(element).attr('id').replace('department_select_','').trim();
-  var modal = $('#selectModal');
-  var container = $('#selectModal').find('.modal-body').first();
-  modal.find('h4').first().append('department');
-  container.append('[% INCLUDE backend/fields/field_department_select.tt %]');
-  $('.selectme').bind("click", function(){
-    var id = $(this).attr('id');
-    var name = $(this).html();
-    var index = $(this).attr('data-index');
-    $('#dp_idautocomplete_' + index).val(id);
-    $('#dp_autocomplete_' + index).val(name);
-    $('#selectModal').modal('hide');
-  });
-  modal.modal('show');
-}
 
 
 <!--
