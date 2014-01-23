@@ -198,10 +198,10 @@
       [% ELSE %]
       [% FOREACH dept IN departments %]
         <div class="form-group">
-          <input type="hidden" name="dp_departmentOId_[% loop.index %]" id="dp_idautocomplete_[% loop.index %]" value="[% dept.departmentOId %]" />
+          <input type="hidden" name="dp_departmentOId_[% loop.index %]" id="dp_idautocomplete_[% loop.index %]" value="[% dept.departmentOId || dept.organizationNumber %]" />
           
           <span class="form-group col-md-7">
-            <input type="text" name="dp_departmentName_[% loop.index %]" class="form-control" id="dp_autocomplete_[% loop.index %]" value="[% dept.departmentName %]" />
+            <input type="text" name="dp_departmentName_[% loop.index %]" class="form-control" id="dp_autocomplete_[% loop.index %]" value="[% dept.departmentName || dept.name %]" />
           </span>
           
           <span class="form-group col-md-2">
