@@ -114,6 +114,9 @@
             <input type="hidden" name="au_auPersonNumber_[% loop.index %]" id="id_au_auPersonNumber_[% loop.index %]" value="[% name.aupersonNumber %]" />
             <input name="au_auLuLdapId_[% loop.index %]" type="hidden" value="[% name.auLuLdapId %]" />
             <input name="au_auEndDate_[% loop.index %]" type="hidden" value="[% name.auEndDate %]" />
+            <input name="au_origGivenName_0" id="id_au_origGivenName_[% loop.index %]" type="hidden" />
+            <input name="au_origLastName_0" id="id_au_origLastName_[% loop.index %]" type="hidden" />
+            <input name="au_origTitle_0" id="id_au_origTitle_[% loop.index %]" type="hidden" />
 
             <span class="form-group col-md-3">
               <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="First Name" id="id_au_auGivenName_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auGivenName %]" class="form-control"/>
@@ -213,7 +216,8 @@
             <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
             [% ELSE %]
             <span class="glyphicon glyphicon-minus single"></span>
-          [% END %]
+            [% END %]
+          </span>
           
           <script>
             $(function() {
@@ -996,14 +1000,14 @@ $('#twoToOne').click(function(){
 $('#plusAuthor').click(function(){
   var items = $('#author div.form-group');
   var index = items.index($('#author div.form-group:last')) + 1;
-  $('#author').append('[% INCLUDE backend/fields/field_author.tt %]');
+  $('#author').append('[% INCLUDE backend/fields/subfields/author.tt %]');
   $('#id_linkPevz_'+index).bind("click", function() { return linkPevz($('#id_linkPevz_'+index))});
 });
 
 $('#plusDepartment').click(function(){
   var items = $('#department div.form-group');
   var index = items.index($('#department div.form-group').last()) + 1;
-  $('#department').append('[% INCLUDE backend/fields/field_department.tt %]');
+  $('#department').append('[% INCLUDE backend/fields/subfields/department.tt %]');
   $('#department').bind("click", function(){
     $( "#dp_autocomplete_" + index ).autocomplete({
       source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
@@ -1019,7 +1023,7 @@ $('#plusDepartment').click(function(){
 $('#plusProject').click(function(){
   var items = $('#project div.form-group');
   var index = items.index($('#project div.form-group').last()) + 1;
-  $('#project').append('[% INCLUDE backend/fields/field_project.tt %]');
+  $('#project').append('[% INCLUDE backend/fields/subfields/project.tt %]');
   $('#project').bind("click", function(){
     $( "#pj_autocomplete_" + index ).autocomplete({
       source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
@@ -1035,7 +1039,7 @@ $('#plusProject').click(function(){
 $('#plusResearchgroup').click(function(){
   var items = $('#researchgroup div.form-group');
   var index = items.index($('#researchgroup div.form-group').last()) + 1;
-  $('#researchgroup').append('[% INCLUDE backend/fields/field_researchgroup.tt %]');
+  $('#researchgroup').append('[% INCLUDE backend/fields/subfields/researchgroup.tt %]');
   $('#researchgroup').bind("click", function(){
     $( "#rg_autocomplete_" + index ).autocomplete({
       source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=researchGroup",
@@ -1100,17 +1104,17 @@ function selectButton(element){
 	var container = $('#selectModal').find('.modal-body').first();
 	container.html("");
 	if(type == "department"){
-	    container.append('[% INCLUDE backend/fields/field_department_select.tt %]');
+	    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
 	    type_short = "dp";
 	    type_name = "Department";
 	}
 	else if(type == "project"){
-	    container.append('[% INCLUDE backend/fields/field_project_select.tt %]');
+	    container.append('[% INCLUDE backend/fields/subfields/project_select.tt %]');
 	    type_short = "pj";
 	    type_name = "Project";
 	}
 	else if(type == "researchgroup"){
-	    container.append('[% INCLUDE backend/fields/field_researchgroup_select.tt %]');
+	    container.append('[% INCLUDE backend/fields/subfields/researchgroup_select.tt %]');
 	    type_short = "rg";
 	    type_name = "Research Group";
 	}
@@ -1226,7 +1230,7 @@ function deleteRelMat(materialOId, otherOId) {
 
 
 $('button.cancel-button').click(function() {
-  window.location.href = '/admin';
+  window.location.href = '/myPUB';
 });
 
 

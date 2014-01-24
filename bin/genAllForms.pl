@@ -14,13 +14,14 @@ my $tt = Template->new(
 	'START_TAG' => '{%',
 	'END_TAG' => '%}',
 	ENCODING => 'utf8',
-	INCLUDE_PATH => '../conf/forms',
-	OUTPUT_PATH => '../views',
+	INCLUDE_PATH => '../views/backend/fields',
+	OUTPUT_PATH => '../views/backend/forms',
 	);
 
 foreach my $type (keys %$forms) {
 
 	my $type_hash = $forms->{$type};
-	$tt->process("master.tt", $type_hash, "$type_hash->{tmpl}");
+	print "Generating $type_hash->{tmpl}.tt\n";
+	$tt->process("master.tt", $type_hash, "$type_hash->{tmpl}.tt");
 
 }

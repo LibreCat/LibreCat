@@ -1,0 +1,209 @@
+// Placeholder for MSIE
+if(navigator.userAgent.indexOf('MSIE') != -1){
+  $('[placeholder]').focus(function() {
+    var input = $(this);
+    if (input.val() == input.attr('placeholder')) {
+      input.val('');
+      input.removeClass('placeholder');
+    }
+  }).blur(function() {
+    var input = $(this);
+    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+      input.addClass('placeholder');
+      input.val(input.attr('placeholder'));
+    }
+  }).blur();
+  $('[placeholder]').parents('form').submit(function() {
+    $(this).find('[placeholder]').each(function() {
+      var input = $(this);
+      if (input.val() == input.attr('placeholder')) {
+        input.val('');
+      }
+    })
+  });
+}
+
+// Tab forward one to two
+$('#oneToTwo').click(function(){
+  var check = 1;
+  var oneauthor = 0;
+  $('#author').children('div.form-group').each(function(){
+    if(!$(this).children('span').eq(0).children().eq(0).val()){
+      $(this).children('span').eq(0).addClass("has-error");
+    }
+    if(!$(this).children('span').eq(1).children().eq(0).val()){
+      $(this).children('span').eq(1).addClass("has-error");
+    }
+    if($(this).children('span').eq(0).children().eq(0).val() && $(this).children('span').eq(1).children().eq(0).val()){
+      oneauthor = 1;
+    }
+  });
+  if(!oneauthor){
+    check = 0;
+  }
+  
+  $('.required').each(function(){
+    if(!$(this).val()){
+      $(this).parents('span.form-group').addClass('has-error');
+      check = 0;
+    }
+    else if($(this).val() && ($(this).val() == "Publication Title" || $(this).val() == "First Name" || $(this).val() == "Last Name" || $(this).val() == "YYYY")){
+      $(this).parents('span.form-group').addClass('has-error');
+      check = 0;
+    }
+    else{
+      $(this).parents('span.form-group').removeClass('has-error');
+    }
+  });
+  if(check){
+    $('#author.has-error').each(function(){
+      $(this).removeClass('has-error');
+    });
+    $('#basicFields, #li_basicFields').removeClass('active');
+    $('#fileUpload, #li_fileUpload').addClass('active');
+    $('button[href=#fileUpload]').attr('data-toggle','tab');
+    $('#li_fileUpload').css('visibility','visible');
+  }
+});
+
+
+// plus
+$('#plusAuthor').click(function(){
+  var items = $('#author div.form-group');
+  var index = items.index($('#author div.form-group:last')) + 1;
+  $('#author').append('[% INCLUDE backend/fields/subfields/author.tt %]');
+  $('#id_linkPevz_'+index).bind("click", function() { return linkPevz($('#id_linkPevz_'+index))});
+});
+
+$('#plusDepartment').click(function(){
+  var items = $('#department div.form-group');
+  var index = items.index($('#department div.form-group').last()) + 1;
+  $('#department').append('[% INCLUDE backend/fields/subfields/department.tt %]');
+  $('#department').bind("click", function(){
+    $( "#dp_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#dp_autocomplete_" + index ).val( ui.item.label );
+        $( "#dp_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+
+$('#plusProject').click(function(){
+  var items = $('#project div.form-group');
+  var index = items.index($('#project div.form-group').last()) + 1;
+  $('#project').append('[% INCLUDE backend/fields/subfields/project.tt %]');
+  $('#project').bind("click", function(){
+    $( "#pj_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#pj_autocomplete_" + index ).val( ui.item.label );
+        $( "#pj_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+
+$('#plusResearchgroup').click(function(){
+  var items = $('#researchgroup div.form-group');
+  var index = items.index($('#researchgroup div.form-group').last()) + 1;
+  $('#researchgroup').append('[% INCLUDE backend/fields/subfields/researchgroup.tt %]');
+  $('#researchgroup').bind("click", function(){
+    $( "#rg_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=researchGroup",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#rg_autocomplete_" + index ).val( ui.item.label );
+        $( "#rg_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+
+
+// minus
+$(document).on('click', '.group', function(){
+  var index = $(this).parent().parent().index();
+  if(parseInt(index) != 0){
+    $(this).parent().parent().remove();
+  }
+});
+$(document).on('click', '.single', function(){
+  var index = $(this).parent().parent().index();
+  if(parseInt(index) != 0){
+    $(this).parent().parent().remove();
+  }
+});
+$(document).on('click', '.author', function(){
+  var container = $(this).parent().parent();
+  container.children('input').each(function(){
+    if($(this).attr("readonly")){
+      $(this).removeAttr("readonly");
+    }
+    if($(this).is(':checked')){
+      $(this).removeAttr("checked");
+    }
+    this.value = "";
+  });
+  container.children('span').children('input').each(function(){
+    if($(this).attr("readonly")){
+      $(this).removeAttr("readonly");
+    }
+    if($(this).is(':checked')){
+      $(this).removeAttr("checked");
+    }
+    this.value = "";
+  });
+  container.find('img').each(function(){
+    this.title = "";
+    this.src = "/images/biNotAuthorized.png";
+  });  
+});
+
+
+// Select button (dept, proj, rg)
+function selectButton(element){
+	var type = $(element).attr('class').replace('btn select_button', '').trim();
+	var type_short;
+	var type_name;
+	
+	var index = $(element).attr('id').replace(type + '_select_','').trim();
+	var modal = $('#selectModal');
+	var container = $('#selectModal').find('.modal-body').first();
+	container.html("");
+	if(type == "department"){
+	    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+	    type_short = "dp";
+	    type_name = "Department";
+	}
+	else if(type == "project"){
+	    container.append('[% INCLUDE backend/fields/subfields/project_select.tt %]');
+	    type_short = "pj";
+	    type_name = "Project";
+	}
+	else if(type == "researchgroup"){
+	    container.append('[% INCLUDE backend/fields/subfields/researchgroup_select.tt %]');
+	    type_short = "rg";
+	    type_name = "Research Group";
+	}
+	var heading = modal.find('h4').first();
+	heading.html("");
+	heading.append('Choose a ' + type_name);
+	$('.selectme').bind("click", function(){
+		var id = $(this).attr('id');
+	    var name = $(this).html();
+	    var index = $(this).attr('data-index');
+	    $('#' + type_short + '_idautocomplete_' + index).val(id);
+	    $('#' + type_short + '_autocomplete_' + index).val(name);
+	    $('#selectModal').modal('hide');
+	});
+	modal.modal('show');
+}
+
+
+$('button.cancel-button').click(function() {
+  window.location.href = '/myPUB';
+});

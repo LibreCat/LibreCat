@@ -1,55 +1,55 @@
 publicationTypes:
   book:
     label: "Book"
-    tmpl: book.tt
+    tmpl: book
   bookChapter:
     label: "Book Chapter"
-    tmpl: bookChapter.tt
+    tmpl: bookChapter
   bookEditor:
     label: "Book Editor"
-    tmpl: bookEditor.tt
+    tmpl: bookEditor
   caseStudy:
     label: "Case Study"
-    tmpl: caseStudy.tt
+    tmpl: caseStudy
   conferenceAbstract:
     label: "Conference Abstract"
-    tmpl: conferenceAbstract.tt
+    tmpl: conferenceAbstract
   conferenceEditor:
     label: "Conference Editor"
-    tmple: conferenceEditor.tt
+    tmple: conferenceEditor
   conference:
     label: "Conference Proceeding/Paper"
-    tmpl: conference.tt
+    tmpl: conference
   dissertation:
     label: "Dissertation"
-    tmpl: dissertation.tt
+    tmpl: dissertation
   encyclopediaArticle:
     label: "Encyclopedia Article"
-    tmpl: encyclopediaArticle.tt
+    tmpl: encyclopediaArticle
   journalArticle:
     label: "Journal Article"
-    tmpl: journalArticle.tt
+    tmpl: journalArticle
   journalEditor:
     label: "Journal Editor"
-    tmpl: journalEditor.tt
+    tmpl: journalEditor
   newspaperarticle:
     label: "Newspaper Article"
-    tmpl: newspaperaArticle.tt
+    tmpl: newspaperaArticle
   patent:
     label: "Patent"
-    tmpl: patent.tt
+    tmpl: patent
   preprint:
     label: "Preprint"
-    tmpl: preprint.tt
+    tmpl: preprint
   report:
     label: "Report"
-    tmpl: report.tt
+    tmpl: report
   review:
     label: "Book Review"
-    tmpl: bookReview.tt
+    tmpl: bookReview
   researchdata:
     label: "Research Data"
-    tmpl: researchData.tt
+    tmpl: researchData
     fields:
       basicFields:
         tabName: "Basic Fields"
@@ -62,36 +62,46 @@ publicationTypes:
           mandatory: 1
           multiple: 0
           label: "Title"
+          placeholder: "Publication Title"
           readonly: 0
         authors:
-          mandatory: 1
+          firstName:
+            mandatory: 1
+            placeholder: "First Name"
+          lastName:
+            mandatory: 1
+            placeholder: "Last Name"
+          title:
+            mandatory: 0
+            placeholder: "Title"            
           multiple: 1
           label: "Creator"
-          readonly: 0
         departments:
           mandatory: 1
           multiple: 1
-          label: "Departments"
-          readonly: 0
+          label: "Department"
+          placeholder: "Department"
         projects:
           mandatory: 0
           multiple: 1
           label: "Projects"
-          readonly: 0
+          placeholder: "Project"
         researchGroups:
           mandatory: 0
           multiple: 1
           label: "Research Groups"
-          readonly: 0
+          placeholder: "Research Group"
         publisher:
           mandatory: 1
           multiple: 0
           label: "Publisher"
+          placeholder: "Publisher"
           readonly: 0
         year:
           mandatory: 1
           multiple: 0
           label: "Year"
+          placeholder: "YYYY"
           readonly: 0
       fileUpload:
         tabName: "Research data upload"
@@ -142,19 +152,19 @@ publicationTypes:
           readonly: 0
   translation:
     label: "Translation"
-    tmpl: translation.tt
+    tmpl: translation
   workingpaper:
     label: "Working Paper"
-    tmpl: workingPaper.tt
+    tmpl: workingPaper
   bidissertation:
     label: "Bielefeld Doctoral Thesis"
-    tmpl: biDissertation.tt
+    tmpl: biDissertation
   bibachelorthesis:
     label: "Bielefeld Bachelor Thesis"
-    tmpl: biBachelorThesis.tt
+    tmpl: biBachelorThesis
   bimasterthesis:
     label: "Bielefeld Master Thesis"
-    tmpl: biMasterThesis.tt
+    tmpl: biMasterThesis
   bipostdocthesis:
     label: "Bielefeld Postdoctoral Thesis/ Habilitation"
-    tmpl: biPostdocThesis.tt
+    tmpl: biPostdocThesis

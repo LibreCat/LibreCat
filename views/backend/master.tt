@@ -1,24 +1,80 @@
 [% INCLUDE navbar.tt %]
-<!-- BEGIN /backend/forms/[% tmpl %] -->
+<!-- BEGIN /backend/forms/{% tmpl %} -->
 
-[% IF fields.basicFields %]
+<div class="row">
 
-[% END %]
+<div class="col-md-9 col-md-offset-1">
 
+  [% IF mainTitle %]
+  <h3>[% mainTitle %]</h3>
+  [% ELSE %]
+  <h3>Add new {% label %}</h3>
+  [% END %]
+  
+  <ul class="nav nav-tabs" id="tabs-left">
+    <li id="li_basicFields" class="active">
+      <a href="#basicFields" data-toggle="tab">{% fields.basicFields.tabName %}</a>
+    </li>
+    {% IF fields.fileUpload %}
+    <li id="li_fileUpload" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
+      <a href="#fileUpload" data-toggle="tab">{% fields.fileUpload.tabName %}</a>
+    </li>
+    {% END %}
+    {% IF fields.supplementaryFields %}
+    <li id="li_supplementaryFields" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
+      <a href="#supplementaryFields" data-toggle="tab">{% fields.supplementaryFields.tabName %}</a>
+    </li>
+    {% END %}
+    {% IF fields.relatedMaterial %}
+    <li id="li_relatedMaterial" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
+      <a href="#relatedMaterial" data-toggle="tab">{% fields.relatedMaterial.tabName %}</a>
+    </li>
+    {% END %}
+  </ul>
+  
+  <form action="/luur/record" method="get" name="reLoad">
+    <input type="hidden" name="recordType" value="{% tmpl %}">
+    <input type="hidden" name="recordOId" value="[% recordOId %]">
+    
+    <div class="tab tab-content edit-form">
+    
+      <!-- STEP 1 -->
+      <div class="tab-pane active" id="basicFields">
 
-[% IF fields.fileUpload %]
+      {% IF fields.basicFields %}
+        {% FOREACH key IN fields.basicFields.keys %}
+          {% template = "fields/"_key_".tt" %}
+          {% INCLUDE $template %}
+        {% END %}
+        {% INCLUDE buttonrow_tab1.tt %}
+      {% END %}
+      
+      </div><!-- tab-pane -->
+      
+      
+      {% IF fields.fileUpload %}
+      
+      {% END %}
+      
+      
+      {% IF fields.supplementaryFields %}
+      
+      {% END %}
+      
+      
+      {% IF fields.relatedMaterial %}
+      
+      {% END %}
+      
+    </div><!-- tab-content -->
+  </form>
 
-[% END %]
+</div><!-- col-md-9 col-md-offset-1 -->
+</div><!-- row -->
 
+<script>
+{% INCLUDE jquery_tab1.tt %}
+</script>
 
-[% IF fields.supplementaryFields %]
-
-[% END %]
-
-
-[% IF fields.relatedMaterial %]
-
-[% END %]
-
-<!-- END /backend/forms/[% tmpl %] -->
+<!-- END /backend/forms/{% tmpl %} -->
 [% INCLUDE footer.tt %]
