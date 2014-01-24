@@ -1,366 +1,610 @@
-<h5>Add new research data</h5>
+[% INCLUDE navbar.tt %]
+<!-- BEGIN /backend/forms/researchData -->
 
+<div class="row">
+
+<div class="col-md-9 col-md-offset-1">
+
+  [% IF mainTitle %]
+  <h3>[% mainTitle %]</h3>
+  [% ELSE %]
+  <h3>Add new Research Data</h3>
+  [% END %]
+  
   <ul class="nav nav-tabs" id="tabs-left">
-    <li id="liStepOne" class="active">
-      <a href="#stepOne" data-toggle="tab">Mandatory fields</a>
+    <li id="li_basicFields" class="active">
+      <a href="#basicFields" data-toggle="tab">Basic Fields</a>
     </li>
-    <li id="liStepTwo" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
-      <a href="#stepTwo">Research data upload</a>
+    
+    <li id="li_fileUpload" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
+      <a href="#fileUpload" data-toggle="tab">Research data upload</a>
     </li>
-    <li id="liStepThree" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
-      <a href="#stepThree">Supplementary fields</a>
+    
+    
+    <li id="li_supplementaryFields" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
+      <a href="#supplementaryFields" data-toggle="tab">Supplementary fields</a>
     </li>
-    <li id="liStepFour" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
-      <a href="#stepFour">Check input</a>
+    
+    
+    <li id="li_relatedMaterial" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
+      <a href="#relatedMaterial" data-toggle="tab">Link to publications</a>
     </li>
+    
   </ul>
   
-  <form action="/submitForm" method="get">
-  <div class="tab tab-content" style="border-bottom: 1px solid lightgray;min-height:200px;padding-bottom:5px;">
-    <!-- STEP 1 -->
-    <div class="tab-pane[% IF !allActive %] active in[% END %]" id="stepOne">
-      <div class="span2">
-        DOI<span class="starMandatory">*</span> <i class="icon-plus" id="plusDoi"></i>
-      </div>
-      <div class="span6" id="doi">
-        <div class="controls control-group">
-          <input type="text" name="doi_0" id="doi_0" value="[% parameters.doi_0 %]" placeholder="Will be generated automatically" class="span5" readonly="readonly">
-        </div>
-      </div>
+  <form action="/luur/record" method="get" name="reLoad">
+    <input type="hidden" name="recordType" value="researchData">
+    <input type="hidden" name="recordOId" value="[% recordOId %]">
+    
+    <div class="tab tab-content edit-form">
+    
+      <!-- STEP 1 -->
+      <div class="tab-pane active" id="basicFields">
 
-      <div class="span2">
-        Title<span class="starMandatory">*</span>
-      </div>
-      <div class="span6">
-        <div class="controls control-group">
-          <input type="text" name="title" value="[% parameters.title %]" placeholder="Publication Title" class="span5 required">
-        </div>
-      </div>
 
-      <div class="span2">
-        Creator<span class="starMandatory">*</span> <i class="icon-plus" id="plusCreator"></i>
-      </div>
-      <div class="span6" id="creator">
-        <div class="controls control-group">
-          <div class="controls controls-row">
-            <input type="text" name="firstName_0" value="[% parameters.firstName_0 %]" placeholder="First Names" class="span2 required">
-            <input type="text" name="lastName_0" value="[% parameters.lastName_0 %]" placeholder="Last Name" class="span3 required">
-          </div>
-        </div>
-      </div>
   
-      <div class="span2">
-        Publisher<span class="starMandatory">*</span>
-      </div>
-      <div class="span6">
-        <div class="controls control-group">
-          <input type="text" name="publisher" value="[% parameters.publisher OR 'Bielefeld University' %]" placeholder="Bielefeld University" class="span5 required">
-        </div>
-      </div>
+    
+    
+[% IF doi %]
+  <div class="col-md-2">
+    <label for="id_doi">
+      DOI
+    </label>
+  </div>
+  <div class="col-md-10">
+    <div class="form-group col-md-5">
+      <input type="text" name="doi" id="id_doi" value="[% doi %]" class="form-control" readonly="readonly">
+    </div>
+  </div>
+[% END %]
+    
+  
+    
+    
+<div class="col-md-2">
+  <label for="id_mainTitle">
+    Title<span class="starMandatory">*</span>
+  </label>
+</div>
+<div class="col-md-10">
+  <span class="form-group col-md-9">
+    <input type="text" name="mainTitle" id="id_mainTitle" value="[% mainTitle %]" placeholder="Publication Title" class="form-control required">
+  </span>
+</div>
+    
+  
+    
+    
+<div class="col-md-2">
+  <label for="author">
+    Creator<span class="starMandatory">*</span> <span class="glyphicon glyphicon-plus" id="plusAuthor"></span>
+  </label>
+</div>
+<div class="col-md-10" id="author">
+  [% IF !authors %]
+  <div class="form-group">
+    <input type="hidden" name="au_auLuAuthorOId_0" id="id_au_auLuAuthorOId_0" value="[% auLuAuthorOId %]"/>
+    <input type="hidden" name="au_auPersonNumber_0" id="id_au_auPersonNumber_0" value="[% aupersonNumber %]" />
+    <input name="au_auLuLdapId_0" type="hidden" value="[% auLuLdapId %]" />
+    <input name="au_auEndDate_0" type="hidden" value="[% auEndDate %]" />
+    <input name="au_origGivenName_0" id="id_au_origGivenName_0" type="hidden" />
+    <input name="au_origLastName_0" id="id_au_origLastName_0" type="hidden" />
+    <input name="au_origTitle_0" id="id_au_origTitle_0" type="hidden" />
+            
+    <span class="form-group col-md-3">
+      <input type="text" name="au_auGivenName_0" placeholder="First Name" id="id_au_auGivenName_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" value="" />
+    </span>
+    <span class="form-group col-md-4">
+      <input type="text" name="au_auSurname_0" placeholder="Last Name" id="id_au_auSurname_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" value="" />
+    </span>
+    <span class="form-group col-md-2">
+      <input type="text" name="au_auPersonTitle_0" placeholder="Title" id="id_au_auPersonTitle_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" />
+    </span>
+    
+    <span class="col-md-1">
+      <span class="glyphicon glyphicon-minus author"></span>
+    </span>
+          
+    <span class="col-md-2">
+      <input name="linkPevz_0" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
+      <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+    </span>
+  </div>
+  [% ELSE %]
+  [% FOREACH name IN authors %]
+  <div class="form-group">
+    <input type="hidden" name="au_auLuAuthorOId_[% loop.index %]" id="id_au_auLuAuthorOId_[% loop.index %]" value="[% name.auLuAuthorOId %]"/>
+    <input type="hidden" name="au_auPersonNumber_[% loop.index %]" id="id_au_auPersonNumber_[% loop.index %]" value="[% name.aupersonNumber %]" />
+    <input name="au_auLuLdapId_[% loop.index %]" type="hidden" value="[% name.auLuLdapId %]" />
+    <input name="au_auEndDate_[% loop.index %]" type="hidden" value="[% name.auEndDate %]" />
+    <input name="au_origGivenName_0" id="id_au_origGivenName_[% loop.index %]" type="hidden" />
+    <input name="au_origLastName_0" id="id_au_origLastName_[% loop.index %]" type="hidden" />
+    <input name="au_origTitle_0" id="id_au_origTitle_[% loop.index %]" type="hidden" />
 
-      <div class="span2">
-        Year<span class="starMandatory">*</span>
-      </div>
-      <div class="span6">
-        <div class="controls control-group">
-          <input type="text" name="publicationYear" value="[% parameters.publicationYear %]" maxlength="4" placeholder="YYYY" class="span1 required">
+    <span class="form-group col-md-3">
+      <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="First Name" id="id_au_auGivenName_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auGivenName %]" class="form-control"/>
+    </span>
+    <span class="form-group col-md-4">
+      <input type="text" name="au_auSurname_[% loop.index %]" placeholder="Last Name" id="id_au_auSurname_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auSurname %]" class="form-control" />
+    </span>
+    <span class="form-group col-md-2">
+      <input type="text" name="au_auPersonTitle_[% loop.index %]" placeholder="Title" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auPersonTitle %]" class="form-control"/>
+    </span>
+            
+    <span class="col-md-1">
+      [% IF loop.index == 0 %]
+      <span class="glyphicon glyphicon-minus author"></span>
+      [% ELSE %]
+      <span class="glyphicon glyphicon-minus single"></span>
+      [% END %]
+    </span>
+            
+    <span class="col-md-2">
+      <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
+      [% IF name.auLuAuthorOId OR name.auLuLdapId %]
+        <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+      [% ELSE %]
+        <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>
+      [% END %]
+    </span>
+  </div>
+  [% END %]
+  [% END %]
+        
+  <div class="modal" id="linkPevzModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Several PEVZ Accounts found... make a choice</h4>
+        </div>
+        <div class="modal-body">
         </div>
       </div>
-      
-      <div class="span2">
-        <a class="btn btn-small" id="oneToTwo">Next <i class="icon-chevron-right"></i></a>
-      </div>
-    </div><!-- tab-pane -->
+    </div>
+  </div>
+        
+</div>
+    
   
-    <!-- STEP 2 -->
-    <div class="tab-pane" id="stepTwo">
-      <div class="span8" id="file">
-        <input name="file_0" id="file_0" value="[% parameters.file_0 %]" type="file" /> <i class="icon-plus" id="plusFile"></i><br />
-      </div>
+    
+    
+<div class="col-md-2">
+  <label for="department">
+    Department <span class="glyphicon glyphicon-plus" id="plusDepartment"></span>
+  </label>
+</div>
+<div class="col-md-10" id="department">
+  [% IF !departments %]
+  <div class="form-group">
+    <input type="hidden" name="dp_departmentOId_0" id="dp_idautocomplete_0" value="" />
+    
+    <span class="form-group col-md-7">
+      <input type="text" name="dp_departmentName_0" class="form-control" placeholder="Department" id="dp_autocomplete_0" value="" />
+    </span>
+    
+    <span class="form-group col-md-2">
+      <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0" value="Select"/>
+    </span>
+        
+    <span class="col-md-1">
+      <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
+    </span>
+        
+    <script>
+      $(function() {
+        $( "#dp_autocomplete_0" ).autocomplete({
+          source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+          minLength: 2,
+          select: function( event, ui ) {
+            $( "#dp_autocomplete_0" ).val( ui.item.label );
+            $( "#dp_idautocomplete_0" ).val( ui.item.id );
+          }
+        });
+      });
+    </script>
+  </div>
+  [% ELSE %]
+  [% FOREACH dept IN departments %]
+  <div class="form-group">
+    <input type="hidden" name="dp_departmentOId_[% loop.index %]" id="dp_idautocomplete_[% loop.index %]" value="[% dept.departmentOId || dept.organizationNumber %]" />
+          
+    <span class="form-group col-md-7">
+      <input type="text" name="dp_departmentName_[% loop.index %]" class="form-control" placeholder="Department" id="dp_autocomplete_[% loop.index %]" value="[% dept.departmentName || dept.name %]" />
+    </span>
+          
+    <span class="form-group col-md-2">
+      <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]" value="Select"/>
+    </span>
+          
+    <span class="col-md-1">
+      [% IF loop.index == 0 %]
+      <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
+      [% ELSE %]
+      <span class="glyphicon glyphicon-minus single"></span>
+      [% END %]
+    </span>
+          
+    <script>
+      $(function() {
+        $( "#dp_autocomplete_[% loop.index %]" ).autocomplete({
+          source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+          minLength: 2,
+          select: function( event, ui ) {
+            $( "#dp_autocomplete_[% loop.index %]" ).val( ui.item.label );
+            $( "#dp_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+          }
+        });
+      });
+    </script>
+  </div>
+  [% END %]
+  [% END %]
       
-      <div class="span2">
-        <a class="btn btn-small" id="twoToOne" data-toggle="tab" href="#stepOne"><i class="icon-chevron-left"></i> Back</a>
-        <a class="btn btn-small" id="twoToThree" data-toggle="tab" href="#stepThree">Next <i class="icon-chevron-right"></i></a>
+  <div class="modal" id="selectModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"></h4>
+          <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
+        </div>
+        <div class="modal-body">
+        </div>
       </div>
-    </div><!-- tab-pane -->
+    </div>
+  </div>
+
+</div>
+    
   
-    <!-- STEP 3 -->
-    <div class="tab-pane" id="stepThree">
-      <div class="span2">
-        Subtitle
-      </div>
-      <div class="span6">
-        <input type="text" name="subtitle" value="[% parameters.subtitle %]" placeholder="Publication Subtitle (optional)" class="span5">
-        <input type="hidden" name="titleType" value="Subtitle">
-      </div>
-      
-      <div class="span2">
-        Subject
-      </div>
-      <div class="span6">
-        <input type="text" name="subject" value="[% parameters.subject %]" placeholder="Subject" class="span5">
-      </div>
-      
-      <div class="span2">
-        DDC
-      </div>
-      <div class="span6">
-        <input type="text" name="ddc" value="[% parameters.ddc %]" placeholder="Subject (will be select box)" class="span5">
-        <input type="hidden" name="subjectScheme" value="DDC">
-      </div>
-      
-      <div class="span2">
-        Contributor <i class="icon-plus" id="plusContributor"></i>
-      </div>
-      <div class="span6" id="contributor">
-        <div class="controls controls-row">
-          <select name="contributorType_0" id="contributorType_0" value="[% parameters.contributorType_0 %]" class="span2">
-            <option value="">-- select --</option>
-            <option value="contactPerson">ContactPerson</option>
-            <option value="dataManager">DataManager</option>
-          </select>
-          <input type="text" class="span3" name="orgName_0" id="contributorName_0" value="[% parameters.contributorName %]" placeholder="Org. Name or Last Name, First Name">
-        </div>
-      </div>
-      
-      <div class="span2">
-        Date <i class="icon-plus" id="plusDate"></i>
-      </div>
-      <div class="span6" id="date">
-        <div class="controls controls-row">
-          <select name="dateType_0" id="dateType_0" value="[% parameters.dataType %]" class="span2">
-            <option value="">-- select --</option>
-            <option value="valid">Valid</option>
-            <option value="accepted">Accepted</option>
-          </select>
-          <input type="text" name="date_0" id="date_0" class="span3" placeholder="YYYY-MM-DD">
-        </div>
-      </div>
-      
-      <div class="span2">
-        Language
-      </div>
-      <div class="span6">
-        <select name="language" value="[% parameters.language %]"  class="span5">
-          <option value="eng">English</option>
-          <option value="ger">German</option>
-          <option value="swe">Swedish</option>
-        </select>
-      </div>
-      
-      <div class="span2">
-        Type
-      </div>
-      <div class="span6">
-        <div class="controls controls-row">
-        <select name="resourceTypeGeneral" value="[% parameters.resourceTypeGeneral %]" class="span2">
-          <option value="">-- select --</option>
-          <option value="img">Image</option>
-          <option value="interview">Interview</option>
-          <option value="cupOfTea">Cup of Tea</option>
-        </select>
-        <input type="text" name="resourceType" value="[% parameters.resourceType %]" class="span3" placeholder="Resource Type">
-        </div>
-      </div>
-      
-      <div class="span2">
-        Alternate Identifier <i class="icon-plus" id="plusAltid"></i>
-      </div>
-      <div class="span6" id="altid">
-        <div class="controls controls-row">
-          <select name="alternateIdentifierType_0" id="alternateIdentifierType_0" value="[% parameters.alternateIdentifierType_0 %]" class="span2">
-            <option value="">-- select --</option>
-            <option value="isbn">ISBN</option>
-            <option value="issn">ISSN</option>
-            <option value="eissn">eISSN</option>
-          </select>
-          <input type="text" class="span3" name="alternateIdentifier_0" id="alternateIdentifier_0" value="[% parameters.alternateIdentifier_0 %]" placeholder="Alternate Identifier">
-        </div>
-      </div>
-      
-      <div class="span2">
-        Related Identifier <i class="icon-plus" id="plusRelid"></i>
-      </div>
-      <div class="span6" id="relid">
-        <div class="controls controls-row">
-          <select name="relatedIdentifierType_0" id="relatedIdentifierType_0" value="[% parameters.relatedIdentifierType_0 %]" class="span1">
-            <option value="">-- select --</option>
-            <option value="doi">DOI</option>
-            <option value="urn">URN</option>
-          </select>
-          <select name="relationType_0" id="relationType_0" value="[% parameters.relationType_0 %]" class="span1">
-            <option value="">-- select --</option>
-            <option value="cites">This publication cites</option>
-            <option value="isCitedBy">This publication is cited by</option>
-          </select>
-          <input type="text" class="span3" name="relatedIdentifier_0" id="relatedIdentifier_0" value="[% parameters.relatedIdentifier_0 %]" placeholder="Related Identifier">
-        </div>
-      </div>
-      
-      <div class="span2">
-        Size <i class="icon-plus" id="plusSize"></i>
-      </div>
-      <div class="span6" id="dataSize">
-        <div class="controls controls-row">
-          <select name="unit_0" id="unit_0" value="[% parameters.unit_0 %]" class="span2">
-            <option value="">-- select --</option>
-            <option value="pages">Pages</option>
-            <option value="kB">kB</option>
-            <option value="MB">MB</option>
-            <option value="GB">GB</option>
-          </select>
-          <input type="text" name="dataSize_0" id="dataSize_0" value="[% parameters.dataSize_0 %]" class="span3" placeholder="Size">
-        </div>
-      </div>
-      
-      <div class="span2">
-        Format <i class="icon-plus" id="plusFormat"></i>
-      </div>
-      <div class="span6" id="format">
-        <div class="controls controls-row">
-          <select name="format_0" id="format_0" value="[% parameters.format %]" class="span5">
-            <option value="">-- select --</option>
-            <option value="text/plain">Text</option>
-            <option value="text/html">HTML</option>
-            <option value="text/xml">XML</option>
-            <option value="application/pdf">PDF</option>
-          </select>
-        </div>
-      </div>
-      
-      <div class="span2">
-        Version
-      </div>
-      <div class="span6">
-        <input type="text" name="version" value="[% parameters.version %]" placeholder="Version" class="span5">
-      </div>
-      
-      <div class="span2">
-        Rights
-      </div>
-      <div class="span6">
-        <select name="rights" value="[% parameters.rights %]" class="span5">
-          <option value="">-- select --</option>
-          <option value="ODbL">Open Database License [ODbL]</option>
-        </select>
-      </div>
-      
-      <div class="span2">
-        Description <i class="icon-plus" id="plusDescription"></i>
-      </div>
-      <div class="span6" id="description">
-        <div class="controls controls-row">
-          <select name="descriptionType_0" id="descriptionType_0" value="[% parameters.descriptionType_0 %]" class="span2">
-            <option value="">-- select --</option>
-            <option>other</option>
-          </select>
-          <textarea rows="3" name="description_0" id="description_0" value="[% parameters.description_0 %]" class="span3"></textarea>
-        </div>
-      </div>
-      
-      <div class="span2">
-        <a class="btn btn-small" id="threeToTwo" data-toggle="tab" data-target="#stepTwo"><i class="icon-chevron-left"></i> Back</a>
-        <a class="btn btn-small" id="threeToFour" data-toggle="tab" href="#stepFour">Next <i class="icon-chevron-right"></i></a>
-      </div>
-    </div><!-- tab-pane -->
+    
+    
+<div class="col-md-2">
+  <label for="project">
+    Projects <span class="glyphicon glyphicon-plus" id="plusProject"></span>
+  </label>
+</div>
+<div class="col-md-10" id="project">
+  [% IF !projects %]
+  <div class="form-group">
+    <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
+          
+    <span class="form-group col-md-7">
+      <input type="text" name="pj_projectName_0" class="form-control" placeholder="Project" id="pj_autocomplete_0" value="" />
+    </span>
+        
+    <span class="form-group col-md-2">
+      <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_0" value="Select"/>
+    </span>
+        
+    <span class="col-md-1">
+      <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
+    </span>
+        
+    <script>
+      $(function() {
+        $( "#pj_autocomplete_0" ).autocomplete({
+          source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
+          minLength: 2,
+          select: function( event, ui ) {
+            $( "#pj_autocomplete_0" ).val( ui.item.label );
+            $( "#pj_idautocomplete_0" ).val( ui.item.id );
+          }
+        });
+      });
+    </script>
+  </div>
+  [% ELSE %]
+  [% FOREACH proj IN projects %]
+  <div class="form-group">
+    <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.projectOId %]" />
+          
+    <span class="form-group col-md-7">
+      <input type="text" name="pj_projectName_[% loop.index %]" class="form-control" placeholder="Project" id="pj_autocomplete_[% loop.index %]" value="[% proj.projectName %]" />
+    </span>
+          
+    <span class="form-group col-md-2">
+      <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_[% loop.index %]" value="Select"/>
+    </span>
+          
+    <span class="col-md-1">
+      [% IF loop.index == 0 %]
+      <span class="icon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
+      [% ELSE %]
+      <span class="icon-minus single"></span>
+      [% END %]
+    </span>
+          
+    <script>
+      $(function() {
+        $( "#pj_autocomplete_[% loop.index %]" ).autocomplete({
+          source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
+          minLength: 2,
+          select: function( event, ui ) {
+            $( "#pj_autocomplete_[% loop.index %]" ).val( ui.item.label );
+            $( "#pj_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+          }
+        });
+      });
+    </script>
+  </div>
+  [% END %]
+  [% END %]
+</div>
+    
   
-    <!-- STEP 4 -->
-    <div class="tab-pane[% IF allActive %] active in[% END %]" id="stepFour">
-      <div class="span8" id="checkInput">
-      </div>
-      
-      <div class="span8">
-        <a class="btn btn-small" id="fourToThree" data-toggle="tab" data-target="#stepThree"><i class="icon-chevron-left"></i> Back</a>
-        <button type="submit">Submit</button>
-      </div>
-    </div><!-- tab-pane -->
+    
+    
+<div class="col-md-2">
+  <label for="researchgroup">
+    Research Group <span class="glyphicon glyphicon-plus" id="plusResearchgroup"></span>
+  </label>
+</div>
+<div class="col-md-10" id="researchgroup">
+  [% IF !researchGroups %]
+  <div class="form-group">
+    <input type="hidden" name="rg_researchGroupOId_0" id="rg_idautocomplete_0" value="" />
+          
+    <span class="form-group col-md-7">
+      <input type="text" name="rg_researchGroupName_0" class="form-control" placeholder="Research Group" id="rg_autocomplete_0" value="" />
+    </span>
+        
+    <span class="col-md-2">
+      <input type="button" onclick="selectButton(this);" class="btn select_button researchgroup" id="researchgroup_select_0" value="Select"/>
+    </span>
+
+    <span class="col-md-1">
+      <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rg_autocomplete_0').value = '';document.getElementById('rg_idautocomplete_0').value='';"></span>
+    </span>
+
+    <script>
+      $(function() {
+        $( "#rg_autocomplete_0" ).autocomplete({
+          source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=researchgroup",
+          minLength: 2,
+          select: function( event, ui ) {
+            $( "#rg_autocomplete_0" ).val( ui.item.label );
+            $( "#rg_idautocomplete_0" ).val( ui.item.id );
+          }
+        });
+      });
+    </script>
+  </div>
+  [% ELSE %]
+  [% FOREACH res IN researchGroups %]
+  <div class="form-group">
+    <input type="hidden" name="rg_researchGroupOId_[% loop.index %]" id="rg_idautocomplete_[% loop.index %]" value="[% res.researchGroupOId %]" />
+          
+    <span class="form-group col-md-7">
+      <input type="text" name="rg_researchGroupName_[% loop.index %]" class="form-control" id="rg_autocomplete_[% loop.index %]" value="[% res.researchGroupName %]" />
+    </span>
+          
+    <span class="form-group col-md-2">
+      <input type="button" onclick="selectButton(this);" class="btn select_button researchgroup" id="researchgroup_select_[% loop.index %]" value="Select"/>
+    </span>
+          
+    <span class="col-md-1">
+      [% IF loop.index == 0 %]
+      <span class="icon-minus" onclick="javascript:document.getElementById('rg_autocomplete_0').value = '';document.getElementById('rg_idautocomplete_0').value='';"></span>
+      [% ELSE %]
+      <span class="icon-minus single"></span>
+      [% END %]
+    </span>
+          
+    <script>
+      $(function() {
+        $( "#rg_autocomplete_[% loop.index %]" ).autocomplete({
+          source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=researchgroup",
+          minLength: 2,
+          select: function( event, ui ) {
+            $( "#rg_autocomplete_[% loop.index %]" ).val( ui.item.label );
+            $( "#rg_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+          }
+        });
+      });
+    </script>
+  </div>
+  [% END %]
+  [% END %]
+</div>
+    
   
-  </div><!-- tab-content -->
+    
+    
+<div class="col-md-2">
+  <label for="id_publisher">
+    Publisher<span class="starMandatory">*</span>
+  </label>
+</div>
+<div class="col-md-10">
+  <span class="form-group col-md-9">
+    <input type="text" name="publisher" id="id_publisher" value="[% publisher OR 'Bielefeld University' %]" placeholder="Publisher" class="form-control required">
+  </span>
+</div>
+    
+  
+    
+    
+<div class="col-md-2">
+  <label for="id_publishingYear">
+    Year<span class="starMandatory">*</span>
+  </label>
+</div>
+<div class="col-md-10">
+  <span class="form-group col-md-3">
+    <input type="text" name="publishingYear" id="id_publishingYear" value="[% publishingYear %]" maxlength="4" placeholder="YYYY" class="form-control required">
+  </span>
+</div>
+    
+  
+  <div class="col-md-12 buttonrow">
+  <span class="form-group col-md-2">
+    <a class="btn btn-default back-button" style="display:none;"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+  </span>
+  <span class="form-group col-md-2">
+    <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+  </span>
+  [% IF submissionStatus != "public" %]
+  <span class="form-group col-md-2">
+    <button type="submit" class="btn btn-default" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+  </span>
+  [% END %]
+  <span class="form-group col-md-2">
+    <a class="btn btn-default next-button" id="oneToTwo" href="#fileUpload">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+  </span>
+</div>
+
+      
+      </div><!-- tab-pane -->
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </div><!-- tab-content -->
   </form>
 
+</div><!-- col-md-9 col-md-offset-1 -->
+</div><!-- row -->
+
 <script>
+// Placeholder for MSIE
+if(navigator.userAgent.indexOf('MSIE') != -1){
+  $('[placeholder]').focus(function() {
+    var input = $(this);
+    if (input.val() == input.attr('placeholder')) {
+      input.val('');
+      input.removeClass('placeholder');
+    }
+  }).blur(function() {
+    var input = $(this);
+    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+      input.addClass('placeholder');
+      input.val(input.attr('placeholder'));
+    }
+  }).blur();
+  $('[placeholder]').parents('form').submit(function() {
+    $(this).find('[placeholder]').each(function() {
+      var input = $(this);
+      if (input.val() == input.attr('placeholder')) {
+        input.val('');
+      }
+    })
+  });
+}
+
+// Tab forward one to two
 $('#oneToTwo').click(function(){
   var check = 1;
+  var oneauthor = 0;
+  $('#author').children('div.form-group').each(function(){
+    if(!$(this).children('span').eq(0).children().eq(0).val()){
+      $(this).children('span').eq(0).addClass("has-error");
+    }
+    if(!$(this).children('span').eq(1).children().eq(0).val()){
+      $(this).children('span').eq(1).addClass("has-error");
+    }
+    if($(this).children('span').eq(0).children().eq(0).val() && $(this).children('span').eq(1).children().eq(0).val()){
+      oneauthor = 1;
+    }
+  });
+  if(!oneauthor){
+    check = 0;
+  }
+  
   $('.required').each(function(){
     if(!$(this).val()){
-      $(this).parents('div.control-group').addClass('error');
+      $(this).parents('span.form-group').addClass('has-error');
+      check = 0;
+    }
+    else if($(this).val() && ($(this).val() == "Publication Title" || $(this).val() == "First Name" || $(this).val() == "Last Name" || $(this).val() == "YYYY")){
+      $(this).parents('span.form-group').addClass('has-error');
       check = 0;
     }
     else{
-      $(this).parents('div.control-group').removeClass('error');
+      $(this).parents('span.form-group').removeClass('has-error');
     }
   });
   if(check){
-    $('#stepOne').removeClass('active');
-    $('#stepTwo').addClass('active');
-    $('a[href=#stepTwo]').attr('data-toggle','tab');
-    $('#liStepOne').removeClass('active');
-    $('#liStepTwo').css('visibility','visible');
-    $('#liStepTwo').addClass('active');
+    $('#author.has-error').each(function(){
+      $(this).removeClass('has-error');
+    });
+    $('#basicFields, #li_basicFields').removeClass('active');
+    $('#fileUpload, #li_fileUpload').addClass('active');
+    $('button[href=#fileUpload]').attr('data-toggle','tab');
+    $('#li_fileUpload').css('visibility','visible');
   }
 });
 
-$('#twoToThree').click(function(){
-  $('#liStepTwo').removeClass('active');
-  $('#liStepThree').css('visibility','visible');
-  $('#liStepThree').addClass('active');
-  $('a[href=#stepThree]').attr('data-toggle','tab');
+
+// plus
+$('#plusAuthor').click(function(){
+  var items = $('#author div.form-group');
+  var index = items.index($('#author div.form-group:last')) + 1;
+  $('#author').append('[% INCLUDE backend/fields/subfields/author.tt %]');
+  $('#id_linkPevz_'+index).bind("click", function() { return linkPevz($('#id_linkPevz_'+index))});
 });
 
-$('#threeToFour').click(function(){
-  var check = 1;
-  $('.required').each(function(){
-    if(!$(this).val()){
-      $(this).parents('div.control-group').addClass('error');
-      check = 0;
-    }
+$('#plusDepartment').click(function(){
+  var items = $('#department div.form-group');
+  var index = items.index($('#department div.form-group').last()) + 1;
+  $('#department').append('[% INCLUDE backend/fields/subfields/department.tt %]');
+  $('#department').bind("click", function(){
+    $( "#dp_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#dp_autocomplete_" + index ).val( ui.item.label );
+        $( "#dp_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
   });
-  if(check){
-    var urlstr = '';
-    $('input').each(function(){
-      urlstr = urlstr + '<span id="inputSpan"><div class="span2">' + $(this).attr('name') + '</div><div class="span5">';
-      if($(this).val()){
-        urlstr = urlstr + $(this).val();
+});
+
+$('#plusProject').click(function(){
+  var items = $('#project div.form-group');
+  var index = items.index($('#project div.form-group').last()) + 1;
+  $('#project').append('[% INCLUDE backend/fields/subfields/project.tt %]');
+  $('#project').bind("click", function(){
+    $( "#pj_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#pj_autocomplete_" + index ).val( ui.item.label );
+        $( "#pj_idautocomplete_" + index ).val( ui.item.id );
       }
-      else {
-        urlstr = urlstr + '&nbsp;';
-      }
-      urlstr = urlstr + '</div>'; 
     });
-    $('select').each(function(){
-      urlstr = urlstr + '<div class="span2">' + $(this).attr('name') + '</div><div class="span5">';
-      if($(this).val()){
-        urlstr = urlstr + $(this).val();
+  });
+});
+
+$('#plusResearchgroup').click(function(){
+  var items = $('#researchgroup div.form-group');
+  var index = items.index($('#researchgroup div.form-group').last()) + 1;
+  $('#researchgroup').append('[% INCLUDE backend/fields/subfields/researchgroup.tt %]');
+  $('#researchgroup').bind("click", function(){
+    $( "#rg_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=researchGroup",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#rg_autocomplete_" + index ).val( ui.item.label );
+        $( "#rg_idautocomplete_" + index ).val( ui.item.id );
       }
-      else {
-        urlstr = urlstr + '&nbsp;';
-      }
-      urlstr = urlstr + '</div></span>';
     });
-
-    $('#liStepFour').css('visibility','visible');
-    $('#liStepThree').removeClass('active');
-    $('#liStepFour').addClass('active');
-    $('a[href=#stepFour]').attr('data-toggle','tab');
-    $('#inputSpan').remove();
-    $('#checkInput').append(urlstr);
-  }
+  });
 });
 
-$('#fourToThree').click(function(){
-  $('#liStepFour').removeClass('active');
-  $('#liStepThree').addClass('active');
-});
-
-$('#threeToTwo').click(function(){
-  $('#liStepThree').removeClass('active');
-  $('#liStepTwo').addClass('active');
-});
-
-$('#twoToOne').click(function(){
-  $('#liStepTwo').removeClass('active');
-  $('#liStepOne').addClass('active');
-});
 
 // minus
 $(document).on('click', '.group', function(){
@@ -370,70 +614,82 @@ $(document).on('click', '.group', function(){
   }
 });
 $(document).on('click', '.single', function(){
-  var index = $(this).parent().index();
+  var index = $(this).parent().parent().index();
   if(parseInt(index) != 0){
-    $(this).parent().remove();
+    $(this).parent().parent().remove();
   }
 });
-
-
-$('#plusDoi').click(function(){
-  var items = $('#doi div.control-group');
-  var index = items.index($('#doi div.control-group:last')) + 1;
-  $('#doi').append('[% INCLUDE backend/fields/rd_doi.tt %]');
+$(document).on('click', '.author', function(){
+  var container = $(this).parent().parent();
+  container.children('input').each(function(){
+    if($(this).attr("readonly")){
+      $(this).removeAttr("readonly");
+    }
+    if($(this).is(':checked')){
+      $(this).removeAttr("checked");
+    }
+    this.value = "";
+  });
+  container.children('span').children('input').each(function(){
+    if($(this).attr("readonly")){
+      $(this).removeAttr("readonly");
+    }
+    if($(this).is(':checked')){
+      $(this).removeAttr("checked");
+    }
+    this.value = "";
+  });
+  container.find('img').each(function(){
+    this.title = "";
+    this.src = "/images/biNotAuthorized.png";
+  });  
 });
 
-$('#plusCreator').click(function(){
-  var items = $('#creator div.control-group');
-  var index = items.index($('#creator div.control-group:last')) + 1;
-  $('#creator').append('[% INCLUDE backend/fields/rd_creator.tt %]');
-});
 
-$('#plusFile').click(function(){
-  var items = $('#file input');
-  var index = items.index($('#file input:last')) + 1;
-  $('#file').append('[% INCLUDE backend/fields/rd_file.tt %]');
-});
+// Select button (dept, proj, rg)
+function selectButton(element){
+	var type = $(element).attr('class').replace('btn select_button', '').trim();
+	var type_short;
+	var type_name;
+	
+	var index = $(element).attr('id').replace(type + '_select_','').trim();
+	var modal = $('#selectModal');
+	var container = $('#selectModal').find('.modal-body').first();
+	container.html("");
+	if(type == "department"){
+	    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+	    type_short = "dp";
+	    type_name = "Department";
+	}
+	else if(type == "project"){
+	    container.append('[% INCLUDE backend/fields/subfields/project_select.tt %]');
+	    type_short = "pj";
+	    type_name = "Project";
+	}
+	else if(type == "researchgroup"){
+	    container.append('[% INCLUDE backend/fields/subfields/researchgroup_select.tt %]');
+	    type_short = "rg";
+	    type_name = "Research Group";
+	}
+	var heading = modal.find('h4').first();
+	heading.html("");
+	heading.append('Choose a ' + type_name);
+	$('.selectme').bind("click", function(){
+		var id = $(this).attr('id');
+	    var name = $(this).html();
+	    var index = $(this).attr('data-index');
+	    $('#' + type_short + '_idautocomplete_' + index).val(id);
+	    $('#' + type_short + '_autocomplete_' + index).val(name);
+	    $('#selectModal').modal('hide');
+	});
+	modal.modal('show');
+}
 
-$('#plusContributor').click(function(){
-  var items = $('#contributor div');
-  var index = items.index($('#contributor div:last')) + 1;
-  $('#contributor').append('[% INCLUDE backend/fields/rd_contributor.tt %]');
-});
 
-$('#plusDate').click(function(){
-  var items = $('#date div');
-  var index = items.index($('#date div:last')) + 1;
-  $('#date').append('[% INCLUDE backend/fields/rd_date.tt %]');
-});
-
-$('#plusAltid').click(function(){
-  var items = $('#altid div');
-  var index = items.index($('#altid div:last')) + 1;
-  $('#altid').append('[% INCLUDE backend/fields/rd_altid.tt %]');
-});
-
-$('#plusRelid').click(function(){
-  var items = $('#relid div');
-  var index = items.index($('#relid div:last')) + 1;
-  $('#relid').append('[% INCLUDE backend/fields/rd_relid.tt %]');
-});
-
-$('#plusSize').click(function(){
-  var items = $('#dataSize div');
-  var index = items.index($('#dataSize div:last')) + 1;
-  $('#dataSize').append('[% INCLUDE backend/fields/rd_size.tt %]');
-});
-
-$('#plusFormat').click(function(){
-  var items = $('#format div');
-  var index = items.index($('#format div:last')) + 1;
-  $('#format').append('[% INCLUDE backend/fields/rd_format.tt %]');
-});
-
-$('#plusDescription').click(function(){
-  var items = $('#description div');
-  var index = items.index($('#description div:last')) + 1;
-  $('#description').append('[% INCLUDE backend/fields/rd_description.tt %]');
+$('button.cancel-button').click(function() {
+  window.location.href = '/myPUB';
 });
 </script>
+
+<!-- END /backend/forms/researchData -->
+[% INCLUDE footer.tt %]

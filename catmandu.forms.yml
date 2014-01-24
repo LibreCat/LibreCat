@@ -1,3 +1,23 @@
+fieldOrder:
+  basicFields:
+    - doi
+    - mainTitle
+    - authors
+    - departments
+    - projects
+    - researchGroups
+    - publisher
+    - year
+  fileUpload:
+    - externalFiles
+    - dropzone
+    - licenses
+  supplementaryFields:
+    - abstract:
+    - xddcs:
+    - keyword:
+  relatedMaterial:
+    - connectPubl
 publicationTypes:
   book:
     label: "Book"
@@ -16,7 +36,7 @@ publicationTypes:
     tmpl: conferenceAbstract
   conferenceEditor:
     label: "Conference Editor"
-    tmple: conferenceEditor
+    tmpl: conferenceEditor
   conference:
     label: "Conference Proceeding/Paper"
     tmpl: conference
@@ -29,12 +49,57 @@ publicationTypes:
   journalArticle:
     label: "Journal Article"
     tmpl: journalArticle
+    fields:
+      basicFields:
+        tabName: "Basic Fields"
+        doi:
+          mandatory: 1
+          multiple: 0
+          label: "DOI"
+          readonly: 1
+        mainTitle:
+          mandatory: 1
+          multiple: 0
+          label: "Title"
+          placeholder: "Publication Title"
+          readonly: 0
+        authors:
+          firstName:
+            placeholder: "First Name"
+          lastName:
+            placeholder: "Last Name"
+          title:
+            placeholder: "Title"
+          mandatory: 1
+          multiple: 1
+          label: "Author"
+        departments:
+          mandatory: 0
+          multiple: 1
+          label: "Department"
+          placeholder: "Department"
+        projects:
+          mandatory: 0
+          multiple: 1
+          label: "Projects"
+          placeholder: "Project"
+        researchGroups:
+          mandatory: 0
+          multiple: 1
+          label: "Research Group"
+          placeholder: "Research Group"
+        year:
+          mandatory: 1
+          multiple: 0
+          label: "Publishing Year"
+          placeholder: "YYYY"
+          readonly: 0
   journalEditor:
     label: "Journal Editor"
     tmpl: journalEditor
-  newspaperarticle:
+  newspaperArticle:
     label: "Newspaper Article"
-    tmpl: newspaperaArticle
+    tmpl: newspaperArticle
   patent:
     label: "Patent"
     tmpl: patent
@@ -47,7 +112,7 @@ publicationTypes:
   review:
     label: "Book Review"
     tmpl: bookReview
-  researchdata:
+  researchData:
     label: "Research Data"
     tmpl: researchData
     fields:
@@ -66,18 +131,16 @@ publicationTypes:
           readonly: 0
         authors:
           firstName:
-            mandatory: 1
             placeholder: "First Name"
           lastName:
-            mandatory: 1
             placeholder: "Last Name"
           title:
-            mandatory: 0
-            placeholder: "Title"            
+            placeholder: "Title"
+          mandatory: 1
           multiple: 1
           label: "Creator"
         departments:
-          mandatory: 1
+          mandatory: 0
           multiple: 1
           label: "Department"
           placeholder: "Department"
@@ -89,7 +152,7 @@ publicationTypes:
         researchGroups:
           mandatory: 0
           multiple: 1
-          label: "Research Groups"
+          label: "Research Group"
           placeholder: "Research Group"
         publisher:
           mandatory: 1
@@ -153,18 +216,18 @@ publicationTypes:
   translation:
     label: "Translation"
     tmpl: translation
-  workingpaper:
+  workingPaper:
     label: "Working Paper"
     tmpl: workingPaper
-  bidissertation:
+  biDissertation:
     label: "Bielefeld Doctoral Thesis"
     tmpl: biDissertation
-  bibachelorthesis:
+  biBachelorThesis:
     label: "Bielefeld Bachelor Thesis"
     tmpl: biBachelorThesis
-  bimasterthesis:
+  biMasterThesis:
     label: "Bielefeld Master Thesis"
     tmpl: biMasterThesis
-  bipostdocthesis:
+  biPostdocThesis:
     label: "Bielefeld Postdoctoral Thesis/ Habilitation"
     tmpl: biPostdocThesis

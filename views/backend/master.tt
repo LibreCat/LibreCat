@@ -41,13 +41,15 @@
       <!-- STEP 1 -->
       <div class="tab-pane active" id="basicFields">
 
-      {% IF fields.basicFields %}
-        {% FOREACH key IN fields.basicFields.keys %}
-          {% template = "fields/"_key_".tt" %}
-          {% INCLUDE $template %}
-        {% END %}
-        {% INCLUDE buttonrow_tab1.tt %}
-      {% END %}
+{% IF fields.basicFields %}
+  {% FOREACH key IN fieldOrder.basicFields %}
+    {% IF fields.basicFields.$key %}
+    {% template = "fields/" _ key _ ".tt" %}
+{% INCLUDE $template %}
+    {% END %}
+  {% END %}
+  {% INCLUDE fields/buttonrow_tab1.tt %}
+{% END %}
       
       </div><!-- tab-pane -->
       
@@ -73,7 +75,7 @@
 </div><!-- row -->
 
 <script>
-{% INCLUDE jquery_tab1.tt %}
+{% INCLUDE fields/jquery_tab1.tt %}
 </script>
 
 <!-- END /backend/forms/{% tmpl %} -->

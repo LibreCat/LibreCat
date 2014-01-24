@@ -1,5 +1,5 @@
 [% INCLUDE navbar.tt %]
-<!-- BEGIN /backend/forms/encyclopediaArticle -->
+<!-- BEGIN /backend/forms/conferenceEditor -->
 
 <div class="row">
 
@@ -8,7 +8,7 @@
   [% IF mainTitle %]
   <h3>[% mainTitle %]</h3>
   [% ELSE %]
-  <h3>Add new Encyclopedia Article</h3>
+  <h3>Add new Conference Editor</h3>
   [% END %]
   
   <ul class="nav nav-tabs" id="tabs-left">
@@ -21,7 +21,7 @@
   </ul>
   
   <form action="/luur/record" method="get" name="reLoad">
-    <input type="hidden" name="recordType" value="encyclopediaArticle">
+    <input type="hidden" name="recordType" value="conferenceEditor">
     <input type="hidden" name="recordOId" value="[% recordOId %]">
     
     <div class="tab tab-content edit-form">
@@ -260,5 +260,5 @@ $('button.cancel-button').click(function() {
 });
 </script>
 
-<!-- END /backend/forms/encyclopediaArticle -->
+<!-- END /backend/forms/conferenceEditor -->
 [% INCLUDE footer.tt %]

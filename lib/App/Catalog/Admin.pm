@@ -12,7 +12,7 @@ get '/myPUB' => sub {
 get '/myPUB/add' => sub {
 	my $person = h->getPerson("86212");
 	my $departments = $person->{affiliation};
-	template 'edit_researchData.tmpl', {recordOId => "123456789", departments => $departments};#, file => [{fileOId => 1, fileName => "file", accessLevel => "admin", dateLastUploaded => "2014-01-10", isUploadedBy => {login => "kohorst"}}]};
+	template 'backend/forms/researchData.tt', {recordOId => "123456789", departments => $departments};#, file => [{fileOId => 1, fileName => "file", accessLevel => "admin", dateLastUploaded => "2014-01-10", isUploadedBy => {login => "kohorst"}}]};
 };
 	
 get qr{/myPUB/(\d{1,})/*} => sub {

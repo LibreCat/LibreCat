@@ -1,232 +1,264 @@
-<h5>Add a new Bielefeld dissertation</h5>
+[% INCLUDE navbar.tt %]
+<!-- BEGIN /backend/forms/biDissertation -->
 
+<div class="row">
+
+<div class="col-md-9 col-md-offset-1">
+
+  [% IF mainTitle %]
+  <h3>[% mainTitle %]</h3>
+  [% ELSE %]
+  <h3>Add new Bielefeld Doctoral Thesis</h3>
+  [% END %]
+  
   <ul class="nav nav-tabs" id="tabs-left">
-    <li class="active">
-      <a href="#stepOne" data-toggle="tab">Mandatory fields</a>
+    <li id="li_basicFields" class="active">
+      <a href="#basicFields" data-toggle="tab"></a>
     </li>
-    <li visible="hide">
-      <a href="#stepTwo" data-toggle="tab">Research data upload</a>
-    </li>
-    <li>
-      <a href="#stepThree" data-toggle="tab">Supplementary fields</a>
-    </li>
-    <li>
-      <a href="#stepFour" data-toggle="tab">Check input</a>
-    </li>
+    
+    
+    
   </ul>
   
-  <div class="tab tab-content">
-  
-    <div class="tab-pane active slide-left in" id="stepOne">
-      <div class="span1">
-        DOI<span class="starMandatory">*</span>
-      </div>
-      <div class="span7">
-        <input type="text" name="doi_1" id="doi_1" placeholder="Will be generated automatically" class="span6" readonly="readonly">
-      </div>
+  <form action="/luur/record" method="get" name="reLoad">
+    <input type="hidden" name="recordType" value="biDissertation">
+    <input type="hidden" name="recordOId" value="[% recordOId %]">
+    
+    <div class="tab tab-content edit-form">
+    
+      <!-- STEP 1 -->
+      <div class="tab-pane active" id="basicFields">
 
-      <div class="span1">
-        Title<span class="starMandatory">*</span>
-      </div>
-      <div class="span7">
-        <input type="text" placeholder="Publication Title" class="span6">
-      </div>
 
-      <div class="span1">
-        Creator<span class="starMandatory">*</span>
-      </div>
-      <div class="span7">
-        <div class="controls controls-row">
-        <input type="text" placeholder="First Names" class="span3">
-        <input type="text" placeholder="Last Name" class="span3">
-        </div>
-      </div>
-  
-      <div class="span1">
-        Publisher<span class="starMandatory">*</span>
-      </div>
-      <div class="span7">
-        <input type="text" placeholder="Bielefeld University" value="Bielefeld University" class="span6">
-      </div>
+      
+      </div><!-- tab-pane -->
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </div><!-- tab-content -->
+  </form>
 
-      <div class="span1">
-        Year<span class="starMandatory">*</span>
-      </div>
-      <div class="span7">
-        <input type="text" maxlength="4" placeholder="YYYY" class="span1">
-      </div>
-    </div><!-- tab-pane -->
+</div><!-- col-md-9 col-md-offset-1 -->
+</div><!-- row -->
+
+<script>
+// Placeholder for MSIE
+if(navigator.userAgent.indexOf('MSIE') != -1){
+  $('[placeholder]').focus(function() {
+    var input = $(this);
+    if (input.val() == input.attr('placeholder')) {
+      input.val('');
+      input.removeClass('placeholder');
+    }
+  }).blur(function() {
+    var input = $(this);
+    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+      input.addClass('placeholder');
+      input.val(input.attr('placeholder'));
+    }
+  }).blur();
+  $('[placeholder]').parents('form').submit(function() {
+    $(this).find('[placeholder]').each(function() {
+      var input = $(this);
+      if (input.val() == input.attr('placeholder')) {
+        input.val('');
+      }
+    })
+  });
+}
+
+// Tab forward one to two
+$('#oneToTwo').click(function(){
+  var check = 1;
+  var oneauthor = 0;
+  $('#author').children('div.form-group').each(function(){
+    if(!$(this).children('span').eq(0).children().eq(0).val()){
+      $(this).children('span').eq(0).addClass("has-error");
+    }
+    if(!$(this).children('span').eq(1).children().eq(0).val()){
+      $(this).children('span').eq(1).addClass("has-error");
+    }
+    if($(this).children('span').eq(0).children().eq(0).val() && $(this).children('span').eq(1).children().eq(0).val()){
+      oneauthor = 1;
+    }
+  });
+  if(!oneauthor){
+    check = 0;
+  }
   
-    <div class="tab-pane slide-left" id="stepTwo">
-      Upload research data
-    </div><!-- tab-pane -->
-  
-    <div class="tab-pane slide-left" id="stepThree">
-      <div class="span1">
-        Subtitle
-      </div>
-      <div class="span7">
-        <input type="text" placeholder="Publication Subtitle (optional)" class="span6">
-        <input type="hidden" name="titleType" value="Subtitle">
-      </div>
-      
-      <div class="span1">
-        Subject
-      </div>
-      <div class="span7">
-        <input type="text" placeholder="Subject" class="span6">
-      </div>
-      
-      <div class="span1">
-        DDC
-      </div>
-      <div class="span7">
-        <input type="text" placeholder="Subject (will be select box)" class="span6">
-        <input type="hidden" name="subjectScheme" value="DDC">
-      </div>
-      
-      <div class="span1">
-        Contributor
-      </div>
-      <div class="span7">
-        <div class="controls controls-row">
-        <select name="contributorType" class="span2">
-          <option>ContactPerson</option>
-          <option>DataManager</option>
-        </select>
-        <input type="text" class="span4" placeholder="'Organisation Name' or 'Last name, First name'">
-        </div>
-      </div>
-      
-      <div class="span1">
-        Date
-      </div>
-      <div class="span7">
-        <div class="controls controls-row">
-        <select name="dateType" class="span2">
-          <option>Valid</option>
-          <option>Accepted</option>
-        </select>
-        <input type="text" class="span4" placeholder="YYYY-MM-DD">
-        </div>
-      </div>
-      
-      <div class="span1">
-        Language
-      </div>
-      <div class="span7">
-        <select name="language" class="span2">
-          <option value="ger">German</option>
-          <option value="eng">English</option>
-          <option value="swe">Swedish</option>
-        </select>
-      </div>
-      
-      <div class="span1">
-        Type
-      </div>
-      <div class="span7">
-        <div class="controls controls-row">
-        <select name="resourceTypeGeneral" class="span2">
-          <option>Image</option>
-          <option>Interview</option>
-          <option>Cup of Tea</option>
-        </select>
-        <input type="text" class="span4" placeholder="Resource Type">
-        </div>
-      </div>
-      
-      <div class="span1">
-        Alt. ID
-      </div>
-      <div class="span7">
-        <div class="controls controls-row">
-        <select name="alternateIdentifierType" class="span2">
-          <option>ISBN</option>
-          <option>ISSN</option>
-          <option>eISSN</option>
-        </select>
-        <input type="text" class="span4" placeholder="Alternative Identifier">
-        </div>
-      </div>
-      
-      <div class="span1">
-        Rel. ID
-      </div>
-      <div class="span7">
-        <div class="controls controls-row">
-        <select name="relatedIdentifierType" class="span1">
-          <option>DOI</option>
-          <option>URN</option>
-        </select>
-        <select name="relationType" class="span1">
-          <option>This publication cites</option>
-          <option>This publication is cited by</option>
-        </select>
-        <input type="text" class="span4" placeholder="Related Identifier">
-        </div>
-      </div>
-      
-      <div class="span1">
-        Size
-      </div>
-      <div class="span7">
-        <div class="controls controls-row">
-        <input type="text" class="span2" placeholder="Size">
-        <select name="unit" class="span2">
-          <option>pages</option>
-          <option>kB</option>
-          <option>MB</option>
-          <option>GB</option>
-        </select>
-        </div>
-      </div>
-      
-      <div class="span1">
-        Format
-      </div>
-      <div class="span7">
-        <div class="controls controls-row">
-        <select name="format" class="span2">
-          <option>text/plain</option>
-          <option>text/html</option>
-          <option>text/xml</option>
-          <option>application/pdf</option>
-        </select>
-        </div>
-      </div>
-      
-      <div class="span1">
-        Version
-      </div>
-      <div class="span7">
-        <input type="text" placeholder="Version" class="span2">
-      </div>
-      
-      <div class="span1">
-        Rights
-      </div>
-      <div class="span7">
-        <select name="rights" class="span6">
-          <option>Open Database License [ODbL]</option>
-        </select>
-      </div>
-      
-      <div class="span1">
-        Description
-      </div>
-      <div class="span7">
-        <div class="controls controls-row">
-        <select name="descriptionType" class="span2">
-          <option>other</option>
-        </select>
-        <textarea rows="3" class="span4"></textarea>
-        </div>
-      </div>
-    </div><!-- tab-pane -->
-  
-    <div class="tab-pane slide-left" id="stepFour">
-      Check input
-    </div><!-- tab-pane -->
-  
-  </div><!-- tab-content -->
+  $('.required').each(function(){
+    if(!$(this).val()){
+      $(this).parents('span.form-group').addClass('has-error');
+      check = 0;
+    }
+    else if($(this).val() && ($(this).val() == "Publication Title" || $(this).val() == "First Name" || $(this).val() == "Last Name" || $(this).val() == "YYYY")){
+      $(this).parents('span.form-group').addClass('has-error');
+      check = 0;
+    }
+    else{
+      $(this).parents('span.form-group').removeClass('has-error');
+    }
+  });
+  if(check){
+    $('#author.has-error').each(function(){
+      $(this).removeClass('has-error');
+    });
+    $('#basicFields, #li_basicFields').removeClass('active');
+    $('#fileUpload, #li_fileUpload').addClass('active');
+    $('button[href=#fileUpload]').attr('data-toggle','tab');
+    $('#li_fileUpload').css('visibility','visible');
+  }
+});
+
+
+// plus
+$('#plusAuthor').click(function(){
+  var items = $('#author div.form-group');
+  var index = items.index($('#author div.form-group:last')) + 1;
+  $('#author').append('[% INCLUDE backend/fields/subfields/author.tt %]');
+  $('#id_linkPevz_'+index).bind("click", function() { return linkPevz($('#id_linkPevz_'+index))});
+});
+
+$('#plusDepartment').click(function(){
+  var items = $('#department div.form-group');
+  var index = items.index($('#department div.form-group').last()) + 1;
+  $('#department').append('[% INCLUDE backend/fields/subfields/department.tt %]');
+  $('#department').bind("click", function(){
+    $( "#dp_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#dp_autocomplete_" + index ).val( ui.item.label );
+        $( "#dp_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+
+$('#plusProject').click(function(){
+  var items = $('#project div.form-group');
+  var index = items.index($('#project div.form-group').last()) + 1;
+  $('#project').append('[% INCLUDE backend/fields/subfields/project.tt %]');
+  $('#project').bind("click", function(){
+    $( "#pj_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#pj_autocomplete_" + index ).val( ui.item.label );
+        $( "#pj_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+
+$('#plusResearchgroup').click(function(){
+  var items = $('#researchgroup div.form-group');
+  var index = items.index($('#researchgroup div.form-group').last()) + 1;
+  $('#researchgroup').append('[% INCLUDE backend/fields/subfields/researchgroup.tt %]');
+  $('#researchgroup').bind("click", function(){
+    $( "#rg_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=researchGroup",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#rg_autocomplete_" + index ).val( ui.item.label );
+        $( "#rg_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+
+
+// minus
+$(document).on('click', '.group', function(){
+  var index = $(this).parent().parent().index();
+  if(parseInt(index) != 0){
+    $(this).parent().parent().remove();
+  }
+});
+$(document).on('click', '.single', function(){
+  var index = $(this).parent().parent().index();
+  if(parseInt(index) != 0){
+    $(this).parent().parent().remove();
+  }
+});
+$(document).on('click', '.author', function(){
+  var container = $(this).parent().parent();
+  container.children('input').each(function(){
+    if($(this).attr("readonly")){
+      $(this).removeAttr("readonly");
+    }
+    if($(this).is(':checked')){
+      $(this).removeAttr("checked");
+    }
+    this.value = "";
+  });
+  container.children('span').children('input').each(function(){
+    if($(this).attr("readonly")){
+      $(this).removeAttr("readonly");
+    }
+    if($(this).is(':checked')){
+      $(this).removeAttr("checked");
+    }
+    this.value = "";
+  });
+  container.find('img').each(function(){
+    this.title = "";
+    this.src = "/images/biNotAuthorized.png";
+  });  
+});
+
+
+// Select button (dept, proj, rg)
+function selectButton(element){
+	var type = $(element).attr('class').replace('btn select_button', '').trim();
+	var type_short;
+	var type_name;
+	
+	var index = $(element).attr('id').replace(type + '_select_','').trim();
+	var modal = $('#selectModal');
+	var container = $('#selectModal').find('.modal-body').first();
+	container.html("");
+	if(type == "department"){
+	    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+	    type_short = "dp";
+	    type_name = "Department";
+	}
+	else if(type == "project"){
+	    container.append('[% INCLUDE backend/fields/subfields/project_select.tt %]');
+	    type_short = "pj";
+	    type_name = "Project";
+	}
+	else if(type == "researchgroup"){
+	    container.append('[% INCLUDE backend/fields/subfields/researchgroup_select.tt %]');
+	    type_short = "rg";
+	    type_name = "Research Group";
+	}
+	var heading = modal.find('h4').first();
+	heading.html("");
+	heading.append('Choose a ' + type_name);
+	$('.selectme').bind("click", function(){
+		var id = $(this).attr('id');
+	    var name = $(this).html();
+	    var index = $(this).attr('data-index');
+	    $('#' + type_short + '_idautocomplete_' + index).val(id);
+	    $('#' + type_short + '_autocomplete_' + index).val(name);
+	    $('#selectModal').modal('hide');
+	});
+	modal.modal('show');
+}
+
+
+$('button.cancel-button').click(function() {
+  window.location.href = '/myPUB';
+});
+</script>
+
+<!-- END /backend/forms/biDissertation -->
+[% INCLUDE footer.tt %]

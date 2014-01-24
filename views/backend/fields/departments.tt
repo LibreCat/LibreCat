@@ -1,6 +1,6 @@
 <div class="col-md-2">
   <label for="department">
-    {% fields.basicFields.departments.label %}{% IF fields.basicFields.authors.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusDepartment"></span>
+    {% fields.basicFields.departments.label %}{% IF fields.basicFields.departments.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusDepartment"></span>
   </label>
 </div>
 <div class="col-md-10" id="department">
