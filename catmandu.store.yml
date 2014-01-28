@@ -1471,7 +1471,7 @@ sort_options:
     - {key: title, label: "Title" }
     - {key: author, label: "First author"}
     - {key: documenttype, label: "Documenttype"}
-    - {key: publication, label: "Publication/ Series/ Journal"}
+    - {key: publication, label: "Publ./ Series/ Journal"}
 project_sort_options:
     - {key: name, label: "Name"}
     - {key: acronym, label: "Acronym"}
