@@ -13,10 +13,14 @@
         <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
         [% END %]
         [% END %]
-        <input type="text" value="[% qp.ftext %]" class="col-md-6" name="ftext" placeholder="Search" />
-        <button type="submit" class="btn btn-default">Go!</button>
+        <span class="input-group">
+          <input type="text" value="[% qp.ftext %]" class="form-control" name="ftext" placeholder="Search" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default">Go!</button>
+          </span>
+        </span>
       [% IF qp.ftext %]
-      <p class="muted"><a href="[% h.newuri_for("$path", qp, ftext="") %]" rel="nofollow"><i class="icon-remove"></i></a> Search: [% qp.ftext %]</p>
+      <p class="muted"><a href="[% h.newuri_for("$path", qp, ftext="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> Search: [% qp.ftext %]</p>
       [% END %]
     </form>
     
@@ -29,56 +33,56 @@
     [% IF qp.keys.0 %]
     [% IF qp.publicationtype.0 %]
       [% FOREACH publtype IN qp.publicationtype %]
-        <p class="text-muted"><a href="[% h.newuri_for("$path", qp, publicationtype="del_$publtype") %]" rel="nofollow"><i class="icon-remove"></i></a> publicationtype: [% publtype %]</p>
+        <p class="text-muted"><a href="[% h.newuri_for("$path", qp, publicationtype="del_$publtype") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> publicationtype: [% publtype %]</p>
       [% END %]
     [% ELSIF qp.publicationtype != "" %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, publicationtype="") %]" rel="nofollow"><i class="icon-remove"></i></a> publicationtype: [% qp.publicationtype %]</p>
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, publicationtype="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> publicationtype: [% qp.publicationtype %]</p>
     [% END %]
     [% IF qp.author.0 %]
       [% FOREACH auth IN qp.author %]
         [% name = h.getPerson(auth) %]
-        <p class="text-muted"><a href="[% h.newuri_for("$path", qp, author="del_$auth") %]" rel="nofollow"><i class="icon-remove"></i></a> author: [% name.fullName %]</p>
+        <p class="text-muted"><a href="[% h.newuri_for("$path", qp, author="del_$auth") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> author: [% name.fullName %]</p>
       [% END %]
     [% ELSIF qp.author != "" %]
       [% name = h.getPerson(qp.author) %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, author="") %]" rel="nofollow"><i class="icon-remove"></i></a> author: [% name.fullName %]</p>
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, author="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> author: [% name.fullName %]</p>
     [% END %]
     [% IF qp.editor.0 %]
       [% FOREACH ed IN qp.editor %]
         [% name = h.getPerson(ed) %]
-        <p class="text-muted"><a href="[% h.newuri_for("$path", qp, editor="del_$ed") %]" rel="nofollow"><i class="icon-remove"></i></a> editor: [% name.fullName %]</p>
+        <p class="text-muted"><a href="[% h.newuri_for("$path", qp, editor="del_$ed") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> editor: [% name.fullName %]</p>
       [% END %]
     [% ELSIF qp.editor != "" %]
       [% name = h.getPerson(qp.editor) %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, editor="") %]" rel="nofollow"><i class="icon-remove"></i></a> editor: [% name.fullName %]</p>
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, editor="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> editor: [% name.fullName %]</p>
     [% END %]
     [% IF qp.person.0 %]
       [% FOREACH pers IN qp.person %]
         [% name = h.getPerson(pers) %]
-        <p class="text-muted"><a href="[% h.newuri_for("$path", qp, person="del_$pers") %]" rel="nofollow"><i class="icon-remove"></i></a> person: [% name.fullName %]</p>
+        <p class="text-muted"><a href="[% h.newuri_for("$path", qp, person="del_$pers") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> person: [% name.fullName %]</p>
       [% END %]
     [% ELSIF qp.person %]
       [% name = h.getPerson(qp.person) %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, person="") %]" rel="nofollow"><i class="icon-remove"></i></a> person: [% name.fullName %]</p>
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, person="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> person: [% name.fullName %]</p>
     [% END %]
     [% IF qp.publishingyear.0 %]
       [% FOREACH publyear IN qp.publishingyear %]
-        <p class="text-muted"><a href="[% h.newuri_for("$path", qp, publishingyear="del_$publyear") %]" rel="nofollow"><i class="icon-remove"></i></a> publishingyear: [% publyear %]</p>
+        <p class="text-muted"><a href="[% h.newuri_for("$path", qp, publishingyear="del_$publyear") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> publishingyear: [% publyear %]</p>
       [% END %]
     [% ELSIF qp.publishingyear != "" %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, publishingyear="") %]" rel="nofollow"><i class="icon-remove"></i></a> publishingyear: [% qp.publishingyear %]</p>
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, publishingyear="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> publishingyear: [% qp.publishingyear %]</p>
     [% END %]
     [% IF qp.popularscience.0 OR qp.popularscience %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, popularscience="") %]" rel="nofollow"><i class="icon-remove"></i></a> popularscience: [% FOREACH filval IN qp.popularscience %][% filval %][% END %]</p>
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, popularscience="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> popularscience: [% FOREACH filval IN qp.popularscience %][% filval %][% END %]</p>
     [% END %]
     [% IF qp.nonunibi %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, nonunibi="") %]" rel="nofollow"><i class="icon-remove"></i></a> nonunibi: 1</p>
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, nonunibi="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> nonunibi: 1</p>
     [% END %]
     [% IF qp.fulltext %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, fulltext="") %]" rel="nofollow"><i class="icon-remove"></i></a> fulltext: 1</p>
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, fulltext="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> fulltext: 1</p>
     [% END %]
     [% IF qp.externalidentifier %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, externalidentifier="") %]" rel="nofollow"><i class="icon-remove"></i></a> source: [% qp.externalidentifier %]</p>
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, externalidentifier="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> source: [% qp.externalidentifier %]</p>
     [% END %]
 
     [% END %]
@@ -86,7 +90,7 @@
     <ul class="nav nav-tabs nav-stacked">
       [% IF dochits.facets.documentType.terms.0 %]
       <li>
-        <button data-toggle="collapse" data-target="#documentType"><a href="#"><i class="icon-chevron-down"></i>&nbsp;Publication Type ([% dochits.facets.documentType.terms.size %])</a></button>
+        <button data-toggle="collapse" data-target="#documentType"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publication Type ([% dochits.facets.documentType.terms.size %])</a></button>
         <div class="facettecollapse">
         <ul id="documentType" class="collapse[% IF qp.publicationtype %] in[% END %]">
           [% FOREACH type IN dochits.facets.documentType.terms %]
@@ -103,7 +107,7 @@
      [% END %]
      [% IF facets.coAuthor.terms.0 %] 
       <li>
-        <button data-toggle="collapse" data-target="#co_authors"><a href="#"><i class="icon-chevron-down"></i>&nbsp;Uni-Bi Co-authors ([% facets.coAuthor.terms.size %])</a></button>
+        <button data-toggle="collapse" data-target="#co_authors"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Co-authors ([% facets.coAuthor.terms.size %])</a></button>
         <div class="facettecollapse">
         <ul id="co_authors" class="collapse[% IF qp.author %] in[% END %]">
           [% FOREACH co IN facets.coAuthor.terms %]
@@ -120,7 +124,7 @@
       [% END %]
       [% IF facets.coEditor.terms.0 %] 
       <li>
-        <button data-toggle="collapse" data-target="#co_editors"><a href="#"><i class="icon-chevron-down"></i>&nbsp;Uni-Bi Co-editors ([% facets.coEditor.terms.size %])</a></button>
+        <button data-toggle="collapse" data-target="#co_editors"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Co-editors ([% facets.coEditor.terms.size %])</a></button>
         <div class="facettecollapse">
         <ul id="co_editors" class="collapse[% IF qp.editor %] in[% END %]">
           [% FOREACH co IN facets.coEditor.terms %]
@@ -137,7 +141,7 @@
       [% END %]
       [% IF yearhits.facets.year.terms.0 %]
       <li>
-        <button data-target="#year" data-toggle="collapse"><a href="#"><i class="icon-chevron-down"></i>&nbsp;Publishing Year ([% yearhits.facets.year.terms.size %])</a></button>
+        <button data-target="#year" data-toggle="collapse"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publishing Year ([% yearhits.facets.year.terms.size %])</a></button>
         <div class="facettecollapse">
         <ul id="year" class="collapse[% IF qp.publishingyear %] in[% END %]">
           [% FOREACH y IN yearhits.facets.year.terms %]
@@ -155,67 +159,49 @@
       [% END %]
     </ul>
     
+    <p>&nbsp;</p>
+    
     <ul class="nav nav-tabs nav-stacked">
       
       [% IF facets.popularScience.total %]
       <li>
-        <a href="[% h.newuri_for("$path", qp, popularscience="1") %]" rel="nofollow"><i class="icon-chevron-right"></i>&nbsp;[% facets.popularScience.total %] Popular Science</a>
+        <a href="[% h.newuri_for("$path", qp, popularscience="1") %]" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% facets.popularScience.total %] Popular Science</a>
       </li>
       [% END %]
       
       [% IF facets.nonlu.total %]
       <li>
-        <a href="[% h.newuri_for("$path", qp, nonunibi="1") %]" rel="nofollow"><i class="icon-chevron-right"></i>&nbsp;[% facets.nonlu.total %] External Publications</a>
+        <a href="[% h.newuri_for("$path", qp, nonunibi="1") %]" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% facets.nonlu.total %] External Publications</a>
       </li>
       [% END %]
 
       <li>
         [% FOREACH term IN facets.openAccess.terms %]
           [% NEXT IF term.term == "0" %]
-          <a href="[% h.newuri_for("$path", qp, fulltext="1") %]" rel="nofollow"><i class="icon-chevron-right"></i>&nbsp;[% term.count %] OA Fulltexts</a>
+          <a href="[% h.newuri_for("$path", qp, fulltext="1") %]" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% term.count %] OA Fulltexts</a>
         [% END %]
       </li>
 
     </ul>
-<!--
-    [% IF facets.hasArxiv.total OR facets.hasInspire.total
-      OR facets.hasIsi.total OR facets.hasMedline.total %]
-    <h5>Sources</h5>
-    <ul class="nav nav-tabs nav-stacked">
-    [% IF facets.hasMedline.total %]
-    <li>
-      <a href="[% h.newuri_for("$path", qp, externalidentifier="medline*") %]" rel="nofollow"><i class="icon-chevron-right"></i>&nbsp;[% facets.hasMedline.total %] Pubmed</a>
-    </li>
-    [% END %]
-    [% IF facets.hasArxiv.total %]
-    <li>
-      <a href="[% h.newuri_for("$path", qp, externalidentifier="arxiv*") %]" rel="nofollow"><i class="icon-chevron-right"></i>&nbsp;[% facets.hasArxiv.total %] arXiv</a>
-    </li>
-    [% END %]
-    [% IF facets.hasInspire.total %]
-    <li>
-      <a href="[% h.newuri_for("$path", qp, externalidentifier="inspire*") %]" rel="nofollow"><i class="icon-chevron-right"></i>&nbsp;[% facets.hasInspire.total %] Inspire</a>
-    </li>
-    [% END %]
-    </ul>
-    [% END %]
--->
+    
+    <p>&nbsp;</p>
+    
     <!-- Style / Sort -->
     
-    <h5>Display &amp; Export Publications</h5>
+    <h5>Display Publications</h5>
     
     [% IF qp.keys.0 %]
     [% IF qp.style AND qp.style != "frontShort" %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, style="frontShort") %]" rel="nofollow"><i class="icon-remove"></i></a> style: [% qp.style %]</p>
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, style="frontShort") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> style: [% qp.style %]</p>
     [% END %]
     [% IF qp.item('sort').0 OR qp.defined('sort') %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><i class="icon-remove"></i></a> sort: [% FOREACH filval IN qp.item('sort') %][% filval %], [% END %]</p>
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> sort: [% FOREACH filval IN qp.item('sort') %][% filval %], [% END %]</p>
     [% END %]
     [% END %]
     
     <ul class="nav nav-tabs nav-stacked">
       <li>
-        <button data-toggle="collapse" data-target="#style"><a href="#"><i class="icon-chevron-down"></i>&nbsp;Citation Style[% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</a></button>
+        <button data-toggle="collapse" data-target="#style"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Citation Style[% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</a></button>
         <div class="facettecollapse">
         <ul id="style" class="collapse">
           [% IF qp.style AND qp.style == "frontShort" %]
@@ -234,7 +220,7 @@
         </div>
       </li>
       <li>
-        <button data-toggle="collapse" data-target="#sort"><a href="#"><i class="icon-chevron-down"></i>&nbsp;Sorting</a></button>
+        <button data-toggle="collapse" data-target="#sort"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Sorting</a></button>
         <div class="facettecollapse">
         <ul id="sort" class="collapse[% IF qp.defined('sort') %] in[% END %]">
           [% FOREACH sorting IN h.config.store.sort_options %]
@@ -243,64 +229,8 @@
             [% ELSE %]
               [% sortasc = sorting.key _ ".asc" %]
               [% sortdesc = sorting.key _ ".desc" %]
-              <li><a href="[% h.newuri_for("$path", qp, sort="$sortasc") %]" rel="nofollow">[% sorting.label %]&nbsp;<i class="icon icon-arrow-up"></i></a>&nbsp;&nbsp;<a href="[% h.newuri_for("$path", qp, sort="$sortdesc") %]" rel="nofollow"><i class="icon icon-arrow-down"></i></a></li>
+              <li><a href="[% h.newuri_for("$path", qp, sort="$sortasc") %]" rel="nofollow">[% sorting.label %]&nbsp;<span class="glyphicon glyphicon-arrow-up"></span></a>&nbsp;&nbsp;<a href="[% h.newuri_for("$path", qp, sort="$sortdesc") %]" rel="nofollow"><span class="glyphicon glyphicon-arrow-down"></span></a></li>
             [% END %]
-          [% END %]
-        </ul>
-        </div>
-      </li>
-    </ul>
-    
-    <!-- Modal -->
-    <div id="myModal" class="modal hide">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h3 id="myModalLabel">Export Options</h3>
-      </div>
-      <div class="modal-body">
-        <p><i class="icon-chevron-right"></i> <a href="[% h.newuri_for("$path", qp, fmt="rtf") %]&explinks=yes" class="rtfmodal" rel="nofollow">Export list with links ("PUB | PDF | arXiv" etc.)</a></p>
-        <p><i class="icon-chevron-right"></i> <a href="[% h.newuri_for("$path", qp, fmt="rtf") %]&explinks=pub" class="rtfmodal" rel="nofollow">Export list with PUB link only</a></p>
-        <p><i class="icon-chevron-right"></i> <a href="[% h.newuri_for("$path", qp, fmt="rtf") %]" class="rtfmodal" rel="nofollow">Export list without links</a></p>
-      </div>
-    </div>
-    
-    <script>
-    $('.rtfmodal').click(function(){
-      $('#myModal').modal('hide');
-    });
-    </script>
-    
-    <ul class="nav nav-tabs nav-stacked">
-      <li>
-        <button data-toggle="collapse" data-target="#export"><a href="#"><i class="icon-chevron-down"></i>&nbsp;Export as</a></button>
-        <div class="facettecollapse">
-        <ul id="export" class="collapse">
-          <li><a href="#myModal" data-toggle="modal"><i class="icon-share"></i> RTF (e.g. Word, Office)</a></li>
-          <li><a href="[% h.newuri_for("$path", qp, fmt="bibtex") %]" rel="nofollow"><i class="icon-share"></i> BibTeX</a></li>
-          <li><a href="[% h.newuri_for("$path", qp, fmt="ris") %]" rel="nofollow"><i class="icon-share"></i> RIS</a></li>
-          <li><a href="[% h.newuri_for("$path", qp, fmt="json") %]" rel="nofollow"><i class="icon-share"></i> JSON</a></li>
-          <li><a href="[% h.newuri_for("$path", qp, fmt="yaml") %]" rel="nofollow"><i class="icon-share"></i> YAML</a></li>
-        </ul>
-        </div>
-      </li>
-      <li>
-        <button data-toggle="collapse" data-target="#embed"><a href="#"><i class="icon-chevron-down"></i>&nbsp;Embed as</a></button>
-        <div class="facettecollapse">
-        <ul id="embed" class="collapse">
-          [% IF embedstrings.js %]
-          <li><i class="icon-download"></i> <strong>javaScript</strong>
-          <textarea class="input-block-level" name="jstext" style="cursor:text;" rows="2" id="id_jstext" onclick="this.focus();this.select()" readonly="readonly">[% embedstrings.js %]</textarea>
-          </li>
-          [% END %]
-          [% IF embedstrings.iframe %]
-          <li><i class="icon-download"></i> <strong>iFrame</strong>
-          <textarea class="input-block-level" name="jstext" style="cursor:text;" rows="2" id="id_jstext" onclick="this.focus();this.select()" readonly="readonly">[% embedstrings.iframe %]</textarea>
-          </li>
-          [% END %]
-          [% IF embedstrings.item('link') %]
-          <li><i class="icon-download"></i> <strong>Link</strong>
-          <textarea class="input-block-level" name="jstext" style="cursor:text;" rows="2" id="id_jstext" onclick="this.focus();this.select()" readonly="readonly">[% embedstrings.item('link') %]</textarea>
-          </li>
           [% END %]
         </ul>
         </div>
