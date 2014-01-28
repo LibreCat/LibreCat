@@ -1,26 +1,15 @@
 styles_public:
-  ama:
-    label: 'AMA'
-  apa:
-    label: 'APA (6th ed.)'
-  apa_indent:
-    label: 'APA with indent'
-  bio1:
-    label: 'bio1'
-  ewi:
-    label: 'EWI'
-  frontiers:
-    label: 'Frontiers'
-  harvard1:
-    label: 'Harvard'
-  ieee:
-    label: 'IEEE'
-  lncs:
-    label: 'LNCS'
-  mla:
-    label: 'MLA'
-  wels:
-    label: 'Wels'
+  - ama
+  - apa
+  - apa_indent
+  - bio1
+  - ewi
+  - frontiers
+  - harvard1
+  - ieee
+  - lncs
+  - mla
+  - wels
 
 styles:
   - ama
