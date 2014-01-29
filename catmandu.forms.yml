@@ -1,3 +1,27 @@
+publicationTypeOrder:
+  - researchData
+  - book
+  - bookEditor
+  - bookChapter
+  - review
+  - caseStudy
+  - conferenceAbstract
+  - conferenceEditor
+  - conference
+  - dissertation
+  - encyclopediaArticle
+  - journalArticle
+  - journalEditor
+  - newspaperArticle
+  - patent
+  - preprint
+  - report
+  - translation
+  - workingPaper
+  - biDissertation
+  - biBachelorThesis
+  - biMasterThesis
+  - biPostdocThesis
 fieldOrder:
   basicFields:
     - doi
@@ -72,7 +96,11 @@ publicationTypes:
             placeholder: "Title"
           mandatory: 1
           multiple: 1
-          label: "Author"
+          label:
+            "Author" : "author"
+            "Editor" : "editor"
+            "Corp. Ed." : "corporateEditor"
+            "Translator" : "translator"
         departments:
           mandatory: 0
           multiple: 1

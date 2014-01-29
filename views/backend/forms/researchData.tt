@@ -75,96 +75,115 @@
   
     
     
-<div class="col-md-2">
-  <label for="author">
-    Creator<span class="starMandatory">*</span> <span class="glyphicon glyphicon-plus" id="plusAuthor"></span>
-  </label>
-</div>
-<div class="col-md-10" id="author">
+<span id="authorEditorTranslator">
   [% IF !authors %]
-  <div class="form-group">
-    <input type="hidden" name="au_auLuAuthorOId_0" id="id_au_auLuAuthorOId_0" value="[% auLuAuthorOId %]"/>
-    <input type="hidden" name="au_auPersonNumber_0" id="id_au_auPersonNumber_0" value="[% aupersonNumber %]" />
-    <input name="au_auLuLdapId_0" type="hidden" value="[% auLuLdapId %]" />
-    <input name="au_auEndDate_0" type="hidden" value="[% auEndDate %]" />
-    <input name="au_origGivenName_0" id="id_au_origGivenName_0" type="hidden" />
-    <input name="au_origLastName_0" id="id_au_origLastName_0" type="hidden" />
-    <input name="au_origTitle_0" id="id_au_origTitle_0" type="hidden" />
+  <span class="authorspan">
+    <div class="col-md-2">
+      <label for="author">
+      
+        Creator<span class="starMandatory">*</span> <span class="glyphicon glyphicon-plus" data-mandatory="yes" id="plusAuthor"></span>
+      
+      </label>
+    </div>
+    <div class="col-md-10" id="author">
+      <div class="form-group">
+        <input type="hidden" name="au_auLuAuthorOId_0" id="id_au_auLuAuthorOId_0" value="[% auLuAuthorOId %]"/>
+        <input type="hidden" name="au_auPersonNumber_0" id="id_au_auPersonNumber_0" value="[% aupersonNumber %]" />
+        <input name="au_auLuLdapId_0" type="hidden" value="[% auLuLdapId %]" />
+        <input name="au_auEndDate_0" type="hidden" value="[% auEndDate %]" />
+        <input name="au_origGivenName_0" id="id_au_origGivenName_0" type="hidden" />
+        <input name="au_origLastName_0" id="id_au_origLastName_0" type="hidden" />
+        <input name="au_origTitle_0" id="id_au_origTitle_0" type="hidden" />
+        <input name="au_type_0" id="id_au_type_0" type="hidden" />
             
-    <span class="form-group col-md-3">
-      <input type="text" name="au_auGivenName_0" placeholder="First Name" id="id_au_auGivenName_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" value="" />
-    </span>
-    <span class="form-group col-md-4">
-      <input type="text" name="au_auSurname_0" placeholder="Last Name" id="id_au_auSurname_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" value="" />
-    </span>
-    <span class="form-group col-md-2">
-      <input type="text" name="au_auPersonTitle_0" placeholder="Title" id="id_au_auPersonTitle_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" />
-    </span>
-    
-    <span class="col-md-1">
-      <span class="glyphicon glyphicon-minus author"></span>
-    </span>
+        <span class="form-group col-md-3">
+          <input type="text" name="au_auGivenName_0" placeholder="First Name" id="id_au_auGivenName_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" value="" />
+        </span>
+        <span class="form-group col-md-4">
+          <input type="text" name="au_auSurname_0" placeholder="Last Name" id="id_au_auSurname_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" value="" />
+        </span>
+        <span class="form-group col-md-2">
+          <input type="text" name="au_auPersonTitle_0" placeholder="Title" id="id_au_auPersonTitle_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" />
+        </span>
+        
+        <span class="col-md-1">
+          <span class="glyphicon glyphicon-minus author"></span>
+        </span>
           
-    <span class="col-md-2">
-      <input name="linkPevz_0" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
-      <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
-    </span>
-  </div>
+        <span class="col-md-2">
+          <input name="linkPevz_0" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
+          <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+        </span>
+      </div>
+    </div>
+  </span>
   [% ELSE %]
   [% FOREACH name IN authors %]
-  <div class="form-group">
-    <input type="hidden" name="au_auLuAuthorOId_[% loop.index %]" id="id_au_auLuAuthorOId_[% loop.index %]" value="[% name.auLuAuthorOId %]"/>
-    <input type="hidden" name="au_auPersonNumber_[% loop.index %]" id="id_au_auPersonNumber_[% loop.index %]" value="[% name.aupersonNumber %]" />
-    <input name="au_auLuLdapId_[% loop.index %]" type="hidden" value="[% name.auLuLdapId %]" />
-    <input name="au_auEndDate_[% loop.index %]" type="hidden" value="[% name.auEndDate %]" />
-    <input name="au_origGivenName_0" id="id_au_origGivenName_[% loop.index %]" type="hidden" />
-    <input name="au_origLastName_0" id="id_au_origLastName_[% loop.index %]" type="hidden" />
-    <input name="au_origTitle_0" id="id_au_origTitle_[% loop.index %]" type="hidden" />
+  <span class="authorspan">
+    <div class="col-md-2">
+      <label for="author">
+      
+        Creator<span class="starMandatory">*</span> <span class="glyphicon glyphicon-plus" data-mandatory="yes" id="plusAuthor"></span>
+      
+      </label>
+    </div>
+    <div class="col-md-10" id="author">
+      <div class="form-group">
+        <input type="hidden" name="au_auLuAuthorOId_[% loop.index %]" id="id_au_auLuAuthorOId_[% loop.index %]" value="[% name.auLuAuthorOId %]"/>
+        <input type="hidden" name="au_auPersonNumber_[% loop.index %]" id="id_au_auPersonNumber_[% loop.index %]" value="[% name.aupersonNumber %]" />
+        <input name="au_auLuLdapId_[% loop.index %]" type="hidden" value="[% name.auLuLdapId %]" />
+        <input name="au_auEndDate_[% loop.index %]" type="hidden" value="[% name.auEndDate %]" />
+        <input name="au_origGivenName_[% loop.index %]" id="id_au_origGivenName_[% loop.index %]" type="hidden" />
+        <input name="au_origLastName_[% loop.index %]" id="id_au_origLastName_[% loop.index %]" type="hidden" />
+        <input name="au_origTitle_[% loop.index %]" id="id_au_origTitle_[% loop.index %]" type="hidden" />
+        <input name="au_type_[% loop.index %]" id="id_au_type_[% loop.index %]" type="hidden" />
 
-    <span class="form-group col-md-3">
-      <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="First Name" id="id_au_auGivenName_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auGivenName %]" class="form-control"/>
-    </span>
-    <span class="form-group col-md-4">
-      <input type="text" name="au_auSurname_[% loop.index %]" placeholder="Last Name" id="id_au_auSurname_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auSurname %]" class="form-control" />
-    </span>
-    <span class="form-group col-md-2">
-      <input type="text" name="au_auPersonTitle_[% loop.index %]" placeholder="Title" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auPersonTitle %]" class="form-control"/>
-    </span>
+        <span class="form-group col-md-3">
+          <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="First Name" id="id_au_auGivenName_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auGivenName %]" class="form-control"/>
+        </span>
+        <span class="form-group col-md-4">
+          <input type="text" name="au_auSurname_[% loop.index %]" placeholder="Last Name" id="id_au_auSurname_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auSurname %]" class="form-control" />
+        </span>
+        <span class="form-group col-md-2">
+          <input type="text" name="au_auPersonTitle_[% loop.index %]" placeholder="Title" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auPersonTitle %]" class="form-control"/>
+        </span>
             
-    <span class="col-md-1">
-      [% IF loop.index == 0 %]
-      <span class="glyphicon glyphicon-minus author"></span>
-      [% ELSE %]
-      <span class="glyphicon glyphicon-minus single"></span>
-      [% END %]
-    </span>
+        <span class="col-md-1">
+          [% IF loop.index == 0 %]
+          <span class="glyphicon glyphicon-minus author"></span>
+          [% ELSE %]
+          <span class="glyphicon glyphicon-minus fullrow"></span>
+          [% END %]
+        </span>
             
-    <span class="col-md-2">
-      <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
-      [% IF name.auLuAuthorOId OR name.auLuLdapId %]
-        <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
-      [% ELSE %]
-        <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>
-      [% END %]
-    </span>
-  </div>
+        <span class="col-md-2">
+          <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
+          [% IF name.auLuAuthorOId OR name.auLuLdapId %]
+            <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+          [% ELSE %]
+            <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>
+          [% END %]
+        </span>
+      </div>
+    </div>
+  </span>
   [% END %]
   [% END %]
         
-  <div class="modal" id="linkPevzModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Several PEVZ Accounts found... make a choice</h4>
-        </div>
-        <div class="modal-body">
-        </div>
+<div class="modal" id="linkPevzModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Several PEVZ Accounts found... make a choice</h4>
+      </div>
+      <div class="modal-body">
       </div>
     </div>
   </div>
-        
 </div>
+
+</span>
     
   
     
@@ -551,10 +570,26 @@ $('#oneToTwo').click(function(){
 
 // plus
 $('#plusAuthor').click(function(){
-  var items = $('#author div.form-group');
-  var index = items.index($('#author div.form-group:last')) + 1;
-  $('#author').append('[% INCLUDE backend/fields/subfields/author.tt %]');
+  var items = $('#authorEditorTranslator span.authorspan');
+  var index = items.index($('#authorEditorTranslator span.authorspan').last()) + 1;
+  $('#authorEditorTranslator').append('[% INCLUDE backend/fields/subfields/author.tt %]');
+  $('#authorEditorTranslator span:last-child label').append('Creator');
+  if($(this).attr('data-mandatory') == "yes"){
+    $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
+  }
   $('#id_linkPevz_'+index).bind("click", function() { return linkPevz($('#id_linkPevz_'+index))});
+});
+
+$('#plusAuthorMore').click(function(){
+  var items = $('#authorEditorTranslator span.authorspan');
+  var index = items.index($('#authorEditorTranslator span.authorspan').last()) + 1;
+  $('#authorEditorTranslator').append('[% INCLUDE backend/fields/subfields/author_more.tt %]');
+  $('#authorEditorTranslator span:last-child select').append('');
+  if($(this).attr('data-mandatory') == "yes"){
+    $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
+  }
+  $('#id_linkPevz_'+index).bind("click", function() { return linkPevz($('#id_linkPevz_'+index))});
+  $('#authedtrans_'+index).bind("change", function() { return selectAuthedtrans($('#authedtrans_'+index))});
 });
 
 $('#plusDepartment').click(function(){
@@ -619,6 +654,12 @@ $(document).on('click', '.single', function(){
     $(this).parent().parent().remove();
   }
 });
+$(document).on('click', '.fullrow', function(){
+  var index = $(this).parent().parent().parent().parent().index();
+  if(parseInt(index) != 0){
+    $(this).parent().parent().parent().parent().remove();
+  }
+});
 $(document).on('click', '.author', function(){
   var container = $(this).parent().parent();
   container.children('input').each(function(){
@@ -644,6 +685,15 @@ $(document).on('click', '.author', function(){
     this.src = "/images/biNotAuthorized.png";
   });  
 });
+
+
+// Select author, editor, translator
+function selectAuthedtrans(element){
+  var selected = $(element).val();
+  var index = $(element).attr('id').replace('authedtrans_','');
+  $('#id_au_type_'+index).val(selected);
+  alert($('#id_au_type_'+index).val());
+}
 
 
 // Select button (dept, proj, rg)
