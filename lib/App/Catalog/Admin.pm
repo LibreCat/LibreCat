@@ -95,9 +95,26 @@ get '/myPUB' => sub {
 };
 	
 get '/myPUB/add' => sub {
-	my $person = h->getPerson("86212");
-	my $departments = $person->{affiliation};
-	template 'backend/forms/researchData.tt', {recordOId => "123456789", departments => $departments};#, file => [{fileOId => 1, fileName => "file", accessLevel => "admin", dateLastUploaded => "2014-01-10", isUploadedBy => {login => "kohorst"}}]};
+	template 'add_new.tt';
+	#my $person = h->getPerson("86212");
+	#my $departments = $person->{affiliation};
+	#template 'backend/forms/researchData.tt', {recordOId => "123456789", departments => $departments};#, file => [{fileOId => 1, fileName => "file", accessLevel => "admin", dateLastUploaded => "2014-01-10", isUploadedBy => {login => "kohorst"}}]};
+};
+
+get qr{/myPUB/add/(\w{1,})/*} => sub {
+	my ($type) = splat;
+	my $id = "86212";
+	my $personInfo = h->getPerson($id);
+	my $departments = $personInfo->{affiliation};
+	my $tmpl = "";
+	
+	if(h->config->{forms}->{publicationTypes}->{$type}){
+		$tmpl = "backend/forms/" . h->config->{forms}->{publicationTypes}->{$type}->{tmpl} . ".tt";
+		template $tmpl, {recordOId => "123456789", departments => $departments};
+	}
+	else{
+		template "admin.tt";
+	}
 };
 	
 get qr{/myPUB/(\d{1,})/*} => sub {

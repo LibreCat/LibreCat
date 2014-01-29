@@ -2,24 +2,37 @@
 
 <!-- BEGIN add_new.tt -->
 
-<div class="row">
-  <div class="col-md-7">
-	<h3>Enter ID</h3>
-	<form class="form-inline" role="search" action="/import" method="GET">
-      <div class="form-group">
-        <input type="text" class="form-control" id="id" placeholder="10.324/JHEP287432">
-      </div>
-      <button type="search" class="btn btn-info">Search</button>
-    </form>
-    <h3>or choose document type</h3>
-    [% FOREACH type IN h.config.lists.publicationTypes.keys %]
-    	<a href="/add/[% type %]">[% h.config.lists.publicationTypes.$type.label %]</a><br />
-    [% END %]
-  </div><!-- col-md-7 -->
+<div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->  
+  <div class="col-md-9 col-md-offset-1"> <!-- main content (left) -->
   
-  <div class="col-md-4">
-
-  </div><!-- col-md-4 -->
+    <h3>Add Publication</h3>
+  
+    <div class="col-md-10">
+	  <h5>Enter ID</h5>
+	  <form class="form-inline" role="form" action="/import" method="GET">
+	    <span class="input-group col-md-8">
+          <input type="text" value="" class="form-control" id="id" name="id" placeholder="10.324/JHEP287432" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default">Go!</button>
+          </span>
+        </span>
+      </form>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    
+    <div class="col-md-10">  
+      <h5>Or choose a document type:</h5>
+      [% FOREACH doctype IN h.config.forms.publicationTypeOrder %]
+    	<a href="/myPUB/add/[% doctype %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+      [% END %]
+    </div>
+  </div><!-- col-md-9 -->
 </div>
 
 <!-- END add_new.tt -->
