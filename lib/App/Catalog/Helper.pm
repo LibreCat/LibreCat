@@ -48,10 +48,13 @@ sub luurConf {
 }
 
 sub getPerson {
-	if($_[1] =~ /\d{1,}/){
+	if($_[1] and $_[1] =~ /\d{1,}/){
 		$_[0]->authority->get($_[1]);
-	} else {
+	}
+    elsif($_[1]) {
     	$_[0]->authority->select("fullName", qr/$_[1]/i)->to_array;
+    } else {
+    	$_[0]->authority->select("type", "person")->to_array;
     }
 }
 
@@ -475,6 +478,20 @@ sub uri_for_file {
     my ($self, $pub, $file) = @_;
     my $ext = $self->file_extension($file->{fileName});
     $self->host . "/download/$pub->{_id}/$file->{fileOId}$ext";
+}
+
+sub embed_params {	
+	my ($self) = @_;
+    vars->{embed_params} ||= do {
+    	my $p = {};
+        for my $key (qw(embed hide_pagination hide_info hide_options)) {
+            $p->{$key} = 1 if params->{$key};
+        }
+        for my $key (qw(style)) {
+            $p->{$key} = params->{$key} if is_string(params->{$key});
+        }
+        $p;
+    };
 }
 
 sub add_publication {
