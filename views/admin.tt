@@ -4,6 +4,9 @@
 [% USE date(format => '%Y') %]
 
 [% thisPerson = h.getPerson(bisId) %]
+[% path = request.path %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
 
 <div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->  
   <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->

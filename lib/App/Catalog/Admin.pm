@@ -1,6 +1,7 @@
 package App::Catalog::Admin;
 
 use Catmandu::Sane;
+use Catmandu::Util qw(:array);
 use Dancer ':syntax';
 use Dancer::Request;
 use App::Catalog::Helper;
@@ -8,7 +9,7 @@ use App::Catalog::Helper;
 sub handle_request {
 	my ($par) = @_;
 	my $p;
-	my $query = $par->{q};
+	my $query = $par->{q} || "";
 	my $id = $par->{bisId};
 	$p->{limit} = $par->{limit};
 	
@@ -65,6 +66,46 @@ sub handle_request {
     $p->{q} = $query;
     $p->{facets} = $facets;
     
+    
+    #Sorting
+	my $personStyle = $par->{personStyle};
+    my $personSorto = $par->{personSort};
+    
+    my $standardSort = h->config->{store}->{default_sort};
+    my $standardSruSort;
+    foreach(@$standardSort){
+    	$standardSruSort .= "$_->{field},,";
+    	$standardSruSort .= $_->{order} eq "asc" ? "1 " : "0 ";
+    }
+    $standardSruSort = s/\s+$//; #substr($standardSruSort, 0, -1);
+    
+    my $personSruSort;
+    if($personSorto){
+    	$personSruSort = "publishingYear,,";
+    	$personSruSort .= $personSorto eq "asc" ? "1 " : "0 ";
+    	$personSruSort .= "dateLastChanged,,0";
+    } 
+    my $paramSruSort = "";
+    if($par->{sorting} && ref $par->{sorting} eq 'ARRAY'){
+        foreach (@{$par->{sorting}}){
+        	if($_ =~ /(.*)\.(.*)/){
+        		$paramSruSort .= "$1,,";
+        		$paramSruSort .= $2 eq "asc" ? "1 " : "0 ";
+        	}
+        }
+        $paramSruSort = substr($paramSruSort, 0, -1);
+    }
+    elsif ($par->{sorting} && ref $par->{sorting} ne 'ARRAY') {
+        if($par->{sorting} =~ /(.*)\.(.*)/){
+        	$paramSruSort .= "$1,,";
+        	$paramSruSort .= $2 eq "asc" ? "1" : "0";
+        }
+    }
+    my $sruSort = "";
+	$sruSort = $paramSruSort ||= $personSruSort ||= $standardSruSort ||= "";
+	$p->{sort} = $sruSort;
+	
+    
     my $hits = h->search_publication($p);
     
     my $d = {q => $rawquery.$publyearquery, limit => 1, facets => {documentType => {terms => {field => 'documentType', size => 30}}}};
@@ -85,14 +126,16 @@ sub handle_request {
 	
 	$hits->{sbcatId} = $par->{sbcatId};
 	$hits->{bisId} = $par->{bisId};
-	$hits->{style} = $par->{style};
+	$hits->{style} = $par->{style} || $personStyle || h->config->{store}->{default_fd_style};
+	$hits->{personSort} = $par->{personSort};
+	$hits->{personStyle} = $par->{personStyle};
 	
 	template 'admin.tt', $hits;
 } 
     
-get '/myPUB' => sub {
-	forward '/myPUB/86212';
-};
+#get '/myPUB' => sub {
+#	forward '/myPUB/86212';
+#};
 	
 get '/myPUB/add' => sub {
 	template 'add_new.tt';
@@ -117,8 +160,10 @@ get qr{/myPUB/add/(\w{1,})/*} => sub {
 	}
 };
 	
-get qr{/myPUB/(\d{1,})/*} => sub {
-	my ($id) = splat;
+get qr{/myPUB/$|/myPUB$} => sub {
+	#my ($id) = splat;
+	
+	my $id = "86212";
 	my $personInfo = h->getPerson($id);
 	my $sbcatId = $personInfo->{sbcatId};
 		
@@ -133,11 +178,24 @@ get qr{/myPUB/(\d{1,})/*} => sub {
 	my $personStyle;
 	my $personSort;
 	if($personInfo->{stylePreference} and $personInfo->{stylePreference} =~ /(\w{1,})\.(\w{1,})/){
-		$personStyle = $1;
-		$personSort = $2;
+		if(array_includes(h->config->{lists}->{styles},$1)){
+			$personStyle = $1 unless $1 eq "pub";
+		}
+		$personSort = "publishingyear." . $2;
 	}
-	$p->{style} = $personStyle || "pub";
-	#template 'admin.tt', $hits;
+	elsif($personInfo->{stylePreference} and $personInfo->{stylePreference} !~ /\w{1,}\.\w{1,}/){
+		if(array_includes(h->config->{lists}->{styles},$personInfo->{stylePreference})){
+			$personStyle = $personInfo->{stylePreference} unless $personInfo->{stylePreference} eq "pub";
+		}
+	}
+	
+	if($personInfo->{sortPreference}){
+		$personSort = $personInfo->{sortPreference};
+	}
+	$p->{personStyle} = $personStyle || "";
+	$p->{style} = params->{style} if params->{style};
+	$p->{personSort} = $personSort || "";
+	$p->{sorting} = params->{'sort'} || "";
 	handle_request($p);
 };
 
@@ -155,6 +213,43 @@ get qr{/myPUB/hidden/*} => sub {
 	};
 	
 	handle_request($p);
+};
+
+get '/myPUB/settings_update' => sub {
+	#my $params = params;
+	my $id = "86212";
+
+	my $personInfo = h->getPerson($id);
+	my $personStyle;
+	my $personSort;
+	if($personInfo->{stylePreference} and $personInfo->{stylePreference} =~ /(\w{1,})\.(\w{1,})/){
+		if(array_includes(h->config->{lists}->{styles},$1)){
+			$personStyle = $1 unless $1 eq "pub";
+		}
+		$personSort = $2;
+	}
+	elsif($personInfo->{stylePreference} and $personInfo->{stylePreference} !~ /\w{1,}\.\w{1,}/){
+		if(array_includes(h->config->{lists}->{styles},$personInfo->{stylePreference})){
+			$personStyle = $personInfo->{stylePreference} unless $personInfo->{stylePreference} eq "pub";
+		}
+	}
+	
+	if($personInfo->{sortPreference}){
+		$personSort = $personInfo->{sortPreference};
+	}
+	
+	my $style = params->{style} || $personStyle || h->config->{store}->{default_fd_style};
+	delete(params->{style}) if params->{style};
+	
+	my $sort = params->{'sort'} || $personSort || "";
+	
+	$personInfo->{stylePreference} = $style;
+	$personInfo->{sortPreference} = $sort if $sort ne "";
+	my ($sec,$min,$hour,$day,$mon,$year) = localtime(time);
+	$personInfo->{dateLastChanged} = sprintf("%04d-%02d-%02dT%02d:%02d:%02d", 1900+$year, 1+$mon, $day, $hour, $min, $sec);
+	h->authority->add($personInfo);
+	
+	redirect '/myPUB/';
 };
 
 get '/myPUB/update' => sub {

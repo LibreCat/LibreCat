@@ -190,13 +190,50 @@
     
     <h5>Display Publications</h5>
     
-    [% IF qp.keys.0 %]
-    [% IF qp.style AND qp.style != "frontShort" %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, style="frontShort") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> style: [% qp.style %]</p>
+    [% IF personSort OR personStyle %]
+    <p class="text-success"><strong>Your public settings:</strong><br />
+    [% IF personStyle %]
+    <strong>style:</strong> [% personStyle %]<br />
     [% END %]
-    [% IF qp.item('sort').0 OR qp.defined('sort') %]
-      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> sort: [% FOREACH filval IN qp.item('sort') %][% filval %], [% END %]</p>
+    [% IF personSort %]
+    <strong>sort:</strong> [% personSort %]
     [% END %]
+    </p>
+    [% END %]
+    
+    [% IF qp.style OR qp.item('sort') %]
+    <p class="text-warning"><strong>Your current settings:</strong><br />
+    [% IF qp.style AND qp.style != personStyle %]
+      <a href="[% h.newuri_for("$path", qp, style="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <strong>style:</strong> [% qp.style %][% IF qp.style == "frontShort" %] (default)[% END %]<br />
+    [% ELSIF personStyle %]
+      <span class="text-success"><strong>style:</strong> [% personStyle %][% IF personStyle == "frontShort" %] (default)[% END %]</span><br />
+    [% END %]
+    
+    [% IF qp.item('sort').0 %]
+      [% FOREACH sortme IN qp.item('sort') %]
+        [% IF (personSort.0 AND personSort.defined(sortme)) OR personSort == sortme %]
+          <a href="[% h.newuri_for("$path", qp, sort="del_$sortme") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <span class="text-success"><strong>sort:</strong> [% sortme %]</strong></span><br />
+        [% ELSE %]
+          <a href="[% h.newuri_for("$path", qp, sort="del_$sortme") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <strong>sort:</strong> [% sortme %]</strong><br />
+        [% END %]
+      [% END %]
+    [% ELSIF qp.defined('sort') AND qp.item('sort') != "" %]
+      [% IF (personSort.0 AND personSort.defined(qp.item('sort'))) OR personSort == qp.item('sort') %]
+        <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <span class="text-success"><strong>sort:</strong> [% qp.item('sort') %]</strong></span><br />
+      [% ELSE %]
+        <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <strong>sort:</strong> [% qp.item('sort') %]<br />
+      [% END %]
+    [% ELSE %]
+      [% IF personSort.0 %]
+        [% FOREACH ps IN personSort %]
+          <span class="text-success"><strong>sort:</strong> [% ps %]</strong></span><br />
+        [% END %]
+      [% ELSE %]
+        <span class="text-success"><strong>sort:</strong> [% personSort %]</strong></span><br />
+      [% END %]
+    [% END %]
+    <a type="button" href="http://pub-dev.ub.uni-bielefeld.de:3000[% h.uri_for("/myPUB/settings_update", qp) %]" name="save_settings" id="id_save_settings" class="btn btn-xs btn-block btn-warning">Save this as public default</a>
+    </p>
     [% END %]
     
     <ul class="nav nav-tabs nav-stacked">
