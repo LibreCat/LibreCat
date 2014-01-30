@@ -1479,24 +1479,5 @@ project_sort_options:
 default_sort:
   - {field: publishingYear, order: desc}
   - {field: dateLastChanged, order: desc}
-default_publication_sort: [publishingYear.desc, relevance.desc]
-search_ops:
-    term: "is"
-    not_term: "isn't"
-    text: "matches"
-    'exact.text': "exactly matches"
-    not_text: "doesn't match"
-    phrase: "contains"
-    not_phrase: "doesn't contain"
-    phrase_prefix: "starts with"
-    not_phrase_prefix: "doesn't start with"
-    gt: "is greater than"
-    lt: "is less than"
-    gte: "is greater than or equal to"
-    lte: "is less than or equal to"
-    within: "is within"
-    not_within: "isn't within"
-    qs: "matches query"
-    not_qs: "doesn't match query"
-    any: "has any value"
-    missing: "is missing"
+default_style: pub
+default_fd_style: frontShort
