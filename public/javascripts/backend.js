@@ -192,3 +192,14 @@ function linkPevz(element){
 		});
 	}
 }
+
+function editAuthorIds(direction){
+	if(direction == "edit"){
+		$('.authorIds').css('display','none');
+		$('.authorIds_input').attr('style','display:display');
+	}
+	else if(direction == "cancel"){
+		$('.authorIds').attr('style','display:display');
+		$('.authorIds_input').attr('style','display:none');
+	}
+}
