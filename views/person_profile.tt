@@ -17,24 +17,28 @@
       <br /><br />
       
       <div class="row">
+      <form action="/myPUB/authorid_update" method="post">
+      <input type="hidden" name="id" value="[% qp.item('id') %]" />
       [% IF !(thisPerson.googleScholarId OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcidId OR thisPerson.githubId OR thisPerson.arxivId OR thisPerson.inspireId) %]
       <div class="col-md-12">
         <span class="text-muted">No Author IDs set.</span>&nbsp;
         <a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
       </div>
       [% END %]
+      [% IF thisPerson.googleScholarId %]
       <span class="authorIds">
         <div class="col-md-4">Google Scholar Profile:</div>
-        <div class="col-md-7"><a href="http://scholar.google.de/citations?user=[% thisPerson.googleScholarId %]" target="_blank">test[% thisPerson.googleScholarId %]</a></div>
+        <div class="col-md-7"><a href="http://scholar.google.de/citations?user=[% thisPerson.googleScholarId %]" target="_blank">[% thisPerson.googleScholarId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
       </span>
+      [% END %]
       <span class="authorIds_input" style="display:none;">
         <div class="col-md-4">Google Scholar Profile:</div>
-        <div class="col-md-7"><input type="text" class="form-control input-sm" name="googlescholar" value="test[% thisPerson.googleScholarId ? thisPerson.googleScholarId : "" %]" /></div>
+        <div class="col-md-7"><input type="text" class="form-control input-sm" name="googlescholar" id="googlescholar_input" value="[% thisPerson.googleScholarId ? thisPerson.googleScholarId : "" %]" /></div>
       </span>
       [% IF thisPerson.researcherId %]
       <span class="authorIds">
         <div class="col-md-4">Researcher ID:</div>
-        <div class="col-md-7"><a href="http://www.researcherid.com/rid/[% thisPerson.researcherId %]" target="_blank">[% thisPerson.researcherId %]</a></div>
+        <div class="col-md-7"><a href="http://www.researcherid.com/rid/[% thisPerson.researcherId %]" target="_blank">[% thisPerson.researcherId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
       </span>
       [% END %]
       <span class="authorIds_input" style="display:none;">
@@ -44,7 +48,7 @@
       [% IF thisPerson.authorClaim %]
       <span class="authorIds">
         <div class="col-md-4">Author Claim:</div>
-        <div class="col-md-7"><a href="http://authorclaim.org/profile/[% thisPerson.authorClaim %]" target="_blank">[% thisPerson.authorClaim %]</a></div>
+        <div class="col-md-7"><a href="http://authorclaim.org/profile/[% thisPerson.authorClaim %]" target="_blank">[% thisPerson.authorClaim %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
       </span>
       [% END %]
       <span class="authorIds_input" style="display:none;">
@@ -54,7 +58,7 @@
       [% IF thisPerson.scopusId %]
       <span class="authorIds">
         <div class="col-md-4">Scopus Author ID:</div>
-        <div class="col-md-7"><a href="http://www.scopus.com/authid/detail.url?authorId=[% thisPerson.scopusId %]" target="_blank">[% thisPerson.scopusId %]</a></div>
+        <div class="col-md-7"><a href="http://www.scopus.com/authid/detail.url?authorId=[% thisPerson.scopusId %]" target="_blank">[% thisPerson.scopusId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
       </span>
       [% END %]
       <span class="authorIds_input" style="display:none;">
@@ -64,7 +68,7 @@
       [% IF thisPerson.orcidId %]
       <span class="authorIds">
         <div class="col-md-4">ORCID:</div>
-        <div class="col-md-7"><a href="http://orcid.org/[% thisPerson.orcidId %]" target="_blank">[% thisPerson.orcidId %]</a></div>
+        <div class="col-md-7"><a href="http://orcid.org/[% thisPerson.orcidId %]" target="_blank">[% thisPerson.orcidId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
       </span>
       [% END %]
       <span class="authorIds_input" style="display:none;">
@@ -74,7 +78,7 @@
       [% IF thisPerson.githubId %]
       <span class="authorIds">
         <div class="col-md-4">GitHub:</div>
-        <div class="col-md-7"><a href="http://github.com/[% thisPerson.githubId %]" target="_blank">[% thisPerson.githubId %]</a></div>
+        <div class="col-md-7"><a href="http://github.com/[% thisPerson.githubId %]" target="_blank">[% thisPerson.githubId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
       </span>
       [% END %]
       <span class="authorIds_input" style="display:none;">
@@ -84,7 +88,7 @@
       [% IF thisPerson.arxivId %]
       <span class="authorIds">
         <div class="col-md-4">arXiv:</div>
-        <div class="col-md-7"><a href="http://arxiv.org/a/[% thisPerson.arxivId %]" target="_blank">[% thisPerson.arxivId %]</a></div>
+        <div class="col-md-7"><a href="http://arxiv.org/a/[% thisPerson.arxivId %]" target="_blank">[% thisPerson.arxivId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
       </span>
       [% END %]
       <span class="authorIds_input" style="display:none;">
@@ -94,7 +98,7 @@
       [% IF thisPerson.inspireId %]
       <span class="authorIds">
         <div class="col-md-4">Inspire:</div>
-        <div class="col-md-7"><a href="http://inspirehep.net/record/[% thisPerson.inspireId %]" target="_blank">[% thisPerson.inspireId %]</a></div>
+        <div class="col-md-7"><a href="http://inspirehep.net/record/[% thisPerson.inspireId %]" target="_blank">[% thisPerson.inspireId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
       </span>
       [% END %]
       <span class="authorIds_input" style="display:none;">
@@ -103,12 +107,18 @@
       </span>
       <span class="authorIds_input" style="display:none;"><div class="col-md-11">&nbsp;</div></span>
       <span class="authorIds_input" style="display:none;">
-        <div class="col-md-4">&nbsp;</div>
+        <div class="col-md-4">
+          <span class="glyphicon glyphicon-question-sign" id="authorid_help" data-toggle="tooltip" data-placement="right" title="These IDs will be visible on your public person page immediately after saving."></span>
+          <script>
+            $('#authorid_help').tooltip();
+          </script>
+        </div>
         <div class="col-md-7">
-          <button type="button" id="saveAuthorIds" class="btn btn-success btn-sm">Save</button>
+          <button type="submit" id="saveAuthorIds" class="btn btn-success btn-sm">Save</button>
           <button type="button" onclick="editAuthorIds('cancel');" class="btn btn-danger btn-sm">Cancel</button>
         </div>
       </span>
+      </form>
       </div>
     [% END %]
   [% END %]
