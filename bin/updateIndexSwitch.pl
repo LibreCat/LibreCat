@@ -11,8 +11,10 @@ use Catmandu -all;
 my $sb_home = '/srv/www/app-catalog';
 my $perl_version = '/home/bup/perl5/perlbrew/perls/perl-5.16.3/bin/perl';
 
-my $log = "$sb_home/log/update_es_time.log";
-my $last_indexed = "2014-01-09T14:00:00";#`head -1 $log`;
+#my $log = "$sb_home/log/update_es_time.log";
+my ($sec,$min,$hour,$day,$mon,$year) = localtime(time);
+my $last_indexed = sprintf("%04d-%02d-%02dT%02d:%02d:%02d", 1900+$year, 1+$mon, $day, $hour, $min, $sec);
+#my $last_indexed = "2014-01-09T14:00:00";#`head -1 $log`;
 
 use luurCfg;
 use Orms;
