@@ -116,6 +116,11 @@ publicationTypes:
           multiple: 1
           label: "Research Group"
           placeholder: "Research Group"
+        publisher:
+          mandatory: 0
+          multiple: 0
+          label: "Publisher"
+          placeholder: "Publisher"
         year:
           mandatory: 1
           multiple: 0
@@ -187,6 +192,7 @@ publicationTypes:
           multiple: 0
           label: "Publisher"
           placeholder: "Publisher"
+          defaultvalue: "Bielefeld University"
           readonly: 0
         year:
           mandatory: 1

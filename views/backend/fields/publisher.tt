@@ -5,6 +5,6 @@
 </div>
 <div class="col-md-10">
   <span class="form-group col-md-9">
-    <input type="text" name="publisher" id="id_publisher" value="[% publisher OR 'Bielefeld University' %]" placeholder="{% fields.basicFields.publisher.placeholder %}" class="form-control{% IF fields.basicFields.publisher.mandatory %} required{% END %}">
+    <input type="text" name="publisher" id="id_publisher" value="[% publisher || "{% fields.basicFields.publisher.defaultvalue ? fields.basicFields.publisher.defaultvalue : "" %}" %]" placeholder="{% fields.basicFields.publisher.placeholder %}" class="form-control{% IF fields.basicFields.publisher.mandatory %} required{% END %}">
   </span>
 </div>
