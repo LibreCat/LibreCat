@@ -156,6 +156,16 @@ get qr{/myPUB/add/(\w{1,})/*} => sub {
 		template "admin.tt";
 	}
 };
+
+get qr{/myPUB/edit/(\d{1,})/*} => sub {
+	my ($recId) = splat;
+	my $record = h->publications->get($recId);
+	if($record){
+		my $type = $record->{documentType};
+		my $tmpl = "backend/forms/" . h->config->{forms}->{publicationTypes}->{$type}->{tmpl} . ".tt";
+		template $tmpl, $record;
+	}
+};
 	
 get qr{/myPUB/$|/myPUB$} => sub {
 	#my ($id) = splat;
