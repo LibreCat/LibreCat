@@ -1,5 +1,5 @@
 <span id="authorEditorTranslator">
-  [% IF !authors %]
+  [% IF !author %]
   <span class="authorspan">
     <div class="col-md-2">
       <label for="author">
@@ -16,23 +16,23 @@
     </div>
     <div class="col-md-10" id="author">
       <div class="form-group">
-        <input type="hidden" name="au_auLuAuthorOId_0" id="id_au_auLuAuthorOId_0" value="[% auLuAuthorOId %]"/>
-        <input type="hidden" name="au_auPersonNumber_0" id="id_au_auPersonNumber_0" value="[% aupersonNumber %]" />
-        <input name="au_auLuLdapId_0" type="hidden" value="[% auLuLdapId %]" />
-        <input name="au_auEndDate_0" type="hidden" value="[% auEndDate %]" />
+        <input type="hidden" name="au_auLuAuthorOId_0" id="id_au_auLuAuthorOId_0" value=""/>
+        <input type="hidden" name="au_auPersonNumber_0" id="id_au_auPersonNumber_0" value="" />
+        <input name="au_auLuLdapId_0" type="hidden" value="" />
+        <input name="au_auEndDate_0" type="hidden" value="" />
         <input name="au_origGivenName_0" id="id_au_origGivenName_0" type="hidden" />
         <input name="au_origLastName_0" id="id_au_origLastName_0" type="hidden" />
         <input name="au_origTitle_0" id="id_au_origTitle_0" type="hidden" />
         <input name="au_type_0" id="id_au_type_0" type="hidden" />
             
         <span class="form-group col-md-3">
-          <input type="text" name="au_auGivenName_0" placeholder="{% fields.basicFields.authors.firstName.placeholder %}" id="id_au_auGivenName_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" value="" />
+          <input type="text" name="au_auGivenName_0" placeholder="{% fields.basicFields.authors.firstName.placeholder %}" id="id_au_auGivenName_0" class="form-control" value="" />
         </span>
         <span class="form-group col-md-4">
-          <input type="text" name="au_auSurname_0" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" id="id_au_auSurname_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" value="" />
+          <input type="text" name="au_auSurname_0" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" id="id_au_auSurname_0" class="form-control" value="" />
         </span>
         <span class="form-group col-md-2">
-          <input type="text" name="au_auPersonTitle_0" placeholder="{% fields.basicFields.authors.title.placeholder %}" id="id_au_auPersonTitle_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" />
+          <input type="text" name="au_auPersonTitle_0" placeholder="{% fields.basicFields.authors.title.placeholder %}" id="id_au_auPersonTitle_0" class="form-control" />
         </span>
         
         <span class="col-md-1">
@@ -47,7 +47,7 @@
     </div>
   </span>
   [% ELSE %]
-  [% FOREACH name IN authors %]
+  [% FOREACH name IN author %]
   <span class="authorspan">
     <div class="col-md-2">
       <label for="author">
@@ -64,9 +64,9 @@
     </div>
     <div class="col-md-10" id="author">
       <div class="form-group">
-        <input type="hidden" name="au_auLuAuthorOId_[% loop.index %]" id="id_au_auLuAuthorOId_[% loop.index %]" value="[% name.auLuAuthorOId %]"/>
-        <input type="hidden" name="au_auPersonNumber_[% loop.index %]" id="id_au_auPersonNumber_[% loop.index %]" value="[% name.aupersonNumber %]" />
-        <input name="au_auLuLdapId_[% loop.index %]" type="hidden" value="[% name.auLuLdapId %]" />
+        <input type="hidden" name="au_auLuAuthorOId_[% loop.index %]" id="id_au_auLuAuthorOId_[% loop.index %]" value="[% name.oId %]"/>
+        <input type="hidden" name="au_auPersonNumber_[% loop.index %]" id="id_au_auPersonNumber_[% loop.index %]" value="[% name.personNumber %]" />
+        <input name="au_auLuLdapId_[% loop.index %]" type="hidden" value="[% name.luLdapId %]" />
         <input name="au_auEndDate_[% loop.index %]" type="hidden" value="[% name.auEndDate %]" />
         <input name="au_origGivenName_[% loop.index %]" id="id_au_origGivenName_[% loop.index %]" type="hidden" />
         <input name="au_origLastName_[% loop.index %]" id="id_au_origLastName_[% loop.index %]" type="hidden" />
@@ -74,13 +74,13 @@
         <input name="au_type_[% loop.index %]" id="id_au_type_[% loop.index %]" type="hidden" />
 
         <span class="form-group col-md-3">
-          <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="{% fields.basicFields.authors.firstName.placeholder %}" id="id_au_auGivenName_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auGivenName %]" class="form-control"/>
+          <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="{% fields.basicFields.authors.firstName.placeholder %}" id="id_au_auGivenName_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.givenName %]" class="form-control"/>
         </span>
         <span class="form-group col-md-4">
-          <input type="text" name="au_auSurname_[% loop.index %]" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" id="id_au_auSurname_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auSurname %]" class="form-control" />
+          <input type="text" name="au_auSurname_[% loop.index %]" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" id="id_au_auSurname_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.surname %]" class="form-control" />
         </span>
         <span class="form-group col-md-2">
-          <input type="text" name="au_auPersonTitle_[% loop.index %]" placeholder="{% fields.basicFields.authors.title.placeholder %}" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auPersonTitle %]" class="form-control"/>
+          <input type="text" name="au_auPersonTitle_[% loop.index %]" placeholder="{% fields.basicFields.authors.title.placeholder %}" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.personTitle || name.jobTitle %]" class="form-control"/>
         </span>
             
         <span class="col-md-1">
@@ -92,8 +92,8 @@
         </span>
             
         <span class="col-md-2">
-          <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
-          [% IF name.auLuAuthorOId OR name.auLuLdapId %]
+          <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.oId OR name.luLdapId %]checked="checked"[% END %]/>
+          [% IF name.oId OR name.luLdapId %]
             <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
           [% ELSE %]
             <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>

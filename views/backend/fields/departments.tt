@@ -4,7 +4,7 @@
   </label>
 </div>
 <div class="col-md-10" id="department">
-  [% IF !departments %]
+  [% IF !department %]
   <div class="form-group">
     <input type="hidden" name="dp_departmentOId_0" id="dp_idautocomplete_0" value="" />
     
@@ -34,12 +34,12 @@
     </script>
   </div>
   [% ELSE %]
-  [% FOREACH dept IN departments %]
+  [% FOREACH dept IN department %]
   <div class="form-group">
-    <input type="hidden" name="dp_departmentOId_[% loop.index %]" id="dp_idautocomplete_[% loop.index %]" value="[% dept.departmentOId || dept.organizationNumber %]" />
+    <input type="hidden" name="dp_departmentOId_[% loop.index %]" id="dp_idautocomplete_[% loop.index %]" value="[% dept.oId || dept.organizationNumber %]" />
           
     <span class="form-group col-md-7">
-      <input type="text" name="dp_departmentName_[% loop.index %]" class="form-control" placeholder="{% fields.basicFields.departments.placeholder %}" id="dp_autocomplete_[% loop.index %]" value="[% dept.departmentName || dept.name %]" />
+      <input type="text" name="dp_departmentName_[% loop.index %]" class="form-control" placeholder="{% fields.basicFields.departments.placeholder %}" id="dp_autocomplete_[% loop.index %]" value="[% dept.name.0.text || dept.name %]" />
     </span>
           
     <span class="form-group col-md-2">

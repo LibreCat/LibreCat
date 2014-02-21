@@ -4,7 +4,7 @@
   </label>
 </div>
 <div class="col-md-10" id="researchgroup">
-  [% IF !researchGroups %]
+  [% IF !researchGroup %]
   <div class="form-group">
     <input type="hidden" name="rg_researchGroupOId_0" id="rg_idautocomplete_0" value="" />
           
@@ -34,12 +34,12 @@
     </script>
   </div>
   [% ELSE %]
-  [% FOREACH res IN researchGroups %]
+  [% FOREACH res IN researchGroup %]
   <div class="form-group">
-    <input type="hidden" name="rg_researchGroupOId_[% loop.index %]" id="rg_idautocomplete_[% loop.index %]" value="[% res.researchGroupOId %]" />
+    <input type="hidden" name="rg_researchGroupOId_[% loop.index %]" id="rg_idautocomplete_[% loop.index %]" value="[% res.oId %]" />
           
     <span class="form-group col-md-7">
-      <input type="text" name="rg_researchGroupName_[% loop.index %]" class="form-control" id="rg_autocomplete_[% loop.index %]" value="[% res.researchGroupName %]" />
+      <input type="text" name="rg_researchGroupName_[% loop.index %]" class="form-control" id="rg_autocomplete_[% loop.index %]" value="[% res.name.0.text || res.name %]" />
     </span>
           
     <span class="form-group col-md-2">

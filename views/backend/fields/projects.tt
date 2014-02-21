@@ -4,7 +4,7 @@
   </label>
 </div>
 <div class="col-md-10" id="project">
-  [% IF !projects %]
+  [% IF !project %]
   <div class="form-group">
     <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
           
@@ -34,12 +34,12 @@
     </script>
   </div>
   [% ELSE %]
-  [% FOREACH proj IN projects %]
+  [% FOREACH proj IN project %]
   <div class="form-group">
-    <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.projectOId %]" />
+    <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.oId %]" />
           
     <span class="form-group col-md-7">
-      <input type="text" name="pj_projectName_[% loop.index %]" class="form-control" placeholder="{% fields.basicFields.projects.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.projectName %]" />
+      <input type="text" name="pj_projectName_[% loop.index %]" class="form-control" placeholder="{% fields.basicFields.projects.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name.0.text || proj.name %]" />
     </span>
           
     <span class="form-group col-md-2">
