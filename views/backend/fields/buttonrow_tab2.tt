@@ -1,0 +1,16 @@
+<div class="col-md-12 buttonrow">
+  <span class="form-group col-md-2">
+    <a class="btn btn-default back-button" id="twoToOne" data-toggle="tab" href="#basicFields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+  </span>
+  <span class="form-group col-md-2">
+    <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+  </span>
+  [% IF submissionStatus != "public" %]
+  <span class="form-group col-md-2">
+    <button type="submit" class="btn btn-default" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+  </span>
+  [% END %]
+  <span class="form-group col-md-2">
+    <a class="btn btn-default next-button" id="twoToThree" href="#supplementaryFields">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+  </span>
+</div>

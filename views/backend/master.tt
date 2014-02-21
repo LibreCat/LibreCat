@@ -53,10 +53,20 @@
       
       </div><!-- tab-pane -->
       
+      <!-- STEP 2 -->
+      <div class="tab-pane" id="fileUpload">
       
-      {% IF fields.fileUpload %}
-      
-      {% END %}
+{% IF fields.fileUpload %}
+  {% FOREACH key IN fieldOrder.fileUpload %}
+    {% IF fields.fileUpload.$key %}
+    {% template = "fields/" _ key _ ".tt" %}
+{% INCLUDE $template %}
+    {% END %}
+  {% END %}
+  {% INCLUDE fields/buttonrow_tab2.tt %}      
+{% END %}
+
+      </div><!-- tab-pane -->
       
       
       {% IF fields.supplementaryFields %}

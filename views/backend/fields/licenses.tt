@@ -1,0 +1,60 @@
+<div class="col-md-12">&nbsp;</div>
+
+<div class="col-md-10">
+  <a data-target="#licenses" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> <strong>Licenses</strong></a><br />
+  
+  <div id="licenses" class="collapse[% IF file %] in[% END %]">
+  
+    <strong>{% fields.fileUpload.licenses.dataReuseLicense.label %}</strong>[% IF file %]<span class="starMandatory">*</span>[% END %]
+    <div class="alert alert-info">
+      Choose a license under which your uploaded data will be available:<br />
+      <select name="dataReuseLicense" id="id_dataReuseLicense" class="form-control">
+        <option value="">Select a license</option>
+        <option value="PDDL"[% IF dataReuseLicense == "PDDL" %] selected="selected"[% END %]>No restrictions - PDDL</option>
+        <option value="ODC-By"[% IF dataReuseLicense == "ODC-By" %] selected="selected"[% END %]>Attribution required - ODC-By</option>
+        <option value="ODbL"[% IF dataReuseLicense == "ODbL" %] selected="selected"[% END %]>Share alike - ODbL</option>
+      </select><br />
+      
+      <a data-target="#PDDL" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> The Open Data Commons Public Domain Dedication and License (PDDL) v1.0</a><br />
+      <div id="PDDL" class="collapse reuse-license">
+        Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data<br />
+        <a href="http://opendatacommons.org/licenses/pddl/" target="_blank">http://opendatacommons.org/licenses/pddl/</a>
+      </div>
+      
+      <a data-target="#ODCBy" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> The Open Data Commons Attribution License (ODC-By) v1.0</a><br />
+      <div id="ODCBy" class="collapse reuse-license">
+        Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data<br />
+        <a href="http://opendatacommons.org/licenses/by/" target="_blank">http://opendatacommons.org/licenses/by/</a>
+      </div>
+      
+      <a data-target="#ODbL" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> The Open Database License (ODbL) v1.0</a>
+      <div id="ODbL" class="collapse reuse-license">
+        Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br />
+        <a href="http://opendatacommons.org/licenses/odbl/" target="_blank">http://opendatacommons.org/licenses/odbl/</a>
+      </div>
+    </div>
+    
+    <br />
+    
+    <strong>{% fields.fileUpload.licenses.openDataRelease.label %}</strong>[% IF file %]<span class="starMandatory">*</span>[% END %]<br />
+    
+    <div class="alert alert-info" id="odralert">
+      I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br /><br />
+      Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br /><br />
+      I am aware, that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br />
+      I declare, that I do not violate these rules.<br />
+      I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.
+    </div>
+    <label class="checkbox">
+      <input type="checkbox" value="1" id="id_openDataRelease" name="openDataRelease"[% IF openDataRelease == "1" %] checked="checked"[% END %] /> <strong>I have read and agree with the information above about releasing data under the selected license.</strong>
+    </label>
+    <br />
+    
+    If you have any questions, please contact:<br />
+    <strong>
+      <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713" target="_blank">Dr. Johanna Vompras</a><br />
+      0521 106-2694<br />
+      <a href="mailto:data@uni-bielefeld.de">data@uni-bielefeld.de</a><br />
+    </strong>
+  </div>
+</div>

@@ -77,7 +77,7 @@ publicationTypes:
       basicFields:
         tabName: "Basic Fields"
         doi:
-          mandatory: 1
+          mandatory: 0
           multiple: 0
           label: "DOI"
           readonly: 1
@@ -127,6 +127,10 @@ publicationTypes:
           label: "Publishing Year"
           placeholder: "YYYY"
           readonly: 0
+      fileUpload:
+        tabName: "Main File Upload"
+        dropzone:
+          label: "Upload main file(s)"
   journalEditor:
     label: "Journal Editor"
     tmpl: journalEditor
