@@ -13,6 +13,7 @@ use App::Catalog::Admin;
 use App::Catalog::Profile;
 use App::Catalog::Publication;
 use App::Catalog::Search;
+use App::Catalog::Interface;
 
 Catmandu->load;
 
