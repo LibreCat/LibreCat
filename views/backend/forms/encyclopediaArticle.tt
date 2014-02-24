@@ -40,11 +40,19 @@
 
       </div><!-- tab-pane -->
       
+      <!-- STEP 3 -->
+      <div class="tab-pane" id="supplementaryFields">
+
+
+
+      </div><!-- tab-pane -->
       
+      <!-- STEP 4 -->
+      <div class="tab-pane" id="relatedMaterial">
       
-      
-      
-      
+
+
+      </div><!-- tab-pane -->
       
     </div><!-- tab-content -->
   </form>
@@ -110,6 +118,13 @@ $('#oneToTwo').click(function(){
       $(this).parents('span.form-group').removeClass('has-error');
     }
   });
+  
+  var year = $('#id_publishingYear').val();
+  if(year.length < 4 || !year.match(/^\d+$/)){
+    check = 0;
+    $('#id_publishingYear').parents('span.form-group').addClass('has-error');
+  }
+  
   if(check){
     $('#author.has-error').each(function(){
       $(this).removeClass('has-error');
@@ -291,6 +306,232 @@ function selectButton(element){
 
 $('button.cancel-button').click(function() {
   window.location.href = '/myPUB';
+});
+// Tab forward two to three
+$('#twoToThree').click(function(e){
+  if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_openDataRelease').is(':checked') || $('#id_dataReuseLicense').val() == '')){
+    if($('#id_dataReuseLicense').val() == ''){
+      $('#id_dataReuseLicense').parent().removeClass('alert-info');
+      $('#id_dataReuseLicense').parent().addClass('alert-danger');
+      alert('You need to choose a Data Re-Use License because you have attached files to this record.');
+      e.stopImmediatePropagation();
+    }
+    if(!$('#id_openDataRelease').is(':checked')) {
+      $('#odralert').removeClass('alert-info');
+      $('#odralert').addClass('alert-danger');
+      alert('You need to accept the Open Data Release Statement because you have attached files to this record.');
+      document.location.href = "#stepTwo";
+      e.stopImmediatePropagation();
+    }
+  }
+  else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && (!$('#id_openDataRelease').is(':checked') || $('#id_dataReuseLicense').val() == '')){
+    if($('#id_dataReuseLicense').val() == ''){
+      $('#id_dataReuseLicense').parent().removeClass('alert-info');
+      $('#id_dataReuseLicense').parent().addClass('alert-danger');
+      alert('You need to choose a Data Re-Use License because you have attached files to this record.');
+      e.stopImmediatePropagation();
+    }
+    if(!$('#id_openDataRelease').is(':checked')) {
+      $('#odralert').removeClass('alert-info');
+      $('#odralert').addClass('alert-danger');
+      alert('You need to accept the Open Data Release Statement because you have attached files to this record.');
+      document.location.href = "#stepTwo";
+      e.stopImmediatePropagation();
+    }
+  }
+  else {
+    if($('.dropzone').first().children().length == 1){
+      if($('#id_dataReuseLicense').val() != ''){
+        $('#id_dataReuseLicense').val('');
+      }
+      if($('#id_openDataRelease').is(':checked')){
+        $('#id_openDataRelease').prop("checked", false);
+      }
+    }
+
+    $('#fileUpload, #li_fileUpload').removeClass('active');
+    $('#supplementaryFields, #li_supplementaryFields').addClass('active');
+    $('a[href=#supplementaryFields]').attr('data-toggle','tab');
+    $('#li_supplementaryFields').css('visibility','visible');
+  }
+});
+
+
+// Two to One
+$('#twoToOne').click(function(){
+  $('#li_fileUpload').removeClass('active');
+  $('#li_basicFields').addClass('active');
+});
+
+
+// Research Data License checks
+$('#id_openDataRelease').click(function(){
+  if(!$('#id_openDataRelease').is(':checked')){
+    if ($('.dropzone').first().children().length > 1){
+      $('#liStepThree, #liStepFour').css('visibility','hidden');
+      $('#odralert').removeClass('alert-info');
+      $('#odralert').addClass('alert-danger');
+    }
+  }
+  else {
+    $('#odralert').removeClass('alert-danger');
+    $('#odralert').addClass('alert-info');
+  }
+});
+
+$('#id_dataReuseLicense').change(function(){
+  if($('#id_dataReuseLicense').val() == ''){
+    if ($('.dropzone').first().children().length > 1){
+      $('#liStepThree, #liStepFour').css('visibility','hidden');
+      $('#id_dataReuseLicense').parent().removeClass('alert-info');
+      $('#id_dataReuseLicense').parent().addClass('alert-danger');
+    }
+  }
+  else {
+    $('#id_dataReuseLicense').parent().removeClass('alert-danger');
+    $('#id_dataReuseLicense').parent().addClass('alert-info');
+  }
+});
+
+
+function editFile(fileOId, recordOId, fileName, accessLevel, accessEmbargo, openAccessDate, fileTitle, fileDescription){
+  var fileid = self.document.getElementById('id_uploadedFileOId');
+  fileid.value = fileOId;
+  var recid = self.document.getElementById('id_recordOId');
+  recid.value = recordOId;
+  var name = self.document.getElementById('id_fileName');
+  name.value = fileName;
+  var title = self.document.getElementById('id_fileTitle');
+  if(fileTitle){title.value = fileTitle;}
+  var description = self.document.getElementById('id_fileDescription');
+  if(fileDescription){description.value = fileDescription;}
+  var access;
+  if(accessLevel == "Open Access" || accessLevel == "openAccess"){
+    access = self.document.getElementById('id_accessLevel_openAccess');
+    self.document.getElementById('id_accessEmbargo').disabled="disabled";
+  }
+  else if(accessLevel == "UniBi Only" || accessLevel == "lu"){
+    access = self.document.getElementById('id_accessLevel_lu');
+    self.document.getElementById('id_accessEmbargo').disabled="";
+  }
+  else if(accessLevel == "Author/Admin/Reviewer" || accessLevel == "admin"){
+    access = self.document.getElementById('id_accessLevel_admin');
+    self.document.getElementById('id_accessEmbargo').disabled="";
+  }
+  access.checked = "checked";
+  var embargo = self.document.getElementById('id_accessEmbargo');
+  embargo.value = accessEmbargo;
+  var accdate = self.document.getElementById('id_openAccessDate');
+  accdate.value = openAccessDate;
+  
+  var fileNameTag = self.document.getElementById('fileNameTag');
+  fileNameTag.style.display = "block";
+
+  $('#fileUpload').modal('show'); 
+  
+}
+
+function deleteRelMat(materialOId, otherOId) {
+   if (confirm("Are you sure you want to delete this related material/relation")) {
+     $('#' + materialOId).children('.col-md-1').last().remove();
+     $('#' + materialOId).append('<div class="col-md-1"><img src="/images/preloader_circle.gif" /></div>');
+     var xmlhttp;
+     if (window.XMLHttpRequest) {
+       // code for IE7+, Firefox, Chrome, Opera, Safari
+       xmlhttp = new XMLHttpRequest();
+     } else {
+       // code for IE6, IE5
+       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+     }
+     
+     xmlhttp.onreadystatechange = function() {
+       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+         $('#' + materialOId).remove();
+       }
+     }
+     
+     var url = "/luur/record_material?func=deleteRelatedMaterial&recordOId=[% recordOId %]&otherObjectOId=" + otherOId + "&deleteRelatedMaterialOId=" + materialOId;
+     xmlhttp.open("GET", url, true);
+     xmlhttp.send();
+
+   }
+}
+$('#threeToFour').click(function(){
+    $('#li_relatedMaterial').css('visibility','visible');
+    $('#li_supplementaryFields').removeClass('active');
+    $('#li_relatedMaterial').addClass('active');
+    $('a[href=#relatedMaterial]').attr('data-toggle','tab');
+    $('#inputSpan').remove();
+});
+
+$('#threeToTwo').click(function(){
+  $('#li_supplementaryFields').removeClass('active');
+  $('#li_fileUpload').addClass('active');
+});
+$('#fourToThree').click(function(){
+  $('#li_relatedMaterial').removeClass('active');
+  $('#li_supplementaryFields').addClass('active');
+});
+
+function deleteRelMat(materialOId, otherOId) {
+   if (confirm("Are you sure you want to delete this related material/relation")) {
+     $('#' + materialOId).children('.col-md-1').last().remove();
+     $('#' + materialOId).append('<div class="col-md-1"><img src="/images/preloader_circle.gif" /></div>');
+     var xmlhttp;
+     if (window.XMLHttpRequest) {
+       // code for IE7+, Firefox, Chrome, Opera, Safari
+       xmlhttp = new XMLHttpRequest();
+     } else {
+       // code for IE6, IE5
+       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+     }
+     
+     xmlhttp.onreadystatechange = function() {
+       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+         $('#' + materialOId).remove();
+       }
+     }
+     
+     var url = "/luur/record_material?func=deleteRelatedMaterial&recordOId=[% recordOId %]&otherObjectOId=" + otherOId + "&deleteRelatedMaterialOId=" + materialOId;
+     xmlhttp.open("GET", url, true);
+     xmlhttp.send();
+
+   }
+}
+
+
+$('#searchPubl').click(function() {
+
+  $.get(puburl,function(response) {
+    var objJSON = eval("(function(){return " + response + ";})()");
+    $('#results').html("");
+    for(var i=0;i<objJSON.length;i++){
+      var data = objJSON[i];
+      var control = "";
+      var oId = "";
+      var title = "";
+      var citation = "";
+      $.each(data, function(key, value){
+        if(key == "oId"){
+          oId = value;
+        }
+        if(key == "title"){
+          title = value;
+        }
+        if(key == "citation"){
+          citation = value;
+        }
+      });
+        $('#results').append("<div class=\"span5\"><a href=\"#\" onclick=\"javascript:connect(" + oId + ",[% recordOId %])\"><i class=\"icon-plus\"></i> <strong>" + title + "</strong></a><br />" + citation + "</div><div class=\"span3\">&nbsp;</div>");
+      oId = "";
+      title = "";
+      citation = "";
+      control = "";
+    }
+    if($.trim($('#results').html())==''){
+      $('#results').html("<div><div class=\"span4 alert alert-error\">No results found or all matching results have already been connected.</div></div>");
+    }
+  });
 });
 </script>
 

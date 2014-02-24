@@ -1,0 +1,65 @@
+$('#fourToThree').click(function(){
+  $('#li_relatedMaterial').removeClass('active');
+  $('#li_supplementaryFields').addClass('active');
+});
+
+function deleteRelMat(materialOId, otherOId) {
+   if (confirm("Are you sure you want to delete this related material/relation")) {
+     $('#' + materialOId).children('.col-md-1').last().remove();
+     $('#' + materialOId).append('<div class="col-md-1"><img src="/images/preloader_circle.gif" /></div>');
+     var xmlhttp;
+     if (window.XMLHttpRequest) {
+       // code for IE7+, Firefox, Chrome, Opera, Safari
+       xmlhttp = new XMLHttpRequest();
+     } else {
+       // code for IE6, IE5
+       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+     }
+     
+     xmlhttp.onreadystatechange = function() {
+       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+         $('#' + materialOId).remove();
+       }
+     }
+     
+     var url = "/luur/record_material?func=deleteRelatedMaterial&recordOId=[% recordOId %]&otherObjectOId=" + otherOId + "&deleteRelatedMaterialOId=" + materialOId;
+     xmlhttp.open("GET", url, true);
+     xmlhttp.send();
+
+   }
+}
+
+
+$('#searchPubl').click(function() {
+
+  $.get(puburl,function(response) {
+    var objJSON = eval("(function(){return " + response + ";})()");
+    $('#results').html("");
+    for(var i=0;i<objJSON.length;i++){
+      var data = objJSON[i];
+      var control = "";
+      var oId = "";
+      var title = "";
+      var citation = "";
+      $.each(data, function(key, value){
+        if(key == "oId"){
+          oId = value;
+        }
+        if(key == "title"){
+          title = value;
+        }
+        if(key == "citation"){
+          citation = value;
+        }
+      });
+        $('#results').append("<div class=\"span5\"><a href=\"#\" onclick=\"javascript:connect(" + oId + ",[% recordOId %])\"><i class=\"icon-plus\"></i> <strong>" + title + "</strong></a><br />" + citation + "</div><div class=\"span3\">&nbsp;</div>");
+      oId = "";
+      title = "";
+      citation = "";
+      control = "";
+    }
+    if($.trim($('#results').html())==''){
+      $('#results').html("<div><div class=\"span4 alert alert-error\">No results found or all matching results have already been connected.</div></div>");
+    }
+  });
+});

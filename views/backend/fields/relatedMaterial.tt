@@ -1,0 +1,30 @@
+<div class="row innerrow">
+  <div class="col-md-12 form-group buttonrow">
+    <div class="col-md-12">
+      <a href="#connectPubl" type="button" class="btn btn-default" data-toggle="modal">Link Publications</a>
+    </div>
+  </div>
+      
+  <div class="col-md-12" id="relatesTo">
+    <span[% IF !relatesTo %] style="display:none"[% END %]><strong>Linked Publications:</strong></span>
+    [% IF relatesTo %]
+    [% FOREACH rel IN relatesTo %]
+      [% IF rel.isOfMaterialRelationType.oId == "2632526" %]
+      <div class="row" id="[% rel.relatesFrom.relatedMaterialOId %]">
+        <div class="col-md-5">
+          <i class="icon-file"></i> <a href="/publication/[% rel.relatesFrom.oId %]" target="_blank">[% rel.relatesFrom.mainTitle %]</a><br />
+        </div>
+        <div class="col-md-1">
+          [% rel.relatesFrom.oId %]
+        </div>
+        <div class="col-md-1">
+          <a href="javascript:deleteRelMat([% rel.relatesFrom.relatedMaterialOId %],[% rel.relatesFrom.oId %])">Remove</a>
+        </div>
+      </div>
+      [% END %]
+    [% END %]
+    [% END %]
+  </div>
+</div>
+
+[% INCLUDE backend/fields/connectPubl.tt %]

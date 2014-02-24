@@ -1,6 +1,6 @@
 <span id="authorEditorTranslator">
   [% IF !author %]
-  <span class="authorspan">
+  <div class="row authorspan innerrow">
     <div class="col-md-2">
       <label for="author">
       {% IF fields.basicFields.authors.label.keys %}
@@ -45,10 +45,10 @@
         </span>
       </div>
     </div>
-  </span>
+  </div>
   [% ELSE %]
   [% FOREACH name IN author %]
-  <span class="authorspan">
+  <div class="row authorspan innerrow">
     <div class="col-md-2">
       <label for="author">
       {% IF fields.basicFields.authors.label.keys %}
@@ -101,7 +101,7 @@
         </span>
       </div>
     </div>
-  </span>
+  </div>
   [% END %]
   [% END %]
         

@@ -1,4 +1,5 @@
 [% IF doi %]
+<div class="row innerrow">
   <div class="col-md-2">
     <label for="id_doi">
       {% fields.basicFields.doi.label %}
@@ -9,4 +10,5 @@
       <input type="text" name="doi" id="id_doi" value="[% doi %]" class="form-control" readonly="readonly">
     </div>
   </div>
+</div>
 [% END %]

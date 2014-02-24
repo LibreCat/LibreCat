@@ -37,11 +37,11 @@ fieldOrder:
     - dropzone
     - licenses
   supplementaryFields:
-    - abstract:
-    - xddcs:
-    - keyword:
+    - abstracts
+    - xddcs
+    - keyword
   relatedMaterial:
-    - connectPubl
+    - relatedMaterial
 publicationTypes:
   book:
     label: "Book"
@@ -131,6 +131,31 @@ publicationTypes:
         tabName: "Main File Upload"
         dropzone:
           label: "Upload main file(s)"
+      supplementaryFields:
+        tabName: "Additional fields"
+        abstracts:
+          mandatory: 0
+          multiple: 1
+          label: "Abstract"
+          label2: "Abstract Language:"
+          readonly: 0
+        xddcs:
+          mandatory: 0
+          multiple: 0
+          label: "DDC"
+          readonly: 0
+        keyword:
+          mandatory: 0
+          multiple: 0
+          label: "Keywords"
+          readonly: 0
+      relatedMaterial:
+        tabName: "Link to publications"
+        relatedMaterial:
+          mandatory: 0
+          multiple: 0
+          label: "Link Publications"
+          readonly: 0
   journalEditor:
     label: "Journal Editor"
     tmpl: journalEditor
@@ -229,7 +254,7 @@ publicationTypes:
             readonly: 0
       supplementaryFields:
         tabName: "Supplementary fields"
-        abstract:
+        abstracts:
           mandatory: 0
           multiple: 1
           label: "Abstract"
@@ -246,7 +271,7 @@ publicationTypes:
           readonly: 0
       relatedMaterial:
         tabName: "Link to publications"
-        connectPubl:
+        relatedMaterial:
           mandatory: 0
           multiple: 0
           label: "Link Publications"

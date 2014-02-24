@@ -1,10 +1,12 @@
-<div class="col-md-2">
-  <label for="id_mainTitle">
-    {% fields.basicFields.mainTitle.label %}{% IF fields.basicFields.mainTitle.mandatory == "1" %}<span class="starMandatory">*</span>{% END %}
-  </label>
-</div>
-<div class="col-md-10">
-  <span class="form-group col-md-9">
-    <input type="text" name="mainTitle" id="id_mainTitle" value="[% mainTitle %]" placeholder="{% fields.basicFields.mainTitle.placeholder %}" class="form-control required">
-  </span>
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="id_mainTitle">
+      {% fields.basicFields.mainTitle.label %}{% IF fields.basicFields.mainTitle.mandatory == "1" %}<span class="starMandatory">*</span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10">
+    <span class="form-group col-md-9">
+      <input type="text" name="mainTitle" id="id_mainTitle" value="[% mainTitle %]" placeholder="{% fields.basicFields.mainTitle.placeholder %}" class="form-control required">
+    </span>
+  </div>
 </div>

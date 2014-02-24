@@ -1,26 +1,27 @@
-<div class="col-md-2">
-  <label for="project">
-    {% fields.basicFields.projects.label %}{% IF fields.basicFields.projects.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusProject"></span>
-  </label>
-</div>
-<div class="col-md-10" id="project">
-  [% IF !project %]
-  <div class="form-group">
-    <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="project">
+      {% fields.basicFields.projects.label %}{% IF fields.basicFields.projects.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusProject"></span>
+    </label>
+  </div>
+  <div class="col-md-10" id="project">
+    [% IF !project %]
+    <div class="form-group">
+      <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
           
-    <span class="form-group col-md-7">
-      <input type="text" name="pj_projectName_0" class="form-control" placeholder="{% fields.basicFields.projects.placeholder %}" id="pj_autocomplete_0" value="" />
-    </span>
+      <span class="form-group col-md-7">
+        <input type="text" name="pj_projectName_0" class="form-control" placeholder="{% fields.basicFields.projects.placeholder %}" id="pj_autocomplete_0" value="" />
+      </span>
         
-    <span class="form-group col-md-2">
-      <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_0" value="Select"/>
-    </span>
+      <span class="form-group col-md-2">
+        <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_0" value="Select"/>
+      </span>
         
-    <span class="col-md-1">
-      <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
-    </span>
+      <span class="col-md-1">
+        <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
+      </span>
         
-    <script>
+      <script>
       $(function() {
         $( "#pj_autocomplete_0" ).autocomplete({
           source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
@@ -31,30 +32,30 @@
           }
         });
       });
-    </script>
-  </div>
-  [% ELSE %]
-  [% FOREACH proj IN project %]
-  <div class="form-group">
-    <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.oId %]" />
+      </script>
+    </div>
+    [% ELSE %]
+    [% FOREACH proj IN project %]
+    <div class="form-group">
+      <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.oId %]" />
           
-    <span class="form-group col-md-7">
-      <input type="text" name="pj_projectName_[% loop.index %]" class="form-control" placeholder="{% fields.basicFields.projects.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name.0.text || proj.name %]" />
-    </span>
+      <span class="form-group col-md-7">
+        <input type="text" name="pj_projectName_[% loop.index %]" class="form-control" placeholder="{% fields.basicFields.projects.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name.0.text || proj.name %]" />
+      </span>
+
+      <span class="form-group col-md-2">
+        <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_[% loop.index %]" value="Select"/>
+      </span>
           
-    <span class="form-group col-md-2">
-      <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_[% loop.index %]" value="Select"/>
-    </span>
+      <span class="col-md-1">
+        [% IF loop.index == 0 %]
+        <span class="icon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
+        [% ELSE %]
+        <span class="icon-minus single"></span>
+        [% END %]
+      </span>
           
-    <span class="col-md-1">
-      [% IF loop.index == 0 %]
-      <span class="icon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
-      [% ELSE %]
-      <span class="icon-minus single"></span>
-      [% END %]
-    </span>
-          
-    <script>
+      <script>
       $(function() {
         $( "#pj_autocomplete_[% loop.index %]" ).autocomplete({
           source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
@@ -65,8 +66,9 @@
           }
         });
       });
-    </script>
+      </script>
+    </div>
+    [% END %]
+    [% END %]
   </div>
-  [% END %]
-  [% END %]
 </div>

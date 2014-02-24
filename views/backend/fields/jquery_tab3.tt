@@ -1,0 +1,12 @@
+$('#threeToFour').click(function(){
+    $('#li_relatedMaterial').css('visibility','visible');
+    $('#li_supplementaryFields').removeClass('active');
+    $('#li_relatedMaterial').addClass('active');
+    $('a[href=#relatedMaterial]').attr('data-toggle','tab');
+    $('#inputSpan').remove();
+});
+
+$('#threeToTwo').click(function(){
+  $('#li_supplementaryFields').removeClass('active');
+  $('#li_fileUpload').addClass('active');
+});

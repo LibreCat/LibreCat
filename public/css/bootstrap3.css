@@ -7076,6 +7076,10 @@ div.frontdoor_right {
 	margin-left: 5px;
 }
 
+.innerrow {
+	margin-left: 0;
+}
+
 select.authedtrans {
 	min-height: 33px;
 	background-color: #fff;

@@ -1,5 +1,8 @@
-<div class="col-md-12">
-  <strong>{% fields.fileUpload.dropzone.label %}</strong><br /><br />
+<div class="row innerrow">
+  <div class="col-md-12">
+    <strong>{% fields.fileUpload.dropzone.label %}</strong>
+  </div>
+</div>
         
   <script type="text/javascript">
   jQuery(document).ready(function() {
@@ -102,7 +105,8 @@
     });
   });
   </script>
-        
+  
+<div class="row innerrow">
   <div class="dropzone alert alert-warning col-md-10" id="uploadFiles">
     <div class="fallback">
       <div class="col-md-8">&nbsp;</div>
@@ -152,10 +156,12 @@
     [% END %]
     [% END %]
   </div>
-  
-  <span id="sortFilesInput">
-  [% FOREACH fi IN file.nsort('fileOrder') %]
-    <input type="hidden" name="fileOrder" value="[% fi.fileOId %]" />
-  [% END %]
-  </span>
+    
+  <div class="col-md-2">  
+    <span id="sortFilesInput">
+    [% FOREACH fi IN file.nsort('fileOrder') %]
+      <input type="hidden" name="fileOrder" value="[% fi.fileOId %]" />
+    [% END %]
+    </span>
+  </div>
 </div>

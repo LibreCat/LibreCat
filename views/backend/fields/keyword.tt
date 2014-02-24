@@ -1,0 +1,12 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="keywords">
+      {% fields.supplementaryFields.keyword.label %}
+    </label>
+  </div>
+  <div class="col-md-10" id="keywords">
+    <div class="col-md-6">
+      <textarea rows="3" name="keyword" class="form-control">[% keyword %]</textarea>
+    </div>
+  </div>
+</div>

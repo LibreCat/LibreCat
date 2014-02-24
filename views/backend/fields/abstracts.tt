@@ -1,0 +1,39 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="abstract">
+      {% fields.supplementaryFields.abstracts.label %}
+    </label>
+  </div>
+  <div class="col-md-10" id="abstract">
+    [% IF !abstract %]
+    <span class="form-group col-md-6">
+      <textarea rows="3" name="ab_abAbstract_0" id="id_ab_abAbstract_0" class="form-control" onkeyup="checkForm4Ddc();"></textarea>
+    </span>
+    <span class="col-md-6">
+      <label for="id_ab_abLanguageOId0">
+        {% fields.supplementaryFields.abstracts.label2 %}
+      </label>
+    </span>
+    <span class="form-group col-md-3">
+      <select name="ab_abLanguageOId_0" id="id_ab_abLanguageOId_0" class="form-control">
+      [% FOREACH lang IN h.xlanguages_preselect.keys.sort %]
+        <option value="[% h.xlanguages_preselect.$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
+      [% END %]
+        <option value="2436687"></option>
+      [% FOREACH lang IN h.xlanguages.keys.sort %]
+        <option value="[% h.xlanguages.$lang %]" [% IF abLanguageOId == h.xlanguages.$lang %]selected="selected"[% END %]>[% lang %]</option>
+      [% END %]
+      </select>
+    </span>
+    [% ELSE %]
+      [% FOREACH abs IN abstract %]
+        <textarea rows="3" name="ab_abAbstract_[% loop.index %]" id="id_ab_abAbstract_[% loop.index %]" class="form-control" onkeyup="checkForm4Ddc();">[% abs.text %]</textarea>
+        <select name="ab_abLanguageOId_[% loop.index %]" id="id_ab_abLanguageOId_[% loop.index %]" class="form-control">
+        [% FOREACH lang IN h.xlanguages %]
+          <option value="[% lang.langOId %]" [% IF lang.abLanguageOId == lang.langOId %]selected="selected"[% END %]>[% lang.langName %]</option>
+        [% END %]
+        </select>
+      [% END %]
+    [% END %]
+  </div>
+</div>

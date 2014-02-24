@@ -1,26 +1,27 @@
-<div class="col-md-2">
-  <label for="department">
-    {% fields.basicFields.departments.label %}{% IF fields.basicFields.departments.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusDepartment"></span>
-  </label>
-</div>
-<div class="col-md-10" id="department">
-  [% IF !department %]
-  <div class="form-group">
-    <input type="hidden" name="dp_departmentOId_0" id="dp_idautocomplete_0" value="" />
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="department">
+      {% fields.basicFields.departments.label %}{% IF fields.basicFields.departments.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusDepartment"></span>
+    </label>
+  </div>
+  <div class="col-md-10" id="department">
+    [% IF !department %]
+    <div class="form-group">
+      <input type="hidden" name="dp_departmentOId_0" id="dp_idautocomplete_0" value="" />
     
-    <span class="form-group col-md-7">
-      <input type="text" name="dp_departmentName_0" class="form-control" placeholder="{% fields.basicFields.departments.placeholder %}" id="dp_autocomplete_0" value="" />
-    </span>
+      <span class="form-group col-md-7">
+        <input type="text" name="dp_departmentName_0" class="form-control" placeholder="{% fields.basicFields.departments.placeholder %}" id="dp_autocomplete_0" value="" />
+      </span>
     
-    <span class="form-group col-md-2">
-      <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0" value="Select"/>
-    </span>
+      <span class="form-group col-md-2">
+        <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0" value="Select"/>
+      </span>
         
-    <span class="col-md-1">
-      <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
-    </span>
+      <span class="col-md-1">
+        <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
+      </span>
         
-    <script>
+      <script>
       $(function() {
         $( "#dp_autocomplete_0" ).autocomplete({
           source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
@@ -31,30 +32,30 @@
           }
         });
       });
-    </script>
-  </div>
-  [% ELSE %]
-  [% FOREACH dept IN department %]
-  <div class="form-group">
-    <input type="hidden" name="dp_departmentOId_[% loop.index %]" id="dp_idautocomplete_[% loop.index %]" value="[% dept.oId || dept.organizationNumber %]" />
+      </script>
+    </div>
+    [% ELSE %]
+    [% FOREACH dept IN department %]
+    <div class="form-group">
+      <input type="hidden" name="dp_departmentOId_[% loop.index %]" id="dp_idautocomplete_[% loop.index %]" value="[% dept.oId || dept.organizationNumber %]" />
           
-    <span class="form-group col-md-7">
-      <input type="text" name="dp_departmentName_[% loop.index %]" class="form-control" placeholder="{% fields.basicFields.departments.placeholder %}" id="dp_autocomplete_[% loop.index %]" value="[% dept.name.0.text || dept.name %]" />
-    </span>
+      <span class="form-group col-md-7">
+        <input type="text" name="dp_departmentName_[% loop.index %]" class="form-control" placeholder="{% fields.basicFields.departments.placeholder %}" id="dp_autocomplete_[% loop.index %]" value="[% dept.name.0.text || dept.name %]" />
+      </span>
           
-    <span class="form-group col-md-2">
-      <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]" value="Select"/>
-    </span>
+      <span class="form-group col-md-2">
+        <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]" value="Select"/>
+      </span>
           
-    <span class="col-md-1">
-      [% IF loop.index == 0 %]
-      <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
-      [% ELSE %]
-      <span class="glyphicon glyphicon-minus single"></span>
-      [% END %]
-    </span>
+      <span class="col-md-1">
+        [% IF loop.index == 0 %]
+        <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
+        [% ELSE %]
+        <span class="glyphicon glyphicon-minus single"></span>
+        [% END %]
+      </span>
           
-    <script>
+      <script>
       $(function() {
         $( "#dp_autocomplete_[% loop.index %]" ).autocomplete({
           source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
@@ -65,23 +66,24 @@
           }
         });
       });
-    </script>
-  </div>
-  [% END %]
-  [% END %]
+      </script>
+    </div>
+    [% END %]
+    [% END %]
       
-  <div class="modal" id="selectModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title"></h4>
-          <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
-        </div>
-        <div class="modal-body">
+    <div class="modal" id="selectModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title"></h4>
+            <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
+          </div>
+          <div class="modal-body">
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
+  </div>
 </div>

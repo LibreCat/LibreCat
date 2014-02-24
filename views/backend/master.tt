@@ -68,15 +68,35 @@
 
       </div><!-- tab-pane -->
       
+      <!-- STEP 3 -->
+      <div class="tab-pane" id="supplementaryFields">
+
+{% IF fields.supplementaryFields %}
+  {% FOREACH key IN fieldOrder.supplementaryFields %}
+    {% IF fields.supplementaryFields.$key %}
+    {% template = "fields/" _ key _ ".tt" %}
+{% INCLUDE $template %}
+    {% END %}
+  {% END %}
+  {% INCLUDE fields/buttonrow_tab3.tt %}
+{% END %}
+
+      </div><!-- tab-pane -->
       
-      {% IF fields.supplementaryFields %}
+      <!-- STEP 4 -->
+      <div class="tab-pane" id="relatedMaterial">
       
-      {% END %}
-      
-      
-      {% IF fields.relatedMaterial %}
-      
-      {% END %}
+{% IF fields.relatedMaterial %}
+  {% FOREACH key IN fieldOrder.relatedMaterial %}
+    {% IF fields.relatedMaterial.$key %}
+    {% template = "fields/" _ key _ ".tt" %}
+{% INCLUDE $template %}
+    {% END %}
+  {% END %}
+  {% INCLUDE fields/buttonrow_tab4.tt %}
+{% END %}
+
+      </div><!-- tab-pane -->
       
     </div><!-- tab-content -->
   </form>
@@ -86,6 +106,9 @@
 
 <script>
 {% INCLUDE fields/jquery_tab1.tt %}
+{% INCLUDE fields/jquery_tab2.tt %}
+{% INCLUDE fields/jquery_tab3.tt %}
+{% INCLUDE fields/jquery_tab4.tt %}
 </script>
 
 <!-- END /backend/forms/{% tmpl %} -->

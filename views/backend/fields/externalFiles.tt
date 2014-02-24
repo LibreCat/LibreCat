@@ -1,12 +1,15 @@
 [% IF externalFiles == "1" OR doi %]
-<div class="col-md-8">
-  <label class="checkbox">
-    <input type="checkbox" value="1" name="externalFiles"[% IF externalFiles == "1" %] checked="checked"[% END %] />
-    Files available at <strong><a href="http://doi.org/[% doi %]" target="_blank">[% doi %]</a></strong>
-  </label>
+<div class="row innerrow">
+  <div class="col-md-8">
+    <label class="checkbox">
+      <input type="checkbox" value="1" name="externalFiles"[% IF externalFiles == "1" %] checked="checked"[% END %] />
+      Files available at <strong><a href="http://doi.org/[% doi %]" target="_blank">[% doi %]</a></strong>
+    </label>
+  </div>
 </div>
-      
-<div class="col-md-8">
-  <hr />
+<div class="row innerrow">
+  <div class="col-md-8">
+    <hr />
+  </div>
 </div>
 [% END %]
