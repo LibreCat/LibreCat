@@ -55,6 +55,13 @@ $('#oneToTwo').click(function(){
       $(this).parents('span.form-group').removeClass('has-error');
     }
   });
+  
+  var year = $('#id_publishingYear').val();
+  if(year.length < 4 || !year.match(/^\d+$/)){
+    check = 0;
+    $('#id_publishingYear').parents('span.form-group').addClass('has-error');
+  }
+  
   if(check){
     $('#author.has-error').each(function(){
       $(this).removeClass('has-error');
