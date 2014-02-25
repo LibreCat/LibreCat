@@ -88,6 +88,22 @@
     [% END %]
     
     <ul class="nav nav-tabs nav-stacked">
+      [% IF facets.submissionStatus.terms.0 %]
+      <li>
+        <button data-toggle="collapse" data-target="#submissionStatus"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Submission Status ([% facets.submissionStatus.terms.size %])</a></button>
+        <div class="facettecollapse">
+        <ul id="submissionStatus" class="collapse[% IF qp.submissionstatus %] in[% END %]">
+          [% FOREACH type IN facets.submissionStatus.terms %]
+          [% IF qp.submissionstatus.grep("^$type.term\$").0 %]
+          <li>[% type.term %] ([% type.count %])</li>
+          [% ELSE %]
+          <li><a href="[% h.newuri_for("$path", qp, submissionstatus="$type.term") %]" rel="nofollow">[% type.term %] ([% type.count %])</a></li>
+          [% END %]
+          [% END %]
+        </ul>
+        </div>
+      </li>
+      [% END %]
       [% IF dochits.facets.documentType.terms.0 %]
       <li>
         <button data-toggle="collapse" data-target="#documentType"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publication Type ([% dochits.facets.documentType.terms.size %])</a></button>
