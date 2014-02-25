@@ -87,7 +87,7 @@ sub xddcs {
 
 sub display_doctypes {
 	my $map = config->{forms}{publicationTypes};
-	my $doctype = $map->{$_[1]}->{label};
+	my $doctype = $map->{lc $_[1]}->{label};
 	$doctype;
 }
 

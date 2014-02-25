@@ -1,27 +1,27 @@
 publicationTypeOrder:
-  - researchData
+  - researchdata
   - book
-  - bookEditor
-  - bookChapter
+  - bookeditor
+  - bookchapter
   - review
-  - caseStudy
-  - conferenceAbstract
-  - conferenceEditor
+  - casestudy
+  - conferenceabstract
+  - conferenceeditor
   - conference
   - dissertation
-  - encyclopediaArticle
-  - journalArticle
-  - journalEditor
-  - newspaperArticle
+  - encyclopediaarticle
+  - journalarticle
+  - journaleditor
+  - newspaperarticle
   - patent
   - preprint
   - report
   - translation
-  - workingPaper
-  - biDissertation
-  - biBachelorThesis
-  - biMasterThesis
-  - biPostdocThesis
+  - workingpaper
+  - bidissertation
+  - bibachelorthesis
+  - bimasterthesis
+  - bipostdocthesis
 fieldOrder:
   basicFields:
     - doi
@@ -34,7 +34,8 @@ fieldOrder:
     - year
   fileUpload:
     - externalFiles
-    - dropzone
+    - dropzone_mainDoc
+    - dropzone_confLetter
     - licenses
   supplementaryFields:
     - abstracts
@@ -46,19 +47,19 @@ publicationTypes:
   book:
     label: "Book"
     tmpl: book
-  bookChapter:
+  bookchapter:
     label: "Book Chapter"
     tmpl: bookChapter
-  bookEditor:
+  bookeditor:
     label: "Book Editor"
     tmpl: bookEditor
-  caseStudy:
+  casestudy:
     label: "Case Study"
     tmpl: caseStudy
-  conferenceAbstract:
+  conferenceabstract:
     label: "Conference Abstract"
     tmpl: conferenceAbstract
-  conferenceEditor:
+  conferenceeditor:
     label: "Conference Editor"
     tmpl: conferenceEditor
   conference:
@@ -67,10 +68,10 @@ publicationTypes:
   dissertation:
     label: "Dissertation"
     tmpl: dissertation
-  encyclopediaArticle:
+  encyclopediaarticle:
     label: "Encyclopedia Article"
     tmpl: encyclopediaArticle
-  journalArticle:
+  journalarticle:
     label: "Journal Article"
     tmpl: journalArticle
     fields:
@@ -101,6 +102,7 @@ publicationTypes:
             "Editor" : "editor"
             "Corp. Ed." : "corporateEditor"
             "Translator" : "translator"
+          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
         departments:
           mandatory: 0
           multiple: 1
@@ -129,10 +131,12 @@ publicationTypes:
           readonly: 0
       fileUpload:
         tabName: "Main File Upload"
-        dropzone:
+        dropzone_mainDoc:
           label: "Upload main file(s)"
+        dropzone_confLetter:
+          label: "Upload a confirmation letter"
       supplementaryFields:
-        tabName: "Additional fields"
+        tabName: "Additional Information"
         abstracts:
           mandatory: 0
           multiple: 1
@@ -148,18 +152,19 @@ publicationTypes:
           mandatory: 0
           multiple: 0
           label: "Keywords"
+          placeholder: "Keywords separated by semicolons: keyword1; keyword2; keyword3"
           readonly: 0
       relatedMaterial:
-        tabName: "Link to publications"
+        tabName: "Supplementary Material"
         relatedMaterial:
           mandatory: 0
           multiple: 0
           label: "Link Publications"
           readonly: 0
-  journalEditor:
+  journaleditor:
     label: "Journal Editor"
     tmpl: journalEditor
-  newspaperArticle:
+  newspaperarticle:
     label: "Newspaper Article"
     tmpl: newspaperArticle
   patent:
@@ -174,7 +179,7 @@ publicationTypes:
   review:
     label: "Book Review"
     tmpl: bookReview
-  researchData:
+  researchdata:
     label: "Research Data"
     tmpl: researchData
     fields:
@@ -236,7 +241,7 @@ publicationTypes:
           multiple: 0
           label: "Files available at"
           readonly: 0
-        dropzone:
+        dropzone_mainDoc:
           mandatory: 0
           multiple: 0
           label: "Upload files"
@@ -268,6 +273,7 @@ publicationTypes:
           mandatory: 0
           multiple: 0
           label: "Keywords"
+          placeholder: "Keywords separated by semicolons: keyword1; keyword2; keyword3"
           readonly: 0
       relatedMaterial:
         tabName: "Link to publications"
@@ -279,18 +285,18 @@ publicationTypes:
   translation:
     label: "Translation"
     tmpl: translation
-  workingPaper:
+  workingpaper:
     label: "Working Paper"
     tmpl: workingPaper
-  biDissertation:
+  bidissertation:
     label: "Bielefeld Doctoral Thesis"
     tmpl: biDissertation
-  biBachelorThesis:
+  bibachelorthesis:
     label: "Bielefeld Bachelor Thesis"
     tmpl: biBachelorThesis
-  biMasterThesis:
+  bimasterthesis:
     label: "Bielefeld Master Thesis"
     tmpl: biMasterThesis
-  biPostdocThesis:
+  bipostdocthesis:
     label: "Bielefeld Postdoctoral Thesis/ Habilitation"
     tmpl: biPostdocThesis

@@ -10,7 +10,6 @@ use Dancer ':syntax';
 use App::Catalog::Import;
 use App::Catalog::Helper;
 use App::Catalog::Admin;
-use App::Catalog::Profile;
 use App::Catalog::Publication;
 use App::Catalog::Search;
 use App::Catalog::Interface;

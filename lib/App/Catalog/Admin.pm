@@ -1,10 +1,13 @@
 package App::Catalog::Admin;
 
 use Catmandu::Sane;
+use Catmandu qw(:load);
 use Catmandu::Util qw(:array);
 use Dancer ':syntax';
 use Dancer::Request;
 use App::Catalog::Helper;
+
+Catmandu->load('/srv/www/app-catalog/index1');
 
 sub handle_request {
 	my ($par) = @_;
@@ -26,6 +29,7 @@ sub handle_request {
         hasArxiv => {terms => {field => 'hasArxiv', size => 1}},
         hasInspire => {terms => {field => 'hasInspire', size => 1}},
         hasIsi => {terms => {field => 'hasIsi', size => 1}},
+        submissionStatus => {terms => {field => 'submissionStatus', size => 10}},
     };
     $p->{facets} = $facets;
 	
@@ -77,17 +81,17 @@ sub handle_request {
     	$standardSruSort .= "$_->{field},,";
     	$standardSruSort .= $_->{order} eq "asc" ? "1 " : "0 ";
     }
-    $standardSruSort = s/\s+$//; #substr($standardSruSort, 0, -1);
+    $standardSruSort = substr($standardSruSort, 0, -1);
     
     my $personSruSort;
-    if($personSorto){
+    if($personSorto and $personSorto ne ""){
     	$personSruSort = "publishingYear,,";
     	$personSruSort .= $personSorto eq "asc" ? "1 " : "0 ";
     	$personSruSort .= "dateLastChanged,,0";
     } 
-    my $paramSruSort = "";
-    if($par->{sorting} && ref $par->{sorting} eq 'ARRAY'){
-        foreach (@{$par->{sorting}}){
+    my $paramSruSort;
+    if($par->{'sort'} && ref $par->{'sort'} eq 'ARRAY'){
+        foreach (@{$par->{'sort'}}){
         	if($_ =~ /(.*)\.(.*)/){
         		$paramSruSort .= "$1,,";
         		$paramSruSort .= $2 eq "asc" ? "1 " : "0 ";
@@ -95,8 +99,8 @@ sub handle_request {
         }
         $paramSruSort = substr($paramSruSort, 0, -1);
     }
-    elsif ($par->{sorting} && ref $par->{sorting} ne 'ARRAY') {
-        if($par->{sorting} =~ /(.*)\.(.*)/){
+    elsif ($par->{'sort'} && ref $par->{'sort'} ne 'ARRAY') {
+        if($par->{'sort'} =~ /(.*)\.(.*)/){
         	$paramSruSort .= "$1,,";
         	$paramSruSort .= $2 eq "asc" ? "1" : "0";
         }
@@ -130,7 +134,7 @@ sub handle_request {
 	$hits->{personSort} = $par->{personSort};
 	$hits->{personStyle} = $par->{personStyle};
 	
-	template 'admin.tt', $hits;
+	template 'home.tt', $hits;
 } 
 	
 get '/myPUB/add' => sub {
@@ -148,41 +152,64 @@ get qr{/myPUB/add/(\w{1,})/*} => sub {
 	my $departments = $personInfo->{affiliation};
 	my $tmpl = "";
 	
-	if(h->config->{forms}->{publicationTypes}->{$type}){
+	if(h->config->{forms}->{publicationTypes}->{lc($type)}){
 		$tmpl = "backend/forms/" . h->config->{forms}->{publicationTypes}->{$type}->{tmpl} . ".tt";
-		template $tmpl, {recordOId => "123456789", departments => $departments};
+		template $tmpl, {recordOId => "123456789", department => $departments, personNumber => $id, author => [{personNumber => $id, oId => $personInfo->{sbcatId}, givenName => $personInfo->{givenName}, surname => $personInfo->{surname}, personTitle => $personInfo->{bis_personTitle}}]};
 	}
 	else{
-		template "admin.tt";
+		template "home.tt";
 	}
 };
 
 get qr{/myPUB/edit/(\d{1,})/*} => sub {
 	my ($recId) = splat;
+	
 	my $record = h->publications->get($recId);
 	if($record){
 		my $type = $record->{documentType};
-		my $tmpl = "backend/forms/" . h->config->{forms}->{publicationTypes}->{$type}->{tmpl} . ".tt";
+		$record->{personNumber} = "73476";
+		if ($record->{keyword}){
+			foreach (@{$record->{keyword}}){
+				$record->{xkeyword} .= $_ . "; ";
+			}
+		}
+		my $tmpl = "backend/forms/" . h->config->{forms}->{publicationTypes}->{lc($type)}->{tmpl} . ".tt";
 		template $tmpl, $record;
 	}
+};
+
+post '/myPUB/save' => sub {
+	my $params = params;
+	my $bag = Catmandu->store('search')->bag('publicationItem');
+	#my $record = h->publications->get($params->{recordOId});
+	my $record = $bag->get($params->{recordOId});
+	
+	$record->{mainTitle} = $params->{mainTitle};
+	my ($sec,$min,$hour,$day,$mon,$year) = localtime(time);
+	$record->{dateLastChanged} = sprintf("%04d-%02d-%02dT%02d:%02d:%02d", 1900+$year, 1+$mon, $day, $hour, $min, $sec);
+	
+	$bag->add($record);
+	#h->publications->add($record);
+	$bag->commit;
+	#h->publications->commit;
+	
+	redirect '/myPUB/';
 };
 	
 get qr{/myPUB/$|/myPUB$} => sub {
 	#my ($id) = splat;
 	
 	#my $id = "86212";
+	my $params = params;
 	my $id = params->{id} ? params->{id} : "73476";
 	my $personInfo = h->getPerson($id);
 	my $sbcatId = $personInfo->{sbcatId};
 		
-	my $p = {
-		q => "person=$id AND hide<>$id",
-		limit => h->config->{store}->{maximum_page_size},
-	};
-	#my $hits = h->search_publication($p);
+	$params->{q} = "person=$id AND hide<>$id" if !$params->{q};
+	$params->{limit} = h->config->{store}->{maximum_page_size} if !$params->{limit};
 		
-	$p->{sbcatId} = $sbcatId if $sbcatId;
-	$p->{bisId} = $id;
+	$params->{sbcatId} = $sbcatId if $sbcatId;
+	$params->{bisId} = $id;
 	my $personStyle;
 	my $personSort;
 	if($personInfo->{stylePreference} and $personInfo->{stylePreference} =~ /(\w{1,})\.(\w{1,})/){
@@ -200,11 +227,9 @@ get qr{/myPUB/$|/myPUB$} => sub {
 	if($personInfo->{sortPreference}){
 		$personSort = $personInfo->{sortPreference};
 	}
-	$p->{personStyle} = $personStyle || "";
-	$p->{style} = params->{style} if params->{style};
-	$p->{personSort} = $personSort || "";
-	$p->{sorting} = params->{'sort'} || "";
-	handle_request($p);
+	$params->{personStyle} = $personStyle || "";
+	$params->{personSort} = $personSort || "";
+	handle_request($params);
 };
 
 get qr{/myPUB/hidden/*} => sub {
@@ -224,16 +249,8 @@ get qr{/myPUB/hidden/*} => sub {
 	handle_request($p);
 };
 
-get '/myPUB/update' => sub {
+get '/myPUB/admin' => sub {
 	template 'admin_update';
-};
-
-get '/myPUB/accounts' => sub {
-	template 'accounts'
-};
-
-get '/myPUB/curate' => sub {
-	template 'curate';
 };
 
 1;

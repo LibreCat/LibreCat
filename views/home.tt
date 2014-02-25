@@ -24,6 +24,7 @@
       </div> <!-- span 2 -->
   
       <div class="col-md-6">
+      [% title %]
         [% INCLUDE person_profile.tt %]
       </div> <!-- span6 -->
 
@@ -38,6 +39,8 @@
       <div class="col-md-10">
         <ul class="nav nav-tabs" id="myTab">
           <li class="active"><a href="#publ">Personal Publications</a></li>
+          <li><a href="#hidden">Hidden Publications</a></li>
+          <li><a href="#review">Publications for Review</a></li>
         </ul>
       </div>
       
@@ -50,6 +53,12 @@
             <div class="col-md-3">
               [% INCLUDE right_menu_publ.tt %]
             </div>
+          </div>
+          <div class="tab-pane" id="hidden">
+
+          </div>
+          <div class="tab-pane" id="review">
+          
           </div>
         </div>  
         <script>
