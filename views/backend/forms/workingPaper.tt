@@ -1,10 +1,10 @@
 [% INCLUDE navbar.tt %]
+[% thisPerson = h.getPerson($personNumber) %]
 <!-- BEGIN /backend/forms/workingPaper -->
 
 <div class="row">
 
 <div class="col-md-9 col-md-offset-1">
-
   [% IF mainTitle %]
   <h3>[% mainTitle %]</h3>
   [% ELSE %]
@@ -20,9 +20,9 @@
     
   </ul>
   
-  <form action="/luur/record" method="get" name="reLoad">
+  <form action="/myPUB/save" method="post">
     <input type="hidden" name="recordType" value="workingPaper">
-    <input type="hidden" name="recordOId" value="[% recordOId %]">
+    <input type="hidden" name="recordOId" value="[% oId %]">
     
     <div class="tab tab-content edit-form">
     
@@ -153,7 +153,7 @@ $('#plusAuthorMore').click(function(){
   var items = $('#authorEditorTranslator span.authorspan');
   var index = items.index($('#authorEditorTranslator span.authorspan').last()) + 1;
   $('#authorEditorTranslator').append('[% INCLUDE backend/fields/subfields/author_more.tt %]');
-  $('#authorEditorTranslator span:last-child select').append('');
+  $('#authorEditorTranslator div:last-child select').append('');
   if($(this).attr('data-mandatory') == "yes"){
     $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
   }
@@ -309,6 +309,7 @@ $('button.cancel-button').click(function() {
 });
 // Tab forward two to three
 $('#twoToThree').click(function(e){
+if($('#id_dataReuseLicense').length || $('#id_openDataRelease').length){
   if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_openDataRelease').is(':checked') || $('#id_dataReuseLicense').val() == '')){
     if($('#id_dataReuseLicense').val() == ''){
       $('#id_dataReuseLicense').parent().removeClass('alert-info');
@@ -354,6 +355,13 @@ $('#twoToThree').click(function(e){
     $('a[href=#supplementaryFields]').attr('data-toggle','tab');
     $('#li_supplementaryFields').css('visibility','visible');
   }
+}
+else {
+    $('#fileUpload, #li_fileUpload').removeClass('active');
+    $('#supplementaryFields, #li_supplementaryFields').addClass('active');
+    $('a[href=#supplementaryFields]').attr('data-toggle','tab');
+    $('#li_supplementaryFields').css('visibility','visible');
+}
 });
 
 
@@ -363,35 +371,6 @@ $('#twoToOne').click(function(){
   $('#li_basicFields').addClass('active');
 });
 
-
-// Research Data License checks
-$('#id_openDataRelease').click(function(){
-  if(!$('#id_openDataRelease').is(':checked')){
-    if ($('.dropzone').first().children().length > 1){
-      $('#liStepThree, #liStepFour').css('visibility','hidden');
-      $('#odralert').removeClass('alert-info');
-      $('#odralert').addClass('alert-danger');
-    }
-  }
-  else {
-    $('#odralert').removeClass('alert-danger');
-    $('#odralert').addClass('alert-info');
-  }
-});
-
-$('#id_dataReuseLicense').change(function(){
-  if($('#id_dataReuseLicense').val() == ''){
-    if ($('.dropzone').first().children().length > 1){
-      $('#liStepThree, #liStepFour').css('visibility','hidden');
-      $('#id_dataReuseLicense').parent().removeClass('alert-info');
-      $('#id_dataReuseLicense').parent().addClass('alert-danger');
-    }
-  }
-  else {
-    $('#id_dataReuseLicense').parent().removeClass('alert-danger');
-    $('#id_dataReuseLicense').parent().addClass('alert-info');
-  }
-});
 
 
 function editFile(fileOId, recordOId, fileName, accessLevel, accessEmbargo, openAccessDate, fileTitle, fileDescription){

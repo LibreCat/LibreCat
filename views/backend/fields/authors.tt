@@ -1,5 +1,5 @@
 <span id="authorEditorTranslator">
-  [% IF !author %]
+  [% IF !author AND !editor AND !translator %]
   <div class="row authorspan innerrow">
     <div class="col-md-2">
       <label for="author">
@@ -41,7 +41,10 @@
           
         <span class="col-md-2">
           <input name="linkPevz_0" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
-          <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+          <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basicFields.authors.pevz_tooltip %}" />
+          <script>
+            $('#auAuthorized0').tooltip();
+          </script>
         </span>
       </div>
     </div>
@@ -54,7 +57,7 @@
       {% IF fields.basicFields.authors.label.keys %}
         <select class="authedtrans" onchange="selectAuthedtrans(this);" id="authedtrans_[% loop.index %]">
           {% FOREACH creator IN fields.basicFields.authors.label.keys.sort %}
-          <option value="{% fields.basicFields.authors.label.$creator %}"{% IF name.type == creator %} selected="selected"{% END %}>{% creator %}</option>
+          <option value="{% fields.basicFields.authors.label.$creator %}"{% IF name.type.typeName == creator %} selected="selected"{% END %}>{% creator %}</option>
           {% END %}
         </select>{% IF fields.basicFields.authors.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basicFields.authors.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
       {% ELSE %}
@@ -94,7 +97,70 @@
         <span class="col-md-2">
           <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.oId OR name.luLdapId %]checked="checked"[% END %]/>
           [% IF name.oId OR name.luLdapId %]
-            <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+            <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="{% fields.basicFields.authors.pevz_tooltip %}" />
+            <script>
+              $('#auAuthorized[% loop.index %]').tooltip();
+          </script>
+          [% ELSE %]
+            <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>
+          [% END %]
+        </span>
+      </div>
+    </div>
+  </div>
+  [% END %]
+  
+  [% FOREACH name IN editor %]
+  <div class="row authorspan innerrow">
+    <div class="col-md-2">
+      <label for="author">
+      {% IF fields.basicFields.authors.label.keys %}
+        <select class="authedtrans" onchange="selectAuthedtrans(this);" id="authedtrans_[% loop.index %]">
+          {% FOREACH creator IN fields.basicFields.authors.label.keys.sort %}
+          <option value="{% fields.basicFields.authors.label.$creator %}"{% IF name.type.typeName == creator %} selected="selected"{% END %}>{% creator %}</option>
+          {% END %}
+        </select>{% IF fields.basicFields.authors.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basicFields.authors.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
+      {% ELSE %}
+        {% fields.basicFields.authors.label %}{% IF fields.basicFields.authors.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus"{% IF fields.basicFields.authors.mandatory %} data-mandatory="yes"{% END %} id="plusAuthor"></span>
+      {% END %}
+      </label>
+    </div>
+    <div class="col-md-10" id="author">
+      <div class="form-group">
+        <input type="hidden" name="au_auLuAuthorOId_[% loop.index %]" id="id_au_auLuAuthorOId_[% loop.index %]" value="[% name.oId %]"/>
+        <input type="hidden" name="au_auPersonNumber_[% loop.index %]" id="id_au_auPersonNumber_[% loop.index %]" value="[% name.personNumber %]" />
+        <input name="au_auLuLdapId_[% loop.index %]" type="hidden" value="[% name.luLdapId %]" />
+        <input name="au_auEndDate_[% loop.index %]" type="hidden" value="[% name.auEndDate %]" />
+        <input name="au_origGivenName_[% loop.index %]" id="id_au_origGivenName_[% loop.index %]" type="hidden" />
+        <input name="au_origLastName_[% loop.index %]" id="id_au_origLastName_[% loop.index %]" type="hidden" />
+        <input name="au_origTitle_[% loop.index %]" id="id_au_origTitle_[% loop.index %]" type="hidden" />
+        <input name="au_type_[% loop.index %]" id="id_au_type_[% loop.index %]" type="hidden" />
+
+        <span class="form-group col-md-3">
+          <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="{% fields.basicFields.authors.firstName.placeholder %}" id="id_au_auGivenName_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.givenName %]" class="form-control"/>
+        </span>
+        <span class="form-group col-md-4">
+          <input type="text" name="au_auSurname_[% loop.index %]" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" id="id_au_auSurname_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.surname %]" class="form-control" />
+        </span>
+        <span class="form-group col-md-2">
+          <input type="text" name="au_auPersonTitle_[% loop.index %]" placeholder="{% fields.basicFields.authors.title.placeholder %}" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.personTitle || name.jobTitle %]" class="form-control"/>
+        </span>
+            
+        <span class="col-md-1">
+          [% IF loop.index == 0 %]
+          <span class="glyphicon glyphicon-minus author"></span>
+          [% ELSE %]
+          <span class="glyphicon glyphicon-minus fullrow"></span>
+          [% END %]
+        </span>
+            
+        <span class="col-md-2">
+          <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.oId OR name.luLdapId %]checked="checked"[% END %]/>
+          [% IF name.oId OR name.luLdapId %]
+            <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="{% fields.basicFields.authors.pevz_tooltip %}" />
+            <script>
+              $('#auAuthorized[% loop.index %]').tooltip();
+          </script>
           [% ELSE %]
             <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>
           [% END %]

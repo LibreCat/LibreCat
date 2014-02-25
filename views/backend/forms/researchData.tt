@@ -1,10 +1,10 @@
 [% INCLUDE navbar.tt %]
+[% thisPerson = h.getPerson($personNumber) %]
 <!-- BEGIN /backend/forms/researchData -->
 
 <div class="row">
 
 <div class="col-md-9 col-md-offset-1">
-
   [% IF mainTitle %]
   <h3>[% mainTitle %]</h3>
   [% ELSE %]
@@ -32,9 +32,9 @@
     
   </ul>
   
-  <form action="/luur/record" method="get" name="reLoad">
+  <form action="/myPUB/save" method="post">
     <input type="hidden" name="recordType" value="researchData">
-    <input type="hidden" name="recordOId" value="[% recordOId %]">
+    <input type="hidden" name="recordOId" value="[% oId %]">
     
     <div class="tab tab-content edit-form">
     
@@ -80,7 +80,7 @@
     
     
 <span id="authorEditorTranslator">
-  [% IF !author %]
+  [% IF !author AND !editor AND !translator %]
   <div class="row authorspan innerrow">
     <div class="col-md-2">
       <label for="author">
@@ -116,7 +116,10 @@
           
         <span class="col-md-2">
           <input name="linkPevz_0" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
-          <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+          <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="" />
+          <script>
+            $('#auAuthorized0').tooltip();
+          </script>
         </span>
       </div>
     </div>
@@ -163,7 +166,64 @@
         <span class="col-md-2">
           <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.oId OR name.luLdapId %]checked="checked"[% END %]/>
           [% IF name.oId OR name.luLdapId %]
-            <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
+            <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="" />
+            <script>
+              $('#auAuthorized[% loop.index %]').tooltip();
+          </script>
+          [% ELSE %]
+            <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>
+          [% END %]
+        </span>
+      </div>
+    </div>
+  </div>
+  [% END %]
+  
+  [% FOREACH name IN editor %]
+  <div class="row authorspan innerrow">
+    <div class="col-md-2">
+      <label for="author">
+      
+        Creator<span class="starMandatory">*</span> <span class="glyphicon glyphicon-plus" data-mandatory="yes" id="plusAuthor"></span>
+      
+      </label>
+    </div>
+    <div class="col-md-10" id="author">
+      <div class="form-group">
+        <input type="hidden" name="au_auLuAuthorOId_[% loop.index %]" id="id_au_auLuAuthorOId_[% loop.index %]" value="[% name.oId %]"/>
+        <input type="hidden" name="au_auPersonNumber_[% loop.index %]" id="id_au_auPersonNumber_[% loop.index %]" value="[% name.personNumber %]" />
+        <input name="au_auLuLdapId_[% loop.index %]" type="hidden" value="[% name.luLdapId %]" />
+        <input name="au_auEndDate_[% loop.index %]" type="hidden" value="[% name.auEndDate %]" />
+        <input name="au_origGivenName_[% loop.index %]" id="id_au_origGivenName_[% loop.index %]" type="hidden" />
+        <input name="au_origLastName_[% loop.index %]" id="id_au_origLastName_[% loop.index %]" type="hidden" />
+        <input name="au_origTitle_[% loop.index %]" id="id_au_origTitle_[% loop.index %]" type="hidden" />
+        <input name="au_type_[% loop.index %]" id="id_au_type_[% loop.index %]" type="hidden" />
+
+        <span class="form-group col-md-3">
+          <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="First Name" id="id_au_auGivenName_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.givenName %]" class="form-control"/>
+        </span>
+        <span class="form-group col-md-4">
+          <input type="text" name="au_auSurname_[% loop.index %]" placeholder="Last Name" id="id_au_auSurname_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.surname %]" class="form-control" />
+        </span>
+        <span class="form-group col-md-2">
+          <input type="text" name="au_auPersonTitle_[% loop.index %]" placeholder="Title" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.personTitle || name.jobTitle %]" class="form-control"/>
+        </span>
+            
+        <span class="col-md-1">
+          [% IF loop.index == 0 %]
+          <span class="glyphicon glyphicon-minus author"></span>
+          [% ELSE %]
+          <span class="glyphicon glyphicon-minus fullrow"></span>
+          [% END %]
+        </span>
+            
+        <span class="col-md-2">
+          <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.oId OR name.luLdapId %]checked="checked"[% END %]/>
+          [% IF name.oId OR name.luLdapId %]
+            <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="" />
+            <script>
+              $('#auAuthorized[% loop.index %]').tooltip();
+          </script>
           [% ELSE %]
             <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>
           [% END %]
@@ -627,7 +687,7 @@
   });
   </script>
   
-<div class="row innerrow">
+<div class="row" style="margin-left:15px;">
   <div class="dropzone alert alert-warning col-md-10" id="uploadFiles">
     <div class="fallback">
       <div class="col-md-8">&nbsp;</div>
@@ -686,6 +746,8 @@
     </span>
   </div>
 </div>
+    
+  
     
   
     
@@ -750,6 +812,37 @@
     </div>
   </div>
 </div>
+
+<script>
+// Research Data License checks
+$('#id_openDataRelease').click(function(){
+  if(!$('#id_openDataRelease').is(':checked')){
+    if ($('.dropzone').first().children().length > 1){
+      $('#liStepThree, #liStepFour').css('visibility','hidden');
+      $('#odralert').removeClass('alert-info');
+      $('#odralert').addClass('alert-danger');
+    }
+  }
+  else {
+    $('#odralert').removeClass('alert-danger');
+    $('#odralert').addClass('alert-info');
+  }
+});
+
+$('#id_dataReuseLicense').change(function(){
+  if($('#id_dataReuseLicense').val() == ''){
+    if ($('.dropzone').first().children().length > 1){
+      $('#liStepThree, #liStepFour').css('visibility','hidden');
+      $('#id_dataReuseLicense').parent().removeClass('alert-info');
+      $('#id_dataReuseLicense').parent().addClass('alert-danger');
+    }
+  }
+  else {
+    $('#id_dataReuseLicense').parent().removeClass('alert-danger');
+    $('#id_dataReuseLicense').parent().addClass('alert-info');
+  }
+});
+</script>
     
   
   <div class="row innerrow">
@@ -787,9 +880,9 @@
       Abstract
     </label>
   </div>
-  <div class="col-md-10" id="abstract">
+  <div class="col-md-10 form-group" id="abstract">
     [% IF !abstract %]
-    <span class="form-group col-md-6">
+    <span class="col-md-6">
       <textarea rows="3" name="ab_abAbstract_0" id="id_ab_abAbstract_0" class="form-control" onkeyup="checkForm4Ddc();"></textarea>
     </span>
     <span class="col-md-6">
@@ -810,12 +903,25 @@
     </span>
     [% ELSE %]
       [% FOREACH abs IN abstract %]
+      <div class="col-md-6">
         <textarea rows="3" name="ab_abAbstract_[% loop.index %]" id="id_ab_abAbstract_[% loop.index %]" class="form-control" onkeyup="checkForm4Ddc();">[% abs.text %]</textarea>
+      </div>
+      <div class="col-md-6">
+        <label for="id_ab_abLanguageOId[% loop.index %]">
+          
+        </label>
+      </div>
+      <div class="form-group col-md-3">
         <select name="ab_abLanguageOId_[% loop.index %]" id="id_ab_abLanguageOId_[% loop.index %]" class="form-control">
-        [% FOREACH lang IN h.xlanguages %]
-          <option value="[% lang.langOId %]" [% IF lang.abLanguageOId == lang.langOId %]selected="selected"[% END %]>[% lang.langName %]</option>
+        [% FOREACH lang IN h.xlanguages_preselect.keys.sort %]
+          <option value="[% h.xlanguages_preselect.$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
+        [% END %]
+          <option value="2436687"></option>
+        [% FOREACH lang IN h.xlanguages.keys.sort %]
+          <option value="[% h.xlanguages.$lang %]" [% IF abLanguageOId == h.xlanguages.$lang %]selected="selected"[% END %]>[% lang %]</option>
         [% END %]
         </select>
+      </div>
       [% END %]
     [% END %]
   </div>
@@ -864,7 +970,7 @@
   </div>
   <div class="col-md-10" id="keywords">
     <div class="col-md-6">
-      <textarea rows="3" name="keyword" class="form-control">[% keyword %]</textarea>
+      <textarea rows="3" name="keyword" class="form-control" placeholder="Keywords separated by semicolons: keyword1; keyword2; keyword3">[% xkeyword %]</textarea>
     </div>
   </div>
 </div>
@@ -931,7 +1037,7 @@
   </div>
 </div>
 
-[% INCLUDE backend/fields/connectPubl.tt %]
+[% INCLUDE backend/fields/modal_connectPubl.tt %]
     
   
   <div class="row innerrow">
@@ -1068,7 +1174,7 @@ $('#plusAuthorMore').click(function(){
   var items = $('#authorEditorTranslator span.authorspan');
   var index = items.index($('#authorEditorTranslator span.authorspan').last()) + 1;
   $('#authorEditorTranslator').append('[% INCLUDE backend/fields/subfields/author_more.tt %]');
-  $('#authorEditorTranslator span:last-child select').append('');
+  $('#authorEditorTranslator div:last-child select').append('');
   if($(this).attr('data-mandatory') == "yes"){
     $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
   }
@@ -1224,6 +1330,7 @@ $('button.cancel-button').click(function() {
 });
 // Tab forward two to three
 $('#twoToThree').click(function(e){
+if($('#id_dataReuseLicense').length || $('#id_openDataRelease').length){
   if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_openDataRelease').is(':checked') || $('#id_dataReuseLicense').val() == '')){
     if($('#id_dataReuseLicense').val() == ''){
       $('#id_dataReuseLicense').parent().removeClass('alert-info');
@@ -1269,6 +1376,13 @@ $('#twoToThree').click(function(e){
     $('a[href=#supplementaryFields]').attr('data-toggle','tab');
     $('#li_supplementaryFields').css('visibility','visible');
   }
+}
+else {
+    $('#fileUpload, #li_fileUpload').removeClass('active');
+    $('#supplementaryFields, #li_supplementaryFields').addClass('active');
+    $('a[href=#supplementaryFields]').attr('data-toggle','tab');
+    $('#li_supplementaryFields').css('visibility','visible');
+}
 });
 
 
@@ -1278,35 +1392,6 @@ $('#twoToOne').click(function(){
   $('#li_basicFields').addClass('active');
 });
 
-
-// Research Data License checks
-$('#id_openDataRelease').click(function(){
-  if(!$('#id_openDataRelease').is(':checked')){
-    if ($('.dropzone').first().children().length > 1){
-      $('#liStepThree, #liStepFour').css('visibility','hidden');
-      $('#odralert').removeClass('alert-info');
-      $('#odralert').addClass('alert-danger');
-    }
-  }
-  else {
-    $('#odralert').removeClass('alert-danger');
-    $('#odralert').addClass('alert-info');
-  }
-});
-
-$('#id_dataReuseLicense').change(function(){
-  if($('#id_dataReuseLicense').val() == ''){
-    if ($('.dropzone').first().children().length > 1){
-      $('#liStepThree, #liStepFour').css('visibility','hidden');
-      $('#id_dataReuseLicense').parent().removeClass('alert-info');
-      $('#id_dataReuseLicense').parent().addClass('alert-danger');
-    }
-  }
-  else {
-    $('#id_dataReuseLicense').parent().removeClass('alert-danger');
-    $('#id_dataReuseLicense').parent().addClass('alert-info');
-  }
-});
 
 
 function editFile(fileOId, recordOId, fileName, accessLevel, accessEmbargo, openAccessDate, fileTitle, fileDescription){

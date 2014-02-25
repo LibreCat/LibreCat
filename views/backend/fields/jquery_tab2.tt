@@ -1,5 +1,6 @@
 // Tab forward two to three
 $('#twoToThree').click(function(e){
+if($('#id_dataReuseLicense').length || $('#id_openDataRelease').length){
   if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_openDataRelease').is(':checked') || $('#id_dataReuseLicense').val() == '')){
     if($('#id_dataReuseLicense').val() == ''){
       $('#id_dataReuseLicense').parent().removeClass('alert-info');
@@ -45,6 +46,13 @@ $('#twoToThree').click(function(e){
     $('a[href=#supplementaryFields]').attr('data-toggle','tab');
     $('#li_supplementaryFields').css('visibility','visible');
   }
+}
+else {
+    $('#fileUpload, #li_fileUpload').removeClass('active');
+    $('#supplementaryFields, #li_supplementaryFields').addClass('active');
+    $('a[href=#supplementaryFields]').attr('data-toggle','tab');
+    $('#li_supplementaryFields').css('visibility','visible');
+}
 });
 
 
@@ -54,35 +62,6 @@ $('#twoToOne').click(function(){
   $('#li_basicFields').addClass('active');
 });
 
-
-// Research Data License checks
-$('#id_openDataRelease').click(function(){
-  if(!$('#id_openDataRelease').is(':checked')){
-    if ($('.dropzone').first().children().length > 1){
-      $('#liStepThree, #liStepFour').css('visibility','hidden');
-      $('#odralert').removeClass('alert-info');
-      $('#odralert').addClass('alert-danger');
-    }
-  }
-  else {
-    $('#odralert').removeClass('alert-danger');
-    $('#odralert').addClass('alert-info');
-  }
-});
-
-$('#id_dataReuseLicense').change(function(){
-  if($('#id_dataReuseLicense').val() == ''){
-    if ($('.dropzone').first().children().length > 1){
-      $('#liStepThree, #liStepFour').css('visibility','hidden');
-      $('#id_dataReuseLicense').parent().removeClass('alert-info');
-      $('#id_dataReuseLicense').parent().addClass('alert-danger');
-    }
-  }
-  else {
-    $('#id_dataReuseLicense').parent().removeClass('alert-danger');
-    $('#id_dataReuseLicense').parent().addClass('alert-info');
-  }
-});
 
 
 function editFile(fileOId, recordOId, fileName, accessLevel, accessEmbargo, openAccessDate, fileTitle, fileDescription){

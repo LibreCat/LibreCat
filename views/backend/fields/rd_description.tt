@@ -1,1 +1,0 @@
-<div class="controls controls-row"><select name="descriptionType_' + index + '" id="descriptionType_' + index + '" class="span2"><option value="">-- select --</option><option>other</option></select><textarea rows="3" name="description_' + index + '" id="description_' + index + '" class="span3"></textarea> &nbsp;<i class="icon-minus single"></i></div>

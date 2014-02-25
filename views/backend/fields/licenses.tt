@@ -58,3 +58,34 @@
     </div>
   </div>
 </div>
+
+<script>
+// Research Data License checks
+$('#id_openDataRelease').click(function(){
+  if(!$('#id_openDataRelease').is(':checked')){
+    if ($('.dropzone').first().children().length > 1){
+      $('#liStepThree, #liStepFour').css('visibility','hidden');
+      $('#odralert').removeClass('alert-info');
+      $('#odralert').addClass('alert-danger');
+    }
+  }
+  else {
+    $('#odralert').removeClass('alert-danger');
+    $('#odralert').addClass('alert-info');
+  }
+});
+
+$('#id_dataReuseLicense').change(function(){
+  if($('#id_dataReuseLicense').val() == ''){
+    if ($('.dropzone').first().children().length > 1){
+      $('#liStepThree, #liStepFour').css('visibility','hidden');
+      $('#id_dataReuseLicense').parent().removeClass('alert-info');
+      $('#id_dataReuseLicense').parent().addClass('alert-danger');
+    }
+  }
+  else {
+    $('#id_dataReuseLicense').parent().removeClass('alert-danger');
+    $('#id_dataReuseLicense').parent().addClass('alert-info');
+  }
+});
+</script>

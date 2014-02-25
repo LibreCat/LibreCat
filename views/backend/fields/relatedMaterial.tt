@@ -27,4 +27,4 @@
   </div>
 </div>
 
-[% INCLUDE backend/fields/connectPubl.tt %]
+[% INCLUDE backend/fields/modal_connectPubl.tt %]

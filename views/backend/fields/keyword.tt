@@ -6,7 +6,7 @@
   </div>
   <div class="col-md-10" id="keywords">
     <div class="col-md-6">
-      <textarea rows="3" name="keyword" class="form-control">[% keyword %]</textarea>
+      <textarea rows="3" name="keyword" class="form-control" placeholder="{% fields.supplementaryFields.keyword.placeholder %}">[% xkeyword %]</textarea>
     </div>
   </div>
 </div>

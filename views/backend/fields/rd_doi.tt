@@ -1,1 +1,0 @@
-<div class="controls control-group"><input type="text" name="doi_' + index + '" id="doi_' + index + '" class="span5"> <i class="icon-minus single"></i></div>

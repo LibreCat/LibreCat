@@ -1,10 +1,10 @@
 [% INCLUDE navbar.tt %]
+[% thisPerson = h.getPerson($personNumber) %]
 <!-- BEGIN /backend/forms/{% tmpl %} -->
 
 <div class="row">
 
 <div class="col-md-9 col-md-offset-1">
-
   [% IF mainTitle %]
   <h3>[% mainTitle %]</h3>
   [% ELSE %]
@@ -32,9 +32,9 @@
     {% END %}
   </ul>
   
-  <form action="/luur/record" method="get" name="reLoad">
+  <form action="/myPUB/save" method="post">
     <input type="hidden" name="recordType" value="{% tmpl %}">
-    <input type="hidden" name="recordOId" value="[% recordOId %]">
+    <input type="hidden" name="recordOId" value="[% oId %]">
     
     <div class="tab tab-content edit-form">
     
