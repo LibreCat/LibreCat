@@ -1,25 +1,25 @@
-[% INCLUDE navbar.tt %]
-
-<!-- BEGIN admin.tt -->
 [% USE date(format => '%Y') %]
-
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
 [% bisId = qp.id ? qp.id : "73476" %]
 [% thisPerson = h.getPerson(bisId) %]
 
+[% INCLUDE navbar.tt %]
+
+<!-- BEGIN admin.tt -->
+
 <div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->  
   <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->
     
     <div class="row"> <!-- row span8 picture, email -->
       <div class="col-md-2">
-        [% IF thisPerson.bis_photo %]
-        <object data="[% thisPerson.bis_photo %]" class="img-thumbnail" style="max-width:140px;" itemprop="image">
-          <img src="/images/dummy.png" style="width:10px;" class="img-polaroid">
+        [% IF thisPerson.bis.photo %]
+        <object data="[% thisPerson.bis.photo %]" class="img-thumbnail" style="max-width:140px;" itemprop="image">
+          <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail">
         </object>
         [% ELSE %]
-        <img src="/images/dummy.png" class="img-thumbnail">
+        <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail">
         [% END %]
       </div> <!-- span 2 -->
   
