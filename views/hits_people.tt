@@ -1,0 +1,27 @@
+<!-- BEGIN websites/hits_people.tt -->
+
+[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
+<div class="row innerrow">
+  <div class="col-md-12">
+    <h3 id="totalheading">[% total %] [% lang ? "UniBi Authors" : "UniBi Autorinnen und Autoren" %]</h3>
+  </div>
+</div>
+
+<div class="row innerrow">
+  [% INCLUDE pagination.tt %]
+</div>
+
+<div class="row innerrow">
+  <div class="col-md-12" style="margin-right:20px;width:600px;">
+  [% FOREACH person IN hits %]
+     <a href="/person/[% person.oId %]">[% person.fullName %][% IF person.bis.personTitle %], [% person.bis.personTitle %][% END %] ([% person.publication_hits %] publications[% IF person.research_hits %], [% person.research_hits %] data publications[% END %])</a><br />
+     <div style="margin-left:10px;">
+       [% FOREACH affil IN person.affiliation %]
+         <span class="muted">[% affil.name %]</span>[% IF !loop.last %], [% END %]
+       [% END %]
+     </div>
+  [% END %]
+  </div>
+</div>
+
+<!-- END websites/hits_people.tt -->

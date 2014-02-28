@@ -24,7 +24,7 @@ citation:
 authority:
   package: MongoDB
   options:
-    database_name: PUBAuthority
+    database_name: PUBAuthorityNew
 
 viewing:
   package: MongoDB
@@ -1043,12 +1043,12 @@ search:
               op:
                 '=': true
                 '<>': true
-              field: bis_forschend            
+              field: bis.forschend            
             former:
               op:
                 '=': true
                 '<>': true
-              field: bis_former
+              field: bis.former
             publcount:
               op:
                 '=': true
@@ -1433,10 +1433,12 @@ search:
               exact: {type: string, analyzer: tag}
           surname: {type: string}
           givenName: {type: string}
-          bis_personTitle: {type: string}
-          bis_former: {type: byte}
-          bis_nonExist: {type: byte}
-          bis_forschend: {type: byte}
+          bis:
+            properties:
+              personTitle: {type: string}
+              former: {type: byte}
+              nonExist: {type: byte}
+              forschend: {type: byte}
           affiliation:
             properties:
               organizationNumber: {type: string, analyzer: tag}

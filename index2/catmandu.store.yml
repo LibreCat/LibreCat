@@ -24,7 +24,7 @@ citation:
 authority:
   package: MongoDB
   options:
-    database_name: PUBAuthority
+    database_name: PUBAuthorityNew
 
 viewing:
   package: MongoDB
@@ -1043,12 +1043,12 @@ search:
               op:
                 '=': true
                 '<>': true
-              field: bis_forschend            
+              field: bis.forschend            
             former:
               op:
                 '=': true
                 '<>': true
-              field: bis_former
+              field: bis.former
             publcount:
               op:
                 '=': true
@@ -1433,10 +1433,12 @@ search:
               exact: {type: string, analyzer: tag}
           surname: {type: string}
           givenName: {type: string}
-          bis_personTitle: {type: string}
-          bis_former: {type: byte}
-          bis_nonExist: {type: byte}
-          bis_forschend: {type: byte}
+          bis:
+            properties:
+              personTitle: {type: string}
+              former: {type: byte}
+              nonExist: {type: byte}
+              forschend: {type: byte}
           affiliation:
             properties:
               organizationNumber: {type: string, analyzer: tag}
@@ -1471,7 +1473,7 @@ sort_options:
     - {key: title, label: "Title" }
     - {key: author, label: "First author"}
     - {key: documenttype, label: "Documenttype"}
-    - {key: publication, label: "Publication/ Series/ Journal"}
+    - {key: publication, label: "Publ./ Series/ Journal"}
 project_sort_options:
     - {key: name, label: "Name"}
     - {key: acronym, label: "Acronym"}
@@ -1479,24 +1481,5 @@ project_sort_options:
 default_sort:
   - {field: publishingYear, order: desc}
   - {field: dateLastChanged, order: desc}
-default_publication_sort: [publishingYear.desc, relevance.desc]
-search_ops:
-    term: "is"
-    not_term: "isn't"
-    text: "matches"
-    'exact.text': "exactly matches"
-    not_text: "doesn't match"
-    phrase: "contains"
-    not_phrase: "doesn't contain"
-    phrase_prefix: "starts with"
-    not_phrase_prefix: "doesn't start with"
-    gt: "is greater than"
-    lt: "is less than"
-    gte: "is greater than or equal to"
-    lte: "is less than or equal to"
-    within: "is within"
-    not_within: "isn't within"
-    qs: "matches query"
-    not_qs: "doesn't match query"
-    any: "has any value"
-    missing: "is missing"
+default_style: pub
+default_fd_style: frontShort

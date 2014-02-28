@@ -153,15 +153,8 @@ sub search_publication {
 
 sub search_researcher {
 	my ($self, $p) = @_;
-	my $q;
-	#if ($p->{q}) {
-	#	my @textbits = split " ", $p->{q};
-	#	foreach (@textbits){
-	#		$q .= " AND fullname=" . $_ ;
-	#	}
-	#	$q =~ s/^ AND //g;
-    #}
-    $q = $p->{q};
+	my $q = $p->{q} ||= "";
+	#$q .= $q eq "" ? "publCount>0" : " AND publCount>0";
 	
 	my $hits = researcher->search(
 	  cql_query => $q,
@@ -169,6 +162,10 @@ sub search_researcher {
 	  start => $p->{start} ||= 0,
 	  sru_sortkeys => $p->{sorting} || "fullName,,1",
 	);
+	
+	foreach (qw(next_page last_page page previous_page pages_in_spread)) {	
+    	$hits->{$_} = $hits->$_;
+    }
 	
     return $hits;
 }

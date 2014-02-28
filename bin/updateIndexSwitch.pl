@@ -24,8 +24,7 @@ my $luur = Orms->new($cfg->{ormsCfg});
 
 my $newPub = "backenddefault";
 
-#print "[$last_indexed] Called skript 'updateIndexSwitch.pl'.\n";
-print "Called script 'updateIndexSwitch.pl'.\n";
+print "[$last_indexed] Called skript 'updateIndexSwitch.pl'.\n";
 
 my $status = `curl -s -XGET 'http://localhost:9200/backend1/_status'`;
 

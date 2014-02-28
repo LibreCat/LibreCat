@@ -6933,8 +6933,40 @@ h5 {
 .nav-tabs.nav-stacked>li>a:hover,
 .nav-tabs.nav-stacked>li>button:hover {
 	z-index:2;
-	border-color:#ddd
+	border-color:#ddd;
 }
+
+
+.pub_pagination {
+	padding:0;
+	margin:1em 0;
+}
+
+.pub_pagination li {
+	list-style-type:none !important;
+	display:inline;
+	margin:0;
+}
+
+.pub_pagination li a {
+	padding:1px 0.5em;
+	margin:0;
+	border:1px solid #ccc;
+	background:#fff;
+	text-decoration:none !important;
+}
+
+.pub_pagination li:first-child {
+	margin-left:0 !important;
+}
+
+.pub_pagination li.current a {
+	font-weight:bold;
+	color:#111;
+	background:#eee;
+}
+
+
 
 .corner_up{
     position: absolute;

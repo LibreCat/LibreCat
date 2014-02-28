@@ -41,7 +41,7 @@ sub add_to_index {
 
 if ($opt_i){
 	my $researcher = $mongoBag->get($opt_i);
-	add_to_index($researcher);
+	add_to_index($researcher) if $researcher;
 }
 else { # initial indexing
 
