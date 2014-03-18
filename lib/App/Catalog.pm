@@ -17,7 +17,6 @@ use App::Catalog::Interface;
 Catmandu->load;
 
 get '/' => sub {
-
 	redirect h->host;
 };
 
@@ -34,12 +33,7 @@ get '/submitForm' => sub {
 	template "backend/index.tt", {newRec => 'stored'};
 };
 
-get '/importId' => sub {
-	#my $documentId = params->{documentId} ||= "";
-	#my $idType = App::Import::identifyId($documentId);
-	
-	template "backend/header.tt";
-};
+get '/login' => sub {};
 
 get '/logout' => sub {
 	# do logout

@@ -42,11 +42,6 @@ sub authority {
     state $bag = Catmandu->store('authority')->bag;
 }
 
-sub luurConf {
-	use luurCfg;
-	state $cfg     = luurCfg->new;
-}
-
 sub getPerson {
 	if($_[1] and $_[1] =~ /\d{1,}/){
 		$_[0]->authority->get($_[1]);
@@ -491,33 +486,20 @@ sub embed_params {
     };
 }
 
-sub add_publication {
+sub add_update_pub {
 	my ($self, $pub) = @_;
+	$self->
 	$self->validate($pub);
-	bag->add($pub);
-}
-
-# or clean record?
-sub validate {
-	my ($self, $pub) = @_;
-	# trim
-	foreach (keys %$pub) {
-		trim $pub->{$_};
-	}
-	#check ISSN, ISBN
-
-	# kill ugly chars
-	return $pub;
+	$self->bag->add($pub);
 }
 
 sub classifyId {
 	my ($self, $id) = @_;
 	my $package;
   	given ($id) {
-    	when (/^\d{4}\.\d{4}/) { $package = 'arxiv'}
+    	when (/^\d{4}\.\d{4}|^\w+\/\d+/) { $package = 'arxiv'}
     	when (/^10\.\d{4}/){ $package = 'doi'}
-    	when (/^\d{1,8}$/) { $package = 'pubmed'}
-  #  	when (is_isbn($id)) {$package = 'isbn'}
+    	when (/^\d{1,8}$/) { $package = 'pubmed'} # not unique!?
     	default {$package = ''}
   }
 

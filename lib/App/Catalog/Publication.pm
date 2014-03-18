@@ -5,23 +5,50 @@ use Dancer ':syntax';
 
 prefix '/record' => sub {
 
-	# 
-	get '/' => sub {
-		my $id = shift;
-		my $hits = h->bag->search(cql_query => "person exact $id");
-		template 'list', $hits;
-	};
-
 	get '/new' => sub {
-		# here comes add function
-		template 'add_new';
+		my $type = params 'type';
+		(!$type) && template 'add_new';
+		template 'add_type';
 	};
 
-	get '/import' => sub {
-		my $id = param 'id';
-		my $pkg = h->classifyId($id);
-		(!$pkg) && (return "Error");
-		my $importer = Catmandu->importer($pkg);	
+	# show the record, has user permission to see it?
+	get '/edit/:id' => sub {
+		my $id = params 'id';
+	
+		my $record = h->publications->get($id);
+		if($record){
+			my $type = $record->{documentType};
+			$record->{personNumber} = "73476";
+			$record->{xkeyword} = join('; ', @{$record->{keyword}});
+			#my not needed here?
+			#my $tmpl = "backend/forms/" . h->config->{forms}->{publicationTypes}->{lc($type)}->{tmpl} . ".tt";
+			my $tmpl = "backend/forms/$type";
+			template $tmpl, $record;
+		}
+	};
+
+	post '/update' => sub {
+		my $params = params;
+
+		my $record = h->publications->get($params->{recordOId});
+
+		# TODO: nice method for merging records 
+
+		h->add_update_pub($record);
+
+		redirect '/myPUB/';
+	};
+
+	get 'return/:id' => sub {
+		my $id = params 'id';
+
+		forward '/update', {_id => $id, submissionStatus => 'returned'};
+	};
+
+	get 'publish/:id' => sub {
+		my $id = params 'id';
+
+		forward '/update', {_id => $id, submissionStatus => 'public'};
 	};
 
 	# deleting records, for admins only

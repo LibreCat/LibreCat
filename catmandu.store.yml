@@ -4,7 +4,9 @@ default:
     database_name: pub
     bags:
       session:
-        plugins: [Datestamps]
+        plugins:
+          - Datestamps
+          - Versioning
 
 project:
   package: MongoDB
