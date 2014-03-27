@@ -36,7 +36,7 @@ prefix '/record' => sub {
 
 		h->add_update_pub($record);
 
-		redirect '/myPUB/';
+		redirect '/';
 	};
 
 	get 'return/:id' => sub {
@@ -52,7 +52,7 @@ prefix '/record' => sub {
 	};
 
 	# deleting records, for admins only
-	del '/:id' => sub {
+	del 'delete/:id' => sub {
 		my $id = params 'id';
 		h->bag->delete($id);
 	};
