@@ -78,3 +78,25 @@ set citationstyle and sorting, allowed for user
 
 set external author ids, allowed for user
 
+## Module App::Catalog::Admin
+
+### get '/admin'
+
+what should appear here?
+
+### get '/admin/accounts/search'
+
+search accounts
+
+### get '/admin/accounts/edit/:id'
+
+edit account with :id
+
+### post '/admin/accounts/update'
+
+update account record
+
+
+
+
+

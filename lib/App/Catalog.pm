@@ -69,10 +69,10 @@ post '/login' => sub {
         if ($auth->can('manage_accounts', 'create')) {}
 
         session user => params->{user};
+        #session role => ;
         redirect params->{path} || '/';
     }
     else {
-        #print $auth->errors;
         redirect 'login?failed=1';
     }
 
