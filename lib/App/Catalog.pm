@@ -16,11 +16,7 @@ use App::Catalog::Interface;
 
 Catmandu->load;
 
-get '/' => sub {
-	redirect h->host;
-	#my ($id) = splat;
-	
-	#my $id = "86212";
+any '/' => sub {
 	my $params = params;
 	my $id = params->{id} ? params->{id} : "73476";
 	my $personInfo = h->getPerson($id);
@@ -52,22 +48,6 @@ get '/' => sub {
 	$params->{personSort} = $personSort || "";
 	handle_request($params);
 };
-
-
-
-
-# get '/submitForm' => sub {
-# 	my $params = params;
-# 	my $returnhash;
-# 	foreach my $key (keys %$params){
-# 		$returnhash->{parameters}->{$key} = $params->{$key};
-# 	}
-	
-# 	my $store = Catmandu::Store::MongoDB->new(database_name => 'bnbdb');
-# 	my $response = $store->bag->add($returnhash);
-	
-# 	template "backend/index.tt", {newRec => 'stored'};
-# };
 
 get '/login' => sub {};
 

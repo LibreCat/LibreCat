@@ -36,7 +36,7 @@ prefix '/record' => sub {
 
 		h->add_update_pub($record);
 
-		redirect '/';
+		forward '/';
 	};
 
 	get 'return/:id' => sub {

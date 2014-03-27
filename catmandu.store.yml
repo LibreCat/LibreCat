@@ -27,11 +27,19 @@ authority:
   package: MongoDB
   options:
     database_name: PUBAuthorityNew
+    bags:
+      admin:
+        plugins:
+          - Datestamps
 
-viewing:
+authorityUser:
   package: MongoDB
   options:
-    database_name: PUBViewingOptions
+    database_name: PUBAuthorityNew
+    bags:
+      user:
+        plugins:
+          - Datestamps
 
 europmc:
   package: MongoDB
