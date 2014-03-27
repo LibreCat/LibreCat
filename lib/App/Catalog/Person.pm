@@ -8,7 +8,7 @@ use App::Catalog::Helper;
 
 prefix '/person' => sub {
 
-	post '/settings_update' => sub {
+	post '/preferences' => sub {
 		my $id = params->{id} ? params->{id} : "73476";
 
 		my $personInfo = h->getPerson($id);
@@ -43,12 +43,16 @@ prefix '/person' => sub {
 		forward '/';
 	};
 
-	post '/authorid_update' => sub {
+	post '/authorid' => sub {
 
 		my $id = params->{id} ? params->{id} : "73476";
 		my $personInfo = h->getPerson($id);
 		my @identifier = qw(googleScholar researcher authorclaim scopus orcid github arxiv inspire);
-		map{ $personInfo->{$_} = params->{$_} ? params->{$_} : "" } @identifier;
+		
+		map{
+			$personInfo->{$_} = params->{$_} ? params->{$_} : ""
+			} @identifier;
+
 		my $bag = h->authorityUser->add($personInfo);
 		
 		forward '/';

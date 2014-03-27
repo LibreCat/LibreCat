@@ -67,3 +67,14 @@ classify id, load data from specified source, show in template, DO NOT SAVE IN D
 
 allow for admins only? or set maximum number of records?
 
+
+## Module App::Catalog::Person
+
+### post '/person/preferences'
+
+set citationstyle and sorting, allowed for user
+
+### post '/post/authorid'
+
+set external author ids, allowed for user
+

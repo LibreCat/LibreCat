@@ -7,30 +7,12 @@ use Dancer::Request;
 use App::Catalog::Helper;
 
 get '/search_researcher' => sub {
+	
 	my $q = params->{'ftext'};
 	my $hits = h->search_researcher({q => $q});
 	
-	#use to_json
-
-	my $jsonstring = "[";
-	foreach (@{$hits->{hits}}){
-		my $pevzId = $_->{_id};
-		my $sbcatId = $_->{sbcatId};
-		my $firstName = $_->{givenName};
-		$firstName =~ s/"/\\"/g;
-		my $lastName = $_->{surname};
-		$lastName =~ s/"/\\"/g;
-		my $title = $_->{bis_personTitle} || "";
-		$jsonstring .= "{pevzId:\"" . $pevzId . "\"";
-		$jsonstring .= ", sbcatId:\"" . $sbcatId . "\"";
-		$jsonstring .= ", firstName:\"" . $firstName . "\"";
-		$jsonstring .= ", lastName:\"" . $lastName . "\"";
-		$jsonstring .= ", title:\"" . $title ."\"";
-		$jsonstring .= "},";
-	}
-	$jsonstring =~ s/,$//g;
-	$jsonstring .= "]";
-	return $jsonstring;
+	to_json($hits->{hits});
+	
 };
 
 get '/autocomplete_hierarchy' => sub {
