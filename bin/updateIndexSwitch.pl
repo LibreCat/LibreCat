@@ -8,8 +8,8 @@ use Getopt::Std;
 use SBCatDB;
 use Catmandu -all;
 
-my $sb_home = '/srv/www/app-catalog';
-my $perl_version = '/home/bup/perl5/perlbrew/perls/perl-5.16.3/bin/perl';
+my $sb_home = $ENV{BACKEND};#'/srv/www/app-catalog';
+my $perl_version = '/usr/local/bin/perl';
 
 #my $log = "$sb_home/log/update_es_time.log";
 my ($sec,$min,$hour,$day,$mon,$year) = localtime(time);
@@ -47,19 +47,19 @@ if($status =~ /"status":404}$/){
 my $command_1 = "$perl_version $sb_home/bin/index_publication.pl";
 my $command_2 = "$perl_version $sb_home/bin/index_project.pl";
 my $command_3 = "$perl_version $sb_home/bin/index_researcher.pl";
-my $command_4 = "$perl_version $sb_home/bin/index_award.pl";
+#my $command_4 = "$perl_version $sb_home/bin/index_award.pl";
 
 if($newPub eq "backend2"){
 	$command_1 .= " -m backend2";
 	$command_2 .= " -m backend2";
 	$command_3 .= " -m backend2";
-	$command_4 .= " -m backend2";
+#	$command_4 .= " -m backend2";
 }
 elsif($newPub eq "backend1"){
 	$command_1 .= " -m backend1";
 	$command_2 .= " -m backend1";
 	$command_3 .= " -m backend1";
-	$command_4 .= " -m backend1";
+#	$command_4 .= " -m backend1";
 }
 
 print "Indexing publications.\n";
@@ -71,8 +71,8 @@ my $result_2 = `$command_2`;
 print "Indexing researchers.\n";
 my $result_3 = `$command_3`;
 
-print "Indexing awards.\n";
-my $result_4 = `$command_4`;
+# print "Indexing awards.\n";
+# my $result_4 = `$command_4`;
 
 
 if($newPub eq "backend2"){
