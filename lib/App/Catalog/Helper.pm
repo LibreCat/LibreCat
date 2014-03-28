@@ -5,7 +5,7 @@ use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
 use Catmandu::Util qw(:is :array trim);
 use Dancer qw(:syntax vars params request);
-use Hash::Merge::Simple qw(merge);
+use Hash::Merge qw(merge);
 use Template;
 use Moo;
 

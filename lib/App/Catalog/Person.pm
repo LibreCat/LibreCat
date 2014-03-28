@@ -1,6 +1,6 @@
 package App::Catalog::Person;
 
-se Catmandu::Sane;
+use Catmandu::Sane;
 use Catmandu::Util qw(:array);
 use Dancer ':syntax';
 use Dancer::Request;

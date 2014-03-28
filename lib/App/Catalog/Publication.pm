@@ -6,14 +6,13 @@ use Dancer ':syntax';
 prefix '/record' => sub {
 
 	get '/new' => sub {
-		my $type = params 'type';
-		(! $type) && template 'add_new';
-		template "add_$type";
+		my $type = params->{type} ||= '';
+		($type) ? (template "backend/forms/$type") : template 'add_new';
 	};
 
 	# show the record, has user permission to see it?
 	get '/edit/:id' => sub {
-		my $id = params 'id';
+		my $id = param 'id';
 	
 		my $record = h->publications->get($id);
 		if($record){

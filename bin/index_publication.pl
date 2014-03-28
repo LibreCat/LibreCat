@@ -31,7 +31,7 @@ if ( $opt_m && $opt_m eq "backend2" ) {
     Catmandu->load("$home/index2");
 }
 elsif ( $opt_m && $opt_m eq "backend1" ) {
-    Catmandu->load("home/index1");
+    Catmandu->load("$home/index1");
 }
 else {
     Catmandu->load($home);

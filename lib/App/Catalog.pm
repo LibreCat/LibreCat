@@ -4,7 +4,7 @@ use Catmandu;
 use Catmandu::Sane;
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::RBAC::Credentials::Catmandu; 
-
+use Catmandu::Util qw(:array);
 use App::Catalog::Admin;
 use App::Catalog::Helper;
 use App::Catalog::Import;

@@ -2,7 +2,7 @@ package App::Catalog::Import;
 
 use Dancer ':syntax';
 
-get '/import/:id' => sub {
+post '/import/:id' => sub {
 	my $id = params->{'id'};
 	my $source = h->classifyId($id);
 	my $importer = Catmandu->importer($source);
