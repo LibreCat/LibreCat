@@ -78,6 +78,8 @@ set citationstyle and sorting, allowed for user
 
 set external author ids, allowed for user
 
+---
+
 ## Module App::Catalog::Admin
 
 ### get '/admin'

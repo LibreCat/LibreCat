@@ -7,8 +7,8 @@ prefix '/record' => sub {
 
 	get '/new' => sub {
 		my $type = params 'type';
-		(!$type) && template 'add_new';
-		template 'add_type';
+		(! $type) && template 'add_new';
+		template "add_$type";
 	};
 
 	# show the record, has user permission to see it?
@@ -30,11 +30,7 @@ prefix '/record' => sub {
 	post '/update' => sub {
 		my $params = params;
 
-		my $record = h->publications->get($params->{recordOId});
-
-		# TODO: nice method for merging records 
-
-		h->add_update_pub($record);
+		h->update_publication($params);
 
 		forward '/';
 	};

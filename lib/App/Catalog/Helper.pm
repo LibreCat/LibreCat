@@ -5,6 +5,7 @@ use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
 use Catmandu::Util qw(:is :array trim);
 use Dancer qw(:syntax vars params request);
+use Hash::Merge::Simple qw(merge);
 use Template;
 use Moo;
 
@@ -486,11 +487,13 @@ sub embed_params {
     };
 }
 
-sub add_update_pub {
-	my ($self, $pub) = @_;
-	$self->
-	$self->validate($pub);
-	$self->bag->add($pub);
+sub update_publication {
+	my ($self, $new) = @_;
+	my $old = $self->bag->get($new->{_id});
+	my $merge = Hash::Merge->new( 'LEFT_PRECEDENT' );
+    my %store_rec = %{ $merge->merge( $new, $old ) };
+	$self->validate(\%store_rec);
+	$self->bag->add(\%store_rec);
 }
 
 sub classifyId {
