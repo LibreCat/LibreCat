@@ -1,14 +1,17 @@
 package App::Catalog::Import;
 
 use Dancer ':syntax';
+use App::Catalog::Helper;
 
-post '/import/:id' => sub {
+post '/import' => sub {
+	my $params = params('body');
 	my $id = params->{'id'};
 	my $source = h->classifyId($id);
+	return "Source unknown" if !$source;
 	my $importer = Catmandu->importer($source);
 	my $pub =$importer->first;
 	my $type = $pub->{type};
-	template "backend/$type", $pub;
+	template "backend/forms/$type", $pub;
 };
 
 # for admins only? otherwise: garbage collection in db

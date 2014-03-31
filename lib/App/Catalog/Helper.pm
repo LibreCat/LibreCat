@@ -501,7 +501,7 @@ sub classifyId {
 	my $package;
   	given ($id) {
     	when (/^\d{4}\.\d{4}|^\w+\/\d+/) { $package = 'arxiv'}
-    	when (/^10\.\d{4}/){ $package = 'doi'}
+    	when (/^10\.\d{2,}/){ $package = 'doi'}
     	when (/^\d{1,8}$/) { $package = 'pubmed'} # not unique!?
     	default {$package = ''}
   }

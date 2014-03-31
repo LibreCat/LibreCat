@@ -9,7 +9,7 @@
   
     <div class="col-md-10">
 	  <h5>Enter ID</h5>
-	  <form class="form-inline" role="form" action="/import" method="GET">
+	  <form class="form-inline" role="form" action="/myPUB/import" method="POST">
 	    <span class="input-group col-md-8">
           <input type="text" value="" class="form-control" id="id" name="id" placeholder="10.324/JHEP287432" />
           <span class="input-group-btn">
