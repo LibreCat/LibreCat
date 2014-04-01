@@ -31,13 +31,10 @@ authority:
       admin:
         plugins:
           - Datestamps
-
-authorityUser:
-  package: MongoDB
-  options:
-    database_name: PUBAuthorityNew
-    bags:
       user:
+        plugins:
+          - Datestamps
+      department:
         plugins:
           - Datestamps
 

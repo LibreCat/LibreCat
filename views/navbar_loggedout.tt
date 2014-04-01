@@ -37,14 +37,10 @@
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
        <ul class="nav navbar-nav">
-         <li><a href="/myPUB"><span class="glyphicon glyphicon-list"></span> Home</a></li>
-         <li><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
-         <li><a href="[% h.host %]/person/73476"><span class="glyphicon glyphicon-eye-open"></span> View Public Profile</a></li>
+         <li><a href="/myPUB/login"><span class="glyphicon glyphicon-list"></span> Home</a></li>
        </ul>
        <ul class="nav navbar-nav navbar-right">
-         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Logged in as: <em>[% thisPerson.login %]</em></a></li>
-         <li><a href="/myPUB/admin"><span class="glyphicon glyphicon-exclamation-sign"></span> Admin</a></li>
-         <li><a href="/myPUB/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+         <li><a href ="myPUB/login"><span class="glyphicon glyphicon-log-out"></span> Login</a></li>
        </ul>
      </div><!-- /.navbar-collapse -->
    </nav>

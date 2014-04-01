@@ -2,6 +2,7 @@ package App::Catalog::Search;
 
 use App::Catalog::Helper;
 use Dancer ':syntax';
+use Catmandu::Util qw(:is :array);
 
 sub handle_request {
     my ($par) = @_;
@@ -174,6 +175,10 @@ sub handle_request {
 }
 
 get '/search' => sub {
+	if(!session->{role}){
+		forward '/myPUB/login', {error_message => "Please log in!"};
+	}
+	
     my $params = params;
     my $id = params->{id} ? params->{id} : "73476";    # for development only
     my $personInfo = h->getPerson($id);

@@ -43,6 +43,10 @@ sub authority {
     state $bag = Catmandu->store('authority')->bag;
 }
 
+sub account {
+	state $bag = Catmandu->store('authority')->bag('admin');
+}
+
 sub getPerson {
 	if($_[1] and $_[1] =~ /\d{1,}/){
 		$_[0]->authority->get($_[1]);
@@ -52,6 +56,13 @@ sub getPerson {
     } else {
     	$_[0]->authority->select("type", "person")->to_array;
     }
+}
+
+sub getAccount {
+	if($_[1]){
+		$_[0]->account->select("login", $_[1])->to_array;
+		#$_[0]->authority->select("luLdapId", qr/$_[1]/i)->to_array;
+	}
 }
 
 sub getDepartment {

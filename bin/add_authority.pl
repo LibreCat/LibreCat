@@ -27,7 +27,9 @@ my $default_style = $cfg->{citation_db}->{default_style};
 
 Catmandu->load;
 my $conf = Catmandu->config;
-my $bag= Catmandu->store('authority')->bag;
+my $adminbag = Catmandu->store('authority')->bag('admin');
+my $userbag = Catmandu->store('authority')->bag('user');
+my $deptbag = Catmandu->store('authority')->bag('department');
 my $host = $conf->{host};
 
 getopts('adp:');
@@ -126,13 +128,22 @@ sub getPersonData {
 	
 	my $mongo_data = ();
 	if($record->{_id}){
-		$mongo_data = $bag->get($record->{_id});
+		$mongo_data = $adminbag->get($record->{_id});
 		foreach my $key (keys %$record){
 			$mongo_data->{$key} = $record->{$key};
 		}
 	}
+	$fixer->fix($mongo_data) if $mongo_data;
+	$adminbag->add($mongo_data) if $mongo_data;
 	
-	my $id = $record->{_id};
+	
+	
+	my $user_data = ();
+	my $id = "";
+	if($record->{_id}){
+		$user_data = $userbag->get($record->{_id});
+		$id = $record->{_id};
+	}
 	
 	if($mongo_data){
 		# BIS API
@@ -153,20 +164,18 @@ sub getPersonData {
 		my $former = ($res2 =~ /<\/pevz:kontakte>/) ? "0" : "1";
 		my $nonexist = ($former and !$personName) ? "1" : "0";
 		my $forschend = ($res =~ /forschend="forschend"/) ? "1" : "0";
-	
-		$mongo_data->{bis}->{photo} = $photo;
-		$mongo_data->{bis}->{email} = $email;
-		$mongo_data->{bis}->{forschend} = $forschend;
-		$mongo_data->{bis}->{former} = $former;
-		$mongo_data->{bis}->{nonExist} = $nonexist;
-		$mongo_data->{bis}->{personTitle} = $personTitle;
 		
-		$fixer->fix($mongo_data);
+		$user_data->{_id} = $id;
+		$user_data->{bis}->{photo} = $photo;
+		$user_data->{bis}->{email} = $email;
+		$user_data->{bis}->{forschend} = $forschend;
+		$user_data->{bis}->{former} = $former;
+		$user_data->{bis}->{nonExist} = $nonexist;
+		$user_data->{bis}->{personTitle} = $personTitle;
 		
-		my ($sec,$min,$hour,$day,$mon,$year) = localtime(time);
-		$mongo_data->{dateLastChanged} = sprintf("%04d-%02d-%02d %02d:%02d:%02d", 1900+$year, 1+$mon, $day, $hour, $min, $sec);
+		$fixer->fix($user_data);
 		
-		$bag->add($mongo_data) if $mongo_data;
+		$userbag->add($user_data);
 	}
 	
 }
@@ -195,7 +204,7 @@ sub add_department {
 		my ($sec,$min,$hour,$day,$mon,$year) = localtime(time);
 		$dep_hash->{dateLastChanged} = sprintf("%04d-%02d-%02dT%02d:%02d:%02d", 1900+$year, 1+$mon, $day, $hour, $min, $sec);
 
-		$bag->add($dep_hash);
+		$deptbag->add($dep_hash);
 	}
 }
 
@@ -233,10 +242,10 @@ sub add_sfb882profile {
 	my $bisids = get("http://www.sfb882.uni-bielefeld.de/sites/default/pubsync/get_published_profiles.php");
 	my $bisjson = from_json($bisids);
 	foreach(@$bisjson){
-		my $record = $bag->get($_->[0]);
+		my $record = $userbag->get($_->[0]);
 		if($record and $record ne ""){
 			$record->{"sfb882_profile"} = "1";
-			$bag->add($record);
+			$userbag->add($record);
 			$record = "";
 		}
 	}

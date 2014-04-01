@@ -25,6 +25,16 @@ authority:
   package: MongoDB
   options:
     database_name: PUBAuthorityNew
+    bags:
+      admin:
+        plugins:
+          - Datestamps
+      user:
+        plugins:
+          - Datestamps
+      department:
+        plugins:
+          - Datestamps
 
 viewing:
   package: MongoDB
