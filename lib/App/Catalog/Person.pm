@@ -46,14 +46,14 @@ prefix '/person' => sub {
 	post '/authorid' => sub {
 
 		my $id = params->{id} ? params->{id} : "73476";
-		my $personInfo = h->getPerson($id);
+		my $person = h->getPerson($id);
 		my @identifier = qw(googleScholar researcher authorclaim scopus orcid github arxiv inspire);
 		
 		map{
-			$personInfo->{$_} = params->{$_} ? params->{$_} : ""
+			$person->{$_} = params->{$_} ? params->{$_} : ""
 			} @identifier;
 
-		my $bag = h->authorityUser->add($personInfo);
+		my $bag = h->authorityUser->add($person);
 		
 		forward '/';
 

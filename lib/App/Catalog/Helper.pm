@@ -5,6 +5,7 @@ use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
 use Catmandu::Util qw(:is :array trim);
 use Dancer qw(:syntax vars params request);
+use Sys::Hostname::Long;
 use Hash::Merge qw(merge);
 use Template;
 use Moo;
@@ -105,16 +106,11 @@ sub display_styles {
 }
 
 sub host {
-	#my $serverIP = request->address();
-	my $host = config->{host};
-	return $host;
+	return "http://" . hostname_long;
 }
 
 sub shost {
-	#my $serverIP = request->address();
-	my $host = config->{host};
-	$host =~ s/http/https/g;
-	return $host;
+	return "https://" . hostname_long;
 }
 
 sub search_publication {

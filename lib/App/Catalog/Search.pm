@@ -1,7 +1,8 @@
 package App::Catalog::Search;
 
-use App::Catalog::Helper;
 use Dancer ':syntax';
+use Catmandu::Util qw(:array);
+use App::Catalog::Helper;
 
 sub handle_request {
     my ($par) = @_;

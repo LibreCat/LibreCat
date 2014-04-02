@@ -32,7 +32,7 @@
     
   </ul>
   
-  <form action="/myPUB/save" method="post">
+  <form action="/myPUB/record/update" method="POST">
     <input type="hidden" name="recordType" value="journalArticle">
     <input type="hidden" name="recordOId" value="[% oId %]">
     

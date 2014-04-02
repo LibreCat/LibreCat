@@ -18,7 +18,7 @@ prefix '/record' => sub {
 		if($record){
 			my $type = $record->{documentType};
 			$record->{personNumber} = "73476";
-			$record->{xkeyword} = join('; ', @{$record->{keyword}});
+			#$record->{xkeyword} = join('; ', @{$record->{keyword}});
 			#my not needed here?
 			#my $tmpl = "backend/forms/" . h->config->{forms}->{publicationTypes}->{lc($type)}->{tmpl} . ".tt";
 			my $tmpl = "backend/forms/$type";
@@ -28,10 +28,10 @@ prefix '/record' => sub {
 
 	post '/update' => sub {
 		my $params = params;
+		to_dumper($params);
+		#h->update_publication($params);
 
-		h->update_publication($params);
-
-		forward '/';
+		#forward '/';
 	};
 
 	get 'return/:id' => sub {

@@ -1,0 +1,17 @@
+[% INCLUDE navbar.tt %]
+
+<!-- BEGIN admin/edit_account.tt -->
+
+<div class="row">
+
+<div class="col-md-9 col-md-offset-1">
+  [% IF fullName %]
+  <h3>[% fullName %]</h3>
+  [% ELSE %]
+  <h3>Add new account</h3>
+  [% END %]
+
+</div><!-- col-md-9 col-md-offset-1 -->
+</div><!-- row -->
+
+<!-- END admin/edit_account.tt -->

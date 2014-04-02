@@ -6,7 +6,6 @@ default:
       session:
         plugins:
           - Datestamps
-          - Versioning
 
 project:
   package: MongoDB

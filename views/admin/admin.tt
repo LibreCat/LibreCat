@@ -1,6 +1,6 @@
 [% INCLUDE navbar.tt %]
 
-<!-- BEGIN add_new.tt -->
+<!-- BEGIN admin.tt -->
 
 <div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->  
   <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->
@@ -10,15 +10,15 @@
     <div class="row"> <!-- row span11 authors, projects etc. -->
       <div class="col-md-10">
         <ul class="nav nav-tabs" id="myTab">
-          <li[% IF bag == "authorlist" %] class="active"[% END %]><a href="/myPUB/admin/authorityDB">Authority DB</a></li>
-          <li[% IF bag == "projects" %] class="active"[% END %]><a href="/myPUB/admin/projects">Projects</a></li>
+          <li[% IF bag == "authorlist" %] class="active"[% END %]><a href="/myPUB/admin/account">Accounts</a></li>
+          <li[% IF bag == "project" %] class="active"[% END %]><a href="/myPUB/admin/project">Projects</a></li>
           <li><a href="#imports">Imports</a></li>
         </ul>
       </div>
       
       <div class="col-md-11">
         <div class="tab-content">
-          <div class="tab-pane[% IF bag == "authorlist" %] active[% END %]" id="authorityDB">
+          <div class="tab-pane active" id="authorityDB">
             <div class="col-md-8">
               [% INCLUDE hits_people.tt %]
             </div>
@@ -48,4 +48,4 @@
   </div><!-- col-md-11 -->
 </div>
 
-<!-- END add_new.tt -->
+<!-- END admin.tt -->

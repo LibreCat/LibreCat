@@ -1,0 +1,8 @@
+[% INCLUDE navbar.tt %]
+
+<!-- BEGIN admin/account.tt -->
+
+
+
+
+<!-- END admin/account.tt -->

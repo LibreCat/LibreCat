@@ -12,6 +12,7 @@ use App::Catalog::Interface;
 use App::Catalog::Person;
 use App::Catalog::Publication;
 use App::Catalog::Search;
+use App::Catalog::Test;
 
 Catmandu->load;
 
@@ -22,10 +23,10 @@ Catmandu->load;
 # 	}
 # };
 
-any '/' => sub {
+get '/' => sub {
     my $params = params;
-
-    forward '/search', $params;
+    status '302';
+    redirect '/myPUB/search', $params;
 };
 
 get '/login' => sub {

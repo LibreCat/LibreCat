@@ -14,6 +14,10 @@ prefix '/admin' => sub {
 		template 'admin/admin';
 	};
 
+	# manage counts
+	get '/accounts' => sub {
+		template 'admin/account';
+	};
 	get '/accounts/search' => sub {};
 
 	get '/accounts/edit/:id' => sub {

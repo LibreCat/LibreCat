@@ -98,6 +98,27 @@ edit account with :id
 
 update account record
 
+---
+
+# Data model
+
+## basic fields
+_id, unique record identifier
+type, publication type
+title, title of the publication
+alternativeTitle, alt. title
+year, publishing year of the publication
+author/editor, ..of the publication
+fulltext, attach fultext to publication
+doi,
+ddc,
+keywords,
+relatedMaterial,
+department/project/researchGroup,
+issn
+
+
+
 
 
 

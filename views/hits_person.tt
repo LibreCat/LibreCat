@@ -33,7 +33,7 @@
   </div>
   
   <div class="col-md-1" style="text-align:right;">
-    <i><a href="/myPUB/edit/[% entry.oId %]"><span class="glyphicon glyphicon-pencil"></span></a></i>
+    <i><a href="/myPUB/record/edit/[% entry.oId %]"><span class="glyphicon glyphicon-pencil"></span></a></i>
   </div>
 </div>
 <div class="row">&nbsp;</div>

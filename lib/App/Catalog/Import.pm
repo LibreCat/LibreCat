@@ -7,7 +7,6 @@ post '/import' => sub {
 	my $params = params('body');
 	my $id = params->{'id'};
 	my $source = h->classifyId($id);
-	return "Source unknown" if !$source;
 	my $importer = Catmandu->importer($source);
 	my $pub =$importer->first;
 	my $type = $pub->{type};
