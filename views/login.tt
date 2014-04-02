@@ -17,6 +17,7 @@
         <label class="col-md-3 control-label" for="id_password">Password<span style="color:red"><b>*</b></span></label>
         <div class="col-md-5">
           <input type="password" class="form-control" name="pass" id="id_password" value="" placeholder="HRZ password" />
+          <input type="hidden" name="path" value="[% path %]"/>
         </div>
       </div>
       <div class="form-group">

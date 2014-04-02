@@ -18,44 +18,51 @@ use Authentication::Authenticate;
 Catmandu->load;
 
 hook 'before' => sub {
- 	if( !session('user') && request->path_info !~ m{login} ) {
- 		var requested_path => request->path_info;
- 		request->path_info('/myPUB/login');
- 		#redirect '/myPUB/login';
- 	}
+    if ( !session('user') && request->path_info !~ m{login} ) {
+        var requested_path => request->path_info;
+        request->path_info('/myPUB/login');
+    }
 };
 
 get '/' => sub {
     my $params = params;
 
-    forward 'search', $params;
+    forward '/myPUB/search', $params;
 };
 
 get '/login' => sub {
-	my $error;
-	$error->{error_message} = params->{error_message} if params->{error_message};
-    template 'login', $error;
+    my $data = { path => vars->{requested_path} };
+    $data->{error_message} = params->{error_message} ||= '';
+    template 'login', $data;
 };
 
 post '/login' => sub {
-	my $bag= Catmandu->store('authority')->bag;
-	my $user = h->getAccount(params->{user});
-	
-	if($user){
-		#username is in PUB
-		if (verifyUser(params->{user}, params->{pass})) {
-			session role => $user->[0]->{isSuperAdminAccount} ? "superAdmin" : "user";
-			session user => $user->[0]->{login};
-			session personNumber => $user->[0]->{personNumber};
-			redirect '/myPUB/search';
-		}
-		else {
-			forward '/myPUB/login', {error_message => "Wrong username or password!"}, {method => 'GET'};
-		}
-	}
-	else {
-		forward '/myPUB/login', {error_message => "No such user in PUB. Please register first!"}, {method => 'GET'};
-	}
+    my $bag  = Catmandu->store('authority')->bag;
+    my $user = h->getAccount( params->{user} );
+
+    if ($user) {
+
+        #username is in PUB
+        if ( verifyUser( params->{user}, params->{pass} ) ) {
+            session role => $user->[0]->{isSuperAdminAccount}
+                ? "superAdmin"
+                : "user";
+            session user         => $user->[0]->{login};
+            session personNumber => $user->[0]->{personNumber};
+            redirect params->{path} || '/myPUB/search';
+        }
+        else {
+            forward '/myPUB/login',
+                { error_message => "Wrong username or password!" },
+                { method        => 'GET' };
+        }
+    }
+    else {
+        forward '/myPUB/login',
+            { error_message =>
+                "No such user in PUB. Please register first!" },
+            { method => 'GET' };
+    }
 };
 
 get '/logout' => sub {

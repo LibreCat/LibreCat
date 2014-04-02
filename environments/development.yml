@@ -4,12 +4,13 @@
 # console: log messages to STDOUT (your console where you started the
 #          application server)
 # file:    log message to a file in log/
-logger: "console"
+logger: "file"
+log_file: "pub_backend.log"
 
 # the log level for this environment
 # core is the lowest, it shows Dancer's core log messages as well as yours
 # (debug, info, warning and error)
-log: "core"
+log: "debug"
 
 # should Dancer consider warnings as critical errors?
 warnings: 1
@@ -25,5 +26,3 @@ show_errors: 1
 # DO NOT EVER USE THIS FEATURE IN PRODUCTION
 # OR TINY KITTENS SHALL DIE WITH LOTS OF SUFFERING
 auto_reload: 0
-
-session: "YAML"
