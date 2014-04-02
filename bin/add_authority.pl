@@ -54,12 +54,16 @@ sub getPersonData {
 		'repair_name_array("hasDepartmentRights")',
 		'repair_name_array("hasDependent")',
 		'repair_name_array("isAffiliatedWith")',
-		'add_field("type", "person")',
 		'move_field("oId", "sbcatId")',
 		'remove_field("isOfType")',
 		]);
 		
 	my $sbcatPerson = shift;
+	
+	my $mongo_data = ();
+	my $user_data = ();
+	my $citationStyle;
+	my $sortDirection;
 	
 	my $sbcatAccount = $luur->getRelatedObjects(relation => "isOwnedBy", object2 => $sbcatPerson);
 	
@@ -74,7 +78,15 @@ sub getPersonData {
 	foreach(@{$externalRelations}){
 		#$record->{oId} = $_->{erOId};
 		my $rel = $luur->getObjectInfo($_->{erRelationOId});
-		$record->{$rel->{oInternalName}} = $_->{erValue};
+		if($rel->{oInternalName} eq "sortDirection"){
+			$sortDirection = $_->{erValue};
+		}
+		elsif($rel->{oInternalName} eq "citationStyle"){
+			$citationStyle = $_->{erValue};
+		}
+		else {
+			$record->{$rel->{oInternalName}} = $_->{erValue};
+		}
 	}
 	
 	foreach(@{$internalRelations}){
@@ -126,7 +138,6 @@ sub getPersonData {
 	}
 	$record->{_id} = $record->{personNumber};
 	
-	my $mongo_data = ();
 	if($record->{_id}){
 		$mongo_data = $adminbag->get($record->{_id});
 		foreach my $key (keys %$record){
@@ -138,7 +149,6 @@ sub getPersonData {
 	
 	
 	
-	my $user_data = ();
 	my $id = "";
 	if($record->{_id}){
 		$user_data = $userbag->get($record->{_id});
@@ -146,6 +156,8 @@ sub getPersonData {
 	}
 	
 	if($mongo_data){
+		$user_data->{citationStyle} = $citationStyle;
+		$user_data->{sortDirection} = $sortDirection;
 		# BIS API
 		my $base = 'http://ekvv.uni-bielefeld.de/ws/pevz/PersonKerndaten.xml?';
 		my $base2 = 'http://ekvv.uni-bielefeld.de/ws/pevz/PersonKontaktdaten.xml?';
@@ -198,7 +210,6 @@ sub add_department {
 		$dep_hash->{oId} = $_->{organizationNumber};
 		$dep_hash->{name} = $_->{name}->[0]->{content}; #forcearray on "name" makes this possible
 		$dep_hash->{name_lc} = lc $_->{name}->[0]->{content};
-		$dep_hash->{type} = "organization";
 		$dep_hash->{parent} = $_->{parent} if $_->{parent} ne "0";
 		
 		my ($sec,$min,$hour,$day,$mon,$year) = localtime(time);
