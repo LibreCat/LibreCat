@@ -17,10 +17,11 @@ use Authentication::Authenticate;
 
 Catmandu->load;
 
-hook_before => sub {
+hook 'before' => sub {
  	if( !session('user') && request->path_info !~ m{login} ) {
  		var requested_path => request->path_info;
- 		request->path_info('/login');
+ 		request->path_info('/myPUB/login');
+ 		#redirect '/myPUB/login';
  	}
 };
 
