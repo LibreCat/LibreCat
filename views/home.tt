@@ -2,8 +2,7 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% bisId = qp.id ? qp.id : "73476" %]
-[% thisPerson = h.getPerson(bisId) %]
+[% thisPerson = h.getPerson(session.personNumber) %]
 
 [% INCLUDE navbar.tt %]
 

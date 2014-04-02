@@ -175,12 +175,12 @@ sub handle_request {
 }
 
 get '/search' => sub {
-	if(!session->{role}){
-		forward '/myPUB/login', {error_message => "Please log in!"};
-	}
+	#if(!session->{role}){
+	#	forward '/myPUB/login';
+	#}
 	
     my $params = params;
-    my $id = params->{id} ? params->{id} : "73476";    # for development only
+    my $id = session->{personNumber};
     my $personInfo = h->getPerson($id);
 
     $params->{q} = "person=$id AND hide<>$id" if !$params->{q};

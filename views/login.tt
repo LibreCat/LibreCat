@@ -2,9 +2,8 @@
 
 <!-- BEGIN login.tt -->
 
-<p class="errormessage">[% error_message %]</p>
-
 <div class="row">
+  <p class="errormessage">[% error_message %]</p>
   <div class="col-md-6 col-md-offset-2 well loginframe" style="background:white;">
     <form action="/myPUB/login" method="post" class="form-horizontal">
       <h4><strong>Login to PUB </strong><span style="font-size:10pt;font-weight:normal;">&nbsp;&nbsp;(Not registered yet? <strong><a href="[% luurBase %]/registration?func=getRegistered"><b>Register for PUB</b></a></strong>)</span></h4>
