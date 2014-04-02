@@ -40,30 +40,52 @@ sub department {
 	state $bag = Catmandu->store('search')->bag('department');
 }
 
-sub authority {
-    state $bag = Catmandu->store('authority')->bag;
+sub authority_user {
+    state $bag = Catmandu->store('authority')->bag('user');
+}
+
+sub authority_admin {
+	state $bag = Catmandu->store('authority')->bag('admin');
+}
+
+sub authority_department {
+	state $bag = Catmandu->store('authority')->bag('department');
 }
 
 sub getPerson {
+	my $user;
+	my $admin;
 	if($_[1] and $_[1] =~ /\d{1,}/){
-		$_[0]->authority->get($_[1]);
+		$user = $_[0]->authority_user->get($_[1]);
+		$admin = $_[0]->authority_admin->get($_[1]);
+		
+		my @fields = qw(fullName surname givenName email isAffiliatedWith);
+		map {
+			$user->{$_} = $admin->{$_};
+		} @fields;
+		$user;
 	}
-    elsif($_[1]) {
-    	$_[0]->authority->select("fullName", qr/$_[1]/i)->to_array;
-    } else {
-    	$_[0]->authority->select("type", "person")->to_array;
-    }
+}
+
+sub getAccount {
+	if($_[1]){# and $_[1] =~ /\w{1,}/){
+		$_[0]->authority_admin->select("login", $_[1])->to_array;
+		#$_[0]->authority_admin->select("luLdapId", $_[1])->to_array;
+	}
+	#else {
+	#	$_[0]->authority_admin->to_array;
+	#}
 }
 
 sub getDepartment {
 	if($_[1] =~ /\d{1,}/){
-		$_[0]->authority->get($_[1]);
+		$_[0]->authority_department->get($_[1]);
 	}
 	elsif($_[1] ne "") {
-		$_[0]->authority->select("name_lc", lc $_[1])->to_array;
+		$_[0]->authority_department->select("name_lc", lc $_[1])->to_array;
 	}
 	else{
-		$_[0]->authority->select("type", "organization")->to_array;
+		$_[0]->authority_department->to_array;
 	}
 }
 

@@ -1,8 +1,8 @@
 package App::Catalog::Search;
 
 use Dancer ':syntax';
-use Catmandu::Util qw(:array);
 use App::Catalog::Helper;
+use Catmandu::Util qw(:is :array);
 
 sub handle_request {
     my ($par) = @_;
@@ -175,8 +175,12 @@ sub handle_request {
 }
 
 get '/search' => sub {
+	#if(!session->{role}){
+	#	forward '/myPUB/login';
+	#}
+	
     my $params = params;
-    my $id = params->{id} ? params->{id} : "73476";    # for development only
+    my $id = session->{personNumber};
     my $personInfo = h->getPerson($id);
 
     $params->{q} = "person=$id AND hide<>$id" if !$params->{q};
