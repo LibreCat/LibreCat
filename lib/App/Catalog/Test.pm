@@ -11,6 +11,10 @@ prefix '/test' => sub {
 	get '/host' => sub {
 		return h->host, h->shost;
 	};
+	
+	get '/search' => sub {
+		return to_dumper h->search_publication({q => params->{q}});
+	};
 };
 
 1;
