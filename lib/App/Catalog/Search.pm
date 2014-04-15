@@ -181,9 +181,13 @@ get '/search' => sub {
 	
     my $params = params;
     my $id = session->{personNumber};
+    my $role = session->{role};
     my $personInfo = h->getPerson($id);
-
-    $params->{q} = "person=$id AND hide<>$id" if !$params->{q};
+    
+    if($role ne "superAdmin"){
+    	$params->{q} .= "person=$id AND hide<>$id";
+    }
+    
     $params->{limit} = h->config->{store}->{maximum_page_size}
         if !$params->{limit};
 
