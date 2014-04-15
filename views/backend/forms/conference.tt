@@ -20,9 +20,11 @@
     
   </ul>
   
-  <form action="/myPUB/save" method="post">
-    <input type="hidden" name="recordType" value="conference">
-    <input type="hidden" name="recordOId" value="[% oId %]">
+  <form action="/myPUB/record/update" method="POST">
+    <input type="hidden" name="documentType" value="conference"/>
+    <input type="hidden" name="oId" value="[% oId %]"/>
+    <input type="hidden" name="_id" value="[% oId %]"/>
+    <input type="hidden" name="submissionStatus" value="unsubmitted"/>
     
     <div class="tab tab-content edit-form">
     
