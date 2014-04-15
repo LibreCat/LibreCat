@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="abstract">
-      {% fields.supplementaryFields.abstracts.label %}
+      {% fields.supplementaryFields.abstract.label %}
     </label>
   </div>
   <div class="col-md-10 form-group" id="abstract">
@@ -11,7 +11,7 @@
     </span>
     <span class="col-md-6">
       <label for="id_ab_abLanguageOId0">
-        {% fields.supplementaryFields.abstracts.label2 %}
+        {% fields.supplementaryFields.abstract.label2 %}
       </label>
     </span>
     <span class="form-group col-md-3">

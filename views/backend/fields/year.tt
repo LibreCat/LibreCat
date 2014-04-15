@@ -1,12 +1,12 @@
 <div class="row innerrow">
   <div class="col-md-2">
-    <label for="id_publishingYear">
+    <label for="id_year">
       {% fields.basicFields.year.label %}{% IF fields.basicFields.year.mandatory %}<span class="starMandatory">*</span>{% END %}
     </label>
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-3">
-      <input type="text" name="publishingYear" id="id_publishingYear" value="[% publishingYear %]" maxlength="4" placeholder="{% fields.basicFields.year.placeholder %}" class="form-control{% IF fields.basicFields.year.mandatory %} required{% END %}">
+      <input type="text" name="year" id="id_year" value="[% year %]" maxlength="4" placeholder="{% fields.basicFields.year.placeholder %}" class="form-control{% IF fields.basicFields.year.mandatory %} required{% END %}">
     </span>
   </div>
 </div>
