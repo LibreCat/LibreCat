@@ -2,6 +2,7 @@ package App::Catalog::Publication;
 
 use App::Catalog::Helper;
 use Dancer ':syntax';
+#use JSON;
 
 prefix '/record' => sub {
 
@@ -35,29 +36,35 @@ prefix '/record' => sub {
 
 	post '/update' => sub {
 		my $params = params;
-		h->update_publication($params);
+		my $author;
+		my $test;
+		if(ref $params->{author} ne "ARRAY"){
+			push @$author, $params->{author};
+		}
+		else{
+			$author = $params->{author};
+		}
+		foreach(@{$author}){
+			push @$test, from_json($_);
+		}
+		$params->{author} = $test;
+		#return to_dumper $params;
+		if($params->{finalSubmit} and $params->{finalSubmit} eq "recPublish"){
+			$params->{submissionStatus} = "public";
+		}
+		my $result = h->update_publication($params);
+		#return to_dumper $result;
 
 		redirect '/myPUB';
 	};
 
 	get '/return/:id' => sub {
-	# NEEDS TESTING !!!
 		my $id = params->{id};
 		my $rec = h->publications->get($id);
 		$rec->{submissionStatus} = "returned";
+		h->update_publication($rec);
 
-		forward '/update', $rec;
-	};
-
-	get '/publish/:id' => sub {
-    # NEEDS TESTING !!!
-		my $id = params->{id};
-		my $rec = h->publications->get($id);
-		$rec->{submissionStatus} = "public";
-		
-		# Add routine to add record to public index !!!
-
-		forward '/update', $rec;
+		redirect '/myPUB/search';
 	};
 
 	# deleting records, for admins only
