@@ -45,17 +45,16 @@ prefix '/person' => sub {
 
 	post '/authorid' => sub {
 
-		my $id = params->{id} ? params->{id} : "73476";
-		my $person = h->getPerson($id);
-		my @identifier = qw(googleScholar researcher authorclaim scopus orcid github arxiv inspire);
+		my $person = h->authority_user->get(params->{_id});
+		my @identifier = keys h->config->{lists}->{author_id};
 		
 		map{
 			$person->{$_} = params->{$_} ? params->{$_} : ""
 			} @identifier;
 
-		my $bag = h->authorityUser->add($person);
+		my $bag = h->authority_user->add($person);
 		
-		forward '/';
+		redirect '/myPUB';
 
 	};
 

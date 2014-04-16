@@ -17,15 +17,15 @@
       <br /><br />
       
       <div class="row">
-      <form action="/myPUB/person/authorid" method="post">
-      <input type="hidden" name="id" value="[% qp.item('id') %]" />
+      <form action="/myPUB/person/authorid" method="POST">
+      <input type="hidden" name="_id" value="[% session.personNmmber %]" />
       [% IF !(thisPerson.googleScholarId OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcidId OR thisPerson.githubId OR thisPerson.arxivId OR thisPerson.inspireId) %]
       <div class="col-md-12">
         <span class="text-muted">No Author IDs set.</span>&nbsp;
         <a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
       </div>
       [% END %]
-      
+
       [% FOREACH  k IN h.config.lists.author_id.keys.sort %]
       [% IF thisPerson.$k %]
       <span class="authorIds">
