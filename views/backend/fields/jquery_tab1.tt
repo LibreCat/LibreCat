@@ -194,11 +194,11 @@ $(document).on('click', '.author', function(){
 
 
 // Select author, editor, translator
-function selectAuthedtrans(element){
-  var selected = $(element).val();
-  var index = $(element).attr('id').replace('authedtrans_','');
-  $('#id_au_type_'+index).val(selected);
-}
+//function selectAuthedtrans(element){
+//  var selected = $(element).val();
+//  var index = $(element).attr('id').replace('authedtrans_','');
+//  $('#id_au_type_'+index).val(selected);
+//}
 
 
 // Select button (dept, proj, rg)
