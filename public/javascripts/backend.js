@@ -59,16 +59,16 @@ function linkPevz(element){
 				var title = "";
 				
 				$.each(data, function(key, value){
-					if(key == "pevzId"){
+					if(key == "personNumber"){
 						pevzId = value;
 					}
 					if(key == "sbcatId"){
 						sbcatId = value;
 					}
-					if(key == "firstName"){
+					if(key == "givenName"){
 						firstName = value;
 					}
-					if(key == "lastName"){
+					if(key == "surname"){
 						lastName = value;
 					}
 					if(key == "title"){

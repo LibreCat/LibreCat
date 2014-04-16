@@ -7,7 +7,17 @@ prefix '/record' => sub {
 
 	get '/new' => sub {
 		my $type = params->{type} ||= '';
-		($type) ? (template "backend/forms/$type") : template 'add_new';
+		
+		if($type){
+			my $bag = h->bag->get('1');
+			my $id = $bag->{"latest"};
+			$id++;
+			$bag = h->bag->add({_id=> "1", latest => $id});
+			template "backend/forms/$type", {oId => $id};
+		}
+		else {
+			template 'add_new';
+		}
 	};
 
 	# show the record, has user permission to see it?
@@ -17,10 +27,7 @@ prefix '/record' => sub {
 		my $record = h->publications->get($id);
 		if($record){
 			my $type = $record->{documentType};
-			$record->{personNumber} = "73476";
-			#$record->{xkeyword} = join('; ', @{$record->{keyword}});
-			#my not needed here?
-			#my $tmpl = "backend/forms/" . h->config->{forms}->{publicationTypes}->{lc($type)}->{tmpl} . ".tt";
+			$record->{personNumber} = session->{personNumber};
 			my $tmpl = "backend/forms/$type";
 			template $tmpl, $record;
 		}
@@ -28,28 +35,37 @@ prefix '/record' => sub {
 
 	post '/update' => sub {
 		my $params = params;
-		to_dumper($params);
-		#h->update_publication($params);
+		h->update_publication($params);
 
-		#forward '/';
+		redirect '/myPUB';
 	};
 
-	get 'return/:id' => sub {
-		my $id = params 'id';
+	get '/return/:id' => sub {
+	# NEEDS TESTING !!!
+		my $id = params->{id};
+		my $rec = h->publications->get($id);
+		$rec->{submissionStatus} = "returned";
 
-		forward '/update', {_id => $id, submissionStatus => 'returned'};
+		forward '/update', $rec;
 	};
 
-	get 'publish/:id' => sub {
-		my $id = params 'id';
+	get '/publish/:id' => sub {
+    # NEEDS TESTING !!!
+		my $id = params->{id};
+		my $rec = h->publications->get($id);
+		$rec->{submissionStatus} = "public";
+		
+		# Add routine to add record to public index !!!
 
-		forward '/update', {_id => $id, submissionStatus => 'public'};
+		forward '/update', $rec;
 	};
 
 	# deleting records, for admins only
-	del 'delete/:id' => sub {
-		my $id = params 'id';
-		h->bag->delete($id);
+	get '/delete/:id' => sub {
+		my $id = params->{id};
+		h->publications->delete($id);
+		h->publications->commit;
+		redirect '/myPUB/search';
 	};
 
 };

@@ -9,22 +9,27 @@
     <span class="form-group col-md-2">
       <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
     </span>
-    [% IF submissionStatus != "public" %]
-    <span class="form-group col-md-2">
-      <button type="submit" class="btn btn-default" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
+    [% IF submissionStatus == "public" %]
+    <span class="form-gourp col-md-2">
+      <a class="btn btn-default" href="/myPUB/record/return/[% oId %]" onClick="return confirm('Are you sure you want to return this record?'):" name="return" value="recReturn">Return <img src="/images/edit-withdraw.png"/></a>
     </span>
+    [% ELSEIF submissionStatus != "public" %]
+      [% IF session.role == "superAdmin" %]
+      <span class="form-group col-md-2">
+        <a class="btn btn-default" href="/myPUB/record/delete/[% oId %]" onClick="return confirm('Are you sure you want to delete this record?');" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></a>
+      </span>
+      [% ELSE %]
+      <span class="form-group col-md-2">
+        <a class="btn btn-default" href="/myPUB/record/return/[% oId %]" onClick="return confirm('Are you sure you want to return this record?'):" name="return" value="recReturn">Return <img src="/images/edit-withdraw.png"/></a>
+      </span>
+      [% END %]
     [% END %]
-    [% IF submissionStatus == "public" AND userRole == "superAdmin" %]
     <span class="form-group col-md-2">
-      <button type="submit" class="btn btn-default" name="withdrawSubmit" value="Return">Return <img src="/images/edit-withdraw.png"/></button>
-    </span>
-    [% END %]
-    <span class="form-group col-md-2">
-      <button type="submit" name="finalSubmit" value="rdSave" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
+      <button type="submit" name="finalSubmit" value="recSave" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
     </span>
     [% IF (submissionStatus != "public" AND submissionStatus != "submitted") %]
     <span class="form-group col-md-2">
-      <button type="submit" name="finalSubmit" value="rdPublish" class="btn btn-default">Publish <img src="/images/edit-submit.png"/></button>
+      <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-default">Publish <img src="/images/edit-submit.png"/></button>
     </span>
     [% END %]
   </div>

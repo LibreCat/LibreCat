@@ -20,6 +20,8 @@
       <span style="font-weight:bold;color:red;">Invalid</span>
     [% CASE "pdeleted" %]
       <span style="font-weight:bold;color:red;">Deleted</span>
+    [% CASE "new" %]
+      <span style="font-weight:bold;color:gray;">New/<br />Private</span>
     [% END %]
   </div> 
   <div class="col-md-10">
