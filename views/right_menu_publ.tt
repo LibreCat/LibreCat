@@ -31,6 +31,9 @@
     <h5>Filter Publications</h5>
 
     [% IF qp.keys.0 %]
+    [% IF qp.submissionstatus != "" %]
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, submissionstatus="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> submissionstatus: [% qp.submissionstatus %]</p>
+    [% END %]
     [% IF qp.publicationtype.0 %]
       [% FOREACH publtype IN qp.publicationtype %]
         <p class="text-muted"><a href="[% h.newuri_for("$path", qp, publicationtype="del_$publtype") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> publicationtype: [% publtype %]</p>
