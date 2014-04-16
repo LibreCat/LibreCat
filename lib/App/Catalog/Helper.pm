@@ -507,14 +507,11 @@ sub embed_params {
 
 sub update_publication {
 	my ($self, $new) = @_;
-	my $old = $self->publications->get($new->{_id});
+	#my $old = $self->publications->get($new->{_id});
 	#my $merge = Hash::Merge->new( 'LEFT_PRECEDENT' );
     #my %store_rec = %{ $merge->merge( $new, $old ) };
 	#$self->validate(\%store_rec);
 	#$self->bag->add(\%store_rec);
-	if($new->{finalSubmit} eq "recPublish"){
-		$new->{submissionStatus} = "public";
-	}
 	$self->publications->add($new);
 	$self->publications->commit;
 }
