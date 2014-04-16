@@ -4,7 +4,7 @@
     <div class="col-md-2">
       <label for="author">
       {% IF fields.basicFields.authors.label.keys %}
-        <select class="authedtrans" onchange="selectAuthedtrans(this);" id="authedtrans_0">
+        <select ng-model="type_0" class="authedtrans">
           {% FOREACH creator IN fields.basicFields.authors.label.keys.sort %}
           <option value="{% fields.basicFields.authors.label.$creator %}">{% creator %}</option>
           {% END %}
@@ -16,24 +16,19 @@
     </div>
     <div class="col-md-10" id="author">
       <div class="form-group">
-        <input type="hidden" name="au_auLuAuthorOId_0" id="id_au_auLuAuthorOId_0" value=""/>
-        <input type="hidden" name="au_auPersonNumber_0" id="id_au_auPersonNumber_0" value="" />
-        <input name="au_auLuLdapId_0" type="hidden" value="" />
-        <input name="au_auEndDate_0" type="hidden" value="" />
-        <input name="au_origGivenName_0" id="id_au_origGivenName_0" type="hidden" />
-        <input name="au_origLastName_0" id="id_au_origLastName_0" type="hidden" />
-        <input name="au_origTitle_0" id="id_au_origTitle_0" type="hidden" />
-        <input name="au_type_0" id="id_au_type_0" type="hidden" />
+        <input type="hidden" ng-model="personNumber_0" value="" />
+        <input ng-model="ldapId_0" type="hidden" value="" />
             
         <span class="form-group col-md-3">
-          <input type="text" name="au_auGivenName_0" placeholder="{% fields.basicFields.authors.firstName.placeholder %}" id="id_au_auGivenName_0" class="form-control" value="" />
+          <input type="text" ng-model="givenName_0" placeholder="{% fields.basicFields.authors.firstName.placeholder %}" class="form-control" value="" />
         </span>
         <span class="form-group col-md-4">
-          <input type="text" name="au_auSurname_0" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" id="id_au_auSurname_0" class="form-control" value="" />
+          <input type="text" ng-model="surname_0" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" class="form-control" value="" />
         </span>
         <span class="form-group col-md-2">
-          <input type="text" name="au_auPersonTitle_0" placeholder="{% fields.basicFields.authors.title.placeholder %}" id="id_au_auPersonTitle_0" class="form-control" />
+          <input type="text" ng-model="jobTitle_0" placeholder="{% fields.basicFields.authors.title.placeholder %}" class="form-control" />
         </span>
+        <input type="hidden" name="author" value='{"surname":"{{surname_0}}", "givenName":"{{givenName_0}}", "fullName":"{{surname_0}}, {{givenName_0}}", "personType":"{{type_0}}", "personNumber":"{{personNumber_0}}", "ldapId":"{{ldapId_0}}"}'>
         
         <span class="col-md-1">
           <span class="glyphicon glyphicon-minus author"></span>
@@ -55,7 +50,7 @@
     <div class="col-md-2">
       <label for="author">
       {% IF fields.basicFields.authors.label.keys %}
-        <select class="authedtrans" onchange="selectAuthedtrans(this);" id="authedtrans_[% loop.index %]">
+        <select ng-model="type_[% loop.index %]" class="authedtrans">
           {% FOREACH creator IN fields.basicFields.authors.label.keys.sort %}
           <option value="{% fields.basicFields.authors.label.$creator %}"{% IF name.type.typeName == creator %} selected="selected"{% END %}>{% creator %}</option>
           {% END %}
@@ -67,24 +62,19 @@
     </div>
     <div class="col-md-10" id="author">
       <div class="form-group">
-        <input type="hidden" name="au_auLuAuthorOId_[% loop.index %]" id="id_au_auLuAuthorOId_[% loop.index %]" value="[% name.oId %]"/>
-        <input type="hidden" name="au_auPersonNumber_[% loop.index %]" id="id_au_auPersonNumber_[% loop.index %]" value="[% name.personNumber %]" />
-        <input name="au_auLuLdapId_[% loop.index %]" type="hidden" value="[% name.luLdapId %]" />
-        <input name="au_auEndDate_[% loop.index %]" type="hidden" value="[% name.auEndDate %]" />
-        <input name="au_origGivenName_[% loop.index %]" id="id_au_origGivenName_[% loop.index %]" type="hidden" />
-        <input name="au_origLastName_[% loop.index %]" id="id_au_origLastName_[% loop.index %]" type="hidden" />
-        <input name="au_origTitle_[% loop.index %]" id="id_au_origTitle_[% loop.index %]" type="hidden" />
-        <input name="au_type_[% loop.index %]" id="id_au_type_[% loop.index %]" type="hidden" />
-
+        <input type="hidden" ng-model="personNumber_[% loop.index %]" value="" />
+        <input ng-model="ldapId_[% loop.index %]" type="hidden" value="" />
+            
         <span class="form-group col-md-3">
-          <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="{% fields.basicFields.authors.firstName.placeholder %}" id="id_au_auGivenName_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.givenName %]" class="form-control"/>
+          <input type="text" ng-model="givenName_[% loop.index %]" placeholder="{% fields.basicFields.authors.firstName.placeholder %}" class="form-control" value="[% name.givenName %]" />
         </span>
         <span class="form-group col-md-4">
-          <input type="text" name="au_auSurname_[% loop.index %]" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" id="id_au_auSurname_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.surname %]" class="form-control" />
+          <input type="text" ng-model="surname_[% loop.index %]" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" class="form-control" value="[% name.surname %]" />
         </span>
         <span class="form-group col-md-2">
-          <input type="text" name="au_auPersonTitle_[% loop.index %]" placeholder="{% fields.basicFields.authors.title.placeholder %}" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.personTitle || name.jobTitle %]" class="form-control"/>
+          <input type="text" ng-model="jobTitle_[% loop.index %]" placeholder="{% fields.basicFields.authors.title.placeholder %}" class="form-control" value="[% name.jobTitle %]" />
         </span>
+        <input type="hidden" name="author" value='{"surname":"{{surname_[% loop.index %]}}", "givenName":"{{givenName_[% loop.index %]}}", "fullName":"{{surname_[% loop.index %]}}, {{givenName_[% loop.index %]}}", "personType":"{{type_[% loop.index %]}}", "personNumber":"{{personNumber_[% loop.index %]}}", "ldapId":"{{ldapId_[% loop.index %]}}"}'>
             
         <span class="col-md-1">
           [% IF loop.index == 0 %]

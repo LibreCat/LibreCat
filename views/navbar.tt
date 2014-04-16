@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
   <head>
     <title>PUB - Publication at Bielefeld University</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +20,7 @@
     <script src="/javascripts/dropzone3.js"></script>
     <script type="text/javascript" src="/javascripts/scripts.js"></script>
     <script type="text/javascript" src="/javascripts/backend.js"></script>
+    <script type="text/javascript" src="/javascripts/angular-1.2.14.min.js"></script>
   </head>
   <body>
 
