@@ -25,86 +25,20 @@
         <a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
       </div>
       [% END %]
-      [% IF thisPerson.googleScholarId %]
+      
+      [% FOREACH  k IN h.config.lists.author_id.keys.sort %]
+      [% IF thisPerson.$k %]
       <span class="authorIds">
-        <div class="col-md-4">Google Scholar Profile:</div>
-        <div class="col-md-7"><a href="http://scholar.google.de/citations?user=[% thisPerson.googleScholarId %]" target="_blank">[% thisPerson.googleScholarId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
+        <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
+        <div class="col-md-7"><a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]" target="_blank">[% thisPerson.$k %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
       </span>
-      [% END %]
+      [% END %]<!-- end if -->
       <span class="authorIds_input" style="display:none;">
-        <div class="col-md-4">Google Scholar Profile:</div>
-        <div class="col-md-7"><input type="text" class="form-control input-sm" name="googlescholar" id="googlescholar_input" value="[% thisPerson.googleScholarId ? thisPerson.googleScholarId : "" %]" /></div>
+        <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
+        <div class="col-md-7"><input type="text" class="form-control input-sm" name="[% k %]" id="[% k %]_input" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
       </span>
-      [% IF thisPerson.researcherId %]
-      <span class="authorIds">
-        <div class="col-md-4">Researcher ID:</div>
-        <div class="col-md-7"><a href="http://www.researcherid.com/rid/[% thisPerson.researcherId %]" target="_blank">[% thisPerson.researcherId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
-      </span>
-      [% END %]
-      <span class="authorIds_input" style="display:none;">
-        <div class="col-md-4">Researcher ID:</div>
-        <div class="col-md-7"><input type="text" class="form-control input-sm" name="researcherid" id="researcherid_input" value="[% thisPerson.researcherId ? thisPerson.researcherId : "" %]" /></div>
-      </span>
-      [% IF thisPerson.authorClaim %]
-      <span class="authorIds">
-        <div class="col-md-4">Author Claim:</div>
-        <div class="col-md-7"><a href="http://authorclaim.org/profile/[% thisPerson.authorClaim %]" target="_blank">[% thisPerson.authorClaim %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
-      </span>
-      [% END %]
-      <span class="authorIds_input" style="display:none;">
-        <div class="col-md-4">Author Claim:</div>
-        <div class="col-md-7"><input type="text" class="form-control input-sm" name="authorclaim" id="authorclaim_input" value="[% thisPerson.authorClaim ? thisPerson.authorClaim : "" %]" /></div>
-      </span>
-      [% IF thisPerson.scopusId %]
-      <span class="authorIds">
-        <div class="col-md-4">Scopus Author ID:</div>
-        <div class="col-md-7"><a href="http://www.scopus.com/authid/detail.url?authorId=[% thisPerson.scopusId %]" target="_blank">[% thisPerson.scopusId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
-      </span>
-      [% END %]
-      <span class="authorIds_input" style="display:none;">
-        <div class="col-md-4">Scopus Author ID:</div>
-        <div class="col-md-7"><input type="text" class="form-control input-sm" name="scopusid" id="scopusid_input" value="[% thisPerson.scopusId ? thisPerson.scopusId : "" %]" /></div>
-      </span>
-      [% IF thisPerson.orcidId %]
-      <span class="authorIds">
-        <div class="col-md-4">ORCID:</div>
-        <div class="col-md-7"><a href="http://orcid.org/[% thisPerson.orcidId %]" target="_blank">[% thisPerson.orcidId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
-      </span>
-      [% END %]
-      <span class="authorIds_input" style="display:none;">
-        <div class="col-md-4">ORCID:</div>
-        <div class="col-md-7"><input type="text" class="form-control input-sm" name="orcid" id="orcid_input" value="[% thisPerson.orcidId ? thisPerson.orcidId : "" %]" /></div>
-      </span>
-      [% IF thisPerson.githubId %]
-      <span class="authorIds">
-        <div class="col-md-4">GitHub:</div>
-        <div class="col-md-7"><a href="http://github.com/[% thisPerson.githubId %]" target="_blank">[% thisPerson.githubId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
-      </span>
-      [% END %]
-      <span class="authorIds_input" style="display:none;">
-        <div class="col-md-4">GitHub:</div>
-        <div class="col-md-7"><input type="text" class="form-control input-sm" name="githubid" id="githubid_input" value="[% thisPerson.githubId ? thisPerson.githubId : "" %]" /></div>
-      </span>
-      [% IF thisPerson.arxivId %]
-      <span class="authorIds">
-        <div class="col-md-4">arXiv:</div>
-        <div class="col-md-7"><a href="http://arxiv.org/a/[% thisPerson.arxivId %]" target="_blank">[% thisPerson.arxivId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
-      </span>
-      [% END %]
-      <span class="authorIds_input" style="display:none;">
-        <div class="col-md-4">arXiv:</div>
-        <div class="col-md-7"><input type="text" class="form-control input-sm" name="arxivid" id="arxivid_input" value="[% thisPerson.arxivId ? thisPerson.arxivId : "" %]" /></div>
-      </span>
-      [% IF thisPerson.inspireId %]
-      <span class="authorIds">
-        <div class="col-md-4">Inspire:</div>
-        <div class="col-md-7"><a href="http://inspirehep.net/record/[% thisPerson.inspireId %]" target="_blank">[% thisPerson.inspireId %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
-      </span>
-      [% END %]
-      <span class="authorIds_input" style="display:none;">
-        <div class="col-md-4">Inspire:</div>
-        <div class="col-md-7"><input type="text" class="form-control input-sm" name="inspireid" id="inspireid_input" value="[% thisPerson.inspireId ? thisPerson.inspireId : "" %]" /></div>
-      </span>
+      [% END %]<!-- END foreach -->
+
       <span class="authorIds_input" style="display:none;"><div class="col-md-11">&nbsp;</div></span>
       <span class="authorIds_input" style="display:none;">
         <div class="col-md-4">

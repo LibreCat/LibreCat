@@ -1,3 +1,29 @@
+author_id:
+  inspire:
+    label: INSPIRE ID
+    url: "http://inspirehep.net/record/"
+  arxiv:
+    label: ArXiv ID
+    url: "http://arxiv.org/a/"
+  orcid:
+    label: ORCID
+    url: "http://orcid.org/"
+  googleScholar:
+    label: Google Scholar Profile
+    url: "http://http://scholar.google.de/citations?user="
+  github:
+    label: GitHub
+    url: "http://github.com/"
+  researcherId:
+    label: Researcher ID
+    url: "http://www.researcherid.com/rid/"
+  authorClaim:
+    label: Author Claim
+    url: "http://authorclaim.org/profile/"
+  scopusId:
+    label: Scopus Author ID
+    url: "http://www.scopus.com/authid/detail.url?authorId="
+
 styles_public:
   - ama
   - apa
