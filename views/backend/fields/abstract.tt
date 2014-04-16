@@ -26,13 +26,13 @@
       </select>
     </span>
     [% ELSE %]
-      [% FOREACH abs IN abstract %]
+      [% FOREACH ab IN abstract %]
       <div class="col-md-6">
-        <textarea rows="3" name="ab_abAbstract_[% loop.index %]" id="id_ab_abAbstract_[% loop.index %]" class="form-control" onkeyup="checkForm4Ddc();">[% abs.text %]</textarea>
+        <textarea rows="3" name="ab_abAbstract_[% loop.index %]" id="id_ab_abAbstract_[% loop.index %]" class="form-control">[% ab.text %]</textarea>
       </div>
       <div class="col-md-6">
         <label for="id_ab_abLanguageOId[% loop.index %]">
-          {% fields.supplementaryFields.abstracts.label2 %}
+          {% fields.supplementaryFields.abstract.label2 %}
         </label>
       </div>
       <div class="form-group col-md-3">

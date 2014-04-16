@@ -26,20 +26,20 @@ fieldOrder:
   basicFields:
     - doi
     - mainTitle
-    - authors
-    - departments
-    - projects
-    - researchGroups
+    - author
+    - department
+    - project
+    - researchGroup
     - publisher
     - year
   fileUpload:
-    - externalFiles
+    - externalFile
     - dropzone_mainDoc
     - dropzone_confLetter
-    - licenses
+    - license
   supplementaryFields:
-    - abstracts
-    - xddcs
+    - abstract
+    - xddc
     - keyword
   relatedMaterial:
     - relatedMaterial
@@ -82,13 +82,13 @@ publicationTypes:
           multiple: 0
           label: "DOI"
           readonly: 1
-        mainTitle:
+        title:
           mandatory: 1
           multiple: 0
           label: "Title"
           placeholder: "Publication Title"
           readonly: 0
-        authors:
+        author:
           firstName:
             placeholder: "First Name"
           lastName:
@@ -103,17 +103,17 @@ publicationTypes:
             "Corp. Ed." : "corporateEditor"
             "Translator" : "translator"
           pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
-        departments:
+        department:
           mandatory: 0
           multiple: 1
           label: "Department"
           placeholder: "Department"
-        projects:
+        project:
           mandatory: 0
           multiple: 1
           label: "Projects"
           placeholder: "Project"
-        researchGroups:
+        researchGroup:
           mandatory: 0
           multiple: 1
           label: "Research Group"
@@ -143,7 +143,7 @@ publicationTypes:
           label: "Abstract"
           label2: "Abstract Language:"
           readonly: 0
-        xddcs:
+        xddc:
           mandatory: 0
           multiple: 0
           label: "DDC"

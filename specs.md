@@ -118,6 +118,16 @@ department/project/researchGroup,
 issn
 
 
+## Layout of some fields
+
+abstract
+```perl
+[{lang => 'eng', text => 'bla'},
+{text => 'ger', text => 'alb'}
+];
+```
+
+
 
 
 
