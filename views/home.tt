@@ -37,27 +37,41 @@
     <div class="row"> <!-- row span11 publications, projects, departments -->
       <div class="col-md-10">
         <ul class="nav nav-tabs" id="myTab">
-          <li class="active"><a href="#publ">Personal Publications</a></li>
-          <li><a href="#hidden">Hidden Publications</a></li>
-          <li><a href="#review">Publications for Review</a></li>
+        [% IF session.role == 'superAdmin' %]
+          <li class="active"><a href="/myPUB/adminSearch">All Publications</a></li>
+        [% END %]
+          <li [% IF session.role != 'superAdmin' %]class="active"[% END %]><a href="/myPUB/search">Personal Publications</a></li>
+          [% IF session.role == 'reviewer' %]
+          <li><a href="/myPUB/reviewerSearch">Publications for Review</a></li>
+          [% END %]
         </ul>
       </div>
       
       <div class="col-md-11">
         <div class="tab-content">
-          <div class="tab-pane[% IF total != 0 %] active[% END %]" id="publ">
+          <div class="tab-pane[% IF modus == 'admin' %] active[% END %]" id="adminPubl">
             <div class="col-md-8">
-              [% INCLUDE hits_person.tt %]
+              [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
               [% INCLUDE right_menu_publ.tt %]
             </div>
           </div>
-          <div class="tab-pane" id="hidden">
-
+          <div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ">
+            <div class="col-md-8">
+              [% INCLUDE hits.tt %]
+            </div>
+            <div class="col-md-3">
+              [% INCLUDE right_menu_publ.tt %]
+            </div>
           </div>
-          <div class="tab-pane" id="review">
-          
+          <div class="tab-pane[% IF modus == 'reviewer' %] active[%END %]" id="review">
+            <div class="col-md-8">
+              [% INCLUDE hits.tt %]
+            </div>
+            <div class="col-md-3">
+              [% INCLUDE right_menu_publ.tt %]
+            </div>
           </div>
         </div>  
         <script>

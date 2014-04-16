@@ -5,8 +5,8 @@
 <div class="row">
 
 <div class="col-md-9 col-md-offset-1">
-  [% IF mainTitle %]
-  <h3>[% mainTitle %]</h3>
+  [% IF title %]
+  <h3>[% title %]</h3>
   [% ELSE %]
   <h3>Add new {% label %}</h3>
   [% END %]
