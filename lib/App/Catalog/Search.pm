@@ -10,8 +10,29 @@ sub handle_request {
     my $query = $par->{q} || "";
     my $id = $par->{bisId};
     $p->{limit} = $par->{limit};
+    $p->{limit} = h->config->{store}->{default_searchpage_size} if !$par->{limit};
 
     my $personInfo = h->getPerson($id);
+    
+    my $personStyle;
+    my $personSorto;
+    if ($personInfo->{stylePreference} and $personInfo->{stylePreference} =~ /(\w{1,})\.(\w{1,})/ ){
+        if (array_includes(h->config->{lists}->{styles}, $1)) {
+            $personStyle = $1 unless $1 eq "pub";
+        }
+        $personSorto = "publishingyear." . $2;
+    }
+    elsif ($personInfo->{stylePreference} and $personInfo->{stylePreference} !~ /\w{1,}\.\w{1,}/ ){
+        if (array_includes(h->config->{lists}->{styles}, $personInfo->{stylePreference})){
+            $personStyle = $personInfo->{stylePreference} unless $personInfo->{stylePreference} eq "pub";
+        }
+    }
+
+    if ( $personInfo->{sortPreference} ) {
+        $personSorto = $personInfo->{sortPreference};
+    }
+    $par->{personStyle} = $personStyle || "";
+    $par->{personSort}  = $personSorto  || "";
 
     my $facets = {
         coAuthor => {
@@ -46,6 +67,11 @@ sub handle_request {
     my $rawquery      = $query;
     my $doctypequery  = "";
     my $publyearquery = "";
+    
+    if ( params->{submissionstatus} and ref params->{submissionstatus} ne 'ARRAY' ){
+        $query        .= " AND submissionstatus=" . params->{submissionstatus};
+        $doctypequery .= " AND submissionstatus=" . params->{submissionstatus};
+    }
 
     # separate handling of publication types (for separate facet)
     if ( params->{publicationtype}
@@ -85,12 +111,16 @@ sub handle_request {
         $publyearquery .= " AND publishingyear=" . params->{publishingyear};
     }
 
+    $query = h->clean_cql($query) if $query ne "";
+    $publyearquery = h->clean_cql($publyearquery) if $publyearquery ne "";
+    $doctypequery = h->clean_cql($doctypequery) if $doctypequery ne "";
+    
     $p->{q}      = $query;
     $p->{facets} = $facets;
 
     #Sorting
-    my $personStyle = $par->{personStyle};
-    my $personSorto = $par->{personSort};
+    #my $personStyle = $par->{personStyle};
+    #my $personSorto = $par->{personSort};
 
     my $standardSort = h->config->{store}->{default_sort};
     my $standardSruSort;
@@ -163,81 +193,52 @@ sub handle_request {
         $hits->{personPageTitle} = "Publications " . $titleName;
     }
 
-    $hits->{bisId}   = $par->{bisId};
-    $hits->{style}
-        = $par->{style}
-        || $personStyle
-        || h->config->{store}->{default_fd_style};
+    $hits->{style} = $par->{style} || $personStyle || h->config->{store}->{default_fd_style};
     $hits->{personSort}  = $par->{personSort};
     $hits->{personStyle} = $par->{personStyle};
 
     template 'home.tt', $hits;
 }
 
-get '/search' => sub {
-	#if(!session->{role}){
-	#	forward '/myPUB/login';
-	#}
+get '/adminSearch' => sub {
 	
     my $params = params;
-    my $id = session->{personNumber};
     my $role = session->{role};
-    my $personInfo = h->getPerson($id);
     
     if($role ne "superAdmin"){
-    	$params->{q} .= "person=$id AND hide<>$id";
+    	redirect '/myPUB/search';
     }
     
-    $params->{limit} = h->config->{store}->{maximum_page_size}
-        if !$params->{limit};
+    
 
-    $params->{bisId} = $id;
-    my $personStyle;
-    my $personSort;
-    if (    $personInfo->{stylePreference}
-        and $personInfo->{stylePreference} =~ /(\w{1,})\.(\w{1,})/ )
-    {
-        if ( array_includes( h->config->{lists}->{styles}, $1 ) ) {
-            $personStyle = $1 unless $1 eq "pub";
-        }
-        $personSort = "publishingyear." . $2;
-    }
-    elsif ( $personInfo->{stylePreference}
-        and $personInfo->{stylePreference} !~ /\w{1,}\.\w{1,}/ )
-    {
-        if (array_includes(
-                h->config->{lists}->{styles},
-                $personInfo->{stylePreference}
-            )
-            )
-        {
-            $personStyle = $personInfo->{stylePreference}
-                unless $personInfo->{stylePreference} eq "pub";
-        }
-    }
-
-    if ( $personInfo->{sortPreference} ) {
-        $personSort = $personInfo->{sortPreference};
-    }
-    $params->{personStyle} = $personStyle || "";
-    $params->{personSort}  = $personSort  || "";
+    $params->{modus} = "admin";
+    
 
     handle_request($params);
 };
 
-get qr{/hidden/*} => sub {
-    my $id = params->{id} ? params->{id} : "73476";
-    my $style = params->{style} || "pub";
-    my $p = {
-        q      => "person=$id AND hide=$id",
-        facets => "",
-        limit  => params->{limit} || h->config->{store}->{maximum_page_size},
-        start  => params->{start} || 0,
-        style  => $style,
-        id     => $id,
-    };
+get '/reviewerSearch' => sub {
+	
+    my $params = params;
+    my $role = session->{role};
+    
+    if($role ne "superAdmin" and $role ne "reviewer"){
+    	redirect '/myPUB/search';
+    }
 
-    handle_request($p);
+    $params->{modus} = "reviewer";
+
+    handle_request($params);
+};
+
+get '/search' => sub {
+	
+    my $params = params;
+    my $role = session->{role};
+
+    $params->{modus} = "user";
+
+    handle_request($params);
 };
 
 1;
