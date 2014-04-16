@@ -2,6 +2,7 @@
 
 <!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->
 [% num = total; n = 0 %]
+[% total %]
 
 [% FOREACH entry IN hits %]
 <div class="row">
