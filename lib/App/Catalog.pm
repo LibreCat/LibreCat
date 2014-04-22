@@ -33,17 +33,25 @@ get '/' => sub {
 get '/login' => sub {
     my $data = { path => vars->{requested_path} };
     $data->{error_message} = params->{error_message} ||= '';
+    $data->{login} = params->{login} ||= "";
     template 'login', $data;
 };
 
 post '/login' => sub {
+	
+	if(!params->{user} || !params->{pass}){
+		forward '/myPUB/login', { error_message => "Please enter your username AND password!", login => params->{user}}, { method => 'GET' };
+	}
+	
     my $bag  = Catmandu->store('authority')->bag;
     my $user = h->getAccount( params->{user} );
 
     if ($user) {
 
         #username is in PUB
-        if ( verifyUser( params->{user}, params->{pass} ) ) {
+        my $verify = verifyUser(params->{user}, params->{pass});
+        
+        if ($verify and $verify ne "error") {
             session role => $user->[0]->{isSuperAdminAccount}
                 ? "superAdmin"
                 : "user";
@@ -52,9 +60,7 @@ post '/login' => sub {
             redirect params->{path} || '/myPUB/search';
         }
         else {
-            forward '/myPUB/login',
-                { error_message => "Wrong username or password!" },
-                { method        => 'GET' };
+            forward '/myPUB/login', { error_message => "Wrong username or password!" }, { method => 'GET' };
         }
     }
     else {
