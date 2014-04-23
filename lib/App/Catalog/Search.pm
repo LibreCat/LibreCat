@@ -196,6 +196,7 @@ sub handle_request {
     $hits->{style} = $par->{style} || $personStyle || h->config->{store}->{default_fd_style};
     $hits->{personSort}  = $par->{personSort};
     $hits->{personStyle} = $par->{personStyle};
+    $hits->{modus} = $par->{modus} ||= "user";
 
     template 'home.tt', $hits;
 }
@@ -208,11 +209,8 @@ get '/adminSearch' => sub {
     if($role ne "superAdmin"){
     	redirect '/myPUB/search';
     }
-    
-    
 
     $params->{modus} = "admin";
-    
 
     handle_request($params);
 };

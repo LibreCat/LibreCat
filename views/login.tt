@@ -1,19 +1,26 @@
-[% INCLUDE navbar_loggedout.tt %]
+[% INCLUDE navbar.tt %]
 
 <!-- BEGIN login.tt -->
 
-<div class="row">
-  <p class="errormessage">[% error_message %]</p>
+[% IF error_message %]
+<div class="row" style="padding-top:15px;">
+  <div class="col-md-6 col-md-offset-2">
+    <p class="text-danger"><strong>[% error_message %]</strong></p>
+  </div>
+</div>
+[% END %]
+  
+<div class="row" style="padding-top:15px;">
   <div class="col-md-6 col-md-offset-2 well loginframe" style="background:white;">
     <form action="/myPUB/login" method="post" class="form-horizontal">
       <h4><strong>Login to PUB </strong><span style="font-size:10pt;font-weight:normal;">&nbsp;&nbsp;(Not registered yet? <strong><a href="[% luurBase %]/registration?func=getRegistered"><b>Register for PUB</b></a></strong>)</span></h4>
-      <div class="form-group">
+      <div class="form-group[% IF error_message AND !login %] has-error[% END %]">
         <label class="col-md-3 control-label" for="id_login">Username<span style="color:red"><b>*</b></span></label>
         <div class="col-md-5">
           <input type="text" class="form-control" name="user" id="id_login" value="[% login %]" placeholder="HRZ Username" />
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group[% IF error_message %] has-error[% END %]">
         <label class="col-md-3 control-label" for="id_password">Password<span style="color:red"><b>*</b></span></label>
         <div class="col-md-5">
           <input type="password" class="form-control" name="pass" id="id_password" value="" placeholder="HRZ password" />

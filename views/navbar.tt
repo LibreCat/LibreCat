@@ -39,13 +39,19 @@
      <div class="collapse navbar-collapse navbar-ex1-collapse">
        <ul class="nav navbar-nav">
          <li><a href="/myPUB"><span class="glyphicon glyphicon-list"></span> Home</a></li>
+         [% IF session AND session.user %]
          <li><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
          <li><a href="[% h.host %]/person/[% bisId %]"><span class="glyphicon glyphicon-eye-open"></span> View Public Profile</a></li>
+         [% END %]
        </ul>
        <ul class="nav navbar-nav navbar-right">
+         [% IF session AND session.user %]
          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Logged in as: <em>[% session.user %]</em></a></li>
          <li><a href="/myPUB/admin"><span class="glyphicon glyphicon-exclamation-sign"></span> Admin</a></li>
          <li><a href="/myPUB/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+         [% ELSE %]
+         <li><a href="/myPUB/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+         [% END %]
        </ul>
      </div><!-- /.navbar-collapse -->
    </nav>
