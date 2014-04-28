@@ -196,7 +196,7 @@ sub handle_request {
     $hits->{style} = $par->{style} || $personStyle || h->config->{store}->{default_fd_style};
     $hits->{personSort}  = $par->{personSort};
     $hits->{personStyle} = $par->{personStyle};
-    $hits->{modus} = $par->{modus} ||= "user";
+    $hits->{modus} = $par->{modus};
 
     template 'home.tt', $hits;
 }
