@@ -54,7 +54,12 @@ sub getPersonData {
 		'repair_name_array("hasDepartmentRights")',
 		'repair_name_array("hasDependent")',
 		'repair_name_array("isAffiliatedWith")',
-		'move_field("oId", "sbcatId")',
+		'remove_field("oId")',
+		'remove_field("oIdAccount")',
+		'move_field("isSuperAdminAccount", "superAdmin")',
+		'move_field("hasUserAccessThrough", "access")',
+		'move_field("luLdapId","login")',
+		'move_field("jobTitle","title")',
 		'remove_field("isOfType")',
 		]);
 		
@@ -72,8 +77,15 @@ sub getPersonData {
 	my $extRelAccount = $luur->getExternalRelationsInfo(@{$sbcatAccount}[0]) if @{$sbcatAccount}[0];
 	my $intRelAccount = $luur->getInternalRelationsInfo(@{$sbcatAccount}[0]) if @{$sbcatAccount}[0];
 	
+	#print Dumper $externalRelations;
+	#print Dumper $internalRelations;
+	#print Dumper $extRelAccount;
+	#print Dumper $intRelAccount;
+	#exit;
+	
 	my $record;
 	$record->{oId} = $sbcatPerson;
+	$record->{oIdAccount} = @{$sbcatAccount}[0];
 	
 	foreach(@{$externalRelations}){
 		#$record->{oId} = $_->{erOId};
@@ -88,25 +100,31 @@ sub getPersonData {
 			$record->{$rel->{oInternalName}} = $_->{erValue};
 		}
 	}
-	
+
 	foreach(@{$internalRelations}){
 		my $rel = $luur->getObjectInfo($_->{irRelationOId});
 		if($rel->{oInternalName} eq "isOfType"){
 			my $relation = $luur->getObjectInfo($_->{irOId2});
 			$record->{$rel->{oInternalName}} = $relation->{oInternalName};
 		}
-		unless ($rel->{oInternalName} eq "isOwnedBy" or $rel->{oInternalName} eq "isAuthoredBy" or $rel->{oInternalName} eq "isEditedBy" or $rel->{oInternalName} eq "isHiddenFor" or $rel->{oInternalName} eq "isOfType"){
+		if($rel->{oInternalName} eq 'isAffiliatedWith'){
+			my $relation = $luur->getAttributeValues(object => $_->{irOId2});
+			push @{$record->{department}}, {id => $relation->{organizationNumber}, name => (ref $relation->{name} eq "ARRAY" ? $relation->{name}->[0] : $relation->{name})};
+		}
+		unless ($rel->{oInternalName} eq "isOwnedBy" or $rel->{oInternalName} eq "isAuthoredBy" or $rel->{oInternalName} eq "isEditedBy" or $rel->{oInternalName} eq "isHiddenFor" or $rel->{oInternalName} eq "isOfType" or $rel->{oInternalName} eq 'isAffiliatedWith'){
 			if($_->{irOId1} eq $record->{oId}){
 				my $related = $luur->getAttributeValues(object => $_->{irOId2});
+				$record->{$rel->{oInternalName}} = () unless $record->{$rel->{oInternalName}};
 				push @{$record->{$rel->{oInternalName}}}, $related;
 			}
 			elsif($_->{irOId2} eq $record->{oId}){
 				my $related = $luur->getAttributeValues(object => $_->{irOId1});
+				$record->{$rel->{oInternalName}} = () unless $record->{$rel->{oInternalName}};
 				push @{$record->{$rel->{oInternalName}}}, $related;
 			}
 		}
 	}
-	
+
 	foreach(@{$extRelAccount}){
 		#$record->{oId} = $_->{erOId};
 		my $rel = $luur->getObjectInfo($_->{erRelationOId});
@@ -115,27 +133,33 @@ sub getPersonData {
 	
 	foreach(@{$intRelAccount}){
 		my $rel = $luur->getObjectInfo($_->{irRelationOId});
-		if($rel->{oInternalName} eq "hasDepartmentRights" or $rel->{oInternalName} eq "hasDependent"){
-			if($_->{irOId1} eq $record->{oId}){
-				my $relatedAttr = $luur->getAttributeValues(object => $_->{irOId2});
+		if($rel->{oInternalName} eq "hasDepartmentRights"){ #or $rel->{oInternalName} eq "hasDependent"){
+			if($_->{irOId1} eq $record->{oIdAccount}){
+				my $relatedAttribs = $luur->getAttributeValues(object => $_->{irOId2});
 				my $relatedRelation = $luur->getRelatedObjects(object1 => $_->{irOId2}, relation => "isForDepartment");
 				my $dept = $luur->getAttributeValues(object => @$relatedRelation[0]);
-				$relatedAttr->{organizationNumber} = $dept->{organizationNumber};
-				$relatedAttr->{name} = ref $dept->{name} eq "ARRAY" ? @{$dept->{name}}[0] : $dept->{name};
-				push @{$record->{$rel->{oInternalName}}}, $relatedAttr;
+				my $relatedAttr;
+				$relatedAttr->{reviewer} = $relatedAttribs->{reviewOtherRight} ? "1" : "0";
+				$relatedAttr->{reviewDiss} = $relatedAttribs->{reviewDissertationRight} ? "1" : "0";
+				$relatedAttr->{department}->{id} = $dept->{organizationNumber};
+				$relatedAttr->{department}->{name} = ref $dept->{name} eq "ARRAY" ? @{$dept->{name}}[0] : $dept->{name};
+				push @{$record->{reviewer}}, $relatedAttr;
 			}
 		}
 		unless ($rel->{oInternalName} eq "isOwnedBy" or $rel->{oInternalName} eq "isAuthoredBy" or $rel->{oInternalName} eq "isEditedBy" or $rel->{oInternalName} eq "isHiddenFor" or $rel->{oInternalName} eq "isOfType" or $rel->{oInternalName} eq "isCreatedFromAccount" or $rel->{oInternalName} eq "isUploadedBy" or $rel->{oInternalName} eq "isHiddenForAccount" or $rel->{oInternalName} eq "hasDepartmentRights" or $rel->{oInternalName} eq "hasDependent"){
-			if($_->{irOId1} eq $record->{oId}){
+			if($_->{irOId1} eq $record->{oIdAccount}){
 				my $related = $luur->getAttributeValues(object => $_->{irOId2});
+				$record->{$rel->{oInternalName}} = () unless $record->{$rel->{oInternalName}};
 				push @{$record->{$rel->{oInternalName}}}, $related;
 			}
-			elsif($_->{irOId2} eq $record->{oId}){
+			elsif($_->{irOId2} eq $record->{oIdAccount}){
 				my $related = $luur->getAttributeValues(object => $_->{irOId1});
+				$record->{$rel->{oInternalName}} = () unless $record->{$rel->{oInternalName}};
 				push @{$record->{$rel->{oInternalName}}}, $related;
 			}
 		}
 	}
+
 	$record->{_id} = $record->{personNumber};
 	
 	if($record->{_id}){
@@ -146,7 +170,6 @@ sub getPersonData {
 	}
 	$fixer->fix($mongo_data) if $mongo_data;
 	$adminbag->add($mongo_data) if $mongo_data;
-	
 	
 	
 	my $id = "";

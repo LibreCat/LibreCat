@@ -248,7 +248,7 @@ search:
                 '=': true
                 '<>': true
               field: 'organization'
-            year:
+            publishingyear:
               op:
                 'any': true
                 'all': true
@@ -259,7 +259,7 @@ search:
                 '>=': true
                 '<=': true
                 'exact': true
-              field: 'year'
+              field: 'publishingYear'
               sort: 'true'
             honoree:
               op:
@@ -361,6 +361,15 @@ search:
               field: 'issn'
               sort: true
               description: "journal/series indentifier"
+            eissn:
+              op:
+                'any': true
+                '=': true
+                'exact': true
+                '<>': true
+              field: 'eIssn'
+              sort: true
+              description: "ejournal/series indentifier"
             isbn:
               op:
                 'any': true
@@ -716,6 +725,14 @@ search:
                 '<>': true
               field: 'issn'
               sort: true
+            eissn:
+              op:
+                'any': true
+                '=': true
+                'exact': true
+                '<>': true
+              field: 'eIssn'
+              sort: true
             isbn:
               op:
                 'any': true
@@ -799,8 +816,8 @@ search:
                 '=': true
                 'exact': true
                 '<>': true
-              field: ['issn', 'isbn']
-              description: 'searches both fields, isbn and issn'
+              field: ['issn', 'isbn', 'eIssn']
+              description: 'searches fields isbn, eissn and issn'
             id:
               op:
                 '=': true
@@ -1260,6 +1277,7 @@ search:
           issue: {type: string}
           isbn: {type: string, analyzer: tag, include_in_all: true}
           issn: {type: string, analyzer: tag, include_in_all: true}
+          eIssn: {type: string, analyzer: tag, include_in_all: true}
           submissionStatus: {type: string, analyzer: tag}
           publicationStatus: {type: string, analyzer: tag}
           reportNumber: {type: string, analyzer: tag}
@@ -1368,6 +1386,7 @@ search:
           issue: {type: string}
           isbn: {type: string, analyzer: tag, include_in_all: true}
           issn: {type: string, analyzer: tag, include_in_all: true}
+          eIssn: {type: string, analyzer: tag, include_in_all: true}
           submissionStatus: {type: string, analyzer: tag}
           publicationStatus: {type: string, analyzer: tag}
           abstract:

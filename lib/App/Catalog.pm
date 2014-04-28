@@ -52,11 +52,11 @@ post '/login' => sub {
         my $verify = verifyUser(params->{user}, params->{pass});
         
         if ($verify and $verify ne "error") {
-            session role => $user->[0]->{isSuperAdminAccount}
-                ? "superAdmin"
-                : "user";
+        	my $superAdmin = "superAdmin" if $user->[0]->{superAdmin};
+        	my $reviewer = "reviewer" if $user->[0]->{reviewer};
+            session role => $superAdmin || $reviewer || "user";
             session user         => $user->[0]->{login};
-            session personNumber => $user->[0]->{personNumber};
+            session personNumber => $user->[0]->{_id};
             redirect params->{path} || '/myPUB/search';
         }
         else {
@@ -64,10 +64,7 @@ post '/login' => sub {
         }
     }
     else {
-        forward '/myPUB/login',
-            { error_message =>
-                "No such user in PUB. Please register first!" },
-            { method => 'GET' };
+        forward '/myPUB/login', { error_message => "No such user in PUB. Please register first!" }, { method => 'GET' };
     }
 };
 
