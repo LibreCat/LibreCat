@@ -1,6 +1,7 @@
 package App::Catalog::Publication;
 
 use App::Catalog::Helper;
+use App::Catalog::Controller::Publication;
 use Dancer ':syntax';
 #use JSON;
 
@@ -10,10 +11,7 @@ prefix '/record' => sub {
 		my $type = params->{type} ||= '';
 		
 		if($type){
-			my $bag = h->bag->get('1');
-			my $id = $bag->{"latest"};
-			$id++;
-			$bag = h->bag->add({_id=> "1", latest => $id});
+			my $id = new_publication();
 			template "backend/forms/$type", {oId => $id};
 		}
 		else {
