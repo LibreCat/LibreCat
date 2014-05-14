@@ -2,7 +2,18 @@
 
 <!-- BEGIN admin/account.tt -->
 
+<div class="row">
 
+<div class="col-md-9 col-md-offset-1">
+<form role="form" action="/myPUB/admin/account/search" method="POST">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="text" class="form-control" id="id_search_account" placeholder="Search" value="[%  %]">
+  </div>
+  <button type="submit" class="btn btn-default">Search</button>
+</form>
 
+</div><!-- end col-md-9 -->
+</div><!-- end div row -->
 
 <!-- END admin/account.tt -->

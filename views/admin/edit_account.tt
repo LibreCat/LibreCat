@@ -10,6 +10,12 @@
   [% ELSE %]
   <h3>Add new account</h3>
   [% END %]
+  <form action="/myPUB/record/update" method="POST">
+    <input type="hidden" name="documentType" value="{% tmpl %}"/>
+    <input type="hidden" name="oId" value="[% oId %]"/>
+    <input type="hidden" name="_id" value="[% oId %]"/>
+    <input type="hidden" name="submissionStatus" value="unsubmitted"/>
+    
 
 </div><!-- col-md-9 col-md-offset-1 -->
 </div><!-- row -->

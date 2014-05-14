@@ -12,14 +12,6 @@ use LWP::Simple;
 use HTML::Entities;
 use Getopt::Std;
 use Data::Dumper;
-#use PUBSearch::Helper;
-##################################
-### DON'T CHANGE SCRIPTNAME!
-### If you do change its name, also change the command in
-### controllers/default/Module/Authority/Author.pm line 541
-### AND
-### controllers/default/Module/Preferences.pm line 55
-##################################
 
 my $cfg = luurCfg->new;
 my $luur = Orms->new($cfg->{ormsCfg});

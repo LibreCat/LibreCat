@@ -2,7 +2,9 @@ package App::Catalog::Utils;
 
 use Catmandu::Sane;
 use Catmandu qw/load/;
-use Moo;
+use Exporter qw/import/;
+
+our @EXPORT = qw/genereteURN/;
 
 has prefix => ( is => 'ro', required => 1 );
 has id => (is => 'ro', required => 1);

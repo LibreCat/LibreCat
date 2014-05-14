@@ -30,9 +30,11 @@ authority:
       admin:
         plugins:
           - Datestamps
+          - Versioning
       user:
         plugins:
           - Datestamps
+          - Versioning
       department:
         plugins:
           - Datestamps
@@ -51,11 +53,6 @@ metrics:
   package: MongoDB
   options:
     database_name: Metrics
-
-journal:
-  package: MongoDB
-  options:
-    database_name: PUBJournals
 
 search:  
   package: ElasticSearch

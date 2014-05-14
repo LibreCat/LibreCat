@@ -106,30 +106,32 @@ update account record
 ```yaml
 ---
 _id: unique record identifier
+record_creator: mmustermann
 type: publication type
 title: title of the publication
-alternativeTitle: alternative title
+alternative_title:
+	- alternative title
 year: 2014
 author:
 	- 
-		firstName: "Gerhard"
-		lastName: "Sagerer"
+		first_name: "Gerhard"
+		last_name: "Sagerer"
 		title: "Prof. Dr."
-		fullName: "Sagerer, Gerhard"
+		full_name: "Sagerer, Gerhard"
 		id: "123456"
 editor: see author
 translator: see author
 supervisor: see author
 file:
 	-
-		fileName: "hello.pdf"
-		fileId: 123456
-		contentType: "application/pdf"
-		accessLevel: "openAccess"
+		file_name: "hello.pdf"
+		file_id: 123456
+		content_type: "application/pdf"
+		access_level: "openAccess"
 		date_updated: "2014-04-23T12:00:00"
 		date_created: "2014-04-23T12:00:00"
 		checksum: 1423534q566768tz
-		fileSize: 3.4 MB
+		file_size: 3.4 MB
 		language: eng
 		creator: bisid
 doi: 10.214/test
@@ -142,9 +144,13 @@ keyword:
 	- keyword1
 	- keyword2
 language:
-	- ger
-	- eng
-department/project/researchGroup:
+	- 
+	  iso: ger
+	  name: German
+	-
+	  iso: eng
+	  name: English
+department/project:
 	-
 		name: "Faculty of Physics"
 		id: 123456
@@ -152,11 +158,12 @@ department/project/researchGroup:
 			- 98765
 			- 54321
 status: public|private|submitted|returned
-publicationStatus: inPress|unpublished|submitted|published
-issn: ["1234", "23445"]
-eissn: see issn
-isbn: see issn 
-urn: "urn:nbn:de...."
+publication_status: inPress|unpublished|submitted|published
+publication_identifier:
+	issn: ["1234", "23445"]
+	eissn: see issn
+	isbn: see issn 
+	urn: "urn:nbn:de...."
 publisher: "Springer"
 place: "Bielefeld"
 publication: "Journal of genetics"
@@ -168,40 +175,41 @@ abstract:
 		lang: ger
 		text: "Das ist eine Zusammenfassung"
 external: 0|1
-popularScience: 0|1
-qualityControlled: 0|1
-pages:
+popular_science: 0|1
+quality_controlled: 0|1
+page:
 	start: 20
 	end: 25
 	count: 230
 edition: 2
-corporateEditor:
+corporate_editor:
 	- "Gesellschaft für Soziologie"
 	- "Institut ...."
-seriesTitle: "KI Serie"
+series_title: "KI Serie"
 volume: 3
 issue: 2
 conference:
 	name: "ELAG 2014"
 	location: "Bath, UK"
-	startDate: "2014-05-20"
-	endDate: "2014-05-23"
+	start_date: "2014-05-20"
+	end_date: "2014-05-23"
 publishingDate: "2014-04-23"
 ipn: 21314
 ipc: 2344
-reportNumber 18
+report_number 18
 email: "me@example.com"
-defenseDate: "2014-04-23"
+defense_date: "2014-04-23"
 link: ["www.example.com", "www.example2.com"]
-arxiv: sdfdsf
-pmid: dfsdf
-inspire:
-wos:
-genbank: []
-nasc: []
+external_id:
+	arxiv: sdfdsf
+	pmid: dfsdf
+	inspire:
+	wos:
+	genbank: []
+	nasc: []
 message: "Just a message"
-ubiFunded: 0|1
-relatedMaterial:
+ubi_funded: 0|1
+related_material:
 	-
 		type: "supplementary"
 		link:
@@ -209,16 +217,16 @@ relatedMaterial:
 			title: "test"
 			description: "This describes something"
 		file:
-			fileName: "file.jpg"
-			fileId: 12345
+			file_name: "file.jpg"
+			file_id: 12345
 			date_updated: "2014-04-23"
 			date_created: "2014-04-23"
 			title: "Title"
-			creator: bisid
-			accessLevel: openAccess
-			contentType: application/pdf
+			creator: login_name
+			access_level: openAccess
+			content_type: application/pdf
 			checksum: 32erjweoiru90
-			fileSize: 3.4 MB
+			file_size: 3.4 MB
 		record:
 			id: 123456
 ```

@@ -56,11 +56,11 @@ styles:
   - sfb882
 
 xlanguages_preselect:
-  "English": 190 
-  "German": 196 
-  
+  "English": 190
+  "German": 196
+
 xlanguages:
-  "Arabic": 185 
+  "Arabic": 185
   "Chinese": 187
   "Croatian": 2459065
   "Czech": 2561692

@@ -25,7 +25,7 @@ my $cfg  = luurCfg->new;
 my $orm  = $cfg->{ormsCfg};
 my $luur = Orms->new( $cfg->{ormsCfg} );
 
-my $home = "/srv/www/app-catalog/";#$ENV{BACKEND};
+my $home = "/srv/www/app-catalog/";    #$ENV{BACKEND};
 
 if ( $opt_m && $opt_m eq "backend2" ) {
     Catmandu->load("$home/index2");
@@ -39,8 +39,6 @@ else {
 
 my $conf = Catmandu->config;
 
-#print Dumper $conf->{store};exit;
-
 my $pre_fixer = Catmandu::Fix->new(
     fixes => [
         'rename_relation()',
@@ -53,110 +51,103 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("pagesEnd", "page.end")',
         'move_field("pagesCount", "page.count")',
         'move_field("submissionStatus", "status")',
-        'move_field("usesLanguage.languageCode","language")',
+        'move_field("usesOriginalLanguage.languageCode", "language")',
         'move_field("dateCreated", "date_created")',
         'move_field("creator.login", "creator")',
         'move_field("isNonLuPublication", "extern")',
         'move_field("hasDdc.ddcNumber", "ddc")',
+        'move_field("eIssn", "eissn")',
 
         'add_contributor_info()',
         'split_ext_ident()',
-        
-        'add_file_yearlastuploaded()',
-        'add_field_yearcreated()',
+
+        #'add_file_yearlastuploaded()',
+        #'add_field_yearcreated()',
         'add_file_access()',
         'language_info()',
         'add_ddc()',
-        'volume_sort()',
+        #'volume_sort()',
     ]
 );
 
 my $file_fixer = Catmandu::Fix->new(
-	fixes => [
-		'move_field("file.fileOId", "file.fileId")',
-		'copy_field("file.dateLastUploaded", "file.date_created")',
-		'move_field("file.dateLastUploaded", "file.date_updated")',
-		'move_field("file.isUploadedBy.login", "file.creator")',
-		'remove_field("file.isOfType")',
-		'remove_field("file.isUploadedBy")',
-]);
+    fixes => [
+        'move_field("file.fileOId", "file.file_id")',
+        'copy_field("file.dateLastUploaded", "file.date_created")',
+        'move_field("file.dateLastUploaded", "file.date_updated")',
+        'move_field("file.isUploadedBy.login", "file.creator")',
+        'remove_field("file.isOfType")',
+        'remove_field("file.isUploadedBy")',
+    ]
+);
+
 # checksum, fileSize
 
 my $author_fixer = Catmandu::Fix->new(
-	fixes => [
-		'move_field("author.surname", "author.lastName")',
-		'move_field("author.givenName", "author.firstName")',
-		'move_field("author.personNumber", "author.id")',
-		'remove_field("author.email")',
-		'remove_field("author.isOfType")',
-		'remove_field("author.oId")',
-		'remove_field("author.departmentAffiliations")',
-		'remove_field("author.luLdapId")',
-		'remove_field("author.jobTitle")',
-		'remove_field("author.personTitle")',
-	
-]);
+    fixes => [
+        'move_field("author.surname", "author.last_name")',
+        'move_field("author.givenName", "author.first_name")',
+        'move_field("author.personNumber", "author.id")',
+        'remove_field("author.email")',
+        'remove_field("author.isOfType")',
+        'remove_field("author.oId")',
+        'remove_field("author.departmentAffiliations")',
+        'remove_field("author.luLdapId")',
+        'remove_field("author.jobTitle")',
+        'remove_field("author.personTitle")',
+    ]
+);
 
-## replace...
 my $editor_fixer = Catmandu::Fix->new(
-        fixes => [
-                'move_field("author.surname", "author.lastName")',      
-                'move_field("author.givenName", "author.firstName")',   
-                'move_field("author.personNumber", "author.id")',
-                'remove_field("author.email")',
-                'remove_field("author.isOfType")',
-                'remove_field("author.oId")',
-                'remove_field("author.departmentAffiliations")',
-                'remove_field("author.luLdapId")',
-                'remove_field("author.jobTitle")',      
-                'remove_field("author.personTitle")',   
+    fixes => [
+        'move_field("editor.surname", "editor.last_name")',
+        'move_field("editor.givenName", "editor.first_name")',
+        'move_field("editor.personNumber", "editor.id")',
+        'remove_field("editor.email")',
+        'remove_field("editor.isOfType")',
+        'remove_field("editor.oId")',
+        'remove_field("editor.departmentAffiliations")',
+        'remove_field("editor.luLdapId")',
+        'remove_field("editor.jobTitle")',
+        'remove_field("editor.personTitle")',
+    ]
+);
 
-]);
+# my $translator_fixer = Catmandu::Fix->new(
+#         fixes => [
+#                 'move_field("translator.surname", "translator.last_name")',
+#                 'move_field("translator.givenName", "translator.first_name")',
+#                 'move_field("translator.personNumber", "translator.id")',
+#                 'remove_field("translator.email")',
+#                 'remove_field("translator.isOfType")',
+#                 'remove_field("translator.oId")',
+#                 'remove_field("translator.departmentAffiliations")',
+#                 'remove_field("translator.luLdapId")',
+#                 'remove_field("translator.jobTitle")',
+#                 'remove_field("translator.personTitle")',
 
-#replace ..
-my $translator_fixer = Catmandu::Fix->new(
-        fixes => [
-                'move_field("author.surname", "author.lastName")',      
-                'move_field("author.givenName", "author.firstName")',   
-                'move_field("author.personNumber", "author.id")',
-                'remove_field("author.email")',
-                'remove_field("author.isOfType")',
-                'remove_field("author.oId")',
-                'remove_field("author.departmentAffiliations")',
-                'remove_field("author.luLdapId")',
-                'remove_field("author.jobTitle")',      
-                'remove_field("author.personTitle")',   
+# ]);
 
-]);
-
-
-#replace ..
 my $supervisor_fixer = Catmandu::Fix->new(
-        fixes => [
-                'move_field("author.surname", "author.lastName")',
-                'move_field("author.givenName", "author.firstName")',
-                'move_field("author.personNumber", "author.id")',
-                'remove_field("author.email")',
-                'remove_field("author.isOfType")',
-                'remove_field("author.oId")',
-                'remove_field("author.departmentAffiliations")',
-                'remove_field("author.luLdapId")',
-                'remove_field("author.jobTitle")',
-                'remove_field("author.personTitle")',
-
-]);
-
-
+    fixes => [
+        'move_field("supervisor.surname", "supervisor.lastName")',
+        'move_field("supervisor.givenName", "supervisor.firstName")',
+        'move_field("supervisor.personNumber", "supervisor.id")',
+        'remove_field("supervisor.email")',
+        'remove_field("supervisor.isOfType")',
+        'remove_field("supervisor.oId")',
+        'remove_field("supervisor.departmentAffiliations")',
+        'remove_field("supervisor.luLdapId")',
+        'remove_field("supervisor.jobTitle")',
+        'remove_field("supervisor.personTitle")',
+    ]
+);
 
 my $post_fixer = Catmandu::Fix->new(
     fixes => [
-        'remove_field("type")',
-	'remove_field("usesLanguage")',
-        'remove_field("citations._id")',
-	'remove_field("message")',
-        'hiddenFor_info()',
-	'schema_dot_org()',
-	'remove_field("usesLanguage")',
+        'remove_field("type")',          'remove_field("usesLanguage")',
+        'remove_field("citations._id")', 'remove_field("message")',
+        'hiddenFor_info()',              'schema_dot_org()',
     ]
 );
 
@@ -188,8 +179,9 @@ sub add_to_index {
     if ( $rec->{documentType} ne 'researchData' ) {
         $separate_fixer->fix($rec);
     }
-    
+
     print Dumper $rec;
+
     #print Dumper $rec->{schema};
     #print "\n";
     exit;
@@ -197,22 +189,24 @@ sub add_to_index {
     #$bag->add($rec);
 }
 
+# get all publication types
+my $types = $luur->getChildrenTypes( type => 'publicationItem' );
 
-    # get all publication types
-    my $types = $luur->getChildrenTypes( type => 'publicationItem' );
+# foreach type get public records
+foreach (@$types) {
 
-    # foreach type get public records
-    foreach (@$types) {
-
-        my $obj = $luur->getObjectsByType( type => $_ );
-        foreach (@$obj) {
-            my $rec = $db->get($_);
-            if($rec->{isOfType}->{typeName} ne "unknown" and $rec->{isOfType}->{typeName} ne "studentPaper" and $rec->{submissionStatus} and $rec->{submissionStatus} ne "pdeleted"){
-                add_to_index($rec);
-            }
+    my $obj = $luur->getObjectsByType( type => $_ );
+    foreach (@$obj) {
+        my $rec = $db->get($_);
+        if (    $rec->{isOfType}->{typeName} ne "unknown"
+            and $rec->{isOfType}->{typeName} ne "studentPaper"
+            and $rec->{submissionStatus}
+            and $rec->{submissionStatus} ne "pdeleted" )
+        {
+            add_to_index($rec);
         }
     }
-
+}
 
 #$bag->commit;
 
@@ -230,11 +224,11 @@ if ($authors) {
 
 =head1 SYNOPSIS
 
-	Script for indexing publication data
+    Script for indexing publication data
 
 =head2 Initial indexing
 
-	perl index_publication.pl
+    perl index_publication.pl
 
 # fetches all data from SBCatDB and pushes it into the search store
 

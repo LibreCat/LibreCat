@@ -1,4 +1,4 @@
-package App::Catalog::Admin;
+package App::Catalog::Route::admin;
 
 use Catmandu::Sane;
 use Catmandu qw(:load);
@@ -6,7 +6,7 @@ use Catmandu::Util qw(:array);
 use Dancer ':syntax';
 use App::Catalog::Helper;
 
-Catmandu->load('/srv/www/app-catalog/index1');
+#Catmandu->load('/srv/www/app-catalog/index1');
 
 prefix '/admin' => sub {
 
@@ -14,19 +14,20 @@ prefix '/admin' => sub {
 		template 'admin/admin';
 	};
 
-	# manage counts
-	get '/accounts' => sub {
+	# manage accounts
+	get '/account' => sub {
 		template 'admin/account';
 	};
-	get '/accounts/search' => sub {};
 
-	get '/accounts/edit/:id' => sub {
+	post '/account/search' => sub {};
+
+	get '/account/edit/:id' => sub {
 		my $id = params 'id';
-		my $person = h->getPerson($id);
+		my $person = edit_person($id);
 		template 'admin/edit_account', $person;
 	};
 
-	post 'accounts/update' => sub {};
+	post 'account/update' => sub {};
 
 	# get qr{/myPUB/add/(\w{1,})/*} => sub {
 	# 	my ($type) = splat;
