@@ -46,6 +46,14 @@ publicationTypes:
   book:
     label: "Book"
     tmpl: book
+    fields:
+      basicFields:
+        tabName: "Basic Fields"
+        title: &title
+          mandatory: 1
+          multiple: 0
+          label: "Title"
+        
   bookchapter:
     label: "Book Chapter"
     tmpl: bookChapter
