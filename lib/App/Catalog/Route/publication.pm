@@ -1,4 +1,4 @@
-package App::Catalog::Publication;
+package App::Catalog::Route::publication;
 
 use App::Catalog::Helper;
 use App::Catalog::Controller::Publication;
@@ -68,8 +68,7 @@ prefix '/record' => sub {
 	# deleting records, for admins only
 	get '/delete/:id' => sub {
 		my $id = params->{id};
-		h->publications->delete($id);
-		h->publications->commit;
+		#
 		redirect '/myPUB/search';
 	};
 

@@ -1,4 +1,4 @@
-package App::Catalog::Admin;
+package App::Catalog::Route::admin;
 
 use Catmandu::Sane;
 use Catmandu qw(:load);
@@ -14,7 +14,7 @@ prefix '/admin' => sub {
 		template 'admin/admin';
 	};
 
-	# manage counts
+	# manage accounts
 	get '/account' => sub {
 		template 'admin/account';
 	};
@@ -23,7 +23,7 @@ prefix '/admin' => sub {
 
 	get '/account/edit/:id' => sub {
 		my $id = params 'id';
-		my $person = h->getPerson($id);
+		my $person = edit_person($id);
 		template 'admin/edit_account', $person;
 	};
 

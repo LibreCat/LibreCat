@@ -1,18 +1,16 @@
 package App::Catalog;
 
-use Catmandu;
 use Catmandu::Sane;
+use Catmandu;
 use Dancer ':syntax';
 use Catmandu::Util qw(:array);
-use App::Catalog::Admin;
 use App::Catalog::Helper;
-use App::Catalog::Import;
+use App::Catalog::Route::admin;
+use App::Catalog::Route::import;
+use App::Catalog::Route::publication;
 use App::Catalog::Interface;
 use App::Catalog::Person;
-use App::Catalog::Publication;
 use App::Catalog::Search;
-use App::Catalog::Test;
-
 use Authentication::Authenticate;
 
 Catmandu->load;

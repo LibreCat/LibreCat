@@ -505,30 +505,6 @@ sub embed_params {
     };
 }
 
-sub update_publication {
-	my ($self, $new) = @_;
-	#my $old = $self->publications->get($new->{_id});
-	#my $merge = Hash::Merge->new( 'LEFT_PRECEDENT' );
-    #my %store_rec = %{ $merge->merge( $new, $old ) };
-	#$self->validate(\%store_rec);
-	#$self->bag->add(\%store_rec);
-	$self->publications->add($new);
-	$self->publications->commit;
-}
-
-sub classifyId {
-	my ($self, $id) = @_;
-	my $package;
-  	given ($id) {
-    	when (/^\d{4}\.\d{4}|^\w+\/\d+/) { $package = 'arxiv'}
-    	when (/^10\.\d{2,}/){ $package = 'doi'}
-    	when (/^\d{1,8}$/) { $package = 'pubmed'} # not unique!?
-    	default {$package = ''}
-  }
-
-  return $package;
-}
-
 package App::Catalog::Helper;
 
 my $h = App::Catalog::Helper::Helpers->new;

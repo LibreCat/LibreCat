@@ -4,7 +4,7 @@ publicationTypeOrder:
   - bookeditor
   - bookchapter
   - review
-  - casestudy
+#  - casestudy
   - conferenceabstract
   - conferenceeditor
   - conference
@@ -29,7 +29,6 @@ fieldOrder:
     - author
     - department
     - project
-    - researchGroup
     - publisher
     - year
   fileUpload:
@@ -53,9 +52,9 @@ publicationTypes:
   bookeditor:
     label: "Book Editor"
     tmpl: bookEditor
-  casestudy:
-    label: "Case Study"
-    tmpl: caseStudy
+  # casestudy:
+  #   label: "Case Study"
+  #   tmpl: caseStudy
   conferenceabstract:
     label: "Conference Abstract"
     tmpl: conferenceAbstract
@@ -63,7 +62,7 @@ publicationTypes:
     label: "Conference Editor"
     tmpl: conferenceEditor
   conference:
-    label: "Conference Proceeding/Paper"
+    label: "Conference Paper"
     tmpl: conference
   dissertation:
     label: "Dissertation"
@@ -71,6 +70,18 @@ publicationTypes:
   encyclopediaarticle:
     label: "Encyclopedia Article"
     tmpl: encyclopediaArticle
+    fields:
+      basicFields:
+        tabName: "Basic Fields"
+        title:
+          mandatory: 1
+          multiple: 0
+          label: "Title"
+        doi:
+          mandatory: 0
+          multiple: 0
+          label: "DOI"
+          readonly: 0
   journalarticle:
     label: "Journal Article"
     tmpl: journalArticle
@@ -81,7 +92,7 @@ publicationTypes:
           mandatory: 0
           multiple: 0
           label: "DOI"
-          readonly: 1
+          readonly: 0
         title:
           mandatory: 1
           multiple: 0
@@ -113,11 +124,6 @@ publicationTypes:
           multiple: 1
           label: "Projects"
           placeholder: "Project"
-        researchGroup:
-          mandatory: 0
-          multiple: 1
-          label: "Research Group"
-          placeholder: "Research Group"
         publisher:
           mandatory: 0
           multiple: 0
