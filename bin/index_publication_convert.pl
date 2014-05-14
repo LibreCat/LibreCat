@@ -51,12 +51,14 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("pagesEnd", "page.end")',
         'move_field("pagesCount", "page.count")',
         'move_field("submissionStatus", "status")',
+        'move_field("publicationStatus", "publication_status")',
         'move_field("usesOriginalLanguage.languageCode", "language")',
         'move_field("dateCreated", "date_created")',
         'move_field("creator.login", "creator")',
         'move_field("isNonLuPublication", "extern")',
         'move_field("hasDdc.ddcNumber", "ddc")',
         'move_field("eIssn", "eissn")',
+        'move_field("dateSubmitted", "date_submitted")',
 
         'add_contributor_info()',
         'split_ext_ident()',
@@ -67,6 +69,7 @@ my $pre_fixer = Catmandu::Fix->new(
         'language_info()',
         'add_ddc()',
         #'volume_sort()',
+        'clean_department()',
     ]
 );
 
@@ -148,14 +151,18 @@ my $supervisor_fixer = Catmandu::Fix->new(
 
 my $post_fixer = Catmandu::Fix->new(
     fixes => [
-        'remove_field("type")',          'remove_field("usesLanguage")',
-        'remove_field("citations._id")', 'remove_field("message")',
-        'hiddenFor_info()',              'schema_dot_org()',
+        #'remove_field("type")',
+        'remove_field("usesLanguage")',
+        'remove_field("citations._id")',
+        'remove_field("message")',
+        'remove_field("isAReviewOf")',
+        #'hiddenFor_info()',
+        #'schema_dot_org()',
     ]
 );
 
-my $separate_fixer = Catmandu::Fix->new(
-    fixes => [ 'remove_field("additionalInformation")', ] );
+#my $separate_fixer = Catmandu::Fix->new(
+#    fixes => [ 'remove_field("additionalInformation")', ] );
 
 my $bag    = Catmandu->store('search')->bag('publicationItem');
 my $citbag = Catmandu->store('citation')->bag;
@@ -181,12 +188,28 @@ sub add_to_index {
     
     $rec->{citation} = $citbag->get( $rec->{_id} ) if $rec->{_id};
     $post_fixer->fix($rec);
+    
+    foreach my $key (keys %$rec){
+    	my $ref = ref $rec->{$key};
+    	
+    	if($ref eq "ARRAY"){
+    		if(!$rec->{$key}->[0]){
+    			delete $rec->{$key};
+    		}
+    	}
+    	elsif($ref eq "HASH"){
+    		if(! keys %{$rec->{$key}}){
+    			delete $rec->{$key};
+    		}
+    	}
+    	else{
+    		if($rec->{$key} eq ""){
+    			delete $rec->{$key};
+    		}
+    	}
+    }
 
     ( $rec->{project} ) && ( $rec->{proj} = 1 );
-
-    if ( $rec->{documentType} ne 'researchData' ) {
-        $separate_fixer->fix($rec);
-    }
 
     print Dumper $rec;
 
