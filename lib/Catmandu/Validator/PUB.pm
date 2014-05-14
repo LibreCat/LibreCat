@@ -23,7 +23,7 @@ sub validate_data {
 
     # id, year
     (is_integer $data->{_id}) && (push @$error, "Invalid _id, must be integer");
-    (is_integer $data->{year} && 1950 < $data->year < 2020) && (push @$error, "Invalid year.");
+    (is_integer $data->{year} && 1950 < $data->{year} && $data->{year} < 2020) && (push @$error, "Invalid year.");
 
     # integer fields
     foreach (qw/volume issue pmid inspire wos reportNumber/) {
@@ -36,7 +36,7 @@ sub validate_data {
     }
 
     # doi
-    (if $data->{doi} =~ /^http/) {
+    if ($data->{doi} =~ /^http/) {
     	$data->{doi} =~ s/http:\/\/doi.org\///;
     	$data->{doi} =~ s/http:\/\/dx.doi.org\///;
     }
@@ -50,7 +50,7 @@ sub validate_data {
 		if ($obj->is_valid) {
 			push @{$data->{issn}}, $obj->as_string;
 		} else {
-			push @$error "Issn invalid";
+			push @$error, "Issn invalid";
 		}
     }
     delete $data->{tmp};

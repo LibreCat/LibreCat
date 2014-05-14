@@ -113,21 +113,6 @@ my $editor_fixer = Catmandu::Fix->new(
     ]
 );
 
-# my $translator_fixer = Catmandu::Fix->new(
-#         fixes => [
-#                 'move_field("translator.surname", "translator.last_name")',
-#                 'move_field("translator.givenName", "translator.first_name")',
-#                 'move_field("translator.personNumber", "translator.id")',
-#                 'remove_field("translator.email")',
-#                 'remove_field("translator.isOfType")',
-#                 'remove_field("translator.oId")',
-#                 'remove_field("translator.departmentAffiliations")',
-#                 'remove_field("translator.luLdapId")',
-#                 'remove_field("translator.jobTitle")',
-#                 'remove_field("translator.personTitle")',
-
-# ]);
-
 my $supervisor_fixer = Catmandu::Fix->new(
     fixes => [
         'move_field("supervisor.surname", "supervisor.lastName")',
