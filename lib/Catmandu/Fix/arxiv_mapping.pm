@@ -3,32 +3,29 @@ package Catmandu::Fix::arxiv_mapping;
 use Catmandu::Sane;
 use Catmandu::Fix::add_field as => 'add_field';
 use Catmandu::Fix::move_field as => 'move_field';
-use Catmandu::Fix::fix_date as => 'fix_date';
-# use Catmandu::Fix::add_field as => 'add_field';
-# use Catmandu::Fix::add_field as => 'add_field';
-# use Catmandu::Fix::add_field as => 'add_field';
-# use Catmandu::Fix::add_field as => 'add_field';
-# use Catmandu::Fix::add_field as => 'add_field';
+use Catmandu::Fix::append as => 'append';
 
 use Moo;
-
-move_field("summary","abstract");
-move_field("arxiv:journal_ref","publication");
-move_field("arxiv:doi","doi");
-append("category.term","message", -join => '; ');
 
 sub fix {
 	my ($self, $pub) = @_;
 
-    foreach my $au (@{$pub->{author}) {
-        my $authorname = $author->{'name'};
-        my $lastName    = @$authorname[0];
+    foreach my $au ( @{$pub->{author}} ) {
+        my $lastName = $au->{'name'};
         $lastName =~ s/.*\s(\S+)$/$1/;
-        my $firstName    = @$authorname[0];
+        my $firstName = $au->{'name'};
         $firstName =~ s/(.*)\s(\S+)$/$1/;
         my $fullname = $lastName.', '.$firstName;
-        push @{$record->{authors}}, $fullname;
+        push @{$pub->{NEWauthors}}, $fullname;
     }
+
+    move_field($pub,"summary","abstract.text");
+    add_field($pub, "abstract.lang", "eng");
+    move_field($pub,"arxiv:journal_ref.content","publication");
+    move_field($pub,"arxiv:doi.content","doi");
+    #append($pub,"category.term","message", -join => '; ');
+    $pub->{message} = join ()
+    return $pub;
 }
 
 1;
