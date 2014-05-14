@@ -1,4 +1,4 @@
-package Catmandu::Fix::rename_relations;
+package Catmandu::Fix::rename_relation;
 
 use Catmandu::Sane;
 use Moo;
