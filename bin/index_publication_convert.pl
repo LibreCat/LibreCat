@@ -1,11 +1,11 @@
 #!/usr/local/bin/perl
 
-use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension);
+use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/app-catalog/lib);
 
 use Catmandu::Sane;
 use Catmandu -all;
 use Catmandu::Fix
-    qw(add_ddc rename_relations move_field split_ext_ident add_contributor_info add_file_access language_info remove_field volume_sort);
+    qw(add_ddc rename_relation remove_array_field move_field split_ext_ident add_contributor_info add_file_access language_info remove_field volume_sort);
 
 #use MDS;
 use SBCatDB;
@@ -85,31 +85,33 @@ my $file_fixer = Catmandu::Fix->new(
 
 my $author_fixer = Catmandu::Fix->new(
     fixes => [
-        'move_field("author.surname", "author.last_name")',
-        'move_field("author.givenName", "author.first_name")',
-        'move_field("author.personNumber", "author.id")',
-        'remove_field("author.email")',
-        'remove_field("author.isOfType")',
-        'remove_field("author.oId")',
-        'remove_field("author.departmentAffiliations")',
-        'remove_field("author.luLdapId")',
-        'remove_field("author.jobTitle")',
-        'remove_field("author.personTitle")',
+        'move_array_field("author.*.surname", "author.*.last_name")',
+        'move_array_field("author.*.givenName", "author.*.first_name")',
+        'move_array_field("author.*.personNumber", "author.*.id")',
+        'move_array_field("author.*.fullName", "author.*.full_name")',
+        'remove_array_field("author.*.email")',
+        'remove_array_field("author.*.type")',
+        'remove_array_field("author.*.oId")',
+        'remove_array_field("author.*.departmentAffiliations")',
+        'remove_array_field("author.*.luLdapId")',
+        'remove_array_field("author.*.jobTitle")',
+        'remove_array_field("author.*.personTitle")',
     ]
 );
 
 my $editor_fixer = Catmandu::Fix->new(
     fixes => [
-        'move_field("editor.surname", "editor.last_name")',
-        'move_field("editor.givenName", "editor.first_name")',
-        'move_field("editor.personNumber", "editor.id")',
-        'remove_field("editor.email")',
-        'remove_field("editor.isOfType")',
-        'remove_field("editor.oId")',
-        'remove_field("editor.departmentAffiliations")',
-        'remove_field("editor.luLdapId")',
-        'remove_field("editor.jobTitle")',
-        'remove_field("editor.personTitle")',
+        'move_array_field("editor.*.surname", "editor.*.last_name")',
+        'move_array_field("editor.*.givenName", "editor.*.first_name")',
+        'move_array_field("editor.*.personNumber", "editor.*.id")',
+        'move_array_field("editor.*.fullName", "editor.*.full_name")',
+        'remove_array_field("editor.*.email")',
+        'remove_array_field("editor.*.type")',
+        'remove_array_field("editor.*.oId")',
+        'remove_array_field("editor.*.departmentAffiliations")',
+        'remove_array_field("editor.*.luLdapId")',
+        'remove_array_field("editor.*.jobTitle")',
+        'remove_array_field("editor.*.personTitle")',
     ]
 );
 
@@ -130,16 +132,17 @@ my $editor_fixer = Catmandu::Fix->new(
 
 my $supervisor_fixer = Catmandu::Fix->new(
     fixes => [
-        'move_field("supervisor.surname", "supervisor.lastName")',
-        'move_field("supervisor.givenName", "supervisor.firstName")',
-        'move_field("supervisor.personNumber", "supervisor.id")',
-        'remove_field("supervisor.email")',
-        'remove_field("supervisor.isOfType")',
-        'remove_field("supervisor.oId")',
-        'remove_field("supervisor.departmentAffiliations")',
-        'remove_field("supervisor.luLdapId")',
-        'remove_field("supervisor.jobTitle")',
-        'remove_field("supervisor.personTitle")',
+        'move_array_field("supervisor.*.surname", "supervisor.*.last_name")',
+        'move_array_field("supervisor.*.givenName", "supervisor.*.first_name")',
+        'move_array_field("supervisor.*.personNumber", "supervisor.*.id")',
+        'move_array_field("supervisor.*.fullName", "supervisor.*.full_name")',
+        'remove_array_field("supervisor.*.email")',
+        'remove_array_field("supervisor.*.type")',
+        'remove_array_field("supervisor.*.oId")',
+        'remove_array_field("supervisor.*.departmentAffiliations")',
+        'remove_array_field("supervisor.*.luLdapId")',
+        'remove_array_field("supervisor.*.jobTitle")',
+        'remove_array_field("supervisor.*.personTitle")',
     ]
 );
 
@@ -171,6 +174,11 @@ sub add_to_index {
     my $rec = shift;
 
     $pre_fixer->fix($rec);
+    $file_fixer->fix($rec);
+    $author_fixer->fix($rec);
+    $editor_fixer->fix($rec);
+    $supervisor_fixer->fix($rec);
+    
     $rec->{citation} = $citbag->get( $rec->{_id} ) if $rec->{_id};
     $post_fixer->fix($rec);
 
@@ -192,7 +200,7 @@ sub add_to_index {
 # get all publication types
 my $types = $luur->getChildrenTypes( type => 'publicationItem' );
 
-# foreach type get public records
+# foreach type get records
 foreach (@$types) {
 
     my $obj = $luur->getObjectsByType( type => $_ );
