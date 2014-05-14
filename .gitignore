@@ -20,4 +20,5 @@ public/images/dummy.jpg
 /sessions
 views/backend/forms/
 logs/
+t/testPetra.pl
 ~$
