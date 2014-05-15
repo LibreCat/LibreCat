@@ -65,7 +65,7 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("hasDdc.ddcNumber", "ddc")',
         'move_field("eIssn", "eissn")',
         'move_field("dateSubmitted", "date_submitted")',
-
+        'move_field("defenseDateTime", "date_defense")',
         'add_contributor_info()',
         'split_ext_ident()',
         'move_identifiers()',
@@ -150,6 +150,36 @@ my $supp_fixer = Catmandu::Fix->new(
     ]
 );
 
+my $date_fixer = Catmandu::Fix->new(
+    fixes => [
+        "datetime_format('date_created',
+            'source_pattern' => '%Y-%m-%d %H:%M:%S',
+            'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ',
+            'time_zone' => 'Europe/Berlin',
+            'set_time_zone' => 'UTC')",
+        "datetime_format('date_updated',
+            'source_pattern' => '%Y-%m-%d %H:%M:%S',
+            'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ',
+            'time_zone' => 'Europe/Berlin',
+            'set_time_zone' => 'UTC')",
+        "datetime_format('date_deleted',
+            'source_pattern' => '%Y-%m-%d %H:%M:%S',
+            'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ',
+            'time_zone' => 'Europe/Berlin',
+            'set_time_zone' => 'UTC')",
+        "datetime_format('date_submitted',
+            'source_pattern' => '%Y-%m-%d %H:%M:%S',
+            'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ',
+            'time_zone' => 'Europe/Berlin',
+            'set_time_zone' => 'UTC')",
+        "datetime_format('date_defense',
+            'source_pattern' => '%Y-%m-%d %H:%M',
+            'destination_pattern' => '%Y-%m-%d',
+            'time_zone' => 'Europe/Berlin',
+            'set_time_zone' => 'UTC')",
+    ]
+);
+
 my $post_fixer = Catmandu::Fix->new(
     fixes => [
         #'remove_field("isOfType")',
@@ -160,13 +190,14 @@ my $post_fixer = Catmandu::Fix->new(
         'remove_field("isHiddenFor")',
         'remove_field("isHiddenForAccount")',
         'remove_field("dateToTeacher")',
+        'remove_field("subject")',
+        'remove_field("additionalInformation")',
+        'remove_field("last_author")',
+        'remove_field("hasDdc")',
         #'hiddenFor_info()',
         #'schema_dot_org()',
     ]
 );
-
-#my $separate_fixer = Catmandu::Fix->new(
-#    fixes => [ 'remove_field("additionalInformation")', ] );
 
 my $bag    = Catmandu->store('search')->bag('publicationItem');
 my $citbag = Catmandu->store('citation')->bag;
@@ -190,7 +221,7 @@ sub add_to_index {
     $editor_fixer->fix($rec);
     $supervisor_fixer->fix($rec);
     $supp_fixer->fix($rec);
-    
+    $date_fixer->fix($rec);
     #$rec->{citation} = $citbag->get( $rec->{_id} ) if $rec->{_id};
     $post_fixer->fix($rec);
     
