@@ -45,6 +45,7 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("oId","_id")',
         'move_field("type.typeName","type")',
         'move_field("mainTitle", "title")',
+        'move_field("alternativeTitle", "alternative_title")',
         'move_field("publishingYear", "year")',
         'move_field("dateLastChanged", "date_updated")',
         'move_field("pagesStart","page.start")',
@@ -54,7 +55,12 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("publicationStatus", "publication_status")',
         'move_field("usesOriginalLanguage.languageCode", "language")',
         'move_field("dateCreated", "date_created")',
-        'move_field("record_creator.login", "record_creator")',
+        'move_field("record_creator.login", "tmp.record_creator")',
+        'remove_field("record_creator")',
+        'move_field("tmp.record_creator", "record_creator)',
+        'move_field("doi.doi", "tmp.doi")';
+        'remove_field("doi")',
+        'move_field("tmp.doi", "doi")',
         'move_field("isNonLuPublication", "extern")',
         'move_field("hasDdc.ddcNumber", "ddc")',
         'move_field("eIssn", "eissn")',
@@ -62,6 +68,7 @@ my $pre_fixer = Catmandu::Fix->new(
 
         'add_contributor_info()',
         'split_ext_ident()',
+        'move_identifiers()',
 
         #'add_file_yearlastuploaded()',
         #'add_field_yearcreated()',
@@ -150,6 +157,9 @@ my $post_fixer = Catmandu::Fix->new(
         'remove_field("citations._id")',
         'remove_field("message")',
         'remove_field("isAReviewOf")',
+        'remove_field("isHiddenFor")',
+        'remove_field("isHiddenForAccount")',
+        'remove_field("dateToTeacher")',
         #'hiddenFor_info()',
         #'schema_dot_org()',
     ]
