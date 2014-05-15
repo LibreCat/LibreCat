@@ -54,7 +54,7 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("publicationStatus", "publication_status")',
         'move_field("usesOriginalLanguage.languageCode", "language")',
         'move_field("dateCreated", "date_created")',
-        'move_field("creator.login", "creator")',
+        'move_field("record_creator.login", "record_creator")',
         'move_field("isNonLuPublication", "extern")',
         'move_field("hasDdc.ddcNumber", "ddc")',
         'move_field("eIssn", "eissn")',
@@ -66,8 +66,8 @@ my $pre_fixer = Catmandu::Fix->new(
         #'add_file_yearlastuploaded()',
         #'add_field_yearcreated()',
         'add_file_access()',
-        'language_info()',
-        'add_ddc()',
+        'clean_language()',
+        #'add_ddc()',
         #'volume_sort()',
         'clean_department()',
     ]
@@ -99,6 +99,9 @@ my $author_fixer = Catmandu::Fix->new(
         'remove_array_field("author.*.luLdapId")',
         'remove_array_field("author.*.jobTitle")',
         'remove_array_field("author.*.personTitle")',
+        'remove_array_field("author.*.searchName")',
+        'remove_array_field("author.*.citationStyle")',
+        'remove_array_field("author.*.sortDirection")',
     ]
 );
 
@@ -134,9 +137,15 @@ my $supervisor_fixer = Catmandu::Fix->new(
     ]
 );
 
+my $supp_fixer = Catmandu::Fix->new(
+    fixes => [
+        'clean_suppmat()',
+    ]
+);
+
 my $post_fixer = Catmandu::Fix->new(
     fixes => [
-        #'remove_field("type")',
+        #'remove_field("isOfType")',
         'remove_field("usesLanguage")',
         'remove_field("citations._id")',
         'remove_field("message")',
@@ -170,8 +179,9 @@ sub add_to_index {
     $author_fixer->fix($rec);
     $editor_fixer->fix($rec);
     $supervisor_fixer->fix($rec);
+    $supp_fixer->fix($rec);
     
-    $rec->{citation} = $citbag->get( $rec->{_id} ) if $rec->{_id};
+    #$rec->{citation} = $citbag->get( $rec->{_id} ) if $rec->{_id};
     $post_fixer->fix($rec);
     
     foreach my $key (keys %$rec){
@@ -183,12 +193,12 @@ sub add_to_index {
     		}
     	}
     	elsif($ref eq "HASH"){
-    		if(! keys %{$rec->{$key}}){
+    		if(!%{$rec->{$key}}){
     			delete $rec->{$key};
     		}
     	}
     	else{
-    		if($rec->{$key} eq ""){
+    		if($rec->{$key} and $rec->{$key} eq ""){
     			delete $rec->{$key};
     		}
     	}
@@ -198,9 +208,7 @@ sub add_to_index {
 
     print Dumper $rec;
 
-    #print Dumper $rec->{schema};
-    #print "\n";
-    exit;
+    #exit;
 
     #$bag->add($rec);
 }
@@ -210,7 +218,10 @@ my $types = $luur->getChildrenTypes( type => 'publicationItem' );
 
 # foreach type get records
 foreach (@$types) {
-
+	
+	#my $results = $db->find("id=2659314");
+	#while ( my $rec = $results->next ) {
+	
     my $obj = $luur->getObjectsByType( type => $_ );
     foreach (@$obj) {
         my $rec = $db->get($_);
@@ -220,8 +231,14 @@ foreach (@$types) {
             and $rec->{submissionStatus} ne "pdeleted" )
         {
             add_to_index($rec);
+            #print Dumper $rec;
+            #exit;
         }
     }
+    #print Dumper $rec;
+    #exit;
+    #add_to_index($rec);
+	#}
 }
 
 #$bag->commit;
