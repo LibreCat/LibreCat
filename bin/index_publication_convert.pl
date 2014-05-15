@@ -82,12 +82,12 @@ my $pre_fixer = Catmandu::Fix->new(
 
 my $file_fixer = Catmandu::Fix->new(
     fixes => [
-        'move_field("file.fileOId", "file.file_id")',
-        'copy_field("file.dateLastUploaded", "file.date_created")',
-        'move_field("file.dateLastUploaded", "file.date_updated")',
-        'move_field("file.isUploadedBy.login", "file.creator")',
-        'remove_field("file.isOfType")',
-        'remove_field("file.isUploadedBy")',
+        'move_array_field("file.*.fileOId", "file.*.file_id")',
+        #'copy_field("file.dateLastUploaded", "file.date_created")',
+        'move_array_field("file.*.dateLastUploaded", "file.*.date_updated")',
+        'move_array_field("file.*.isUploadedBy.login", "file.*.creator")',
+        'remove_array_field("file.*.isOfType")',
+        'remove_array_field("file.*.isUploadedBy")',
     ]
 );
 
