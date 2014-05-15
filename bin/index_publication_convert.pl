@@ -65,6 +65,10 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("eIssn", "eissn")',
         'move_field("dateSubmitted", "date_submitted")',
         'move_field("defenseDateTime", "date_defense")',
+        'move_field("conferenceName", "conference_name")',
+        'move_field("conferenceDate", "conference_date")',
+        'move_field("conferenceEndDate", "conference_enddate")',
+        'move_field("conferenceLocation", "conference_location")',
         'add_contributor_info()',
         'split_ext_ident()',
         'move_identifiers()',
@@ -76,6 +80,7 @@ my $pre_fixer = Catmandu::Fix->new(
         #'add_ddc()',
         #'volume_sort()',
         'clean_department()',
+        'clean_link()',
     ]
 );
 
@@ -173,6 +178,7 @@ my $post_fixer = Catmandu::Fix->new(
         'remove_field("additionalInformation")',
         'remove_field("last_author")',
         'remove_field("hasDdc")',
+        'remove_field("externalIdentifier")',
         #'hiddenFor_info()',
         #'schema_dot_org()',
     ]
@@ -249,9 +255,11 @@ foreach (@$types) {
             and $rec->{isOfType}->{typeName} ne "studentPaper"
             and $rec->{submissionStatus})
         {
-            add_to_index($rec);
-            #print Dumper $rec;
-            #exit;
+        	if($rec->{status} ne "new"){
+        		add_to_index($rec);
+        		#print Dumper $rec;
+        		#exit;
+        	}
         }
     }
     #print Dumper $rec;
