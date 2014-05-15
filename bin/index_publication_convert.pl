@@ -66,7 +66,7 @@ my $pre_fixer = Catmandu::Fix->new(
         #'add_file_yearlastuploaded()',
         #'add_field_yearcreated()',
         'add_file_access()',
-        'language_info()',
+        'clean_language()',
         #'add_ddc()',
         #'volume_sort()',
         'clean_department()',
