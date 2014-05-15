@@ -208,16 +208,36 @@ email: "me@example.com"
 defense_date: "2014-04-23"
 link: ["www.example.com", "www.example2.com"]
 external_id:
-    isi: asldkf
-	arxiv: sdfdsf
-	pubmed: dfsdf
+    isi:
+        id: asldkf
+        prefix_id: "ISI:asldkf"
+	arxiv:
+	    id: sdfdsf
+	    prefix_id: "arXiv:sdfdsf"
+	pubmed:
+	    id: dfsdf
+	    prefix_id: "MEDLINE:dfsdf"
 	inspire:
+	    id: asldfjasl
+	    prefix_id: "INSPIRE:asldfjasl"
 	ahf:
+	    id: sksks
+	    prefix_id: "AHF:sksks"
 	scoap3:
+	    id: sklslsdj
+	    prefix_id: "SCOAP3:sklslsdj"
 	phillister:
+	    id: sdklfjdslf
+	    prefix_id: "PhilLister:sdklfjdslf"
 	opac:
+	    id: lsdfj
+	    prefix_id: "UB-OPAC:lsdfj"
 	fp7:
+	    id: fp7/sdfkls
+	    prefix_id: fp7/sdfkls
 	fp6:
+	    id: fp6/sdlfkjsd
+	    prefix_id: fp6/sdlfkjsd
 	genbank: []
 	nasc: []
 message: "Just a message"
