@@ -5,21 +5,20 @@ use Moo;
 
 sub fix {
 	my ( $self, $pub ) = @_;
-	my $dep = $pub->{department};
+	my $department = $pub->{department};
 	
-	foreach (@$dep) {
-		delete $_->{oId} if $_->{oId};
-		delete $_->{type} if $_->{type};
+	foreach my $dep (@$department) {
+		delete $dep->{oId} if $dep->{oId};
+		delete $dep->{type} if $dep->{type};
 		
-		#ref $pub->{author} eq 'ARRAY' ? $pub->{author}->[0]->{fullName} : $pub->{author}->{fullName};
-		if (ref $_->{name} eq 'ARRAY') {
-			$_->{name} = $_->{name}->[0]->{text};
+		if (ref $dep->{name} eq 'ARRAY') {
+			$dep->{name} = $dep->{name}->[0]->{text};
 		}
 		
-		$_->{id} = $_->{organizationNumber};
-		delete $_->{organizationNumber};
-		$_->{tree} = $_->{allDepartments};
-		delete $_->{allDepartments};
+		$dep->{id} = $dep->{organizationNumber};
+		delete $dep->{organizationNumber};
+		$dep->{tree} = $dep->{allDepartments};
+		delete $dep->{allDepartments};
 	}
 	
 	$pub;
