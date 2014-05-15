@@ -57,8 +57,8 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("dateCreated", "date_created")',
         'move_field("record_creator.login", "tmp.record_creator")',
         'remove_field("record_creator")',
-        'move_field("tmp.record_creator", "record_creator)',
-        'move_field("doi.doi", "tmp.doi")';
+        'move_field("tmp.record_creator", "record_creator")',
+        'move_field("doi.doi", "tmp.doi")',
         'remove_field("doi")',
         'move_field("tmp.doi", "doi")',
         'move_field("isNonLuPublication", "extern")',
@@ -229,7 +229,7 @@ my $types = $luur->getChildrenTypes( type => 'publicationItem' );
 # foreach type get records
 foreach (@$types) {
 	
-	#my $results = $db->find("id=2659314");
+	#my $results = $db->find("id=1600406");
 	#while ( my $rec = $results->next ) {
 	
     my $obj = $luur->getObjectsByType( type => $_ );
@@ -237,8 +237,7 @@ foreach (@$types) {
         my $rec = $db->get($_);
         if (    $rec->{isOfType}->{typeName} ne "unknown"
             and $rec->{isOfType}->{typeName} ne "studentPaper"
-            and $rec->{submissionStatus}
-            and $rec->{submissionStatus} ne "pdeleted" )
+            and $rec->{submissionStatus})
         {
             add_to_index($rec);
             #print Dumper $rec;
