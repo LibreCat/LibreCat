@@ -4,8 +4,7 @@ use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/app-catalog/
 
 use Catmandu::Sane;
 use Catmandu -all;
-use Catmandu::Fix
-    qw(add_ddc rename_relation remove_array_field move_field split_ext_ident add_contributor_info add_file_access language_info remove_field volume_sort);
+use Catmandu::Fix qw(datetime_format add_ddc rename_relation remove_array_field move_field split_ext_ident add_contributor_info add_file_access language_info remove_field volume_sort);
 
 #use MDS;
 use SBCatDB;
@@ -152,31 +151,11 @@ my $supp_fixer = Catmandu::Fix->new(
 
 my $date_fixer = Catmandu::Fix->new(
     fixes => [
-        "datetime_format('date_created',
-            'source_pattern' => '%Y-%m-%d %H:%M:%S',
-            'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ',
-            'time_zone' => 'Europe/Berlin',
-            'set_time_zone' => 'UTC')",
-        "datetime_format('date_updated',
-            'source_pattern' => '%Y-%m-%d %H:%M:%S',
-            'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ',
-            'time_zone' => 'Europe/Berlin',
-            'set_time_zone' => 'UTC')",
-        "datetime_format('date_deleted',
-            'source_pattern' => '%Y-%m-%d %H:%M:%S',
-            'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ',
-            'time_zone' => 'Europe/Berlin',
-            'set_time_zone' => 'UTC')",
-        "datetime_format('date_submitted',
-            'source_pattern' => '%Y-%m-%d %H:%M:%S',
-            'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ',
-            'time_zone' => 'Europe/Berlin',
-            'set_time_zone' => 'UTC')",
-        "datetime_format('date_defense',
-            'source_pattern' => '%Y-%m-%d %H:%M',
-            'destination_pattern' => '%Y-%m-%d',
-            'time_zone' => 'Europe/Berlin',
-            'set_time_zone' => 'UTC')",
+        "datetime_format('date_created', 'source_pattern' => '%Y-%m-%d %H:%M:%S', 'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ', 'time_zone' => 'Europe/Berlin', 'set_time_zone' => 'UTC')",
+        "datetime_format('date_updated', 'source_pattern' => '%Y-%m-%d %H:%M:%S', 'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ', 'time_zone' => 'Europe/Berlin', 'set_time_zone' => 'UTC')",
+        "datetime_format('date_deleted', 'source_pattern' => '%Y-%m-%d %H:%M:%S', 'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ', 'time_zone' => 'Europe/Berlin', 'set_time_zone' => 'UTC')",
+        "datetime_format('date_submitted', 'source_pattern' => '%Y-%m-%d %H:%M:%S', 'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ', 'time_zone' => 'Europe/Berlin', 'set_time_zone' => 'UTC')",
+        "datetime_format('date_defense', 'source_pattern' => '%Y-%m-%d %H:%M', 'destination_pattern' => '%Y-%m-%d', 'time_zone' => 'Europe/Berlin', 'set_time_zone' => 'UTC')",
     ]
 );
 
