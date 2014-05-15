@@ -208,10 +208,16 @@ email: "me@example.com"
 defense_date: "2014-04-23"
 link: ["www.example.com", "www.example2.com"]
 external_id:
+    isi: asldkf
 	arxiv: sdfdsf
-	pmid: dfsdf
+	pubmed: dfsdf
 	inspire:
-	wos:
+	ahf:
+	scoap3:
+	phillister:
+	opac:
+	fp7:
+	fp6:
 	genbank: []
 	nasc: []
 message: "Just a message"

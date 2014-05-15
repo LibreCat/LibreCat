@@ -8,8 +8,6 @@ sub fix {
 	
 	my $related_material;
 	
-	try{
-	
 	if($pub->{relatesTo}){
 		foreach my $relmat (@{$pub->{relatesTo}}){
 			my $hashrec;
@@ -76,19 +74,12 @@ sub fix {
 		}
 	}
 	
-	$pub->{related_material} = $related_material;
+	$pub->{related_material} = $related_material if ($pub->{relatesFrom} or $pub->{relatesTo});
 	delete $pub->{uploadDirectory} if $pub->{uploadDirectory};
 	delete $pub->{relatesTo} if $pub->{relatesTo};
 	delete $pub->{relatesFrom} if $pub->{relatesFrom};
 	
 	$pub;
-	}
-	catch{
-		my $error;
-		$error = "An error has occurred.";
-		
-		$error;
-	};
 
 }
 
