@@ -150,6 +150,13 @@ language:
 	-
 	  iso: eng
 	  name: English
+original_language:
+	- 
+	  iso: ger
+	  name: German
+	-
+	  iso: eng
+	  name: English
 department/project:
 	-
 		name: "Faculty of Physics"
