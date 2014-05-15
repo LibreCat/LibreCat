@@ -219,6 +219,7 @@ related_material:
 		file:
 			file_name: "file.jpg"
 			file_id: 12345
+			description: "This describes something"
 			date_updated: "2014-04-23"
 			date_created: "2014-04-23"
 			title: "Title"
