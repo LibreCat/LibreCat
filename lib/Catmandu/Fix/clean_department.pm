@@ -12,13 +12,14 @@ sub fix {
 		delete $_->{type} if $_->{type};
 		
 		#ref $pub->{author} eq 'ARRAY' ? $pub->{author}->[0]->{fullName} : $pub->{author}->{fullName};
-		if ($_->{name}->[0]) {
+		if (ref $_->{name} eq 'ARRAY') {
 			$_->{name} = $_->{name}->[0]->{text};
-			$_->{id} = $_->{organizationNumber};
-			delete $_->{organizationNumber};
-			$_->{tree} = $_->{allDepartments};
-			delete $_->{allDepartments};
 		}
+		
+		$_->{id} = $_->{organizationNumber};
+		delete $_->{organizationNumber};
+		$_->{tree} = $_->{allDepartments};
+		delete $_->{allDepartments};
 	}
 	
 	$pub;
