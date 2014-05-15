@@ -45,20 +45,20 @@ sub fix {
 
     
     # Special for related Material
-    my @relatedMaterial;
-    for my $rel ( qw(relatesFrom relatesTo) ) {
-        next unless $pub->{$rel};
-        my $rel_list = ref $pub->{$rel} eq 'ARRAY' ? $pub->{$rel} : [$pub->{$rel}];
-        foreach my $rm (@{$rel_list}) {
-            $rm->{relationRole} = $rel eq 'relatesFrom' ? 'from' : 'to';
-        }
-        push @relatedMaterial, @$rel_list;
-        delete $pub->{$rel};      
-    }
+    #my @relatedMaterial;
+    #for my $rel ( qw(relatesFrom relatesTo) ) {
+    #    next unless $pub->{$rel};
+    #    my $rel_list = ref $pub->{$rel} eq 'ARRAY' ? $pub->{$rel} : [$pub->{$rel}];
+    #    foreach my $rm (@{$rel_list}) {
+    #        $rm->{relationRole} = $rel eq 'relatesFrom' ? 'from' : 'to';
+    #    }
+    #    push @relatedMaterial, @$rel_list;
+    #    delete $pub->{$rel};      
+    #}
     
-    $pub->{relatedMaterial}
-        = [sort { $a->{"position\u$a->{relationRole}"} <=> $b->{"position\u$b->{relationRole}"} }
-            @relatedMaterial] if @relatedMaterial;    
+    #$pub->{relatedMaterial}
+    #    = [sort { $a->{"position\u$a->{relationRole}"} <=> $b->{"position\u$b->{relationRole}"} }
+    #        @relatedMaterial] if @relatedMaterial;    
 
     $pub;
 }
