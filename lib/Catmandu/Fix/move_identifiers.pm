@@ -24,7 +24,7 @@ sub fix {
 		}
 	}
 	
-	push  @{$pub->{publication_identifier}}, {urn => $pub->{urn}} if $pub->{urn};
+	push  @{$pub->{publication_identifier}->{urn}}, $pub->{urn} if $pub->{urn};
 	
 	
 	$pub->{external_id}->{isi} = {id => $pub->{isi}, prefix_id => "ISI:$pub->{isi}"} if $pub->{isi};
