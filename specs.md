@@ -119,6 +119,7 @@ author:
 		title: "Prof. Dr."
 		full_name: "Sagerer, Gerhard"
 		id: "123456"
+first_author: "Lastname, Firstname"
 editor: see author
 translator: see author
 supervisor: see author
@@ -134,6 +135,8 @@ file:
 		file_size: 3.4 MB
 		language: eng
 		creator: bisid
+		open_access: 1|0
+		year_last_uploaded: 2014
 doi: 10.214/test
 ddc:
 	- 530
@@ -157,13 +160,17 @@ original_language:
 	-
 	  iso: eng
 	  name: English
-department/project:
+department:
 	-
 		name: "Faculty of Physics"
 		id: 123456
 		tree:
 			- 98765
 			- 54321
+project:
+    -
+        name: "project name"
+        id: 29383
 status: public|private|submitted|returned
 publication_status: inPress|unpublished|submitted|published
 publication_identifier:
@@ -181,7 +188,7 @@ abstract:
 	-
 		lang: ger
 		text: "Das ist eine Zusammenfassung"
-external: 0|1
+extern: 0|1
 popular_science: 0|1
 quality_controlled: 0|1
 page:
@@ -200,7 +207,7 @@ conference:
 	location: "Bath, UK"
 	start_date: "2014-05-20"
 	end_date: "2014-05-23"
-publishingDate: "2014-04-23"
+publishing_date: "2014-04-23"
 ipn: 21314
 ipc: 2344
 report_number 18
@@ -242,6 +249,7 @@ external_id:
 	nasc: []
 message: "Just a message"
 ubi_funded: 0|1
+ec_funded: 0|1
 related_material:
 	-
 		type: "supplementary"
