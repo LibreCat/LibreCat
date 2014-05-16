@@ -8,7 +8,7 @@ use Getopt::Std;
 use SBCatDB;
 use Catmandu -all;
 
-my $sb_home = $ENV{BACKEND};#'/srv/www/app-catalog';
+my $sb_home = '/srv/www/app-catalog';
 my $perl_version = '/usr/local/bin/perl';
 
 #my $log = "$sb_home/log/update_es_time.log";
@@ -44,7 +44,7 @@ if($status =~ /"status":404}$/){
 	}
 }
 
-my $command_1 = "$perl_version $sb_home/bin/index_publication.pl";
+my $command_1 = "$perl_version $sb_home/bin/index_publication_convert.pl";#$sb_home/bin/index_publication.pl";
 my $command_2 = "$perl_version $sb_home/bin/index_project.pl";
 my $command_3 = "$perl_version $sb_home/bin/index_researcher.pl";
 #my $command_4 = "$perl_version $sb_home/bin/index_award.pl";
@@ -151,7 +151,7 @@ else {
 }
 
 # Update publications index for the time this process took
-print "Updating index for the time this process took...\n";
-my $command = "$perl_version $sb_home/bin/index_publication.pl -u '$last_indexed'";
-my $result = `$command`;
+#print "Updating index for the time this process took...\n";
+#my $command = "$perl_version $sb_home/bin/index_publication.pl -u '$last_indexed'";
+#my $result = `$command`;
 print "Updated the index. DONE!\n\n\n";
