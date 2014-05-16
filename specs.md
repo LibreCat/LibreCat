@@ -221,7 +221,7 @@ external_id:
 	arxiv:
 	    id: sdfdsf
 	    prefix_id: "arXiv:sdfdsf"
-	pubmed:
+	pumid:
 	    id: dfsdf
 	    prefix_id: "MEDLINE:dfsdf"
 	inspire:
