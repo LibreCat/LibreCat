@@ -1,12 +1,12 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="id_title">
-      {% fields.basicFields.title.label %}{% IF fields.basicFields.title.mandatory == "1" %}<span class="starMandatory">*</span>{% END %}
+      {% fields.basic_fields.title.label %}{% IF fields.basic_fields.title.mandatory == "1" %}<span class="starMandatory">*</span>{% END %}
     </label>
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-9">
-      <input type="text" name="title" id="id_title" value="[% title %]" placeholder="{% fields.basicFields.title.placeholder %}" class="form-control required">
+      <input type="text" name="title" id="id_title" value="[% title %]" placeholder="{% fields.basic_fields.title.placeholder %}" class="form-control required">
     </span>
   </div>
 </div>
