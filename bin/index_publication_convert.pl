@@ -46,6 +46,7 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("mainTitle", "title")',
         'move_field("alternativeTitle", "alternative_title")',
         'move_field("publishingYear", "year")',
+        'substring("year",0,4)',
         'move_field("dateLastChanged", "date_updated")',
         'move_field("pagesStart","page.start")',
         'move_field("pagesEnd", "page.end")',
@@ -65,6 +66,7 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("eIssn", "eissn")',
         'move_field("dateSubmitted", "date_submitted")',
         'move_field("defenseDateTime", "date_defense")',
+        'substring("date_defense", 0,10)',
         'move_field("conferenceName", "conference_name")',
         'move_field("conferenceDate", "conference_date")',
         'move_field("conferenceEndDate", "conference_enddate")',
@@ -247,7 +249,7 @@ sub add_to_index {
 
     #exit;
 
-    $bag->add($rec);
+    my $result = $bag->add($rec);
 }
 
 # get all publication types
