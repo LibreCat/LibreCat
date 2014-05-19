@@ -564,10 +564,10 @@ search:
                 '<': true
                 '>=': true
                 '<=': true
-                '=': {field: 'date_updated.str'}
+                '=': true
                 'exact': true
                 '<>': true
-              field: 'date_updated.date'
+              field: 'date_updated'
               sort: true
               values: "date in the form yyyy-MM-dd HH:mm:ss or yyyy-MM-dd HH:mm"
             publicationstatus:
@@ -1387,11 +1387,7 @@ search:
                 fields:
                   nasc: {type: string}
                   exact: {type: string, analyzer: tag}
-          date_updated: &datefield
-            type: multi_field
-            fields:
-              date: {type: date, format: "yyy-MM-dd HH:mm:ss||yyyy-MM-dd||yyyy||yyyy-MM"}
-              str: {type: string, analyzer: datestring}
+          date_updated: {type: date, format: date_time_no_millis}
           file:
             properties:
               open_access: {type: byte}
@@ -1467,11 +1463,7 @@ search:
               doi: {type: string, analyzer: datestring}
               exact: {type: string, analyzer: tag}
           ddc: {type: string}
-          date_updated: &datefield
-            type: multi_field
-            fields:
-              date: {type: date, format: "yyy-MM-dd HH:mm:ss||yyyy-MM-dd||yyyy||yyyy-MM"}
-              str: {type: string, analyzer: datestring}
+          date_updated: {type: date, format: date_time_no_millis}
           file:
             properties:
               open_access: {type: byte}
@@ -1525,17 +1517,17 @@ pagination_options:
     - 50
     - 100
 sort_options:
-    - {key: publishingyear, label: "Publishing year"}
+    - {key: year, label: "Publishing year"}
     - {key: title, label: "Title" }
     - {key: author, label: "First author"}
-    - {key: documenttype, label: "Documenttype"}
+    - {key: type, label: "Documenttype"}
     - {key: publication, label: "Publ./ Series/ Journal"}
 project_sort_options:
     - {key: name, label: "Name"}
     - {key: acronym, label: "Acronym"}
     - {key: startyear, label: "Start Year"}
 default_sort:
-  - {field: publishingYear, order: desc}
-  - {field: dateLastChanged, order: desc}
+  - {field: year, order: desc}
+  - {field: date_updated, order: desc}
 default_style: pub
 default_fd_style: frontShort
