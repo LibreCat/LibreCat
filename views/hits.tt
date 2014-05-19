@@ -6,9 +6,9 @@
 
 [% FOREACH entry IN hits %]
 <div class="row">
-  [% bag = entry.documentType == "researchData" ? "data" : "publication" %]
+  [% bag = entry.type == "researchData" ? "data" : "publication" %]
   <div class="col-md-1" style="text-align:right">
-    [% SWITCH entry.submissionStatus %]
+    [% SWITCH entry.status %]
     [% CASE "public" %]
       <span style="font-weight:bold;color:green;">Public</span>
     [% CASE "unsubmitted" %]
@@ -26,9 +26,9 @@
     [% END %]
   </div> 
   <div class="col-md-10">
-    <i>[% entry.publishingYear %] | [% h.display_doctypes(entry.documentType) %] | PUB-ID: <span class="pubid">[% entry.oId %]</span></i><br />
+    <i>[% entry.year %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry.item('_id') %]</span></i><br />
     [% IF style == 'frontShort' %]
-	<a href="[% h.host %]/[% bag %]/[% entry.oId %]">[% entry.mainTitle %]</a><br />
+	<a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]">[% entry.title %]</a><br />
     [% END %]
     [% entry.citation.$style %][% IF style != "apa_indent" %]<br />[% END %]
     [% INCLUDE links.tt %]
@@ -36,7 +36,7 @@
   </div>
   
   <div class="col-md-1" style="text-align:right;">
-    <i><a href="/myPUB/record/edit/[% entry.oId %]"><span class="glyphicon glyphicon-pencil"></span></a></i>
+    <i><a href="/myPUB/record/edit/[% entry.item('_id') %]"><span class="glyphicon glyphicon-pencil"></span></a></i>
   </div>
 </div>
 <div class="row">&nbsp;</div>

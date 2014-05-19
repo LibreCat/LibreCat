@@ -46,6 +46,7 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("mainTitle", "title")',
         'move_field("alternativeTitle", "alternative_title")',
         'move_field("publishingYear", "year")',
+        'substring("year",0,4)',
         'move_field("dateLastChanged", "date_updated")',
         'move_field("pagesStart","page.start")',
         'move_field("pagesEnd", "page.end")',
@@ -65,9 +66,18 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("eIssn", "eissn")',
         'move_field("dateSubmitted", "date_submitted")',
         'move_field("defenseDateTime", "date_defense")',
+        'substring("date_defense", 0,10)',
+        'move_field("conferenceName", "conference_name")',
+        'move_field("conferenceDate", "conference_date")',
+        'move_field("conferenceEndDate", "conference_enddate")',
+        'move_field("conferenceLocation", "conference_location")',
+        'move_field("isFundedByUBI","ubi_funded")',
+        'move_field("patentNumber", "ipn")',
+        'move_field("patentClassification", "ipc")',
         'add_contributor_info()',
         'split_ext_ident()',
         'move_identifiers()',
+        'move_field("ecFunded", "ec_funded")',
 
         #'add_file_yearlastuploaded()',
         #'add_field_yearcreated()',
@@ -75,13 +85,16 @@ my $pre_fixer = Catmandu::Fix->new(
         'clean_language()',
         #'add_ddc()',
         #'volume_sort()',
-        'clean_department()',
+        'clean_department_project()',
+        'clean_link()',
     ]
 );
 
 my $file_fixer = Catmandu::Fix->new(
     fixes => [
+        'add_file_yearlastuploaded()',
         'move_array_field("file.*.fileOId", "file.*.file_id")',
+        'move_array_field("file.*.yearLastUploaded", "file.*.year_last_uploaded")',
         'move_array_field("file.*.dateLastUploaded", "file.*.date_updated")',
         'move_array_field("file.*.uploader.login", "file.*.creator")',
         'move_array_field("file.*.fileName","file.*.file_name")',
@@ -91,6 +104,7 @@ my $file_fixer = Catmandu::Fix->new(
         'move_array_field("file.*.openAccess","file.*.open_access")',
         'remove_array_field("file.*.type")',
         'remove_array_field("file.*.uploader")',
+        
     ]
 );
 
@@ -177,6 +191,7 @@ my $post_fixer = Catmandu::Fix->new(
         'remove_field("additionalInformation")',
         'remove_field("last_author")',
         'remove_field("hasDdc")',
+        'remove_field("externalIdentifier")',
         #'hiddenFor_info()',
         #'schema_dot_org()',
     ]
@@ -205,7 +220,7 @@ sub add_to_index {
     $supervisor_fixer->fix($rec);
     $supp_fixer->fix($rec);
     $date_fixer->fix($rec);
-    #$rec->{citation} = $citbag->get( $rec->{_id} ) if $rec->{_id};
+    $rec->{citation} = $citbag->get( $rec->{_id} ) if $rec->{_id};
     $post_fixer->fix($rec);
     
     foreach my $key (keys %$rec){
@@ -230,11 +245,11 @@ sub add_to_index {
 
     ( $rec->{project} ) && ( $rec->{proj} = 1 );
 
-    print Dumper $rec;
+    #print Dumper $rec;
 
     #exit;
 
-    #$bag->add($rec);
+    my $result = $bag->add($rec);
 }
 
 # get all publication types
@@ -243,7 +258,7 @@ my $types = $luur->getChildrenTypes( type => 'publicationItem' );
 # foreach type get records
 foreach (@$types) {
 	
-	#my $results = $db->find("id=1600406");
+	#my $results = $db->find("id=2487085");
 	#while ( my $rec = $results->next ) {
 	
     my $obj = $luur->getObjectsByType( type => $_ );
@@ -253,9 +268,10 @@ foreach (@$types) {
             and $rec->{isOfType}->{typeName} ne "studentPaper"
             and $rec->{submissionStatus})
         {
-            add_to_index($rec);
-            #print Dumper $rec;
-            #exit;
+        	if($rec->{submissionStatus} ne "new"){
+        		add_to_index($rec);
+        	}
+
         }
     }
     #print Dumper $rec;

@@ -37,30 +37,30 @@ sub handle_request {
     my $facets = {
         coAuthor => {
             terms => {
-                field   => 'author.personNumber',
+                field   => 'author.id',
                 size    => 100,
                 exclude => [$id]
             }
         },
         coEditor => {
             terms => {
-                field   => 'editor.personNumber',
+                field   => 'editor.id',
                 size    => 100,
                 exclude => [$id]
             }
         },
-        openAccess => { terms => { field => 'file.openAccess', size => 10 } },
+        openAccess => { terms => { field => 'file.open_access', size => 10 } },
         qualityControlled =>
-            { terms => { field => 'qualityControlled', size => 1 } },
+            { terms => { field => 'quality_controlled', size => 1 } },
         popularScience =>
-            { terms => { field => 'popularScience', size => 1 } },
-        nonlu => { terms => { field => 'isNonLuPublication', size => 1 } },
-        hasMedline => { terms => { field => 'hasMedline', size => 1 } },
-        hasArxiv   => { terms => { field => 'hasArxiv',   size => 1 } },
-        hasInspire => { terms => { field => 'hasInspire', size => 1 } },
-        hasIsi     => { terms => { field => 'hasIsi',     size => 1 } },
+            { terms => { field => 'popular_science', size => 1 } },
+        nonlu => { terms => { field => 'extern', size => 1 } },
+        #hasMedline => { terms => { field => 'hasMedline', size => 1 } },
+        #hasArxiv   => { terms => { field => 'hasArxiv',   size => 1 } },
+        #hasInspire => { terms => { field => 'hasInspire', size => 1 } },
+        #hasIsi     => { terms => { field => 'hasIsi',     size => 1 } },
         submissionStatus =>
-            { terms => { field => 'submissionStatus', size => 10 } },
+            { terms => { field => 'status', size => 10 } },
     };
     $p->{facets} = $facets;
 
@@ -132,9 +132,9 @@ sub handle_request {
 
     my $personSruSort;
     if ( $personSorto and $personSorto ne "" ) {
-        $personSruSort = "publishingYear,,";
+        $personSruSort = "publishingyear,,";
         $personSruSort .= $personSorto eq "asc" ? "1 " : "0 ";
-        $personSruSort .= "dateLastChanged,,0";
+        $personSruSort .= "datelastchanged,,0";
     }
     my $paramSruSort;
     if ( $par->{'sort'} && ref $par->{'sort'} eq 'ARRAY' ) {
@@ -163,7 +163,7 @@ sub handle_request {
         limit  => 1,
         facets => {
             documentType =>
-                { terms => { field => 'documentType', size => 30 } }
+                { terms => { field => 'type', size => 30 } }
         }
     };
     my $dochits = h->search_publication($d);
@@ -175,7 +175,7 @@ sub handle_request {
         facets => {
             year => {
                 terms => {
-                    field => 'publishingYear',
+                    field => 'year',
                     size  => 100,
                     order => 'reverse_term'
                 }

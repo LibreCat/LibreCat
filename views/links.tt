@@ -1,44 +1,43 @@
 <!-- BEGIN links. tt --> 
-[% bag = entry.documentType == "researchData" ? "data" : "publication" %]
-  [% IF entry.submissionStatus == "public" %]
-	<a href="[% h.host %]/[% bag %]/[% entry.oId %]/preview" title="Show complete bibliographic and access information" target="_top">Public View</a>
+[% bag = entry.type == "researchData" ? "data" : "publication" %]
+  [% IF entry.status == "public" %]
+	<a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]/preview" title="Show complete bibliographic and access information" target="_top">Public View</a>
   [% ELSE %]
-    <a href="/admin/preview/[% entry.oId %]">Preview</a>
+    <a href="/admin/preview/[% entry.item('_id') %]">Preview</a>
   [% END %]
 	[% FOREACH file IN entry.file %]
 	[% IF file AND bag == "publication" %]
-	  [% SWITCH file.contentType %] 
+	  [% SWITCH file.content_type %] 
 		[% CASE 'application/pdf' %]
-	    | <a href="[% h.host %]/download/[% entry.oId %]/[% file.fileOId %]" title="[% file.fileName %]" target="_top">PDF
+	    | <a href="[% h.host %]/download/[% entry.item('_id') %]/[% file.id %]" title="[% file.name %]" target="_top">PDF
 		[% CASE 'application/ps' %]
-	 	| <a href="[% h.host %]/download/[% entry.oId %]/[% file.fileOId %]" title="[% file.fileName %]" target="_top">PS
+	 	| <a href="[% h.host %]/download/[% entry.item('_id') %]/[% file.id %]" title="[% file.name %]" target="_top">PS
 	  [% END %]</a>
 	[% END %]
 	[% END %]
-	[% FOREACH supp IN entry.relatedMaterial %][% IF supp.link  %]| <a href="[% supp.link.url %]" title="[% supp.link.linkTitle %]">Suppl. Material</a>[% ELSIF supp.file %]| <a href="[% h.host %]/download/[% entry.oId  %]/[% supp.file.fileOId %]" title="[% supp.file.fileName %]">Suppl. Material</a> [% END %][% END %]
-	[% IF entry.link AND bag != "data" %] | <a href="[% entry.link.0.url %]">URL</a>[% END %]
-	[% IF entry.doiInfo %] | <a href="http://dx.doi.org/[% entry.doiInfo.doi %]" title="[% entry.doiInfo.doi %]" target="_top">DOI</a>[% ELSIF entry.doi %]| <a href="http://dx.doi.org/[% entry.doi %]" target="_top">DOI</a>[% END %]
-	[% IF entry.pubmedID %] | <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% entry.pubmedID %]" target="_top">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% entry.pubmedID %]">Europe PMC</a>
-	[% ELSIF entry.medline %] | <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% entry.medline %]" target="_top">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% entry.medline %]">Europe PMC</a>[% END %]
-	[% IF entry.phillister %] | <a href="http://phillister.ub.uni-bielefeld.de/publication/[% entry.phillister %]" target="_top">PhilLister</a>[% END %]
-	[% IF entry.arxiv %] | <a href="http://arxiv.org/abs/[% entry.arxiv %]" target="_top">arXiv</a>[% END %]
-	[% IF entry.inspire %] | <a href="http://inspirebeta.net/record/[% entry.inspire %]" target="_top">Inspire</a>[% END %]
-	[% IF entry.ahf %] | <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&T=HB&ID=[% entry.ahf %]" target="_top">AHF</a>[% END %]
+	[% FOREACH supp IN entry.related_material %][% IF supp.link  %]| <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %]| <a href="[% h.host %]/download/[% entry.item('_id')  %]/[% supp.file.file_id %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
+	[% IF entry.link AND bag != "data" %] | <a href="[% entry.link.url %]">URL</a>[% END %]
+	[% IF entry.doi %]| <a href="http://dx.doi.org/[% entry.doi %]" target="_top">DOI</a>[% END %]
+	[% IF entry.external_id.pmid %] | <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% entry.external_id.pmid.id %]" target="_top">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% entry.external_id.pmid.id %]">Europe PMC</a>[% END %]
+	[% IF entry.external_id.phillister %] | <a href="http://phillister.ub.uni-bielefeld.de/publication/[% entry.external_id.phillister.id %]" target="_top">PhilLister</a>[% END %]
+	[% IF entry.external_id.arxiv %] | <a href="http://arxiv.org/abs/[% entry.external_id.arxiv.id %]" target="_top">arXiv</a>[% END %]
+	[% IF entry.external_id.inspire %] | <a href="http://inspirebeta.net/record/[% entry.external_id.inspire %]" target="_top">Inspire</a>[% END %]
+	[% IF entry.external_id.ahf %] | <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&T=HB&ID=[% entry.external_id.ahf %]" target="_top">AHF</a>[% END %]
 
 	[% IF qp.timescited && entry.metrics.timesCited %]
 		| <a href="[% entry.metrics.citingURL %]" target="_parent">WOS&reg; Times Cited: [% entry.metrics.timesCited %]</a>
 	[% END %]
 	[% IF bag == "data" %]
 	  [% IF entry.externalFiles == "1" %]
-	    | <a href="[% h.host %]/[% bag %]/[% entry.oId %]" class="label label-success">Files available</a>
+	    | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-success">Files available</a>
 	  [% ELSE %]
 	    [% FOREACH file IN entry.file %]
-	      [% IF file.openAccess == 1 %]
-	      | <a href="[% h.host %]/[% bag %]/[% entry.oId %]" class="label label-success">Files available</a>
+	      [% IF file.open_access == 1 %]
+	      | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-success">Files available</a>
 	      [% LAST %]
 	      [% END %]
 	    [% END %]
 	  [% END %]
 	[% END %]
-	| <a data-toggle="collapse" href="#collapse[% entry.oId %]">Details <span class="glyphicon glyphicon-chevron-down"></span></a>
+	| <a data-toggle="collapse" href="#collapse[% entry.item('_id') %]">Details <span class="glyphicon glyphicon-chevron-down"></span></a>
 <!-- END links. tt --> 

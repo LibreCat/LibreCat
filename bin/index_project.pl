@@ -12,7 +12,7 @@ our $opt_u;
 # m for multiple indices
 our $opt_m;
 
-my $home = $ENV{BACKEND};
+my $home = "/srv/www/app-catalog/";#$ENV{BACKEND};
 
 if($opt_m && $opt_m eq "backend2"){
 	Catmandu->load("$home/index2");
