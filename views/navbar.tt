@@ -11,11 +11,8 @@
       <script src="../../assets/js/respond.min.js"></script>
     <![endif]-->
     <link href="/css/bootstrap3.css" rel="stylesheet" media="screen">
-    <script type="text/javascript" src="http://www.uni-bielefeld.de/javascript/CrossPlatform.js"></script>
-    <script type="text/javascript" src="http://www.uni-bielefeld.de/javascript/Popup.js"></script>
     <script type="text/javascript" src="/javascripts/jquery-latest.js"></script>
     <script src="/javascripts/jquery-ui-1.8.22.custom.min.js"></script>
-    <script type="text/javascript" src="/javascripts/tabs.js"></script>
     <script src="/javascripts/bootstrap3.js"></script>
     <script src="/javascripts/dropzone3.js"></script>
     <script type="text/javascript" src="/javascripts/scripts.js"></script>
