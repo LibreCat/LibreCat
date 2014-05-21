@@ -19,7 +19,7 @@ get '/autocomplete_hierarchy' => sub {
 	my $q = params->{'term'} || "";
 	my $fmt = params->{fmt} || "autocomplete";
 	my $type = params->{type} || "department";
-	$q = "name=" . $q . "*" if ($q ne "" and $type ne "researchgroup");
+	$q = "name=" . $q . "*" if ($q ne "");
 	my $hits;
 	
 	if($type eq "department"){
@@ -28,9 +28,9 @@ get '/autocomplete_hierarchy' => sub {
 	elsif($type eq "project"){
 		$hits = h->search_project({q => $q, limit => 1000});
 	}
-	elsif($type eq "researchgroup"){
-		$hits = h->search_researchgroup({q => $q});
-	}
+	#elsif($type eq "researchgroup"){
+	#	$hits = h->search_researchgroup({q => $q});
+	#}
 	my $jsonhash = ();
 	my $sorted;
 	my $fullsort;

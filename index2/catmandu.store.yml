@@ -729,14 +729,6 @@ search:
                 '<>': true
                 'exact': true
               field: 'project.projectId'
-            researchgroup:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-                'exact': {field: ['researchGroup.researchGroupId','researchGroup.name.text.exact']}
-              field: ['researchGroup.researchGroupId', 'researchGroup.name.text']
             conference:
               op:
                 'any': true
@@ -1517,7 +1509,7 @@ pagination_options:
     - 50
     - 100
 sort_options:
-    - {key: year, label: "Publishing year"}
+    - {key: publishingyear, label: "Publishing year"}
     - {key: title, label: "Title" }
     - {key: author, label: "First author"}
     - {key: type, label: "Documenttype"}
@@ -1527,7 +1519,7 @@ project_sort_options:
     - {key: acronym, label: "Acronym"}
     - {key: startyear, label: "Start Year"}
 default_sort:
-  - {field: year, order: desc}
-  - {field: date_updated, order: desc}
+  - {field: publishingyear, order: desc}
+  - {field: datelastchanged, order: desc}
 default_style: pub
 default_fd_style: frontShort

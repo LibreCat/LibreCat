@@ -1,5 +1,5 @@
 <!-- BEGIN rec_details.tt --> 
-<div id="collapse[% entry.item('_id') %]" class="collapse" style="padding-top:5px;">
+<div id="[% modus %]_[% entry.item('_id') %]" class="collapse" style="padding-top:5px;">
 [% IF entry.author %]
   <div class="frontdoor">
     <div class="frontdoor_left">Authors</div>

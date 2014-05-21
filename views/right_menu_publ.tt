@@ -257,6 +257,20 @@
     
     <ul class="nav nav-tabs nav-stacked">
       <li>
+        <button data-toggle="collapse" data-target="#hitsperpage"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.store.default_searchpage_size %][% END %]</a></button>
+        <div class="facettecollapse">
+        <ul id="hitsperpage" class="collapse">
+          [% FOREACH limiting IN h.config.store.pagination_options %]
+            [% IF (qp.limit AND qp.limit == limiting) OR (!qp.limit AND limiting == h.config.store.default_searchpage_size) %]
+            <li>[% limiting %]</li>
+            [% ELSE %]
+              <li><a href="[% h.newuri_for("$bag", qp, limit="$limiting") %]" rel="nofollow">[% limiting %]</a></li>
+            [% END %]
+          [% END %]
+        </ul>
+        </div>
+      </li>
+      <li>
         <button data-toggle="collapse" data-target="#style"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Citation Style[% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</a></button>
         <div class="facettecollapse">
         <ul id="style" class="collapse">

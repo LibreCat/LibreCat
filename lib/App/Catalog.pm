@@ -24,8 +24,16 @@ hook 'before' => sub {
 
 get '/' => sub {
     my $params = params;
-
-    forward '/myPUB/search', $params;
+    
+    if(session->{role} eq "superAdmin"){
+    	forward '/myPUB/adminSearch', $params;
+    }
+    elsif(session->{role} eq "reviewer"){
+        forward '/myPUB/reviewerSearch', $params;
+    }
+    else{
+        forward '/myPUB/search', $params;
+    }
 };
 
 get '/login' => sub {
@@ -55,7 +63,17 @@ post '/login' => sub {
             session role => $superAdmin || $reviewer || "user";
             session user         => $user->[0]->{login};
             session personNumber => $user->[0]->{_id};
-            redirect params->{path} || '/myPUB/search';
+            my $params;
+            $params->{path} = params->{path} if params->{path};
+            if(session->{role} eq "superAdmin"){
+            	redirect '/myPUB/adminSearch';
+            }
+            elsif(session->{role} eq "reviewer"){
+            	redirect '/myPUB/reviewerSearch';
+            }
+            else{
+            	redirect '/myPUB/search';
+            }
         }
         else {
             forward '/myPUB/login', { error_message => "Wrong username or password!" }, { method => 'GET' };

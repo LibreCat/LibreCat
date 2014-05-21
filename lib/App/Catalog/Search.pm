@@ -7,10 +7,31 @@ use Catmandu::Util qw(:is :array);
 sub handle_request {
     my ($par) = @_;
     my $p;
-    my $query = $par->{q} || "";
-    my $id = $par->{bisId};
+    my $id = session->{personNumber};
     $p->{limit} = $par->{limit};
     $p->{limit} = h->config->{store}->{default_searchpage_size} if !$par->{limit};
+    $p->{start} = $par->{start} || "0";
+    my $query = "";
+    
+    my $account = h->getAccount(session->{user});
+    if($account->[0]->{reviewer} and $par->{modus} eq "reviewer"){
+    	my $revdep = "";
+    	foreach my $rev (@{$account->[0]->{reviewer}}){
+    		$revdep .= "department=$rev->{department}->{id} OR ";
+    	}
+    	$revdep =~ s/ OR $//g;
+    	$query = $revdep;
+    }
+    elsif ($par->{modus} eq "admin"){
+    	#$query = "";
+    }
+    else{
+    	$query = "person=$id";
+    }
+    
+    if($par->{q}){
+    	$query = $query ne "" ? $query . " AND " . $par->{q} : $par->{q};
+    }
 
     my $personInfo = h->getPerson($id);
     
@@ -155,8 +176,14 @@ sub handle_request {
     my $sruSort = "";
     $sruSort = $paramSruSort ||= $personSruSort ||= $standardSruSort ||= "";
     $p->{sort} = $sruSort;
+    
+    #return to_dumper $account;
 
     my $hits = h->search_publication($p);
+    
+    foreach (qw(next_page last_page page previous_page pages_in_spread)) {	
+		$hits->{$_} = $hits->$_;
+	}
 
     my $d = {
         q      => $rawquery . $publyearquery,
@@ -207,7 +234,7 @@ get '/adminSearch' => sub {
     my $role = session->{role};
     
     if($role ne "superAdmin"){
-    	redirect '/myPUB/search';
+    	redirect '/myPUB/reviewerSearch';
     }
 
     $params->{modus} = "admin";

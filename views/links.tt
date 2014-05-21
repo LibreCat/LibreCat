@@ -39,5 +39,5 @@
 	    [% END %]
 	  [% END %]
 	[% END %]
-	| <a data-toggle="collapse" href="#collapse[% entry.item('_id') %]">Details <span class="glyphicon glyphicon-chevron-down"></span></a>
+	| <a data-toggle="collapse" href="#[% modus %]_[% entry.item('_id') %]">Details <span class="glyphicon glyphicon-chevron-down"></span></a>
 <!-- END links. tt --> 

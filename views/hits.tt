@@ -2,7 +2,16 @@
 
 <!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->
 [% num = total; n = 0 %]
-[% total %]
+
+<div class="row">
+  <div class="col-md-9">
+    <h5>[% total %] [% lang ? "Publications" : "Publikationen" %]</h5>
+  </div>
+</div>
+
+<div class="row">
+  [% INCLUDE pagination.tt %]
+</div>
 
 [% FOREACH entry IN hits %]
 <div class="row">
