@@ -5,12 +5,12 @@
       <label for="author">
       {% IF fields.basicFields.authors.label.keys %}
         <select ng-model="type_0" class="authedtrans">
-          {% FOREACH creator IN fields.basicFields.authors.label.keys.sort %}
-          <option value="{% fields.basicFields.authors.label.$creator %}">{% creator %}</option>
+          {% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}
+          <option value="{% fields.basic_fields.author.label.$creator %}">{% creator %}</option>
           {% END %}
-        </select>{% IF fields.basicFields.authors.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basicFields.authors.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
+        </select>{% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
       {% ELSE %}
-        {% fields.basicFields.authors.label %}{% IF fields.basicFields.authors.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus"{% IF fields.basicFields.authors.mandatory %} data-mandatory="yes"{% END %} id="plusAuthor"></span>
+        {% fields.basic_fields.author.label %}{% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthor"></span>
       {% END %}
       </label>
     </div>
@@ -20,15 +20,15 @@
         <input ng-model="ldapId_0" type="hidden" value="" />
             
         <span class="form-group col-md-3">
-          <input type="text" ng-model="givenName_0" placeholder="{% fields.basicFields.authors.firstName.placeholder %}" class="form-control" value="" />
+          <input type="text" ng-model="givenName_0" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" class="form-control" value="" />
         </span>
         <span class="form-group col-md-4">
-          <input type="text" ng-model="surname_0" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" class="form-control" value="" />
+          <input type="text" ng-model="surname_0" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control" value="" />
         </span>
         <span class="form-group col-md-2">
-          <input type="text" ng-model="jobTitle_0" placeholder="{% fields.basicFields.authors.title.placeholder %}" class="form-control" />
+          <input type="text" ng-model="jobTitle_0" placeholder="{% fields.basic_fields.author.title.placeholder %}" class="form-control" />
         </span>
-        <input type="hidden" name="author" value='{"surname":"{{surname_0}}", "givenName":"{{givenName_0}}", "fullName":"{{surname_0}}, {{givenName_0}}", "personType":"{{type_0}}", "personNumber":"{{personNumber_0}}", "ldapId":"{{ldapId_0}}"}'>
+        <input type="hidden" name="author" value='{"last_name":"{{last_name_0}}", "first_name":"{{first_name_0}}", "full_name":"{{last_name_0}}, {{first_name_0}}", "id":"{{id_0}}"}'>
         
         <span class="col-md-1">
           <span class="glyphicon glyphicon-minus author"></span>
@@ -36,7 +36,7 @@
           
         <span class="col-md-2">
           <input name="linkPevz_0" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
-          <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basicFields.authors.pevz_tooltip %}" />
+          <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip %}" />
           <script>
             $('#auAuthorized0').tooltip();
           </script>
@@ -49,32 +49,31 @@
   <div class="row authorspan innerrow">
     <div class="col-md-2">
       <label for="author">
-      {% IF fields.basicFields.authors.label.keys %}
+      {% IF fields.basic_fields.author.label.keys %}
         <select ng-model="type_[% loop.index %]" class="authedtrans">
-          {% FOREACH creator IN fields.basicFields.authors.label.keys.sort %}
-          <option value="{% fields.basicFields.authors.label.$creator %}"{% IF name.type.typeName == creator %} selected="selected"{% END %}>{% creator %}</option>
+          {% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}
+          <option value="{% fields.basic_fields.author.label.$creator %}"{% IF name.type.typeName == creator %} selected="selected"{% END %}>{% creator %}</option>
           {% END %}
-        </select>{% IF fields.basicFields.authors.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basicFields.authors.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
+        </select>{% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
       {% ELSE %}
-        {% fields.basicFields.authors.label %}{% IF fields.basicFields.authors.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus"{% IF fields.basicFields.authors.mandatory %} data-mandatory="yes"{% END %} id="plusAuthor"></span>
+        {% fields.basic_fields.author.label %}{% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthor"></span>
       {% END %}
       </label>
     </div>
     <div class="col-md-10" id="author">
       <div class="form-group">
-        <input type="hidden" ng-model="personNumber_[% loop.index %]" value="" />
-        <input ng-model="ldapId_[% loop.index %]" type="hidden" value="" />
+        <input type="hidden" ng-model="id_[% loop.index %]" value="" />
             
         <span class="form-group col-md-3">
-          <input type="text" ng-model="givenName_[% loop.index %]" placeholder="{% fields.basicFields.authors.firstName.placeholder %}" class="form-control" value="[% name.givenName %]" />
+          <input type="text" ng-model="first_name_[% loop.index %]" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" class="form-control" value="[% name.given_name %]" />
         </span>
         <span class="form-group col-md-4">
-          <input type="text" ng-model="surname_[% loop.index %]" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" class="form-control" value="[% name.surname %]" />
+          <input type="text" ng-model="last_name_[% loop.index %]" placeholder="{% fields.basic_fields.authors.last_name.placeholder %}" class="form-control" value="[% name.last_name %]" />
         </span>
         <span class="form-group col-md-2">
-          <input type="text" ng-model="jobTitle_[% loop.index %]" placeholder="{% fields.basicFields.authors.title.placeholder %}" class="form-control" value="[% name.jobTitle %]" />
+          <input type="text" ng-model="jobTitle_[% loop.index %]" placeholder="{% fields.basic_fields.author.title.placeholder %}" class="form-control" value="[% name.jobTitle %]" />
         </span>
-        <input type="hidden" name="author" value='{"surname":"{{surname_[% loop.index %]}}", "givenName":"{{givenName_[% loop.index %]}}", "fullName":"{{surname_[% loop.index %]}}, {{givenName_[% loop.index %]}}", "personType":"{{type_[% loop.index %]}}", "personNumber":"{{personNumber_[% loop.index %]}}", "ldapId":"{{ldapId_[% loop.index %]}}"}'>
+        <input type="hidden" name="author" value='{"last_name":"{{last_name_[% loop.index %]}}", "first_name":"{{first_name_[% loop.index %]}}", "full_name":"{{last_name_[% loop.index %]}}, {{first_name_[% loop.index %]}}", "id":"{{id_[% loop.index %]}}"}'>
             
         <span class="col-md-1">
           [% IF loop.index == 0 %]
@@ -85,14 +84,14 @@
         </span>
             
         <span class="col-md-2">
-          <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.oId OR name.luLdapId %]checked="checked"[% END %]/>
-          [% IF name.oId OR name.luLdapId %]
-            <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="{% fields.basicFields.authors.pevz_tooltip %}" />
+          <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
+          [% IF name.id %]
+            <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="{% fields.basic_fields.author.pevz_tooltip %}" />
             <script>
               $('#auAuthorized[% loop.index %]').tooltip();
           </script>
           [% ELSE %]
-            <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>
+            <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.id %]"/>
           [% END %]
         </span>
       </div>
@@ -104,14 +103,14 @@
   <div class="row authorspan innerrow">
     <div class="col-md-2">
       <label for="author">
-      {% IF fields.basicFields.authors.label.keys %}
+      {% IF fields.basic_fields.author.label.keys %}
         <select class="authedtrans" onchange="selectAuthedtrans(this);" id="authedtrans_[% loop.index %]">
-          {% FOREACH creator IN fields.basicFields.authors.label.keys.sort %}
-          <option value="{% fields.basicFields.authors.label.$creator %}"{% IF name.type.typeName == creator %} selected="selected"{% END %}>{% creator %}</option>
+          {% FOREACH creator IN fields.basic_fields.authora.label.keys.sort %}
+          <option value="{% fields.basic_fields.author.label.$creator %}"{% IF name.type.typeName == creator %} selected="selected"{% END %}>{% creator %}</option>
           {% END %}
-        </select>{% IF fields.basicFields.authors.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basicFields.authors.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
+        </select>{% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
       {% ELSE %}
-        {% fields.basicFields.authors.label %}{% IF fields.basicFields.authors.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus"{% IF fields.basicFields.authors.mandatory %} data-mandatory="yes"{% END %} id="plusAuthor"></span>
+        {% fields.basic_fields.author.label %}{% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthor"></span>
       {% END %}
       </label>
     </div>
@@ -127,10 +126,10 @@
         <input name="au_type_[% loop.index %]" id="id_au_type_[% loop.index %]" type="hidden" />
 
         <span class="form-group col-md-3">
-          <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="{% fields.basicFields.authors.firstName.placeholder %}" id="id_au_auGivenName_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.givenName %]" class="form-control"/>
+          <input type="text" name="au_auGivenName_[% loop.index %]" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" id="id_au_auGivenName_[% loop.index %]"[% IF name.id %] readonly="readonly"[% END %] value="[% name.first_name %]" class="form-control"/>
         </span>
         <span class="form-group col-md-4">
-          <input type="text" name="au_auSurname_[% loop.index %]" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" id="id_au_auSurname_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.surname %]" class="form-control" />
+          <input type="text" name="au_auSurname_[% loop.index %]" placeholder="{% fields.basicFields.authors.lastName.placeholder %}" id="id_au_auSurname_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.last_name %]" class="form-control" />
         </span>
         <span class="form-group col-md-2">
           <input type="text" name="au_auPersonTitle_[% loop.index %]" placeholder="{% fields.basicFields.authors.title.placeholder %}" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.oId OR name.luLdapId %] readonly="readonly"[% END %] value="[% name.personTitle || name.jobTitle %]" class="form-control"/>
@@ -145,14 +144,14 @@
         </span>
             
         <span class="col-md-2">
-          <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.oId OR name.luLdapId %]checked="checked"[% END %]/>
-          [% IF name.oId OR name.luLdapId %]
+          <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
+          [% IF name.id %]
             <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="{% fields.basicFields.authors.pevz_tooltip %}" />
             <script>
               $('#auAuthorized[% loop.index %]').tooltip();
           </script>
           [% ELSE %]
-            <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.auLuLdapId %]"/>
+            <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.id %]"/>
           [% END %]
         </span>
       </div>
