@@ -74,10 +74,10 @@ prefix '/record' => sub {
 
 };
 
-post '/upload' => sub {
-	my $file = request->upload('file_name');
-	my $path = path(h->config->{upload_dir}, "$id", "file_name");
-	$file->copy_to($path);
-};
+#post '/upload' => sub {
+#	my $file = request->upload('file_name');
+#	my $path = path(h->config->{upload_dir}, "$id", "file_name");
+#	$file->copy_to($path);
+#};
 
 1;
