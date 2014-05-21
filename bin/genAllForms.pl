@@ -22,9 +22,8 @@ my $tt = Template->new(
 foreach my $type ( keys %$forms ) {
 
     my $type_hash = $forms->{$type};
-    $type_hash->{fieldOrder} = $conf->{forms}->{fieldOrder};
+    $type_hash->{field_order} = $conf->{forms}->{field_order};
     print "Generating $type_hash->{tmpl}.tt\n";
-    $tt->process( "master.tt", $type_hash, "$type_hash->{tmpl}.tt" )
-        || die $tt->error(), "\n";
+    $tt->process( "master.tt", $type_hash, "$type_hash->{tmpl}.tt" ) || die $tt->error(), "\n";
 
 }

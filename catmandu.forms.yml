@@ -93,9 +93,9 @@ publicationTypes:
           placeholder: "Publication Title"
           readonly: 0
         author:
-          firstName:
+          first_name:
             placeholder: "First Name"
-          lastName:
+          last_name:
             placeholder: "Last Name"
           title:
             placeholder: "Title"
@@ -155,7 +155,7 @@ publicationTypes:
           readonly: 0
       related_material:
         tab_name: "Supplementary Material"
-        relatedMaterial:
+        related_material:
           mandatory: 0
           multiple: 0
           label: "Link Publications"

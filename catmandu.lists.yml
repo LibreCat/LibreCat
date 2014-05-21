@@ -1047,7 +1047,7 @@ xresearchgroups:
   "ZiF-Kooperationsgruppe Transnationalisation and Development(s): Concepts and Venues for Research":
     oId: RG54
 
-xddcs:
+ddc:
   000: 
     optgroup: "000 Computer science, information & general works"
     ddc000:

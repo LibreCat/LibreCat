@@ -99,8 +99,8 @@ sub xlanguages_preselect {
 	$map;
 }
 
-sub xddcs {
-	my $map = config->{lists}{xddcs};
+sub ddc {
+	my $map = config->{lists}{ddc};
 	$map;
 }
 
