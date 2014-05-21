@@ -729,14 +729,6 @@ search:
                 '<>': true
                 'exact': true
               field: 'project.projectId'
-            researchgroup:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-                'exact': {field: ['researchGroup.researchGroupId','researchGroup.name.text.exact']}
-              field: ['researchGroup.researchGroupId', 'researchGroup.name.text']
             conference:
               op:
                 'any': true

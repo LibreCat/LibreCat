@@ -130,22 +130,6 @@ $('#plusProject').click(function(){
   });
 });
 
-$('#plusResearchgroup').click(function(){
-  var items = $('#researchgroup div.form-group');
-  var index = items.index($('#researchgroup div.form-group').last()) + 1;
-  $('#researchgroup').append('[% INCLUDE backend/fields/subfields/researchgroup.tt %]');
-  $('#researchgroup').bind("click", function(){
-    $( "#rg_autocomplete_" + index ).autocomplete({
-      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=researchGroup",
-      minLength: 2,
-      select: function( event, ui ) {
-        $( "#rg_autocomplete_" + index ).val( ui.item.label );
-        $( "#rg_idautocomplete_" + index ).val( ui.item.id );
-      }
-    });
-  });
-});
-
 
 // minus
 $(document).on('click', '.group', function(){
@@ -220,11 +204,6 @@ function selectButton(element){
 	    container.append('[% INCLUDE backend/fields/subfields/project_select.tt %]');
 	    type_short = "pj";
 	    type_name = "Project";
-	}
-	else if(type == "researchgroup"){
-	    container.append('[% INCLUDE backend/fields/subfields/researchgroup_select.tt %]');
-	    type_short = "rg";
-	    type_name = "Research Group";
 	}
 	var heading = modal.find('h4').first();
 	heading.html("");

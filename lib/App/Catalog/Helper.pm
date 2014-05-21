@@ -216,24 +216,24 @@ sub search_project {
     return $hits;
 }
 
-sub search_researchgroup {
-	my ($self, $p) = @_;
-	
-	my $hits;
-	my $query = $p->{q};
-	my $researchgroups = config->{lists}->{xresearchgroups};
-	my $counter = 0;
-    
-    foreach my $key (keys %$researchgroups){
-    	if(index(lc($key), lc($query)) != -1){
-    		push @{$hits->{hits}}, {_id => $researchgroups->{$key}->{oId}, oId => $researchgroups->{$key}->{oId}, name => $key};
-    		$counter++;
-    	}		
-    }
-    $hits->{total} = $counter;
-    
-    return $hits;
-}
+#sub search_researchgroup {
+#	my ($self, $p) = @_;
+#	
+#	my $hits;
+#	my $query = $p->{q};
+#	my $researchgroups = config->{lists}->{xresearchgroups};
+#	my $counter = 0;
+#    
+#    foreach my $key (keys %$researchgroups){
+#    	if(index(lc($key), lc($query)) != -1){
+#    		push @{$hits->{hits}}, {_id => $researchgroups->{$key}->{oId}, oId => $researchgroups->{$key}->{oId}, name => $key};
+#    		$counter++;
+#    	}		
+#    }
+#    $hits->{total} = $counter;
+#    
+#    return $hits;
+#}
 
 sub embed_string {
 	my ($self, $query, $bag, $id, $style, %params) = @_;
