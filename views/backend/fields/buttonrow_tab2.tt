@@ -1,13 +1,13 @@
 <div class="row innerrow">
   <div class="col-md-12 buttonrow">
     <span class="form-group col-md-2">
-      <a class="btn btn-default back-button" id="twoToOne" data-toggle="tab" href="#basicFields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+      <a class="btn btn-default back-button" id="twoToOne" data-toggle="tab" href="#basic_fields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
     </span>
     <span class="form-group col-md-2">
       <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
     </span>
     [% IF status == "public" %]
-    <span class="form-gourp col-md-2">
+    <span class="form-group col-md-2">
       <a class="btn btn-default" href="/myPUB/record/return/[% item('_id') %]" onClick="return confirm('Are you sure you want to return this record?');" name="return" value="recReturn">Return <img src="/images/edit-withdraw.png"/></a>
     </span>
     [% ELSIF status != "public" %]
@@ -22,7 +22,7 @@
       [% END %]
     [% END %]
     <span class="form-group col-md-2">
-      <a class="btn btn-default next-button" id="twoToThree" href="#supplementaryFields">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+      <a class="btn btn-default next-button" id="twoToThree" href="#supplementary_fields">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
     </span>
   </div>
 </div>

@@ -12,22 +12,22 @@
   [% END %]
   
   <ul class="nav nav-tabs" id="tabs-left">
-    <li id="li_basicFields" class="active">
-      <a href="#basicFields" data-toggle="tab">{% fields.basic_fields.tab_name %}</a>
+    <li id="li_basic_fields" class="active">
+      <a href="#basic_fields" data-toggle="tab">{% fields.basic_fields.tab_name %}</a>
     </li>
     {% IF fields.file_upload %}
-    <li id="li_fileUpload" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
-      <a href="#fileUpload" data-toggle="tab">{% fields.file_upload.tab_name %}</a>
+    <li id="li_file_upload" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
+      <a href="#file_upload" data-toggle="tab">{% fields.file_upload.tab_name %}</a>
     </li>
     {% END %}
     {% IF fields.supplementary_fields %}
-    <li id="li_supplementaryFields" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
-      <a href="#supplementaryFields" data-toggle="tab">{% fields.supplementary_fields.tab_name %}</a>
+    <li id="li_supplementary_fields" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
+      <a href="#supplementary_fields" data-toggle="tab">{% fields.supplementary_fields.tab_name %}</a>
     </li>
     {% END %}
     {% IF fields.related_material %}
-    <li id="li_relatedMaterial" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
-      <a href="#relatedMaterial" data-toggle="tab">{% fields.related_material.tab_name %}</a>
+    <li id="li_related_material" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
+      <a href="#related_material" data-toggle="tab">{% fields.related_material.tab_name %}</a>
     </li>
     {% END %}
   </ul>
@@ -40,7 +40,7 @@
     <div class="tab tab-content edit-form">
     
       <!-- STEP 1 -->
-      <div class="tab-pane active" id="basicFields">
+      <div class="tab-pane active" id="basic_fields">
 
 {% IF fields.basic_fields %}
   {% FOREACH key IN field_order.basic_fields %}
@@ -55,7 +55,7 @@
       </div><!-- tab-pane -->
       
       <!-- STEP 2 -->
-      <div class="tab-pane" id="fileUpload">
+      <div class="tab-pane" id="file_upload">
       
 {% IF fields.file_upload %}
   {% FOREACH key IN field_order.file_upload %}
@@ -74,7 +74,7 @@
 
 {% IF fields.supplementary_fields %}
   {% FOREACH key IN field_order.supplementary_fields %}
-    {% IF fields.supplementaryFields.$key %}
+    {% IF fields.supplementary_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
@@ -85,7 +85,7 @@
       </div><!-- tab-pane -->
       
       <!-- STEP 4 -->
-      <div class="tab-pane" id="relatedMaterial">
+      <div class="tab-pane" id="related_material">
       
 {% IF fields.related_material %}
   {% FOREACH key IN field_order.related_material %}

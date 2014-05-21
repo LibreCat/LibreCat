@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="ddc">
-      {% fields.supplementaryFields.xddcs.label %}
+      {% fields.supplementary_fields.xddcs.label %}
     </label>
   </div>
   <div class="col-md-10" id="ddc">

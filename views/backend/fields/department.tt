@@ -40,7 +40,7 @@
       <input type="hidden" name="dp_departmentOId_[% loop.index %]" id="dp_idautocomplete_[% loop.index %]" value="[% dept.oId || dept.organizationNumber %]" />
           
       <span class="form-group col-md-7">
-        <input type="text" name="dp_departmentName_[% loop.index %]" class="form-control" placeholder="{% fields.basicFields.departments.placeholder %}" id="dp_autocomplete_[% loop.index %]" value="[% dept.name.0.text || dept.name %]" />
+        <input type="text" name="dp_departmentName_[% loop.index %]" class="form-control" placeholder="{% fields.basic_fields.departments.placeholder %}" id="dp_autocomplete_[% loop.index %]" value="[% dept.name.0.text || dept.name %]" />
       </span>
           
       <span class="form-group col-md-2">

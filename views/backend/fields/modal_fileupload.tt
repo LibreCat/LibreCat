@@ -1,4 +1,4 @@
-<div id="fileUpload" class="modal hide" style="z-index:1041;">
+<div id="file_upload" class="modal hide" style="z-index:1041;">
   
   <form enctype="multipart/form-data" name="upLoad" id="upLoad">
     <div class="modal-header">

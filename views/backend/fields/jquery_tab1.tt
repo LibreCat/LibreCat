@@ -56,20 +56,20 @@ $('#oneToTwo').click(function(){
     }
   });
   
-  var year = $('#id_publishingYear').val();
+  var year = $('#id_year').val();
   if(year.length < 4 || !year.match(/^\d+$/)){
     check = 0;
-    $('#id_publishingYear').parents('span.form-group').addClass('has-error');
+    $('#id_year').parents('span.form-group').addClass('has-error');
   }
   
   if(check){
     $('#author.has-error').each(function(){
       $(this).removeClass('has-error');
     });
-    $('#basicFields, #li_basicFields').removeClass('active');
-    $('#fileUpload, #li_fileUpload').addClass('active');
-    $('button[href=#fileUpload]').attr('data-toggle','tab');
-    $('#li_fileUpload').css('visibility','visible');
+    $('#basic_fields, #li_basic_fields').removeClass('active');
+    $('#file_upload, #li_file_upload').addClass('active');
+    $('button[href=#file_upload]').attr('data-toggle','tab');
+    $('#li_file_upload').css('visibility','visible');
   }
 });
 
@@ -79,7 +79,7 @@ $('#plusAuthor').click(function(){
   var items = $('#authorEditorTranslator span.authorspan');
   var index = items.index($('#authorEditorTranslator span.authorspan').last()) + 1;
   $('#authorEditorTranslator').append('[% INCLUDE backend/fields/subfields/author.tt %]');
-  $('#authorEditorTranslator span:last-child label').append('{% fields.basicFields.authors.label %}');
+  $('#authorEditorTranslator span:last-child label').append('{% fields.basic_fields.author.label %}');
   if($(this).attr('data-mandatory') == "yes"){
     $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
   }
@@ -90,7 +90,7 @@ $('#plusAuthorMore').click(function(){
   var items = $('#authorEditorTranslator span.authorspan');
   var index = items.index($('#authorEditorTranslator span.authorspan').last()) + 1;
   $('#authorEditorTranslator').append('[% INCLUDE backend/fields/subfields/author_more.tt %]');
-  $('#authorEditorTranslator div:last-child select').append('{% FOREACH creator IN fields.basicFields.authors.label.keys.sort %}<option value="{% fields.basicFields.authors.label.$creator %}">{% creator %}</option>{% END %}');
+  $('#authorEditorTranslator div:last-child select').append('{% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}<option value="{% fields.basic_fields.author.label.$creator %}">{% creator %}</option>{% END %}');
   if($(this).attr('data-mandatory') == "yes"){
     $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
   }
