@@ -3,7 +3,7 @@
   <div class="row authorspan innerrow">
     <div class="col-md-2">
       <label for="author">
-      {% IF fields.basicFields.authors.label.keys %}
+      {% IF fields.basic_fields.author.label.keys %}
         <select ng-model="type_0" class="authedtrans">
           {% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}
           <option value="{% fields.basic_fields.author.label.$creator %}">{% creator %}</option>
@@ -17,16 +17,12 @@
     <div class="col-md-10" id="author">
       <div class="form-group">
         <input type="hidden" ng-model="personNumber_0" value="" />
-        <input ng-model="ldapId_0" type="hidden" value="" />
             
-        <span class="form-group col-md-3">
+        <span class="form-group col-md-4">
           <input type="text" ng-model="givenName_0" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" class="form-control" value="" />
         </span>
-        <span class="form-group col-md-4">
+        <span class="form-group col-md-5">
           <input type="text" ng-model="surname_0" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control" value="" />
-        </span>
-        <span class="form-group col-md-2">
-          <input type="text" ng-model="jobTitle_0" placeholder="{% fields.basic_fields.author.title.placeholder %}" class="form-control" />
         </span>
         <input type="hidden" name="author" value='{"last_name":"{{last_name_0}}", "first_name":"{{first_name_0}}", "full_name":"{{last_name_0}}, {{first_name_0}}", "id":"{{id_0}}"}'>
         
@@ -35,7 +31,7 @@
         </span>
           
         <span class="col-md-2">
-          <input name="linkPevz_0" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
+          <input name="linkPevz_0" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
           <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip %}" />
           <script>
             $('#auAuthorized0').tooltip();
@@ -64,14 +60,11 @@
       <div class="form-group">
         <input type="hidden" ng-model="id_[% loop.index %]" value="" />
             
-        <span class="form-group col-md-3">
-          <input type="text" ng-model="first_name_[% loop.index %]" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" class="form-control" value="[% name.given_name %]" />
-        </span>
         <span class="form-group col-md-4">
-          <input type="text" ng-model="last_name_[% loop.index %]" placeholder="{% fields.basic_fields.authors.last_name.placeholder %}" class="form-control" value="[% name.last_name %]" />
+          <input type="text" ng-model="first_name_[% loop.index %]" ng-init="first_name_[% loop.index %]='[% name.first_name %]'" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" class="form-control" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
-        <span class="form-group col-md-2">
-          <input type="text" ng-model="jobTitle_[% loop.index %]" placeholder="{% fields.basic_fields.author.title.placeholder %}" class="form-control" value="[% name.jobTitle %]" />
+        <span class="form-group col-md-5">
+          <input type="text" ng-model="last_name_[% loop.index %]" ng-init="last_name_[% loop.index %]='[% name.last_name %]'" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
         <input type="hidden" name="author" value='{"last_name":"{{last_name_[% loop.index %]}}", "first_name":"{{first_name_[% loop.index %]}}", "full_name":"{{last_name_[% loop.index %]}}, {{first_name_[% loop.index %]}}", "id":"{{id_[% loop.index %]}}"}'>
             

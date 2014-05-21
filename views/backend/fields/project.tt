@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="project">
-      {% fields.basic_fields.projects.label %}{% IF fields.basic_fields.projects.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusProject"></span>
+      {% fields.basic_fields.project.label %}{% IF fields.basic_fields.project.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusProject"></span>
     </label>
   </div>
   <div class="col-md-10" id="project">
@@ -10,7 +10,7 @@
       <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
           
       <span class="form-group col-md-7">
-        <input type="text" name="pj_projectName_0" class="form-control" placeholder="{% fields.basic_fields.projects.placeholder %}" id="pj_autocomplete_0" value="" />
+        <input type="text" name="pj_projectName_0" class="form-control" placeholder="{% fields.basic_fields.project.placeholder %}" id="pj_autocomplete_0" value="" />
       </span>
         
       <span class="form-group col-md-2">
@@ -40,7 +40,7 @@
       <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.oId %]" />
           
       <span class="form-group col-md-7">
-        <input type="text" name="pj_projectName_[% loop.index %]" class="form-control" placeholder="{% fields.basic_fields.projects.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name.0.text || proj.name %]" />
+        <input type="text" name="pj_projectName_[% loop.index %]" class="form-control" placeholder="{% fields.basic_fields.project.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name.0.text || proj.name %]" />
       </span>
 
       <span class="form-group col-md-2">
