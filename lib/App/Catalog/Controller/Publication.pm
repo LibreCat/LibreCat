@@ -26,12 +26,12 @@ sub new_publication {
 }
 
 sub save_publication {
-    my $data      = shift;
+    my $pub      = shift;
     my $validator = Catmandu::Validator::PUB->new();
 
-    if ( $validator->is_valid($data) ) {
-        h->publication->add($data);
-        h->publication->commit
+    if ( $validator->is_valid($pub) ) {
+        h->publications->add($pub);
+        h->publications->commit;
     }
     else {
         croak join(@{$validator->last_errors}, ' | ');
@@ -43,7 +43,7 @@ sub update_publication {
     my $data = shift;
     croak "Error: No _id specified" unless $data->{_id};
 
-    my $old = h->publication->get( $data->{_id} );
+    my $old = h->publications->get( $data->{_id} );
     my $merger = Hash::Merge->new(); 
     #left precedence by default!
     my $new = $merger->merge( $data, $old );
@@ -56,7 +56,7 @@ sub edit_publication {
 
     return "Error" unless $id;
     # some pre-processing needed?
-    # if not, then this method sub is overkill
+    # if not, then this sub is overkill
     h->publication->get($id);
 }
 
@@ -72,8 +72,8 @@ sub delete_publication {
 
     # this will do a hard override of
     # the existing publication
-	h->publication->add($del);
-	h->publication->commit;
+	h->publications->add($del);
+	h->publications->commit;
 
     # delete attached files
     my $dir = h->conf->{upload_dir} ."/$id";
