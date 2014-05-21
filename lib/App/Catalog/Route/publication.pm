@@ -3,7 +3,7 @@ package App::Catalog::Route::publication;
 use App::Catalog::Helper;
 use App::Catalog::Controller::Publication;
 use Dancer ':syntax';
-#use JSON;
+use Dancer::FileUtils qw/path/;
 
 prefix '/record' => sub {
 
@@ -72,6 +72,12 @@ prefix '/record' => sub {
 		redirect '/myPUB/search';
 	};
 
+};
+
+post '/upload' => sub {
+	my $file = request->upload('file_name');
+	my $path = path(h->config->{upload_dir}, "$id", "file_name");
+	$file->copy_to($path);
 };
 
 1;

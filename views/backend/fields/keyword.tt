@@ -1,12 +1,12 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="keywords">
-      {% fields.supplementaryFields.keyword.label %}
+      {% fields.supplementary_fields.keyword.label %}
     </label>
   </div>
   <div class="col-md-10" id="keywords">
     <div class="col-md-6">
-      <textarea rows="3" name="keyword" class="form-control" placeholder="{% fields.supplementaryFields.keyword.placeholder %}">[% xkeyword %]</textarea>
+      <textarea rows="3" name="keyword" class="form-control" placeholder="{% fields.supplementary_fields.keyword.placeholder %}">[% keyword %]</textarea>
     </div>
   </div>
 </div>

@@ -13,39 +13,38 @@
   
   <ul class="nav nav-tabs" id="tabs-left">
     <li id="li_basicFields" class="active">
-      <a href="#basicFields" data-toggle="tab">{% fields.basicFields.tabName %}</a>
+      <a href="#basicFields" data-toggle="tab">{% fields.basic_fields.tab_name %}</a>
     </li>
-    {% IF fields.fileUpload %}
+    {% IF fields.file_upload %}
     <li id="li_fileUpload" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
-      <a href="#fileUpload" data-toggle="tab">{% fields.fileUpload.tabName %}</a>
+      <a href="#fileUpload" data-toggle="tab">{% fields.file_upload.tab_name %}</a>
     </li>
     {% END %}
-    {% IF fields.supplementaryFields %}
+    {% IF fields.supplementary_fields %}
     <li id="li_supplementaryFields" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
-      <a href="#supplementaryFields" data-toggle="tab">{% fields.supplementaryFields.tabName %}</a>
+      <a href="#supplementaryFields" data-toggle="tab">{% fields.supplementary_fields.tab_name %}</a>
     </li>
     {% END %}
-    {% IF fields.relatedMaterial %}
+    {% IF fields.related_material %}
     <li id="li_relatedMaterial" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
-      <a href="#relatedMaterial" data-toggle="tab">{% fields.relatedMaterial.tabName %}</a>
+      <a href="#relatedMaterial" data-toggle="tab">{% fields.related_material.tab_name %}</a>
     </li>
     {% END %}
   </ul>
   
   <form action="/myPUB/record/update" method="POST">
-    <input type="hidden" name="documentType" value="{% tmpl %}"/>
-    <input type="hidden" name="oId" value="[% oId %]"/>
-    <input type="hidden" name="_id" value="[% oId %]"/>
-    <input type="hidden" name="submissionStatus" value="unsubmitted"/>
+    <input type="hidden" name="type" value="{% tmpl %}"/>
+    <input type="hidden" name="_id" value="[% item('_id') %]"/>
+    <input type="hidden" name="status" value="unsubmitted"/>
     
     <div class="tab tab-content edit-form">
     
       <!-- STEP 1 -->
       <div class="tab-pane active" id="basicFields">
 
-{% IF fields.basicFields %}
-  {% FOREACH key IN fieldOrder.basicFields %}
-    {% IF fields.basicFields.$key %}
+{% IF fields.basic_fields %}
+  {% FOREACH key IN field_order.basic_fields %}
+    {% IF fields.basic_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
@@ -58,9 +57,9 @@
       <!-- STEP 2 -->
       <div class="tab-pane" id="fileUpload">
       
-{% IF fields.fileUpload %}
-  {% FOREACH key IN fieldOrder.fileUpload %}
-    {% IF fields.fileUpload.$key %}
+{% IF fields.file_upload %}
+  {% FOREACH key IN field_order.file_upload %}
+    {% IF fields.file_upload.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
@@ -71,10 +70,10 @@
       </div><!-- tab-pane -->
       
       <!-- STEP 3 -->
-      <div class="tab-pane" id="supplementaryFields">
+      <div class="tab-pane" id="supplementary_fields">
 
-{% IF fields.supplementaryFields %}
-  {% FOREACH key IN fieldOrder.supplementaryFields %}
+{% IF fields.supplementary_fields %}
+  {% FOREACH key IN field_order.supplementary_fields %}
     {% IF fields.supplementaryFields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
@@ -88,9 +87,9 @@
       <!-- STEP 4 -->
       <div class="tab-pane" id="relatedMaterial">
       
-{% IF fields.relatedMaterial %}
-  {% FOREACH key IN fieldOrder.relatedMaterial %}
-    {% IF fields.relatedMaterial.$key %}
+{% IF fields.related_material %}
+  {% FOREACH key IN field_order.related_material %}
+    {% IF fields.related_material.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
