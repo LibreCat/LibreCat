@@ -23,10 +23,9 @@ prefix '/record' => sub {
 	get '/edit/:id' => sub {
 		my $id = param 'id';
 	
-		my $record = h->publications->get($id);
+		my $record = edit_publication($id);
 		if($record){
-			my $type = $record->{documentType};
-			$record->{personNumber} = session->{personNumber};
+			my $type = $record->{type};
 			my $tmpl = "backend/forms/$type";
 			template $tmpl, $record;
 		}
@@ -34,41 +33,43 @@ prefix '/record' => sub {
 
 	post '/update' => sub {
 		my $params = params;
-		my $author;
-		my $test;
-		if(ref $params->{author} ne "ARRAY"){
-			push @$author, $params->{author};
-		}
-		else{
-			$author = $params->{author};
-		}
-		foreach(@{$author}){
-			push @$test, from_json($_);
-		}
-		$params->{author} = $test;
-		#return to_dumper $params;
+		# my $author;
+		# my $test;
+		# if(ref $params->{author} ne "ARRAY"){
+		# 	push @$author, $params->{author};
+		# }
+		# else{
+		# 	$author = $params->{author};
+		# }
+		# foreach(@{$author}){
+		# 	push @$test, from_json($_);
+		# }
+		# $params->{author} = $test;
+		# #return to_dumper $params;
 		if($params->{finalSubmit} and $params->{finalSubmit} eq "recPublish"){
-			$params->{submissionStatus} = "public";
+			$params->{status} = "public";
 		}
-		my $result = h->update_publication($params);
-		#return to_dumper $result;
-
+		my $result = update_publication($params);
+		
 		redirect '/myPUB';
 	};
 
 	get '/return/:id' => sub {
 		my $id = params->{id};
 		my $rec = h->publications->get($id);
-		$rec->{submissionStatus} = "returned";
-		h->update_publication($rec);
-
+		$rec->{status} = "returned";
+		try {
+			h->update_publication($rec);
+			} catch {
+				template "error", {error => "someting went wrong"};
+			}
 		redirect '/myPUB/search';
 	};
 
 	# deleting records, for admins only
 	get '/delete/:id' => sub {
 		my $id = params->{id};
-		#
+		
 		redirect '/myPUB/search';
 	};
 

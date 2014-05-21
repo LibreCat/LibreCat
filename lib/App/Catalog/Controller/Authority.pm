@@ -4,8 +4,8 @@ use Catmandu::Sane;
 use Catmandu;
 use App::Catalog::Helper;
 use Hash::Merge qw/merge/;
+use Carp;
 use Exporter qw/import/;
-
 our @EXPORT = qw/new_person update_person edit_person delete_person/;
 our @EXPORT_OK
     = qw/new_department update_department edit_department delete_department/;
@@ -31,7 +31,7 @@ sub new_person {
 
 sub update_person {
     my $data = shift;
-    return "Error: No _id specified" unless $data->{_id};
+    croak "Error: No _id specified" unless $data->{_id};
 
     my $old = h->authority('admin')->get( $data->{_id} );
     my $merger = Hash::Merge->new();           #left precedence by default!

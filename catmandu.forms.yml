@@ -78,24 +78,24 @@ publicationTypes:
   encyclopediaarticle:
     label: "Encyclopedia Article"
     tmpl: encyclopediaArticle
-    fields:
-      basic_fields:
-        tabName: "Basic Fields"
-        title:
-          mandatory: 1
-          multiple: 0
-          label: "Title"
-        doi:
-          mandatory: 0
-          multiple: 0
-          label: "DOI"
-          readonly: 0
+#    fields:
+#      basic_fields:
+#        tabName: "Basic Fields"
+#        title:
+#          mandatory: 1
+#          multiple: 0
+#          label: "Title"
+#        doi:
+#          mandatory: 0
+#          multiple: 0
+#          label: "DOI"
+#          readonly: 0
   journalarticle:
     label: "Journal Article"
     tmpl: journalArticle
     fields:
       basic_fields:
-        tabName: "Basic Fields"
+        tab_name: "Basic Fields"
         doi:
           mandatory: 0
           multiple: 0
@@ -144,7 +144,7 @@ publicationTypes:
           placeholder: "YYYY"
           readonly: 0
       file_upload:
-        tabName: "Main File Upload"
+        tab_name: "Main File Upload"
         dropzone_mainDoc:
           label: "Upload main file(s)"
         dropzone_confLetter:
@@ -210,7 +210,7 @@ publicationTypes:
           label: "Title"
           placeholder: "Publication Title"
           readonly: 0
-        authors:
+        author:
           firstName:
             placeholder: "First Name"
           lastName:
@@ -220,12 +220,12 @@ publicationTypes:
           mandatory: 1
           multiple: 1
           label: "Creator"
-        departments:
+        department:
           mandatory: 0
           multiple: 1
           label: "Department"
           placeholder: "Department"
-        projects:
+        project:
           mandatory: 0
           multiple: 1
           label: "Projects"
