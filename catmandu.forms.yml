@@ -25,23 +25,23 @@ publicationTypeOrder:
 field_order:
   basic_fields:
     - doi
-    - mainTitle
+    - title
     - author
     - department
     - project
     - publisher
     - year
   file_upload:
-    - externalFile
+    - external_file
     - dropzone_mainDoc
     - dropzone_confLetter
     - license
   supplementary_fields:
     - abstract
-    - xddc
+    - ddc
     - keyword
   related_material:
-    - relatedMaterial
+    - related_material
 publicationTypes:
   book:
     label: "Book"
@@ -60,9 +60,6 @@ publicationTypes:
   bookeditor:
     label: "Book Editor"
     tmpl: bookEditor
-  # casestudy:
-  #   label: "Case Study"
-  #   tmpl: caseStudy
   conferenceabstract:
     label: "Conference Abstract"
     tmpl: conferenceAbstract
@@ -78,18 +75,6 @@ publicationTypes:
   encyclopediaarticle:
     label: "Encyclopedia Article"
     tmpl: encyclopediaArticle
-#    fields:
-#      basic_fields:
-#        tabName: "Basic Fields"
-#        title:
-#          mandatory: 1
-#          multiple: 0
-#          label: "Title"
-#        doi:
-#          mandatory: 0
-#          multiple: 0
-#          label: "DOI"
-#          readonly: 0
   journalarticle:
     label: "Journal Article"
     tmpl: journalArticle

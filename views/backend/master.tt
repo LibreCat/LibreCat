@@ -1,5 +1,5 @@
 [% INCLUDE navbar.tt %]
-[% thisPerson = h.getPerson($personNumber) %]
+[% thisPerson = h.getPerson(session.personNumber) %]
 <!-- BEGIN /backend/forms/{% tmpl %} -->
 
 <div class="row">
