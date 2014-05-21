@@ -207,7 +207,7 @@ get '/adminSearch' => sub {
     my $role = session->{role};
     
     if($role ne "superAdmin"){
-    	redirect '/myPUB/search';
+    	redirect '/myPUB/reviewerSearch';
     }
 
     $params->{modus} = "admin";
