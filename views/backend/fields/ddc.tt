@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="ddc">
-      {% fields.supplementary_fields.xddcs.label %}
+      {% fields.supplementary_fields.ddc.label %}
     </label>
   </div>
   <div class="col-md-10" id="ddc">
@@ -12,7 +12,7 @@
           <optgroup label="[% h.ddc.$group.optgroup %]">
           [% FOREACH ddc IN h.ddc.$group.keys %]
             [% NEXT IF ddc == "optgroup" %]
-            <option id="[% ddc %]" value="[% h.ddc.$group.$ddc.value %]"[% IF h.ddc.$group.$ddc.value == hasDdc.oId %] selected="selected"[% END %]>[% h.ddc.$group.$ddc.label %]</option>
+            <option id="[% ddc %]" value="[% h.ddc.$group.$ddc.value %]"[% IF h.ddc.$group.$ddc.value == ddc %] selected="selected"[% END %]>[% h.ddc.$group.$ddc.label %]</option>
           [% END %]
           </optgroup>
         [% END %]

@@ -4,7 +4,7 @@
 <div class="row innerrow">
   <div class="col-md-12 buttonrow">
     <span class="form-group col-md-2">
-      <a class="btn btn-default back-button" id="threeToTwo" data-toggle="tab" href="#fileUpload"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+      <a class="btn btn-default back-button" id="threeToTwo" data-toggle="tab" href="#file_upload"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
     </span>
     <span class="form-group col-md-2">
       <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
@@ -25,7 +25,7 @@
       [% END %]
     [% END %]
     <span class="form-group col-md-2">
-      <a class="btn btn-default next-button" id="threeToFour" data-toggle="tab" href="#relatedMaterial">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+      <a class="btn btn-default next-button" id="threeToFour" data-toggle="tab" href="#related_material">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
     </span>
   </div>
 </div>

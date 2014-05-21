@@ -41,25 +41,25 @@ if($('#id_dataReuseLicense').length || $('#id_openDataRelease').length){
       }
     }
 
-    $('#fileUpload, #li_fileUpload').removeClass('active');
-    $('#supplementaryFields, #li_supplementaryFields').addClass('active');
-    $('a[href=#supplementaryFields]').attr('data-toggle','tab');
-    $('#li_supplementaryFields').css('visibility','visible');
+    $('#file_upload, #li_file_upload').removeClass('active');
+    $('#supplementary_ields, #li_supplementary_fields').addClass('active');
+    $('a[href=#supplementary_fields]').attr('data-toggle','tab');
+    $('#li_supplementary_fields').css('visibility','visible');
   }
 }
 else {
-    $('#fileUpload, #li_fileUpload').removeClass('active');
-    $('#supplementaryFields, #li_supplementaryFields').addClass('active');
-    $('a[href=#supplementaryFields]').attr('data-toggle','tab');
-    $('#li_supplementaryFields').css('visibility','visible');
+    $('#file_upload, #li_file_upload').removeClass('active');
+    $('#supplementary_fields, #li_supplementary_fields').addClass('active');
+    $('a[href=#supplementary_fields]').attr('data-toggle','tab');
+    $('#li_supplementary_fields').css('visibility','visible');
 }
 });
 
 
 // Two to One
 $('#twoToOne').click(function(){
-  $('#li_fileUpload').removeClass('active');
-  $('#li_basicFields').addClass('active');
+  $('#li_file_upload').removeClass('active');
+  $('#li_basic_fields').addClass('active');
 });
 
 

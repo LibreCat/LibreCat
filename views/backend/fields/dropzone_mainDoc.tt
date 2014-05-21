@@ -50,7 +50,7 @@
         
         var editLink = Dropzone.createElement("<div class=\"corner_down\"><a href=\"#\"><i class=\"icon icon-pencil\"></i></a></div>");
         editLink.addEventListener("click", function(e) {
-          window.editFile(match[1],[% recordOId %],file.name,match[4],"","");
+          window.editFile(match[1],[% item('_id') %],file.name,match[4],"","");
         });
         file.previewElement.appendChild(editLink);
         
