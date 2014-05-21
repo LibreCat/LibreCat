@@ -25,7 +25,7 @@ prefix '/record' => sub {
 	
 		my $record = h->publications->get($id);
 		if($record){
-			my $type = $record->{documentType};
+			my $type = $record->{type};
 			$record->{personNumber} = session->{personNumber};
 			my $tmpl = "backend/forms/$type";
 			template $tmpl, $record;
@@ -48,7 +48,7 @@ prefix '/record' => sub {
 		$params->{author} = $test;
 		#return to_dumper $params;
 		if($params->{finalSubmit} and $params->{finalSubmit} eq "recPublish"){
-			$params->{submissionStatus} = "public";
+			$params->{status} = "public";
 		}
 		my $result = h->update_publication($params);
 		#return to_dumper $result;
@@ -59,7 +59,7 @@ prefix '/record' => sub {
 	get '/return/:id' => sub {
 		my $id = params->{id};
 		my $rec = h->publications->get($id);
-		$rec->{submissionStatus} = "returned";
+		$rec->{status} = "returned";
 		h->update_publication($rec);
 
 		redirect '/myPUB/search';
