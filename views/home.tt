@@ -23,7 +23,6 @@
       </div> <!-- span 2 -->
   
       <div class="col-md-6">
-      [% title %]
         [% INCLUDE person_profile.tt %]
       </div> <!-- span6 -->
 
@@ -36,14 +35,14 @@
     [% IF total != 0 OR researchhits.total != 0 %]
     <div class="row"> <!-- row span11 publications, projects, departments -->
       <div class="col-md-10">
-        <ul class="nav nav-tabs" id="myTab">
+        <ul class="nav nav-tabs">
         [% IF session.role == 'superAdmin' %]
-          <li class="active"><a href="/myPUB/adminSearch">All Publications</a></li>
+          <li[% IF modus == "admin" %] class="active"[% END %]><a href="/myPUB/adminSearch">All Publications</a></li>
         [% END %]
-          <li [% IF session.role != 'superAdmin' %]class="active"[% END %]><a href="/myPUB/search">Personal Publications</a></li>
-          [% IF session.role == 'reviewer' %]
-          <li><a href="/myPUB/reviewerSearch">Publications for Review</a></li>
-          [% END %]
+          <li[% IF modus == "user" %] class="active"[% END %]><a href="/myPUB/search">Personal Publications</a></li>
+        [% IF session.role == 'reviewer' OR session.role == "superAdmin" %]
+          <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/reviewerSearch">Publications for Review</a></li>
+        [% END %]
         </ul>
       </div>
       
@@ -59,18 +58,14 @@
           </div>
           <div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ">
             <div class="col-md-8">
-              [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
-              [% INCLUDE right_menu_publ.tt %]
             </div>
           </div>
           <div class="tab-pane[% IF modus == 'reviewer' %] active[%END %]" id="review">
             <div class="col-md-8">
-              [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
-              [% INCLUDE right_menu_publ.tt %]
             </div>
           </div>
         </div>  
