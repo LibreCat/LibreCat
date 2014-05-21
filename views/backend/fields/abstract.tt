@@ -1,17 +1,17 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="abstract">
-      {% fields.supplementaryFields.abstract.label %}
+      {% fields.supplementary_fields.abstract.label %}
     </label>
   </div>
   <div class="col-md-10 form-group" id="abstract">
     [% IF !abstract %]
     <span class="col-md-6">
-      <textarea rows="3" name="ab_abAbstract_0" id="id_ab_abAbstract_0" class="form-control" onkeyup="checkForm4Ddc();"></textarea>
+      <textarea rows="3" name="ab_abAbstract_0" id="id_ab_abAbstract_0" class="form-control"></textarea>
     </span>
     <span class="col-md-6">
       <label for="id_ab_abLanguageOId0">
-        {% fields.supplementaryFields.abstract.label2 %}
+        {% fields.supplementary_fields.abstract.label2 %}
       </label>
     </span>
     <span class="form-group col-md-3">
@@ -41,8 +41,8 @@
           <option value="[% h.xlanguages_preselect.$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
         [% END %]
           <option value="2436687"></option>
-        [% FOREACH lang IN h.xlanguages.keys.sort %]
-          <option value="[% h.xlanguages.$lang %]" [% IF abLanguageOId == h.xlanguages.$lang %]selected="selected"[% END %]>[% lang %]</option>
+        [% FOREACH lang IN h.languages.keys.sort %]
+          <option value="[% h.languages.$lang %]" [% IF abLanguageOId == h.languages.$lang %]selected="selected"[% END %]>[% lang %]</option>
         [% END %]
         </select>
       </div>

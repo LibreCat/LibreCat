@@ -22,8 +22,8 @@ publicationTypeOrder:
   - bibachelorthesis
   - bimasterthesis
   - bipostdocthesis
-fieldOrder:
-  basicFields:
+field_order:
+  basic_fields:
     - doi
     - mainTitle
     - author
@@ -31,29 +31,29 @@ fieldOrder:
     - project
     - publisher
     - year
-  fileUpload:
+  file_upload:
     - externalFile
     - dropzone_mainDoc
     - dropzone_confLetter
     - license
-  supplementaryFields:
+  supplementary_fields:
     - abstract
     - xddc
     - keyword
-  relatedMaterial:
+  related_material:
     - relatedMaterial
 publicationTypes:
   book:
     label: "Book"
     tmpl: book
     fields:
-      basicFields:
+      basic_fields:
         tabName: "Basic Fields"
         title: &title
           mandatory: 1
           multiple: 0
           label: "Title"
-        
+
   bookchapter:
     label: "Book Chapter"
     tmpl: bookChapter
@@ -79,7 +79,7 @@ publicationTypes:
     label: "Encyclopedia Article"
     tmpl: encyclopediaArticle
     fields:
-      basicFields:
+      basic_fields:
         tabName: "Basic Fields"
         title:
           mandatory: 1
@@ -94,7 +94,7 @@ publicationTypes:
     label: "Journal Article"
     tmpl: journalArticle
     fields:
-      basicFields:
+      basic_fields:
         tabName: "Basic Fields"
         doi:
           mandatory: 0
@@ -143,21 +143,21 @@ publicationTypes:
           label: "Publishing Year"
           placeholder: "YYYY"
           readonly: 0
-      fileUpload:
+      file_upload:
         tabName: "Main File Upload"
         dropzone_mainDoc:
           label: "Upload main file(s)"
         dropzone_confLetter:
           label: "Upload a confirmation letter"
-      supplementaryFields:
-        tabName: "Additional Information"
+      supplementary_fields:
+        tab_name: "Additional Information"
         abstracts:
           mandatory: 0
           multiple: 1
           label: "Abstract"
           label2: "Abstract Language:"
           readonly: 0
-        xddc:
+        ddc:
           mandatory: 0
           multiple: 0
           label: "DDC"
@@ -168,8 +168,8 @@ publicationTypes:
           label: "Keywords"
           placeholder: "Keywords separated by semicolons: keyword1; keyword2; keyword3"
           readonly: 0
-      relatedMaterial:
-        tabName: "Supplementary Material"
+      related_material:
+        tab_name: "Supplementary Material"
         relatedMaterial:
           mandatory: 0
           multiple: 0
@@ -197,14 +197,14 @@ publicationTypes:
     label: "Research Data"
     tmpl: researchData
     fields:
-      basicFields:
-        tabName: "Basic Fields"
+      basic_fields:
+        tab_name: "Basic Fields"
         doi:
           mandatory: 1
           multiple: 0
           label: "DOI"
           readonly: 1
-        mainTitle:
+        title:
           mandatory: 1
           multiple: 0
           label: "Title"
@@ -230,11 +230,6 @@ publicationTypes:
           multiple: 1
           label: "Projects"
           placeholder: "Project"
-        researchGroups:
-          mandatory: 0
-          multiple: 1
-          label: "Research Group"
-          placeholder: "Research Group"
         publisher:
           mandatory: 1
           multiple: 0
@@ -248,8 +243,8 @@ publicationTypes:
           label: "Year"
           placeholder: "YYYY"
           readonly: 0
-      fileUpload:
-        tabName: "Research data upload"
+      file_upload:
+        tab_name: "Research data upload"
         externalFiles:
           mandatory: 0
           multiple: 0
@@ -271,14 +266,14 @@ publicationTypes:
             multiple: 0
             label: "Open Data Release - Declaration"
             readonly: 0
-      supplementaryFields:
-        tabName: "Supplementary fields"
+      supplementary_fields:
+        tab_name: "Supplementary fields"
         abstracts:
           mandatory: 0
           multiple: 1
           label: "Abstract"
           readonly: 0
-        xddcs:
+        ddc:
           mandatory: 0
           multiple: 0
           label: "DDC"
@@ -289,8 +284,8 @@ publicationTypes:
           label: "Keywords"
           placeholder: "Keywords separated by semicolons: keyword1; keyword2; keyword3"
           readonly: 0
-      relatedMaterial:
-        tabName: "Link to publications"
+      related_material:
+        tab_name: "Link to publications"
         relatedMaterial:
           mandatory: 0
           multiple: 0
