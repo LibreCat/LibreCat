@@ -3,15 +3,9 @@
   <div class="row authorspan innerrow">
     <div class="col-md-2">
       <label for="author">
-      {% IF fields.basic_fields.author.label.keys %}
-        <select ng-model="type_0" class="authedtrans">
-          {% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}
-          <option value="{% fields.basic_fields.author.label.$creator %}">{% creator %}</option>
-          {% END %}
-        </select>{% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
-      {% ELSE %}
-        {% fields.basic_fields.author.label %}{% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthor"></span>
-      {% END %}
+        <select class="authedtrans" id="authedtrans_0">
+        </select>
+        {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
       </label>
     </div>
     <div class="col-md-10" id="author">
@@ -45,15 +39,9 @@
   <div class="row authorspan innerrow">
     <div class="col-md-2">
       <label for="author">
-      {% IF fields.basic_fields.author.label.keys %}
-        <select ng-model="type_[% loop.index %]" class="authedtrans">
-          {% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}
-          <option value="{% fields.basic_fields.author.label.$creator %}"{% IF name.type.typeName == creator %} selected="selected"{% END %}>{% creator %}</option>
-          {% END %}
-        </select>{% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
-      {% ELSE %}
-        {% fields.basic_fields.author.label %}{% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthor"></span>
-      {% END %}
+        <select class="authedtrans" id="authedtrans_[% loop.index %]">
+        </select>
+        {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
       </label>
     </div>
     <div class="col-md-10" id="author">
