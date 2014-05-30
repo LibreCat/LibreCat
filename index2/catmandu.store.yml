@@ -1010,25 +1010,25 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-                'exact': {field: 'fullName.exact'}
-              field: fullName
-              sort: {field: 'fullName.exact'}
-            surname:
+                'exact': {field: 'full_name.exact'}
+              field: full_name
+              sort: {field: 'full_name.exact'}
+            lastname:
               op:
                 'any': true
                 'all': true
                 '=': true
                 '<>': true
                 'exact': true
-              field: surname
-            givenname:
+              field: last_name
+            firstname:
               op:
                 'any': true
                 'all': true
                 '=': true
                 '<>': true
                 'exact': true
-              field: givenName
+              field: first_name
             id:
               op:
                 '=': true
@@ -1467,13 +1467,13 @@ search:
         include_in_all: false  
         properties:
           _id: {type: string, include_in_all: true}
-          fullName:
+          full_name:
             type: multi_field
             fields:
-              fullName: {type: string, include_in_all: true}
+              full_name: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
-          surname: {type: string}
-          givenName: {type: string}
+          last_name: {type: string}
+          first_name: {type: string}
           bis:
             properties:
               personTitle: {type: string}
@@ -1484,11 +1484,7 @@ search:
             properties:
               organizationNumber: {type: string, analyzer: tag}
               name: {type: string, include_in_all: true}
-          dateLastChanged:
-            type: multi_field
-            fields:
-              date: {type: date, format: "yyy-MM-dd HH:mm:ss||yyyy-MM-dd||yyyy||yyyy-MM"}
-              str: {type: string, analyzer: datestring}
+          date_updated: {type: string, analyzer: datestring}
               
       department:
         include_in_all: false

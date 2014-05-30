@@ -174,7 +174,7 @@ sub search_researcher {
 	  cql_query => $q,
 	  limit => $p->{limit} ||= 20,
 	  start => $p->{start} ||= 0,
-	  sru_sortkeys => $p->{sorting} || "fullName,,1",
+	  sru_sortkeys => $p->{sorting} || "full_name,,1",
 	);
 	
 	foreach (qw(next_page last_page page previous_page pages_in_spread)) {	
