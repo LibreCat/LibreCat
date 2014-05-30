@@ -20,10 +20,10 @@
         <input type="hidden" id="orig_last_name_0" value="" />
             
         <span class="form-group col-md-4">
-          <input type="text" id="first_name_0" ng-model="givenName_0" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" class="form-control" value="" />
+          <input type="text" id="first_name_0" ng-model="first_name_0" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" class="form-control" value="" />
         </span>
         <span class="form-group col-md-5">
-          <input type="text" id="last_name_0" ng-model="surname_0" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control" value="" />
+          <input type="text" id="last_name_0" ng-model="last_name_0" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control" value="" />
         </span>
         <input type="hidden" name="author" value='{"last_name":"{{last_name_0}}", "first_name":"{{first_name_0}}", "full_name":"{{last_name_0}}, {{first_name_0}}", "id":"{{id_0}}"}'>
         
