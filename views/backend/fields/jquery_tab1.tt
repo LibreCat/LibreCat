@@ -74,9 +74,9 @@ $('#oneToTwo').click(function(){
 });
 
 // add field names auth/ed/transl
-$(document).ready(function(){
-  $('#authorEditorTranslator div:first-child select').append('{% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}<option value="{% fields.basic_fields.author.label.$creator %}"{% IF name.type.typeName == creator %} selected="selected"{% END %}>{% creator %}</option>{% END %}');
-});
+//$(document).ready(function(){
+//  $('#authorEditorTranslator div:first-child select').append('{% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}<option value="{% fields.basic_fields.author.label.$creator %}"{% IF name.type.typeName == creator %} selected="selected"{% END %}>{% creator %}</option>{% END %}');
+//});
 
 //
 $('#authedtrans_0').change(function() {
