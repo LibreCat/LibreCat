@@ -7,16 +7,14 @@ function linkPevz(element){
 		$('#auAuthorized' + lineId).attr('src','/images/biNotAuthorized.png');
 		$('#id_' + lineId).val("");
 		$('#first_name_' + lineId + ', #last_name_' + lineId).removeAttr("readonly");
-		var orig_first_name = $('#orig_first_name_' + lineId).val();
-		var orig_last_name = $('#orig_last_name_' + lineId).val();
-		if(orig_first_name){
-			$('#first_name_' + lineId).val(orig_first_name);
-			$('#last_name_' + lineId).val("");
-		}
-		if(orig_last_name){
-			$('#last_name_' + lineId).val(orig_last_name);
-			$('#orig_last_name_' + lineId).val("");
-		}
+		var orig_first_name = "";
+		orig_first_name = $('#orig_first_name_' + lineId).val();
+		var orig_last_name = "";
+		orig_last_name = $('#orig_last_name_' + lineId).val();
+		$('#first_name_' + lineId).val(orig_first_name);
+		$('#orig_first_name_' + lineId).val("");
+		$('#last_name_' + lineId).val(orig_last_name);
+		$('#orig_last_name_' + lineId).val("");
 	}
 	
 	// Someone checked the "Link to PEVZ Account" checkbox
@@ -30,13 +28,13 @@ function linkPevz(element){
 		$('#orig_last_name_' + lineId).val(last_name);
 		var lastname = last_name.toLowerCase();
 		if(firstname){
-			narrowurl += "givenname=" + firstname + "*";
+			narrowurl += "firstname=" + firstname + "*";
 		}
 		if(firstname && lastname){
 			narrowurl += " AND ";
 		}
 		if(lastname){
-			narrowurl += "surname=*" + lastname + "*";
+			narrowurl += "lastname=*" + lastname + "*";
 		}
 		
 		$.get(narrowurl, function(response) {
@@ -50,13 +48,13 @@ function linkPevz(element){
 				var last_name = "";
 				
 				$.each(data, function(key, value){
-					if(key == "personNumber"){
+					if(key == "_id"){
 						pevzId = value;
 					}
-					if(key == "givenName"){
+					if(key == "first_name"){
 						first_name = value;
 					}
-					if(key == "surname"){
+					if(key == "last_name"){
 						last_name = value;
 					}
 				});
@@ -77,9 +75,9 @@ function linkPevz(element){
 			else if(objJSON.length > 1){
 				var container = $('#linkPevzModal').find('.modal-body').first();
 				container.html('');
-				var table = '<p><strong>Exact hits:</strong></p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>PEVZ-ID</th><th>Title</th><th>Name</th></tr>';
+				var table = '<p><strong>Exact hits:</strong></p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>PEVZ-ID</th><th>Name</th></tr>';
 				var rows = "";
-				var table2 = '<p><strong>Further hits:</strong></p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>PEVZ-ID</th><th>Title</th><th>Name</th></tr>';
+				var table2 = '<p><strong>Further hits:</strong></p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>PEVZ-ID</th><th>Name</th></tr>';
 				var rows2 = "";
 				
 				for(var i=0;i<objJSON.length;i++){
@@ -88,14 +86,14 @@ function linkPevz(element){
 					var first_name = "";
 					var last_name = "";
 					$.each(data, function(key, value){
-						if(key == "pevzId"){
+						if(key == "_id"){
 							pevzId = value;
 						}
-						if(key == "firstName"){
+						if(key == "first_name"){
 							first_name = value;
 							first_nameLc = value.toLowerCase();
 						}
-						if(key == "lastName"){
+						if(key == "last_name"){
 							last_name = value;
 							last_nameLc = value.toLowerCase();
 						}
@@ -137,7 +135,7 @@ function linkPevz(element){
 					$('#id_' + lineId).val(pevzId);
 					$('#first_name_' + lineId).val(first_name);
 					$('#last_name_' + lineId).val(last_name);
-					$('#first_name_' + lineId + ', #given_name_' + lineId).attr("readonly","readonly");
+					$('#first_name_' + lineId + ', #last_name_' + lineId).attr("readonly","readonly");
 					
 					$('#auAuthorized' + lineId).attr('src','/images/biAuthorized.png');
 					$('#first_name_' + lineId + ', #last_name_' + lineId).parent().removeClass("has-error");
