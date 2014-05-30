@@ -34,7 +34,7 @@
   
   <form action="/myPUB/record/update" method="POST">
     <input type="hidden" name="type" value="{% tmpl %}"/>
-    <input type="hidden" name="_id" value="[% item('_id') %]"/>
+    <input type="hidden" name="_id" value="[% oId %]"/>
     <input type="hidden" name="status" value="unsubmitted"/>
     
     <div class="tab tab-content edit-form">
