@@ -2,9 +2,9 @@
     <!-- Search -->
 
     <h5>Search Publications</h5>
-    <form action="/person/[% id %]" method="get" class="form-inline" role="form">
+    <form action="/myPUB/[% SWITCH modus %][% CASE "admin" %]adminSearch[% CASE "reviewer" %]reviewerSearch[% CASE "user" %]search[% END %]" method="get" class="form-inline" role="form">
         [% FOREACH key IN qp.keys %]
-        [% NEXT IF key == "ftext" %]
+        [% NEXT IF key == "q" %]
         [% IF qp.$key.0 %]
         [% FOREACH val in qp.$key %]
         <input type="hidden" name="[% key %]" value="[% val %]" />
@@ -14,7 +14,7 @@
         [% END %]
         [% END %]
         <span class="input-group">
-          <input type="text" value="[% qp.ftext %]" class="form-control" name="ftext" placeholder="Search" />
+          <input type="text" value='[% qp.q %]' class="form-control" name="q" placeholder="Search" />
           <span class="input-group-btn">
             <button type="button" class="btn btn-default">Go!</button>
           </span>
