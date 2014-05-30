@@ -30,8 +30,8 @@ sub save_publication {
     my $validator = Catmandu::Validator::PUB->new();
 
     if ( $validator->is_valid($data) ) {
-        h->publications->add($data);
-        h->publications->commit
+        h->publication->add($data);
+        h->publication->commit;
     }
     else {
         croak join(@{$validator->last_errors}, ' | ');
@@ -57,7 +57,7 @@ sub edit_publication {
     return "Error" unless $id;
     # some pre-processing needed?
     # if not, then this method sub is overkill
-    h->publications->get($id);
+    h->publication->get($id);
 }
 
 sub delete_publication {
@@ -72,8 +72,8 @@ sub delete_publication {
 
     # this will do a hard override of
     # the existing publication
-	h->publications->add($del);
-	h->publications->commit;
+	h->publication->add($del);
+	h->publication->commit;
 
     # delete attached files
     my $dir = h->conf->{upload_dir} ."/$id";

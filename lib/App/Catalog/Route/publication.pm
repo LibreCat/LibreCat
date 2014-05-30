@@ -56,10 +56,10 @@ prefix '/record' => sub {
 
 	get '/return/:id' => sub {
 		my $id = params->{id};
-		my $rec = h->publications->get($id);
+		my $rec = h->publication->get($id);
 		$rec->{status} = "returned";
 		try {
-			h->update_publication($rec);
+			update_publication($rec);
 			} catch {
 				template "error", {error => "someting went wrong"};
 			}
