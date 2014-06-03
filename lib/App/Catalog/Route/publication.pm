@@ -46,10 +46,11 @@ prefix '/record' => sub {
 		# }
 		# $params->{author} = $test;
 		# #return to_dumper $params;
-		if($params->{finalSubmit} and $params->{finalSubmit} eq "recPublish"){
-			$params->{status} = "public";
-		}
+		#if($params->{finalSubmit} and $params->{finalSubmit} eq "recPublish"){
+		#	$params->{status} = "public";
+		#}
 		my $result = update_publication($params);
+		return to_dumper $result;
 		
 		redirect '/myPUB';
 	};
@@ -61,7 +62,7 @@ prefix '/record' => sub {
 		try {
 			update_publication($rec);
 			} catch {
-				template "error", {error => "someting went wrong"};
+				template "error", {error => "something went wrong"};
 			}
 		redirect '/myPUB/search';
 	};
@@ -75,10 +76,17 @@ prefix '/record' => sub {
 
 };
 
-#post '/upload' => sub {
-#	my $file = request->upload('file_name');
-#	my $path = path(h->config->{upload_dir}, "$id", "file_name");
-#	$file->copy_to($path);
-#};
+get '/upload' => sub {
+	template "backend/upload.tt";
+};
+
+post '/upload' => sub {
+	my $file = request->upload('file_name');
+	my $id = params->{recordId};
+	my $path = path(h->config->{upload_dir}, "$id", $file->{filename});
+	mkdir h->config->{upload_dir}."/".$id;
+	$file->copy_to($path);
+	#return to_dumper $file;
+};
 
 1;
