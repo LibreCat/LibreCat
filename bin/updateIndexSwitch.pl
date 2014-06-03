@@ -48,18 +48,21 @@ my $command_1 = "$perl_version $sb_home/bin/index_publication_convert.pl";#$sb_h
 my $command_2 = "$perl_version $sb_home/bin/index_project.pl";
 my $command_3 = "$perl_version $sb_home/bin/index_researcher.pl";
 #my $command_4 = "$perl_version $sb_home/bin/index_award.pl";
+my $command_5 = "$perl_version $sb_home/bin/index_department.pl";
 
 if($newPub eq "backend2"){
 	$command_1 .= " -m backend2";
 	$command_2 .= " -m backend2";
 	$command_3 .= " -m backend2";
 #	$command_4 .= " -m backend2";
+    $command_5 .= " -m backend2";
 }
 elsif($newPub eq "backend1"){
 	$command_1 .= " -m backend1";
 	$command_2 .= " -m backend1";
 	$command_3 .= " -m backend1";
 #	$command_4 .= " -m backend1";
+    $command_5 .= " -m backend1";
 }
 
 print "Indexing publications.\n";
@@ -73,6 +76,9 @@ my $result_3 = `$command_3`;
 
 # print "Indexing awards.\n";
 # my $result_4 = `$command_4`;
+
+print "Indexing departments.\n";
+my $result_5 = `$command_5`;
 
 
 if($newPub eq "backend2"){

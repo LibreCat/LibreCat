@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 
 use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/sbcat/lib/default /home/bup/perl5/lib/perl5);
+use lib qw(/srv/www/app-catalog/lib);
 use Catmandu::Sane;
 use Catmandu -all;
 use Getopt::Std;
@@ -25,11 +26,11 @@ else {
 }
 
 my $conf = Catmandu->config;
-my $mongoBag = Catmandu->store('authority')->bag();
+my $mongoBag = Catmandu->store('authority')->bag('admin');
 my $bag = Catmandu->store('search')->bag('researcher');
 
 my $pre_fixer = Catmandu::Fix->new(fixes => [
-			'add_number_of_publications()',
+			'add_num_of_publs()',
 			'copy_field("_id","oId")',
 		]);
 
@@ -47,7 +48,7 @@ if ($opt_i){
 }
 else { # initial indexing
 
-	my $allResearchers = $mongoBag->select("type", "person")->to_array;
+	my $allResearchers = $mongoBag->to_array;
 	foreach(@$allResearchers){
 		add_to_index($_);
 		#print Dumper $_;

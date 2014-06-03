@@ -73,29 +73,46 @@ $('#oneToTwo').click(function(){
   }
 });
 
+// add field names auth/ed/transl
+//$(document).ready(function(){
+//  $('#authorEditorTranslator div:first-child select').append('{% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}<option value="{% fields.basic_fields.author.label.$creator %}"{% IF name.type.typeName == creator %} selected="selected"{% END %}>{% creator %}</option>{% END %}');
+//});
 
-// plus
-$('#plusAuthor').click(function(){
-  var items = $('#authorEditorTranslator span.authorspan');
-  var index = items.index($('#authorEditorTranslator span.authorspan').last()) + 1;
-  $('#authorEditorTranslator').append('[% INCLUDE backend/fields/subfields/author.tt %]');
-  $('#authorEditorTranslator span:last-child label').append('{% fields.basic_fields.author.label %}');
-  if($(this).attr('data-mandatory') == "yes"){
-    $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
-  }
-  $('#id_linkPevz_'+index).bind("click", function() { return linkPevz($('#id_linkPevz_'+index))});
+//
+$('#authedtrans_0').change(function() {
+  var selected = $(this).val();
+  var seltext = $(this).find("option:selected").text();
+  $('.authedtrans:not(#authedtrans_0)').children().remove();
+  $('.authedtrans:not(#authedtrans_0)').append('<option value="' + selected + '">' + seltext + '</option>');
 });
 
+// plus
+//$('#plusAuthor').click(function(){
+//  var items = $('#authorEditorTranslator span.authorspan');
+//  var index = items.index($('#authorEditorTranslator span.authorspan').last()) + 1;
+//  $('#authorEditorTranslator').append('[% INCLUDE backend/fields/subfields/author.tt %]');
+//  $('#authorEditorTranslator span:last-child label').append('{% fields.basic_fields.author.label %}');
+//  if($(this).attr('data-mandatory') == "yes"){
+//    $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
+//  }
+//  $('#id_linkPevz_'+index).bind("click", function() { return linkPevz($('#id_linkPevz_'+index))});
+//});
+
 $('#plusAuthorMore').click(function(){
-  var items = $('#authorEditorTranslator span.authorspan');
-  var index = items.index($('#authorEditorTranslator span.authorspan').last()) + 1;
+  var items = $('#authorEditorTranslator div.authorspan');
+  var index = items.index($('#authorEditorTranslator div.authorspan').last()) + 1;
   $('#authorEditorTranslator').append('[% INCLUDE backend/fields/subfields/author_more.tt %]');
-  $('#authorEditorTranslator div:last-child select').append('{% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}<option value="{% fields.basic_fields.author.label.$creator %}">{% creator %}</option>{% END %}');
+  var selected = $('#authedtrans_0').val();
+  {% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}
+    if(selected == "{% fields.basic_fields.author.label.$creator %}"){
+      $('#authorEditorTranslator div:last-child select').append('<option value="{% fields.basic_fields.author.label.$creator %}">{% creator %}</option>');
+    }
+  {% END %}
   if($(this).attr('data-mandatory') == "yes"){
     $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
   }
   $('#id_linkPevz_'+index).bind("click", function() { return linkPevz($('#id_linkPevz_'+index))});
-  $('#authedtrans_'+index).bind("change", function() { return selectAuthedtrans($('#authedtrans_'+index))});
+  //$('#authedtrans_'+index).bind("change", function() { return selectAuthedtrans($('#authedtrans_'+index))});
 });
 
 $('#plusDepartment').click(function(){
@@ -178,11 +195,11 @@ $(document).on('click', '.author', function(){
 
 
 // Select author, editor, translator
-//function selectAuthedtrans(element){
-//  var selected = $(element).val();
-//  var index = $(element).attr('id').replace('authedtrans_','');
-//  $('#id_au_type_'+index).val(selected);
-//}
+function selectAuthedtrans(element){
+  var selected = $(element).val();
+  var index = $(element).attr('id').replace('authedtrans_','');
+  $('#id_au_type_'+index).val(selected);
+}
 
 
 // Select button (dept, proj, rg)

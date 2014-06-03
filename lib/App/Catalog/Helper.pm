@@ -20,11 +20,11 @@ sub config {
 	state $config = Catmandu->config;
 }
 
-sub publications {
+sub publication {
 	state $bag = Catmandu->store('search')->bag('publicationItem');
 }
 
-sub projects {
+sub project {
 	state $bag = Catmandu->store('search')->bag('project');
 }
 
@@ -59,7 +59,7 @@ sub getPerson {
 		$user = $_[0]->authority_user->get($_[1]);
 		$admin = $_[0]->authority_admin->get($_[1]);
 		
-		my @fields = qw(fullName surname givenName email isAffiliatedWith);
+		my @fields = qw(full_name last_name first_name email department);
 		map {
 			$user->{$_} = $admin->{$_};
 		} @fields;
@@ -150,7 +150,7 @@ sub search_publication {
 	my $sort = $p->{'sort'} ||= $default_sort;
 	my $bag = $p->{'bag'} ||= "publicationItem";
 
-	$hits = publications->search(
+	$hits = publication->search(
 	    cql_query => $p->{q},
 		sru_sortkeys => $sort,
 		limit => $p->{limit} ||= config->{default_page_size},
@@ -174,7 +174,7 @@ sub search_researcher {
 	  cql_query => $q,
 	  limit => $p->{limit} ||= 20,
 	  start => $p->{start} ||= 0,
-	  sru_sortkeys => $p->{sorting} || "fullName,,1",
+	  sru_sortkeys => $p->{sorting} || "full_name,,1",
 	);
 	
 	foreach (qw(next_page last_page page previous_page pages_in_spread)) {	
@@ -203,7 +203,7 @@ sub search_project {
 	my ($self, $p) = @_;
 
 	my $hits;
-	$hits = projects->search (
+	$hits = project->search (
 		cql_query => $p->{q},
 		limit => $p->{limit} ||= config->{default_page_size},
 	#	facets => $p->{facets} ||= {},

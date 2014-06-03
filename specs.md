@@ -176,7 +176,8 @@ publication_status: inPress|unpublished|submitted|published
 publication_identifier:
 	issn: ["1234", "23445"]
 	eissn: see issn
-	isbn: see issn 
+	isbn: see issn
+	eisbn: see issn
 	urn: "urn:nbn:de...."
 publisher: "Springer"
 place: "Bielefeld"

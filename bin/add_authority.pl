@@ -52,6 +52,9 @@ sub getPersonData {
 		'move_field("hasUserAccessThrough", "access")',
 		'move_field("luLdapId","login")',
 		'move_field("jobTitle","title")',
+		'move_field("fullName","full_name")',
+		'move_field("surname","last_name")',
+		'move_field("givenName","first_name")',
 		'remove_field("isOfType")',
 		]);
 		

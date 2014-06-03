@@ -126,6 +126,7 @@ my $author_fixer = Catmandu::Fix->new(
         'remove_array_field("author.*.searchName")',
         'remove_array_field("author.*.citationStyle")',
         'remove_array_field("author.*.sortDirection")',
+        'add_autorenansetzung()',
     ]
 );
 
@@ -142,6 +143,7 @@ my $editor_fixer = Catmandu::Fix->new(
         'remove_array_field("editor.*.luLdapId")',
         'remove_array_field("editor.*.jobTitle")',
         'remove_array_field("editor.*.personTitle")',
+        'add_editorenansetzung()',
     ]
 );
 
@@ -248,21 +250,21 @@ sub add_to_index {
     #print Dumper $rec;
 
     #exit;
-    my $validator = Catmandu::Validator::PUB->new(
-        handler => sub {
-            $data = shift;
-        }
-    );
+    #my $validator = Catmandu::Validator::PUB->new(
+    #    handler => sub {
+    #        $data = shift;
+    #    }
+    #);
 
-    if ( $validator->is_valid($data) ) {
-        #h->publication->add($data);
-        #my $result = $bag->add($rec);
-        print STDERR "OK";
-    }
-    else {
-        print STDERR $validator->last_errors;
-    }
-    #my $result = $bag->add($rec);
+    #if ( $validator->is_valid($data) ) {
+    #    #h->publication->add($data);
+    #    #my $result = $bag->add($rec);
+    #    print STDERR "OK";
+    #}
+    #else {
+    #    print STDERR $validator->last_errors;
+    #}
+    my $result = $bag->add($rec);
 }
 
 # get all publication types

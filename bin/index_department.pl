@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl
 
 use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/sbcat/lib/default /home/bup/perl5/lib/perl5);
+use lib qw(/srv/www/app-catalog/lib);
 use Catmandu::Sane;
 use Catmandu -all;
 use Getopt::Std;
@@ -12,7 +13,7 @@ our $opt_u;
 our $opt_m;
 our $opt_i;
 
-my $home = $ENV{BACKEND};
+my $home = "/srv/www/app-catalog/";#$ENV{BACKEND};
 
 if($opt_m && $opt_m eq "backend2"){
 	Catmandu->load("$home/index2");
@@ -25,11 +26,14 @@ else {
 }
 
 my $conf = Catmandu->config;
-my $mongoBag = Catmandu->store('authority')->bag();
+my $mongoBag = Catmandu->store('authority')->bag('department');
 my $bag = Catmandu->store('search')->bag('department');
 
 my $pre_fixer = Catmandu::Fix->new(fixes => [
-			'department_name()',
+			'dept_name()',
+			'remove_field("parent")',
+			'remove_field("oId")',
+			'remove_field("dateLastChanged")',
 		]);
 
 sub add_to_index {
@@ -37,21 +41,17 @@ sub add_to_index {
 
 	$pre_fixer->fix($rec);
   	$bag->add($rec);
+  	#print Dumper $rec;
 }
 
 
 if ($opt_i){
 	my $department = $mongoBag->get($opt_i);
-	if($department->{type} eq "organization"){
-		add_to_index($department);
-	}
-	else {
-		print "Wrong type!\n";
-	}
+	add_to_index($department);
 }
 else { # initial indexing
 
-	my $allDepartments = $mongoBag->select("type", "organization")->to_array;
+	my $allDepartments = $mongoBag->to_array;
 	foreach(@$allDepartments){
 		add_to_index($_);
 		#print Dumper $_;
