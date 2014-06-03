@@ -272,15 +272,5 @@ related_material:
 			file_size: 3.4 MB
 		record:
 			id: 123456
+			relation: is_part_of
 ```
-
-## TODO
-
-Review?
-
-
-
-
-
-
-

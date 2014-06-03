@@ -13,7 +13,7 @@ sub _create_id_proj {
     my $id  = $bag->{"latest"};
     $id++;
     $bag = h->bag->add( { _id => "1", latest => $id } );
-    return $id;    # correct?
+    return $id;
 }
 
 sub new_project {

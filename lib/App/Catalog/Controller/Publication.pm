@@ -26,7 +26,7 @@ sub new_publication {
 }
 
 sub save_publication {
-    my $data      = shift;
+    my $pub      = shift;
     my $validator = Catmandu::Validator::PUB->new();
 
     if ( $validator->is_valid($data) ) {
@@ -43,7 +43,7 @@ sub update_publication {
     my $data = shift;
     croak "Error: No _id specified" unless $data->{_id};
 
-    my $old = h->publication->get( $data->{_id} );
+    my $old = h->publications->get( $data->{_id} );
     my $merger = Hash::Merge->new(); 
     #left precedence by default!
     my $new = $merger->merge( $data, $old );
@@ -56,7 +56,6 @@ sub edit_publication {
 
     return "Error" unless $id;
     # some pre-processing needed?
-    # if not, then this method sub is overkill
     h->publication->get($id);
 }
 
