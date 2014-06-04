@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="angularController">
   <head>
     <title>PUB - Publication at Bielefeld University</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,7 +44,9 @@
        <ul class="nav navbar-nav navbar-right">
          [% IF session AND session.user %]
          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Logged in as: <em>[% session.user %]</em></a></li>
+         [% IF session.role == "superAdmin" %]
          <li><a href="/myPUB/admin"><span class="glyphicon glyphicon-exclamation-sign"></span> Admin</a></li>
+         [% END %]
          <li><a href="/myPUB/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
          [% ELSE %]
          <li><a href="/myPUB/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
