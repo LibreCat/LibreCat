@@ -1,21 +1,20 @@
 [% lowtype = type.lower %]
 [% confpath = h.config.forms.publicationTypes.$lowtype %]
-<span id="authorEditorTranslator">
+<span id="authorEditorTranslator" ng-controller="angularSearch">
   [% IF !author AND !editor AND !translator %]
   <div class="row authorspan innerrow">
     <div class="col-md-2">
       <label>
-        <select class="authedtrans" id="authedtrans_0">
+        <select class="authedtrans" ng-model="creator_type" ng-init="creator_type='author'" id="authedtrans_0">
         {% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}
         <option value="{% fields.basic_fields.author.label.$creator %}"{% IF fields.basic_fields.author.label.$creator == "author" %} selected="selected"{% END %}>{% creator %}</option>
         {% END %}
         </select>
-        {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
+        {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span ng-click="cloneField($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
       </label>
     </div>
-    <div class="col-md-10" id="author">
+    <div class="col-md-10 creator">
       <div class="form-group">
-        <input type="hidden" id="id_0" ng-model="id_0" value="" />
         <input type="hidden" id="orig_first_name_0" value="" />
         <input type="hidden" id="orig_last_name_0" value="" />
             
@@ -25,14 +24,14 @@
         <span class="form-group col-md-5">
           <input type="text" id="last_name_0" ng-model="last_name_0" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control" value="" />
         </span>
-        <input type="hidden" name="author" value='{"last_name":"{{last_name_0}}", "first_name":"{{first_name_0}}", "full_name":"{{last_name_0}}, {{first_name_0}}", "id":"{{id_0}}"}'>
+        <input type="hidden" id="{{creator_type}}_json_0" name="{{creator_type}}" value='{last_name:&quot;{{last_name_0}}&quot;, first_name:&quot;{{first_name_0}}&quot;, full_name:&quot;{{last_name_0}}, {{first_name_0}}&quot;, id:&quot;{{id_0}}&quot;}'>
         
         <span class="col-md-1">
           <span class="glyphicon glyphicon-minus author"></span>
         </span>
           
         <span class="col-md-2">
-          <input name="linkPevz_0" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
+          <input class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
           <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip %}" />
           <script>
             $('#auAuthorized0').tooltip();
@@ -57,9 +56,8 @@
         {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
       </label>
     </div>
-    <div class="col-md-10">
+    <div class="col-md-10 creator">
       <div class="form-group">
-        <input type="hidden" ng-model="id_[% loop.index %]" value="" />
         <input type="hidden" id="orig_first_name_[% loop.index %]" value="" />
         <input type="hidden" id="orig_last_name_[% loop.index %]" value="" />
             
@@ -69,7 +67,7 @@
         <span class="form-group col-md-5">
           <input type="text" ng-model="last_name_[% loop.index %]" ng-init="last_name_[% loop.index %]='[% name.last_name %]'" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
-        <input type="hidden" name="author" value='{"last_name":"{{last_name_[% loop.index %]}}", "first_name":"{{first_name_[% loop.index %]}}", "full_name":"{{last_name_[% loop.index %]}}, {{first_name_[% loop.index %]}}", "id":"{{id_[% loop.index %]}}"}'>
+        <input type="hidden" id="author_json_[% loop.index %]" name="author" value='{"last_name":"{{last_name_[% loop.index %]}}", "first_name":"{{first_name_[% loop.index %]}}", "full_name":"{{last_name_[% loop.index %]}}, {{first_name_[% loop.index %]}}", "id":"{{id_[% loop.index %]}}"}'>
             
         <span class="col-md-1">
           [% IF loop.index == 0 %]
@@ -80,7 +78,7 @@
         </span>
             
         <span class="col-md-2">
-          <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
+          <input class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
           [% IF name.id %]
             <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="{% fields.basic_fields.author.pevz_tooltip %}" />
             <script>
@@ -110,9 +108,8 @@
         {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
       </label>
     </div>
-    <div class="col-md-10">
+    <div class="col-md-10 creator">
       <div class="form-group">
-        <input type="hidden" ng-model="id_[% loop.index %]" value="" />
         <input type="hidden" id="orig_first_name_[% loop.index %]" value="" />
         <input type="hidden" id="orig_last_name_[% loop.index %]" value="" />
             
@@ -122,7 +119,7 @@
         <span class="form-group col-md-5">
           <input type="text" ng-model="last_name_[% loop.index %]" ng-init="last_name_[% loop.index %]='[% name.last_name %]'" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
-        <input type="hidden" name="editor" value='{"last_name":"{{last_name_[% loop.index %]}}", "first_name":"{{first_name_[% loop.index %]}}", "full_name":"{{last_name_[% loop.index %]}}, {{first_name_[% loop.index %]}}", "id":"{{id_[% loop.index %]}}"}'>
+        <input type="hidden" id="editor_json_[% loop.index %]" name="editor" value='{"last_name":"{{last_name_[% loop.index %]}}", "first_name":"{{first_name_[% loop.index %]}}", "full_name":"{{last_name_[% loop.index %]}}, {{first_name_[% loop.index %]}}", "id":"{{id_[% loop.index %]}}"}'>
             
         <span class="col-md-1">
           [% IF loop.index == 0 %]
