@@ -222,7 +222,7 @@ external_id:
 	arxiv:
 	    id: sdfdsf
 	    prefix_id: "arXiv:sdfdsf"
-	pumid:
+	pmid:
 	    id: dfsdf
 	    prefix_id: "MEDLINE:dfsdf"
 	inspire:
