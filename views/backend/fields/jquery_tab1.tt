@@ -225,9 +225,7 @@ $('button.cancel-button').click(function() {
 
 
 
-var angularController = angular.module('angularController', []);
-
-angularController.controller('angularSearch', function ($scope, $compile) {
+function angularSearch($scope, $compile) {
   $scope.cloneField = function(myVal){
     var items = $('#authorEditorTranslator div.authorspan');
 	var index = items.index($('#authorEditorTranslator div.authorspan').last()) + 1;
@@ -242,4 +240,4 @@ angularController.controller('angularSearch', function ($scope, $compile) {
 	  $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
 	}
   };
-});
+};

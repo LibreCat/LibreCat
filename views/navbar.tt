@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="angularController">
+<html ng-app>
   <head>
     <title>PUB - Publication at Bielefeld University</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

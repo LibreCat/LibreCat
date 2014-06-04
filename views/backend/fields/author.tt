@@ -24,7 +24,7 @@
         <span class="form-group col-md-5">
           <input type="text" id="last_name_0" ng-model="last_name_0" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control" value="" />
         </span>
-        <input type="hidden" id="{{creator_type}}_json_0" name="{{creator_type}}" value='{last_name:&quot;{{last_name_0}}&quot;, first_name:&quot;{{first_name_0}}&quot;, full_name:&quot;{{last_name_0}}, {{first_name_0}}&quot;, id:&quot;{{id_0}}&quot;}'>
+        <input type="hidden" id="{{creator_type}}_json_0" name="{{creator_type}}" value='{"last_name":"{{last_name_0}}", "first_name":"{{first_name_0}}", "full_name":"{{last_name_0}}, {{first_name_0}}", "id":"{{id_0}}"}'>
         
         <span class="col-md-1">
           <span class="glyphicon glyphicon-minus author"></span>
