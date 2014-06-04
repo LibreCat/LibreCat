@@ -12,7 +12,7 @@ prefix '/record' => sub {
 		
 		if($type){
 			my $id = new_publication();
-			template "backend/forms/$type", {oId => $id};
+			template "backend/forms/$type", {id => $id};
 		}
 		else {
 			template 'add_new';
@@ -25,6 +25,7 @@ prefix '/record' => sub {
 	
 		my $record = edit_publication($id);
 		if($record){
+			$record->{id} = $record->{_id} if $record->{_id} and !$record->{id};
 			my $type = $record->{type};
 			my $tmpl = "backend/forms/$type";
 			template $tmpl, $record;
@@ -50,7 +51,7 @@ prefix '/record' => sub {
 		#	$params->{status} = "public";
 		#}
 		my $result = update_publication($params);
-		return to_dumper $result;
+		#return to_dumper $result;
 		
 		redirect '/myPUB';
 	};
@@ -64,14 +65,15 @@ prefix '/record' => sub {
 			} catch {
 				template "error", {error => "something went wrong"};
 			}
-		redirect '/myPUB/search';
+		redirect '/myPUB';
 	};
 
 	# deleting records, for admins only
 	get '/delete/:id' => sub {
 		my $id = params->{id};
 		
-		redirect '/myPUB/search';
+		delete_publication($id);
+		redirect '/myPUB';
 	};
 
 };

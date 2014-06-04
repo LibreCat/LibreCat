@@ -4,7 +4,7 @@ use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/app-catalog/
 
 use Catmandu::Sane;
 use Catmandu -all;
-use Catmandu::Fix qw(datetime_format add_ddc rename_relation remove_array_field move_field split_ext_ident add_contributor_info add_file_access language_info remove_field volume_sort);
+use Catmandu::Fix qw(datetime_format add_ddc rename_relation remove_array_field move_field copy_field split_ext_ident add_contributor_info add_file_access language_info remove_field volume_sort);
 
 #use MDS;
 use SBCatDB;
@@ -42,6 +42,7 @@ my $pre_fixer = Catmandu::Fix->new(
     fixes => [
         'rename_relation()',
         'move_field("oId","_id")',
+        'copy_field("_id", "id")',
         'move_field("type.typeName","type")',
         'move_field("mainTitle", "title")',
         'move_field("alternativeTitle", "alternative_title")',
