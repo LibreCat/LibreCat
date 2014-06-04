@@ -1,5 +1,5 @@
 <!-- BEGIN person/profile.tt -->
-<h5>[% IF thisPerson.bis.personTitle %]<span itemprop="honorificPrefix">[% thisPerson.bis.personTitle %]</span>[% END %] <span itemprop="name">[% thisPerson.givenName %] [% thisPerson.surname %]</span></h5>
+<h5>[% IF thisPerson.bis.personTitle %]<span itemprop="honorificPrefix">[% thisPerson.bis.personTitle %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span></h5>
 [% IF thisPerson.bis.email %]
 <a href="mailto:[% thisPerson.bis.email %]" itemprop="email">[% thisPerson.bis.email.replace('@|&#64;', ' [at] ') %]</a><br />
 [% END %]
@@ -18,8 +18,8 @@
       
       <div class="row">
       <form action="/myPUB/person/authorid" method="POST">
-      <input type="hidden" name="_id" value="[% session.personNmmber %]" />
-      [% IF !(thisPerson.googleScholarId OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcidId OR thisPerson.githubId OR thisPerson.arxivId OR thisPerson.inspireId) %]
+      <input type="hidden" name="_id" value="[% session.personNumber %]" />
+      [% IF !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire) %]
       <div class="col-md-12">
         <span class="text-muted">No Author IDs set.</span>&nbsp;
         <a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
