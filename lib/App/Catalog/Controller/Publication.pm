@@ -73,11 +73,13 @@ sub save_publication {
     use Citation;
     my $response = Citation::id2citation($data);
     my $citbag = Catmandu->store('citation')->bag;
+    my $publbag = Catmandu->store->bag('publication');
     $data->{citation} = $citbag->get($data->{_id}) if $data->{_id};
 
     #if ( $validator->is_valid($data) ) {
     	
         my $result = h->publication->add($data);
+        $publbag->add($result);
         h->publication->commit;
         #return $response;
     #}

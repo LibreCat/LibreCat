@@ -12,6 +12,7 @@ use luurCfg;
 use Getopt::Std;
 use Orms;
 use Data::Dumper;
+use Carp qw(croak);
 
 getopts('u:m:i:');
 our $opt_u;
@@ -202,6 +203,7 @@ my $post_fixer = Catmandu::Fix->new(
 
 my $bag    = Catmandu->store('search')->bag('publicationItem');
 my $citbag = Catmandu->store('citation')->bag;
+my $publbag = Catmandu->store->bag('publication');
 my $authors;
 
 my $db = SBCatDB->new(
@@ -266,6 +268,8 @@ sub add_to_index {
     #    print STDERR $validator->last_errors;
     #}
     my $result = $bag->add($rec);
+    #print Dumper $result;
+    $publbag->add($result);
 }
 
 # get all publication types
