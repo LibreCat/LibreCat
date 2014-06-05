@@ -1,11 +1,16 @@
 default:
   package: MongoDB
   options:
-    database_name: pub
+    database_name: PUBSystem
     bags:
       session:
         plugins:
           - Datestamps
+      publication:
+        plugins:
+          - Versioning
+        version_compare_ignore:
+          - date_updated
 
 project:
   package: MongoDB
