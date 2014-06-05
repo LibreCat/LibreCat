@@ -1,3 +1,6 @@
+_prefix:
+  lists:
+
 author_id:
   inspire:
     label: INSPIRE ID
