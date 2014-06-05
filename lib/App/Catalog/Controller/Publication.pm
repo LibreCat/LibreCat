@@ -128,7 +128,9 @@ sub delete_publication {
     my $status = rmdir $dir if -e $dir || 0;
     croak "Error: could not delete files" if $status;
     
-    # TODO delete citations
+    # delete citations
+    my $citbag = Catmandu->store('citation')->bag;
+    $citbag->delete($id) if $id;
 }
 
 1;
