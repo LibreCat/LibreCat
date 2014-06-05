@@ -7,12 +7,10 @@ use Catmandu -all;
 use Catmandu::Fix
     qw(add_ddc rename_relations move_field split_ext_ident add_contributor_info add_file_access language_info remove_field volume_sort);
 
-#use MDS;
 use SBCatDB;
 use luurCfg;
 use Getopt::Std;
 use Orms;
-use Data::Dumper;
 
 getopts('u:m:i:');
 our $opt_u;
@@ -27,19 +25,16 @@ my $luur = Orms->new( $cfg->{ormsCfg} );
 
 my $home = $ENV{BACKEND};
 
-if ( $opt_m && $opt_m eq "backend2" ) {
-    Catmandu->load("$home/index2");
-}
-elsif ( $opt_m && $opt_m eq "backend1" ) {
-    Catmandu->load("$home/index1");
-}
-else {
-    Catmandu->load($home);
+my $index_name = "backend";
+if ( $opt_m ) {
+    if ($opt_m eq "backend1" || $opt_m eq "backend2" ) {
+    $index_name = $opt_m;
+} else {
+    die "$opt_m is not an valid option";
 }
 
+Catmandu->load(':up');
 my $conf = Catmandu->config;
-
-#print Dumper $conf->{store};exit;
 
 my $pre_fixer = Catmandu::Fix->new(
     fixes => [
@@ -69,7 +64,7 @@ my $post_fixer = Catmandu::Fix->new(
 my $separate_fixer = Catmandu::Fix->new(
     fixes => [ 'remove_field("additionalInformation")', ] );
 
-my $bag    = Catmandu->store('search')->bag('publicationItem');
+my $bag    = Catmandu->store('search', index_name => $index_name)->bag('publicationItem');
 my $citbag = Catmandu->store('citation')->bag;
 my $authors;
 

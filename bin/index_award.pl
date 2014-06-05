@@ -4,7 +4,6 @@ use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/sbcat/lib/de
 use Catmandu::Sane;
 use Catmandu -all;
 use Getopt::Std;
-use Data::Dumper;
 
 getopts('u:m:d');
 our $opt_u;
@@ -12,21 +11,21 @@ our $opt_u;
 our $opt_m;
 our $opt_d;
 
-if($opt_m && $opt_m eq "backend2"){
-	Catmandu->load('/srv/www/app-catalog/index2');
-}
-elsif($opt_m && $opt_m eq "backend1"){
-	Catmandu->load('/srv/www/app-catalog/index1');
-}
-else {
-	Catmandu->load;
+my $index_name = "backend";
+if ( $opt_m ) {
+    if ($opt_m eq "backend1" || $opt_m eq "backend2" ) {
+    $index_name = $opt_m;
+} else {
+    die "$opt_m is not an valid option";
 }
 
+Catmandu->load(':up');
 my $conf = Catmandu->config;
+
 my $mongoBag = Catmandu->store('award')->bag('preise');
 my $academyBag = Catmandu->store('award')->bag('academy');
 my $awardBag = Catmandu->store('award')->bag('awards');
-my $preisBag = Catmandu->store('search')->bag('award');
+my $preisBag = Catmandu->store('search', index_name => $index_name)->bag('award');
 
 if ($opt_d){
 	$preisBag->delete_all;
@@ -62,8 +61,6 @@ elsif ($opt_u) { # update process
 		$aw->{awardData}->{id} = $aw->{awardData}->{_id} if $aw->{awardData};
 		$preisBag->add($aw);
 	}
-	#not needed:
-	#$awardBag->add_many($allAward);
 
 }
 
