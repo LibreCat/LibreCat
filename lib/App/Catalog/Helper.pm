@@ -13,7 +13,7 @@ use Moo;
 Catmandu->load;
 
 sub bag {
-	state $bag = Catmandu->store->bag;
+	state $bag = Catmandu->store->bag('pub_id');
 }
 
 sub config {
