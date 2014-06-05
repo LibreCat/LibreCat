@@ -62,6 +62,16 @@ sub save_publication {
     	}
     	$data->{translator} = $translator;
     }
+    if($data->{file}){
+    	if(ref $data->{file} ne "ARRAY"){
+    		$data->{file} = [$data->{file}];
+    	}
+    	my $file = ();
+    	foreach (@{$data->{file}}){
+    		push @$file, $json->decode($_);
+    	}
+    	$data->{file} = $file;
+    }
     
     foreach my $key (keys %$data){
     	if(!$data->{$key}){

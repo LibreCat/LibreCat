@@ -7,7 +7,7 @@
   <script type="text/javascript">
   jQuery(document).ready(function() {
     var myDropzone = new Dropzone("div#uploadFiles", {
-      params: {func : "uploadDocumentUpdate", recordOId: "[% recordOId %]", itype: "file", accessLevel: "openAccess", cancel: "", accept: 1, finalSubmit: "Accept and Submit"},
+      params: {recordId: "[% id %]", itype: "file", accessLevel: "openAccess", cancel: "", accept: 1, finalSubmit: "Accept and Submit"},
       createImageThumbnails: false,
     });
     myDropzone.on("addedfile", function(file){
@@ -22,35 +22,34 @@
       var progressbar = document.getElementById(file.name + "_progress");
       var progresselement = progressbar.parentNode.parentNode.parentNode;
       progresselement.parentNode.removeChild(progresselement);
-      var resp = response;
-      var regexp = /<body onload=\"javascript:updateOpener\(\)\">(.*?)<span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span>/g;
-      var match = regexp.exec(resp);
-      if(match){
+      alert(response);
+      var resp = JSON.parse(response);
+      if(resp.success){
         var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-2 text-muted\">Upload Date:</div><div class=\"col-md-1 text-muted\">User:</div></div>");
         file.previewElement.appendChild(tagsRow);
         
-        var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\"><a href=\"[% h.shost %]/download/[% recordOId %]/" + match[1] + "\" target=\"_blank\">" + file.name + "</a></div></div>");
+        var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\"><a href=\"[% h.shost %]/download/[% id %]/" + resp.file_id + "\" target=\"_blank\">" + file.name + "</a></div></div>");
         
-        var accessString = Dropzone.createElement("<div class=\"col-md-2\"><span>" + match[4] + "</span></div>");
+        var accessString = Dropzone.createElement("<div class=\"col-md-2\"><span>" + resp.access + "</span></div>");
         fileName.appendChild(accessString);
         
-        var dateString = Dropzone.createElement("<div class=\"col-md-2\"><span>" + match[2] + "</span></div>");
+        var dateString = Dropzone.createElement("<div class=\"col-md-2\"><span>" + resp.date + "</span></div>");
         fileName.appendChild(dateString);
         
-        var userString = Dropzone.createElement("<div class=\"col-md-1\"><span>" + match[3] + "</span></div>");
+        var userString = Dropzone.createElement("<div class=\"col-md-1\"><span>" + resp.user + "</span></div>");
         fileName.appendChild(userString);
         
         file.previewElement.appendChild(fileName);
         
-        var removeLink = Dropzone.createElement("<div class=\"corner_up\"><a href=\"#\"><i class=\"icon-remove\"></i></a></div>");
+        var removeLink = Dropzone.createElement("<div class=\"corner_up\"><a href=\"#\"><span class=\"glyphicon glyphicon-remove\"></span></a></div>");
         removeLink.addEventListener("click", function(e) {
-          window.deleteUploadedDocument(match[1], this);
+          window.deleteUploadedDocument(resp.file_id, this);
         });
         file.previewElement.appendChild(removeLink);
         
-        var editLink = Dropzone.createElement("<div class=\"corner_down\"><a href=\"#\"><i class=\"icon icon-pencil\"></i></a></div>");
+        var editLink = Dropzone.createElement("<div class=\"corner_down\"><a href=\"#\"><span class=\"glyphicon glyphicon-pencil\"></span></a></div>");
         editLink.addEventListener("click", function(e) {
-          window.editFile(match[1],[% item('_id') %],file.name,match[4],"","");
+          window.editFile(resp.file_id,[% id %],file.name,resp.access,"","");
         });
         file.previewElement.appendChild(editLink);
         
@@ -64,9 +63,11 @@
           }
         }
         
-        file.previewElement.setAttribute("id", match[1]);
+        file.previewElement.setAttribute("id", resp.file_id);
+        var input_element = Dropzone.createElement('<input type=\'hidden\' id=\'file_' + resp.file_id + '\' name=\'file\' value=\'' + resp.file_json + '\' />');
+        file.previewElement.appendChild(input_element);
         
-        $('#sortFilesInput').append('<input type="hidden" name="fileOrder" value="' + match[1] + '" />');
+        $('#sortFilesInput').append('<input type="hidden" name="file_order" value="' + resp.file_id + '" />');
       }
       else {
         var prevClass = file.previewElement;
@@ -80,7 +81,7 @@
         var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-5\"><b>File not uploaded!</b></div></div>");
         file.previewElement.appendChild(tagsRow);
         
-        var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\">" + file.name + "</div><div class=\"col-md-5\">" + resp + "</div></div>");
+        var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\">" + file.name + "</div><div class=\"col-md-5\">" + resp.error + "</div></div>");
         file.previewElement.appendChild(fileName);
         
         var removeLink = Dropzone.createElement("<div class=\"corner_up\"><a href=\"#\"><i class=\"icon-remove\"></i></a></div>");
@@ -91,10 +92,11 @@
       }
     });
     myDropzone.on("error", function(file,response){
+      var resp = JSON.parse(response);
       var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-5\"><b>File not uploaded!</b></div></div>");
       file.previewElement.appendChild(tagsRow);
       
-      var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\">" + file.name + "</div><div class=\"col-md-5\">" + response + "</div></div>");
+      var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\">" + file.name + "</div><div class=\"col-md-5\">" + resp.error + "</div></div>");
       file.previewElement.appendChild(fileName);
       
       var removeLink = Dropzone.createElement("<div class=\"corner_up\"><a href=\"#\"><i class=\"icon-remove\"></i></a></div>");
@@ -112,14 +114,14 @@
       <div class="col-md-8">&nbsp;</div>
       <div class="col-md-8"><span>Your browser does not support drag'n'drop file uploads.</span></div>
       <div class="col-md-7">
-        <a href="#" class="btn" onclick="javascript:editFile('','[% recordOId %]','','openAccess','','','','')" title="Add new file">Add a new file</a>
+        <a href="#" class="btn" onclick="javascript:editFile('','[% id %]','','openAccess','','','','')" title="Add new file">Add a new file</a>
       </div>
       <div class="col-md-7">&nbsp;</div>
     </div>
           
     [% IF file %]
     [% FOREACH fi IN file.nsort('fileOrder') %]
-      <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.fileOId %]">
+      <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.file_id %]">
         <div class="row">
           <div class="col-md-3 padded text-muted">Filename:</div>
           <div class="col-md-3 text-muted">Access Level:</div>
@@ -128,10 +130,10 @@
         </div>
         <div class="row">
           <div class="col-md-3 padded">
-            <a href="[% h.shost %]/download/[% recordOId %]/[% fi.fileOId %]" target="_blank" title="[% fi.fileName %]">[% fi.fileName %]</a>
+            <a href="[% h.shost %]/download/[% id %]/[% fi.file_id %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a>
           </div>
           <div class="col-md-3">
-            [% SWITCH fi.accessLevel %]
+            [% SWITCH fi.access_level %]
             [% CASE "admin" %]
             Author/Admin/Reviewer
             
@@ -144,14 +146,16 @@
             [% END %]
           </div>
           <div class="col-md-3">
-            [% fi.dateLastUploaded %]
+            [% fi.date_updated %]
           </div>
           <div class="col-md-2">
-            [% fi.isUploadedBy.login %]
+            [% fi.creator %]
           </div>
         </div>
-        <div class="corner_up" onclick="javascript:deleteUploadedDocument([% fi.fileOId %], this);"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></div>
-        <div class="corner_down" onclick="javascript:editFile('[% fi.fileOId %]','[% recordOId %]','[% fi.fileName %]','[% fi.accessLevel %]','[% fi.accessEmbargo %]','[% fi.openAccessLevel %]','[% fi.fileTitle %]','[% fi.description | replace("'","\\'") | replace('"','&quot;') %]');"><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
+        <div class="corner_up" onclick="javascript:deleteUploadedDocument([% fi.file_id %], this);"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></div>
+        <div class="corner_down" onclick="javascript:editFile('[% fi.file_id %]','[% id %]','[% fi.file_name %]','[% fi.access_level %]','[% fi.accessEmbargo %]','[% fi.openAccessLevel %]','[% fi.file_title %]','[% fi.description | replace("'","\\'") | replace('"','&quot;') %]');"><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
+        [% USE JSON %]
+        <input type="hidden" id="file_[% fi.file_id %]" name="file" value='[% fi.json %]' />
       </div>
     [% END %]
     [% END %]
@@ -159,8 +163,8 @@
     
   <div class="col-md-2">  
     <span id="sortFilesInput">
-    [% FOREACH fi IN file.nsort('fileOrder') %]
-      <input type="hidden" name="fileOrder" value="[% fi.fileOId %]" />
+    [% FOREACH fi IN file.nsort('file_order') %]
+      <input type="hidden" name="file_order" value="[% fi.file_id %]" />
     [% END %]
     </span>
   </div>
