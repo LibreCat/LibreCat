@@ -103,6 +103,10 @@
     </div><!-- tab-content -->
   </form>
 
+{% IF fields.file_upload %}
+{% INCLUDE fields/modal_fileupload.tt %}
+{% END %}
+
 </div><!-- col-md-9 col-md-offset-1 -->
 </div><!-- row -->
 

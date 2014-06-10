@@ -1,29 +1,30 @@
-<div id="file_upload" class="modal hide" style="z-index:1041;">
+<div id="file_upload" class="modal">
   
   <form enctype="multipart/form-data" name="upLoad" id="upLoad">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Edit Uploaded File</h3>
-    </div>
-  
-    <div class="modal-body">
-      <input type="hidden" name="func" value="uploadDocumentUpdate" />
-      <input type="hidden" name="uploadedFileOId" id="id_uploadedFileOId" value="[% uploadedFileOId %]" />
-      <input type="hidden" name="recordOId" id="id_recordOId" value="[% recordOId %]" />
-      <input type="hidden" name="cancel" value="" />
-      
-      <strong>File</strong>
-      <div class="control-group">
-        <label class="text" id="fileNameTag" style="display:none">
-          Current file:
-          <input type="text" name="fileName" id="id_fileName" value="[% fileName %]" readonly="readonly" class="span5"/>
-        </label>
-        <input type="file" name="file" id="id_file" size="40" />
-        <input type="hidden" name="itype" value="file" />
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Edit Uploaded File</h3>
       </div>
+  
+      <div class="modal-body">
+        <input type="hidden" name="uploadedFileOId" id="id_uploadedFileOId" value="[% uploadedFileOId %]" />
+        <input type="hidden" name="recordOId" id="id_recordOId" value="[% recordOId %]" />
+        <input type="hidden" name="cancel" value="" />
+      
+        <strong>File</strong>
+        <div class="control-group">
+          <label class="text" id="fileNameTag" style="display:none">
+            Current file:
+            <input type="text" name="fileName" id="id_fileName" value="[% fileName %]" readonly="readonly" class="span5"/>
+          </label>
+          <input type="file" name="file" id="id_file" size="40" />
+          <input type="hidden" name="itype" value="file" />
+        </div>
 
-      <div class="control-group">
-        <strong>Access Level</strong><br />
+        <div class="control-group">
+          <strong>Access Level</strong><br />
         
         <script type="text/javascript">
         <!--
@@ -47,38 +48,41 @@
         //-->
         </script>
         
-        [% IF !openAccessCheck AND !luCheck AND !adminCheck %]
-        [% openAccessCheck = 'checked="checked"' %]
-        [% END %]
-        <label class="radio">
-          <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="openAccess" [% openAccessCheck %] onclick="oamode(this.form, true)"/> Open access (the file is freely available, effective immediately)
-        </label>
-        <label class="radio">
-          <input type="radio" name="accessLevel" id="id_accessLevel_lu" value="lu" onclick="oamode(this.form,false)" [% luCheck %] /> UniBi
-        </label>
-        <label class="radio">
-          <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false)" [% adminCheck %] /> Only Author/Reviewer/Administrator
-        </label>
-        <label class="checkbox control-label">
-          <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" onclick="toggleTextBox(this.form)" [% IF openAccessCheck %]disabled="disabled"[% ELSE %][% embargoCheck %][% END %] />Switch to open access on:<br />
-        </label>
-        <input type="text" size="10" name="openAccessDate" id="id_openAccessDate" placeholder="YYYY-MM-DD" value="[% openAccessDate %]" [% IF openAccessCheck OR !embargoCheck %]disabled="disabled"[% END %]>
-        <input type="hidden" name="accept" value="1" />
+          [% IF !openAccessCheck AND !luCheck AND !adminCheck %]
+            [% openAccessCheck = 'checked="checked"' %]
+          [% END %]
+          <label class="radio">
+            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="openAccess" [% openAccessCheck %] onclick="oamode(this.form, true)"/> Open access (the file is freely available, effective immediately)
+          </label>
+          <label class="radio">
+            <input type="radio" name="accessLevel" id="id_accessLevel_lu" value="lu" onclick="oamode(this.form,false)" [% luCheck %] /> UniBi
+          </label>
+          <label class="radio">
+            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false)" [% adminCheck %] /> Only Author/Reviewer/Administrator
+          </label>
+          <label class="checkbox control-label">
+            <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" onclick="toggleTextBox(this.form)" [% IF openAccessCheck %]disabled="disabled"[% ELSE %][% embargoCheck %][% END %] />Switch to open access on:<br />
+          </label>
+          <input type="text" size="10" name="openAccessDate" id="id_openAccessDate" placeholder="YYYY-MM-DD" value="[% openAccessDate %]" [% IF openAccessCheck OR !embargoCheck %]disabled="disabled"[% END %]>
+          <input type="hidden" name="accept" value="1" />
+        </div>
         
         <div class="control-group">
-        <strong>Title</strong><br />
-        <input type="text" name="fileTitle" id="id_fileTitle" value="[% fileTitle %]" class="span5" />
-      </div>
+          <strong>Title</strong><br />
+          <input type="text" name="fileTitle" id="id_fileTitle" value="[% fileTitle %]" class="span5" />
+        </div>
       
-      <div class="control-group">
-        <strong>Description</strong><br />
-        <textarea name="description" id="id_fileDescription" class="span5" rows="6">[% description %]</textarea>
+        <div class="control-group">
+          <strong>Description</strong><br />
+          <textarea name="description" id="id_fileDescription" class="span5" rows="6">[% description %]</textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn" value="Submit" name="finalSubmit" id="fileSubmit" />
+        <input type=button class="btn" data-dismiss="modal" aria-hidden="true" value="Cancel" />
       </div>
     </div>
-    <div class="modal-footer">
-      <input type="submit" class="btn" value="Submit" name="finalSubmit" id="fileSubmit" />
-      <input type=button class="btn" data-dismiss="modal" aria-hidden="true" value="Cancel" />
-    </div>
+  </div>
   </form>
 </div>
 
@@ -120,12 +124,6 @@ else {
   $('#upLoad').attr('method','post');
 }
 
-  //$('#finalSubmit').click( function(){
-  //  $('#fileUpload').modal('hide');
-  //});
-  //$('#finalSubmit2').click( function(){
-  //  $('#fileEdit').modal('hide');
-  //});
   $('body').on('hidden', '.modal', function () {
     $('#id_file').val('');
     $('#id_fileName').val('');
