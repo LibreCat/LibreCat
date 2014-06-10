@@ -17,7 +17,7 @@ my $cfg = luurCfg->new;
 my $luur = Orms->new($cfg->{ormsCfg});
 my $default_style = $cfg->{citation_db}->{default_style};
 
-Catmandu->load;
+Catmandu->load(":up");
 my $conf = Catmandu->config;
 my $adminbag = Catmandu->store('authority')->bag('admin');
 my $userbag = Catmandu->store('authority')->bag('user');

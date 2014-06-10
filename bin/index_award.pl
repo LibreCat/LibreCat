@@ -14,9 +14,10 @@ our $opt_d;
 my $index_name = "backend";
 if ( $opt_m ) {
     if ($opt_m eq "backend1" || $opt_m eq "backend2" ) {
-    $index_name = $opt_m;
-} else {
-    die "$opt_m is not an valid option";
+    	$index_name = $opt_m;
+    } else {
+    	die "$opt_m is not an valid option";
+    }
 }
 
 Catmandu->load(':up');

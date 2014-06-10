@@ -15,16 +15,16 @@ our $opt_i;
 
 my $home = "/srv/www/app-catalog/";#$ENV{BACKEND};
 
-if($opt_m && $opt_m eq "backend2"){
-	Catmandu->load("$home/index2");
-}
-elsif($opt_m && $opt_m eq "backend1"){
-	Catmandu->load("$home/index1");
-}
-else {
-	Catmandu->load;
+my $index_name = "backend";
+if ( $opt_m ) {
+	if ($opt_m eq "backend1" || $opt_m eq "backend2" ) {
+		$index_name = $opt_m;
+	} else {
+		die "$opt_m is not an valid option";
+	}
 }
 
+Catmandu->load(':up');
 my $conf = Catmandu->config;
 my $mongoBag = Catmandu->store('authority')->bag('admin');
 my $bag = Catmandu->store('search')->bag('researcher');

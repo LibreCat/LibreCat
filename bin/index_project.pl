@@ -14,15 +14,16 @@ our $opt_m;
 
 my $home = "/srv/www/app-catalog/";#$ENV{BACKEND};
 
-if($opt_m && $opt_m eq "backend2"){
-	Catmandu->load("$home/index2");
+my $index_name = "backend";
+if ( $opt_m ) {
+	if ($opt_m eq "backend1" || $opt_m eq "backend2" ) {
+		$index_name = $opt_m;
+	} else {
+		die "$opt_m is not an valid option";
+	}
 }
-elsif($opt_m && $opt_m eq "backend1"){
-	Catmandu->load("$home/index1");
-}
-else {
-	Catmandu->load;
-}
+
+Catmandu->load(':up');
 my $conf = Catmandu->config;
 
 my $pre_fixer = Catmandu::Fix->new(fixes => [
