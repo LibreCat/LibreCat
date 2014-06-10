@@ -27,16 +27,16 @@ my $luur = Orms->new( $cfg->{ormsCfg} );
 
 my $home = "/srv/www/app-catalog/";    #$ENV{BACKEND};
 
-if ( $opt_m && $opt_m eq "backend2" ) {
-    Catmandu->load("$home/index2");
-}
-elsif ( $opt_m && $opt_m eq "backend1" ) {
-    Catmandu->load("$home/index1");
-}
-else {
-    Catmandu->load($home);
+my $index_name = "backend";
+if ( $opt_m ) {
+    if ($opt_m eq "backend1" || $opt_m eq "backend2" ) {
+    	$index_name = $opt_m;
+    } else {
+    	die "$opt_m is not an valid option";
+    }
 }
 
+Catmandu->load(':up');
 my $conf = Catmandu->config;
 
 my $pre_fixer = Catmandu::Fix->new(
@@ -201,7 +201,7 @@ my $post_fixer = Catmandu::Fix->new(
     ]
 );
 
-my $bag    = Catmandu->store('search')->bag('publicationItem');
+my $bag    = Catmandu->store('search', index_name => $index_name)->bag('publicationItem');
 my $citbag = Catmandu->store('citation')->bag;
 my $publbag = Catmandu->store->bag('publication');
 my $authors;
@@ -275,6 +275,9 @@ sub add_to_index {
 # get all publication types
 my $types = $luur->getChildrenTypes( type => 'publicationItem' );
 
+print "Pub. types:\n";
+print Dumper $types;
+
 # foreach type get records
 foreach (@$types) {
 	
@@ -294,10 +297,6 @@ foreach (@$types) {
 
         }
     }
-    #print Dumper $rec;
-    #exit;
-    #add_to_index($rec);
-	#}
 }
 
 #$bag->commit;
@@ -331,3 +330,4 @@ perl index_publication.pl -u 'DATETIME'
 # fetches all records with dateLastChanged > 'DATETIME' (e.g. 2012-10-15 21:34:02) and pushes it into the search store
 
 =cut
+
