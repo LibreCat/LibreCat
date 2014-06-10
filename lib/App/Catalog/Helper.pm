@@ -10,7 +10,7 @@ use Hash::Merge qw(merge);
 use Template;
 use Moo;
 
-Catmandu->load;
+Catmandu->load(':up');
 
 sub bag {
 	state $bag = Catmandu->store->bag;
