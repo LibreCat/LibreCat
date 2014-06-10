@@ -38,7 +38,7 @@
          <li><a href="/myPUB"><span class="glyphicon glyphicon-list"></span> Home</a></li>
          [% IF session AND session.user %]
          <li><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
-         <li><a href="[% h.host %]/person/[% bisId %]"><span class="glyphicon glyphicon-eye-open"></span> View Public Profile</a></li>
+         <li><a href="[% h.host %]/person/[% session.personNumber %]"><span class="glyphicon glyphicon-eye-open"></span> My Public Author Page</a></li>
          [% END %]
        </ul>
        <ul class="nav navbar-nav navbar-right">
