@@ -65,39 +65,40 @@ $('#twoToOne').click(function(){
 
 
 function editFile(fileOId, recordOId, fileName, accessLevel, accessEmbargo, openAccessDate, fileTitle, fileDescription){
-  var fileid = self.document.getElementById('id_uploadedFileOId');
-  fileid.value = fileOId;
-  var recid = self.document.getElementById('id_recordOId');
-  recid.value = recordOId;
-  var name = self.document.getElementById('id_fileName');
-  name.value = fileName;
-  var title = self.document.getElementById('id_fileTitle');
-  if(fileTitle){title.value = fileTitle;}
-  var description = self.document.getElementById('id_fileDescription');
-  if(fileDescription){description.value = fileDescription;}
-  var access;
-  if(accessLevel == "Open Access" || accessLevel == "openAccess"){
-    access = self.document.getElementById('id_accessLevel_openAccess');
-    self.document.getElementById('id_accessEmbargo').disabled="disabled";
-  }
-  else if(accessLevel == "UniBi Only" || accessLevel == "lu"){
-    access = self.document.getElementById('id_accessLevel_lu');
-    self.document.getElementById('id_accessEmbargo').disabled="";
-  }
-  else if(accessLevel == "Author/Admin/Reviewer" || accessLevel == "admin"){
-    access = self.document.getElementById('id_accessLevel_admin');
-    self.document.getElementById('id_accessEmbargo').disabled="";
-  }
-  access.checked = "checked";
-  var embargo = self.document.getElementById('id_accessEmbargo');
-  embargo.value = accessEmbargo;
-  var accdate = self.document.getElementById('id_openAccessDate');
-  accdate.value = openAccessDate;
+  //var fileid = self.document.getElementById('id_uploadedFileOId');
+  //fileid.value = fileOId;
+  //var recid = self.document.getElementById('id_recordOId');
+  //recid.value = recordOId;
+  //var name = self.document.getElementById('id_fileName');
+  //name.value = fileName;
+  //var title = self.document.getElementById('id_fileTitle');
+  //if(fileTitle){title.value = fileTitle;}
+  //var description = self.document.getElementById('id_fileDescription');
+  //if(fileDescription){description.value = fileDescription;}
+  //var access;
+  //if(accessLevel == "Open Access" || accessLevel == "openAccess"){
+  //  access = self.document.getElementById('id_accessLevel_openAccess');
+  //  self.document.getElementById('id_accessEmbargo').disabled="disabled";
+  //}
+  //else if(accessLevel == "UniBi Only" || accessLevel == "lu"){
+  //  access = self.document.getElementById('id_accessLevel_lu');
+  //  self.document.getElementById('id_accessEmbargo').disabled="";
+  //}
+  //else if(accessLevel == "Author/Admin/Reviewer" || accessLevel == "admin"){
+  //  access = self.document.getElementById('id_accessLevel_admin');
+  //  self.document.getElementById('id_accessEmbargo').disabled="";
+  //}
+  //access.checked = "checked";
+  //var embargo = self.document.getElementById('id_accessEmbargo');
+  //embargo.value = accessEmbargo;
+  //var accdate = self.document.getElementById('id_openAccessDate');
+  //accdate.value = openAccessDate;
   
-  var fileNameTag = self.document.getElementById('fileNameTag');
-  fileNameTag.style.display = "block";
+  //var fileNameTag = self.document.getElementById('fileNameTag');
+  //fileNameTag.style.display = "block";
 
-  $('#fileUpload').modal('show'); 
+  $('#file_upload').modal('toggle');
+  $('#file_upload').modal('show'); 
   
 }
 

@@ -1,22 +1,52 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="ddc">
-      {% fields.supplementary_fields.ddc.label %}
+      {% fields.supplementary_fields.ddc.label %}{% IF fields.supplementary_fields.ddc.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusDdc"></span>
     </label>
   </div>
   <div class="col-md-10" id="ddc">
-    <span class="col-md-6">
-      <select name="select_ddc" class="form-control" id="select_ddc" onchange="changeSelectColor()">
-        <option value=""[% IF !ddc %] selected="selected"[% END %]>--- Select DDC ---</option>
-        [% FOREACH group IN h.ddc.keys.sort %]
-          <optgroup label="[% h.ddc.$group.optgroup %]">
-          [% FOREACH ddc IN h.ddc.$group.keys %]
-            [% NEXT IF ddc == "optgroup" %]
-            <option id="[% ddc %]" value="[% h.ddc.$group.$ddc.value %]"[% IF h.ddc.$group.$ddc.value == ddc %] selected="selected"[% END %]>[% h.ddc.$group.$ddc.label %]</option>
+    {% IF fields.supplementary_fields.ddc.multiple %}
+    [% IF !ddc %]
+    {% END %}
+    <div class="form-group row innerrow">
+      <div class="col-md-6">
+        <select name="ddc" class="form-control" id="select_ddc" onchange="changeSelectColor()">
+          <option value=""[% IF !ddc %] selected="selected"[% END %]>--- Select DDC ---</option>
+          [% FOREACH group IN h.ddc.keys.sort %]
+            <optgroup label="[% h.ddc.$group.optgroup %]">
+            [% FOREACH xddc IN h.ddc.$group.keys.sort %]
+              [% NEXT IF xddc == "optgroup" %]
+              <option id="[% xddc %]" value="[% xddc %]"[% IF xddc == ddc %] selected="selected"[% END %]>[% h.ddc.$group.$xddc %]</option>
+            [% END %]
+            </optgroup>
           [% END %]
-          </optgroup>
+        </select>
+      </div>
+    </div>
+    {% IF fields.supplementary_fields.ddc.multiple %}
+    [% ELSE %]
+      [% FOREACH d IN ddc %]
+      <div class="form-group row innerrow">
+        <div class="col-md-6">
+          <select name="ddc" class="form-control" id="select_ddc" onchange="changeSelectColor()">
+            [% FOREACH group IN h.ddc.keys.sort %]
+              <optgroup label="[% h.ddc.$group.optgroup %]">
+              [% FOREACH xddc IN h.ddc.$group.keys.sort %]
+                [% NEXT IF xddc == "optgroup" %]
+                <option id="[% xddc %]" value="[% xddc %]"[% IF xddc == d %] selected="selected"[% END %]>[% h.ddc.$group.$xddc %]</option>
+              [% END %]
+              </optgroup>
+            [% END %]
+          </select>
+        </div>
+        [% IF loop.index != "1" %]
+        <div class="col-md-1">
+          <div class="glyphicon glyphicon-minus single"></div>
+        </div>
         [% END %]
-      </select>
-    </span>
+      </div>
+      [% END %]
+    [% END %]
+    {% END %}
   </div>
 </div>

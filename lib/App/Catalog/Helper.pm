@@ -89,13 +89,13 @@ sub getDepartment {
 	}
 }
 
-sub xlanguages {
-	my $map = config->{lists}{xlanguages};
+sub language {
+	my $map = config->{lists}{language};
 	$map;
 }
 
-sub xlanguages_preselect {
-	my $map = config->{lists}{xlanguages_preselect};
+sub language_preselect {
+	my $map = config->{lists}{language_preselect};
 	$map;
 }
 

@@ -7,7 +7,6 @@ publicationTypeOrder:
   - bookeditor
   - bookchapter
   - review
-#  - casestudy
   - conferenceabstract
   - conferenceeditor
   - conference
@@ -29,10 +28,14 @@ field_order:
   basic_fields:
     - doi
     - title
+    - volume
     - author
     - department
     - project
     - publisher
+    - publication
+    - issue
+    - language
     - year
   file_upload:
     - external_file
@@ -40,11 +43,25 @@ field_order:
     - dropzone_confLetter
     - license
   supplementary_fields:
+    - publication
+    - volume
+    - issue
     - abstract
     - ddc
     - keyword
+    - extern
+    - alternative_title
+    - publication_status
+    - page
+    - publication_identifier
+    - external_id
+    - popular_science
+    - quality_controlled
+    - ubi_funded
   related_material:
+    - confirmation_letter
     - related_material
+    - link
 publicationTypes:
   book:
     label: "Book"
@@ -125,6 +142,10 @@ publicationTypes:
           multiple: 0
           label: "Publisher"
           placeholder: "Publisher"
+        language:
+          mandatory: 0
+          multiple: 1
+          label: "Language"
         year:
           mandatory: 1
           multiple: 0
@@ -139,6 +160,22 @@ publicationTypes:
           label: "Upload a confirmation letter"
       supplementary_fields:
         tab_name: "Additional Information"
+        publication:
+          mandatory: 0
+          multiple: 0
+          label: "Publication"
+          placeholder: "Publication (e.g. Journal Title)"
+        volume:
+          mandatory: 0
+          multiple: 0
+          label: "Volume"
+          placeholder: "Volume"
+          readonly: 0
+        issue:
+          mandatory: 0
+          multiple: 0
+          label: "Issue"
+          placeholder: "Issue"
         abstracts:
           mandatory: 0
           multiple: 1
@@ -147,14 +184,14 @@ publicationTypes:
           readonly: 0
         ddc:
           mandatory: 0
-          multiple: 0
+          multiple: 1
           label: "DDC"
           readonly: 0
         keyword:
           mandatory: 0
           multiple: 0
           label: "Keywords"
-          placeholder: "Keywords separated by semicolons: keyword1; keyword2; keyword3"
+          placeholder: "Keyword (for more keyword fields click +)"
           readonly: 0
       related_material:
         tab_name: "Supplementary Material"

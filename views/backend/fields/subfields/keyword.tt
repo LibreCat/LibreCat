@@ -1,0 +1,1 @@
+<div class="form-group row innerrow"><div class="col-md-6"><input type="text" name="keyword" id="keyword_' + index + '" value="" class="form-control"/></div><div class="col-md-1"><div class="glyphicon glyphicon-minus single"></div></div></div>

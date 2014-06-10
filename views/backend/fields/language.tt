@@ -1,0 +1,22 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="ddc">
+      {% fields.basic_fields.language.label %}
+    </label>
+  </div>
+  <div class="col-md-10" id="language">
+    <div class="form-group row innerrow">
+      <div class="col-md-6">
+        <select name="language" class="form-control" id="select_language" onchange="changeSelectColor()">
+          [% FOREACH lang IN h.language_preselect.keys.sort %]
+            <option value="[% h.language_preselect.$lang %]"[% IF lang == language || (!language AND lang=="eng") %] selected="selected"[% END %]>[% lang %]</option>
+          [% END %]
+          <option value="2436687"></option>
+          [% FOREACH lang IN h.language.keys.sort %]
+            <option value="[% h.language.$lang %]"[% IF lang == language %] selected="selected"[% END %]>[% lang %]</option>
+          [% END %]
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
