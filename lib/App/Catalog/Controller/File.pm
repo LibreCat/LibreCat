@@ -13,7 +13,7 @@ sub _create_id {
     my $id  = $bag->{"latest"};
     $id++;
     $bag = h->bag->add( { _id => "1", latest => $id } );
-    return $id;    # correct?
+    return $id;
 }
 
 sub _bagit {
@@ -34,11 +34,16 @@ sub edit_file {}
 sub update_file {
 	my $pub = shift;
 	my $dir = $upload_dir ."/$pub->{_id}";
-	my $ok = mkdir $dir unless -e $dir;
+	mkdir $dir unless -e $dir || croak "Can't create directory";
+
 }
 
 # this sub should be called from the sub 'delete_publication',
 # if publication has a file attached
-sub delete_file { }
+sub delete_file {
+    my $pub = shift;
+    my $file = $upload_dir ."/$pub->{_id}";
+    unlink($file);
+}
 
 1;

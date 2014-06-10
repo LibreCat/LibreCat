@@ -1,3 +1,6 @@
+_prefix:
+  forms:
+
 publicationTypeOrder:
   - researchdata
   - book

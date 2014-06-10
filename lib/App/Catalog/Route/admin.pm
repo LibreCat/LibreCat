@@ -6,8 +6,6 @@ use Catmandu::Util qw(:array);
 use Dancer ':syntax';
 use App::Catalog::Helper;
 
-#Catmandu->load('/srv/www/app-catalog/index1');
-
 prefix '/admin' => sub {
 
 	get '/' => sub {

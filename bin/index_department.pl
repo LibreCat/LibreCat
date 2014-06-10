@@ -13,21 +13,19 @@ our $opt_u;
 our $opt_m;
 our $opt_i;
 
-my $home = "/srv/www/app-catalog/";#$ENV{BACKEND};
-
-if($opt_m && $opt_m eq "backend2"){
-	Catmandu->load("$home/index2");
-}
-elsif($opt_m && $opt_m eq "backend1"){
-	Catmandu->load("$home/index1");
-}
-else {
-	Catmandu->load;
+my $index_name = "backend";
+if ( $opt_m ) {
+    if ($opt_m eq "backend1" || $opt_m eq "backend2" ) {
+    $index_name = $opt_m;
+} else {
+    die "$opt_m is not an valid option";
 }
 
+Catmandu->load(':up');
 my $conf = Catmandu->config;
+
 my $mongoBag = Catmandu->store('authority')->bag('department');
-my $bag = Catmandu->store('search')->bag('department');
+my $bag = Catmandu->store('search', index_name => $index_name)->bag('department');
 
 my $pre_fixer = Catmandu::Fix->new(fixes => [
 			'dept_name()',
@@ -41,7 +39,6 @@ sub add_to_index {
 
 	$pre_fixer->fix($rec);
   	$bag->add($rec);
-  	#print Dumper $rec;
 }
 
 
@@ -54,7 +51,6 @@ else { # initial indexing
 	my $allDepartments = $mongoBag->to_array;
 	foreach(@$allDepartments){
 		add_to_index($_);
-		#print Dumper $_;
 	}
 }
 

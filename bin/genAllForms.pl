@@ -4,7 +4,7 @@ use Catmandu::Sane;
 use Catmandu;
 use Template;
 
-Catmandu->load;
+Catmandu->load(':up');
 my $conf = Catmandu->config;
 
 my $forms = $conf->{forms}->{publicationTypes};
