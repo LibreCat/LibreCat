@@ -4,6 +4,7 @@ use App::Catalog::Helper;
 use App::Catalog::Controller::Publication;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path/;
+use Carp;
 #use JSON;
 
 prefix '/record' => sub {
@@ -112,6 +113,14 @@ post '/upload' => sub {
 	#my $json = new JSON;
 	my $return_json = to_json($return);
 	return $return_json;
+};
+
+post '/upload/delete' => sub {
+	my $recordid = params->{id};
+	my $filename = params->{filename};
+	my $dir = h->config->{upload_dir} ."/$recordid/$filename";
+    my $status = rmdir $dir if -e $dir || 0;
+    croak "Error: could not delete files" if $status;
 };
 
 1;
