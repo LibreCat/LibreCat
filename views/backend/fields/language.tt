@@ -1,22 +1,45 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="ddc">
-      {% fields.basic_fields.language.label %}
+      {% fields.basic_fields.language.label %}{% IF fields.basic_fields.language.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusLanguage"></span>
     </label>
   </div>
   <div class="col-md-10" id="language">
+    [% IF !language %]
     <div class="form-group row innerrow">
       <div class="col-md-6">
-        <select name="language" class="form-control" id="select_language" onchange="changeSelectColor()">
+        <select name="language" class="form-control" id="select_language_0">
           [% FOREACH lang IN h.language_preselect.keys.sort %]
-            <option value="[% h.language_preselect.$lang %]"[% IF lang == language || (!language AND lang=="eng") %] selected="selected"[% END %]>[% lang %]</option>
+            <option value="[% lang %]"[% IF lang == language.text || (!language AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>
           [% END %]
           <option value="2436687"></option>
           [% FOREACH lang IN h.language.keys.sort %]
-            <option value="[% h.language.$lang %]"[% IF lang == language %] selected="selected"[% END %]>[% lang %]</option>
+            <option value="[% lang %]"[% IF lang == language.text %] selected="selected"[% END %]>[% lang %]</option>
           [% END %]
         </select>
       </div>
     </div>
+    [% ELSE %]
+      [% FOREACH lan IN language %]
+      <div class="form-group row innerrow">
+        <div class="col-md-6">
+          <select name="language" class="form-control" id="select_language_[% loop.index %]">
+            [% FOREACH lang IN h.language_preselect.keys.sort %]
+              <option value="[% lang %]"[% IF lang == lan.text || (!lan AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>
+            [% END %]
+            <option value="2436687"></option>
+            [% FOREACH lang IN h.language.keys.sort %]
+              <option value="[% lang %]"[% IF lang == lan.text %] selected="selected"[% END %]>[% lang %]</option>
+            [% END %]
+          </select>
+        </div>
+        [% IF loop.index != "0" %]
+        <div class="col-md-1">
+          <div class="glyphicon glyphicon-minus single"></div>
+        </div>
+        [% END %]
+      </div>
+      [% END %]
+    [% END %]
   </div>
 </div>

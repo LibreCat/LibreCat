@@ -129,6 +129,12 @@ $('#plusProject').click(function(){
   });
 });
 
+$('#plusLanguage').click(function(){
+  var items = $('#language div.form-group');
+  var index = items.index($('#language div.form-group').last()) + 1;
+  $('#language').append('[% INCLUDE backend/fields/subfields/language.tt %]');
+});
+
 
 // minus
 $(document).on('click', '.group', function(){
