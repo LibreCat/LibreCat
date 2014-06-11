@@ -21,7 +21,11 @@
         <input type="text" name="keyword" id="keyword_[% loop.index %]" value="[% keyw %]" class="form-control"/>
       </div>
       <div class="col-md-1">
+        [% IF loop.index == "0" %]
+        <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('keyword_[% loop.index %]').value = '';"></div>
+        [% ELSE %]
         <div class="glyphicon glyphicon-minus single"></div>
+        [% END %]
       </div>
     </div>
     [% END %]
