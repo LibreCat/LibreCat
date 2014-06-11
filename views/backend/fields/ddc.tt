@@ -5,9 +5,7 @@
     </label>
   </div>
   <div class="col-md-10" id="ddc">
-    {% IF fields.supplementary_fields.ddc.multiple %}
     [% IF !ddc %]
-    {% END %}
     <div class="form-group row innerrow">
       <div class="col-md-6">
         <select name="ddc" class="form-control" id="select_ddc" onchange="changeSelectColor()">
@@ -23,12 +21,12 @@
         </select>
       </div>
     </div>
-    {% IF fields.supplementary_fields.ddc.multiple %}
     [% ELSE %]
       [% FOREACH d IN ddc %]
       <div class="form-group row innerrow">
         <div class="col-md-6">
           <select name="ddc" class="form-control" id="select_ddc" onchange="changeSelectColor()">
+            <option value="">--- Select DDC ---</option>
             [% FOREACH group IN h.ddc.keys.sort %]
               <optgroup label="[% h.ddc.$group.optgroup %]">
               [% FOREACH xddc IN h.ddc.$group.keys.sort %]
@@ -39,7 +37,7 @@
             [% END %]
           </select>
         </div>
-        [% IF loop.index != "1" %]
+        [% IF loop.index != "0" %]
         <div class="col-md-1">
           <div class="glyphicon glyphicon-minus single"></div>
         </div>
@@ -47,6 +45,5 @@
       </div>
       [% END %]
     [% END %]
-    {% END %}
   </div>
 </div>
