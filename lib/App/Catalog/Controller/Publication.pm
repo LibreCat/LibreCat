@@ -30,6 +30,27 @@ sub new_publication {
 sub save_publication {
     my $data      = shift;
     #my $validator = Catmandu::Validator::PUB->new();
+    
+    foreach my $key (keys %$data){
+    	my $ref = ref $data->{$key};
+    	
+    	if($ref eq "ARRAY"){
+    		if(!$data->{$key}->[0]){
+    			delete $data->{$key};
+    		}
+    	}
+    	elsif($ref eq "HASH"){
+    		if(!%{$data->{$key}}){
+    			delete $data->{$key};
+    		}
+    	}
+    	else{
+    		if($data->{$key} and $data->{$key} eq ""){
+    			delete $data->{$key};
+    		}
+    	}
+    }
+    
     my $json = new JSON;
     
     if($data->{author}){
@@ -72,6 +93,22 @@ sub save_publication {
     	}
     	$data->{file} = $file;
     }
+    if($data->{language}){
+    	if(ref $data->{language} ne "ARRAY"){
+    		$data->{language} = [$data->{language}];
+    	}
+    	foreach my $lang (@{$data->{language}}){
+    		my $language;
+    		$language->{text} = $lang;
+    		if($lang eq "English" or $lang eq "German"){
+    			$language->{iso} = h->config->{lists}->{language_preselect}->{$lang};
+    		}
+    		else {
+    			$language->{iso} = h->config->{lists}->{language}->{$lang};
+    		}
+    		$lang = $language;
+    	}
+    }
     
     foreach my $key (keys %$data){
     	if(!$data->{$key}){
@@ -91,7 +128,7 @@ sub save_publication {
         my $result = h->publication->add($data);
         $publbag->add($result);
         h->publication->commit;
-        #return $response;
+        return $result;
     #}
     #else {
     #    croak join(@{$validator->last_errors}, ' | ');
@@ -103,13 +140,13 @@ sub update_publication {
     my $data = shift;
     croak "Error: No _id specified" unless $data->{_id};
 
-    my $old = h->publication->get( $data->{_id} );
-    my $merger = Hash::Merge->new(); 
+    #my $old = h->publication->get( $data->{_id} );
+    #my $merger = Hash::Merge->new(); 
     #left precedence by default!
-    my $new = $merger->merge( $data, $old );
+    #my $new = $merger->merge( $data, $old );
 
-    my $result = save_publication($new);
-    #return $result;
+    my $result = save_publication($data);
+    return $result;
 }
 
 sub edit_publication {
