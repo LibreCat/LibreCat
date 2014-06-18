@@ -1,4 +1,4 @@
-<div id="file_upload" class="modal">
+<div id="upload_file" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   
   <form enctype="multipart/form-data" name="upLoad" id="upLoad">
   <div class="modal-dialog">
@@ -9,21 +9,20 @@
       </div>
   
       <div class="modal-body">
-        <input type="hidden" name="uploadedFileOId" id="id_uploadedFileOId" value="[% uploadedFileOId %]" />
-        <input type="hidden" name="recordOId" id="id_recordOId" value="[% recordOId %]" />
+        <input type="hidden" name="file_id" id="id_file_id" value="" />
+        <input type="hidden" name="record_id" id="id_record_id" value="" />
         <input type="hidden" name="cancel" value="" />
       
         <strong>File</strong>
-        <div class="control-group">
+        <div class="form-group">
           <label class="text" id="fileNameTag" style="display:none">
             Current file:
-            <input type="text" name="fileName" id="id_fileName" value="[% fileName %]" readonly="readonly" class="span5"/>
+            <input type="text" name="fileName" id="id_fileName" value="" readonly="readonly" class="form-control"/>
           </label>
           <input type="file" name="file" id="id_file" size="40" />
-          <input type="hidden" name="itype" value="file" />
         </div>
 
-        <div class="control-group">
+        <div class="form-group">
           <strong>Access Level</strong><br />
         
         <script type="text/javascript">
@@ -55,7 +54,7 @@
             <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="openAccess" [% openAccessCheck %] onclick="oamode(this.form, true)"/> Open access (the file is freely available, effective immediately)
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_lu" value="lu" onclick="oamode(this.form,false)" [% luCheck %] /> UniBi
+            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="unibi" onclick="oamode(this.form,false)" [% luCheck %] /> UniBi
           </label>
           <label class="radio">
             <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false)" [% adminCheck %] /> Only Author/Reviewer/Administrator
@@ -63,18 +62,18 @@
           <label class="checkbox control-label">
             <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" onclick="toggleTextBox(this.form)" [% IF openAccessCheck %]disabled="disabled"[% ELSE %][% embargoCheck %][% END %] />Switch to open access on:<br />
           </label>
-          <input type="text" size="10" name="openAccessDate" id="id_openAccessDate" placeholder="YYYY-MM-DD" value="[% openAccessDate %]" [% IF openAccessCheck OR !embargoCheck %]disabled="disabled"[% END %]>
+          <input type="text" class="form-control" name="openAccessDate" id="id_openAccessDate" placeholder="YYYY-MM-DD" value="[% openAccessDate %]" [% IF openAccessCheck OR !embargoCheck %]disabled="disabled"[% END %]>
           <input type="hidden" name="accept" value="1" />
         </div>
         
-        <div class="control-group">
+        <div class="form-group">
           <strong>Title</strong><br />
-          <input type="text" name="fileTitle" id="id_fileTitle" value="[% fileTitle %]" class="span5" />
+          <input type="text" name="fileTitle" id="id_fileTitle" value="[% fileTitle %]" class="form-control" />
         </div>
       
-        <div class="control-group">
+        <div class="form-group">
           <strong>Description</strong><br />
-          <textarea name="description" id="id_fileDescription" class="span5" rows="6">[% description %]</textarea>
+          <textarea name="description" id="id_fileDescription" class="form-control" rows="6">[% description %]</textarea>
         </div>
       </div>
       <div class="modal-footer">
@@ -89,34 +88,64 @@
 <script>
 
 if(navigator.userAgent.indexOf('MSIE') == -1){
-  $('#fileSubmit').click( function() {
-    $('#fileSubmit').removeAttr('type');
-    $('#fileSubmit').addClass('span1');
+  $('#fileSubmit').click( function() {    
+    var inputs = $(":file");
+    var file_id = $('#id_file_id').val();
+
+    var formData = new FormData();
+    if(inputs.eq(0)){
+      formData.append("file", inputs.eq(0).prop("files")[0]);
+    }
+    formData.append("id", "[% id %]");
+    formData.append("file_id", file_id);
+    formData.append("old_file_name", $('#id_fileName').val());
+    
+    if($('#id_accessLevel_openAccess').is(':checked')){
+      formData.append("access_level", "openAccess");
+    }
+    else if($('#id_accessLevel_unibi').is(':checked')){
+      formData.append("access_level", "unibi");
+    }
+    else if($('#id_accessLevel_admin').is(':checked')){
+      formData.append("access_level", "admin");
+    }
+
     $.ajax({
-        url: '[% luurBase %]/record_material',
-        type: 'post',
-        dataType: 'html',
-        data: $('#upLoad').serialize(),
-        success: function(response) {
-          var regexp = /<body onload=\"javascript:updateOpener\(\)\">(.*?)<span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span><span>(.*?)<\/span>/g;
-          var match = regexp.exec(response);
-          
-          $('#' + match[1]).remove();
-          $('#uploadFiles').append('<div id="' + match[1] + '" class="span7 alert alert-success dz-preview dz-file-preview" style="position:relative;min-height:35px;"><div class="row"><div class="span2 padded muted">Filename:</div><div class="span2 muted">Access Level:</div><div class="span2 muted">Upload Date:</div><div class="span1 muted">User:</div></div></div>');
-          $('#' + match[1]).append('<div class="row"><div class="span2 padded"><a href="[% h.shost %]/download/[% recordOId %]/' + match[1] + '" title="' + match[7] + '">' + match[7] + '</a></div><div class="span2"><span>' + match[4] + '</span></div><div class="span2">' + match[2] + '</div><div class="span1">' + match[3] + '</div></div>');
-          $('#' + match[1]).append('<div class="corner_up" onclick="deleteUploadedDocument(' + match[1] + ', this);"><a href="#"><i class="icon-remove"></i></a></div>');
-          var description = match[9].replace("'","\\'").replace('"','&quot;');
-          $('#' + match[1]).append('<div class="corner_down" onclick="javascript:editFile(\'' + match[1] + '\',\'[% recordOId %]\',\'' + match[7] + '\',\'' + match[4] + '\',\'' + match[6] + '\',\'' + match[5] + '\',\'' + match[8] + '\',\'' + description + '\');"><a href="#"><i class="icon icon-pencil"></i></a></div>');
-          
-          if(!$('#licenses').hasClass('collapse in')){
-            $('#licenses').addClass('collapse in');
-          }
-          
-          $('#upLoad')[0].reset();
-          $('#fileUpload').modal('hide');
+      url: 'http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/upload/update',
+      data: formData,
+      processData: false,
+      contentType: false,
+      type: 'POST',
+      dataType: "json",
+      success: function(data){
+        var accessLevel;
+        if(data.access_level == "openAccess"){
+          accessLevel = "Open Access";
         }
+        else if(data.access_level == "unibi"){
+          accessLevel = "UniBi only";
+        }
+        else if(data.access_level == "admin"){
+          accessLevel = "Admin Only";
+        }
+        
+        $('#filename_' + file_id).html("");
+        $('#filename_' + file_id).html('<a href="[% h.shost %]/download/[% id %]/' + file_id + '" target="_blank" title="' + data.file_name + '">' + data.file_name + '</a>');
+        $('#access_' + file_id).html(accessLevel);
+        $('#updated_' + file_id).html(data.date_updated);
+        $('#creator_' + file_id).html(data.creator);
+        $('#cordown_' + file_id).click(function (){
+          edit_file(file_id,'[% id %]', data.file_name, data.access_level, data.access_embargo, "", data.file_title, data.file_description);
+        });
+
+        $('#file_' + file_id).html(data.file_json);
+        
+        $('#upLoad')[0].reset();
+        $('#upload_file').modal('hide');
+      }
     });
   });
+  
 }
 else {
   $('#upLoad').attr('target','_blank');
@@ -124,10 +153,10 @@ else {
   $('#upLoad').attr('method','post');
 }
 
-  $('body').on('hidden', '.modal', function () {
-    $('#id_file').val('');
-    $('#id_fileName').val('');
-    $('#id_fileTitle').val('');
-    $('#id_fileDescription').val('');
-  });
+  //$('body').on('hidden', '.modal', function () {
+  //  $('#id_file').val('');
+  //  $('#id_fileName').val('');
+  //  $('#id_fileTitle').val('');
+  //  $('#id_fileDescription').val('');
+  //});
 </script>

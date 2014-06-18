@@ -22,32 +22,31 @@
       var progressbar = document.getElementById(file.name + "_progress");
       var progresselement = progressbar.parentNode.parentNode.parentNode;
       progresselement.parentNode.removeChild(progresselement);
-      alert(response);
       var resp = JSON.parse(response);
       if(resp.success){
         var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-2 text-muted\">Upload Date:</div><div class=\"col-md-1 text-muted\">User:</div></div>");
         file.previewElement.appendChild(tagsRow);
         
-        var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\"><a href=\"[% h.shost %]/download/[% id %]/" + resp.file_id + "\" target=\"_blank\">" + file.name + "</a></div></div>");
+        var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\" id=\"filename_" + resp.file_id + "\"><a href=\"[% h.shost %]/download/[% id %]/" + resp.file_id + "\" target=\"_blank\">" + file.name + "</a></div></div>");
         
-        var accessString = Dropzone.createElement("<div class=\"col-md-2\"><span>" + resp.access + "</span></div>");
+        var accessString = Dropzone.createElement("<div class=\"col-md-2\" id=\"access_" + resp.file_id + "\"><span>" + resp.access_level + "</span></div>");
         fileName.appendChild(accessString);
         
-        var dateString = Dropzone.createElement("<div class=\"col-md-2\"><span>" + resp.date + "</span></div>");
+        var dateString = Dropzone.createElement("<div class=\"col-md-2\" id=\"updated_" + resp.file_id + "\"><span>" + resp.date_updated + "</span></div>");
         fileName.appendChild(dateString);
         
-        var userString = Dropzone.createElement("<div class=\"col-md-1\"><span>" + resp.user + "</span></div>");
+        var userString = Dropzone.createElement("<div class=\"col-md-1\" id=\"creator_" + resp.file_id + "\"><span>" + resp.creator + "</span></div>");
         fileName.appendChild(userString);
         
         file.previewElement.appendChild(fileName);
         
-        var removeLink = Dropzone.createElement("<div class=\"corner_up\"><a href=\"#\"><span class=\"glyphicon glyphicon-remove\"></span></a></div>");
+        var removeLink = Dropzone.createElement("<div class=\"corner_up\" id=\"corup_" + resp.file_id + "\"><a href=\"#\"><span class=\"glyphicon glyphicon-remove\"></span></a></div>");
         removeLink.addEventListener("click", function(e) {
           window.deleteUploadedDocument(resp.file_id, this);
         });
         file.previewElement.appendChild(removeLink);
         
-        var editLink = Dropzone.createElement("<div class=\"corner_down\"><a href=\"#\"><span class=\"glyphicon glyphicon-pencil\"></span></a></div>");
+        var editLink = Dropzone.createElement("<div class=\"corner_down\" id=\"cordown_" + resp.file_id + "\"><a href=\"#\"><span class=\"glyphicon glyphicon-pencil\"></span></a></div>");
         editLink.addEventListener("click", function(e) {
           window.editFile(resp.file_id,[% id %],file.name,resp.access,"","");
         });
@@ -99,7 +98,7 @@
       var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\">" + file.name + "</div><div class=\"col-md-5\">" + resp.error + "</div></div>");
       file.previewElement.appendChild(fileName);
       
-      var removeLink = Dropzone.createElement("<div class=\"corner_up\"><a href=\"#\"><i class=\"icon-remove\"></i></a></div>");
+      var removeLink = Dropzone.createElement("<div class=\"corner_up\" id=\"cordown_" + resp.file_id + "\"><a href=\"#\"><i class=\"icon-remove\"></i></a></div>");
       removeLink.addEventListener("click", function(e) {
         this.parentNode.parentNode.removeChild(this.parentNode);
       });
@@ -114,7 +113,7 @@
       <div class="col-md-8">&nbsp;</div>
       <div class="col-md-8"><span>Your browser does not support drag'n'drop file uploads.</span></div>
       <div class="col-md-7">
-        <a href="#" class="btn" onclick="javascript:editFile('','[% id %]','','openAccess','','','','')" title="Add new file">Add a new file</a>
+        <a href="#" class="btn" onclick="javascript:edit_file('','[% id %]','','openAccess','','','','')" title="Add new file">Add a new file</a>
       </div>
       <div class="col-md-7">&nbsp;</div>
     </div>
@@ -129,15 +128,15 @@
           <div class="col-md-2 text-muted">User:</div>
         </div>
         <div class="row">
-          <div class="col-md-3 padded">
+          <div class="col-md-3 padded" id="filename_[% fi.file_id %]">
             <a href="[% h.shost %]/download/[% id %]/[% fi.file_id %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3" id="access_[% fi.file_id %]">
             [% SWITCH fi.access_level %]
             [% CASE "admin" %]
             Author/Admin/Reviewer
             
-            [% CASE "lu" %]
+            [% CASE "unibi" %]
             UniBi Only
             
             [% CASE "openAccess" %]
@@ -145,15 +144,15 @@
             
             [% END %]
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3" id="updated_[% fi.file_id %]">
             [% fi.date_updated %]
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2" id="creator_[% fi.file_id %]">
             [% fi.creator %]
           </div>
         </div>
-        <div class="corner_up" onclick="javascript:deleteUploadedDocument([% fi.file_id %], this);"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></div>
-        <div class="corner_down" onclick="javascript:editFile('[% fi.file_id %]','[% id %]','[% fi.file_name %]','[% fi.access_level %]','[% fi.accessEmbargo %]','[% fi.openAccessLevel %]','[% fi.file_title %]','[% fi.description | replace("'","\\'") | replace('"','&quot;') %]');"><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
+        <div class="corner_up" id="corup_[% fi.file_id %]" onclick="javascript:deleteUploadedDocument([% fi.file_id %], this);"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></div>
+        <div class="corner_down" id="cordown_[% fi.file_id %]" onclick="javascript:edit_file('[% fi.file_id %]','[% id %]','[% fi.file_name %]','[% fi.access_level %]','[% fi.accessEmbargo %]','[% fi.openAccessLevel %]','[% fi.file_title %]','[% fi.description | replace("'","\\'") | replace('"','&quot;') %]');"><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
         [% USE JSON %]
         <input type="hidden" id="file_[% fi.file_id %]" name="file" value='[% fi.json %]' />
       </div>

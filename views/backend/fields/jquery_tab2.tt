@@ -63,43 +63,66 @@ $('#twoToOne').click(function(){
 });
 
 
-
-function editFile(fileOId, recordOId, fileName, accessLevel, accessEmbargo, openAccessDate, fileTitle, fileDescription){
+function edit_file(fileOId, recordOId, fileName, accessLevel, accessEmbargo, openAccessDate, fileTitle, fileDescription){
   //var fileid = self.document.getElementById('id_uploadedFileOId');
   //fileid.value = fileOId;
+  $('#id_file_id').val(fileOId);
   //var recid = self.document.getElementById('id_recordOId');
   //recid.value = recordOId;
+  $('#id_record_id').val(recordOId);
   //var name = self.document.getElementById('id_fileName');
   //name.value = fileName;
+  $('#id_fileName').val(fileName);
   //var title = self.document.getElementById('id_fileTitle');
   //if(fileTitle){title.value = fileTitle;}
+  if(fileTitle){
+    $('#id_fileTitle').val(fileTitle);
+  }
   //var description = self.document.getElementById('id_fileDescription');
   //if(fileDescription){description.value = fileDescription;}
-  //var access;
-  //if(accessLevel == "Open Access" || accessLevel == "openAccess"){
-  //  access = self.document.getElementById('id_accessLevel_openAccess');
-  //  self.document.getElementById('id_accessEmbargo').disabled="disabled";
-  //}
-  //else if(accessLevel == "UniBi Only" || accessLevel == "lu"){
-  //  access = self.document.getElementById('id_accessLevel_lu');
-  //  self.document.getElementById('id_accessEmbargo').disabled="";
-  //}
-  //else if(accessLevel == "Author/Admin/Reviewer" || accessLevel == "admin"){
-  //  access = self.document.getElementById('id_accessLevel_admin');
-  //  self.document.getElementById('id_accessEmbargo').disabled="";
-  //}
+  if(fileDescription){
+    $('#id_fileDescription').val(fileDescription);
+  }
+  var access;
+  if(accessLevel == "Open Access" || accessLevel == "openAccess"){
+    access = $('#id_accessLevel_openAccess');
+    //access = self.document.getElementById('id_accessLevel_openAccess');
+    $('#id_accessEmbargo').attr('disabled','disabled');
+    //self.document.getElementById('id_accessEmbargo').disabled="disabled";
+  }
+  else if(accessLevel == "UniBi Only" || accessLevel == "unibi"){
+    access = $('#id_accessLevel_unibi');
+    //access = self.document.getElementById('id_accessLevel_lu');
+    $('#id_accessEmbargo').attr('disabled','');
+    //self.document.getElementById('id_accessEmbargo').disabled="";
+  }
+  else if(accessLevel == "Author/Admin/Reviewer" || accessLevel == "admin"){
+    access = $('#id_accessLevel_admin');
+    //access = self.document.getElementById('id_accessLevel_admin');
+    $('#id_accessEmbargo').attr('disabled','');
+    //self.document.getElementById('id_accessEmbargo').disabled="";
+  }
+  access.attr('checked','checked');
   //access.checked = "checked";
+  $('#id_accessEmbargo').val(accessEmbargo);
   //var embargo = self.document.getElementById('id_accessEmbargo');
   //embargo.value = accessEmbargo;
+  $('#id_openAccessDate').val(openAccessDate);
   //var accdate = self.document.getElementById('id_openAccessDate');
   //accdate.value = openAccessDate;
   
-  //var fileNameTag = self.document.getElementById('fileNameTag');
-  //fileNameTag.style.display = "block";
+  var fileNameTag = self.document.getElementById('fileNameTag');
+  fileNameTag.style.display = "block";
 
-  $('#file_upload').modal('toggle');
-  $('#file_upload').modal('show'); 
+  $('#upload_file').modal('show'); 
   
+}
+
+function deleteUploadedDocument(fileId, recordId, fileName){
+  if (confirm("Are you sure you want to delete this uploaded document? Any external links will be broken! If you need to update an existing file to a new version you should edit the corresponding entry in the list and re-upload the file")) {
+    $('#' + fileId).remove();
+    $.post( "/upload/delete", { id: recordId, filename: fileName });
+  }
 }
 
 function deleteRelMat(materialOId, otherOId) {
