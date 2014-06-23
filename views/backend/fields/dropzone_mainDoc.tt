@@ -152,9 +152,9 @@
           </div>
         </div>
         <div class="corner_up" id="corup_[% fi.file_id %]" onclick="javascript:deleteUploadedDocument([% fi.file_id %], this);"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></div>
-        <div class="corner_down" id="cordown_[% fi.file_id %]" onclick="javascript:edit_file('[% fi.file_id %]','[% id %]','[% fi.file_name %]','[% fi.access_level %]','[% fi.accessEmbargo %]','[% fi.openAccessLevel %]','[% fi.file_title %]','[% fi.description | replace("'","\\'") | replace('"','&quot;') %]');"><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
+        <div class="corner_down" id="cordown_[% fi.file_id %]" onclick="javascript:edit_file('[% fi.file_id %]');"><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
         [% USE JSON %]
-        <input type="hidden" id="file_[% fi.file_id %]" name="file" value='[% fi.json %]' />
+        <input type="hidden" id="file_[% fi.file_id %]" name="file" value='[% fi.file_json %]' />
       </div>
     [% END %]
     [% END %]

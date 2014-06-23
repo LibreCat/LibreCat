@@ -31,7 +31,7 @@
           if (flag) {
             f.accessEmbargo.checked=false;
             f.accessEmbargo.disabled=true;
-            f.openAccessDate.disabled=true;
+            f.embargo.disabled=true;
           } else {
             f.accessEmbargo.disabled=false;
           }
@@ -39,9 +39,9 @@
         
         function toggleTextBox(f) {
           if (f.accessEmbargo.checked) {
-            f.openAccessDate.disabled=false;
+            f.embargo.disabled=false;
           } else {
-            f.openAccessDate.disabled=true;
+            f.embargo.disabled=true;
           }
         }
         //-->
@@ -62,13 +62,13 @@
           <label class="checkbox control-label">
             <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" onclick="toggleTextBox(this.form)" [% IF openAccessCheck %]disabled="disabled"[% ELSE %][% embargoCheck %][% END %] />Switch to open access on:<br />
           </label>
-          <input type="text" class="form-control" name="openAccessDate" id="id_openAccessDate" placeholder="YYYY-MM-DD" value="[% openAccessDate %]" [% IF openAccessCheck OR !embargoCheck %]disabled="disabled"[% END %]>
+          <input type="text" class="form-control" name="embargo" id="id_embargo" placeholder="YYYY-MM-DD" value="[% embargo %]" [% IF openAccessCheck OR !embargoCheck %]disabled="disabled"[% END %]>
           <input type="hidden" name="accept" value="1" />
         </div>
         
         <div class="form-group">
           <strong>Title</strong><br />
-          <input type="text" name="fileTitle" id="id_fileTitle" value="[% fileTitle %]" class="form-control" />
+          <input type="text" name="file_title" id="id_fileTitle" value="[% file_title %]" class="form-control" />
         </div>
       
         <div class="form-group">
@@ -109,6 +109,18 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
     else if($('#id_accessLevel_admin').is(':checked')){
       formData.append("access_level", "admin");
     }
+    
+    if($('#id_embargo').val()){
+      formData.append("embargo", $('#id_embargo').val());
+    }
+    
+    if($('#id_fileTitle').val()){
+      formData.append("file_title", $('#id_fileTitle').val());
+    }
+    
+    if($('#id_fileDescription').val()){
+      formData.append("description", $('#id_fileDescription').val());
+    }
 
     $.ajax({
       url: 'http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/upload/update',
@@ -124,9 +136,15 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
         }
         else if(data.access_level == "unibi"){
           accessLevel = "UniBi only";
+          if(data.embargo){
+            accessLevel += " (until " + data.embargo + ")";
+          }
         }
         else if(data.access_level == "admin"){
           accessLevel = "Admin Only";
+          if(data.embargo){
+            accessLevel += " (until " + data.embargo + ")";
+          }
         }
         
         $('#filename_' + file_id).html("");
@@ -134,11 +152,13 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
         $('#access_' + file_id).html(accessLevel);
         $('#updated_' + file_id).html(data.date_updated);
         $('#creator_' + file_id).html(data.creator);
+        $('#cordown_' + file_id)[0].onclick = null;
+        $('#cordown_' + file_id).unbind();
         $('#cordown_' + file_id).click(function (){
-          edit_file(file_id,'[% id %]', data.file_name, data.access_level, data.access_embargo, "", data.file_title, data.file_description);
+          edit_file(file_id);
         });
 
-        $('#file_' + file_id).html(data.file_json);
+        $('#file_' + file_id).val(data.file_json);
         
         $('#upLoad')[0].reset();
         $('#upload_file').modal('hide');

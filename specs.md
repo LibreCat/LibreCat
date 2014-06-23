@@ -136,7 +136,10 @@ file:
 		language: eng
 		creator: bisid
 		open_access: 1|0
+		embargo: YYYY-MM-DD
 		year_last_uploaded: 2014
+		title: "some title"
+		description: "some description"
 doi: 10.214/test
 ddc:
 	- 530

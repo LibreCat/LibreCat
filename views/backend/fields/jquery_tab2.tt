@@ -63,53 +63,41 @@ $('#twoToOne').click(function(){
 });
 
 
-function edit_file(fileOId, recordOId, fileName, accessLevel, accessEmbargo, openAccessDate, fileTitle, fileDescription){
-  //var fileid = self.document.getElementById('id_uploadedFileOId');
-  //fileid.value = fileOId;
-  $('#id_file_id').val(fileOId);
-  //var recid = self.document.getElementById('id_recordOId');
-  //recid.value = recordOId;
-  $('#id_record_id').val(recordOId);
-  //var name = self.document.getElementById('id_fileName');
-  //name.value = fileName;
-  $('#id_fileName').val(fileName);
-  //var title = self.document.getElementById('id_fileTitle');
-  //if(fileTitle){title.value = fileTitle;}
-  if(fileTitle){
-    $('#id_fileTitle').val(fileTitle);
+function edit_file(fileOId){ //, recordOId, fileName, accessLevel, accessEmbargo, openAccessDate, fileTitle, fileDescription){
+
+  var json = jQuery.parseJSON($('#file_' + fileOId).val());
+  
+  $('#id_file_id').val(json.file_id);
+
+  $('#id_record_id').val([% id %]);
+
+  $('#id_fileName').val(json.file_name);
+
+  if(json.title){
+    $('#id_fileTitle').val(json.title);
   }
-  //var description = self.document.getElementById('id_fileDescription');
-  //if(fileDescription){description.value = fileDescription;}
-  if(fileDescription){
-    $('#id_fileDescription').val(fileDescription);
+
+  if(json.description){
+    $('#id_fileDescription').val(json.description);
   }
-  var access;
-  if(accessLevel == "Open Access" || accessLevel == "openAccess"){
-    access = $('#id_accessLevel_openAccess');
-    //access = self.document.getElementById('id_accessLevel_openAccess');
-    $('#id_accessEmbargo').attr('disabled','disabled');
-    //self.document.getElementById('id_accessEmbargo').disabled="disabled";
+
+  alert(json.access_level);
+  if(json.access_level == "openAccess"){
+    $('#id_accessLevel_openAccess').prop('checked',true);
+    $('#id_accessEmbargo').attr('disabled',true);
   }
-  else if(accessLevel == "UniBi Only" || accessLevel == "unibi"){
-    access = $('#id_accessLevel_unibi');
-    //access = self.document.getElementById('id_accessLevel_lu');
-    $('#id_accessEmbargo').attr('disabled','');
-    //self.document.getElementById('id_accessEmbargo').disabled="";
+  else if(json.access_level == "unibi"){
+    $('#id_accessLevel_unibi').prop('checked',true);
+    $('#id_accessEmbargo').removeAttr("disabled");
   }
-  else if(accessLevel == "Author/Admin/Reviewer" || accessLevel == "admin"){
-    access = $('#id_accessLevel_admin');
-    //access = self.document.getElementById('id_accessLevel_admin');
-    $('#id_accessEmbargo').attr('disabled','');
-    //self.document.getElementById('id_accessEmbargo').disabled="";
+  else if(json.access_level == "admin"){
+    $('#id_accessLevel_admin').prop('checked',true);
+    $('#id_accessEmbargo').removeAttr("disabled");
   }
-  access.attr('checked','checked');
-  //access.checked = "checked";
-  $('#id_accessEmbargo').val(accessEmbargo);
-  //var embargo = self.document.getElementById('id_accessEmbargo');
-  //embargo.value = accessEmbargo;
-  $('#id_openAccessDate').val(openAccessDate);
-  //var accdate = self.document.getElementById('id_openAccessDate');
-  //accdate.value = openAccessDate;
+
+  $('#id_accessEmbargo').val(json.access_embargo);
+  $('#id_embargo').val(json.embargo);
+
   
   var fileNameTag = self.document.getElementById('fileNameTag');
   fileNameTag.style.display = "block";

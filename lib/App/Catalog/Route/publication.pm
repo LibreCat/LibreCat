@@ -145,8 +145,11 @@ post '/upload/update' => sub {
 		$return->{file_id} = $file_id;
 		$return->{date_updated} = "now";#???
 		$return->{access_level} = params->{access_level} ? params->{access_level} : "openAccess";
+		$return->{embargo} = params->{embargo} ? params->{embargo} : "";
 		$return->{content_type} = $file ? $file->{headers}->{"Content-Type"} : "";
 		$return->{checksum} = "ToDo";
+		$return->{file_title} = params->{file_title} if params->{file_title};
+		$return->{description} = params->{description} if params->{description};
 		#$return->{error} = "this is not an error. Y U no display file?";
 		$return->{old_file_name} = $old_file_name;
 		
@@ -162,6 +165,7 @@ post '/upload/update' => sub {
 				}
 				else {
 					$return->{open_access} = 0;
+					$return->{embargo} = ($return->{embargo} eq "" and $recfile->{accessEmbargo}) ? $recfile->{accessEmbargo} : "";
 				}
 				
 				$recfile = ();
@@ -174,13 +178,17 @@ post '/upload/update' => sub {
 		
 		$return->{file_json} = '{"file_name": "'.$return->{file_name}.'", ';
 		$return->{file_json} .= '"file_id": "'.$return->{file_id}.'", ';
+		$return->{file_json} .= '"title": "'.$return->{file_title}.'", ' if $return->{file_title};
+		$return->{file_json} .= '"description": "'.$return->{description}.'", ' if $return->{description};
 		$return->{file_json} .= '"content_type": "'.$return->{content_type}.'", ';
 		$return->{file_json} .= '"access_level": "'.$return->{access_level}.'", ';
+		$return->{file_json} .= '"embargo": "'.$return->{embargo}.'", ' if $return->{embargo} and $return->{embargo} ne "";
 		$return->{file_json} .= '"date_updated": "'.$return->{date_updated}.'", ';
 		$return->{file_json} .= '"date_created": "'.$return->{date_updated}.'", ';
 		$return->{file_json} .= '"checksum": "ToDo", "file_size": "'.$return->{file_size}.'", ';
 		$return->{file_json} .= '"language": "eng", "creator": "'.$return->{creator}.'", ';
-		$return->{file_json} .= '"open_access": "1", "year_last_uploaded": "2014"}';
+		$return->{file_json} .= '"open_access": "'.$return->{open_access}.'", ';
+		$return->{file_json} .= '"year_last_uploaded": "2014"}';
 		
 		h->publication->add($record);
 		h->publication->commit;
