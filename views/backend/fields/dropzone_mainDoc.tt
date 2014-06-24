@@ -135,9 +135,15 @@
             [% SWITCH fi.access_level %]
             [% CASE "admin" %]
             Author/Admin/Reviewer
+            [% IF fi.embargo %]
+            <br />(until [% fi.embargo %])
+            [% END %]
             
             [% CASE "unibi" %]
             UniBi Only
+            [% IF fi.embargo %]
+            <br />(until [% fi.embargo %])
+            [% END %]
             
             [% CASE "openAccess" %]
             Open Access
