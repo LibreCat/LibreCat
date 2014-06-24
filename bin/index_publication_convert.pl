@@ -104,6 +104,7 @@ my $file_fixer = Catmandu::Fix->new(
         'move_array_field("file.*.fileName","file.*.file_name")',
         'move_array_field("file.*.accessLevel","file.*.access_level")',
         'move_array_field("file.*.openAccess","file.*.open_access")',
+        'move_array_field("file.*.openAccessDate","file.*.embargo")',
         'remove_array_field("file.*.type")',
         'remove_array_field("file.*.uploader")',
         
