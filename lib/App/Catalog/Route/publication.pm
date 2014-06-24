@@ -162,10 +162,11 @@ post '/upload/update' => sub {
 				$return->{date_created} = $recfile->{date_created};
 				if($return->{access_level} eq "openAccess"){
 					$return->{open_access} = 1;
+					$return->{embargo} = "";
 				}
 				else {
 					$return->{open_access} = 0;
-					$return->{embargo} = ($return->{embargo} eq "" and $recfile->{accessEmbargo}) ? $recfile->{accessEmbargo} : "";
+					$return->{embargo} = $recfile->{embargo} if ($return->{embargo} eq "" and $recfile->{embargo});
 				}
 				
 				$recfile = ();
@@ -182,7 +183,7 @@ post '/upload/update' => sub {
 		$return->{file_json} .= '"description": "'.$return->{description}.'", ' if $return->{description};
 		$return->{file_json} .= '"content_type": "'.$return->{content_type}.'", ';
 		$return->{file_json} .= '"access_level": "'.$return->{access_level}.'", ';
-		$return->{file_json} .= '"embargo": "'.$return->{embargo}.'", ' if $return->{embargo} and $return->{embargo} ne "";
+		$return->{file_json} .= '"embargo": "'.$return->{embargo}.'", ' if ($return->{embargo} and $return->{embargo} ne "");
 		$return->{file_json} .= '"date_updated": "'.$return->{date_updated}.'", ';
 		$return->{file_json} .= '"date_created": "'.$return->{date_updated}.'", ';
 		$return->{file_json} .= '"checksum": "ToDo", "file_size": "'.$return->{file_size}.'", ';
