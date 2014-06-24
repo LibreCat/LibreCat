@@ -37,13 +37,14 @@
           }
         }
         
-        function toggleTextBox(f) {
-          if (f.accessEmbargo.checked) {
-            f.embargo.disabled=false;
-          } else {
-            f.embargo.disabled=true;
-          }
-        }
+        
+        //function toggleTextBox(f) {
+        //  if (f.accessEmbargo.checked) {
+        //    f.embargo.disabled=false;
+        //  } else {
+        //    f.embargo.disabled=true;
+        //  }
+        //}
         //-->
         </script>
         
@@ -51,19 +52,18 @@
             [% openAccessCheck = 'checked="checked"' %]
           [% END %]
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="openAccess" [% openAccessCheck %] onclick="oamode(this.form, true)"/> Open access (the file is freely available, effective immediately)
+            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="openAccess" onclick="oamode(this.form, true)"/> Open access (the file is freely available, effective immediately)
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="unibi" onclick="oamode(this.form,false)" [% luCheck %] /> UniBi
+            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="unibi" onclick="oamode(this.form,false)" /> UniBi
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false)" [% adminCheck %] /> Only Author/Reviewer/Administrator
+            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false)" /> Only Author/Reviewer/Administrator
           </label>
           <label class="checkbox control-label">
-            <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" onclick="toggleTextBox(this.form)" [% IF openAccessCheck %]disabled="disabled"[% ELSE %][% embargoCheck %][% END %] />Switch to open access on:<br />
+            <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" [% IF openAccessCheck %]disabled="disabled"[% ELSE %][% embargoCheck %][% END %] />Switch to open access on:<br />
           </label>
-          <input type="text" class="form-control" name="embargo" id="id_embargo" placeholder="YYYY-MM-DD" value="[% embargo %]" [% IF openAccessCheck OR !embargoCheck %]disabled="disabled"[% END %]>
-          <input type="hidden" name="accept" value="1" />
+          <input type="text" class="form-control" name="embargo" id="id_embargo" placeholder="YYYY-MM-DD" value="[% embargo %]" [% IF openAccessCheck OR !embargo %]disabled="disabled"[% END %]>
         </div>
         
         <div class="form-group">
@@ -137,16 +137,16 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
         else if(data.access_level == "unibi"){
           accessLevel = "UniBi only";
           if(data.embargo){
-            accessLevel += " (until " + data.embargo + ")";
+            accessLevel += "<br />(until " + data.embargo + ")";
           }
         }
         else if(data.access_level == "admin"){
           accessLevel = "Admin Only";
           if(data.embargo){
-            accessLevel += " (until " + data.embargo + ")";
+            accessLevel += "<br />(until " + data.embargo + ")";
           }
         }
-        
+
         $('#filename_' + file_id).html("");
         $('#filename_' + file_id).html('<a href="[% h.shost %]/download/[% id %]/' + file_id + '" target="_blank" title="' + data.file_name + '">' + data.file_name + '</a>');
         $('#access_' + file_id).html(accessLevel);
@@ -172,6 +172,15 @@ else {
   $('#upLoad').attr('action','[% luurBase %]/record_material');
   $('#upLoad').attr('method','post');
 }
+
+$('#id_accessEmbargo').bind('change', function(){
+  if($(this).is(':checked')){
+    $('#id_embargo').prop('disabled',false);
+  }
+  else {
+    $('#id_embargo').prop('disabled',true);
+  }
+});
 
   //$('body').on('hidden', '.modal', function () {
   //  $('#id_file').val('');
