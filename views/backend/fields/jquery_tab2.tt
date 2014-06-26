@@ -91,14 +91,14 @@ function edit_file(fileOId){ //, recordOId, fileName, accessLevel, accessEmbargo
   }
   else if(json.access_level == "admin"){
     $('#id_accessLevel_admin').prop('checked',true);
+    $('#id_accessEmbargo').prop('disabled',false);
   }
 
   if(json.embargo && json.embargo != ""){
     $('#id_accessEmbargo').prop('checked',true);
     $('#id_embargo').prop('disabled', false);
+    $('#id_embargo').val(json.embargo);
   }
-  $('#id_embargo').val(json.embargo);
-
   
   var fileNameTag = self.document.getElementById('fileNameTag');
   fileNameTag.style.display = "block";

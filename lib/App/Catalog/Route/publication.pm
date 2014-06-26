@@ -166,7 +166,6 @@ post '/upload/update' => sub {
 				}
 				else {
 					$return->{open_access} = 0;
-					$return->{embargo} = $recfile->{embargo} if ($return->{embargo} eq "" and $recfile->{embargo});
 				}
 				
 				$recfile = ();

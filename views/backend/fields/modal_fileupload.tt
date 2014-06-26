@@ -110,7 +110,8 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
       formData.append("access_level", "admin");
     }
     
-    if($('#id_embargo').val()){
+    if($('#id_embargo').val() && $('#id_accessEmbargo').is(':checked')){
+      alert('setting embargo');
       formData.append("embargo", $('#id_embargo').val());
     }
     
@@ -182,10 +183,4 @@ $('#id_accessEmbargo').bind('change', function(){
   }
 });
 
-  //$('body').on('hidden', '.modal', function () {
-  //  $('#id_file').val('');
-  //  $('#id_fileName').val('');
-  //  $('#id_fileTitle').val('');
-  //  $('#id_fileDescription').val('');
-  //});
 </script>
