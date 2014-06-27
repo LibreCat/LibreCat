@@ -96,15 +96,22 @@ post '/upload' => sub {
 	my $return;
 	if($success){
 		$return->{success} = 1;
-		$return->{filename} = $file->{filename};
-		$return->{user} = session->{user};
-		$return->{size} = $file->{size};
+		$return->{file_name} = $file->{filename};
+		$return->{creator} = session->{user};
+		$return->{file_size} = $file->{size};
 		$return->{file_id} = $file_id;
 		$return->{date_updated} = "now";#???
-		$return->{access} = "openAccess";
+		$return->{access_level} = "openAccess";
 		$return->{content_type} = $file->{headers}->{"Content-Type"};
 		#$return->{error} = "this is not an error. Y U no display file?";
-		$return->{file_json} = '{"file_name": "'.$return->{filename}.'", "file_id": "'.$return->{file_id}.'", "content_type": "'.$return->{content_type}.'", "access_level": "'.$return->{access}.'", "date_updated": "'.$return->{date}.'", "date_created": "'.$return->{date}.'", "checksum": "ToDo", "file_size": "'.$return->{size}.'", "language": "eng", "creator": "'.$return->{user}.'", "open_access": "1", "year_last_uploaded": "2014"}';
+		$return->{file_json} = '{"file_name": "'.$return->{file_name}.'", ';
+		$return->{file_json} .= '"file_id": "'.$return->{file_id}.'", ';
+		$return->{file_json} .= '"content_type": "'.$return->{content_type}.'", ';
+		$return->{file_json} .= '"access_level": "'.$return->{access_level}.'", ';
+		$return->{file_json} .= '"date_updated": "'.$return->{date_updated}.'", ';
+		$return->{file_json} .= '"date_created": "'.$return->{date_updated}.'", ';
+		$return->{file_json} .= '"checksum": "ToDo", "file_size": "'.$return->{file_size}.'", ';
+		$return->{file_json} .= '"language": "eng", "creator": "'.$return->{creator}.'", "open_access": "1", "year_last_uploaded": "2014"}';
 	}
 	else {
 		$return->{success} = 0;
