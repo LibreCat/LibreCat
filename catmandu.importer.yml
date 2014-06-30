@@ -4,11 +4,12 @@ _prefix:
 inspire:
   package: Inspire
   options:
-    fix: ['inspire_mapping()']
+    fix: ['inspire_mapping.fix']
 crossref:
-  package: crossref
+  package: CrossRef
   options:
-    fix: ['crossref_mapping()']
+    fixes: ['lib/Catmandu/Fix/crossref_mapping.fix']
+    usr: 'vitali.peil@uni-bielefeld.de'
 pmc:
   package: Pubmed
   options:
@@ -16,7 +17,7 @@ pmc:
 arxiv:
   package: ArXiv
   options:
-    fix: ['arxiv_mapping()']
+    fix: ['lib/Catmandu/Fix/arxiv_mapping.fix']
 bibtex:
   package: BibTeX
   options:
