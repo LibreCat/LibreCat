@@ -27,6 +27,10 @@ prefix '/admin' => sub {
 
 	post 'account/update' => sub {};
 
+	# monitoring external sources
+	get '/inspire-monitor' => sub {};
+
+
 	# get qr{/myPUB/add/(\w{1,})/*} => sub {
 	# 	my ($type) = splat;
 	# 	#my $id = "86212";
