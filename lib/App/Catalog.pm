@@ -87,4 +87,14 @@ get '/logout' => sub {
     redirect '/myPUB/login';
 };
 
+get '/changeRole/:user/:role' => sub {
+    my $user = h->getAccount( params->{user} )->[0];
+    
+    # is user allowed to take this role?
+    if ($user->{params->{role}}) {
+        session role => params->{role};
+    }
+    redirect '/myPUB';
+};
+
 1;
