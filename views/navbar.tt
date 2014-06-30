@@ -21,6 +21,8 @@
   </head>
   <body>
 
+[% thisPerson = h.getPerson(session.personNumber) %]
+
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -39,20 +41,27 @@
          [% IF session AND session.user %]
          <li><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
          <li><a href="[% h.host %]/person/[% session.personNumber %]"><span class="glyphicon glyphicon-eye-open"></span> My Public Author Page</a></li>
+         [% IF session.role == "superAdmin" %]
+         <li><a href="/myPUB/admin"><span class="glyphicon glyphicon-exclamation-sign"></span> Admin</a></li>
+         [% END %]
          [% END %]
        </ul>
        <ul class="nav navbar-nav navbar-right">
          [% IF session AND session.user %]
          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Logged in as: <em>[% session.user %]</em></a></li>
+         
+         [% IF thisPerson.superAdmin OR thisPerson.reviewer %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Role: <em>[% session.role %]</em><span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="/myPUB/changeRole/[% session.user %]/user">User</a></li>
-            <li><a href="/myPUB/changeRole/[% session.user %]/reviewer">Reviewer</a></li>
-            <li><a href="/myPUB/changeRole/[% session.user %]/admin">Admin</a></li>
+            <li><a href="/myPUB/change_role/user">User</a></li>
+            [% IF thisPerson.reviewer %]
+            <li><a href="/myPUB/change_role/reviewer">Reviewer</a></li>
+            [% END %]
+            [% IF thisPerson.superAdmin %]
+            <li><a href="/myPUB/change_role/admin">Admin</a></li>
+            [% END %]
           </ul>
          </li>
-         [% IF session.role == "superAdmin" %]
-         <li><a href="/myPUB/admin"><span class="glyphicon glyphicon-exclamation-sign"></span> Admin</a></li>
          [% END %]
          <li><a href="/myPUB/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
          [% ELSE %]
