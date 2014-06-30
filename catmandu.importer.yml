@@ -1,0 +1,23 @@
+_prefix:
+  importer:
+
+inspire:
+  package: Inspire
+  options:
+    fix: ['inspire_mapping()']
+crossref:
+  package: crossref
+  options:
+    fix: ['crossref_mapping()']
+pmc:
+  package: Pubmed
+  options:
+    fix: ['pmc_mapping()']
+arxiv:
+  package: ArXiv
+  options:
+    fix: ['arxiv_mapping()']
+bibtex:
+  package: BibTeX
+  options:
+    fix: ['bibtex_mapping()']
