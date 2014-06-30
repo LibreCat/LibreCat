@@ -92,6 +92,48 @@ language:
   "Turkish": "tur" #2561691
   "Other": "other" #221
 
+relations:
+  - "cites":
+    opposite: "is_cited_by"
+  - "is_cited_by":
+    opposite: "cites"
+  - "earlier_version":
+    opposite: "later_version"
+    link_text: "Earlier Version"
+  - "later_version":
+    opposite: "earlier_version"
+    link_text: "Later Version"
+  - "contains":
+    opposite: "published_in"
+    link_text: "Published in"
+  - "published_in":
+    opposite: "contains"
+    link_text: "Contains Document"
+  - "part_of_dissertation":
+    opposite: "dissertation_contains"
+    link_text: "Published in Dissertation"
+  - "dissertation_contains":
+    opposite: "part_of_dissertation"
+    link_text: "Article/Paper in Dissertation"
+  - "old_edition":
+    opposite: "new_edition"
+    link_text: "Old Edition"
+  - "new_edition":
+    opposite: "old_edition"
+    link_text: "New Edition"
+  - "continues":
+    opposite: "is_continued_by"
+    link_text: "Continuation"
+  - "is_continued_by":
+    opposite: "continues"
+    link_text: "Previous Object"
+  - "popular_science_of":
+    opposite: "research_paper_of"
+    link_text: "Research Paper"
+  - "research_paper_of":
+    opposite: "popular_science_of"
+    link_text: "Popular Science"
+
 xdepartments:
   "BiSEd Bielefeld School of Education":
     oId: 10057

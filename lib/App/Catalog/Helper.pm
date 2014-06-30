@@ -59,7 +59,7 @@ sub getPerson {
 		$user = $_[0]->authority_user->get($_[1]);
 		$admin = $_[0]->authority_admin->get($_[1]);
 		
-		my @fields = qw(full_name last_name first_name email department);
+		my @fields = qw(full_name last_name first_name email department superAdmin reviewer);
 		map {
 			$user->{$_} = $admin->{$_};
 		} @fields;

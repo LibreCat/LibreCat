@@ -87,12 +87,19 @@ get '/logout' => sub {
     redirect '/myPUB/login';
 };
 
-get '/changeRole/:user/:role' => sub {
-    my $user = h->getAccount( params->{user} )->[0];
+get '/change_role/:role' => sub {
+    my $user = h->getAccount( session->{user} )->[0];
     
     # is user allowed to take this role?
-    if ($user->{params->{role}}) {
-        session role => params->{role};
+    
+    if(params->{role} eq "reviewer" and $user->{reviewer}){
+    	session role => "reviewer";
+    }
+    elsif(params->{role} eq "admin" and $user->{superAdmin}){
+    	session role => "superAdmin";
+    }
+    else{
+    	session role => "user";
     }
     redirect '/myPUB';
 };
