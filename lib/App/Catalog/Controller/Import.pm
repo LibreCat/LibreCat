@@ -5,38 +5,23 @@ use Catmandu;
 use Carp;
 use Exporter qw/import/;
 
-our @EXPORT    = qw/import_from_id/;
+our @EXPORT    = qw/import_publication/;
 our @EXPORT_OK = qw/arxiv inspire crossref plos pubmed/;
 
 my %dispatch = (
     arxiv    => \&arxiv,
     inspire  => \&inspire,
     crossref => \&crossref,
-    plos     => \&plos,
-    pubmed   => \&pubmed,
+    pmc   => \&pmc,
 );
 
-sub _classify_id {
-    my $id = shift;
-    my $package;
-    given ($id) {
-        when (/^\d{4}\.\d{4}|^\w+\/\d+/) { $package = 'arxiv' }
-        when (/^10\.\d{2,}/)             { $package = 'doi' }
-        when (/^\d{1,8}$/) { $package = 'pubmed' }    # not unique!?
-        default            { $package = '' }
-    }
-
-    return $package;
-}
-
-sub import_from_id {
-    my $id      = shift;
-    my $package = _classify_id($id);
-    if ($package) {
-        $dispatch{$package}->($id);
+sub import_publication {
+    my ($pkg, $id) = @_;
+    if ($pkg) {
+        $dispatch{$pkg}->($id);
     }
     else {
-        croak "Could not do anything!";
+        croak "No source provided";
     }
 }
 
@@ -61,7 +46,7 @@ sub crossref {
     return $pub;
 }
 
-sub pubmed {
+sub pmc {
     my $id = shift;
     my $pub = Catmandu->importer( 'pubmed', term => $id, )->first;
 

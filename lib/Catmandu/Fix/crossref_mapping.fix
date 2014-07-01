@@ -58,4 +58,5 @@ end
 
 # book
 if exists('book.book_series_metadata')
+	nothing()
 end
