@@ -53,7 +53,7 @@
          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Logged in as: <em>[% session.user %]</em></a></li>
          
          [% IF thisPerson.superAdmin OR thisPerson.reviewer %]
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Role: <em>[% session.role %]</em><span class="glyphicon glyphicon-chevron-down"></span></a>
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Role: <em>[% session.role %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="/myPUB/change_role/user">User</a></li>
             [% IF thisPerson.reviewer %]

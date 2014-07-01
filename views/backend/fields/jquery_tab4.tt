@@ -1,6 +1,6 @@
 $('#fourToThree').click(function(){
-  $('#li_relatedMaterial').removeClass('active');
-  $('#li_supplementaryFields').addClass('active');
+  $('#li_related_material').removeClass('active');
+  $('#li_supplementary_fields').addClass('active');
 });
 
 function deleteRelMat(materialOId, otherOId) {

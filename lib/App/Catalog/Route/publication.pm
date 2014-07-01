@@ -14,7 +14,8 @@ prefix '/record' => sub {
 		
 		if($type){
 			my $id = new_publication();
-			template "backend/forms/$type", {id => $id};
+			my $user = h->getPerson(session->{personNumber});
+			template "backend/forms/$type", {id => $id, department => $user->{department}};
 		}
 		else {
 			template 'add_new';
