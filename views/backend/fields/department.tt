@@ -7,7 +7,7 @@
   <div class="col-md-10" id="department">
     [% IF !department %]
     <div class="form-group">
-      <input type="hidden" name="department_id_0" id="dp_idautocomplete_0" value="" />
+      <input type="hidden" name="department" id="dp_idautocomplete_0" value="" />
     
       <span class="form-group col-md-7">
         <input type="text" class="form-control" placeholder="{% fields.basic_fields.department.placeholder %}" id="dp_autocomplete_0" value="" />
@@ -37,7 +37,7 @@
     [% ELSE %]
     [% FOREACH dept IN department %]
     <div class="form-group">
-      <input type="hidden" name="department_id_[% loop.index %]" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+      <input type="hidden" name="department" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
           
       <span class="form-group col-md-7">
         <input type="text" class="form-control" placeholder="{% fields.basic_fields.departments.placeholder %}" id="dp_autocomplete_[% loop.index %]" value="[% dept.name.0.text || dept.name %]" />
@@ -54,7 +54,7 @@
         <span class="glyphicon glyphicon-minus single"></span>
         [% END %]
       </span>
-          
+      
       <script>
       $(function() {
         $( "#dp_autocomplete_[% loop.index %]" ).autocomplete({

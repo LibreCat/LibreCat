@@ -37,6 +37,32 @@ prefix '/record' => sub {
 
 	post '/update' => sub {
 		my $params = params;
+		
+		if(($params->{department} and $params->{department} eq "") or !$params->{department}){
+			$params->{department} = ();
+			if(session->{role} ne "superAdmin"){
+				my $person = h->getPerson(session->{personNumber});
+				foreach my $dep (@{$person->{department}}){
+					push @{$params->{department}}, $dep->{id};
+				}
+			}
+		}
+		elsif($params->{department} and $params->{department} ne "" and ref $params->{department} ne "ARRAY"){
+			$params->{department} = [$params->{department}];
+		}
+		
+		if($params->{department}){
+			my $deparray;
+			foreach my $dept (@{$params->{department}}){
+				my $authdep = h->getDepartment($dept);
+				push @{$deparray}, {id => $authdep->{_id}, name => $authdep->{name}};
+			}
+			
+			$params->{department} = ();
+			$params->{department} = $deparray;
+		}
+		
+		
 		# my $author;
 		# my $test;
 		# if(ref $params->{author} ne "ARRAY"){

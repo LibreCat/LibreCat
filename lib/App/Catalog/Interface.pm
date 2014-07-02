@@ -40,18 +40,22 @@ get '/autocomplete_hierarchy' => sub {
 	if($fmt eq "autocomplete"){
 		foreach (@{$hits->{hits}}){
 			my $label = "";
-			$label = $_->{name};
 			
-			if($_->{parent}){
-				$label .= " (";
-				if($_->{parent_of_parent}){
-					$label .= $_->{parent_of_parent}->{name} . " | ";
+			if($_->{tree}){				
+				foreach my $dep (@{$_->{tree}}){
+					next if $dep eq $_->{_id};
+					my $info = h->getDepartment($dep);
+					my $name = $info->{name};
+					$label .= $name . " | ";
 				}
-				$label .=  $_->{parent}->{name} . ")";
+				$label =~ s/ \| $//g;
+				$label =  "(" . $label . ")" if $label ne "";
 			}
 			
+			$label = $_->{name} . " " . $label;
+			
 			$label =~ s/"/\\"/g;
-			push @$jsonhash, {id => $_->{oId}, label => $label};
+			push @$jsonhash, {id => $_->{_id}, label => $label};
 		}
 	}
 	else{

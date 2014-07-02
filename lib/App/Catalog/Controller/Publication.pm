@@ -122,9 +122,15 @@ sub save_publication {
     my $citbag = Catmandu->store('citation')->bag;
     my $publbag = Catmandu->store->bag('publication');
     $data->{citation} = $citbag->get($data->{_id}) if $data->{_id};
+    
+    my $pre_fixer = Catmandu::Fix->new(
+    fixes => [
+        'clean_department_project()',
+    ]);
 
     #if ( $validator->is_valid($data) ) {
     	
+    	$pre_fixer->fix($data);
         my $result = h->publication->add($data);
         $publbag->add($result);
         h->publication->commit;
