@@ -178,7 +178,7 @@ my $date_fixer = Catmandu::Fix->new(
         "datetime_format('date_updated', 'source_pattern' => '%Y-%m-%d %H:%M:%S', 'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ', 'time_zone' => 'Europe/Berlin', 'set_time_zone' => 'UTC')",
         "datetime_format('date_deleted', 'source_pattern' => '%Y-%m-%d %H:%M:%S', 'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ', 'time_zone' => 'Europe/Berlin', 'set_time_zone' => 'UTC')",
         "datetime_format('date_submitted', 'source_pattern' => '%Y-%m-%d %H:%M:%S', 'destination_pattern' => '%Y-%m-%dT%H:%M:%SZ', 'time_zone' => 'Europe/Berlin', 'set_time_zone' => 'UTC')",
-        "datetime_format('date_defense', 'source_pattern' => '%Y-%m-%d %H:%M', 'destination_pattern' => '%Y-%m-%d', 'time_zone' => 'Europe/Berlin', 'set_time_zone' => 'UTC')",
+        "datetime_format('date_defense', 'source_pattern' => '%Y-%m-%d %H:%M', 'destination_pattern' => '%Y-%m-%d', 'time_zone' => 'Europe/Berlin', 'set_time_zone' => 'UTC', 'delete' => 1)",
     ]
 );
 
@@ -268,6 +268,7 @@ sub add_to_index {
     #else {
     #    print STDERR $validator->last_errors;
     #}
+
     my $result = $bag->add($rec);
     #print Dumper $result;
     $publbag->add($result);
@@ -276,31 +277,25 @@ sub add_to_index {
 # get all publication types
 my $types = $luur->getChildrenTypes( type => 'publicationItem' );
 
-print "Pub. types:\n";
-print Dumper $types;
-
 # foreach type get records
 foreach (@$types) {
 	
-	#my $results = $db->find("id=2487085");
-	#while ( my $rec = $results->next ) {
+	#if($_ eq "2632034"){
 	
     my $obj = $luur->getObjectsByType( type => $_ );
     foreach (@$obj) {
         my $rec = $db->get($_);
-        if (    $rec->{isOfType}->{typeName} ne "unknown"
-            and $rec->{isOfType}->{typeName} ne "studentPaper"
-            and $rec->{submissionStatus})
-        {
+        if ($rec->{isOfType}->{typeName} ne "unknown" and $rec->{isOfType}->{typeName} ne "studentPaper" and $rec->{submissionStatus}){
         	if($rec->{submissionStatus} ne "new"){
         		add_to_index($rec);
         	}
 
         }
     }
+	#}
 }
 
-#$bag->commit;
+$bag->commit;
 
 if ($authors) {
     foreach my $key ( keys %$authors ) {
