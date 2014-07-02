@@ -29,6 +29,9 @@ get '/' => sub {
     elsif(session->{role} eq "reviewer"){
         forward '/myPUB/reviewerSearch', $params;
     }
+    elsif(session->{role} eq "dataManager"){
+    	forward '/myPUB/datamanagerSearch', $params;
+    }
     else{
         forward '/myPUB/search', $params;
     }
@@ -58,7 +61,8 @@ post '/login' => sub {
         if ($verify and $verify ne "error") {
         	my $superAdmin = "superAdmin" if $user->[0]->{superAdmin};
         	my $reviewer = "reviewer" if $user->[0]->{reviewer};
-            session role => $superAdmin || $reviewer || "user";
+        	my $dataManager = "dataManager" if $user->[0]->{dataManager};
+            session role => $superAdmin || $reviewer || $dataManager || "user";
             session user         => $user->[0]->{login};
             session personNumber => $user->[0]->{_id};
             my $params;
@@ -68,6 +72,9 @@ post '/login' => sub {
             }
             elsif(session->{role} eq "reviewer"){
             	redirect '/myPUB/reviewerSearch';
+            }
+            elsif(session->{role} eq "dataManager"){
+            	redirect '/myPUB/datamanagerSearch';
             }
             else{
             	redirect '/myPUB/search';
@@ -94,6 +101,9 @@ get '/change_role/:role' => sub {
     
     if(params->{role} eq "reviewer" and $user->{reviewer}){
     	session role => "reviewer";
+    }
+    elsif(params->{role} eq "dataManager" and $user->{dataManager}){
+    	session role => "dataManager";
     }
     elsif(params->{role} eq "admin" and $user->{superAdmin}){
     	session role => "superAdmin";

@@ -22,6 +22,15 @@ sub handle_request {
     	$revdep =~ s/ OR $//g;
     	$query = $revdep;
     }
+    elsif($account->[0]->{dataManager} and $par->{modus} eq "dataManager"){
+    	my $mgrdep = "";
+    	$query = "documenttype=researchData AND ";
+    	foreach my $mgr (@{$account->[0]->{dataManager}}){
+    		$mgrdep .= "department=$mgr->{department}->{id} OR ";
+    	}
+    	$mgrdep =~ s/ OR $//g;
+    	$query .= $mgrdep;
+    }
     elsif ($par->{modus} eq "admin"){
     	#$query = "";
     }
@@ -252,6 +261,20 @@ get '/reviewerSearch' => sub {
     }
 
     $params->{modus} = "reviewer";
+
+    handle_request($params);
+};
+
+get '/datamanagerSearch' => sub {
+	
+    my $params = params;
+    my $role = session->{role};
+    
+    if($role ne "superAdmin" and $role ne "dataManager"){
+    	redirect '/myPUB/search';
+    }
+
+    $params->{modus} = "dataManager";
 
     handle_request($params);
 };

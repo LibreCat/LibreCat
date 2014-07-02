@@ -43,6 +43,9 @@
         [% IF session.role == 'reviewer' OR session.role == "superAdmin" %]
           <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/reviewerSearch">Publications for Review</a></li>
         [% END %]
+        [% IF session.role == "dataManager" OR session.role == "superAdmin" %]
+          <li[% IF modus == "dataManager" %] class="active"[% END %]><a href="/myPUB/datamanagerSearch">Data Publications for Review</a></li>
+        [% END %]
         </ul>
       </div>
       
@@ -65,6 +68,14 @@
             </div>
           </div>
           <div class="tab-pane[% IF modus == 'reviewer' %] active[%END %]" id="review">
+            <div class="col-md-8">
+              [% INCLUDE hits.tt %]
+            </div>
+            <div class="col-md-3">
+              [% INCLUDE right_menu_publ.tt %]
+            </div>
+          </div>
+          <div class="tab-pane[% IF modus == 'dataManager' %] active[%END %]" id="data">
             <div class="col-md-8">
               [% INCLUDE hits.tt %]
             </div>

@@ -3,7 +3,6 @@
 [% IF thisPerson.bis.email %]
 <a href="mailto:[% thisPerson.bis.email %]" itemprop="email">[% thisPerson.bis.email.replace('@|&#64;', ' [at] ') %]</a><br />
 [% END %]
-[% IF total OR researchhits.total %]
   [% IF !thisPerson %]
     <p>No info found.</p>
   [% ELSE %]
@@ -56,7 +55,4 @@
       </div>
     [% END %]
   [% END %]
-[% ELSE %]
-<p>No info found.</p>
-[% END %]
 <!-- END person/profile.tt -->
