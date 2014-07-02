@@ -1,19 +1,17 @@
 package App::Catalog::Route::import;
 
 use Dancer ':syntax';
-use App::Catalog::Helper;
+#use App::Catalog::Helper;
+use App::Catalog::Controller::Import;
 
 post '/import' => sub {
-	my $params = params('body');
-	my $id = params->{'id'};
-	my $pub = _process_import($id);
-	template "backend/forms/$pub->{type}", $pub;
-};
+	my $p = params;
+	# returns template if something is missing
+	return template "add_new" unless $p->{source} && $p->{id};
+	my $pub = import_publication($p->{source}, $p->{id});
 
-# for admins only? otherwise: garbage collection in db
-post '/import/bibtex/:bibtex' => sub {
-	my $bibtex = params 'bibtex';
-	my $importer = Catmandu->importer('bibtex');
+	#error handling!
+	template "backend/forms/$pub->{type}", $pub;
 };
 
 1;

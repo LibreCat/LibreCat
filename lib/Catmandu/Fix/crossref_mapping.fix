@@ -1,0 +1,62 @@
+# mapping data from CrossRef to the local repository
+
+# get publication type
+if exists('journal.journal_article')
+	add_field('data.type','journal_article')
+end
+if exists('book.book_content')
+	add_field('data.type','book_chapter')
+end
+if exists('book.xxx')
+	add_field('data.type','journal_article')
+end
+if exists('conference.conference_paper')
+	add_field('data.type','conference')
+end
+
+# journal article
+if exists ('journal.journal_article')
+add_field('data.type','journal_article')
+move_field('journal.journal_article.titles.title','data.title')
+move_field('journal.journal_article.publication_date.0.year','data.year')
+move_field('journal.journal_article.publication_date.year','data.year')
+trim('data.year')
+move_field('journal.journal_article.doi_data.doi','data.doi')
+move_field('journal.journal_article.pages.first_page','data.page.start')
+move_field('journal.journal_article.pages.last_page','data.page.end')
+move_field('journal.journal_issue.issue','data.issue')
+move_field('journal.journal_issue.journal_volume.volume','data.volume')
+move_field('journal.journal_metadata.full_title','data.publication')
+move_field('journal.journal_metadata.issn.*.content','data.issn.$append')
+move_field('journal.journal_article.contributors.person_name','data.author')
+do list (path => data.author)
+	remove_field('sequence')
+	move_field('given_name', 'first_name')
+	move_field('surname','last_name')
+end
+retain_field('data')
+end
+
+# book_chapter
+if exists ('book.book_metadata')
+move_field('book.book_metadata.isbn.content','data.isbn.$append')
+move_field('book.book_metadata.publication_date.0.year','data.year')
+move_field('book.book_metadata.publication_date.year','data.year')
+trim('data.year')
+move_field('book.book_metadata.titles.title','data.book_title')
+move_field('book.content_item.titles.title','data.title')
+move_field('book.content_item.doi_data.doi','data.doi')
+move_field('book.content_item.pages.first_page','data.page.start')
+move_field('book.content_item.pages.last_page','data.page.end')
+move_field('book.content_item.contributors.person_name','data.author')
+do list (path => data.author)
+	remove_field('sequence')
+	move_field('given_name', 'first_name')
+	move_field('surname','last_name')
+end
+end
+
+# book
+if exists('book.book_series_metadata')
+	nothing()
+end

@@ -4,20 +4,21 @@ _prefix:
 inspire:
   package: Inspire
   options:
-    fix: ['inspire_mapping()']
+    fix: ['lib/Catmandu/Fix/inspire_mapping.fix']
 crossref:
-  package: crossref
+  package: CrossRef
   options:
-    fix: ['crossref_mapping()']
+    fix: ['lib/Catmandu/Fix/crossref_mapping.fix']
+    usr: 'publikationsdienste.ub@uni-bielefeld.de'
 pmc:
-  package: Pubmed
+  package: EuropePMC
   options:
-    fix: ['pmc_mapping()']
+    fix: ['lib/Catmandu/Fix/pmc_mapping.fix']
 arxiv:
   package: ArXiv
   options:
-    fix: ['arxiv_mapping()']
+    fix: ['lib/Catmandu/Fix/arxiv_mapping.fix']
 bibtex:
   package: BibTeX
   options:
-    fix: ['bibtex_mapping()']
+    fix: ['lib/Catmandu/Fix/bibtex_mapping.fix']

@@ -11,12 +11,19 @@
 	  <h5>Enter ID</h5>
 	  <form class="form-inline" role="form" action="/myPUB/import" method="POST">
 	    <span class="input-group col-md-8">
-          <input type="text" value="" class="form-control" id="id" name="id" placeholder="10.324/JHEP287432" />
+          <select class="selectpicker input-group-btn" id="select_source">
+            <option value="crossref" selected="selected">Crossref</option>
+            <option value="pmc">Europe PMC</option>
+            <option value="arxiv">ArXiv</option>
+            <option value="inspire">Inpire</option>
+          </select>
+          <input type="hidden" id="input_source" name="source">
+          <input type="text" value="" class="form-control" id="input_id" name="id" placeholder="10.324/JHEP287432" />
           <span class="input-group-btn">
-            <button type="button" class="btn btn-default">Go!</button>
+            <button type="submit" class="btn btn-default">Go!</button>
           </span>
-        </span>
-      </form>
+      </span><!-- input-group -->
+    </form>
     </div>
     
     <div class="row">
@@ -34,5 +41,18 @@
     </div>
   </div><!-- col-md-9 -->
 </div>
+
+<script>
+$.('.selectpicker').selectpicker();
+</script>
+
+<script>
+$('#select_source').change(function () {
+  $('#input_source').val($('#select_source').val());
+});
+$('#input_id').keydown(function () {
+  $('#input_source').val($('#select_source').val());
+});
+</script>
 
 <!-- END add_new.tt -->
