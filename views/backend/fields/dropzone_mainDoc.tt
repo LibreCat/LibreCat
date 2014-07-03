@@ -24,7 +24,7 @@
       progresselement.parentNode.removeChild(progresselement);
       var resp = JSON.parse(response);
       if(resp.success){
-        var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-2 text-muted\">Upload Date:</div><div class=\"col-md-1 text-muted\">User:</div></div>");
+        var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-2 text-muted\">Upload Date:</div><div class=\"col-md-2 text-muted\">User:</div><div class=\"col-md-2 text-muted\">Relation:</div></div>");
         file.previewElement.appendChild(tagsRow);
         
         var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\" id=\"filename_" + resp.file_id + "\"><a href=\"[% h.shost %]/download/[% id %]/" + resp.file_id + "\" target=\"_blank\">" + file.name + "</a></div></div>");
@@ -35,8 +35,11 @@
         var dateString = Dropzone.createElement("<div class=\"col-md-2\" id=\"updated_" + resp.file_id + "\"><span>" + resp.date_updated + "</span></div>");
         fileName.appendChild(dateString);
         
-        var userString = Dropzone.createElement("<div class=\"col-md-1\" id=\"creator_" + resp.file_id + "\"><span>" + resp.creator + "</span></div>");
+        var userString = Dropzone.createElement("<div class=\"col-md-2\" id=\"creator_" + resp.file_id + "\"><span>" + resp.creator + "</span></div>");
         fileName.appendChild(userString);
+        
+        var relationString = Dropzone.createElement("<div class=\"col-md-2\" id=\"relation_" + resp.file_id + "\"><span>" + resp.relation + "</span></div>");
+        fileName.appendChild(relationString);
         
         file.previewElement.appendChild(fileName);
         
@@ -48,7 +51,7 @@
         
         var editLink = Dropzone.createElement("<div class=\"corner_down\" id=\"cordown_" + resp.file_id + "\"><a href=\"#\"><span class=\"glyphicon glyphicon-pencil\"></span></a></div>");
         editLink.addEventListener("click", function(e) {
-          window.editFile(resp.file_id,[% id %],file.name,resp.access,"","");
+          window.edit_file(resp.file_id,[% id %],file.name,resp.access,"","");
         });
         file.previewElement.appendChild(editLink);
         
@@ -126,6 +129,7 @@
           <div class="col-md-3 text-muted">Access Level:</div>
           <div class="col-md-3 text-muted">Upload Date:</div>
           <div class="col-md-2 text-muted">User:</div>
+          <div class="col-md-2 text-muted">Relation:</div>
         </div>
         <div class="row">
           <div class="col-md-3 padded" id="filename_[% fi.file_id %]">
@@ -155,6 +159,9 @@
           </div>
           <div class="col-md-2" id="creator_[% fi.file_id %]">
             [% fi.creator %]
+          </div>
+          <div class="col-md-2" id="relation_[% fi.file_id %]">
+            [% fi.relation %]
           </div>
         </div>
         <div class="corner_up" id="corup_[% fi.file_id %]" onclick="javascript:deleteUploadedDocument([% fi.file_id %], this);"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></div>
