@@ -93,6 +93,10 @@ function edit_file(fileOId){ //, recordOId, fileName, accessLevel, accessEmbargo
     $('#id_accessLevel_admin').prop('checked',true);
     $('#id_accessEmbargo').prop('disabled',false);
   }
+  else if(json.access_level == "request"){
+    $('#id_accessLevel_request').prop('checked',true);
+    $('#id_accessEmbargo').prop('disabled',false);
+  }
 
   if(json.embargo && json.embargo != ""){
     $('#id_accessEmbargo').prop('checked',true);
@@ -110,6 +114,7 @@ function edit_file(fileOId){ //, recordOId, fileName, accessLevel, accessEmbargo
 function deleteUploadedDocument(fileId, recordId, fileName){
   if (confirm("Are you sure you want to delete this uploaded document? Any external links will be broken! If you need to update an existing file to a new version you should edit the corresponding entry in the list and re-upload the file")) {
     $('#' + fileId).remove();
+    $('#file_order_' + fileId).remove();
     $.post( "/upload/delete", { id: recordId, filename: fileName });
   }
 }

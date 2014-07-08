@@ -606,7 +606,8 @@ require.register("dropzone/lib/dropzone.js", function(exports, require, module){
         }
       },
       completemultiple: noop,
-      previewTemplate: "<div class=\"span7 dz-preview dz-file-preview\" style=\"position:relative;min-height:35px;\"></div>"
+      previewTemplate: "<div class=\"col-md-11 dz-preview dz-file-preview\"></div>"
+      //previewTemplate: "<div class=\"span7 dz-preview dz-file-preview\" style=\"position:relative;min-height:35px;\"></div>"
     };
 
     extend = function() {
@@ -739,10 +740,10 @@ require.register("dropzone/lib/dropzone.js", function(exports, require, module){
       if (this.element.classList.contains("dropzone") && !this.element.querySelector(".dz-message")) {
     	var firstKid = this.element.childNodes[0];
     	if(firstKid){
-    		this.element.insertBefore(Dropzone.createElement("<div class=\"dz-default dz-message alert span7\"><span>" + this.options.dictDefaultMessage + "</span></div>"),firstKid);
+    		this.element.insertBefore(Dropzone.createElement("<div class=\"dz-default dz-message alert col-md-7\"><span>" + this.options.dictDefaultMessage + "</span></div>"),firstKid);
     	}
     	else {
-    		this.element.appendChild(Dropzone.createElement("<div class=\"dz-default dz-message alert span7\"><span>" + this.options.dictDefaultMessage + "</span></div>"));
+    		this.element.appendChild(Dropzone.createElement("<div class=\"dz-default dz-message alert col-md-7\"><span>" + this.options.dictDefaultMessage + "</span></div>"));
     	}
       }
       if (this.clickableElements.length) {

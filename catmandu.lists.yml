@@ -104,51 +104,79 @@ relations:
   00:
     relation: "earlier_version"
     opposite: "later_version"
+    relation_text: "Earlier Version (of PUB record)"
     link_text: "Earlier Version"
   01:
     relation: "later_version"
     opposite: "earlier_version"
+    relation_text: "Later Version (of PUB record)"
     link_text: "Later Version"
   02:
     relation: "contains"
     opposite: "published_in"
+    relation_text: "Contains (PUB record)"
     link_text: "Published in"
   03:
     relation: "published_in"
     opposite: "contains"
+    relation_text: "Published in (PUB record)"
     link_text: "Contains Document"
   04:
     relation: "part_of_dissertation"
     opposite: "dissertation_contains"
+    relation_text: "Part of dissertation (PUB record)"
     link_text: "Published in Dissertation"
   05:
     relation: "dissertation_contains"
     opposite: "part_of_dissertation"
+    relation_text: "Dissertation containing (PUB record)"
     link_text: "Article/Paper in Dissertation"
   06:
     relation: "old_edition"
     opposite: "new_edition"
+    relation_text: "Old Edition (of PUB record)"
     link_text: "Old Edition"
   07:
     relation: "new_edition"
     opposite: "old_edition"
+    relation_text: "New Edition (of PUB record)"
     link_text: "New Edition"
   08:
     relation: "continues"
     opposite: "is_continued_by"
+    relation_text: "Continues (PUB record)"
     link_text: "Continuation"
   09:
     relation: "is_continued_by"
     opposite: "continues"
+    relation_text: "Continued by (PUB record)"
     link_text: "Previous Object"
   10:
     relation: "popular_science_of"
     opposite: "research_paper_of"
+    relation_text: "Popular science of (PUB record)"
     link_text: "Research Paper"
   11:
     relation: "research_paper_of"
     opposite: "popular_science_of"
+    relation_text: "Research paper of (popular science PUB record)"
     link_text: "Popular Science"
+  12:
+    relation: "table_of_contents"
+    relation_text: "Table of contents (of PUB record)"
+    link_text: "Table of Contents"
+  13:
+    relation: "erratum"
+    relation_text: "Erratum (of PUB record)"
+    link_text: "Erratum"
+  14:
+    relation: "supplementary_material"
+    relation_text: "Supplementary Material (of PUB record)"
+    link_text: "Supplementary Material"
+  15:
+    relation: "other"
+    relation_text: "In other relation (to PUB record)"
+    link_text: "Other Relation"
 
 xdepartments:
   "BiSEd Bielefeld School of Education":

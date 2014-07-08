@@ -146,9 +146,9 @@ publicationTypes:
           placeholder: "YYYY"
           readonly: 0
       file_upload:
-        tab_name: "Main File Upload"
+        tab_name: "File Upload"
         dropzone_mainDoc:
-          label: "Upload main file(s)"
+          label: "Upload Main File(s) and Supplementary Material"
         dropzone_confLetter:
           label: "Upload a confirmation letter"
       supplementary_fields:
