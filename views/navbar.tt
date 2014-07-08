@@ -19,6 +19,31 @@
     <script type="text/javascript" src="/javascripts/backend.js"></script>
     <script type="text/javascript" src="/javascripts/angular-1.2.14.min.js"></script>
     <script src="/javascripts/bootstrap-select.js"></script>
+    <script src="/javascripts/jquery-sortable.js"></script>
+    
+    <style>
+    body.dragging, body.dragging * {
+      cursor: url(/images/closedhand.cur) 4 4, move !important;
+    }
+    
+    .dragged {
+      position: absolute;
+      margin-left:-250px;
+      opacity: 0.5;
+      z-index: 2000;
+    }
+    
+    div.dz-preview:hover {
+      cursor: url(/images/openhand.cur) 4 4, move !important;
+    }
+    
+    div.dz-preview.placeholder {
+      position: relative;
+    }
+    div.dz-preview.placeholder:before {
+      position: absolute;
+    }
+    </style>
 
   </head>
   <body>
