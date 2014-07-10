@@ -60,8 +60,8 @@ field_order:
     - ubi_funded
   related_material:
     - confirmation_letter
-    - related_material
-    - link
+    - link_publication
+    - url
 publicationTypes:
   book:
     label: "Book"
@@ -181,11 +181,14 @@ publicationTypes:
           placeholder: "Keyword (for more keyword fields click +)"
           readonly: 0
       related_material:
-        tab_name: "Supplementary Material"
-        related_material:
+        tab_name: "Related Material"
+        link_publication:
           mandatory: 0
           label: "Link Publications"
           readonly: 0
+        url:
+          label: "URL"
+          placeholder: "Enter a remote location of your file here"
   journaleditor:
     label: "Journal Editor"
     tmpl: journalEditor
