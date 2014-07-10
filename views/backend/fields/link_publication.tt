@@ -1,0 +1,30 @@
+<div class="row innerrow">
+  <div class="col-md-12 form-group buttonrow">
+    <div class="col-md-12">
+      <a href="#connectPubl" type="button" class="btn btn-default" data-toggle="modal">{% fields.related_material.link_publication.label %}</a>
+    </div>
+  </div>
+      
+  <div class="col-md-12" id="relatesTo">
+    <span[% IF !related_material %] style="display:none"[% END %]><strong>Linked Publications:</strong></span>
+    [% IF related_material %]
+    [% FOREACH rel IN related_material %]
+      [% NEXT IF rel.url %]
+      [% record = h.publication.get(rel.id) %]
+      <div class="row" id="[% rel.id %]">
+        <div class="col-md-5">
+          <i class="icon-file"></i> <a href="/publication/[% rel.id %]" target="_blank">[% record.title %]</a><br />
+        </div>
+        <div class="col-md-1">
+          [% rel.id %]
+        </div>
+        <div class="col-md-1">
+          <a href="javascript:deleteRelMat([% rel.id %])">Remove</a>
+        </div>
+      </div>
+    [% END %]
+    [% END %]
+  </div>
+</div>
+
+[% INCLUDE backend/fields/modal_connectPubl.tt %]

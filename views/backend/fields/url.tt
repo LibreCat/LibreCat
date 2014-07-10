@@ -1,0 +1,12 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="id_title">
+      {% fields.related_material.url.label %}{% IF fields.related_material.url.mandatory == "1" %}<span class="starMandatory">*</span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10">
+    <span class="form-group col-md-9">
+      <input type="text" name="url" id="id_url" value="[% url %]" placeholder="{% fields.related_material.url.placeholder %}" class="form-control">
+    </span>
+  </div>
+</div>

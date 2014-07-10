@@ -28,38 +28,3 @@ function deleteRelMat(materialOId, otherOId) {
 
    }
 }
-
-
-$('#searchPubl').click(function() {
-
-  $.get(puburl,function(response) {
-    var objJSON = eval("(function(){return " + response + ";})()");
-    $('#results').html("");
-    for(var i=0;i<objJSON.length;i++){
-      var data = objJSON[i];
-      var control = "";
-      var oId = "";
-      var title = "";
-      var citation = "";
-      $.each(data, function(key, value){
-        if(key == "oId"){
-          oId = value;
-        }
-        if(key == "title"){
-          title = value;
-        }
-        if(key == "citation"){
-          citation = value;
-        }
-      });
-        $('#results').append("<div class=\"span5\"><a href=\"#\" onclick=\"javascript:connect(" + oId + ",[% recordOId %])\"><i class=\"icon-plus\"></i> <strong>" + title + "</strong></a><br />" + citation + "</div><div class=\"span3\">&nbsp;</div>");
-      oId = "";
-      title = "";
-      citation = "";
-      control = "";
-    }
-    if($.trim($('#results').html())==''){
-      $('#results').html("<div><div class=\"span4 alert alert-error\">No results found or all matching results have already been connected.</div></div>");
-    }
-  });
-});
