@@ -102,6 +102,17 @@ sub save_publication {
     	}
     	$data->{file} = $file;
     }
+    if($data->{related_material}){
+    	if(ref $data->{related_material} ne "ARRAY"){
+    		$data->{related_material} = [$data->{related_material}];
+    	}
+    	my $relmat = ();
+    	foreach (@{$data->{related_material}}){
+    		next if $_ eq "";
+    		push @$relmat, $json->decode($_);
+    	}
+    	$data->{related_material} = $relmat;
+    }
     if($data->{language}){
     	if(ref $data->{language} ne "ARRAY"){
     		$data->{language} = [$data->{language}];

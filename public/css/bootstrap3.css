@@ -7112,7 +7112,7 @@ div.frontdoor_right {
 	margin-left: 0;
 }
 
-select.authedtrans {
+select.authedtrans, select.relmat {
 	min-height: 33px;
 	background-color: #fff;
 	border-color: lightgray;

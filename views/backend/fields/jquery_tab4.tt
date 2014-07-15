@@ -3,28 +3,22 @@ $('#fourToThree').click(function(){
   $('#li_supplementary_fields').addClass('active');
 });
 
-function deleteRelMat(materialOId, otherOId) {
-   if (confirm("Are you sure you want to delete this related material/relation")) {
-     $('#' + materialOId).children('.col-md-1').last().remove();
-     $('#' + materialOId).append('<div class="col-md-1"><img src="/images/preloader_circle.gif" /></div>');
-     var xmlhttp;
-     if (window.XMLHttpRequest) {
-       // code for IE7+, Firefox, Chrome, Opera, Safari
-       xmlhttp = new XMLHttpRequest();
-     } else {
-       // code for IE6, IE5
-       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-     }
-     
-     xmlhttp.onreadystatechange = function() {
-       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-         $('#' + materialOId).remove();
-       }
-     }
-     
-     var url = "/luur/record_material?func=deleteRelatedMaterial&recordOId=[% recordOId %]&otherObjectOId=" + otherOId + "&deleteRelatedMaterialOId=" + materialOId;
-     xmlhttp.open("GET", url, true);
-     xmlhttp.send();
+$('#plus_connect').click(function(){
+  var items = $('#url div.innerrow');
+  var index = items.index($('#url div.innerrow').last()) + 1;
+  $('#url').append('[% INCLUDE backend/fields/subfields/url.tt %]');
+  $('#url_select_' + index).append('[% FOREACH key IN h.config.lists.relations.keys.nsort %]<option value="[% h.config.lists.relations.$key.relation %]"[% IF h.config.lists.relations.$key.relation == "supplementary_material" %] selected="selected"[% END %]>[% h.config.lists.relations.$key.link_text %]</option>[% END %]');
+});
 
-   }
-}
+//minus
+$(document).on('click', '.connect', function(){
+  var index = $(this).parent().parent().parent().index();
+  $(this).parent().parent().parent().remove();
+});
+
+$('select.relmat').on('change', function() {
+  var selid = $(this).attr('id');
+  var selval = $(this).val();
+  var arr = selid.split('_');
+  $('#reljson_' + arr[1]).val('{"record": {"id": ' + arr[1] + ', "relation": "' + selval + '"}}');
+});
