@@ -184,11 +184,12 @@ publicationTypes:
         tab_name: "Related Material"
         link_publication:
           mandatory: 0
-          label: "Link Publications"
+          label: "Documents within PUB"
+          placeholder: "Start typing to search your publications."
           readonly: 0
         url:
-          label: "URL"
-          placeholder: "Enter a remote location of your file here"
+          label: "Documents outside PUB"
+          placeholder: "Enter a remote location (URL) of your file here"
   journaleditor:
     label: "Journal Editor"
     tmpl: journalEditor
