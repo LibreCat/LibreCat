@@ -125,12 +125,12 @@ relations:
     relation: "part_of_dissertation"
     opposite: "dissertation_contains"
     relation_text: "Part of dissertation (PUB record)"
-    link_text: "Published in Dissertation"
+    link_text: "Published in Diss."
   05:
     relation: "dissertation_contains"
     opposite: "part_of_dissertation"
     relation_text: "Dissertation containing (PUB record)"
-    link_text: "Article/Paper in Dissertation"
+    link_text: "Article in Dissertation"
   06:
     relation: "old_edition"
     opposite: "new_edition"
@@ -155,12 +155,12 @@ relations:
     relation: "popular_science_of"
     opposite: "research_paper_of"
     relation_text: "Popular science of (PUB record)"
-    link_text: "Research Paper"
+    link_text: "Popular Science"
   11:
     relation: "research_paper_of"
     opposite: "popular_science_of"
     relation_text: "Research paper of (popular science PUB record)"
-    link_text: "Popular Science"
+    link_text: "Research Paper"
   12:
     relation: "table_of_contents"
     relation_text: "Table of contents (of PUB record)"
@@ -172,7 +172,7 @@ relations:
   14:
     relation: "supplementary_material"
     relation_text: "Supplementary Material (of PUB record)"
-    link_text: "Supplementary Material"
+    link_text: "Suppl. Material"
   15:
     relation: "other"
     relation_text: "In other relation (to PUB record)"
