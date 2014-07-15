@@ -27,16 +27,16 @@
         var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-12 padded\" id=\"filename_" + resp.file_id + "\"><span class=\"glyphicon glyphicon-file text-muted\"></span> <a href=\"[% h.shost %]/download/[% id %]/" + resp.file_id + "\" target=\"_blank\">" + file.name + "</a></div></div>");
         file.previewElement.appendChild(fileName);
         
-        var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-2 text-muted\">Upload Date:</div><div class=\"col-md-4 text-muted\">User:</div><div class=\"col-md-4 text-muted\">Relation:</div></div>");
+        var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-3 text-muted\">Upload Date:</div><div class=\"col-md-3 text-muted\">User:</div><div class=\"col-md-4 text-muted\">Relation:</div></div>");
         file.previewElement.appendChild(tagsRow);
         
         var accessString = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2\" id=\"access_" + resp.file_id + "\"><span>" + resp.access_level + "</span></div></div>");
         fileName.appendChild(accessString);
         
-        var dateString = Dropzone.createElement("<div class=\"col-md-2\" id=\"updated_" + resp.file_id + "\"><span>" + resp.date_updated + "</span></div>");
+        var dateString = Dropzone.createElement("<div class=\"col-md-3\" id=\"updated_" + resp.file_id + "\"><span>" + resp.date_updated + "</span></div>");
         accessString.appendChild(dateString);
         
-        var userString = Dropzone.createElement("<div class=\"col-md-4\" id=\"creator_" + resp.file_id + "\"><span>" + resp.creator + "</span></div>");
+        var userString = Dropzone.createElement("<div class=\"col-md-3\" id=\"creator_" + resp.file_id + "\"><span>" + resp.creator + "</span></div>");
         accessString.appendChild(userString);
         
         var relationString = Dropzone.createElement("<div class=\"col-md-4\" id=\"relation_" + resp.file_id + "\"><span>" + resp.relation + "</span></div>");
@@ -132,8 +132,8 @@
         </div>
         <div class="row">
           <div class="col-md-2 text-muted">Access Level:</div>
-          <div class="col-md-2 text-muted">Upload Date:</div>
-          <div class="col-md-4 text-muted">User:</div>
+          <div class="col-md-3 text-muted">Upload Date:</div>
+          <div class="col-md-3 text-muted">User:</div>
           <div class="col-md-4 text-muted">Relation:</div>
         </div>
         <div class="row">
@@ -162,10 +162,10 @@
             
             [% END %]
           </div>
-          <div class="col-md-2" id="updated_[% fi.file_id %]">
+          <div class="col-md-3" id="updated_[% fi.file_id %]">
             [% fi.date_updated %]
           </div>
-          <div class="col-md-4" id="creator_[% fi.file_id %]">
+          <div class="col-md-3" id="creator_[% fi.file_id %]">
             [% fi.creator %]
           </div>
           <div class="col-md-4" id="relation_[% fi.file_id %]">
