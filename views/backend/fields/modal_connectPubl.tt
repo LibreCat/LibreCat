@@ -35,7 +35,7 @@
           [% NEXT IF skip %]
         <div class="row innerrow">
         <div class="col-md-12">
-          <a href="#" onclick="javascript:connect([% pub.id %],[% id %])"><span class="glyphicon glyphicon-plus"></span>
+          <a href="#" onclick="javascript:connect([% pub.id %],"[% pub.title | replace('"', '\"') %]",[% id %])"><span class="glyphicon glyphicon-plus"></span>
           <strong>[% pub.title %]</strong></a><br />
           [% pub.citation.frontShort %]
         </div>
@@ -116,7 +116,7 @@ $('#searchPublInput').keyup(function(ev) {
   }
 });
 
-function connect(otherId, recId){
+function connect(other_id, other_title, rec_id){
   
 }
 </script>
