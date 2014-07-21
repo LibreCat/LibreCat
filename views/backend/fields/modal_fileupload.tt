@@ -27,8 +27,8 @@
           
           <select name="relation" class="form-control" id="id_select_relation">
             <option value="main_file"[% IF !relation %] selected="selected"[% END %]>Main File</option>
-            [% FOREACH rel IN h.config.lists.relations.keys.sort %]
-              <option value="[% h.config.lists.relations.$rel.relation %]"[% IF h.config.lists.relations.$rel.relation == relation %] selected="selected"[% END %]>[% h.config.lists.relations.$rel.relation_text %]</option>
+            [% FOREACH rel IN h.config.lists.relations_file.keys.sort %]
+              <option value="[% h.config.lists.relations_file.$rel.relation %]"[% IF h.config.lists.relations_file.$rel.relation == relation %] selected="selected"[% END %]>[% h.config.lists.relations_file.$rel.relation_text %]</option>
             [% END %]
           </select>
         </div>
