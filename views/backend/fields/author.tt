@@ -59,8 +59,8 @@
     </div>
     <div class="col-md-10 creator">
       <div class="form-group">
-        <input type="hidden" id="orig_first_name_[% loop.index %]" value="" />
-        <input type="hidden" id="orig_last_name_[% loop.index %]" value="" />
+        <input type="hidden" id="orig_first_name_[% loop.index %]" value="[% name.first_name %]" />
+        <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% name.last_name %]" />
             
         <span class="form-group col-md-4">
           <input type="text" id="first_name_[% loop.index %]" ng-model="first_name_[% loop.index %]" ng-init="first_name_[% loop.index %]='[% name.first_name %]'" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" class="form-control" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
@@ -68,7 +68,8 @@
         <span class="form-group col-md-5">
           <input type="text" id="last_name_[% loop.index %]" ng-model="last_name_[% loop.index %]" ng-init="last_name_[% loop.index %]='[% name.last_name %]'" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
-        <input type="hidden" id="author_json_[% loop.index %]" name="author" ng-model="author_[% loop.index %]" ng-init="author_[% loop.index %]='[% name.json.replace('"', "\\'") %]'" value='{"last_name":"{{last_name_[% loop.index %]}}", "first_name":"{{first_name_[% loop.index %]}}", "full_name":"{{last_name_[% loop.index %]}}, {{first_name_[% loop.index %]}}", "id":"{{id_[% loop.index %]}}"}'>
+        <input type="hidden" id="id_[% loop.index %]" ng-model="id_[% loop.index %]" ng-init="id_[% loop_index %]='[% name.id %]'" value="[% name.id %]" />
+        <input type="hidden" id="author_json_[% loop.index %]" name="author" ng-model="author_[% loop.index %]" ng-init="author_[% loop.index %]='[% name.json.replace('"', "\\'") %]'" value='{"last_name":"{{last_name_[% loop.index %]}}", "first_name":"{{first_name_[% loop.index %]}}", "full_name":"{{last_name_[% loop.index %]}}, {{first_name_[% loop.index %]}}", "id":"[% name.id %]"}'>
             
         <span class="col-md-1">
           [% IF loop.index == 0 %]
