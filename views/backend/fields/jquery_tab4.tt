@@ -3,13 +3,6 @@ $('#fourToThree').click(function(){
   $('#li_supplementary_fields').addClass('active');
 });
 
-$('#plus_connect').click(function(){
-  var items = $('#url div.innerrow');
-  var index = items.index($('#url div.innerrow').last()) + 1;
-  $('#url').append('[% INCLUDE backend/fields/subfields/url.tt %]');
-  $('#url_select_' + index).append('[% FOREACH key IN h.config.lists.relations.keys.nsort %]<option value="[% h.config.lists.relations.$key.relation %]"[% IF h.config.lists.relations.$key.relation == "supplementary_material" %] selected="selected"[% END %]>[% h.config.lists.relations.$key.link_text %]</option>[% END %]');
-});
-
 //minus
 $(document).on('click', '.connect', function(){
   var index = $(this).parent().parent().parent().index();
