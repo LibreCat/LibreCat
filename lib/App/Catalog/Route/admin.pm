@@ -1,10 +1,10 @@
 package App::Catalog::Route::admin;
 
 use Catmandu::Sane;
-use Catmandu qw(:load);
 use Catmandu::Util qw(:array);
 use Dancer ':syntax';
 use App::Catalog::Helper;
+use App::Catalog::Controller::Admin qw/:all/;
 
 prefix '/admin' => sub {
 
@@ -17,7 +17,9 @@ prefix '/admin' => sub {
 		template 'admin/account';
 	};
 
-	post '/account/search' => sub {};
+	post '/account/search' => sub {
+		
+	};
 
 	get '/account/edit/:id' => sub {
 		my $id = params 'id';

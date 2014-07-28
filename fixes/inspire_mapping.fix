@@ -1,0 +1,22 @@
+# maps Inspire data to the local repository
+
+move_field("records.record","rec")
+move_field("rec.titles.title","rec.title")
+move_field("rec.titles.secondary-title","rec.publication")
+remove_field("rec.titles")
+move_field("rec.dates.year","rec.year")
+remove_field("rec.dates")
+if exists("rec.abstract")
+	move_field("rec.abstract","rec.abstract.0.text")
+	set_field("rec.abstract.0.lang","eng")
+end
+move_field("rec.electronic-resource-num","rec.doi")
+do list (path => "rec.contributors.authors.author")
+	move_field("*","rec.tmpauthor.name")
+end
+
+#if exists("rec.pages")
+#	copy_field"rec.
+#end
+
+retain_field("rec")
