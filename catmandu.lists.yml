@@ -137,12 +137,12 @@ relations_link:
     relation: "contains"
     opposite: "published_in"
     relation_text: "Contains (PUB record)"
-    link_text: "Published in"
+    link_text: "Contains Document"
   03:
     relation: "published_in"
     opposite: "contains"
     relation_text: "Published in (PUB record)"
-    link_text: "Contains Document"
+    link_text: "Published in"
   04:
     relation: "part_of_dissertation"
     opposite: "dissertation_contains"
