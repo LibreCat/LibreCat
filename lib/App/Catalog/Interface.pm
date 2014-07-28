@@ -15,6 +15,50 @@ get '/search_researcher' => sub {
 	
 };
 
+get '/autocomplete_connect' => sub {
+	my $q = params->{'term'} || "";
+	
+	if($q ne ""){
+		if(session->{role} ne "user"){
+			$q = "title=" . $q . "* OR person=" . $q . "*",
+		}
+		else {
+			$q = "title=" . $q . "*";
+		}
+	}
+	
+	
+	my $hits = h->search_publication({q => $q, limit => 1000, sort => "title,,0"});
+	my $jsonhash;
+	
+	foreach my $hit (@{$hits->{hits}}){
+		my $label = "$hit->{title} ($hit->{year}, ";
+		if(!$hit->{author} and $hit->{editor}){
+#			foreach my $editor (@{$hit->{editor}}){
+#				$label .= $editor->{first_name} . " " . $editor->{last_name} . ", ";
+#			}
+			$label .= $hit->{editor}->[0]->{first_name} . " " . $hit->{editor}->[0]->{last_name};
+			$label .= ", 1st ed.)";
+		}
+		elsif($hit->{author}){
+#			foreach my $author (@{$hit->{author}}){
+#				$label .= $author->{first_name} . " " . $author->{last_name} . ", ";
+#			}
+#			$label =~ s/, $//g;
+			$label .= $hit->{author}->[0]->{first_name} . " " . $hit->{author}->[0]->{last_name};
+			$label .= ", 1st auth.)",
+		}
+		else{
+			$label =~ s/, $/)/g;
+		}
+		
+		push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
+	}
+
+	my $json = to_json($jsonhash);
+	return $json;
+};
+
 get '/autocomplete_hierarchy' => sub {
 	my $q = params->{'term'} || "";
 	my $fmt = params->{fmt} || "autocomplete";

@@ -87,11 +87,31 @@ sub save_publication {
     	if(ref $data->{file} ne "ARRAY"){
     		$data->{file} = [$data->{file}];
     	}
+    	if(ref $data->{file_order} ne "ARRAY"){
+    		$data->{file_order} = [$data->{file_order}];
+    	}
     	my $file = ();
-    	foreach (@{$data->{file}}){
-    		push @$file, $json->decode($_);
+    	foreach my $recfile (@{$data->{file}}){
+    		my $rfile = $json->decode($recfile);
+    		my @array = @{$data->{file_order}};
+    		my $search_for = $rfile->{file_id};
+    		my( $index )= grep { $array[$_] eq $search_for } 0..$#array;
+    		$rfile->{file_order} = sprintf("%03d", $index);
+    		$rfile->{file_json} = $recfile;
+    		push @$file, $rfile;
     	}
     	$data->{file} = $file;
+    }
+    if($data->{related_material}){
+    	if(ref $data->{related_material} ne "ARRAY"){
+    		$data->{related_material} = [$data->{related_material}];
+    	}
+    	my $relmat = ();
+    	foreach (@{$data->{related_material}}){
+    		next if $_ eq "";
+    		push @$relmat, $json->decode($_);
+    	}
+    	$data->{related_material} = $relmat;
     }
     if($data->{language}){
     	if(ref $data->{language} ne "ARRAY"){

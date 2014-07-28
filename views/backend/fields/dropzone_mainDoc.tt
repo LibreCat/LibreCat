@@ -24,21 +24,25 @@
       progresselement.parentNode.removeChild(progresselement);
       var resp = JSON.parse(response);
       if(resp.success){
-        var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-2 text-muted\">Upload Date:</div><div class=\"col-md-1 text-muted\">User:</div></div>");
+        var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-12 padded\" id=\"filename_" + resp.file_id + "\"><span class=\"glyphicon glyphicon-file text-muted\"></span> <a href=\"[% h.shost %]/download/[% id %]/" + resp.file_id + "\" target=\"_blank\">" + file.name + "</a></div></div>");
+        file.previewElement.appendChild(fileName);
+        
+        var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-3 text-muted\">Upload Date:</div><div class=\"col-md-3 text-muted\">User:</div><div class=\"col-md-4 text-muted\">Relation:</div></div>");
         file.previewElement.appendChild(tagsRow);
         
-        var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\" id=\"filename_" + resp.file_id + "\"><a href=\"[% h.shost %]/download/[% id %]/" + resp.file_id + "\" target=\"_blank\">" + file.name + "</a></div></div>");
-        
-        var accessString = Dropzone.createElement("<div class=\"col-md-2\" id=\"access_" + resp.file_id + "\"><span>" + resp.access_level + "</span></div>");
+        var accessString = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2\" id=\"access_" + resp.file_id + "\"><span>" + resp.access_level + "</span></div></div>");
         fileName.appendChild(accessString);
         
-        var dateString = Dropzone.createElement("<div class=\"col-md-2\" id=\"updated_" + resp.file_id + "\"><span>" + resp.date_updated + "</span></div>");
-        fileName.appendChild(dateString);
+        var dateString = Dropzone.createElement("<div class=\"col-md-3\" id=\"updated_" + resp.file_id + "\"><span>" + resp.date_updated + "</span></div>");
+        accessString.appendChild(dateString);
         
-        var userString = Dropzone.createElement("<div class=\"col-md-1\" id=\"creator_" + resp.file_id + "\"><span>" + resp.creator + "</span></div>");
-        fileName.appendChild(userString);
+        var userString = Dropzone.createElement("<div class=\"col-md-3\" id=\"creator_" + resp.file_id + "\"><span>" + resp.creator + "</span></div>");
+        accessString.appendChild(userString);
         
-        file.previewElement.appendChild(fileName);
+        var relationString = Dropzone.createElement("<div class=\"col-md-4\" id=\"relation_" + resp.file_id + "\"><span>" + resp.relation + "</span></div>");
+        accessString.appendChild(relationString);
+        
+        file.previewElement.appendChild(accessString);
         
         var removeLink = Dropzone.createElement("<div class=\"corner_up\" id=\"corup_" + resp.file_id + "\"><a href=\"#\"><span class=\"glyphicon glyphicon-remove\"></span></a></div>");
         removeLink.addEventListener("click", function(e) {
@@ -48,7 +52,7 @@
         
         var editLink = Dropzone.createElement("<div class=\"corner_down\" id=\"cordown_" + resp.file_id + "\"><a href=\"#\"><span class=\"glyphicon glyphicon-pencil\"></span></a></div>");
         editLink.addEventListener("click", function(e) {
-          window.editFile(resp.file_id,[% id %],file.name,resp.access,"","");
+          window.edit_file(resp.file_id);
         });
         file.previewElement.appendChild(editLink);
         
@@ -66,7 +70,7 @@
         var input_element = Dropzone.createElement('<input type=\'hidden\' id=\'file_' + resp.file_id + '\' name=\'file\' value=\'' + resp.file_json + '\' />');
         file.previewElement.appendChild(input_element);
         
-        $('#sortFilesInput').append('<input type="hidden" name="file_order" value="' + resp.file_id + '" />');
+        $('#sortFilesInput').append('<input type="hidden" name="file_order" id="file_order_' + resp.file_id + '" value="' + resp.file_id + '" />');
       }
       else {
         var prevClass = file.previewElement;
@@ -119,19 +123,21 @@
     </div>
           
     [% IF file %]
-    [% FOREACH fi IN file.nsort('fileOrder') %]
+    [% FOREACH fi IN file.nsort('file_order') %]
       <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.file_id %]">
         <div class="row">
-          <div class="col-md-3 padded text-muted">Filename:</div>
-          <div class="col-md-3 text-muted">Access Level:</div>
-          <div class="col-md-3 text-muted">Upload Date:</div>
-          <div class="col-md-2 text-muted">User:</div>
+          <div class="col-md-12 padded">
+            <span class="glyphicon glyphicon-file text-muted"></span> <a href="[% h.shost %]/download/[% id %]/[% fi.file_id %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a>
+          </div>
         </div>
         <div class="row">
-          <div class="col-md-3 padded" id="filename_[% fi.file_id %]">
-            <a href="[% h.shost %]/download/[% id %]/[% fi.file_id %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a>
-          </div>
-          <div class="col-md-3" id="access_[% fi.file_id %]">
+          <div class="col-md-2 text-muted">Access Level:</div>
+          <div class="col-md-3 text-muted">Upload Date:</div>
+          <div class="col-md-3 text-muted">User:</div>
+          <div class="col-md-4 text-muted">Relation:</div>
+        </div>
+        <div class="row">
+          <div class="col-md-2" id="access_[% fi.file_id %]">
             [% SWITCH fi.access_level %]
             [% CASE "admin" %]
             Author/Admin/Reviewer
@@ -145,6 +151,12 @@
             <br />(until [% fi.embargo %])
             [% END %]
             
+            [% CASE "request" %]
+            Request a Copy
+            [% IF fi.embargo %]
+            <br />(until [% fi.embargo %])
+            [% END %]
+            
             [% CASE "openAccess" %]
             Open Access
             
@@ -153,13 +165,16 @@
           <div class="col-md-3" id="updated_[% fi.file_id %]">
             [% fi.date_updated %]
           </div>
-          <div class="col-md-2" id="creator_[% fi.file_id %]">
+          <div class="col-md-3" id="creator_[% fi.file_id %]">
             [% fi.creator %]
+          </div>
+          <div class="col-md-4" id="relation_[% fi.file_id %]">
+            [% fi.relation %]
           </div>
         </div>
         <div class="corner_up" id="corup_[% fi.file_id %]" onclick="javascript:deleteUploadedDocument([% fi.file_id %], this);"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></div>
         <div class="corner_down" id="cordown_[% fi.file_id %]" onclick="javascript:edit_file('[% fi.file_id %]');"><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
-        [% USE JSON %]
+
         <input type="hidden" id="file_[% fi.file_id %]" name="file" value='[% fi.file_json %]' />
       </div>
     [% END %]
@@ -169,7 +184,7 @@
   <div class="col-md-2">  
     <span id="sortFilesInput">
     [% FOREACH fi IN file.nsort('file_order') %]
-      <input type="hidden" name="file_order" value="[% fi.file_id %]" />
+      <input type="hidden" name="file_order" id="file_order_[% fi.file_id %]" value="[% fi.file_id %]" />
     [% END %]
     </span>
   </div>

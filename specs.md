@@ -140,6 +140,7 @@ file:
 		year_last_uploaded: 2014
 		title: "some title"
 		description: "some description"
+		relation: "main_file"|"supplementary_material"...
 doi: 10.214/test
 ddc:
 	- 530
@@ -256,23 +257,11 @@ ubi_funded: 0|1
 ec_funded: 0|1
 related_material:
 	-
-		type: "supplementary"
 		link:
 			url: "www.example.com"
 			title: "test"
 			description: "This describes something"
-		file:
-			file_name: "file.jpg"
-			file_id: 12345
-			description: "This describes something"
-			date_updated: "2014-04-23"
-			date_created: "2014-04-23"
-			title: "Title"
-			creator: login_name
-			access_level: openAccess
-			content_type: application/pdf
-			checksum: 32erjweoiru90
-			file_size: 3.4 MB
+			relation: "supplementary_file"
 		record:
 			id: 123456
 			relation: is_part_of

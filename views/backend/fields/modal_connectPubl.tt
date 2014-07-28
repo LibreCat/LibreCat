@@ -17,6 +17,34 @@
           </span>
         </span>
         <p>&nbsp;</p>
+        <div id="results">
+        [% linkPubls = h.search_publication() %]
+        [% FOREACH pub IN linkPubls.hits %]
+          [% skip = 0 %]
+          [% IF pub.related_material %]
+            [% FOREACH relations IN pub.related_material %]
+              [% IF relations.record %]
+                [% IF id == relations.record.id %]
+                  [% skip = 1 %]
+                  [% LAST %]
+                [% END %]
+              [% END %]
+            [% END %]
+          [% END %]
+        
+          [% NEXT IF skip %]
+        <div class="row innerrow">
+        <div class="col-md-12">
+          <a href="#" onclick="javascript:connect([% pub.id %],"[% pub.title | replace('"', '\"') %]",[% id %])"><span class="glyphicon glyphicon-plus"></span>
+          <strong>[% pub.title %]</strong></a><br />
+          [% pub.citation.frontShort %]
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-md-12">&nbsp;</div>
+        </div>
+        [% END %]
+        </div>
       </div>
     </div>
   </div>
@@ -24,15 +52,15 @@
 
 <script>
 $('#searchPubl').click(function() {
-  [% IF userRole == 'superAdmin' %]
-    var puburl = '[% h.host %]/publication?fmt=jsonintern&q=';
+  var puburl = 'http://pub-dev.ub.uni-bielefeld.de/publication?fmt=jsonintern&q=';
+  [% IF session.role == 'superAdmin' %]
     var searchphrase = $('#searchPublInput').val();
     if(searchphrase != ""){
       searchphrase = searchphrase.replace(/\s+/g, ' AND ');
       puburl += searchphrase;
     }
   [% ELSE %]
-    var puburl = '[% h.host %]/publication?fmt=jsonintern&q=person=[% personNumber %]';
+    puburl += 'person=[% session.personNumber %]';
     var searchphrase = $('#searchPublInput').val();
     if(searchphrase != ""){
       searchphrase = searchphrase.replace(/\s+/g, ' AND ');
@@ -46,7 +74,8 @@ $('#searchPubl').click(function() {
       connectedIds[connectedIds.length] = $(this).children().eq(1).html().trim();
     }
   });
-  $.get(puburl,function(response) {
+
+  $.get(puburl, function(response) {
     var objJSON = eval("(function(){return " + response + ";})()");
     $('#results').html("");
     for(var i=0;i<objJSON.length;i++){
@@ -68,7 +97,7 @@ $('#searchPubl').click(function() {
         }
       });
       if(control == "use"){
-        $('#results').append("<div class=\"span5\"><a href=\"#\" onclick=\"javascript:connect(" + oId + ",[% recordOId %])\"><i class=\"icon-plus\"></i> <strong>" + title + "</strong></a><br />" + citation + "</div><div class=\"span3\">&nbsp;</div>");
+        $('#results').append("<div class=\"row innerrow\"><div class=\"col-md-12\"><a href=\"#\" onclick=\"javascript:connect(" + oId + ",[% id %])\"><span class=\"glyphicon glyphicon-plus\"></span> <strong>" + title + "</strong></a><br />" + citation + "</div></div><div class=\"row\"><div class=\"col-md-12\">&nbsp;</div></div>");
       }
       oId = "";
       title = "";
@@ -76,7 +105,7 @@ $('#searchPubl').click(function() {
       control = "";
     }
     if($.trim($('#results').html())==''){
-      $('#results').html("<div><div class=\"span4 alert alert-error\">No results found or all matching results have already been connected.</div></div>");
+      $('#results').html("<div class=\"row innerrow\"><div class=\"col-md-12 alert alert-error\">No results found or all matching results have already been connected.</div></div>");
     }
   });
 });
@@ -87,39 +116,7 @@ $('#searchPublInput').keyup(function(ev) {
   }
 });
 
-function connect(otherId, recId){
-  $('#connectPubl').children('.modal-header').first().append('<div id="loading"><img src="/images/preloader_circle.gif" /></div>');
+function connect(other_id, other_title, rec_id){
   
-  var xmlhttp;
-
-  if (window.XMLHttpRequest) {
-      // code for IE7+, Firefox, Chrome, Opera, Safari
-      xmlhttp = new XMLHttpRequest();
-  } else {
-      // code for IE6, IE5
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-  }
-
-  xmlhttp.onreadystatechange = function() {
-      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        var regexp = /<body>(.*?)<br \/>(.*?)<br \/>(.*?)<\/body>/g;
-        var match = regexp.exec(xmlhttp.responseText);
-        if(match){
-          var div = '<div class="row" id="' + match[2] + '"><div class="span5"><i class="icon-file"></i> <a href="/publication/' + otherId + '" target="_blank">' + match[3] + '</a><br /></div><div class="span1">' + match[1] + '</div><div class="span1"><a href="javascript:deleteRelMat(' + match[2] + ',' + match[1] + ')">Remove</a></div></div>';
-          $('#relatesTo').append(div);
-          $('#loading').remove();
-          $('#searchPubl').click();
-          $('#connectPubl').modal('hide');
-        }
-        else {
-          alert('Oops, something went wrong!');
-        }
-      }
-  }
-
-  //var url = "/luur/record_material?func=updateDocumentRelation&materialRelationTypeOId=2587097&relationDirection=to&recordOId=" + recId + "&otherRecordOId=" + otherId;
-  var url = "/luur/record_material?func=updateDocumentRelation&materialRelationTypeOId=2632526&relationDirection=to&recordOId=" + recId + "&otherRecordOId=" + otherId;
-  xmlhttp.open("GET", url, true);
-  xmlhttp.send();
 }
 </script>

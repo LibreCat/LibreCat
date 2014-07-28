@@ -1,0 +1,54 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label>
+    {% fields.related_material.url.label %}{% IF fields.related_material.url.mandatory == "1" %}<span class="starMandatory">*</span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10">
+    <div class="form-group">
+    <span class="form-group col-md-4">
+      <input type="text" placeholder="URL" id="relurl_url" class="form-control" />
+    </span>
+    <span class="form-group col-md-5">
+      <input type="text" placeholder="Title" id="relurl_title" class="form-control" />
+    </span>
+    </div>
+  </div>
+</div>
+<div class="row innerrow">
+  <div class="col-md-10 col-md-offset-2">
+    <div class="form-group">
+    <span class="form-group col-md-7">
+      <textarea placeholder="Description" id="relurl_description" class="form-control"></textarea>
+    </span>
+    <span class="form-group col-md-2">
+      <button type="button" id="add_relurl" class="btn btn-default">Add</button>
+    </span>
+    </div>
+  </div>
+</div>
+<div id="url">
+[% IF related_material %]
+[% FOREACH u IN related_material %]
+[% NEXT IF u.record %]
+<div class="row innerrow">
+  <div class="col-md-2">
+    <select class="relurl" id="urlselect_[% loop.index %]">
+      [% FOREACH key IN h.config.lists.relations_link.keys.nsort %]
+      <option value="[% h.config.lists.relations_link.$key.relation %]"[% IF h.config.lists.relations_link.$key.relation == u.link.relation %] selected="selected"[% END %]>[% h.config.lists.relations_link.$key.link_text %]</option>
+      [% END %]
+    </select>
+  </div>
+  <div class="col-md-10">
+    <span class="form-group col-md-9">
+      <span class="glyphicon glyphicon-link"></span> <a href="[% u.link.url %]" target="_blank">[% u.link.title %]</a><br /><span class="text-muted">[% u.link.description %]</span>
+      <input type="hidden" id="relurljson_[% loop.index %]" name="related_material" value='{"link": {"url": "[% u.link.url %]", "title": "[% u.link.title %]", "description": "[% u.link.description %]", "relation": "[% u.link.relation %]"}}' />
+    </span>
+    <span class="col-md-1">
+      <span class="glyphicon glyphicon-minus connect"></span>
+    </span>
+  </div>
+</div>
+[% END %]
+[% END %]
+</div>

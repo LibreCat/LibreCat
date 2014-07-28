@@ -127,9 +127,10 @@ post '/upload' => sub {
 		$return->{creator} = session->{user};
 		$return->{file_size} = $file->{size};
 		$return->{file_id} = $file_id;
-		$return->{date_updated} = "now";#???
+		$return->{date_updated} = "2014-07-20T12:00";#???
 		$return->{access_level} = "openAccess";
 		$return->{content_type} = $file->{headers}->{"Content-Type"};
+		$return->{relation} = "main_file";
 		#$return->{error} = "this is not an error. Y U no display file?";
 		$return->{file_json} = '{"file_name": "'.$return->{file_name}.'", ';
 		$return->{file_json} .= '"file_id": "'.$return->{file_id}.'", ';
@@ -138,6 +139,7 @@ post '/upload' => sub {
 		$return->{file_json} .= '"date_updated": "'.$return->{date_updated}.'", ';
 		$return->{file_json} .= '"date_created": "'.$return->{date_updated}.'", ';
 		$return->{file_json} .= '"checksum": "ToDo", "file_size": "'.$return->{file_size}.'", ';
+		$return->{file_json} .= '"relation": "main_file", ';
 		$return->{file_json} .= '"language": "eng", "creator": "'.$return->{creator}.'", "open_access": "1", "year_last_uploaded": "2014"}';
 	}
 	else {
@@ -177,8 +179,9 @@ post '/upload/update' => sub {
 		$return->{creator} = session->{user};
 		$return->{file_size} = $file ? $file->{size} : "";
 		$return->{file_id} = $file_id;
-		$return->{date_updated} = "now";#???
+		$return->{date_updated} = "2014-07-01T12:00";#???
 		$return->{access_level} = params->{access_level} ? params->{access_level} : "openAccess";
+		$return->{open_access} = (params->{access_level} and params->{access_level} eq "openAccess") ? 1 : 0;
 		$return->{embargo} = params->{embargo} ? params->{embargo} : "";
 		$return->{content_type} = $file ? $file->{headers}->{"Content-Type"} : "";
 		$return->{checksum} = "ToDo";
@@ -186,6 +189,7 @@ post '/upload/update' => sub {
 		$return->{description} = params->{description} if params->{description};
 		#$return->{error} = "this is not an error. Y U no display file?";
 		$return->{old_file_name} = $old_file_name;
+		$return->{relation} = params->{relation} ? params->{relation} : "main_file";
 		
 		my $record = h->publication->get($id);
 		foreach my $recfile (@{$record->{file}}){
@@ -222,6 +226,7 @@ post '/upload/update' => sub {
 		$return->{file_json} .= '"checksum": "ToDo", "file_size": "'.$return->{file_size}.'", ';
 		$return->{file_json} .= '"language": "eng", "creator": "'.$return->{creator}.'", ';
 		$return->{file_json} .= '"open_access": "'.$return->{open_access}.'", ';
+		$return->{file_json} .= '"relation": "'.$return->{relation}.'", ';
 		$return->{file_json} .= '"year_last_uploaded": "2014"}';
 		
 		h->publication->add($record);
