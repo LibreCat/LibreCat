@@ -67,17 +67,18 @@ post '/login' => sub {
             session personNumber => $user->[0]->{_id};
             my $params;
             $params->{path} = params->{path} if params->{path};
+            
             if(session->{role} eq "superAdmin"){
-            	redirect '/myPUB/adminSearch';
+            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/adminSearch';
             }
             elsif(session->{role} eq "reviewer"){
-            	redirect '/myPUB/reviewerSearch';
+            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/reviewerSearch';
             }
             elsif(session->{role} eq "dataManager"){
-            	redirect '/myPUB/datamanagerSearch';
+            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/datamanagerSearch';
             }
             else{
-            	redirect '/myPUB/search';
+            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/search';
             }
         }
         else {
