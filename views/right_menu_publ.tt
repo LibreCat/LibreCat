@@ -132,9 +132,9 @@
           [% FOREACH co IN facets.coAuthor.terms %]
           [% name = h.getPerson(co.term) %]
           [% IF qp.author.grep("$co.term").0 %]
-          <li>[% name.fullName %] (<a href="/person/[% co.term %]">publication list</a>)</li>
+          <li>[% name.full_name %] (<a href="/person/[% co.term %]">publication list</a>)</li>
           [% ELSE %]
-              <li><a href="[% h.newuri_for("$path", qp, author="$co.term") %]" rel="nofollow">[% name.fullName %] ([% co.count %])</a></li>
+              <li><a href="[% h.newuri_for("$path", qp, author="$co.term") %]" rel="nofollow">[% name.full_name %] ([% co.count %])</a></li>
           [% END %]
           [% END %]
         </ul>
@@ -149,9 +149,9 @@
           [% FOREACH co IN facets.coEditor.terms %]
           [% name = h.getPerson(co.term) %]
           [% IF qp.editor.grep("$co.term").0 %]
-          <li>[% name.fullName %] (<a href="/person/[% co.term %]">publication list</a>)</li>
+          <li>[% name.full_name %] (<a href="/person/[% co.term %]">publication list</a>)</li>
           [% ELSE %]
-              <li><a href="[% h.newuri_for("$path", qp, editor="$co.term") %]" rel="nofollow">[% name.fullName %] ([% co.count %])</a></li>
+              <li><a href="[% h.newuri_for("$path", qp, editor="$co.term") %]" rel="nofollow">[% name.full_name %] ([% co.count %])</a></li>
           [% END %]
           [% END %]
         </ul>
@@ -166,7 +166,7 @@
           [% FOREACH y IN yearhits.facets.year.terms %]
           [%- year = (y.term) / 1000; -%]
           [%- yf = date.format(year); -%]
-          [% IF qp.publishingyear.grep("^$yf\$").0 %]
+          [% IF qp.year.grep("^$yf\$").0 %]
           <li>[% yf %] ([% y.count %])</li>
           [% ELSE %]
               <li><a href="[% h.newuri_for("$path", qp, publishingyear="$yf") %]" rel="nofollow">[% yf %] ([% y.count %])</a></li>
