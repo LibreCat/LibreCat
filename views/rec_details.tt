@@ -35,13 +35,12 @@
     <div class="frontdoor_left">Departments</div>
     <div class="frontdoor_right">
     [% FOREACH dept IN entry.department %]
-      [% IF dept.tree.0 != dept.id %]
-        [% parentDept = h.getDepartment(dept.tree.0) %]
-        [% parentDept.name %] - 
+      [% department = h.getDepartment(dept.id) %]
+      [% IF department.tree.2 %]
+        [% department.tree.2.name %] / 
       [% END %]
-      [% IF dept.tree.1 AND dept.tree.1 != dept.id %]
-        [% parentDept = h.getDepartment(dept.tree.1) %]
-        [% parentDept.name %] - 
+      [% IF department.tree.1 %]
+        [% department.tree.1.name %] / 
       [% END %]
       [% dept.name %],<br />
     [% END %]
