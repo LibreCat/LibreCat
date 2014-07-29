@@ -61,6 +61,7 @@ get '/autocomplete_connect' => sub {
 
 get '/autocomplete_hierarchy' => sub {
 	my $q = params->{'term'} || "";
+	$q = lc($q) if $q ne "";
 	my $fmt = params->{fmt} || "autocomplete";
 	my $type = params->{type} || "department";
 	$q = "name=" . $q . "*" if ($q ne "");
@@ -99,6 +100,7 @@ get '/autocomplete_hierarchy' => sub {
 			$label = $_->{name} . " " . $label;
 			
 			$label =~ s/"/\\"/g;
+			$label =~ s/\s+$//g;
 			push @$jsonhash, {id => $_->{_id}, label => $label};
 		}
 	}
