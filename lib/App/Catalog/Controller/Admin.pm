@@ -1,4 +1,4 @@
-package App::Catalog::Controller::Authority;
+package App::Catalog::Controller::Admin;
 
 use Catmandu::Sane;
 use Catmandu;
@@ -11,7 +11,7 @@ our @EXPORT_OK
     = qw/new_department update_department edit_department delete_department/;
 
 our %EXPORT_TAGS = (
-    all        => [ @EXPORT, @EXPORT_TAGS ],
+    all        => [ @EXPORT, @EXPORT_OK ],
     person     => [@EXPORT],
     department => [@EXPORT_OK],
 );
@@ -22,7 +22,7 @@ sub _create_id_pers {
     my $id  = $bag->{"latest"};
     $id++;
     $bag = h->bag->add( { _id => "1", latest => $id } );
-    return $id;    # correct?
+    return $id;   # correct?
 }
 
 sub new_person {
