@@ -1,4 +1,4 @@
-s# configuration file for production environment
+# configuration file for production environment
 
 # only log warning and error messsages
 log: "warning"

@@ -1,6 +1,6 @@
 # maps Inspire data to the local repository
 
-move_field("records.record","rec")
+move_field("record","rec")
 move_field("rec.titles.title","rec.title")
 move_field("rec.titles.secondary-title","rec.publication")
 remove_field("rec.titles")
