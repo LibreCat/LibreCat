@@ -224,15 +224,14 @@ publicationTypes:
           placeholder: "Publication Title"
           readonly: 0
         author:
-          firstName:
+          first_name:
             placeholder: "First Name"
-          lastName:
+          last_name:
             placeholder: "Last Name"
-          title:
-            placeholder: "Title"
           mandatory: 1
           multiple: 1
-          label: "Creator"
+          label:
+            "Creator" : "author"
         department:
           mandatory: 0
           label: "Department"
@@ -254,7 +253,7 @@ publicationTypes:
           readonly: 0
       file_upload:
         tab_name: "Research data upload"
-        externalFiles:
+        external_file:
           mandatory: 0
           label: "Files available at"
           readonly: 0
@@ -262,7 +261,7 @@ publicationTypes:
           mandatory: 0
           label: "Upload files"
           readonly: 0
-        licenses:
+        license:
           dataReuseLicense:
             mandatory: 1
             label: "Data Re-Use License"
@@ -284,7 +283,7 @@ publicationTypes:
         keyword:
           mandatory: 0
           label: "Keywords"
-          placeholder: "Keywords separated by semicolons: keyword1; keyword2; keyword3"
+          placeholder: "Keyword (for more keyword fields click +)"
           readonly: 0
       related_material:
         tab_name: "Link to publications"
