@@ -104,6 +104,12 @@ prefix '/record' => sub {
 		delete_publication($id);
 		redirect '/myPUB';
 	};
+	
+	get '/preview/:id' => sub {
+		my $id = params->{id};
+		my $hits = h->publication->get($id);
+		template 'frontend/frontdoor/record_preview.tt', $hits;
+	};
 
 };
 
