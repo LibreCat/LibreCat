@@ -169,11 +169,11 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
         $('#updated_' + file_id).html(data.date_updated);
         $('#creator_' + file_id).html(data.creator);
         $('#relation_' + file_id).html(data.relation);
-        $('#cordown_' + file_id)[0].onclick = null;
-        $('#cordown_' + file_id).unbind();
-        $('#cordown_' + file_id).click(function (){
-          edit_file(file_id);
-        });
+        //$('#cordown_' + file_id)[0].onclick = null;
+        //$('#cordown_' + file_id).unbind();
+        //$('#cordown_' + file_id).click(function (){
+        //  edit_file(file_id);
+        //});
 
         $('#file_' + file_id).val(data.file_json);
         

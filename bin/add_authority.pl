@@ -228,7 +228,20 @@ sub add_department {
 		$dep_hash->{oId} = $_->{organizationNumber};
 		$dep_hash->{name} = $_->{name}->[0]->{content}; #forcearray on "name" makes this possible
 		$dep_hash->{name_lc} = lc $_->{name}->[0]->{content};
-		$dep_hash->{parent} = $_->{parent} if $_->{parent} ne "0";
+		
+		push @{$dep_hash->{tree}}, {id => $_->{organizationNumber}, name => $_->{name}->[0]->{content}};
+		my $parent = $_->{parent};
+		if($parent and $parent ne "0"){
+			my @matching_items = grep {$_->{organizationNumber} eq $parent} @$orgunit;
+			$parent = $matching_items[0];
+			push @{$dep_hash->{tree}}, {id => $parent->{organizationNumber}, name => $parent->{name}->[0]->{content}};
+			
+			if($parent->{parent} and $parent->{parent} ne "0"){
+				@matching_items = grep {$_->{organizationNumber} eq $parent->{parent}} @$orgunit;
+				my $parentparent = $matching_items[0];
+				push @{$dep_hash->{tree}}, {id => $parentparent->{organizationNumber}, name => $parentparent->{name}->[0]->{content}};
+			}
+		}
 		
 		my ($sec,$min,$hour,$day,$mon,$year) = localtime(time);
 		$dep_hash->{dateLastChanged} = sprintf("%04d-%02d-%02dT%02d:%02d:%02d", 1900+$year, 1+$mon, $day, $hour, $min, $sec);
