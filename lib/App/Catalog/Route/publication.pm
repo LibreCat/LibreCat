@@ -108,6 +108,10 @@ prefix '/record' => sub {
 	get '/preview/:id' => sub {
 		my $id = params->{id};
 		my $hits = h->publication->get($id);
+		$hits->{bag} = $hits->{type} eq "researchData" ? "data" : "publication";
+		$hits->{style} = h->config->{store}->{default_fd_style} || "frontShort";
+		$hits->{marked} = 0;
+		$hits->{preview} = 1;
 		template 'frontend/frontdoor/record_preview.tt', $hits;
 	};
 
