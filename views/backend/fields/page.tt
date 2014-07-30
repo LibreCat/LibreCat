@@ -1,0 +1,12 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="id_page">
+      {% fields.basic_fields.page.label %}{% fields.supplementary_fields.page.label %}{% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %}<span class="starMandatory">*</span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10">
+    <span class="form-group col-md-3">
+      <input type="text" name="page" id="id_page" value="[% page.count %]" placeholder="{% fields.basic_fields.page.placeholder || fields.supplementary_fields.page.placeholder %}" class="form-control{% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %} required{% END %}">
+    </span>
+  </div>
+</div>

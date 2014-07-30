@@ -4,7 +4,6 @@ _prefix:
 publicationTypeOrder:
   - researchdata
   - book
-  - bookeditor
   - bookchapter
   - review
   - conferenceabstract
@@ -40,7 +39,6 @@ field_order:
   file_upload:
     - external_file
     - dropzone_mainDoc
-    - dropzone_confLetter
     - license
   supplementary_fields:
     - publication
@@ -53,13 +51,13 @@ field_order:
     - alternative_title
     - publication_status
     - page
+    - page_range
     - publication_identifier
     - external_id
     - popular_science
     - quality_controlled
     - ubi_funded
   related_material:
-    - confirmation_letter
     - link_publication
     - url
 publicationTypes:
@@ -68,18 +66,92 @@ publicationTypes:
     tmpl: book
     fields:
       basic_fields:
-        tabName: "Basic Fields"
+        tab_name: "Basic Fields"
+        doi: &doi
+          label: "DOI"
+          readonly: 0
         title: &title
           mandatory: 1
-          multiple: 0
           label: "Title"
+        author: &author_editor_etc
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          title:
+            placeholder: "Title"
+          mandatory: 1
+          multiple: 1
+          label:
+            "Author" : "author"
+            "Editor" : "editor"
+            "Corp. Ed." : "corporateEditor"
+            "Translator" : "translator"
+          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+        department: &department
+          label: "Department"
+          placeholder: "Department"
+        project: &project
+          label: "Projects"
+          placeholder: "Project"
+        publisher: &publisher
+          label: "Publisher"
+          placeholder: "Publisher"
+        language: &lang
+          label: "Language"
+          default: "eng"
+        year: &year
+          mandatory: 1
+          label: "Publishing Year"
+          placeholder: "YYYY"
+      file_upload: &file_upload
+        tab_name: "File Upload"
+        dropzone_mainDoc:
+          label: "Upload Main File(s) and Supplementary Material (max. 1000MB per file)"
+        dropzone_confLetter:
+          label: "Upload a confirmation letter"
+      supplementary_fields:
+        tab_name: "Additional Information"
+        publication:
+          label: "Series Title"
+          placeholder: "E.g. Lecture Notes in Computer Science"
+        abstract: &abstract
+          label: "Abstract"
+          label2: "Abstract Language"
+        keyword: &kw
+          label: "Keywords"
+          placeholder: "Keyword (for more keyword fields click +)"
+        volume: &vol
+         label: "Volume"
+        ddc: &ddc
+          label: DDC
+        page: &page
+          label: "Pages"
+      related_material: &rm
+        tab_name: "Related Material"
+        link_publication:
+          label: "Documents within PUB"
+          placeholder: "Start typing to search your publications."
+        url:
+          label: "Documents outside PUB"
+          placeholder: "Enter a remote location (URL) of your file here"
 
   bookchapter:
     label: "Book Chapter"
     tmpl: bookChapter
-  bookeditor:
-    label: "Book Editor"
-    tmpl: bookEditor
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        doi: *doi
+        title: *title
+        author: *author_editor_etc
+        department: *department
+        project: *project
+        year: *year
+      supplementary_fields:
+        tab_name: "Additional Information"
+      file_upload: *file_upload
+      related_material: *rm
   conferenceabstract:
     label: "Conference Abstract"
     tmpl: conferenceAbstract
@@ -292,12 +364,13 @@ publicationTypes:
           mandatory: 0
           label: "Link Publications"
           readonly: 0
-  translation:
-    label: "Translation"
-    tmpl: translation
+# translation:
+#   label: "Translation"
+#   tmpl: translation
   workingpaper:
     label: "Working Paper"
     tmpl: workingPaper
+
   bidissertation:
     label: "Bielefeld Doctoral Thesis"
     tmpl: biDissertation

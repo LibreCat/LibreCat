@@ -1,0 +1,12 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="id_popular_science">
+      {% fields.supplementary_fields.popular_science.label %}
+    </label>
+  </div>
+  <div class="col-md-10">
+    <span class="form-group col-md-1">
+      <input type="checkbox" name="popular_science" id="id_popular_science" value="[% popular_science %]" class="form-control">
+    </span>
+  </div>
+</div>
