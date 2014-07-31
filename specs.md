@@ -196,6 +196,7 @@ abstract:
 extern: 0|1
 popular_science: 0|1
 quality_controlled: 0|1
+# problem in template
 page:
 	start: 20
 	end: 25

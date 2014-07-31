@@ -36,6 +36,7 @@ field_order:
     - issue
     - language
     - year
+    - conference_part
   file_upload:
     - external_file
     - dropzone_mainDoc
@@ -44,6 +45,7 @@ field_order:
     - publication
     - volume
     - issue
+    - series_title
     - abstract
     - ddc
     - keyword
@@ -126,7 +128,13 @@ publicationTypes:
         ddc: &ddc
           label: DDC
         page: &page
-          label: "Pages"
+          label: "Total Pages"
+        extern: &extern
+          label: "Published while not @Bielefeld University"
+        alternative_title: &alt_title
+          label: "Alternative Title"
+        publication_status: &publication_status
+          label: "Publication Status"
       related_material: &rm
         tab_name: "Related Material"
         link_publication:
@@ -135,7 +143,6 @@ publicationTypes:
         url:
           label: "Documents outside PUB"
           placeholder: "Enter a remote location (URL) of your file here"
-
   bookchapter:
     label: "Book Chapter"
     tmpl: bookChapter
@@ -147,14 +154,39 @@ publicationTypes:
         author: *author_editor_etc
         department: *department
         project: *project
+        publication:
+          label: "Book Title"
+          mandatory: 1
         year: *year
       supplementary_fields:
         tab_name: "Additional Information"
+        series_title:
+          label: Series Title
+          placeholder: "Lecture Notes in Computer Science"
       file_upload: *file_upload
       related_material: *rm
   conferenceabstract:
     label: "Conference Abstract"
     tmpl: conferenceAbstract
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        doi: *doi
+        title: *title
+        author: *author_editor_etc
+        department: *department
+        project: *project
+        publication:
+          label: "Publication"
+        year: *year
+        conference_part:
+      supplementary_fields:
+        tab_name: "Additional Information"
+        keyword: *kw
+        ddc: *ddc
+        abstract: *abstract
+      file_upload: *file_upload
+      related_material: *rm
   conferenceeditor:
     label: "Conference Editor"
     tmpl: conferenceEditor
@@ -167,101 +199,33 @@ publicationTypes:
   encyclopediaarticle:
     label: "Encyclopedia Article"
     tmpl: encyclopediaArticle
+
   journalarticle:
     label: "Journal Article"
     tmpl: journalArticle
     fields:
       basic_fields:
         tab_name: "Basic Fields"
-        doi:
-          mandatory: 0
-          label: "DOI"
-          readonly: 0
-        title:
-          mandatory: 1
-          label: "Title"
-          placeholder: "Publication Title"
-          readonly: 0
-        author:
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
-          title:
-            placeholder: "Title"
-          mandatory: 1
-          multiple: 1
-          label:
-            "Author" : "author"
-            "Editor" : "editor"
-            "Corp. Ed." : "corporateEditor"
-            "Translator" : "translator"
-          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
-        department:
-          mandatory: 0
-          label: "Department"
-          placeholder: "Department"
-        project:
-          mandatory: 0
-          label: "Projects"
-          placeholder: "Project"
-        publisher:
-          mandatory: 0
-          label: "Publisher"
-          placeholder: "Publisher"
-        language:
-          mandatory: 0
-          label: "Language"
-        year:
-          mandatory: 1
-          label: "Publishing Year"
-          placeholder: "YYYY"
-          readonly: 0
-      file_upload:
-        tab_name: "File Upload"
-        dropzone_mainDoc:
-          label: "Upload Main File(s) and Supplementary Material (max. 1000MB per file)"
-        dropzone_confLetter:
-          label: "Upload a confirmation letter"
+        doi: *doi
+        title: *title
+        author: *author_editor_etc
+        department: *department
+        project: *project
+        publisher: *publisher
+        language: *lang
+        year: *year
+      file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         publication:
-          mandatory: 0
           label: "Publication"
-          placeholder: "Publication (e.g. Journal Title)"
-        volume:
-          mandatory: 0
-          label: "Volume"
-          placeholder: "Volume"
-          readonly: 0
-        issue:
-          mandatory: 0
-          label: "Issue"
-          placeholder: "Issue"
-        abstracts:
-          mandatory: 0
-          label: "Abstract"
-          label2: "Abstract Language:"
-          readonly: 0
-        ddc:
-          mandatory: 0
-          label: "DDC"
-          readonly: 0
-        keyword:
-          mandatory: 0
-          label: "Keywords"
-          placeholder: "Keyword (for more keyword fields click +)"
-          readonly: 0
-      related_material:
-        tab_name: "Related Material"
-        link_publication:
-          mandatory: 0
-          label: "Documents within PUB"
-          placeholder: "Start typing to search your publications."
-          readonly: 0
-        url:
-          label: "Documents outside PUB"
-          placeholder: "Enter a remote location (URL) of your file here"
+          placeholder: "Journal of Neuroscience"
+        volume: *vol
+        issue: *issue
+        abstract: *abstract
+        ddc: *ddc
+        keyword: *kw
+      related_material: *rm
   journaleditor:
     label: "Journal Editor"
     tmpl: journalEditor
@@ -290,11 +254,7 @@ publicationTypes:
           mandatory: 1
           label: "DOI"
           readonly: 1
-        title:
-          mandatory: 1
-          label: "Title"
-          placeholder: "Publication Title"
-          readonly: 0
+        title: *title
         author:
           firstName:
             placeholder: "First Name"
@@ -305,68 +265,33 @@ publicationTypes:
           mandatory: 1
           multiple: 1
           label: "Creator"
-        department:
-          mandatory: 0
-          label: "Department"
-          placeholder: "Department"
-        project:
-          mandatory: 0
-          label: "Projects"
-          placeholder: "Project"
+        department: *department
+        project: *project
         publisher:
           mandatory: 1
           label: "Publisher"
           placeholder: "Publisher"
           defaultvalue: "Bielefeld University"
-          readonly: 0
-        year:
-          mandatory: 1
-          label: "Year"
-          placeholder: "YYYY"
-          readonly: 0
+        year: *year
       file_upload:
         tab_name: "Research data upload"
         externalFiles:
-          mandatory: 0
           label: "Files available at"
-          readonly: 0
         dropzone_mainDoc:
-          mandatory: 0
           label: "Upload files"
-          readonly: 0
         licenses:
           dataReuseLicense:
             mandatory: 1
             label: "Data Re-Use License"
-            readonly: 0
           openDataRelease:
             mandatory: 1
             label: "Open Data Release - Declaration"
-            readonly: 0
       supplementary_fields:
         tab_name: "Supplementary fields"
-        abstracts:
-          mandatory: 0
-          label: "Abstract"
-          readonly: 0
-        ddc:
-          mandatory: 0
-          label: "DDC"
-          readonly: 0
-        keyword:
-          mandatory: 0
-          label: "Keywords"
-          placeholder: "Keywords separated by semicolons: keyword1; keyword2; keyword3"
-          readonly: 0
-      related_material:
-        tab_name: "Link to publications"
-        relatedMaterial:
-          mandatory: 0
-          label: "Link Publications"
-          readonly: 0
-# translation:
-#   label: "Translation"
-#   tmpl: translation
+        abstract: *abstract
+        ddc: *ddc
+        keyword: *kw
+      related_material: *rm
   workingpaper:
     label: "Working Paper"
     tmpl: workingPaper
