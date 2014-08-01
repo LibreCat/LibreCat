@@ -29,7 +29,10 @@
       [% IF thisPerson.$k %]
       <span class="authorIds">
         <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
-        <div class="col-md-7"><a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]" target="_blank">[% thisPerson.$k %]</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
+        <div class="col-md-7">
+        [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]" target="_blank">[% thisPerson.$k %]</a>
+        [% ELSE %][% thisPerson.$k %][% END %]
+        &nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
       </span>
       [% END %]<!-- end if -->
       <span class="authorIds_input" style="display:none;">
