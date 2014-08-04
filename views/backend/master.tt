@@ -6,7 +6,7 @@
 
 <div class="col-md-9 col-md-offset-1">
   [% IF title %]
-  <h3>[% title %]</h3>
+  <h3>[% title %] ([% type %])</h3>
   [% ELSE %]
   <h3>Add new {% label %}</h3>
   [% END %]

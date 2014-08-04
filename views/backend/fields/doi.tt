@@ -1,4 +1,3 @@
-[% IF doi %]
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="id_doi">
@@ -11,4 +10,3 @@
     </div>
   </div>
 </div>
-[% END %]

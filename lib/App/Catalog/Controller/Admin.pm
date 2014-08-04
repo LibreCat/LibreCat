@@ -6,7 +6,7 @@ use App::Catalog::Helper;
 use Hash::Merge qw/merge/;
 use Carp;
 use Exporter qw/import/;
-our @EXPORT = qw/new_person update_person edit_person delete_person/;
+our @EXPORT = qw/new_person search_person update_person edit_person delete_person/;
 our @EXPORT_OK
     = qw/new_department update_department edit_department delete_department/;
 
@@ -29,6 +29,18 @@ sub new_person {
     return _create_id_pers;
 }
 
+sub search_person {
+    my $p = shift;
+    
+    if ($p->{id}) {
+        return [h->authority_admin->get($p->{id})];
+    } elsif ($p->{full_name}) {
+        return h->authority_admin->select("last_name", $p->{full_name})->to_array;
+    } else {
+        croak "Error: No search params provided";
+    }
+}
+
 sub update_person {
     my $data = shift;
     croak "Error: No _id specified" unless $data->{_id};
@@ -41,7 +53,10 @@ sub update_person {
     h->authority('admin')->commit;
 }
 
-sub edit_person { }
+sub edit_person {
+    my $id = shift;
+    return h->authority_admin->get($id);
+}
 
 sub delete_person {
     my $id = shift;

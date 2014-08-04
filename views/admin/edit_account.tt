@@ -5,17 +5,76 @@
 <div class="row">
 
 <div class="col-md-9 col-md-offset-1">
-  [% IF fullName %]
-  <h3>[% fullName %]</h3>
+  [% IF full_name %]
+  <h3>[% full_name %]</h3>
   [% ELSE %]
   <h3>Add new account</h3>
   [% END %]
-  <form action="/myPUB/record/update" method="POST">
-    <input type="hidden" name="documentType" value="{% tmpl %}"/>
-    <input type="hidden" name="oId" value="[% oId %]"/>
-    <input type="hidden" name="_id" value="[% oId %]"/>
-    <input type="hidden" name="submissionStatus" value="unsubmitted"/>
-    
+
+  <form action="/myPUB/admin/account/update" method="POST">
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_id">ID</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-2">
+          <input type="text" name="_id" id="id__id" value="[% _id %]" class="form-control" readonly="readonly">
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_account_type">Account Type</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-2">
+        UniBi
+          <input type="radio" name="account_type" id="id_account_type" value="unibi" [% IF account_type == unibi %]checked="checked"[% END %] class="form-control">
+        </div>
+        <div class="form-group col-md-2">
+        External
+          <input type="radio" name="account_type" id="id_account_type" value="external" [% IF account_type == external %]checked="checked"[% END %] class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_last_name">Last Name</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-6">
+          <input type="text" name="last_name" id="id_last_name" value="[% last_name %]" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_first_name">First Name</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-6">
+          <input type="text" name="first_name" id="id_first_name" value="[% first_name %]" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_email">Email</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-6">
+          <input type="email" name="email" id="id_email" value="[% email %]" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_active">Active</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-1">
+          <input type="checkbox" name="active" id="id_active" value="active" class="form-control" [% IF active %]checked="1"[% END %]>
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow"><!-- button -->
+      <div class="col-md-12 buttonrow">
+      <span class="form-grou col-md-2">&nbsp;</span>
+        <span class="form-group col-md-2">
+          <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+        </span>
+        <span class="form-group col-md-2">
+          <button type="submit" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
+        </span>
+  </form>
 
 </div><!-- col-md-9 col-md-offset-1 -->
 </div><!-- row -->

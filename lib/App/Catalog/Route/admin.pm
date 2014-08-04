@@ -8,88 +8,43 @@ use App::Catalog::Controller::Admin qw/:all/;
 
 prefix '/admin' => sub {
 
-	get '/' => sub {
-		template 'admin/admin';
-	};
+	#(session('role') ne "superAdmin") && (return 403);
 
 	# manage accounts
 	get '/account' => sub {
 		template 'admin/account';
+		# that all, just print stupid template
 	};
 
 	post '/account/search' => sub {
-		
+		my $p = params;
+		my $hits;
+		$hits->{hits} = search_person($p);
+		template 'admin/account', $hits;
 	};
 
 	get '/account/edit/:id' => sub {
-		my $id = params 'id';
+		my $id = param 'id';
 		my $person = edit_person($id);
 		template 'admin/edit_account', $person;
 	};
 
-	post 'account/update' => sub {};
+	post '/account/update' => sub {
+		my $p = params;
+		#save_person(params);
+		template 'admin/account';
+	};
+
+	get '/account/import/:id' => sub {
+		my $p = import_person(params->{id});
+		template 'admin/edit_account', $person;
+	};
+
+	# manage departments
+	get '/admin/department' => sub {};
 
 	# monitoring external sources
 	get '/inspire-monitor' => sub {};
-
-
-	# get qr{/myPUB/add/(\w{1,})/*} => sub {
-	# 	my ($type) = splat;
-	# 	#my $id = "86212";
-	# 	my $id = params->{id} ? params->{id} : "73476";
-	# 	my $personInfo = h->getPerson($id);
-	# 	my $departments = $personInfo->{affiliation};
-	# 	my $tmpl = "";
-		
-	# 	if(h->config->{forms}->{publicationTypes}->{lc($type)}){
-	# 		$tmpl = "backend/forms/" . h->config->{forms}->{publicationTypes}->{$type}->{tmpl} . ".tt";
-	# 		template $tmpl, {recordOId => "123456789", department => $departments, personNumber => $id, author => [{personNumber => $id, oId => $personInfo->{sbcatId}, givenName => $personInfo->{givenName}, surname => $personInfo->{surname}, personTitle => $personInfo->{bis_personTitle}}]};
-	# 	}
-	# 	else{
-	# 		template "home.tt";
-	# 	}
-	# };
-
-	# get '/admin' => sub {
-
-	# 	my $tmpl = 'admin.tt';
-	# 	my $p;
-	# 	$p->{q} = "";
-	# 	if(params->{q}){
-	#     	$p->{q} = params->{q};
-	#     }
-	# 	elsif (params->{ftext}) {
-	# 		my @textbits = split " ", params->{ftext};
-	# 		foreach (@textbits){
-	# 			$p->{q} .= " AND " . $_;
-	# 		}
-	# 		$p->{q} =~ s/^ AND //g;
-	#         #$p->{q} = params->{ftext};
-	#     }
-
-	#     $p->{start} = params->{start} if params->{start};
-	# 	$p->{limit} = params->{limit} ? params->{limit} : "100";
-		
-	# 	if(params->{former}){
-	# 		$p->{q} .= " AND former=" if $p->{q} ne "";
-	# 		$p->{q} = "former=" if $p->{q} eq "";
-	# 		$p->{q} .= params->{former} eq "yes" ? "1" : "0";
-	# 	}
-	# 	my $cqlsort;
-	# 	if(params->{sorting} and params->{sorting} =~ /(\w{1,})\.(\w{1,})/){
-	# 		$cqlsort = $1 . ",,";
-	# 		$cqlsort .= $2 eq "asc" ? "1" : "0";
-	# 	}
-	# 	$p->{sorting} = $cqlsort;
-		
-	# 	my $hits = h->search_researcher($p);
-		
-	# 	$hits->{bag} = "authorlist";
-	# 	$hits->{former} = params->{former} if params->{former};
-		
-	# 	template $tmpl, $hits;
-	# };
-
 };
 
 1;
