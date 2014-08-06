@@ -8,8 +8,7 @@
     <form role="form" class="form-inline" action="/myPUB/import" method="POST">
       <div class="col-md-2">
         <select class="selectpicker form-control" id="select_source">
-          <option value="doi" selected="selected">DOI</option>
-          <option value="crossref">Crossref</option>
+          <option value="wos" selected="selected">Web of Science</option>
           <option value="pmc">Europe PMC</option>
           <option value="arxiv">ArXiv</option>
           <option value="inspire">Inpire</option>
@@ -17,10 +16,7 @@
       </div>
       <div class="input-group col-md-5">
           <input type="hidden" id="input_source" name="source">
-          <input type="text" value="" class="form-control" id="input_id" name="id" placeholder="10.324/JHEP287432" />
-          <span class="input-group-btn">
-            <button type="submit" class="btn btn-default">Go!</button>
-          </span>
+          <input type="text" value="" class="form-control" id="input_id" name="id" />
       </div><!-- input-group -->
     </form>
   </div>

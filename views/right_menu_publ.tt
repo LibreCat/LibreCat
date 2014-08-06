@@ -251,7 +251,7 @@
         <span class="text-success"><strong>sort:</strong> [% personSort %]</strong></span><br />
       [% END %]
     [% END %]
-    <a type="button" href="http://pub-dev.ub.uni-bielefeld.de:3000[% h.uri_for("/myPUB/settings_update", qp) %]" name="save_settings" id="id_save_settings" class="btn btn-xs btn-block btn-warning">Save this as public default</a>
+    <a type="button" href="[% h.uri_for("/myPUB/person/preferences", qp) %]" name="save_settings" id="id_save_settings" class="btn btn-xs btn-block btn-warning">Save this as public default</a>
     </p>
     [% END %]
     

@@ -6,7 +6,7 @@
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-1">
-      <input type="checkbox" name="popular_science" id="id_popular_science" value="[% popular_science %]" class="form-control">
+      <input type="checkbox" name="popular_science" id="id_popular_science" value="popular_science"[% IF popular_science %] checked="checked"[% END %] class="form-control">
     </span>
   </div>
 </div>
