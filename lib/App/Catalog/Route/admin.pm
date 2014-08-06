@@ -8,8 +8,6 @@ use App::Catalog::Controller::Admin qw/:all/;
 
 prefix '/admin' => sub {
 
-	#(session('role') ne "superAdmin") && (return 403);
-
 	# manage accounts
 	get '/account' => sub {
 		template 'admin/account';

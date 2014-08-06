@@ -1,6 +1,9 @@
 _prefix:
   forms:
 
+input_path: "views/backend"
+output_path: "views/backend/forms"
+
 publicationTypeOrder:
   - researchdata
   - book
@@ -45,6 +48,7 @@ field_order:
     - publication
     - volume
     - issue
+    - place
     - series_title
     - abstract
     - ddc
@@ -71,7 +75,6 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: &doi
           label: "DOI"
-          readonly: 0
         title: &title
           mandatory: 1
           label: "Title"
@@ -125,6 +128,9 @@ publicationTypes:
           placeholder: "Keyword (for more keyword fields click +)"
         volume: &vol
          label: "Volume"
+        place: &place
+          label: "Place"
+          placeholder: "Berlin, Germany"
         ddc: &ddc
           label: DDC
         page: &page
@@ -135,6 +141,8 @@ publicationTypes:
           label: "Alternative Title"
         publication_status: &publication_status
           label: "Publication Status"
+        external_id:
+          label: "External Identifier"
       related_material: &rm
         tab_name: "Related Material"
         link_publication:
@@ -160,9 +168,12 @@ publicationTypes:
         year: *year
       supplementary_fields:
         tab_name: "Additional Information"
-        series_title:
+        series_title: &series_title
           label: Series Title
           placeholder: "Lecture Notes in Computer Science"
+        place: *place
+        page_range: &page_range
+          label: "Pages"
       file_upload: *file_upload
       related_material: *rm
   conferenceabstract:
@@ -199,7 +210,6 @@ publicationTypes:
   encyclopediaarticle:
     label: "Encyclopedia Article"
     tmpl: encyclopediaArticle
-
   journalarticle:
     label: "Journal Article"
     tmpl: journalArticle
@@ -217,14 +227,17 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        publication:
+        publication: &publication
           label: "Publication"
           placeholder: "Journal of Neuroscience"
         volume: *vol
-        issue: *issue
+        issue: &issue
+          label: "Issue"
         abstract: *abstract
         ddc: *ddc
         keyword: *kw
+        popular_science: &popular_science
+         label: "Popular Science"
       related_material: *rm
   journaleditor:
     label: "Journal Editor"
@@ -232,15 +245,77 @@ publicationTypes:
   newspaperarticle:
     label: "Newspaper Article"
     tmpl: newspaperArticle
+    fields:
+      basic_fields:
+        doi: *doi
+        author: *author_editor_etc
+        title: *title
+        department: *department
+        project: *project
+        year: *year
+        publishing_date:
+          label: "Publishing Date"
+          placeholder: "YYYY-MM-DD"
+          mandatory: 1
+        publication: *publication
+        publisher: *publisher
+      supplementary_fields:
+        extern: *extern
+        page_range: *page_range
+        volume: *vol
+        issue: *issue
+        abstract: *abstract
+        ddc: *ddc
+        popular_science: *popular_science
+      file_upload: *file_upload
+      related_material: *rm
   patent:
     label: "Patent"
     tmpl: patent
   preprint:
     label: "Preprint"
     tmpl: preprint
+    fields:
+      basic_fields:
+        doi: *doi
+        title: *title
+        author:
+          firstName:
+            placeholder: "First Name"
+          lastName:
+            placeholder: "Last Name"
+          mandatory: 1
+          multiple: 1
+          label: "Author"
+        department: *department
+        project: *project
+        year: *year
+        publication: *publication
+      supplementary_fields:
+      file_upload: *file_upload
+      related_material: *rm
   report:
     label: "Report"
     tmpl: report
+    fields:
+      basic_fields:
+        doi: *doi
+        title: *title
+        author: *author_editor_etc
+        year: *year
+      supplementary_fields:
+        series_title: *series_title
+        volume: *vol
+        place: *place
+        publication: *publication
+        publisher: *publisher
+        language: *lang
+        abstract: *abstract
+        page: *page
+        extern: *extern
+        alternative_title: *alt_title
+      file_upload: *file_upload
+      related_material: *rm
   review:
     label: "Book Review"
     tmpl: bookReview
@@ -260,8 +335,6 @@ publicationTypes:
             placeholder: "First Name"
           lastName:
             placeholder: "Last Name"
-          title:
-            placeholder: "Title"
           mandatory: 1
           multiple: 1
           label: "Creator"

@@ -66,6 +66,11 @@ sub delete_person {
     h->authority('admin')->commit;
 }
 
+sub import_person {
+    my $id = shift;
+    
+}
+
 # manage departments
 sub _create_id_dep {
     my $bag = h->authority('department')->get('1');

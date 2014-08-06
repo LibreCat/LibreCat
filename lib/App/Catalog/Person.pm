@@ -3,47 +3,40 @@ package App::Catalog::Person;
 use Catmandu::Sane;
 use Catmandu::Util qw(:array);
 use Dancer ':syntax';
-use Dancer::Request;
 use App::Catalog::Helper;
 
 prefix '/person' => sub {
 
-	post '/preferences' => sub {
-		my $id = params->{id} ? params->{id} : "73476";
-
-		my $personInfo = h->getPerson($id);
-		my $personStyle;
-		my $personSort;
-		if($personInfo->{stylePreference} and $personInfo->{stylePreference} =~ /(\w{1,})\.(\w{1,})/){
+	get '/preferences' => sub {
+		
+		my $person = h->getPerson(sesion('id'));
+		my $style;
+		my $sort;
+		if($person->{stylePreference} and $person->{stylePreference} =~ /(\w{1,})\.(\w{1,})/){
 			if(array_includes(h->config->{lists}->{styles},$1)){
-				$personStyle = $1 unless $1 eq "pub";
+				$style = $1 unless $1 eq "pub";
 			}
-			$personSort = $2;
+			$sort = $2;
 		}
-		elsif($personInfo->{stylePreference} and $personInfo->{stylePreference} !~ /\w{1,}\.\w{1,}/){
-			if(array_includes(h->config->{lists}->{styles},$personInfo->{stylePreference})){
-				$personStyle = $personInfo->{stylePreference} unless $personInfo->{stylePreference} eq "pub";
+		elsif($person->{stylePreference} and $person->{stylePreference} !~ /\w{1,}\.\w{1,}/){
+			if(array_includes(h->config->{lists}->{styles},$person->{stylePreference})){
+				$style = $person->{stylePreference} unless $person->{stylePreference} eq "pub";
 			}
 		}
 		
-		if($personInfo->{sortPreference}){
-			$personSort = $personInfo->{sortPreference};
+		if($person->{sortPreference}){
+			$sort = $person->{sortPreference};
 		}
-		
-		my $style = params->{style} || $personStyle || h->config->{store}->{default_fd_style};
-		delete(params->{style}) if params->{style};
-		
-		my $sort = params->{'sort'} || $personSort || "";
-		
-		$personInfo->{stylePreference} = $style;
-		$personInfo->{sortPreference} = $sort if $sort ne "";
+				
+		$person->{stylePreference} = params->{style} || $style || h->config->{store}->{default_fd_style};
+		$person->{sortPreference} = params->{'sort'} || $sort || "desc";
 
-		h->authorityUser->add($personInfo);
+		h->authority_user->add($person);
 		
-		forward '/';
+		redirect '/myPUB';
 	};
 
-	post '/authorid' => sub {
+	post '/author_id' => sub {
 
 		my $person = h->authority_user->get(params->{_id});
 		my @identifier = keys h->config->{lists}->{author_id};
