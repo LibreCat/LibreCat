@@ -26,7 +26,7 @@ prefix '/requestcopy' => sub {
 
 	# step one: user requests for document
 	# send mail to author and wait for approval
-	post '/requestcopy/:id/:file_id' => sub {
+	get '/requestcopy/:id/:file_id' => sub {
 		my $conf = h->config->{request_copy};
 		my $bag = 'x';
 

@@ -16,7 +16,7 @@
       <div class="col-md-2"><label for="id_id">ID</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-2">
-          <input type="text" name="_id" id="id__id" value="[% _id %]" class="form-control" readonly="readonly">
+          <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control" readonly="readonly">
         </div>
       </div>
     </div>

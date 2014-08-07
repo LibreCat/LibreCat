@@ -35,7 +35,7 @@ prefix '/admin' => sub {
 
 	get '/account/import/:id' => sub {
 		my $p = import_person(params->{id});
-		template 'admin/edit_account', $person;
+		template 'admin/edit_account', $p;
 	};
 
 	# manage departments

@@ -33,7 +33,7 @@
 [% FOREACH p IN hits %]
 <div class="row col-md-6">
 <li>
-<i> <span class="glyphicon glyphicon-pencil"></span></i> <a href="/myPUB/admin/account/edit/[% p.item('_id') %]">[% p.full_name %]</a> ([% p.item('_id') %]) [% p.account_status %]<br />
+<i> <span class="glyphicon glyphicon-pencil"></span></i> <a href="/myPUB/admin/account/edit/[% p._id) %]">[% p.full_name %]</a> ([% p.item('_id') %]) [% p.account_status %]<br />
 [% p.department.0.name %]<br />
 </li>
 </div>
