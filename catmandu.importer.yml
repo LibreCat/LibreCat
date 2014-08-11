@@ -22,3 +22,7 @@ bibtex:
   package: BibTeX
   options:
     fix: ['fixes/bibtex_mapping.fix']
+pevz:
+  package: XML
+  options:
+    fix: ['fixes/pevz_mapping.fix']

@@ -4,7 +4,7 @@
 
 <div class="row col-md-11 col-md-offset-1">
 <h2>Manage Account Information</h2>
-<div class="col-md-9">
+<div class="col-md-7">
 <form role="form" action="/myPUB/admin/account/search" method="POST">
   <div class="row innerrow">
   <div class="col-md-3">
@@ -25,7 +25,21 @@
   </div>
 </form>
 
-</div><!-- end col-md-9 -->
+</div><!-- end col-md-7 -->
+
+<div class="col-md-4">
+<form role="form" action="/myPUB/admin/account/import" method="POST">
+  <div class="col-md-3">
+    <div class="form-group">
+      <label for="id">ID</label>
+      <input type="text" class="form-control" name="id" id="id_id" placeholder="12345" value="">
+    </div>
+  </div>
+  <div class="col-md-1">
+    <button type="submit" class="btn btn-default">Import</button>
+  </div>
+</form>
+</div><!-- end col-md-4 -->
 
 <div class="row col-md-9">
 
@@ -33,7 +47,7 @@
 [% FOREACH p IN hits %]
 <div class="row col-md-6">
 <li>
-<i> <span class="glyphicon glyphicon-pencil"></span></i> <a href="/myPUB/admin/account/edit/[% p._id) %]">[% p.full_name %]</a> ([% p.item('_id') %]) [% p.account_status %]<br />
+<i> <span class="glyphicon glyphicon-pencil"></span></i> <a href="/myPUB/admin/account/edit/[% p._id %]">[% p.full_name %]</a> ([% p._id %]) [% p.account_status %]<br />
 [% p.department.0.name %]<br />
 </li>
 </div>

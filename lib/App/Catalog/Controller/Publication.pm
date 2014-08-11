@@ -12,14 +12,10 @@ use Exporter qw/import/;
 our @EXPORT
     = qw/new_publication save_publication delete_publication update_publication edit_publication/;
 
-# Catmandu->load;
-# Catmandu->config;
-
 sub _create_id {
-    my $bag = h->bag->get('1');
-    my $id  = $bag->{"latest"};
+    my $id = h->bag->get('1')->{"latest"};
     $id++;
-    $bag = h->bag->add( { _id => "1", latest => $id } );
+    h->bag->add( { _id => "1", latest => $id } );
     return $id;
 }
 
@@ -177,20 +173,19 @@ sub update_publication {
 
 sub edit_publication {
     my $id = shift;
+    croak "Error: No id specified." unless $id;
 
-    return "Error" unless $id;
-    # some pre-processing needed?
     h->publication->get($id);
 }
 
 sub delete_publication {
 	my $id = shift;
-    return "Error" unless $id;
+    croak "Error: No id provided." unless $id;
 
-    my $now = "";
     my $del = {
         _id => $id,
-        date_deleted => $now,
+        date_deleted => h->now,
+        status => 'deleted',
     };
 
     # this will do a hard override of
@@ -205,7 +200,7 @@ sub delete_publication {
     
     # delete citations
     my $citbag = Catmandu->store('citation')->bag;
-    $citbag->delete($id) if $id;
+    $citbag->delete($id);
 }
 
 1;

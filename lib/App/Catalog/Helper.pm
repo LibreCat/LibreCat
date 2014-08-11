@@ -4,20 +4,26 @@ use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/default /srv/www/sbcat/lib/exte
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
 use Catmandu::Util qw(:is :array trim);
+use Catmandu::Fix::expand as => 'expand';
 use Dancer qw(:syntax vars params request);
 use Sys::Hostname::Long;
 use Hash::Merge qw(merge);
 use Template;
 use Moo;
+use POSIX qw(strftime);
 
 Catmandu->load(':up');
 
-sub bag {
-	state $bag = Catmandu->store->bag;
-}
-
+# easy config accessor
+######################
 sub config {
 	state $config = Catmandu->config;
+}
+
+# helper functions for stores
+#############################
+sub bag {
+	state $bag = Catmandu->store->bag;
 }
 
 sub publication {
@@ -50,6 +56,19 @@ sub authority_admin {
 
 sub authority_department {
 	state $bag = Catmandu->store('authority')->bag('department');
+}
+
+# helper for params handling
+############################
+sub nested_params {
+	my ($self, $params) = @_;
+	expand($params);
+	return $params;
+}
+
+sub now {
+	 my $now = strftime($_[0]->config->{time_format}, gmtime(time));
+	 return $now;
 }
 
 sub getPerson {
@@ -215,25 +234,6 @@ sub search_project {
     #}
     return $hits;
 }
-
-#sub search_researchgroup {
-#	my ($self, $p) = @_;
-#	
-#	my $hits;
-#	my $query = $p->{q};
-#	my $researchgroups = config->{lists}->{xresearchgroups};
-#	my $counter = 0;
-#    
-#    foreach my $key (keys %$researchgroups){
-#    	if(index(lc($key), lc($query)) != -1){
-#    		push @{$hits->{hits}}, {_id => $researchgroups->{$key}->{oId}, oId => $researchgroups->{$key}->{oId}, name => $key};
-#    		$counter++;
-#    	}		
-#    }
-#    $hits->{total} = $counter;
-#    
-#    return $hits;
-#}
 
 sub embed_string {
 	my ($self, $query, $bag, $id, $style, %params) = @_;

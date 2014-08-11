@@ -7,11 +7,11 @@ use App::Catalog::Helper;
 use App::Catalog::Controller::Admin qw/:all/;
 
 prefix '/admin' => sub {
+#TODO: check role!
 
 	# manage accounts
 	get '/account' => sub {
 		template 'admin/account';
-		# that all, just print stupid template
 	};
 
 	post '/account/search' => sub {
@@ -29,12 +29,16 @@ prefix '/admin' => sub {
 
 	post '/account/update' => sub {
 		my $p = params;
-		#save_person(params);
+		$p = h->nested_params($p);
+		#update_person($p);
 		template 'admin/account';
 	};
 
-	get '/account/import/:id' => sub {
+	post '/account/import' => sub {
+		return template 'admin/account' unless params->{id};
+
 		my $p = import_person(params->{id});
+		return to_dumper $p;
 		template 'admin/edit_account', $p;
 	};
 

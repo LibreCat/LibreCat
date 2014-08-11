@@ -5,7 +5,7 @@ use App::Catalog::Controller::Publication;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path/;
 use Carp;
-#use JSON;
+
 
 prefix '/record' => sub {
 
@@ -37,7 +37,7 @@ prefix '/record' => sub {
 
 	post '/update' => sub {
 		my $params = params;
-		
+		#$params = h->nested_params($params);
 		if(($params->{department} and $params->{department} eq "") or !$params->{department}){
 			$params->{department} = ();
 			if(session->{role} ne "superAdmin"){
@@ -62,25 +62,7 @@ prefix '/record' => sub {
 			$params->{department} = $deparray;
 		}
 		
-		
-		# my $author;
-		# my $test;
-		# if(ref $params->{author} ne "ARRAY"){
-		# 	push @$author, $params->{author};
-		# }
-		# else{
-		# 	$author = $params->{author};
-		# }
-		# foreach(@{$author}){
-		# 	push @$test, from_json($_);
-		# }
-		# $params->{author} = $test;
-		# #return to_dumper $params;
-		#if($params->{finalSubmit} and $params->{finalSubmit} eq "recPublish"){
-		#	$params->{status} = "public";
-		#}
 		my $result = update_publication($params);
-		#return to_dumper $result;
 		
 		redirect '/myPUB';
 	};
@@ -119,7 +101,7 @@ post '/upload' => sub {
 	my $dir = h->config->{upload_dir}."/".$id;
 	mkdir $dir unless -e $dir;
 	my $success = $file->copy_to($path);
-	#return to_dumper $success;
+	
 	my $return;
 	if($success){
 		$return->{success} = 1;
@@ -146,9 +128,8 @@ post '/upload' => sub {
 		$return->{success} = 0;
 		$return->{error} = "There was an error while uploading your file."
 	}
-	#my $json = new JSON;
-	my $return_json = to_json($return);
-	return $return_json;
+
+	return to_json($return);
 };
 
 post '/upload/update' => sub {
