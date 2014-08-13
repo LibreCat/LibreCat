@@ -1,0 +1,12 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="id_message">
+      {% fields.supplementary_fields.message.label %}
+    </label>
+  </div>
+  <div class="col-md-10">
+    <span class="form-group col-md-9">
+      <textarea rows="3" name="message" id="id_message" value="[% message %]" class="form-control">
+    </span>
+  </div>
+</div>
