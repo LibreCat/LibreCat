@@ -4,7 +4,7 @@ use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/default /srv/www/sbcat/lib/exte
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
 use Catmandu::Util qw(:is :array trim);
-use Catmandu::Fix::expand as => 'expand';
+use Catmandu::Fix qw /expand/;
 use Dancer qw(:syntax vars params request);
 use Sys::Hostname::Long;
 use Hash::Merge qw(merge);
@@ -62,8 +62,8 @@ sub authority_department {
 ############################
 sub nested_params {
 	my ($self, $params) = @_;
-	expand($params);
-	return $params;
+	my $fixer = Catmandu::Fix->new(fixes => ["expand()"]);
+    return $fixer->fix($params);
 }
 
 sub now {
@@ -77,7 +77,7 @@ sub getPerson {
 	if($_[1] and $_[1] =~ /\d{1,}/){
 		$user = $_[0]->authority_user->get($_[1]);
 		$admin = $_[0]->authority_admin->get($_[1]);
-		
+
 		my @fields = qw(full_name last_name first_name email department superAdmin reviewer dataManager);
 		map {
 			$user->{$_} = $admin->{$_};
@@ -156,7 +156,7 @@ sub shost {
 
 sub search_publication {
 	my ($self, $p) = @_;
-	
+
 	my $hits;
 	my $q = $p->{q} ||= "";
 	my $default_sort = "";
@@ -165,7 +165,7 @@ sub search_publication {
 		$default_sort .= $_->{order} eq "asc" ? "1 " : "0 ";
 	}
 	$default_sort = substr($default_sort, 0, -1);
-	
+
 	my $sort = $p->{'sort'} ||= $default_sort;
 	my $bag = $p->{'bag'} ||= "publicationItem";
 
@@ -176,11 +176,11 @@ sub search_publication {
 		start => $p->{start} ||= 0,
 		facets => $p->{facets} ||= {},
 	);
-       	
-    foreach (qw(next_page last_page page previous_page pages_in_spread)) {	
+
+    foreach (qw(next_page last_page page previous_page pages_in_spread)) {
     	$hits->{$_} = $hits->$_;
     }
-	
+
 	return $hits;
 }
 
@@ -188,33 +188,33 @@ sub search_researcher {
 	my ($self, $p) = @_;
 	my $q = $p->{q} ||= "";
 	#$q .= $q eq "" ? "publCount>0" : " AND publCount>0";
-	
+
 	my $hits = researcher->search(
 	  cql_query => $q,
 	  limit => $p->{limit} ||= 20,
 	  start => $p->{start} ||= 0,
 	  sru_sortkeys => $p->{sorting} || "full_name,,1",
 	);
-	
-	foreach (qw(next_page last_page page previous_page pages_in_spread)) {	
+
+	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
     	$hits->{$_} = $hits->$_;
     }
-	
+
     return $hits;
 }
 
 sub search_department {
 	my ($self, $p) = @_;
 	my $q;
-	
+
 	$q = $p->{q};
-	
+
 	my $hits = department->search(
 	  cql_query => $q,
 	  limit => $p->{limit} ||= 20,
 	  start => $p->{start} ||= 0,
 	);
-	
+
 	return $hits;
 }
 
@@ -240,13 +240,13 @@ sub embed_string {
 	my $embed;
 	my $host = $_[0]->host();
 	delete $params{splat};
-	
+
 	if(keys %params){
 		# create a javaScript snipped for this list
 		my $ftyp = '&ftyp=js';
 		my $stylestring = "&style=";
 		$stylestring .= $style if $style;
-		
+
 		my $sortstring = "";
 		if($params{sort}){
 			if (ref $params{sort} eq 'ARRAY'){
@@ -256,9 +256,9 @@ sub embed_string {
 			}
 			else{
 				$sortstring = "&sort=$params{sort}";
-			} 
+			}
 		}
-		
+
 		my $string1 = '&lt;div class="publ"&gt;&lt;script type="text/javascript" charset="UTF-8" src="' . $host . '/';
 		if($bag eq "person"){
 			$string1 .= "publication";
@@ -266,7 +266,7 @@ sub embed_string {
 		else {
 			$string1 .= $bag;
 		}
-		
+
 		$string1 .= '?q=';
 		my $string2 = '"&gt;&lt;/script&gt;&lt;noscript&gt;&lt;a href="' . $host . '/';
 		if($bag eq "person"){
@@ -275,17 +275,17 @@ sub embed_string {
 		else {
 			$string2 .= $bag;
 		}
-		
+
 		$string2 .= '?q=';
 		my $string3 = '" target="_blank"&gt;';
 		$string3 .= 'Pers&amp;ouml;nliche Publikationsliste &gt;&gt; / My Publication List &gt;&gt;' if $bag eq "person";
 		$string3 .= 'Publikationsliste &gt;&gt; / Publication List &gt;&gt;' if $bag ne "person";
 		$string3 .= '&lt;/a&gt;&lt;/noscript&gt;&lt;/div&gt;';
-		
+
 		$embed->{js} = $string1 . $query . $ftyp . $stylestring . $sortstring . $string2 . $query . $stylestring . $sortstring . $string3;
 		$string1 = ""; $string2 = ""; $string3 = ""; $ftyp = "";
-		
-		
+
+
 		# create an iFrame containing this list
 		$ftyp = "&ftyp=iframe";
 		$string1 = '&lt;iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="' . $host . '/';
@@ -300,14 +300,14 @@ sub embed_string {
 
 		$embed->{iframe} = $string1 . $query . $ftyp . $stylestring . $sortstring . $string2;
 		$string1 = ""; $string2 = "";
-		
-		
+
+
 		# create a link to this page
 		$string1 = '&lt;a href="' . $host . '/' . $bag;
 		$string1 .= '/' . $id if $id;
 		$string1 .= '?';
 		$string2 = '"&gt;My Publication List&lt;/a&gt;';
-		
+
 		my $linkstring = $string1;
 		foreach my $key (keys %params){
 			next if $key eq 'splat';
@@ -323,13 +323,13 @@ sub embed_string {
 		#$embed->{'modlink'} = $linkstring . $string2;
 		$embed->{'link'} = $linkstring . $string2;
 	}
-	
+
 	else {
 		# create a javaScript snipped for this list
 		my $ftyp = '&ftyp=js';
 		my $stylestring = "&style=";
 		$stylestring .= $style if $style;
-		
+
 		my $string1 = '&lt;div class="publ"&gt;&lt;script type="text/javascript" charset="UTF-8" src="' . $host . '/';
 		if($bag eq "person"){
 			$string1 .= "publication";
@@ -350,11 +350,11 @@ sub embed_string {
 		$string3 .= 'Pers&amp;ouml;nliche Publikationsliste &gt;&gt; / My Publication List &gt;&gt;' if $bag eq "person";
 		$string3 .= 'Publikationsliste &gt;&gt; / Publication List &gt;&gt;' if $bag ne "person";
 		$string3 .= '&lt;/a&gt;&lt;/noscript&gt;&lt;/div&gt;';
-		
+
 		$embed->{js} = $string1 . $query . $ftyp . $stylestring . $string2 . $query . $stylestring . $string3;
 		$string1 = ""; $string2 = ""; $string3 = ""; $ftyp = "";
-		
-		
+
+
 		# create an iFrame containing this list
 		$ftyp = "&ftyp=iframe";
 		$string1 = '&lt;iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="' . $host . '/';
@@ -366,28 +366,28 @@ sub embed_string {
 		}
 		$string1 .= '?q=';
 		$string2 = '"&gt;&lt;/iframe&gt;';
-		
+
 		$embed->{iframe} = $string1 . $query . $ftyp . $stylestring . $string2;
 		$string1 = ""; $string2 = "";
-		
-		
+
+
 		# create a link to this page
 		$string1 = '&lt;a href="' . $host . '/person/'. $id;
 		$string2 = '"&gt;My Publication List&lt;/a&gt;';
-		
+
 		$embed->{'link'} = $string1 . $string2;
 	}
-	
+
 	return $embed;
 }
 
 sub clean_cql {
 	my ($self, $query) = @_;
 	my $cleancql = "";
-	
+
 	# Strip all leading and trailing whitespaces from full query
 	$query =~ s/^\s+//; $query =~ s/\s+$//;
-	
+
 	# Remove incorrect modifiers directly after q=
 	if($query =~ /^(AND|OR|NOT)(.*)/){
 		my $tail = $2;
@@ -397,11 +397,11 @@ sub clean_cql {
 	else {
 		$cleancql .= $query;
 	}
-	
+
 	# Surround AND, OR and NOT with whitespaces
 	$cleancql =~ s/(AND|OR|NOT)(\S.*)/$1 $2/;
 	$cleancql =~ s/(.*\S)(AND|OR|NOT)/$1 $2/;
-	
+
 	return $cleancql;
 }
 
@@ -414,7 +414,7 @@ sub uri_for {
     foreach (keys %{ $uri_params }) {
 	$uri .= "$_=$uri_params->{$_}&";
     }
-    $uri =~ s/&$//; #delete trailing "&" 
+    $uri =~ s/&$//; #delete trailing "&"
     $uri;
 }
 
@@ -425,11 +425,11 @@ sub newuri_for {
 		$passed_key = $_;
 		$passed_value = $passedparam->{$_};
 	}
-	
+
 	my $uri = $path . "?";
-	
+
 	$uri_params = () if $uri_params eq "";
-	
+
 	if(defined $uri_params->{$passed_key}){
 		foreach my $urikey (keys %{$uri_params}){
 			if ($urikey ne $passed_key){
@@ -452,7 +452,7 @@ sub newuri_for {
 									$uri .= "$urikey=$_&";
 								}
 							}
-							
+
 						}
 					}
 					else {
@@ -480,7 +480,7 @@ sub newuri_for {
 		}
 		$uri .= "$passed_key=$passed_value&";
 	}
-	
+
 	$uri =~ s/&$//;
 	$uri;
 }
@@ -491,7 +491,7 @@ sub uri_for_file {
     $self->host . "/download/$pub->{_id}/$file->{fileOId}$ext";
 }
 
-sub embed_params {	
+sub embed_params {
 	my ($self) = @_;
     vars->{embed_params} ||= do {
     	my $p = {};
@@ -518,7 +518,7 @@ register h => sub { $h };
 hook before_template => sub {
 
     $_[0]->{h} = $h;
-    
+
 };
 
 register_plugin;
