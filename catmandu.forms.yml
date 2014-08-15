@@ -309,7 +309,7 @@ publicationTypes:
         keyword: *kw
         popular_science: &popular_science
           label: "Popular Science"
-        quality_controlled: *qc
+        quality_controlled: &qc
           lable: "Quality Controlled"
         external_id: *external_id
         publication_identifier: *publ_id
