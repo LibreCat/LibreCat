@@ -23,6 +23,12 @@ if(navigator.userAgent.indexOf('MSIE') != -1){
   });
 }
 
+$(document).keypress(function(e){
+    if (e.which == 13){
+        $("#oneToTwo").click();
+    }
+});
+
 // Tab forward one to two
 $('#oneToTwo').click(function(){
   var check = 1;
@@ -57,9 +63,13 @@ $('#oneToTwo').click(function(){
   });
   
   var year = $('#id_year').val();
-  if(year.length < 4 || !year.match(/^\d+$/)){
+  var currentYear = (new Date).getFullYear();
+  var maxYear = currentYear + 5;
+  if(year.length < 4 || !year.match(/^\d+$/) || year < 1930 || year > maxYear){
     check = 0;
     $('#id_year').parents('span.form-group').addClass('has-error');
+    $('#id_year').val("");
+    $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
   }
   
   if(check){

@@ -99,10 +99,21 @@ prefix '/record' => sub {
 
     # deleting records, for admins only
     get '/delete/:id' => sub {
-        delete_publication(params->{id});
+        delete_publication( params->{id} );
         redirect '/myPUB';
     };
 
+    get '/preview/:id' => sub {
+        my $id   = params->{id};
+        my $hits = h->publication->get($id);
+        $hits->{bag}
+            = $hits->{type} eq "researchData" ? "data" : "publication";
+        $hits->{style}
+            = h->config->{store}->{default_fd_style} || "frontShort";
+        $hits->{marked}  = 0;
+        $hits->{preview} = 1;
+        template 'frontend/frontdoor/record_preview.tt', $hits;
+    };
 };
 
 get '/upload' => sub {
@@ -278,7 +289,7 @@ post '/upload/delete' => sub {
     my $filename = params->{filename};
     my $dir      = h->config->{upload_dir} . "/$recordid/$filename";
     my $status   = rmdir $dir if -e $dir || 0;
-    template 'error', {error => "Error: could not delete files"} if $status;
+    template 'error', { error => "Error: could not delete files" } if $status;
 };
 
 1;

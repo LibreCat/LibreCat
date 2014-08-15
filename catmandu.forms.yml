@@ -406,9 +406,9 @@ publicationTypes:
           readonly: 1
         title: *title
         author:
-          firstName:
+          first_name:
             placeholder: "First Name"
-          lastName:
+          last_name:
             placeholder: "Last Name"
           mandatory: 1
           multiple: 1

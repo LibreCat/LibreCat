@@ -48,4 +48,23 @@
   </div>
 [% END %]
 </div>
+
+[% USE Dumper %]
+<div id="[% modus %]_iv_[% entry.item('_id') %]" class="collapse" style="padding-top:5px;">
+[% FOREACH key IN entry.keys %]
+  <b>[% key %]</b>:<br />
+  [% IF entry.$key.0 %]
+    [% FOREACH arrkey IN entry.$key %]
+      &nbsp;&nbsp;[% arrkey.0 OR arrkey.keys ? Dumper.dump(arrkey) : arrkey %]<br />
+    [% END %]
+  [% ELSIF entry.$key.keys %]
+    [% FOREACH subkey IN entry.$key.keys %]
+      &nbsp;&nbsp;<i>[% subkey %]</i>:<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;[% (entry.$key.$arrkey.0 OR entry.$key.$arrkey.keys) ? Dumper.dump(entry.$key.$arrkey) : entry.$key.$subkey %]<br />
+    [% END %]
+  [% ELSE %]
+    [% entry.$key %]<br />
+  [% END %]
+[% END %]
+</div>
 <!-- END rec_details.tt --> 
