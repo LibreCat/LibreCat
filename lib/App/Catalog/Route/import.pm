@@ -10,7 +10,7 @@ post '/import' => sub {
 	return template "add_new" unless $p->{source} && $p->{id};
 	my $pub = import_publication($p->{source}, $p->{id});
 
-	#error handling!
+	#TODO: error handling!
 	template "backend/forms/$pub->{type}", $pub;
 };
 

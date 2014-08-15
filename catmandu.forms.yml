@@ -36,6 +36,7 @@ field_order:
     - project
     - publisher
     - publication
+    - place
     - issue
     - language
     - year
@@ -50,6 +51,7 @@ field_order:
     - issue
     - place
     - series_title
+    - edition
     - abstract
     - ddc
     - keyword
@@ -63,6 +65,7 @@ field_order:
     - popular_science
     - quality_controlled
     - ubi_funded
+    - message
   related_material:
     - link_publication
     - url
@@ -118,11 +121,14 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         publication:
-          label: "Series Title"
+          label: "Publication/Series Title"
           placeholder: "E.g. Lecture Notes in Computer Science"
         abstract: &abstract
           label: "Abstract"
           label2: "Abstract Language"
+        edition: &edition
+          label: "Edition"
+          placerholder: "2"
         keyword: &kw
           label: "Keywords"
           placeholder: "Keyword (for more keyword fields click +)"
@@ -141,8 +147,12 @@ publicationTypes:
           label: "Alternative Title"
         publication_status: &publication_status
           label: "Publication Status"
-        external_id:
+        external_id: &external_id
           label: "External Identifier"
+        message: &message
+          label: "Admin Comments"
+        publication_identifier: &publ_id
+          label: "Publication Identifier"
       related_material: &rm
         tab_name: "Related Material"
         link_publication:
@@ -158,7 +168,9 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi: *doi
-        title: *title
+        title:
+          label: "Chapter Title"
+          mandatory: 1
         author: *author_editor_etc
         department: *department
         project: *project
@@ -166,15 +178,25 @@ publicationTypes:
           label: "Book Title"
           mandatory: 1
         year: *year
+      file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         series_title: &series_title
           label: Series Title
           placeholder: "Lecture Notes in Computer Science"
         place: *place
+        edition: *edition
+        publication_status: *publication_status
+        abstract: *abstract
+        ddc: *ddc
+        keyword: *kw
+        alternative_title: *alt_title
         page_range: &page_range
           label: "Pages"
-      file_upload: *file_upload
+        extern: *extern
+        external_id: *external_id
+        message: *message
+        publication_identifier: *publ_id
       related_material: *rm
   conferenceabstract:
     label: "Conference Abstract"
@@ -187,16 +209,17 @@ publicationTypes:
         author: *author_editor_etc
         department: *department
         project: *project
-        publication:
+        publication: &publication
           label: "Publication"
         year: *year
-        conference_part:
+        conference_part: 1
+      file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         keyword: *kw
         ddc: *ddc
         abstract: *abstract
-      file_upload: *file_upload
+        publication_identifier: *publ_id
       related_material: *rm
   conferenceeditor:
     label: "Conference Editor"
@@ -207,9 +230,59 @@ publicationTypes:
   dissertation:
     label: "Dissertation"
     tmpl: dissertation
+    fields:
+      basic_field:
+        doi: *doi
+        title: *title
+        author:
+        year: *year
+        department: *department
+        project: *project
+        publication: *publication
+        volume: *vol
+      file_upload: *file_upload
+      supplementary_fields:
+        abstract: *abstract
+        ddc: *ddc
+        keyword: *kw
+        external_id: *external_id
+        publisher: *publisher
+        publication_identifier: *publ_id
+      related_material: *rm
   encyclopediaarticle:
     label: "Encyclopedia Article"
     tmpl: encyclopediaArticle
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        doi: *doi
+        title:
+          label: "Article Title"
+          mandatory: 1
+        author: *author_editor_etc
+        department: *department
+        project: *project
+        publication:
+          label: "Book Title"
+          mandatory: 1
+        year: *year
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
+        series_title: *series_title
+        place: *place
+        edition: *edition
+        publication_status: *publication_status
+        abstract: *abstract
+        ddc: *ddc
+        keyword: *kw
+        alternative_title: *alt_title
+        page_range: *page_range
+        extern: *extern
+        external_id: *external_id
+        message: *message
+        publication_identifier: *publ_id
+      related_material: *rm
   journalarticle:
     label: "Journal Article"
     tmpl: journalArticle
@@ -227,9 +300,7 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        publication: &publication
-          label: "Publication"
-          placeholder: "Journal of Neuroscience"
+        publication: *publication
         volume: *vol
         issue: &issue
           label: "Issue"
@@ -237,7 +308,11 @@ publicationTypes:
         ddc: *ddc
         keyword: *kw
         popular_science: &popular_science
-         label: "Popular Science"
+          label: "Popular Science"
+        quality_controlled: *qc
+          lable: "Quality Controlled"
+        external_id: *external_id
+        publication_identifier: *publ_id
       related_material: *rm
   journaleditor:
     label: "Journal Editor"
