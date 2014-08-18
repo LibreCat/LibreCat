@@ -8,6 +8,7 @@ use Catmandu::Validator::PUB;
 use Hash::Merge qw/merge/;
 use Carp;
 use JSON;
+use HTML::Entities;
 use Exporter qw/import/;
 our @EXPORT
     = qw/new_publication save_publication delete_publication update_publication edit_publication/;
@@ -26,10 +27,10 @@ sub new_publication {
 sub save_publication {
     my $data      = shift;
     #my $validator = Catmandu::Validator::PUB->new();
-    
+
     foreach my $key (keys %$data){
     	my $ref = ref $data->{$key};
-    	
+
     	if($ref eq "ARRAY"){
     		if(!$data->{$key}->[0]){
     			delete $data->{$key};
@@ -46,9 +47,14 @@ sub save_publication {
     		}
     	}
     }
-    
+
     my $json = new JSON;
-    
+
+    # html encoding
+    foreach (qw/message/) {
+        $data->{$_} = encode_entities($data->{$_});
+    }
+
     if($data->{author}){
     	if(ref $data->{author} ne "ARRAY"){
     		$data->{author} = [$data->{author}];
@@ -125,27 +131,27 @@ sub save_publication {
     		$lang = $language;
     	}
     }
-    
+
     foreach my $key (keys %$data){
     	if(!$data->{$key}){
     		delete $data->{$key};
     	}
     }
-    
+
     # citations
     use Citation;
     my $response = Citation::id2citation($data);
     my $citbag = Catmandu->store('citation')->bag;
     my $publbag = Catmandu->store->bag('publication');
     $data->{citation} = $citbag->get($data->{_id}) if $data->{_id};
-    
+
     my $pre_fixer = Catmandu::Fix->new(
     fixes => [
         'clean_department_project()',
     ]);
 
     #if ( $validator->is_valid($data) ) {
-    	
+
     	$pre_fixer->fix($data);
         my $result = h->publication->add($data);
         $publbag->add($result);
@@ -163,7 +169,7 @@ sub update_publication {
     croak "Error: No _id specified" unless $data->{_id};
 
     #my $old = h->publication->get( $data->{_id} );
-    #my $merger = Hash::Merge->new(); 
+    #my $merger = Hash::Merge->new();
     #left precedence by default!
     #my $new = $merger->merge( $data, $old );
 
@@ -197,7 +203,7 @@ sub delete_publication {
     my $dir = h->config->{upload_dir} ."/$id";
     my $status = rmdir $dir if -e $dir || 0;
     croak "Error: could not delete files" if $status;
-    
+
     # delete citations
     my $citbag = Catmandu->store('citation')->bag;
     $citbag->delete($id);

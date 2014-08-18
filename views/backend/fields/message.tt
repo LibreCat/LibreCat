@@ -6,7 +6,7 @@
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-9">
-      <textarea rows="3" name="message" id="id_message" value="[% message %]" class="form-control"></textarea>
+      <textarea rows="3" name="message" id="id_message" value="[% FILTER html %][% message %][% END %]" class="form-control"></textarea>
     </span>
   </div>
 </div>

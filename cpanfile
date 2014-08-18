@@ -25,6 +25,7 @@ requires 'Dancer::Plugin::Catmandu::SRU';
 requires 'Dancer::Plugin::Email';
 requires 'Template';
 requires 'Furl';
+requires 'HTML::Entities';
 requires 'Net::LDAP';
 requires 'Net::LDAPS';
 

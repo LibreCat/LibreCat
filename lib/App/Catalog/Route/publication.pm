@@ -32,12 +32,11 @@ prefix '/record' => sub {
         }
         catch {
             template 'error', { error => "Something went wrong: $_" };
-
-        }
+        };
 
         if ($rec) {
             my $tmpl = "backend/forms/$rec->{type}";
-            template $tmpl, $record;
+            template $tmpl, $rec;
         }
         else {
             template 'error', { error => "No publication with ID $id." };
@@ -92,7 +91,7 @@ prefix '/record' => sub {
         }
         catch {
             template "error", { error => "something went wrong" };
-        }
+        };
 
         redirect '/myPUB';
     };
