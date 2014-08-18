@@ -10,7 +10,7 @@ use App::Catalog::Route::import;
 use App::Catalog::Route::publication;
 use App::Catalog::Interface;
 use App::Catalog::Person;
-use App::Catalog::Search;
+use App::Catalog::Route::search;
 use Authentication::Authenticate;
 
 $Template::Stash::PRIVATE = 0;
