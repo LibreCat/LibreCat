@@ -70,7 +70,7 @@
       <div class="col-md-2"><label for="id_active">Library Admin</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-1">
-          <input type="checkbox" name="super_admin" id="id_active" value="active" class="form-control" [% IF role.super_admin %]checked="checked"[% END %]>
+          <input type="checkbox" name="super_admin" id="id_active" value="admin" class="form-control" [% IF role.super_admin %]checked="checked"[% END %]>
         </div>
       </div>
     </div>

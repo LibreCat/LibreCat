@@ -38,10 +38,10 @@ sub search_person {
     my $p = shift;
 
     if ( $p->{id} ) {
-        return [ h->authority_admin->get( $p->{id} ) ];
+        return [ h->getPerson( $p->{id} ) ];
     }
     elsif ( $p->{full_name} ) {
-        return h->authority_admin->select( "last_name", $p->{full_name} )
+        return h->authority_admin->select( "full_name", qr/$p->{full_name}/i )
             ->to_array;
     }
     else {
@@ -76,24 +76,24 @@ sub delete_person {
 
 sub import_person {
     my $id = shift;
-    
+
     my $furl = Furl->new(agent => "Chrome 35.1",timeout => 10);
 
-    my $base_url = 'http://ekvv.uni-bielefeld.de/ws/pevz';    
+    my $base_url = 'http://ekvv.uni-bielefeld.de/ws/pevz';
     my $url  = $base_url . "/PersonKerndaten.xml?persId=$id";
     my $url2 = $base_url . "/PersonKontaktdaten.xml?persId=$id";
-    
+
     my $res = $furl->get($url);
     croak "Error: $res->status_line" unless $res->is_success;
     my $p1 = Catmandu->importer('pevz', file => $res->content)->first;
-    
+
     $res = $furl->get($url2);
     croak "Error: $res->status_line" unless $res->is_success;
     my $p2 = Catmandu->importer('pevz', file => $res->content)->first;
     my $merger = Hash::Merge->new();
-    # decode_entities($email) if $email; # do we need this?    
+    # decode_entities($email) if $email; # do we need this?
     return $merger->merge( $p1, $p2 );
-    
+
 # decode_entities($email) if $email;
 # my $former = ( $res2 =~ /<\/pevz:kontakte>/ ) ? "0" : "1";
 # my $nonexist = ( $former and !$personName ) ? "1" : "0";
