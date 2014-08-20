@@ -2,7 +2,7 @@ package App::Catalog::Controller::Search;
 
 use App::Catalog::Helper;
 use Catmandu::Util qw(:is :array);
-
+use Dancer qw/:syntax/;
 use Exporter qw/import/;
 
 our @EXPORT = qw/search/;
@@ -21,13 +21,13 @@ sub search {
 
     my $account = h->getAccount(session->{user});
     if($account->[0]->{reviewer} and $par->{modus} eq "reviewer"){
-    	$query =. join(' OR ')
-    	# my $revdep = "";
-    	# foreach my $rev (@{$account->[0]->{reviewer}}){
-    	# 	$revdep .= "department=$rev->{department}->{id} OR ";
-    	# }
-    	# $revdep =~ s/ OR $//g;
-    	# $query = $revdep;
+    	#$query .= join(' OR ');
+    	 my $revdep = "";
+    	 foreach my $rev (@{$account->[0]->{reviewer}}){
+    	 	$revdep .= "department=$rev->{department}->{id} OR ";
+    	 }
+    	 $revdep =~ s/ OR $//g;
+    	 $query = $revdep;
     }
     elsif($account->[0]->{dataManager} and $par->{modus} eq "dataManager"){
     	my $mgrdep = "";
@@ -39,7 +39,7 @@ sub search {
     	$query .= $mgrdep;
     }
     elsif ($par->{modus} eq "admin"){
-    	#nothing?
+    	$query = "";
     }
     else{
     	$query = "person=$id";
