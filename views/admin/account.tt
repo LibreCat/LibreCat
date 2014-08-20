@@ -1,60 +1,77 @@
 [% INCLUDE navbar.tt %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
 
 <!-- BEGIN admin/account.tt -->
 
-<div class="row col-md-11 col-md-offset-1">
+<div class="row">
+<div class="col-md-11 col-md-offset-1">
 <h2>Manage Account Information</h2>
-<div class="col-md-7">
-<form role="form" action="/myPUB/admin/account/search" method="POST">
+
+<form role="form" action="/myPUB/admin/account/search" method="GET">
   <div class="row innerrow">
-  <div class="col-md-3">
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" class="form-control" name="full_name" id="id_name" placeholder="Einstein, A" value="">
-  </div>
-  </div>
-  <div class="col-md-3">
-  <div class="form-group">
-    <label for="id">ID</label>
-    <input type="text" class="form-control" name="id" id="id_id" placeholder="12345" value="">
-  </div>
-  </div>
-  <div class="col-md-1">
-  <button type="submit" class="btn btn-default">Search</button>
+  <div class="col-md-5">
+    <label for="id_name">SEARCH by name or PEVZ-ID</label>
+    <div class="input-group">
+      <input type="text" class="form-control" name="full_name" id="id_name" placeholder="Einstein, A" value="[% qp.full_name %]">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-default">Search</button>
+      </span>
+    </div><!-- /input-group -->
+    
   </div>
   </div>
 </form>
 
-</div><!-- end col-md-7 -->
+</div>
+</div>
 
-<div class="col-md-4">
+<div class="row">
+<div class="col-md-12">&nbsp;</div>
+</div>
+
+<div class="row">
+<div class="col-md-11 col-md-offset-1">
+
 <form role="form" action="/myPUB/admin/account/import" method="POST">
-  <div class="col-md-3">
-    <div class="form-group">
-      <label for="id">ID</label>
-      <input type="text" class="form-control" name="id" id="id_id" placeholder="12345" value="">
+  <div class="row innerrow">
+  <div class="col-md-5">
+    <label for="id_name">IMPORT by PEVZ-ID</label>
+    <div class="input-group">
+      <input type="text" class="form-control" name="name_id" id="id_name" placeholder="Einstein, A" value="[% qp.name_id %]">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-default">Import</button>
+      </span>
+    </div><!-- /input-group -->
+    
+  </div>
+  </div>
+</form>
+
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-12">&nbsp;</div>
+</div>
+
+[% IF hits %]
+<div class="row">
+<div class="col-md-11 col-md-offset-1">
+<h3>[% total ? total : "0" %] Results</h3>
+
+[% FOREACH p IN hits %]
+<div class="row innerrow">
+  <div class="col-md-6">
+    <i> <span class="glyphicon glyphicon-pencil"></span></i> <a href="/myPUB/admin/account/edit/[% p._id %]">[% p.full_name %]</a> ([% p._id %]) [% p.account_status %]<br />
+    <div style="margin-left:10px;">
+      <span class="text-muted">[% p.department.0.name %]</span>
     </div>
   </div>
-  <div class="col-md-1">
-    <button type="submit" class="btn btn-default">Import</button>
-  </div>
-</form>
-</div><!-- end col-md-4 -->
-
-<div class="row col-md-9">
-
-<ul>
-[% FOREACH p IN hits %]
-<div class="row col-md-6">
-<li>
-<i> <span class="glyphicon glyphicon-pencil"></span></i> <a href="/myPUB/admin/account/edit/[% p._id %]">[% p.full_name %]</a> ([% p._id %]) [% p.account_status %]<br />
-[% p.department.0.name %]<br />
-</li>
 </div>
 [% END %]
-<ul>
 </div>
-
-</div><!-- end div row col-md-11 -->
+</div>
+[% END %]
 
 <!-- END admin/account.tt -->
