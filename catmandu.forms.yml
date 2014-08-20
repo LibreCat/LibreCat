@@ -120,11 +120,12 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         publication:
-          label: "Publication/Series Title"
+          label: "Publication/<br />Series Title"
           placeholder: "E.g. Lecture Notes in Computer Science"
         abstract: &abstract
           label: "Abstract"
           label2: "Abstract Language"
+          multiple: 1
         edition: &edition
           label: "Edition"
           placerholder: "2"
@@ -141,7 +142,8 @@ publicationTypes:
         page: &page
           label: "Total Pages"
         extern: &extern
-          label: "Published while not @Bielefeld University"
+          label: "External<br />Publication"
+          placeholder: "(Published while not employed at Bielefeld University)"
         alternative_title: &alt_title
           label: "Alternative Title"
         publication_status: &publication_status
