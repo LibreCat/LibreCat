@@ -7,46 +7,55 @@ use App::Catalog::Helper;
 use App::Catalog::Controller::Admin qw/:all/;
 
 prefix '/admin' => sub {
-#TODO: check role!
 
-	# manage accounts
-	get '/account' => sub {
-		template 'admin/account';
-	};
+    #TODO: check role!
 
-	post '/account/search' => sub {
-		my $p = params;
-		my $hits;
-		$hits->{hits} = search_person($p);
-		template 'admin/account', $hits;
-	};
+    # manage accounts
+    get '/account' => sub {
+        template 'admin/account';
+    };
 
-	get '/account/edit/:id' => sub {
-		my $id = param 'id';
-		my $person = edit_person($id);
-		template 'admin/edit_account', $person;
-	};
+    post '/account/search' => sub {
+        my $p = params;
+        my $hits;
+        $hits->{hits} = search_person($p);
+        template 'admin/account', $hits;
+    };
 
-	post '/account/update' => sub {
-		my $p = params;
-		$p = h->nested_params($p);
-		#update_person($p);
-		template 'admin/account';
-	};
+    get '/account/edit/:id' => sub {
+        my $id     = param 'id';
+        my $person = edit_person($id);
+        template 'admin/edit_account', $person;
+    };
 
-	post '/account/import' => sub {
-		return template 'admin/account' unless params->{id};
+    post '/account/update' => sub {
+        my $p = params;
+        $p = h->nested_params($p);
 
-		my $p = import_person(params->{id});
-		return to_dumper $p;
-		template 'admin/edit_account', $p;
-	};
+        #update_person($p);
+        template 'admin/account';
+    };
 
-	# manage departments
-	get '/admin/department' => sub {};
+    post '/account/import' => sub {
+        return template 'admin/account' unless params->{_id};
 
-	# monitoring external sources
-	get '/inspire-monitor' => sub {};
+        my $person_in_db = search_person( { _id => params->{_id} } );
+        if ($person_in_db) {
+            template 'admin/edit_account',
+                { error =>
+                    "There is already an account with ID params->{_id}" };
+        }
+        else {
+            my $p = import_person( params->{id} );
+            template 'admin/edit_account', $p;
+        }
+    };
+
+    # manage departments
+    get '/admin/department' => sub { };
+
+    # monitoring external sources
+    get '/inspire-monitor' => sub { };
 };
 
 1;

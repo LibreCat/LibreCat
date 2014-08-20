@@ -16,7 +16,7 @@
       <div class="col-md-2"><label for="id_id">ID</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-2">
-          <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control" readonly="readonly">
+          <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control required" [% IF _id %]readonly="readonly"[% END %]>
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@
       <div class="col-md-2"><label for="id_last_name">Last Name</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-6">
-          <input type="text" name="last_name" id="id_last_name" value="[% last_name %]" class="form-control">
+          <input type="text" name="last_name" id="id_last_name" value="[% last_name %]" class="form-control required">
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@
       <div class="col-md-2"><label for="id_first_name">First Name</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-6">
-          <input type="text" name="first_name" id="id_first_name" value="[% first_name %]" class="form-control">
+          <input type="text" name="first_name" id="id_first_name" value="[% first_name %]" class="form-control required">
         </div>
       </div>
     </div>
@@ -87,5 +87,11 @@
 
 </div><!-- col-md-9 col-md-offset-1 -->
 </div><!-- row -->
+
+<script>
+$('button.cancel-button').click(function() {
+  window.location.href = '/myPUB';
+});
+</script>
 
 <!-- END admin/edit_account.tt -->

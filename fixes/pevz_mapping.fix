@@ -5,7 +5,7 @@ move_field("tmp.id","_id");
 move_field("tmp.pevz:nachname", "last_name");
 move_field("tmp.pevz:vorname","first_name");
 move_field("tmp.pevz:bildskalierturl","bis.photo"); #full_name?
-move_field("tmp.pevz:title","bis.title");
+#move_field("tmp.pevz:title","bis.title");
 if exists ("tmp.forschend")
 	add_field("bis.researcher","1");
 end

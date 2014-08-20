@@ -37,8 +37,8 @@ sub new_person {
 sub search_person {
     my $p = shift;
 
-    if ( $p->{id} ) {
-        return [ h->getPerson( $p->{id} ) ];
+    if ( $p->{_id} ) {
+        return [ h->getPerson( $p->{_id} ) ];
     }
     elsif ( $p->{full_name} ) {
         return h->authority_admin->select( "full_name", qr/$p->{full_name}/i )
