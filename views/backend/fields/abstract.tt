@@ -2,20 +2,22 @@
   <div class="col-md-2">
     <label for="abstract">
       {% fields.supplementary_fields.abstract.label %}
+      {% IF fields.supplementary_fields.abstract.mandatory %}<span class="starMandatory">*</span>&nbsp;{% END %}{% IF fields.supplementary_fields.abstract.multiple %}<span class="glyphicon glyphicon-plus"{% IF fields.supplementary_fields.abstract.mandatory %} data-mandatory="yes"{% END %} id="plusAbstract"></span>{% END %}
     </label>
   </div>
-  <div class="col-md-10 form-group" id="abstract">
+  <div class="col-md-10" id="abstract">
     [% IF !abstract %]
-    <span class="col-md-6">
-      <textarea rows="3" name="ab_abAbstract_0" id="id_ab_abAbstract_0" class="form-control"></textarea>
-    </span>
-    <span class="col-md-6">
+    <div class="form-group row innerrow">
+    <div class="col-md-6">
+      <textarea rows="3" name="abstract_0" id="id_abstract_0" class="form-control"></textarea>
+    </div>
+    <div class="col-md-6">
       <label for="id_ab_abLanguageOId0">
         {% fields.supplementary_fields.abstract.label2 %}
       </label>
-    </span>
-    <span class="form-group col-md-3">
-      <select name="ab_abLanguageOId_0" id="id_ab_abLanguageOId_0" class="form-control">
+    </div>
+    <div class="form-group col-md-3">
+      <select name="abstract_language_0" id="id_abstract_language_0" class="form-control">
       [% FOREACH lang IN h.language_preselect.keys.sort %]
         <option value="[% h.language_preselect.$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
       [% END %]
@@ -24,19 +26,24 @@
         <option value="[% h.language.$lang %]" [% IF abLanguageOId == h.language.$lang %]selected="selected"[% END %]>[% lang %]</option>
       [% END %]
       </select>
-    </span>
+    </div>
+    <div class="col-md-1">
+      <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('id_abstract_0').value = '';javascript:document.getElementById('id_abstract_language_0').value = 'eng';"></div>
+    </div>
+    </div>
     [% ELSE %]
       [% FOREACH ab IN abstract %]
+      <div class="form-group row innerrow">
       <div class="col-md-6">
-        <textarea rows="3" name="ab_abAbstract_[% loop.index %]" id="id_ab_abAbstract_[% loop.index %]" class="form-control">[% ab.text %]</textarea>
+        <textarea rows="3" name="abstract_[% loop.index %]" id="id_abstract_[% loop.index %]" class="form-control">[% ab.text %]</textarea>
       </div>
       <div class="col-md-6">
-        <label for="id_ab_abLanguageOId[% loop.index %]">
+        <label for="id_abstract_language_[% loop.index %]">
           {% fields.supplementary_fields.abstract.label2 %}
         </label>
       </div>
       <div class="form-group col-md-3">
-        <select name="ab_abLanguageOId_[% loop.index %]" id="id_ab_abLanguageOId_[% loop.index %]" class="form-control">
+        <select name="abstract_language_[% loop.index %]" id="id_abstract_language_[% loop.index %]" class="form-control">
         [% FOREACH lang IN h.language_preselect.keys.sort %]
           <option value="[% h.language_preselect.$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
         [% END %]
@@ -45,6 +52,14 @@
           <option value="[% h.language.$lang %]" [% IF abLanguageOId == h.language.$lang %]selected="selected"[% END %]>[% lang %]</option>
         [% END %]
         </select>
+      </div>
+      <div class="col-md-1">
+        [% IF loop.index == "0" %]
+        <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('id_abstract_[% loop.index %]').value = '';javascript:document.getElementById('id_abstract_language_[% loop.index %]').value = 'eng';"></div>
+        [% ELSE %]
+        <div class="glyphicon glyphicon-minus single"></div>
+        [% END %]
+      </div>
       </div>
       [% END %]
     [% END %]
