@@ -5,8 +5,13 @@
     </label>
   </div>
   <div class="col-md-10">
-    <span class="form-group col-md-1">
-      <input type="checkbox" name="extern" id="id_extern" value="extern"[% IF extern %] checked="checked[% END %] class="form-control">
-    </span>
+    <div class="checkbox">
+      <label>
+        <span class="form-group col-md-1">
+          <input type="checkbox" name="extern" id="id_extern" value="extern"[% IF extern %] checked="checked[% END %]>
+        </span>
+        {% fields.supplementary_fields.extern.placeholder %}
+      </label>
+    </div>
   </div>
 </div>
