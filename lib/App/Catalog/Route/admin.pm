@@ -14,6 +14,11 @@ prefix '/admin' => sub {
 		template 'admin/account';
 	};
 
+    get '/account/new' => sub {
+        my $id = new_person();
+        template 'admin/account', {_id => $id};
+    }
+
 	post '/account/search' => sub {
 		my $p = params;
 		my $hits;

@@ -31,7 +31,7 @@ sub _create_id_pers {
 }
 
 sub new_person {
-    return _create_id_pers;
+    return "AU_". _create_id_pers;
 }
 
 sub search_person {
