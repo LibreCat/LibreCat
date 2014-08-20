@@ -14,10 +14,11 @@ prefix '/admin' => sub {
 		template 'admin/account';
 	};
 
-	post '/account/search' => sub {
+	get '/account/search' => sub {
 		my $p = params;
 		my $hits;
 		$hits->{hits} = search_person($p);
+		$hits->{total} = scalar @{$hits->{hits}};
 		template 'admin/account', $hits;
 	};
 
