@@ -20,7 +20,6 @@ publicationTypeOrder:
   - patent
   - preprint
   - report
-  - translation
   - workingpaper
   - bidissertation
   - bibachelorthesis
@@ -443,7 +442,6 @@ publicationTypes:
   workingpaper:
     label: "Working Paper"
     tmpl: workingPaper
-
   bidissertation:
     label: "Bielefeld Doctoral Thesis"
     tmpl: biDissertation
