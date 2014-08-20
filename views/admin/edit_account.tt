@@ -21,15 +21,27 @@
       </div>
     </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_account_type">Account Type</label></div>
-      <div class="col-md-10">
-        <div class="form-group col-md-2">
-        UniBi
-          <input type="radio" name="account_type" id="id_account_type" value="unibi" [% IF account_type == unibi %]checked="checked"[% END %] class="form-control">
+      <div class="col-md-2">
+        <label for="id_account_type">Account Type</label>
+      </div>
+      <div class="col-md-3">
+        <div class="row innerrow">
+        <div class="checkbox">
+        <label>
+          <input type="radio" name="account_type" id="id_account_type" value="unibi" [% IF account_type == unibi %]checked="checked"[% END %]>
+          UniBi
+        </label>
         </div>
-        <div class="form-group col-md-2">
-        External
-          <input type="radio" name="account_type" id="id_account_type" value="external" [% IF account_type == external %]checked="checked"[% END %] class="form-control">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="row innerrow">
+        <div class="checkbox">
+        <label>
+          <input type="radio" name="account_type" id="id_account_type" value="external" [% IF account_type == external %]checked="checked"[% END %]>
+          External
+        </label>
+        </div>
         </div>
       </div>
     </div>
@@ -53,7 +65,7 @@
       <div class="col-md-2"><label for="id_email">Email</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-6">
-          <input type="email" name="email" id="id_email" value="[% bis.email %]" class="form-control" readonly="readonly">
+          <input type="email" name="email" id="id_email" value="[% bis.email %]" class="form-control">
         </div>
       </div>
     </div>
@@ -61,19 +73,184 @@
       <div class="col-md-2"><label for="id_active">Active</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-1">
-          <input type="checkbox" name="active" id="id_active" value="active" class="form-control" [% IF active %]checked="checked"[% END %]>
+          <input type="checkbox" name="active" id="id_active" value="active" [% IF active %]checked="checked"[% END %]>
         </div>
       </div>
     </div>
-    <div class="row innerrow"><label>Roles</label>
+    
+    <div class="row innerrow">
+      <div class="col-md-12">
+        &nbsp;
+      </div>
+    </div>
+    
     <div class="row innerrow">
       <div class="col-md-2"><label for="id_active">Library Admin</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-1">
-          <input type="checkbox" name="super_admin" id="id_active" value="active" class="form-control" [% IF role.super_admin %]checked="checked"[% END %]>
+          <input type="checkbox" name="super_admin" id="id_active" value="active" [% IF role.super_admin %]checked="checked"[% END %]>
         </div>
       </div>
     </div>
+    
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_active">Data Manager</label></div>
+      <div class="col-md-10">
+      [% IF !data_manager %]
+        <div class="form-group">
+          <input type="hidden" name="department" id="dp_idautocomplete_0" value="" />
+          
+          <span class="form-group col-md-7">
+            <input type="text" class="form-control" id="dp_autocomplete_0" value="" />
+          </span>
+          <span class="form-group col-md-2">
+            <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0" value="Select"/>
+          </span>
+          <span class="col-md-1">
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
+          </span>
+          <script>
+          $(function() {
+            $( "#dp_autocomplete_0" ).autocomplete({
+              source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+              minLength: 2,
+              select: function( event, ui ) {
+                $( "#dp_autocomplete_0" ).val( ui.item.label );
+                $( "#dp_idautocomplete_0" ).val( ui.item.id );
+              }
+            });
+          });
+          </script>
+        </div>
+      [% ELSE %]
+      [% FOREACH dept IN data_manager %]
+        <div class="form-group">
+          <input type="hidden" name="data_manager.[% loop.index %].department.id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.department.id %]" />
+          <span class="form-group col-md-7">
+            <input type="text" class="form-control" id="dp_autocomplete_[% loop.index %]" value="[% dept.department.name %]" />
+          </span>
+          <span class="form-group col-md-2">
+            <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]" value="Select"/>
+          </span>
+          <span class="col-md-1">
+          [% IF loop.index == 0 %]
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
+          [% ELSE %]
+            <span class="glyphicon glyphicon-minus single"></span>
+          [% END %]
+          </span>
+          <script>
+          $(function() {
+            $( "#dp_autocomplete_[% loop.index %]" ).autocomplete({
+              source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+              minLength: 2,
+              select: function( event, ui ) {
+                $( "#dp_autocomplete_[% loop.index %]" ).val( ui.item.label );
+                $( "#dp_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+              }
+            });
+          });
+          </script>
+        </div>
+      [% END %]
+      [% END %]
+      
+        <div class="modal" id="selectModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"></h4>
+                <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
+              </div>
+              <div class="modal-body">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_active">Reviewer</label></div>
+      <div class="col-md-10">
+        [% IF !reviewer %]
+        <div class="form-group">
+          <input type="hidden" name="reviewer" id="rv_idautocomplete_0" value="" />
+          
+          <span class="form-group col-md-7">
+            <input type="text" class="form-control" id="rv_autocomplete_0" value="" />
+          </span>
+          <span class="form-group col-md-2">
+            <input type="button" onclick="selectButton(this);" class="btn select_button department" id="reviewer_select_0" value="Select"/>
+          </span>
+          <span class="col-md-1">
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rv_autocomplete_0').value = '';document.getElementById('rv_idautocomplete_0').value='';"></span>
+          </span>
+          <script>
+          $(function() {
+            $( "#rv_autocomplete_0" ).autocomplete({
+              source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+              minLength: 2,
+              select: function( event, ui ) {
+                $( "#rv_autocomplete_0" ).val( ui.item.label );
+                $( "#rv_idautocomplete_0" ).val( ui.item.id );
+              }
+            });
+          });
+          </script>
+        </div>
+      [% ELSE %]
+      [% FOREACH dept IN reviewer %]
+        <div class="form-group">
+          <input type="hidden" name="reviewer.[% loop.index %].department.id" id="rv_idautocomplete_[% loop.index %]" value="[% dept.department.id %]" />
+          <span class="form-group col-md-7">
+            <input type="text" class="form-control" id="rv_autocomplete_[% loop.index %]" value="[% dept.department.name %]" />
+          </span>
+          <span class="form-group col-md-2">
+            <input type="button" onclick="selectButton(this);" class="btn select_button department" id="reviewer_select_[% loop.index %]" value="Select"/>
+          </span>
+          <span class="col-md-1">
+          [% IF loop.index == 0 %]
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rv_autocomplete_0').value = '';document.getElementById('rv_idautocomplete_0').value='';"></span>
+          [% ELSE %]
+            <span class="glyphicon glyphicon-minus single"></span>
+          [% END %]
+          </span>
+          <script>
+          $(function() {
+            $( "#rv_autocomplete_[% loop.index %]" ).autocomplete({
+              source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+              minLength: 2,
+              select: function( event, ui ) {
+                $( "#rv_autocomplete_[% loop.index %]" ).val( ui.item.label );
+                $( "#rv_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+              }
+            });
+          });
+          </script>
+        </div>
+      [% END %]
+      [% END %]
+      
+        <div class="modal" id="selectModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"></h4>
+                <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
+              </div>
+              <div class="modal-body">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
     <div class="row innerrow"><!-- button -->
       <div class="col-md-12 buttonrow">
       <span class="form-grou col-md-2">&nbsp;</span>
@@ -89,3 +266,39 @@
 </div><!-- row -->
 
 <!-- END admin/edit_account.tt -->
+
+<script>
+// Select button (dept, proj, rg)
+function selectButton(element){
+	var type = $(element).attr('class').replace('btn select_button', '').trim();
+	var type_short;
+	var type_name;
+	
+	var index = $(element).attr('id').replace(type + '_select_','').trim();
+	var modal = $('#selectModal');
+	var container = $('#selectModal').find('.modal-body').first();
+	container.html("");
+	if(type == "department"){
+	    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+	    type_short = "dp";
+	    type_name = "Department";
+	}
+	else if(type == "project"){
+	    container.append('[% INCLUDE backend/fields/subfields/project_select.tt %]');
+	    type_short = "pj";
+	    type_name = "Project";
+	}
+	var heading = modal.find('h4').first();
+	heading.html("");
+	heading.append('Choose a ' + type_name);
+	$('.selectme').bind("click", function(){
+		var id = $(this).attr('id');
+	    var name = $(this).html();
+	    var index = $(this).attr('data-index');
+	    $('#' + type_short + '_idautocomplete_' + index).val(id);
+	    $('#' + type_short + '_autocomplete_' + index).val(name);
+	    $('#selectModal').modal('hide');
+	});
+	modal.modal('show');
+}
+</script>
