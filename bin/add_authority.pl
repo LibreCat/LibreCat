@@ -40,48 +40,50 @@ if($opt_p) {
 }
 
 sub getPersonData {
-	
+
 	my $fixer = Catmandu::Fix->new(fixes => [
-		'repair_name_array("hasUserAccessThrough")',
+#		'repair_name_array("hasUserAccessThrough")',
 		'repair_name_array("hasDepartmentRights")',
 		'repair_name_array("hasDependent")',
 		'repair_name_array("isAffiliatedWith")',
 		'remove_field("oId")',
 		'remove_field("oIdAccount")',
-		'move_field("isSuperAdminAccount", "superAdmin")',
-		'move_field("hasUserAccessThrough", "access")',
+		'move_field("isSuperAdminAccount", "super_admin")',
+		'remove_field("hasUserAccessThrough")',
 		'move_field("luLdapId","login")',
 		'move_field("jobTitle","title")',
 		'move_field("fullName","full_name")',
 		'move_field("surname","last_name")',
 		'move_field("givenName","first_name")',
 		'remove_field("isOfType")',
+        'remove_field("reviewer.*.reviewer")',
+        'remove_field("reviewer.*.reviewDiss")',
 		]);
-		
+
 	my $sbcatPerson = shift;
-	
+
 	my $mongo_data = ();
 	my $user_data = ();
 	my $citationStyle;
 	my $sortDirection;
-	
+
 	my $sbcatAccount = $luur->getRelatedObjects(relation => "isOwnedBy", object2 => $sbcatPerson);
-	
+
 	my $externalRelations = $luur->getExternalRelationsInfo($sbcatPerson) if $sbcatPerson;
 	my $internalRelations = $luur->getInternalRelationsInfo($sbcatPerson) if $sbcatPerson;
 	my $extRelAccount = $luur->getExternalRelationsInfo(@{$sbcatAccount}[0]) if @{$sbcatAccount}[0];
 	my $intRelAccount = $luur->getInternalRelationsInfo(@{$sbcatAccount}[0]) if @{$sbcatAccount}[0];
-	
+
 	#print Dumper $externalRelations;
 	#print Dumper $internalRelations;
 	#print Dumper $extRelAccount;
 	#print Dumper $intRelAccount;
 	#exit;
-	
+
 	my $record;
 	$record->{oId} = $sbcatPerson;
 	$record->{oIdAccount} = @{$sbcatAccount}[0];
-	
+
 	foreach(@{$externalRelations}){
 		#$record->{oId} = $_->{erOId};
 		my $rel = $luur->getObjectInfo($_->{erRelationOId});
@@ -125,7 +127,7 @@ sub getPersonData {
 		my $rel = $luur->getObjectInfo($_->{erRelationOId});
 		$record->{$rel->{oInternalName}} = $_->{erValue};
 	}
-	
+
 	foreach(@{$intRelAccount}){
 		my $rel = $luur->getObjectInfo($_->{irRelationOId});
 		if($rel->{oInternalName} eq "hasDepartmentRights"){ #or $rel->{oInternalName} eq "hasDependent"){
@@ -156,7 +158,7 @@ sub getPersonData {
 	}
 
 	$record->{_id} = $record->{personNumber};
-	
+
 	if($record->{_id}){
 		$mongo_data = $adminbag->get($record->{_id});
 		foreach my $key (keys %$record){
@@ -165,14 +167,14 @@ sub getPersonData {
 	}
 	$fixer->fix($mongo_data) if $mongo_data;
 	$adminbag->add($mongo_data) if $mongo_data;
-	
-	
+
+
 	my $id = "";
 	if($record->{_id}){
 		$user_data = $userbag->get($record->{_id});
 		$id = $record->{_id};
 	}
-	
+
 	if($mongo_data){
 		$user_data->{citationStyle} = $citationStyle;
 		$user_data->{sortDirection} = $sortDirection;
@@ -194,7 +196,7 @@ sub getPersonData {
 		my $former = ($res2 =~ /<\/pevz:kontakte>/) ? "0" : "1";
 		my $nonexist = ($former and !$personName) ? "1" : "0";
 		my $forschend = ($res =~ /forschend="forschend"/) ? "1" : "0";
-		
+
 		$user_data->{_id} = $id;
 		$user_data->{bis}->{photo} = $photo;
 		$user_data->{bis}->{email} = $email;
@@ -202,47 +204,47 @@ sub getPersonData {
 		$user_data->{bis}->{former} = $former;
 		$user_data->{bis}->{nonExist} = $nonexist;
 		$user_data->{bis}->{personTitle} = $personTitle;
-		
+
 		$fixer->fix($user_data);
-		
+
 		$userbag->add($user_data);
 	}
-	
+
 }
 
 sub add_department {
-	
+
 	my $dep_url = "http://pub.uni-bielefeld.de/luur/authority_organization?func=getOrganizations";
-	
+
 	use LWP::Simple;
 	use XML::Simple;
 	my $html = get($dep_url);
 	my $xml = XMLin($html, ForceArray => ['name']);
-	
+
 	my $orgunit = $xml->{organizationalUnit};
-	
+
 	foreach(@$orgunit){
 		my $dep_hash;
-		
+
 		$dep_hash->{_id} = $_->{organizationNumber};
 		$dep_hash->{oId} = $_->{organizationNumber};
 		$dep_hash->{name} = $_->{name}->[0]->{content}; #forcearray on "name" makes this possible
 		$dep_hash->{name_lc} = lc $_->{name}->[0]->{content};
-		
+
 		push @{$dep_hash->{tree}}, {id => $_->{organizationNumber}, name => $_->{name}->[0]->{content}};
 		my $parent = $_->{parent};
 		if($parent and $parent ne "0"){
 			my @matching_items = grep {$_->{organizationNumber} eq $parent} @$orgunit;
 			$parent = $matching_items[0];
 			push @{$dep_hash->{tree}}, {id => $parent->{organizationNumber}, name => $parent->{name}->[0]->{content}};
-			
+
 			if($parent->{parent} and $parent->{parent} ne "0"){
 				@matching_items = grep {$_->{organizationNumber} eq $parent->{parent}} @$orgunit;
 				my $parentparent = $matching_items[0];
 				push @{$dep_hash->{tree}}, {id => $parentparent->{organizationNumber}, name => $parentparent->{name}->[0]->{content}};
 			}
 		}
-		
+
 		my ($sec,$min,$hour,$day,$mon,$year) = localtime(time);
 		$dep_hash->{dateLastChanged} = sprintf("%04d-%02d-%02dT%02d:%02d:%02d", 1900+$year, 1+$mon, $day, $hour, $min, $sec);
 
@@ -251,9 +253,9 @@ sub add_department {
 }
 
 sub add_person {
-	
+
 	my $id = shift;
-	
+
 	if($id) {
 		my $person = $luur->getObjectsByAttributeValues(type => 'luAuthor', attributeValues => { personNumber => $id});
 		my $p = @{$person}[0];
@@ -265,7 +267,7 @@ sub add_person {
 		}
 	} else {
 		my $person = $luur->getObjectsByType(type => 'luAuthor');
-		
+
 		foreach my $p (@$person) {
 			if ($p and $p ne "" and $p =~ /\d{1,}/){
 				&getPersonData($p);
@@ -303,7 +305,7 @@ bin/add_authority.pl
 
 bin/add_authority.pl -r
 
-=head2 Update store with a person's infos 
+=head2 Update store with a person's infos
 
 bin/add_authority.pl -p [person's BIS ID]
 
