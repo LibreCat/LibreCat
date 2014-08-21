@@ -16,15 +16,17 @@ prefix '/admin' => sub {
 
     get '/account/new' => sub {
         my $id = new_person();
-        template 'admin/account', {_id => $id};
-    }
+        template 'admin/edit_account', {_id => $id};
+    };
 
 	get '/account/search' => sub {
-		my $p = params;
+		my $query = params->{q} ||= '';
+
 		my $hits;
-		$hits->{hits} = search_person($p);
-		$hits->{total} = scalar @{$hits->{hits}};
-		template 'admin/account', $hits;
+		$hits = search_person($query);
+        return to_dumper $hits;
+		#$hits->{total} = scalar @{$hits->{hits}};
+		#template 'admin/account', $hits;
 	};
 
 	get '/account/edit/:id' => sub {
@@ -40,17 +42,17 @@ prefix '/admin' => sub {
 		template 'admin/account';
 	};
 
-	post '/account/import' => sub {
-        return template 'admin/account' unless params->{_id};
+	get '/account/import' => sub {
+        my $id = params->{id};
 
-        my $person_in_db = search_person( { _id => params->{_id} } );
+        my $person_in_db = h->authority_admin->get($id);
         if ($person_in_db) {
-            template 'admin/edit_account',
+            template 'admin/account',
                 { error =>
-                    "There is already an account with ID params->{_id}" };
+                    "There is already an account with ID $id" };
         }
         else {
-            my $p = import_person( params->{id} );
+            my $p = import_person( $id );
             template 'admin/edit_account', $p;
         }
     };

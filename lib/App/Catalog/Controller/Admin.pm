@@ -2,7 +2,6 @@ package App::Catalog::Controller::Admin;
 
 use Catmandu::Sane;
 use Catmandu;
-use Catmandu::Importer::XML;
 use Furl;
 use Hash::Merge qw/merge/;
 use Carp;
@@ -22,31 +21,29 @@ our %EXPORT_TAGS = (
 );
 
 # manage persons
-sub _create_id_pers {
-    my $bag = h->authority('admin')->get('1');
-    my $id  = $bag->{"latest"};
+sub _create_id {
+    my $id = h->bag->get('1')->{"latest"};
     $id++;
-    $bag = h->bag->add( { _id => "1", latest => $id } );
-    return $id;    # correct?
+    h->bag->add( { _id => "1", latest => $id } );
+    return $id;
 }
 
 sub new_person {
-    return "AU_". _create_id_pers;
+    return "AU_". _create_id;
 }
 
 sub search_person {
-    my $p = shift;
+    my $query = shift;
 
-    if ( $p->{_id} ) {
-        return [ h->getPerson( $p->{_id} ) ];
+    if ( $query && $query =~ /\d+/) {
+        return [ h->getPerson( $query ) ];
     }
-    elsif ( $p->{full_name} ) {
-        return h->authority_admin->select( "full_name", qr/$p->{full_name}/i )
-            ->to_array;
+    elsif ($query) {
+        return h->authority_admin->select( "full_name", qr/$query/i );
     }
-    else {
-        croak "Error: No search params provided";
-    }
+    # else {
+    #     h->authority_admin->search(query => '', start => 0, limit => 20);
+    # }
 }
 
 sub update_person {

@@ -16,7 +16,7 @@
       <div class="col-md-2"><label for="id_id">ID</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-2">
-          <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control required" [% IF _id %]readonly="readonly"[% END %]>
+          <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control" readonly="readonly" required>
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
         <div class="row innerrow">
         <div class="checkbox">
         <label>
-          <input type="radio" name="account_type" id="id_account_type" value="unibi" [% IF account_type == unibi %]checked="checked"[% END %]>
+          <input type="radio" name="account_type" id="id_account_type" value="unibi" [% IF account_type == unibi || !account_type %]checked="checked"[% END %]>
           UniBi
         </label>
         </div>
@@ -38,7 +38,7 @@
         <div class="row innerrow">
         <div class="checkbox">
         <label>
-          <input type="radio" name="account_type" id="id_account_type" value="external" [% IF account_type == external %]checked="checked"[% END %]>
+          <input type="radio" name="account_type" id="id_account_type" value="external" [% IF account_type == 'external' %]checked="checked"[% END %]>
           External
         </label>
         </div>
@@ -46,10 +46,18 @@
       </div>
     </div>
     <div class="row innerrow">
+      <div class="col-md-2"><label for="id_ext_institution">External Institution</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-6">
+          <input type="text" name="ext_institution" id="id_ext_institution" value="[% ext_institution %]" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
       <div class="col-md-2"><label for="id_last_name">Last Name</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-6">
-          <input type="text" name="last_name" id="id_last_name" value="[% last_name %]" class="form-control required">
+          <input type="text" name="last_name" id="id_last_name" value="[% last_name %]" class="form-control" required>
         </div>
       </div>
     </div>
@@ -57,7 +65,7 @@
       <div class="col-md-2"><label for="id_first_name">First Name</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-6">
-          <input type="text" name="first_name" id="id_first_name" value="[% first_name %]" class="form-control required">
+          <input type="text" name="first_name" id="id_first_name" value="[% first_name %]" class="form-control" required>
         </div>
       </div>
     </div>
@@ -70,10 +78,18 @@
       </div>
     </div>
     <div class="row innerrow">
+      <div class="col-md-2"><label for="id_login">LDAP Login</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-6">
+          <input type="text" name="login" id="id_login" value="[% login %]" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
       <div class="col-md-2"><label for="id_active">Active</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-1">
-          <input type="checkbox" name="active" id="id_active" value="active" [% IF active %]checked="checked"[% END %]>
+          <input type="checkbox" name="account_status" id="id_active" value="active" [% IF account_status != 'inactive' %]checked="checked"[% END %]>
         </div>
       </div>
     </div>
@@ -85,10 +101,10 @@
     </div>
 
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_active">Library Admin</label></div>
+      <div class="col-md-2"><label for="id_super_admin">Library Admin</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-1">
-          <input type="checkbox" name="super_admin" id="id_active" value="active" [% IF role.super_admin %]checked="checked"[% END %]>
+          <input type="checkbox" name="super_admin" id="id_super_admin" value="admin" [% IF super_admin %]checked="checked"[% END %]>
         </div>
       </div>
     </div>
@@ -258,7 +274,7 @@
           <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
         </span>
         <span class="form-group col-md-2">
-          <button type="submit" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
+          <button type="submit" id="id_do_nothing" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
         </span>
   </form>
 
@@ -267,11 +283,9 @@
 
 <script>
 $('button.cancel-button').click(function() {
-  window.location.href = '/myPUB';
+  window.location.href = '/myPUB/admin/account';
 });
 </script>
-
-<!-- END admin/edit_account.tt -->
 
 <script>
 // Select button (dept, proj, rg)
@@ -308,3 +322,5 @@ function selectButton(element){
 	modal.modal('show');
 }
 </script>
+
+<!-- END admin/edit_account.tt -->

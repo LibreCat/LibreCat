@@ -55,9 +55,11 @@ sub getPersonData {
 		'move_field("fullName","full_name")',
 		'move_field("surname","last_name")',
 		'move_field("givenName","first_name")',
+        'move_field("accountStatus","account_status")',
 		'remove_field("isOfType")',
         'remove_field("reviewer.*.reviewer")',
         'remove_field("reviewer.*.reviewDiss")',
+        'remove_field("searchName")',
 		]);
 
 	my $sbcatPerson = shift;
