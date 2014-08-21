@@ -22,3 +22,9 @@ $('#plusDdc').click(function(){
   var index = items.index($('#ddc div.form-group').last()) + 1;
   $('#ddc').append('[% INCLUDE backend/fields/subfields/ddc.tt %]');
 });
+
+$('#plusAbstract').click(function(){
+  var items = $('#abstract div.form-group');
+  var index = items.index($('#abstract div.form-group').last()) + 1;
+  $('#abstract').append('[% INCLUDE backend/fields/subfields/abstract.tt %]');
+});

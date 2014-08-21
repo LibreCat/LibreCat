@@ -4,17 +4,17 @@
       {% fields.supplementary_fields.external_id.label %}
     </label>
   </div>
-  <div class="col-md-10">
-    <form role="form" class="form-inline" action="/myPUB/import" method="POST">
-      <div class="col-md-2">
-        <select class="form-control" ng-model="source">
+  <div class="col-md-10 form-group">
+    <form role="form" action="/myPUB/import" method="POST">
+      <div class="col-md-3">
+        <select class="form-control" ng-model="source" ng-init="source='wos'">
           <option value="wos" selected="selected">Web of Science</option>
           <option value="pmc">Europe PMC</option>
           <option value="arxiv">ArXiv</option>
-          <option value="inspire">Inpire</option>
+          <option value="inspire">Inspire</option>
         </select>
       </div>
-      <div class="input-group col-md-5">
+      <div class="col-md-6">
           <input type="text" value="" class="form-control" id="input_id" name="external_id.{{source}}" />
       </div><!-- input-group -->
     </form>
