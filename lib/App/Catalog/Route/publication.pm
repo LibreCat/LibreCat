@@ -51,7 +51,7 @@ prefix '/record' => sub {
             or !$params->{department} )
         {
             $params->{department} = ();
-            if ( session->{role} ne "superAdmin" ) {
+            if ( session->{role} ne "super_admin" ) {
                 my $person = h->getPerson( session->{personNumber} );
                 foreach my $dep ( @{ $person->{department} } ) {
                     push @{ $params->{department} }, $dep->{id};

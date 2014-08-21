@@ -14,7 +14,7 @@
       <a class="btn btn-default" href="/myPUB/record/return/[% id %]" onClick="return confirm('Are you sure you want to return this record?');" name="return" value="recReturn">Return <img src="/images/edit-withdraw.png"/></a>
     </span>
     [% ELSIF status != "public" %]
-      [% IF session.role == "superAdmin" %]
+      [% IF session.role == "super_admin" %]
       <span class="form-group col-md-2">
         <a class="btn btn-default" href="/myPUB/record/delete/[% id %]" onClick="return confirm('Are you sure you want to delete this record?');" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></a>
       </span>

@@ -9,11 +9,11 @@
       <span class="form-group col-md-9">
         <input type="text" class="form-control" placeholder="{% fields.related_material.link_publication.placeholder %}" id="connect_autocomplete" value="" />
       </span>
-      
+
       <script>
       $(function() {
         var puburl = '/myPUB/autocomplete_connect';
-        [% IF session.role != "superAdmin" %]
+        [% IF session.role != "super_admin" %]
         puburl += 'person=[% session.personNumber %]
         [% END %]
         $( "#connect_autocomplete" ).autocomplete({

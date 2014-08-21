@@ -20,23 +20,23 @@
     <script type="text/javascript" src="/javascripts/angular-1.2.14.min.js"></script>
     <script src="/javascripts/bootstrap-select.js"></script>
     <script src="/javascripts/jquery-sortable.js"></script>
-    
+
     <style>
     body.dragging, body.dragging * {
       cursor: url(/images/closedhand.cur) 4 4, move !important;
     }
-    
+
     .dragged {
       position: absolute;
       margin-left:-250px;
       opacity: 0.5;
       z-index: 2000;
     }
-    
+
     div.dz-preview:hover {
       cursor: url(/images/openhand.cur) 4 4, move !important;
     }
-    
+
     div.dz-preview.placeholder {
       position: relative;
     }
@@ -60,7 +60,7 @@
       	</button>
       	<a class="navbar-brand" href="#"><span class=".glyphicon .glyphicon-home"></span> MyPUB</a>
      </div>
-     
+
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
        <ul class="nav navbar-nav">
@@ -68,7 +68,7 @@
          [% IF session AND session.user %]
          <li><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
          <li><a href="[% h.host %]/person/[% session.personNumber %]"><span class="glyphicon glyphicon-eye-open"></span> My Public Author Page</a></li>
-         [% IF session.role == "superAdmin" %]
+         [% IF session.role == "super_admin" %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="glyphicon glyphicon-chevron-down"></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="/myPUB/admin/account">Accounts</a></li>
@@ -82,8 +82,8 @@
        <ul class="nav navbar-nav navbar-right">
          [% IF session AND session.user %]
          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Logged in as: <em>[% session.user %]</em></a></li>
-         
-         [% IF thisPerson.superAdmin OR thisPerson.reviewer OR thisPerson.dataManager %]
+
+         [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.dataManager %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Role: <em>[% session.role %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="/myPUB/change_role/user">User</a></li>
@@ -93,7 +93,7 @@
             [% IF thisPerson.dataManager %]
             <li><a href="/myPUB/change_role/dataManager">Data Manager</a></li>
             [% END %]
-            [% IF thisPerson.superAdmin %]
+            [% IF thisPerson.super_admin %]
             <li><a href="/myPUB/change_role/admin">Admin</a></li>
             [% END %]
           </ul>

@@ -30,10 +30,10 @@
       <a href="#relatedMaterial" data-toggle="tab">Link to Publications</a>
     </li>
   </ul>
-  
+
   <form action="/luur/record" method="get" name="reLoad">
   <input type="hidden" name="recordType" value="researchData">
-  
+
   <input type="hidden" name="recordOId" value="[% recordOId %]">
   <input type="hidden" name="errorMessages" value="[% errorMessages %]">
   <input type="hidden" name="tab" value="[% tab %]">
@@ -43,9 +43,9 @@
   <input type="hidden" name="reviewerRights" value="[% reviewerRights %]">
   <input type="hidden" name="adminRights" value="[% adminRights %]">
   <input type="hidden" name="submissionStatus" value="[% submissionStatus %]">
-  
+
   <div class="tab tab-content edit-form">
-    
+
     <!-- STEP 1 -->
     <div class="tab-pane active" id="basicFields">
       [% IF doi %]
@@ -60,7 +60,7 @@
         </div>
       </div>
       [% END %]
-      
+
       <div class="col-md-2">
         <label for="id_mainTitle">
           Title<span class="starMandatory">*</span>
@@ -71,7 +71,7 @@
           <input type="text" name="mainTitle" id="id_mainTitle" value="[% mainTitle %]" placeholder="Publication Title" class="form-control required">
         </span>
       </div>
-      
+
       <div class="col-md-2">
         <label for="author">
           Creator<span class="starMandatory">*</span> <span class="glyphicon glyphicon-plus" id="plusAuthor"></span>
@@ -87,7 +87,7 @@
           <input name="au_origGivenName_0" id="id_au_origGivenName_0" type="hidden" />
           <input name="au_origLastName_0" id="id_au_origLastName_0" type="hidden" />
           <input name="au_origTitle_0" id="id_au_origTitle_0" type="hidden" />
-            
+
           <span class="form-group col-md-3">
             <input type="text" name="au_auGivenName_0" placeholder="First Name" id="id_au_auGivenName_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" value="" />
           </span>
@@ -97,11 +97,11 @@
           <span class="form-group col-md-2">
             <input type="text" name="au_auPersonTitle_0" placeholder="Title" id="id_au_auPersonTitle_0"[% IF auLuAuthorOId %] readonly="readonly"[% END %] class="form-control" />
           </span>
-          
+
           <span class="col-md-1">
             <span class="glyphicon glyphicon-minus author"></span>
           </span>
-          
+
           <span class="col-md-2">
             <input name="linkPevz_0" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
             <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" title="[% name.auLuLdapId %]"/>
@@ -127,7 +127,7 @@
             <span class="form-group col-md-2">
               <input type="text" name="au_auPersonTitle_[% loop.index %]" placeholder="Title" id="id_au_auPersonTitle_[% loop.index %]"[% IF name.auLuAuthorOId %] readonly="readonly"[% END %] value="[% name.auPersonTitle %]" class="form-control"/>
             </span>
-            
+
             <span class="col-md-1">
               [% IF loop.index == 0 %]
                 <span class="glyphicon glyphicon-minus author"></span>
@@ -135,7 +135,7 @@
                 <span class="glyphicon glyphicon-minus single"></span>
               [% END %]
             </span>
-            
+
             <span class="col-md-2">
               <input name="linkPevz_[% loop.index %]" class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.auLuMarked %]checked="checked"[% END %]/>
               [% IF name.auLuAuthorOId OR name.auLuLdapId %]
@@ -147,7 +147,7 @@
           </div>
         [% END %]
         [% END %]
-        
+
         <div class="modal" id="linkPevzModal">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -160,9 +160,9 @@
             </div>
           </div>
         </div>
-        
+
       </div>
-      
+
       <div class="col-md-2">
         <label for="department">
           Department <span class="glyphicon glyphicon-plus" id="plusDepartment"></span>
@@ -172,19 +172,19 @@
       [% IF !departments %]
         <div class="form-group">
           <input type="hidden" name="dp_departmentOId_0" id="dp_idautocomplete_0" value="" />
-        
+
           <span class="form-group col-md-7">
             <input type="text" name="dp_departmentName_0" class="form-control" id="dp_autocomplete_0" value="" />
           </span>
-        
+
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0" value="Select"/>
           </span>
-        
+
           <span class="col-md-1">
             <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
           </span>
-        
+
           <script>
             $(function() {
               $( "#dp_autocomplete_0" ).autocomplete({
@@ -202,15 +202,15 @@
       [% FOREACH dept IN departments %]
         <div class="form-group">
           <input type="hidden" name="dp_departmentOId_[% loop.index %]" id="dp_idautocomplete_[% loop.index %]" value="[% dept.departmentOId || dept.organizationNumber %]" />
-          
+
           <span class="form-group col-md-7">
             <input type="text" name="dp_departmentName_[% loop.index %]" class="form-control" id="dp_autocomplete_[% loop.index %]" value="[% dept.departmentName || dept.name %]" />
           </span>
-          
+
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]" value="Select"/>
           </span>
-          
+
           <span class="col-md-1">
             [% IF loop.index == 0 %]
             <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
@@ -218,7 +218,7 @@
             <span class="glyphicon glyphicon-minus single"></span>
             [% END %]
           </span>
-          
+
           <script>
             $(function() {
               $( "#dp_autocomplete_[% loop.index %]" ).autocomplete({
@@ -234,7 +234,7 @@
         </div>
       [% END %]
       [% END %]
-      
+
         <div class="modal" id="selectModal">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -250,7 +250,7 @@
         </div>
 
       </div>
-      
+
       <div class="col-md-2">
         <label for="project">
           Project <span class="glyphicon glyphicon-plus" id="plusProject"></span>
@@ -260,19 +260,19 @@
       [% IF !projects %]
         <div class="form-group">
           <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
-          
+
           <span class="form-group col-md-7">
             <input type="text" name="pj_projectName_0" class="form-control" id="pj_autocomplete_0" value="" />
           </span>
-        
+
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_0" value="Select"/>
           </span>
-        
+
           <span class="col-md-1">
             <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
           </span>
-        
+
           <script>
             $(function() {
               $( "#pj_autocomplete_0" ).autocomplete({
@@ -290,15 +290,15 @@
       [% FOREACH proj IN projects %]
         <div class="form-group">
           <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.projectOId %]" />
-          
+
           <span class="form-group col-md-7">
             <input type="text" name="pj_projectName_[% loop.index %]" class="form-control" id="pj_autocomplete_[% loop.index %]" value="[% proj.projectName %]" />
           </span>
-          
+
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_[% loop.index %]" value="Select"/>
           </span>
-          
+
           <span class="col-md-1">
             [% IF loop.index == 0 %]
             <span class="icon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
@@ -306,7 +306,7 @@
             <span class="icon-minus single"></span>
             [% END %]
           </span>
-          
+
           <script>
             $(function() {
               $( "#pj_autocomplete_[% loop.index %]" ).autocomplete({
@@ -323,7 +323,7 @@
       [% END %]
       [% END %]
       </div>
-      
+
       <div class="col-md-2">
         <label for="researchgroup">
           Research Group <span class="glyphicon glyphicon-plus" id="plusResearchgroup"></span>
@@ -333,11 +333,11 @@
       [% IF !researchGroups %]
         <div class="form-group">
           <input type="hidden" name="rg_researchGroupOId_0" id="rg_idautocomplete_0" value="" />
-          
+
           <span class="form-group col-md-7">
             <input type="text" name="rg_researchGroupName_0" class="form-control" id="rg_autocomplete_0" value="" />
           </span>
-        
+
           <span class="col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button researchgroup" id="researchgroup_select_0" value="Select"/>
           </span>
@@ -363,15 +363,15 @@
       [% FOREACH res IN researchGroups %]
         <div class="form-group">
           <input type="hidden" name="rg_researchGroupOId_[% loop.index %]" id="rg_idautocomplete_[% loop.index %]" value="[% res.researchGroupOId %]" />
-          
+
           <span class="form-group col-md-7">
             <input type="text" name="rg_researchGroupName_[% loop.index %]" class="form-control" id="rg_autocomplete_[% loop.index %]" value="[% res.researchGroupName %]" />
           </span>
-          
+
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button researchgroup" id="researchgroup_select_[% loop.index %]" value="Select"/>
           </span>
-          
+
           <span class="col-md-1">
             [% IF loop.index == 0 %]
             <span class="icon-minus" onclick="javascript:document.getElementById('rg_autocomplete_0').value = '';document.getElementById('rg_idautocomplete_0').value='';"></span>
@@ -379,7 +379,7 @@
             <span class="icon-minus single"></span>
             [% END %]
           </span>
-          
+
           <script>
             $(function() {
               $( "#rg_autocomplete_[% loop.index %]" ).autocomplete({
@@ -396,7 +396,7 @@
       [% END %]
       [% END %]
       </div>
-  
+
       <div class="col-md-2">
         <label for="id_publisher">
           Publisher<span class="starMandatory">*</span>
@@ -418,7 +418,7 @@
           <input type="text" name="publishingYear" id="id_publishingYear" value="[% publishingYear %]" maxlength="4" placeholder="YYYY" class="form-control required">
         </span>
       </div>
-      
+
       <div class="col-md-12 buttonrow">
         <span class="form-group col-md-2">
           <a class="btn btn-default back-button" style="display:none;"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
@@ -435,15 +435,15 @@
           <a class="btn btn-default next-button" id="oneToTwo" href="#fileUpload">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
         </span>
       </div>
-      
+
       <input type="hidden" name="docType" value="researchData" />
     </div><!-- tab-pane -->
-    
-    
-  
+
+
+
     <!-- STEP 2 -->
     <div class="tab-pane" id="fileUpload">
-    
+
       [% IF externalFiles == "1" OR doi %]
       <div class="col-md-8">
         <label class="checkbox">
@@ -451,15 +451,15 @@
           Files available at <strong><a href="http://doi.org/[% doi %]" target="_blank">[% doi %]</a></strong>
         </label>
       </div>
-      
+
       <div class="col-md-8">
         <hr />
       </div>
       [% END %]
-      
+
       <div class="col-md-12">
         <strong>Upload files</strong><br /><br />
-        
+
         <script type="text/javascript">
           jQuery(document).ready(function() {
             var myDropzone = new Dropzone("div#uploadFiles", {
@@ -474,16 +474,16 @@
               if(match){
                 var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-2 text-muted\">Upload Date:</div><div class=\"col-md-1 text-muted\">User:</div></div>");
                 file.previewElement.appendChild(tagsRow);
-                
+
                 var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\"><a href=\"[% h.shost %]/download/[% recordOId %]/" + match[1] + "\" target=\"_blank\">" + file.name + "</a></div></div>");
                 file.previewElement.appendChild(fileName);
-                
+
                 var accessString = Dropzone.createElement("<div class=\"col-md-2\"><span>" + match[4] + "</span></div>");
                 file.previewElement.childNodes[1].appendChild(accessString);
-                
+
                 var dateString = Dropzone.createElement("<div class=\"col-md-2\"><span>" + match[2] + "</span></div>");
                 file.previewElement.childNodes[1].appendChild(dateString);
-                
+
                 var userString = Dropzone.createElement("<div class=\"col-md-1\"><span>" + match[3] + "</span></div>");
                 file.previewElement.childNodes[1].appendChild(userString);
 
@@ -492,13 +492,13 @@
                   window.deleteUploadedDocument(match[1], this);
                 });
                 file.previewElement.appendChild(removeLink);
-                
+
                 var editLink = Dropzone.createElement("<div class=\"corner_down\"><a href=\"#\"><i class=\"icon icon-pencil\"></i></a></div>");
                 editLink.addEventListener("click", function(e) {
                   window.editFile(match[1],[% recordOId %],file.name,match[4],"","");
                 });
                 file.previewElement.appendChild(editLink);
-                
+
                 var licenses = document.getElementById('licenses');
                 var liClass = licenses.className;
                 var regexp = /collapse in/;
@@ -506,7 +506,7 @@
                 if(!limatch){
                   licenses.setAttribute("class", "collapse in");
                 }
-                
+
                 file.previewElement.setAttribute("id", match[1]);
               }
               else {
@@ -517,13 +517,13 @@
                 prevClass.className = "";
                 prevClass.className = match.join("");
                 prevClass.className += " alert-error";
-                
+
                 var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-5\"><b>File not uploaded!</b></div></div>");
                 file.previewElement.appendChild(tagsRow);
-                
+
                 var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\">" + file.name + "</div><div class=\"col-md-5\">" + resp + "</div></div>");
                 file.previewElement.appendChild(fileName);
-                
+
                 var removeLink = Dropzone.createElement("<div class=\"corner_up\"><a href=\"#\"><i class=\"icon-remove\"></i></a></div>");
                 removeLink.addEventListener("click", function(e) {
                   this.parentNode.parentNode.removeChild(this.parentNode);
@@ -534,10 +534,10 @@
             myDropzone.on("error", function(file,response){
               var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-5\"><b>File not uploaded!</b></div></div>");
               file.previewElement.appendChild(tagsRow);
-                
+
               var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\">" + file.name + "</div><div class=\"col-md-5\">" + response + "</div></div>");
               file.previewElement.appendChild(fileName);
-              
+
               var removeLink = Dropzone.createElement("<div class=\"corner_up\"><a href=\"#\"><i class=\"icon-remove\"></i></a></div>");
               removeLink.addEventListener("click", function(e) {
                 this.parentNode.parentNode.removeChild(this.parentNode);
@@ -546,9 +546,9 @@
             });
           });
         </script>
-        
+
         <div class="dropzone alert alert-warning col-md-10" id="uploadFiles">
-      
+
           <div class="fallback">
             <div class="col-md-7">&nbsp;</div>
             <div class="col-md-7">
@@ -556,7 +556,7 @@
             </div>
             <div class="col-md-7">&nbsp;</div>
           </div>
-          
+
           [% IF file %]
           [% FOREACH fi IN file %]
           <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.fileOId %]">
@@ -574,13 +574,13 @@
                 [% SWITCH fi.accessLevel %]
                 [% CASE "admin" %]
                 Author/Admin/Reviewer
-                
+
                 [% CASE "lu" %]
                 UniBi Only
-                
+
                 [% CASE "openAccess" %]
                 Open Access
-                
+
                 [% END %]
               </div>
               <div class="col-md-3">
@@ -597,14 +597,14 @@
           [% END %]
         </div>
       </div>
-      
+
       <div class="col-md-12">&nbsp;</div>
-      
+
       <div class="col-md-10">
         <a data-target="#licenses" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> <strong>Licenses</strong></a><br />
-        
+
         <div id="licenses" class="collapse[% IF file %] in[% END %]">
-        
+
           <strong>Data Re-Use License</strong>[% IF file %]<span class="starMandatory">*</span>[% END %]
           <div class="alert alert-info">
           Choose a license under which your uploaded data will be available:<br />
@@ -614,30 +614,30 @@
             <option value="ODC-By"[% IF dataReuseLicense == "ODC-By" %] selected="selected"[% END %]>Attribution required - ODC-By</option>
             <option value="ODbL"[% IF dataReuseLicense == "ODbL" %] selected="selected"[% END %]>Share alike - ODbL</option>
           </select><br />
-        
+
           <a data-target="#PDDL" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> The Open Data Commons Public Domain Dedication and License (PDDL) v1.0</a><br />
           <div id="PDDL" class="collapse reuse-license">
             Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data<br />
             <a href="http://opendatacommons.org/licenses/pddl/" target="_blank">http://opendatacommons.org/licenses/pddl/</a>
           </div>
-        
+
           <a data-target="#ODCBy" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> The Open Data Commons Attribution License (ODC-By) v1.0</a><br />
           <div id="ODCBy" class="collapse reuse-license">
             Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data<br />
             <a href="http://opendatacommons.org/licenses/by/" target="_blank">http://opendatacommons.org/licenses/by/</a>
           </div>
-        
+
           <a data-target="#ODbL" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> The Open Database License (ODbL) v1.0</a>
           <div id="ODbL" class="collapse reuse-license">
             Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br />
             <a href="http://opendatacommons.org/licenses/odbl/" target="_blank">http://opendatacommons.org/licenses/odbl/</a>
           </div>
           </div>
-          
+
           <br />
-          
+
           <strong>Open Data Release - Declaration</strong>[% IF file %]<span class="starMandatory">*</span>[% END %]<br />
-          
+
           <div class="alert alert-info" id="odralert">
             I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br /><br />
             Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br /><br />
@@ -649,7 +649,7 @@
             <input type="checkbox" value="1" id="id_openDataRelease" name="openDataRelease"[% IF openDataRelease == "1" %] checked="checked"[% END %] /> <strong>I have read and agree with the information above about releasing data under the selected license.</strong>
           </label>
           <br />
-            
+
             If you have any questions, please contact:<br />
             <strong>
             <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713" target="_blank">Dr. Johanna Vompras</a><br />
@@ -658,7 +658,7 @@
             </strong>
         </div>
       </div>
-      
+
       <div class="col-md-12 buttonrow">
         <span class="form-group col-md-2">
           <a class="btn btn-default back-button" id="twoToOne" data-toggle="tab" href="#basicFields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
@@ -677,7 +677,7 @@
       </div>
     </div>
     <!-- tab-pane -->
-    
+
     <!-- STEP 3 -->
     <div class="tab-pane" id="supplementaryFields">
       <div class="col-md-2">
@@ -717,7 +717,7 @@
           [% END %]
         [% END %]
       </div>
-      
+
       <div class="col-md-2">
         <label for="ddc">
           DDC
@@ -744,7 +744,7 @@
           <span class="text-muted">(* Suggest DDC is available for English and German abstracts with 500 words or more)</span>
         </span>
       </div>
-      
+
       <div class="col-md-2">
         <label for="keywords">
           Keywords
@@ -755,11 +755,11 @@
           <textarea rows="3" name="keyword" class="form-control">[% keyword %]</textarea>
         </div>
       </div>
-      
+
       <div class="col-md-12">
       &nbsp;
       </div>
-      
+
       <div class="col-md-12 buttonrow">
         <span class="form-group col-md-2">
           <a class="btn btn-default back-button" id="threeToTwo" data-toggle="tab" href="#fileUpload"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
@@ -778,7 +778,7 @@
       </div>
     </div>
     <!-- tab-pane -->
-    
+
     <!-- STEP 4 -->
     <div class="tab-pane" id="relatedMaterial">
       <div class="col-md-12 form-group buttonrow">
@@ -786,7 +786,7 @@
           <a href="#connectPubl" type="button" class="btn btn-default" data-toggle="modal">Link Publications</a>
         </div>
       </div>
-      
+
       <div class="col-md-12" id="relatesTo">
       <span[% IF !relatesTo %] style="display:none"[% END %]><strong>Linked Publications:</strong></span>
       [% IF relatesTo %]
@@ -806,12 +806,12 @@
           [% END %]
         [% END %]
       [% END %]
-      </div>      
-      
+      </div>
+
       <div class="col-md-12">
       &nbsp;
       </div>
-      
+
       <div class="col-md-12 buttonrow">
         <span class="form-group col-md-2">
           <a class="btn btn-default back-button" id="fourToThree" data-toggle="tab" href="#supplementaryFields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
@@ -824,7 +824,7 @@
           <button type="submit" class="btn btn-default" onClick="return deletePublicationItem();" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></button>
         </span>
         [% END %]
-        [% IF submissionStatus == "public" AND userRole == "superAdmin" %]
+        [% IF submissionStatus == "public" AND userRole == "super_admin" %]
         <span class="form-group col-md-2">
           <button type="submit" class="btn btn-default" name="withdrawSubmit" value="Return">Return <img src="/images/edit-withdraw.png"/></button>
         </span>
@@ -840,12 +840,12 @@
       </div>
     </div>
     <!-- tab-pane -->
-  
+
   </div><!-- tab-content -->
   </form>
-  
+
   [% INCLUDE backend/fields/rd_fileupload.tt %]
-  
+
 </div>
 </div>
 
@@ -897,7 +897,7 @@ $('#oneToTwo').click(function(){
   if(!oneauthor){
     check = 0;
   }
-  
+
   $('.required').each(function(){
     if(!$(this).val()){
       $(this).parents('span.form-group').addClass('has-error');
@@ -1089,7 +1089,7 @@ $(document).on('click', '.author', function(){
   container.find('img').each(function(){
     this.title = "";
     this.src = "/images/biNotAuthorized.png";
-  });  
+  });
 });
 
 
@@ -1098,7 +1098,7 @@ function selectButton(element){
 	var type = $(element).attr('class').replace('btn select_button', '').trim();
 	var type_short;
 	var type_name;
-	
+
 	var index = $(element).attr('id').replace(type + '_select_','').trim();
 	var modal = $('#selectModal');
 	var container = $('#selectModal').find('.modal-body').first();
@@ -1194,12 +1194,12 @@ function editFile(fileOId, recordOId, fileName, accessLevel, accessEmbargo, open
   embargo.value = accessEmbargo;
   var accdate = self.document.getElementById('id_openAccessDate');
   accdate.value = openAccessDate;
-  
+
   var fileNameTag = self.document.getElementById('fileNameTag');
   fileNameTag.style.display = "block";
 
-  $('#fileUpload').modal('show'); 
-  
+  $('#fileUpload').modal('show');
+
 }
 
 function deleteRelMat(materialOId, otherOId) {
@@ -1214,13 +1214,13 @@ function deleteRelMat(materialOId, otherOId) {
        // code for IE6, IE5
        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
      }
-     
+
      xmlhttp.onreadystatechange = function() {
        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
          $('#' + materialOId).remove();
        }
      }
-     
+
      var url = "/luur/record_material?func=deleteRelatedMaterial&recordOId=[% recordOId %]&otherObjectOId=" + otherOId + "&deleteRelatedMaterialOId=" + materialOId;
      xmlhttp.open("GET", url, true);
      xmlhttp.send();

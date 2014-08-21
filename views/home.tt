@@ -8,9 +8,9 @@
 
 <!-- BEGIN admin.tt -->
 
-<div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->  
+<div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->
   <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->
-    
+
     <div class="row"> <!-- row span8 picture, email -->
       <div class="col-md-2">
         [% IF thisPerson.bis.photo %]
@@ -21,13 +21,13 @@
         <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail">
         [% END %]
       </div> <!-- span 2 -->
-  
+
       <div class="col-md-6">
         [% INCLUDE person_profile.tt %]
       </div> <!-- span6 -->
 
     </div> <!-- row span8 picture, email -->
-    
+
     <div class="row"> <!-- empty row span8 -->
       <div class="col-md-11">&nbsp;</div>
     </div> <!-- empty row span8 -->
@@ -36,19 +36,19 @@
     <div class="row"> <!-- row span11 publications, projects, departments -->
       <div class="col-md-10">
         <ul class="nav nav-tabs">
-        [% IF session.role == 'superAdmin' %]
+        [% IF session.role == 'super_admin' %]
           <li[% IF modus == "admin" %] class="active"[% END %]><a href="/myPUB/adminSearch">All Publications</a></li>
         [% END %]
           <li[% IF modus == "user" %] class="active"[% END %]><a href="/myPUB/search">Personal Publications</a></li>
-        [% IF session.role == 'reviewer' OR session.role == "superAdmin" %]
+        [% IF session.role == 'reviewer' OR session.role == "super_admin" %]
           <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/reviewerSearch">Publications for Review</a></li>
         [% END %]
-        [% IF session.role == "dataManager" OR session.role == "superAdmin" %]
+        [% IF session.role == "dataManager" OR session.role == "super_admin" %]
           <li[% IF modus == "dataManager" %] class="active"[% END %]><a href="/myPUB/datamanagerSearch">Data Publications for Review</a></li>
         [% END %]
         </ul>
       </div>
-      
+
       <div class="col-md-11">
         <div class="tab-content">
           <div class="tab-pane[% IF modus == 'admin' %] active[% END %]" id="adminPubl">
@@ -83,7 +83,7 @@
               [% INCLUDE right_menu_publ.tt %]
             </div>
           </div>
-        </div>  
+        </div>
         <script>
         $('#myTab a').click(function (e) {
           e.preventDefault();

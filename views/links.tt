@@ -1,4 +1,4 @@
-<!-- BEGIN links. tt --> 
+<!-- BEGIN links. tt -->
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
   [% IF entry.status == "public" %]
 	<a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]/preview" title="Show complete bibliographic and access information" target="_blank"><span class="glyphicon glyphicon-chevron-right"></span> Public View</a>
@@ -6,13 +6,13 @@
     <a href="/myPUB/record/preview/[% entry.item('_id') %]" target="_blank"><span class="glyphicon glyphicon-chevron-right"></span> Preview</a>
   [% END %]
   | <a data-toggle="collapse" href="#[% modus %]_[% entry.item('_id') %]"><span class="glyphicon glyphicon-chevron-down"></span> Details</a>
-  [% IF session.role == "superAdmin" %]
+  [% IF session.role == "super_admin" %]
   | <a data-toggle="collapse" href="#[% modus %]_iv_[% entry.item('_id') %]"><span class="glyphicon glyphicon-chevron-down"></span> Int. View</a>
   [% END %]
-  
+
 	[% FOREACH file IN entry.file %]
 	[% IF file AND bag == "publication" %]
-	  [% SWITCH file.content_type %] 
+	  [% SWITCH file.content_type %]
 		[% CASE 'application/pdf' %]
 	    | <a href="[% h.host %]/download/[% entry.item('_id') %]/[% file.id %]" title="[% file.name %]" target="_top">PDF
 		[% CASE 'application/ps' %]
@@ -44,4 +44,4 @@
 	    [% END %]
 	  [% END %]
 	[% END %]
-<!-- END links. tt --> 
+<!-- END links. tt -->

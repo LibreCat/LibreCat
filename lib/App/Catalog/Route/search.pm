@@ -9,8 +9,8 @@ use App::Catalog::Controller::Search;
 get '/adminSearch' => sub {
     my $params = params;
 
-    (session->{role} ne "superAdmin") && (redirect '/myPUB/reviewerSearch');   
-    
+    (session->{role} ne "super_admin") && (redirect '/myPUB/reviewerSearch');
+
     $params->{modus} = "admin";
     search($params);
 
@@ -19,7 +19,7 @@ get '/adminSearch' => sub {
 get '/reviewerSearch' => sub {
     my $params = params;
 
-    (session->{role} ne "superAdmin" and session->{role} ne "reviewer")
+    (session->{role} ne "super_admin" and session->{role} ne "reviewer")
     	&& (redirect '/myPUB/search');
 
     $params->{modus} = "reviewer";
@@ -30,7 +30,7 @@ get '/reviewerSearch' => sub {
 get '/datamanagerSearch' => sub {
     my $params = params;
 
-    (session->{role} ne "superAdmin" and session->{role} ne "dataManager")
+    (session->{role} ne "super_admin" and session->{role} ne "dataManager")
     	&& (redirect '/myPUB/search');
 
     $params->{modus} = "dataManager";

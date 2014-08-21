@@ -24,8 +24,8 @@ hook 'before' => sub {
 
 get '/' => sub {
     my $params = params;
-    
-    if(session->{role} eq "superAdmin"){
+
+    if(session->{role} eq "super_admin"){
     	forward '/myPUB/adminSearch', $params;
     }
     elsif(session->{role} eq "reviewer"){
@@ -47,11 +47,11 @@ get '/login' => sub {
 };
 
 post '/login' => sub {
-	
+
 	if(!params->{user} || !params->{pass}){
 		forward '/myPUB/login', { error_message => "Please enter your username AND password!", login => params->{user}}, { method => 'GET' };
 	}
-	
+
     my $bag  = Catmandu->store('authority')->bag;
     my $user = h->getAccount( params->{user} );
 
@@ -59,18 +59,18 @@ post '/login' => sub {
 
         #username is in PUB
         my $verify = verifyUser(params->{user}, params->{pass});
-        
+
         if ($verify and $verify ne "error") {
-        	my $superAdmin = "superAdmin" if $user->[0]->{superAdmin};
+        	my $super_admin = "super_admin" if $user->[0]->{super_admin};
         	my $reviewer = "reviewer" if $user->[0]->{reviewer};
         	my $dataManager = "dataManager" if $user->[0]->{dataManager};
-            session role => $superAdmin || $reviewer || $dataManager || "user";
+            session role => $super_admin || $reviewer || $dataManager || "user";
             session user         => $user->[0]->{login};
             session personNumber => $user->[0]->{_id};
             my $params;
             $params->{path} = params->{path} if params->{path};
-            
-            if(session->{role} eq "superAdmin"){
+
+            if(session->{role} eq "super_admin"){
             	$params->{path} ? redirect $params->{path} : redirect '/myPUB/adminSearch';
             }
             elsif(session->{role} eq "reviewer"){
@@ -99,17 +99,17 @@ get '/logout' => sub {
 
 get '/change_role/:role' => sub {
     my $user = h->getAccount( session->{user} )->[0];
-    
+
     # is user allowed to take this role?
-    
+
     if(params->{role} eq "reviewer" and $user->{reviewer}){
     	session role => "reviewer";
     }
     elsif(params->{role} eq "dataManager" and $user->{dataManager}){
     	session role => "dataManager";
     }
-    elsif(params->{role} eq "admin" and $user->{superAdmin}){
-    	session role => "superAdmin";
+    elsif(params->{role} eq "admin" and $user->{super_admin}){
+    	session role => "super_admin";
     }
     else{
     	session role => "user";

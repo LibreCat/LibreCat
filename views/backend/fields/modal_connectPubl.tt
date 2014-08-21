@@ -1,12 +1,12 @@
 <div id="connectPubl" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
-  
+
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>Link Publications</h3>
       </div>
-  
+
       <div class="modal-body">
         <span class="col-md-12">
           <span class="form-group col-md-8">
@@ -31,7 +31,7 @@
               [% END %]
             [% END %]
           [% END %]
-        
+
           [% NEXT IF skip %]
         <div class="row innerrow">
         <div class="col-md-12">
@@ -53,7 +53,7 @@
 <script>
 $('#searchPubl').click(function() {
   var puburl = 'http://pub-dev.ub.uni-bielefeld.de/publication?fmt=jsonintern&q=';
-  [% IF session.role == 'superAdmin' %]
+  [% IF session.role == 'super_admin' %]
     var searchphrase = $('#searchPublInput').val();
     if(searchphrase != ""){
       searchphrase = searchphrase.replace(/\s+/g, ' AND ');
@@ -117,6 +117,6 @@ $('#searchPublInput').keyup(function(ev) {
 });
 
 function connect(other_id, other_title, rec_id){
-  
+
 }
 </script>
