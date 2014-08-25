@@ -1,8 +1,7 @@
 package App::Catalog::Route::admin;
 
 use Catmandu::Sane;
-
-#use Catmandu::Util qw(:array);
+use Catmandu::Util qw(trim);
 use Dancer ':syntax';
 use App::Catalog::Helper;
 use App::Catalog::Controller::Admin qw/:all/;
@@ -42,12 +41,12 @@ prefix '/admin' => sub {
     };
 
     get '/account/import' => sub {
-        my $id = params->{id};
+        my $id = trim params->{id};
 
         my $person_in_db = h->authority_admin->get($id);
         if ($person_in_db) {
             template 'admin/account',
-                { error => "There is already an account with ID $id" };
+                { error => "There is already an account with ID $id." };
         }
         else {
             my $p = import_person($id);

@@ -15,7 +15,7 @@
     <div class="input-group">
       <input type="text" class="form-control" name="q" id="id_q" placeholder="Einstein, A" value="[% qp.q %]">
       <span class="input-group-btn">
-        <button type="submit" class="btn btn-default">Search</button>
+        <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-search"></span> </i>Search</button>
       </span>
     </div><!-- /input-group -->
 
@@ -40,7 +40,7 @@
     <div class="input-group">
       <input type="text" class="form-control" name="id" id="id_id" placeholder="12345" value="[% qp.id %]" required>
       <span class="input-group-btn">
-        <button type="submit" class="btn btn-default">Import</button>
+        <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-download"></span> </i>Import</button>
       </span>
     </div><!-- /input-group -->
 
@@ -48,7 +48,7 @@
   </div>
 </form>
 [% IF error %]
-    <p class="text-danger">[% error %]. <i> <span class="glyphicon glyphicon-pencil"></span></i> <a href="/myPUB/admin/account/edit/[% qp.id %]">Edit</a></p>
+    <p class="text-danger">[% error %] <i> <span class="glyphicon glyphicon-pencil"></span></i><a href="/myPUB/admin/account/edit/[% qp.id %]">Edit</a></p>
 [% END %]
 </div>
 </div>
@@ -59,7 +59,7 @@
 
 <div class="row">
 <div class="col-md-11 col-md-offset-1">
-<a href="/myPUB/admin/account/new" class="btn btn-danger">Add new account</a>
+<a href="/myPUB/admin/account/new" class="btn btn-danger"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new account</a>
 </div>
 </div>
 
