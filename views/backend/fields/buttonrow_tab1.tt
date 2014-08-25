@@ -22,7 +22,7 @@
       [% END %]
     [% END %]
     <span class="form-group col-md-2">
-      <a class="btn btn-default next-button" id="oneToTwo" href="#file_upload">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+      <a class="btn btn-default next-button oneToTwo" href="#file_upload">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
     </span>
   </div>
 </div>

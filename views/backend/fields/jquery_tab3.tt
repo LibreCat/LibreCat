@@ -1,4 +1,4 @@
-$('#threeToFour').click(function(){
+$('.threeToFour').click(function(){
     $('#li_related_material').css('visibility','visible');
     $('#li_supplementary_fields').removeClass('active');
     $('#li_related_material').addClass('active');
@@ -6,7 +6,7 @@ $('#threeToFour').click(function(){
     $('#inputSpan').remove();
 });
 
-$('#threeToTwo').click(function(){
+$('.threeToTwo').click(function(){
   $('#li_supplementary_fields').removeClass('active');
   $('#li_file_upload').addClass('active');
 });

@@ -1,10 +1,7 @@
 <div class="row innerrow">
-  <div class="col-md-12">&nbsp;</div>
-</div>
-<div class="row innerrow">
   <div class="col-md-12 buttonrow">
     <span class="form-group col-md-2">
-      <a class="btn btn-default back-button" id="fourToThree" data-toggle="tab" href="#supplementary_fields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+      <a class="btn btn-default back-button fourToThree" data-toggle="tab" href="#supplementary_fields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
     </span>
     <span class="form-group col-md-2">
       <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>

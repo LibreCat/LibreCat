@@ -1,5 +1,5 @@
 // Tab forward two to three
-$('#twoToThree').click(function(e){
+$('.twoToThree').click(function(e){
 if($('#id_dataReuseLicense').length || $('#id_openDataRelease').length){
   if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_openDataRelease').is(':checked') || $('#id_dataReuseLicense').val() == '')){
     if($('#id_dataReuseLicense').val() == ''){
@@ -57,7 +57,7 @@ else {
 
 
 // Two to One
-$('#twoToOne').click(function(){
+$('.twoToOne').click(function(){
   $('#li_file_upload').removeClass('active');
   $('#li_basic_fields').addClass('active');
 });
