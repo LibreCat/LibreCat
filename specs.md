@@ -178,11 +178,24 @@ project:
 status: public|private|submitted|returned
 publication_status: inPress|unpublished|submitted|published
 publication_identifier:
-	issn: ["1234", "23445"]
-	eissn: see issn
-	isbn: see issn
-	eisbn: see issn
-	urn: "urn:nbn:de...."
+	-
+	  id: issn
+	  value: "1234"
+	-
+	  id: issn
+	  value: "23445"
+	-
+	  id: eissn
+	  value: "see issn"
+	-
+	  id: isbn
+	  value: "see issn"
+	-
+	  id: eisbn
+	  value: "see issn"
+	-
+	  id: urn
+	  value: "urn:nbn:de...."
 publisher: "Springer"
 place: "Bielefeld"
 publication: "Journal of genetics"

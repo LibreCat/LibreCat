@@ -126,6 +126,20 @@ external_identifier:
     name: "FP6"
     prefix: "fp6/"
 
+publication_identifier:
+  - id: "issn"
+    name: "ISSN"
+  - id: "eissn"
+    name: "eISSN"
+  - id: "isbn"
+    name: "ISBN"
+  - id: "eisbn"
+    name: "eISBN"
+  - id: "urn"
+    name: "URN"
+  - id: "other"
+    name: "Other Identifier"
+
 rd_relation:
   00:
     relation: "cites"

@@ -154,7 +154,8 @@ publicationTypes:
         message: &message
           label: "Admin Comments"
         publication_identifier: &publ_id
-          label: "Publication Identifier"
+          label: "Publication<br />Identifier"
+          multiple: 1
       related_material: &rm
         tab_name: "Related Material"
         link_publication:

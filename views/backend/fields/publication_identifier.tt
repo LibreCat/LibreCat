@@ -1,0 +1,49 @@
+<div class="row innerrow" ng-app>
+  <div class="col-md-2">
+    <label for="id_external_id">
+      {% fields.supplementary_fields.publication_identifier.label %}
+      {% IF fields.supplementary_fields.publication_identifier.mandatory %}<span class="starMandatory">*</span>&nbsp;{% END %}{% IF fields.supplementary_fields.publication_identifier.multiple %}<span class="glyphicon glyphicon-plus"{% IF fields.supplementary_fields.publication_identifier.mandatory %} data-mandatory="yes"{% END %} id="plusPublId"></span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10" id="publId">
+    [% IF !publication_identifier %]
+    <div class="form-group row innerrow">
+      <div class="col-md-3">
+        <select class="form-control" name="publication_identifier.0.id" >
+          [% FOREACH pubid IN h.publication_id %]
+          <option value="[% pubid.id %]"[% IF loop.first %] selected="selected"[% END %]>[% pubid.name %]</option>
+          [% END %]
+        </select>
+      </div>
+      <div class="col-md-6">
+        <input type="text" value="" class="form-control" name="publication_identifier.0.id" id="publication_id_0" />
+      </div><!-- input-group -->
+      <div class="col-md-1">
+        <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('publication_id_0').value = '';"></div>
+      </div>
+    </div>
+    [% ELSE %]
+      [% FOREACH pub_id IN publication_identifier %]
+      <div class="form-group row innerrow">
+        <div class="col-md-3">
+          <select class="form-control" name="publication_identifier.[% loop.index %].id">
+            [% FOREACH pubid IN h.publication_id %]
+            <option value="[% pubid.id %]"[% IF pubid.id == pub_id.id %] selected="selected"[% END %]>[% pubid.name %]</option>
+            [% END %]
+          </select>
+        </div>
+        <div class="col-md-6">
+          <input type="text" value="[% pub_id.value %]" class="form-control" name="publication_identifier.[% loop.index %].id" id="publication_id_[% loop.index %]" />
+        </div><!-- input-group -->
+        <div class="col-md-1">
+          [% IF loop.index == "0" %]
+          <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('publication_id_[% loop.index %]').value = '';"></div>
+          [% ELSE %]
+          <div class="glyphicon glyphicon-minus single"></div>
+          [% END %]
+        </div>
+      </div>
+      [% END %]
+    [% END %]
+  </div>
+</div>
