@@ -10,8 +10,9 @@
     <div class="form-group row innerrow">
       <div class="col-md-3">
         <select class="form-control" name="publication_identifier.0.id" >
+          <option value="">-- Select --</option>
           [% FOREACH pubid IN h.publication_id %]
-          <option value="[% pubid.id %]"[% IF loop.first %] selected="selected"[% END %]>[% pubid.name %]</option>
+          <option value="[% pubid.id %]">[% pubid.name %]</option>
           [% END %]
         </select>
       </div>
@@ -27,6 +28,7 @@
       <div class="form-group row innerrow">
         <div class="col-md-3">
           <select class="form-control" name="publication_identifier.[% loop.index %].id">
+            <option value="">-- Select --</option>
             [% FOREACH pubid IN h.publication_id %]
             <option value="[% pubid.id %]"[% IF pubid.id == pub_id.id %] selected="selected"[% END %]>[% pubid.name %]</option>
             [% END %]

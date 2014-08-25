@@ -10,8 +10,9 @@
     <div class="form-group row innerrow">
       <div class="col-md-3">
         <select class="form-control" name="external_id.0.name" >
+          <option value="">-- Select --</option>
           [% FOREACH extid IN h.external_id %]
-          <option value="[% extid.id %]"[% IF loop.first %] selected="selected"[% END %]>[% extid.name %]</option>
+          <option value="[% extid.id %]">[% extid.name %]</option>
           [% END %]
         </select>
       </div>
@@ -27,6 +28,7 @@
       <div class="form-group row innerrow">
         <div class="col-md-3">
           <select class="form-control" name="external_id.[% loop.index %].name">
+            <option value="">-- Select --</option>
             [% FOREACH extid IN h.external_id %]
             <option value="[% extid.id %]"[% IF extid.id == ext_id.id %] selected="selected"[% END %]>[% extid.name %]</option>
             [% END %]
