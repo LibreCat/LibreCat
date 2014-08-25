@@ -43,6 +43,7 @@
       <div class="tab-pane active" id="basic_fields">
 
 {% IF fields.basic_fields %}
+  {% INCLUDE fields/buttonrow_tab1.tt %}
   {% FOREACH key IN field_order.basic_fields %}
     {% IF fields.basic_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -58,6 +59,7 @@
       <div class="tab-pane" id="file_upload">
 
 {% IF fields.file_upload %}
+  {% INCLUDE fields/buttonrow_tab2.tt %}
   {% FOREACH key IN field_order.file_upload %}
     {% IF fields.file_upload.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -73,6 +75,7 @@
       <div class="tab-pane" id="supplementary_fields">
 
 {% IF fields.supplementary_fields %}
+  {% INCLUDE fields/buttonrow_tab3.tt %}
   {% FOREACH key IN field_order.supplementary_fields %}
     {% IF fields.supplementary_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -88,6 +91,7 @@
       <div class="tab-pane" id="related_material">
 
 {% IF fields.related_material %}
+  {% INCLUDE fields/buttonrow_tab4.tt %}
   {% FOREACH key IN field_order.related_material %}
     {% IF fields.related_material.$key %}
     {% template = "fields/" _ key _ ".tt" %}

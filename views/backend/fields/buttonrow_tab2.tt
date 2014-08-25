@@ -1,28 +1,28 @@
 <div class="row innerrow">
   <div class="col-md-12 buttonrow">
     <span class="form-group col-md-2">
-      <a class="btn btn-default back-button" id="twoToOne" data-toggle="tab" href="#basic_fields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+      <a class="btn btn-default back-button twoToOne" data-toggle="tab" href="#basic_fields"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
     </span>
     <span class="form-group col-md-2">
       <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
     </span>
     [% IF status == "public" %]
     <span class="form-group col-md-2">
-      <a class="btn btn-default" href="/myPUB/record/return/[% id %]" onClick="return confirm('Are you sure you want to return this record?');" name="return" value="recReturn">Return <img src="/images/edit-withdraw.png"/></a>
+      <a class="btn btn-default" href="/myPUB/record/return/[% _id %]" onClick="return confirm('Are you sure you want to return this record?');" name="return" value="recReturn">Return <img src="/images/edit-withdraw.png"/></a>
     </span>
     [% ELSIF status != "public" %]
       [% IF session.role == "super_admin" %]
       <span class="form-group col-md-2">
-        <a class="btn btn-default" href="/myPUB/record/delete/[% id %]" onClick="return confirm('Are you sure you want to delete this record?');" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></a>
+        <a class="btn btn-default" href="/myPUB/record/delete/[% _id %]" onClick="return confirm('Are you sure you want to delete this record?');" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></a>
       </span>
       [% ELSE %]
       <span class="form-group col-md-2">
-        <a class="btn btn-default" href="/myPUB/record/return/[% id %]" onClick="return confirm('Are you sure you want to return this record?');" name="return" value="recReturn">Return <img src="/images/edit-withdraw.png"/></a>
+        <a class="btn btn-default" href="/myPUB/record/return/[% _id %]" onClick="return confirm('Are you sure you want to return this record?');" name="return" value="recReturn">Return <img src="/images/edit-withdraw.png"/></a>
       </span>
       [% END %]
     [% END %]
     <span class="form-group col-md-2">
-      <a class="btn btn-default next-button" id="twoToThree" href="#supplementary_fields">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+      <a class="btn btn-default next-button twoToThree" href="#supplementary_fields">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
     </span>
   </div>
 </div>

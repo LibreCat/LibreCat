@@ -1,4 +1,4 @@
-$('#threeToFour').click(function(){
+$('.threeToFour').click(function(){
     $('#li_related_material').css('visibility','visible');
     $('#li_supplementary_fields').removeClass('active');
     $('#li_related_material').addClass('active');
@@ -6,7 +6,7 @@ $('#threeToFour').click(function(){
     $('#inputSpan').remove();
 });
 
-$('#threeToTwo').click(function(){
+$('.threeToTwo').click(function(){
   $('#li_supplementary_fields').removeClass('active');
   $('#li_file_upload').addClass('active');
 });
@@ -15,6 +15,18 @@ $('#plusKeyword').click(function(){
   var items = $('#keyword div.form-group');
   var index = items.index($('#keyword div.form-group').last()) + 1;
   $('#keyword').append('[% INCLUDE backend/fields/subfields/keyword.tt %]');
+});
+
+$('#plusPublId').click(function(){
+  var items = $('#publId div.form-group');
+  var index = items.index($('#publId div.form-group').last()) + 1;
+  $('#publId').append('[% INCLUDE backend/fields/subfields/publication_identifier.tt %]');
+});
+
+$('#plusExtId').click(function(){
+  var items = $('#extId div.form-group');
+  var index = items.index($('#extId div.form-group').last()) + 1;
+  $('#extId').append('[% INCLUDE backend/fields/subfields/external_id.tt %]');
 });
 
 $('#plusDdc').click(function(){

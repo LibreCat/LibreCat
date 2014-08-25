@@ -94,6 +94,52 @@ language:
   "Turkish": "tur" #2561691
   "Other": "other" #221
 
+external_identifier:
+  - id: "isi"
+    name: "Web of Science"
+    prefix: "ISI:"
+  - id: "arxiv"
+    name: "ArXiv"
+    prefix: "arXiv:"
+  - id: "pmid"
+    name: "Europe PMC"
+    prefix: "MEDLINE:"
+  - id: "inspire"
+    name: "Inspire"
+    prefix: "INSPIRE:"
+  - id: "ahf"
+    name: "AHF"
+    prefix: "AHF:"
+  - id: "scoap3"
+    name: "SCOAP3"
+    prefix: "SCOAP3:"
+  - id: "phillister"
+    name: "PhilLister"
+    prefix: "PhilLister:"
+  - id: "opac"
+    name: "OPAC"
+    prefix: "UB-OPAC:"
+  - id: "fp7"
+    name: "FP7"
+    prefix: "fp7/"
+  - id: "fp6"
+    name: "FP6"
+    prefix: "fp6/"
+
+publication_identifier:
+  - id: "issn"
+    name: "ISSN"
+  - id: "eissn"
+    name: "eISSN"
+  - id: "isbn"
+    name: "ISBN"
+  - id: "eisbn"
+    name: "eISBN"
+  - id: "urn"
+    name: "URN"
+  - id: "other"
+    name: "Other Identifier"
+
 rd_relation:
   00:
     relation: "cites"

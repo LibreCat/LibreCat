@@ -1,4 +1,4 @@
-$('#fourToThree').click(function(){
+$('.fourToThree').click(function(){
   $('#li_related_material').removeClass('active');
   $('#li_supplementary_fields').addClass('active');
 });

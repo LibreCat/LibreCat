@@ -15,8 +15,7 @@ prefix '/record' => sub {
             my $id   = new_publication();
             my $user = h->getPerson( session->{personNumber} );
             template "backend/forms/$type",
-                { _id => $id, id => $id, department => $user->{department} };
-                # param id necessary because item('_id') is again not working in TT
+                { _id => $id, department => $user->{department} };
         }
         else {
             template 'add_new';

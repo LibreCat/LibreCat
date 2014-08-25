@@ -30,7 +30,7 @@ $(document).keypress(function(e){
 });
 
 // Tab forward one to two
-$('#oneToTwo').click(function(){
+$('.oneToTwo').click(function(){
   var check = 1;
   var oneauthor = 0;
   $('.creator').children('div.form-group').each(function(){
