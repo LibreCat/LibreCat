@@ -2,11 +2,11 @@ package App::Catalog::Controller::Admin;
 
 use Catmandu::Sane;
 use Catmandu;
+use Catmandu::Util qw(:is);
 use Furl;
 use Hash::Merge qw/merge/;
 use Carp;
 use Exporter qw/import/;
-
 use App::Catalog::Helper;
 
 our @EXPORT
@@ -29,21 +29,36 @@ sub _create_id {
 }
 
 sub new_person {
-    return "AU_". _create_id;
+    return "AU_" . _create_id;
 }
 
 sub search_person {
-    my $query = shift;
+    my $p = shift;
 
-    if ( $query && $query =~ /\d+/) {
-        return [ h->getPerson( $query ) ];
+    utf8::decode( $p->{q} )
+        if $p->{q}
+        ;  # needed, otherwise search in mongodb does not work, u-flag problem
+
+    my $query;
+    if ( $p->{q} && $p->{q} =~ /\d+/ ) {
+        $query = { "_id" => $p->{q} };
     }
-    elsif ($query) {
-        return h->authority_admin->select( "full_name", qr/$query/i );
+    elsif ( is_string( $p->{q} ) ) {
+        $query = { "full_name" => qr/$p->{q}/i };
     }
-    # else {
-    #     h->authority_admin->search(query => '', start => 0, limit => 20);
-    # }
+
+    my $hits = h->authority_admin->search(
+        query => $query,
+        start => $p->{start} ||= 0,
+        limit => $p->{limit}
+            ||= h->config->{store}->{default_searchpage_size},
+    );
+
+    my @page_func
+        = qw(next_page last_page page previous_page pages_in_spread);
+    map { $hits->{$_} = $hits->$_ } @page_func;
+
+    return $hits;
 }
 
 sub update_person {
@@ -74,26 +89,27 @@ sub delete_person {
 sub import_person {
     my $id = shift;
 
-    my $furl = Furl->new(agent => "Chrome 35.1",timeout => 10);
+    my $furl = Furl->new( agent => "Chrome 35.1", timeout => 10 );
 
     my $base_url = 'http://ekvv.uni-bielefeld.de/ws/pevz';
-    my $url  = $base_url . "/PersonKerndaten.xml?persId=$id";
-    my $url2 = $base_url . "/PersonKontaktdaten.xml?persId=$id";
+    my $url      = $base_url . "/PersonKerndaten.xml?persId=$id";
+    my $url2     = $base_url . "/PersonKontaktdaten.xml?persId=$id";
 
     my $res = $furl->get($url);
     croak "Error: $res->status_line" unless $res->is_success;
-    my $p1 = Catmandu->importer('pevz', file => $res->content)->first;
+    my $p1 = Catmandu->importer( 'pevz', file => $res->content )->first;
 
     $res = $furl->get($url2);
     croak "Error: $res->status_line" unless $res->is_success;
-    my $p2 = Catmandu->importer('pevz', file => $res->content)->first;
+    my $p2 = Catmandu->importer( 'pevz', file => $res->content )->first;
     my $merger = Hash::Merge->new();
+
     # decode_entities($email) if $email; # do we need this?
     return $merger->merge( $p1, $p2 );
 
-# decode_entities($email) if $email;
-# my $former = ( $res2 =~ /<\/pevz:kontakte>/ ) ? "0" : "1";
-# my $nonexist = ( $former and !$personName ) ? "1" : "0";
+    # decode_entities($email) if $email;
+    # my $former = ( $res2 =~ /<\/pevz:kontakte>/ ) ? "0" : "1";
+    # my $nonexist = ( $former and !$personName ) ? "1" : "0";
 }
 
 # manage departments
