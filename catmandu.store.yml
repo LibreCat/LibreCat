@@ -1515,6 +1515,7 @@ pagination_options:
     - 100
 sort_options:
     - {key: publishingyear, label: "Publishing year"}
+    - {key: datelastchanged, label: "Date last changed"}
     - {key: title, label: "Title" }
     - {key: author, label: "First author"}
     - {key: type, label: "Documenttype"}
