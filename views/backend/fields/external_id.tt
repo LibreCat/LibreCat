@@ -2,21 +2,48 @@
   <div class="col-md-2">
     <label for="id_external_id">
       {% fields.supplementary_fields.external_id.label %}
+      {% IF fields.supplementary_fields.external_id.mandatory %}<span class="starMandatory">*</span>&nbsp;{% END %}{% IF fields.supplementary_fields.external_id.multiple %}<span class="glyphicon glyphicon-plus"{% IF fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %} id="plusExtId"></span>{% END %}
     </label>
   </div>
-  <div class="col-md-10 form-group">
-    <form role="form" action="/myPUB/import" method="POST">
+  <div class="col-md-10" id="extId">
+    [% IF !external_id %]
+    <div class="form-group row innerrow">
       <div class="col-md-3">
-        <select class="form-control" ng-model="source" ng-init="source='wos'">
-          <option value="wos" selected="selected">Web of Science</option>
-          <option value="pmc">Europe PMC</option>
-          <option value="arxiv">ArXiv</option>
-          <option value="inspire">Inspire</option>
+        <select class="form-control" name="external_id.0.name" >
+          [% FOREACH extid IN h.external_id %]
+          <option value="[% extid.id %]"[% IF loop.first %] selected="selected"[% END %]>[% extid.name %]</option>
+          [% END %]
         </select>
       </div>
       <div class="col-md-6">
-          <input type="text" value="" class="form-control" id="input_id" name="external_id.{{source}}" />
+        <input type="text" value="" class="form-control" name="external_id.0.id" id="external_id_0" />
       </div><!-- input-group -->
-    </form>
+      <div class="col-md-1">
+        <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('external_id_0').value = '';"></div>
+      </div>
+    </div>
+    [% ELSE %]
+      [% FOREACH ext_id IN external_id %]
+      <div class="form-group row innerrow">
+        <div class="col-md-3">
+          <select class="form-control" name="external_id.[% loop.index %].name">
+            [% FOREACH extid IN h.external_id %]
+            <option value="[% extid.id %]"[% IF extid.id == ext_id.id %] selected="selected"[% END %]>[% extid.name %]</option>
+            [% END %]
+          </select>
+        </div>
+        <div class="col-md-6">
+          <input type="text" value="[% ext_id.value %]" class="form-control" name="external_id.[% loop.index %].id" id="external_id_[% loop.index %]" />
+        </div><!-- input-group -->
+        <div class="col-md-1">
+          [% IF loop.index == "0" %]
+          <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('external_id_[% loop.index %]').value = '';"></div>
+          [% ELSE %]
+          <div class="glyphicon glyphicon-minus single"></div>
+          [% END %]
+        </div>
+      </div>
+      [% END %]
+    [% END %]
   </div>
 </div>

@@ -17,6 +17,12 @@ $('#plusKeyword').click(function(){
   $('#keyword').append('[% INCLUDE backend/fields/subfields/keyword.tt %]');
 });
 
+$('#plusExtId').click(function(){
+  var items = $('#extId div.form-group');
+  var index = items.index($('#extId div.form-group').last()) + 1;
+  $('#extId').append('[% INCLUDE backend/fields/subfields/external_id.tt %]');
+});
+
 $('#plusDdc').click(function(){
   var items = $('#ddc div.form-group');
   var index = items.index($('#ddc div.form-group').last()) + 1;

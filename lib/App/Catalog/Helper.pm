@@ -118,6 +118,11 @@ sub language_preselect {
 	$map;
 }
 
+sub external_id {
+	my $map = config->{lists}{external_identifier};
+	$map;
+}
+
 sub ddc {
 	my $map = config->{lists}{ddc};
 	$map;

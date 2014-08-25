@@ -150,6 +150,7 @@ publicationTypes:
           label: "Publication Status"
         external_id: &external_id
           label: "External Identifier"
+          multiple: 1
         message: &message
           label: "Admin Comments"
         publication_identifier: &publ_id
