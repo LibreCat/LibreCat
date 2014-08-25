@@ -48,7 +48,7 @@
   </div>
 </form>
 [% IF error %]
-    <p class="text-danger">[% error %]</p>
+    <p class="text-danger">[% error %]. <i> <span class="glyphicon glyphicon-pencil"></span></i> <a href="/myPUB/admin/account/edit/[% qp.id %]">Edit</a></p>
 [% END %]
 </div>
 </div>
