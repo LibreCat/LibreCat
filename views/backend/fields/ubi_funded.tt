@@ -5,8 +5,13 @@
     </label>
   </div>
   <div class="col-md-10">
-    <span class="form-group col-md-1">
-      <input type="checkbox" name="ubi_funded" id="id_ubi_funded" value="[% ubi_funded %]" class="form-control">
-    </span>
+    <div class="checkbox">
+      <label>
+        <span class="form-group col-md-1">
+          <input type="checkbox" name="ubi_funded" id="id_ubi_funded" value="[% ubi_funded %]">
+        </span>
+        {% fields.supplementary_fields.ubi_funded.placeholder %}
+      </label>
+    </div>
   </div>
 </div>

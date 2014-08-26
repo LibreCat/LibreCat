@@ -161,6 +161,11 @@ publicationTypes:
         publication_identifier: &publ_id
           label: "Publication<br />Identifier"
           multiple: 1
+        popular_science: &pop_sci
+          label: "Popular Science"
+        ubi_funded: &funded
+          label: "Funding"
+          placeholder: "Funded by the 'Publikationsfonds' at Bielefeld University"
       related_material: &rm
         tab_name: "Related Material"
         link_publication:
@@ -206,6 +211,8 @@ publicationTypes:
         external_id: *external_id
         message: *message
         publication_identifier: *publ_id
+        popular_science: *pop_sci
+        ubi_funded: *funded
       related_material: *rm
   conferenceabstract:
     label: "Conference Abstract"
@@ -235,7 +242,6 @@ publicationTypes:
         page_range: *page_range
         publisher: *publisher
         place: *place
-        publication_identifier: *publ_id
         volume: *vol
         issue: &issue
           label: "Issue"
@@ -247,6 +253,9 @@ publicationTypes:
           placeholder: "Berlin, BE, Germany"
         conference_date: &conference_date
           label: "Conference Date"
+        quality_controlled: &qual_contr
+          label: "Quality Controlled"
+        ubi_funded: *funded
       related_material: *rm
   conferenceeditor:
     label: "Conference Editor"
@@ -254,6 +263,48 @@ publicationTypes:
   conference:
     label: "Conference Paper"
     tmpl: conference
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        doi: *doi
+        title: *title
+        author: *author_editor_etc
+        department: *department
+        project: *project
+        publication:
+          label: "Proceedings Title"
+        series_title:
+          label: "Series Title"
+        year: *year
+        language: *lang
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
+        keyword: *kw
+        ddc: *ddc
+        abstract: *abstract
+        publication_identifier: *publ_id
+        extern: *extern
+        alternative_title: *alt_title
+        publication_status: *publication_status
+        page_range: *page_range
+        publisher: *publisher
+        place: *place
+        volume: *vol
+        issue: &issue
+          label: "Issue"
+        conference_name: &conference_name
+          label: "Conference Name"
+          placeholder: "e.g. 3rd Conference on Nano-Physics"
+        conference_location: &conference_location
+          label: "Conference Location"
+          placeholder: "Berlin, BE, Germany"
+        conference_date: &conference_date
+          label: "Conference Date"
+        quality_controlled: *qual_contr
+        popular_science: *pop_sci
+        ubi_funded: *funded
+      related_material: *rm
   dissertation:
     label: "Dissertation"
     tmpl: dissertation
