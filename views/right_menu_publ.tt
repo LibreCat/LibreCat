@@ -41,6 +41,9 @@
     [% ELSIF qp.publicationtype != "" %]
       <p class="text-muted"><a href="[% h.newuri_for("$path", qp, publicationtype="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> publicationtype: [% qp.publicationtype %]</p>
     [% END %]
+    [% IF qp.department != "" %]
+      <p class="text-muted"><a href="[% h.newuri_for("$path", qp, department="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> department: [% qp.department %]</p>
+    [% END %]
     [% IF qp.author.0 %]
       [% FOREACH auth IN qp.author %]
         [% name = h.getPerson(auth) %]
@@ -103,6 +106,56 @@
           <li><a href="[% h.newuri_for("$path", qp, submissionstatus="$type.term") %]" rel="nofollow">[% type.term %] ([% type.count %])</a></li>
           [% END %]
           [% END %]
+        </ul>
+        </div>
+      </li>
+      [% END %]
+      [% IF session.role == "super_admin" %]
+      <li>
+        <button data-toggle="collapse" data-target="#department_new"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Department</a></button>
+        <div class="facettecollapse">
+        <ul id="department_new" class="collapse[% IF qp.department %] in[% END %]">
+        [% IF qp.department %]
+          [% dept = h.getDepartment(qp.department) %]
+          [% dept.name %]
+        [% ELSE %]
+        [% departments = h.get_list('department') %]
+        [% FOREACH dept IN departments.keys.sort %]
+          [% thisdept = departments.$dept %]
+          <a href="[% h.newuri_for("$path", qp, department="$thisdept.oId") %]" class="selectme" data-index="[% loop.index %]" id="[% departments.$dept.oId %]">[% dept %]</a>
+          [% IF departments.$dept.keys.size > 1 %] <a href="#subdepts_[% departments.$dept.oId %]" data-toggle="collapse">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+          </a>[% END %]
+          <br />
+          <div id="subdepts_[% departments.$dept.oId %]" class="panel-collapse collapse">
+            [% FOREACH subdept IN departments.$dept.keys.sort %]
+            [% NEXT IF subdept == "oId" %]
+            [% thissubdept = thisdept.$subdept %]
+            <span style="padding-left:20px;">
+              <a href="[% h.newuri_for("$path", qp, department="$thissubdept.oId") %]" class="selectme" data-index="[% loop.index %]" id="[% departments.$dept.$subdept.oId %]">
+                [% subdept %]
+              </a>
+            </span>
+            [% IF departments.$dept.$subdept.keys.size >1 %] <a href="#subsubdepts_[% departments.$dept.$subdept.oId %]" data-toggle="collapse">
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </a>[% END %]
+            <br />
+            <div id="subsubdepts_[% departments.$dept.$subdept.oId %]" class="panel-collapse collapse">
+              [% FOREACH subsubdept IN departments.$dept.$subdept.keys.sort %]
+              [% NEXT IF subsubdept == "oId" %]
+              [% thissubsubdept = thissubdept.$subsubdept %]
+              <span style="padding-left:40px;">
+                <a href="[% h.newuri_for("$path", qp, department="$thissubsubdept.oId") %]" class="selectme" data-index="[% loop.index %]" id="[% departments.$dept.$subdept.$subsubdept.oId %]">
+                  [% subsubdept %]
+                </a>
+              </span>
+              <br />
+              [% END %]
+            </div>
+            [% END %]
+          </div>
+        [% END %]
+        [% END %]
         </ul>
         </div>
       </li>

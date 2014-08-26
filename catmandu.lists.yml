@@ -248,7 +248,7 @@ relations_link:
     relation_text: "In other relation (to PUB record)"
     link_text: "Other Relation"
 
-xdepartments:
+department:
   "BiSEd Bielefeld School of Education":
     oId: 10057
     'Beratungsstelle Master of Education (M.Ed.)':
