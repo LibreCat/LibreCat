@@ -40,7 +40,7 @@ sub search_person {
         ;  # needed, otherwise search in mongodb does not work, u-flag problem
 
     my $query;
-    if ( $p->{q} && $p->{q} =~ /\d+/ ) {
+    if ( is_integer( $p->{q} ) ) {
         $query = { "_id" => $p->{q} };
     }
     elsif ( is_string( $p->{q} ) ) {
