@@ -18,12 +18,12 @@
     </div>
     <div class="form-group col-md-3">
       <select name="abstract_language_0" id="id_abstract_language_0" class="form-control">
-      [% FOREACH lang IN h.language_preselect.keys.sort %]
-        <option value="[% h.language_preselect.$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
+      [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
+        <option value="[% h.get_list('language_preselect').$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
       [% END %]
         <option value="2436687"></option>
-      [% FOREACH lang IN h.language.keys.sort %]
-        <option value="[% h.language.$lang %]" [% IF abLanguageOId == h.language.$lang %]selected="selected"[% END %]>[% lang %]</option>
+      [% FOREACH lang IN h.get_list('language').keys.sort %]
+        <option value="[% h.get_list('language').$lang %]" [% IF abLanguageOId == h.get_list('language').$lang %]selected="selected"[% END %]>[% lang %]</option>
       [% END %]
       </select>
     </div>
@@ -44,12 +44,12 @@
       </div>
       <div class="form-group col-md-3">
         <select name="abstract_language_[% loop.index %]" id="id_abstract_language_[% loop.index %]" class="form-control">
-        [% FOREACH lang IN h.language_preselect.keys.sort %]
-          <option value="[% h.language_preselect.$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
+        [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
+          <option value="[% h.get_list('language_preselect').$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
         [% END %]
           <option value="2436687"></option>
-        [% FOREACH lang IN h.language.keys.sort %]
-          <option value="[% h.language.$lang %]" [% IF abLanguageOId == h.language.$lang %]selected="selected"[% END %]>[% lang %]</option>
+        [% FOREACH lang IN h.get_list('language').keys.sort %]
+          <option value="[% h.get_list('language').$lang %]" [% IF abLanguageOId == h.get_list('language').$lang %]selected="selected"[% END %]>[% lang %]</option>
         [% END %]
         </select>
       </div>

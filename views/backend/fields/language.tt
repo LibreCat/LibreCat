@@ -7,13 +7,13 @@
   <div class="col-md-10" id="language">
     [% IF !language %]
     <div class="form-group row innerrow">
-      <div class="col-md-6">
+      <div class="col-md-9">
         <select name="language" class="form-control" id="select_language_0">
-          [% FOREACH lang IN h.language_preselect.keys.sort %]
+          [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
             <option value="[% lang %]"[% IF lang == language.text || (!language AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>
           [% END %]
           <option value="2436687"></option>
-          [% FOREACH lang IN h.language.keys.sort %]
+          [% FOREACH lang IN h.get_list('language').keys.sort %]
             <option value="[% lang %]"[% IF lang == language.text %] selected="selected"[% END %]>[% lang %]</option>
           [% END %]
         </select>
@@ -22,13 +22,13 @@
     [% ELSE %]
       [% FOREACH lan IN language %]
       <div class="form-group row innerrow">
-        <div class="col-md-6">
+        <div class="col-md-9">
           <select name="language" class="form-control" id="select_language_[% loop.index %]">
-            [% FOREACH lang IN h.language_preselect.keys.sort %]
+            [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
               <option value="[% lang %]"[% IF lang == lan.text || (!lan AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>
             [% END %]
             <option value="2436687"></option>
-            [% FOREACH lang IN h.language.keys.sort %]
+            [% FOREACH lang IN h.get_list('language').keys.sort %]
               <option value="[% lang %]"[% IF lang == lan.text %] selected="selected"[% END %]>[% lang %]</option>
             [% END %]
           </select>

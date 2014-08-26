@@ -279,7 +279,7 @@
           [% ELSE %]
           <li><a href="[% h.newuri_for("$path", qp, style="frontShort") %]" rel="nofollow">default</a></li>
           [% END %]
-          [% FOREACH dstyle IN h.display_styles %]
+          [% FOREACH dstyle IN h.get_list('styles_public') %]
             [% IF dstyle == style %]
             <li>[% dstyle %]</li>
             [% ELSE %]

@@ -11,7 +11,7 @@
       <div class="col-md-3">
         <select class="form-control" name="external_id.0.name" >
           <option value="">-- Select --</option>
-          [% FOREACH extid IN h.external_id %]
+          [% FOREACH extid IN h.get_list('external_identifier') %]
           <option value="[% extid.id %]">[% extid.name %]</option>
           [% END %]
         </select>
@@ -29,7 +29,7 @@
         <div class="col-md-3">
           <select class="form-control" name="external_id.[% loop.index %].name">
             <option value="">-- Select --</option>
-            [% FOREACH extid IN h.external_id %]
+            [% FOREACH extid IN h.get_list('external_identifier') %]
             <option value="[% extid.id %]"[% IF extid.id == ext_id.id %] selected="selected"[% END %]>[% extid.name %]</option>
             [% END %]
           </select>
