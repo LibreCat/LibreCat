@@ -5,8 +5,10 @@
     </label>
   </div>
   <div class="col-md-10">
-    <span class="form-group col-md-9">
-      <input type="text" name="title" id="id_title" value="[% title %]" placeholder="{% fields.basic_fields.title.placeholder %}" class="form-control required">
-    </span>
+    <div class="form-group row innerrow">
+      <div class="col-md-9">
+        <input type="text" name="title" id="id_title" value="[% title %]" placeholder="{% fields.basic_fields.title.placeholder %}" class="form-control{% IF fields.basic_fields.title.mandatory == "1" %} required{% END %}">
+      </div>
+    </div>
   </div>
 </div>

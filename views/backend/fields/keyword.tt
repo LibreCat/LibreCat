@@ -7,7 +7,7 @@
   <div class="col-md-10" id="keyword">
     [% IF !keyword %]
     <div class="form-group row innerrow">
-      <div class="col-md-6">
+      <div class="col-md-9">
         <input type="text" name="keyword" id="keyword_0" value="" class="form-control" placeholder="{% fields.supplementary_fields.keyword.placeholder %}"/>
       </div>
       <div class="col-md-1">
@@ -17,7 +17,7 @@
     [% ELSE %]
     [% FOREACH keyw IN keyword %]
     <div class="form-group row innerrow">
-      <div class="col-md-6">
+      <div class="col-md-9">
         <input type="text" name="keyword" id="keyword_[% loop.index %]" value="[% keyw %]" class="form-control"/>
       </div>
       <div class="col-md-1">

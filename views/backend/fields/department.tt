@@ -6,20 +6,20 @@
   </div>
   <div class="col-md-10" id="department">
     [% IF !department %]
-    <div class="form-group">
+    <div class="form-group row innerrow">
       <input type="hidden" name="department" id="dp_idautocomplete_0" value="" />
     
-      <span class="form-group col-md-7">
+      <div class="form-group col-md-7">
         <input type="text" class="form-control" placeholder="{% fields.basic_fields.department.placeholder %}" id="dp_autocomplete_0" value="" />
-      </span>
+      </div>
     
-      <span class="form-group col-md-2">
+      <div class="form-group col-md-2">
         <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0" value="Select"/>
-      </span>
+      </div>
         
-      <span class="col-md-1">
+      <div class="col-md-1">
         <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
-      </span>
+      </div>
         
       <script>
       $(function() {
@@ -36,24 +36,24 @@
     </div>
     [% ELSE %]
     [% FOREACH dept IN department %]
-    <div class="form-group">
+    <div class="form-group row innerrow">
       <input type="hidden" name="department" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
           
-      <span class="form-group col-md-7">
+      <div class="form-group col-md-7">
         <input type="text" class="form-control" placeholder="{% fields.basic_fields.departments.placeholder %}" id="dp_autocomplete_[% loop.index %]" value="[% dept.name.0.text || dept.name %]" />
-      </span>
+      </div>
           
-      <span class="form-group col-md-2">
+      <div class="form-group col-md-2">
         <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]" value="Select"/>
-      </span>
+      </div>
           
-      <span class="col-md-1">
+      <div class="col-md-1">
         [% IF loop.index == 0 %]
         <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
         [% ELSE %]
         <span class="glyphicon glyphicon-minus single"></span>
         [% END %]
-      </span>
+      </div>
       
       <script>
       $(function() {
