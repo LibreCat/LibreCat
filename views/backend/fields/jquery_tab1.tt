@@ -37,9 +37,17 @@ $('.oneToTwo').click(function(){
     if(!$(this).children('span').eq(0).children().eq(0).val()){
       $(this).children('span').eq(0).addClass("has-error");
     }
+    else if($(this).children('span').eq(0).children().eq(0).val() && $(this).children('span').eq(0).hasClass("has-error")){
+      $(this).children('span').eq(0).removeClass("has-error");
+    }
+    
     if(!$(this).children('span').eq(1).children().eq(0).val()){
       $(this).children('span').eq(1).addClass("has-error");
     }
+    else if($(this).children('span').eq(1).children().eq(0).val() && $(this).children('span').eq(1).hasClass("has-error")){
+      $(this).children('span').eq(1).removeClass("has-error");
+    }
+    
     if($(this).children('span').eq(0).children().eq(0).val() && $(this).children('span').eq(1).children().eq(0).val()){
       oneauthor = 1;
     }
@@ -50,15 +58,15 @@ $('.oneToTwo').click(function(){
   
   $('.required').each(function(){
     if(!$(this).val()){
-      $(this).parents('span.form-group').addClass('has-error');
+      $(this).parents('div.form-group').addClass('has-error');
       check = 0;
     }
     else if($(this).val() && ($(this).val() == "Publication Title" || $(this).val() == "First Name" || $(this).val() == "Last Name" || $(this).val() == "YYYY")){
-      $(this).parents('span.form-group').addClass('has-error');
+      $(this).parents('div.form-group').addClass('has-error');
       check = 0;
     }
     else{
-      $(this).parents('span.form-group').removeClass('has-error');
+      $(this).parents('div.form-group').removeClass('has-error');
     }
   });
   
@@ -67,7 +75,7 @@ $('.oneToTwo').click(function(){
   var maxYear = currentYear + 5;
   if(year.length < 4 || !year.match(/^\d+$/) || year < 1930 || year > maxYear){
     check = 0;
-    $('#id_year').parents('span.form-group').addClass('has-error');
+    $('#id_year').parents('div.form-group').addClass('has-error');
     $('#id_year').val("");
     $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
   }
@@ -257,3 +265,52 @@ function angularSearch($scope, $compile) {
 	}
   };
 };
+
+
+$("#id_conference_location").autocomplete({
+  source: function (request, response) {
+    jQuery.getJSON(
+      "http://gd.geobytes.com/AutoCompleteCity?callback=?&q="+request.term,
+      function (data) {
+        response(data);
+      }
+    );
+  },
+  minLength: 3,
+  select: function (event, ui) {
+    var selectedObj = ui.item;
+    $("#id_conference_location").val(selectedObj.value);
+    return false;
+  },
+  open: function () {
+    $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+  },
+  close: function () {
+    $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+  }
+});
+$("#id_conference_location").autocomplete("option", "delay", 100);
+
+$("#id_place").autocomplete({
+  source: function (request, response) {
+    jQuery.getJSON(
+      "http://gd.geobytes.com/AutoCompleteCity?callback=?&q="+request.term,
+      function (data) {
+        response(data);
+      }
+    );
+  },
+  minLength: 3,
+  select: function (event, ui) {
+    var selectedObj = ui.item;
+    $("#id_place").val(selectedObj.value);
+    return false;
+  },
+  open: function () {
+    $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+  },
+  close: function () {
+    $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+  }
+});
+$("#id_place").autocomplete("option", "delay", 100);

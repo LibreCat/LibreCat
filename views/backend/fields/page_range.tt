@@ -1,16 +1,16 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="id_page_start">
-      {% fields.basic_fields.page.label %}{% fields.supplementary_fields.page.label %}{% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %}<span class="starMandatory">*</span>{% END %}
+      {% fields.basic_fields.page_range.label %}{% fields.supplementary_fields.page_range.label %}{% IF fields.basic_fields.page_range.mandatory OR fields.supplementary_fields.page_range.mandatory %}<span class="starMandatory">*</span>{% END %}
     </label>
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-3">
-      <input type="text" name="page_start" id="id_page_start" value="[% page_start %]" placeholder="{% fields.basic_fields.page.placeholder || fields.supplementary_fields.page.placeholder %}" class="form-control{% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %} required{% END %}">
+      <input type="text" name="page_start" id="id_page_start" value="[% page_start %]" placeholder="{% fields.basic_fields.page_range.placeholder || fields.supplementary_fields.page_range.placeholder %}" class="form-control{% IF fields.basic_fields.page_range.mandatory OR fields.supplementary_fields.page_range.mandatory %} required{% END %}">
     </span> 
     <span class="form-group col-md-1">&mdash;</span>
     <span class="form-group col-md-3">
-      <input type="text" name="page_end" id="id_page_end" value="[% page_end %]" placeholder="{% fields.basic_fields.page.placeholder || fields.supplementary_fields.page.placeholder %}" class="form-control{% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %} required{% END %}">
+      <input type="text" name="page_end" id="id_page_end" value="[% page_end %]" placeholder="{% fields.basic_fields.page_range.placeholder || fields.supplementary_fields.page_range.placeholder %}" class="form-control{% IF fields.basic_fields.page_range.mandatory OR fields.supplementary_fields.page_range.mandatory %} required{% END %}">
     </span>
   </div>
 </div>

@@ -87,13 +87,11 @@ sub search {
             }
         },
         openAccess => { terms => { field => 'file.open_access', size => 10 } },
-        qualityControlled =>
-            { terms => { field => 'quality_controlled', size => 1 } },
-        popularScience =>
-            { terms => { field => 'popular_science', size => 1 } },
+        qualityControlled => { terms => { field => 'quality_controlled', size => 1 } },
+        popularScience => { terms => { field => 'popular_science', size => 1 } },
         nonlu => { terms => { field => 'extern', size => 1 } },
-        submissionStatus =>
-            { terms => { field => 'status', size => 10 } },
+        submissionStatus => { terms => { field => 'status', size => 10 } },
+        department => { terms => {field => 'department.id', size => 1000}},
     };
     $p->{facets} = $facets;
 
@@ -104,6 +102,11 @@ sub search {
     if ( params->{submissionstatus} and ref params->{submissionstatus} ne 'ARRAY' ){
         $query        .= " AND submissionstatus=" . params->{submissionstatus};
         $doctypequery .= " AND submissionstatus=" . params->{submissionstatus};
+    }
+    
+    if(params->{department} and ref params->{department} ne "ARRAY"){
+    	$query .= " AND department=" . params->{department};
+    	$doctypequery .= " AND department=" . params->{department};
     }
 
     # separate handling of publication types (for separate facet)

@@ -6,14 +6,12 @@
   </div>
   <div class="col-md-10" id="publication_status">
     <div class="form-group row innerrow">
-      <div class="col-md-6">
-        <select name="publication_status" class="form-control" id="select_publication_status" onchange="changeSelectColor()">
+      <div class="col-md-9">
+        <select name="publication_status" class="form-control" id="select_publication_status">
           <option value=""[% IF !publication_status %] selected="selected"[% END %]>--- Select ---</option>
-          <option value="published" [% IF publication_status == 'published' %]selected="selected"[% END %]>published</option>
-          <option value="inpress" [% IF publication_status == 'inpress' %]selected="selected"[% END %]>in press</option>
-          <option value="accepted" [% IF publication_status == 'accepted' %]selected="selected"[% END %]>accepted</option>
-          <option value="submitted" [% IF publication_status == 'submitted' %]selected="selected"[% END %]>submitted</option>
-          <option value="unpublished" [% IF publication_status == 'unpublished' %]selected="selected"[% END %]>unpublished</option>
+          [% FOREACH pi IN h.get_list('publication_status') %]
+            <option value="[% pi.value %]" [% IF publication_status == pi.value %]selected="selected"[% END %]>[% pi.name %]</option>
+          [% END %]
         </select>
       </div>
     </div>

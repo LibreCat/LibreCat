@@ -5,8 +5,10 @@
     </label>
   </div>
   <div class="col-md-10">
-    <div class="form-group col-md-5">
-      <input type="text" name="doi" id="id_doi" value="[% doi %]" class="form-control{% IF fields.basic_fields.doi.mandatory %} required{% END %}" {% IF fields.basic_fields.doi.readonly %}readonly="readonly"{% END %}>
+    <div class="form-group row innerrow">
+      <div class="col-md-9">
+        <input type="text" name="doi" id="id_doi" value="[% doi %]" class="form-control{% IF fields.basic_fields.doi.mandatory %} required{% END %}" {% IF fields.basic_fields.doi.readonly %}readonly="readonly"{% END %}>
+      </div>
     </div>
   </div>
 </div>

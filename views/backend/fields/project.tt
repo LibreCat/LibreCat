@@ -6,20 +6,20 @@
   </div>
   <div class="col-md-10" id="project">
     [% IF !project %]
-    <div class="form-group">
+    <div class="form-group row innerrow">
       <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
           
-      <span class="form-group col-md-7">
+      <div class="form-group col-md-7">
         <input type="text" name="pj_projectName_0" class="form-control" placeholder="{% fields.basic_fields.project.placeholder %}" id="pj_autocomplete_0" value="" />
-      </span>
+      </div>
         
-      <span class="form-group col-md-2">
+      <div class="form-group col-md-2">
         <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_0" value="Select"/>
-      </span>
+      </div>
         
-      <span class="col-md-1">
+      <div class="col-md-1">
         <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
-      </span>
+      </div>
         
       <script>
       $(function() {
@@ -36,24 +36,24 @@
     </div>
     [% ELSE %]
     [% FOREACH proj IN project %]
-    <div class="form-group">
+    <div class="form-group row innerrow">
       <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.oId %]" />
           
-      <span class="form-group col-md-7">
+      <div class="form-group col-md-7">
         <input type="text" name="pj_projectName_[% loop.index %]" class="form-control" placeholder="{% fields.basic_fields.project.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name.0.text || proj.name %]" />
-      </span>
+      </div>
 
-      <span class="form-group col-md-2">
+      <div class="form-group col-md-2">
         <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_[% loop.index %]" value="Select"/>
-      </span>
+      </div>
           
-      <span class="col-md-1">
+      <div class="col-md-1">
         [% IF loop.index == 0 %]
         <span class="icon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
         [% ELSE %]
         <span class="icon-minus single"></span>
         [% END %]
-      </span>
+      </div>
           
       <script>
       $(function() {

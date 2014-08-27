@@ -39,7 +39,9 @@ field_order:
     - issue
     - language
     - year
-    - conference_part
+    - conference_name
+    - conference_location
+    - conference_date
   file_upload:
     - external_file
     - dropzone_mainDoc
@@ -57,6 +59,9 @@ field_order:
     - extern
     - alternative_title
     - publication_status
+    - conference_name
+    - conference_location
+    - conference_date
     - page
     - page_range
     - publication_identifier
@@ -119,7 +124,7 @@ publicationTypes:
           label: "Upload a confirmation letter"
       supplementary_fields:
         tab_name: "Additional Information"
-        publication:
+        publication: &publicationseries
           label: "Publication/<br />Series Title"
           placeholder: "E.g. Lecture Notes in Computer Science"
         abstract: &abstract
@@ -135,8 +140,8 @@ publicationTypes:
         volume: &vol
          label: "Volume"
         place: &place
-          label: "Place"
-          placeholder: "Berlin, Germany"
+          label: "Place<br />(of publication)"
+          placeholder: "Berlin, BE, Germany"
         ddc: &ddc
           label: DDC
         page: &page
@@ -156,6 +161,11 @@ publicationTypes:
         publication_identifier: &publ_id
           label: "Publication<br />Identifier"
           multiple: 1
+        popular_science: &pop_sci
+          label: "Popular Science"
+        ubi_funded: &funded
+          label: "Funding"
+          placeholder: "Funded by the 'Publikationsfonds' at Bielefeld University"
       related_material: &rm
         tab_name: "Related Material"
         link_publication:
@@ -181,12 +191,13 @@ publicationTypes:
           label: "Book Title"
           mandatory: 1
         year: *year
+        language: *lang
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         series_title: &series_title
-          label: Series Title
-          placeholder: "Lecture Notes in Computer Science"
+          label: "Series Title"
+          placeholder: "e.g. Lecture Notes in Computer Science"
         place: *place
         edition: *edition
         publication_status: *publication_status
@@ -200,6 +211,8 @@ publicationTypes:
         external_id: *external_id
         message: *message
         publication_identifier: *publ_id
+        popular_science: *pop_sci
+        ubi_funded: *funded
       related_material: *rm
   conferenceabstract:
     label: "Conference Abstract"
@@ -212,10 +225,10 @@ publicationTypes:
         author: *author_editor_etc
         department: *department
         project: *project
-        publication: &publication
-          label: "Publication"
+        publication: *publicationseries
         year: *year
         conference_part: 1
+        language: *lang
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
@@ -223,6 +236,26 @@ publicationTypes:
         ddc: *ddc
         abstract: *abstract
         publication_identifier: *publ_id
+        extern: *extern
+        alternative_title: *alt_title
+        publication_status: *publication_status
+        page_range: *page_range
+        publisher: *publisher
+        place: *place
+        volume: *vol
+        issue: &issue
+          label: "Issue"
+        conference_name: &conference_name
+          label: "Conference Name"
+          placeholder: "e.g. 3rd Conference on Nano-Physics"
+        conference_location: &conference_location
+          label: "Conference Location"
+          placeholder: "Berlin, BE, Germany"
+        conference_date: &conference_date
+          label: "Conference Date"
+        quality_controlled: &qual_contr
+          label: "Quality Controlled"
+        ubi_funded: *funded
       related_material: *rm
   conferenceeditor:
     label: "Conference Editor"
@@ -230,6 +263,48 @@ publicationTypes:
   conference:
     label: "Conference Paper"
     tmpl: conference
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        doi: *doi
+        title: *title
+        author: *author_editor_etc
+        department: *department
+        project: *project
+        publication:
+          label: "Proceedings Title"
+        series_title:
+          label: "Series Title"
+        year: *year
+        language: *lang
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
+        keyword: *kw
+        ddc: *ddc
+        abstract: *abstract
+        publication_identifier: *publ_id
+        extern: *extern
+        alternative_title: *alt_title
+        publication_status: *publication_status
+        page_range: *page_range
+        publisher: *publisher
+        place: *place
+        volume: *vol
+        issue: &issue
+          label: "Issue"
+        conference_name: &conference_name
+          label: "Conference Name"
+          placeholder: "e.g. 3rd Conference on Nano-Physics"
+        conference_location: &conference_location
+          label: "Conference Location"
+          placeholder: "Berlin, BE, Germany"
+        conference_date: &conference_date
+          label: "Conference Date"
+        quality_controlled: *qual_contr
+        popular_science: *pop_sci
+        ubi_funded: *funded
+      related_material: *rm
   dissertation:
     label: "Dissertation"
     tmpl: dissertation
@@ -241,7 +316,8 @@ publicationTypes:
         year: *year
         department: *department
         project: *project
-        publication: *publication
+        publication: &publication
+          label: "Publication"
         volume: *vol
       file_upload: *file_upload
       supplementary_fields:
@@ -305,8 +381,7 @@ publicationTypes:
         tab_name: "Additional Information"
         publication: *publication
         volume: *vol
-        issue: &issue
-          label: "Issue"
+        issue: *issue
         abstract: *abstract
         ddc: *ddc
         keyword: *kw

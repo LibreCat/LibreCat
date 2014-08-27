@@ -108,28 +108,10 @@ sub getDepartment {
 	}
 }
 
-sub language {
-	my $map = config->{lists}{language};
-	$map;
-}
-
-sub language_preselect {
-	my $map = config->{lists}{language_preselect};
-	$map;
-}
-
-sub publication_id {
-	my $map = config->{lists}{publication_identifier};
-	$map;
-}
-
-sub external_id {
-	my $map = config->{lists}{external_identifier};
-	$map;
-}
-
-sub ddc {
-	my $map = config->{lists}{ddc};
+sub get_list {
+	my $list = $_[1];
+	my $map;
+	$map = config->{lists}{$list};
 	$map;
 }
 
@@ -143,17 +125,6 @@ sub display_gs_doctypes {
 	my $map = config->{forms}{display_gs_docs};
 	my $doctype = $map->{lc $_[1]};
 	$doctype;
-}
-
-sub display_publstatus {
-	my $map = config->{lists}{display_publstatus};
-	my $publstatus = $map->{lc $_[1]};
-	$publstatus;
-}
-
-sub display_styles {
-	my $map = config->{lists}{styles_public};
-	$map;
 }
 
 sub host {

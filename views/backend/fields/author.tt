@@ -15,7 +15,7 @@
       </label>
     </div>
     <div class="col-md-10 creator">
-      <div class="form-group">
+      <div class="form-group row innerrow">
         <input type="hidden" id="orig_first_name_0" value="" />
         <input type="hidden" id="orig_last_name_0" value="" />
             
@@ -58,7 +58,7 @@
       </label>
     </div>
     <div class="col-md-10 creator">
-      <div class="form-group">
+      <div class="form-group row innerrow">
         <input type="hidden" id="orig_first_name_[% loop.index %]" value="[% name.first_name %]" />
         <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% name.last_name %]" />
             
@@ -111,7 +111,7 @@
       </label>
     </div>
     <div class="col-md-10 creator">
-      <div class="form-group">
+      <div class="form-group row innerrow">
         <input type="hidden" id="orig_first_name_[% loop.index %]" value="" />
         <input type="hidden" id="orig_last_name_[% loop.index %]" value="" />
             

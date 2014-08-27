@@ -140,6 +140,18 @@ publication_identifier:
   - id: "other"
     name: "Other Identifier"
 
+publication_status:
+  - name: "Published"
+    value: "published"
+  - name: "In Press"
+    value: "inpress"
+  - name: "Accepted"
+    value: "accepted"
+  - name: "Submitted"
+    value: "submitted"
+  - name: "Unpublished"
+    value: "unpublished"
+
 rd_relation:
   00:
     relation: "cites"
@@ -236,7 +248,7 @@ relations_link:
     relation_text: "In other relation (to PUB record)"
     link_text: "Other Relation"
 
-xdepartments:
+department:
   "BiSEd Bielefeld School of Education":
     oId: 10057
     'Beratungsstelle Master of Education (M.Ed.)':
