@@ -110,14 +110,16 @@
     </div>
 
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_active">Data Manager</label></div>
+      <div class="col-md-2"><label>
+        Data Manager <span class="glyphicon glyphicon-plus" id="plusDM"></span>
+      </label></div>
       <div class="col-md-10">
       [% IF !data_manager %]
         <div class="form-group">
-          <input type="hidden" name="department" id="dp_idautocomplete_0" value="" />
+          <input type="hidden" name="data_manager.0.id" id="dp_idautocomplete_0" value="" />
 
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" id="dp_autocomplete_0" value="" />
+            <input type="text" class="form-control" name="data_manager.0.name" id="dp_autocomplete_0" value="" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0" value="Select"/>
@@ -141,9 +143,9 @@
       [% ELSE %]
       [% FOREACH dept IN data_manager %]
         <div class="form-group">
-          <input type="hidden" name="data_manager.[% loop.index %].department.id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.department.id %]" />
+          <input type="hidden" name="data_manager.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.department.id %]" />
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" id="dp_autocomplete_[% loop.index %]" value="[% dept.department.name %]" />
+            <input type="text" class="form-control" name="data_manager.[% loop.index %].name" id="dp_autocomplete_[% loop.index %]" value="[% dept.department.name %]" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]" value="Select"/>
@@ -189,14 +191,16 @@
     </div>
 
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_active">Reviewer</label></div>
+      <div class="col-md-2"><label>
+        Reviewer <span class="glyphicon glyphicon-plus" id="plusRV"></span>
+      </label></div>
       <div class="col-md-10">
         [% IF !reviewer %]
         <div class="form-group">
-          <input type="hidden" name="reviewer" id="rv_idautocomplete_0" value="" />
+          <input type="hidden" name="reviewer.0.id" id="rv_idautocomplete_0" value="" />
 
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" id="rv_autocomplete_0" value="" />
+            <input type="text" class="form-control" name="reviewer.0.name" id="rv_autocomplete_0" value="" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button department" id="reviewer_select_0" value="Select"/>
@@ -220,9 +224,9 @@
       [% ELSE %]
       [% FOREACH dept IN reviewer %]
         <div class="form-group">
-          <input type="hidden" name="reviewer.[% loop.index %].department.id" id="rv_idautocomplete_[% loop.index %]" value="[% dept.department.id %]" />
+          <input type="hidden" name="reviewer.[% loop.index %].id" id="rv_idautocomplete_[% loop.index %]" value="[% dept.department.id %]" />
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" id="rv_autocomplete_[% loop.index %]" value="[% dept.department.name %]" />
+            <input type="text" class="form-control" name="reviewer.[% loop.index %].name" id="rv_autocomplete_[% loop.index %]" value="[% dept.department.name %]" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button department" id="reviewer_select_[% loop.index %]" value="Select"/>
@@ -329,6 +333,14 @@ $("input[name='account_type']").change(function(){
   else {
     $('#id_ext_institution').hide();
   }
+});
+
+$('#plusRV').click(function(){
+  
+});
+
+$('#plusDM').click(function(){
+  
 });
 </script>
 
