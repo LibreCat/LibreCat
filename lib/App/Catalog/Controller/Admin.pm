@@ -35,10 +35,6 @@ sub new_person {
 sub search_person {
     my $p = shift;
 
-    utf8::decode( $p->{q} )
-        if $p->{q}
-        ;  # needed, otherwise search in mongodb does not work, u-flag problem
-
     my $query;
     if ( is_integer( $p->{q} ) ) {
         $query = { "_id" => $p->{q} };
@@ -79,11 +75,12 @@ sub edit_person {
 }
 
 sub delete_person {
-    my $id = shift;
-    return "Error" unless $id;
+    confess "Don't do that! Seriously.";
+    # my $id = shift;
+    # return "Error" unless $id;
 
-    h->authority('admin')->delete($id);
-    h->authority('admin')->commit;
+    # h->authority('admin')->delete($id);
+    # h->authority('admin')->commit;
 }
 
 sub import_person {

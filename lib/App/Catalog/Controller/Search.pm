@@ -7,8 +7,8 @@ use Exporter qw/import/;
 
 our @EXPORT = qw/search/;
 
-# handling the search, which is somehow central
-###############################################
+# handling the search
+#####################
 sub search {
     my $par = shift;
 
@@ -16,7 +16,7 @@ sub search {
     my $id = session->{personNumber};
     $p->{limit} = $par->{limit} ||= h->config->{store}->{default_searchpage_size};
     $p->{start} = $par->{start} ||= 0;
-    
+
     my $query;
 
     my $account = h->getAccount(session->{user});
@@ -44,13 +44,13 @@ sub search {
     else{
     	$query = "person=$id";
     }
-    
+
     if($par->{q}){
     	$query = $query ne "" ? $query . " AND " . $par->{q} : $par->{q};
     }
 
     my $personInfo = h->getPerson($id);
-    
+
     my $personStyle;
     my $personSorto;
     if ($personInfo->{stylePreference} and $personInfo->{stylePreference} =~ /(\w{1,})\.(\w{1,})/ ){
@@ -100,7 +100,7 @@ sub search {
     my $rawquery      = $query;
     my $doctypequery  = "";
     my $publyearquery = "";
-    
+
     if ( params->{submissionstatus} and ref params->{submissionstatus} ne 'ARRAY' ){
         $query        .= " AND submissionstatus=" . params->{submissionstatus};
         $doctypequery .= " AND submissionstatus=" . params->{submissionstatus};
@@ -147,7 +147,7 @@ sub search {
     $query = h->clean_cql($query) if $query ne "";
     $publyearquery = h->clean_cql($publyearquery) if $publyearquery ne "";
     $doctypequery = h->clean_cql($doctypequery) if $doctypequery ne "";
-    
+
     $p->{q}      = $query;
     $p->{facets} = $facets;
 
@@ -184,10 +184,10 @@ sub search {
     my $sruSort = "";
     $sruSort = $paramSruSort ||= $personSruSort ||= $standardSruSort ||= "";
     $p->{sort} = $sruSort;
-    
+
     my $hits = h->search_publication($p);
-    
-    foreach (qw(next_page last_page page previous_page pages_in_spread)) {	
+
+    foreach (qw(next_page last_page page previous_page pages_in_spread)) {
 		$hits->{$_} = $hits->$_;
 	}
 

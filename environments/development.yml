@@ -13,7 +13,7 @@ log_file: "pub_backend.log"
 log: "debug"
 
 # should Dancer consider warnings as critical errors?
-warnings: 1
+warnings: 0
 
 # should Dancer show a stacktrace when an error is caught?
 show_errors: 1
