@@ -1,1 +1,1 @@
-[% xprojects = h.config.lists.xprojects %][% FOREACH proj IN xprojects.keys.sort %]<a href="#" class="selectme" data-index="' + index + '" id="[% xprojects.$proj.oId %]">[% proj %]</a><br />[% END %]
+[% xprojects = h.get_list('project') %][% FOREACH proj IN xprojects.keys.sort %]<a href="#" class="selectme" data-index="' + index + '" id="[% xprojects.$proj.oId %]">[% proj %]</a><br />[% END %]

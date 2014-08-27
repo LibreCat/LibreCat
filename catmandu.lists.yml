@@ -974,7 +974,7 @@ department:
   "Zentrum für interdisziplinäre Forschung":
     oId: 10048
 
-xprojects:
+project:
   "2nd-Generation Open Access Infrastructure for Research in Europe":
     oId: P475
   "Adaptive Modular Architecture for Rich Motor Skills":
