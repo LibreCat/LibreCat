@@ -6,7 +6,7 @@ use Carp;
 use Exporter qw/import/;
 
 our @EXPORT    = qw/import_publication/;
-our @EXPORT_OK = qw/arxiv inspire crossref plos pubmed/;
+our @EXPORT_OK = qw/arxiv inspire crossref pmc/;
 
 my %dispatch = (
     arxiv    => \&arxiv,
