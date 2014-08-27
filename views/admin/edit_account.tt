@@ -28,7 +28,7 @@
         <div class="row innerrow">
         <div class="checkbox">
         <label>
-          <input type="radio" name="account_type" id="id_account_type" value="unibi" [% IF account_type == unibi || !account_type %]checked="checked"[% END %]>
+          <input type="radio" name="account_type" value="unibi" [% IF account_type == unibi || !account_type %]checked="checked"[% END %]>
           UniBi
         </label>
         </div>
@@ -38,18 +38,18 @@
         <div class="row innerrow">
         <div class="checkbox">
         <label>
-          <input type="radio" name="account_type" id="id_account_type" value="external" [% IF account_type == 'external' %]checked="checked"[% END %]>
+          <input type="radio" name="account_type" value="external" [% IF account_type == 'external' %]checked="checked"[% END %]>
           External
         </label>
         </div>
         </div>
       </div>
     </div>
-    <div class="row innerrow">
+    <div class="row innerrow" id="id_ext_institution" style="display:none;">
       <div class="col-md-2"><label for="id_ext_institution">External Institution</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-6">
-          <input type="text" name="ext_institution" id="id_ext_institution" value="[% ext_institution %]" class="form-control">
+          <input type="text" name="ext_institution" value="[% ext_institution %]" class="form-control">
         </div>
       </div>
     </div>
@@ -321,6 +321,15 @@ function selectButton(element){
 	});
 	modal.modal('show');
 }
+
+$("input[name='account_type']").change(function(){
+  if($("input[name='account_type']:checked").val() == "external"){
+    $('#id_ext_institution').show();
+  }
+  else {
+    $('#id_ext_institution').hide();
+  }
+});
 </script>
 
 <!-- END admin/edit_account.tt -->
