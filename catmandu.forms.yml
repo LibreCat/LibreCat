@@ -104,7 +104,7 @@ publicationTypes:
           label: "Department"
           placeholder: "Department"
         project: &project
-          label: "Projects"
+          label: "Project"
           placeholder: "Project"
         publisher: &publisher
           label: "Publisher"
