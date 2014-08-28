@@ -11,14 +11,14 @@ move_field('id','external_id.arxiv.id')
 move_field('summary','abstract.0.text')
 add_field('abstract.0.lang','eng')
 move_field('category.*.term','keyword.$append')
-replace_all('abstract.0.text','\s\|\d*-*','')
-replace_all('title','\s\|\d*-*','')
+trim('abstract.0.text')
+trim('title')
 
 # year
 replace_all('published','(^20[0-9][0-9]).*','$1')
 move_field('published','year')
 
-# this is a bad hack, write own fix method
+# authors
 do list (path => author)
 	remove_field('arxiv:affiliation')
 	copy_field('name','last_name')
