@@ -34,7 +34,7 @@ sub arxiv {
 
 sub inspire {
     my $id = shift;
-    my $pub = Catmandu->importer( 'inspire', fmt => 'marc', id => $id, )->first;
+    my $pub = Catmandu->importer( 'inspire', id => $id, )->first;
 
     return $pub;
 }
