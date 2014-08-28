@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-md-2">
-    <label for="id_title">
+    <label for="corp_ed">
       {% fields.basic_fields.corporate_editor.label %}{% fields.supplementary_fields.corporate_editor.label %}{% IF fields.basic_fields.corporate_editor.mandatory == "1" OR fields.supplementary_fields.corporate_editor.mandatory == "1" %}<span class="starMandatory">*</span>{% END %}{% IF fields.basic_fields.corporate_editor.multiple == "1" OR fields.supplementary_fields.corporate_editor.multiple == "1" %} <span class="glyphicon glyphicon-plus" id="plusCored"></span>{% END %}
     </label>
   </div>
