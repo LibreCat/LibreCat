@@ -102,7 +102,7 @@ publicationTypes:
             placeholder: "First Name"
           last_name:
             placeholder: "Last Name"
-          mandatory: 1
+          mandatory: 0
           multiple: 1
           label:
             "Editor" : "editor"

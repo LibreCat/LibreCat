@@ -33,15 +33,15 @@ $(document).keypress(function(e){
 $('.oneToTwo').click(function(){
   var check = 1;
   var oneauthor = 0;
-  $('.creator').children('div.form-group').each(function(){
-    if(!$(this).children('span').eq(0).children().eq(0).val()){
+  $('.creator').children('div').each(function(){
+    if($(this).children('span').eq(0).children().eq(0).hasClass("required") && !$(this).children('span').eq(0).children().eq(0).val()){
       $(this).children('span').eq(0).addClass("has-error");
     }
     else if($(this).children('span').eq(0).children().eq(0).val() && $(this).children('span').eq(0).hasClass("has-error")){
       $(this).children('span').eq(0).removeClass("has-error");
     }
     
-    if(!$(this).children('span').eq(1).children().eq(0).val()){
+    if($(this).children('span').eq(1).children().eq(0).hasClass("required") && !$(this).children('span').eq(1).children().eq(0).val()){
       $(this).children('span').eq(1).addClass("has-error");
     }
     else if($(this).children('span').eq(1).children().eq(0).val() && $(this).children('span').eq(1).hasClass("has-error")){
