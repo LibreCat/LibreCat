@@ -11,11 +11,11 @@
         <option value="{% fields.basic_fields.author.label.$creator %}"{% IF fields.basic_fields.author.label.$creator == "author" %} selected="selected"{% END %}>{% creator %}</option>
         {% END %}
         </select>
-        {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span ng-click="cloneField($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
+        {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
       </label>
     </div>
     <div class="col-md-10 creator">
-      <div class="form-group row innerrow">
+      <div class="row innerrow">
         <input type="hidden" id="orig_first_name_0" value="" />
         <input type="hidden" id="orig_last_name_0" value="" />
             
@@ -54,11 +54,11 @@
             [% END %]
           [% END %]
         </select>
-        {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
+        {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
       </label>
     </div>
     <div class="col-md-10 creator">
-      <div class="form-group row innerrow">
+      <div class="row innerrow">
         <input type="hidden" id="orig_first_name_[% loop.index %]" value="[% name.first_name %]" />
         <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% name.last_name %]" />
             

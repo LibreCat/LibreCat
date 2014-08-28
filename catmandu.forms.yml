@@ -31,6 +31,7 @@ field_order:
     - title
     - volume
     - author
+    - editor
     - department
     - project
     - publisher
@@ -85,20 +86,26 @@ publicationTypes:
         title: &title
           mandatory: 1
           label: "Title"
-        author: &author_editor_etc
+        author:
           first_name:
             placeholder: "First Name"
           last_name:
             placeholder: "Last Name"
-          title:
-            placeholder: "Title"
           mandatory: 1
           multiple: 1
           label:
             "Author" : "author"
-            "Editor" : "editor"
-            "Corp. Ed." : "corporateEditor"
             "Translator" : "translator"
+          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+        editor: &editor_only
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 1
+          multiple: 1
+          label:
+            "Editor" : "editor"
           pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
         department: &department
           label: "Department"
@@ -184,7 +191,19 @@ publicationTypes:
         title:
           label: "Chapter Title"
           mandatory: 1
-        author: *author_editor_etc
+        author: &author_editor_etc
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 1
+          multiple: 1
+          label:
+            "Author" : "author"
+            "Editor" : "editor"
+            "Corp. Ed." : "corporateEditor"
+            "Translator" : "translator"
+          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
         department: *department
         project: *project
         publication:
@@ -490,7 +509,8 @@ publicationTypes:
             placeholder: "Last Name"
           mandatory: 1
           multiple: 1
-          label: "Creator"
+          label:
+            "Creator" : "author"
         department: *department
         project: *project
         publisher:

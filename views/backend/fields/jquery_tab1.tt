@@ -250,7 +250,7 @@ $('button.cancel-button').click(function() {
 
 
 function angularSearch($scope, $compile) {
-  $scope.cloneField = function(myVal){
+  $scope.cloneAuthedtrans = function(myVal){
     var items = $('#authorEditorTranslator div.authorspan');
 	var index = items.index($('#authorEditorTranslator div.authorspan').last()) + 1;
 	$('#authorEditorTranslator').append($compile('[% INCLUDE backend/fields/subfields/author_more.tt %]')($scope));
@@ -262,6 +262,20 @@ function angularSearch($scope, $compile) {
 	{% END %}
 	if($(myVal).attr('data-mandatory') == "yes"){
 	  $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
+	}
+  };
+  $scope.cloneEdonly = function(myVal){
+    var items = $('#editorOnly div.authorspan');
+	var index = items.index($('#editorOnly div.authorspan').last()) + 1;
+	$('#editorOnly').append($compile('[% INCLUDE backend/fields/subfields/editor_more.tt %]')($scope));
+	var selected = $('#ed_0').val();
+	{% FOREACH creator IN fields.basic_fields.editor.label.keys.sort %}
+	  if(selected == "{% fields.basic_fields.editor.label.$creator %}"){
+	    $('#editorOnly div:last-child select').append('<option value="{% fields.basic_fields.editor.label.$creator %}">{% creator %}</option>');
+	  }
+	{% END %}
+	if($(myVal).attr('data-mandatory') == "yes"){
+	  $('#editorOnly span:last-child label').append('<span class="starMandatory">*</span>');
 	}
   };
 };
