@@ -32,6 +32,7 @@ field_order:
     - volume
     - author
     - editor
+    - corporate_editor
     - department
     - project
     - publisher
@@ -107,6 +108,10 @@ publicationTypes:
           label:
             "Editor" : "editor"
           pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+        corporate_editor: &corp_ed
+          mandatory: 0
+          multiple: 1
+          label: "Coroprate Editor"
         department: &department
           label: "Department"
           placeholder: "Department"

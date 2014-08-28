@@ -154,6 +154,13 @@ $('#plusLanguage').click(function(){
 });
 
 
+$('#plusCored').click(function(){
+  var items = $('#corp_ed div.form-group');
+  var index = items.index($('#corp_ed div.form-group').last()) + 1;
+  $('#corp_ed').append('[% INCLUDE backend/fields/subfields/corporate_editor.tt %]');
+});
+
+
 // minus
 $(document).on('click', '.group', function(){
   var index = $(this).parent().parent().index();

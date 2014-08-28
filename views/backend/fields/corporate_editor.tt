@@ -1,0 +1,38 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="id_title">
+      {% fields.basic_fields.corporate_editor.label %}{% fields.supplementary_fields.corporate_editor.label %}{% IF fields.basic_fields.corporate_editor.mandatory == "1" OR fields.supplementary_fields.corporate_editor.mandatory == "1" %}<span class="starMandatory">*</span>{% END %}{% IF fields.basic_fields.corporate_editor.multiple == "1" OR fields.supplementary_fields.corporate_editor.multiple == "1" %} <span class="glyphicon glyphicon-plus" id="plusCored"></span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10" id="corp_ed">
+    {% IF fields.basic_fields.corporate_editor.multiple == "1" OR fields.supplementary_fields.corporate_editor.multiple == "1" %}
+    [% IF !corporate_editor %]
+    {% END %}
+    <div class="form-group row innerrow">
+      <div class="col-md-9">
+        <input type="text" name="corporate_editor" id="id_corporate_editor_0" value="[% corporate_editor %]" class="form-control" placeholder="{% fields.basic_fields.corporate_editor.placeholder %}"/>
+      </div>
+      <div class="col-md-1">
+        <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('id_corporate_editor_0').value = '';"></div>
+      </div>
+    </div>
+    {% IF fields.basic_fields.corporate_editor.multiple == "1" OR fields.supplementary_fields.corporate_editor.multiple == "1" %}
+    [% ELSE %]
+    [% FOREACH cored IN corporate_editor %]
+    <div class="form-group row innerrow">
+      <div class="col-md-9">
+        <input type="text" name="corporate_editor" id="corporate_editor_[% loop.index %]" value="[% cored %]" class="form-control"/>
+      </div>
+      <div class="col-md-1">
+        [% IF loop.index == "0" %]
+        <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('corporate_editor_[% loop.index %]').value = '';"></div>
+        [% ELSE %]
+        <div class="glyphicon glyphicon-minus single"></div>
+        [% END %]
+      </div>
+    </div>
+    [% END %]
+    [% END %]
+    {% END %}
+  </div>
+</div>
