@@ -116,7 +116,7 @@ $('#authedtrans_0').change(function() {
 //});
 
 $('#plusDepartment').click(function(){
-  var items = $('#department div.form-group');
+  var items = $('#department div.innerrow');
   var index = items.index($('#department div.form-group').last()) + 1;
   $('#department').append('[% INCLUDE backend/fields/subfields/department.tt %]');
   $('#department').bind("click", function(){
@@ -132,7 +132,7 @@ $('#plusDepartment').click(function(){
 });
 
 $('#plusProject').click(function(){
-  var items = $('#project div.form-group');
+  var items = $('#project div.innerrow');
   var index = items.index($('#project div.form-group').last()) + 1;
   $('#project').append('[% INCLUDE backend/fields/subfields/project.tt %]');
   $('#project').bind("click", function(){

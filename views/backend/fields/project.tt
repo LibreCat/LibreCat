@@ -6,7 +6,7 @@
   </div>
   <div class="col-md-10" id="project">
     [% IF !project %]
-    <div class="form-group row innerrow">
+    <div class="row innerrow">
       <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
           
       <div class="form-group col-md-7">
@@ -36,7 +36,7 @@
     </div>
     [% ELSE %]
     [% FOREACH proj IN project %]
-    <div class="form-group row innerrow">
+    <div class="row innerrow">
       <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.oId %]" />
           
       <div class="form-group col-md-7">
