@@ -1,24 +1,27 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="keyword">
-      {% fields.supplementary_fields.keyword.label %}{% IF fields.supplementary_fields.keyword.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusKeyword"></span>
+      {% fields.basic_fields.keyword.label %}{% fields.supplementary_fields.keyword.label %}{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %}<span class="starMandatory">*</span>{% END %}{% IF fields.basic_fields.keyword.multiple OR fields.supplementary_fields.keyword.multiple %} <span class="glyphicon glyphicon-plus" id="plusKeyword"></span>{% END %}
     </label>
   </div>
   <div class="col-md-10" id="keyword">
+    {% IF fields.basic_fields.keyword.multiple OR fields.supplementary_fields.keyword.multiple %}
     [% IF !keyword %]
+    {% END %}
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <input type="text" name="keyword" id="keyword_0" value="" class="form-control" placeholder="{% fields.supplementary_fields.keyword.placeholder %}"/>
+        <input type="text" name="keyword" id="keyword_0" value="" class="form-control{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.keyword.placeholder %}{% fields.supplementary_fields.keyword.placeholder %}"{% IF fields.basic_fields.keyword.readonly OR fields.supplementary_fields.keyword.readonly %} readonly="readonly"{% END %}/>
       </div>
       <div class="col-md-1">
         <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('keyword_0').value = '';"></div>
       </div>
     </div>
+    {% IF fields.basic_fields.keyword.multiple OR fields.supplementary_fields.keyword.multiple %}
     [% ELSE %]
     [% FOREACH keyw IN keyword %]
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <input type="text" name="keyword" id="keyword_[% loop.index %]" value="[% keyw %]" class="form-control"/>
+        <input type="text" name="keyword" id="keyword_[% loop.index %]" value="[% keyw %]" class="form-control{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.keyword.readonly OR fields.supplementary_fields.keyword.readonly %} readonly="readonly"{% END %}/>
       </div>
       <div class="col-md-1">
         [% IF loop.index == "0" %]
@@ -30,5 +33,6 @@
     </div>
     [% END %]
     [% END %]
+    {% END %}
   </div>
 </div>

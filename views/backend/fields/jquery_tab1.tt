@@ -75,7 +75,7 @@ $('.oneToTwo').click(function(){
   var maxYear = currentYear + 5;
   if(year.length < 4 || !year.match(/^\d+$/) || year < 1930 || year > maxYear){
     check = 0;
-    $('#id_year').parents('div.form-group').addClass('has-error');
+    $('#id_year').parents('div.innerrow').addClass('has-error');
     $('#id_year').val("");
     $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
   }

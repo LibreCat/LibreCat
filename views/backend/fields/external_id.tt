@@ -2,12 +2,14 @@
   [% external_identifier_list = h.get_list('external_identifier') %]
   <div class="col-md-2">
     <label for="extId">
-      {% fields.supplementary_fields.external_id.label %}
-      {% IF fields.supplementary_fields.external_id.mandatory %}<span class="starMandatory">*</span>&nbsp;{% END %}{% IF fields.supplementary_fields.external_id.multiple %}<span ng-click="cloneExtid($event)" class="glyphicon glyphicon-plus"{% IF fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %} id="plusExtId"></span>{% END %}
+      {% fields.basic_fields.external_id.label %}{% fields.supplementary_fields.external_id.label %}
+      {% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}<span class="starMandatory">*</span>&nbsp;{% END %}{% IF fields.basic_fields.external_id.multiple OR fields.supplementary_fields.external_id.multiple %}<span ng-click="cloneExtid($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %} id="plusExtId"></span>{% END %}
     </label>
   </div>
   <div class="col-md-10" id="extId">
+    {% IF fields.basic_fields.external_id.multiple OR fields.supplementary_fields.external_id.multiple %}
     [% IF !external_id %]
+    {% END %}
     <div class="form-group row innerrow">
       <div class="col-md-3">
         <select class="form-control" name="external_id.{{source}}" ng-model="source">
@@ -18,12 +20,13 @@
         </select>
       </div>
       <div class="col-md-6">
-        <input type="text" value="" class="form-control" name="external_id.{{source}}.value" id="external_id_0" />
+        <input type="text" value="" class="form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF loop.first %] required[% END %]{% END %}" name="external_id.{{source}}.value" id="external_id_0"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonly="readonly"{% END %} />
       </div><!-- input-group -->
       <div class="col-md-1">
         <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('external_id_0').value = '';"></div>
       </div>
     </div>
+    {% IF fields.basic_fields.external_id.multiple OR fields.supplementary_fields.external_id.multiple %}
     [% ELSE %]
       [% FOREACH ext_id IN external_id %]
       <div class="form-group row innerrow">
@@ -36,7 +39,7 @@
           </select>
         </div>
         <div class="col-md-6">
-          <input type="text" value="[% ext_id.value %]" class="form-control" name="external_id.{{source}}.value" id="external_id_[% loop.index %]" />
+          <input type="text" value="[% ext_id.value %]" class="form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF loop.first %] required[% END %]{% END %}" name="external_id.{{source}}.value" id="external_id_[% loop.index %]"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonyl="readonly"{% END %} />
         </div><!-- input-group -->
         <div class="col-md-1">
           [% IF loop.index == "0" %]
@@ -48,5 +51,6 @@
       </div>
       [% END %]
     [% END %]
+    {% END %}
   </div>
 </div>

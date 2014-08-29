@@ -29,6 +29,7 @@ field_order:
   basic_fields:
     - doi
     - title
+    - publication
     - volume
     - author
     - editor
@@ -36,26 +37,51 @@ field_order:
     - department
     - project
     - publisher
-    - publication
     - place
+    - publication
+    - series_title
     - issue
+    - edition
+    - abstract
     - language
     - year
+    - ddc
+    - keyword
+    - extern
+    - alternative_title
+    - publication_status
     - conference_name
     - conference_location
     - conference_date
+    - page
+    - page_range
+    - publication_identifier
+    - external_id
+    - popular_science
+    - quality_controlled
+    - ubi_funded
+    - message
   file_upload:
     - external_file
     - dropzone_mainDoc
     - license
   supplementary_fields:
+    - doi
+    - title
     - publication
     - volume
-    - issue
+    - corporate_editor
+    - department
+    - project
+    - publisher
     - place
+    - publication
     - series_title
+    - issue
     - edition
     - abstract
+    - language
+    - year
     - ddc
     - keyword
     - extern
@@ -149,6 +175,7 @@ publicationTypes:
         keyword: &kw
           label: "Keywords"
           placeholder: "Keyword (for more keyword fields click +)"
+          multiple: 1
         volume: &vol
          label: "Volume"
         place: &place

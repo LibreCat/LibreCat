@@ -1,20 +1,22 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="project">
-      {% fields.basic_fields.project.label %}{% IF fields.basic_fields.project.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusProject"></span>
+      {% fields.basic_fields.project.label %}{% fields.supplementary_fields.project.label %}{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}<span class="starMandatory">*</span>{% END %}{% IF fields.basic_fields.project.multiple OR fields.supplementary_fields.project.multiple %} <span class="glyphicon glyphicon-plus" id="plusProject"></span>{% END %}
     </label>
   </div>
   <div class="col-md-10" id="project">
+    {% IF fields.basic_fields.project.multiple OR fields.supplementary_fields.project.multiple %}
     [% IF !project %]
+    {% END %}
     <div class="row innerrow">
       <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
           
       <div class="form-group col-md-7">
-        <input type="text" name="pj_projectName_0" class="form-control" placeholder="{% fields.basic_fields.project.placeholder %}" id="pj_autocomplete_0" value="" />
+        <input type="text" name="pj_projectName_0" class="form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_0" value=""{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
       </div>
         
       <div class="form-group col-md-2">
-        <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_0" value="Select"/>
+        <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_0" value="Select"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} disabled {% END %}/>
       </div>
         
       <div class="col-md-1">
@@ -34,17 +36,18 @@
       });
       </script>
     </div>
+    {% IF fields.basic_fields.project.multiple OR fields.supplementary_fields.project.multiple %}
     [% ELSE %]
     [% FOREACH proj IN project %]
     <div class="row innerrow">
       <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.oId %]" />
           
       <div class="form-group col-md-7">
-        <input type="text" name="pj_projectName_[% loop.index %]" class="form-control" placeholder="{% fields.basic_fields.project.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name.0.text || proj.name %]" />
+        <input type="text" name="pj_projectName_[% loop.index %]" class="form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name %]"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
       </div>
 
       <div class="form-group col-md-2">
-        <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_[% loop.index %]" value="Select"/>
+        <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_[% loop.index %]" value="Select"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} disabled {% END %}/>
       </div>
           
       <div class="col-md-1">
@@ -70,5 +73,6 @@
     </div>
     [% END %]
     [% END %]
+    {% END %}
   </div>
 </div>

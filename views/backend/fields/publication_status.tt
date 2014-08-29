@@ -1,13 +1,13 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="publication_status">
-      {% fields.supplementary_fields.publication_status.label %}{% IF fields.supplementary_fields.publication_status.mandatory %}<span class="starMandatory">*</span>{% END %}
+      {% fields.basic_fields.publication_status.label %}{% fields.supplementary_fields.publication_status.label %}{% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %}<span class="starMandatory">*</span>{% END %}
     </label>
   </div>
   <div class="col-md-10" id="publication_status">
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <select name="publication_status" class="form-control" id="select_publication_status">
+        <select name="publication_status" class="form-control{% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %} required{% END %}" id="select_publication_status">
           <option value=""[% IF !publication_status %] selected="selected"[% END %]>--- Select ---</option>
           [% FOREACH pi IN h.get_list('publication_status') %]
             <option value="[% pi.value %]" [% IF publication_status == pi.value %]selected="selected"[% END %]>[% pi.name %]</option>

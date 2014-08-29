@@ -2,7 +2,7 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="id_message">
-      {% fields.supplementary_fields.message.label %}
+      {% fields.basic_fields.message.label %}{% fields.supplementary_fields.message.label %}
     </label>
   </div>
   <div class="col-md-10">

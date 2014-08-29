@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="id_quality_controlled">
-      {% fields.supplementary_fields.quality_controlled.label %}
+      {% fields.basic_fields.quality_controlled.label %}{% fields.supplementary_fields.quality_controlled.label %}
     </label>
   </div>
   <div class="col-md-10">
