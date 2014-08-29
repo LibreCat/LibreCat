@@ -285,6 +285,16 @@ function angularSearch($scope, $compile) {
 	  $('#editorOnly span:last-child label').append('<span class="starMandatory">*</span>');
 	}
   };
+  $scope.cloneExtid = function(myVal){
+    var items = $('#extId div.form-group');
+	var index = items.index($('#extId div.form-group').last()) + 1;
+	$('#extId').append($compile('[% INCLUDE backend/fields/subfields/external_id.tt %]')($scope));
+  };
+  $scope.clonePublid = function(myVal){
+    var items = $('#publId div.form-group');
+	var index = items.index($('#publId div.form-group').last()) + 1;
+	$('#publId').append($compile('[% INCLUDE backend/fields/subfields/publication_identifier.tt %]')($scope));
+  };
 };
 
 
