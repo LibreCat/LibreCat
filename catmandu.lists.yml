@@ -95,50 +95,44 @@ language:
   "Other": "other" #221
 
 external_identifier:
-  - id: "isi"
+  isi:
     name: "Web of Science"
     prefix: "ISI:"
-  - id: "arxiv"
+  arxiv:
     name: "ArXiv"
     prefix: "arXiv:"
-  - id: "pmid"
+  pmid:
     name: "Europe PMC"
     prefix: "MEDLINE:"
-  - id: "inspire"
+  inspire:
     name: "Inspire"
     prefix: "INSPIRE:"
-  - id: "ahf"
+  ahf:
     name: "AHF"
     prefix: "AHF:"
-  - id: "scoap3"
+  scoap3:
     name: "SCOAP3"
     prefix: "SCOAP3:"
-  - id: "phillister"
+  phillister:
     name: "PhilLister"
     prefix: "PhilLister:"
-  - id: "opac"
+  opac:
     name: "OPAC"
     prefix: "UB-OPAC:"
-  - id: "fp7"
+  fp7:
     name: "FP7"
     prefix: "fp7/"
-  - id: "fp6"
+  fp6:
     name: "FP6"
     prefix: "fp6/"
 
 publication_identifier:
-  - id: "issn"
-    name: "ISSN"
-  - id: "eissn"
-    name: "eISSN"
-  - id: "isbn"
-    name: "ISBN"
-  - id: "eisbn"
-    name: "eISBN"
-  - id: "urn"
-    name: "URN"
-  - id: "other"
-    name: "Other Identifier"
+  issn: "ISSN"
+  eissn: "eISSN"
+  isbn: "ISBN"
+  eisbn: "eISBN"
+  urn: "URN"
+  other: "Other Identifier"
 
 publication_status:
   - name: "Published"

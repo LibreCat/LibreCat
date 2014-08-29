@@ -116,7 +116,6 @@ author:
 	- 
 		first_name: "Gerhard"
 		last_name: "Sagerer"
-		title: "Prof. Dr."
 		full_name: "Sagerer, Gerhard"
 		id: "123456"
 first_author: "Lastname, Firstname"
@@ -178,24 +177,11 @@ project:
 status: public|private|submitted|returned
 publication_status: inPress|unpublished|submitted|published
 publication_identifier:
-	-
-	  id: issn
-	  value: "1234"
-	-
-	  id: issn
-	  value: "23445"
-	-
-	  id: eissn
-	  value: "see issn"
-	-
-	  id: isbn
-	  value: "see issn"
-	-
-	  id: eisbn
-	  value: "see issn"
-	-
-	  id: urn
-	  value: "urn:nbn:de...."
+	issn: ["1234", "23445"]
+	eissn: ["see issn"]
+	isbn: ["see issn"]
+	eisbn: ["see issn"]
+	urn: "urn:nbn:de...."
 publisher: "Springer"
 place: "Bielefeld"
 publication: "Journal of genetics"
@@ -234,50 +220,38 @@ email: "me@example.com"
 defense_date: "2014-04-23"
 link: ["www.example.com", "www.example2.com"]
 external_id:
-    - 
-      id: "isi"
+    isi:
       value: asldkf
       prefix_id: "ISI:asldkf"
-    -
-	  id: "arxiv"
+    arxiv:
 	  value: sdfdsf
 	  prefix_id: "arXiv:sdfdsf"
-	-
-	  id: "pmid"
+	pmid:
 	  value: dfsdf
 	  prefix_id: "MEDLINE:dfsdf"
-	-
-	  id: "inspire"
+	inspire:
 	  value: asldfjasl
 	  prefix_id: "INSPIRE:asldfjasl"
-	-
-	  id: "ahf"
+	ahf:
 	  value: sksks
 	  prefix_id: "AHF:sksks"
-	-
-	  id: "scoap3"
+	scoap3:
 	  value: sklslsdj
 	  prefix_id: "SCOAP3:sklslsdj"
-	-
-	  id: "phillister"
+	phillister:
 	  value: sdklfjdslf
 	  prefix_id: "PhilLister:sdklfjdslf"
-	-
-	  id: "opac"
+	opac:
 	  value: lsdfj
 	  prefix_id: "UB-OPAC:lsdfj"
-	-
-	  id: "fp7"
+	fp7:
 	  value: fp7/sdfkls
 	  prefix_id: fp7/sdfkls
-	-
-	  id: "fp6"
+	fp6:
 	  value: fp6/sdlfkjsd
 	  prefix_id: fp6/sdlfkjsd
-	-
-	  genbank: []
-	-
-	  nasc: []
+	genbank: []
+	nasc: []
 message: "Just a message"
 ubi_funded: 0|1
 ec_funded: 0|1
