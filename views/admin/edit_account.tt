@@ -318,7 +318,6 @@ function selectButton(element){
 	$('.selectme').bind("click", function(){
 		var id = $(this).attr('id');
 	    var name = $(this).html();
-	    alert(index);
 	    //var index = $(this).attr('data-index');
 	    $('#' + type_short + '_idautocomplete_' + index).val(id);
 	    $('#' + type_short + '_autocomplete_' + index).val(name);
