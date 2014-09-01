@@ -36,7 +36,7 @@ prefix '/admin' => sub {
         my $p = params;
         $p = h->nested_params($p);
 
-        #update_person($p);
+        update_person($p);
         template 'admin/account';
     };
 

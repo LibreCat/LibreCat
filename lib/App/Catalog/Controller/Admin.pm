@@ -2,12 +2,14 @@ package App::Catalog::Controller::Admin;
 
 use Catmandu::Sane;
 use Catmandu;
+use Catmandu::Fix;
 use Catmandu::Util qw(:is);
 use Furl;
 use Hash::Merge qw/merge/;
 use Carp;
 use Exporter qw/import/;
 use App::Catalog::Helper;
+use Data::Dumper;
 
 our @EXPORT
     = qw/new_person search_person update_person edit_person delete_person import_person/;
@@ -61,12 +63,19 @@ sub update_person {
     my $data = shift;
     croak "Error: No _id specified" unless $data->{_id};
 
-    my $old = h->authority('admin')->get( $data->{_id} );
-    my $merger = Hash::Merge->new();           #left precedence by default!
-    my $new = $merger->merge( $data, $old );
+    my $old = h->authority_admin->get( $data->{_id} );
 
-    h->authority('admin')->add($new);
-    h->authority('admin')->commit;
+    my $fixer = Catmandu::Fix->new(fixes => [
+        'unless exists("account_status") add_field("account_status","inactive") end',
+        'unless exists("super_admin") add_field("super_admin","0") end',
+        'if any_match("data_manager.0.id", "^$") remove_field("data_manager") end',
+        'if any_match("reviewer.0.id", "^$") remove_field("reviewer") end',
+        ]);
+
+    $data->{full_name} = $data->{last_name} . ", " . $data->{first_name};
+    $fixer->fix($data);
+    h->authority_admin->add($data);
+    h->authority_admin->commit;
 }
 
 sub edit_person {

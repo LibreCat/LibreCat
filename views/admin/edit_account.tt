@@ -28,7 +28,7 @@
         <div class="row innerrow">
         <div class="checkbox">
         <label>
-          <input type="radio" name="account_type" value="unibi" [% IF account_type == unibi || !account_type %]checked="checked"[% END %]>
+          <input type="radio" name="account_type" value="unibi" [% IF account_type == 'unibi' || !account_type %]checked="checked"[% END %]>
           UniBi
         </label>
         </div>
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="row innerrow" id="id_ext_institution" style="display:none;">
+    <div class="row innerrow" id="id_ext_institution" [% IF account_type != 'external' %]style="display:none;"[% END %]>
       <div class="col-md-2"><label for="id_ext_institution">External Institution</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-6">
@@ -73,7 +73,7 @@
       <div class="col-md-2"><label for="id_email">Email</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-6">
-          <input type="email" name="email" id="id_email" value="[% bis.email %]" class="form-control">
+          <input type="email" name="bis.email" id="id_email" value="[% bis.email %]" class="form-control">
         </div>
       </div>
     </div>
@@ -104,7 +104,7 @@
       <div class="col-md-2"><label for="id_super_admin">Library Admin</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-1">
-          <input type="checkbox" name="super_admin" id="id_super_admin" value="admin" [% IF super_admin %]checked="checked"[% END %]>
+          <input type="checkbox" name="super_admin" id="id_super_admin" value="admin" [% IF super_admin  %]checked="checked"[% END %]>
         </div>
       </div>
     </div>
@@ -143,9 +143,9 @@
       [% ELSE %]
       [% FOREACH dept IN data_manager %]
         <div class="row innerrow">
-          <input type="hidden" name="data_manager.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.department.id %]" />
+          <input type="hidden" name="data_manager.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" name="data_manager.[% loop.index %].name" id="dp_autocomplete_[% loop.index %]" value="[% dept.department.name %]" />
+            <input type="text" class="form-control" name="data_manager.[% loop.index %].name" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button data_manager" id="data_manager_select_[% loop.index %]" value="Select"/>
@@ -224,9 +224,9 @@
       [% ELSE %]
       [% FOREACH dept IN reviewer %]
         <div class="row innerrow">
-          <input type="hidden" name="reviewer.[% loop.index %].id" id="rv_idautocomplete_[% loop.index %]" value="[% dept.department.id %]" />
+          <input type="hidden" name="reviewer.[% loop.index %].id" id="rv_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" name="reviewer.[% loop.index %].name" id="rv_autocomplete_[% loop.index %]" value="[% dept.department.name %]" />
+            <input type="text" class="form-control" name="reviewer.[% loop.index %].name" id="rv_autocomplete_[% loop.index %]" value="[% dept.name %]" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button reviewer" id="reviewer_select_[% loop.index %]" value="Select"/>
@@ -318,7 +318,6 @@ function selectButton(element){
 	$('.selectme').bind("click", function(){
 		var id = $(this).attr('id');
 	    var name = $(this).html();
-	    alert(index);
 	    //var index = $(this).attr('data-index');
 	    $('#' + type_short + '_idautocomplete_' + index).val(id);
 	    $('#' + type_short + '_autocomplete_' + index).val(name);
