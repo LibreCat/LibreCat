@@ -1,13 +1,13 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="id_title">
-      {% fields.basic_fields.title.label %}{% IF fields.basic_fields.title.mandatory == "1" %}<span class="starMandatory">*</span>{% END %}
+      {% fields.basic_fields.title.label %}{% fields.supplementary_fields.title.label %}{% IF fields.basic_fields.title.mandatory OR fields.supplementary_fields.title.mandatory %}<span class="starMandatory">*</span>{% END %}
     </label>
   </div>
   <div class="col-md-10">
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <input type="text" name="title" id="id_title" value="[% title %]" placeholder="{% fields.basic_fields.title.placeholder %}" class="form-control{% IF fields.basic_fields.title.mandatory == "1" %} required{% END %}">
+        <input type="text" name="title" id="id_title" value="[% title %]" placeholder="{% fields.basic_fields.title.placeholder %}{% fields.supplementary_fields.title.placeholder %}" class="form-control{% IF fields.basic_fields.title.mandatory OR fields.supplementary_fields.title.mandatory %} required{% END %}"{% IF fields.basic_fields.title.readonly OR fields.supplementary_fields.title.readonly %} readonly="readonly"{% END %}>
       </div>
     </div>
   </div>

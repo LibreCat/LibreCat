@@ -29,31 +29,59 @@ field_order:
   basic_fields:
     - doi
     - title
+    - publication
     - volume
     - author
+    - editor
+    - corporate_editor
     - department
     - project
     - publisher
-    - publication
     - place
+    - publication
+    - series_title
     - issue
+    - edition
+    - abstract
     - language
     - year
+    - ddc
+    - keyword
+    - extern
+    - alternative_title
+    - publication_status
     - conference_name
     - conference_location
     - conference_date
+    - page
+    - page_range
+    - publication_identifier
+    - external_id
+    - popular_science
+    - quality_controlled
+    - ubi_funded
+    - message
   file_upload:
     - external_file
     - dropzone_mainDoc
     - license
   supplementary_fields:
+    - doi
+    - title
     - publication
     - volume
-    - issue
+    - corporate_editor
+    - department
+    - project
+    - publisher
     - place
+    - publication
     - series_title
+    - issue
     - edition
     - abstract
+    - language
+    - year
     - ddc
     - keyword
     - extern
@@ -85,26 +113,36 @@ publicationTypes:
         title: &title
           mandatory: 1
           label: "Title"
-        author: &author_editor_etc
+        author:
           first_name:
             placeholder: "First Name"
           last_name:
             placeholder: "Last Name"
-          title:
-            placeholder: "Title"
           mandatory: 1
           multiple: 1
           label:
             "Author" : "author"
-            "Editor" : "editor"
-            "Corp. Ed." : "corporateEditor"
             "Translator" : "translator"
           pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+        editor: &editor_only
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 0
+          multiple: 1
+          label:
+            "Editor" : "editor"
+          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+        corporate_editor: &corp_ed
+          mandatory: 0
+          multiple: 1
+          label: "Coroprate Editor"
         department: &department
           label: "Department"
           placeholder: "Department"
         project: &project
-          label: "Projects"
+          label: "Project"
           placeholder: "Project"
         publisher: &publisher
           label: "Publisher"
@@ -137,6 +175,7 @@ publicationTypes:
         keyword: &kw
           label: "Keywords"
           placeholder: "Keyword (for more keyword fields click +)"
+          multiple: 1
         volume: &vol
          label: "Volume"
         place: &place
@@ -184,7 +223,19 @@ publicationTypes:
         title:
           label: "Chapter Title"
           mandatory: 1
-        author: *author_editor_etc
+        author: &author_editor_etc
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 1
+          multiple: 1
+          label:
+            "Author" : "author"
+            "Editor" : "editor"
+            "Corp. Ed." : "corporateEditor"
+            "Translator" : "translator"
+          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
         department: *department
         project: *project
         publication:
@@ -490,7 +541,8 @@ publicationTypes:
             placeholder: "Last Name"
           mandatory: 1
           multiple: 1
-          label: "Creator"
+          label:
+            "Creator" : "author"
         department: *department
         project: *project
         publisher:

@@ -12,10 +12,17 @@ prefix '/record' => sub {
         my $type = params->{type} ||= '';
 
         if ($type) {
+        	my $data;
             my $id   = new_publication();
+            $data->{_id} = $id;
             my $user = h->getPerson( session->{personNumber} );
-            template "backend/forms/$type",
-                { _id => $id, department => $user->{department} };
+            $data->{department} = $user->{department};
+            
+            if($type eq "researchData"){
+            	$data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
+            }
+            
+            template "backend/forms/$type", $data;
         }
         else {
             template 'add_new';
@@ -121,7 +128,7 @@ get '/upload' => sub {
 
 post '/upload' => sub {
     my $file    = request->upload('file');
-    my $id      = params->{recordId};
+    my $id      = params->{_id};
     my $file_id = new_publication();
     my $path    = path( h->config->{upload_dir}, "$id", $file->{filename} );
     my $dir     = h->config->{upload_dir} . "/" . $id;

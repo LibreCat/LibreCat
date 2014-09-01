@@ -33,15 +33,15 @@ $(document).keypress(function(e){
 $('.oneToTwo').click(function(){
   var check = 1;
   var oneauthor = 0;
-  $('.creator').children('div.form-group').each(function(){
-    if(!$(this).children('span').eq(0).children().eq(0).val()){
+  $('.creator').children('div').each(function(){
+    if($(this).children('span').eq(0).children().eq(0).hasClass("required") && !$(this).children('span').eq(0).children().eq(0).val()){
       $(this).children('span').eq(0).addClass("has-error");
     }
     else if($(this).children('span').eq(0).children().eq(0).val() && $(this).children('span').eq(0).hasClass("has-error")){
       $(this).children('span').eq(0).removeClass("has-error");
     }
     
-    if(!$(this).children('span').eq(1).children().eq(0).val()){
+    if($(this).children('span').eq(1).children().eq(0).hasClass("required") && !$(this).children('span').eq(1).children().eq(0).val()){
       $(this).children('span').eq(1).addClass("has-error");
     }
     else if($(this).children('span').eq(1).children().eq(0).val() && $(this).children('span').eq(1).hasClass("has-error")){
@@ -75,7 +75,7 @@ $('.oneToTwo').click(function(){
   var maxYear = currentYear + 5;
   if(year.length < 4 || !year.match(/^\d+$/) || year < 1930 || year > maxYear){
     check = 0;
-    $('#id_year').parents('div.form-group').addClass('has-error');
+    $('#id_year').parents('div.innerrow').addClass('has-error');
     $('#id_year').val("");
     $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
   }
@@ -116,7 +116,7 @@ $('#authedtrans_0').change(function() {
 //});
 
 $('#plusDepartment').click(function(){
-  var items = $('#department div.form-group');
+  var items = $('#department div.innerrow');
   var index = items.index($('#department div.form-group').last()) + 1;
   $('#department').append('[% INCLUDE backend/fields/subfields/department.tt %]');
   $('#department').bind("click", function(){
@@ -132,7 +132,7 @@ $('#plusDepartment').click(function(){
 });
 
 $('#plusProject').click(function(){
-  var items = $('#project div.form-group');
+  var items = $('#project div.innerrow');
   var index = items.index($('#project div.form-group').last()) + 1;
   $('#project').append('[% INCLUDE backend/fields/subfields/project.tt %]');
   $('#project').bind("click", function(){
@@ -151,6 +151,13 @@ $('#plusLanguage').click(function(){
   var items = $('#language div.form-group');
   var index = items.index($('#language div.form-group').last()) + 1;
   $('#language').append('[% INCLUDE backend/fields/subfields/language.tt %]');
+});
+
+
+$('#plusCored').click(function(){
+  var items = $('#corp_ed div.form-group');
+  var index = items.index($('#corp_ed div.form-group').last()) + 1;
+  $('#corp_ed').append('[% INCLUDE backend/fields/subfields/corporate_editor.tt %]');
 });
 
 
@@ -250,7 +257,7 @@ $('button.cancel-button').click(function() {
 
 
 function angularSearch($scope, $compile) {
-  $scope.cloneField = function(myVal){
+  $scope.cloneAuthedtrans = function(myVal){
     var items = $('#authorEditorTranslator div.authorspan');
 	var index = items.index($('#authorEditorTranslator div.authorspan').last()) + 1;
 	$('#authorEditorTranslator').append($compile('[% INCLUDE backend/fields/subfields/author_more.tt %]')($scope));
@@ -263,6 +270,30 @@ function angularSearch($scope, $compile) {
 	if($(myVal).attr('data-mandatory') == "yes"){
 	  $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
 	}
+  };
+  $scope.cloneEdonly = function(myVal){
+    var items = $('#editorOnly div.authorspan');
+	var index = items.index($('#editorOnly div.authorspan').last()) + 1;
+	$('#editorOnly').append($compile('[% INCLUDE backend/fields/subfields/editor_more.tt %]')($scope));
+	var selected = $('#ed_0').val();
+	{% FOREACH creator IN fields.basic_fields.editor.label.keys.sort %}
+	  if(selected == "{% fields.basic_fields.editor.label.$creator %}"){
+	    $('#editorOnly div:last-child select').append('<option value="{% fields.basic_fields.editor.label.$creator %}">{% creator %}</option>');
+	  }
+	{% END %}
+	if($(myVal).attr('data-mandatory') == "yes"){
+	  $('#editorOnly span:last-child label').append('<span class="starMandatory">*</span>');
+	}
+  };
+  $scope.cloneExtid = function(myVal){
+    var items = $('#extId div.form-group');
+	var index = items.index($('#extId div.form-group').last()) + 1;
+	$('#extId').append($compile('[% INCLUDE backend/fields/subfields/external_id.tt %]')($scope));
+  };
+  $scope.clonePublid = function(myVal){
+    var items = $('#publId div.form-group');
+	var index = items.index($('#publId div.form-group').last()) + 1;
+	$('#publId').append($compile('[% INCLUDE backend/fields/subfields/publication_identifier.tt %]')($scope));
   };
 };
 

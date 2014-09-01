@@ -1,41 +1,44 @@
-<div class="row innerrow" ng-app>
+<div class="row innerrow" ng-controller="angularSearch">
+  [% publication_identifier_list = h.get_list('publication_identifier') %]
   <div class="col-md-2">
-    <label for="id_external_id">
-      {% fields.supplementary_fields.publication_identifier.label %}
-      {% IF fields.supplementary_fields.publication_identifier.mandatory %}<span class="starMandatory">*</span>&nbsp;{% END %}{% IF fields.supplementary_fields.publication_identifier.multiple %}<span class="glyphicon glyphicon-plus"{% IF fields.supplementary_fields.publication_identifier.mandatory %} data-mandatory="yes"{% END %} id="plusPublId"></span>{% END %}
+    <label for="publId">
+      {% fields.basic_fields.publication_identifier.label %}{% fields.supplementary_fields.publication_identifier.label %}{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} <span class="starMandatory">*</span>&nbsp;{% END %}{% IF fields.basic_fields.publication_identifier.multiple OR fields.supplementary_fields.publication_identifier.multiple %}<span ng-click="clonePublid($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} data-mandatory="yes"{% END %} id="plusPublId"></span>{% END %}
     </label>
   </div>
   <div class="col-md-10" id="publId">
+    {% IF fields.basic_fields.publication_identifier.multiple OR fields.supplementary_fields.publication_identifier.multiple %}
     [% IF !publication_identifier %]
+    {% END %}
     <div class="form-group row innerrow">
       <div class="col-md-3">
-        <select class="form-control" name="publication_identifier.0.id" >
+        <select class="form-control" ng-model="source_0">
           <option value="">-- Select --</option>
-          [% FOREACH pubid IN h.get_list('publication_identifier') %]
-          <option value="[% pubid.id %]">[% pubid.name %]</option>
+          [% FOREACH pubid IN publication_identifier_list.keys.sort %]
+          <option value="[% pubid %]">[% publication_identifier_list.$pubid %]</option>
           [% END %]
         </select>
       </div>
       <div class="col-md-6">
-        <input type="text" value="" class="form-control" name="publication_identifier.0.id" id="publication_id_0" />
+        <input type="text" value="" class="form-control{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} required{% END %}" name="publication_identifier.{{source_0}}[]" id="publication_id_0" {% IF fields.basic_fields.publication_identifier.readonly OR fields.supplementary_fields.publication_identifier.readonly %} readonly="readonly"{% END %}/>
       </div><!-- input-group -->
       <div class="col-md-1">
         <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('publication_id_0').value = '';"></div>
       </div>
     </div>
+    {% IF fields.basic_fields.publication_identifier.multiple OR fields.supplementary_fields.publication_identifier.multiple %}
     [% ELSE %]
       [% FOREACH pub_id IN publication_identifier %]
       <div class="form-group row innerrow">
         <div class="col-md-3">
-          <select class="form-control" name="publication_identifier.[% loop.index %].id">
+          <select class="form-control" ng-model="source_[% loop.index %]">
             <option value="">-- Select --</option>
-            [% FOREACH pubid IN h.get_list('publication_identifier') %]
-            <option value="[% pubid.id %]"[% IF pubid.id == pub_id.id %] selected="selected"[% END %]>[% pubid.name %]</option>
+            [% FOREACH pubid IN publication_identifier_list.keys.sort %]
+            <option value="[% pubid %]"[% IF pubid == pub_id.id %] selected="selected"[% END %]>[% publication_identifier_list.$pubid %]</option>
             [% END %]
           </select>
         </div>
         <div class="col-md-6">
-          <input type="text" value="[% pub_id.value %]" class="form-control" name="publication_identifier.[% loop.index %].id" id="publication_id_[% loop.index %]" />
+          <input type="text" value="[% pub_id.value %]" class="form-control{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %}[% IF loop.first %] required[% END %]{% END %}" name="publication_identifier.{{source_[% loop.index %]}}[]" id="publication_id_[% loop.index %]" {% IF fields.basic_fields.publication_identifier.readonly OR fields.supplementary_fields.publication_identifier.readonly %} readonly="readonly"{% END %}/>
         </div><!-- input-group -->
         <div class="col-md-1">
           [% IF loop.index == "0" %]
@@ -47,5 +50,6 @@
       </div>
       [% END %]
     [% END %]
+    {% END %}
   </div>
 </div>
