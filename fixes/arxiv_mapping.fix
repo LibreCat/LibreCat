@@ -1,24 +1,34 @@
 # mapping data from ArXiv to the local repository
+
+# default type
 add_field('type','preprint')
 replace_all('id','http://arxiv.org/abs/(.*)v[0-9]','$1')
 copy_field('id','publication')
 prepend('publication','arXiv:')
 move_field('id','external_id.arxiv.id')
+
+# abstract, keywords
 move_field('summary','abstract.0.text')
 add_field('abstract.0.lang','eng')
-#replace_all('abstract.0.text','^\W*','')
-#replace_all('title','','')
+move_field('category.*.term','keyword.$append')
+trim('abstract.0.text')
+trim('title')
+
+# year
 replace_all('published','(^20[0-9][0-9]).*','$1')
 move_field('published','year')
-# this is a bad hack, write own fix method
+
+# authors
 do list (path => author)
 	remove_field('arxiv:affiliation')
 	copy_field('name','last_name')
 	replace_all('last_name','.*\s(\S+)$','$1')
 	copy_field('name', 'first_name')
 	replace_all('first_name', '(.*)\s(\S+)$','$1')
-	move_field('name','full_name')
+	remove_field('name');
 end
+
+# maybe journal article with doi
 if exists ('arxiv:journal_ref')
 	set_field('type','journal_article')
 	move_field('arxiv:journal_ref.content', 'publication')
@@ -26,7 +36,8 @@ end
 remove_field('arxiv:journal_ref')
 move_field('arxiv:doi.content','doi')
 remove_field('arxiv:doi')
-move_field('category.*.term','keyword.$append')
+
+# cleaning record
 remove_field('arxiv:comment')
 remove_field('arxiv:primary_category')
 remove_field('category')

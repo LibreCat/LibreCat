@@ -6,7 +6,7 @@ use Carp;
 use Exporter qw/import/;
 
 our @EXPORT    = qw/import_publication/;
-our @EXPORT_OK = qw/arxiv inspire crossref plos pubmed/;
+our @EXPORT_OK = qw/arxiv inspire crossref pmc/;
 
 my %dispatch = (
     arxiv    => \&arxiv,
@@ -34,7 +34,7 @@ sub arxiv {
 
 sub inspire {
     my $id = shift;
-    my $pub = Catmandu->importer( 'inspire', query => $id, )->first;
+    my $pub = Catmandu->importer( 'inspire', id => $id, )->first;
 
     return $pub;
 }
@@ -48,7 +48,7 @@ sub crossref {
 
 sub pmc {
     my $id = shift;
-    my $pub = Catmandu->importer( 'pubmed', term => $id, )->first;
+    my $pub = Catmandu->importer( 'pmc', query => $id, )->first;
 
     return $pub;
 }

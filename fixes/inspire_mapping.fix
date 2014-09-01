@@ -2,21 +2,38 @@
 
 move_field("record","rec")
 move_field("rec.titles.title","rec.title")
+trim("rec.title")
 move_field("rec.titles.secondary-title","rec.publication")
 remove_field("rec.titles")
 move_field("rec.dates.year","rec.year")
 remove_field("rec.dates")
+
+# abstract, keywords
 if exists("rec.abstract")
 	move_field("rec.abstract","rec.abstract.0.text")
+    trim("rec.abstract.0.text")
 	set_field("rec.abstract.0.lang","eng")
 end
+move_field("rec.keywords.keyword","keyword")
+
 move_field("rec.electronic-resource-num","rec.doi")
-do list (path => "rec.contributors.authors.author")
-	move_field("*","rec.tmpauthor.name")
-end
+if_any_match("rec.number","\d+|\w+");
+    move_field("rec.number","rec.issue")
+end();
+remove_field("rec.number")
+split_field("rec.pages","-")
+move_field("rec.pages.0","rec.page.start")
+move_field("rec.pages.0","rec.page.end")
+remove_field("rec.pages")
 
-#if exists("rec.pages")
-#	copy_field"rec.
+# author
+#move_field("rec.contributors.authors.author", "author.full_name")
+copy_field("rec.contributors.authors.author.$first", "author1.")
+#remove_field("rec.contributors")
+
+#retain_field("rec")
+#move_field("rec","");
+#split_field("contributors.authors.author.*",", ")
+#do list(path => "contributors.authors.author")
+#
 #end
-
-retain_field("rec")
