@@ -78,13 +78,20 @@
 [% FOREACH p IN hits %]
 <div class="row innerrow">
   <div class="col-md-6">
-    <i> <span class="glyphicon glyphicon-pencil"></span></i> <a href="/myPUB/admin/account/edit/[% p._id %]">[% p.full_name %]</a> ([% p._id %]) [% p.account_status %]<br />
+    <i> <span class="glyphicon glyphicon-pencil"></span></i> <a href="/myPUB/admin/account/edit/[% p._id %]">[% p.full_name %]</a>
+    <span [% IF p.account_status == 'active' %]class="label label-success"
+    [% ELSE %]class="label label-danger"[% END %]>
+    [% p.account_status || 'inactive' %]</span><br />
+    <div style="margin-left:10px;"><span class="text-muted">BIS-ID: [% p._id %]</span></div>
     <div style="margin-left:10px;">
       <span class="text-muted">[% p.department.0.name %]</span>
     </div>
   </div>
 </div>
 [% END %]
+
+[% INCLUDE pagination.tt %]
+
 </div>
 </div>
 [% END %]
