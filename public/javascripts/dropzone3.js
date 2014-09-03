@@ -559,7 +559,17 @@ require.register("dropzone/lib/dropzone.js", function(exports, require, module){
       },
       removedfile: function(file) {
         var _ref;
-        return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+        _ref = file.previewElement;
+        if(_ref != null){
+        	var progressbar = document.getElementById(file.name + "_progress");
+            var progresselement = progressbar.parentNode.parentNode.parentNode;
+            progresselement.parentNode.removeChild(progresselement);
+        	return _ref.parentNode.removeChild(file.previewElement);
+        }
+        else {
+        	return void 0;
+        }
+        //return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
       },
       thumbnail: function(file, dataUrl) {
         var thumbnailElement;
@@ -571,7 +581,7 @@ require.register("dropzone/lib/dropzone.js", function(exports, require, module){
       },
       error: function(file, message) {
     	//var prevClass = file.previewElement.querySelector("[data-dz-name]").parentNode.parentNode.parentNode.parentNode;
-    	file.previewElement.className = file.previewElement.className + ' alert alert-error';
+    	file.previewElement.className = file.previewElement.className + ' alert alert-danger';
     	//file.previewElement.querySelector("[data-dz-size]").parentNode.removeChild(file.previewElement.querySelector("[data-dz-size]"));
     	return file.previewElement.classList.add("dz-error");
         //return file.previewElement.querySelector("[data-dz-errormessage]").innerHTML = "<b>" + message + "</b>";

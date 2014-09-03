@@ -9,6 +9,7 @@
     var myDropzone = new Dropzone("div#uploadFiles", {
       params: {_id: "[% _id %]", itype: "file", accessLevel: "openAccess", cancel: "", accept: 1, finalSubmit: "Accept and Submit"},
       createImageThumbnails: false,
+      addRemoveLinks: true,
     });
     myDropzone.on("addedfile", function(file){
       var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width: 0%;text-align:left;\"><span style=\"padding-left:10px;\">" + file.name + "</span></div></div></div>");
@@ -95,18 +96,18 @@
       }
     });
     myDropzone.on("error", function(file,response){
-      var resp = JSON.parse(response);
+      //var resp = JSON.parse(response);
       var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded text-muted\">Filename:</div><div class=\"col-md-5\"><b>File not uploaded!</b></div></div>");
       file.previewElement.appendChild(tagsRow);
       
-      var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\">" + file.name + "</div><div class=\"col-md-5\">" + resp.error + "</div></div>");
+      var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 padded\">" + file.name + "</div><div class=\"col-md-5\">" + response + "</div></div>");
       file.previewElement.appendChild(fileName);
       
-      var removeLink = Dropzone.createElement("<div class=\"corner_up\" id=\"cordown_" + resp.file_id + "\"><a href=\"#\"><i class=\"icon-remove\"></i></a></div>");
-      removeLink.addEventListener("click", function(e) {
-        this.parentNode.parentNode.removeChild(this.parentNode);
-      });
-      file.previewElement.appendChild(removeLink);
+      //var removeLink = Dropzone.createElement("<div class=\"corner_up\" id=\"cordown_" + resp.file_id + "\"><a href=\"#\"><i class=\"icon-remove\"></i></a></div>");
+      //removeLink.addEventListener("click", function(e) {
+      //  this.parentNode.parentNode.removeChild(this.parentNode);
+      //});
+      //file.previewElement.appendChild(removeLink);
     });
   });
   </script>
