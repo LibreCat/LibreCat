@@ -13,7 +13,7 @@
 
   <form action="/myPUB/admin/account/update" method="POST">
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_id">ID</label></div>
+      <div class="col-md-2"><label for="id_id">ID<span class="starMandatory">*</span></label></div>
       <div class="col-md-10">
         <div class="form-group col-md-2">
           <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control" readonly="readonly" required>
@@ -22,7 +22,7 @@
     </div>
     <div class="row innerrow">
       <div class="col-md-2">
-        <label for="id_account_type">Account Type</label>
+        <label for="id_account_type">Account Type<span class="starMandatory">*</span></label>
       </div>
       <div class="col-md-3">
         <div class="row innerrow">
@@ -53,8 +53,16 @@
         </div>
       </div>
     </div>
+    <div class="row innerrow" id="id_password" [% IF account_type != 'external' %]style="display:none;"[% END %]>
+      <div class="col-md-2"><label for="id_password">Password</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-6">
+          <input type="text" name="password" value="[% password %]" class="form-control">
+        </div>
+      </div>
+    </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_last_name">Last Name</label></div>
+      <div class="col-md-2"><label for="id_last_name">Last Name<span class="starMandatory">*</span></label></div>
       <div class="col-md-10">
         <div class="form-group col-md-6">
           <input type="text" name="last_name" id="id_last_name" value="[% last_name %]" class="form-control" required>
@@ -62,7 +70,7 @@
       </div>
     </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_first_name">First Name</label></div>
+      <div class="col-md-2"><label for="id_first_name">First Name<span class="starMandatory">*</span></label></div>
       <div class="col-md-10">
         <div class="form-group col-md-6">
           <input type="text" name="first_name" id="id_first_name" value="[% first_name %]" class="form-control" required>
@@ -329,9 +337,11 @@ function selectButton(element){
 $("input[name='account_type']").change(function(){
   if($("input[name='account_type']:checked").val() == "external"){
     $('#id_ext_institution').show();
+    $('#id_password').show();
   }
   else {
     $('#id_ext_institution').hide();
+    $('#id_password').hide();
   }
 });
 
