@@ -55,6 +55,9 @@ sub getPersonData {
 		'move_field("fullName","full_name")',
 		'move_field("surname","last_name")',
 		'move_field("givenName","first_name")',
+		'move_field("old_fullName", "old_full_name")',
+		'move_field("old_surname", "old_last_name")',
+		'move_field("old_givenName", "old_first_name")',
         'move_field("accountStatus","account_status")',
 		'remove_field("isOfType")',
         'remove_field("reviewer.*.reviewer")',
@@ -94,6 +97,14 @@ sub getPersonData {
 		}
 		elsif($rel->{oInternalName} eq "citationStyle"){
 			$citationStyle = $_->{erValue};
+		}
+		elsif($rel->{oInternalName} eq "fullName" or $rel->{oInternalName} eq "surname" or $rel->{oInternalName} eq "givenName"){
+			if(!$_->{erEndDate}){
+				$record->{$rel->{oInternalName}} = $_->{erValue};
+			}
+			elsif(!$_->{erStartDate} and $_->{erEndDate}){
+				$record->{"old_" . $rel->{oInternalName}} = $_->{erValue};
+			}
 		}
 		else {
 			$record->{$rel->{oInternalName}} = $_->{erValue};
