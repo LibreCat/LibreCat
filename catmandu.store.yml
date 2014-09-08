@@ -1021,6 +1021,15 @@ search:
                 'exact': {field: 'full_name.exact'}
               field: full_name
               sort: {field: 'full_name.exact'}
+            oldfullname:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+                'exact': {field: 'old_full_name.exact'}
+              field: old_full_name
+              sort: {field: 'old_full_name.exact'}
             lastname:
               op:
                 'any': true
@@ -1029,6 +1038,14 @@ search:
                 '<>': true
                 'exact': true
               field: last_name
+            oldlastname:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+                'exact': true
+              field: old_last_name
             firstname:
               op:
                 'any': true
@@ -1037,6 +1054,13 @@ search:
                 '<>': true
                 'exact': true
               field: first_name
+            oldfirstname:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+              field: old_first_name
             id:
               op:
                 '=': true
@@ -1480,17 +1504,24 @@ search:
             fields:
               full_name: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
+          old_full_name:
+            type: multi_field
+            fields:
+              old_full_name: {type: string, include_in_all: true}
+              exact: {type: string, analyzer: tag}
           last_name: {type: string}
+          old_last_name: {type: string}
           first_name: {type: string}
+          old_first_name: {type: string}
           bis:
             properties:
               personTitle: {type: string}
               former: {type: byte}
               nonExist: {type: byte}
               forschend: {type: byte}
-          affiliation:
+          department:
             properties:
-              organizationNumber: {type: string, analyzer: tag}
+              id: {type: string, analyzer: tag}
               name: {type: string, include_in_all: true}
           date_updated: {type: string, analyzer: datestring}
               

@@ -20,7 +20,8 @@ function linkPevz(element){
 	// Someone checked the "Link to PEVZ Account" checkbox
 	else{
 		var puburl = 'http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/search_researcher?ftext=';
-		var narrowurl = puburl;
+		var narrowurl = "";
+		var longurl = "";
 		var first_name = $('#first_name_' + lineId).val();
 		$('#orig_first_name_' + lineId).val(first_name);
 		var firstname = first_name.toLowerCase();
@@ -28,20 +29,56 @@ function linkPevz(element){
 		$('#orig_last_name_' + lineId).val(last_name);
 		var lastname = last_name.toLowerCase();
 		if(firstname){
-			narrowurl += "firstname=" + firstname + "*";
+			// if name consists of more than one word, use any and ""
+			if(firstname.indexOf(" ") > -1){
+				narrowurl += 'firstname any "' + firstname + '"';
+				longurl += 'oldfirstname any "' + firstname + '"';
+			}
+			// if name contains -, truncating won't work, so use literal search
+			else if(firstname.indexOf("-") > -1){
+				narrowurl += "firstname=" + firstname;
+				longurl += "oldfirstname=" + firstname;
+			}
+			else {
+				narrowurl += "firstname=" + firstname + "*";
+				longurl += "oldfirstname=" + firstname + "*";
+			}
 		}
 		if(firstname && lastname){
 			narrowurl += " AND ";
+			longurl += " AND ";
 		}
 		if(lastname){
-			narrowurl += "lastname=*" + lastname + "*";
+			// if name consists of more than one word, use any and ''
+			if(lastname.indexOf(" ") > -1){
+				narrowurl += 'lastname any "' + lastname + '"';
+				longurl += 'oldlastname any "' + lastname + '"';
+			}
+			// if name contains -, truncating won't work, so use literal search
+			else if(lastname.indexOf("-") > -1){
+				narrowurl += "lastname=" + lastname;
+				longurl += "oldlastname=" + lastname;
+			}
+			else{
+				narrowurl += "lastname=*" + lastname + "*";
+				longurl += "oldlastname=*" + lastname + "*";
+			}
+		}
+		if(narrowurl != "" && longurl != ""){
+			narrowurl = puburl + narrowurl + " OR " + longurl;
+		}
+		else if(narrowurl != "" && longurl == ""){
+			narrowurl = puburl + narrowurl;
+		}
+		else if(narrowurl == "" && longurl != ""){
+			narrowurl = puburl + longurl;
 		}
 		
 		$.get(narrowurl, function(response) {
 			var objJSON = eval("(function(){return " + response + ";})()");
 
 			// If only one hit... fill out fields and change img to green
-			if(objJSON.length == 1){
+			if(objJSON.length == 1 && (!objJSON[0].old_full_name || !objJSON[0].full_name)){
 				var data = objJSON[0];
 				var pevzId = "";
 				var first_name = "";
@@ -85,7 +122,7 @@ function linkPevz(element){
 			}
 			
 			// If more than one hit... show modal with choices
-			else if(objJSON.length > 1){
+			else if(objJSON.length > 1 || (objJSON.length == 1 && objJSON[0].old_full_name && objJSON[0].full_name)){
 				var container = $('#linkPevzModal').find('.modal-body').first();
 				container.html('');
 				var table = '<p><strong>Exact hits:</strong></p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>PEVZ-ID</th><th>Name</th></tr>';
@@ -97,7 +134,9 @@ function linkPevz(element){
 					var data = objJSON[i];
 					var pevzId = "";
 					var first_name = "";
+					var old_first_name = "";
 					var last_name = "";
+					var old_last_name = "";
 					$.each(data, function(key, value){
 						if(key == "_id"){
 							pevzId = value;
@@ -106,14 +145,25 @@ function linkPevz(element){
 							first_name = value;
 							first_nameLc = value.toLowerCase();
 						}
+						if(key == "old_first_name"){
+							old_first_name = value;
+							old_first_nameLc = value.toLowerCase();
+						}
 						if(key == "last_name"){
 							last_name = value;
 							last_nameLc = value.toLowerCase();
 						}
+						if(key == "old_last_name"){
+							old_last_name = value;
+							old_last_nameLc = value.toLowerCase();
+						}
 					});
 					
-					if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase())){
+					if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase()) || (firstname == old_first_name.toLowerCase() && lastname == "") || (lastname == old_last_name.toLowerCase() && firstname == "") || (lastname == old_last_name.toLowerCase() && firstname == old_first_name.toLowerCase())){
 						rows += '<tr data-id="' + pevzId + '"><td><a href="#" class="pevzLink">' + pevzId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="pevzLink">' + first_name + " " + last_name + '</a></td></tr>';
+						if(old_first_name || old_last_name){
+							rows += '<tr data-id="' + pevzId + '"><td><a href="#" class="pevzLink">' + pevzId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="pevzLink">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+						}
 					}
 					else {
 						rows2 += '<tr data-id="' + pevzId + '"><td><a href="#" class="pevzLink">' + pevzId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="pevzLink">' + first_name + " " + last_name + '</a></td></tr>';

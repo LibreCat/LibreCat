@@ -13,8 +13,6 @@ our $opt_u;
 our $opt_m;
 our $opt_i;
 
-my $home = "/srv/www/app-catalog/";#$ENV{BACKEND};
-
 my $index_name = "backend";
 if ( $opt_m ) {
 	if ($opt_m eq "backend1" || $opt_m eq "backend2" ) {
@@ -24,10 +22,11 @@ if ( $opt_m ) {
 	}
 }
 
-Catmandu->load(':up');
+Catmandu->load('/srv/www/app-catalog/');
 my $conf = Catmandu->config;
 my $mongoBag = Catmandu->store('authority')->bag('admin');
-my $bag = Catmandu->store('search')->bag('researcher');
+my $userBag = Catmandu->store('authority')->bag('user');
+my $bag = Catmandu->store('search', index_name => $index_name)->bag('researcher');
 
 my $pre_fixer = Catmandu::Fix->new(fixes => [
 			'add_num_of_publs()',
@@ -38,20 +37,34 @@ sub add_to_index {
 	my $rec = shift;
 
 	$pre_fixer->fix($rec);
-  	$bag->add($rec);
+	#print Dumper $rec;
+  	my $response = $bag->add($rec);
+  	#print Dumper $response;
 }
 
 
 if ($opt_i){
-	my $researcher = $mongoBag->get($opt_i);
-	add_to_index($researcher) if $researcher;
+	my $researcher_admin = $mongoBag->get($opt_i);
+	my $researcher_user = $userBag->get($opt_i);
+
+	my @fields = qw(full_name old_full_name last_name old_last_name first_name old_first_name email department super_admin reviewer dataManager);
+	map {
+		$researcher_user->{$_} = $researcher_admin->{$_} if $researcher_admin->{$_};
+	} @fields;
+	add_to_index($researcher_user) if $researcher_user;
+	#print Dumper $researcher_user;
 }
 else { # initial indexing
 
 	my $allResearchers = $mongoBag->to_array;
-	foreach(@$allResearchers){
-		add_to_index($_);
-		#print Dumper $_;
+	foreach my $researcher_admin (@$allResearchers){
+		my $researcher_user = $userBag->get($researcher_admin->{_id});
+		my @fields = qw(full_name old_full_name last_name old_last_name first_name old_first_name email department super_admin reviewer dataManager);
+		map {
+			$researcher_user->{$_} = $researcher_admin->{$_} if $researcher_admin->{$_};
+		} @fields;
+		add_to_index($researcher_user);
+		#print Dumper $researcher_user;
 	}
 }
 
