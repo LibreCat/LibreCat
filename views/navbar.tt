@@ -2,6 +2,7 @@
 <html ng-app>
   <head>
     <title>PUB - Publication at Bielefeld University</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -16,7 +17,7 @@
     <script src="/javascripts/bootstrap3.js"></script>
     <script src="/javascripts/dropzone3.js"></script>
     <script type="text/javascript" src="/javascripts/scripts.js"></script>
-    <script type="text/javascript" src="/javascripts/backend.js"></script>
+    <script type="text/javascript" src="/javascripts/backend.js" charset="utf-8"></script>
     <script type="text/javascript" src="/javascripts/angular-1.2.14.min.js"></script>
     <script src="/javascripts/bootstrap-select.js"></script>
     <script src="/javascripts/jquery-sortable.js"></script>

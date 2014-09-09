@@ -1420,7 +1420,7 @@ search:
               yearCreated: {type: date, format: "yyyy"}
 
       researchData:
-        include_in_all: false  
+        include_in_all: false
         properties:
           _id: {type: string, include_in_all: true}
           title:
@@ -1439,7 +1439,7 @@ search:
                    exact: {type: string, analyzer: tag}
           first_author: {type: string, analyzer: tag}
           year: {type: date, format: year, include_in_all: true}
-          language: 
+          language:
             properties:
               iso: {type: string, analyzer: tag}
               name: {type: string, analyzer: tag}

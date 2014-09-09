@@ -34,8 +34,8 @@ function linkPevz(element){
 				narrowurl += 'firstname any "' + firstname + '"';
 				longurl += 'oldfirstname any "' + firstname + '"';
 			}
-			// if name contains -, truncating won't work, so use literal search
-			else if(firstname.indexOf("-") > -1){
+			// if name contains [-äöüß], truncating won't work, so use literal search
+			else if(firstname.indexOf("-") > -1 || firstname.indexOf("\u00E4") > -1 || firstname.indexOf("\u00F6") > -1 || firstname.indexOf("\u00FC")> -1 || firstname.indexOf("\u00DF") > -1){
 				narrowurl += "firstname=" + firstname;
 				longurl += "oldfirstname=" + firstname;
 			}
@@ -54,8 +54,8 @@ function linkPevz(element){
 				narrowurl += 'lastname any "' + lastname + '"';
 				longurl += 'oldlastname any "' + lastname + '"';
 			}
-			// if name contains -, truncating won't work, so use literal search
-			else if(lastname.indexOf("-") > -1){
+			// if name contains [-äöüß], truncating won't work, so use literal search
+			else if(lastname.indexOf("-") > -1 || lastname.indexOf("\u00E4") > -1 || lastname.indexOf("\u00F6") > -1 || lastname.indexOf("\u00FC") > -1 || lastname.indexOf("\u00DF") > -1){
 				narrowurl += "lastname=" + lastname;
 				longurl += "oldlastname=" + lastname;
 			}
