@@ -7,6 +7,7 @@ output_path: "views/backend/forms"
 publicationTypeOrder:
   - researchdata
   - book
+  - bookeditor
   - bookchapter
   - review
   - conferenceabstract
@@ -137,13 +138,16 @@ publicationTypes:
         corporate_editor: &corp_ed
           mandatory: 0
           multiple: 1
-          label: "Coroprate Editor"
+          label: "Corporate Editor"
+          placeholder: "Corporate Editor"
         department: &department
           label: "Department"
           placeholder: "Department"
+          multiple: 1
         project: &project
           label: "Project"
           placeholder: "Project"
+          multiple: 1
         publisher: &publisher
           label: "Publisher"
           placeholder: "Publisher"
@@ -213,6 +217,50 @@ publicationTypes:
         url:
           label: "Documents outside PUB"
           placeholder: "Enter a remote location (URL) of your file here"
+  bookeditor:
+    label: "Book (Editor)"
+    tmpl: bookEditor
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        doi: *doi
+        title: *title
+        editor:
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 1
+          multiple: 1
+          label:
+            "Editor" : "editor"
+          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+        corporate_editor: *corp_ed
+        department: *department
+        project: *project
+        publisher: *publisher
+        language: *lang
+        year: *year
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
+        publication: *publicationseries
+        abstract: *abstract
+        edition: *edition
+        keyword: *kw
+        volume: *vol
+        place: *place
+        ddc: *ddc
+        page: *page
+        extern: *extern
+        alternative_title: *alt_title
+        publication_status: *publication_status
+        external_id: *external_id
+        message: *message
+        publication_identifier: *publ_id
+        popular_science: *pop_sci
+        ubi_funded: *funded
+      related_material: *rm
   bookchapter:
     label: "Book Chapter"
     tmpl: bookChapter
@@ -232,10 +280,10 @@ publicationTypes:
           multiple: 1
           label:
             "Author" : "author"
-            "Editor" : "editor"
-            "Corp. Ed." : "corporateEditor"
             "Translator" : "translator"
           pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+        editor: *editor_only
+        corporate_editor: *corp_ed
         department: *department
         project: *project
         publication:
