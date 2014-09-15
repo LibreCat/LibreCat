@@ -31,7 +31,7 @@ my $pre_fixer = Catmandu::Fix->new(fixes => [
 		]);
 
 my $mongoBag = Catmandu->store('project')->bag;
-my $projBag = Catmandu->store('search')->bag('project');
+my $projBag = Catmandu->store('search', index_name => $index_name)->bag('project');
 
 if ($opt_u) { # update process
 	my $project = $mongoBag->get($opt_u);
