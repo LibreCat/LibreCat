@@ -53,6 +53,7 @@
         <div class="tab-content">
           <div class="tab-pane[% IF modus == 'admin' %] active[% END %]" id="adminPubl">
             <div class="col-md-8">
+              [% tabmodus = 'admin' %]
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
@@ -61,6 +62,7 @@
           </div>
           <div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ">
             <div class="col-md-8">
+              [% tabmodus = 'user' %]
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
@@ -69,6 +71,7 @@
           </div>
           <div class="tab-pane[% IF modus == 'reviewer' %] active[%END %]" id="review">
             <div class="col-md-8">
+              [% tabmodus = 'reviewer' %]
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
@@ -77,6 +80,7 @@
           </div>
           <div class="tab-pane[% IF modus == 'dataManager' %] active[%END %]" id="data">
             <div class="col-md-8">
+              [% tabmodus = 'dataManager' %]
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
