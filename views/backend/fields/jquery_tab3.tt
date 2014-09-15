@@ -10,21 +10,3 @@ $('.threeToTwo').click(function(){
   $('#li_supplementary_fields').removeClass('active');
   $('#li_file_upload').addClass('active');
 });
-
-$('#plusKeyword').click(function(){
-  var items = $('#keyword div.form-group');
-  var index = items.index($('#keyword div.form-group').last()) + 1;
-  $('#keyword').append('[% INCLUDE backend/fields/subfields/keyword.tt %]');
-});
-
-$('#plusDdc').click(function(){
-  var items = $('#ddc div.form-group');
-  var index = items.index($('#ddc div.form-group').last()) + 1;
-  $('#ddc').append('[% INCLUDE backend/fields/subfields/ddc.tt %]');
-});
-
-$('#plusAbstract').click(function(){
-  var items = $('#abstract div.form-group');
-  var index = items.index($('#abstract div.form-group').last()) + 1;
-  $('#abstract').append('[% INCLUDE backend/fields/subfields/abstract.tt %]');
-});

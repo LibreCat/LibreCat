@@ -98,26 +98,12 @@ $('#authedtrans_0').change(function() {
   $('.authedtrans:not(#authedtrans_0)').append('<option value="' + selected + '">' + seltext + '</option>');
 });
 
-
-//$('#plusAuthorMore').click(function(){
-//  var items = $('#authorEditorTranslator div.authorspan');
-//  var index = items.index($('#authorEditorTranslator div.authorspan').last()) + 1;
-//  $('#authorEditorTranslator').append('[% INCLUDE backend/fields/subfields/author_more.tt %]');
-//  var selected = $('#authedtrans_0').val();
-//  {% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}
-//    if(selected == "{% fields.basic_fields.author.label.$creator %}"){
-//      $('#authorEditorTranslator div:last-child select').append('<option value="{% fields.basic_fields.author.label.$creator %}">{% creator %}</option>');
-//    }
-//  {% END %}
-//  if($(this).attr('data-mandatory') == "yes"){
-//    $('#authorEditorTranslator span:last-child label').append('<span class="starMandatory">*</span>');
-//  }
-//  $('#id_linkPevz_'+index).bind("click", function() { return linkPevz($('#id_linkPevz_'+index))});
-//});
-
 $('#plusDepartment').click(function(){
   var items = $('#department div.innerrow');
   var index = items.index($('#department div.form-group').last()) + 1;
+  {% IF fields.basic_fields.department.placeholder || fields.supplementary_fields.department.placeholder %}
+	var placeholder = "{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}";
+  {% END %}
   $('#department').append('[% INCLUDE backend/fields/subfields/department.tt %]');
   $('#department').bind("click", function(){
     $( "#dp_autocomplete_" + index ).autocomplete({
@@ -134,6 +120,9 @@ $('#plusDepartment').click(function(){
 $('#plusProject').click(function(){
   var items = $('#project div.innerrow');
   var index = items.index($('#project div.form-group').last()) + 1;
+  {% IF fields.basic_fields.project.placeholder || fields.supplementary_fields.project.placeholder %}
+	var placeholder = "{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}";
+  {% END %}
   $('#project').append('[% INCLUDE backend/fields/subfields/project.tt %]');
   $('#project').bind("click", function(){
     $( "#pj_autocomplete_" + index ).autocomplete({
@@ -147,17 +136,31 @@ $('#plusProject').click(function(){
   });
 });
 
+$('#plusKeyword').click(function(){
+  var items = $('#keyword div.form-group');
+  var index = items.index($('#keyword div.form-group').last()) + 1;
+  {% IF fields.basic_fields.keyword.placeholder || fields.supplementary_fields.keyword.placeholder %}
+	var placeholder = "{% fields.basic_fields.keyword.placeholder %}{% fields.supplementary_fields.keyword.placeholder %}";
+  {% END %}
+  $('#keyword').append('[% INCLUDE backend/fields/subfields/keyword.tt %]');
+});
+
+$('#plusDdc').click(function(){
+  var items = $('#ddc div.form-group');
+  var index = items.index($('#ddc div.form-group').last()) + 1;
+  $('#ddc').append('[% INCLUDE backend/fields/subfields/ddc.tt %]');
+});
+
+$('#plusAbstract').click(function(){
+  var items = $('#abstract div.form-group');
+  var index = items.index($('#abstract div.form-group').last()) + 1;
+  $('#abstract').append('[% INCLUDE backend/fields/subfields/abstract.tt %]');
+});
+
 $('#plusLanguage').click(function(){
   var items = $('#language div.form-group');
   var index = items.index($('#language div.form-group').last()) + 1;
   $('#language').append('[% INCLUDE backend/fields/subfields/language.tt %]');
-});
-
-
-$('#plusCored').click(function(){
-  var items = $('#corp_ed div.form-group');
-  var index = items.index($('#corp_ed div.form-group').last()) + 1;
-  $('#corp_ed').append('[% INCLUDE backend/fields/subfields/corporate_editor.tt %]');
 });
 
 
@@ -260,6 +263,12 @@ function angularSearch($scope, $compile) {
   $scope.cloneAuthedtrans = function(myVal){
     var items = $('#authorEditorTranslator div.authorspan');
 	var index = items.index($('#authorEditorTranslator div.authorspan').last()) + 1;
+	{% IF fields.basic_fields.author.first_name.placeholder %}
+	  var fn_placeholder = "{% fields.basic_fields.author.first_name.placeholder %}";
+	{% END %}
+	{% IF fields.basic_fields.author.last_name.placeholder %}
+	  var ln_placeholder = "{% fields.basic_fields.author.last_name.placeholder %}";
+	{% END %}
 	$('#authorEditorTranslator').append($compile('[% INCLUDE backend/fields/subfields/author_more.tt %]')($scope));
 	var selected = $('#authedtrans_0').val();
 	{% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}
@@ -274,6 +283,12 @@ function angularSearch($scope, $compile) {
   $scope.cloneEdonly = function(myVal){
     var items = $('#editorOnly div.authorspan');
 	var index = items.index($('#editorOnly div.authorspan').last()) + 1;
+	{% IF fields.basic_fields.editor.first_name.placeholder %}
+	  var fn_placeholder = "{% fields.basic_fields.editor.first_name.placeholder %}";
+	{% END %}
+	{% IF fields.basic_fields.editor.last_name.placeholder %}
+	  var ln_placeholder = "{% fields.basic_fields.editor.last_name.placeholder %}";
+	{% END %}
 	$('#editorOnly').append($compile('[% INCLUDE backend/fields/subfields/editor_more.tt %]')($scope));
 	var selected = $('#ed_0').val();
 	{% FOREACH creator IN fields.basic_fields.editor.label.keys.sort %}
@@ -284,6 +299,14 @@ function angularSearch($scope, $compile) {
 	if($(myVal).attr('data-mandatory') == "yes"){
 	  $('#editorOnly span:last-child label').append('<span class="starMandatory">*</span>');
 	}
+  };
+  $scope.cloneCorped = function(myVal){
+    var items = $('#corporate_editor div.form-group');
+    var index = items.index($('#corporate_editor div.form-group').last()) + 1;
+    {% IF fields.basic_fields.corporate_editor.placeholder || fields.supplementary_fields.corporate_editor.placeholder %}
+	  var placeholder = "{% fields.basic_fields.corporate_editor.placeholder %}{% fields.supplementary_fields.corporate_editor.placeholder %}";
+    {% END %}
+    $('#corporate_editor').append('[% INCLUDE backend/fields/subfields/corporate_editor.tt %]');
   };
   $scope.cloneExtid = function(myVal){
     var items = $('#extId div.form-group');

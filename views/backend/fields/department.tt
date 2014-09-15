@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="department">
-      {% fields.basic_fields.department.label %}{% fields.supplementary_fields.department.label %}{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %}<span class="starMandatory">*</span>{% END %} <span class="glyphicon glyphicon-plus" id="plusDepartment"></span>
+      {% fields.basic_fields.department.label %}{% fields.supplementary_fields.department.label %}{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %}<span class="starMandatory">*</span>{% END %}{% IF fields.basic_fields.department.multiple || fields.supplementary_fields.department.multiple %} <span class="glyphicon glyphicon-plus" id="plusDepartment"></span>{% END %}
     </label>
   </div>
   <div class="col-md-10" id="department">
