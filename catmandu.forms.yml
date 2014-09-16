@@ -51,9 +51,10 @@ field_order:
     - extern
     - alternative_title
     - publication_status
-    - conference_name
-    - conference_location
-    - conference_date
+    - conference.name
+    - conference.location
+    - conference.start_date
+    - conference.end_date
     - page
     - page_range
     - publication_identifier
@@ -88,9 +89,10 @@ field_order:
     - extern
     - alternative_title
     - publication_status
-    - conference_name
-    - conference_location
-    - conference_date
+    - conference.name
+    - conference.location
+    - conference.start_date
+    - conference.end_date
     - page
     - page_range
     - publication_identifier
@@ -114,7 +116,7 @@ publicationTypes:
         title: &title
           mandatory: 1
           label: "Title"
-        author:
+        author: &author_translator
           first_name:
             placeholder: "First Name"
           last_name:
@@ -151,7 +153,7 @@ publicationTypes:
         publisher: &publisher
           label: "Publisher"
           placeholder: "Publisher"
-        language: &lang
+        language: &language
           label: "Language"
           default: "eng"
         year: &year
@@ -162,8 +164,6 @@ publicationTypes:
         tab_name: "File Upload"
         dropzone_mainDoc:
           label: "Upload Main File(s) and Supplementary Material (max. 1000MB per file)"
-        dropzone_confLetter:
-          label: "Upload a confirmation letter"
       supplementary_fields:
         tab_name: "Additional Information"
         series_title: &publicationseries
@@ -192,7 +192,7 @@ publicationTypes:
         extern: &extern
           label: "External<br />Publication"
           placeholder: "(Published while not employed at Bielefeld University)"
-        alternative_title: &alt_title
+        alternative_title: &alternative_title
           label: "Alternative Title"
         publication_status: &publication_status
           label: "Publication Status"
@@ -239,7 +239,7 @@ publicationTypes:
         department: *department
         project: *project
         publisher: *publisher
-        language: *lang
+        language: *language
         year: *year
       file_upload: *file_upload
       supplementary_fields:
@@ -253,7 +253,7 @@ publicationTypes:
         ddc: *ddc
         page: *page
         extern: *extern
-        alternative_title: *alt_title
+        alternative_title: *alternative_title
         publication_status: *publication_status
         external_id: *external_id
         message: *message
@@ -271,17 +271,7 @@ publicationTypes:
         title:
           label: "Chapter Title"
           mandatory: 1
-        author: &author_editor_etc
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
-          mandatory: 1
-          multiple: 1
-          label:
-            "Author" : "author"
-            "Translator" : "translator"
-          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+        author: *author_translator
         editor: *editor_only
         corporate_editor: *corp_ed
         department: *department
@@ -290,20 +280,19 @@ publicationTypes:
           label: "Book Title"
           mandatory: 1
         year: *year
-        language: *lang
+        language: *language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        series_title: &series_title
-          label: "Series Title"
-          placeholder: "e.g. Lecture Notes in Computer Science"
+        series_title: *publicationseries
         place: *place
         edition: *edition
         publication_status: *publication_status
+        publisher: *publisher
         abstract: *abstract
         ddc: *ddc
         keyword: *kw
-        alternative_title: *alt_title
+        alternative_title: *alternative_title
         page_range: &page_range
           label: "Pages"
         extern: *extern
@@ -312,6 +301,7 @@ publicationTypes:
         publication_identifier: *publ_id
         popular_science: *pop_sci
         ubi_funded: *funded
+        volume: *vol
       related_material: *rm
   conferenceabstract:
     label: "Conference Abstract"
@@ -321,39 +311,43 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_editor_etc
+        author: *author_translator
+        editor: *editor_only
+        corporate_editor: *corp_ed
         department: *department
         project: *project
-        publication: *publicationseries
         year: *year
-        conference_part: 1
-        language: *lang
+        conference.name: &conference_name
+          label: "Conference Name"
+          placeholder: "e.g. 3rd Conference on Nano-Physics"
+        conference.location: &conference_location
+          label: "Conference Location"
+          placeholder: "Berlin, BE, Germany"
+        conference.start_date: &conference_startdate
+          label: "Conference Date<br />(start date)"
+        conference.end_date: &conference_enddate
+          label: "Conference Date<br />(end date, optional)"
+        language: *language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         keyword: *kw
         ddc: *ddc
-        abstract: *abstract
         publication_identifier: *publ_id
+        external_id: *external_id
         extern: *extern
-        alternative_title: *alt_title
+        alternative_title: *alternative_title
         publication_status: *publication_status
         page_range: *page_range
         publisher: *publisher
         place: *place
+        publication: *publicationseries
         volume: *vol
         issue: &issue
           label: "Issue"
-        conference_name: &conference_name
-          label: "Conference Name"
-          placeholder: "e.g. 3rd Conference on Nano-Physics"
-        conference_location: &conference_location
-          label: "Conference Location"
-          placeholder: "Berlin, BE, Germany"
-        conference_date: &conference_date
-          label: "Conference Date"
         quality_controlled: &qual_contr
           label: "Quality Controlled"
+        message: *message
         ubi_funded: *funded
       related_material: *rm
   conferenceeditor:
@@ -365,12 +359,15 @@ publicationTypes:
         doi: *doi
         title: *title
         editor: *editor
+        corporate_editor: *corp_ed
         department: *department
         project: *project
-        publication: *publicationseries
         year: *year
-        conference_part: 1
-        language: *lang
+        conference.name: *conference_name
+        conference.location: *conference_location
+        conference.start_date: *conference_startdate
+        conference.end_date: *conference_enddate
+        language: *language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
@@ -378,18 +375,18 @@ publicationTypes:
         ddc: *ddc
         abstract: *abstract
         publication_identifier: *publ_id
+        external_id: *external_id
+        publication: *publicationseries
         extern: *extern
-        alternative_title: *alt_title
+        alternative_title: *alternative_title
         publication_status: *publication_status
         publisher: *publisher
         place: *place
         volume: *vol
         issue: *issue
-        conference_name: *conference_name
-        conference_location: *conference_location
-        conference_date: *conference_date
         quality_controlled: *qual_contr
         ubi_funded: *funded
+        message: *message
       related_material: *rm
   conference:
     label: "Conference Paper"
@@ -399,8 +396,9 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_editor_etc
+        author: *author_translator
         editor: *editor_only
+        corporate_editor: *corp_ed
         department: *department
         project: *project
         publication:
@@ -408,7 +406,11 @@ publicationTypes:
         series_title:
           label: "Series Title"
         year: *year
-        language: *lang
+        conference.name: *conference_name
+        conference.location: *conference_location
+        conference.start_date: *conference_startdate
+        conference.end_date: *conference_enddate
+        language: *language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
@@ -416,42 +418,68 @@ publicationTypes:
         ddc: *ddc
         abstract: *abstract
         publication_identifier: *publ_id
+        external_id: *external_id
         extern: *extern
-        alternative_title: *alt_title
+        alternative_title: *alternative_title
         publication_status: *publication_status
         page_range: *page_range
         publisher: *publisher
         place: *place
         volume: *vol
         issue: *issue
-        conference_name: *conference_name
-        conference_location: *conference_location
-        conference_date: *conference_date
         quality_controlled: *qual_contr
         popular_science: *pop_sci
         ubi_funded: *funded
+        message: *message
       related_material: *rm
   dissertation:
     label: "Dissertation"
     tmpl: dissertation
     fields:
-      basic_field:
+      basic_fields:
+        tab_name: "Basic Fields"
         doi: *doi
         title: *title
         author:
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 1
+          multiple: 1
+          label:
+            "Author" : "author"
+          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+        supervisor:
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 1
+          multiple: 1
+          label:
+            "Supervisor" : "supervisor"
         year: *year
         department: *department
         project: *project
-        publication: *publicationseries
-        volume: *vol
+        language: *language
+        page: *page
+        publisher: *publisher
+        place: *place
       file_upload: *file_upload
       supplementary_fields:
+        tab_name: "Additional Information"
+        extern: *extern
+        alternative_title: *alternative_title
         abstract: *abstract
         ddc: *ddc
         keyword: *kw
         external_id: *external_id
-        publisher: *publisher
         publication_identifier: *publ_id
+        publication: *publicationseries
+        volume: *vol
+        message: *message
+        ubi_funded: *funded
       related_material: *rm
   encyclopediaarticle:
     label: "Encyclopedia Article"
@@ -463,12 +491,13 @@ publicationTypes:
         title:
           label: "Article Title"
           mandatory: 1
-        author: *author_editor_etc
+        author: *author_translator
+        editor: *editor_only
+        corporate_editor: *corp_ed
         department: *department
         project: *project
-        publication:
-          label: "Book Title"
-          mandatory: 1
+        language: *language
+        publisher: *publisher
         year: *year
       file_upload: *file_upload
       supplementary_fields:
@@ -480,12 +509,17 @@ publicationTypes:
         abstract: *abstract
         ddc: *ddc
         keyword: *kw
-        alternative_title: *alt_title
+        alternative_title: *alternative_title
         page_range: *page_range
+        publication:
+          label: "Book Title"
+          mandatory: 1
         extern: *extern
         external_id: *external_id
         message: *message
+        volume: *vol
         publication_identifier: *publ_id
+        ubi_funded: *funded
       related_material: *rm
   journalarticle:
     label: "Journal Article"
@@ -495,15 +529,17 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_editor_etc
+        author: *author_translator
         department: *department
         project: *project
         publisher: *publisher
-        language: *lang
+        language: *language
         year: *year
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
+        extern: *extern
+        alternative_title: *alternative_title
         publication: &publicationjtitle
           label: "Journal Title"
         volume: *vol
@@ -511,12 +547,14 @@ publicationTypes:
         abstract: *abstract
         ddc: *ddc
         keyword: *kw
-        popular_science: &popular_science
-          label: "Popular Science"
-        quality_controlled: &qc
-          lable: "Quality Controlled"
+        popular_science: *pop_sci
+        quality_controlled: *qual_contr
         external_id: *external_id
         publication_identifier: *publ_id
+        publication_status: *publication_status
+        page_range: *page_range
+        message: *message
+        ubi_funded: *funded
       related_material: *rm
   journaleditor:
     label: "Journal (Editor)"
@@ -540,35 +578,36 @@ publicationTypes:
         department: *department
         project: *project
         publisher: *publisher
-        language: *lang
+        language: *language
         year: *year
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         publication: *publicationjtitle
         abstract: *abstract
-        edition: *edition
         keyword: *kw
         volume: *vol
-        place: *place
+        issue: *issue
         ddc: *ddc
-        page: *page
         extern: *extern
-        alternative_title: *alt_title
+        alternative_title: *alternative_title
         publication_status: *publication_status
         external_id: *external_id
         message: *message
         publication_identifier: *publ_id
         popular_science: *pop_sci
+        quality_controlled: *qual_contr
         ubi_funded: *funded
+        message: *message
       related_material: *rm
   newspaperarticle:
     label: "Newspaper Article"
     tmpl: newspaperArticle
     fields:
       basic_fields:
+        tab_name: "Basic Fields"
         doi: *doi
-        author: *author_editor_etc
+        author: *author_translator
         title: *title
         department: *department
         project: *project
@@ -577,32 +616,42 @@ publicationTypes:
           label: "Publishing Date"
           placeholder: "YYYY-MM-DD"
           mandatory: 1
-        publication: *publicationseries
         publisher: *publisher
+        language: *language
       file_upload: *file_upload
       supplementary_fields:
+        tab_name: "Additional Information"
+        alternative_title: *alternative_title
+        publication: *publicationseries
+        publication_identifier: *publ_id
         extern: *extern
+        external_id: *external_id
         page_range: *page_range
         volume: *vol
         issue: *issue
         abstract: *abstract
+        keyword: *kw
         ddc: *ddc
-        popular_science: *popular_science
+        popular_science: *pop_sci
+        message: *message
+        ubi_funded: *funded
       related_material: *rm
   patent:
     label: "Patent"
     tmpl: patent
     fields:
       basic_fields:
+        tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_editor_etc
+        author: *author_translator
         department: *department
         project: *project
         year: *year
         publisher: *publisher
       file_upload: *file_upload
       supplementary_fields:
+        tab_name: "Additional Information"
         publishing_date: *publishing_date
         publication_status: *publication_status
         page_range: *page_range
@@ -639,12 +688,12 @@ publicationTypes:
         project: *project
         year: *year
         publication: *publicationseries
-        language: *lang
+        language: *language
         publisher: *publisher
       file_upload: *file_upload
       supplementary_fields:
         extern: *extern
-        alternative_title: *alt_title
+        alternative_title: *alternative_title
         publication_status: *publication_status
         page: *page
         publication: *publicationseries
@@ -667,19 +716,19 @@ publicationTypes:
       basic_fields:
         doi: *doi
         title: *title
-        author: *author_editor_etc
+        author: *author_translator
         year: *year
       file_upload: *file_upload
       supplementary_fields:
-        series_title: *series_title
+        series_title: *publicationseries
         volume: *vol
         place: *place
         publisher: *publisher
-        language: *lang
+        language: *language
         abstract: *abstract
         page: *page
         extern: *extern
-        alternative_title: *alt_title
+        alternative_title: *alternative_title
       related_material: *rm
   review:
     label: "Book Review"
@@ -689,19 +738,19 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_editor_etc
+        author: *author_translator
         editor: *editor_only
         corporate_editor: *corp_ed
         department: *department
         project: *project
         publisher: *publisher
-        language: *lang
+        language: *language
         year: *year
       file_upload: *file_upload
       supplementary_fields:
         extern: *extern
-        alternative_title: *alt_title
-        language: *lang
+        alternative_title: *alternative_title
+        language: *language
         publication_status: *publication_status
         page_range: *page_range
         place: *place
@@ -771,7 +820,7 @@ publicationTypes:
       basic_fields:
         doi: *doi
         title: *title
-        author: *author_editor_etc
+        author: *author_translator
         department: *department
         project: *project
       file_upload: *file_upload

@@ -6,11 +6,11 @@
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-3">
-      <input type="text" name="page_start" id="id_page_start" value="[% page_start %]" placeholder="{% fields.basic_fields.page_range.placeholder %}{% fields.supplementary_fields.page_range.placeholder %}" class="form-control{% IF fields.basic_fields.page_range.mandatory OR fields.supplementary_fields.page_range.mandatory %} required{% END %}"{% IF fields.basic_fields.page_range.readonly OR fields.supplementary_fields.page_range.readonly %} readonly="readonly"{% END %}>
+      <input type="text" name="page.start" id="id_page_start" value="[% page.start %]" placeholder="{% fields.basic_fields.page_range.placeholder %}{% fields.supplementary_fields.page_range.placeholder %}" class="form-control{% IF fields.basic_fields.page_range.mandatory OR fields.supplementary_fields.page_range.mandatory %} required{% END %}"{% IF fields.basic_fields.page_range.readonly OR fields.supplementary_fields.page_range.readonly %} readonly="readonly"{% END %}>
     </span> 
     <span class="form-group col-md-1">&mdash;</span>
     <span class="form-group col-md-3">
-      <input type="text" name="page_end" id="id_page_end" value="[% page_end %]" placeholder="{% fields.basic_fields.page_range.placeholder %}{% fields.supplementary_fields.page_range.placeholder %}" class="form-control{% IF fields.basic_fields.page_range.mandatory OR fields.supplementary_fields.page_range.mandatory %} required{% END %}"{% IF fields.basic_fields.page_range.readonly OR fields.supplementary_fields.page_range.readonly %} readonly="readonly"{% END %}>
+      <input type="text" name="page.end" id="id_page_end" value="[% page.end %]" placeholder="{% fields.basic_fields.page_range.placeholder %}{% fields.supplementary_fields.page_range.placeholder %}" class="form-control{% IF fields.basic_fields.page_range.mandatory OR fields.supplementary_fields.page_range.mandatory %} required{% END %}"{% IF fields.basic_fields.page_range.readonly OR fields.supplementary_fields.page_range.readonly %} readonly="readonly"{% END %}>
     </span>
   </div>
 </div>

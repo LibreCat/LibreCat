@@ -1,0 +1,14 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="id_conference_name">
+    {% fields.basic_fields.item('conference.name').label %}{% fields.supplementary_fields.item('conference.name').label %}{% IF fields.basic_fields.item('conference.name').mandatory || fields.supplementary_fields.item('conference.name').mandatory %}<span class="starMandatory">*</span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10">
+    <div class="form-group row innerrow">
+      <div class="col-md-9">
+        <input type="text" name="conference.name" id="id_conference_name" value="[% conference.name %]" placeholder="{% fields.basic_fields.item('conference.name').placeholder %}{% fields.supplementary_fields.item('conference.name').placeholder %}" class="form-control">
+      </div>
+    </div>
+  </div>
+</div>
