@@ -215,7 +215,7 @@ conference:
 publishing_date: "2014-04-23"
 ipn: 21314
 ipc: 2344
-report_number 18
+report_number: 18
 email: "me@example.com"
 defense_date: "2014-04-23"
 link: ["www.example.com", "www.example2.com"]

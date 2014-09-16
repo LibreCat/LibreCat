@@ -166,7 +166,7 @@ publicationTypes:
           label: "Upload a confirmation letter"
       supplementary_fields:
         tab_name: "Additional Information"
-        publication: &publicationseries
+        series_title: &publicationseries
           label: "Publication/<br />Series Title"
           placeholder: "E.g. Lecture Notes in Computer Science"
         abstract: &abstract
@@ -225,7 +225,7 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        editor:
+        editor: &editor
           first_name:
             placeholder: "First Name"
           last_name:
@@ -244,7 +244,7 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        publication: *publicationseries
+        series_title: *publicationseries
         abstract: *abstract
         edition: *edition
         keyword: *kw
@@ -357,8 +357,40 @@ publicationTypes:
         ubi_funded: *funded
       related_material: *rm
   conferenceeditor:
-    label: "Conference Editor"
+    label: "Conference (Editor)"
     tmpl: conferenceEditor
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        doi: *doi
+        title: *title
+        editor: *editor
+        department: *department
+        project: *project
+        publication: *publicationseries
+        year: *year
+        conference_part: 1
+        language: *lang
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
+        keyword: *kw
+        ddc: *ddc
+        abstract: *abstract
+        publication_identifier: *publ_id
+        extern: *extern
+        alternative_title: *alt_title
+        publication_status: *publication_status
+        publisher: *publisher
+        place: *place
+        volume: *vol
+        issue: *issue
+        conference_name: *conference_name
+        conference_location: *conference_location
+        conference_date: *conference_date
+        quality_controlled: *qual_contr
+        ubi_funded: *funded
+      related_material: *rm
   conference:
     label: "Conference Paper"
     tmpl: conference
@@ -368,6 +400,7 @@ publicationTypes:
         doi: *doi
         title: *title
         author: *author_editor_etc
+        editor: *editor_only
         department: *department
         project: *project
         publication:
@@ -390,16 +423,10 @@ publicationTypes:
         publisher: *publisher
         place: *place
         volume: *vol
-        issue: &issue
-          label: "Issue"
-        conference_name: &conference_name
-          label: "Conference Name"
-          placeholder: "e.g. 3rd Conference on Nano-Physics"
-        conference_location: &conference_location
-          label: "Conference Location"
-          placeholder: "Berlin, BE, Germany"
-        conference_date: &conference_date
-          label: "Conference Date"
+        issue: *issue
+        conference_name: *conference_name
+        conference_location: *conference_location
+        conference_date: *conference_date
         quality_controlled: *qual_contr
         popular_science: *pop_sci
         ubi_funded: *funded
@@ -415,8 +442,7 @@ publicationTypes:
         year: *year
         department: *department
         project: *project
-        publication: &publication
-          label: "Publication"
+        publication: *publicationseries
         volume: *vol
       file_upload: *file_upload
       supplementary_fields:
@@ -447,7 +473,7 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        series_title: *series_title
+        series_title: *publicationseries
         place: *place
         edition: *edition
         publication_status: *publication_status
@@ -478,7 +504,8 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        publication: *publication
+        publication: &publicationjtitle
+          label: "Journal Title"
         volume: *vol
         issue: *issue
         abstract: *abstract
@@ -492,8 +519,49 @@ publicationTypes:
         publication_identifier: *publ_id
       related_material: *rm
   journaleditor:
-    label: "Journal Editor"
+    label: "Journal (Editor)"
     tmpl: journalEditor
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        doi: *doi
+        title: *title
+        editor: &editor
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 1
+          multiple: 1
+          label:
+            "Editor" : "editor"
+          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+        corporate_editor: *corp_ed
+        department: *department
+        project: *project
+        publisher: *publisher
+        language: *lang
+        year: *year
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
+        publication: *publicationjtitle
+        abstract: *abstract
+        edition: *edition
+        keyword: *kw
+        volume: *vol
+        place: *place
+        ddc: *ddc
+        page: *page
+        extern: *extern
+        alternative_title: *alt_title
+        publication_status: *publication_status
+        external_id: *external_id
+        message: *message
+        publication_identifier: *publ_id
+        popular_science: *pop_sci
+        ubi_funded: *funded
+      related_material: *rm
   newspaperarticle:
     label: "Newspaper Article"
     tmpl: newspaperArticle
@@ -505,12 +573,13 @@ publicationTypes:
         department: *department
         project: *project
         year: *year
-        publishing_date:
+        publishing_date: &publishing_date
           label: "Publishing Date"
           placeholder: "YYYY-MM-DD"
           mandatory: 1
-        publication: *publication
+        publication: *publicationseries
         publisher: *publisher
+      file_upload: *file_upload
       supplementary_fields:
         extern: *extern
         page_range: *page_range
@@ -519,11 +588,38 @@ publicationTypes:
         abstract: *abstract
         ddc: *ddc
         popular_science: *popular_science
-      file_upload: *file_upload
       related_material: *rm
   patent:
     label: "Patent"
     tmpl: patent
+    fields:
+      basic_fields:
+        doi: *doi
+        title: *title
+        author: *author_editor_etc
+        department: *department
+        project: *project
+        year: *year
+        publisher: *publisher
+      file_upload: *file_upload
+      supplementary_fields:
+        publishing_date: *publishing_date
+        publication_status: *publication_status
+        page_range: *page_range
+        publication:
+          label: "Published Source"
+        publication_identifier: *publ_id
+        ipn:
+          label: "International Patent<br />Number"
+        ipc:
+          label: "International Patent<br />Classification"
+        abstract: *abstract
+        keyword: *kw
+        ddc: *ddc
+        external_identifier: *external_id
+        message: *message
+        ubi_funded: *funded
+      related_material: *rm
   preprint:
     label: "Preprint"
     tmpl: preprint
@@ -542,9 +638,27 @@ publicationTypes:
         department: *department
         project: *project
         year: *year
-        publication: *publication
-      supplementary_fields:
+        publication: *publicationseries
+        language: *lang
+        publisher: *publisher
       file_upload: *file_upload
+      supplementary_fields:
+        extern: *extern
+        alternative_title: *alt_title
+        publication_status: *publication_status
+        page: *page
+        publication: *publicationseries
+        publication_identifier: *publ_id
+        volume: *vol
+        issue: *issue
+        abstract: *abstract
+        keyword: *kw
+        ddc: *ddc
+        work_references: *message
+        publication_identifier: *publ_id
+        external_id: *external_id
+        message: *message
+        ubi_funded: *funded
       related_material: *rm
   report:
     label: "Report"
@@ -555,22 +669,54 @@ publicationTypes:
         title: *title
         author: *author_editor_etc
         year: *year
+      file_upload: *file_upload
       supplementary_fields:
         series_title: *series_title
         volume: *vol
         place: *place
-        publication: *publication
         publisher: *publisher
         language: *lang
         abstract: *abstract
         page: *page
         extern: *extern
         alternative_title: *alt_title
-      file_upload: *file_upload
       related_material: *rm
   review:
     label: "Book Review"
-    tmpl: bookReview
+    tmpl: review
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        doi: *doi
+        title: *title
+        author: *author_editor_etc
+        editor: *editor_only
+        corporate_editor: *corp_ed
+        department: *department
+        project: *project
+        publisher: *publisher
+        language: *lang
+        year: *year
+      file_upload: *file_upload
+      supplementary_fields:
+        extern: *extern
+        alternative_title: *alt_title
+        language: *lang
+        publication_status: *publication_status
+        page_range: *page_range
+        place: *place
+        publication: *publicationseries
+        publication_identifier: *publ_id
+        volume: *vol
+        issue: *issue
+        abstract: *abstract
+        keyword: *kw
+        ddc: *ddc
+        work_references: *message
+        external_id: *external_id
+        message: *message
+        ubi_funded: *funded
+      related_material: *rm
   researchdata:
     label: "Research Data"
     tmpl: researchData
@@ -621,6 +767,17 @@ publicationTypes:
   workingpaper:
     label: "Working Paper"
     tmpl: workingPaper
+    fields:
+      basic_fields:
+        doi: *doi
+        title: *title
+        author: *author_editor_etc
+        department: *department
+        project: *project
+      file_upload: *file_upload
+      supplementary_fields:
+        extern: *extern
+      related_material: *rm
   bidissertation:
     label: "Bielefeld Doctoral Thesis"
     tmpl: biDissertation
