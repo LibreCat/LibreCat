@@ -252,6 +252,9 @@ external_id:
 	  prefix_id: fp6/sdlfkjsd
 	genbank: []
 	nasc: []
+pacs_class: []
+msc_class: []
+ccs_class: []
 message: "Just a message"
 ubi_funded: 0|1
 ec_funded: 0|1

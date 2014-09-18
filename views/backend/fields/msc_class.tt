@@ -1,0 +1,38 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="msc_class">
+      {% fields.basic_fields.msc_class.label %}{% fields.supplementary_fields.msc_class.label %}{% IF fields.basic_fields.msc_class.mandatory OR fields.supplementary_fields.msc_class.mandatory %}<span class="starMandatory">*</span>{% END %}{% IF fields.basic_fields.msc_class.multiple OR fields.supplementary_fields.msc_class.multiple %} <span class="glyphicon glyphicon-plus" id="plusmsc_class"></span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10" id="msc_class">
+    {% IF fields.basic_fields.msc_class.multiple OR fields.supplementary_fields.msc_class.multiple %}
+    [% IF !msc_class %]
+    {% END %}
+    <div class="form-group row innerrow">
+      <div class="col-md-9">
+        <input type="text" name="msc_class" id="msc_class_0" value="" class="form-control{% IF fields.basic_fields.msc_class.mandatory OR fields.supplementary_fields.msc_class.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.msc_class.placeholder %}{% fields.supplementary_fields.msc_class.placeholder %}"{% IF fields.basic_fields.msc_class.readonly OR fields.supplementary_fields.msc_class.readonly %} readonly="readonly"{% END %}/>
+      </div>
+      <div class="col-md-1">
+        <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('msc_class_0').value = '';"></div>
+      </div>
+    </div>
+    {% IF fields.basic_fields.msc_class.multiple OR fields.supplementary_fields.msc_class.multiple %}
+    [% ELSE %]
+    [% FOREACH keyw IN msc_class %]
+    <div class="form-group row innerrow">
+      <div class="col-md-9">
+        <input type="text" name="msc_class" id="msc_class_[% loop.index %]" value="[% keyw %]" class="form-control{% IF fields.basic_fields.msc_class.mandatory OR fields.supplementary_fields.msc_class.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.msc_class.readonly OR fields.supplementary_fields.msc_class.readonly %} readonly="readonly"{% END %}/>
+      </div>
+      <div class="col-md-1">
+        [% IF loop.index == "0" %]
+        <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('msc_class_[% loop.index %]').value = '';"></div>
+        [% ELSE %]
+        <div class="glyphicon glyphicon-minus single"></div>
+        [% END %]
+      </div>
+    </div>
+    [% END %]
+    [% END %]
+    {% END %}
+  </div>
+</div>

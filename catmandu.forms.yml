@@ -49,6 +49,9 @@ field_order:
     - year
     - ddc
     - keyword
+    - pacs_class
+    - msc_class
+    - ccs_class
     - extern
     - alternative_title
     - publication_status
@@ -97,6 +100,9 @@ field_order:
     - page
     - page_range
     - publication_identifier
+    - pacs_class
+    - msc_class
+    - ccs_class
     - external_id
     - popular_science
     - quality_controlled

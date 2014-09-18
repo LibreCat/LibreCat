@@ -145,6 +145,33 @@ $('#plusKeyword').click(function(){
   $('#keyword').append('[% INCLUDE backend/fields/subfields/keyword.tt %]');
 });
 
+$('#pluspacs_class').click(function(){
+  var items = $('#pacs_class div.form-group');
+  var index = items.index($('#pacs_class div.form-group').last()) + 1;
+  {% IF fields.basic_fields.pacs_class.placeholder || fields.supplementary_fields.pacs_class.placeholder %}
+	var placeholder = "{% fields.basic_fields.pacs_class.placeholder %}{% fields.supplementary_fields.pacs_class.placeholder %}";
+  {% END %}
+  $('#pacs_class').append('[% INCLUDE backend/fields/subfields/pacs_class.tt %]');
+});
+
+$('#plusmsc_class').click(function(){
+  var items = $('#msc_class div.form-group');
+  var index = items.index($('#msc_class div.form-group').last()) + 1;
+  {% IF fields.basic_fields.msc_class.placeholder || fields.supplementary_fields.msc_class.placeholder %}
+	var placeholder = "{% fields.basic_fields.msc_class.placeholder %}{% fields.supplementary_fields.msc_class.placeholder %}";
+  {% END %}
+  $('#msc_class').append('[% INCLUDE backend/fields/subfields/msc_class.tt %]');
+});
+
+$('#plusccs_class').click(function(){
+  var items = $('#ccs_class div.form-group');
+  var index = items.index($('#ccs_class div.form-group').last()) + 1;
+  {% IF fields.basic_fields.ccs_class.placeholder || fields.supplementary_fields.ccs_class.placeholder %}
+	var placeholder = "{% fields.basic_fields.ccs_class.placeholder %}{% fields.supplementary_fields.ccs_class.placeholder %}";
+  {% END %}
+  $('#ccs_class').append('[% INCLUDE backend/fields/subfields/ccs_class.tt %]');
+});
+
 $('#plusDdc').click(function(){
   var items = $('#ddc div.form-group');
   var index = items.index($('#ddc div.form-group').last()) + 1;

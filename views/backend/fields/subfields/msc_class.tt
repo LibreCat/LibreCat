@@ -1,0 +1,1 @@
+<div class="form-group row innerrow"><div class="col-md-9"><input type="text" name="msc_class" id="msc_class_' + index + '" value="" class="form-control" placeholder="' + placeholder + '" /></div><div class="col-md-1"><div class="glyphicon glyphicon-minus single"></div></div></div>
