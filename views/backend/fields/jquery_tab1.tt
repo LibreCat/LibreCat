@@ -308,6 +308,17 @@ function angularSearch($scope, $compile) {
     {% END %}
     $('#corporate_editor').append('[% INCLUDE backend/fields/subfields/corporate_editor.tt %]');
   };
+  $scope.cloneSupervisor = function(myVal){
+    var items = $('#supervisor div.creator div.innerrow');
+	var index = items.index($('#supervisor div.creator div.innerrow').last()) + 1;
+	{% IF fields.basic_fields.supervisor.first_name.placeholder %}
+	  var fn_placeholder = "{% fields.basic_fields.supervisor.first_name.placeholder %}";
+	{% END %}
+	{% IF fields.basic_fields.supervisor.last_name.placeholder %}
+	  var ln_placeholder = "{% fields.basic_fields.supervisor.last_name.placeholder %}";
+	{% END %}
+	$('#supervisor div.creator').append($compile('[% INCLUDE backend/fields/subfields/supervisor.tt %]')($scope));
+  };
   $scope.cloneExtid = function(myVal){
     var items = $('#extId div.form-group');
 	var index = items.index($('#extId div.form-group').last()) + 1;

@@ -1,0 +1,101 @@
+[% lowtype = type.lower %]
+[% confpath = h.config.forms.publicationTypes.$lowtype %]
+[% USE JSON %]
+<span id="supervisor" ng-controller="angularSearch">
+  [% IF !supervisor %]
+  <div class="row authorspan innerrow">
+    <div class="col-md-2">
+      <label>
+        {% fields.basic_fields.supervisor.label %}{% fields.supplementary_fields.supervisor.label %}
+        {% IF fields.basic_fields.supervisor.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span ng-click="cloneSupervisor($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span>
+      </label>
+    </div>
+    <div class="col-md-10 creator">
+      <div class="row innerrow">
+        <input type="hidden" id="orig_first_name_0" value="" />
+        <input type="hidden" id="orig_last_name_0" value="" />
+            
+        <span class="form-group col-md-4">
+          <input type="text" id="first_name_0" ng-model="first_name_0" placeholder="{% fields.basic_fields.supervisor.first_name.placeholder %}{% fields.supplementary_fields.supervisor.first_name.placeholder %}" class="form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="" />
+        </span>
+        <span class="form-group col-md-5">
+          <input type="text" id="last_name_0" ng-model="last_name_0" placeholder="{% fields.basic_fields.supervisor.last_name.placeholder %}{% fields.supplementary_fields.supervisor.last_name.placeholder %}" class="form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="" />
+        </span>
+        <input type="hidden" id="supervisor_json_0" name="supervisor" value='{"last_name":"{{last_name_0}}", "first_name":"{{first_name_0}}", "full_name":"{{last_name_0}}, {{first_name_0}}", "id":"{{id_0}}"}'>
+        
+        <span class="col-md-1">
+          <span class="glyphicon glyphicon-minus author"></span>
+        </span>
+          
+        <span class="col-md-2">
+          <input class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
+          <img id="svAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.supervisor.pevz_tooltip %}{% fields.supplementary_fields.supervisor.pevz_tooltip %}" />
+          <script>
+            $('#svAuthorized0').tooltip();
+          </script>
+        </span>
+      </div>
+    </div>
+  </div>
+  [% ELSE %]
+  [% FOREACH name IN supervisor %]
+  <div class="row authorspan innerrow">
+    <div class="col-md-2">
+      <label>
+        {% fields.basic_fields.supervisor.label %}{% fields.supplementary_fields.supervisor.label %}
+        {% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %}<span class="starMandatory">*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneSupervisor($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} ></span>[% END %]
+      </label>
+    </div>
+    <div class="col-md-10 creator">
+      <div class="row innerrow">
+        <input type="hidden" id="orig_first_name_[% loop.index %]" value="[% name.first_name %]" />
+        <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% name.last_name %]" />
+            
+        <span class="form-group col-md-4">
+          <input type="text" id="first_name_[% loop.index %]" ng-model="first_name_[% loop.index %]" ng-init="first_name_[% loop.index %]='[% name.first_name %]'" placeholder="{% fields.basic_fields.supervisor.first_name.placeholder %}{% fields.supplementary_fields.supervisor.first_name.placeholder %}" class="form-control[% loop.first ? "{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" : '' %]" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+        </span>
+        <span class="form-group col-md-5">
+          <input type="text" id="last_name_[% loop.index %]" ng-model="last_name_[% loop.index %]" ng-init="last_name_[% loop.index %]='[% name.last_name %]'" placeholder="{% fields.basic_fields.supervisor.last_name.placeholder %}{% fields.supplementary_fields.supervisor.last_name.placeholder %}" class="form-control[% loop.first ? "{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+        </span>
+        <input type="hidden" id="id_[% loop.index %]" ng-model="id_[% loop.index %]" ng-init="id_[% loop_index %]='[% name.id %]'" value="[% name.id %]" />
+        <input type="hidden" id="supervisor_json_[% loop.index %]" name="supervisor" ng-model="supervisor_[% loop.index %]" ng-init="supervisor_[% loop.index %]='[% name.json.replace('"', "\\'") %]'" value='{"last_name":"{{last_name_[% loop.index %]}}", "first_name":"{{first_name_[% loop.index %]}}", "full_name":"{{last_name_[% loop.index %]}}, {{first_name_[% loop.index %]}}", "id":"[% name.id %]"}'>
+            
+        <span class="col-md-1">
+          [% IF loop.index == 0 %]
+          <span class="glyphicon glyphicon-minus author"></span>
+          [% ELSE %]
+          <span class="glyphicon glyphicon-minus fullrow"></span>
+          [% END %]
+        </span>
+            
+        <span class="col-md-2">
+          <input class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
+          [% IF name.id %]
+            <img id="svAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="{% fields.basic_fields.author.pevz_tooltip %}" />
+            <script>
+              $('#svAuthorized[% loop.index %]').tooltip();
+          </script>
+          [% ELSE %]
+            <img id="svAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.id %]"/>
+          [% END %]
+        </span>
+      </div>
+    </div>
+  </div>
+  [% END %]
+  [% END %]
+        
+<div class="modal" id="linkPevzModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Several PEVZ Accounts found... make a choice</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>
+
+</span>
