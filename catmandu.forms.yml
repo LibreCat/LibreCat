@@ -33,6 +33,7 @@ field_order:
     - publication
     - volume
     - author
+    - supervisor
     - editor
     - corporate_editor
     - department
@@ -137,7 +138,7 @@ publicationTypes:
           label:
             "Editor" : "editor"
           pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
-        corporate_editor: &corp_ed
+        corporate_editor: &corporate_editor
           mandatory: 0
           multiple: 1
           label: "Corporate Editor"
@@ -166,7 +167,7 @@ publicationTypes:
           label: "Upload Main File(s) and Supplementary Material (max. 1000MB per file)"
       supplementary_fields:
         tab_name: "Additional Information"
-        series_title: &publicationseries
+        series_title: &publication_series
           label: "Publication/<br />Series Title"
           placeholder: "E.g. Lecture Notes in Computer Science"
         abstract: &abstract
@@ -176,11 +177,11 @@ publicationTypes:
         edition: &edition
           label: "Edition"
           placerholder: "2"
-        keyword: &kw
+        keyword: &keyword
           label: "Keywords"
           placeholder: "Keyword (for more keyword fields click +)"
           multiple: 1
-        volume: &vol
+        volume: &volume
          label: "Volume"
         place: &place
           label: "Place<br />(of publication)"
@@ -201,15 +202,15 @@ publicationTypes:
           multiple: 1
         message: &message
           label: "Admin Comments"
-        publication_identifier: &publ_id
+        publication_identifier: &publication_identifier
           label: "Publication<br />Identifier"
           multiple: 1
-        popular_science: &pop_sci
+        popular_science: &popular_science
           label: "Popular Science"
-        ubi_funded: &funded
+        ubi_funded: &ubi_funded
           label: "Funding"
           placeholder: "Funded by the 'Publikationsfonds' at Bielefeld University"
-      related_material: &rm
+      related_material: &related_material
         tab_name: "Related Material"
         link_publication:
           label: "Documents within PUB"
@@ -235,7 +236,7 @@ publicationTypes:
           label:
             "Editor" : "editor"
           pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
-        corporate_editor: *corp_ed
+        corporate_editor: *corporate_editor
         department: *department
         project: *project
         publisher: *publisher
@@ -244,11 +245,11 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        series_title: *publicationseries
+        series_title: *publication_series
         abstract: *abstract
         edition: *edition
-        keyword: *kw
-        volume: *vol
+        keyword: *keyword
+        volume: *volume
         place: *place
         ddc: *ddc
         page: *page
@@ -257,10 +258,10 @@ publicationTypes:
         publication_status: *publication_status
         external_id: *external_id
         message: *message
-        publication_identifier: *publ_id
-        popular_science: *pop_sci
-        ubi_funded: *funded
-      related_material: *rm
+        publication_identifier: *publication_identifier
+        popular_science: *popular_science
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   bookchapter:
     label: "Book Chapter"
     tmpl: bookChapter
@@ -273,7 +274,7 @@ publicationTypes:
           mandatory: 1
         author: *author_translator
         editor: *editor_only
-        corporate_editor: *corp_ed
+        corporate_editor: *corporate_editor
         department: *department
         project: *project
         publication:
@@ -284,25 +285,25 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        series_title: *publicationseries
+        series_title: *publication_series
         place: *place
         edition: *edition
         publication_status: *publication_status
         publisher: *publisher
         abstract: *abstract
         ddc: *ddc
-        keyword: *kw
+        keyword: *keyword
         alternative_title: *alternative_title
         page_range: &page_range
           label: "Pages"
         extern: *extern
         external_id: *external_id
         message: *message
-        publication_identifier: *publ_id
-        popular_science: *pop_sci
-        ubi_funded: *funded
-        volume: *vol
-      related_material: *rm
+        publication_identifier: *publication_identifier
+        popular_science: *popular_science
+        ubi_funded: *ubi_funded
+        volume: *volume
+      related_material: *related_material
   conferenceabstract:
     label: "Conference Abstract"
     tmpl: conferenceAbstract
@@ -313,7 +314,7 @@ publicationTypes:
         title: *title
         author: *author_translator
         editor: *editor_only
-        corporate_editor: *corp_ed
+        corporate_editor: *corporate_editor
         department: *department
         project: *project
         year: *year
@@ -331,9 +332,9 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        keyword: *kw
+        keyword: *keyword
         ddc: *ddc
-        publication_identifier: *publ_id
+        publication_identifier: *publication_identifier
         external_id: *external_id
         extern: *extern
         alternative_title: *alternative_title
@@ -341,15 +342,15 @@ publicationTypes:
         page_range: *page_range
         publisher: *publisher
         place: *place
-        publication: *publicationseries
-        volume: *vol
+        publication: *publication_series
+        volume: *volume
         issue: &issue
           label: "Issue"
-        quality_controlled: &qual_contr
+        quality_controlled: &quality_controlled
           label: "Quality Controlled"
         message: *message
-        ubi_funded: *funded
-      related_material: *rm
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   conferenceeditor:
     label: "Conference (Editor)"
     tmpl: conferenceEditor
@@ -359,7 +360,7 @@ publicationTypes:
         doi: *doi
         title: *title
         editor: *editor
-        corporate_editor: *corp_ed
+        corporate_editor: *corporate_editor
         department: *department
         project: *project
         year: *year
@@ -371,23 +372,23 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        keyword: *kw
+        keyword: *keyword
         ddc: *ddc
         abstract: *abstract
-        publication_identifier: *publ_id
+        publication_identifier: *publication_identifier
         external_id: *external_id
-        publication: *publicationseries
+        publication: *publication_series
         extern: *extern
         alternative_title: *alternative_title
         publication_status: *publication_status
         publisher: *publisher
         place: *place
-        volume: *vol
+        volume: *volume
         issue: *issue
-        quality_controlled: *qual_contr
-        ubi_funded: *funded
+        quality_controlled: *quality_controlled
+        ubi_funded: *ubi_funded
         message: *message
-      related_material: *rm
+      related_material: *related_material
   conference:
     label: "Conference Paper"
     tmpl: conference
@@ -398,12 +399,12 @@ publicationTypes:
         title: *title
         author: *author_translator
         editor: *editor_only
-        corporate_editor: *corp_ed
+        corporate_editor: *corporate_editor
         department: *department
         project: *project
         publication:
           label: "Proceedings Title"
-        series_title:
+        series_title: &series_title
           label: "Series Title"
         year: *year
         conference.name: *conference_name
@@ -414,10 +415,10 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        keyword: *kw
+        keyword: *keyword
         ddc: *ddc
         abstract: *abstract
-        publication_identifier: *publ_id
+        publication_identifier: *publication_identifier
         external_id: *external_id
         extern: *extern
         alternative_title: *alternative_title
@@ -425,13 +426,13 @@ publicationTypes:
         page_range: *page_range
         publisher: *publisher
         place: *place
-        volume: *vol
+        volume: *volume
         issue: *issue
-        quality_controlled: *qual_contr
-        popular_science: *pop_sci
-        ubi_funded: *funded
+        quality_controlled: *quality_controlled
+        popular_science: *popular_science
+        ubi_funded: *ubi_funded
         message: *message
-      related_material: *rm
+      related_material: *related_material
   dissertation:
     label: "Dissertation"
     tmpl: dissertation
@@ -455,17 +456,14 @@ publicationTypes:
             placeholder: "First Name"
           last_name:
             placeholder: "Last Name"
-          mandatory: 1
+          mandatory: 0
           multiple: 1
-          label:
-            "Supervisor" : "supervisor"
+          label: "Supervisor"
         year: *year
         department: *department
         project: *project
         language: *language
-        page: *page
         publisher: *publisher
-        place: *place
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
@@ -473,14 +471,16 @@ publicationTypes:
         alternative_title: *alternative_title
         abstract: *abstract
         ddc: *ddc
-        keyword: *kw
+        place: *place
+        page: *page
+        keyword: *keyword
         external_id: *external_id
-        publication_identifier: *publ_id
-        publication: *publicationseries
-        volume: *vol
+        publication_identifier: *publication_identifier
+        publication: *publication_series
+        volume: *volume
         message: *message
-        ubi_funded: *funded
-      related_material: *rm
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   encyclopediaarticle:
     label: "Encyclopedia Article"
     tmpl: encyclopediaArticle
@@ -493,7 +493,7 @@ publicationTypes:
           mandatory: 1
         author: *author_translator
         editor: *editor_only
-        corporate_editor: *corp_ed
+        corporate_editor: *corporate_editor
         department: *department
         project: *project
         language: *language
@@ -502,13 +502,13 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        series_title: *publicationseries
+        series_title: *publication_series
         place: *place
         edition: *edition
         publication_status: *publication_status
         abstract: *abstract
         ddc: *ddc
-        keyword: *kw
+        keyword: *keyword
         alternative_title: *alternative_title
         page_range: *page_range
         publication:
@@ -517,10 +517,10 @@ publicationTypes:
         extern: *extern
         external_id: *external_id
         message: *message
-        volume: *vol
-        publication_identifier: *publ_id
-        ubi_funded: *funded
-      related_material: *rm
+        volume: *volume
+        publication_identifier: *publication_identifier
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   journalarticle:
     label: "Journal Article"
     tmpl: journalArticle
@@ -540,22 +540,22 @@ publicationTypes:
         tab_name: "Additional Information"
         extern: *extern
         alternative_title: *alternative_title
-        publication: &publicationjtitle
+        publication: &publication_jtitle
           label: "Journal Title"
-        volume: *vol
+        volume: *volume
         issue: *issue
         abstract: *abstract
         ddc: *ddc
-        keyword: *kw
-        popular_science: *pop_sci
-        quality_controlled: *qual_contr
+        keyword: *keyword
+        popular_science: *popular_science
+        quality_controlled: *quality_controlled
         external_id: *external_id
-        publication_identifier: *publ_id
+        publication_identifier: *publication_identifier
         publication_status: *publication_status
         page_range: *page_range
         message: *message
-        ubi_funded: *funded
-      related_material: *rm
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   journaleditor:
     label: "Journal (Editor)"
     tmpl: journalEditor
@@ -564,17 +564,8 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        editor: &editor
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
-          mandatory: 1
-          multiple: 1
-          label:
-            "Editor" : "editor"
-          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
-        corporate_editor: *corp_ed
+        editor: *editor
+        corporate_editor: *corporate_editor
         department: *department
         project: *project
         publisher: *publisher
@@ -583,10 +574,10 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        publication: *publicationjtitle
+        publication: *publication_jtitle
         abstract: *abstract
-        keyword: *kw
-        volume: *vol
+        keyword: *keyword
+        volume: *volume
         issue: *issue
         ddc: *ddc
         extern: *extern
@@ -594,12 +585,12 @@ publicationTypes:
         publication_status: *publication_status
         external_id: *external_id
         message: *message
-        publication_identifier: *publ_id
-        popular_science: *pop_sci
-        quality_controlled: *qual_contr
-        ubi_funded: *funded
+        publication_identifier: *publication_identifier
+        popular_science: *popular_science
+        quality_controlled: *quality_controlled
+        ubi_funded: *ubi_funded
         message: *message
-      related_material: *rm
+      related_material: *related_material
   newspaperarticle:
     label: "Newspaper Article"
     tmpl: newspaperArticle
@@ -622,20 +613,20 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         alternative_title: *alternative_title
-        publication: *publicationseries
-        publication_identifier: *publ_id
+        publication: *publication_series
+        publication_identifier: *publication_identifier
         extern: *extern
         external_id: *external_id
         page_range: *page_range
-        volume: *vol
+        volume: *volume
         issue: *issue
         abstract: *abstract
-        keyword: *kw
+        keyword: *keyword
         ddc: *ddc
-        popular_science: *pop_sci
+        popular_science: *popular_science
         message: *message
-        ubi_funded: *funded
-      related_material: *rm
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   patent:
     label: "Patent"
     tmpl: patent
@@ -649,87 +640,97 @@ publicationTypes:
         project: *project
         year: *year
         publisher: *publisher
+        language: *language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
+        extern: *extern
+        alternative_title: *alternative_title
         publishing_date: *publishing_date
         publication_status: *publication_status
-        page_range: *page_range
+        page: *page
         publication:
           label: "Published Source"
-        publication_identifier: *publ_id
+        publication_identifier: *publication_identifier
         ipn:
           label: "International Patent<br />Number"
         ipc:
           label: "International Patent<br />Classification"
         abstract: *abstract
-        keyword: *kw
+        keyword: *keyword
         ddc: *ddc
-        external_identifier: *external_id
+        external_id: *external_id
         message: *message
-        ubi_funded: *funded
-      related_material: *rm
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   preprint:
     label: "Preprint"
     tmpl: preprint
     fields:
       basic_fields:
+        tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author:
-          firstName:
-            placeholder: "First Name"
-          lastName:
-            placeholder: "Last Name"
-          mandatory: 1
-          multiple: 1
-          label: "Author"
+        author: *author_translator
         department: *department
         project: *project
         year: *year
-        publication: *publicationseries
         language: *language
         publisher: *publisher
       file_upload: *file_upload
       supplementary_fields:
+        tab_name: "Additional Information"
         extern: *extern
         alternative_title: *alternative_title
         publication_status: *publication_status
         page: *page
-        publication: *publicationseries
-        publication_identifier: *publ_id
-        volume: *vol
+        publication: *publication_series
+        publication_identifier: *publication_identifier
+        volume: *volume
         issue: *issue
         abstract: *abstract
-        keyword: *kw
+        keyword: *keyword
         ddc: *ddc
         work_references: *message
-        publication_identifier: *publ_id
         external_id: *external_id
         message: *message
-        ubi_funded: *funded
-      related_material: *rm
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   report:
     label: "Report"
     tmpl: report
     fields:
       basic_fields:
+        tab_name: "Basic Fields"
         doi: *doi
         title: *title
         author: *author_translator
+        editor: *editor_only
+        corporate_editor: *corporate_editor
+        department: *department
+        project: *project
+        language: *language
+        publisher: *publisher
         year: *year
       file_upload: *file_upload
       supplementary_fields:
-        series_title: *publicationseries
-        volume: *vol
+        tab_name: "Additional Information"
+        series_title: *series_title
+        volume: *volume
         place: *place
-        publisher: *publisher
-        language: *language
+        publication_identifier: *publication_identifier
+        external_id: *external_id
+        report_number:
+          label: "Report Number"
         abstract: *abstract
+        keyword: *keyword
+        ddc: *ddc
         page: *page
         extern: *extern
         alternative_title: *alternative_title
-      related_material: *rm
+        message: *message
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   review:
     label: "Book Review"
     tmpl: review
@@ -740,7 +741,7 @@ publicationTypes:
         title: *title
         author: *author_translator
         editor: *editor_only
-        corporate_editor: *corp_ed
+        corporate_editor: *corporate_editor
         department: *department
         project: *project
         publisher: *publisher
@@ -748,24 +749,25 @@ publicationTypes:
         year: *year
       file_upload: *file_upload
       supplementary_fields:
+        tab_name: "Additional Information"
         extern: *extern
         alternative_title: *alternative_title
         language: *language
         publication_status: *publication_status
         page_range: *page_range
         place: *place
-        publication: *publicationseries
-        publication_identifier: *publ_id
-        volume: *vol
+        publication: *publication_series
+        publication_identifier: *publication_identifier
+        volume: *volume
         issue: *issue
         abstract: *abstract
-        keyword: *kw
+        keyword: *keyword
         ddc: *ddc
         work_references: *message
         external_id: *external_id
         message: *message
-        ubi_funded: *funded
-      related_material: *rm
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   researchdata:
     label: "Research Data"
     tmpl: researchData
@@ -811,31 +813,248 @@ publicationTypes:
         tab_name: "Supplementary fields"
         abstract: *abstract
         ddc: *ddc
-        keyword: *kw
-      related_material: *rm
+        keyword: *keyword
+      related_material: *related_material
   workingpaper:
     label: "Working Paper"
     tmpl: workingPaper
     fields:
       basic_fields:
+        tab_name: "Basic Fields"
         doi: *doi
         title: *title
         author: *author_translator
+        editor: *editor_only
+        corporate_editor: *corporate_editor
         department: *department
         project: *project
+        language: *language
+        publisher: *publisher
+        year: *year
       file_upload: *file_upload
       supplementary_fields:
+        tab_name: "Additional Information"
+        publication_status: *publication_status
+        publication_identifer: *publication_identifier
+        external_id: *external_id
+        volume: *volume
+        issue: *issue
+        page: *page
+        place: *place
+        series_title: *series_title
+        alternative_title: *alternative_title
+        abstract: *abstract
+        keyword: *keyword
+        ddc: *ddc
         extern: *extern
-      related_material: *rm
+        message: *message
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   bidissertation:
     label: "Bielefeld Doctoral Thesis"
     tmpl: biDissertation
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        author: &author
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 1
+          multiple: 1
+          label:
+            "Author" : "author"
+          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+        email: &email
+          label: "E-Mail address"
+          placeholder: "me@example.com"
+          mandatory: 1
+        department: &department_diss
+          label: "Department"
+          placeholder: "Department"
+          mandatory: 1
+        supervisor: &supervisor
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 1
+          multiple: 1
+          label: "Supervisor"
+        title: *title
+        language: &language_diss
+          label: "Language"
+          default: "eng"
+          mandatory: 1
+        year: *year
+        defense_date: &defense_date
+          label: "Date of Defense"
+          placeholder: "YYYY-MM-DD"
+          mandatory: 1
+        publisher: &publisher_diss
+          label: "Publisher"
+          placeholder: "Publisher"
+          mandatory: 1
+        place: &place_diss
+          label: "Place<br />(of publication)"
+          placeholder: "Berlin, BE, Germany"
+          mandatory: 1
+        ddc: &ddc_diss
+          label: DDC
+          mandatory: 1
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
+        doi: *doi
+        alternative_title: *alternative_title
+        page: *page
+        publication: *publication_series
+        publication_identifier: *publication_identifier
+        external_id: *external_id
+        volume: *volume
+        abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        pacs_class: &pacs
+          label: "PACS Code"
+          multiple: 1
+        msc_class: &msc
+          label: "MSC Code"
+          multiple: 1
+        ccs_class: &ccs
+          label: "CCS Code"
+          multiple: 1
+        message: *message
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   bibachelorthesis:
     label: "Bielefeld Bachelor Thesis"
     tmpl: biBachelorThesis
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        author: *author
+        email: *email
+        department: *department_diss
+        supervisor:
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 0
+          multiple: 1
+          label: "Supervisor"
+        title: *title
+        language: *language_diss
+        year: *year
+        defense_date:
+          label: "Date of Defense"
+          placeholder: "YYYY-MM-DD"
+        publisher: *publisher_diss
+        place: *place_diss
+        ddc: *ddc_diss
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
+        alternative_title: *alternative_title
+        doi: *doi
+        page: *page
+        publication: *publication_series
+        publication_identifier: *publication_identifier
+        external_id: *external_id
+        volume: *volume
+        abstract: *abstract
+        keyword: *keyword
+        pacs_class: *pacs
+        msc_class: *msc
+        ccs_class: *ccs
+        message: *message
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   bimasterthesis:
     label: "Bielefeld Master Thesis"
     tmpl: biMasterThesis
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        author: *author
+        email: *email
+        department: *department_diss
+        supervisor:
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 0
+          multiple: 1
+          label: "Supervisor"
+        title: *title
+        language: *language_diss
+        year: *year
+        defense_date:
+          label: "Date of Defense"
+          placeholder: "YYYY-MM-DD"
+        publisher: *publisher_diss
+        place: *place_diss
+        ddc: *ddc_diss
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
+        alternative_title: *alternative_title
+        page: *page
+        publication: *publication_series
+        publication_identifier: *publication_identifier
+        external_id: *external_id
+        volume: *volume
+        abstract: *abstract
+        doi: *doi
+        keyword: *keyword
+        pacs_class: *pacs
+        msc_class: *msc
+        ccs_class: *ccs
+        message: *message
+        ubi_funded: *ubi_funded
+      related_material: *related_material
   bipostdocthesis:
     label: "Bielefeld Postdoctoral Thesis/ Habilitation"
     tmpl: biPostdocThesis
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        author: *author
+        email: *email
+        department: *department_diss
+        supervisor:
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 0
+          multiple: 1
+          label: "Supervisor"
+        title: *title
+        language: *language_diss
+        year: *year
+        defense_date: *defense_date
+        publisher: *publisher_diss
+        place: *place_diss
+        ddc: *ddc_diss
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
+        alternative_title: *alternative_title
+        page: *page
+        publication: *publication_series
+        publication_identifier: *publication_identifier
+        external_id: *external_id
+        volume: *volume
+        abstract: *abstract
+        keyword: *keyword
+        doi: *doi
+        pacs_class: *pacs
+        msc_class: *msc
+        ccs_class: *ccs
+        message: *message
+        ubi_funded: *ubi_funded
+      related_material: *related_material
