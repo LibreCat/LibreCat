@@ -1,0 +1,148 @@
+[% department = thisPerson.department %]
+<form action="/myPUB/person/affiliation" method="POST">
+    <div class="row innerrow">
+    <div class="col-md-1"><span class="glyphicon glyphicon-plus" id="plusAFF"></span>
+      </label></div>
+      <div class="col-md-10" id="affiliation">
+      [% IF !department %]
+        <div class="row innerrow">
+          <input type="hidden" name="department.0.id" id="aff_idautocomplete_0" value="" />
+
+          <span class="form-group col-md-7">
+            <input type="text" class="form-control" name="department.0.name" id="dp_autocomplete_0" value="" />
+          </span>
+          <span class="form-group col-md-2">
+            <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_0" value="Select"/>
+          </span>
+          <span class="col-md-1">
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';"></span>
+          </span>
+          <script>
+          $(function() {
+            $( "#aff_autocomplete_0" ).autocomplete({
+              source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+              minLength: 2,
+              select: function( event, ui ) {
+                $( "#aff_autocomplete_0" ).val( ui.item.label );
+                $( "#aff_idautocomplete_0" ).val( ui.item.id );
+              }
+            });
+          });
+          </script>
+        </div>
+      [% ELSE %]
+      [% FOREACH dept IN department %]
+        <div class="row innerrow">
+          <input type="hidden" name="department.[% loop.index %].id" id="aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+          <span class="form-group col-md-7">
+            <input type="text" class="form-control" name="department.[% loop.index %].name" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" />
+          </span>
+          <span class="form-group col-md-2">
+            <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_[% loop.index %]" value="Select"/>
+          </span>
+          <span class="col-md-1">
+          [% IF loop.index == 0 %]
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';"></span>
+          [% ELSE %]
+            <span class="glyphicon glyphicon-minus single"></span>
+          [% END %]
+          </span>
+          <script>
+          $(function() {
+            $( "#aff_autocomplete_[% loop.index %]" ).autocomplete({
+              source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+              minLength: 2,
+              select: function( event, ui ) {
+                $( "#aff_autocomplete_[% loop.index %]" ).val( ui.item.label );
+                $( "#aff_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+              }
+            });
+          });
+          </script>
+        </div>
+      [% END %]
+      [% END %]
+
+        <div class="modal" id="selectModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"></h4>
+                <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
+              </div>
+              <div class="modal-body">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row innerrow"><!-- button -->
+      <div class="col-md-12 buttonrow">
+        <span class="form-group col-md-2">&nbsp;</span>
+        <span class="form-group col-md-2">
+          <button type="submit" id="id_save_aff" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
+        </span>
+      </div>
+    </div>
+</form>
+
+<script>
+// Select button (dept, proj, rg)
+function selectButton(element){
+    var type = $(element).attr('class').replace('btn select_button', '').trim();
+    var type_short;
+    var type_name;
+
+    var index = $(element).attr('id').replace(type + '_select_','').trim();
+    var modal = $('#selectModal');
+    var container = $('#selectModal').find('.modal-body').first();
+    container.html("");
+    if(type == "data_manager"){
+        container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+        type_short = "dp";
+        type_name = "Department";
+    }
+    else if(type == "reviewer"){
+        container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+        type_short = "rv";
+        type_name = "Department";
+    }
+    else if (type == "affiliation") {
+        container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+        type_short = "aff";
+        type_name = "Department";
+    }
+    var heading = modal.find('h4').first();
+    heading.html("");
+    heading.append('Choose a ' + type_name);
+    $('.selectme').bind("click", function(){
+        var id = $(this).attr('id');
+        var name = $(this).html();
+        //var index = $(this).attr('data-index');
+        $('#' + type_short + '_idautocomplete_' + index).val(id);
+        $('#' + type_short + '_autocomplete_' + index).val(name);
+        $('#selectModal').modal('hide');
+    });
+    modal.modal('show');
+}
+
+$('#plusAFF').click(function(){
+  var items = $('#affiliation div.innerrow');
+  var index = items.index($('#affiliation div.innerrow').last()) + 1;
+  $('#affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="aff_idautocomplete_' + index + '" value="" /><span class="form-group col-md-7"><input type="text" class="form-control" name="department.' + index + '.name" id="aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
+  $('#affiliation').bind("click", function(){
+    $( "#aff_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#aff_autocomplete_" + index ).val( ui.item.label );
+        $( "#aff_idautocomplete_" + index ).val( ui.item.id );
+      }
+    });
+  });
+});
+</script>

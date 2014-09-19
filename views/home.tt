@@ -11,7 +11,7 @@
 <div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->
   <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->
 
-    <div class="row"> <!-- row span8 picture, email -->
+    <div class="row">
       <div class="col-md-2">
         [% IF thisPerson.bis.photo %]
         <object data="[% thisPerson.bis.photo %]" class="img-thumbnail" style="max-width:140px;" itemprop="image">
@@ -20,13 +20,13 @@
         [% ELSE %]
         <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail">
         [% END %]
-      </div> <!-- span 2 -->
+      </div>
 
       <div class="col-md-6">
         [% INCLUDE person_profile.tt %]
-      </div> <!-- span6 -->
+      </div>
 
-    </div> <!-- row span8 picture, email -->
+    </div>
 
     <div class="row"> <!-- empty row span8 -->
       <div class="col-md-11">&nbsp;</div>

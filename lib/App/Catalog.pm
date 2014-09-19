@@ -4,13 +4,16 @@ use Catmandu::Sane;
 use Catmandu;
 use Dancer ':syntax';
 use Catmandu::Util qw(:array);
+
 use App::Catalog::Helper;
+use App::Catalog::Interface;
+
 use App::Catalog::Route::admin;
 use App::Catalog::Route::import;
+use App::Catalog::Route::person;
 use App::Catalog::Route::publication;
-use App::Catalog::Interface;
-use App::Catalog::Person;
 use App::Catalog::Route::search;
+
 use Authentication::Authenticate;
 
 $Template::Stash::PRIVATE = 0;

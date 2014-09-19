@@ -63,8 +63,6 @@ sub update_person {
     my $data = shift;
     croak "Error: No _id specified" unless $data->{_id};
 
-    my $old = h->authority_admin->get( $data->{_id} );
-
     my $fixer = Catmandu::Fix->new(fixes => [
         'unless exists("account_status") add_field("account_status","inactive") end',
         'unless exists("super_admin") add_field("super_admin","0") end',
@@ -73,6 +71,8 @@ sub update_person {
         ]);
 
     $data->{full_name} = $data->{last_name} . ", " . $data->{first_name};
+    $data->{old_full_name} = $data->{old_last_name} . ", " . $data->{old_first_name}
+        if $data->{old_last_name} && $data->{old_first_name};
     $fixer->fix($data);
     h->authority_admin->add($data);
     h->authority_admin->commit;
