@@ -60,3 +60,35 @@ prefix '/admin' => sub {
 };
 
 1;
+
+=head1 PREFIX /admin
+
+    Permission: for admins only. Every other user will get a 403.
+
+=head2 GET /account
+
+    Prints a search form for the authority database.
+
+=head2 GET /account/new
+
+    Opens an empty form. The ID is automatically generated.
+
+=head2 GET /account/search
+
+    Searches the authority database. Prints the search form + result list.
+
+=head2 GET /account/edit/:id
+
+    Opens the record with ID id. Cancel returns to /account.
+    Save does a POST on /account/update.
+
+=head2 POST /account/update
+
+    Saves the data in the authority database.
+
+=head2 GET /account/import
+
+    Input is person id. Returns warning if person is alread in the database.
+    Otherwise opens a form with data imported from PEVZ.
+
+=cut

@@ -1,11 +1,21 @@
 package App::Catalog::Route::search;
 
+=head1 NAME
+
+    App::Catalog::Route::search
+
+=cut
+
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use App::Catalog::Helper;
 use App::Catalog::Controller::Search;
 
+=head2 PREFIX /search
+=cut
 
+=head2 GET /search/admin
+=cut
 get '/adminSearch' => sub {
     my $params = params;
 
@@ -16,6 +26,8 @@ get '/adminSearch' => sub {
 
 };
 
+=head2 GET /search/reviewer
+=cut
 get '/reviewerSearch' => sub {
     my $params = params;
 
@@ -27,6 +39,8 @@ get '/reviewerSearch' => sub {
 
 };
 
+=head2 GET /search/reviewer
+=cut
 get '/datamanagerSearch' => sub {
     my $params = params;
 
@@ -38,6 +52,8 @@ get '/datamanagerSearch' => sub {
 
 };
 
+=head2 GET /search
+=cut
 get '/search' => sub {
     my $params = params;
 
