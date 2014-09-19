@@ -2,22 +2,21 @@
 
 <!-- BEGIN add_new.tt -->
 
-<div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->  
+<div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->
   <div class="col-md-9 col-md-offset-1"> <!-- main content (left) -->
-  
-    <h3>Add Publication</h3>
-  
+
+    <h3>Add New Publication</h3>
+
     <div class="col-md-10">
 	  <h5>Enter ID</h5>
 	  <div class="row">
 	    <form role="form" class="form-inline" action="/myPUB/import" method="POST">
 	      <div class="col-md-2">
           <select class="selectpicker form-control" id="select_source">
-            <option value="doi" selected="selected">DOI</option>
-            <option value="crossref">Crossref</option>
-            <option value="pmc">Europe PMC</option>
-            <option value="arxiv">ArXiv</option>
-            <option value="inspire">Inpire</option>
+            <option value="crossref" selected="selected">DOI</option>
+            <option value="pmc">PMID</option>
+            <option value="arxiv">ArXiv ID</option>
+            <option value="inspire">Inpire ID</option>
           </select>
           </div>
           <div class="input-group col-md-5">
@@ -30,15 +29,15 @@
         </form>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col-md-12">&nbsp;</div>
     </div>
     <div class="row">
       <div class="col-md-12">&nbsp;</div>
     </div>
-    
-    <div class="col-md-10">  
+
+    <div class="col-md-10">
       <h5>Or choose a document type:</h5>
       [% FOREACH doctype IN h.config.forms.publicationTypeOrder %]
     	<a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
