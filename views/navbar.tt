@@ -82,6 +82,11 @@
        </ul>
        <ul class="nav navbar-nav navbar-right">
          [% IF session AND session.user %]
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">My Affiliation <span class="glyphicon glyphicon-chevron-down"></span></a>
+            <div class="dropdown-menu" style="width: 550px">
+            [% INCLUDE person_affiliation.tt %]
+            <div>
+         </li>
          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Logged in as: <em>[% session.user %]</em></a></li>
 
          [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.dataManager %]

@@ -64,7 +64,7 @@ prefix '/person' => sub {
 
     };
 
-    post '/affilition' => sub {
+    post '/affiliation' => sub {
 
         my $p = params;
         $p = h->nested_params($p);
