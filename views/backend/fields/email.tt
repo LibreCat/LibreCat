@@ -1,0 +1,14 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="id_email">
+      {% fields.basic_fields.email.label %}{% fields.supplementary_fields.email.label %}{% IF fields.basic_fields.email.mandatory OR fields.supplementary_fields.email.mandatory %}<span class="starMandatory">*</span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10">
+    <div class="form-group row innerrow">
+      <div class="col-md-9">
+        <input type="text" name="email" id="id_email" value="[% email %]" placeholder="{% fields.basic_fields.email.placeholder %}{% fields.supplementary_fields.email.placeholder %}" class="form-control{% IF fields.basic_fields.email.mandatory OR fields.supplementary_fields.email.mandatory %} required{% END %}"{% IF fields.basic_fields.email.readonly OR fields.supplementary_fields.email.readonly %} readonly="readonly"{% END %}>
+      </div>
+    </div>
+  </div>
+</div>
