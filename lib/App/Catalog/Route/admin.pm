@@ -8,8 +8,6 @@ use App::Catalog::Controller::Admin qw/:all/;
 
 prefix '/admin' => sub {
 
-    #TODO: check role!
-
     # manage accounts
     get '/account' => sub {
         template 'admin/account';

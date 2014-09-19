@@ -77,6 +77,24 @@
         </div>
       </div>
     </div>
+
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_old_last_name">Last Name used before</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-6">
+          <input type="text" name="old_last_name" id="id_old_last_name" value="[% old_last_name %]" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_old_first_name">First Name used before</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-6">
+          <input type="text" name="old_first_name" id="id_old_first_name" value="[% old_first_name %]" class="form-control">
+        </div>
+      </div>
+    </div>
+
     <div class="row innerrow">
       <div class="col-md-2"><label for="id_email">Email</label></div>
       <div class="col-md-10">
