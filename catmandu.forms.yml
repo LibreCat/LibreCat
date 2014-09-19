@@ -22,12 +22,10 @@ publicationTypeOrder:
   - preprint
   - report
   - workingpaper
-  - bidissertation
-  - bibachelorthesis
-  - bimasterthesis
-  - bipostdocthesis
+  - bithesis
 field_order:
   basic_fields:
+    - bi_doctype
     - doi
     - title
     - publication
@@ -856,12 +854,15 @@ publicationTypes:
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material
-  bidissertation:
-    label: "Bielefeld Doctoral Thesis"
+  bithesis:
+    label: "Bielefeld Thesis"
     tmpl: biDissertation
     fields:
       basic_fields:
         tab_name: "Basic Fields"
+        bi_doctype:
+          label: "Documenttype"
+          mandatory: 1
         author: &author
           first_name:
             placeholder: "First Name"
@@ -921,7 +922,6 @@ publicationTypes:
         volume: *volume
         abstract: *abstract
         keyword: *keyword
-        external_id: *external_id
         pacs_class: &pacs
           label: "PACS Code"
           multiple: 1

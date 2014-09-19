@@ -1,0 +1,57 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="id_bi_doctype">
+      {% fields.basic_fields.bi_doctype.label %}{% IF fields.basic_fields.bi_doctype.mandatory OR fields.supplementary_fields.bi_doctype.mandatory %}<span class="starMandatory">*</span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10">
+    <div class="checkbox" id="id_bi_doctype">
+      <div class="col-md-2">
+        <div class="row innerrow">
+          <div class="checkbox">
+            <label>
+              <input type="radio" name="type" value="biDissertation" [% IF type == 'biDissertation' || !type %]checked="checked"[% END %]>
+              biDissertation
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="row innerrow">
+          <div class="checkbox">
+            <label>
+              <input type="radio" name="type" value="biBachelorThesis" [% IF type == 'biBachelorThesis' %]checked="checked"[% END %]>
+              biBachelorThesis
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="row innerrow">
+          <div class="checkbox">
+            <label>
+              <input type="radio" name="type" value="biMasterThesis" [% IF type == 'biMasterThesis' %]checked="checked"[% END %]>
+              biMasterThesis
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="row innerrow">
+          <div class="checkbox">
+            <label>
+              <input type="radio" name="type" value="biPostdocThesis" [% IF type == 'biPostdocThesis' %]checked="checked"[% END %]>
+              biPostdocThesis
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#id_type').remove();
+});
+</script>

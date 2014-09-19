@@ -33,7 +33,7 @@
   </ul>
 
   <form action="/myPUB/record/update" method="POST">
-    <input type="hidden" name="type" value="{% tmpl %}"/>
+    <input type="hidden" name="type" value="{% tmpl %}" id="id_type"/>
     <input type="hidden" name="_id" value="[% _id %]"/>
     <input type="hidden" name="status" value="unsubmitted"/>
 
