@@ -33,7 +33,10 @@
     [% CASE "new" %]
       <span style="font-weight:bold;color:gray;">New/<br />Private</span>
     [% END %]
-  </div> 
+    [% IF approved %]
+    <br /><button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Checked by your librarian."><i><span class="glyphicon glyphicon-ok"></span></i></button><br />
+    [% END %]
+  </div>
   <div class="col-md-10">
     <i>[% entry.year %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry.item('_id') %]</span></i><br />
     [% IF style == 'frontShort' %]
@@ -43,7 +46,7 @@
     [% INCLUDE links.tt %]
     [% INCLUDE rec_details.tt %]
   </div>
-  
+
   <div class="col-md-1" style="text-align:right;">
     <i><a href="/myPUB/record/edit/[% entry.item('_id') %]"><span class="glyphicon glyphicon-pencil"></span></a></i>
   </div>

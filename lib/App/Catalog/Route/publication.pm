@@ -17,11 +17,11 @@ prefix '/record' => sub {
             $data->{_id} = $id;
             my $user = h->getPerson( session->{personNumber} );
             $data->{department} = $user->{department};
-            
+
             if($type eq "researchData"){
             	$data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
             }
-            
+
             template "backend/forms/$type", $data;
         }
         else {
@@ -83,6 +83,10 @@ prefix '/record' => sub {
             $params->{department} = ();
             $params->{department} = $deparray;
         }
+
+        (session->{role} eq "super_admin") ? ($params->{approved} = 1)
+            : ($params->{approved} = 0);
+
 
         my $result = update_publication($params);
 
