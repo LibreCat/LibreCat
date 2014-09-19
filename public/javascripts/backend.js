@@ -1,20 +1,22 @@
 function linkPevz(element){
 	var lineId = $(element).attr('id').replace('id_linkPevz_','');
+	var type = "";
+	type = $(element).attr('data-type');
 	
 	// Someone unchecked the "Link to PEVZ Account" checkbox
 	if(!$(element).is(':checked')){
 		// So, release input fields and change img back to gray
-		$('#auAuthorized' + lineId).attr('src','/images/biNotAuthorized.png');
-		$('#id_' + lineId).val("");
-		$('#first_name_' + lineId + ', #last_name_' + lineId).removeAttr("readonly");
+		$('#' + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
+		$('#' + type + 'id_' + lineId).val("");
+		$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
 		var orig_first_name = "";
-		orig_first_name = $('#orig_first_name_' + lineId).val();
+		orig_first_name = $('#' + type + 'orig_first_name_' + lineId).val();
 		var orig_last_name = "";
-		orig_last_name = $('#orig_last_name_' + lineId).val();
-		$('#first_name_' + lineId).val(orig_first_name);
-		$('#orig_first_name_' + lineId).val("");
-		$('#last_name_' + lineId).val(orig_last_name);
-		$('#orig_last_name_' + lineId).val("");
+		orig_last_name = $('#' + type + 'orig_last_name_' + lineId).val();
+		$('#' + type + 'first_name_' + lineId).val(orig_first_name);
+		$('#' + type + 'orig_first_name_' + lineId).val("");
+		$('#' + type + 'last_name_' + lineId).val(orig_last_name);
+		$('#' + type + 'orig_last_name_' + lineId).val("");
 	}
 	
 	// Someone checked the "Link to PEVZ Account" checkbox
@@ -22,17 +24,17 @@ function linkPevz(element){
 		var puburl = 'http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/search_researcher?ftext=';
 		var narrowurl = "";
 		var longurl = "";
-		var first_name = $('#first_name_' + lineId).val();
-		$('#orig_first_name_' + lineId).val(first_name);
+		var first_name = $('#' + type + 'first_name_' + lineId).val();
+		$('#' + type + 'orig_first_name_' + lineId).val(first_name);
 		var firstname = first_name.toLowerCase();
-		var last_name = $('#last_name_' + lineId).val();
-		$('#orig_last_name_' + lineId).val(last_name);
+		var last_name = $('#' + type + 'last_name_' + lineId).val();
+		$('#' + type + 'orig_last_name_' + lineId).val(last_name);
 		var lastname = last_name.toLowerCase();
 		if(firstname){
 			// if name consists of more than one word, use any and ""
 			if(firstname.indexOf(" ") > -1){
-				narrowurl += 'firstname any "' + firstname + '"';
-				longurl += 'oldfirstname any "' + firstname + '"';
+				narrowurl += '(firstname any "' + firstname + '"';
+				longurl += '(oldfirstname any "' + firstname + '"';
 			}
 			// if name contains [-äöüß], truncating won't work, so use literal search
 			else if(firstname.indexOf("-") > -1 || firstname.indexOf("\u00E4") > -1 || firstname.indexOf("\u00F6") > -1 || firstname.indexOf("\u00FC")> -1 || firstname.indexOf("\u00DF") > -1){
@@ -65,7 +67,7 @@ function linkPevz(element){
 			}
 		}
 		if(narrowurl != "" && longurl != ""){
-			narrowurl = puburl + narrowurl + " OR " + longurl;
+			narrowurl = puburl + "(" + narrowurl + ")" + " OR " + "(" + longurl + ")";
 		}
 		else if(narrowurl != "" && longurl == ""){
 			narrowurl = puburl + narrowurl;
@@ -97,24 +99,24 @@ function linkPevz(element){
 				});
 				
 				//$('#id_' + lineId).val(pevzId);
-				$('#first_name_' + lineId).val(first_name);
-				$('#last_name_' + lineId).val(last_name);
-				$('#first_name_' + lineId + ', #last_name_' + lineId).attr("readonly","readonly");
-				$('#auAuthorized' + lineId).attr('src','/images/biAuthorized.png');
-				$('#first_name_' + lineId + ', #last_name_' + lineId).parent().removeClass("has-error");
+				$('#' + type + 'first_name_' + lineId).val(first_name);
+				$('#' + type + 'last_name_' + lineId).val(last_name);
+				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
+				$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
+				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 				
-				if($('#author_json_' + lineId).length){
-					$('#author_json_' + lineId).val("");
-					$('#author_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
+				if($('#' + type + 'json_' + lineId).length){
+					$('#' + type + 'json_' + lineId).val("");
+					$('#' + type + 'json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
 				}
-				if($('#editor_json_' + lineId).length){
-					$('#editor_json_' + lineId).val("");
-					$('#editor_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
-				}
-				if($('#translator_json_' + lineId).length){
-					$('#translator_json_' + lineId).val("");
-					$('#translator_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
-				}
+				//if($('#editor_json_' + lineId).length){
+				//	$('#editor_json_' + lineId).val("");
+				//	$('#editor_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
+				//}
+				//if($('#translator_json_' + lineId).length){
+				//	$('#translator_json_' + lineId).val("");
+				//	$('#translator_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
+				//}
 				
 				pevzId = "";
 				first_name = "";
@@ -195,27 +197,27 @@ function linkPevz(element){
 					
 					var lineId = $(this).parents('.table').attr('id').replace('lineId','');
 					
-					$('#first_name_' + lineId).val(first_name);
-					$('#last_name_' + lineId).val(last_name);
-					$('#first_name_' + lineId + ', #last_name_' + lineId).attr("readonly","readonly");
+					$('#' + type + 'first_name_' + lineId).val(first_name);
+					$('#' + type + 'last_name_' + lineId).val(last_name);
+					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
 					
-					$('#auAuthorized' + lineId).attr('src','/images/biAuthorized.png');
-					$('#first_name_' + lineId + ', #last_name_' + lineId).parent().removeClass("has-error");
+					$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
+					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 					$('#linkPevzModal').modal("hide");
 					$('#linkPevzModal').find('.modal-body').first().html('');
 					
-					if($('#author_json_' + lineId).length){
-						$('#author_json_' + lineId).val("");
-						$('#author_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
+					if($('#' + type + 'json_' + lineId).length){
+						$('#' + type + 'json_' + lineId).val("");
+						$('#' + type + 'json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
 					}
-					if($('#editor_json_' + lineId).length){
-						$('#editor_json_' + lineId).val("");
-						$('#editor_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
-					}
-					if($('#translator_json_' + lineId).length){
-						$('#translator_json_' + lineId).val("");
-						$('#translator_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
-					}
+					//if($('#editor_json_' + lineId).length){
+					//	$('#editor_json_' + lineId).val("");
+					//	$('#editor_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
+					//}
+					//if($('#translator_json_' + lineId).length){
+					//	$('#translator_json_' + lineId).val("");
+					//	$('#translator_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
+					//}
 				});
 
 				$('#linkPevzModal').modal("show");

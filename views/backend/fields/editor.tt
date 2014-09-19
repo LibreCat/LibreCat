@@ -6,7 +6,7 @@
   <div class="row authorspan innerrow">
     <div class="col-md-2">
       <label>
-        <select class="ed_only" ng-model="creator_type" ng-init="creator_type='editor'" id="ed_0">
+        <select class="ed_only" id="ed_0">
         {% FOREACH creator IN fields.basic_fields.editor.label.keys %}
         <option value="{% fields.basic_fields.editor.label.$creator %}">{% creator %}</option>
         {% END %}
@@ -16,26 +16,27 @@
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
-        <input type="hidden" id="orig_first_name_0" value="" />
-        <input type="hidden" id="orig_last_name_0" value="" />
+        <input type="hidden" id="editor_orig_first_name_0" value="" />
+        <input type="hidden" id="editor_orig_last_name_0" value="" />
             
         <span class="form-group col-md-4">
-          <input type="text" id="first_name_0" ng-model="first_name_0" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
+          <input type="text" id="editor_first_name_0" ng-model="editor_first_name_0" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
         </span>
         <span class="form-group col-md-5">
-          <input type="text" id="last_name_0" ng-model="last_name_0" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
+          <input type="text" id="editor_last_name_0" ng-model="editor_last_name_0" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
         </span>
-        <input type="hidden" id="{{creator_type}}_json_0" name="{{creator_type}}" value='{"last_name":"{{last_name_0}}", "first_name":"{{first_name_0}}", "full_name":"{{last_name_0}}, {{first_name_0}}", "id":"{{id_0}}"}'>
+        <input type="hidden" id="editor_id_0" ng-model="editor_id_0" value="" />
+        <input type="hidden" id="editor_json_0" name="editor" value='{"last_name":"{{editor_last_name_0}}", "first_name":"{{editor_first_name_0}}", "full_name":"{{editor_last_name_0}}, {{editor_first_name_0}}", "id":"{{editor_id_0}}"}'>
         
         <span class="col-md-1">
           <span class="glyphicon glyphicon-minus author"></span>
         </span>
           
         <span class="col-md-2">
-          <input class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
-          <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip %}" />
+          <input class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" data-type="editor_" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
+          <img id="editor_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip %}" />
           <script>
-            $('#auAuthorized0').tooltip();
+            $('#editorAuthorized0').tooltip();
           </script>
         </span>
       </div>

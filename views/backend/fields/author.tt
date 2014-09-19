@@ -25,17 +25,18 @@
         <span class="form-group col-md-5">
           <input type="text" id="last_name_0" ng-model="last_name_0" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control{% IF fields.basic_fields.author.mandatory == "1" %} required{% END %}" value="" />
         </span>
-        <input type="hidden" id="{{creator_type}}_json_0" name="{{creator_type}}" value='{"last_name":"{{last_name_0}}", "first_name":"{{first_name_0}}", "full_name":"{{last_name_0}}, {{first_name_0}}", "id":"{{id_0}}"}'>
+        <input type="hidden" id="id_0" ng-model="id_0" value="" />
+        <input type="hidden" id="json_0" name="{{creator_type}}" value='{"last_name":"{{last_name_0}}", "first_name":"{{first_name_0}}", "full_name":"{{last_name_0}}, {{first_name_0}}", "id":"{{id_0}}"}'>
         
         <span class="col-md-1">
           <span class="glyphicon glyphicon-minus author"></span>
         </span>
           
         <span class="col-md-2">
-          <input class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
-          <img id="auAuthorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip %}" />
+          <input class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" data-type="" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
+          <img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip %}" />
           <script>
-            $('#auAuthorized0').tooltip();
+            $('#Authorized0').tooltip();
           </script>
         </span>
       </div>
