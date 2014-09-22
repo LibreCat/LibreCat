@@ -31,6 +31,7 @@ field_order:
     - publication
     - volume
     - author
+    - email
     - supervisor
     - editor
     - corporate_editor
@@ -60,6 +61,9 @@ field_order:
     - page
     - page_range
     - publication_identifier
+    - ipc
+    - ipn
+    - report_number
     - external_id
     - popular_science
     - quality_controlled
@@ -98,6 +102,9 @@ field_order:
     - page
     - page_range
     - publication_identifier
+    - ipc
+    - ipn
+    - report_number
     - pacs_class
     - msc_class
     - ccs_class
@@ -645,6 +652,12 @@ publicationTypes:
         year: *year
         publisher: *publisher
         language: *language
+        ipn:
+          label: "International Patent<br />Number"
+          mandatory: 1
+        ipc:
+          label: "International Patent<br />Classification"
+          mandatory: 1
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
@@ -656,10 +669,6 @@ publicationTypes:
         publication:
           label: "Published Source"
         publication_identifier: *publication_identifier
-        ipn:
-          label: "International Patent<br />Number"
-        ipc:
-          label: "International Patent<br />Classification"
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
