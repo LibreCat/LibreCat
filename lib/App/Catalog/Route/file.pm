@@ -1,5 +1,12 @@
 package App::Catalog::Route::file;
 
+=head1 NAME
+
+    App::Catalog::Route::file - routes for file handling:
+    upload & download files, request-a-copy.
+
+=cut
+
 use Catmandu::Sane;
 use Dancer qw/:syntax request/;
 use App::Catalog::Helper;
@@ -20,12 +27,19 @@ sub calc_date {
 	return $date_expires;
 }
 
-# Request-a-copy
-################
+=head1 PREFIX /requestcopy
+
+    Prefix for the feature 'request-a-copy'
+
+=cut
 prefix '/requestcopy' => sub {
 
-	# step one: user requests for document
-	# send mail to author and wait for approval
+=head2 GET requestcopy/:id/:file_id
+
+    Request a copy of the publication. Email will be sent
+    to the author.
+
+=cut
 	get '/requestcopy/:id/:file_id' => sub {
 		my $conf = h->config->{request_copy};
 		my $bag = 'x';
@@ -37,10 +51,10 @@ prefix '/requestcopy' => sub {
 			email => params->{email};
 			})
 		my $key = $stored->{_id};
-		my $mail_body = 
+		my $mail_body =
 		"The publication '$pub->{title}' has been requested by params->{name} (params->{email}).\n
 		To approve this request click on the link below:\n\n" .
-		h->host ."/requestcopy/approve/" . $key ."\n\n 
+		h->host ."/requestcopy/approve/" . $key ."\n\n
 		If you want to deny this request click on the following link:\n\n"
 		h->host ."/requestcopy/deny/" . $key ."\n\n
 		Your PUB system";
@@ -55,7 +69,12 @@ prefix '/requestcopy' => sub {
 		}
 	};
 
-	# author approves request
+=head2 GET /approve/:key
+
+    Author approves the request. Email will be sent
+    to user.
+
+=cut
 	get '/approve/:key' => sub {
 		my $data = $bag->get(params->{key});
 		$data->{approved} = 1;
@@ -75,8 +94,13 @@ prefix '/requestcopy' => sub {
 		}
 	};
 
-	# author denies request
-	get '/deny/:key' => sub {
+=head2 GET /refuse/:key
+
+    Author refuses the request for a copy. Email will be sent
+    to user. Delete request key from database.
+
+=cut
+	get '/refuse/:key' => sub {
 		my $data = $bag->get(params->{key});
 		$bag->delete(params->{key});
 		my $mail_body = "Your request has been denied by the author.\n\n
@@ -92,7 +116,12 @@ prefix '/requestcopy' => sub {
 		}
 	};
 
-	# user download approved request
+=head2 GET /download/:key
+
+    User received permission for downloading.
+    Now get the document if time has not expired yet.
+
+=cut
 	get '/download/:key' => sub {
 		my $check = h->getPermission(params->{key});
 		if ($check->[0]->{approved} == 1) {
@@ -104,8 +133,14 @@ prefix '/requestcopy' => sub {
 
 };
 
+=head2 GET /download/:id/:file_id
+
+    Download the document. Access level of the document
+    and user rights will be checked before.
+
+=cut
 get '/download/:id/:file_id' => sub {
-	
+
 	my $pub = edit_publication(params->{id});
 	my $access = $pub->{file}->{params->{file_id}}->{access_level};
 
@@ -118,7 +153,7 @@ get '/download/:id/:file_id' => sub {
 	my $ip = request->remote_adress;
 	if ($access eq 'unibi' && $ip =~ /^129.70/) {
 		send(params->{id}, $file_name);
-	} 
+	}
 
 	my $account = h->getAccount(session->{user})->[0];
 	my $role = session->{role};
@@ -131,7 +166,7 @@ get '/download/:id/:file_id' => sub {
 				$access_ok = 1;
 			}
 		}
-		
+
 		if ($access_ok)) {
 			send(params->{id}, $file_name);
 		} else {
@@ -143,8 +178,8 @@ get '/download/:id/:file_id' => sub {
 			if ($account->{_id} == $item) {
 				my $access_ok = 1;
 			}
-		} 
-		
+		}
+
 		if ($access_ok)) {
 			send(params->{id}, $file_name);
 		} else {
