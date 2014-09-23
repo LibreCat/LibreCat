@@ -54,7 +54,7 @@
 
 [% END %]
 <script>
-  $('.default-link').tooltip();
+  $('.citation-block-link').tooltip();
 </script>
 
 <!-- END hits.tt -->
