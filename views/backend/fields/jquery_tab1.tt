@@ -86,8 +86,10 @@ $('.oneToTwo').click(function(){
     });
     $('#basic_fields, #li_basic_fields').removeClass('active');
     $('#file_upload, #li_file_upload').addClass('active');
+    $('#li_file_upload').children('a').attr('href','#file_upload');
+    $('#li_file_upload').children('a').attr('data-toggle','tab');
     $('button[href=#file_upload]').attr('data-toggle','tab');
-    $('#li_file_upload').css('visibility','visible');
+    $('#li_file_upload').removeClass('disabled');
   }
 });
 

@@ -1,48 +1,86 @@
 // Tab forward two to three
 $('.twoToThree').click(function(e){
-if($('#id_dataReuseLicense').length || $('#id_openDataRelease').length){
-  if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_openDataRelease').is(':checked') || $('#id_dataReuseLicense').val() == '')){
-    if($('#id_dataReuseLicense').val() == ''){
-      $('#id_dataReuseLicense').parent().removeClass('alert-info');
-      $('#id_dataReuseLicense').parent().addClass('alert-danger');
-      alert('You need to choose a Data Re-Use License because you have attached files to this record.');
+if($('#id_data_reuse_license').length || $('#id_open_data_release').length){
+  if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
+    if($('#id_data_reuse_license').val() == ''){
+      $('#id_data_reuse_license').parent().removeClass('alert-info');
+      $('#id_data_reuse_license').parent().addClass('alert-danger');
+      alert('{% fields.file_upload.license.data_reuse_license.alert %}');
       e.stopImmediatePropagation();
     }
-    if(!$('#id_openDataRelease').is(':checked')) {
+    if(!$('#id_open_data_release').is(':checked')) {
       $('#odralert').removeClass('alert-info');
       $('#odralert').addClass('alert-danger');
-      alert('You need to accept the Open Data Release Statement because you have attached files to this record.');
+      alert('{% fields.file_upload.license.open_data_release.alert %}');
       document.location.href = "#stepTwo";
       e.stopImmediatePropagation();
     }
   }
-  else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && (!$('#id_openDataRelease').is(':checked') || $('#id_dataReuseLicense').val() == '')){
-    if($('#id_dataReuseLicense').val() == ''){
-      $('#id_dataReuseLicense').parent().removeClass('alert-info');
-      $('#id_dataReuseLicense').parent().addClass('alert-danger');
-      alert('You need to choose a Data Re-Use License because you have attached files to this record.');
+  else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
+    if($('#id_data_reuse_license').val() == ''){
+      $('#id_data_reuse_license').parent().removeClass('alert-info');
+      $('#id_data_reuse_license').parent().addClass('alert-danger');
+      alert('{% fields.file_upload.license.data_reuse_license.alert %}');
       e.stopImmediatePropagation();
     }
-    if(!$('#id_openDataRelease').is(':checked')) {
+    if(!$('#id_open_data_release').is(':checked')) {
       $('#odralert').removeClass('alert-info');
       $('#odralert').addClass('alert-danger');
-      alert('You need to accept the Open Data Release Statement because you have attached files to this record.');
+      alert('{% fields.file_upload.license.open_data_release.alert %}');
       document.location.href = "#stepTwo";
       e.stopImmediatePropagation();
     }
   }
   else {
     if($('.dropzone').first().children().length == 1){
-      if($('#id_dataReuseLicense').val() != ''){
-        $('#id_dataReuseLicense').val('');
+      if($('#id_data_reuse_license').val() != ''){
+        $('#id_data_reuse_license').val('');
       }
-      if($('#id_openDataRelease').is(':checked')){
-        $('#id_openDataRelease').prop("checked", false);
+      if($('#id_open_data_release').is(':checked')){
+        $('#id_open_data_release').prop("checked", false);
       }
     }
 
     $('#file_upload, #li_file_upload').removeClass('active');
-    $('#supplementary_ields, #li_supplementary_fields').addClass('active');
+    $('#supplementary_fields, #li_supplementary_fields').addClass('active');
+    $('#li_supplementary_fields').children('a').attr('href','#supplementary_fields');
+    $('#li_supplementary_fields').children('a').attr('data-toggle','tab');
+    $('#li_supplementary_fields').removeClass('disabled');
+    $('a[href=#supplementary_fields]').attr('data-toggle','tab');
+    $('#li_supplementary_fields').css('visibility','visible');
+  }
+}
+else if($('#id_pub_license').length){
+  if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && !$('#id_pub_license').is(':checked')){
+    if(!$('#id_pub_license').is(':checked')) {
+      $('#pub_license_alert').removeClass('alert-info');
+      $('#pub_license_alert').addClass('alert-danger');
+      alert('{% fields.file_upload.license.pub_license.alert %}');
+      document.location.href = "#stepTwo";
+      e.stopImmediatePropagation();
+    }
+  }
+  else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && !$('#id_pub_license').is(':checked')){
+    if(!$('#id_pub_license').is(':checked')) {
+      $('#pub_license_alert').removeClass('alert-info');
+      $('#pub_license_alert').addClass('alert-danger');
+      alert('{% fields.file_upload.license.pub_license.alert %}');
+      document.location.href = "#stepTwo";
+      e.stopImmediatePropagation();
+    }
+  }
+  else {
+    if($('.dropzone').first().children().length == 1){
+      if($('#id_pub_license').is(':checked')){
+        $('#id_pub_license').prop("checked", false);
+      }
+    }
+
+    $('#file_upload, #li_file_upload').removeClass('active');
+    $('#supplementary_fields, #li_supplementary_fields').addClass('active');
+    $('#li_supplementary_fields').children('a').attr('href', '#supplementary_fields');
+    $('#li_supplementary_fields').children('a').attr('data-toggle', 'tab');
+    $('#li_supplementary_fields').removeClass('disabled');
     $('a[href=#supplementary_fields]').attr('data-toggle','tab');
     $('#li_supplementary_fields').css('visibility','visible');
   }
@@ -50,9 +88,25 @@ if($('#id_dataReuseLicense').length || $('#id_openDataRelease').length){
 else {
     $('#file_upload, #li_file_upload').removeClass('active');
     $('#supplementary_fields, #li_supplementary_fields').addClass('active');
+    $('#li_supplementary_fields').children('a').attr('href','#supplementary_fields');
+    $('#li_supplementary_fields').children('a').attr('data-toggle','tab');
+    $('#li_supplementary_fields').removeClass('disabled');
     $('a[href=#supplementary_fields]').attr('data-toggle','tab');
     $('#li_supplementary_fields').css('visibility','visible');
 }
+});
+
+$('#li_supplementary_fields').click(function(){
+  if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && !$('#id_pub_license').is(':checked')){
+    $('#pub_license_alert').removeClass('alert-info');
+    $('#pub_license_alert').addClass('alert-danger');
+    alert('{% fields.file_upload.license.pub_license.alert %}');
+    $('#li_supplementary_fields').children('a').attr('href','#');
+    $('#li_supplementary_fields').children('a').attr('data-toggle','');
+    $('#li_supplementary_fields').addClass('disabled');
+    document.location.href = "#stepTwo";
+    e.stopImmediatePropagation();
+  }
 });
 
 

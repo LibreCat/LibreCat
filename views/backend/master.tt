@@ -16,18 +16,24 @@
       <a href="#basic_fields" data-toggle="tab">{% fields.basic_fields.tab_name %}</a>
     </li>
     {% IF fields.file_upload %}
-    <li id="li_file_upload" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
-      <a href="#file_upload" data-toggle="tab">{% fields.file_upload.tab_name %}</a>
+    <li id="li_file_upload" class="[% IF !allActive %]disabled[% END %]">
+      [% !allActive ? '<a href="#">' : '<a href="#file_upload" data-toggle="tab">' %]
+      {% fields.file_upload.tab_name %}
+      </a>
     </li>
     {% END %}
     {% IF fields.supplementary_fields %}
-    <li id="li_supplementary_fields" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
-      <a href="#supplementary_fields" data-toggle="tab">{% fields.supplementary_fields.tab_name %}</a>
+    <li id="li_supplementary_fields" class="[% IF !allActive %]disabled[% END %]">
+      [% !allActive ? '<a href="#">' : '<a href="#supplementary_fields" data-toggle="tab">' %]
+      {% fields.supplementary_fields.tab_name %}
+      </a>
     </li>
     {% END %}
     {% IF fields.related_material %}
-    <li id="li_related_material" [% IF !allActive %]style="visibility:hidden;"[% ELSE %]style="visibility:visible;"[% END %]>
-      <a href="#related_material" data-toggle="tab">{% fields.related_material.tab_name %}</a>
+    <li id="li_related_material" class="[% IF !allActive %]disabled[% END %]">
+      [% !allActive ? '<a href="#">' : '<a href="#related_material" data-toggle="tab">' %]
+      {% fields.related_material.tab_name %}
+      </a>
     </li>
     {% END %}
   </ul>
