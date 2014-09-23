@@ -3,15 +3,18 @@
     <a data-target="#licenses" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> <strong>Licenses</strong></a><br />
   
     <div id="licenses" class="collapse[% IF file %] in[% END %]">
-  
-      <strong>{% fields.fileUpload.licenses.dataReuseLicense.label %}</strong>[% IF file %]<span class="starMandatory">*</span>[% END %]
-      <div class="alert alert-info">
+    
+      {% IF fields.file_upload.license.data_reuse_license %}
+      <strong>{% fields.file_upload.license.data_reuse_license.label %}</strong>[% IF file %]<span class="starMandatory">*</span>[% END %]
+      <div class="row innerrow">
+        <div class="col-md-12 alert alert-info">
+        {% IF fields.file_upload.license.data_reuse_license %}
         Choose a license under which your uploaded data will be available:<br />
-        <select name="dataReuseLicense" id="id_dataReuseLicense" class="form-control">
+        <select name="data_reuse_license" id="id_data_reuse_license" class="form-control">
           <option value="">Select a license</option>
-          <option value="PDDL"[% IF dataReuseLicense == "PDDL" %] selected="selected"[% END %]>No restrictions - PDDL</option>
-          <option value="ODC-By"[% IF dataReuseLicense == "ODC-By" %] selected="selected"[% END %]>Attribution required - ODC-By</option>
-          <option value="ODbL"[% IF dataReuseLicense == "ODbL" %] selected="selected"[% END %]>Share alike - ODbL</option>
+          <option value="PDDL"[% IF data_reuse_license == "PDDL" %] selected="selected"[% END %]>No restrictions - PDDL</option>
+          <option value="ODC-By"[% IF data_reuse_license == "ODC-By" %] selected="selected"[% END %]>Attribution required - ODC-By</option>
+          <option value="ODbL"[% IF data_reuse_license == "ODbL" %] selected="selected"[% END %]>Share alike - ODbL</option>
         </select><br />
       
         <a data-target="#PDDL" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> The Open Data Commons Public Domain Dedication and License (PDDL) v1.0</a><br />
@@ -31,38 +34,70 @@
           Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br />
           <a href="http://opendatacommons.org/licenses/odbl/" target="_blank">http://opendatacommons.org/licenses/odbl/</a>
         </div>
+        {% END %}
+        </div>
       </div>
-    
-      <br />
-    
-      <strong>{% fields.file_upload.licenses.openDataRelease.label %}</strong>[% IF file %]<span class="starMandatory">*</span>[% END %]<br />
-    
-      <div class="alert alert-info" id="odralert">
-        I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br /><br />
-        Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br /><br />
-        I am aware, that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br />
-        I declare, that I do not violate these rules.<br />
-        I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.
+      {% END %}
+      
+      {% IF fields.file_upload.license.open_data_release || fields.file_upload.license.pub_license %}    
+      <strong>{% fields.file_upload.license.open_data_release.label %}{% fields.file_upload.license.pub_license.label %}</strong>[% IF file %]<span class="starMandatory">*</span>[% END %]<br />
+      
+      <div class="row innerrow">
+        <div class="col-md-12 alert alert-info"{% IF fields.file_upload.license.open_data_release %} id="odralert"{% ELSIF fields.file_upload.license.pub_license %} id="pub_license_alert"{% END %}>
+        {% IF fields.file_upload.license.open_data_release %}
+          {% fields.file_upload.license.open_data_release.disclaimer_text %}
+        {% ELSIF fields.file_upload.license.pub_license %}
+          {% fields.file_upload.license.pub_license.disclaimer_text %}
+        {% END %}
+        </div>
+        <label class="checkbox">
+          {% IF fields.file_upload.license.open_data_release %}
+            <input type="checkbox" value="1" id="id_open_data_release" name="open_data_release"[% IF open_rata_release == "1" %] checked="checked"[% END %] /> <strong>{% fields.file_upload.license.open_data_release.accept_text %}</strong>
+          {% ELSIF fields.file_upload.license.pub_license %}
+            <input type="checkbox" value="1" id="id_pub_license" name="accept"[% IF accept == "1" %] checked="checked"[% END %] /> <strong>{% fields.file_upload.license.pub_license.accept_text %}</strong>
+          {% END %}
+        </label>
       </div>
-      <label class="checkbox">
-        <input type="checkbox" value="1" id="id_openDataRelease" name="openDataRelease"[% IF openDataRelease == "1" %] checked="checked"[% END %] /> <strong>I have read and agree with the information above about releasing data under the selected license.</strong>
-      </label>
-      <br />
-    
-      If you have any questions, please contact:<br />
-      <strong>
-        <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713" target="_blank">Dr. Johanna Vompras</a><br />
-        0521 106-2694<br />
-        <a href="mailto:data@uni-bielefeld.de">data@uni-bielefeld.de</a><br />
-      </strong>
+      {% END %}
+      
+      <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+      </div>
+      
+      {% IF fields.file_upload.license.other_data_license %}
+      [% IF session.role == "super_admin" %]
+      <div class="row">
+        <div class="col-md-12">
+        <span class="starMandatory">{% fields.file_upload.license.other_data_license.warning %} <span class="glyphicon glyphicon-chevron-down"></span></span><br />
+        <strong>{% fields.file_upload.license.other_data_license.label %}</strong><br />
+        <textarea rows="3" class="form-control" id="id_otherDataLicense" name="other_data_license">[% other_data_license %]</textarea>
+        <span class="starMandatory">{% fields.file_upload.license.other_data_license.warning %} <span class="glyphicon glyphicon-chevron-up"></span></span><br /><br />
+        </div>
+      </div>
+      [% ELSIF session.role != "super_admin" && other_data_license %]
+      <div class="row">
+        <div class="col-md-12">
+        <strong>{% fields.file_upload.license.other_data_license.label %}</strong><br />
+        <textarea rows="3" class="form-control" id="id_otherDataLicense" name="other_data_license" readonly="readonly">[% other_data_license %]</textarea>
+        </div>
+      </div>
+      [% END %]
+      {% END %}
+      
+      <div class="row">
+        <div class="col-md-12">
+          {% fields.file_upload.license.info.text %}
+          {% fields.file_upload.license.info.contact %}
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
 // Research Data License checks
-$('#id_openDataRelease').click(function(){
-  if(!$('#id_openDataRelease').is(':checked')){
+$('#id_open_data_release').click(function(){
+  if(!$('#id_open_data_release').is(':checked')){
     if ($('.dropzone').first().children().length > 1){
       $('#liStepThree, #liStepFour').css('visibility','hidden');
       $('#odralert').removeClass('alert-info');
@@ -75,17 +110,31 @@ $('#id_openDataRelease').click(function(){
   }
 });
 
-$('#id_dataReuseLicense').change(function(){
-  if($('#id_dataReuseLicense').val() == ''){
+$('#id_pub_license').click(function(){
+  if(!$('#id_pub_license').is(':checked')){
     if ($('.dropzone').first().children().length > 1){
       $('#liStepThree, #liStepFour').css('visibility','hidden');
-      $('#id_dataReuseLicense').parent().removeClass('alert-info');
-      $('#id_dataReuseLicense').parent().addClass('alert-danger');
+      $('#pub_license_alert').removeClass('alert-info');
+      $('#pub_license_alert').addClass('alert-danger');
     }
   }
   else {
-    $('#id_dataReuseLicense').parent().removeClass('alert-danger');
-    $('#id_dataReuseLicense').parent().addClass('alert-info');
+    $('#pub_license_alert').removeClass('alert-danger');
+    $('#pub_license_alert').addClass('alert-info');
+  }
+});
+
+$('#id_data_reuse_license').change(function(){
+  if($('#id_data_reuse_license').val() == ''){
+    if ($('.dropzone').first().children().length > 1){
+      $('#liStepThree, #liStepFour').css('visibility','hidden');
+      $('#id_data_reuse_license').parent().removeClass('alert-info');
+      $('#id_data_reuse_license').parent().addClass('alert-danger');
+    }
+  }
+  else {
+    $('#id_data_reuse_license').parent().removeClass('alert-danger');
+    $('#id_data_reuse_license').parent().addClass('alert-info');
   }
 });
 </script>

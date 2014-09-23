@@ -140,6 +140,10 @@ file:
 		title: "some title"
 		description: "some description"
 		relation: "main_file"|"supplementary_material"...
+data_reuse_license: "pddl"
+open_data_release: 1|0
+other_data_license: "text"
+accept: 1|0
 doi: 10.214/test
 ddc:
 	- 530
