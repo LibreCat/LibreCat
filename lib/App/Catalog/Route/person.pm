@@ -69,7 +69,7 @@ prefix '/person' => sub {
         my $p = params;
         $p = h->nested_params($p);
         my $person = h->getPerson( session('personNumber') );
-        $person->{department} = $p;
+        $person->{department} = $p->{department};
         update_person($person);
 
         redirect '/myPUB';
