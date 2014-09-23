@@ -39,7 +39,7 @@
         [% IF session.role == 'super_admin' %]
           <li[% IF modus == "admin" %] class="active"[% END %]><a href="/myPUB/adminSearch">All Publications</a></li>
         [% END %]
-          <li[% IF modus == "user" %] class="active"[% END %]><a href="/myPUB/search">Personal Publications</a></li>
+          <li[% IF modus == "user" %] class="active"[% END %]><a href="/myPUB/search">My Publications</a></li>
         [% IF session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer") %]
           <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/reviewerSearch">Publications for Review</a></li>
         [% END %]
