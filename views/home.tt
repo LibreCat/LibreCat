@@ -40,10 +40,10 @@
           <li[% IF modus == "admin" %] class="active"[% END %]><a href="/myPUB/adminSearch">All Publications</a></li>
         [% END %]
           <li[% IF modus == "user" %] class="active"[% END %]><a href="/myPUB/search">Personal Publications</a></li>
-        [% IF session.role == 'reviewer' OR session.role == "super_admin" %]
+        [% IF session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer") %]
           <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/reviewerSearch">Publications for Review</a></li>
         [% END %]
-        [% IF session.role == "dataManager" OR session.role == "super_admin" %]
+        [% IF session.role == "dataManager" OR (session.role == "super_admin" AND modus == "dataManager") %]
           <li[% IF modus == "dataManager" %] class="active"[% END %]><a href="/myPUB/datamanagerSearch">Data Publications for Review</a></li>
         [% END %]
         </ul>
@@ -51,6 +51,7 @@
 
       <div class="col-md-11">
         <div class="tab-content">
+          [% IF session.role == 'super_admin' %]
           <div class="tab-pane[% IF modus == 'admin' %] active[% END %]" id="adminPubl">
             <div class="col-md-8">
               [% tabmodus = 'admin' %]
@@ -60,6 +61,7 @@
               [% INCLUDE right_menu_publ.tt %]
             </div>
           </div>
+          [% END %]
           <div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ">
             <div class="col-md-8">
               [% tabmodus = 'user' %]
@@ -69,6 +71,7 @@
               [% INCLUDE right_menu_publ.tt %]
             </div>
           </div>
+          [% IF session.role == "reviewer" OR (session.role == "super_admin" AND modus == "reviewer") %]
           <div class="tab-pane[% IF modus == 'reviewer' %] active[%END %]" id="review">
             <div class="col-md-8">
               [% tabmodus = 'reviewer' %]
@@ -78,6 +81,8 @@
               [% INCLUDE right_menu_publ.tt %]
             </div>
           </div>
+          [% END %]
+          [% IF session.role == "dataManager" OR (session.role == "super_admin" AND modus == "dataManager") %]
           <div class="tab-pane[% IF modus == 'dataManager' %] active[%END %]" id="data">
             <div class="col-md-8">
               [% tabmodus = 'dataManager' %]
@@ -87,6 +92,7 @@
               [% INCLUDE right_menu_publ.tt %]
             </div>
           </div>
+          [% END %]
         </div>
         <script>
         $('#myTab a').click(function (e) {
