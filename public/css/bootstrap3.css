@@ -6819,6 +6819,22 @@ td.visible-print {
 Modifications for PUB
 */
 
+
+.citation-block-link{
+  position:absolute; 
+  width:100%;
+  height:100%;
+  top:0;
+  left: 0;
+  z-index: 1;
+}
+.citation-block-div{
+    position: relative;
+}
+.citation-block-div:hover, .citation-block-div:focus {
+  background-color: #e6e6e6;
+}
+
 .ui-autocomplete {
 	position: absolute;
 	cursor: default;

@@ -1,4 +1,4 @@
-<!-- BEGIN hits_person.tt -->
+<!-- BEGIN hits.tt -->
 
 <!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->
 [% num = total; n = 0 %]
@@ -37,21 +37,24 @@
     <br /><button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Checked by your librarian."><i><span class="glyphicon glyphicon-ok"></span></i></button><br />
     [% END %]
   </div>
-  <div class="col-md-10">
+  <div class="col-md-11">
+    <div class="citation-block-div">
     <i>[% entry.year %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry.item('_id') %]</span></i><br />
     [% IF style == 'frontShort' %]
 	<a href="/myPUB/record/edit/[% entry.item('_id') %]">[% entry.title %]</a><br />
-    [% END %]
+	[% END %]
+	<a href="javascript:void(0);" onclick="window.location='/myPUB/record/edit/[% entry._id %]'" class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="Edit <i>[% entry.title | html %]</i>"></a>
     [% entry.citation.$style %][% IF style != "apa_indent" %]<br />[% END %]
+    </div>
     [% INCLUDE links.tt %]
     [% INCLUDE rec_details.tt %]
-  </div>
-
-  <div class="col-md-1" style="text-align:right;">
-    <i><a href="/myPUB/record/edit/[% entry.item('_id') %]"><span class="glyphicon glyphicon-pencil"></span></a></i>
   </div>
 </div>
 <div class="row">&nbsp;</div>
 
 [% END %]
-<!-- END hits_person.tt -->
+<script>
+  $('.default-link').tooltip();
+</script>
+
+<!-- END hits.tt -->
