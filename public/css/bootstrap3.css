@@ -6832,7 +6832,7 @@ Modifications for PUB
     position: relative;
 }
 .citation-block-div:hover, .citation-block-div:focus {
-  background-color: #e6e6e6;
+  background-color: #efefef;
 }
 
 .ui-autocomplete {
@@ -7148,6 +7148,16 @@ select.authedtrans, select.ed_only, select.relmat, select.relurl {
 	-moz-border-radius-topleft:4px;
 }
 
+.navbar-default {
+    /**background-color: #B6C828;*/
+    background-color: #f9f9f9;
+    border-color: #b6c828;
+    border-width: 0 0 4px 0;
+}
+.navbar-default .navbar-brand {
+  color: #B6C828;
+  text-shadow: #fff 1.5px 1.5px;
+}
 
 body {
 	line-height: 20px;
