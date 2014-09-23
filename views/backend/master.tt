@@ -8,7 +8,7 @@
   [% IF title %]
   <h3>[% title %] ([% type %])</h3>
   [% ELSE %]
-  <h3>Add new {% label %}</h3>
+  <h3>Add New {% label %}</h3>
   [% END %]
 
   <ul class="nav nav-tabs" id="tabs-left">
