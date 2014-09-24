@@ -216,7 +216,7 @@ sub getPersonData {
 		$user_data->{bis}->{forschend} = $forschend;
 		$user_data->{bis}->{former} = $former;
 		$user_data->{bis}->{nonExist} = $nonexist;
-		$user_data->{bis}->{personTitle} = $personTitle;
+		#$user_data->{bis}->{personTitle} = $personTitle;
 
 		$fixer->fix($user_data);
 
