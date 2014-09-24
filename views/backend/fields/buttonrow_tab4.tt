@@ -6,27 +6,17 @@
     <span class="form-group col-md-2">
       <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
     </span>
-    [% IF status == "public" %]
-    <span class="form-gourp col-md-2">
-      <a class="btn btn-default" href="/myPUB/record/return/[% _id %]" onClick="return confirm('Are you sure you want to return this record?');" name="return" value="recReturn">Return <img src="/images/edit-withdraw.png"/></a>
-    </span>
-    [% ELSIF status != "public" %]
-      [% IF session.role == "super_admin" %]
+    [% IF status != "public" OR session.role == "super_admin" %]
       <span class="form-group col-md-2">
         <a class="btn btn-default" href="/myPUB/record/delete/[% _id %]" onClick="return confirm('Are you sure you want to delete this record?');" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></a>
       </span>
-      [% ELSE %]
-      <span class="form-group col-md-2">
-        <a class="btn btn-default" href="/myPUB/record/return/[% _id %]" onClick="return confirm('Are you sure you want to return this record?');" name="return" value="recReturn">Return <img src="/images/edit-withdraw.png"/></a>
-      </span>
-      [% END %]
     [% END %]
     <span class="form-group col-md-2">
       <button type="submit" name="finalSubmit" value="recSave" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
     </span>
-    [% IF (status != "public" AND status != "submitted") %]
+    [% IF (status != "public" AND status != "submitted") OR (status == "submitted" AND session.role == "super_admin") %]
     <span class="form-group col-md-2">
-      <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-default">Publish <img src="/images/edit-submit.png"/></button>
+      <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-default{% IF fields.related_material.publish_button %}[% IF session.role != "super_admin" %] sure[% END %]{% END %}">Publish <img src="/images/edit-submit.png"/></button>
     </span>
     [% END %]
   </div>

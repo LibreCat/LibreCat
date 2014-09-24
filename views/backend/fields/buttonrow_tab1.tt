@@ -6,20 +6,20 @@
     <span class="form-group col-md-2">
       <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
     </span>
-    [% IF status == "public" %]
-    <span class="form-gourp col-md-2">
-      <a class="btn btn-default" href="/myPUB/record/return/[% _id %]" onClick="return confirm('Are you sure you want to return this record?');" name="return" value="recReturn">Return <img src="/images/edit-withdraw.png"/></a>
-    </span>
-    [% ELSIF status != "public" %]
-      [% IF session.role == "super_admin" %]
+    [% IF session.role == "super_admin" %]
       <span class="form-group col-md-2">
         <a class="btn btn-default" href="/myPUB/record/delete/[% _id %]" onClick="return confirm('Are you sure you want to delete this record?');" name="delete" value="Delete">Delete <img src="/images/edit-delete.png"/></a>
       </span>
-      [% ELSE %]
-      <span class="form-group col-md-2">
-        <a class="btn btn-default" href="/myPUB/record/return/[% _id %]" onClick="return confirm('Are you sure you want to return this record?');" name="return" value="recReturn">Return <img src="/images/edit-withdraw.png"/></a>
-      </span>
-      [% END %]
+    [% END %]
+    [% IF session.role == "super_admin" %]
+    <span class="form-group col-md-2">
+      <button type="submit" name="finalSubmit" value="recSave" class="btn btn-default oneToTwo">Save <img src="/images/edit-save.png"/></button>
+    </span>
+    [% END %]
+    [% IF status != "public" AND session.role == "super_admin" %]
+    <span class="form-group col-md-2">
+      <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-default oneToTwo">Publish <img src="/images/edit-submit.png"/></button>
+    </span>
     [% END %]
     <span class="form-group col-md-2">
       <a class="btn btn-default next-button oneToTwo" href="#file_upload">Next <span class="glyphicon glyphicon-chevron-right"></span></a>

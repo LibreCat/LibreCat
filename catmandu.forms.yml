@@ -239,6 +239,8 @@ publicationTypes:
         url:
           label: "Documents outside PUB"
           placeholder: "Enter a remote location (URL) of your file here"
+        publish_button:
+          alert: "Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified."
   bookeditor:
     label: "Book (Editor)"
     tmpl: bookEditor

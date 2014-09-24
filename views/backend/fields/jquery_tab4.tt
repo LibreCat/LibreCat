@@ -53,3 +53,7 @@ $('select.relurl').on('change', function() {
   //$('#relurljson_' + index).val('{"link": {"url": ' + arr[1] + ', "title": "", "description": "", "relation": "' + selval + '"}}');
   $('#relurljson_' + index).val(JSON.stringify(json));
 });
+
+$('.sure').click(function(){
+  return confirm('{% fields.related_material.publish_button.alert %}');
+});
