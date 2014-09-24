@@ -21,7 +21,7 @@ function linkPevz(element){
 	
 	// Someone checked the "Link to PEVZ Account" checkbox
 	else{
-		var puburl = 'http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/search_researcher?ftext=';
+		var puburl = '/myPUB/search_researcher?ftext=';
 		var narrowurl = "";
 		var longurl = "";
 		var first_name = $('#' + type + 'first_name_' + lineId).val();
