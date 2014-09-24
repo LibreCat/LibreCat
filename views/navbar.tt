@@ -12,6 +12,7 @@
     <![endif]-->
     <link href="/css/bootstrap3.css" rel="stylesheet" media="screen">
     <link href="/css/bootstrap-select.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript" src="/javascripts/jquery-latest.js"></script>
     <script src="/javascripts/jquery-ui-1.8.22.custom.min.js"></script>
     <script src="/javascripts/bootstrap3.js"></script>
