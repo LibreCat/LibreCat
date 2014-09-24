@@ -9,7 +9,9 @@ my $p = {
     "deeply.nested.hash" => "Value",
     "some.array.0.key"   => "Here we go!",
     "untouched"          => "ok",
+    "empty" => '',
 };
+$p->{"not_defined"} = undef;
 
 is_deeply(
     h->nested_params($p),

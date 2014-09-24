@@ -65,15 +65,13 @@ sub update_person {
 
     my $fixer = Catmandu::Fix->new(fixes => [
         'unless exists("account_status") add_field("account_status","inactive") end',
-        'unless exists("super_admin") add_field("super_admin","0") end',
-        'if any_match("data_manager.0.id", "^$") remove_field("data_manager") end',
-        'if any_match("reviewer.0.id", "^$") remove_field("reviewer") end',
         ]);
 
     $data->{full_name} = $data->{last_name} . ", " . $data->{first_name};
     $data->{old_full_name} = $data->{old_last_name} . ", " . $data->{old_first_name}
         if $data->{old_last_name} && $data->{old_first_name};
     $fixer->fix($data);
+
     h->authority_admin->add($data);
     h->authority_admin->commit;
 }
@@ -112,10 +110,6 @@ sub import_person {
 
     # decode_entities($email) if $email; # do we need this?
     return $merger->merge( $p1, $p2 );
-
-    # decode_entities($email) if $email;
-    # my $former = ( $res2 =~ /<\/pevz:kontakte>/ ) ? "0" : "1";
-    # my $nonexist = ( $former and !$personName ) ? "1" : "0";
 }
 
 # manage departments

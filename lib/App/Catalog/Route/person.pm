@@ -5,7 +5,7 @@ use Catmandu::Util qw(:array);
 use Dancer ':syntax';
 
 use App::Catalog::Helper;
-use App::Catalog::Controller::Admin qw/update_person/;
+use App::Catalog::Controller::Admin qw/:person/;
 
 prefix '/person' => sub {
 
@@ -68,7 +68,7 @@ prefix '/person' => sub {
 
         my $p = params;
         $p = h->nested_params($p);
-        my $person = h->getPerson( session('personNumber') );
+        my $person = edit_person( session('personNumber') );
         $person->{department} = $p->{department};
         update_person($person);
 

@@ -62,6 +62,14 @@ sub authority_department {
 ############################
 sub nested_params {
 	my ($self, $params) = @_;
+
+    foreach my $k (keys %$params) {
+        unless (defined $params->{$k}) {
+            delete $params->{$k};
+            next;
+        }
+        delete $params->{$k} if ($params->{$k} =~ /^$/);
+    }
 	my $fixer = Catmandu::Fix->new(fixes => ["expand()"]);
     return $fixer->fix($params);
 }
