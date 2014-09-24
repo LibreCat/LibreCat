@@ -7148,6 +7148,14 @@ select.authedtrans, select.ed_only, select.relmat, select.relurl {
 	-moz-border-radius-topleft:4px;
 }
 
+.navbar {
+	margin: 0;
+	min-height:10px;
+}
+.navbar-nav > li > a {
+  padding-top: 12px;
+  padding-bottom: 10px;
+}
 .navbar-default {
     /**background-color: #B6C828;*/
     background-color: #f9f9f9;
@@ -7157,6 +7165,7 @@ select.authedtrans, select.ed_only, select.relmat, select.relurl {
 .navbar-default .navbar-brand {
   color: #B6C828;
   text-shadow: #fff 1.5px 1.5px;
+  padding: 7px 0 7px 7px;
 }
 
 body {

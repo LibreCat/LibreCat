@@ -59,7 +59,7 @@
       	  <span class="icon-bar"></span>
       	  <span class="icon-bar"></span>
       	</button>
-      	<a class="navbar-brand" href="#"><span class=".glyphicon .glyphicon-home"></span> MyPUB</a>
+      	<a class="navbar-brand" href="#"><span class=".glyphicon .glyphicon-home"></span> <img src="/images/PUB_UNIBI_logo_gruen.gif" height="30" /></a>
      </div>
 
      <!-- Collect the nav links, forms, and other content for toggling -->
