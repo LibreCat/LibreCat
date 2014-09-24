@@ -6982,7 +6982,28 @@ h5 {
 	background:#eee;
 }
 
-
+.pubbutton{
+	color:#fff;
+	text-shadow:0 -1px 0 rgba(0,0,0,0.25);
+	background-color:#20496e;
+	*background-color:#20496e;
+	background-image:-moz-linear-gradient(top,#005580,#20496e);
+	background-image:-webkit-gradient(linear,0 0,0 100%,from(#005580),to(#20496e));
+	background-image:-webkit-linear-gradient(top,#005580,#20496e);
+	background-image:-o-linear-gradient(top,#005580,#20496e);
+	background-image:linear-gradient(to bottom,#005580,#20496e);
+	background-repeat:repeat-x;
+	border-color:#20496e #20496e #20496e;
+	border-color:rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#005580',endColorstr='#20496e',GradientType=0);
+	filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	font-size:105%;
+}
+.pubbutton:hover{
+	color:#fff;
+	background-color:#20496e;
+	*background-color:#20496e;
+}
 
 .corner_up{
     position: absolute;
