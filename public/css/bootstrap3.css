@@ -7005,6 +7005,28 @@ h5 {
 	*background-color:#20496e;
 }
 
+.publish-button{
+	color:#fff;
+	text-shadow:0 -1px 0 rgba(0,0,0,0.25);
+	background-color:#b6c828;
+	*background-color:#b6c828;
+	background-image:-moz-linear-gradient(top,#005580,#b6c828);
+	background-image:-webkit-gradient(linear,0 0,0 100%,from(#005580),to(#b6c828));
+	background-image:-webkit-linear-gradient(top,#005580,#b6c828);
+	background-image:-o-linear-gradient(top,#005580,#b6c828);
+	background-image:linear-gradient(to bottom,#005580,#b6c828);
+	background-repeat:repeat-x;
+	border-color:#b6c828 #b6c828 #b6c828;
+	border-color:rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#005580',endColorstr='#b6c828',GradientType=0);
+	filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	font-size:105%;
+}
+
+.librarian-approved {
+	color: #9dad23;
+}
+
 .corner_up{
     position: absolute;
     top: -1px;

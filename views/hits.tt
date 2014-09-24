@@ -19,7 +19,7 @@
   <div class="col-md-1" style="text-align:right">
     [% SWITCH entry.status %]
     [% CASE "public" %]
-      <span style="font-weight:bold;color:green;">Public</span>
+      <span style="font-weight:bold;color:#9dad23;">Public</span>
     [% CASE "unsubmitted" %]
       <span style="font-weight:bold;color:gray;">Private</span>
     [% CASE "returned" %]
@@ -33,8 +33,8 @@
     [% CASE "new" %]
       <span style="font-weight:bold;color:gray;">New/<br />Private</span>
     [% END %]
-    [% IF approved %]
-    <br /><button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Checked by your librarian."><i><span class="glyphicon glyphicon-ok"></span></i></button><br />
+    [% IF entry.approved %]
+    <div data-toggle="tooltip" data-placement="right" title="Checked by your librarian." class="librarian-approved"><button type="button" class="btn btn-default btn-xs disabled"><span class="fa fa-check librarian-approved"></span></button></div>
     [% END %]
   </div>
   <div class="col-md-11">
@@ -55,6 +55,7 @@
 [% END %]
 <script>
   $('.citation-block-link').tooltip();
+  $('.librarian-approved').tooltip();
 </script>
 
 <!-- END hits.tt -->
