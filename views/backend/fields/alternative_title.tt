@@ -1,14 +1,35 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="id_alternative_title">
-      {% fields.basic_fields.alternative_title.label %}{% fields.supplementary_fields.alternative_title.label %}{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %}<span class="starMandatory">*</span>{% END %}
+      {% fields.basic_fields.alternative_title.label %}{% fields.supplementary_fields.alternative_title.label %}{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %}<span class="starMandatory">*</span>{% END %}{% IF fields.basic_fields.alternative_title.multiple OR fields.supplementary_fields.alternative_title.multiple %} <span class="glyphicon glyphicon-plus" id="plusAlttitle"></span>{% END %}
     </label>
   </div>
-  <div class="col-md-10">
+  <div class="col-md-10" id="alternative_title">
+    {% IF fields.basic_fields.alternative_title.multiple OR fields.supplementary_fields.alternative_title.multiple %}
+    [% IF !alternative_title %]
+    {% END %}
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <input type="text" name="alternative_title" id="id_alternative_title" value="[% alternative_title %]" placeholder="{% fields.basic_fields.alternative_title.placeholder %}{% fields.supplementary_fields.alternative_title.placeholder %}" class="form-control{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_title.readonly OR fields.supplementary_fields.alternative_title.readonly %} readonly="readonly"{% END %}>
+        <input type="text" name="alternative_title_0" id="id_alternative_title" value="[% alternative_title %]" placeholder="{% fields.basic_fields.alternative_title.placeholder %}{% fields.supplementary_fields.alternative_title.placeholder %}" class="form-control{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_title.readonly OR fields.supplementary_fields.alternative_title.readonly %} readonly="readonly"{% END %}>
       </div>
     </div>
+    {% IF fields.basic_fields.alternative_title.multiple OR fields.supplementary_fields.alternative_title.multiple %}
+    [% ELSE %]
+    [% FOREACH alttitle IN alternative_title %]
+    <div class="form-group row innerrow">
+      <div class="col-md-9">
+        <input type="text" name="alternative_title_[% loop.index %]" id="id_alternative_title_[% loop.index %]" value="[% alttitle %]" placeholder="{% fields.basic_fields.alternative_title.placeholder %}{% fields.supplementary_fields.alternative_title.placeholder %}" class="form-control{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_title.readonly OR fields.supplementary_fields.alternative_title.readonly %} readonly="readonly"{% END %}>
+      </div>
+      <div class="col-md-1">
+        [% IF loop.index == "0" %]
+        <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('alternative_title_[% loop.index %]').value = '';"></div>
+        [% ELSE %]
+        <div class="glyphicon glyphicon-minus single"></div>
+        [% END %]
+      </div>
+    </div>
+    [% END %]
+    [% END %]
+    {% END %}
   </div>
 </div>
