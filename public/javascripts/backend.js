@@ -98,24 +98,17 @@ function linkPevz(element){
 					}
 				});
 				
-				//$('#id_' + lineId).val(pevzId);
 				$('#' + type + 'first_name_' + lineId).val(first_name);
 				$('#' + type + 'last_name_' + lineId).val(last_name);
+				$('#' + type + 'full_name_' + lineId).val(last_name + ", " + first_name);
+				$('#' + type + 'id_' + lineId).val(pevzId);
 				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
 				$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
 				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 				
-				if($('#' + type + 'json_' + lineId).length){
-					$('#' + type + 'json_' + lineId).val("");
-					$('#' + type + 'json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
-				}
-				//if($('#editor_json_' + lineId).length){
-				//	$('#editor_json_' + lineId).val("");
-				//	$('#editor_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
-				//}
-				//if($('#translator_json_' + lineId).length){
-				//	$('#translator_json_' + lineId).val("");
-				//	$('#translator_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
+				//if($('#' + type + 'json_' + lineId).length){
+				//	$('#' + type + 'json_' + lineId).val("");
+				//	$('#' + type + 'json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
 				//}
 				
 				pevzId = "";
@@ -197,26 +190,22 @@ function linkPevz(element){
 					
 					var lineId = $(this).parents('.table').attr('id').replace('lineId','');
 					
+					$('#' + type + 'first_name_' + lineId).val("");
 					$('#' + type + 'first_name_' + lineId).val(first_name);
+					$('#' + type + 'last_name_' + lineId).val("");
 					$('#' + type + 'last_name_' + lineId).val(last_name);
+					$('#' + type + 'full_name_' + lineId).val(last_name + ", " + first_name);
 					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
+					$('#' + type + 'id_' + lineId).val(pevzId);
 					
 					$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
 					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 					$('#linkPevzModal').modal("hide");
 					$('#linkPevzModal').find('.modal-body').first().html('');
 					
-					if($('#' + type + 'json_' + lineId).length){
-						$('#' + type + 'json_' + lineId).val("");
-						$('#' + type + 'json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
-					}
-					//if($('#editor_json_' + lineId).length){
-					//	$('#editor_json_' + lineId).val("");
-					//	$('#editor_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
-					//}
-					//if($('#translator_json_' + lineId).length){
-					//	$('#translator_json_' + lineId).val("");
-					//	$('#translator_json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
+					//if($('#' + type + 'json_' + lineId).length){
+					//	$('#' + type + 'json_' + lineId).val("");
+					//	$('#' + type + 'json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
 					//}
 				});
 

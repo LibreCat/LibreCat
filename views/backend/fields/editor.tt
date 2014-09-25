@@ -20,13 +20,13 @@
         <input type="hidden" id="editor_orig_last_name_0" value="" />
             
         <span class="form-group col-md-4">
-          <input type="text" id="editor_first_name_0" ng-model="editor_first_name_0" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
+          <input type="text" id="editor_first_name_0" ng-model="editor.0.first_name" name="editor.0.first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
         </span>
         <span class="form-group col-md-5">
-          <input type="text" id="editor_last_name_0" ng-model="editor_last_name_0" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
+          <input type="text" id="editor_last_name_0" ng-model="editor.0.last_name" name="editor.0.last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
         </span>
-        <input type="hidden" id="editor_id_0" ng-model="editor_id_0" value="" />
-        <input type="hidden" id="editor_json_0" name="editor" value='{"last_name":"{{editor_last_name_0}}", "first_name":"{{editor_first_name_0}}", "full_name":"{{editor_last_name_0}}, {{editor_first_name_0}}", "id":"{{editor_id_0}}"}'>
+        <input type="hidden" id="editor_id_0" name="editor.0.id" value="" />
+        <input type="hidden" id="editor_full_name_0" name="editor.0.full_name" value="{{editor.0.last_name}}, {{editor.0.first_name}}">
         
         <span class="col-md-1">
           <span class="glyphicon glyphicon-minus author"></span>
@@ -60,17 +60,17 @@
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
-        <input type="hidden" id="orig_first_name_[% loop.index %]" value="[% name.first_name %]" />
-        <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% name.last_name %]" />
+        <input type="hidden" id="editor_orig_first_name_[% loop.index %]" value="[% name.first_name %]" />
+        <input type="hidden" id="editor_orig_last_name_[% loop.index %]" value="[% name.last_name %]" />
             
         <span class="form-group col-md-4">
-          <input type="text" id="first_name_[% loop.index %]" ng-model="first_name_[% loop.index %]" ng-init="first_name_[% loop.index %]='[% name.first_name %]'" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+          <input type="text" id="editor_first_name_[% loop.index %]" ng-model="editor.[% loop.index %].first_name" name="editor.[% loop.index %].first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
         <span class="form-group col-md-5">
-          <input type="text" id="last_name_[% loop.index %]" ng-model="last_name_[% loop.index %]" ng-init="last_name_[% loop.index %]='[% name.last_name %]'" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+          <input type="text" id="editor_last_name_[% loop.index %]" ng-model="editor.[% loop.index %].last_name" name="editor.[% loop.index %].last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
-        <input type="hidden" id="id_[% loop.index %]" ng-model="id_[% loop.index %]" ng-init="id_[% loop_index %]='[% name.id %]'" value="[% name.id %]" />
-        <input type="hidden" id="author_json_[% loop.index %]" name="author" ng-model="author_[% loop.index %]" ng-init="author_[% loop.index %]='[% name.json.replace('"', "\\'") %]'" value='{"last_name":"{{last_name_[% loop.index %]}}", "first_name":"{{first_name_[% loop.index %]}}", "full_name":"{{last_name_[% loop.index %]}}, {{first_name_[% loop.index %]}}", "id":"[% name.id %]"}'>
+        <input type="hidden" id="editor_id_[% loop.index %]" ng-model="id_[% loop.index %]" ng-init="id_[% loop_index %]='[% name.id %]'" value="[% name.id %]" />
+        <input type="hidden" id="editor_full_name_[% loop.index %]" name="editor.[% loop.index %].full_name" value="{{editor.[% loop.index %].last_name}}, {{editor.[% loop.index %].first_name}}">
             
         <span class="col-md-1">
           [% IF loop.index == 0 %]
@@ -83,12 +83,12 @@
         <span class="col-md-2">
           <input class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
           [% IF name.id %]
-            <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="{% fields.basic_fields.editor.pevz_tooltip %}" />
+            <img id="editor_Authorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="{% fields.basic_fields.editor.pevz_tooltip %}" />
             <script>
-              $('#auAuthorized[% loop.index %]').tooltip();
+              $('#editor_Authorized[% loop.index %]').tooltip();
           </script>
           [% ELSE %]
-            <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.id %]"/>
+            <img id="editor_Authorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.id %]"/>
           [% END %]
         </span>
       </div>

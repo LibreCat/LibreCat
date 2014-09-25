@@ -9,10 +9,10 @@
     [% IF !project %]
     {% END %}
     <div class="row innerrow">
-      <input type="hidden" name="pj_projectOId_0" id="pj_idautocomplete_0" value="" />
+      <input type="hidden" name="project.0.id" id="pj_idautocomplete_0" value="" />
           
       <div class="form-group col-md-7">
-        <input type="text" name="pj_projectName_0" class="form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_0" value=""{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
+        <input type="text" name="project.0.name" class="form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_0" value=""{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
       </div>
         
       <div class="form-group col-md-2">
@@ -40,10 +40,10 @@
     [% ELSE %]
     [% FOREACH proj IN project %]
     <div class="row innerrow">
-      <input type="hidden" name="pj_projectOId_[% loop.index %]" id="pj_idautocomplete_[% loop.index %]" value="[% proj.oId %]" />
+      <input type="hidden" name="project.[% loop.index %].id" id="pj_idautocomplete_[% loop.index %]" value="[% proj.oId %]" />
           
       <div class="form-group col-md-7">
-        <input type="text" name="pj_projectName_[% loop.index %]" class="form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name %]"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
+        <input type="text" name="project.[% loop.index %].name" class="form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name %]"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
       </div>
 
       <div class="form-group col-md-2">

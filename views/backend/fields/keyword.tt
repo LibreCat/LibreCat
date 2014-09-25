@@ -10,7 +10,7 @@
     {% END %}
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <input type="text" name="keyword" id="keyword_0" value="" class="form-control{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.keyword.placeholder %}{% fields.supplementary_fields.keyword.placeholder %}"{% IF fields.basic_fields.keyword.readonly OR fields.supplementary_fields.keyword.readonly %} readonly="readonly"{% END %}/>
+        <input type="text" name="keyword.0" id="keyword_0" value="" class="form-control{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.keyword.placeholder %}{% fields.supplementary_fields.keyword.placeholder %}"{% IF fields.basic_fields.keyword.readonly OR fields.supplementary_fields.keyword.readonly %} readonly="readonly"{% END %}/>
       </div>
       <div class="col-md-1">
         <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('keyword_0').value = '';"></div>
@@ -21,7 +21,7 @@
     [% FOREACH keyw IN keyword %]
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <input type="text" name="keyword" id="keyword_[% loop.index %]" value="[% keyw %]" class="form-control{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.keyword.readonly OR fields.supplementary_fields.keyword.readonly %} readonly="readonly"{% END %}/>
+        <input type="text" name="keyword.[% loop.index %]" id="keyword_[% loop.index %]" value="[% keyw %]" class="form-control{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.keyword.readonly OR fields.supplementary_fields.keyword.readonly %} readonly="readonly"{% END %}/>
       </div>
       <div class="col-md-1">
         [% IF loop.index == "0" %]

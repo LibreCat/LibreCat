@@ -11,7 +11,7 @@
       {% END %}
       <div class="form-group row innerrow">
         <div class="col-md-9">
-          <input type="text" name="corporate_editor" id="id_corporate_editor_0" value="[% corporate_editor %]" class="form-control{% IF fields.basic_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.corporate_editor.placeholder %}{% fields.supplementary_fields.corporate_editor.placeholder %}"{% IF fields.basic_fields.corporate_editor.readonly OR fields.supplementary_fields.corporate_editor.readonly %} readonly="readonly"{% END %} />
+          <input type="text" name="corporate_editor.0" id="id_corporate_editor_0" value="" class="form-control{% IF fields.basic_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.corporate_editor.placeholder %}{% fields.supplementary_fields.corporate_editor.placeholder %}"{% IF fields.basic_fields.corporate_editor.readonly OR fields.supplementary_fields.corporate_editor.readonly %} readonly="readonly"{% END %} />
         </div>
         <div class="col-md-1">
           <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('id_corporate_editor_0').value = '';"></div>
@@ -22,7 +22,7 @@
       [% FOREACH cored IN corporate_editor %]
       <div class="form-group row innerrow">
         <div class="col-md-9">
-          <input type="text" name="corporate_editor" id="corporate_editor_[% loop.index %]" value="[% cored %]" class="form-control{% IF fields.basic_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.corporate_editor.readonly OR fields.supplementary_fields.corporate_editor.readonly %} readonly="readonly"{% END %} />
+          <input type="text" name="corporate_editor.[% loop.index %]" id="corporate_editor_[% loop.index %]" value="[% cored %]" class="form-control{% IF fields.basic_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.corporate_editor.readonly OR fields.supplementary_fields.corporate_editor.readonly %} readonly="readonly"{% END %} />
         </div>
         <div class="col-md-1">
           [% IF loop.index == "0" %]

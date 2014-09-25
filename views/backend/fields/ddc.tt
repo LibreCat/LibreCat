@@ -10,7 +10,7 @@
     {% END %}
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <select name="ddc" class="form-control{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} required{% END %}" id="select_ddc" onchange="changeSelectColor()">
+        <select name="ddc.0" class="form-control{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} required{% END %}" id="select_ddc" onchange="changeSelectColor()">
           <option value=""[% IF !ddc %] selected="selected"[% END %]>--- Select DDC ---</option>
           [% FOREACH group IN h.get_list('ddc').keys.sort %]
             <optgroup label="[% h.get_list('ddc').$group.optgroup %]">
@@ -28,7 +28,7 @@
       [% FOREACH d IN ddc %]
       <div class="form-group row innerrow">
         <div class="col-md-9">
-          <select name="ddc" class="form-control{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_ddc" onchange="changeSelectColor()">
+          <select name="ddc.[% loop.index %]" class="form-control{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_ddc" onchange="changeSelectColor()">
             <option value="">--- Select DDC ---</option>
             [% FOREACH group IN h.get_list('ddc').keys.sort %]
               <optgroup label="[% h.get_list('ddc').$group.optgroup %]">

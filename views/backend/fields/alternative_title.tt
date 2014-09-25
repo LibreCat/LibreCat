@@ -10,7 +10,7 @@
     {% END %}
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <input type="text" name="alternative_title_0" id="id_alternative_title" value="[% alternative_title %]" placeholder="{% fields.basic_fields.alternative_title.placeholder %}{% fields.supplementary_fields.alternative_title.placeholder %}" class="form-control{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_title.readonly OR fields.supplementary_fields.alternative_title.readonly %} readonly="readonly"{% END %}>
+        <input type="text" name="alternative_title.0" id="id_alternative_title" value="[% alternative_title %]" placeholder="{% fields.basic_fields.alternative_title.placeholder %}{% fields.supplementary_fields.alternative_title.placeholder %}" class="form-control{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_title.readonly OR fields.supplementary_fields.alternative_title.readonly %} readonly="readonly"{% END %}>
       </div>
     </div>
     {% IF fields.basic_fields.alternative_title.multiple OR fields.supplementary_fields.alternative_title.multiple %}
@@ -18,7 +18,7 @@
     [% FOREACH alttitle IN alternative_title %]
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <input type="text" name="alternative_title_[% loop.index %]" id="id_alternative_title_[% loop.index %]" value="[% alttitle %]" placeholder="{% fields.basic_fields.alternative_title.placeholder %}{% fields.supplementary_fields.alternative_title.placeholder %}" class="form-control{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_title.readonly OR fields.supplementary_fields.alternative_title.readonly %} readonly="readonly"{% END %}>
+        <input type="text" name="alternative_title.[% loop.index %]" id="id_alternative_title_[% loop.index %]" value="[% alttitle %]" placeholder="{% fields.basic_fields.alternative_title.placeholder %}{% fields.supplementary_fields.alternative_title.placeholder %}" class="form-control{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_title.readonly OR fields.supplementary_fields.alternative_title.readonly %} readonly="readonly"{% END %}>
       </div>
       <div class="col-md-1">
         [% IF loop.index == "0" %]
