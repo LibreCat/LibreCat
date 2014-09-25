@@ -124,6 +124,31 @@ prefix '/record' => sub {
         $hits->{preview} = 1;
         template 'frontend/frontdoor/record_preview.tt', $hits;
     };
+    
+    get '/publish/:id' => sub {
+    	my $id = params->{id};
+    	my $record = h->publication->get($id);
+    	
+    	#check if all mandatory fields are filled
+    	my $publtype = lc $record->{type};
+    	my $basic_fields = h->config->{forms}->{publicationTypes}->{$publtype}->{fields}->{basic_fields};
+    	my $field_check = 1;
+    	
+    	foreach my $key (keys %$basic_fields){
+    		next if $key eq "tab_name";
+    		if($basic_fields->{$key}->{mandatory} and $basic_fields->{$key}->{mandatory} eq "1" and (!$record->{$key} || $record->{$key} eq "")){
+    		  $field_check = 0;
+    		}
+    	}
+    	
+    	$record->{status} = "public" if $field_check;
+    	my $result = h->publication->add($record);
+    	my $publbag = Catmandu->store->bag('publication');
+        $publbag->add($result);
+        h->publication->commit;
+
+        redirect '/myPUB';
+    };
 };
 
 get '/upload' => sub {
