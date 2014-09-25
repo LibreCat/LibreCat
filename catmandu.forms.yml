@@ -168,6 +168,7 @@ publicationTypes:
         language: &language
           label: "Language"
           default: "eng"
+          multiple: 1
         year: &year
           mandatory: 1
           label: "Publishing Year"
