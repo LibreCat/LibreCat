@@ -30,7 +30,7 @@ $(document).keypress(function(e){
 });
 
 // Tab forward one to two
-$('.oneToTwo').click(function(){
+$('.oneToTwo').click(function(e){
   var check = 1;
   var oneauthor = 0;
   $('.creator').children('div').each(function(){
@@ -84,12 +84,17 @@ $('.oneToTwo').click(function(){
     $('.creator.has-error').each(function(){
       $(this).removeClass('has-error');
     });
-    $('#basic_fields, #li_basic_fields').removeClass('active');
-    $('#file_upload, #li_file_upload').addClass('active');
-    $('#li_file_upload').children('a').attr('href','#file_upload');
-    $('#li_file_upload').children('a').attr('data-toggle','tab');
-    $('button[href=#file_upload]').attr('data-toggle','tab');
-    $('#li_file_upload').removeClass('disabled');
+    if($(this).attr('name') != "finalSubmit"){
+      $('#basic_fields, #li_basic_fields').removeClass('active');
+      $('#file_upload, #li_file_upload').addClass('active');
+      $('#li_file_upload').children('a').attr('href','#file_upload');
+      $('#li_file_upload').children('a').attr('data-toggle','tab');
+      $('button[href=#file_upload]').attr('data-toggle','tab');
+      $('#li_file_upload').removeClass('disabled');
+    }
+  }
+  else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish")){
+    e.preventDefault();
   }
 });
 
