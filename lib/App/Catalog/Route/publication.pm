@@ -52,8 +52,20 @@ prefix '/record' => sub {
 
     post '/update' => sub {
         my $params = params;
+        
+        foreach my $key (keys %$params){
+        	if (ref $params->{$key} eq "ARRAY"){
+        		my $i = 0;
+        		foreach my $entry (@{$params->{$key}}){
+        			$params->{$key . "." . $i} = $entry,
+        			$i++;
+        		}
+        		delete $params->{$key};
+        	}
+        }
 
         $params = h->nested_params($params);
+        
         if ( ( $params->{department} and $params->{department} eq "" )
             or !$params->{department} )
         {
@@ -71,24 +83,27 @@ prefix '/record' => sub {
         {
             $params->{department} = [ $params->{department} ];
         }
+        
+        #return to_dumper $params;
 
-        if ( $params->{department} ) {
-            my $deparray;
-            foreach my $dept ( @{ $params->{department} } ) {
-                my $authdep = h->getDepartment($dept);
-                push @{$deparray},
-                    { id => $authdep->{_id}, name => $authdep->{name} };
-            }
+#        if ( $params->{department} ) {
+#            my $deparray;
+#            foreach my $dept ( @{ $params->{department} } ) {
+#                my $authdep = h->getDepartment($dept);
+#                push @{$deparray},
+#                    { id => $authdep->{_id}, name => $authdep->{name} };
+#            }
+#
+#            $params->{department} = ();
+#            $params->{department} = $deparray;
+#        }
+        
+        #return to_dumper $params;
 
-            $params->{department} = ();
-            $params->{department} = $deparray;
-        }
-
-        (session->{role} eq "super_admin") ? ($params->{approved} = 1)
-            : ($params->{approved} = 0);
-
-
+        (session->{role} eq "super_admin") ? ($params->{approved} = 1) : ($params->{approved} = 0);
+            
         my $result = update_publication($params);
+        return to_dumper $result;
 
         redirect '/myPUB';
     };
