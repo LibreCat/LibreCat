@@ -10,7 +10,7 @@
     {% END %}
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <select name="language.0.iso" ng-model="language.0" class="form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} required{% END %}" id="select_language_0">
+        <select name="language.0.iso" ng-model="language.0" ng-init="language.0='English'" class="form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} required{% END %}" id="select_language_0">
           [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
             <option value="[% lang %]"[% IF lang == language.text || (!language AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>
           [% END %]
@@ -27,7 +27,7 @@
       [% FOREACH lan IN language %]
       <div class="form-group row innerrow">
         <div class="col-md-9">
-          <select name="language.[% loop.index %].iso" ng-model="language.[% loop.index %]" class="form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_language_[% loop.index %]">
+          <select name="language.[% loop.index %].iso" ng-model="language.[% loop.index %]" ng-init="language.[% loop.index %]='English'" class="form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_language_[% loop.index %]">
             [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
               <option value="[% lang %]"[% IF lang == lan.text || (!lan AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>
             [% END %]
