@@ -64,10 +64,10 @@
         <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% name.last_name %]" />
             
         <span class="form-group col-md-4">
-          <input type="text" id="first_name_[% loop.index %]" ng-model="author.[% loop.index %].first_name" ng-init="first_name_[% loop.index %]='[% name.first_name %]'" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" class="form-control[% loop.first ? {% IF fields.basic_fields.author.mandatory == "1" %} required{% END %} : '' %]" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+          <input type="text" id="first_name_[% loop.index %]" ng-model="author.[% loop.index %].first_name" ng-init="author.[% loop.index %].first_name='[% name.first_name %]'" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" class="form-control[% loop.first ? {% IF fields.basic_fields.author.mandatory == "1" %} required{% END %} : '' %]" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
         <span class="form-group col-md-5">
-          <input type="text" id="last_name_[% loop.index %]" ng-model="author.[% loop.index %].last_name" ng-init="last_name_[% loop.index %]='[% name.last_name %]'" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control[% loop.first ? {% IF fields.basic_fields.author.mandatory == "1" %} required{% END %} : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+          <input type="text" id="last_name_[% loop.index %]" ng-model="author.[% loop.index %].last_name" ng-init="author.[% loop.index %].last_name='[% name.last_name %]'" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control[% loop.first ? {% IF fields.basic_fields.author.mandatory == "1" %} required{% END %} : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
         <input type="hidden" id="id_[% loop.index %]" name="author.[% loop.index %].id" value="[% name.id %]" />
         <input type="hidden" id="full_name_[% loop.index %]" name="author.[% loop.index %].full_name" value="{{author.[% loop.index %].last_name}}, {{author.[% loop.index %].first_name}}" />
@@ -117,10 +117,10 @@
         <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% name.last_name %]" />
             
         <span class="form-group col-md-4">
-          <input type="text" id="first_name_[% loop.index %]" ng-model="translator.[% loop.index %].first_name" ng-init="first_name_[% loop.index %]='[% name.first_name %]'" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" class="form-control[% loop.first ? {% IF fields.basic_fields.author.mandatory == "1" %} required{% END %} : '' %]" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+          <input type="text" id="first_name_[% loop.index %]" ng-model="translator.[% loop.index %].first_name" ng-init="translator.[% loop.index %].first_name='[% name.first_name %]'" placeholder="{% fields.basic_fields.author.first_name.placeholder %}" class="form-control[% loop.first ? {% IF fields.basic_fields.author.mandatory == "1" %} required{% END %} : '' %]" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
         <span class="form-group col-md-5">
-          <input type="text" id="last_name_[% loop.index %]" ng-model="translator.[% loop.index %].last_name" ng-init="last_name_[% loop.index %]='[% name.last_name %]'" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control[% loop.first ? {% IF fields.basic_fields.author.mandatory == "1" %} required{% END %} : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+          <input type="text" id="last_name_[% loop.index %]" ng-model="translator.[% loop.index %].last_name" ng-init="translator.[% loop.index %].last_name='[% name.last_name %]'" placeholder="{% fields.basic_fields.author.last_name.placeholder %}" class="form-control[% loop.first ? {% IF fields.basic_fields.author.mandatory == "1" %} required{% END %} : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
         <input type="hidden" id="id_[% loop.index %]" name="translator.[% loop.index %].id" value="[% name.id %]" />
         <input type="hidden" id="full_name_[% loop.index %]" name="translator.[% loop.index %].full_name" value="{{translator.[% loop.index %].last_name}}, {{translator.[% loop.index %].first_name}}" />

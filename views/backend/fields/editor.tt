@@ -64,12 +64,12 @@
         <input type="hidden" id="editor_orig_last_name_[% loop.index %]" value="[% name.last_name %]" />
             
         <span class="form-group col-md-4">
-          <input type="text" id="editor_first_name_[% loop.index %]" ng-model="editor.[% loop.index %].first_name" name="editor.[% loop.index %].first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+          <input type="text" id="editor_first_name_[% loop.index %]" ng-model="editor.[% loop.index %].first_name" ng-init="editor.[% loop.index %].first_name='[% name.first_name %]'" name="editor.[% loop.index %].first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
         <span class="form-group col-md-5">
-          <input type="text" id="editor_last_name_[% loop.index %]" ng-model="editor.[% loop.index %].last_name" name="editor.[% loop.index %].last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+          <input type="text" id="editor_last_name_[% loop.index %]" ng-model="editor.[% loop.index %].last_name" ng-init="editor.[% loop.index %].last_name='[% name.last_name %]'" name="editor.[% loop.index %].last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
         </span>
-        <input type="hidden" id="editor_id_[% loop.index %]" ng-model="id_[% loop.index %]" ng-init="id_[% loop_index %]='[% name.id %]'" value="[% name.id %]" />
+        <input type="hidden" id="editor_id_[% loop.index %]" value="[% name.id %]" />
         <input type="hidden" id="editor_full_name_[% loop.index %]" name="editor.[% loop.index %].full_name" value="{{editor.[% loop.index %].last_name}}, {{editor.[% loop.index %].first_name}}">
             
         <span class="col-md-1">
