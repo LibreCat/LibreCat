@@ -59,31 +59,32 @@ sub save_publication {
     	if(ref $data->{author} ne "ARRAY"){
     		$data->{author} = [$data->{author}];
     	}
-    	my $author = ();
-    	foreach (@{$data->{author}}){
-    		push @$author, $json->decode($_);
-    	}
-    	$data->{author} = $author;
+#    	my $author = ();
+#    	foreach (@{$data->{author}}){
+#    		push @$author, $json->decode($_);
+#    	}
+#    	$data->{author} = $author;
     }
+    return $data;
     if($data->{editor}){
     	if(ref $data->{editor} ne "ARRAY"){
     		$data->{editor} = [$data->{editor}];
     	}
-    	my $editor = ();
-    	foreach (@{$data->{editor}}){
-    		push @$editor, $json->decode($_);
-    	}
-    	$data->{editor} = $editor;
+#    	my $editor = ();
+#    	foreach (@{$data->{editor}}){
+#    		push @$editor, $json->decode($_);
+#    	}
+#    	$data->{editor} = $editor;
     }
     if($data->{translator}){
     	if(ref $data->{translator} ne "ARRAY"){
     		$data->{translator} = [$data->{translator}];
     	}
-    	my $translator = ();
-    	foreach (@{$data->{translator}}){
-    		push @$translator, $json->decode($_);
-    	}
-    	$data->{translator} = $translator;
+#    	my $translator = ();
+#    	foreach (@{$data->{translator}}){
+#    		push @$translator, $json->decode($_);
+#    	}
+#    	$data->{translator} = $translator;
     }
     if($data->{file}){
     	if(ref $data->{file} ne "ARRAY"){
@@ -119,17 +120,17 @@ sub save_publication {
     	if(ref $data->{language} ne "ARRAY"){
     		$data->{language} = [$data->{language}];
     	}
-    	foreach my $lang (@{$data->{language}}){
-    		my $language;
-    		$language->{text} = $lang;
-    		if($lang eq "English" or $lang eq "German"){
-    			$language->{iso} = h->config->{lists}->{language_preselect}->{$lang};
-    		}
-    		else {
-    			$language->{iso} = h->config->{lists}->{language}->{$lang};
-    		}
-    		$lang = $language;
-    	}
+#    	foreach my $lang (@{$data->{language}}){
+#    		my $language;
+#    		$language->{text} = $lang;
+#    		if($lang eq "English" or $lang eq "German"){
+#    			$language->{iso} = h->config->{lists}->{language_preselect}->{$lang};
+#    		}
+#    		else {
+#    			$language->{iso} = h->config->{lists}->{language}->{$lang};
+#    		}
+#    		$lang = $language;
+#    	}
     }
 
     foreach my $key (keys %$data){
