@@ -76,7 +76,6 @@ field_order:
   supplementary_fields:
     - doi
     - title
-    - publication
     - volume
     - corporate_editor
     - department
