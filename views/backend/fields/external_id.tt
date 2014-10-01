@@ -12,7 +12,7 @@
     {% END %}
     <div class="form-group row innerrow">
       <div class="col-md-3">
-        <select class="form-control" ng-model="source_0">
+        <select class="form-control" ng-model="external_id_source_0">
           <option value="">-- Select --</option>
           [% FOREACH extid IN external_identifier_list.keys %]
           <option value="[% extid %]">[% external_identifier_list.$extid.name %]</option>
@@ -20,7 +20,7 @@
         </select>
       </div>
       <div class="col-md-6">
-        <input type="text" value="" class="form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} required{% END %}" name="external_id.{{source_0}}.value" id="external_id_0"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonly="readonly"{% END %} />
+        <input type="text" value="" class="form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} required{% END %}" name="external_id.{{external_id_source_0}}" id="external_id_0"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonly="readonly"{% END %} />
       </div><!-- input-group -->
       <div class="col-md-1">
         <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('external_id_0').value = '';"></div>
@@ -31,7 +31,7 @@
       [% FOREACH ext_id IN external_id %]
       <div class="form-group row innerrow">
         <div class="col-md-3">
-          <select class="form-control" name="external_id.{{source_[% loop.index %]}}">
+          <select class="form-control" ng-model="external_id_source_[% loop.index %]">
             <option value="">-- Select --</option>
             [% FOREACH extid IN external_identifier_list.keys %]
             <option value="[% extid %]"[% IF extid == ext_id.id %] selected="selected"[% END %]>[% external_identifer_list.$extid.name %]</option>
@@ -39,7 +39,7 @@
           </select>
         </div>
         <div class="col-md-6">
-          <input type="text" value="[% ext_id.value %]" class="form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF loop.first %] required[% END %]{% END %}" name="external_id.{{source_[% loop.index %]}}.value" id="external_id_[% loop.index %]"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonyl="readonly"{% END %} />
+          <input type="text" value="[% ext_id.value %]" class="form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF loop.first %] required[% END %]{% END %}" name="external_id.{{external_id_source_[% loop.index %]}}" id="external_id_[% loop.index %]"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonyl="readonly"{% END %} />
         </div><!-- input-group -->
         <div class="col-md-1">
           [% IF loop.index == "0" %]
