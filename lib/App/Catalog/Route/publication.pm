@@ -103,7 +103,6 @@ prefix '/record' => sub {
         (session->{role} eq "super_admin") ? ($params->{approved} = 1) : ($params->{approved} = 0);
             
         my $result = update_publication($params);
-        return to_dumper $result;
 
         redirect '/myPUB';
     };

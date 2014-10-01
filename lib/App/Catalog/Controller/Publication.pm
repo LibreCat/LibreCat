@@ -65,7 +65,7 @@ sub save_publication {
 #    	}
 #    	$data->{author} = $author;
     }
-    return $data;
+
     if($data->{editor}){
     	if(ref $data->{editor} ne "ARRAY"){
     		$data->{editor} = [$data->{editor}];
