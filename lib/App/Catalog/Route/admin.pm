@@ -52,6 +52,14 @@ prefix '/admin' => sub {
         }
     };
 
+    get '/admin/import' => sub {
+        return "Not implemented.";
+    };
+
+    get '/admin/project' => sub {
+        return "Not implemented.";
+    };
+
     # manage departments
     get '/admin/department' => sub { };
 

@@ -13,6 +13,7 @@ publicationTypeOrder:
       - journalarticle
       - bookchapter
       - conferenceabstract
+      - conference
       - workingpaper
       - newspaperarticle
       - encyclopediaarticle
@@ -22,7 +23,6 @@ publicationTypeOrder:
   right:
     "Independent Publication":
       - book
-      - conference
       - patent
       - preprint
       - report

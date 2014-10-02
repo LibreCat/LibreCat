@@ -62,7 +62,7 @@ metrics:
   options:
     database_name: Metrics
 
-search:  
+search:
   package: ElasticSearch
   options:
     bags:
@@ -333,7 +333,7 @@ search:
                 '=': true
                 '<>': true
               field: '_all'
-              description: "index with common fields..."             
+              description: "index with common fields..."
             abstract:
               op:
                 'any': true
@@ -1070,7 +1070,7 @@ search:
               op:
                 '=': true
                 '<>': true
-              field: bis.forschend            
+              field: bis.forschend
             former:
               op:
                 '=': true
@@ -1084,7 +1084,7 @@ search:
                 '<': true
               field: combined_hits
               sort: true
-              
+
       department:
         cql_mapping:
           default_index: basic
@@ -1110,7 +1110,7 @@ search:
               op:
                 '=': true
                 'exact': true
-                
+
     transport: httptiny
     index_name: backend
     index_settings:
@@ -1168,7 +1168,7 @@ search:
             properties:
               organizationNumber: {type: string, analyzer: tag}
               sbcatId: {type: integer, analyzer: tag}
-              name: 
+              name:
                 type: multi_field
                 fields:
                   name: {type: string, include_in_all: true}
@@ -1219,7 +1219,7 @@ search:
             properties:
               organizationNumber: {type: string, analyzer: tag}
               sbcatId: {type: integer, analyzer: tag}
-              name: 
+              name:
                 type: multi_field
                 fields:
                   name: {type: string, include_in_all: true}
@@ -1228,7 +1228,7 @@ search:
             properties:
               organizationNumber: {type: string, analyzer: tag}
               sbcatId: {type: integer, analyzer: tag}
-              name: 
+              name:
                 type: multi_field
                 fields:
                   name: {type: string, include_in_all: true}
@@ -1332,86 +1332,16 @@ search:
           ddc: {type: string}
           external_id:
             properties:
-              isi:
-                properties:
-                  prefix_id:
-                    type: multi_field
-                    fields:
-                      prefix_id: {type: string}
-                      exact: {type: string, analyzer: name}
-              arxiv:
-                properties:
-                  prefix_id:
-                    type: multi_field
-                    fields:
-                      prefix_id: {type: string}
-                      exact: {type: string, analyzer: name}
-              pubmed:
-                properties:
-                  prefix_id:
-                    type: multi_field
-                    fields:
-                      prefix_id: {type: string}
-                      exact: {type: string, analyzer: name}
-              inspire:
-                properties:
-                  prefix_id:
-                    type: multi_field
-                    fields:
-                      prefix_id: {type: string}
-                      exact: {type: string, analyzer: name}
-              ahf:
-                properties:
-                  prefix_id:
-                    type: multi_field
-                    fields:
-                      prefix_id: {type: string}
-                      exact: {type: string, analyzer: name}
-              scoap3:
-                properties:
-                  prefix_id:
-                    type: multi_field
-                    fields:
-                      prefix_id: {type: string}
-                      exact: {type: string, analyzer: name}
-              phillister:
-                properties:
-                  prefix_id:
-                    type: multi_field
-                    fields:
-                      prefix_id: {type: string}
-                      exact: {type: string, analyzer: name}
-              opac:
-                properties:
-                  prefix_id:
-                    type: multi_field
-                    fields:
-                      prefix_id: {type: string}
-                      exact: {type: string, analyzer: name}
-              fp7:
-                properties:
-                  prefix_id:
-                    type: multi_field
-                    fields:
-                      prefix_id: {type: string}
-                      exact: {type: string, analyzer: name}
-              fp6:
-                properties:
-                  prefix_id:
-                    type: multi_field
-                    fields:
-                      prefix_id: {type: string}
-                      exact: {type: string, analyzer: name}
-              genbank:
-                type: multi_field
-                fields:
-                  genbank: {type: string}
-                  exact: {type: string, analyzer: tag}
-              nasc:
-                type: multi_field
-                fields:
-                  nasc: {type: string}
-                  exact: {type: string, analyzer: tag}
+              isi: {type: string}
+              arxiv: {type: string}
+              pubmed: {type: string}
+              inspire: {type: string}
+              ahf: {type: string}
+              scoap3: {type: string}
+              phillister: {type: string}
+              opac: {type: string}
+              fp7: {type: string}
+              fp6: {type: string}
           date_updated: {type: date, format: date_time_no_millis}
           file:
             properties:
@@ -1496,7 +1426,7 @@ search:
               yearCreated: {type: date, format: "yyyy"}
 
       researcher:
-        include_in_all: false  
+        include_in_all: false
         properties:
           _id: {type: string, include_in_all: true}
           full_name:
@@ -1524,7 +1454,7 @@ search:
               id: {type: string, analyzer: tag}
               name: {type: string, include_in_all: true}
           date_updated: {type: string, analyzer: datestring}
-              
+
       department:
         include_in_all: false
         properties:

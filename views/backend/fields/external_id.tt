@@ -28,18 +28,18 @@
     </div>
     {% IF fields.basic_fields.external_id.multiple OR fields.supplementary_fields.external_id.multiple %}
     [% ELSE %]
-      [% FOREACH ext_id IN external_id %]
+      [% FOREACH ext_id IN external_id.keys %]
       <div class="form-group row innerrow">
         <div class="col-md-3">
-          <select class="form-control" ng-model="external_id_source_[% loop.index %]">
+          <select class="form-control" ng-model="external_id_source_[% loop.index %]" ng-init="external_id_source_[% loop.index %]='[% ext_id %]'">
             <option value="">-- Select --</option>
             [% FOREACH extid IN external_identifier_list.keys %]
-            <option value="[% extid %]"[% IF extid == ext_id.id %] selected="selected"[% END %]>[% external_identifer_list.$extid.name %]</option>
+            <option value="[% extid %]"[% IF extid == ext_id %] selected="selected"[% END %]>[% external_identifier_list.$extid.name %]</option>
             [% END %]
           </select>
         </div>
         <div class="col-md-6">
-          <input type="text" value="[% ext_id.value %]" class="form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF loop.first %] required[% END %]{% END %}" name="external_id.{{external_id_source_[% loop.index %]}}" id="external_id_[% loop.index %]"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonyl="readonly"{% END %} />
+          <input type="text" value="[% external_id.$ext_id %]" class="form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF loop.first %] required[% END %]{% END %}" name="external_id.{{external_id_source_[% loop.index %]}}" id="external_id_[% loop.index %]"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonyl="readonly"{% END %} />
         </div><!-- input-group -->
         <div class="col-md-1">
           [% IF loop.index == "0" %]

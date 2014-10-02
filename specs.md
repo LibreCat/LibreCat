@@ -113,7 +113,7 @@ alternative_title:
 	- alternative title
 year: 2014
 author:
-	- 
+	-
 		first_name: "Gerhard"
 		last_name: "Sagerer"
 		full_name: "Sagerer, Gerhard"
@@ -154,14 +154,14 @@ keyword:
 	- keyword1
 	- keyword2
 language:
-	- 
+	-
 	  iso: ger
 	  name: German
 	-
 	  iso: eng
 	  name: English
 original_language:
-	- 
+	-
 	  iso: ger
 	  name: German
 	-
