@@ -1,14 +1,25 @@
 package App::Catalog::Route::import;
 
+=head1 NAME
+
+    App::Catalog::Route::import - central handler for import routes
+
+=cut
+
 use Dancer ':syntax';
 use Try::Tiny;
 use App::Catalog::Controller::Import;
 
+=head2 POST /import
+
+    Input is a source and an identifier. Returns a form with imported data.
+
+=cut
+
 post '/record/import' => sub {
 	my $p = params;
 
-    #return template "add_new" unless $p->{source} && $p->{id};
-	my $pub;
+    my $pub;
     try {
         $pub = import_publication($p->{source}, $p->{id});
     } catch {
@@ -17,15 +28,5 @@ post '/record/import' => sub {
 
 	template "backend/forms/$pub->{type}", $pub;
 };
-
-=head1 PREFIX /record
-
-    Bibliographic importer
-
-=head2 POST /import
-
-    Input is a source and an identifier. Returns a form with imported data.
-
-=cut
 
 1;

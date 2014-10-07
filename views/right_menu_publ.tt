@@ -23,11 +23,11 @@
       <p class="muted"><a href="[% h.newuri_for("$path", qp, ftext="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> Search: [% qp.ftext %]</p>
       [% END %]
     </form>
-    
+
     <div class="col-md-12">&nbsp;</div>
-    
+
     <!-- Filter -->
-    
+
     <h5>Filter Publications</h5>
 
     [% IF qp.keys.0 %]
@@ -92,7 +92,7 @@
     [% END %]
 
     [% END %]
-    
+
     <ul class="nav nav-tabs nav-stacked">
       [% IF facets.submissionStatus.terms.0 %]
       <li>
@@ -177,7 +177,7 @@
         </div>
       </li>
      [% END %]
-     [% IF facets.coAuthor.terms.0 %] 
+     [% IF facets.coAuthor.terms.0 %]
       <li>
         <button data-toggle="collapse" data-target="#co_authors"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Co-authors ([% facets.coAuthor.terms.size %])</a></button>
         <div class="facettecollapse">
@@ -194,7 +194,7 @@
         </div>
       </li>
       [% END %]
-      [% IF facets.coEditor.terms.0 %] 
+      [% IF facets.coEditor.terms.0 %]
       <li>
         <button data-toggle="collapse" data-target="#co_editors"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Co-editors ([% facets.coEditor.terms.size %])</a></button>
         <div class="facettecollapse">
@@ -230,17 +230,17 @@
       </li>
       [% END %]
     </ul>
-    
+
     <p>&nbsp;</p>
-    
+
     <ul class="nav nav-tabs nav-stacked">
-      
+
       [% IF facets.popularScience.total %]
       <li>
         <a href="[% h.newuri_for("$path", qp, popularscience="1") %]" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% facets.popularScience.total %] Popular Science</a>
       </li>
       [% END %]
-      
+
       [% IF facets.nonlu.total %]
       <li>
         <a href="[% h.newuri_for("$path", qp, nonunibi="1") %]" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% facets.nonlu.total %] External Publications</a>
@@ -255,13 +255,13 @@
       </li>
 
     </ul>
-    
+
     <p>&nbsp;</p>
-    
+
     <!-- Style / Sort -->
-    
+
     <h5>Display Publications</h5>
-    
+
     [% IF personSort OR personStyle %]
     <p class="text-success"><strong>Your public settings:</strong><br />
     [% IF personStyle %]
@@ -272,7 +272,7 @@
     [% END %]
     </p>
     [% END %]
-    
+
     [% IF qp.style OR qp.item('sort') %]
     <p class="text-warning"><strong>Your current settings:</strong><br />
     [% IF qp.style AND qp.style != personStyle %]
@@ -280,7 +280,7 @@
     [% ELSIF personStyle %]
       <span class="text-success"><strong>style:</strong> [% personStyle %][% IF personStyle == "frontShort" %] (default)[% END %]</span><br />
     [% END %]
-    
+
     [% IF qp.item('sort').0 %]
       [% FOREACH sortme IN qp.item('sort') %]
         [% IF (personSort.0 AND personSort.defined(sortme)) OR personSort == sortme %]
@@ -304,10 +304,10 @@
         <span class="text-success"><strong>sort:</strong> [% personSort %]</strong></span><br />
       [% END %]
     [% END %]
-    <a type="button" href="[% h.uri_for("/myPUB/person/preferences", qp) %]" name="save_settings" id="id_save_settings" class="btn btn-xs btn-block btn-warning">Save this as public default</a>
+    <a type="button" href="[% h.uri_for("/myPUB/person/preference", qp) %]" name="save_settings" id="id_save_settings" class="btn btn-xs btn-block btn-warning">Save this as public default</a>
     </p>
     [% END %]
-    
+
     <ul class="nav nav-tabs nav-stacked">
       <li>
         <button data-toggle="collapse" data-target="#hitsperpage"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.store.default_searchpage_size %][% END %]</a></button>

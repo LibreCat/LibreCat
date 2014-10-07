@@ -7,17 +7,17 @@ use Dancer::Request;
 use App::Catalog::Helper;
 
 get '/search_researcher' => sub {
-	
+
 	my $q = params->{'ftext'};
 	my $hits = h->search_researcher({q => $q});
-	
+
 	to_json($hits->{hits});
-	
+
 };
 
 get '/autocomplete_connect' => sub {
 	my $q = params->{'term'} || "";
-	
+
 	if($q ne ""){
 		if(session->{role} ne "user"){
 			$q = "title=" . $q . "* OR person=" . $q . "*",
@@ -26,11 +26,11 @@ get '/autocomplete_connect' => sub {
 			$q = "title=" . $q . "*";
 		}
 	}
-	
-	
+
+
 	my $hits = h->search_publication({q => $q, limit => 1000, sort => "title,,0"});
 	my $jsonhash;
-	
+
 	foreach my $hit (@{$hits->{hits}}){
 		my $label = "$hit->{title} ($hit->{year}, ";
 		if(!$hit->{author} and $hit->{editor}){
@@ -51,7 +51,7 @@ get '/autocomplete_connect' => sub {
 		else{
 			$label =~ s/, $/)/g;
 		}
-		
+
 		push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
 	}
 
@@ -60,13 +60,13 @@ get '/autocomplete_connect' => sub {
 };
 
 get '/autocomplete_hierarchy' => sub {
-	my $q = params->{'term'} || "";
-	$q = lc($q) if $q ne "";
-	my $fmt = params->{fmt} || "autocomplete";
+	return unless params->{'term'};
+
+    my $fmt = params->{fmt} || "autocomplete";
 	my $type = params->{type} || "department";
-	$q = "name=" . $q . "*" if ($q ne "");
+	my $q = "name=" . lc params->{'term'} . "*";
 	my $hits;
-	
+
 	if($type eq "department"){
 		$hits = h->search_department({q => $q, limit => 1000, sort => "name,,0"});
 	}
@@ -79,14 +79,12 @@ get '/autocomplete_hierarchy' => sub {
 	my $jsonhash = ();
 	my $sorted;
 	my $fullsort;
-	
-	#to_dumper($hits);
-	
+
 	if($fmt eq "autocomplete"){
 		foreach (@{$hits->{hits}}){
 			my $label = "";
-			
-			if($_->{tree}){				
+
+			if($_->{tree}){
 				foreach my $dep (@{$_->{tree}}){
 					next if $dep eq $_->{_id};
 					my $info = h->getDepartment($dep);
@@ -96,9 +94,9 @@ get '/autocomplete_hierarchy' => sub {
 				$label =~ s/ \| $//g;
 				$label =  "(" . $label . ")" if $label ne "";
 			}
-			
+
 			$label = $_->{name} . " " . $label;
-			
+
 			$label =~ s/"/\\"/g;
 			$label =~ s/\s+$//g;
 			push @$jsonhash, {id => $_->{_id}, label => $label};
@@ -109,7 +107,7 @@ get '/autocomplete_hierarchy' => sub {
 			push @$jsonhash, {id => $_->{_id}, label => $_->{name}};
 		}
 	}
-	
+
 	my $json = to_json($jsonhash);
 	return $json;
 
