@@ -5,11 +5,11 @@ use Catmandu::Util qw(:is :array);
 use Dancer qw/:syntax/;
 use Exporter qw/import/;
 
-our @EXPORT = qw/search/;
+our @EXPORT = qw/search_publication/;
 
 # handling the search
 #####################
-sub search {
+sub search_publication {
     my $par = shift;
 
     my $p;
@@ -103,7 +103,7 @@ sub search {
         $query        .= " AND submissionstatus=" . params->{submissionstatus};
         $doctypequery .= " AND submissionstatus=" . params->{submissionstatus};
     }
-    
+
     if(params->{department} and ref params->{department} ne "ARRAY"){
     	$query .= " AND department=" . params->{department};
     	$doctypequery .= " AND department=" . params->{department};

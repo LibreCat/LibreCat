@@ -1,38 +1,62 @@
 package App::Catalog::Route::publication;
 
+=head1 NAME App::Catalog::Route::publication
+
+    Route handler for publications.
+
+=cut
+
 use App::Catalog::Helper;
 use App::Catalog::Controller::Publication;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path/;
 use Try::Tiny;
 
+=head1 PREFIX /record
+
+    All actions related to a publication record are handled under
+    this prefix.
+
+=cut
+
 prefix '/record' => sub {
 
+=head2 GET /new
+
+    Prints a list of available publication types + import form.
+    Some fields are pre-filled.
+
+=cut
+
     get '/new' => sub {
-        my $type = params->{type} ||= '';
+        my $type = params->{type};
 
-        if ($type) {
-        	my $data;
-            my $id   = new_publication();
-            $data->{_id} = $id;
-            my $user = h->getPerson( session->{personNumber} );
-            $data->{department} = $user->{department};
+        template 'add_new' unless $type;
 
-            if($type eq "researchData"){
-            	$data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
-            }
+        my $data;
+        my $id = new_publication();
+        $data->{_id} = $id;
+        my $user = h->getPerson( session->{personNumber} );
+        $data->{department} = $user->{department};
 
-            template "backend/forms/$type", $data;
+        if ( $type eq "researchData" ) {
+            $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
         }
-        else {
-            template 'add_new';
-        }
+
+        template "backend/forms/$type", $data;
     };
 
-    # show the record, has user permission to see it?
+=head2 GET /edit/:id
+
+    Display record for id.
+    Checks if the user has permission the see/edit this record.
+
+=cut
+
     get '/edit/:id' => sub {
         my $id = param 'id';
 
+        forward '/' unless $id;
         my $rec;
         try {
             $rec = edit_publication($id);
@@ -42,30 +66,36 @@ prefix '/record' => sub {
         };
 
         if ($rec) {
-            my $tmpl = "backend/forms/$rec->{type}";
-            template $tmpl, $rec;
+            template "backend/forms/$rec->{type}", $rec;
         }
         else {
             template 'error', { error => "No publication with ID $id." };
         }
     };
 
+=head2 POST /update
+
+    Saves the record in the database.
+    Checks if the user has the rights to update this record.
+    Validation of the record is performed.
+
+=cut
+
     post '/update' => sub {
         my $params = params;
-        
-        foreach my $key (keys %$params){
-        	if (ref $params->{$key} eq "ARRAY"){
-        		my $i = 0;
-        		foreach my $entry (@{$params->{$key}}){
-        			$params->{$key . "." . $i} = $entry,
-        			$i++;
-        		}
-        		delete $params->{$key};
-        	}
+
+        foreach my $key ( keys %$params ) {
+            if ( ref $params->{$key} eq "ARRAY" ) {
+                my $i = 0;
+                foreach my $entry ( @{ $params->{$key} } ) {
+                    $params->{ $key . "." . $i } = $entry, $i++;
+                }
+                delete $params->{$key};
+            }
         }
 
         $params = h->nested_params($params);
-        
+
         if ( ( $params->{department} and $params->{department} eq "" )
             or !$params->{department} )
         {
@@ -83,29 +113,22 @@ prefix '/record' => sub {
         {
             $params->{department} = [ $params->{department} ];
         }
-        
-        #return to_dumper $params;
 
-#        if ( $params->{department} ) {
-#            my $deparray;
-#            foreach my $dept ( @{ $params->{department} } ) {
-#                my $authdep = h->getDepartment($dept);
-#                push @{$deparray},
-#                    { id => $authdep->{_id}, name => $authdep->{name} };
-#            }
-#
-#            $params->{department} = ();
-#            $params->{department} = $deparray;
-#        }
-        
-        #return to_dumper $params;
+        ( session->{role} eq "super_admin" )
+            ? ( $params->{approved} = 1 )
+            : ( $params->{approved} = 0 );
 
-        (session->{role} eq "super_admin") ? ($params->{approved} = 1) : ($params->{approved} = 0);
-            
         my $result = update_publication($params);
 
         redirect '/myPUB';
     };
+
+=head2 GET /return/:id
+
+    Set status to 'returned'.
+    Checks if the user has the rights to return this record.
+
+=cut
 
     get '/return/:id' => sub {
         my $id  = params->{id};
@@ -121,11 +144,22 @@ prefix '/record' => sub {
         redirect '/myPUB';
     };
 
-    # deleting records, for admins only
+=head2 GET /delete/:id
+
+    Deletes record with id. For admins only.
+
+=cut
+
     get '/delete/:id' => sub {
         delete_publication( params->{id} );
         redirect '/myPUB';
     };
+
+=head2 GET /preview/id
+
+    Prints the frontdoor for every record.
+
+=cut
 
     get '/preview/:id' => sub {
         my $id   = params->{id};
@@ -138,26 +172,31 @@ prefix '/record' => sub {
         $hits->{preview} = 1;
         template 'frontend/frontdoor/record_preview.tt', $hits;
     };
-    
+
     get '/publish/:id' => sub {
-    	my $id = params->{id};
-    	my $record = h->publication->get($id);
-    	
-    	#check if all mandatory fields are filled
-    	my $publtype = lc $record->{type};
-    	my $basic_fields = h->config->{forms}->{publicationTypes}->{$publtype}->{fields}->{basic_fields};
-    	my $field_check = 1;
-    	
-    	foreach my $key (keys %$basic_fields){
-    		next if $key eq "tab_name";
-    		if($basic_fields->{$key}->{mandatory} and $basic_fields->{$key}->{mandatory} eq "1" and (!$record->{$key} || $record->{$key} eq "")){
-    		  $field_check = 0;
-    		}
-    	}
-    	
-    	$record->{status} = "public" if $field_check;
-    	my $result = h->publication->add($record);
-    	my $publbag = Catmandu->store->bag('publication');
+        my $id     = params->{id};
+        my $record = h->publication->get($id);
+
+        #check if all mandatory fields are filled
+        my $publtype = lc $record->{type};
+        my $basic_fields
+            = h->config->{forms}->{publicationTypes}->{$publtype}->{fields}
+            ->{basic_fields};
+        my $field_check = 1;
+
+        foreach my $key ( keys %$basic_fields ) {
+            next if $key eq "tab_name";
+            if (    $basic_fields->{$key}->{mandatory}
+                and $basic_fields->{$key}->{mandatory} eq "1"
+                and ( !$record->{$key} || $record->{$key} eq "" ) )
+            {
+                $field_check = 0;
+            }
+        }
+
+        $record->{status} = "public" if $field_check;
+        my $result  = h->publication->add($record);
+        my $publbag = Catmandu->store->bag('publication');
         $publbag->add($result);
         h->publication->commit;
 

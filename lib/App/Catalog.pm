@@ -16,6 +16,7 @@ use App::Catalog::Route::search;
 
 use Authentication::Authenticate;
 
+# make variables with leading '_' visible in TT
 $Template::Stash::PRIVATE = 0;
 
 hook 'before' => sub {
@@ -29,13 +30,13 @@ get '/' => sub {
     my $params = params;
 
     if(session->{role} eq "super_admin"){
-    	forward '/myPUB/adminSearch', $params;
+    	forward '/myPUB/search/admin', $params;
     }
     elsif(session->{role} eq "reviewer"){
-        forward '/myPUB/reviewerSearch', $params;
+        forward '/myPUB/search/reviewer', $params;
     }
     elsif(session->{role} eq "dataManager"){
-    	forward '/myPUB/datamanagerSearch', $params;
+    	forward '/myPUB/search/datamanager', $params;
     }
     else{
         forward '/myPUB/search', $params;
@@ -74,13 +75,13 @@ post '/login' => sub {
             $params->{path} = params->{path} if params->{path};
 
             if(session->{role} eq "super_admin"){
-            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/adminSearch';
+            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/search/admin';
             }
             elsif(session->{role} eq "reviewer"){
-            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/reviewerSearch';
+            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/search/reviewer';
             }
             elsif(session->{role} eq "dataManager"){
-            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/datamanagerSearch';
+            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/search/datamanager';
             }
             else{
             	$params->{path} ? redirect $params->{path} : redirect '/myPUB/search';

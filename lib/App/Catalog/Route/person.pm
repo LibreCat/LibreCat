@@ -1,5 +1,12 @@
 package App::Catalog::Route::person;
 
+=head1 NAME
+
+    App::Catalog::Route::person - handles person settings
+
+=cut
+
+
 use Catmandu::Sane;
 use Catmandu::Util qw(:array);
 use Dancer ':syntax';
@@ -7,9 +14,20 @@ use Dancer ':syntax';
 use App::Catalog::Helper;
 use App::Catalog::Controller::Admin qw/:person/;
 
+=head1 PREFIX /person
+
+    All person settings are handled within the prefix '/person'.
+
+=cut
 prefix '/person' => sub {
 
-    get '/preferences' => sub {
+=head2 GET /preference
+
+    User edits the preferred citation style and sorting
+    for his own publication list.
+
+=cut
+    get '/preference' => sub {
 
         my $person = h->getPerson( session('personNumber') );
         my $style;
@@ -51,6 +69,12 @@ prefix '/person' => sub {
         redirect '/myPUB';
     };
 
+=head2 POST /author_id
+
+    User adds author identifiers to db (e.g. ORCID). These will
+    be displayed on author's profile page.
+
+=cut
     post '/author_id' => sub {
 
         my $person     = h->authority_user->get( params->{_id} );
@@ -64,6 +88,12 @@ prefix '/person' => sub {
 
     };
 
+=head1 POST /affiliation
+
+    User edits his affiliation. Will be displayed if you opens
+    new publication form.
+
+=cut
     post '/affiliation' => sub {
 
         my $p = params;
