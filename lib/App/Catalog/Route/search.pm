@@ -1,48 +1,90 @@
 package App::Catalog::Route::search;
 
+=head1 NAME
+
+    App::Catalog::Route::search
+
+=cut
+
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use App::Catalog::Helper;
-use App::Catalog::Controller::Search;
+use App::Catalog::Controller::Search qw/search_publication/;
 
+=head2 PREFIX /search
 
-get '/adminSearch' => sub {
-    my $params = params;
+    All publication searches are handled within the
+    prefix 'search'.
 
-    (session->{role} ne "super_admin") && (redirect '/myPUB/reviewerSearch');
+=cut
 
-    $params->{modus} = "admin";
-    search($params);
+prefix => '/search' => {
 
-};
+=head2 GET /admin
 
-get '/reviewerSearch' => sub {
-    my $params = params;
+    Performs search for admin.
 
-    (session->{role} ne "super_admin" and session->{role} ne "reviewer")
-    	&& (redirect '/myPUB/search');
+=cut
 
-    $params->{modus} = "reviewer";
-    search($params);
+    get '/admin' => sub {
+        my $params = params;
 
-};
+        ( session->{role} ne "super_admin" )
+            && ( redirect '/myPUB/reviewerSearch' );
 
-get '/datamanagerSearch' => sub {
-    my $params = params;
+        $params->{modus} = "admin";
+        search_publication($params);
 
-    (session->{role} ne "super_admin" and session->{role} ne "dataManager")
-    	&& (redirect '/myPUB/search');
+    };
 
-    $params->{modus} = "dataManager";
-    search($params);
+=head2 GET /reviewer
 
-};
+    Performs search for reviewer.
 
-get '/search' => sub {
-    my $params = params;
+=cut
 
-    $params->{modus} = "user";
-    search($params);
+        get '/reviewer' => sub {
+        my $params = params;
+
+        ( session->{role} ne "super_admin" and session->{role} ne "reviewer" )
+            && ( redirect '/myPUB/search' );
+
+        $params->{modus} = "reviewer";
+        search_publication($params);
+
+        };
+
+=head2 GET /datamanager
+
+    Performs search for data manager.
+
+=cut
+
+        get '/datamanager' => sub {
+        my $params = params;
+
+        (           session->{role} ne "super_admin"
+                and session->{role} ne "dataManager" )
+            && ( redirect '/myPUB/search' );
+
+        $params->{modus} = "dataManager";
+        search_publication($params);
+
+        };
+
+=head2 GET /
+
+    Performs search for user.
+
+=cut
+
+        get '/' => sub {
+        my $params = params;
+
+        $params->{modus} = "user";
+        search_publication($params);
+
+        };
 
 };
 
