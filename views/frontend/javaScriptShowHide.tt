@@ -1,0 +1,64 @@
+function ReduceAuthors (){
+  document.getElementById('showAut').innerHTML= '<br /><a href="#" onclick="ShowAuthors();"><img src="[% h.host %]/images/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a>' ;
+}
+
+function ShowAuthors (){
+  var str = "" ;
+  [% FOREACH au IN author -%]
+    [% IF loop.count > 12 %]
+    str +=  " ; [% IF au.personNumber %]<a href='/person/[% au.personNumber %]'>[% au.fullName %]</a><sup class='muted'>UniBi</sup>[% ELSE %][% au.fullName -%][% END %]" ; 
+    [% END -%]
+  [% END %]
+  str += '<br /><a href="#" onclick="ReduceAuthors();"><img src="[% h.host %]/images/bullet_minuszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />Less</a>' ;
+  document.getElementById('showAut').innerHTML= str ;
+}
+
+function ReduceGenBankIDs (){
+  document.getElementById('showGen').innerHTML= '<br /><a href="#" onclick="ShowGenBankIDs();"><img src="[% h.host %]/images/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a>' ;
+}
+
+function ShowGenBankIDs (){
+  var str = "" ;
+  [% FOREACH id_entry IN genbankID -%]
+    [% IF loop.count > 15 %]
+    str +=  '<a href="http://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]" style="margin-right:2px;">[% id_entry %]</a> ' ;
+    [% END -%]
+  [% END %]
+  str += '<br /><a href="#" onclick="ReduceGenBankIDs();"><img src="[% h.host %]/images/bullet_minuszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />Less</a>' ;
+  document.getElementById('showGen').innerHTML= str ;
+}
+
+function ReduceFiles (){
+  document.getElementById('showFiles').innerHTML= '<a href="#" onclick="ShowFiles();"><img src="[% h.host %]/images/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a>' ;
+}
+
+function ShowFiles (){
+  var str = "" ;
+  [% FOREACH fi IN file %]
+    [% IF loop.count > 3 %]
+    str +=  '<br />[% INCLUDE frontdoor/oa_lock_js.tt %] <a href="[% h.host %]/download/[% oId %]/[% fi.fileOId %]" title="[% fi.fileName %]">[% fi.fileName %]</a><span class="text-muted"> [% h.get_file_size(oId, fi.fileName) %]</span>' ; 
+    [% END -%]
+  [% END %]
+  str += '<br /><a href="#" onclick="ReduceFiles();"><img src="[% h.host %]/images/bullet_minuszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />Less</a>' ;
+  document.getElementById('showFiles').innerHTML= str ;
+}
+
+function ReduceAuthorFacet () {
+  $('#showAuthorFacet').hide();
+  $('#showAuthorFacetLink').show();
+}
+
+function ShowAuthorFacet (){
+  $('#showAuthorFacet').show();
+  $('#showAuthorFacetLink').hide();
+}
+
+function ReduceEditorFacet () {
+  $('#showEditorFacet').hide();
+  $('#showEditorFacetLink').show();
+}
+
+function ShowEditorFacet (){
+  $('#showEditorFacet').show();
+  $('#showEditorFacetLink').hide();
+}

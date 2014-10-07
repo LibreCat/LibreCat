@@ -135,8 +135,7 @@ prefix '/record' => sub {
         $hits->{style}
             = h->config->{store}->{default_fd_style} || "frontShort";
         $hits->{marked}  = 0;
-        $hits->{preview} = 1;
-        template 'frontend/frontdoor/record_preview.tt', $hits;
+        template 'frontend/frontdoor/record.tt', $hits;
     };
     
     get '/publish/:id' => sub {

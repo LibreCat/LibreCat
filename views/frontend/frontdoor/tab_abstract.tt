@@ -1,0 +1,7 @@
+<!-- BEGIN tab abstract -->
+<div class="tab-pane" id="abstract">
+[% FOREACH ab IN abstract %]
+	[% ab.text | html %]<br /><br />
+[% END %]
+</div>
+<!-- END tab abstract -->

@@ -1,0 +1,74 @@
+<!-- BEGIN tab_filedetails -->
+	
+<div class="tab-pane" id="fileDetails">
+  <div class="frontdoor">
+    [% IF dataReuseLicense OR otherDataLicense %] 
+    <strong>All files available under the following license(s):</strong><br />
+    [% END %]
+    [% IF dataReuseLicense %]
+      <div class="alert alert-green">Data Re-Use License
+      [% SWITCH dataReuseLicense %]
+	  [% CASE 'PDDL' %]<a href="http://opendatacommons.org/licenses/pddl/" target="_blank">The Open Data Commons Public Domain Dedication and License (PDDL) v1.0</a>
+	  [% CASE 'ODC-By' %]<a href="http://opendatacommons.org/licenses/by/" target="_blank">The Open Data Commons Attribution License (ODC-By) v1.0</a>
+	  [% CASE 'ODbL' %]<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">The Open Database License (ODbL) v1.0</a>
+      [% END %]
+      </div>
+    [% END %]
+    [% IF otherDataLicense %]
+      <div class="alert alert-green">[% otherDataLicense %]</div>
+    [% END %]
+    </div>
+  
+  [% FOREACH fi IN file.nsort('fileOrder') %]
+  <div class="frontdoor">
+    <div class="frontdoor_left">File Name</div>
+    <div class="frontdoor_right">
+      <a href="[% h.shost %]/download/[% oId %]/[% fi.fileOId %]">
+        [% fi.fileName %]
+      </a><span class="text-muted"> [% h.get_file_size(oId, fi.fileName) %]</span>
+    </div>
+  </div>
+    [% IF fi.fileTitle %]
+    <div class="frontdoor">
+      <div class="frontdoor_left">File Title</div>
+      <div class="frontdoor_right">
+        [% fi.fileTitle %]
+      </div>
+    </div>
+    [% END %]
+    [% IF fi.description %]
+    <div class="frontdoor">
+      <div class="frontdoor_left">Description</div>
+      <div class="frontdoor_right">
+        [% fi.description %]
+      </div>
+    </div>
+    [% END %]
+    <div class="frontdoor">
+    <div class="frontdoor_left">Access Level</div>
+    <div class="frontdoor_right">
+      [% SWITCH fi.accessLevel %]
+        [% CASE 'openAccess' %]
+        [% INCLUDE oa_lock.tt %] Open Access
+            
+        [% CASE 'lu' %]
+        [% INCLUDE oa_lock.tt %] UniBi Only
+            
+        [% CASE 'admin' %]
+        [% INCLUDE oa_lock.tt %] Author/Reviewer/Admin Only
+      [% END %]
+    </div>
+    </div>
+    [% IF fi.dateLastUploaded %]
+    <div class="frontdoor">
+      <div class="frontdoor_left">Last Uploaded</div>
+      <div class="frontdoor_right">
+        [% fi.dateLastUploaded %]
+      </div>
+    </div>
+    [% END %]
+    <div>&nbsp;</div>
+  [% END %]
+</div><!-- tab-pane fileDetails -->
+
+<!-- END tab_filedetails -->

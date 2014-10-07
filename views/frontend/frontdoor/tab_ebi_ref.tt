@@ -1,0 +1,22 @@
+<div class="tab-pane" id="ebi_references">
+<h5>[% ebiData.references.total %] References</h5>
+Data provided by <a href="http://europepmc.org/">Europe PubMed Central</a>.<br /><br />
+[% refArray = ebiData.references.data %]
+[% FOREACH reference IN refArray.nsort('citedOrder') %]
+<div class="frontdoor">
+  <div class="frontdoor_right">
+  [% IF reference.id %]
+  <span class="fa fa-share-square-o"></span> <a href="http://europepmc.org/abstract/MED/[% reference.id %]">[% reference.title %]</a><br />
+  [% ELSE %]
+  [% reference.title %]<br />
+  [% END %]
+  [% reference.authorString %], [% IF reference.journalAbbreviation %] <i>[% reference.journalAbbreviation %]</i> [% reference.volume%]([% reference.issue%]),[% END %] [% reference.pubYear %]
+  [% IF reference.id %]
+  <br />
+  PMID: <a href="http://europepmc.org/abstract/MED/[% reference.id %]">[% reference.id %]</a>
+  [% END %]
+  </div>
+</div>
+[% END %]
+
+</div>

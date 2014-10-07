@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+
+<!-- BEGIN header_head.tt -->
+
+<head>
+[% IF personPageTitle %]
+<title>[% personPageTitle %]</title>
+[% ELSIF title %]
+<title>[% title %]</title>
+[% ELSE %]
+<title>PUB &ndash; Publications at Bielefeld University</title>
+[% END %]
+
+<!-- General Metatags -->
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-language" content="de,en" />
+<meta http-equiv="language" content="de,en" />
+<meta name="language" content="deutsch, de, english, en" />
+[% IF preview %]<meta http-equiv="refresh" content="60; URL=[% h.host %]/[% bag %]/[% id %]">[% END %]
+
+<!-- Google Scholar Tags -->
+
+<meta name="citation_title" content="[% title %]" />[% FOREACH author_entry IN author %]
+<meta name="citation_author" content="[% author_entry.full_name %]" />[% END %][% IF year %]
+<meta name="citation_date" content="[% year %]" />[% END %][% IF file %][% FOREACH fi IN file %]
+<meta name="citation_pdf_url" content="[% h.host %]/download/[% id %]/[% fi.fileOId %]" />[% END %][% END %][% IF doi %]
+<meta name="citation_pdf_url" content="http://doi.org/[% doi %]" />[% ELSIF doiInfo.doi %]
+<meta name="citation_pdf_url" content="http://doi.org/[% doiInfo.doi %]" />[% ELSE %][% IF link %][% FOREACH li IN link %]
+<meta name="citation_pdf_url" content="[% li.url %]" />[% END %][% END %][% END %][% IF publication %]
+<meta name="citation_journal_title" content="[% publication %]" />[% END %][% IF volume %]
+<meta name="citation_volume" content="[% volume %]" />[% END %][% IF issue %]
+<meta name="citation_issue" content="[% issue %]" />[% END %][% IF pagesStart %]
+<meta name="citation_startpage" content="[% pagesStart %]" />[% END %][% IF pagesEnd %]
+<meta name="citation_lastpage" content="[% pagesEnd %]" />[% END %][% IF issn %]
+<meta name="citation_issn" content="[% issn.0 %]" />[% END %][% IF isbn %]
+<meta name="citation_isbn" content="[% isbn.0 %]" />[% END %]
+
+<!-- DC-Tags -->
+
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+<meta name="DC.title" content="[% IF personPageTitle %][% personPageTitle %][% ELSE %][% mainTitle %][% END %]" />[% FOREACH author_entry IN author %]
+<meta name="DC.creator" content="[% author_entry.fullName %]" />[% END %][% IF year %]
+<meta name="DC.date" content="[% year %]" />[% END %][% IF language %]
+<meta name="DC.language" scheme="ISO639-1" content="[% language.iso %]" />[% END %]
+<meta name="DC.identifier" content="[% h.host %][% request.path %]" />[% IF abstract %][% FOREACH abstract_entry IN abstract %][% UNLESS loop.first %][% END %]
+<meta name="DC.description" content="[% abstract_entry.text | html %]" />[% END %][% END %][% FOREACH rel_entry IN entry.host %][% IF rel_entry.issn %]
+<meta name="DC.source.ISSN" content="[% rel_entry.issn.0 %]" />[% END %][% IF rel_entry.isbn %]
+<meta name="DC.source.ISBN" content="[% rel_entry.isbn.0 %]" />[% END %][% END %]
+<meta name="DC.type" content="[% h.display_gs_doctypes(documentType) %]" />[% IF doi %]
+<link rel="DC.relation" href="http://doi.org/[% doi %]" />[% ELSIF doiInfo.doi %]
+<link rel="DC.relation" href="http://doi.org/[% doiInfo.doi %]" />[% END %][% IF urn %]
+<link rel="DC.relation" href="http://nbn-resolving.de/[% urn %]" />[% END %][% IF issn %]
+<link rel="DC.relation" href="urn:ISSN:[% issn.0 %]" />[% END %][% IF isbn %]
+<link rel="DC.relation" href="urn:ISBN:[% isbn.0 %]" />[% END %]
+
+<!-- Other Meta, JS and CSS -->
+
+<link rel="icon" href="//www.uni-bielefeld.de/icons/uni-logo-icon-16.png" type="image/png" />
+<link rel="search" href="//search.uni-bielefeld.de/" type="text/html" />
+<link rel="help" href="//www.uni-bielefeld.de/help.html" type="text/html" />
+<link href="//www.uni-bielefeld.de/Universitaet/impressum.html" rel="copyright" type="text/html" />
+<link rel="stylesheet" type="text/css" media="screen" href="//www.uni-bielefeld.de/css/unistandard_2009.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/frontend.css" />
+<link rel="stylesheet" type="text/css" media="print" href="/css/print.css" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="/pub-opensearch.xml" title="PUB" />
+<script type="text/javascript" src="//www.uni-bielefeld.de/javascript/CrossPlatform.js"></script>
+<script type="text/javascript" src="//www.uni-bielefeld.de/javascript/Popup.js"></script>
+<script type="text/javascript" src="/javascripts/jquery.js"></script>
+<script type="text/javascript" src="/javascripts/tabs.js"></script>
+
+<script type="text/javascript">
+[% INCLUDE frontend/javaScript.tt %]
+
+function createAjaxObject () {
+
+        if (navigator.appName.search("Microsoft") > -1) {
+                resObjektPUB = new ActiveXObject("MSXML2.XMLHTTP");
+        }
+        else{
+                resObjektPUB = new XMLHttpRequest();
+        
+          return resObjektPUB ;
+        }
+}
+
+
+var isBusyMet = false;
+        
+
+</script>
+
+<style type="text/css">
+<!--
+/* don't display link in suggested citation */
+.frontdoor_hidden { display:none; }
+-->
+</style>
+
+<!-- END header_head.tt -->
