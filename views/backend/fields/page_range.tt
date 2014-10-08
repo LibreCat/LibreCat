@@ -1,8 +1,10 @@
 <div class="row innerrow">
   <div class="col-md-2">
+    {% IF fields.basic_fields.page_range.mandatory OR fields.supplementary_fields.page_range.mandatory %}<span class="starMandatory">{% END %}
     <label for="id_page_start">
-      {% fields.basic_fields.page_range.label %}{% fields.supplementary_fields.page_range.label %}{% IF fields.basic_fields.page_range.mandatory OR fields.supplementary_fields.page_range.mandatory %}<span class="starMandatory">*</span>{% END %}
+      {% fields.basic_fields.page_range.label %}{% fields.supplementary_fields.page_range.label %}
     </label>
+    {% IF fields.basic_fields.page_range.mandatory OR fields.supplementary_fields.page_range.mandatory %}*</span>{% END %}
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-3">

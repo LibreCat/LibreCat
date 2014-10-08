@@ -1,0 +1,14 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label>
+      
+    </label>
+  </div>
+  <div class="col-md-10">
+    <div class="form-group row innerrow">
+      <div class="col-md-9">
+        <span class="starMandatory">Fieldname *</span> = Required field
+      </div>
+    </div>
+  </div>
+</div>

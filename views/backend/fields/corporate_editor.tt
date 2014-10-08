@@ -1,9 +1,11 @@
 <span ng-controller="angularSearch">
   <div class="row innerrow">
     <div class="col-md-2">
+      {% IF fields.basic_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor.mandatory %}<span class="starMandatory">{% END %}
       <label for="corp_ed">
-        {% fields.basic_fields.corporate_editor.label %}{% fields.supplementary_fields.corporate_editor.label %}{% IF fields.basic_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor.mandatory %}<span class="starMandatory">*</span>{% END %}{% IF fields.basic_fields.corporate_editor.multiple OR fields.supplementary_fields.corporate_editor.multiple %} <span ng-click="cloneCorped($event)" class="glyphicon glyphicon-plus" id="plusCored"></span>{% END %}
+        {% fields.basic_fields.corporate_editor.label %}{% fields.supplementary_fields.corporate_editor.label %}
       </label>
+      {% IF fields.basic_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor.mandatory %}*</span>{% END %}{% IF fields.basic_fields.corporate_editor.multiple OR fields.supplementary_fields.corporate_editor.multiple %} <span ng-click="cloneCorped($event)" class="glyphicon glyphicon-plus" id="plusCored"></span>{% END %}
     </div>
     <div class="col-md-10" id="corporate_editor">
       {% IF fields.basic_fields.corporate_editor.multiple OR fields.supplementary_fields.corporate_editor.multiple %}

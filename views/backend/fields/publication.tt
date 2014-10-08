@@ -1,8 +1,10 @@
 <div class="row innerrow">
   <div class="col-md-2">
+    {% IF fields.basic_fields.publication.mandatory OR fields.supplementary_fields.publication.mandatory %}<span class="starMandatory">{% END %}
     <label for="id_publication">
-      {% fields.basic_fields.publication.label %}{% fields.supplementary_fields.publication.label %}{% IF fields.basic_fields.publication.mandatory OR fields.supplementary_fields.publication.mandatory %}<span class="starMandatory">*</span>{% END %}
+      {% fields.basic_fields.publication.label %}{% fields.supplementary_fields.publication.label %}
     </label>
+    {% IF fields.basic_fields.publication.mandatory OR fields.supplementary_fields.publication.mandatory %}*</span>{% END %}
   </div>
   <div class="col-md-10">
     <div class="form-group row innerrow">
