@@ -1,8 +1,10 @@
 <div class="row innerrow">
   <div class="col-md-2">
+    {% IF fields.basic_fields.ipc.mandatory OR fields.supplementary_fields.ipc.mandatory %}<span class="starMandatory">{% END %}
     <label for="id_ipc">
-      {% fields.basic_fields.ipc.label %}{% fields.supplementary_fields.ipc.label %}{% IF fields.basic_fields.ipc.mandatory OR fields.supplementary_fields.ipc.mandatory %}<span class="starMandatory">*</span>{% END %}
+      {% fields.basic_fields.ipc.label %}{% fields.supplementary_fields.ipc.label %}
     </label>
+    {% IF fields.basic_fields.ipc.mandatory OR fields.supplementary_fields.ipc.mandatory %}*</span>{% END %}
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-9">

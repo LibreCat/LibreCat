@@ -1,9 +1,10 @@
 <div class="row innerrow">
   <div class="col-md-2">
+    {% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}<span class="starMandatory">{% END %}
     <label for="abstract">
       {% fields.basic_fields.abstract.label %}{% fields.supplementary_fields.abstract.label %}
-      {% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}<span class="starMandatory">*</span>&nbsp;{% END %}{% IF fields.basic_fields.abstract.multiple OR fields.supplementary_fields.abstract.multiple %}<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} data-mandatory="yes"{% END %} id="plusAbstract"></span>{% END %}
     </label>
+    {% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}*</span>&nbsp;{% END %}{% IF fields.basic_fields.abstract.multiple OR fields.supplementary_fields.abstract.multiple %}<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} data-mandatory="yes"{% END %} id="plusAbstract"></span>{% END %}
   </div>
   <div class="col-md-10" id="abstract">
     {% IF fields.basic_fields.abstract.multiple OR fields.supplementary_fields.abstract.multiple %}

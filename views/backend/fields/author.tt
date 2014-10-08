@@ -4,15 +4,16 @@
 <span id="authorEditorTranslator" ng-controller="angularSearch">
   [% IF !author AND !editor AND !translator %]
   <div class="row authorspan innerrow">
-    <div class="col-md-2">
+    <div class="col-md-2 form-group">
+      {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">{% END %}
       <label>
-        <select class="authedtrans" ng-model="creator_type" ng-init="creator_type='author'" id="authedtrans_0">
+        <select class="mylabel authedtrans form-control" ng-model="creator_type" ng-init="creator_type='author'" id="authedtrans_0">
         {% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}
         <option value="{% fields.basic_fields.author.label.$creator %}"{% IF fields.basic_fields.author.label.$creator == "author" %} selected="selected"{% END %}>{% creator %}</option>
         {% END %}
         </select>
-        {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
       </label>
+      {% IF fields.basic_fields.author.mandatory %}*</span>{% END %}&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
@@ -45,9 +46,10 @@
   [% ELSE %]
   [% FOREACH name IN author %]
   <div class="row authorspan innerrow">
-    <div class="col-md-2">
+    <div class="col-md-2 form-group">
+      {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">{% END %}
       <label>
-        <select class="authedtrans" id="authedtrans_[% loop.index %]">
+        <select class="mylabel authedtrans form-control" id="authedtrans_[% loop.index %]">
           [% author_index = loop.index %]
           [% FOREACH creator IN confpath.fields.basic_fields.author.label.keys.sort %]
             [% IF author_index == 0 OR confpath.fields.basic_fields.author.label.$creator == "author" %]
@@ -55,8 +57,8 @@
             [% END %]
           [% END %]
         </select>
-        {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
       </label>
+      {% IF fields.basic_fields.author.mandatory %}*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
