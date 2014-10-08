@@ -64,6 +64,8 @@
           if(!limatch){
             licenses.setAttribute("class", "collapse in");
           }
+          $("#licenses").find('div.alert-info').addClass('alert-danger');
+          $("#licenses").find('div.alert-info').removeClass('alert-info');
         }
         
         file.previewElement.setAttribute("id", resp.file_id);
