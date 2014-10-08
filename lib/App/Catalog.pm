@@ -15,30 +15,67 @@ use App::Catalog::Route::publication;
 use App::Catalog::Route::search;
 
 use Authentication::Authenticate;
+use Dancer::Plugin::Auth::Tiny;
+use Syntax::Keyword::Junction 'any' => { -as => 'any_of' };
 
 # make variables with leading '_' visible in TT
 $Template::Stash::PRIVATE = 0;
 
-hook 'before' => sub {
-    if ( !session('user') && request->path_info !~ m{login} ) {
-        var requested_path => request->path_info;
-        request->path_info('/myPUB/login');
+sub _authenticate {
+    my ( $user, $pass ) = @_;
+    my $user = h->getAccount( params->{user} )->[0];
+    return 0 unless $user;
+
+    my $verify = verifyUser( params->{user}, params->{pass} );
+    if ( $verify and $verify ne "error" ) {
+        return $user;
     }
-};
+    else {
+        return 0;
+    }
+}
+
+Dancer::Plugin::Auth::Tiny->extend(
+    any_role => sub {
+        my $coderef         = pop;
+        my @requested_roles = @_;
+        return sub {
+            my @user_roles = @{ session("role") || [] };
+            if ( any_of(@requested_roles) eq any_of(@user_roles) ) {
+                goto $coderef;
+            }
+            else {
+                redirect '/access_denied';
+            }
+        };
+    },
+    role => sub {
+        my $coderef = pop;
+        my $role    = shift;
+        return sub {
+            if ( $role eq session->{role} ) {
+                goto $coderef;
+            }
+            else {
+                redirect 'access_denied';
+            }
+        };
+    },
+);
 
 get '/' => sub {
     my $params = params;
 
-    if(session->{role} eq "super_admin"){
-    	forward '/myPUB/search/admin', $params;
+    if ( session->{role} eq "super_admin" ) {
+        forward '/myPUB/search/admin', $params;
     }
-    elsif(session->{role} eq "reviewer"){
+    elsif ( session->{role} eq "reviewer" ) {
         forward '/myPUB/search/reviewer', $params;
     }
-    elsif(session->{role} eq "dataManager"){
-    	forward '/myPUB/search/datamanager', $params;
+    elsif ( session->{role} eq "dataManager" ) {
+        forward '/myPUB/search/datamanager', $params;
     }
-    else{
+    else {
         forward '/myPUB/search', $params;
     }
 };
@@ -46,77 +83,69 @@ get '/' => sub {
 get '/login' => sub {
     my $data = { path => vars->{requested_path} };
     $data->{error_message} = params->{error_message} ||= '';
-    $data->{login} = params->{login} ||= "";
+    $data->{login}         = params->{login}         ||= "";
     template 'login', $data;
 };
 
 post '/login' => sub {
 
-	if(!params->{user} || !params->{pass}){
-		forward '/myPUB/login', { error_message => "Please enter your username AND password!", login => params->{user}}, { method => 'GET' };
-	}
-
-    my $bag  = Catmandu->store('authority')->bag;
-    my $user = h->getAccount( params->{user} );
+    my $user = _authenticate( params->{user}, params->{pass} );
 
     if ($user) {
+        session role => $user->{super_admin}
+            || $user->{reviewer}
+            || $user->{dataManager}
+            || "user";
+        session user         => $user->{login};
+        session personNumber => $user->{_id};
 
-        #username is in PUB
-        my $verify = verifyUser(params->{user}, params->{pass});
+        redirect params->{path} if params->{path};
 
-        if ($verify and $verify ne "error") {
-        	my $super_admin = "super_admin" if $user->[0]->{super_admin};
-        	my $reviewer = "reviewer" if $user->[0]->{reviewer};
-        	my $dataManager = "dataManager" if $user->[0]->{dataManager};
-            session role => $super_admin || $reviewer || $dataManager || "user";
-            session user         => $user->[0]->{login};
-            session personNumber => $user->[0]->{_id};
-            my $params;
-            $params->{path} = params->{path} if params->{path};
-
-            if(session->{role} eq "super_admin"){
-            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/search/admin';
-            }
-            elsif(session->{role} eq "reviewer"){
-            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/search/reviewer';
-            }
-            elsif(session->{role} eq "dataManager"){
-            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/search/datamanager';
-            }
-            else{
-            	$params->{path} ? redirect $params->{path} : redirect '/myPUB/search';
-            }
+        if ( session->{role} eq "super_admin" ) {
+            redirect '/myPUB/search/admin';
+        }
+        elsif ( session->{role} eq "reviewer" ) {
+            redirect '/myPUB/search/reviewer';
+        }
+        elsif ( session->{role} eq "dataManager" ) {
+            redirect '/myPUB/search/datamanager';
         }
         else {
-            forward '/myPUB/login', { error_message => "Wrong username or password!" }, { method => 'GET' };
+            redirect '/myPUB/search';
         }
     }
     else {
-        forward '/myPUB/login', { error_message => "No such user in PUB. Please register first!" }, { method => 'GET' };
+        forward '/myPUB/login',
+            { error_message => "Wrong username or password!" },
+            { method        => 'GET' };
     }
 };
 
-get '/logout' => sub {
+any '/logout' => sub {
     session->destroy;
     redirect '/myPUB/login';
 };
 
-get '/change_role/:role' => sub {
+# any '/access_denied' => sub {
+#     return "acces denied";
+# };
+
+get '/change_role/:role' => needs login => sub {
     my $user = h->getAccount( session->{user} )->[0];
 
     # is user allowed to take this role?
 
-    if(params->{role} eq "reviewer" and $user->{reviewer}){
-    	session role => "reviewer";
+    if ( params->{role} eq "reviewer" and $user->{reviewer} ) {
+        session role => "reviewer";
     }
-    elsif(params->{role} eq "dataManager" and $user->{dataManager}){
-    	session role => "dataManager";
+    elsif ( params->{role} eq "dataManager" and $user->{dataManager} ) {
+        session role => "dataManager";
     }
-    elsif(params->{role} eq "admin" and $user->{super_admin}){
-    	session role => "super_admin";
+    elsif ( params->{role} eq "admin" and $user->{super_admin} ) {
+        session role => "super_admin";
     }
-    else{
-    	session role => "user";
+    else {
+        session role => "user";
     }
     redirect '/myPUB';
 };

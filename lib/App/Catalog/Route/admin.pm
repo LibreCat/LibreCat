@@ -11,6 +11,7 @@ use Catmandu::Util qw(trim);
 use Dancer ':syntax';
 use App::Catalog::Helper;
 use App::Catalog::Controller::Admin qw/:all/;
+use Dancer::Plugin::Auth::Tiny;
 
 =head1 PREFIX /admin
 

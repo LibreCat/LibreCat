@@ -9,7 +9,7 @@
   </div>
 </div>
 [% END %]
-  
+
 <div class="row" style="padding-top:15px;">
   <div class="col-md-6 col-md-offset-2 well loginframe" style="background:white;">
     <form action="/myPUB/login" method="post" class="form-horizontal">
@@ -17,14 +17,14 @@
       <div class="form-group[% IF error_message AND !login %] has-error[% END %]">
         <label class="col-md-3 control-label" for="id_login">Username<span style="color:red"><b>*</b></span></label>
         <div class="col-md-5">
-          <input type="text" class="form-control" name="user" id="id_login" value="[% login %]" placeholder="HRZ Username" />
+          <input type="text" class="form-control" name="user" id="id_login" value="[% login %]" placeholder="HRZ Username" required/>
         </div>
       </div>
       <div class="form-group[% IF error_message %] has-error[% END %]">
         <label class="col-md-3 control-label" for="id_password">Password<span style="color:red"><b>*</b></span></label>
         <div class="col-md-5">
           <input type="password" class="form-control" name="pass" id="id_password" value="" placeholder="HRZ password" />
-          <input type="hidden" name="path" value="[% path %]"/>
+          <input type="hidden" name="return_url" value="[% return_url %]" required/>
         </div>
       </div>
       <div class="form-group">

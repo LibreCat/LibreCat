@@ -14,11 +14,11 @@ use App::Catalog::Controller::Search qw/search_publication/;
 =head2 PREFIX /search
 
     All publication searches are handled within the
-    prefix 'search'.
+    prefix search.
 
 =cut
 
-prefix => '/search' => {
+prefix '/search' => sub {
 
 =head2 GET /admin
 
