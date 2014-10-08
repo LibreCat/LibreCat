@@ -31,7 +31,7 @@ prefix '/record' => sub {
     get '/new' => sub {
         my $type = params->{type};
 
-        template 'add_new' unless $type;
+        return template 'add_new' unless $type;
 
         my $data;
         my $id = new_publication();
