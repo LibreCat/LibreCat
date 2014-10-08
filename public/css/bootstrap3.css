@@ -6884,7 +6884,7 @@ h1 {
 h4 {
 	color:#333;
 	font-size:12pt;
-	border-bottom:1px dashed #b6c828;
+	border-bottom:1px solid #b6c828;
 	padding-top:0;
 	padding-bottom:4px;
 	margin-top:0;
@@ -7219,6 +7219,9 @@ select.mylabel {
 }
 .starMandatory select.mylabel {
 	color: red;
+}
+.tab_section {
+	padding-bottom: 20px;
 }
 
 body {
