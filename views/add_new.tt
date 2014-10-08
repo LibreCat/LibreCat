@@ -59,7 +59,7 @@
         [% FOREACH heading IN h.config.forms.publicationTypeOrder.right.keys %]
           <strong>[% heading %]</strong><br />
           [% FOREACH doctype IN h.config.forms.publicationTypeOrder.right.$heading %]
-            <a hrf="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+            <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
           [% END %]
           <br /><br />
         [% END %]
