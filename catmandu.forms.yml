@@ -47,7 +47,6 @@ field_order:
     - project
     - publisher
     - place
-    - publication
     - series_title
     - issue
     - edition
