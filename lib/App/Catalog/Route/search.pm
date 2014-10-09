@@ -18,7 +18,7 @@ use App::Catalog::Controller::Search qw/search_publication/;
 
 =cut
 
-prefix => '/search' => {
+prefix '/search' => sub {
 
 =head2 GET /admin
 
