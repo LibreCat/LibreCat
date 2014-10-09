@@ -1,0 +1,9 @@
+[% INCLUDE frontend/header_head.tt %]
+
+<!-- BEGIN header_noindex.tt -->
+
+<meta name="robots" content="noindex,nofollow,noimageindex" />
+
+<!-- END header_noindex.tt -->
+
+[% INCLUDE frontend/header_content.tt %]

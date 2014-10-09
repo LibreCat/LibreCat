@@ -20,7 +20,15 @@
           source: puburl,
           minLength: 2,
           select: function( event, ui ) {
-            $('#relatesTo').append('<div class="row innerrow"><div class="col-md-2"><select class="relmat">[% FOREACH key IN h.config.lists.relations_link.keys.nsort %]<option value="[% h.config.lists.relations_link.$key.relation %]"[% IF h.config.lists.relations_link.$key.relation == "earlier_version" %] selected="selected"[% END %]>[% h.config.lists.relations_link.$key.link_text %]</option>[% END %]</select></div><div class="col-md-10"><span class="form-group col-md-9"><span class="glyphicon glyphicon-file"></span> <a href="/publication/' + ui.item.id + '" target="_blank">' + ui.item.title + '</a><input type="hidden" name="related_material" value=\'{"record": {"id": ' + ui.item.id + ', "relation": "earlier_version"}}\' /></span><span class="col-md-1"><span class="glyphicon glyphicon-minus connect"></span></span></div></div>');
+            var items = $('#relatesTo div.innerrow');
+            var index = items.index($('#relatesTo div.innerrow').last());
+            if(index > -1){
+              index++;
+            }
+            else{
+              index = 0;
+            }
+            $('#relatesTo').append('<div class="row innerrow"><div class="col-md-2"><select class="relmat" ng-model="relselect_' + index + '" ng-init="relselect_' + index + '=\'earlier_version\'">[% FOREACH key IN h.config.lists.relations_link.keys.nsort %]<option value="[% h.config.lists.relations_link.$key.relation %]"[% IF h.config.lists.relations_link.$key.relation == "earlier_version" %] selected="selected"[% END %]>[% h.config.lists.relations_link.$key.link_text %]</option>[% END %]</select></div><div class="col-md-10"><span class="form-group col-md-9"><span class="glyphicon glyphicon-file"></span> <a href="/publication/' + ui.item.id + '" target="_blank">' + ui.item.title + '</a><input type="hidden" name="related_material.' + index + '.record.id" value="' + ui.item.id + '" /><input type="hidden" name="related_material.' + index + '.record.relation" value="{{relselect_' + index + '}}" /></span><span class="col-md-1"><span class="glyphicon glyphicon-minus connect"></span></span></div></div>');
           },
           close: function(){
             $("#connect_autocomplete").val("");
@@ -35,12 +43,13 @@
 <div id="relatesTo">
   [% IF related_material %]
   [% FOREACH rel IN related_material %]
+  [% index = loop.index %]
   [% NEXT IF rel.url %]
   [% NEXT IF rel.record.id == "" %]
   [% record = h.publication.get(rel.record.id) %]
   <div class="row innerrow">
   <div class="col-md-2">
-    <select class="relmat" id="relselect_[% rel.record.id %]">
+    <select class="relmat" ng-model="relselect_[% index %]" ng-init="relselect_[% index %]='[% rel.record.relation %]'">
       [% FOREACH key IN h.config.lists.relations_link.keys.nsort %]
       <option value="[% h.config.lists.relations_link.$key.relation %]"[% IF h.config.lists.relations_link.$key.relation == rel.record.relation %] selected="selected"[% END %]>[% h.config.lists.relations_link.$key.link_text %]</option>
       [% END %]
@@ -48,8 +57,9 @@
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-9">
-      <span class="glyphicon glyphicon-file"></span> <a href="/publication/[% rel.id %]" target="_blank">[% record.title %]</a>
-      <input type="hidden" id="reljson_[% rel.record.id %]" name="related_material" value='{"record": {"id": "[% rel.record.id %]", "relation": "[% rel.record.relation %]"}}' />
+      <span class="glyphicon glyphicon-file"></span> <a href="/publication/[% rel.record.id %]" target="_blank">[% record.title %]</a>
+      <input type="hidden" name="related_material.[% index %].record.id" value="[% rel.record.id %]" />
+      <input type="hidden" name="related_material.[% index %].record.relation" value="{{relselect_[% index %]}}" />
     </span>
     <span class="col-md-1">
       <span class="glyphicon glyphicon-minus connect"></span>

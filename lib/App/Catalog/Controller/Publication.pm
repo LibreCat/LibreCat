@@ -109,12 +109,12 @@ sub save_publication {
     	if(ref $data->{related_material} ne "ARRAY"){
     		$data->{related_material} = [$data->{related_material}];
     	}
-    	my $relmat = ();
-    	foreach (@{$data->{related_material}}){
-    		next if $_ eq "";
-    		push @$relmat, $json->decode($_);
-    	}
-    	$data->{related_material} = $relmat;
+#    	my $relmat = ();
+#    	foreach (@{$data->{related_material}}){
+#    		next if $_ eq "";
+#    		push @$relmat, $json->decode($_);
+#    	}
+#    	$data->{related_material} = $relmat;
     }
     if($data->{language}){
     	if(ref $data->{language} ne "ARRAY"){
@@ -131,6 +131,20 @@ sub save_publication {
 #    		}
 #    		$lang = $language;
 #    	}
+    }
+    if($data->{abstract}){
+    	my $i = 0;
+    	foreach my $ab (@{$data->{abstract}}){
+    		if($ab->{lang} and !$ab->{text}){
+    			splice @{$data->{abstract}}, $i, 1;
+    		}
+    		$i++;
+    	}
+    }
+    if(ref $data->{abstract} eq "ARRAY"){
+    	if(!$data->{abstract}->[0]){
+    		delete $data->{abstract};
+    	}
     }
 
     foreach my $key (keys %$data){

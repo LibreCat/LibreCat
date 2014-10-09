@@ -4,15 +4,16 @@
 <span id="editorOnly" ng-controller="angularSearch">
   [% IF !editor %]
   <div class="row authorspan innerrow">
-    <div class="col-md-2">
+    <div class="col-md-2 form-group">
+      {% IF fields.basic_fields.editor.mandatory %}<span class="starMandatory">{% END %}
       <label>
-        <select class="ed_only" id="ed_0">
+        <select class="mylabel ed_only form-control" id="ed_0">
         {% FOREACH creator IN fields.basic_fields.editor.label.keys %}
         <option value="{% fields.basic_fields.editor.label.$creator %}">{% creator %}</option>
         {% END %}
         </select>
-        {% IF fields.basic_fields.editor.mandatory %}<span class="starMandatory">*</span>{% END %}&nbsp;<span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span>
       </label>
+      {% IF fields.basic_fields.editor.mandatory %}*</span>{% END %}&nbsp;<span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span>
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
@@ -45,9 +46,10 @@
   [% ELSE %]
   [% FOREACH name IN editor %]
   <div class="row authorspan innerrow">
-    <div class="col-md-2">
+    <div class="col-md-2 form-group">
+      {% IF fields.basic_fields.editor.mandatory %}<span class="starMandatory">{% END %}
       <label>
-        <select class="ed_only" id="ed_[% loop.index %]">
+        <select class="mylabel ed_only form-control" id="ed_[% loop.index %]">
           [% author_index = loop.index %]
           [% FOREACH creator IN confpath.fields.basic_fields.editor.label.keys.sort %]
             [% IF author_index == 0 OR confpath.fields.basic_fields.editor.label.$creator == "editor" %]
@@ -55,8 +57,8 @@
             [% END %]
           [% END %]
         </select>
-        {% IF fields.basic_fields.editor.mandatory %}<span class="starMandatory">*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span>[% END %]
       </label>
+      {% IF fields.basic_fields.editor.mandatory %}*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span>[% END %]
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">

@@ -1,8 +1,10 @@
 <div class="row innerrow">
   <div class="col-md-2">
+    {% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %}<span class="starMandatory">{% END %}
     <label for="keyword">
-      {% fields.basic_fields.keyword.label %}{% fields.supplementary_fields.keyword.label %}{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %}<span class="starMandatory">*</span>{% END %}{% IF fields.basic_fields.keyword.multiple OR fields.supplementary_fields.keyword.multiple %} <span class="glyphicon glyphicon-plus" id="plusKeyword"></span>{% END %}
+      {% fields.basic_fields.keyword.label %}{% fields.supplementary_fields.keyword.label %}
     </label>
+    {% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %}*</span>{% END %}{% IF fields.basic_fields.keyword.multiple OR fields.supplementary_fields.keyword.multiple %} <span class="glyphicon glyphicon-plus" id="plusKeyword"></span>{% END %}
   </div>
   <div class="col-md-10" id="keyword">
     {% IF fields.basic_fields.keyword.multiple OR fields.supplementary_fields.keyword.multiple %}

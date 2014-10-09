@@ -1,0 +1,199 @@
+var myWdw = null;
+var windowArray=new Array();
+var checkflag = "false";
+
+function openWdw(newURL,Width,Height,Left,Top,winName) {
+   var winOption = "toolbar=0,location=0,directories=0,menubar=0,status=1,alwaysRaised=1,scrollbars=1,resizable=yes,copyhistory=0,left="+Left+','+"screenX="+Left+','+"top="+Top+','+"screenY="+Top+','+"width="+Width+','+'height='+Height;
+   var wALength = windowArray.length;
+   windowArray[wALength] = window.open(newURL , winName, winOption );
+   windowArray[wALength].focus();
+}
+
+
+function downloadFile(fileOId) {
+  openWdw('[% luurBase %]/download?func=downloadFile&fileOId='+fileOId,'600','400','600','30','downloadedFile');
+}
+
+function showElement(id, show) {
+   var ele = document.getElementById(id);
+    ele.style.display = show;
+}
+
+
+function checkForm (formObj) {
+   for (var i = 0; i < mandatory.length; i++) {
+      var tocheck =  eval("formObj." + mandatory[i]);
+      if (tocheck.value=="")
+      {
+          alert("Missing mandatory fields");
+          return false; 
+      }
+  }
+  return true;
+}
+
+
+function closeChildren() {
+    for (var i=0; i < windowArray.length; i++){
+        if (! windowArray[i].closed) {
+             windowArray[i].close();
+        }
+    }
+}
+
+
+function closeChild() {
+    if (myWdw != null) {
+        if (myWdw.closed) {
+            return false;
+        }
+        else {
+            myWdw.close();
+        }
+    }
+    else{
+        return false;
+    }
+}
+
+
+function selectAll(formObj, isInverse, which) {
+   var INC=new RegExp("^" + which + "_.+$");
+   for (var i=0;i < formObj.length;i++)
+   {
+       fldObj = formObj.elements[i];
+       if (fldObj.type == 'checkbox')
+       {
+         if(fldObj.name.match(INC)) {
+           if(isInverse) {
+               fldObj.checked = false;
+           }
+           else {
+              fldObj.checked = true;
+           }
+         }
+       }
+   }
+}
+
+function refreshParent(dontclose) {
+[% IF startPage %]
+    self.opener.location = "[% luurBase %]/search?func=startPage";
+[% END %]
+[% IF !startPage %]
+
+url = self.opener.location.href;
+url = url.replace(/&setStatusMarked=/, "&setStatusMarkedDummy");
+
+self.opener.location = url;
+
+
+[% END %]
+ //    self.opener.document.reLoad.submit();
+    if (!dontclose) {
+      setTimeout("self.close()", 500);
+    }
+}
+
+
+function reLoadParent ()
+{
+    self.opener.document.reLoad.submit();
+    setTimeout("self.close()", 500);
+}
+
+function closeDelay() {
+  setTimeout("self.close", 500);
+}
+
+function updateParent(parentFormName)  {
+   
+   var objForm = self.opener.document.forms[parentFormName];
+   for (var i = 0; i < fieldsToUpdate.length; i++) {
+      var Field = eval ("objForm." + fieldsToUpdate[i]);
+      Field.value=fieldsToUpdateValues[i];
+   }
+   setTimeout("self.close()", 500);
+}
+
+function confirmSubmit() {
+    var agree=confirm("Are you sure you wish to continue?");
+    if (agree)
+        return true ;
+    else
+        return false ;
+}
+
+
+function setAllCheckbox(formObj, isInverse, which) {
+   var INC=new RegExp("^" + which);
+   for (var i=0;i < formObj.length;i++)
+   {
+       fldObj = formObj.elements[i];
+       if (fldObj.type == 'checkbox')
+       {
+         if(fldObj.name.match(INC)) {
+           if(isInverse) {
+               fldObj.checked = false;
+           }
+           else {
+              fldObj.checked = true;
+           }
+         }
+       }
+   }
+}
+
+// deactivate document type group selection
+function check(formObj, which, iCount) {
+	var INC=new RegExp("^" + which);
+	for(var i = 0; i < formObj.length; i++) {
+	
+		fldObj = formObj.elements[i];
+		if (formObj.chooseAll.checked==false) {
+			if(fldObj.name.match(INC)) {
+				if (iCount==0) {
+					fldObj.checked = false;
+				} else {
+					formObj.chooseAll.checked=false;
+				}
+			}
+		} else {
+			if (iCount==0) {
+				fldObj.checked = true;
+			} else {
+				formObj.chooseAll.checked=false;
+			}
+		}
+	}
+	return true;
+} 
+
+
+/*
+function check(field) {
+if (checkflag == "false") {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = true; }
+  checkflag = "true";
+  return "x"; }
+else {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = false; }
+  checkflag = "false";
+  return "v"; }
+} */
+
+function anzeigen(das) {
+ if (document.getElementById(das).style.display=='none') {
+  document.getElementById(das).style.display='block';
+ }
+ else {
+  document.getElementById(das).style.display='none';
+ }
+}
+
+//
+function ausblenden(das) {
+ document.getElementById(das).style.display='none';
+}

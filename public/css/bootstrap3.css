@@ -6876,6 +6876,7 @@ h1 {
 	border-bottom:4px solid #b6c828;
 	color:#333;
 	font-size:13pt;
+	font-weight: bold;
 	margin-top:0;
 	padding:0;
 }
@@ -7171,7 +7172,7 @@ div.frontdoor_right {
 	margin-left: 0;
 }
 
-select.authedtrans, select.ed_only, select.relmat, select.relurl {
+/* select.authedtrans, select.ed_only, select.relmat, select.relurl {
 	min-height: 33px;
 	background-color: #fff;
 	border-color: lightgray;
@@ -7189,7 +7190,7 @@ select.authedtrans, select.ed_only, select.relmat, select.relurl {
 	-webkit-border-top-left-radius:4px;
 	border-top-left-radius:4px;
 	-moz-border-radius-topleft:4px;
-}
+} */
 
 .navbar {
 	margin: 0;
@@ -7209,6 +7210,15 @@ select.authedtrans, select.ed_only, select.relmat, select.relurl {
   color: #B6C828;
   text-shadow: #fff 1.5px 1.5px;
   padding: 7px 0 7px 7px;
+}
+
+select.mylabel {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 9pt;
+}
+.starMandatory select.mylabel {
+	color: red;
 }
 
 body {

@@ -358,7 +358,7 @@ publicationTypes:
         conference.start_date: &conference_startdate
           label: "Conference Date<br />(start date)"
         conference.end_date: &conference_enddate
-          label: "Conference Date<br />(end date, optional)"
+          label: "Conference Date<br />(end date)"
         language: *language
       file_upload: *file_upload
       supplementary_fields:

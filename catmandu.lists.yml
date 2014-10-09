@@ -135,16 +135,11 @@ publication_identifier:
   other: "Other Identifier"
 
 publication_status:
-  - name: "Published"
-    value: "published"
-  - name: "In Press"
-    value: "inpress"
-  - name: "Accepted"
-    value: "accepted"
-  - name: "Submitted"
-    value: "submitted"
-  - name: "Unpublished"
-    value: "unpublished"
+  published: "Published"
+  inpress: "In Press"
+  accepted: "Accepted"
+  submitted: "Submitted"
+  unpublished: "Unpublished"
 
 rd_relation:
   00:
