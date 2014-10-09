@@ -43,7 +43,7 @@ prefix '/search' => sub {
 
 =cut
 
-        get '/reviewer' => sub {
+    get '/reviewer' => sub {
         my $params = params;
 
         ( session->{role} ne "super_admin" and session->{role} ne "reviewer" )
@@ -52,7 +52,7 @@ prefix '/search' => sub {
         $params->{modus} = "reviewer";
         search_publication($params);
 
-        };
+    };
 
 =head2 GET /datamanager
 
@@ -60,17 +60,31 @@ prefix '/search' => sub {
 
 =cut
 
-        get '/datamanager' => sub {
+    get '/datamanager' => sub {
         my $params = params;
 
-        (           session->{role} ne "super_admin"
+        ( session->{role} ne "super_admin"
                 and session->{role} ne "dataManager" )
             && ( redirect '/myPUB/search' );
 
         $params->{modus} = "dataManager";
         search_publication($params);
 
-        };
+    };
+
+=head2 GET '/delegate/:delegate_id'
+
+    Performs a search of records for delegated person's
+    publications.
+
+=cut
+
+    get '/delegate/:delegate_id' => sub {
+        my $params = params;
+
+        $params->{modus} = "delegate_".$params->{delegate_id};
+        search_publication($params);
+    };
 
 =head2 GET /
 
@@ -78,13 +92,13 @@ prefix '/search' => sub {
 
 =cut
 
-        get '/' => sub {
+    get '/' => sub {
         my $params = params;
 
         $params->{modus} = "user";
         search_publication($params);
 
-        };
+    };
 
 };
 

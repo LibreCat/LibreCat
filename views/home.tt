@@ -37,14 +37,17 @@
       <div class="col-md-10">
         <ul class="nav nav-tabs">
         [% IF session.role == 'super_admin' %]
-          <li[% IF modus == "admin" %] class="active"[% END %]><a href="/myPUB/adminSearch">All Publications</a></li>
+          <li[% IF modus == "admin" %] class="active"[% END %]><a href="/myPUB/search/admin">All Publications</a></li>
         [% END %]
           <li[% IF modus == "user" %] class="active"[% END %]><a href="/myPUB/search">My Publications</a></li>
         [% IF session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer") %]
-          <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/reviewerSearch">Publications for Review</a></li>
+          <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/search/reviewer">Publications for Review</a></li>
         [% END %]
         [% IF session.role == "dataManager" OR (session.role == "super_admin" AND modus == "dataManager") %]
-          <li[% IF modus == "dataManager" %] class="active"[% END %]><a href="/myPUB/datamanagerSearch">Data Publications for Review</a></li>
+          <li[% IF modus == "dataManager" %] class="active"[% END %]><a href="/myPUB/search/datamanager">Data Publications for Review</a></li>
+        [% END %]
+        [% FOREACH delegate_id IN thisPerson.delegate %]
+          <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. of [% h.getPerson(delegate_id).last_name %]</a></li>
         [% END %]
         </ul>
       </div>
@@ -86,6 +89,17 @@
           <div class="tab-pane[% IF modus == 'dataManager' %] active[%END %]" id="data">
             <div class="col-md-8">
               [% tabmodus = 'dataManager' %]
+              [% INCLUDE hits.tt %]
+            </div>
+            <div class="col-md-3">
+              [% INCLUDE right_menu_publ.tt %]
+            </div>
+          </div>
+          [% END %]
+          [% FOREACH delegate_id IN thisPerson.delegate %]
+          <div class="tab-pane[% IF modus.match(delegate_id) %] active[%END %]" id="delegate_[% delegate_id %]">
+            <div class="col-md-8">
+              [% USE String; tabmodus = String.new('delegate_'); tabmodus = tabmodus.append(delegate_id).text %]
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">

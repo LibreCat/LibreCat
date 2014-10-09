@@ -19,20 +19,20 @@ sub search_publication {
 
     my $query;
 
-    my $account = h->getAccount(session->{user});
-    if($account->[0]->{reviewer} and $par->{modus} eq "reviewer"){
+    my $account = h->getAccount(session->{user})->[0];
+    if($account->{reviewer} and $par->{modus} eq "reviewer"){
     	#$query .= join(' OR ');
     	 my $revdep = "";
-    	 foreach my $rev (@{$account->[0]->{reviewer}}){
+    	 foreach my $rev (@{$account->{reviewer}}){
     	 	$revdep .= "department=$rev->{department}->{id} OR ";
     	 }
     	 $revdep =~ s/ OR $//g;
     	 $query = $revdep;
     }
-    elsif($account->[0]->{dataManager} and $par->{modus} eq "dataManager"){
+    elsif($account->{dataManager} and $par->{modus} eq "dataManager"){
     	my $mgrdep = "";
     	$query = "documenttype=researchData AND ";
-    	foreach my $mgr (@{$account->[0]->{dataManager}}){
+    	foreach my $mgr (@{$account->{dataManager}}){
     		$mgrdep .= "department=$mgr->{department}->{id} OR ";
     	}
     	$mgrdep =~ s/ OR $//g;
@@ -40,6 +40,9 @@ sub search_publication {
     }
     elsif ($par->{modus} eq "admin"){
     	$query = "";
+    }
+    elsif ( $par->{modus} =~ /^delegate/ and array_includes($account->{delegate}, $par->{delegate_id}) ) {
+        $query = "person=$par->{delegate_id}";
     }
     else{
     	$query = "person=$id";
