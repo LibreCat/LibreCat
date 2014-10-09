@@ -31,7 +31,7 @@ prefix '/record' => sub {
     get '/new' => sub {
         my $type = params->{type};
 
-        template 'add_new' unless $type;
+        return template 'add_new' unless $type;
 
         my $data;
         my $id = new_publication();
@@ -117,6 +117,8 @@ prefix '/record' => sub {
         ( session->{role} eq "super_admin" )
             ? ( $params->{approved} = 1 )
             : ( $params->{approved} = 0 );
+
+        $params->{creator} = session 'user' unless $params->{creator};
 
         my $result = update_publication($params);
 
