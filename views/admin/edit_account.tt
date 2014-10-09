@@ -218,6 +218,15 @@
     </div>
 
     <div class="row innerrow">
+      <div class="col-md-2"><label for="id_delegated_for">Manage publications for</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-6">
+          <input type="text" name="delegated_for" id="id_delegated_for" value="[% delegated_for.join(', ') %]" class="form-control" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="row innerrow">
       <div class="col-md-2"><label>
         Data Manager <span class="glyphicon glyphicon-plus" id="plusDM"></span>
       </label></div>
