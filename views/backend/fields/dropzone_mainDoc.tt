@@ -52,7 +52,7 @@
         
         var editLink = Dropzone.createElement("<div class=\"corner_down\" id=\"cordown_" + resp.file_id + "\"><a href=\"#\"><span class=\"glyphicon glyphicon-pencil\"></span></a></div>");
         editLink.addEventListener("click", function(e) {
-          window.edit_file(resp.file_id);
+          window.edit_file(resp.file_id, "[% _id %]");
         });
         file.previewElement.appendChild(editLink);
         
@@ -108,7 +108,7 @@
       <div class="col-md-8">&nbsp;</div>
       <div class="col-md-8"><span>Your browser does not support drag'n'drop file uploads.</span></div>
       <div class="col-md-7">
-        <a href="#" class="btn" onclick="javascript:edit_file('','[% id %]','','openAccess','','','','')" title="Add new file">Add a new file</a>
+        <a href="#" class="btn" onclick="javascript:edit_file('','[% _id %]')" title="Add new file">Add a new file</a>
       </div>
       <div class="col-md-7">&nbsp;</div>
     </div>
@@ -164,7 +164,7 @@
           </div>
         </div>
         <div class="corner_up" id="corup_[% fi.file_id %]" onclick="javascript:deleteUploadedDocument([% fi.file_id %], this);"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></div>
-        <div class="corner_down" id="cordown_[% fi.file_id %]" onclick="javascript:edit_file('[% fi.file_id %]');"><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
+        <div class="corner_down" id="cordown_[% fi.file_id %]" onclick="javascript:edit_file('[% fi.file_id %]', '[% _id %]');"><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
 
         <input type="hidden" id="file_[% fi.file_id %]" name="file" value='[% fi.file_json %]' />
       </div>

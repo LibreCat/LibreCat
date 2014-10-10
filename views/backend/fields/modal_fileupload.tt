@@ -101,7 +101,7 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
     if(inputs.eq(0)){
       formData.append("file", inputs.eq(0).prop("files")[0]);
     }
-    formData.append("id", "[% id %]");
+    formData.append("id", "[% _id %]");
     formData.append("file_id", file_id);
     formData.append("old_file_name", $('#id_fileName').val());
     formData.append("relation", $('#id_select_relation').val());
