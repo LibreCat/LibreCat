@@ -49,7 +49,8 @@ sub getPersonData {
 		'remove_field("oId")',
 		'remove_field("oIdAccount")',
 		'move_field("isSuperAdminAccount", "super_admin")',
-		'remove_field("hasUserAccessThrough")',
+		'move_field("hasUserAccessThrough","access")',
+		'clean_access()',
 		'move_field("luLdapId","login")',
 		'move_field("jobTitle","title")',
 		'move_field("fullName","full_name")',
@@ -60,9 +61,12 @@ sub getPersonData {
 		'move_field("old_givenName", "old_first_name")',
         'move_field("accountStatus","account_status")',
 		'remove_field("isOfType")',
-        'remove_field("reviewer.*.reviewer")',
-        'remove_field("reviewer.*.reviewDiss")',
+		'remove_field("isSupervisedBy")',
+        #'remove_field("reviewer.*.reviewer")',
+        #'remove_field("reviewer.*.reviewDiss")',
+        'clean_reviewer()',
         'remove_field("searchName")',
+        'remove_field("personNumber")',
 		]);
 
 	my $sbcatPerson = shift;
