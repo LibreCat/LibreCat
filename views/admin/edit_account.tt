@@ -122,13 +122,13 @@
           <input type="hidden" name="department.0.id" id="aff_idautocomplete_0" value="" />
 
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" name="department.0.name" id="dp_autocomplete_0" value="" />
+            <input type="text" class="form-control" name="department.0.name" id="aff_autocomplete_0" value="" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_0" value="Select"/>
           </span>
           <span class="col-md-1">
-            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';"></span>
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';document.getElementById('aff_autocomplete_0').disabled = false;"></span>
           </span>
           <script>
           $(function() {
@@ -138,6 +138,7 @@
               select: function( event, ui ) {
                 $( "#aff_autocomplete_0" ).val( ui.item.label );
                 $( "#aff_idautocomplete_0" ).val( ui.item.id );
+                $( "#aff_autocomplete_0" ).attr("disabled", "disabled");
               }
             });
           });
@@ -148,14 +149,14 @@
         <div class="row innerrow">
           <input type="hidden" name="department.[% loop.index %].id" id="aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" name="department.[% loop.index %].name" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" />
+            <input type="text" class="form-control" name="department.[% loop.index %].name" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_[% loop.index %]" value="Select"/>
           </span>
           <span class="col-md-1">
           [% IF loop.index == 0 %]
-            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';"></span>
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';document.getElementById('aff_autocomplete_0').disabled=false;"></span>
           [% ELSE %]
             <span class="glyphicon glyphicon-minus single"></span>
           [% END %]
@@ -168,6 +169,7 @@
               select: function( event, ui ) {
                 $( "#aff_autocomplete_[% loop.index %]" ).val( ui.item.label );
                 $( "#aff_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+                $( "#aff_autocomplete_[% loop.index %]" ).attr("disabled", "disabled");
               }
             });
           });
@@ -263,7 +265,7 @@
             <input type="button" onclick="selectButton(this);" class="btn select_button data_manager" id="data_manager_select_0" value="Select"/>
           </span>
           <span class="col-md-1">
-            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';document.getElementById('dp_autocomplete_0').disabled=false;"></span>
           </span>
           <script>
           $(function() {
@@ -273,6 +275,7 @@
               select: function( event, ui ) {
                 $( "#dp_autocomplete_0" ).val( ui.item.label );
                 $( "#dp_idautocomplete_0" ).val( ui.item.id );
+                $( "#dp_autocomplete_0" ).attr("disabled", "disabled");
               }
             });
           });
@@ -283,14 +286,14 @@
         <div class="row innerrow">
           <input type="hidden" name="data_manager.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" name="data_manager.[% loop.index %].name" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" />
+            <input type="text" class="form-control" name="data_manager.[% loop.index %].name" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button data_manager" id="data_manager_select_[% loop.index %]" value="Select"/>
           </span>
           <span class="col-md-1">
           [% IF loop.index == 0 %]
-            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';document.getElementById('dp_autocomplete_0').disabled=false;"></span>
           [% ELSE %]
             <span class="glyphicon glyphicon-minus single"></span>
           [% END %]
@@ -303,6 +306,7 @@
               select: function( event, ui ) {
                 $( "#dp_autocomplete_[% loop.index %]" ).val( ui.item.label );
                 $( "#dp_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+                $( "#dp_autocomplete_[% loop.index %]" ).attr("disabled","disabled");
               }
             });
           });
@@ -344,7 +348,7 @@
             <input type="button" onclick="selectButton(this);" class="btn select_button reviewer" id="reviewer_select_0" value="Select"/>
           </span>
           <span class="col-md-1">
-            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rv_autocomplete_0').value = '';document.getElementById('rv_idautocomplete_0').value='';"></span>
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rv_autocomplete_0').value = '';document.getElementById('rv_idautocomplete_0').value='';document.getElementById('rv_autocomplete_0').disabled=false;"></span>
           </span>
           <script>
           $(function() {
@@ -354,6 +358,7 @@
               select: function( event, ui ) {
                 $( "#rv_autocomplete_0" ).val( ui.item.label );
                 $( "#rv_idautocomplete_0" ).val( ui.item.id );
+                $( "#rv_autocomplete_0" ).attr("disabled","disabled");
               }
             });
           });
@@ -364,14 +369,14 @@
         <div class="row innerrow">
           <input type="hidden" name="reviewer.[% loop.index %].id" id="rv_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" name="reviewer.[% loop.index %].name" id="rv_autocomplete_[% loop.index %]" value="[% dept.name %]" />
+            <input type="text" class="form-control" name="reviewer.[% loop.index %].name" id="rv_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button reviewer" id="reviewer_select_[% loop.index %]" value="Select"/>
           </span>
           <span class="col-md-1">
           [% IF loop.index == 0 %]
-            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rv_autocomplete_0').value = '';document.getElementById('rv_idautocomplete_0').value='';"></span>
+            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rv_autocomplete_0').value = '';document.getElementById('rv_idautocomplete_0').value='';document.getElementById('rv_autocomplete_0').disabled=false;"></span>
           [% ELSE %]
             <span class="glyphicon glyphicon-minus single"></span>
           [% END %]
@@ -384,6 +389,7 @@
               select: function( event, ui ) {
                 $( "#rv_autocomplete_[% loop.index %]" ).val( ui.item.label );
                 $( "#rv_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+                $( "#rv_autocomplete_[% loop.index %]" ).attr("disabled","disabled");
               }
             });
           });
@@ -511,6 +517,7 @@ $('#plusAFF').click(function(){
       select: function( event, ui ) {
         $( "#aff_autocomplete_" + index ).val( ui.item.label );
         $( "#aff_idautocomplete_" + index ).val( ui.item.id );
+        $( "#aff_autocomplete_" + index ).attr("disabled","disabled");
       }
     });
   });
@@ -527,6 +534,7 @@ $('#plusRV').click(function(){
       select: function( event, ui ) {
         $( "#rv_autocomplete_" + index ).val( ui.item.label );
         $( "#rv_idautocomplete_" + index ).val( ui.item.id );
+        $( "#rv_autocomplete_" + index ).attr("disabled","disabled");
       }
     });
   });
@@ -543,6 +551,7 @@ $('#plusDM').click(function(){
       select: function( event, ui ) {
         $( "#dp_autocomplete_" + index ).val( ui.item.label );
         $( "#dp_idautocomplete_" + index ).val( ui.item.id );
+        $( "#dp_autocomplete_" + index ).attr("disabled","disabled");
       }
     });
   });
