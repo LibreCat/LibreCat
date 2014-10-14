@@ -144,7 +144,7 @@ publicationTypes:
           label:
             "Author" : "author"
             "Translator" : "translator"
-          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         editor: &editor_only
           first_name:
             placeholder: "First Name"
