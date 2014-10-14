@@ -2,9 +2,9 @@
 <form action="/myPUB/person/affiliation" method="POST">
   <div class="row innerrow">
     <div class="col-md-1">
-      <span class="glyphicon glyphicon-plus" id="plusAFF"></span>
+      <span class="glyphicon glyphicon-plus" id="plusPersonAFF"></span>
     </div>
-    <div class="col-md-10" id="affiliation">
+    <div class="col-md-10" id="person_affiliation">
     [% IF !department %]
       <div class="row innerrow">
         <input type="hidden" name="department.0.id" id="person_aff_idautocomplete_0" value="" />
@@ -109,11 +109,11 @@ function selectButton(element){
     modal.modal('show');
 }
 
-$('#plusAFF').click(function(){
-  var items = $('#affiliation div.innerrow');
-  var index = items.index($('#affiliation div.innerrow').last()) + 1;
-  $('#affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="aff_idautocomplete_' + index + '" value="" /><span class="form-group col-md-7"><input type="text" class="form-control" name="department.' + index + '.name" id="aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
-  $('#affiliation').bind("click", function(){
+$('#plusPersonAFF').click(function(){
+  var items = $('#person_affiliation div.innerrow');
+  var index = items.index($('#person_affiliation div.innerrow').last()) + 1;
+  $('#person_affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="person_aff_idautocomplete_' + index + '" value="" /><span class="form-group col-md-7"><input type="text" class="form-control" name="department.' + index + '.name" id="person_aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
+  $('#person_affiliation').bind("click", function(){
     $( "#person_aff_autocomplete_" + index ).autocomplete({
       appendTo: "#aff_dropdown",
       source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
