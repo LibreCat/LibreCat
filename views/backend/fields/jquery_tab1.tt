@@ -80,10 +80,105 @@ $('.oneToTwo').click(function(e){
     $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
   }
   
+  
+  if($('#id_data_reuse_license').length || $('#id_open_data_release').length){
+    if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
+      if($('#id_data_reuse_license').val() == ''){
+        $('#id_data_reuse_license').parent().removeClass('alert-info');
+        $('#id_data_reuse_license').parent().addClass('alert-danger');
+        alert('{% fields.file_upload.license.data_reuse_license.alert %}');
+        e.stopImmediatePropagation();
+      }
+      if(!$('#id_open_data_release').is(':checked')) {
+        $('#odralert').removeClass('alert-info');
+        $('#odralert').addClass('alert-danger');
+        alert('{% fields.file_upload.license.open_data_release.alert %}');
+        //document.location.href = "#stepTwo";
+        e.stopImmediatePropagation();
+      }
+    }
+    else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
+      if($('#id_data_reuse_license').val() == ''){
+        $('#id_data_reuse_license').parent().removeClass('alert-info');
+        $('#id_data_reuse_license').parent().addClass('alert-danger');
+        alert('{% fields.file_upload.license.data_reuse_license.alert %}');
+        e.stopImmediatePropagation();
+      }
+      if(!$('#id_open_data_release').is(':checked')) {
+        $('#odralert').removeClass('alert-info');
+        $('#odralert').addClass('alert-danger');
+        alert('{% fields.file_upload.license.open_data_release.alert %}');
+        //document.location.href = "#stepTwo";
+        e.stopImmediatePropagation();
+      }
+    }
+    else {
+      if($('.dropzone').first().children().length == 1){
+        if($('#id_data_reuse_license').val() != ''){
+          $('#id_data_reuse_license').val('');
+        }
+        if($('#id_open_data_release').is(':checked')){
+          $('#id_open_data_release').prop("checked", false);
+        }
+      }
+
+      //$('#file_upload, #li_file_upload').removeClass('active');
+      //$('#supplementary_fields, #li_supplementary_fields').addClass('active');
+      //$('#li_supplementary_fields').children('a').attr('href','#supplementary_fields');
+      //$('#li_supplementary_fields').children('a').attr('data-toggle','tab');
+      //$('#li_supplementary_fields').removeClass('disabled');
+      //$('a[href=#supplementary_fields]').attr('data-toggle','tab');
+      //$('#li_supplementary_fields').css('visibility','visible');
+    }
+  }
+  else if($('#id_pub_license').length){
+    if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && !$('#id_pub_license').is(':checked')){
+      if(!$('#id_pub_license').is(':checked')) {
+        $('#pub_license_alert').removeClass('alert-info');
+        $('#pub_license_alert').addClass('alert-danger');
+        alert('{% fields.file_upload.license.pub_license.alert %}');
+        //document.location.href = "#stepTwo";
+        e.stopImmediatePropagation();
+      }
+    }
+    else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && !$('#id_pub_license').is(':checked')){
+      if(!$('#id_pub_license').is(':checked')) {
+        $('#pub_license_alert').removeClass('alert-info');
+        $('#pub_license_alert').addClass('alert-danger');
+        alert('{% fields.file_upload.license.pub_license.alert %}');
+        //document.location.href = "#stepTwo";
+        e.stopImmediatePropagation();
+      }
+    }
+    else {
+      if($('.dropzone').first().children().length == 1){
+        if($('#id_pub_license').is(':checked')){
+          $('#id_pub_license').prop("checked", false);
+        }
+      }
+
+      //$('#file_upload, #li_file_upload').removeClass('active');
+      //$('#supplementary_fields, #li_supplementary_fields').addClass('active');
+      //$('#li_supplementary_fields').children('a').attr('href', '#supplementary_fields');
+      //$('#li_supplementary_fields').children('a').attr('data-toggle', 'tab');
+      //$('#li_supplementary_fields').removeClass('disabled');
+      //$('a[href=#supplementary_fields]').attr('data-toggle','tab');
+      //$('#li_supplementary_fields').css('visibility','visible');
+    }
+  }
+  //else {
+    //$('#file_upload, #li_file_upload').removeClass('active');
+    //$('#supplementary_fields, #li_supplementary_fields').addClass('active');
+    //$('#li_supplementary_fields').children('a').attr('href','#supplementary_fields');
+    //$('#li_supplementary_fields').children('a').attr('data-toggle','tab');
+    //$('#li_supplementary_fields').removeClass('disabled');
+    //$('a[href=#supplementary_fields]').attr('data-toggle','tab');
+    //$('#li_supplementary_fields').css('visibility','visible');
+  //}
+  
+  
   if(check){
-    $('.creator.has-error').each(function(){
-      $(this).removeClass('has-error');
-    });
+    $('.creator.has-error').removeClass('has-error');
     if($(this).attr('name') != "finalSubmit"){
       $('#basic_fields, #li_basic_fields').removeClass('active');
       $('#file_upload, #li_file_upload').addClass('active');
@@ -207,6 +302,7 @@ $('#plusLanguage').click(function(){
 });
 
 
+
 // minus
 $(document).on('click', '.group', function(){
   var index = $(this).parent().parent().index();
@@ -250,6 +346,10 @@ $(document).on('click', '.author', function(){
     this.title = "";
     this.src = "/images/biNotAuthorized.png";
   });  
+});
+$(document).on('click', '.connect', function(){
+  var index = $(this).parent().parent().parent().index();
+  $(this).parent().parent().parent().remove();
 });
 
 
@@ -422,3 +522,53 @@ $("#id_place").autocomplete({
   }
 });
 $("#id_place").autocomplete("option", "delay", 100);
+
+
+$('select.relmat').on('change', function() {
+  var selid = $(this).attr('id');
+  var selval = $(this).val();
+  var arr = selid.split('_');
+  $('#reljson_' + arr[1]).val('{"record": {"id": ' + arr[1] + ', "relation": "' + selval + '"}}');
+});
+
+$('#add_relurl').click(function(){
+  var url = $('#relurl_url').val();
+  var title = $('#relurl_title').val();
+  var description = $('#relurl_description').val();
+  
+  if(!url){
+    $('#relurl_url').parent().addClass('has-error');
+  }
+  if(!title){
+    $('#relurl_title').parent().addClass('has-error');
+  }
+  
+  if(url && title){
+    $('#relurl_title').parent().removeClass('has-error');
+    $('#relurl_url').parent().removeClass('has-error');
+    
+    var index = $('#url div.innerrow').length;
+    
+    $('#url').append('<div class="row innerrow"><div class="col-md-2"><select class="relurl" id="urlselect_' + index + '">[% FOREACH key IN h.config.lists.relations_link.keys.nsort %]<option value="[% h.config.lists.relations_link.$key.relation %]">[% h.config.lists.relations_link.$key.link_text %]</option>[% END %]</select></div><div class="col-md-10"><span class="form-group col-md-9"><span class="glyphicon glyphicon-link"></span> <a href="' + url + '" target="_blank">' + title + '</a><br /><span class="text-muted">' + description + '</span><input type="hidden" id="relurljson_0" name="related_material" value=\'{"link": {"url": "' + $('#relurl_url').val() + '", "title": "' + $('#relurl_title').val() + '", "description": "' + $('#relurl_description').val() + '", "relation": "earlier_version"}}\' /></span><span class="col-md-1"><span class="glyphicon glyphicon-minus connect"></span></span></div></div>');
+    $('#relurl_url').val('');
+    $('#relurl_title').val('');
+    $('#relurl_description').val('');
+  }
+});
+
+$('select.relurl').on('change', function() {
+  var selid = $(this).attr('id');
+  var relation = $(this).val();
+  var arr = selid.split('_');
+  var index = arr[1];
+  var json = jQuery.parseJSON($('#relurljson_' + index).val());
+  
+  json.link.relation = relation;
+  
+  //$('#relurljson_' + index).val('{"link": {"url": ' + arr[1] + ', "title": "", "description": "", "relation": "' + selval + '"}}');
+  $('#relurljson_' + index).val(JSON.stringify(json));
+});
+
+$('.sure').click(function(){
+  return confirm('{% fields.related_material.publish_button.alert %}');
+});

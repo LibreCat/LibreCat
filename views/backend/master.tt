@@ -19,7 +19,7 @@
     <div class="tab tab-content edit-form">
 
       <!-- STEP 1 -->
-      <div id="basic_fields">
+      <div id="basic_fields" class="tab_section">
         
 {% IF fields.basic_fields %}
   <h4>{% fields.basic_fields.tab_name %}</h4>
@@ -31,11 +31,10 @@
   {% END %}
   {% INCLUDE fields/mandatory_explain.tt %}
 {% END %}
-
       </div><!-- tab-pane -->
 
       <!-- STEP 2 -->
-      <div id="file_upload">
+      <div id="file_upload" class="tab_section">
 
 {% IF fields.file_upload %}
   <h4>{% fields.file_upload.tab_name %}</h4>
@@ -50,7 +49,7 @@
       </div><!-- tab-pane -->
 
       <!-- STEP 3 -->
-      <div id="supplementary_fields">
+      <div id="supplementary_fields" class="tab_section">
 
 {% IF fields.supplementary_fields %}
   <h4>{% fields.supplementary_fields.tab_name %}</h4>
@@ -65,7 +64,7 @@
       </div><!-- tab-pane -->
 
       <!-- STEP 4 -->
-      <div id="related_material">
+      <div id="related_material" class="tab_section">
 
 {% IF fields.related_material %}
   <h4>{% fields.related_material.tab_name %}</h4>
@@ -93,9 +92,6 @@
 
 <script>
 {% INCLUDE fields/jquery_tab1.tt %}
-{% INCLUDE fields/jquery_tab2.tt %}
-{% INCLUDE fields/jquery_tab3.tt %}
-{% INCLUDE fields/jquery_tab4.tt %}
 </script>
 
 <!-- END /backend/forms/{% tmpl %} -->
