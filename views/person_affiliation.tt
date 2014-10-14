@@ -7,26 +7,27 @@
     <div class="col-md-10" id="affiliation">
     [% IF !department %]
       <div class="row innerrow">
-        <input type="hidden" name="department.0.id" id="aff_idautocomplete_0" value="" />
+        <input type="hidden" name="department.0.id" id="person_aff_idautocomplete_0" value="" />
 
         <span class="form-group col-md-7">
-          <input type="text" class="form-control eventInsForm" name="department.0.name" id="aff_autocomplete_0" value="" />
+          <input type="text" class="form-control eventInsForm" name="department.0.name" id="person_aff_autocomplete_0" value="" />
         </span>
         <span class="form-group col-md-2">
           <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_0" value="Select"/>
         </span>
         <span class="col-md-1">
-          <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';"></span>
+          <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('person_aff_autocomplete_0').value = '';document.getElementById('person_aff_idautocomplete_0').value='';document.getElementById('person_aff_autocomplete_0').disabled=false;"></span>
         </span>
         <script>
         $(function() {
-          $( "#aff_autocomplete_0" ).autocomplete({
+          $( "#person_aff_autocomplete_0" ).autocomplete({
             appendTo: "aff_dropdown",
             source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
             minLength: 2,
             select: function( event, ui ) {
-              $( "#aff_autocomplete_0" ).val( ui.item.label );
-              $( "#aff_idautocomplete_0" ).val( ui.item.id );
+              $( "#person_aff_autocomplete_0" ).val( ui.item.label );
+              $( "#person_aff_idautocomplete_0" ).val( ui.item.id );
+              $( "#person_aff_autocomplete_0" ).attr("disabled","disabled");
               event.stopPropagation();
             }
           });
@@ -36,29 +37,30 @@
     [% ELSE %]
       [% FOREACH dept IN department %]
       <div class="row innerrow">
-        <input type="hidden" name="department.[% loop.index %].id" id="aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+        <input type="hidden" name="department.[% loop.index %].id" id="person_aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
         <span class="form-group col-md-7">
-          <input type="text" class="form-control eventInsForm" name="department.[% loop.index %].name" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" />
+          <input type="text" class="form-control eventInsForm" name="department.[% loop.index %].name" id="person_aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
         </span>
         <span class="form-group col-md-2">
           <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_[% loop.index %]" value="Select"/>
         </span>
         <span class="col-md-1">
         [% IF loop.index == 0 %]
-          <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';"></span>
+          <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('person_aff_autocomplete_0').value = '';document.getElementById('person_aff_idautocomplete_0').value='';document.getElementById('person_aff_autocomplete_0').disabled=false;"></span>
         [% ELSE %]
           <span class="glyphicon glyphicon-minus single"></span>
         [% END %]
         </span>
         <script>
         $(function() {
-          $( "#aff_autocomplete_[% loop.index %]" ).autocomplete({
+          $( "#person_aff_autocomplete_[% loop.index %]" ).autocomplete({
             appendTo: "#aff_dropdown",
             source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
             minLength: 2,
             select: function( event, ui ) {
-              $( "#aff_autocomplete_[% loop.index %]" ).val( ui.item.label );
-              $( "#aff_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+              $( "#person_aff_autocomplete_[% loop.index %]" ).val( ui.item.label );
+              $( "#person_aff_idautocomplete_[% loop.index %]" ).val( ui.item.id );
+              $( "#person_aff_autocomplete_[% loop.index %]" ).attr("disabled","disabled");
               event.stopPropagation();
             }
           });
@@ -91,31 +93,16 @@ function selectButton(element){
     var modal = $('#selectAFF');
     var container = $('#selectAFF').find('.modal-body').first();
     container.html("");
-    //if(type == "data_manager"){
-    //    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
-    //    type_short = "dp";
-    //    type_name = "Department";
-    //}
-    //else if(type == "reviewer"){
-    //    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
-    //    type_short = "rv";
-    //    type_name = "Department";
-    //}
-    //else 
-    if (type == "affiliation") {
-        container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
-        type_short = "aff";
-        type_name = "Department";
-    }
+    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
     var heading = modal.find('h4').first();
     heading.html("");
     heading.append('Choose a ' + type_name);
     $('.selectme').bind("click", function(e){
         var id = $(this).attr('id');
         var name = $(this).html();
-        //var index = $(this).attr('data-index');
-        $('#' + type_short + '_idautocomplete_' + index).val(id);
-        $('#' + type_short + '_autocomplete_' + index).val(name);
+        $('#person_aff_idautocomplete_' + index).val(id);
+        $('#person_aff_autocomplete_' + index).val(name);
+        $('#person_aff_autocomplete_' + index).attr("disabled","disabled");
         $('#selectAFF').modal('hide');
         e.stopPropagation();
     });
@@ -127,13 +114,14 @@ $('#plusAFF').click(function(){
   var index = items.index($('#affiliation div.innerrow').last()) + 1;
   $('#affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="aff_idautocomplete_' + index + '" value="" /><span class="form-group col-md-7"><input type="text" class="form-control" name="department.' + index + '.name" id="aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
   $('#affiliation').bind("click", function(){
-    $( "#aff_autocomplete_" + index ).autocomplete({
+    $( "#person_aff_autocomplete_" + index ).autocomplete({
       appendTo: "#aff_dropdown",
       source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
       minLength: 2,
       select: function( event, ui ) {
-        $( "#aff_autocomplete_" + index ).val( ui.item.label );
-        $( "#aff_idautocomplete_" + index ).val( ui.item.id );
+        $( "#person_aff_autocomplete_" + index ).val( ui.item.label );
+        $( "#person_aff_idautocomplete_" + index ).val( ui.item.id );
+        $( "#person_aff_autocomplete_" + index ).attr("disabled","disabled");
         event.stopPropagation();
       }
     });
