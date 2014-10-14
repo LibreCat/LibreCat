@@ -220,11 +220,32 @@
     <div class="row innerrow">
       <div class="col-md-2"><label for="id_delegate">Manage publications for</label></div>
       <div class="col-md-10">
-        <div class="form-group col-md-6">
-          <input type="text" name="delegate" id="id_delegate" value="[% delegate.join(', ') %]" class="form-control" required>
+        <div class="row innerrow">
+          <div class="col-md-7 form-group">
+            <input type="text" id="id_delegate" value="" class="form-control" placeholder="12345 (PEVZ-ID)"/>
+          </div>
+          <div class="col-md-2 form-group">
+            <input type="button" onclick="addDelegate(this);" class="btn select_button" id="delegate_select" value="Add" />
+          </div>
         </div>
       </div>
     </div>
+    
+    <span id="delegate">
+    [% IF delegate %]
+      [% FOREACH del IN delegate %]
+      [% thisPerson = h.getPerson(del) %]
+      <div class="col-md-10 col-md-offset-2" id="delegate_[% thisPerson._id %]">
+        <div class="row innerrow">
+          <div class="col-md-7 form-group">
+            <span class="glyphicon glyphicon-remove del_del" id="delegate_span_[% thisPerson._id %]"></span> [% thisPerson.full_name %] <span class="text-muted">[% thisPerson._id %]</span>
+            <input type="hidden" name="delegate.[% loop.index %]" value="[% thisPerson._id %]" />
+          </div>
+        </div>
+      </div>
+      [% END %]
+    [% END %]
+    </span>
 
     <div class="row innerrow">
       <div class="col-md-2"><label>
@@ -391,12 +412,14 @@
     <div class="row innerrow"><!-- button -->
       <div class="col-md-12 buttonrow">
       <span class="form-grou col-md-2">&nbsp;</span>
-        <span class="form-group col-md-2">
-          <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
-        </span>
-        <span class="form-group col-md-2">
-          <button type="submit" id="id_do_nothing" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
-        </span>
+      <span class="form-group col-md-2">
+        <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
+      </span>
+      <span class="form-group col-md-2">
+        <button type="submit" id="id_do_nothing" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
+      </span>
+      </div>
+    </div>
   </form>
 
 </div><!-- col-md-9 col-md-offset-1 -->
@@ -447,6 +470,24 @@ function selectButton(element){
 	});
 	modal.modal('show');
 }
+
+function addDelegate(element){
+  var index = $('#delegate').children('input').length;
+  var id = $('#id_delegate').val();
+  var person = "";
+  $.getJSON("/myPUB/authority_user/" + id, function(data,status){
+    $('#delegate').append('<div class="col-md-10 col-md-offset-2" id="delegate_' + id + '"><div class="row innerrow"><div class="col-md-7 form-group"><span class="glyphicon glyphicon-remove del_del" id="delegate_span_' + id + '"></span> ' + data.full_name + ' <span class="text-muted">' + id + '</span><input type="hidden" name="delegate.' + index + '" value="' + id + '" /></div></div></div>');
+    $('#delegate_' + id).find('span.del_del').bind("click", function(){
+      $('#delegate_' + id).remove();
+    });
+    $('#id_delegate').val("");
+  });
+}
+
+$('.del_del').click(function(){
+  var id = $(this).attr('id').replace('delegate_span_','');
+  $('#delegate_' + id).remove();
+});
 
 $("input[name='account_type']").change(function(){
   if($("input[name='account_type']:checked").val() == "external"){
