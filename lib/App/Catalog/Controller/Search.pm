@@ -157,7 +157,7 @@ sub search_publication {
     $p->{q}      = $query;
     $p->{facets} = $facets;
 
-    my $standardSort = h->config->{store}->{default_sort};
+    my $standardSort = h->config->{store}->{default_sort_backend};
     my $standardSruSort;
     foreach (@$standardSort) {
         $standardSruSort .= "$_->{field},,";
