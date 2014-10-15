@@ -24,7 +24,7 @@ sub search_publication {
     	#$query .= join(' OR ');
     	 my $revdep = "";
     	 foreach my $rev (@{$account->{reviewer}}){
-    	 	$revdep .= "department=$rev->{department}->{id} OR ";
+    	 	$revdep .= "department=$rev->{id} OR ";
     	 }
     	 $revdep =~ s/ OR $//g;
     	 $query = $revdep;
