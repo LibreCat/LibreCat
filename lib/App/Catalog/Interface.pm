@@ -16,15 +16,19 @@ get '/search_researcher' => sub {
 };
 
 get '/autocomplete_connect' => sub {
-	my $q = params->{'term'} || "";
+	my $term = params->{'term'} || "";
+	my $q = params->{'q'} || "";
 
-	if($q ne ""){
+	if($term ne "" and $q eq ""){
 		if(session->{role} ne "user"){
-			$q = "title=" . $q . "* OR person=" . $q . "*",
+			$q = "title=" . $term . "* OR person=" . $term . "*",
 		}
 		else {
-			$q = "title=" . $q . "*";
+			$q = "title=" . $term . "*";
 		}
+	}
+	elsif($term ne "" and $q ne "") {
+		$q = $q . " AND " . $term . "*";
 	}
 
 
