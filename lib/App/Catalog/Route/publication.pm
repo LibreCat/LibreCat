@@ -118,6 +118,8 @@ prefix '/record' => sub {
             ? ( $params->{approved} = 1 )
             : ( $params->{approved} = 0 );
 
+        $params->{creator} = session 'user' unless $params->{creator};
+
         my $result = update_publication($params);
 
         redirect '/myPUB';
