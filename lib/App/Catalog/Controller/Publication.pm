@@ -164,6 +164,9 @@ sub save_publication {
     fixes => [
         'clean_department_project()',
     ]);
+    
+    $data->{date_updated} = h->now();
+    $data->{date_created} = $data->{date_updated} if !$data->{date_created};
 
     #if ( $validator->is_valid($data) ) {
 

@@ -106,6 +106,8 @@ update account record
 ```yaml
 ---
 _id: unique record identifier
+date_updated: 2014-10-14T01:00
+date_created: 2014-10-13T01:00
 record_creator: mmustermann
 type: publication type
 title: title of the publication
