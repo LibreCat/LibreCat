@@ -15,6 +15,7 @@
     <input type="hidden" name="type" value="{% tmpl %}" id="id_type"/>
     <input type="hidden" name="_id" value="[% _id %]"/>
     <input type="hidden" name="status" value="unsubmitted"/>
+    <input type="hidden" name="date_created" value="[% date_created %]" />
 
     <div class="tab tab-content edit-form">
 
