@@ -30,6 +30,7 @@ prefix '/record' => sub {
 
     get '/new' => sub {
         my $type = params->{type};
+        my $edit_mode = params->{edit_mode} if params->{edit_mode};
 
         return template 'add_new' unless $type;
 
@@ -38,12 +39,19 @@ prefix '/record' => sub {
         $data->{_id} = $id;
         my $user = h->getPerson( session->{personNumber} );
         $data->{department} = $user->{department};
+        $edit_mode = $user->{edit_mode} if $user->{edit_mode};
 
         if ( $type eq "researchData" ) {
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
         }
+        
+        my $templatepath = "backend/forms";
+        
+        if(($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
+        	$templatepath .= "/expert";
+        }
 
-        template "backend/forms/$type", $data;
+        template $templatepath . "/$type", $data;
     };
 
 =head2 GET /edit/:id
@@ -203,7 +211,36 @@ prefix '/record' => sub {
 
         redirect '/myPUB';
     };
+    
+=head2 GET /change_mode
+
+    Prints the frontdoor for every record.
+
+=cut
+
+    post '/change_mode' => sub {
+    	my $mode = params->{edit_mode};
+        my $params = params;
+
+        foreach my $key ( keys %$params ) {
+            if ( ref $params->{$key} eq "ARRAY" ) {
+                my $i = 0;
+                foreach my $entry ( @{ $params->{$key} } ) {
+                    $params->{ $key . "." . $i } = $entry, $i++;
+                }
+                delete $params->{$key};
+            }
+        }
+
+        $params = h->nested_params($params);
+        my $path = "backend/forms/";
+        $path .= "expert/" if $mode eq "expert";
+        $path .= params->{type} . ".tt";
+        
+        template $path, $params;
+    };
 };
+
 
 get '/upload' => sub {
     template "backend/upload.tt";

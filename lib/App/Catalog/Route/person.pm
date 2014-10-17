@@ -88,6 +88,26 @@ prefix '/person' => sub {
 
     };
 
+=head2 POST /edit_mode
+
+    User can choose default edit mode for editing publications.
+    "normal" -> edit form with tabs
+    "expert" -> one long edit form
+
+=cut
+    post '/edit_mode' => sub {
+
+        my $person     = h->authority_user->get( session('personNumber') );
+        my $type = params->{edit_mode};
+        if($type eq "normal" or $type eq "expert"){
+        	$person->{edit_mode} = $type;
+        	my $bag = h->authority_user->add($person);
+        }
+
+        redirect '/myPUB';
+
+    };
+
 =head1 POST /affiliation
 
     User edits his affiliation. Will be displayed if you opens

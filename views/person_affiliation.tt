@@ -1,6 +1,11 @@
 [% department = thisPerson.department %]
 <form action="/myPUB/person/affiliation" method="POST">
   <div class="row innerrow">
+    <div class="col-md-12">
+      <h4>Department Affiliation</h4>
+    </div>
+  </div>
+  <div class="row innerrow">
     <div class="col-md-1">
       <span class="glyphicon glyphicon-plus" id="plusPersonAFF"></span>
     </div>
@@ -77,6 +82,36 @@
     <div class="col-md-12 buttonrow">
       <span class="form-group col-md-2 col-md-offset-1">
         <button type="submit" id="id_save_aff" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
+      </span>
+    </div>
+  </div>
+</form>
+
+<hr />
+
+<form action="/myPUB/person/edit_mode" method="POST">
+  <div class="row innerrow">
+    <div class="col-md-12">
+      <h4>Edit Mode</h4>
+    </div>
+  </div>
+  <div class="row innerrow">
+    <div class="col-md-10 col-md-offset-1">
+    <div class="row innerrow">
+    <div class="col-md-7">
+      <select name="edit_mode" class="form-control">
+        <option value="normal"[% IF thisPerson.edit_mode == "normal" %] selected="selected"[% END %]>Normal edit mode (with tabs)</option>
+        <option value="expert"[% IF thisPerson.edit_mode == "expert" %] selected="selected"[% END %]>Extended edit mode (same fields but all on one page)</option>
+      </select>
+    </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="row innerrow"><!-- button -->
+    <div class="col-md-12 buttonrow">
+      <span class="form-group col-md-2 col-md-offset-1">
+        <button type="submit" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
       </span>
     </div>
   </div>
