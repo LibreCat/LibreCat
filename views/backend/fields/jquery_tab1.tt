@@ -80,7 +80,7 @@ $('.oneToTwo').click(function(e){
     $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
   }
   
-  
+  {% IF edit_mode == "expert" %}
   if($('#id_data_reuse_license').length || $('#id_open_data_release').length){
     if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
       if($('#id_data_reuse_license').val() == ''){
@@ -125,16 +125,6 @@ $('.oneToTwo').click(function(e){
           $('#id_open_data_release').prop("checked", false);
         }
       }
-      
-      {% IF editmode == "normal" %}
-      $('#file_upload, #li_file_upload').removeClass('active');
-      $('#supplementary_fields, #li_supplementary_fields').addClass('active');
-      $('#li_supplementary_fields').children('a').attr('href','#supplementary_fields');
-      $('#li_supplementary_fields').children('a').attr('data-toggle','tab');
-      $('#li_supplementary_fields').removeClass('disabled');
-      $('a[href=#supplementary_fields]').attr('data-toggle','tab');
-      $('#li_supplementary_fields').css('visibility','visible');
-      {% END %}
     }
   }
   else if($('#id_pub_license').length){
@@ -168,27 +158,7 @@ $('.oneToTwo').click(function(e){
           $('#id_pub_license').prop("checked", false);
         }
       }
-      
-      {% IF editmode == "normal" %}
-      $('#file_upload, #li_file_upload').removeClass('active');
-      $('#supplementary_fields, #li_supplementary_fields').addClass('active');
-      $('#li_supplementary_fields').children('a').attr('href', '#supplementary_fields');
-      $('#li_supplementary_fields').children('a').attr('data-toggle', 'tab');
-      $('#li_supplementary_fields').removeClass('disabled');
-      $('a[href=#supplementary_fields]').attr('data-toggle','tab');
-      $('#li_supplementary_fields').css('visibility','visible');
-      {% END %}
     }
-  }
-  {% IF editmode == "normal" %}
-  else {
-    $('#file_upload, #li_file_upload').removeClass('active');
-    $('#supplementary_fields, #li_supplementary_fields').addClass('active');
-    $('#li_supplementary_fields').children('a').attr('href','#supplementary_fields');
-    $('#li_supplementary_fields').children('a').attr('data-toggle','tab');
-    $('#li_supplementary_fields').removeClass('disabled');
-    $('a[href=#supplementary_fields]').attr('data-toggle','tab');
-    $('#li_supplementary_fields').css('visibility','visible');
   }
   {% END %}
   

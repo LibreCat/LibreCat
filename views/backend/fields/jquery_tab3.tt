@@ -1,0 +1,15 @@
+$('.threeToFour').click(function(){
+  $('#supplementary_fields, #li_supplementary_fields').removeClass('active');
+  $('#related_material, #li_related_material').addClass('active');
+  $('#li_related_material').children('a').attr('href', '#related_material');
+  $('#li_related_material').children('a').attr('data-toggle', 'tab');
+  $('#li_related_material').removeClass('disabled');
+  $('a[href=#related_material]').attr('data-toggle','tab');
+  $('#li_related_material').css('visibility','visible');
+  $('#inputSpan').remove();
+});
+
+$('.threeToTwo').click(function(){
+  $('#li_supplementary_fields').removeClass('active');
+  $('#li_file_upload').addClass('active');
+});
