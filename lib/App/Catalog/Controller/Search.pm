@@ -38,10 +38,10 @@ sub search_publication {
     	$mgrdep =~ s/ OR $//g;
     	$query .= $mgrdep;
     }
-    elsif ($par->{modus} eq "admin"){
+    elsif ($account->{super_admin} and $par->{modus} eq "admin"){
     	$query = "";
     }
-    elsif ( $par->{modus} =~ /^delegate/ and array_includes($account->{delegate}, $par->{delegate_id}) ) {
+    elsif ( $par->{modus} =~ /^delegate/ and $account->{delegate} and array_includes($account->{delegate}, $par->{delegate_id}) ) {
         $query = "person=$par->{delegate_id}";
     }
     else{
@@ -113,9 +113,7 @@ sub search_publication {
     }
 
     # separate handling of publication types (for separate facet)
-    if ( params->{publicationtype}
-        and ref params->{publicationtype} eq 'ARRAY' )
-    {
+    if ( params->{publicationtype} and ref params->{publicationtype} eq 'ARRAY' ){
         my $tmpquery = "";
         foreach ( @{ params->{publicationtype} } ) {
             $tmpquery .= "documenttype=" . $_ . " OR ";
@@ -124,17 +122,13 @@ sub search_publication {
         $query        .= " AND (" . $tmpquery . ")";
         $doctypequery .= " AND (" . $tmpquery . ")";
     }
-    elsif ( params->{publicationtype}
-        and ref params->{publicationtype} ne 'ARRAY' )
-    {
+    elsif ( params->{publicationtype} and ref params->{publicationtype} ne 'ARRAY' ){
         $query        .= " AND documenttype=" . params->{publicationtype};
         $doctypequery .= " AND documenttype=" . params->{publicationtype};
     }
 
     #separate handling of publishing years (for separate facet)
-    if ( params->{publishingyear}
-        and ref params->{publishingyear} eq 'ARRAY' )
-    {
+    if ( params->{publishingyear} and ref params->{publishingyear} eq 'ARRAY' ){
         my $tmpquery = "";
         foreach ( @{ params->{publishingyear} } ) {
             $tmpquery .= "publishingyear=" . $_ . " OR ";
@@ -143,16 +137,14 @@ sub search_publication {
         $query         .= " AND (" . $tmpquery . ")";
         $publyearquery .= " AND (" . $tmpquery . ")";
     }
-    elsif ( params->{publishingyear}
-        and ref params->{publishingyear} ne 'ARRAY' )
-    {
+    elsif ( params->{publishingyear} and ref params->{publishingyear} ne 'ARRAY' ){
         $query         .= " AND publishingyear=" . params->{publishingyear};
         $publyearquery .= " AND publishingyear=" . params->{publishingyear};
     }
 
     $query = h->clean_cql($query) if $query ne "";
-    $publyearquery = h->clean_cql($publyearquery) if $publyearquery ne "";
-    $doctypequery = h->clean_cql($doctypequery) if $doctypequery ne "";
+    #$publyearquery = h->clean_cql($publyearquery) if $publyearquery ne "";
+    #$doctypequery = h->clean_cql($doctypequery) if $doctypequery ne "";
 
     $p->{q}      = $query;
     $p->{facets} = $facets;
