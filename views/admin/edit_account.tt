@@ -119,10 +119,11 @@
       <div class="col-md-10" id="affiliation">
       [% IF !department %]
         <div class="row innerrow">
-          <input type="hidden" name="department.0.id" id="aff_idautocomplete_0" value="" />
+          <input type="hidden" name="department.0.id" id="aff_idautocomplete_0" />
+          <input type="hidden" name="department.0.name" id="aff_nameautocomplete_0" />
 
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" name="department.0.name" id="aff_autocomplete_0" value="" />
+            <input type="text" class="form-control" id="aff_autocomplete_0" value="" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_0" value="Select"/>
@@ -137,6 +138,7 @@
               minLength: 2,
               select: function( event, ui ) {
                 $( "#aff_autocomplete_0" ).val( ui.item.label );
+                $( "#aff_nameautocomplete_0" ).val( ui.item.label );
                 $( "#aff_idautocomplete_0" ).val( ui.item.id );
                 $( "#aff_autocomplete_0" ).attr("disabled", "disabled");
               }
@@ -148,8 +150,9 @@
       [% FOREACH dept IN department %]
         <div class="row innerrow">
           <input type="hidden" name="department.[% loop.index %].id" id="aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+          <input type="hidden" name="department.[% loop.index %].name" id="aff_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" name="department.[% loop.index %].name" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+            <input type="text" class="form-control" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_[% loop.index %]" value="Select"/>
@@ -168,6 +171,7 @@
               minLength: 2,
               select: function( event, ui ) {
                 $( "#aff_autocomplete_[% loop.index %]" ).val( ui.item.label );
+                $( "#aff_nameautocomplete_[% loop.index %]" ).val( ui.item.label );
                 $( "#aff_idautocomplete_[% loop.index %]" ).val( ui.item.id );
                 $( "#aff_autocomplete_[% loop.index %]" ).attr("disabled", "disabled");
               }
@@ -256,7 +260,8 @@
       <div class="col-md-10" id="data_manager">
       [% IF !data_manager %]
         <div class="row innerrow">
-          <input type="hidden" name="data_manager.0.id" id="dp_idautocomplete_0" value="" />
+          <input type="hidden" name="data_manager.0.id" id="dp_idautocomplete_0" />
+          <input type="hidden" name="data_manager.0.name" id="dp_nameautocomplete_0" />
 
           <span class="form-group col-md-7">
             <input type="text" class="form-control" name="data_manager.0.name" id="dp_autocomplete_0" value="" />
@@ -274,6 +279,7 @@
               minLength: 2,
               select: function( event, ui ) {
                 $( "#dp_autocomplete_0" ).val( ui.item.label );
+                $( "#dp_nameautocomplete_0" ).val( ui.item.label );
                 $( "#dp_idautocomplete_0" ).val( ui.item.id );
                 $( "#dp_autocomplete_0" ).attr("disabled", "disabled");
               }
@@ -285,6 +291,7 @@
       [% FOREACH dept IN data_manager %]
         <div class="row innerrow">
           <input type="hidden" name="data_manager.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+          <input type="hidden" name="data_manager.[% loop.index %].name" id="dp_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
           <span class="form-group col-md-7">
             <input type="text" class="form-control" name="data_manager.[% loop.index %].name" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
           </span>
@@ -305,6 +312,7 @@
               minLength: 2,
               select: function( event, ui ) {
                 $( "#dp_autocomplete_[% loop.index %]" ).val( ui.item.label );
+                $( "#dp_nameautocomplete_[% loop.index %]" ).val( ui.item.label );
                 $( "#dp_idautocomplete_[% loop.index %]" ).val( ui.item.id );
                 $( "#dp_autocomplete_[% loop.index %]" ).attr("disabled","disabled");
               }
@@ -339,10 +347,11 @@
       <div class="col-md-10" id="reviewer">
         [% IF !reviewer %]
         <div class="row innerrow">
-          <input type="hidden" name="reviewer.0.id" id="rv_idautocomplete_0" value="" />
+          <input type="hidden" name="reviewer.0.id" id="rv_idautocomplete_0" />
+          <input type="hidden" name="reviewer.0.name" id="rv_nameautocomplete_0" />
 
           <span class="form-group col-md-7">
-            <input type="text" class="form-control" name="reviewer.0.name" id="rv_autocomplete_0" value="" />
+            <input type="text" class="form-control" id="rv_autocomplete_0" value="" />
           </span>
           <span class="form-group col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button reviewer" id="reviewer_select_0" value="Select"/>
@@ -357,6 +366,7 @@
               minLength: 2,
               select: function( event, ui ) {
                 $( "#rv_autocomplete_0" ).val( ui.item.label );
+                $( "#rv_nameautocomplete_0" ).val( ui.item.label );
                 $( "#rv_idautocomplete_0" ).val( ui.item.id );
                 $( "#rv_autocomplete_0" ).attr("disabled","disabled");
               }
@@ -368,6 +378,7 @@
       [% FOREACH dept IN reviewer %]
         <div class="row innerrow">
           <input type="hidden" name="reviewer.[% loop.index %].id" id="rv_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+          <input type="hidden" name="reviewer.[% loop.index %].name" id="rv_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
           <span class="form-group col-md-7">
             <input type="text" class="form-control" name="reviewer.[% loop.index %].name" id="rv_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
           </span>
@@ -388,6 +399,7 @@
               minLength: 2,
               select: function( event, ui ) {
                 $( "#rv_autocomplete_[% loop.index %]" ).val( ui.item.label );
+                $( "#rv_nameautocomplete_[% loop.index %]" ).val( ui.item.label );
                 $( "#rv_idautocomplete_[% loop.index %]" ).val( ui.item.id );
                 $( "#rv_autocomplete_[% loop.index %]" ).attr("disabled","disabled");
               }
@@ -469,8 +481,8 @@ function selectButton(element){
 	$('.selectme').bind("click", function(){
 		var id = $(this).attr('id');
 	    var name = $(this).html();
-	    //var index = $(this).attr('data-index');
 	    $('#' + type_short + '_idautocomplete_' + index).val(id);
+	    $('#' + type_short + '_nameautocomplete_' + index).val(name);
 	    $('#' + type_short + '_autocomplete_' + index).val(name);
 	    $('#selectModal').modal('hide');
 	});
@@ -509,13 +521,14 @@ $("input[name='account_type']").change(function(){
 $('#plusAFF').click(function(){
   var items = $('#affiliation div.innerrow');
   var index = items.index($('#affiliation div.innerrow').last()) + 1;
-  $('#affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="aff_idautocomplete_' + index + '" value="" /><span class="form-group col-md-7"><input type="text" class="form-control" name="department.' + index + '.name" id="aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
+  $('#affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="aff_idautocomplete_' + index + '" /><input type="hidden" name="department.' + index + '.name" id="aff_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
   $('#affiliation').bind("click", function(){
     $( "#aff_autocomplete_" + index ).autocomplete({
       source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
       minLength: 2,
       select: function( event, ui ) {
         $( "#aff_autocomplete_" + index ).val( ui.item.label );
+        $( "#aff_nameautocomplete_" + index ).val( ui.item.label );
         $( "#aff_idautocomplete_" + index ).val( ui.item.id );
         $( "#aff_autocomplete_" + index ).attr("disabled","disabled");
       }
@@ -526,13 +539,14 @@ $('#plusAFF').click(function(){
 $('#plusRV').click(function(){
   var items = $('#reviewer div.innerrow');
   var index = items.index($('#reviewer div.innerrow').last()) + 1;
-  $('#reviewer').append('<div class="row innerrow"><input type="hidden" name="reviewer.' + index + '.id" id="rv_idautocomplete_' + index + '" value="" /><span class="form-group col-md-7"><input type="text" class="form-control" name="reviewer.' + index + '.name" id="rv_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button reviewer" id="reviewer_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
+  $('#reviewer').append('<div class="row innerrow"><input type="hidden" name="reviewer.' + index + '.id" id="rv_idautocomplete_' + index + '" /><input type="hidden" name="reviewer.' + index + '.name" id="rv_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="rv_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button reviewer" id="reviewer_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
   $('#reviewer').bind("click", function(){
     $( "#rv_autocomplete_" + index ).autocomplete({
       source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
       minLength: 2,
       select: function( event, ui ) {
         $( "#rv_autocomplete_" + index ).val( ui.item.label );
+        $( "#rv_nameautocomplete_" + index ).val( ui.item.label );
         $( "#rv_idautocomplete_" + index ).val( ui.item.id );
         $( "#rv_autocomplete_" + index ).attr("disabled","disabled");
       }
@@ -543,13 +557,14 @@ $('#plusRV').click(function(){
 $('#plusDM').click(function(){
   var items = $('#data_manager div.innerrow');
   var index = items.index($('#data_manager div.innerrow').last()) + 1;
-  $('#data_manager').append('<div class="row innerrow"><input type="hidden" name="data_manager.' + index + '.id" id="dp_idautocomplete_' + index + '" value="" /><span class="form-group col-md-7"><input type="text" class="form-control" name="data_manager.' + index + '.name" id="dp_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button data_manager" id="data_manager_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
+  $('#data_manager').append('<div class="row innerrow"><input type="hidden" name="data_manager.' + index + '.id" id="dp_idautocomplete_' + index + '" /><input type="hidden" name="data_manager.' + index + '.name" id="dp_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" name="data_manager.' + index + '.name" id="dp_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button data_manager" id="data_manager_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
   $('#data_manager').bind("click", function(){
     $( "#dp_autocomplete_" + index ).autocomplete({
       source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
       minLength: 2,
       select: function( event, ui ) {
         $( "#dp_autocomplete_" + index ).val( ui.item.label );
+        $( "#dp_nameautocomplete_" + index ).val( ui.item.label );
         $( "#dp_idautocomplete_" + index ).val( ui.item.id );
         $( "#dp_autocomplete_" + index ).attr("disabled","disabled");
       }
