@@ -75,7 +75,13 @@ get '/autocomplete_hierarchy' => sub {
 
     my $fmt = params->{fmt} || "autocomplete";
 	my $type = params->{type} || "department";
-	my $q = "name=" . lc params->{'term'} . "*";
+	my $q;
+	if(params->{'term'} =~ /[äöüß]/){
+		$q = "name=" . lc params->{'term'};
+	}
+	else {
+		$q = "name=" . lc params->{'term'} . "*";
+	}
 	my $hits;
 
 	if($type eq "department"){
