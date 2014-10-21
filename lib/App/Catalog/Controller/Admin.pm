@@ -65,7 +65,6 @@ sub update_person {
 
     my $fixer = Catmandu::Fix->new(fixes => [
         'unless exists("account_status") add_field("account_status","inactive") end',
-        'split_field("delegate",", ")',
         ]);
 
     $data->{full_name} = $data->{last_name} . ", " . $data->{first_name};

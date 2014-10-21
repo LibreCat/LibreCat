@@ -2,7 +2,7 @@
     <!-- Search -->
 
     <h5>Search Publications</h5>
-    <form action="/myPUB/[% SWITCH modus %][% CASE "admin" %]adminSearch[% CASE "reviewer" %]reviewerSearch[% CASE "user" %]search[% END %]" method="get" class="form-inline" role="form">
+    <form action="#" method="get" class="form-inline" role="form">
         [% FOREACH key IN qp.keys %]
         [% NEXT IF key == "q" %]
         [% IF qp.$key.0 %]
@@ -96,9 +96,9 @@
     <ul class="nav nav-tabs nav-stacked">
       [% IF facets.submissionStatus.terms.0 %]
       <li>
-        <button data-toggle="collapse" data-target="#submissionStatus"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Submission Status ([% facets.submissionStatus.terms.size %])</a></button>
+        <button data-toggle="collapse" data-target="#submissionStatus_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Submission Status ([% facets.submissionStatus.terms.size %])</a></button>
         <div class="facettecollapse">
-        <ul id="submissionStatus" class="collapse[% IF qp.submissionstatus %] in[% END %]">
+        <ul id="submissionStatus_[% tabmodus %]" class="collapse[% IF qp.submissionstatus %] in[% END %]">
           [% FOREACH type IN facets.submissionStatus.terms %]
           [% IF qp.submissionstatus.grep("^$type.term\$").0 %]
           <li>[% type.term %] ([% type.count %])</li>
@@ -112,9 +112,9 @@
       [% END %]
       [% IF session.role == "super_admin" %]
       <li>
-        <button data-toggle="collapse" data-target="#department_new"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Department</a></button>
+        <button data-toggle="collapse" data-target="#department_new_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Department</a></button>
         <div class="facettecollapse">
-        <ul id="department_new" class="collapse[% IF qp.department %] in[% END %]">
+        <ul id="department_new_[% tabmodus %]" class="collapse[% IF qp.department %] in[% END %]">
         [% IF qp.department %]
           [% dept = h.getDepartment(qp.department) %]
           [% dept.name %]
@@ -162,9 +162,9 @@
       [% END %]
       [% IF dochits.facets.documentType.terms.0 %]
       <li>
-        <button data-toggle="collapse" data-target="#documentType"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publication Type ([% dochits.facets.documentType.terms.size %])</a></button>
+        <button data-toggle="collapse" data-target="#documentType_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publication Type ([% dochits.facets.documentType.terms.size %])</a></button>
         <div class="facettecollapse">
-        <ul id="documentType" class="collapse[% IF qp.publicationtype %] in[% END %]">
+        <ul id="documentType_[% tabmodus %]" class="collapse[% IF qp.publicationtype %] in[% END %]">
           [% FOREACH type IN dochits.facets.documentType.terms %]
           [% typeName = h.display_doctypes(type.term) %]
           [% IF qp.publicationtype.grep("^$type.term\$").0 %]
@@ -179,9 +179,9 @@
      [% END %]
      [% IF facets.coAuthor.terms.0 %]
       <li>
-        <button data-toggle="collapse" data-target="#co_authors"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Co-authors ([% facets.coAuthor.terms.size %])</a></button>
+        <button data-toggle="collapse" data-target="#co_authors_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Co-authors ([% facets.coAuthor.terms.size %])</a></button>
         <div class="facettecollapse">
-        <ul id="co_authors" class="collapse[% IF qp.author %] in[% END %]">
+        <ul id="co_authors_[% tabmodus %]" class="collapse[% IF qp.author %] in[% END %]">
           [% FOREACH co IN facets.coAuthor.terms %]
           [% name = h.getPerson(co.term) %]
           [% IF qp.author.grep("$co.term").0 %]
@@ -196,9 +196,9 @@
       [% END %]
       [% IF facets.coEditor.terms.0 %]
       <li>
-        <button data-toggle="collapse" data-target="#co_editors"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Co-editors ([% facets.coEditor.terms.size %])</a></button>
+        <button data-toggle="collapse" data-target="#co_editors_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Co-editors ([% facets.coEditor.terms.size %])</a></button>
         <div class="facettecollapse">
-        <ul id="co_editors" class="collapse[% IF qp.editor %] in[% END %]">
+        <ul id="co_editors_[% tabmodus %]" class="collapse[% IF qp.editor %] in[% END %]">
           [% FOREACH co IN facets.coEditor.terms %]
           [% name = h.getPerson(co.term) %]
           [% IF qp.editor.grep("$co.term").0 %]
@@ -213,9 +213,9 @@
       [% END %]
       [% IF yearhits.facets.year.terms.0 %]
       <li>
-        <button data-target="#year" data-toggle="collapse"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publishing Year ([% yearhits.facets.year.terms.size %])</a></button>
+        <button data-target="#year_[% tabmodus %]" data-toggle="collapse"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publishing Year ([% yearhits.facets.year.terms.size %])</a></button>
         <div class="facettecollapse">
-        <ul id="year" class="collapse[% IF qp.publishingyear %] in[% END %]">
+        <ul id="year_[% tabmodus %]" class="collapse[% IF qp.publishingyear %] in[% END %]">
           [% FOREACH y IN yearhits.facets.year.terms %]
           [%- year = (y.term) / 1000; -%]
           [%- yf = date.format(year); -%]
@@ -310,9 +310,9 @@
 
     <ul class="nav nav-tabs nav-stacked">
       <li>
-        <button data-toggle="collapse" data-target="#hitsperpage"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.store.default_searchpage_size %][% END %]</a></button>
+        <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.store.default_searchpage_size %][% END %]</a></button>
         <div class="facettecollapse">
-        <ul id="hitsperpage" class="collapse">
+        <ul id="hitsperpage_[% tabmodus %]" class="collapse">
           [% FOREACH limiting IN h.config.store.pagination_options %]
             [% IF (qp.limit AND qp.limit == limiting) OR (!qp.limit AND limiting == h.config.store.default_searchpage_size) %]
             <li>[% limiting %]</li>
@@ -324,9 +324,9 @@
         </div>
       </li>
       <li>
-        <button data-toggle="collapse" data-target="#style"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Citation Style[% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</a></button>
+        <button data-toggle="collapse" data-target="#style_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Citation Style[% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</a></button>
         <div class="facettecollapse">
-        <ul id="style" class="collapse">
+        <ul id="style_[% tabmodus %]" class="collapse">
           [% IF qp.style AND qp.style == "frontShort" %]
           <li>default</li>
           [% ELSE %]
@@ -343,9 +343,9 @@
         </div>
       </li>
       <li>
-        <button data-toggle="collapse" data-target="#sort"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Sorting</a></button>
+        <button data-toggle="collapse" data-target="#sort_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Sorting</a></button>
         <div class="facettecollapse">
-        <ul id="sort" class="collapse[% IF qp.defined('sort') %] in[% END %]">
+        <ul id="sort_[% tabmodus %]" class="collapse[% IF qp.defined('sort') %] in[% END %]">
           [% FOREACH sorting IN h.config.store.sort_options %]
             [% IF qp.item('sort').grep("$sorting.key").0 %]
             <li>[% sorting.label %]</li>

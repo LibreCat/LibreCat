@@ -1488,5 +1488,7 @@ project_sort_options:
 default_sort:
   - {field: publishingyear, order: desc}
   - {field: datelastchanged, order: desc}
+default_sort_backend:
+  - {field: datelastchanged, order: desc}
 default_style: pub
 default_fd_style: frontShort

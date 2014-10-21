@@ -24,7 +24,7 @@ sub search_publication {
     	#$query .= join(' OR ');
     	 my $revdep = "";
     	 foreach my $rev (@{$account->{reviewer}}){
-    	 	$revdep .= "department=$rev->{department}->{id} OR ";
+    	 	$revdep .= "department=$rev->{id} OR ";
     	 }
     	 $revdep =~ s/ OR $//g;
     	 $query = $revdep;
@@ -157,7 +157,7 @@ sub search_publication {
     $p->{q}      = $query;
     $p->{facets} = $facets;
 
-    my $standardSort = h->config->{store}->{default_sort};
+    my $standardSort = h->config->{store}->{default_sort_backend};
     my $standardSruSort;
     foreach (@$standardSort) {
         $standardSruSort .= "$_->{field},,";

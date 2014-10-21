@@ -120,17 +120,14 @@ sub save_publication {
     	if(ref $data->{language} ne "ARRAY"){
     		$data->{language} = [$data->{language}];
     	}
-#    	foreach my $lang (@{$data->{language}}){
-#    		my $language;
-#    		$language->{text} = $lang;
-#    		if($lang eq "English" or $lang eq "German"){
-#    			$language->{iso} = h->config->{lists}->{language_preselect}->{$lang};
-#    		}
-#    		else {
-#    			$language->{iso} = h->config->{lists}->{language}->{$lang};
-#    		}
-#    		$lang = $language;
-#    	}
+    	foreach my $lang (@{$data->{language}}){
+    		if($lang->{name} eq "English" or $lang->{name} eq "German"){
+    			$lang->{iso} = h->config->{lists}->{language_preselect}->{$lang->{name}};
+    		}
+    		else {
+    			$lang->{iso} = h->config->{lists}->{language}->{$lang->{name}};
+    		}
+    	}
     }
     if($data->{abstract}){
     	my $i = 0;
@@ -164,6 +161,9 @@ sub save_publication {
     fixes => [
         'clean_department_project()',
     ]);
+    
+    $data->{date_updated} = h->now();
+    $data->{date_created} = $data->{date_updated} if !$data->{date_created};
 
     #if ( $validator->is_valid($data) ) {
 

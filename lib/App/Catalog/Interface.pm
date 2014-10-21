@@ -15,6 +15,17 @@ get '/search_researcher' => sub {
 
 };
 
+get '/authority_user/:id' => sub {
+	my $id = params->{'id'};
+	my $user = h->authority_user->get($id);
+	my $admin = h->authority_admin->get($id);
+	my @fields = qw(full_name last_name first_name email department super_admin reviewer dataManager delegate);
+	map {
+		$user->{$_} = $admin->{$_};
+	} @fields;
+	to_json($user);
+};
+
 get '/autocomplete_connect' => sub {
 	my $q = params->{'term'} || "";
 
