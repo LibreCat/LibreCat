@@ -7,10 +7,11 @@
     <div class="col-md-10" id="person_affiliation">
     [% IF !department %]
       <div class="row innerrow">
-        <input type="hidden" name="department.0.id" id="person_aff_idautocomplete_0" value="" />
+        <input type="hidden" name="department.0.id" id="person_aff_idautocomplete_0" />
+        <input type="hidden" name="department.0.name" id="person_aff_nameautocomplete_0" />
 
         <span class="form-group col-md-7">
-          <input type="text" class="form-control eventInsForm" name="department.0.name" id="person_aff_autocomplete_0" value="" />
+          <input type="text" class="form-control eventInsForm" id="person_aff_autocomplete_0" value="" />
         </span>
         <span class="form-group col-md-2">
           <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_0" value="Select"/>
@@ -26,6 +27,7 @@
             minLength: 2,
             select: function( event, ui ) {
               $( "#person_aff_autocomplete_0" ).val( ui.item.label );
+              $( "#person_aff_nameautocomplete_0" ).val( ui.item.label );
               $( "#person_aff_idautocomplete_0" ).val( ui.item.id );
               $( "#person_aff_autocomplete_0" ).attr("disabled","disabled");
               event.stopPropagation();
@@ -38,8 +40,9 @@
       [% FOREACH dept IN department %]
       <div class="row innerrow">
         <input type="hidden" name="department.[% loop.index %].id" id="person_aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+        <input type="hidden" name="department.[% loop.index %].name" id="person_aff_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
         <span class="form-group col-md-7">
-          <input type="text" class="form-control eventInsForm" name="department.[% loop.index %].name" id="person_aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+          <input type="text" class="form-control eventInsForm" id="person_aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
         </span>
         <span class="form-group col-md-2">
           <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_[% loop.index %]" value="Select"/>
@@ -59,6 +62,7 @@
             minLength: 2,
             select: function( event, ui ) {
               $( "#person_aff_autocomplete_[% loop.index %]" ).val( ui.item.label );
+              $( "#person_aff_nameautocomplete_[% loop.index %]" ).val( ui.item.label );
               $( "#person_aff_idautocomplete_[% loop.index %]" ).val( ui.item.id );
               $( "#person_aff_autocomplete_[% loop.index %]" ).attr("disabled","disabled");
               event.stopPropagation();
@@ -101,6 +105,7 @@ function selectButton(element){
         var id = $(this).attr('id');
         var name = $(this).html();
         $('#person_aff_idautocomplete_' + index).val(id);
+        $('#person_aff_nameautocomplete_' + index).val(name);
         $('#person_aff_autocomplete_' + index).val(name);
         $('#person_aff_autocomplete_' + index).attr("disabled","disabled");
         $('#selectAFF').modal('hide');
@@ -112,7 +117,7 @@ function selectButton(element){
 $('#plusPersonAFF').click(function(){
   var items = $('#person_affiliation div.innerrow');
   var index = items.index($('#person_affiliation div.innerrow').last()) + 1;
-  $('#person_affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="person_aff_idautocomplete_' + index + '" value="" /><span class="form-group col-md-7"><input type="text" class="form-control" name="department.' + index + '.name" id="person_aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
+  $('#person_affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="person_aff_idautocomplete_' + index + '" /><input type="hidden" name="department.' + index + '.iname" id="person_aff_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="person_aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
   $('#person_affiliation').bind("click", function(){
     $( "#person_aff_autocomplete_" + index ).autocomplete({
       appendTo: "#aff_dropdown",
@@ -120,6 +125,7 @@ $('#plusPersonAFF').click(function(){
       minLength: 2,
       select: function( event, ui ) {
         $( "#person_aff_autocomplete_" + index ).val( ui.item.label );
+        $( "#person_aff_nameautocomplete_" + index ).val( ui.item.id );
         $( "#person_aff_idautocomplete_" + index ).val( ui.item.id );
         $( "#person_aff_autocomplete_" + index ).attr("disabled","disabled");
         event.stopPropagation();
