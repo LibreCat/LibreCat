@@ -39,26 +39,25 @@ Dancer::Plugin::Auth::Tiny->extend(
     any_role => sub {
         my $coderef         = pop;
         my @requested_roles = @_;
-        return sub {
-            my @user_roles = @{ session("role") || [] };
-            if ( any_of(@requested_roles) eq any_of(@user_roles) ) {
+        session->{role} ? return sub {
+            if ( any_of(@requested_roles) eq session->{role} {
                 goto $coderef;
             }
             else {
                 redirect '/access_denied';
             }
-        };
+        } : redirect '/login';
     },
     role => sub {
         my ($role, $coderef) = @_;
-        return sub {
-            if ( $role eq session->{role} ) {
+        session->{role} ? return sub {
+            if ( session->{role} && $role eq session->{role} ) {
                 goto $coderef;
             }
             else {
                 redirect '/access_denied';
             }
-        };
+        } : redirect '/login';
     },
 );
 
@@ -78,27 +77,15 @@ post '/login' => sub {
     my $user = _authenticate( params->{user}, params->{pass} );
 
     if ($user) {
-        session role => $user->{super_admin}
-            || $user->{reviewer}
-            || $user->{dataManager}
-            || "user";
+        my $super_admin = "super_admin" if $user->{super_admin};
+        my $reviewer = "reviewer" if $user->{reviewer};
+        my $dataManager = "dataManager" if $user->{dataManager};
+        session role => $super_admin || $reviewer || $dataManager || "user";
         session user         => $user->{login};
         session personNumber => $user->{_id};
 
         redirect params->{return_url} if params->{return_url};
         redirect '/';
-        # if ( session->{role} eq "super_admin" ) {
-        #     redirect '/myPUB/search/admin';
-        # }
-        # elsif ( session->{role} eq "reviewer" ) {
-        #     redirect '/myPUB/search/reviewer';
-        # }
-        # elsif ( session->{role} eq "dataManager" ) {
-        #     redirect '/myPUB/search/datamanager';
-        # }
-        # else {
-        #     redirect '/myPUB/search';
-        # }
     }
     else {
         forward '/login',
@@ -120,7 +107,7 @@ get '/private' => needs login => sub {
     return "You're logged in.";
 };
 
-get '/admin' => needs role => 'admin' => sub {
+get '/admin' => needs role => 'super_admin' => sub {
     return "You're admin.";
 };
 
@@ -131,5 +118,9 @@ get '/reviewer' => needs any_role => qw/admin reviewer/ => sub {
 any '/access_denied' => sub {
     return "Access denied.";
 };
+
+get '/test/session' => sub {
+    return to_dumper session;
+}
 
 1;
