@@ -10,6 +10,7 @@ use App::Catalog::Helper;
 use App::Catalog::Controller::Publication;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path/;
+use File::Copy;
 use Try::Tiny;
 
 =head1 PREFIX /record
@@ -211,7 +212,8 @@ get '/upload' => sub {
 
 post '/upload' => sub {
     my $file    = request->upload('file');
-    my $id      = params->{_id};
+    my $id = params->{_id};
+    
     my $file_id = new_publication();
     my $path    = path( h->config->{upload_dir}, "$id", $file->{filename} );
     my $dir     = h->config->{upload_dir} . "/" . $id;
@@ -256,6 +258,58 @@ post '/upload' => sub {
     }
 
     return to_json($return);
+};
+
+post '/upload/qai' => sub {
+    my $file    = request->upload('file');
+    
+    my $return;
+    $return->{tempname} = $file->{tempname};
+    $return->{filename} = $file->{filename};
+    copy($file->{tempname}, h->config->{upload_dir}."/".$file->{filename});
+    return to_json($return);
+};
+
+get '/upload/qai' => sub {
+	my $tmp_file = params->{tmp_file};
+	my $submit_or_cancel = params->{submit_or_cancel} || "Cancel";
+	my $return;
+	
+	if($submit_or_cancel eq "Submit"){
+		my $id = new_publication();
+		my $file_id = new_publication();
+		my $file_name = params->{file_name};
+		$return->{saved} = 1;
+		my $record;
+		$record->{_id} = $id;
+		$record->{title} = "New Quick And Easy Publication - Please edit";
+		$record->{type} = "journalArticle";
+		$record->{"author.0.first_name"} = "Petra";
+		$record->{"author.0.last_name"} = "Kohorst";
+		$record->{"author.0.full_name"} = "Kohorst, Petra";
+		$record->{"author.0.id"} = "29676584";
+		$record->{file} = ();
+		push @{$record->{file}}, "{\"file_name\":\"".$file_name."\", \"file_id\":\"".$file_id."\", \"access_level\":\"openAccess\",\"date_updated\":\"2014-04-23T12:00:00\",\"date_created\":\"2014-04-23T12:00:00\",\"creator\":\"". session->{user} ."\",\"open_access\":\"1\",\"relation\":\"main_file\"}";
+		$record->{year} = "2014";
+		
+		my $path = h->config->{upload_dir} . "/" . $id . "/" . $file_name;#path( h->config->{upload_dir}, "$id", $file_name );
+        my $dir = h->config->{upload_dir} . "/" . $id;
+        mkdir $dir unless -e $dir;
+        move(h->config->{upload_dir}."/".$file_name,$path) or return to_dumper $! . " " . h->config->{upload_dir}. "/". $file_name . " " . $path;
+        
+        $record = h->nested_params($record);
+        my $response = update_publication($record);
+        
+        $return->{response} = $response;
+	}
+	else{
+		my $status = unlink $tmp_file;
+		$return->{deleted} = 1;
+	}
+	
+	my $return_json = to_json($return);
+	my $params = params;
+    return to_dumper $params;
 };
 
 post '/upload/update' => sub {
