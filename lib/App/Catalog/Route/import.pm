@@ -9,15 +9,15 @@ package App::Catalog::Route::import;
 use Dancer ':syntax';
 use Try::Tiny;
 use App::Catalog::Controller::Import;
+use Dancer::Plugin::Auth::Tiny;
 
-=head2 POST /import
+=head2 POST /myPUB/record/import
 
     Input is a source and an identifier.
     Returns a form with imported data.
 
 =cut
-
-post '/record/import' => sub {
+post '/myPUB/record/import' => needs login => sub {
 	my $p = params;
 
     my $pub;
