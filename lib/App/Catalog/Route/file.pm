@@ -4,6 +4,7 @@ package App::Catalog::Route::file;
 
     App::Catalog::Route::file - routes for file handling:
     upload & download files, request-a-copy.
+		All these must be public.
 
 =cut
 
@@ -12,12 +13,17 @@ use Dancer qw/:syntax request/;
 use App::Catalog::Helper;
 use DateTime;
 use Try::Tiny;
+use Dancer::Plugin::Auth::Tiny;
+use App::AuthExtend;
+
+my $auth_extend = App::AuthExtend->new();
+Dancer::Plugin::Auth::Tiny->extend($auth_extend->extend);
 
 # some helpers
 ##############
 sub send {
 	my ($id, $file_name) = @_;
-	my $path_to_file = h->config->{upload_dir} ."/id/$file_name";
+	my $path_to_file = h->config->{upload_dir} ."/$id/$file_name";
 	return Dancer::send_file($path_to_file, streaming => 1);
 }
 

@@ -11,6 +11,21 @@ use App::Catalog::Controller::Publication;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path/;
 use Try::Tiny;
+use Dancer::Plugin::Auth::Tiny;
+
+Dancer::Plugin::Auth::Tiny->extend(
+    role => sub {
+        my ($role, $coderef) = @_;
+          return sub {
+            if ( session->{role} && $role eq session->{role} ) {
+                goto $coderef;
+            }
+            else {
+                redirect '/access_denied';
+            }
+          }
+        }
+);
 
 =head1 PREFIX /record
 
@@ -19,7 +34,7 @@ use Try::Tiny;
 
 =cut
 
-prefix '/record' => sub {
+#prefix '/myPUB/record' => needs login => sub {
 
 =head2 GET /new
 
@@ -28,7 +43,7 @@ prefix '/record' => sub {
 
 =cut
 
-    get '/new' => sub {
+    get '/new' => needs login => sub {
         my $type = params->{type};
 
         template 'add_new' unless $type;
@@ -53,7 +68,7 @@ prefix '/record' => sub {
 
 =cut
 
-    get '/edit/:id' => sub {
+    get '/edit/:id' => needs login => sub {
         my $id = param 'id';
 
         forward '/' unless $id;
@@ -81,7 +96,7 @@ prefix '/record' => sub {
 
 =cut
 
-    post '/update' => sub {
+    post '/update' => needs login => sub {
         my $params = params;
 
         foreach my $key ( keys %$params ) {
@@ -130,7 +145,7 @@ prefix '/record' => sub {
 
 =cut
 
-    get '/return/:id' => sub {
+    get '/return/:id' => needs login => sub {
         my $id  = params->{id};
         my $rec = h->publication->get($id);
         $rec->{status} = "returned";
@@ -150,7 +165,7 @@ prefix '/record' => sub {
 
 =cut
 
-    get '/delete/:id' => sub {
+    get '/delete/:id' => needs login => sub {
         delete_publication( params->{id} );
         redirect '/myPUB';
     };
@@ -161,7 +176,7 @@ prefix '/record' => sub {
 
 =cut
 
-    get '/preview/:id' => sub {
+    get '/preview/:id' => needs login => sub {
         my $id   = params->{id};
         my $hits = h->publication->get($id);
         $hits->{bag}
@@ -173,7 +188,7 @@ prefix '/record' => sub {
         template 'frontend/frontdoor/record_preview.tt', $hits;
     };
 
-    get '/publish/:id' => sub {
+    get '/publish/:id' => needs login => sub {
         my $id     = params->{id};
         my $record = h->publication->get($id);
 
@@ -202,7 +217,7 @@ prefix '/record' => sub {
 
         redirect '/myPUB';
     };
-};
+#};
 
 get '/upload' => sub {
     template "backend/upload.tt";

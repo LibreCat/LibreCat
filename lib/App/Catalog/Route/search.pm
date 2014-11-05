@@ -10,15 +10,30 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use App::Catalog::Helper;
 use App::Catalog::Controller::Search qw/search_publication/;
+use Dancer::Plugin::Auth::Tiny;
 
-=head2 PREFIX /search
+Dancer::Plugin::Auth::Tiny->extend(
+    role => sub {
+        my ($role, $coderef) = @_;
+          return sub {
+            if ( session->{role} && $role eq session->{role} ) {
+                goto $coderef;
+            }
+            else {
+                redirect '/access_denied';
+            }
+          }
+        }
+);
+
+=head2 PREFIX /myPUB/search
 
     All publication searches are handled within the
     prefix search.
 
 =cut
 
-prefix '/search' => sub {
+#prefix '/myPUB/search' => sub {
 
 =head2 GET /admin
 
@@ -26,11 +41,11 @@ prefix '/search' => sub {
 
 =cut
 
-    get '/admin' => sub {
+    get '/myPUB/search/admin' => needs role => 'super_admin' => sub {
         my $params = params;
 
-        ( session->{role} ne "super_admin" )
-            && ( redirect '/myPUB/reviewerSearch' );
+      #  ( session->{role} ne "super_admin" )
+      #      && ( redirect '/myPUB/reviewerSearch' );
 
         $params->{modus} = "admin";
         search_publication($params);
@@ -43,11 +58,11 @@ prefix '/search' => sub {
 
 =cut
 
-        get '/reviewer' => sub {
+        get '/myPUB/search/reviewer' => needs role => 'reviewer' => sub {
         my $params = params;
 
-        ( session->{role} ne "super_admin" and session->{role} ne "reviewer" )
-            && ( redirect '/myPUB/search' );
+      #  ( session->{role} ne "super_admin" and session->{role} ne "reviewer" )
+      #      && ( redirect '/myPUB/search' );
 
         $params->{modus} = "reviewer";
         search_publication($params);
@@ -60,12 +75,12 @@ prefix '/search' => sub {
 
 =cut
 
-        get '/datamanager' => sub {
+        get '/myPUB/search/datamanager' => needs role => 'dataManager' => sub {
         my $params = params;
 
-        (           session->{role} ne "super_admin"
-                and session->{role} ne "dataManager" )
-            && ( redirect '/myPUB/search' );
+        #(           session->{role} ne "super_admin"
+        #        and session->{role} ne "dataManager" )
+        #    && ( redirect '/myPUB/search' );
 
         $params->{modus} = "dataManager";
         search_publication($params);
@@ -78,7 +93,7 @@ prefix '/search' => sub {
 
 =cut
 
-        get '/' => sub {
+        get '/myPUB/search/' => needs login => sub {
         my $params = params;
 
         $params->{modus} = "user";
@@ -86,6 +101,6 @@ prefix '/search' => sub {
 
         };
 
-};
+#};
 
 1;

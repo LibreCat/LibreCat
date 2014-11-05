@@ -12,7 +12,7 @@
 
 <div class="row" style="padding-top:15px;">
   <div class="col-md-6 col-md-offset-2 well loginframe" style="background:white;">
-    <form action="/myPUB/login" method="post" class="form-horizontal">
+    <form action="/login" method="post" class="form-horizontal">
       <h4><strong>Login to PUB </strong><span style="font-size:10pt;font-weight:normal;">&nbsp;&nbsp;(Not registered yet? <strong><a href="[% luurBase %]/registration?func=getRegistered"><b>Register for PUB</b></a></strong>)</span></h4>
       <div class="form-group[% IF error_message AND !login %] has-error[% END %]">
         <label class="col-md-3 control-label" for="id_login">Username<span style="color:red"><b>*</b></span></label>

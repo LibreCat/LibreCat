@@ -2,7 +2,7 @@ package App;
 
 =head1 NAME
 
-    App - a webapp that runs an institutional repository
+    App - a webapp that runs an awesome institutional repository.
 
 =cut
 
@@ -11,16 +11,15 @@ our $VERSION = '0.01';
 use Catmandu::Sane;
 use Dancer ':syntax';
 
-use App::Catalog::Helper;
+use App::Catalog; # the backend
+#use App::Search; # the frontend
 
+use App::Catalog::Helper;
 use Authentication::Authenticate;
 use Dancer::Plugin::Auth::Tiny;
-use Syntax::Keyword::Junction 'any' => { -as => 'any_of' };
 
 # make variables with leading '_' visible in TT
 $Template::Stash::PRIVATE = 0;
-
-load_app 'App::Catalog', prefix => 'myPUB';
 
 # custom authenticate routine
 sub _authenticate {
@@ -36,33 +35,6 @@ sub _authenticate {
         return 0;
     }
 }
-
-# extending, 'cause we need roles
-Dancer::Plugin::Auth::Tiny->extend(
-    any_role => sub {
-        my $coderef         = pop;
-        my @requested_roles = @_;
-        session->{role} ? return sub {
-            if ( any_of(@requested_roles) eq session->{role} {
-                goto $coderef;
-            }
-            else {
-                redirect '/access_denied';
-            }
-        } : redirect '/login';
-    },
-    role => sub {
-        my ($role, $coderef) = @_;
-        session->{role} ? return sub {
-            if ( session->{role} && $role eq session->{role} ) {
-                goto $coderef;
-            }
-            else {
-                redirect '/access_denied';
-            }
-        } : redirect '/login';
-    },
-);
 
 =head2 GET /login
 
@@ -120,32 +92,8 @@ any '/logout' => sub {
 
 =cut
 any '/access_denied' => sub {
-    # add an really ugly
+    # add an really ugly 403 page ;-)
     return "Access denied.";
-};
-
-#####################################
-# some test routes
-#####################################
-
-get '/test/home' => sub {
-    return "This is home.";
-};
-
-get '/test/open' => sub {
-    return "You don't need to log in.";
-};
-
-get '/test/private' => needs login => sub {
-    return "You're logged in.";
-};
-
-get '/test/admin' => needs role => 'super_admin' => sub {
-    return "You're admin.";
-};
-
-get '/test/reviewer' => needs any_role => qw/admin reviewer/ => sub {
-    return "You're reviewer or admin.";
 };
 
 1;

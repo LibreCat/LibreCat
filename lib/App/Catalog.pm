@@ -1,5 +1,12 @@
 package App::Catalog;
 
+=head1 NAME
+
+    App::Catalog - The central top level backend module.
+    Integrates all routes needed for catalogueing records.
+
+=cut
+
 use Catmandu::Sane;
 use Catmandu;
 use Dancer ':syntax';
@@ -7,16 +14,20 @@ use Catmandu::Util qw(:array);
 
 use App::Catalog::Helper;
 use App::Catalog::Interface;
-
+use Dancer::Plugin::Auth::Tiny;
 use App::Catalog::Route::admin;
 use App::Catalog::Route::import;
 use App::Catalog::Route::person;
 use App::Catalog::Route::publication;
 use App::Catalog::Route::search;
 
-use Dancer::Plugin::Auth::Tiny;
+=head2 GET /myPUB
 
-get '/' => needs login => sub {
+    The default route after logging in. Will be forwarded
+    to default search page for current role.
+
+=cut
+get '/myPUB' => needs login => sub {
     my $params = params;
 
     if ( session->{role} eq "super_admin" ) {
@@ -33,8 +44,12 @@ get '/' => needs login => sub {
     }
 };
 
+=head2 GET /myPUB/change_role/:change_role
 
-get '/change_role/:role' => needs login => sub {
+    Let's the user change his role.
+
+=cut
+get '/myPUB/change_role/:role' => needs login => sub {
     my $user = h->getAccount( session->{user} )->[0];
 
     # is user allowed to take this role?
