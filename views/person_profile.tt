@@ -19,7 +19,7 @@
       <form action="/myPUB/person/author_id" method="POST">
       <input type="hidden" name="_id" value="[% session.personNumber %]" />
       [% IF !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire) %]
-      <div class="col-md-12">
+      <div class="col-md-10">
         <span class="text-muted">No Author IDs set.</span>&nbsp;
         <a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
       </div>
@@ -29,7 +29,7 @@
       [% IF thisPerson.$k %]
       <span class="authorIds">
         <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
-        <div class="col-md-7">
+        <div class="col-md-6">
         [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]" target="_blank">[% thisPerson.$k %]</a>
         [% ELSE %][% thisPerson.$k %][% END %]
         &nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
@@ -37,7 +37,7 @@
       [% END %]<!-- end if -->
       <span class="authorIds_input" style="display:none;">
         <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
-        <div class="col-md-7"><input type="text" class="form-control input-sm" name="[% k %]" id="[% k %]_input" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
+        <div class="col-md-6"><input type="text" class="form-control input-sm" name="[% k %]" id="[% k %]_input" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
       </span>
       [% END %]<!-- END foreach -->
 
@@ -49,7 +49,7 @@
             $('#authorid_help').tooltip();
           </script>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <button type="submit" id="saveAuthorIds" class="btn btn-success btn-sm">Save</button>
           <button type="button" onclick="editAuthorIds('cancel');" class="btn btn-danger btn-sm">Cancel</button>
         </div>

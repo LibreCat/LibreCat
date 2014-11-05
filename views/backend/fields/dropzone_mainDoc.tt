@@ -7,6 +7,7 @@
   <script type="text/javascript">
   jQuery(document).ready(function() {
     var myDropzone = new Dropzone("div#uploadFiles", {
+      url: "http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/upload",
       params: {_id: "[% _id %]", itype: "file", accessLevel: "openAccess", cancel: "", accept: 1, finalSubmit: "Accept and Submit"},
       createImageThumbnails: false,
     });
@@ -118,7 +119,7 @@
       <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.file_id %]">
         <div class="row">
           <div class="col-md-12 padded">
-            <span class="glyphicon glyphicon-file text-muted"></span> <a href="[% h.shost %]/download/[% id %]/[% fi.file_id %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a>
+            <span class="glyphicon glyphicon-file text-muted"></span> <a href="/myPUB/download/[% _id %]/[% fi.file_id %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a>
           </div>
         </div>
         <div class="row">

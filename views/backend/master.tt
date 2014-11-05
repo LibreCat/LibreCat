@@ -3,6 +3,8 @@
 [% thisPerson = h.getPerson(session.personNumber) %]
 <!-- BEGIN /backend/forms/{% tmpl %} -->
 
+<script src="/javascripts/dropzone3.js"></script>
+
 <div class="row">
 
 <div class="col-md-9 col-md-offset-1">

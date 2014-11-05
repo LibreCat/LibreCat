@@ -9,7 +9,7 @@
 
     <div class="row">
     <div class="col-md-10">
-	  <h5>Enter ID</h5>
+	  <h5>Enter a publication ID to import:</h5>
 	  <div class="row">
 	    <form role="form" class="form-inline" action="/myPUB/record/import" method="POST">
 	      <div class="col-md-2">
@@ -39,10 +39,21 @@
     <div class="row">
       <div class="col-md-12">&nbsp;</div>
     </div>
+    
+    <div class="row">
+      <div class="col-md-6">
+      <h5>Or drop Open Access fulltext (pdf) here and let us do the rest:</h5>
+      [% INCLUDE person_dropzone.tt %]
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
 
     <div class="row">
       <div class="col-md-10">
-        <h5>Or choose a document type:</h5>
+        <h5>Or choose a document type and fill out the empty form yourself:</h5>
       </div>
     </div>
     <div class="row">

@@ -1,0 +1,25 @@
+<!-- BEGIN person/profile.tt -->
+<div class="row" id="dropzone_row">
+  <script src="/javascripts/dropzone3_qai.js"></script>
+  <script type="text/javascript">
+  jQuery(document).ready(function() {
+    var myDropzone = new Dropzone("div#uploadFiles", {
+      params: {accessLevel: "openAccess", accept: 1, quickandeasy: 1},
+      createImageThumbnails: false,
+    });
+    myDropzone.on("success", function(file, response){
+      var resp = JSON.parse(response);
+      var modal = Dropzone.createElement("<div class='well' id='" + resp.tempname + "' style='background-color:#fff;margin-left:15px;margin-right:15px;'><form id='form_" + resp.tempname + "' action='/myPUB/upload/qai' method='get'><strong>" + file.name + "</strong><textarea class='form-control' placeholder='Type details about your publication here' name='description'></textarea><input type='hidden' name='file_name' value='" + resp.filename + "' /><input type='hidden' name='tmp_file' value='" + resp.tempname + "' /><input type='submit' class='btn btn-default' name='submit_or_cancel' value='Submit'/><input type='submit' class='btn btn-default' name='submit_or_cancel' value='Cancel' /></form></div>");
+      file.previewElement.appendChild(modal);
+    });
+    myDropzone.on("error", function(file,response){
+      alert(response);
+    });
+  });
+  </script>
+  
+  <div class="dropzone well col-md-10" style="margin-left:25px;" id="uploadFiles">
+  </div>
+        
+</div>
+<!-- END person/profile.tt -->
