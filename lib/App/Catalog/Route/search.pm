@@ -32,16 +32,14 @@ Dancer::Plugin::Auth::Tiny->extend(
     prefix search.
 
 =cut
-
-#prefix '/myPUB/search' => sub {
+prefix '/myPUB/search' => sub {
 
 =head2 GET /admin
 
     Performs search for admin.
 
 =cut
-
-    get '/myPUB/search/admin' => needs role => 'super_admin' => sub {
+    get '/admin' => needs role => 'super_admin' => sub {
         my $params = params;
 
       #  ( session->{role} ne "super_admin" )
@@ -57,8 +55,7 @@ Dancer::Plugin::Auth::Tiny->extend(
     Performs search for reviewer.
 
 =cut
-
-        get '/myPUB/search/reviewer' => needs role => 'reviewer' => sub {
+        get '/reviewer' => needs role => 'reviewer' => sub {
         my $params = params;
 
       #  ( session->{role} ne "super_admin" and session->{role} ne "reviewer" )
@@ -74,8 +71,7 @@ Dancer::Plugin::Auth::Tiny->extend(
     Performs search for data manager.
 
 =cut
-
-        get '/myPUB/search/datamanager' => needs role => 'dataManager' => sub {
+        get '/datamanager' => needs role => 'dataManager' => sub {
         my $params = params;
 
         #(           session->{role} ne "super_admin"
@@ -92,8 +88,7 @@ Dancer::Plugin::Auth::Tiny->extend(
     Performs search for user.
 
 =cut
-
-        get '/myPUB/search/' => needs login => sub {
+        get '/search' => needs login => sub {
         my $params = params;
 
         $params->{modus} = "user";
@@ -101,6 +96,6 @@ Dancer::Plugin::Auth::Tiny->extend(
 
         };
 
-#};
+};
 
 1;

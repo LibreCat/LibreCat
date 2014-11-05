@@ -32,14 +32,14 @@ Dancer::Plugin::Auth::Tiny->extend(
     Permission: for admins only. Every other user will get a 403.
 
 =cut
-#prefix '/myPUB/admin' => sub {
+prefix '/myPUB/admin' => sub {
 
 =head2 GET /account
 
     Prints a search form for the authority database.
 
 =cut
-    get '/myPUB/admin/account' => needs role => 'super_admin' => sub {
+    get '/account' => needs role => 'super_admin' => sub {
         template 'admin/account';
     };
 
@@ -121,6 +121,6 @@ Dancer::Plugin::Auth::Tiny->extend(
 
     # monitoring external sources
     get '/inspire-monitor' => sub { };
-#};
+};
 
 1;

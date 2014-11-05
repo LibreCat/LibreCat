@@ -34,7 +34,7 @@ Dancer::Plugin::Auth::Tiny->extend(
 
 =cut
 
-#prefix '/myPUB/record' => needs login => sub {
+prefix '/myPUB/record' => sub {
 
 =head2 GET /new
 
@@ -165,7 +165,7 @@ Dancer::Plugin::Auth::Tiny->extend(
 
 =cut
 
-    get '/delete/:id' => needs login => sub {
+    get '/delete/:id' => needs role => 'super_admin' => sub {
         delete_publication( params->{id} );
         redirect '/myPUB';
     };
@@ -217,7 +217,7 @@ Dancer::Plugin::Auth::Tiny->extend(
 
         redirect '/myPUB';
     };
-#};
+};
 
 get '/upload' => sub {
     template "backend/upload.tt";
