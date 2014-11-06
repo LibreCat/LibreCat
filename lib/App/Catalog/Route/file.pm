@@ -4,6 +4,7 @@ package App::Catalog::Route::file;
 
     App::Catalog::Route::file - routes for file handling:
     upload & download files, request-a-copy.
+		All these must be public.
 
 =cut
 
@@ -13,14 +14,18 @@ use Dancer::Request;
 use App::Catalog::Helper;
 use DateTime;
 use Try::Tiny;
+use Dancer::Plugin::Auth::Tiny;
+use App::AuthExtend;
+
+my $auth_extend = App::AuthExtend->new();
+Dancer::Plugin::Auth::Tiny->extend($auth_extend->extend);
 
 # some helpers
 ##############
 sub send_it {
 	my ($id, $file_name) = @_;
-	#my $path_to_file = h->config->{upload_dir} ."/$id/$file_name";
 	my $path_to_file = path(h->config->{upload_dir}, $id, $file_name);
-	return Dancer::send_file($path_to_file,system_path => 1);
+	return Dancer::send_file($path_to_file, system_path => 1);
 }
 
 sub calc_date {
@@ -53,7 +58,7 @@ prefix '/requestcopy' => sub {
 			email => params->{email},
 			});
 		my $key = $stored->{_id};
-		
+
 		my $pub = edit_publication(params->{id});
 		my $mail_body =
 		"The publication '$pub->{title}' has been requested by params->{name} (params->{email}).\n
@@ -149,8 +154,8 @@ get '/download/:id/:file_id' => sub {
 
 	my $pub = h->publication->get(params->{id});
 	my $file_name;
-	my $access = "admin"; 
-	
+	my $access = "admin";
+
 	foreach my $file (@{$pub->{file}}){
 		if($file->{file_id} eq params->{file_id}){
 			$access = $file->{access_level};
@@ -158,20 +163,20 @@ get '/download/:id/:file_id' => sub {
 			last;
 		}
 	}
-	
+
 	# openAccess
 	if ($access eq 'openAccess') {
 		send_it(params->{id}, $file_name);
 	} elsif (exists session->{user} && session->{role} eq 'admin') {
 		send_it(params->{id}, $file_name);
 	}
-	
+
 	# unibi
 	my $ip = request->{remote_adress};
 	if ($access eq 'unibi' && $ip =~ /^129.70/) {
 		send_it(params->{id}, $file_name);
 	}
-	
+
 	# user/admin/reviewer
 	my $account = h->getAccount(session->{user})->[0];
 	my $role = session->{role};
@@ -195,7 +200,7 @@ get '/download/:id/:file_id' => sub {
 				}
 			}
 		}
-		
+
 
 		if ($access_ok) {
 			send_it(params->{id}, $file_name);

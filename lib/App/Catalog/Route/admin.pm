@@ -11,20 +11,35 @@ use Catmandu::Util qw(trim);
 use Dancer ':syntax';
 use App::Catalog::Helper;
 use App::Catalog::Controller::Admin qw/:all/;
+use Dancer::Plugin::Auth::Tiny;
 
-=head1 PREFIX /admin
+Dancer::Plugin::Auth::Tiny->extend(
+    role => sub {
+        my ($role, $coderef) = @_;
+          return sub {
+            if ( session->{role} && $role eq session->{role} ) {
+                goto $coderef;
+            }
+            else {
+                redirect '/access_denied';
+            }
+          }
+        }
+);
+
+=head1 PREFIX /myPUB/admin
 
     Permission: for admins only. Every other user will get a 403.
 
 =cut
-prefix '/admin' => sub {
+prefix '/myPUB/admin' => sub {
 
 =head2 GET /account
 
     Prints a search form for the authority database.
 
 =cut
-    get '/account' => sub {
+    get '/account' => needs role => 'super_admin' => sub {
         template 'admin/account';
     };
 
@@ -33,7 +48,7 @@ prefix '/admin' => sub {
     Opens an empty form. The ID is automatically generated.
 
 =cut
-    get '/account/new' => sub {
+    get '/account/new' => needs role => 'super_admin' => sub {
         my $id = new_person();
         template 'admin/edit_account', { _id => $id };
     };
@@ -43,7 +58,7 @@ prefix '/admin' => sub {
     Searches the authority database. Prints the search form + result list.
 
 =cut
-    get '/account/search' => sub {
+    get '/account/search' => needs role => 'super_admin' => sub {
         my $p    = params;
         my $hits = search_person($p);
         template 'admin/account', $hits;
@@ -55,7 +70,7 @@ prefix '/admin' => sub {
     Save does a POST on /account/update.
 
 =cut
-    get '/account/edit/:id' => sub {
+    get '/account/edit/:id' => needs role => 'super_admin' => sub {
         my $id     = param 'id';
         my $person = edit_person($id);
         template 'admin/edit_account', $person;
@@ -66,7 +81,7 @@ prefix '/admin' => sub {
     Saves the data in the authority database.
 
 =cut
-    post '/account/update' => sub {
+    post '/account/update' => needs role => 'super_admin' => sub {
         my $p = params;
         $p = h->nested_params($p);
 
@@ -79,7 +94,7 @@ prefix '/admin' => sub {
     Input is person id. Returns warning if person is already in the database.
 
 =cut
-    get '/account/import' => sub {
+    get '/account/import' => needs role => 'super_admin' => sub {
         my $id = trim params->{id};
 
         my $person_in_db = h->authority_admin->get($id);

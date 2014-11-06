@@ -105,9 +105,9 @@
           </ul>
          </li>
          [% END %]
-         <li><a href="/myPUB/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+         <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
          [% ELSE %]
-         <li><a href="/myPUB/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
          [% END %]
        </ul>
      </div><!-- /.navbar-collapse -->
