@@ -111,7 +111,8 @@
       </div>
       <div class="col-md-7">&nbsp;</div>
     </div>
-          
+    
+    <input type="hidden" id="id_global_raq" name="request_a_copy" value="0" />
     [% IF file %]
     [% FOREACH fi IN file.nsort('file_order') %]
       <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.file_id %]">
