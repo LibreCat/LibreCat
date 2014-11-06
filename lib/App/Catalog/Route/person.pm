@@ -6,20 +6,19 @@ package App::Catalog::Route::person;
 
 =cut
 
-
 use Catmandu::Sane;
 use Catmandu::Util qw(:array);
 use Dancer ':syntax';
-
 use App::Catalog::Helper;
 use App::Catalog::Controller::Admin qw/:person/;
+use Dancer::Plugin::Auth::Tiny;
 
-=head1 PREFIX /person
+=head1 PREFIX /myPUB/person
 
     All person settings are handled within the prefix '/person'.
 
 =cut
-prefix '/person' => sub {
+prefix '/myPUB/person' => sub {
 
 =head2 GET /preference
 
@@ -27,7 +26,7 @@ prefix '/person' => sub {
     for his own publication list.
 
 =cut
-    get '/preference' => sub {
+    get '/preference' => needs login => sub {
 
         my $person = h->getPerson( session('personNumber') );
         my $style;
@@ -75,7 +74,7 @@ prefix '/person' => sub {
     be displayed on author's profile page.
 
 =cut
-    post '/author_id' => sub {
+    post '/author_id' => needs login => sub {
 
         my $person     = h->authority_user->get( params->{_id} );
         my @identifier = keys h->config->{lists}->{author_id};
@@ -114,7 +113,7 @@ prefix '/person' => sub {
     new publication form.
 
 =cut
-    post '/affiliation' => sub {
+    post '/affiliation' => needs login => sub {
 
         my $p = params;
         $p = h->nested_params($p);
