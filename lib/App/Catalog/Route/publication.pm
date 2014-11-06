@@ -310,24 +310,31 @@ post '/upload/qai' => sub {
 get '/upload/qai' => sub {
 	my $tmp_file = params->{tmp_file};
 	my $submit_or_cancel = params->{submit_or_cancel} || "Cancel";
+	my $file_name = params->{file_name};
 	my $return;
 	
 	if($submit_or_cancel eq "Submit"){
 		my $id = new_publication();
 		my $file_id = new_publication();
-		my $file_name = params->{file_name};
+		my $person = h->getPerson(session->{personNumber});
+		my $now = h->now();
 		$return->{saved} = 1;
 		my $record;
 		$record->{_id} = $id;
+		$record->{status} = "new";
+		$record->{"accept"} = 1;
 		$record->{title} = "New Quick And Easy Publication - Please edit";
 		$record->{type} = "journalArticle";
-		$record->{"author.0.first_name"} = "Petra";
-		$record->{"author.0.last_name"} = "Kohorst";
-		$record->{"author.0.full_name"} = "Kohorst, Petra";
-		$record->{"author.0.id"} = "29676584";
+		$record->{"author.0.first_name"} = $person->{first_name};
+		$record->{"author.0.last_name"} = $person->{last_name};
+		$record->{"author.0.full_name"} = $person->{full_name};
+		$record->{"author.0.id"} = session->{personNumber};
+		$record->{message} = params->{description};
 		$record->{file} = ();
-		push @{$record->{file}}, "{\"file_name\":\"".$file_name."\", \"file_id\":\"".$file_id."\", \"access_level\":\"openAccess\",\"date_updated\":\"2014-04-23T12:00:00\",\"date_created\":\"2014-04-23T12:00:00\",\"creator\":\"". session->{user} ."\",\"open_access\":\"1\",\"relation\":\"main_file\"}";
-		$record->{year} = "2014";
+		push @{$record->{file}}, "{\"file_name\":\"".$file_name."\", \"file_id\":\"".$file_id."\", \"access_level\":\"openAccess\",\"date_updated\":\"" . $now . "\",\"date_created\":\"" . $now . "\",\"creator\":\"". session->{user} ."\",\"open_access\":\"1\",\"relation\":\"main_file\"}";
+		$record->{file_order} = ();
+		push @{$record->{file_order}}, $file_id;
+		$record->{year} = substr $now, 0, 4;
 		
 		my $path = h->config->{upload_dir} . "/" . $id . "/" . $file_name;#path( h->config->{upload_dir}, "$id", $file_name );
         my $dir = h->config->{upload_dir} . "/" . $id;
@@ -340,13 +347,13 @@ get '/upload/qai' => sub {
         $return->{response} = $response;
 	}
 	else{
-		my $status = unlink $tmp_file;
-		$return->{deleted} = 1;
+		my $path = h->config->{upload_dir} . "/" . $file_name;
+		$return->{deleted} = unlink $path or return to_dumper $! . " " . $path;
 	}
 	
 	my $return_json = to_json($return);
 	my $params = params;
-    return to_dumper $params;
+    redirect '/myPUB';
 };
 
 post '/upload/update' => sub {
