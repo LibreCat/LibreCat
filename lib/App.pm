@@ -67,7 +67,7 @@ post '/login' => sub {
         session personNumber => $user->{_id};
 
         redirect params->{return_url} if params->{return_url};
-        redirect '/';
+        redirect '/myPUB';
     }
     else {
         forward '/login',
