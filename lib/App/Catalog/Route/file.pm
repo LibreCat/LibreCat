@@ -59,8 +59,8 @@ prefix '/requestcopy' => sub {
 		my $mail_body = export_to_string({
 			title => $pub->{title},
 			user_name => params->{user_name},
-			key => $stored->{_id};
-		},
+			key => $stored->{_id},
+		    },
 			'Template',
 			template => 'email/req_copy.tt');
 		try {
@@ -157,7 +157,7 @@ get '/download/:id/:file_id' => sub {
 	return '403' unless $ok;
 
 	send_it(params->{id}, $file_name);
-}
+};
 
 1;
 
