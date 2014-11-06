@@ -9,6 +9,9 @@
   [% IF session.role == "super_admin" %]
   | <a data-toggle="collapse" href="#[% tabmodus %]_iv_[% entry.item('_id') %]"><span class="glyphicon glyphicon-chevron-down"></span> Internal View</a>
   [% END %]
+  [% IF entry.request_a_copy %]
+  | <a data-toggle="collapse" href="#[% tabmodus %]_raq_[% entry._id %]"><span class="glyphicon glyphicon-chevron-down"></span> Request a Copy</a>
+  [% END %]
 
 	[% FOREACH file IN entry.file %]
 	[% IF file AND bag == "publication" %]

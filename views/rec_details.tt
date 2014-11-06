@@ -67,4 +67,19 @@
   [% END %]
 [% END %]
 </div>
+
+[% IF entry.request_a_copy %]
+  <div id="[% tabmodus %]_raq_[% entry._id %]" class="collapse" style="padding-top:5px;">
+  [% FOREACH file in entry.file %]
+    [% IF file.request_a_copy %]
+    <div class="frontdoor">
+      <div class="frontdoor_left"><a class="label label-primary" onclick="generateLink([% file.file_id %], [% entry._id %])">hash link</a></div>
+      <div class="frontdoor_right">
+        <a href="#">[% file.file_name %]</a>
+      </div>
+    </div>
+    [% END %]
+  [% END %]
+  </div>
+[% END %]
 <!-- END rec_details.tt --> 
