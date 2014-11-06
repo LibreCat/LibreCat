@@ -8,7 +8,7 @@ package App::Catalog::Route::upload;
 
 use Catmandu::Sane;
 use App::Catalog::Helper;
-#use App::Catalog::Controller::Publication;
+use App::Catalog::Controller::Publication qw/update_publicaton/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;
 use File::Copy;
@@ -21,11 +21,6 @@ use Dancer::Plugin::Auth::Tiny;
 
 =cut
 prefix => '/myPUB' => sub {
-
-
-  get '/upload' => sub {
-      template "backend/upload.tt";
-  };
 
   post '/upload' => sub {
       my $file    = request->upload('file');
@@ -62,7 +57,18 @@ prefix => '/myPUB' => sub {
       return to_json($file_data);
   };
 
-  get '/upload/qai' => sub {
+  post '/upload/qai' => sub {
+      my $file    = request->upload('file');
+
+      my $file_data;
+      $file_data->{tempname} = $file->{tempname};
+      $file_data->{filename} = $file->{filename};
+      copy( $file->{tempname}, path(h->config->{upload_dir}, $file->{filename}) );
+
+      return to_json($file_data);
+  };
+
+  post '/upload/qai_submit' => sub {
     my $tmp_file = params->{tmp_file};
     my $submit_or_cancel = params->{submit_or_cancel} || "Cancel";
     my $file_name = params->{file_name};
@@ -81,44 +87,45 @@ prefix => '/myPUB' => sub {
         title => "New Quick And Easy Publication - Please edit",
         type => "journalArticle",
         message => params->{description},
-      $record->{"author.0.first_name"} = $person->{first_name};
-      $record->{"author.0.last_name"} = $person->{last_name};
-      $record->{"author.0.full_name"} = $person->{full_name};
-      $record->{"author.0.id"} = session->{personNumber};
-    #  push @{$record->{file}}, "{\"file_name\":\"".$file_name."\", \"file_id\":\"".$file_id."\", \"access_level\":\"openAccess\",\"date_updated\":\"" . $now . "\",\"date_created\":\"" . $now . "\",\"creator\":\"". session->{user} ."\",\"open_access\":\"1\",\"relation\":\"main_file\"}";
+        author => [{
+          first_name => $person->{first_name},
+          last_name => $person->{last_name},
+          full_name => $person->{full_name},
+          id => session->{personNumber},
+          }],
+        year => substr($now, 0, 4),
+
+      };
+      push @{$record->{file}}, to_json({
+        file_name => $file_name,
+        file_id => $file_id,
+        access_level => openAccess,
+        date_updated => $now,
+        date_created => $now,
+        creator => sesson->{user},
+        open_access => 1,
+        relation => main_file,
+      });
       push @{$record->{file_order}}, $file_id;
-      $record->{year} = substr $now, 0, 4;
 
-      my $path = h->config->{upload_dir} . "/" . $id . "/" . $file_name;#path( h->config->{upload_dir}, "$id", $file_name );
-      my $dir = h->config->{upload_dir} . "/" . $id;
+      my $path = path( h->config->{upload_dir}, $id, $file_name );
+      my $dir = dirname($path);
       mkdir $dir unless -e $dir;
-      move(h->config->{upload_dir}."/".$file_name,$path) or return to_dumper $! . " " . h->config->{upload_dir}. "/". $file_name . " " . $path;
+      move(h->config->{upload_dir}."/".$file_name,$path);
 
-      $record = h->nested_params($record);
       my $response = update_publication($record);
 
       $file_data->{response} = $response;
     } else {
-      my $path = h->config->{upload_dir} . "/" . $file_name;
+      my $path = path( h->config->{upload_dir}, $file_name);
       $file_data->{deleted} = unlink $path or return to_dumper $! . " " . $path;
     }
 
-    my $return_json = to_json($file_data);
-    my $params = params;
+    #my $return_json = to_json($file_data);
+    #my $params = params;
 
     redirect '/myPUB';
   };
-
-post '/upload/qai' => sub {
-    my $file    = request->upload('file');
-
-    my $file_data;
-    $file_data->{tempname} = $file->{tempname};
-    $file_data->{filename} = $file->{filename};
-    copy($file->{tempname}, h->config->{upload_dir}."/".$file->{filename});
-
-    return to_json($file_data);
-};
 
 post '/upload/update' => sub {
     my $file          = request->upload('file');
@@ -155,6 +162,7 @@ post '/upload/update' => sub {
           content_type => $file ? $file->{headers}->{"Content-Type"} : '',
           file_title => params->{file_title} || '',
           description => params->{description || '',
+          request_a_copy => params->{request_a_copy} ||= 0,
           embargo => params->{embargo} || '',
           relation => params->{relation} || 'main_file',
           old_file_name => $old_file_name,
@@ -191,6 +199,8 @@ post '/upload/update' => sub {
             }
         }
 
+        $record->{request_a_copy} = $file_data->{request_a_copy};
+
         # $return->{file_json}
         #     = '{"file_name": "' . $return->{file_name} . '", ';
         # $return->{file_json} .= '"file_id": "' . $return->{file_id} . '", ';
@@ -217,6 +227,7 @@ post '/upload/update' => sub {
         #     .= '"open_access": "' . $return->{open_access} . '", ';
         # $return->{file_json} .= '"relation": "' . $return->{relation} . '", ';
         # $return->{file_json} .= '"year_last_uploaded": "2014"}';
+        #  $return->{file_json} .= '"request_a_copy": "' . $return->{request_a_copy} . '", '
 
         h->publication->add($record);
         h->publication->commit;

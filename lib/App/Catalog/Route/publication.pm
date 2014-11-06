@@ -6,11 +6,10 @@ package App::Catalog::Route::publication;
 
 =cut
 
+use Catmandu::Sane;
 use App::Catalog::Helper;
 use App::Catalog::Controller::Publication;
 use Dancer ':syntax';
-use Dancer::FileUtils qw/path/;
-use File::Copy;
 use Try::Tiny;
 use Dancer::Plugin::Auth::Tiny;
 
