@@ -161,6 +161,7 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
           }
           if(data.request_a_copy){
             accessLevel += "<br />(Request a Copy)";
+            $('#id_global_raq').val(1);
           }
         }
 
