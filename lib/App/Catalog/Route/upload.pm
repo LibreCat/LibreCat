@@ -12,7 +12,6 @@ use App::Catalog::Controller::Publication qw/update_publicaton/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;
 use File::Copy;
-use Try::Tiny;
 use Dancer::Plugin::Auth::Tiny;
 
 =head1 PREFIX /myPUB
@@ -111,18 +110,14 @@ prefix => '/myPUB' => sub {
       my $path = path( h->config->{upload_dir}, $id, $file_name );
       my $dir = dirname($path);
       mkdir $dir unless -e $dir;
-      move(h->config->{upload_dir}."/".$file_name,$path);
+      move( path(h->config->{upload_dir}, $file_name), $path );
 
       my $response = update_publication($record);
 
-      $file_data->{response} = $response;
-    } else {
+    } else { # this never happens!?
       my $path = path( h->config->{upload_dir}, $file_name);
-      $file_data->{deleted} = unlink $path or return to_dumper $! . " " . $path;
+      unlink $path;
     }
-
-    #my $return_json = to_json($file_data);
-    #my $params = params;
 
     redirect '/myPUB';
   };
@@ -151,13 +146,15 @@ post '/upload/update' => sub {
     # then return data of updated file
     my $file_data;
     if ($success) {
+        my $now = h->now;
         $file_data = {
           success => 1,
           file_name => $file ? $file->{filename} : $old_file_name,
           creator => session->{user},
           file_size => $file ? $file->{size} : '',
           file_id => $file_id,
-          date_updated => h->now,
+          date_updated => $now,
+          date_created => $now,
           access_level => params->{access_level} || "openAccess",
           content_type => $file ? $file->{headers}->{"Content-Type"} : '',
           file_title => params->{file_title} || '',
@@ -166,10 +163,14 @@ post '/upload/update' => sub {
           embargo => params->{embargo} || '',
           relation => params->{relation} || 'main_file',
           old_file_name => $old_file_name,
+#          language => params->{language},
         };
-        $file_data->{open_access} = ( params->{access_level}
-                and params->{access_level} eq "openAccess" ) ? 1 : 0;
 
+        #do we need this?
+        #$file_data->{open_access} = ( params->{access_level}
+        #        and params->{access_level} eq "openAccess" ) ? 1 : 0;
+
+        # IMHO, this part is not necessary.
         my $record = h->publication->get($id);
         foreach my $recfile ( @{ $record->{file} } ) {
             if ( $recfile->{file_id} eq $file_data->{file_id} ) {
@@ -200,34 +201,6 @@ post '/upload/update' => sub {
         }
 
         $record->{request_a_copy} = $file_data->{request_a_copy};
-
-        # $return->{file_json}
-        #     = '{"file_name": "' . $return->{file_name} . '", ';
-        # $return->{file_json} .= '"file_id": "' . $return->{file_id} . '", ';
-        # $return->{file_json} .= '"title": "' . $return->{file_title} . '", '
-        #     if $return->{file_title};
-        # $return->{file_json}
-        #     .= '"description": "' . $return->{description} . '", '
-        #     if $return->{description};
-        # $return->{file_json}
-        #     .= '"content_type": "' . $return->{content_type} . '", ';
-        # $return->{file_json}
-        #     .= '"access_level": "' . $return->{access_level} . '", ';
-        # $return->{file_json} .= '"embargo": "' . $return->{embargo} . '", '
-        #     if ( $return->{embargo} and $return->{embargo} ne "" );
-        # $return->{file_json}
-        #     .= '"date_updated": "' . $return->{date_updated} . '", ';
-        # $return->{file_json}
-        #     .= '"date_created": "' . $return->{date_updated} . '", ';
-        # $return->{file_json} .= '"checksum": "ToDo", "file_size": "'
-        #     . $return->{file_size} . '", ';
-        # $return->{file_json}
-        #     .= '"language": "eng", "creator": "' . $return->{creator} . '", ';
-        # $return->{file_json}
-        #     .= '"open_access": "' . $return->{open_access} . '", ';
-        # $return->{file_json} .= '"relation": "' . $return->{relation} . '", ';
-        # $return->{file_json} .= '"year_last_uploaded": "2014"}';
-        #  $return->{file_json} .= '"request_a_copy": "' . $return->{request_a_copy} . '", '
 
         h->publication->add($record);
         h->publication->commit;
