@@ -10,8 +10,7 @@ use Carp;
 use JSON;
 use HTML::Entities;
 use Exporter qw/import/;
-our @EXPORT
-    = qw/new_publication save_publication delete_publication update_publication edit_publication/;
+our @EXPORT = qw/new_publication save_publication delete_publication update_publication edit_publication/;
 
 sub _create_id {
     my $id = h->bag->get('1')->{"latest"};

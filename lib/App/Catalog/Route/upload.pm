@@ -8,7 +8,7 @@ package App::Catalog::Route::upload;
 
 use Catmandu::Sane;
 use App::Catalog::Helper;
-use App::Catalog::Controller::Publication qw/update_publicaton/;
+use App::Catalog::Controller::Publication qw/update_publication/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;
 use File::Copy;
@@ -19,7 +19,7 @@ use Dancer::Plugin::Auth::Tiny;
     Section, where all uploads are handled.
 
 =cut
-prefix => '/myPUB' => sub {
+prefix '/myPUB' => sub {
 
   post '/upload' => needs login => sub {
       my $file    = request->upload('file');
@@ -45,7 +45,7 @@ prefix => '/myPUB' => sub {
             acces_level => "openAccess",
             content_type => $file->{headers}->{"Content-Type"},
             relation => "main_file",
-            year_last_uploaded => substr($now,0,4);
+            year_last_uploaded => substr($now,0,4),
           };
       }
       else {
@@ -99,12 +99,12 @@ prefix => '/myPUB' => sub {
       push @{$record->{file}}, to_json({
         file_name => $file_name,
         file_id => $file_id,
-        access_level => openAccess,
+        access_level => "openAccess",
         date_updated => $now,
         date_created => $now,
-        creator => sesson->{user},
+        creator => session->{user},
         open_access => 1,
-        relation => main_file,
+        relation => "main_file",
       });
       push @{$record->{file_order}}, $file_id;
 
@@ -159,7 +159,7 @@ prefix => '/myPUB' => sub {
             access_level => params->{access_level} || "openAccess",
             content_type => $file ? $file->{headers}->{"Content-Type"} : '',
             file_title => params->{file_title} || '',
-            description => params->{description || '',
+            description => params->{description} || '',
             request_a_copy => params->{request_a_copy} ||= 0,
             embargo => params->{embargo} || '',
             relation => params->{relation} || 'main_file',
