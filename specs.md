@@ -124,6 +124,7 @@ first_author: "Lastname, Firstname"
 editor: see author
 translator: see author
 supervisor: see author
+request_a_copy: 1|0
 file:
 	-
 		file_name: "hello.pdf"
@@ -137,6 +138,7 @@ file:
 		language: eng
 		creator: bisid
 		open_access: 1|0
+		request_a_copy: 1|0
 		embargo: YYYY-MM-DD
 		year_last_uploaded: 2014
 		title: "some title"

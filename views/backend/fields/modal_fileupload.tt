@@ -47,28 +47,33 @@
             f.accessEmbargo.disabled=false;
           }
         }
+        function requestmode(f, flag) {
+          if (flag) {
+            f.request_a_copy.checked=false;
+            f.request_a_copy.disabled=true;
+          } else {
+            f.request_a_copy.disabled=false;
+          }
+        }
         //-->
         </script>
         
-          [% IF !openAccessCheck AND !luCheck AND !adminCheck %]
-            [% openAccessCheck = 'checked="checked"' %]
-          [% END %]
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="openAccess" onclick="oamode(this.form, true)"/> Open access (the file is freely available, effective immediately)
+            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="openAccess" onclick="oamode(this.form, true);requestmode(this.form,true);"/> Open access (the file is freely available, effective immediately)
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="unibi" onclick="oamode(this.form,false)" /> UniBi
+            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="unibi" onclick="oamode(this.form,false);requestmode(this.form,true);" /> UniBi
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false)" /> Only Author/Reviewer/Administrator
-          </label>
-          <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_request" value="request" onclick="oamode(this.form,false)" /> Request a Copy
+            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false);requestmode(this.form,false);" /> Only Author/Reviewer/Administrator
           </label>
           <label class="checkbox control-label">
-            <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" [% IF openAccessCheck %]disabled="disabled"[% ELSE %][% embargoCheck %][% END %] />Switch to open access on:<br />
+            <input type="checkbox" name="request_a_copy" id="id_request_a_copy" value="1" /> Request a Copy
           </label>
-          <input type="text" class="form-control" name="embargo" id="id_embargo" placeholder="YYYY-MM-DD" value="[% embargo %]" [% IF openAccessCheck OR !embargo %]disabled="disabled"[% END %]>
+          <label class="checkbox control-label">
+            <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />Switch to open access on:<br />
+          </label>
+          <input type="text" class="form-control" name="embargo" id="id_embargo" placeholder="YYYY-MM-DD" value="">
         </div>
         
         <div class="form-group">
@@ -115,12 +120,11 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
     else if($('#id_accessLevel_admin').is(':checked')){
       formData.append("access_level", "admin");
     }
-    else if($('#id_accessLevel_request').is(':checked')){
-      formData.append("access_level", "request");
-    }
     
+    if($('#id_request_a_copy').is(':checked')){
+      formData.append("request_a_copy", "1");
+    }
     if($('#id_embargo').val() && $('#id_accessEmbargo').is(':checked')){
-      alert('setting embargo');
       formData.append("embargo", $('#id_embargo').val());
     }
     
@@ -155,11 +159,9 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
           if(data.embargo){
             accessLevel += "<br />(until " + data.embargo + ")";
           }
-        }
-        else if(data.access_level == "request"){
-          accessLevel = "Request a Copy";
-          if(data.embargo){
-            accessLevel += "<br />(until " + data.embargo + ")";
+          if(data.request_a_copy){
+            accessLevel += "<br />(Request a Copy)";
+            $('#id_global_raq').val(1);
           }
         }
 

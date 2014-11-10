@@ -115,7 +115,7 @@ prefix '/requestcopy' => sub {
 			email {
 				to => $data->{email},
 				subject => h->config->{request_copy}->{subject},
-				body => $mail_body;
+				body => $mail_body,
 			};
 		} catch {
 			error "Could not send email: $_";
@@ -156,7 +156,7 @@ get '/download/:id/:file_id' => sub {
 	return '403' unless $ok;
 
 	send_it(params->{id}, $file_name);
-}
+};
 
 1;
 
