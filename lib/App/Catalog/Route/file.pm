@@ -106,7 +106,7 @@ prefix '/requestcopy' => sub {
     to user. Delete request key from database.
 
 =cut
-	get '/refuse/:key' => sub {
+	get '/deny/:key' => sub {
 		my $bag = 'x';
 		my $data = $bag->get(params->{key});
 		$bag->delete(params->{key});
