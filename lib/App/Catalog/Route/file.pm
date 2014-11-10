@@ -107,7 +107,7 @@ prefix '/requestcopy' => sub {
     to user. Delete request key from database.
 
 =cut
-	get '/refuse/:key' => sub {
+	get '/deny/:key' => sub {
 		my $bag = 'x';
 		my $data = $bag->get(params->{key});
 		$bag->delete(params->{key});
@@ -116,7 +116,7 @@ prefix '/requestcopy' => sub {
 			email {
 				to => $data->{email},
 				subject => h->config->{request_copy}->{subject},
-				body => $mail_body;
+				body => $mail_body,
 			};
 		} catch {
 			error "Could not send email: $_";
