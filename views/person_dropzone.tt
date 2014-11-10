@@ -9,7 +9,7 @@
     });
     myDropzone.on("success", function(file, response){
       var resp = JSON.parse(response);
-      var modal = Dropzone.createElement("<div class='well' id='" + resp.tempname + "' style='background-color:#fff;margin-left:15px;margin-right:15px;'><form id='form_" + resp.tempname + "' action='/myPUB/upload/qai' method='get'><strong>" + file.name + "</strong><textarea class='form-control' placeholder='Type details about your publication here' name='description'></textarea><input type='hidden' name='file_name' value='" + resp.filename + "' /><input type='hidden' name='tmp_file' value='" + resp.tempname + "' /><input type='submit' class='btn btn-default' name='submit_or_cancel' value='Submit'/><input type='submit' class='btn btn-default' name='submit_or_cancel' value='Cancel' /></form></div>");
+      var modal = Dropzone.createElement("<div class='well' id='" + resp.tempname + "' style='background-color:#fff;margin-left:15px;margin-right:15px;'><form id='form_" + resp.tempname + "' action='/myPUB/upload/qai' method='get'><strong>" + file.name + "</strong><textarea class='form-control' placeholder='Type details about your publication here' name='description'></textarea><input type='hidden' name='file_name' value='" + resp.filename + "' /><input type='hidden' name='tmp_file' value='" + resp.tempname + "' /><input type='submit' class='btn btn-default' name='submit_or_cancel' onclick="return confirm('[% h.config.forms.publicationTypes.book.fields.file_upload.pub_license.disclaimer_text %]');" value='Submit'/><input type='submit' class='btn btn-default' name='submit_or_cancel' value='Cancel' /></form></div>");
       file.previewElement.appendChild(modal);
     });
     myDropzone.on("error", function(file,response){
