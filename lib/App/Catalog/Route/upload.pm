@@ -8,7 +8,7 @@ package App::Catalog::Route::upload;
 
 use Catmandu::Sane;
 use App::Catalog::Helper;
-use App::Catalog::Controller::Publication qw/update_publication/;
+use App::Catalog::Controller::Publication qw/update_publication new_publication/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;
 use File::Copy;
@@ -58,7 +58,7 @@ prefix '/myPUB' => sub {
       return to_json($file_data);
   };
 
-  post '/upload/qai' => needs login =>  sub {
+  post '/upload/qae' => needs login =>  sub {
       my $file    = request->upload('file');
 
       my $file_data;
@@ -68,7 +68,7 @@ prefix '/myPUB' => sub {
       return to_json($file_data);
   };
 
-  post '/upload/qai_submit' => needs login => sub {
+  post '/upload/qae/submit' => needs login => sub {
     my $tmp_file = params->{tmp_file};
     my $submit_or_cancel = params->{submit_or_cancel} || "Cancel";
     my $file_name = params->{file_name};
@@ -115,7 +115,7 @@ prefix '/myPUB' => sub {
 
       my $response = update_publication($record);
 
-    } else { # this never happens!?
+    } else {
       my $path = path( h->config->{upload_dir}, $file_name);
       unlink $path;
     }
