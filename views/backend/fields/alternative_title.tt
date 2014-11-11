@@ -4,7 +4,7 @@
     <label for="id_alternative_title">
       {% fields.basic_fields.alternative_title.label %}{% fields.supplementary_fields.alternative_title.label %}{% IF fields.basic_fields.alternative_title.multiple OR fields.supplementary_fields.alternative_title.multiple %} <span class="glyphicon glyphicon-plus" id="plusAlttitle"></span>{% END %}
     </label>
-    {% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %}*</span>{% END %}
+    {% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %}</span>{% END %}
   </div>
   <div class="col-md-10" id="alternative_title">
     {% IF fields.basic_fields.alternative_title.multiple OR fields.supplementary_fields.alternative_title.multiple %}

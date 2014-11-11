@@ -4,7 +4,7 @@
     <label for="id_ipc">
       {% fields.basic_fields.ipc.label %}{% fields.supplementary_fields.ipc.label %}
     </label>
-    {% IF fields.basic_fields.ipc.mandatory OR fields.supplementary_fields.ipc.mandatory %}*</span>{% END %}
+    {% IF fields.basic_fields.ipc.mandatory OR fields.supplementary_fields.ipc.mandatory %}</span>{% END %}
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-9">

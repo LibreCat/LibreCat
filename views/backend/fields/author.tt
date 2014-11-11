@@ -13,7 +13,7 @@
         {% END %}
         </select>
       </label>
-      {% IF fields.basic_fields.author.mandatory %}*</span>{% END %}&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
+      {% IF fields.basic_fields.author.mandatory %}</span>{% END %}&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
@@ -59,7 +59,7 @@
           [% END %]
         </select>
       </label>
-      {% IF fields.basic_fields.author.mandatory %}*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
+      {% IF fields.basic_fields.author.mandatory %}</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
@@ -102,9 +102,10 @@
   
   [% FOREACH name IN translator %]
   <div class="row authorspan innerrow">
-    <div class="col-md-2">
+    <div class="col-md-2 form-group">
+      {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">{% END %}
       <label>
-        <select class="authedtrans" id="authedtrans_[% loop.index %]">
+        <select class="mylabel authedtrans form-control" id="authedtrans_[% loop.index %]">
           [% author_index = loop.index %]
           [% FOREACH creator IN confpath.fields.basic_fields.author.label.keys.sort %]
             [% IF author_index == 0 OR confpath.fields.basic_fields.author.label.$creator == "translator" %]
@@ -112,8 +113,8 @@
             [% END %]
           [% END %]
         </select>
-        {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
       </label>
+      {% IF fields.basic_fields.author.mandatory %}</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">

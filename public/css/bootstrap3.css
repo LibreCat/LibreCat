@@ -7224,6 +7224,13 @@ select.mylabel {
 	padding-bottom: 20px;
 }
 
+.starMandatory:after {
+    content: "*";
+    font-size: 2.2em;
+    margin-left: 0.2em;
+    vertical-align: text-top;
+}
+
 body {
 	line-height: 20px;
 }

@@ -4,7 +4,7 @@
     <label for="id_report_number">
       {% fields.basic_fields.report_number.label %}{% fields.supplementary_fields.report_number.label %}
     </label>
-    {% IF fields.basic_fields.report_number.mandatory OR fields.supplementary_fields.report_number.mandatory %}*</span>{% END %}
+    {% IF fields.basic_fields.report_number.mandatory OR fields.supplementary_fields.report_number.mandatory %}</span>{% END %}
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-3">

@@ -5,7 +5,7 @@
     <label for="publId">
       {% fields.basic_fields.publication_identifier.label %}{% fields.supplementary_fields.publication_identifier.label %}
     </label>
-    {% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} *</span>&nbsp;{% END %}{% IF fields.basic_fields.publication_identifier.multiple OR fields.supplementary_fields.publication_identifier.multiple %}<span ng-click="clonePublid($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} data-mandatory="yes"{% END %} id="plusPublId"></span>{% END %}
+    {% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} </span>&nbsp;{% END %}{% IF fields.basic_fields.publication_identifier.multiple OR fields.supplementary_fields.publication_identifier.multiple %}<span ng-click="clonePublid($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} data-mandatory="yes"{% END %} id="plusPublId"></span>{% END %}
   </div>
   <div class="col-md-10" id="publId">
     {% IF fields.basic_fields.publication_identifier.multiple OR fields.supplementary_fields.publication_identifier.multiple %}

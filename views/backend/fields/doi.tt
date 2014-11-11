@@ -4,7 +4,7 @@
     <label for="id_doi">
       {% fields.basic_fields.doi.label %}{% fields.supplementary_fields.doi.label %}
     </label>
-    {% IF fields.basic_fields.doi.mandatory OR fields.supplementary_fields.doi.mandatory %}*</span>{% END %}
+    {% IF fields.basic_fields.doi.mandatory OR fields.supplementary_fields.doi.mandatory %}</span>{% END %}
   </div>
   <div class="col-md-10">
     <div class="form-group row innerrow">
