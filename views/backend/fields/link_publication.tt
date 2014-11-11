@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="relatesTo">
-      {% fields.related_material.link_publication.label %}{% IF fields.related_material.link_publication.mandatory == "1" %}<span class="starMandatory">*</span>{% END %}
+      {% fields.related_material.link_publication.label %}{% IF fields.related_material.link_publication.mandatory == "1" %}<span class="starMandatory"></span>{% END %}
     </label>
   </div>
   <div class="col-md-10">

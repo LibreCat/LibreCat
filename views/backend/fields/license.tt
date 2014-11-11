@@ -5,7 +5,7 @@
     <div id="licenses" class="collapse[% IF file %] in[% END %]">
     
       {% IF fields.file_upload.license.data_reuse_license %}
-      <strong>{% fields.file_upload.license.data_reuse_license.label %}</strong>[% IF file %]<span class="starMandatory">*</span>[% END %]
+      <strong>{% fields.file_upload.license.data_reuse_license.label %}</strong>[% IF file %]<span class="starMandatory"></span>[% END %]
       <div class="row innerrow">
         <div class="col-md-12 alert alert-info">
         {% IF fields.file_upload.license.data_reuse_license %}
@@ -40,7 +40,7 @@
       {% END %}
       
       {% IF fields.file_upload.license.open_data_release || fields.file_upload.license.pub_license %}    
-      <strong>{% fields.file_upload.license.open_data_release.label %}{% fields.file_upload.license.pub_license.label %}</strong>[% IF file %]<span class="starMandatory">*</span>[% END %]<br />
+      <strong>{% fields.file_upload.license.open_data_release.label %}{% fields.file_upload.license.pub_license.label %}</strong>[% IF file %]<span class="starMandatory"></span>[% END %]<br />
       
       <div class="row innerrow">
         <div class="col-md-12 alert alert-info"{% IF fields.file_upload.license.open_data_release %} id="odralert"{% ELSIF fields.file_upload.license.pub_license %} id="pub_license_alert"{% END %}>

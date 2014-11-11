@@ -5,7 +5,7 @@
     <label for="publication_status">
       {% fields.basic_fields.publication_status.label %}{% fields.supplementary_fields.publication_status.label %}
     </label>
-    {% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %}*</span>{% END %}
+    {% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %}</span>{% END %}
   </div>
   <div class="col-md-10" id="publication_status">
     <div class="form-group row innerrow">

@@ -4,7 +4,7 @@
     <label for="project">
       {% fields.basic_fields.project.label %}{% fields.supplementary_fields.project.label %}
     </label>
-    {% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}*</span>{% END %}{% IF fields.basic_fields.project.multiple OR fields.supplementary_fields.project.multiple %} <span class="glyphicon glyphicon-plus" id="plusProject"></span>{% END %}
+    {% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}</span>{% END %}{% IF fields.basic_fields.project.multiple OR fields.supplementary_fields.project.multiple %} <span class="glyphicon glyphicon-plus" id="plusProject"></span>{% END %}
   </div>
   <div class="col-md-10" id="project">
     {% IF fields.basic_fields.project.multiple OR fields.supplementary_fields.project.multiple %}

@@ -13,7 +13,7 @@
         {% END %}
         </select>
       </label>
-      {% IF fields.basic_fields.editor.mandatory %}*</span>{% END %}&nbsp;<span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span>
+      {% IF fields.basic_fields.editor.mandatory %}</span>{% END %}&nbsp;<span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span>
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
@@ -58,7 +58,7 @@
           [% END %]
         </select>
       </label>
-      {% IF fields.basic_fields.editor.mandatory %}*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span>[% END %]
+      {% IF fields.basic_fields.editor.mandatory %}</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span>[% END %]
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
