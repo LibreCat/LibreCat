@@ -56,6 +56,11 @@
 <div class="row">&nbsp;</div>
 
 [% END %]
+
+<div class="row">
+  [% INCLUDE pagination.tt %]
+</div>
+
 <script>
   $('.citation-block-link').tooltip();
   $('.librarian-approved').tooltip();
