@@ -78,6 +78,7 @@ prefix '/myPUB/record' => sub {
 
     get '/edit/:id' => needs login => sub {
         my $id = param 'id';
+        my $edit_mode = params->{edit_mode} if params->{edit_mode};
 
         forward '/' unless $id;
         my $rec;
@@ -87,9 +88,13 @@ prefix '/myPUB/record' => sub {
         catch {
             template 'error', { error => "Something went wrong: $_" };
         };
-
+        
+        my $templatepath = "backend/forms";
+        if(($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
+        	$templatepath .= "/expert";
+        }
         if ($rec) {
-            template "backend/forms/$rec->{type}", $rec;
+            template $templatepath . "/$rec->{type}", $rec;
         }
         else {
             template 'error', { error => "No publication with ID $id." };
