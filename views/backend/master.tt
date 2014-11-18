@@ -9,9 +9,9 @@
 
 <div class="col-md-9 col-md-offset-1">
   [% IF title %]
-  <h3>[% title %] ([% type %]) <input type="button" class="btn btn-default change_mode" value="Change to long edit form" /></h3>
+  <h3><input style="float: right" type="button" class="btn btn-default change_mode" value="Change to long edit form" /> [% title %] ([% type %])</h3>
   [% ELSE %]
-  <h3>Add New {% label %} <input type="button" class="btn btn-default change_mode" value="Change to long edit form" /></h3>
+  <h3><input style="float:right;" type="button" class="btn btn-default change_mode" value="Change to long edit form" /> Add New {% label %}</h3>
   [% END %]
   
   <script>
