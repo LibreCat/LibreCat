@@ -132,7 +132,7 @@
           <div class="col-md-2" id="access_[% fi.file_id %]">
             [% SWITCH fi.access_level %]
             [% CASE "admin" %]
-            Author/Admin/Reviewer
+            Author/Reviewer
             [% IF fi.embargo %]
             <br />(until [% fi.embargo %])
             [% END %]
