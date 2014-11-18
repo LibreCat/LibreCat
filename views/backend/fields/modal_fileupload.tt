@@ -10,7 +10,9 @@
   
       <div class="modal-body">
         <input type="hidden" name="file_id" id="id_file_id" value="" />
+        <input type="hidden" name="tempid" id="id_temp_id" value="" />
         <input type="hidden" name="record_id" id="id_record_id" value="" />
+        <input type="hidden" name="creator" id="id_creator" value="" />
         <input type="hidden" name="cancel" value="" />
       
         <strong>File</strong>
@@ -78,7 +80,7 @@
         
         <div class="form-group">
           <strong>Title</strong><br />
-          <input type="text" name="file_title" id="id_fileTitle" value="[% file_title %]" class="form-control" />
+          <input type="text" name="title" id="id_fileTitle" value="" class="form-control" />
         </div>
       
         <div class="form-group">
@@ -101,14 +103,21 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
   $('#fileSubmit').click( function() {    
     var inputs = $(":file");
     var file_id = $('#id_file_id').val();
+    var tempid = $('#id_temp_id').val();
 
     var formData = new FormData();
     if(inputs.eq(0)){
       formData.append("file", inputs.eq(0).prop("files")[0]);
     }
-    formData.append("id", "[% id %]");
-    formData.append("file_id", file_id);
+    formData.append("id", "[% _id %]");
+    if(file_id){
+      formData.append("file_id", file_id);
+    }
+    if(tempid){
+      formData.append("tempid", tempid);
+    }
     formData.append("old_file_name", $('#id_fileName').val());
+    formData.append("creator", $('#id_creator').val());
     formData.append("relation", $('#id_select_relation').val());
     
     if($('#id_accessLevel_openAccess').is(':checked')){
@@ -129,7 +138,7 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
     }
     
     if($('#id_fileTitle').val()){
-      formData.append("file_title", $('#id_fileTitle').val());
+      formData.append("title", $('#id_fileTitle').val());
     }
     
     if($('#id_fileDescription').val()){
@@ -164,20 +173,17 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
             $('#id_global_raq').val(1);
           }
         }
-
-        $('#filename_' + file_id).html("");
-        $('#filename_' + file_id).html('<a href="[% h.shost %]/download/[% id %]/' + file_id + '" target="_blank" title="' + data.file_name + '">' + data.file_name + '</a>');
-        $('#access_' + file_id).html(accessLevel);
-        $('#updated_' + file_id).html(data.date_updated);
-        $('#creator_' + file_id).html(data.creator);
-        $('#relation_' + file_id).html(data.relation);
-        //$('#cordown_' + file_id)[0].onclick = null;
-        //$('#cordown_' + file_id).unbind();
-        //$('#cordown_' + file_id).click(function (){
-        //  edit_file(file_id);
-        //});
-
-        $('#file_' + file_id).val(data.file_json);
+        
+        var use_file_id;
+        use_file_id = file_id ? file_id : tempid;
+        
+        $('#filename_' + use_file_id).html("");
+        $('#filename_' + use_file_id).html('<a href="[% h.shost %]/download/[% id %]/' + use_file_id + '" target="_blank" title="' + data.file_name + '">' + data.file_name + '</a>');
+        $('#access_' + use_file_id).html(accessLevel);
+        $('#updated_' + use_file_id).html(data.date_updated);
+        $('#creator_' + use_file_id).html(data.creator);
+        $('#relation_' + use_file_id).html(data.relation);
+        $('#file_' + use_file_id).val(data.file_json);
         
         $('#upLoad')[0].reset();
         $('#upload_file').modal('hide');

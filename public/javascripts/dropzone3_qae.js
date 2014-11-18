@@ -411,7 +411,7 @@ require.register("dropzone/lib/dropzone.js", function(exports, require, module){
     Dropzone.prototype.events = ["drop", "dragstart", "dragend", "dragenter", "dragover", "dragleave", "selectedfiles", "addedfile", "removedfile", "thumbnail", "error", "processing", "processingmultiple", "uploadprogress", "totaluploadprogress", "sending", "sendingmultiple", "success", "successmultiple", "canceled", "canceledmultiple", "complete", "completemultiple", "reset"];
 
     Dropzone.prototype.defaultOptions = {
-      url: "http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/upload/qae",
+      url: "http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/upload",
       method: "post",
       withCredentials: false,
       parallelUploads: 2,

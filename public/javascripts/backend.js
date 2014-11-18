@@ -223,7 +223,6 @@ function linkPevz(element){
 	}
 }
 
-<<<<<<< HEAD
 function editAuthorIds(direction){
 	if(direction == "edit"){
 		$('.authorIds').css('display','none');
