@@ -241,7 +241,10 @@ prefix '/myPUB/record' => sub {
     post '/change_mode' => sub {
     	my $mode = params->{edit_mode};
         my $params = params;
-
+        
+        $params->{file} = [$params->{file}] if ($params->{file} and ref $params->{file} ne "ARRAY");
+        $params->{file_order} = [$params->{file_order}] if ($params->{file_order} and ref $params->{file_order} ne "ARRAY");
+        
         foreach my $key ( keys %$params ) {
             if ( ref $params->{$key} eq "ARRAY" ) {
                 my $i = 0;
@@ -253,6 +256,11 @@ prefix '/myPUB/record' => sub {
         }
 
         $params = h->nested_params($params);
+        foreach my $fi (@{$params->{file}}){
+        	$fi = from_json($fi);
+        	$fi->{file_json} = to_json($fi);
+        }
+        
         my $path = "backend/forms/";
         $path .= "expert/" if $mode eq "expert";
         $path .= params->{type} . ".tt";
