@@ -45,7 +45,8 @@ prefix '/myPUB/record' => sub {
 
     get '/new' => needs login => sub {
         my $type = params->{type};
-        my $edit_mode = params->{edit_mode} if params->{edit_mode};
+        my $person = h->getPerson(session->{personNumber});
+        my $edit_mode = params->{edit_mode} || $person->{edit_mode} || "";
 
         return template 'add_new' unless $type;
 
@@ -78,7 +79,8 @@ prefix '/myPUB/record' => sub {
 
     get '/edit/:id' => needs login => sub {
         my $id = param 'id';
-        my $edit_mode = params->{edit_mode} if params->{edit_mode};
+        my $person = h->getPerson(session->{personNumber});
+        my $edit_mode = params->{edit_mode} || $person->{edit_mode} || "";
 
         forward '/' unless $id;
         my $rec;
