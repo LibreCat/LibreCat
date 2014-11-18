@@ -2,7 +2,7 @@ package App::Search::Route::thumbnail;
 
 =head1 NAME
 
-  App::Search::Route::thumbnail - deliver thumbnail to the splash page.
+    App::Search::Route::thumbnail - deliver thumbnail to the splash page.
 
 =cut
 
@@ -11,7 +11,7 @@ use Dancer qw/:syntax :script/;
 
 =head2 AJAX /thumbnail/:id/:file_name
 
-  Get a thumbnail image for a given id and file name.
+    Get a thumbnail image for a given id and file name.
 
 =cut
 ajax '/thumbnail/:id/:file_name' => sub {
