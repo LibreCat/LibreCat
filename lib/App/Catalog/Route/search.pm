@@ -91,7 +91,7 @@ prefix '/myPUB/search' => sub {
     Performs search for user.
 
 =cut
-        get '/search' => needs login => sub {
+        get '/' => needs login => sub {
         my $params = params;
 
         $params->{modus} = "user";
