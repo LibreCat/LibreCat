@@ -3,7 +3,7 @@
 # journal_article
 if exists('journal.journal_article')
     move_field('journal.journal_article','tmp')
-    set_field('tmp.type','journalArticle')
+    set_field('type','journalArticle')
 
     move_field('tmp.titles.title','title')
     move_field('tmp.publication_date.0.year','year')
@@ -32,18 +32,38 @@ if exists('journal.journal_article')
 end
 
 # book_chaper
-if exists('book.book_content')
-    #move_field('book.book_content','tmp')
-	set_field('type','bookChapter')
+if exists('book.content_item')
+    set_field('type','bookChapter')
+    # book data
     move_field('book.book_metadata.isbn.content','isbn.$append')
     move_field('book.book_metadata.publication_date.0.year','year')
     move_field('book.book_metadata.publication_date.year','year')
     trim('year')
     move_field('book.book_metadata.titles.title','book_title')
+    move_field('book.book_metadata.publisher.publisher_name','publisher')
+
+    # in case of book series
+    move_field('book.book_series_metadata', 'tmp')
+    move_field('tmp.series_metadata.titles.title','series_title')
+    move_field('tmp.titles.title','book_title')
+    move_field('tmp.isbn.*.content','isbn.$append')
+    move_field('tmp.publisher.publisher_name','publisher')
+    move_field('tmp.series_metadata.issn.*.content','issn.$append')
+    move_field('tmp.contributors.person_name','editor')
+    do list (path => editor)
+        remove_field('sequence')
+        remove_field('contributor_role')
+        move_field('given_name', 'first_name')
+        move_field('surname','last_name')
+    end
+
+    # chapter data
     move_field('book.content_item.titles.title','title')
     move_field('book.content_item.doi_data.doi','doi')
     move_field('book.content_item.pages.first_page','page.start')
     move_field('book.content_item.pages.last_page','page.end')
+    move_field('book.content_item.publication_date.year','year')
+    trim('year')
     move_field('book.content_item.contributors.person_name','author')
     do list (path => author)
         remove_field('sequence')
@@ -52,6 +72,7 @@ if exists('book.book_content')
         move_field('surname','last_name')
     end
     remove_field('book')
+    remove_field('tmp')
 end
 
 #if exists('conference.conference_paper')

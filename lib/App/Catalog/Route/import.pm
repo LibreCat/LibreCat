@@ -24,7 +24,8 @@ post '/myPUB/record/import' => needs login => sub {
     try {
         $pub = import_publication($p->{source}, $p->{id});
         if ($pub) {
-            return template "backend/forms/$pub->{type}", $pub;
+					my $tmpl = $pub->{type} || 'journalArticle';
+          return template "backend/forms/$tmpl", $pub;
         } else {
             return template "add_new",
                 {error => "No record found with ID $p->{id} in $p->{source}."};
