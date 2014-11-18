@@ -5,7 +5,7 @@ use Catmandu::Sane;
 use Catmandu;
 use App::Catalog::Helper;
 use App::Catalog::Controller::Corrector qw/delete_empty_fields correct_hash_array/;
-use App::Catalog::Controller::File qw/handle_file/;
+use App::Catalog::Controller::File qw/handle_file delete_file/;
 use Catmandu::Validator::PUB;
 use Hash::Merge qw/merge/;
 use Carp;
@@ -140,11 +140,13 @@ sub delete_publication {
     # the existing publication
 	h->publication->add($del);
 	h->publication->commit;
+	
+	my $status = delete_file($id);
 
     # delete attached files
-    my $dir = h->config->{upload_dir} ."/$id";
-    my $status = rmdir $dir if -e $dir || 0;
-    croak "Error: could not delete files" if $status;
+#    my $dir = h->config->{upload_dir} ."/$id";
+#    my $status = rmdir $dir if -e $dir || 0;
+#    croak "Error: could not delete files" if $status;
 
     # delete citations
     my $citbag = Catmandu->store('citation')->bag;

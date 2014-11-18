@@ -276,9 +276,15 @@ function revert_name(element){
  */
 function edit_file(fileId, id){
 	var json = jQuery.parseJSON($('#file_' + fileId).val());
-	$('#id_file_id').val(json.file_id);
+	if(json.file_id){
+		$('#id_file_id').val(json.file_id);
+	}
+	if(json.tempid){
+		$('#id_temp_id').val(json.tempid);
+	}
 	$('#id_record_id').val(id);
 	$('#id_fileName').val(json.file_name);
+	$('#id_creator').val(json.creator);
 	
 	if(json.title){
 		$('#id_fileTitle').val(json.title);
@@ -331,11 +337,11 @@ function edit_file(fileId, id){
  * @param id = record ID
  * @param fileName = file name
  */
-function deleteUploadedDocument(fileId, id, fileName){
+function delete_file(fileId){
 	if (confirm("Are you sure you want to delete this uploaded document? Any external links will be broken! If you need to update an existing file to a new version you should edit the corresponding entry in the list and re-upload the file")) {
 		$('#' + fileId).remove();
 	    $('#file_order_' + fileId).remove();
-	    $.post( "/upload/delete", { id: id, filename: fileName });
+	    //$.post( "/upload/delete", { id: id, file_name: fileName });
 	}
 }
 
