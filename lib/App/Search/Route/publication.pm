@@ -8,7 +8,7 @@ package App::Search::Route::publication;
 
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
-# use *search module*
+# use App::Searcher;
 # what for?
 =head2 GET /{data|publication}/:id/:style
 
@@ -17,8 +17,14 @@ use Dancer qw/:syntax/;
 =cut
 get qr{/(data|publication)/(\d{1,})/(\w{1,})/*} => sub {
 	my ($bag, $id, $style) = splat;
-	my $p = {q => "id=$id", style => $style, limit => 1, tmpl => "frontdoor/record"};
-	$p->{fmt} = params->{fmt} if params->{fmt};
+
+	my $p = {
+		q => "id=$id",
+		style => $style,
+		limit => 1,
+		tmpl => "frontdoor/record",
+		fmt => params->{fmt} || '',
+	};
 	$p->{'bag'} = "researchData" if $bag eq "data";
 	#handle_request($p);
 };
@@ -30,8 +36,14 @@ get qr{/(data|publication)/(\d{1,})/(\w{1,})/*} => sub {
 =cut
 get qr{/(data|publication)/(\d{1,})/*} => sub {
 	my ($bag, $id) = splat;
-	my $p = {q => "id=$id", limit => 1, style => $fd_style, tmpl => "frontdoor/record"};
-	$p->{fmt} = params->{fmt} if params->{fmt};
+
+	my $p = {
+		q => "id=$id",
+		limit => 1,
+		style => $fd_style,
+		tmpl => "frontdoor/record",
+		fmt => params->{fmt} || '',
+	};
 	$p->{'bag'} = "researchData" if $bag eq "data";
 	#handle_request($p);
 };
@@ -39,6 +51,7 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 # /data/doi/:doi
 get qr{/data/doi/(.*?)/*} => sub {
 	my ($doi) = splat;
+
 	my $p = params;
 	$p->{'bag'} = 'researchData';
 	$p->{'q'} = "doi=$doi";
@@ -48,6 +61,7 @@ get qr{/data/doi/(.*?)/*} => sub {
 # api for data publication lists
 get qr{/data/*} => sub {
 	my $p = params;
+
 	$p->{'bag'} = 'researchData';
 	#handle_request(\%p);
 };
@@ -55,6 +69,7 @@ get qr{/data/*} => sub {
 # api for publication lists
 get qr{/publication/*} => sub {
 	my $p = params;
+
 	#handle_request(\%p);
 };
 

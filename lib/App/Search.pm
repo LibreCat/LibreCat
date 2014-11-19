@@ -14,4 +14,8 @@ use App::Search::Route::uri;
 use App::Search::Route::unapi;
 #use App::Search::Route::
 
+get '/' => sub {
+    template 'websites/index';
+}
+
 1;

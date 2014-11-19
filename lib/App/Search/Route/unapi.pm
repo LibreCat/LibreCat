@@ -3,18 +3,19 @@ package App::Search::Route::unapi;
 use Catmandu::Sane;
 use Catmandu;
 use Dancer qw(:syntax);
+use App::Helper;
 
 get '/unapi' => sub {
     my $id = params->{id};
     my $format = params->{format};
 
     if ($id && $format) {
-        return forward "/publication/$id", {format => $format};
+        return forward "/publication/$id", {fmt => $format};
     }
 
     content_type 'xml';
 
-    my $specs = $id ? Catmandu->config->{export_publication} : Catmandu->config->{export_publication_hits};
+    my $specs = $id ? h->config->{exporter}->{publication};
     my $out = qq(<?xml version="1.0" encoding="UTF-8" ?>\n);
 
     if ($id) {
@@ -23,9 +24,9 @@ get '/unapi' => sub {
         $out .= qq(<formats>);
     }
 
-    for my $spec (@$specs) {
-        my $content_type = $spec->{content_type} || mime->for_name($spec->{extension} // $spec->{format});
-        $out .= qq(<format name="$spec->{format}" type="$content_type"/>);
+    for my $fmt (keys %$specs) {
+        my $content_type = $specs->{fmt}->{content_type} || mime->for_name($specs->{fmt}->{extension});
+        $out .= qq(<format name="$fmt" type="$content_type"/>);
     }
 
     $out . qq(</formats>);

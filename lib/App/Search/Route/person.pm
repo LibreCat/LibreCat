@@ -44,8 +44,15 @@ get '/authorlist' => sub {
 	template $tmpl, $hits;
 };
 
-get qr{/person/(\d{1,})/*} => sub {
+get qr{/person/(^\d{1,})/*} => sub {
   # needs improvement...
+};
+
+get qr{/person/(\w+)/*} => sub {
+	my ($alias) = splat;
+
+	my $person = h->authority_user->select({"alias", $alias})->first;
+	forward "/person/$person->{_id}";
 };
 
 get qr{/person/$} => sub {
