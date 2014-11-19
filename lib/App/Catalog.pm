@@ -12,7 +12,7 @@ use Catmandu;
 use Dancer ':syntax';
 use Catmandu::Util qw(:array);
 
-use App::Catalog::Helper;
+use App::Helper;
 use App::Catalog::Interface;
 use Dancer::Plugin::Auth::Tiny;
 use App::Catalog::Route::admin;

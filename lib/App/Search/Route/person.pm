@@ -2,6 +2,7 @@ package App::Search::Route::person;
 
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
+use App::Helper;
 
 # /authorlist
 get '/authorlist' => sub {

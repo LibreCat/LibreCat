@@ -1,5 +1,4 @@
-package App::Catalog::Helper::Helpers;
-use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/default /srv/www/sbcat/lib/extension);
+package App::Helper::Helpers;
 
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
@@ -415,6 +414,82 @@ sub clean_cql {
 	return $cleancql;
 }
 
+sub make_cql {
+	my ($self, $p) = @_;
+
+	my $query;
+	if($p->{q}){
+		return $p->{q};
+	} else {
+		if($p->{person} and $p->{person} ne ""){
+			$query .= "person=" . $p->{person} . " AND hide<>" . $p->{person};
+		}
+		elsif($p->{department} and $p->{department} ne ""){
+			$query .= "department=" . $p->{department};
+		}
+
+
+		if($p->{author} and ref $p->{author} eq 'ARRAY'){
+			foreach (@{$p->{author}}){
+				$query .= " AND author exact ". $_;
+			}
+		}
+		elsif($p->{author} and ref $p->{author} ne 'ARRAY'){
+			$query .= " AND author exact ". $p->{author};
+		}
+
+		if($p->{editor} and ref $p->{editor} eq 'ARRAY'){
+			foreach (@{$p->{editor}}){
+				$query .= " AND editor exact ". $_;
+			}
+		}
+		elsif($p->{editor} and ref $p->{editor} ne 'ARRAY'){
+			$query .= " AND editor exact ". $p->{editor};
+		}
+
+		if($p->{person} and ref $p->{person} eq 'ARRAY'){
+			foreach (@{$p->{person}}){
+				$query .= " AND person exact ". $_;
+			}
+		}
+		elsif($p->{person} and ref $p->{person} ne 'ARRAY'){
+			$query .= " AND person exact ". $p->{person};
+		}
+
+		$query .= " AND qualitycontrolled=". $p->{qualitycontrolled} if $p->{qualitycontrolled};
+		$query .= " AND popularscience=". $p->{popularscience} if $p->{popularscience};
+		$query .= " AND nonlu=". $p->{nonunibi} if $p->{nonunibi};
+		$query .= " AND fulltext=". $p->{fulltext} if $p->{fulltext};
+		$query .= " AND basic=\"" . $p->{ftext} . "\"" if $p->{ftext};
+
+		if($p->{publicationtype} and ref $p->{publicationtype} eq 'ARRAY'){
+			my $tmpquery = "";
+			foreach (@{$p->{publicationtype}}){
+				$tmpquery .= "documenttype=" . $_ . " OR ";
+			}
+			$tmpquery =~ s/ OR $//g;
+			$query .= " AND (" . $tmpquery . ")";
+		}
+		elsif ($p->{publicationtype} and ref $p->{publicationtype} ne 'ARRAY'){
+			$query .= " AND documenttype=". $p->{publicationtype};
+		}
+
+		if($p->{publishingyear} and ref $p->{publishingyear} eq 'ARRAY'){
+			my $tmpquery = "";
+			foreach (@{$p->{publishingyear}}){
+				$tmpquery .= "publishingyear=" . $_ . " OR ";
+			}
+			$tmpquery =~ s/ OR $//g;
+			$query .= " AND (" . $tmpquery . ")";
+		}
+		elsif ($p->{publishingyear} and ref $p->{publishingyear} ne 'ARRAY'){
+			$query .= " AND publishingyear=". $p->{publishingyear};
+		}
+		return $query;
+	}
+
+}
+
 sub uri_for {
     my ($self, $path, $uri_params) = @_;
     $uri_params ||= {};
@@ -515,9 +590,9 @@ sub embed_params {
     };
 }
 
-package App::Catalog::Helper;
+package App::Helper;
 
-my $h = App::Catalog::Helper::Helpers->new;
+my $h = App::Helper::Helpers->new;
 
 use Catmandu::Sane;
 use Dancer qw(:syntax hook);
