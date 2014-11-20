@@ -124,7 +124,6 @@ first_author: "Lastname, Firstname"
 editor: see author
 translator: see author
 supervisor: see author
-request_a_copy: 1|0
 file:
 	-
 		file_name: "hello.pdf"

@@ -32,6 +32,15 @@ sub calc_date {
 	return $date_expires;
 }
 
+sub get_file_name {
+	my ($pub_id, $file_id) = @_;
+	my $rec = h->publication->get($pub_id);
+	if($rec->{file} and ref $rec->{file} eq "ARRAY"){
+		my $matching_items = (grep {$_->{file_id} eq $file_id} @{$rec->{file}})[0];
+		return $matching_items->{file_name};
+	}
+}
+
 =head1 PREFIX /requestcopy
 
     Prefix for the feature 'request-a-copy'
@@ -45,31 +54,59 @@ prefix '/requestcopy' => sub {
     to the author.
 
 =cut
-	get '/:id/:file_id' => sub {
-		my $bag = 'x';
-
-		my $stored = $bag->add({
-			record_id => params->{id},
-			file_id => params->{file_id},
-			date_expires => calc_date,
-			email => params->{email},
+	post '/:id/:file_id' => sub {
+		my $bag = Catmandu->store->bag('request');
+		my $file_name = get_file_name(params->{id}, params->{file_id});
+		my $date_expires = calc_date();
+		
+		my $query = {
+			"approved"     => "1",
+			"file_id"      => params->{file_id},
+			"file_name"    => $file_name,
+			"date_expires" => $date_expires,
+			"record_id"    => params->{id}
+		};
+		my $hits = $bag->search(
+		    query => $query,
+		    limit => 1
+		);
+		
+		if($hits->{hits}->[0]){
+			my $rec = $hits->{hits}->[0];
+			return h->host . ":3000/requestcopy/download/" . $rec->{_id};
+		}
+		else{
+			my $stored = $bag->add({
+				record_id => params->{id},
+				file_id => params->{file_id},
+				file_name => $file_name || "",
+				date_expires => $date_expires,
+				email => params->{email} || "",
+				approved => params->{approved} || 0,
 			});
-
-		my $pub = edit_publication(params->{id});
-		my $mail_body = export_to_string({
-			title => $pub->{title},
-			user_name => params->{user_name},
-			key => $stored->{_id},},
-			'Template',
-			template => 'email/req_copy.tt');
-		try {
-			email {
-				to => 'todo',
-				subject => h->config->{request_copy}->{subject},
-				body => $mail_body,
-			};
-		} catch {
-			error "Could not send email: $_";
+			
+			if(params->{email}){
+				my $pub = edit_publication(params->{id});
+				my $mail_body = export_to_string({
+					title => $pub->{title},
+					user_name => params->{user_name},
+					key => $stored->{_id},
+				},
+				'Template',
+				template => 'email/req_copy.tt');
+				try {
+					email {
+						to => params->{email},
+						subject => h->config->{request_copy}->{subject},
+						body => $mail_body,
+					};
+				} catch {
+					error "Could not send email: $_";
+				}
+			}
+			else {
+				return h->host . "/requestcopy/download/" . $stored->{_id};
+			}
 		}
 	};
 
@@ -129,9 +166,9 @@ prefix '/requestcopy' => sub {
 
 =cut
 	get '/download/:key' => sub {
-		my $check = h->getPermission(params->{key});
-		if ($check->[0]->{approved} == 1) {
-			send_it($check->{id}, $check->{file_id});
+		my $check = Catmandu->store->bag('request')->get(params->{key});
+		if ($check and $check->{approved} == 1) {
+			send_it($check->{record_id}, $check->{file_name});
 		} else {
 			template 'error', {message => "The time slot has expired. You can't download the document anymore."};
 		}

@@ -1,3 +1,55 @@
+/**
+ * 
+ * myPUB main/search page
+ * 
+ */
+
+
+/**
+ * Display/hide edit form for author IDs
+ * 
+ * @param direction = [edit|cancel] display or hide form
+ */
+function editAuthorIds(direction){
+	if(direction == "edit"){
+		$('.authorIds').css('display','none');
+		$('.authorIds_input').attr('style','display:display');
+	}
+	else if(direction == "cancel"){
+		$('.authorIds').attr('style','display:display');
+		$('.authorIds_input').attr('style','display:none');
+	}
+}
+
+/**
+ * Generates and displays link for request_a_copy
+ * @param file_id
+ * @param pub_id
+ */
+function generate_link(file_id, pub_id){
+	var url = '/requestcopy/' + pub_id + '/' + file_id;
+	$.post(url, {approved:1}, function(response) {
+		var request_url = response;
+		$("ul[id$='_rac_dd_" + file_id + "'] li input").val(request_url);
+		$('ul[id$="_rac_dd_' + file_id + '"]').dropdown('toggle');
+	});
+}
+
+
+/**
+ * 
+ * Publication Edit Form
+ * 
+ */
+
+
+/**
+ * Section Basic Fields
+ */
+
+/**
+ * Link author name to PEVZ account
+ */
 function linkPevz(element){
 	var lineId = $(element).attr('id').replace('id_linkPevz_','');
 	var type = "";
@@ -220,16 +272,5 @@ function linkPevz(element){
 				$('#linkPevzModal').modal("show");
 			}
 		});
-	}
-}
-
-function editAuthorIds(direction){
-	if(direction == "edit"){
-		$('.authorIds').css('display','none');
-		$('.authorIds_input').attr('style','display:display');
-	}
-	else if(direction == "cancel"){
-		$('.authorIds').attr('style','display:display');
-		$('.authorIds_input').attr('style','display:none');
 	}
 }
