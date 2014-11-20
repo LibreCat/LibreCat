@@ -21,6 +21,20 @@ function editAuthorIds(direction){
 	}
 }
 
+/**
+ * Generates and displays link for request_a_copy
+ * @param file_id
+ * @param pub_id
+ */
+function generate_link(file_id, pub_id){
+	var url = '/requestcopy/' + pub_id + '/' + file_id;
+	$.post(url, {approved:1}, function(response) {
+		var request_url = response;
+		$("ul[id$='_rac_dd_" + file_id + "'] li input").val(request_url);
+		$('ul[id$="_rac_dd_' + file_id + '"]').dropdown('toggle');
+	});
+}
+
 
 /**
  * 
