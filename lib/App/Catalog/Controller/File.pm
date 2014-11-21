@@ -1,7 +1,7 @@
 package App::Catalog::Controller::File;
 
 use Catmandu::Sane;
-use App::Catalog::Helper;
+use App::Helper;
 use Exporter qw/import/;
 
 our @EXPORT = qw/new_file edit_file update_file delete_file/;

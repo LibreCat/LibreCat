@@ -9,7 +9,7 @@ package App::Catalog::Route::person;
 use Catmandu::Sane;
 use Catmandu::Util qw(:array);
 use Dancer ':syntax';
-use App::Catalog::Helper;
+use App::Helper;
 use App::Catalog::Controller::Admin qw/:person/;
 use Dancer::Plugin::Auth::Tiny;
 

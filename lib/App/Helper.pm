@@ -6,10 +6,10 @@ use Catmandu::Util qw(:is :array trim);
 use Catmandu::Fix qw /expand/;
 use Dancer qw(:syntax vars params request);
 use Sys::Hostname::Long;
-use Hash::Merge qw(merge);
 use Template;
 use Moo;
 use POSIX qw(strftime);
+use List::Util;
 
 Catmandu->load(':up');
 
@@ -57,6 +57,22 @@ sub authority_department {
 	state $bag = Catmandu->store('authority')->bag('department');
 }
 
+sub string_array {
+	my ($self, $val) = @_;
+	return [ grep { is_string $_ } @$val ] if is_array_ref $val;
+	return [ $val ] if is_string $val;
+	[];
+}
+
+sub sort_options {
+	state $sort_options = do {
+		my $sorts = $_[0]->config->{publication_sorts} || [];
+		List::Util::reduce {
+			$a->{"$b->{key}.$b->{order}"} = $b; $a;
+		} +{}, @$sorts;
+	};
+}
+
 # helper for params handling
 ############################
 sub nested_params {
@@ -71,6 +87,33 @@ sub nested_params {
     }
 	my $fixer = Catmandu::Fix->new(fixes => ["expand()"]);
     return $fixer->fix($params);
+}
+
+sub exract_params {
+	my ($self, $params) = @_;
+	$params ||= params;
+	my $p = {};
+
+	$p->{start} = $params->{start} if is_natural $params->{start};
+	$p->{limit} = $params->{limit} if is_natural $params->{limit};
+	$p->{q} = $self->string_array($params->{q});
+
+#	$p->{cql_query} = join(' AND ', @{$p->{q}});
+
+	my $formats = $self->config->{exporter}->{publication};
+	$p->{fmt} = array_includes($params->{fmt}, @$formats) ? $params->{fmt}
+			: $self->config->{default_fmt};
+
+	my $styles = $self->config->{styles};
+	$p->{style} = array_includes($params->{style}, @$styles) ? $params->{style}
+			: $self->config->{default_style};
+
+	my $sort = $self->string_array($params->{sort});
+	$sort = [ grep { exists $self->sort_options->{$_} } map { s/(?<=[^_])_(?=[^_])//g; lc $_ } split /,/, join ',', @$sort ];
+	$sort = [] if is_same $sort, $self->config->{default_publication_sort};
+	$p->{sort} = $sort;
+
+	$p;
 }
 
 sub now {
@@ -165,20 +208,8 @@ sub shost {
 
 sub search_publication {
 	my ($self, $p) = @_;
-
-	my $hits;
-	my $q = $p->{q} ||= "";
-	my $default_sort = "";
-	foreach (@{config->{store}->{default_sort}}){
-		$default_sort .= "$_->{field},,";
-		$default_sort .= $_->{order} eq "asc" ? "1 " : "0 ";
-	}
-	$default_sort = substr($default_sort, 0, -1);
-
-	my $sort = $p->{'sort'} ||= $default_sort;
-	my $bag = $p->{'bag'} ||= "publicationItem";
-
-	$hits = publication->search(
+	my $sort;
+	my $hits = publication->search(
 	    cql_query => $p->{q},
 		sru_sortkeys => $sort,
 		limit => $p->{limit} ||= config->{default_page_size},
@@ -193,10 +224,32 @@ sub search_publication {
 	return $hits;
 }
 
+# sub return_publication {
+# 	my ($self, $hits, $opts) = @_;
+# 	if ( $opts->{fmt} eq 'html' ) {
+# 		if ($opts->{ftyp}) {
+# 			$tmpl .= "_". $par->{ftyp};
+# 			header("Content-Type" => "text/plain") unless ($par->{ftyp} eq 'iframe' || $par->{ftyp} eq 'pln');
+# 			$tmpl .= "_num" if ($par->{enum} and $par->{enum} eq "1");
+# 			$tmpl .= "_numasc" if ($par->{enum} and $par->{enum} eq "2");
+# 			template $tmpl, $hits;
+# 		}
+#
+# 		if($limit == 1 && @{$hits->{hits}}[0]){
+# 			@{$hits->{hits}}[0]->{style} = $style;
+# 			@{$hits->{hits}}[0]->{marked} = @$marked;
+# 			@{$hits->{hits}}[0]->{bag} = $hits->{bag};
+# 			template "frontdoor/record.tt", @{$hits->{hits}}[0];
+# 		} else {
+# 			template $tmpl, $hits;
+# 		}
+# 	}
+#
+# }
+
 sub search_researcher {
 	my ($self, $p) = @_;
 	my $q = $p->{q} ||= "";
-	#$q .= $q eq "" ? "publCount>0" : " AND publCount>0";
 
 	my $hits = researcher->search(
 	  cql_query => $q,

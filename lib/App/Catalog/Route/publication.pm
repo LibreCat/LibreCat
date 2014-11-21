@@ -7,7 +7,7 @@ package App::Catalog::Route::publication;
 =cut
 
 use Catmandu::Sane;
-use App::Catalog::Helper;
+use App::Helper;
 use App::Catalog::Controller::Publication;
 use Dancer ':syntax';
 use Try::Tiny;

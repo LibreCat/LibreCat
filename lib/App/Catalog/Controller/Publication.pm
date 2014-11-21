@@ -3,7 +3,7 @@ package App::Catalog::Controller::Publication;
 use lib qw(/srv/www/sbcat/lib/extension);
 use Catmandu::Sane;
 use Catmandu;
-use App::Catalog::Helper;
+use App::Helper;
 use Catmandu::Validator::PUB;
 use Hash::Merge qw/merge/;
 use Carp;
@@ -161,7 +161,7 @@ sub save_publication {
     fixes => [
         'clean_department_project()',
     ]);
-    
+
     $data->{date_updated} = h->now();
     $data->{date_created} = $data->{date_updated} if !$data->{date_created};
 

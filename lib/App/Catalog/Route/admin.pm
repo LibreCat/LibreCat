@@ -9,7 +9,7 @@ package App::Catalog::Route::admin;
 use Catmandu::Sane;
 use Catmandu::Util qw(trim);
 use Dancer ':syntax';
-use App::Catalog::Helper;
+use App::Helper;
 use App::Catalog::Controller::Admin qw/:all/;
 use Dancer::Plugin::Auth::Tiny;
 

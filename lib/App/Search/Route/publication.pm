@@ -26,7 +26,7 @@ get qr{/(data|publication)/(\d{1,})/(\w{1,})/*} => sub {
 		fmt => params->{fmt} || '',
 	};
 	$p->{'bag'} = "researchData" if $bag eq "data";
-	#handle_request($p);
+	my $hits = h->search_publication($p);
 };
 
 =head2 GET /{data|publication}/:id
@@ -45,14 +45,14 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 		fmt => params->{fmt} || '',
 	};
 	$p->{'bag'} = "researchData" if $bag eq "data";
-	#handle_request($p);
+	my $hits = h->search_publication($p);
 };
 
 # /data/doi/:doi
 get qr{/data/doi/(.*?)/*} => sub {
 	my ($doi) = splat;
 
-	my $p = params;
+	my $p = extract_params;
 	$p->{'bag'} = 'researchData';
 	$p->{'q'} = "doi=$doi";
 	#handle_request(\%p);
@@ -60,17 +60,16 @@ get qr{/data/doi/(.*?)/*} => sub {
 
 # api for data publication lists
 get qr{/data/*} => sub {
-	my $p = params;
+	my $p = extract_params;
 
 	$p->{'bag'} = 'researchData';
-	#handle_request(\%p);
+	my $hits = h->search_publication($p);
 };
 
 # api for publication lists
 get qr{/publication/*} => sub {
-	my $p = params;
-
-	#handle_request(\%p);
+	my $p = h->extract_params;
+	my $hits = h->search_publication();
 };
 
 1;

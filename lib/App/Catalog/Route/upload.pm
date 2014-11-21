@@ -7,7 +7,7 @@ package App::Catalog::Route::upload;
 =cut
 
 use Catmandu::Sane;
-use App::Catalog::Helper;
+use App::Helper;
 use App::Catalog::Controller::Publication qw/update_publicaton/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;

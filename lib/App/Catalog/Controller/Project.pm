@@ -2,7 +2,7 @@ package App::Catalog::Controller::Project;
 
 use Catmandu::Sane;
 use Catmandu;
-use App::Catalog::Helper;
+use App::Helper;
 use Hash::Merge qw/merge/;
 use Exporter qw/import/;
 

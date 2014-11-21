@@ -8,7 +8,7 @@ package App::Catalog::Route::search;
 
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
-use App::Catalog::Helper;
+use App::Helper;
 use App::Catalog::Controller::Search qw/search_publication/;
 use Dancer::Plugin::Auth::Tiny;
 
