@@ -1,68 +1,39 @@
-{% editmode = "normal" %}
+{% editmode = "expert" %}
 [% INCLUDE navbar.tt %]
 [% thisPerson = h.getPerson(session.personNumber) %]
 <!-- BEGIN /backend/forms/{% tmpl %} -->
-
-<script src="/javascripts/dropzone3.js"></script>
 
 <div class="row">
 
 <div class="col-md-9 col-md-offset-1">
   [% IF title %]
-  <h3><input style="float: right" type="button" class="btn btn-default change_mode" value="Change to long edit form" /> [% title %] ([% type %])</h3>
+  <h3><input style="float:right;" type="button" class="btn btn-default change_mode" value="Change to normal edit form" /> [% title %] ([% type %])</h3>
   [% ELSE %]
-  <h3><input style="float:right;" type="button" class="btn btn-default change_mode" value="Change to long edit form" /> Add New {% label %}</h3>
+  <h3><input style="float:right;" type="button" class="btn btn-default change_mode" value="Change to normal edit form" /> Add New {% label %}</h3>
   [% END %]
   
   <script>
   $('.change_mode').click(function(){
-    $('#edit_form').find('input[name="edit_mode"]').val('expert');
+    $('#edit_form').find('input[name="edit_mode"]').val('normal');
     $('#edit_form').attr('action','/myPUB/record/change_mode');
     $('#edit_form').submit();
   });
   </script>
-
-  <ul class="nav nav-tabs" id="tabs-left">
-    <li id="li_basic_fields" class="active">
-      <a href="#basic_fields" data-toggle="tab">{% fields.basic_fields.tab_name %}</a>
-    </li>
-    {% IF fields.file_upload %}
-    <li id="li_file_upload" class="[% IF !allActive %]disabled[% END %]">
-      [% !allActive ? '<a href="#">' : '<a href="#file_upload" data-toggle="tab">' %]
-      {% fields.file_upload.tab_name %}
-      </a>
-    </li>
-    {% END %}
-    {% IF fields.supplementary_fields %}
-    <li id="li_supplementary_fields" class="[% IF !allActive %]disabled[% END %]">
-      [% !allActive ? '<a href="#">' : '<a href="#supplementary_fields" data-toggle="tab">' %]
-      {% fields.supplementary_fields.tab_name %}
-      </a>
-    </li>
-    {% END %}
-    {% IF fields.related_material %}
-    <li id="li_related_material" class="[% IF !allActive %]disabled[% END %]">
-      [% !allActive ? '<a href="#">' : '<a href="#related_material" data-toggle="tab">' %]
-      {% fields.related_material.tab_name %}
-      </a>
-    </li>
-    {% END %}
-  </ul>
 
   <form action="/myPUB/record/update" method="POST" id="edit_form">
     <input type="hidden" name="type" value="{% tmpl %}" id="id_type"/>
     <input type="hidden" name="_id" value="[% _id %]"/>
     <input type="hidden" name="status" value="unsubmitted"/>
     <input type="hidden" name="date_created" value="[% date_created %]" />
-    <input type="hidden" name="edit_mode" value="normal" />
+    <input type="hidden" name="edit_mode" value="expert" />
 
     <div class="tab tab-content edit-form">
 
       <!-- STEP 1 -->
-      <div class="tab-pane active" id="basic_fields">
-
+      <div id="basic_fields" class="tab_section">
+        
 {% IF fields.basic_fields %}
-  {% INCLUDE fields/buttonrow_tab1.tt %}
+  <h4>{% fields.basic_fields.tab_name %}</h4>
   {% FOREACH key IN field_order.basic_fields %}
     {% IF fields.basic_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -70,58 +41,55 @@
     {% END %}
   {% END %}
   {% INCLUDE fields/mandatory_explain.tt %}
-  {% INCLUDE fields/buttonrow_tab1.tt %}
 {% END %}
-
       </div><!-- tab-pane -->
 
       <!-- STEP 2 -->
-      <div class="tab-pane" id="file_upload">
+      <div id="file_upload" class="tab_section">
 
 {% IF fields.file_upload %}
-  {% INCLUDE fields/buttonrow_tab2.tt %}
+  <h4>{% fields.file_upload.tab_name %}</h4>
   {% FOREACH key IN field_order.file_upload %}
     {% IF fields.file_upload.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
   {% END %}
-  {% INCLUDE fields/buttonrow_tab2.tt %}
 {% END %}
 
       </div><!-- tab-pane -->
 
       <!-- STEP 3 -->
-      <div class="tab-pane" id="supplementary_fields">
+      <div id="supplementary_fields" class="tab_section">
 
 {% IF fields.supplementary_fields %}
-  {% INCLUDE fields/buttonrow_tab3.tt %}
+  <h4>{% fields.supplementary_fields.tab_name %}</h4>
   {% FOREACH key IN field_order.supplementary_fields %}
     {% IF fields.supplementary_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
   {% END %}
-  {% INCLUDE fields/buttonrow_tab3.tt %}
 {% END %}
 
       </div><!-- tab-pane -->
 
       <!-- STEP 4 -->
-      <div class="tab-pane" id="related_material">
+      <div id="related_material" class="tab_section">
 
 {% IF fields.related_material %}
-  {% INCLUDE fields/buttonrow_tab4.tt %}
+  <h4>{% fields.related_material.tab_name %}</h4>
   {% FOREACH key IN field_order.related_material %}
     {% IF fields.related_material.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
   {% END %}
-  {% INCLUDE fields/buttonrow_tab4.tt %}
 {% END %}
 
       </div><!-- tab-pane -->
+      
+      {% INCLUDE fields/buttonrow_tab1.tt %}
 
     </div><!-- tab-content -->
   </form>
@@ -135,9 +103,6 @@
 
 <script>
 {% INCLUDE fields/jquery_tab1.tt %}
-{% INCLUDE fields/jquery_tab2.tt %}
-{% INCLUDE fields/jquery_tab3.tt %}
-{% INCLUDE fields/jquery_tab4.tt %}
 </script>
 
 <!-- END /backend/forms/{% tmpl %} -->

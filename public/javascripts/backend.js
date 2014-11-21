@@ -51,28 +51,12 @@ function generate_link(file_id, pub_id){
  * Link author name to PEVZ account
  */
 function linkPevz(element){
-	var lineId = $(element).attr('id').replace('id_linkPevz_','');
 	var type = "";
 	type = $(element).attr('data-type');
+	var lineId = $(element).attr('id').replace(type + 'link_pevz_','');
 	
 	// Someone unchecked the "Link to PEVZ Account" checkbox
-	if(!$(element).is(':checked')){
-		// So, release input fields and change img back to gray
-		$('#' + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
-		$('#' + type + 'id_' + lineId).val("");
-		$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
-		var orig_first_name = "";
-		orig_first_name = $('#' + type + 'orig_first_name_' + lineId).val();
-		var orig_last_name = "";
-		orig_last_name = $('#' + type + 'orig_last_name_' + lineId).val();
-		$('#' + type + 'first_name_' + lineId).val(orig_first_name);
-		$('#' + type + 'orig_first_name_' + lineId).val("");
-		$('#' + type + 'last_name_' + lineId).val(orig_last_name);
-		$('#' + type + 'orig_last_name_' + lineId).val("");
-	}
-	
-	// Someone checked the "Link to PEVZ Account" checkbox
-	else{
+	if($('#' + type + 'Authorized' + lineId).attr('alt') == "Not Authorized"){
 		var puburl = '/myPUB/search_researcher?ftext=';
 		var narrowurl = "";
 		var longurl = "";
@@ -156,12 +140,8 @@ function linkPevz(element){
 				$('#' + type + 'id_' + lineId).val(pevzId);
 				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
 				$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
+				$('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
 				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
-				
-				//if($('#' + type + 'json_' + lineId).length){
-				//	$('#' + type + 'json_' + lineId).val("");
-				//	$('#' + type + 'json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
-				//}
 				
 				pevzId = "";
 				first_name = "";
@@ -251,14 +231,10 @@ function linkPevz(element){
 					$('#' + type + 'id_' + lineId).val(pevzId);
 					
 					$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
+					$('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
 					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 					$('#linkPevzModal').modal("hide");
 					$('#linkPevzModal').find('.modal-body').first().html('');
-					
-					//if($('#' + type + 'json_' + lineId).length){
-					//	$('#' + type + 'json_' + lineId).val("");
-					//	$('#' + type + 'json_' + lineId).val('{"last_name":"' + last_name + '", "first_name":"' + first_name + '", "full_name":"' + last_name + ', ' + first_name + '", "id":"' + pevzId + '"}');
-					//}
 				});
 
 				$('#linkPevzModal').modal("show");
@@ -274,3 +250,135 @@ function linkPevz(element){
 		});
 	}
 }
+
+
+/**
+ * Revert to original input after un-checking Link to PEVZ Account
+ */
+function revert_name(element){
+	var type = "";
+	type = $(element).attr('data-type');
+	var lineId = $(element).attr('id').replace(type + 'revert_','');
+	var orig_first_name = "";
+	orig_first_name = $('#' + type + 'orig_first_name_' + lineId).val();
+	var orig_last_name = "";
+	orig_last_name = $('#' + type + 'orig_last_name_' + lineId).val();
+	
+	if($('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
+		// Uncheck, release input fields and change img back to gray
+		$('#' + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
+		$('#' + type + 'Authorized' + lineId).attr('alt','Not Authorized');
+		$('#' + type + 'id_' + lineId).val("");
+		$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
+	}
+	
+	$('#' + type + 'first_name_' + lineId).val(orig_first_name);
+	$('#' + type + 'orig_first_name_' + lineId).val("");
+	$('#' + type + 'last_name_' + lineId).val(orig_last_name);
+	$('#' + type + 'orig_last_name_' + lineId).val("");
+}
+
+
+/**
+ * Section File Upload
+ */
+
+/**
+ * Edit uploaded files
+ * 
+ * @param fileId = file ID
+ * @param id = record ID
+ */
+function edit_file(fileId, id){
+	var json = jQuery.parseJSON($('#file_' + fileId).val());
+	if(json.file_id){
+		$('#id_file_id').val(json.file_id);
+	}
+	if(json.tempid){
+		$('#id_temp_id').val(json.tempid);
+	}
+	$('#id_record_id').val(id);
+	$('#id_fileName').val(json.file_name);
+	$('#id_creator').val(json.creator);
+	
+	if(json.title){
+		$('#id_fileTitle').val(json.title);
+	}
+	if(json.description){
+		$('#id_fileDescription').val(json.description);
+	}
+	
+	if(json.relation != "main_file"){
+		$('#id_select_relation option[value="' + json.relation + '"]').prop('selected', true);
+	}
+	else {
+		$('#id_select_relation option[value="main_file"]').prop('selected', true);
+	}
+	
+	if(json.access_level == "openAccess"){
+		$('#id_accessLevel_openAccess').prop('checked',true);
+		$('#id_accessEmbargo').prop('disabled',true);
+	}
+	else if(json.access_level == "unibi"){
+		$('#id_accessLevel_unibi').prop('checked',true);
+		$('#id_accessEmbargo').prop('disabled',false);
+	}
+	else if(json.access_level == "admin"){
+		if(json.request_a_copy == "1"){
+			$('#id_accessLevel_request').prop('checked',true);
+		}
+		else {
+			$('#id_accessLevel_admin').prop('checked',true);
+		}
+	    $('#id_accessEmbargo').prop('disabled',false);
+	}
+
+	if(json.embargo && json.embargo != ""){
+	    $('#id_accessEmbargo').prop('checked',true);
+	    $('#id_embargo').prop('disabled', false);
+	    $('#id_embargo').val(json.embargo);
+	}
+	  
+	var fileNameTag = self.document.getElementById('fileNameTag');
+	fileNameTag.style.display = "block";
+	$('#upload_file').modal('show');
+}
+
+
+/**
+ * Delete uploaded files
+ * 
+ * @param fileId = file ID
+ * @param id = record ID
+ * @param fileName = file name
+ */
+function delete_file(fileId){
+	if (confirm("Are you sure you want to delete this uploaded document? Any external links will be broken! If you need to update an existing file to a new version you should edit the corresponding entry in the list and re-upload the file")) {
+		$('#' + fileId).remove();
+	    $('#file_order_' + fileId).remove();
+	    //$.post( "/upload/delete", { id: id, file_name: fileName });
+	}
+}
+
+/**
+ * Makes uploaded file items sortable
+ */
+$(function () {
+	$(".dropzone").sortable({
+		containerSelector: 'div.dz-preview',
+	    itemSelector: 'div.dz-preview',
+	    onDrop: function ($item, container, _super) {
+	    	var id = $item.attr('id');
+	    	$('#sortFilesInput input[value="' + id + '"]').remove();
+	    	if($item.index() == 1){
+	    		$('#sortFilesInput').prepend('<input type="hidden" name="file_order" id="file_order_' + id + '" value="' + id + '"/>');
+	    	}
+	    	else {
+	    		var itemindex = $item.index() - 1;
+	    		$('#sortFilesInput input:nth-child(' + itemindex + ')').after('<input type="hidden" name="file_order" id="file_order_' + id + '" value="' + id + '"/>');
+	    	}
+	    	$item.removeClass("dragged").removeAttr("style");
+	    	$("body").removeClass("dragging");
+	    }
+	});
+});

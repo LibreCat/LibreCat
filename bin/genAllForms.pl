@@ -25,5 +25,7 @@ foreach my $type ( keys %$forms ) {
     $type_hash->{field_order} = $conf->{forms}->{field_order};
     print "Generating $type_hash->{tmpl}.tt\n";
     $tt->process( "master.tt", $type_hash, "$type_hash->{tmpl}.tt" ) || die $tt->error(), "\n";
+    print "Generating expert/$type_hash->{tmpl}.tt\n";
+    $tt->process( "master_expert.tt", $type_hash, "expert/$type_hash->{tmpl}.tt" ) || die $tt->error(), "\n";
 
 }

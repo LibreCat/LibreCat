@@ -1,8 +1,10 @@
 <div class="row innerrow">
-  <div class="col-md-12 buttonrow">
+  <div class="col-md-12 buttonrow"{% IF edit_mode == "expert" %} style="padding-top:20px;padding-bottom:20px;"{% END %}>
+    {% IF edit_mode == "normal" %}
     <span class="form-group col-md-2">
       <a class="btn btn-default back-button" style="display:none;"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
     </span>
+    {% END %}
     <span class="form-group col-md-2">
       <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
     </span>
