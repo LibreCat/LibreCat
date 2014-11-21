@@ -12,7 +12,7 @@ use App::Catalog::Helper;
 use Data::Dumper;
 
 our @EXPORT
-    = qw/new_person search_person update_person edit_person delete_person import_person/;
+    = qw/new_person search_person update_person edit_person delete_person import_person new_project update_project edit_project delete_project/;
 our @EXPORT_OK
     = qw/new_department update_department edit_department delete_department/;
 
@@ -150,6 +150,45 @@ sub delete_department {
 
     h->authority('department')->delete($id);
     h->authority('department')->commit;
+}
+
+sub _create_id_proj {
+    my $bag = h->authority('project')->get('1');
+    my $id  = $bag->{"latest"};
+    $id++;
+    $bag = h->bag->add( { _id => "1", latest => $id } );
+    return $id;    # correct?
+}
+
+sub new_project {
+	return _create_id_proj;
+}
+
+sub update_project {
+    my $data = shift;
+    return "Error: No _id specified" unless $data->{_id};
+
+    my $old = h->project->get( $data->{_id} );
+    my $merger = Hash::Merge->new();           #left precedence by default!
+    my $new = $merger->merge( $data, $old );
+
+    h->project->add($new);
+    h->project->commit;
+}
+
+sub edit_project {
+    my $id = shift;
+    return 0 unless $id;
+
+    return h->project->get($id);
+}
+
+sub delete_project {
+    my $id = shift;
+    return "Error" unless $id;
+
+    h->project->delete($id);
+    h->project->commit;
 }
 
 1;

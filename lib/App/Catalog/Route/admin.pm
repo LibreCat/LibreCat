@@ -108,16 +108,35 @@ prefix '/myPUB/admin' => sub {
         }
     };
 
-    get '/admin/import' => sub {
+    get '/import' => sub {
         return "Not implemented.";
     };
-
-    get '/admin/project' => sub {
-        return "Not implemented.";
+    
+    get '/project' => needs role => 'super_admin' => sub {
+    	my $hits = h->search_project({q => "", limit => 100});
+        template 'admin/project', $hits;
+    };
+    
+    get '/project/search' => sub {
+        my $params = params;
+        my $p;
+        
+        $p->{q} = $params->{q} || "";
+        $p->{limit} = $params->{limit} || h->config->{default_searchpage_size};
+        $p->{start} = $params->{start} || 0;
+        my $hits = h->search_project($p);
+        
+        template 'admin/project', $hits;
+    };
+    
+    get '/project/edit/:id' => needs role => 'super_admin' => sub {
+        my $id     = param 'id';
+        my $project = edit_project($id);
+        template 'admin/edit_project', $project;
     };
 
     # manage departments
-    get '/admin/department' => sub { };
+    get '/department' => sub { };
 
     # monitoring external sources
     get '/inspire-monitor' => sub { };

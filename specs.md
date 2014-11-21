@@ -276,3 +276,51 @@ related_material:
 			id: 123456
 			relation: is_part_of
 ```
+
+## project fields
+```yaml
+---
+_id: unique record identifier
+date_updated: 2014-10-14T01:00
+date_created: 2014-10-13T01:00
+start_date: 2014-01-01
+end_date: 2014-12-31
+name: "text"
+acronym: "TEXT"
+alternative_name: "text"
+url: "http://www.bla.de"
+grant_number: "1234"
+psp_element: "1234"
+description: "this is a description"
+active: 1|0
+department:
+	-
+		name: "Faculty of Physics"
+		id: 123456
+		tree:
+			- 98765
+			- 54321
+owner:
+  -
+    full_name: bla
+    first_name: bla
+    last_name: bla
+    id: 12234
+designated_editor:
+  -
+    full_name: bla
+    first_name: bla
+    last_name: bla
+    id: 12234
+principal_investigator:
+  -
+    full_name: bla
+    first_name: bla
+    last_name: bla
+    id: 12234
+project_members:sdfasdf
+project_cooperators:asdfas
+project_funders:asdfas
+funded: 1|0
+call_identifier:asdfas
+sc39: 1|0

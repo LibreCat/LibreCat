@@ -18,7 +18,7 @@ default:
 project:
   package: MongoDB
   options:
-    database_name: PUBProjects
+    database_name: PUBProjectNew
 
 award:
   package: MongoDB
@@ -93,12 +93,12 @@ search:
                 'exact': true
               field: 'name'
               sort: {field: 'name.exact'}
-            isactive:
+            active:
               op:
                 '=': true
                 'exact': true
                 '<>': true
-              field: 'isActive'
+              field: 'active'
             sc39:
               op:
                 '=': true
@@ -117,18 +117,18 @@ search:
                 'all': true
                 '=': true
                 'exact': true
-              field: 'alternativeName'
+              field: 'alternative_name'
               sort: 'true'
             grantno:
               op:
                 '=': true
                 'exact': true
-              field: 'grantNumber'
+              field: 'grant_number'
             pspelement:
               op:
                 '=': true
                 'exact': true
-              field: 'pspElement'
+              field: 'psp_element'
             description:
               op:
                 'any': true
@@ -142,12 +142,12 @@ search:
                 'all': true
                 '=': true
                 'exact': true
-              field: 'projectFunders'
+              field: 'project_funders'
             funded:
               op:
                 '=': true
                 'exact': true
-              field: 'isFunded'
+              field: 'funded'
             startyear:
               op:
                 '=': true
@@ -157,7 +157,7 @@ search:
                 '>=' : true
                 '<': true
                 '<=' : true
-              field: 'startYear'
+              field: 'start_date'
               sort: 'true'
             endyear:
               op:
@@ -168,7 +168,7 @@ search:
                 '>=' : true
                 '<': true
                 '<=' : true
-              field: 'endYear'
+              field: 'end_date'
               sort: 'true'
             department:
               op:
@@ -182,35 +182,35 @@ search:
                 'any': true
                 'all': true
                 '=': true
-              field: 'projectCooperators'
+              field: 'project_cooperators'
             coordinator:
               op:
                 'any': true
                 'all': true
                 '=': true
-                'exact': {field: 'isOwnedBy.name.fullName.exact'}
-              field: ['isOwnedBy.name.fullName', 'isOwnedBy.personNumber']
+                'exact': {field: 'owner.name.full_name.exact'}
+              field: ['owner.name.full_name', 'owner.id']
             investigators:
               op:
                 'any': true
                 'all': true
                 '=': true
-                'exact': {field: 'principalInvestigators.name.fullName.exact'}
-              field: ['principalInvestigators.name.fullName', 'principalInvestigators.personNumber']
+                'exact': {field: 'principal_investigators.name.full_name.exact'}
+              field: ['principal_investigators.name.full_name', 'principal_investigators.id']
             members:
               op:
                 'any': true
                 'all': true
                 '=': true
-                'exact': {field: 'projectMembers.name.fullName.exact'}
-              field: ['projectMembers.name.fullName', 'projectMembers.personNumber']
+                'exact': {field: 'project_members.name.full_name.exact'}
+              field: ['project_members.name.full_name', 'project_members.id']
             person:
               op:
                 'any': true
                 'all': true
                 '=': true
-                'exact': {field: ['isOwnedBy.name.fullName.exact', 'principalInvestigators.name.fullName.exact', 'projectMembers.name.fullName.exact']}
-              field: ['isOwnedBy.name.fullName', 'isOwnedBy.personNumber', 'principalInvestigators.name.fullName', 'principalInvestigators.personNumber', 'projectMembers.name.fullName', 'projectMembers.personNumber']
+                'exact': {field: ['owner.name.full_name.exact', 'principal_investigators.name.full_name.exact', 'project_members.name.full_name.exact']}
+              field: ['owner.name.full_name', 'owner.person_number', 'principal_investigators.name.full_name', 'principal_investigators.person_number', 'project_members.name.full_name', 'project_members.person_number']
 
       award:
         cql_mapping:
@@ -1140,51 +1140,51 @@ search:
             fields:
               name: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
-          isActive: {type: byte}
+          active: {type: byte}
           acronym: {type: string, include_in_all: true}
-          alternativeName: {type: string, include_in_all: true}
-          grantNumber: {type: string, analyzer: tag, include_in_all: true}
-          pspElement: {type: string, analyzer: tag, include_in_all: true}
+          alternative_name: {type: string, include_in_all: true}
+          grant_number: {type: string, analyzer: tag, include_in_all: true}
+          psp_element: {type: string, analyzer: tag, include_in_all: true}
+          call_identifier: {type: string, analyzer: tag}
           description: {type: string, include_in_all: true}
-          projectFunders:
+          project_funders:
             type: multi_field
             fields:
-              projectFunders: {type: string, include_in_all: true}
+              project_funders: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
-          isFunded: {type: string, analyzer: tag}
+          funded: {type: string, analyzer: tag}
           sc39: {type: string, anlyzer: tag}
-          startYear:
+          start_date:
             type: multi_field
             fields:
-              startYear: {type: string, anlyzer: datestring}
+              start_date: {type: string, anlyzer: datestring}
               exact: {type: string, analyzer: tag}
-          endYear:
+          end_date:
             type: multi_field
             fields:
-              endYear: {type: string, analyzer: datestring}
+              end_date: {type: string, analyzer: datestring}
               exact: {type: string, analyzer: tag}
-          projectCooperators: {type: string, analyzer: tag, include_in_all: true}
-          isOwnedByDepartment:
+          project_cooperators: {type: string, analyzer: tag, include_in_all: true}
+          department:
             properties:
-              organizationNumber: {type: string, analyzer: tag}
-              sbcatId: {type: integer, analyzer: tag}
+              id: {type: string, analyzer: tag}
               name:
                 type: multi_field
                 fields:
                   name: {type: string, include_in_all: true}
                   exact: {type: string, analyzer: tag}
-          isOwnedBy: &personField2
+          owner: &personField2
             properties:
-              personNumber: {type: string, analyzer: tag}
+              id: {type: string, analyzer: tag}
               name:
                 properties:
-                  fullName:
+                  full_name:
                     type: multi_field
                     fields:
-                      fullName: {type: string, include_in_all: true}
+                      full_name: {type: string, include_in_all: true}
                       exact: {type: string, analyzer: tag}
-          principalInvestigators: *personField2
-          projectMembers: *personField2
+          principal_investigators: *personField2
+          project_members: *personField2
 
       award:
         include_in_all: false

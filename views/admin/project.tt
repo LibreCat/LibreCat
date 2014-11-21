@@ -1,0 +1,60 @@
+[% INCLUDE navbar.tt %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+
+<!-- BEGIN admin/project.tt -->
+
+<div class="row">
+<div class="col-md-11 col-md-offset-1">
+<h2>Manage Projects</h2>
+
+<form role="form" action="/myPUB/admin/project/search" method="GET">
+  <div class="row innerrow">
+  <div class="col-md-5">
+    <label for="id_q">Search Projects</label>
+    <div class="input-group">
+      <input type="text" class="form-control" name="q" id="id_q" value="[% qp.q %]">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-search"></span> </i>Search</button>
+      </span>
+    </div><!-- /input-group -->
+
+  </div>
+  </div>
+</form>
+
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-12">&nbsp;</div>
+</div>
+
+[% IF hits %]
+<div class="row">
+<div class="col-md-11 col-md-offset-1">
+<h3>[% total ? total : "0" %] Results</h3>
+
+[% INCLUDE pagination.tt %]
+
+[% FOREACH p IN hits %]
+<div class="row innerrow">
+  <div class="col-md-1">
+    <span class="glyphicon glyphicon-pencil"></span>
+    <span class="label [% IF p.active %]label-success[% ELSE %]label-danger[% END %]"><strong>[% p._id %]</strong></span>
+  </div>
+  <div class="col-md-9">
+    <a href="/myPUB/admin/project/edit/[% p._id %]">[% p.name %]</a>
+    <br />
+    <span class="text-muted">[% FOREACH dep IN p.department %][% dep.name %][% UNLESS loop.last %] | [% END %][% END %]</span>
+  </div>
+</div>
+[% END %]
+
+[% INCLUDE pagination.tt %]
+
+</div>
+</div>
+[% END %]
+
+<!-- END admin/account.tt -->
