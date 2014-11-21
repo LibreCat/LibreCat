@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 
+use FindBin qw($Bin);
 use Catmandu::Sane;
 use Catmandu;
 use Template;
@@ -15,8 +16,8 @@ my $tt = Template->new(
     START_TAG  => '{%',
     END_TAG    => '%}',
     ENCODING     => 'utf8',
-    INCLUDE_PATH => '/srv/www/app-catalog/views/backend',
-    OUTPUT_PATH  => '/srv/www/app-catalog/views/backend/forms',
+    INCLUDE_PATH => "$Bin/../views/backend",
+    OUTPUT_PATH  => "$Bin/../views/backend/forms",
 );
 
 foreach my $type ( keys %$forms ) {
