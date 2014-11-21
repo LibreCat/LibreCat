@@ -4,7 +4,7 @@
     <label for="id_edition">
       {% fields.basic_fields.edition.label %}{% fields.supplementary_fields.edition.label %}
     </label>
-    {% IF fields.basic_fields.edition.mandatory OR fields.supplementary_fields.edition.mandatory %}*</span>{% END %}
+    {% IF fields.basic_fields.edition.mandatory OR fields.supplementary_fields.edition.mandatory %}</span>{% END %}
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-3">

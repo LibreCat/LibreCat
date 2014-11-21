@@ -10,10 +10,12 @@
   
       <div class="modal-body">
         <input type="hidden" name="file_id" id="id_file_id" value="" />
+        <input type="hidden" name="tempid" id="id_temp_id" value="" />
         <input type="hidden" name="record_id" id="id_record_id" value="" />
+        <input type="hidden" name="creator" id="id_creator" value="" />
         <input type="hidden" name="cancel" value="" />
       
-        <strong>File</strong>
+        <h4>File</h4>
         <div class="form-group">
           <label class="text" id="fileNameTag" style="display:none">
             Current file:
@@ -23,8 +25,7 @@
         </div>
         
         <div class="form-group">
-          <strong>Relation ("Uploaded document is...")</strong>
-          
+          <strong>Relation ("Uploaded document is...")</strong><br />
           <select name="relation" class="form-control" id="id_select_relation">
             <option value="main_file"[% IF !relation %] selected="selected"[% END %]>Main File</option>
             [% FOREACH rel IN h.config.lists.relations_file.keys.sort %]
@@ -32,55 +33,47 @@
             [% END %]
           </select>
         </div>
-
+        
+        <h4>Access Level</h4>
         <div class="form-group">
-          <strong>Access Level</strong><br />
-        
-        <script type="text/javascript">
-        <!--
-        function oamode(f, flag) {
-          if (flag) {
-            f.accessEmbargo.checked=false;
-            f.accessEmbargo.disabled=true;
-            f.embargo.disabled=true;
-          } else {
-            f.accessEmbargo.disabled=false;
+          <script type="text/javascript">
+          <!--
+          function oamode(f, flag) {
+            if (flag) {
+              f.accessEmbargo.checked=false;
+              f.accessEmbargo.disabled=true;
+              f.embargo.disabled=true;
+            } else {
+              f.accessEmbargo.disabled=false;
+            }
           }
-        }
-        function requestmode(f, flag) {
-          if (flag) {
-            f.request_a_copy.checked=false;
-            f.request_a_copy.disabled=true;
-          } else {
-            f.request_a_copy.disabled=false;
-          }
-        }
-        //-->
-        </script>
+          //-->
+          </script>
         
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="openAccess" onclick="oamode(this.form, true);requestmode(this.form,true);"/> Open access (the file is freely available, effective immediately)
+            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="openAccess" onclick="oamode(this.form, true);"/> Open Access (File is freely available, effective immediately)
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="unibi" onclick="oamode(this.form,false);requestmode(this.form,true);" /> UniBi
+            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="unibi" onclick="oamode(this.form,false);" /> Local Access (UniBi only)
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false);requestmode(this.form,false);" /> Only Author/Reviewer/Administrator
+            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false);" /> Closed Access (Author/Reviewer only)
+          </label>
+          <label class="radio">
+            <input type="radio" name="accessLevel" id="id_accessLevel_request" value="request" onclick="oamode(thisform,false);" /> Request a Copy (Closed Access except upon request)
           </label>
           <label class="checkbox control-label">
-            <input type="checkbox" name="request_a_copy" id="id_request_a_copy" value="1" /> Request a Copy
-          </label>
-          <label class="checkbox control-label">
-            <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />Switch to open access on:<br />
+            <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />Switch to Open Access on:<br />
           </label>
           <input type="text" class="form-control" name="embargo" id="id_embargo" placeholder="YYYY-MM-DD" value="">
         </div>
         
+        <h4>Additional Information</h4>
         <div class="form-group">
           <strong>Title</strong><br />
-          <input type="text" name="file_title" id="id_fileTitle" value="[% file_title %]" class="form-control" />
+          <input type="text" name="title" id="id_fileTitle" value="" class="form-control" />
         </div>
-      
+        
         <div class="form-group">
           <strong>Description</strong><br />
           <textarea name="description" id="id_fileDescription" class="form-control" rows="6">[% description %]</textarea>
@@ -101,14 +94,21 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
   $('#fileSubmit').click( function() {    
     var inputs = $(":file");
     var file_id = $('#id_file_id').val();
+    var tempid = $('#id_temp_id').val();
 
     var formData = new FormData();
     if(inputs.eq(0)){
       formData.append("file", inputs.eq(0).prop("files")[0]);
     }
-    formData.append("id", "[% id %]");
-    formData.append("file_id", file_id);
+    formData.append("id", "[% _id %]");
+    if(file_id){
+      formData.append("file_id", file_id);
+    }
+    if(tempid){
+      formData.append("tempid", tempid);
+    }
     formData.append("old_file_name", $('#id_fileName').val());
+    formData.append("creator", $('#id_creator').val());
     formData.append("relation", $('#id_select_relation').val());
     
     if($('#id_accessLevel_openAccess').is(':checked')){
@@ -120,16 +120,17 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
     else if($('#id_accessLevel_admin').is(':checked')){
       formData.append("access_level", "admin");
     }
-    
-    if($('#id_request_a_copy').is(':checked')){
+    else if($('#id_accessLevel_request').is(':checked')){
+      formData.append("access_level", "admin");
       formData.append("request_a_copy", "1");
     }
+    
     if($('#id_embargo').val() && $('#id_accessEmbargo').is(':checked')){
       formData.append("embargo", $('#id_embargo').val());
     }
     
     if($('#id_fileTitle').val()){
-      formData.append("file_title", $('#id_fileTitle').val());
+      formData.append("title", $('#id_fileTitle').val());
     }
     
     if($('#id_fileDescription').val()){
@@ -155,29 +156,25 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
           }
         }
         else if(data.access_level == "admin"){
-          accessLevel = "Admin Only";
+          accessLevel = "Author/Reviewer";
           if(data.embargo){
             accessLevel += "<br />(until " + data.embargo + ")";
           }
           if(data.request_a_copy){
             accessLevel += "<br />(Request a Copy)";
-            $('#id_global_raq').val(1);
           }
         }
-
-        $('#filename_' + file_id).html("");
-        $('#filename_' + file_id).html('<a href="[% h.shost %]/download/[% id %]/' + file_id + '" target="_blank" title="' + data.file_name + '">' + data.file_name + '</a>');
-        $('#access_' + file_id).html(accessLevel);
-        $('#updated_' + file_id).html(data.date_updated);
-        $('#creator_' + file_id).html(data.creator);
-        $('#relation_' + file_id).html(data.relation);
-        //$('#cordown_' + file_id)[0].onclick = null;
-        //$('#cordown_' + file_id).unbind();
-        //$('#cordown_' + file_id).click(function (){
-        //  edit_file(file_id);
-        //});
-
-        $('#file_' + file_id).val(data.file_json);
+        
+        var use_file_id;
+        use_file_id = file_id ? file_id : tempid;
+        
+        $('#filename_' + use_file_id).html("");
+        $('#filename_' + use_file_id).html('<a href="[% h.shost %]/download/[% id %]/' + use_file_id + '" target="_blank" title="' + data.file_name + '">' + data.file_name + '</a>');
+        $('#access_' + use_file_id).html(accessLevel);
+        $('#updated_' + use_file_id).html(data.date_updated);
+        $('#creator_' + use_file_id).html(data.creator);
+        $('#relation_' + use_file_id).html(data.relation);
+        $('#file_' + use_file_id).val(data.file_json);
         
         $('#upLoad')[0].reset();
         $('#upload_file').modal('hide');

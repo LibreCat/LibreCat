@@ -82,7 +82,7 @@
        </ul>
        <ul class="nav navbar-nav navbar-right">
          [% IF session AND session.user %]
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">My Affiliation <span class="glyphicon glyphicon-chevron-down"></span></a>
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> My Settings <span class="glyphicon glyphicon-chevron-down"></span></a>
             <div class="dropdown-menu" id="aff_dropdown" style="width: 550px">
             [% INCLUDE person_affiliation.tt %]
             </div>

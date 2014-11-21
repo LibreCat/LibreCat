@@ -4,7 +4,7 @@
     <label for="ccs_class">
       {% fields.basic_fields.ccs_class.label %}{% fields.supplementary_fields.ccs_class.label %}
     </label>
-    {% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %}*</span>{% END %}{% IF fields.basic_fields.ccs_class.multiple OR fields.supplementary_fields.ccs_class.multiple %} <span class="glyphicon glyphicon-plus" id="plusccs_class"></span>{% END %}
+    {% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %}</span>{% END %}{% IF fields.basic_fields.ccs_class.multiple OR fields.supplementary_fields.ccs_class.multiple %} <span class="glyphicon glyphicon-plus" id="plusccs_class"></span>{% END %}
   </div>
   <div class="col-md-10" id="ccs_class">
     {% IF fields.basic_fields.ccs_class.multiple OR fields.supplementary_fields.ccs_class.multiple %}

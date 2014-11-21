@@ -45,6 +45,8 @@ prefix '/myPUB/record' => sub {
 
     get '/new' => needs login => sub {
         my $type = params->{type};
+        my $person = h->getPerson(session->{personNumber});
+        my $edit_mode = params->{edit_mode} || $person->{edit_mode} || "";
 
         return template 'add_new' unless $type;
 
@@ -53,12 +55,19 @@ prefix '/myPUB/record' => sub {
         $data->{_id} = $id;
         my $user = h->getPerson( session->{personNumber} );
         $data->{department} = $user->{department};
+        $edit_mode = $user->{edit_mode} if $user->{edit_mode};
 
         if ( $type eq "researchData" ) {
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
         }
+        
+        my $templatepath = "backend/forms";
+        
+        if(($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
+        	$templatepath .= "/expert";
+        }
 
-        template "backend/forms/$type", $data;
+        template $templatepath . "/$type", $data;
     };
 
 =head2 GET /edit/:id
@@ -70,6 +79,8 @@ prefix '/myPUB/record' => sub {
 
     get '/edit/:id' => needs login => sub {
         my $id = param 'id';
+        my $person = h->getPerson(session->{personNumber});
+        my $edit_mode = params->{edit_mode} || $person->{edit_mode} || "";
 
         forward '/' unless $id;
         my $rec;
@@ -79,9 +90,13 @@ prefix '/myPUB/record' => sub {
         catch {
             template 'error', { error => "Something went wrong: $_" };
         };
-
+        
+        my $templatepath = "backend/forms";
+        if(($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
+        	$templatepath .= "/expert";
+        }
         if ($rec) {
-            template "backend/forms/$rec->{type}", $rec;
+            template $templatepath . "/$rec->{type}", $rec;
         }
         else {
             template 'error', { error => "No publication with ID $id." };
@@ -217,6 +232,42 @@ prefix '/myPUB/record' => sub {
         h->publication->commit;
 
         redirect '/myPUB';
+    };
+    
+=head2 GET /change_mode
+
+    Prints the frontdoor for every record.
+
+=cut
+
+    post '/change_mode' => sub {
+    	my $mode = params->{edit_mode};
+        my $params = params;
+        
+        $params->{file} = [$params->{file}] if ($params->{file} and ref $params->{file} ne "ARRAY");
+        $params->{file_order} = [$params->{file_order}] if ($params->{file_order} and ref $params->{file_order} ne "ARRAY");
+        
+        foreach my $key ( keys %$params ) {
+            if ( ref $params->{$key} eq "ARRAY" ) {
+                my $i = 0;
+                foreach my $entry ( @{ $params->{$key} } ) {
+                    $params->{ $key . "." . $i } = $entry, $i++;
+                }
+                delete $params->{$key};
+            }
+        }
+
+        $params = h->nested_params($params);
+        foreach my $fi (@{$params->{file}}){
+        	$fi = from_json($fi);
+        	$fi->{file_json} = to_json($fi);
+        }
+        
+        my $path = "backend/forms/";
+        $path .= "expert/" if $mode eq "expert";
+        $path .= params->{type} . ".tt";
+        
+        template $path, $params;
     };
 };
 

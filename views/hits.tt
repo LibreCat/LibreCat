@@ -31,7 +31,7 @@
     [% CASE "pdeleted" %]
       <span style="font-weight:bold;color:red;">Deleted</span>
     [% CASE "new" %]
-      <span style="font-weight:bold;color:gray;">New/<br />Private</span>
+      <span style="font-weight:bold;color:green;">New QaE</span>
     [% END %]
     [% IF entry.approved %]
     <div data-toggle="tooltip" data-placement="right" title="Checked by your librarian." class="librarian-approved"><button type="button" class="btn btn-default btn-xs disabled"><span class="fa fa-dot-circle-o librarian-approved"></span></button></div>

@@ -4,7 +4,7 @@
     <label for="ddc">
       {% fields.basic_fields.ddc.label %}{% fields.supplementary_fields.ddc.label %}
     </label>
-    {% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}*</span>{% END %}{% IF fields.basic_fields.ddc.multiple OR fields.supplementary_fields.ddc.multiple %} <span class="glyphicon glyphicon-plus" id="plusDdc"></span>{% END %}
+    {% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}</span>{% END %}{% IF fields.basic_fields.ddc.multiple OR fields.supplementary_fields.ddc.multiple %} <span class="glyphicon glyphicon-plus" id="plusDdc"></span>{% END %}
   </div>
   <div class="col-md-10" id="ddc">
     {% IF fields.basic_fields.ddc.multiple OR fields.supplementary_fields.ddc.multiple %}

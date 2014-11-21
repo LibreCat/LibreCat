@@ -5,7 +5,7 @@
     <label for="extId">
       {% fields.basic_fields.external_id.label %}{% fields.supplementary_fields.external_id.label %}
     </label>
-    {% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}*</span>&nbsp;{% END %}{% IF fields.basic_fields.external_id.multiple OR fields.supplementary_fields.external_id.multiple %}<span ng-click="cloneExtid($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %} id="plusExtId"></span>{% END %}
+    {% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}</span>&nbsp;{% END %}{% IF fields.basic_fields.external_id.multiple OR fields.supplementary_fields.external_id.multiple %}<span ng-click="cloneExtid($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %} id="plusExtId"></span>{% END %}
   </div>
   <div class="col-md-10" id="extId">
     {% IF fields.basic_fields.external_id.multiple OR fields.supplementary_fields.external_id.multiple %}

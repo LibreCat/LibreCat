@@ -4,7 +4,7 @@
     <label>
     {% fields.related_material.url.label %}
     </label>
-    {% IF fields.related_material.url.mandatory %}*</span>{% END %}
+    {% IF fields.related_material.url.mandatory %}</span>{% END %}
   </div>
   <div class="col-md-10">
     <div class="form-group">

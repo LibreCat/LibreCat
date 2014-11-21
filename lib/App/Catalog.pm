@@ -21,6 +21,7 @@ use App::Catalog::Route::person;
 use App::Catalog::Route::publication;
 use App::Catalog::Route::search;
 use App::Catalog::Route::file;
+use App::Catalog::Route::upload;
 
 =head2 GET /myPUB
 

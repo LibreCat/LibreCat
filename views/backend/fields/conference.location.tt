@@ -4,7 +4,7 @@
     <label for="id_conference_location">
     {% fields.basic_fields.item('conference.location').label %}{% fields.supplementary_fields.item('conference.location').label %}
     </label>
-    {% IF fields.basic_fields.item('conference.location').mandatory OR fields.supplementary_fields.item('conference.location').mandatory %}*</span>{% END %}
+    {% IF fields.basic_fields.item('conference.location').mandatory OR fields.supplementary_fields.item('conference.location').mandatory %}</span>{% END %}
   </div>
   <div class="col-md-10">
     <div class="form-group row innerrow">

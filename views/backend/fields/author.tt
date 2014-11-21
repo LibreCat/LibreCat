@@ -13,7 +13,7 @@
         {% END %}
         </select>
       </label>
-      {% IF fields.basic_fields.author.mandatory %}*</span>{% END %}&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
+      {% IF fields.basic_fields.author.mandatory %}</span>{% END %}&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
@@ -34,10 +34,11 @@
         </span>
           
         <span class="col-md-2">
-          <input class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_0" data-type="" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
-          <img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip %}" />
+          <button type="button" class="btn btn-default btn-xs" id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip %}" /></button>
+          <button type="button" id="revert_0" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
           <script>
             $('#Authorized0').tooltip();
+            $('#revert_0').tooltip();
           </script>
         </span>
       </div>
@@ -58,7 +59,7 @@
           [% END %]
         </select>
       </label>
-      {% IF fields.basic_fields.author.mandatory %}*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
+      {% IF fields.basic_fields.author.mandatory %}</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
@@ -83,15 +84,16 @@
         </span>
             
         <span class="col-md-2">
-          <input class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
           [% IF name.id %]
-            <img id="auAuthorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="{% fields.basic_fields.author.pevz_tooltip %}" />
-            <script>
-              $('#auAuthorized[% loop.index %]').tooltip();
-          </script>
+            <button type="button" class="btn btn-default btn-xs" id="link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type=""><img id="Authorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% name.id %]" /></button>
           [% ELSE %]
-            <img id="auAuthorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.id %]"/>
+            <button type="button" class="btn btn-default btn-xs" id="link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type=""><img id="Authorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip %}" /></button>
           [% END %]
+          <button type="button" id="revert_[% loop.index %]" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+          <script>
+            $('#Authorized[% loop.index %]').tooltip();
+            $('#revert_[% loop.index %]').tooltip();
+          </script>
         </span>
       </div>
     </div>
@@ -100,9 +102,10 @@
   
   [% FOREACH name IN translator %]
   <div class="row authorspan innerrow">
-    <div class="col-md-2">
+    <div class="col-md-2 form-group">
+      {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">{% END %}
       <label>
-        <select class="authedtrans" id="authedtrans_[% loop.index %]">
+        <select class="mylabel authedtrans form-control" id="authedtrans_[% loop.index %]">
           [% author_index = loop.index %]
           [% FOREACH creator IN confpath.fields.basic_fields.author.label.keys.sort %]
             [% IF author_index == 0 OR confpath.fields.basic_fields.author.label.$creator == "translator" %]
@@ -110,8 +113,8 @@
             [% END %]
           [% END %]
         </select>
-        {% IF fields.basic_fields.author.mandatory %}<span class="starMandatory">*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
       </label>
+      {% IF fields.basic_fields.author.mandatory %}</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.author.mandatory %} data-mandatory="yes"{% END %} id="plusAuthorMore"></span>[% END %]
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">

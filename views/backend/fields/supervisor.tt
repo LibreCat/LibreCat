@@ -9,7 +9,7 @@
       <label>
         {% fields.basic_fields.supervisor.label %}{% fields.supplementary_fields.supervisor.label %}
       </label>
-      {% IF fields.basic_fields.supervisor.mandatory %}*</span>{% END %}&nbsp;<span ng-click="cloneSupervisor($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span>
+      {% IF fields.basic_fields.supervisor.mandatory %}</span>{% END %}&nbsp;<span ng-click="cloneSupervisor($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span>
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
@@ -45,7 +45,7 @@
     <div class="col-md-2">
       <label>
         {% fields.basic_fields.supervisor.label %}{% fields.supplementary_fields.supervisor.label %}
-        {% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %}<span class="starMandatory">*</span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneSupervisor($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} ></span>[% END %]
+        {% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %}<span class="starMandatory"></span>{% END %}[% IF loop.index == 0 %]&nbsp;<span ng-click="cloneSupervisor($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} ></span>[% END %]
       </label>
     </div>
     <div class="col-md-10 creator">

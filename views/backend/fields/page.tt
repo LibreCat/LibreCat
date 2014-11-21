@@ -4,7 +4,7 @@
     <label for="id_page">
       {% fields.basic_fields.page.label %}{% fields.supplementary_fields.page.label %}
     </label>
-    {% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %}*</span>{% END %}
+    {% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %}</span>{% END %}
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-3">
