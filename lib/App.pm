@@ -12,9 +12,9 @@ use Catmandu::Sane;
 use Dancer ':syntax';
 
 use App::Catalog; # the backend
-use App::Search; # the frontend
+#use App::Search; # the frontend
 
-use App::Catalog::Helper;
+use App::Helper;
 use Authentication::Authenticate;
 use Dancer::Plugin::Auth::Tiny;
 
@@ -27,13 +27,15 @@ sub _authenticate {
     my $user = h->getAccount( $login )->[0];
     return 0 unless $user;
 
-    my $verify = verifyUser( params->{user}, params->{pass} );
-    if ( $verify and $verify ne "error" ) {
+    if ($user->{account_type} ne 'external') {
+        my $verify = verifyUser( params->{user}, params->{pass} );
+        if ( $verify and $verify ne "error" ) {
+            return $user;
+        }
+    } elsif ($user->{password} eq params->{pass}) {
         return $user;
     }
-    else {
-        return 0;
-    }
+    return 0;
 }
 
 =head2 GET /login
