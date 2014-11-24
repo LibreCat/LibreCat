@@ -14,82 +14,117 @@
   <form action="/myPUB/admin/project/update" method="POST">
     <input type="hidden" name="date_created" value="[% date_created %]" />
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_id">ID<span class="starMandatory">*</span></label></div>
-      <div class="col-md-10">
-        <div class="form-group col-md-2">
-          <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control" readonly="readonly" required>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow" id="id_ext_institution" [% IF account_type != 'external' %]style="display:none;"[% END %]>
-      <div class="col-md-2"><label for="id_ext_institution">External Institution</label></div>
-      <div class="col-md-10">
-        <div class="form-group col-md-6">
-          <input type="text" name="ext_institution" value="[% ext_institution %]" class="form-control">
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow" id="id_password" [% IF account_type != 'external' %]style="display:none;"[% END %]>
-      <div class="col-md-2"><label for="id_password">Password</label></div>
-      <div class="col-md-10">
-        <div class="form-group col-md-6">
-          <input type="text" name="password" value="[% password %]" class="form-control">
+      <div class="col-md-2"><label for="id_id">ID<span class="starMandatory"></span></label></div>
+      <div class="col-md-2 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control" readonly="readonly" required>
+          </div>
         </div>
       </div>
     </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_last_name">Last Name<span class="starMandatory">*</span></label></div>
-      <div class="col-md-10">
-        <div class="form-group col-md-6">
-          <input type="text" name="last_name" id="id_last_name" value="[% last_name %]" class="form-control" required>
+      <div class="col-md-2"><label for="id_name">Name<span class="starMandatory"></span></label></div>
+      <div class="col-md-10 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="text" name="name" id="id_name" value="[% name %]" class="form-control" required>
+          </div>
         </div>
       </div>
     </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_first_name">First Name<span class="starMandatory">*</span></label></div>
-      <div class="col-md-10">
-        <div class="form-group col-md-6">
-          <input type="text" name="first_name" id="id_first_name" value="[% first_name %]" class="form-control" required>
-        </div>
-      </div>
-    </div>
-
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_old_last_name">Last Name used before</label></div>
-      <div class="col-md-10">
-        <div class="form-group col-md-6">
-          <input type="text" name="old_last_name" id="id_old_last_name" value="[% old_last_name %]" class="form-control">
+      <div class="col-md-2"><label for="id_acronym">Acronym</label></div>
+      <div class="col-md-10 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="text" name="acronym" id="id_acronym" value="[% acronym %]" class="form-control">
+          </div>
         </div>
       </div>
     </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_old_first_name">First Name used before</label></div>
-      <div class="col-md-10">
-        <div class="form-group col-md-6">
-          <input type="text" name="old_first_name" id="id_old_first_name" value="[% old_first_name %]" class="form-control">
-        </div>
-      </div>
-    </div>
-
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_email">Email</label></div>
-      <div class="col-md-10">
-        <div class="form-group col-md-6">
-          <input type="email" name="bis.email" id="id_email" value="[% bis.email %]" class="form-control">
+      <div class="col-md-2"><label for="id_alternative_name">Alternative Name</label></div>
+      <div class="col-md-10 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="text" name="alternative_name" id="id_alternative_name" value="[% alternative_name %]" class="form-control">
+          </div>
         </div>
       </div>
     </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_login">LDAP Login</label></div>
-      <div class="col-md-10">
-        <div class="form-group col-md-6">
-          <input type="text" name="login" id="id_login" value="[% login %]" class="form-control">
+      <div class="col-md-2"><label for="id_url">URL</label></div>
+      <div class="col-md-10 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="text" name="url" id="id_url" value="[% url %]" class="form-control">
+          </div>
         </div>
       </div>
     </div>
-
     <div class="row innerrow">
-      <div class="col-md-2"><label>Affiliation <span class="glyphicon glyphicon-plus" id="plusAFF"></span>
+      <div class="col-md-2"><label for="id_grant_number">Grant Number</label></div>
+      <div class="col-md-10 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="text" name="grant_number" id="id_grant_number" value="[% grant_number %]" class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_psp_element">PSP-Element</label></div>
+      <div class="col-md-10 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="text" name="psp_element" id="id_psp_element" value="[% psp_element %]" class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_description">Description</label></div>
+      <div class="col-md-10 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <textarea name="description" id="id_description" class="form-control">[% description %]</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_active">Active</label></div>
+      <div class="col-md-1 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="checkbox" name="active" id="id_active" value="1" [% IF active %]checked="checked"[% END %]>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_start_date">Start Date</label></div>
+      <div class="col-md-3 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="date" name="start_date" id="id_start_date" value="[% start_date %]" class="form-control" placeholder="YYYY-MM-DD" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_end_date">End Date</label></div>
+      <div class="col-md-3 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="date" name="end_date" id="id_end_date" value="[% end_date %]" class="form-control" placeholder="YYYY-MM-DD" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label>Department <span class="glyphicon glyphicon-plus" id="plusAFF"></span>
       </label></div>
       <div class="col-md-10" id="affiliation">
       [% IF !department %]
@@ -153,10 +188,9 @@
             });
           });
           </script>
-        </div>
+          </div>
       [% END %]
       [% END %]
-
         <div class="modal" id="selectModal">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -170,232 +204,210 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
-
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_active">Active</label></div>
-      <div class="col-md-10">
-        <div class="form-group col-md-1">
-          <input type="checkbox" name="account_status" id="id_active" value="active" [% IF account_status == 'active' %]checked="checked"[% END %]>
-        </div>
-      </div>
-    </div>
-
-    <div class="row innerrow">
-      <div class="col-md-12">
-        &nbsp;
-      </div>
-    </div>
-
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_super_admin">Library Admin</label></div>
-      <div class="col-md-10">
-        <div class="form-group col-md-1">
-          <input type="checkbox" name="super_admin" id="id_super_admin" value="1" [% IF super_admin  %]checked="checked"[% END %]>
-        </div>
-      </div>
-    </div>
-
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_delegate">Manage publications for</label></div>
+      <div class="col-md-2"><label for="id_owner">Coordinator</label></div>
       <div class="col-md-10">
         <div class="row innerrow">
-          <div class="col-md-7 form-group">
-            <input type="text" id="id_delegate" value="" class="form-control" placeholder="12345 (PEVZ-ID)"/>
+          <div class="col-md-5 form-group">
+            <input type="text" name="owner.0.first_name" id="id_owner_first_name" value="[% owner.0.first_name %]" class="form-control" placeholder="First Name" />
           </div>
-          <div class="col-md-2 form-group">
-            <input type="button" onclick="addDelegate(this);" class="btn select_button" id="delegate_select" value="Add" />
+          <div class="col-md-5 form-group">
+            <input type="text" name="owner.0.last_name" id="id_owner_last_name" value="[% owner.0.last_name %]" class="form-control" placeholder="Last Name" />
           </div>
+          <span class="col-md-2 form-group">
+            <button type="button" class="btn btn-default btn-xs" id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+            <button type="button" id="revert_0" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+            <script>
+              $('#revert_0').tooltip();
+            </script>
+          </span>
         </div>
       </div>
     </div>
-    
-    <span id="delegate">
-    [% IF delegate %]
-      [% FOREACH del IN delegate %]
-      [% thisPerson = h.getPerson(del) %]
-      <div class="col-md-10 col-md-offset-2" id="delegate_[% thisPerson._id %]">
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_designated_editor">Designated Editor</label></div>
+      <div class="col-md-10">
         <div class="row innerrow">
-          <div class="col-md-7 form-group">
-            <span class="glyphicon glyphicon-remove del_del" id="delegate_span_[% thisPerson._id %]"></span> [% thisPerson.full_name %] <span class="text-muted">[% thisPerson._id %]</span>
-            <input type="hidden" name="delegate.[% loop.index %]" value="[% thisPerson._id %]" />
+          <div class="col-md-5 form-group">
+            <input type="text" name="designated_editor.0.first_name" id="id_designated_editor_first_name" value="[% designated_editor.0.first_name %]" class="form-control" placeholder="First Name" />
           </div>
+          <div class="col-md-5 form-group">
+            <input type="text" name="designated_editor.0.last_name" id="id_designated_editor_last_name" value="[% designated_editor.0.last_name %]" class="form-control" placeholder="Last Name" />
+          </div>
+          <span class="col-md-2">
+            <button type="button" class="btn btn-default btn-xs" id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+            <button type="button" id="revert_0" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+            <script>
+              $('#revert_0').tooltip();
+            </script>
+          </span>
         </div>
       </div>
-      [% END %]
-    [% END %]
-    </span>
-
+    </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label>
-        Data Manager <span class="glyphicon glyphicon-plus" id="plusDM"></span>
-      </label></div>
-      <div class="col-md-10" id="data_manager">
-      [% IF !data_manager %]
+      <div class="col-md-2"><label for="id_principal_investigator">Principal Investigator</label> <span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus" id="plusPi"></span></div>
+      <div class="col-md-10" id="principal_investigator">
+      [% IF !principal_investigator %]
         <div class="row innerrow">
-          <input type="hidden" name="data_manager.0.id" id="dp_idautocomplete_0" />
-          <input type="hidden" name="data_manager.0.name" id="dp_nameautocomplete_0" />
-
-          <span class="form-group col-md-7">
-            <input type="text" class="form-control" name="data_manager.0.name" id="dp_autocomplete_0" value="" />
+          <div class="col-md-5 form-group">
+            <input type="text" name="principal_investigator.0.first_name" id="id_principal_investigator_first_name" value="[% principal_investigator.0.first_name %]" class="form-control" placeholder="First Name" />
+          </div>
+          <div class="col-md-5 form-group">
+            <input type="text" name="principal_investigator.0.last_name" id="id_principal_investigator_last_name" value="[% principal_investigator.0.last_name %]" class="form-control" placeholder="Last Name" />
+          </div>
+          <span class="col-md-2">
+            <button type="button" class="btn btn-default btn-xs" id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+            <button type="button" id="revert_0" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+            <span class="glyphicon glyphicon-minus author"></span>
+            <script>
+              $('#revert_0').tooltip();
+            </script>
           </span>
-          <span class="form-group col-md-2">
-            <input type="button" onclick="selectButton(this);" class="btn select_button data_manager" id="data_manager_select_0" value="Select"/>
-          </span>
-          <span class="col-md-1">
-            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';document.getElementById('dp_autocomplete_0').disabled=false;"></span>
-          </span>
-          <script>
-          $(function() {
-            $( "#dp_autocomplete_0" ).autocomplete({
-              source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-              minLength: 2,
-              select: function( event, ui ) {
-                $( "#dp_autocomplete_0" ).val( ui.item.label );
-                $( "#dp_nameautocomplete_0" ).val( ui.item.label );
-                $( "#dp_idautocomplete_0" ).val( ui.item.id );
-                $( "#dp_autocomplete_0" ).attr("disabled", "disabled");
-              }
-            });
-          });
-          </script>
         </div>
       [% ELSE %]
-      [% FOREACH dept IN data_manager %]
+        [% FOREACH pi IN principal_investigator %]
         <div class="row innerrow">
-          <input type="hidden" name="data_manager.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
-          <input type="hidden" name="data_manager.[% loop.index %].name" id="dp_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
-          <span class="form-group col-md-7">
-            <input type="text" class="form-control" name="data_manager.[% loop.index %].name" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
-          </span>
-          <span class="form-group col-md-2">
-            <input type="button" onclick="selectButton(this);" class="btn select_button data_manager" id="data_manager_select_[% loop.index %]" value="Select"/>
-          </span>
-          <span class="col-md-1">
-          [% IF loop.index == 0 %]
-            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';document.getElementById('dp_autocomplete_0').disabled=false;"></span>
-          [% ELSE %]
-            <span class="glyphicon glyphicon-minus single"></span>
-          [% END %]
-          </span>
-          <script>
-          $(function() {
-            $( "#dp_autocomplete_[% loop.index %]" ).autocomplete({
-              source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-              minLength: 2,
-              select: function( event, ui ) {
-                $( "#dp_autocomplete_[% loop.index %]" ).val( ui.item.label );
-                $( "#dp_nameautocomplete_[% loop.index %]" ).val( ui.item.label );
-                $( "#dp_idautocomplete_[% loop.index %]" ).val( ui.item.id );
-                $( "#dp_autocomplete_[% loop.index %]" ).attr("disabled","disabled");
-              }
-            });
-          });
-          </script>
-        </div>
-      [% END %]
-      [% END %]
-
-        <div class="modal" id="selectModal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"></h4>
-                <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
-              </div>
-              <div class="modal-body">
-              </div>
-            </div>
+          <div class="col-md-5 form-group">
+            <input type="text" name="principal_investigator.[% loop.index %].first_name" id="id_principal_investigator_[% loop.index %]_first_name" value="[% pi.first_name %]" class="form-control" placeholder="First Name" />
           </div>
+          <div class="col-md-5 form-group">
+            <input type="text" name="principal_investigator.[% loop.index %].last_name" id="id_principal_investigator_[% loop.index %]_last_name" value="[% pi.last_name %]" class="form-control" placeholder="Last Name" />
+          </div>
+          <span class="col-md-2">
+            <button type="button" class="btn btn-default btn-xs" id="link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+            <button type="button" id="revert_[% loop.index %]" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+            <span class="glyphicon glyphicon-minus author"></span>
+            <script>
+              $('#revert_[% loop.index %]').tooltip();
+            </script>
+          </span>
         </div>
-
+        [% END %]
+      [% END %]
       </div>
     </div>
-
     <div class="row innerrow">
-      <div class="col-md-2"><label>
-        Reviewer <span class="glyphicon glyphicon-plus" id="plusRV"></span>
-      </label></div>
-      <div class="col-md-10" id="reviewer">
-        [% IF !reviewer %]
+      <div class="col-md-2"><label for="id_member">Members</label> <span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus" id="plusMember"></span></div>
+      <div class="col-md-10" id="member">
+      [% IF !member %]
         <div class="row innerrow">
-          <input type="hidden" name="reviewer.0.id" id="rv_idautocomplete_0" />
-          <input type="hidden" name="reviewer.0.name" id="rv_nameautocomplete_0" />
-
-          <span class="form-group col-md-7">
-            <input type="text" class="form-control" id="rv_autocomplete_0" value="" />
+          <div class="col-md-5 form-group">
+            <input type="text" name="member.0.first_name" id="id_member_first_name" value="[% member.0.first_name %]" class="form-control" placeholder="First Name" />
+          </div>
+          <div class="col-md-5 form-group">
+            <input type="text" name="member.0.last_name" id="id_member_last_name" value="[% member.0.last_name %]" class="form-control" placeholder="Last Name" />
+          </div>
+          <span class="col-md-2">
+            <button type="button" class="btn btn-default btn-xs" id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+            <button type="button" id="revert_0" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+            <span class="glyphicon glyphicon-minus author"></span>
+            <script>
+              $('#revert_0').tooltip();
+            </script>
           </span>
-          <span class="form-group col-md-2">
-            <input type="button" onclick="selectButton(this);" class="btn select_button reviewer" id="reviewer_select_0" value="Select"/>
-          </span>
-          <span class="col-md-1">
-            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rv_autocomplete_0').value = '';document.getElementById('rv_idautocomplete_0').value='';document.getElementById('rv_autocomplete_0').disabled=false;"></span>
-          </span>
-          <script>
-          $(function() {
-            $( "#rv_autocomplete_0" ).autocomplete({
-              source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-              minLength: 2,
-              select: function( event, ui ) {
-                $( "#rv_autocomplete_0" ).val( ui.item.label );
-                $( "#rv_nameautocomplete_0" ).val( ui.item.label );
-                $( "#rv_idautocomplete_0" ).val( ui.item.id );
-                $( "#rv_autocomplete_0" ).attr("disabled","disabled");
-              }
-            });
-          });
-          </script>
         </div>
       [% ELSE %]
-      [% FOREACH dept IN reviewer %]
+        [% FOREACH mem IN member %]
         <div class="row innerrow">
-          <input type="hidden" name="reviewer.[% loop.index %].id" id="rv_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
-          <input type="hidden" name="reviewer.[% loop.index %].name" id="rv_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
-          <span class="form-group col-md-7">
-            <input type="text" class="form-control" name="reviewer.[% loop.index %].name" id="rv_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+          <div class="col-md-5 form-group">
+            <input type="text" name="member.[% loop.index %].first_name" id="id_member_[% loop.index %]_first_name" value="[% mem.first_name %]" class="form-control" placeholder="First Name" />
+          </div>
+          <div class="col-md-5 form-group">
+            <input type="text" name="member.[% loop.index %].last_name" id="id_member_[% loop.index %]_last_name" value="[% mem.last_name %]" class="form-control" placeholder="Last Name" />
+          </div>
+          <span class="col-md-2">
+            <button type="button" class="btn btn-default btn-xs" id="link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+            <button type="button" id="revert_[% loop.index %]" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+            <span class="glyphicon glyphicon-minus author"></span>
+            <script>
+              $('#revert_[% loop.index %]').tooltip();
+            </script>
           </span>
-          <span class="form-group col-md-2">
-            <input type="button" onclick="selectButton(this);" class="btn select_button reviewer" id="reviewer_select_[% loop.index %]" value="Select"/>
-          </span>
-          <span class="col-md-1">
-          [% IF loop.index == 0 %]
-            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rv_autocomplete_0').value = '';document.getElementById('rv_idautocomplete_0').value='';document.getElementById('rv_autocomplete_0').disabled=false;"></span>
-          [% ELSE %]
-            <span class="glyphicon glyphicon-minus single"></span>
-          [% END %]
-          </span>
-          <script>
-          $(function() {
-            $( "#rv_autocomplete_[% loop.index %]" ).autocomplete({
-              source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-              minLength: 2,
-              select: function( event, ui ) {
-                $( "#rv_autocomplete_[% loop.index %]" ).val( ui.item.label );
-                $( "#rv_nameautocomplete_[% loop.index %]" ).val( ui.item.label );
-                $( "#rv_idautocomplete_[% loop.index %]" ).val( ui.item.id );
-                $( "#rv_autocomplete_[% loop.index %]" ).attr("disabled","disabled");
-              }
-            });
-          });
-          </script>
         </div>
+        [% END %]
       [% END %]
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_cooperator">Cooperators</label> <span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus" id="plusMember"></span></div>
+      <div class="col-md-10" id="cooperator">
+      [% IF !cooperator %]
+      <div class="row innerrow">
+        <div class="col-md-11 form-group">
+          <input type="text" name="cooperator.0" id="id_cooperator" value="[% cooperator.0 %]" class="form-control" />
+        </div>
+        <div class="col-md-1">
+          <span class="glyphicon glyphicon-minus author"></span>
+        </div>
+      </div>
+      [% ELSE %]
+        [% FOREACH co IN cooperator %]
+        <div class="row innerrow">
+          <div class="col-md-11 form-group">
+            <input type="text" name="cooperator.[% loop.index %]" id="id_cooperator_[% loop.index %]" value="[% co %]" class="form-control" />
+          </div>
+          <div class="col-md-1">
+            <span class="glyphicon glyphicon-minus author"></span>
+          </div>
+        </div>
+        [% END %]
       [% END %]
-
-        <div class="modal" id="selectModal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"></h4>
-                <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
-              </div>
-              <div class="modal-body">
-              </div>
-            </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_funder">Ext. Funders</label> <span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus" id="plusMember"></span></div>
+      <div class="col-md-10" id="funder">
+      [% IF !funder %]
+      <div class="row innerrow">
+        <div class="col-md-11 form-group">
+          <input type="text" name="funder.0" id="id_funder" value="[% funder.0 %]" class="form-control" />
+        </div>
+        <div class="col-md-1">
+          <span class="glyphicon glyphicon-minus author"></span>
+        </div>
+      </div>
+      [% ELSE %]
+        [% FOREACH fun IN funder %]
+        <div class="row innerrow">
+          <div class="col-md-11 form-group">
+            <input type="text" name="funder.[% loop.index %]" id="id_funder_[% loop.index %]" value="[% fun %]" class="form-control" />
+          </div>
+          <div class="col-md-1">
+            <span class="glyphicon glyphicon-minus author"></span>
+          </div>
+        </div>
+        [% END %]
+      [% END %]
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_funded">Ext. Funded</label></div>
+      <div class="col-md-1 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="checkbox" name="funded" id="id_funded" value="1" [% IF funded %]checked="checked"[% END %]>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_call_identifier">Identifier</label></div>
+      <div class="col-md-10 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="text" name="call_identifier" id="id_call_identifier" value="[% call_identifier %]" class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_sc39">SC39</label></div>
+      <div class="col-md-1 form-group">
+        <div class="row innerrow">
+          <div class="col-md-12">
+            <input type="checkbox" name="sc39" id="id_sc39" value="1" [% IF sc39 %]checked="checked"[% END %]>
           </div>
         </div>
       </div>

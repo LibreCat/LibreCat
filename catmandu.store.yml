@@ -182,7 +182,7 @@ search:
                 'any': true
                 'all': true
                 '=': true
-              field: 'project_cooperators'
+              field: 'cooperator'
             coordinator:
               op:
                 'any': true
@@ -196,21 +196,21 @@ search:
                 'all': true
                 '=': true
                 'exact': {field: 'principal_investigators.name.full_name.exact'}
-              field: ['principal_investigators.name.full_name', 'principal_investigators.id']
+              field: ['principal_investigator.name.full_name', 'principal_investigator.id']
             members:
               op:
                 'any': true
                 'all': true
                 '=': true
-                'exact': {field: 'project_members.name.full_name.exact'}
-              field: ['project_members.name.full_name', 'project_members.id']
+                'exact': {field: 'member.name.full_name.exact'}
+              field: ['member.name.full_name', 'member.id']
             person:
               op:
                 'any': true
                 'all': true
                 '=': true
-                'exact': {field: ['owner.name.full_name.exact', 'principal_investigators.name.full_name.exact', 'project_members.name.full_name.exact']}
-              field: ['owner.name.full_name', 'owner.person_number', 'principal_investigators.name.full_name', 'principal_investigators.person_number', 'project_members.name.full_name', 'project_members.person_number']
+                'exact': {field: ['owner.name.full_name.exact', 'principal_investigator.name.full_name.exact', 'member.name.full_name.exact']}
+              field: ['owner.name.full_name', 'owner.person_number', 'principal_investigator.name.full_name', 'principal_investigator.person_number', 'member.name.full_name', member.person_number']
 
       award:
         cql_mapping:
@@ -1147,10 +1147,10 @@ search:
           psp_element: {type: string, analyzer: tag, include_in_all: true}
           call_identifier: {type: string, analyzer: tag}
           description: {type: string, include_in_all: true}
-          project_funders:
+          funder:
             type: multi_field
             fields:
-              project_funders: {type: string, include_in_all: true}
+              funder: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
           funded: {type: string, analyzer: tag}
           sc39: {type: string, anlyzer: tag}
@@ -1164,7 +1164,7 @@ search:
             fields:
               end_date: {type: string, analyzer: datestring}
               exact: {type: string, analyzer: tag}
-          project_cooperators: {type: string, analyzer: tag, include_in_all: true}
+          cooperator: {type: string, analyzer: tag, include_in_all: true}
           department:
             properties:
               id: {type: string, analyzer: tag}
@@ -1183,8 +1183,8 @@ search:
                     fields:
                       full_name: {type: string, include_in_all: true}
                       exact: {type: string, analyzer: tag}
-          principal_investigators: *personField2
-          project_members: *personField2
+          principal_investigator: *personField2
+          member: *personField2
 
       award:
         include_in_all: false

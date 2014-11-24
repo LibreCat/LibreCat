@@ -134,6 +134,13 @@ prefix '/myPUB/admin' => sub {
         my $project = edit_project($id);
         template 'admin/edit_project', $project;
     };
+    
+    post '/project/update' => needs role => 'super_admin' => sub {
+    	my $params = params;
+    	my $return = update_project($params);
+    	return to_dumper $return;
+    	redirect '/myPUB/admin/project/';
+    };
 
     # manage departments
     get '/department' => sub { };
