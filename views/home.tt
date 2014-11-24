@@ -3,6 +3,7 @@
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
 [% thisPerson = h.getPerson(session.personNumber) %]
+[% style = qp.style  || 'frontShort' %]
 
 [% INCLUDE navbar.tt %]
 
@@ -25,7 +26,7 @@
       <div class="col-md-5">
         [% INCLUDE person_profile.tt %]
       </div>
-      
+
       <div class="col-md-3" style="margin-left:20px;margin-top:10px;">
         [% INCLUDE person_dropzone.tt %]
       </div>
@@ -65,7 +66,7 @@
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
-              [% INCLUDE right_menu_publ.tt %]
+              [% INCLUDE facettes.tt %]
             </div>
           </div>
           [% END %]
@@ -75,7 +76,7 @@
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
-              [% INCLUDE right_menu_publ.tt %]
+              [% INCLUDE facettes.tt %]
             </div>
           </div>
           [% IF session.role == "reviewer" OR (session.role == "super_admin" AND modus == "reviewer") %]
@@ -85,7 +86,7 @@
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
-              [% INCLUDE right_menu_publ.tt %]
+              [% INCLUDE facettes.tt %]
             </div>
           </div>
           [% END %]
@@ -96,7 +97,7 @@
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
-              [% INCLUDE right_menu_publ.tt %]
+              [% INCLUDE facettes.tt %]
             </div>
           </div>
           [% END %]
@@ -107,7 +108,7 @@
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
-              [% INCLUDE right_menu_publ.tt %]
+              [% INCLUDE facettes.tt %]
             </div>
           </div>
           [% END %]

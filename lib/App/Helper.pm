@@ -89,7 +89,7 @@ sub nested_params {
     return $fixer->fix($params);
 }
 
-sub exract_params {
+sub extract_params {
 	my ($self, $params) = @_;
 	$params ||= params;
 	my $p = {};
@@ -100,13 +100,13 @@ sub exract_params {
 
 #	$p->{cql_query} = join(' AND ', @{$p->{q}});
 
-	my $formats = $self->config->{exporter}->{publication};
-	$p->{fmt} = array_includes($params->{fmt}, @$formats) ? $params->{fmt}
-			: $self->config->{default_fmt};
+#	my $formats = keys %{ $self->config->{exporter}->{publication} };
+#	$p->{fmt} = array_includes($formats, $params->{fmt}) ? $params->{fmt}
+#		: $self->config->{default_fmt};
 
-	my $styles = $self->config->{styles};
-	$p->{style} = array_includes($params->{style}, @$styles) ? $params->{style}
-			: $self->config->{default_style};
+	my $styles = $self->config->{lists}->{styles};
+	$p->{style} = array_includes($styles, $params->{style}) ? $params->{style}
+			: $self->config->{store}->{default_style};
 
 	my $sort = $self->string_array($params->{sort});
 	$sort = [ grep { exists $self->sort_options->{$_} } map { s/(?<=[^_])_(?=[^_])//g; lc $_ } split /,/, join ',', @$sort ];
@@ -209,9 +209,10 @@ sub shost {
 sub search_publication {
 	my ($self, $p) = @_;
 	my $sort;
+	my $cql = join(' AND ', @{$p->{q}});
 	my $hits = publication->search(
-	    cql_query => $p->{q},
-		sru_sortkeys => $sort,
+	    cql_query => $cql,
+#		sru_sortkeys => $sort,
 		limit => $p->{limit} ||= config->{default_page_size},
 		start => $p->{start} ||= 0,
 		facets => $p->{facets} ||= {},
@@ -546,11 +547,11 @@ sub make_cql {
 sub uri_for {
     my ($self, $path, $uri_params) = @_;
     $uri_params ||= {};
-    $uri_params = {%{$self->embed_params}, %$uri_params};
+    #$uri_params = {%{$self->embed_params}, %$uri_params};
     #my $uri = $self->host . $path . "?";
     my $uri = $path . "?";
     foreach (keys %{ $uri_params }) {
-	$uri .= "$_=$uri_params->{$_}&";
+		$uri .= "$_=$uri_params->{$_}&";
     }
     $uri =~ s/&$//; #delete trailing "&"
     $uri;
