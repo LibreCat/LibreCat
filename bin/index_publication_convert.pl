@@ -286,19 +286,13 @@ my $types = $luur->getChildrenTypes( type => 'publicationItem' );
 # foreach type get records
 foreach (@$types) {
 	
-	#if($_ eq "2632034"){
-	
     my $obj = $luur->getObjectsByType( type => $_ );
     foreach (@$obj) {
         my $rec = $db->get($_);
         if ($rec->{isOfType}->{typeName} ne "unknown" and $rec->{isOfType}->{typeName} ne "studentPaper" and $rec->{submissionStatus}){
-        	if($rec->{submissionStatus} ne "new"){
-        		add_to_index($rec);
-        	}
-
+        	add_to_index($rec);
         }
     }
-	#}
 }
 
 $bag->commit;

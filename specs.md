@@ -227,36 +227,16 @@ email: "me@example.com"
 defense_date: "2014-04-23"
 link: ["www.example.com", "www.example2.com"]
 external_id:
-    isi:
-      value: asldkf
-      prefix_id: "ISI:asldkf"
-    arxiv:
-	  value: sdfdsf
-	  prefix_id: "arXiv:sdfdsf"
-	pmid:
-	  value: dfsdf
-	  prefix_id: "MEDLINE:dfsdf"
-	inspire:
-	  value: asldfjasl
-	  prefix_id: "INSPIRE:asldfjasl"
-	ahf:
-	  value: sksks
-	  prefix_id: "AHF:sksks"
-	scoap3:
-	  value: sklslsdj
-	  prefix_id: "SCOAP3:sklslsdj"
-	phillister:
-	  value: sdklfjdslf
-	  prefix_id: "PhilLister:sdklfjdslf"
-	opac:
-	  value: lsdfj
-	  prefix_id: "UB-OPAC:lsdfj"
-	fp7:
-	  value: fp7/sdfkls
-	  prefix_id: fp7/sdfkls
-	fp6:
-	  value: fp6/sdlfkjsd
-	  prefix_id: fp6/sdlfkjsd
+    isi: asldkf
+    arxiv: sdfdsf
+	pmid: dfsdf
+	inspire: asldfjasl
+	ahf: sksks
+	scoap3: sklslsdj
+	phillister: sdklfjdslf
+	opac: lsdfj
+	fp7: fp7/sdfkls
+	fp6: fp6/sdlfkjsd
 	genbank: []
 	nasc: []
 pacs_class: []
@@ -301,26 +281,33 @@ department:
 			- 98765
 			- 54321
 owner:
-  -
-    full_name: bla
-    first_name: bla
-    last_name: bla
-    id: 12234
+  full_name: bla
+  first_name: bla
+  last_name: bla
+  id: 12234
 designated_editor:
-  -
-    full_name: bla
-    first_name: bla
-    last_name: bla
-    id: 12234
+  full_name: bla
+  first_name: bla
+  last_name: bla
+  id: 12234
 principal_investigator:
   -
     full_name: bla
     first_name: bla
     last_name: bla
     id: 12234
-project_members:sdfasdf
-project_cooperators:asdfas
-project_funders:asdfas
+member:
+  -
+    full_name: bla
+    first_name: bla
+    last_name: bla
+    id: 12234
+cooperator:
+  - asdfas
+  - ...
+funder:
+  - asdfas
+  - ...
 funded: 1|0
 call_identifier:asdfas
 sc39: 1|0
