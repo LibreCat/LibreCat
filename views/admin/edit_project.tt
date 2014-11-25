@@ -124,47 +124,33 @@
       </div>
     </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label>Department <span class="glyphicon glyphicon-plus" id="plusAFF"></span>
+      <div class="col-md-2"><label>Department <span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span>
       </label></div>
       <div class="col-md-10" id="affiliation">
       [% IF !department %]
-        <div class="row innerrow">
+        <div class="form-group row innerrow">
           <input type="hidden" name="department.0.id" id="aff_idautocomplete_0" />
           <input type="hidden" name="department.0.name" id="aff_nameautocomplete_0" />
 
-          <span class="form-group col-md-7">
-            <input type="text" class="form-control" id="aff_autocomplete_0" value="" />
+          <span class="col-md-7">
+            <input type="text" class="form-control" onfocus="enable_autocomplete('aff', 0);" id="aff_autocomplete_0" value="" />
           </span>
-          <span class="form-group col-md-2">
+          <span class="col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_0" value="Select"/>
           </span>
           <span class="col-md-1">
             <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';document.getElementById('aff_autocomplete_0').disabled = false;"></span>
           </span>
-          <script>
-          $(function() {
-            $( "#aff_autocomplete_0" ).autocomplete({
-              source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-              minLength: 2,
-              select: function( event, ui ) {
-                $( "#aff_autocomplete_0" ).val( ui.item.label );
-                $( "#aff_nameautocomplete_0" ).val( ui.item.label );
-                $( "#aff_idautocomplete_0" ).val( ui.item.id );
-                $( "#aff_autocomplete_0" ).attr("disabled", "disabled");
-              }
-            });
-          });
-          </script>
         </div>
       [% ELSE %]
       [% FOREACH dept IN department %]
-        <div class="row innerrow">
+        <div class="form-group row innerrow">
           <input type="hidden" name="department.[% loop.index %].id" id="aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
           <input type="hidden" name="department.[% loop.index %].name" id="aff_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
-          <span class="form-group col-md-7">
-            <input type="text" class="form-control" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+          <span class="col-md-7">
+            <input type="text" class="form-control" onfocus="enable_autocomplete('aff', [% loop.index %]);" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
           </span>
-          <span class="form-group col-md-2">
+          <span class="col-md-2">
             <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_[% loop.index %]" value="Select"/>
           </span>
           <span class="col-md-1">
@@ -174,20 +160,6 @@
             <span class="glyphicon glyphicon-minus single"></span>
           [% END %]
           </span>
-          <script>
-          $(function() {
-            $( "#aff_autocomplete_[% loop.index %]" ).autocomplete({
-              source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-              minLength: 2,
-              select: function( event, ui ) {
-                $( "#aff_autocomplete_[% loop.index %]" ).val( ui.item.label );
-                $( "#aff_nameautocomplete_[% loop.index %]" ).val( ui.item.label );
-                $( "#aff_idautocomplete_[% loop.index %]" ).val( ui.item.id );
-                $( "#aff_autocomplete_[% loop.index %]" ).attr("disabled", "disabled");
-              }
-            });
-          });
-          </script>
           </div>
       [% END %]
       [% END %]

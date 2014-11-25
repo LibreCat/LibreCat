@@ -4,51 +4,38 @@
     <label for="department">
       {% fields.basic_fields.department.label %}{% fields.supplementary_fields.department.label %}
     </label>
-    {% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %}</span>{% END %}{% IF fields.basic_fields.department.multiple || fields.supplementary_fields.department.multiple %} <span class="glyphicon glyphicon-plus" id="plusDepartment"></span>{% END %}
+    {% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %}</span>{% END %}{% IF fields.basic_fields.department.multiple || fields.supplementary_fields.department.multiple %} <span class="glyphicon glyphicon-plus" onclick="add_field('department'{% IF fields.basic_fields.department.placeholder || fields.supplementary_fields.department.placeholder %},'{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}'{% END %});"></span>{% END %}
   </div>
   <div class="col-md-10" id="department">
     {% IF fields.basic_fields.department.multiple OR fields.supplementary_fields.department.multiple %}
     [% IF !department %]
     {% END %}
-    <div class="row innerrow">
+    <div class="form-group row innerrow">
       <input type="hidden" name="department.0.id" id="dp_idautocomplete_0" value="" />
     
-      <div class="form-group col-md-7">
-        <input type="text" name="department.0.name" class="form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}" id="dp_autocomplete_0" value=""{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
+      <div class="col-md-7">
+        <input type="text" onfocus="enable_autocomplete('dp',0);" name="department.0.name" class="form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}" id="dp_autocomplete_0" value=""{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
       </div>
     
-      <div class="form-group col-md-2">
+      <div class="col-md-2">
         <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0" value="Select"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} disabled {% END %}/>
       </div>
         
       <div class="col-md-1">
         <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
       </div>
-        
-      <script>
-      $(function() {
-        $( "#dp_autocomplete_0" ).autocomplete({
-          source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-          minLength: 2,
-          select: function( event, ui ) {
-            $( "#dp_autocomplete_0" ).val( ui.item.label );
-            $( "#dp_idautocomplete_0" ).val( ui.item.id );
-          }
-        });
-      });
-      </script>
     </div>
     {% IF fields.basic_fields.department.multiple OR fields.supplementary_fields.department.multiple %}
     [% ELSE %]
     [% FOREACH dept IN department %]
-    <div class="row innerrow">
+    <div class="form-group row innerrow">
       <input type="hidden" name="department.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
           
-      <div class="form-group col-md-7">
-        <input type="text" name="department.[% loop.index %].name" class="form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
+      <div class="col-md-7">
+        <input type="text" onfocus="enable_autocomplete('dp',[% loop.index %]);" name="department.[% loop.index %].name" class="form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
       </div>
           
-      <div class="form-group col-md-2">
+      <div class="col-md-2">
         <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]" value="Select"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} disabled {% END %}/>
       </div>
           
@@ -59,19 +46,6 @@
         <span class="glyphicon glyphicon-minus single"></span>
         [% END %]
       </div>
-      
-      <script>
-      $(function() {
-        $( "#dp_autocomplete_[% loop.index %]" ).autocomplete({
-          source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-          minLength: 2,
-          select: function( event, ui ) {
-            $( "#dp_autocomplete_[% loop.index %]" ).val( ui.item.label );
-            $( "#dp_idautocomplete_[% loop.index %]" ).val( ui.item.id );
-          }
-        });
-      });
-      </script>
     </div>
     [% END %]
     [% END %]

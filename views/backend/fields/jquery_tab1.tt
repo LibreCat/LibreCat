@@ -193,16 +193,7 @@ $('#plusDepartment').click(function(){
 	var placeholder = "{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}";
   {% END %}
   $('#department').append('[% INCLUDE backend/fields/subfields/department.tt %]');
-  $('#department').bind("click", function(){
-    $( "#dp_autocomplete_" + index ).autocomplete({
-      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-      minLength: 2,
-      select: function( event, ui ) {
-        $( "#dp_autocomplete_" + index ).val( ui.item.label );
-        $( "#dp_idautocomplete_" + index ).val( ui.item.id );
-      }
-    });
-  });
+  enable_autocomplete("dp",index);
 });
 
 $('#plusProject').click(function(){

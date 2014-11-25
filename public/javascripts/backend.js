@@ -382,3 +382,30 @@ $(function () {
 	    }
 	});
 });
+
+function add_field(name, placeholder){
+	var items = $('#' + name + ' div.form-group');
+	var index = items.index($('#' + name + ' div.form-group').last()) + 1;
+	var blueprint = $(items[0]).clone(true,true);
+	
+	$(blueprint).find('input, textarea').each(function(){
+		var newid = $(this).attr('id').replace(/0/g,index);
+		$(this).attr('id', newid);
+	});
+	$('#' + name).append(blueprint);
+	var abbrev = name == "department" ? "dp" : "aff";
+	enable_autocomplete(abbrev, index);
+}
+
+function enable_autocomplete(field, index){
+	$( "#" + field + "_autocomplete_" + index ).autocomplete({
+		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+		minLength: 2,
+		select: function( event, ui ) {
+			$( "#" + field + "_autocomplete_" + index ).val( ui.item.label );
+            $( "#" + field + "_nameautocomplete_" + index ).val( ui.item.label );
+            $( "#" + field + "_idautocomplete_" + index ).val( ui.item.id );
+            $( "#" + field + "_autocomplete_" + index ).attr("disabled", "disabled");
+        }
+	});
+}
