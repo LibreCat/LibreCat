@@ -12,7 +12,7 @@ use Catmandu::Sane;
 use Catmandu qw/export_to_string/;
 use Dancer ':syntax';
 use Dancer::Request;
-use App::Catalog::Helper;
+use App::Helper;
 use App::Catalog::Controller::Permission qw/can_download/;
 use DateTime;
 use Try::Tiny;

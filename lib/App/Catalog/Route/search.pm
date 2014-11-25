@@ -8,7 +8,7 @@ package App::Catalog::Route::search;
 
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
-use App::Catalog::Helper;
+use App::Helper;
 use App::Catalog::Controller::Search qw/search_publication/;
 use Dancer::Plugin::Auth::Tiny;
 
@@ -40,10 +40,36 @@ prefix '/myPUB/search' => sub {
 
 =cut
     get '/admin' => needs role => 'super_admin' => sub {
-        my $params = params;
 
-        $params->{modus} = "admin";
-        search_publication($params);
+        my $p = params;
+        $p = h->extract_params($p);
+
+        $p->{facets} = {
+            author => {
+                terms => {
+                    field   => 'author.id',
+                    size    => 20,
+                }
+            },
+            editor => {
+                terms => {
+                    field   => 'editor.id',
+                    size    => 20,
+                }
+            },
+            year => { terms => { field => 'year'} },
+            type => { terms => { field => 'type', size => 20 } },
+            open_access => { terms => { field => 'file.open_access', size => 1 } },
+            quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
+            popular_science => { terms => { field => 'popular_science', size => 1 } },
+            extern => { terms => { field => 'extern', size => 1 } },
+            status => { terms => { field => 'status', size => 5 } },
+        };
+
+        my $hits = h->search_publication($p);
+        #return to_dumper $hits;
+        $hits->{modus} = "admin";
+        template "home", $hits;
 
     };
 
@@ -52,11 +78,33 @@ prefix '/myPUB/search' => sub {
     Performs search for reviewer.
 
 =cut
-        get '/reviewer' => needs role => 'reviewer' => sub {
-        my $params = params;
+    get '/reviewer' => needs role => 'reviewer' => sub {
 
-        $params->{modus} = "reviewer";
-        search_publication($params);
+        my $p = params;
+        return to_dumper $p;
+        # $p->{facets} = {
+        #     coAuthor => {
+        #         terms => {
+        #             field   => 'author.id',
+        #             size    => 20,
+        #         }
+        #     },
+        #     coEditor => {
+        #         terms => {
+        #             field   => 'editor.id',
+        #             size    => 20,
+        #         }
+        #     },
+        #     open_access => { terms => { field => 'file.open_access', size => 1 } },
+        #     quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
+        #     popular_science => { terms => { field => 'popular_science', size => 1 } },
+        #     extern => { terms => { field => 'extern', size => 1 } },
+        #     status => { terms => { field => 'status', size => 5 } },
+        # };
+
+        my $hits = h->search_publication($p);
+        $hits->{modus} = "reviewer";
+        template "home", $hits;
 
     };
 
@@ -65,11 +113,33 @@ prefix '/myPUB/search' => sub {
     Performs search for data manager.
 
 =cut
-        get '/datamanager' => needs role => 'dataManager' => sub {
-        my $params = params;
+    get '/datamanager' => needs role => 'dataManager' => sub {
 
-        $params->{modus} = "dataManager";
-        search_publication($params);
+        my $p = params;
+        return to_dumper $p;
+        # $p->{facets} = {
+        #     coAuthor => {
+        #         terms => {
+        #             field   => 'author.id',
+        #             size    => 20,
+        #         }
+        #     },
+        #     coEditor => {
+        #         terms => {
+        #             field   => 'editor.id',
+        #             size    => 20,
+        #         }
+        #     },
+        #     open_access => { terms => { field => 'file.open_access', size => 1 } },
+        #     quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
+        #     popular_science => { terms => { field => 'popular_science', size => 1 } },
+        #     extern => { terms => { field => 'extern', size => 1 } },
+        #     status => { terms => { field => 'status', size => 5 } },
+        # };
+
+        my $hits = h->search_publication($p);
+        $hits->{modus} = "data_manager";
+        template "home", $hits;
 
     };
 
@@ -80,10 +150,10 @@ prefix '/myPUB/search' => sub {
 
 =cut
     get '/delegate/:delegate_id' => sub {
-        my $params = params;
-
-        $params->{modus} = "delegate_".$params->{delegate_id};
-        search_publication($params);
+        my $p = params;
+        return to_dumper $p;
+        #$params->{modus} = "delegate_".$params->{delegate_id};
+        #search_publication($params);
     };
 
 =head2 GET /
@@ -91,11 +161,36 @@ prefix '/myPUB/search' => sub {
     Performs search for user.
 
 =cut
-        get '/' => needs login => sub {
-        my $params = params;
+    get '/' => needs login => sub {
 
-        $params->{modus} = "user";
-        search_publication($params);
+        my $p = h->extract_params(params);
+        return to_dumper $p;
+        # my $id = session 'personNumber';
+        # $p->{facets} = {
+        #     coAuthor => {
+        #         terms => {
+        #             field   => 'author.id',
+        #             size    => 20,
+        #             exclude => [$id]
+        #         }
+        #     },
+        #     coEditor => {
+        #         terms => {
+        #             field   => 'editor.id',
+        #             size    => 20,
+        #             exclude => [$id]
+        #         }
+        #     },
+        #     open_access => { terms => { field => 'file.open_access', size => 1 } },
+        #     quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
+        #     popular_science => { terms => { field => 'popular_science', size => 1 } },
+        #     extern => { terms => { field => 'extern', size => 1 } },
+        #     status => { terms => { field => 'status', size => 5 } },
+        # };
+
+        my $hits = h->search_publication($p);
+        $hits->{modus} = "user";
+        template "home", $hits;
 
     };
 

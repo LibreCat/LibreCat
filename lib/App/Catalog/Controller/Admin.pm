@@ -8,7 +8,7 @@ use Furl;
 use Hash::Merge qw/merge/;
 use Carp;
 use Exporter qw/import/;
-use App::Catalog::Helper;
+use App::Helper;
 use Data::Dumper;
 
 our @EXPORT

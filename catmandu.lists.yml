@@ -26,8 +26,9 @@ author_id:
   scopusId:
     label: Scopus Author ID
     url: "http://www.scopus.com/authid/detail.url?authorId="
-  editorialship:
-    label: Editorialship
+  alias:
+    label: Alias
+    url: "http://pub.uni-bielefeld.de/person/"
 
 styles_public:
   - ama
@@ -1196,7 +1197,7 @@ xresearchgroups:
     oId: RG54
 
 ddc:
-  000: 
+  000:
     optgroup: "000 Computer science, information & general works"
     ddc000: "-- 000 Computer science, knowledge & systems"
     ddc004: "---- 004 Data processing, computer science, computer systems"

@@ -9,7 +9,7 @@ package App::Catalog::Route::person;
 use Catmandu::Sane;
 use Catmandu::Util qw(:array);
 use Dancer ':syntax';
-use App::Catalog::Helper;
+use App::Helper;
 use App::Catalog::Controller::Admin qw/:person/;
 use Dancer::Plugin::Auth::Tiny;
 
@@ -77,7 +77,7 @@ prefix '/myPUB/person' => sub {
     post '/author_id' => needs login => sub {
 
         my $person     = h->authority_user->get( params->{_id} );
-        my @identifier = keys h->config->{lists}->{author_id};
+        my @identifier = keys %{h->config->{lists}->{author_id}};
 
         map { $person->{$_} = params->{$_} ? params->{$_} : "" } @identifier;
 

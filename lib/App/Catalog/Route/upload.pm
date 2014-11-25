@@ -7,7 +7,7 @@ package App::Catalog::Route::upload;
 =cut
 
 use Catmandu::Sane;
-use App::Catalog::Helper;
+use App::Helper;
 use App::Catalog::Controller::Publication qw/update_publication new_publication/;
 use App::Catalog::Controller::File qw/delete_file/;
 use Dancer ':syntax';
@@ -21,14 +21,14 @@ use Dancer::Plugin::Auth::Tiny;
 
 =cut
 prefix '/myPUB' => sub {
-  
+
   # receives file and places it in tmp
   # copies it to file with real filename (instead of tmp name)
   # returns json with filename (TODO: or status msg)
   post '/upload' => needs login =>  sub {
       my $file    = request->upload('file');
       my $file_data;
-      
+
       if($file){
       	  my $now = h->now;
       	  my $tempid = $file->{tempname};
@@ -57,7 +57,7 @@ prefix '/myPUB' => sub {
       }
 
       return to_json($file_data);
-  };  
+  };
 
   post '/upload/qae/submit' => needs login => sub {
     my $submit_or_cancel = params->{submit_or_cancel} || "Cancel";

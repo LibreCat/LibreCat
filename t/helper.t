@@ -3,7 +3,7 @@ use warnings;
 use Test::More;
 use Catmandu;
 use Data::Dumper;
-use App::Catalog::Helper;
+use App::Helper;
 
 my $p = {
     "deeply.nested.hash" => "Value",
