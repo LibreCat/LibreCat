@@ -23,7 +23,10 @@ requires 'Dancer::FileUtils';
 requires 'Dancer::Plugin::Catmandu::OAI';
 requires 'Dancer::Plugin::Catmandu::SRU';
 requires 'Dancer::Plugin::Email';
+requires 'Dancer::Plugin::Auth::Tiny';
+requires 'Dancer::Session::Catmandu';
 requires 'Template';
+requires 'Template::Plugin::JSON';
 requires 'Furl';
 requires 'HTML::Entities';
 requires 'Net::LDAP';
@@ -35,4 +38,3 @@ requires 'Hash::Merge';
 requires 'Try::Tiny';
 requires 'Sys::Hostname::Long';
 requires 'JSON';
-

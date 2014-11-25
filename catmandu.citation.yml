@@ -1,0 +1,57 @@
+_prefix:
+  citation:
+
+url: '/CiteprocPhp/CiteProc.php'
+default_style: 'frontShort'
+fd_style: 'frontShort'
+styles:
+  - ama
+  - apa
+  - apa_indent
+  - bio1
+  - ewi
+  - frontiers
+  - frontShort
+  - frontShortTitle
+  - harvard1
+  - ieee
+  - lncs
+  - mla
+  - pub
+  - wels
+  - sfb882
+  - dgps
+styles_public:
+  - ama
+  - apa
+  - apa_indent
+  - bio1
+  - dgps
+  - ewi
+  - frontiers
+  - harvard1
+  - ieee
+  - lncs
+  - mla
+  - wels
+type_map:
+  default: article
+  book: book
+  bookChapter: chapter
+  bookEditor: book
+  review: article
+  conferenceAbstract: chapter
+  conferenceEditor: book
+  conference: chapter
+  dissertation: thesis
+  encyclopediaArticle: chapter
+  journalArticle: article
+  journalEditor: article
+  newspaperArticle: article
+  patent: article
+  preprint: article
+  report: book
+  researchData: researchData
+  translation: book
+  workingpaper: book
+  bi*: thesis

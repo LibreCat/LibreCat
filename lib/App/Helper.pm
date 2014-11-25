@@ -1,5 +1,4 @@
-package App::Catalog::Helper::Helpers;
-use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/default /srv/www/sbcat/lib/extension);
+package App::Helper::Helpers;
 
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
@@ -7,10 +6,10 @@ use Catmandu::Util qw(:is :array trim);
 use Catmandu::Fix qw /expand/;
 use Dancer qw(:syntax vars params request);
 use Sys::Hostname::Long;
-use Hash::Merge qw(merge);
 use Template;
 use Moo;
 use POSIX qw(strftime);
+use List::Util;
 
 Catmandu->load(':up');
 
@@ -58,6 +57,22 @@ sub authority_department {
 	state $bag = Catmandu->store('authority')->bag('department');
 }
 
+sub string_array {
+	my ($self, $val) = @_;
+	return [ grep { is_string $_ } @$val ] if is_array_ref $val;
+	return [ $val ] if is_string $val;
+	[];
+}
+
+sub sort_options {
+	state $sort_options = do {
+		my $sorts = $_[0]->config->{publication_sorts} || [];
+		List::Util::reduce {
+			$a->{"$b->{key}.$b->{order}"} = $b; $a;
+		} +{}, @$sorts;
+	};
+}
+
 # helper for params handling
 ############################
 sub nested_params {
@@ -72,6 +87,31 @@ sub nested_params {
     }
 	my $fixer = Catmandu::Fix->new(fixes => ["expand()"]);
     return $fixer->fix($params);
+}
+
+sub extract_params {
+	my ($self, $params) = @_;
+	$params ||= params;
+	my $p = {};
+
+	$p->{start} = $params->{start} if is_natural $params->{start};
+	$p->{limit} = $params->{limit} if is_natural $params->{limit};
+	$p->{q} = $self->string_array($params->{q});
+
+#	my $formats = keys %{ $self->config->{exporter}->{publication} };
+#	$p->{fmt} = array_includes($formats, $params->{fmt}) ? $params->{fmt}
+#		: $self->config->{default_fmt};
+
+	my $styles = $self->config->{lists}->{styles};
+	$p->{style} = array_includes($styles, $params->{style}) ? $params->{style}
+			: $self->config->{store}->{default_style};
+
+	my $sort = $self->string_array($params->{sort});
+	$sort = [ grep { exists $self->sort_options->{$_} } map { s/(?<=[^_])_(?=[^_])//g; lc $_ } split /,/, join ',', @$sort ];
+	$sort = [] if is_same $sort, $self->config->{default_publication_sort};
+	$p->{sort} = $sort;
+
+	$p;
 }
 
 sub now {
@@ -166,22 +206,13 @@ sub shost {
 
 sub search_publication {
 	my ($self, $p) = @_;
-
-	my $hits;
-	my $q = $p->{q} ||= "";
-	my $default_sort = "";
-	foreach (@{config->{store}->{default_sort}}){
-		$default_sort .= "$_->{field},,";
-		$default_sort .= $_->{order} eq "asc" ? "1 " : "0 ";
-	}
-	$default_sort = substr($default_sort, 0, -1);
-
-	my $sort = $p->{'sort'} ||= $default_sort;
-	my $bag = $p->{'bag'} ||= "publicationItem";
-
-	$hits = publication->search(
-	    cql_query => $p->{q},
-		sru_sortkeys => $sort,
+	my $sort;
+	my $cql = "";
+	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
+	#return $cql;
+	my $hits = publication->search(
+	    cql_query => $cql,
+#		sru_sortkeys => $sort,
 		limit => $p->{limit} ||= config->{default_page_size},
 		start => $p->{start} ||= 0,
 		facets => $p->{facets} ||= {},
@@ -194,10 +225,32 @@ sub search_publication {
 	return $hits;
 }
 
+# sub return_publication {
+# 	my ($self, $hits, $opts) = @_;
+# 	if ( $opts->{fmt} eq 'html' ) {
+# 		if ($opts->{ftyp}) {
+# 			$tmpl .= "_". $par->{ftyp};
+# 			header("Content-Type" => "text/plain") unless ($par->{ftyp} eq 'iframe' || $par->{ftyp} eq 'pln');
+# 			$tmpl .= "_num" if ($par->{enum} and $par->{enum} eq "1");
+# 			$tmpl .= "_numasc" if ($par->{enum} and $par->{enum} eq "2");
+# 			template $tmpl, $hits;
+# 		}
+#
+# 		if($limit == 1 && @{$hits->{hits}}[0]){
+# 			@{$hits->{hits}}[0]->{style} = $style;
+# 			@{$hits->{hits}}[0]->{marked} = @$marked;
+# 			@{$hits->{hits}}[0]->{bag} = $hits->{bag};
+# 			template "frontdoor/record.tt", @{$hits->{hits}}[0];
+# 		} else {
+# 			template $tmpl, $hits;
+# 		}
+# 	}
+#
+# }
+
 sub search_researcher {
 	my ($self, $p) = @_;
 	my $q = $p->{q} ||= "";
-	#$q .= $q eq "" ? "publCount>0" : " AND publCount>0";
 
 	my $hits = researcher->search(
 	  cql_query => $q,
@@ -415,14 +468,90 @@ sub clean_cql {
 	return $cleancql;
 }
 
+sub make_cql {
+	my ($self, $p) = @_;
+
+	my $query;
+	if($p->{q}){
+		return $p->{q};
+	} else {
+		if($p->{person} and $p->{person} ne ""){
+			$query .= "person=" . $p->{person} . " AND hide<>" . $p->{person};
+		}
+		elsif($p->{department} and $p->{department} ne ""){
+			$query .= "department=" . $p->{department};
+		}
+
+
+		if($p->{author} and ref $p->{author} eq 'ARRAY'){
+			foreach (@{$p->{author}}){
+				$query .= " AND author exact ". $_;
+			}
+		}
+		elsif($p->{author} and ref $p->{author} ne 'ARRAY'){
+			$query .= " AND author exact ". $p->{author};
+		}
+
+		if($p->{editor} and ref $p->{editor} eq 'ARRAY'){
+			foreach (@{$p->{editor}}){
+				$query .= " AND editor exact ". $_;
+			}
+		}
+		elsif($p->{editor} and ref $p->{editor} ne 'ARRAY'){
+			$query .= " AND editor exact ". $p->{editor};
+		}
+
+		if($p->{person} and ref $p->{person} eq 'ARRAY'){
+			foreach (@{$p->{person}}){
+				$query .= " AND person exact ". $_;
+			}
+		}
+		elsif($p->{person} and ref $p->{person} ne 'ARRAY'){
+			$query .= " AND person exact ". $p->{person};
+		}
+
+		$query .= " AND qualitycontrolled=". $p->{qualitycontrolled} if $p->{qualitycontrolled};
+		$query .= " AND popularscience=". $p->{popularscience} if $p->{popularscience};
+		$query .= " AND nonlu=". $p->{nonunibi} if $p->{nonunibi};
+		$query .= " AND fulltext=". $p->{fulltext} if $p->{fulltext};
+		$query .= " AND basic=\"" . $p->{ftext} . "\"" if $p->{ftext};
+
+		if($p->{publicationtype} and ref $p->{publicationtype} eq 'ARRAY'){
+			my $tmpquery = "";
+			foreach (@{$p->{publicationtype}}){
+				$tmpquery .= "documenttype=" . $_ . " OR ";
+			}
+			$tmpquery =~ s/ OR $//g;
+			$query .= " AND (" . $tmpquery . ")";
+		}
+		elsif ($p->{publicationtype} and ref $p->{publicationtype} ne 'ARRAY'){
+			$query .= " AND documenttype=". $p->{publicationtype};
+		}
+
+		if($p->{publishingyear} and ref $p->{publishingyear} eq 'ARRAY'){
+			my $tmpquery = "";
+			foreach (@{$p->{publishingyear}}){
+				$tmpquery .= "publishingyear=" . $_ . " OR ";
+			}
+			$tmpquery =~ s/ OR $//g;
+			$query .= " AND (" . $tmpquery . ")";
+		}
+		elsif ($p->{publishingyear} and ref $p->{publishingyear} ne 'ARRAY'){
+			$query .= " AND publishingyear=". $p->{publishingyear};
+		}
+		return $query;
+	}
+
+}
+
 sub uri_for {
     my ($self, $path, $uri_params) = @_;
     $uri_params ||= {};
-    $uri_params = {%{$self->embed_params}, %$uri_params};
+    #$uri_params = {%{$self->embed_params}, %$uri_params};
     #my $uri = $self->host . $path . "?";
     my $uri = $path . "?";
     foreach (keys %{ $uri_params }) {
-	$uri .= "$_=$uri_params->{$_}&";
+		$uri .= "$_=$uri_params->{$_}&";
     }
     $uri =~ s/&$//; #delete trailing "&"
     $uri;
@@ -515,9 +644,9 @@ sub embed_params {
     };
 }
 
-package App::Catalog::Helper;
+package App::Helper;
 
-my $h = App::Catalog::Helper::Helpers->new;
+my $h = App::Helper::Helpers->new;
 
 use Catmandu::Sane;
 use Dancer qw(:syntax hook);

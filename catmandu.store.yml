@@ -490,7 +490,7 @@ search:
                 'exact': {field: 'doi.exact'}
                 '<>': true
               field: 'doi'
-            publishingyear:
+            year:
               op:
                 '>': true
                 '<': true
@@ -512,7 +512,7 @@ search:
                 '=': true
                 '<>': true
                 'exact': {field: ['author.full_name.exact', 'author.id']}
-              field: ['author.fullN_name', 'author.id']
+              field: ['author.full_name', 'author.id']
               sort: {field: 'first_author'}
             editor:
               op:
@@ -557,7 +557,7 @@ search:
               field: ['language.iso', 'language.name']
               values: 'three letter language code (iso639-2b) or the language name, e.g. german'
               description: 'will find both, the iso version and the long version'
-            documenttype:
+            type:
               op:
                 '=': true
                 'exact': true
@@ -566,7 +566,7 @@ search:
               field: 'type'
               sort: true
               values: "see the list of publication types"
-            datelastchanged:
+            date_updated:
               op:
                 '>': true
                 '<': true
@@ -578,7 +578,7 @@ search:
               field: 'date_updated'
               sort: true
               values: "date in the form yyyy-MM-dd HH:mm:ss or yyyy-MM-dd HH:mm"
-            publicationstatus:
+            publication_status:
               op:
                 '=': true
                 'exact': true
@@ -586,7 +586,7 @@ search:
               field: 'publication_status'
               sort: true
               values: "see the list of publication statuses"
-            submissionstatus:
+            status:
               op:
                 '=': true
                 'exact': true
@@ -1475,11 +1475,11 @@ pagination_options:
     - 50
     - 100
 sort_options:
-    - {key: publishingyear, label: "Publishing year"}
-    - {key: datelastchanged, label: "Date last changed"}
+    - {key: year, label: "Publishing year"}
+    - {key: date_updated, label: "Date updated"}
     - {key: title, label: "Title" }
     - {key: author, label: "First author"}
-    - {key: type, label: "Documenttype"}
+    - {key: type, label: "Publication type"}
     - {key: publication, label: "Publ./ Series/ Journal"}
 project_sort_options:
     - {key: name, label: "Name"}

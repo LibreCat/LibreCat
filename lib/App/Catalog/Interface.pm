@@ -4,7 +4,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(:array);
 use Dancer ':syntax';
 use Dancer::Request;
-use App::Catalog::Helper;
+use App::Helper;
 
 prefix '/myPUB' => sub {
 	

@@ -1,0 +1,29 @@
+#!/bin/sh
+
+#if [ "$EUID" -ne "0" ]; then
+#   echo "This script must be run as root" 1>&2;
+#   exit 1;
+#fi
+test "$(whoami)" != 'root' && (echo you are using a non-privileged account; exit 1)
+
+case "$1" in
+    init)
+      docker run -d -p 9200:9200 -p 9300:9300 -v /data:/data --name elastic dockerfile/elasticsearch /elasticsearch/bin/elasticsearch -Des.config=/data/elasticsearch.yml
+      docker run -d -p 27017:27017 -v /data/mongo_data:/data/db --name mongodb dockerfile/mongodb
+      ;;
+    start)
+      docker start elastic
+      docker start mongodb
+      ;;
+    stop)
+      docker stop elastic
+      docker stop mongodb
+      ;;
+    destroy)
+      docker rm elastic
+      docker rm mongodb
+      ;;
+    *)
+      echo $"Usage: $0 {init|start|stop|destroy}"
+      exit 1
+esac

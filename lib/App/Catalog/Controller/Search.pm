@@ -1,6 +1,6 @@
 package App::Catalog::Controller::Search;
 
-use App::Catalog::Helper;
+use App::Helper;
 use Catmandu::Util qw(:is :array);
 use Dancer qw/:syntax/;
 use Exporter qw/import/;

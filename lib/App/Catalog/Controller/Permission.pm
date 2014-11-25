@@ -2,7 +2,7 @@ package App::Catalog::Controller::Permission;
 
 use Catmandu::Sane;
 use Catmandu;
-use App::Catalog::Helper;
+use App::Helper;
 use Carp;
 use Exporter qw/import/;
 

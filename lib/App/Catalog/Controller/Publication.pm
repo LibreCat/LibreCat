@@ -3,7 +3,7 @@ package App::Catalog::Controller::Publication;
 use lib qw(/srv/www/sbcat/lib/extension);
 use Catmandu::Sane;
 use Catmandu;
-use App::Catalog::Helper;
+use App::Helper;
 use App::Catalog::Controller::Corrector qw/delete_empty_fields correct_hash_array/;
 use App::Catalog::Controller::File qw/handle_file delete_file/;
 use Catmandu::Validator::PUB;
@@ -28,7 +28,7 @@ sub new_publication {
 sub save_publication {
     my $data      = shift;
     #my $validator = Catmandu::Validator::PUB->new();
-    
+
     my $json = new JSON;
 
     $data = delete_empty_fields($data);
@@ -39,7 +39,7 @@ sub save_publication {
         $data->{$_} = encode_entities($data->{$_});
     }
 
-    
+
     if($data->{file}){
     	$data->{file} = handle_file($data);
     	#return handle_file($data);
@@ -74,7 +74,7 @@ sub save_publication {
     		$i++;
     	}
     }
-    
+
     $data = delete_empty_fields($data);
 
     # citations
@@ -88,7 +88,7 @@ sub save_publication {
     fixes => [
         'clean_department_project()',
     ]);
-    
+
     $data->{date_updated} = h->now();
     $data->{date_created} = $data->{date_updated} if !$data->{date_created};
 
@@ -140,7 +140,7 @@ sub delete_publication {
     # the existing publication
 	h->publication->add($del);
 	h->publication->commit;
-	
+
 	my $status = delete_file($id);
 
     # delete attached files

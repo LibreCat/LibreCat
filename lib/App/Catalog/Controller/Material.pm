@@ -2,7 +2,7 @@ package App::Catalog::Controller::Material;
 
 use Catmandu::Sane;
 use Catmandu;
-use App::Catalog::Helper;
+use App::Helper;
 use Furl;
 use Carp;
 use Exporter qw/import/;
@@ -35,7 +35,7 @@ sub update_related_material {
         # set relation in other record
         if ( $rm->{record} && $rm->{record}->{id} ) {
             my $op = h->publications->get($rm->{record}->{id});
-            
+
             push @{ $op->{related_material} },
                 { record => { id => $pub->{_id}, relation => $rel_map{$rm->{record}->{relation}} } };
             h->publications->add($rec);

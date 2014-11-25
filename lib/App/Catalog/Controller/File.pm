@@ -1,7 +1,7 @@
 package App::Catalog::Controller::File;
 
 use Catmandu::Sane;
-use App::Catalog::Helper;
+use App::Helper;
 use Dancer::FileUtils qw/path dirname/;
 use Carp;
 use JSON;
@@ -31,14 +31,14 @@ sub handle_file {
 	$pub->{file} = [$pub->{file}] if ref $pub->{file} ne "ARRAY";
 	$pub->{file_order} = [$pub->{file_order}] if ref $pub->{file_order} ne "ARRAY";
 	my $previous_pub = h->publication->get($pub->{_id});
-	
+
 	if(!$previous_pub){
 		foreach my $fi (@{$pub->{file}}){
 			$fi = from_json($fi);
 			$fi->{file_id} = new_file();
 			my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
 			$pub->{file_order}->[$index] = $fi->{file_id};
-			
+
 			my $path = h->config->{upload_dir} . "/" . $pub->{_id};
 			mkdir $path || croak "Could not create path $path: $!";
 #			my $pathh = path(h->config->{upload_dir}, $pub->{_id}, $fi->{file_id});
@@ -46,7 +46,7 @@ sub handle_file {
 			my $filepath = path(h->config->{upload_dir}, $fi->{file_name});
 			my $newfilepath = path(h->config->{upload_dir}, $pub->{_id}, $fi->{file_name});
 			move($filepath, $newfilepath);
-			
+
 			delete $fi->{tempid} if $fi->{tempid};
 			delete $fi->{tempname} if $fi->{tempname};
 			delete $fi->{old_file_name} if $fi->{old_file_name};
@@ -69,7 +69,7 @@ sub handle_file {
 				my $filepath = path(h->config->{upload_dir}, $fi->{file_name});
 				my $newfilepath = path(h->config->{upload_dir}, $pub->{_id}, $fi->{file_name});
 				move($filepath, $newfilepath);
-				
+
 				delete $fi->{tempid} if $fi->{tempid};
 				delete $fi->{tempname} if $fi->{tempname};
 				delete $fi->{old_file_name} if $fi->{old_file_name};
@@ -81,10 +81,10 @@ sub handle_file {
 				my $now = h->now();
 				$fi->{date_created} = $now;
 				$fi->{date_updated} = $now;
-				
+
 				my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
 				$pub->{file_order}->[$index] = $fi->{file_id};
-				
+
 				my $path = h->config->{upload_dir} . "/" . $pub->{_id};
 				mkdir $path || croak "Could not create path $path: $!";
 #				my $pathh = path(h->config->{upload_dir}, $pub->{_id}, $fi->{file_id});
@@ -92,14 +92,14 @@ sub handle_file {
 				my $filepath = path(h->config->{upload_dir}, $fi->{file_name});
 				my $newfilepath = path(h->config->{upload_dir}, $pub->{_id}, $fi->{file_name});
 				move($filepath, $newfilepath);
-				
+
 				delete $fi->{tempid} if $fi->{tempid};
 				delete $fi->{tempname} if $fi->{tempname};
 				delete $fi->{old_file_name} if $fi->{old_file_name};
 				$fi->{file_json} = to_json($fi);
 			}
 		}
-		
+
 		# and then delete all files no longer in the list of files for that record
 		# (deleting files only removes the corresponding hidden input fields but not the actual files)
 		# (this makes it possible to discard all changes to a record, including changes to files)
@@ -110,7 +110,7 @@ sub handle_file {
 			}
 		}
 	}
-	
+
 	return $pub->{file};
 }
 
