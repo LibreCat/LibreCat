@@ -1,5 +1,5 @@
 <!-- BEGIN facettes.tt -->
-
+[%- USE JSON -%]
 <h5>Search</h5>
 <form action="#" method="get" class="form-inline" role="form">
     <span class="input-group">
@@ -24,17 +24,13 @@
 [%- END %]
 
 <ul class="nav nav-tabs nav-stacked">
-  [% IF facets.status.terms.0 %]
+  [% IF facets.status.terms.size > 1 %]
   <li>
     <button data-toggle="collapse" data-target="#status_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Submission Status ([% facets.status.terms.size %])</a></button>
     <div class="facettecollapse">
     <ul id="status_[% tabmodus %]" class="collapse[% IF qp.q.grep($facets.status.terms.0.term).0 %] in[% END %]">
-      [% FOREACH type IN facets.status.terms %]
-      [% IF facets.status.terms.size > 1 %]
-      <li><a href="[% h.newuri_for("$path", q="status=$type.term") %]" rel="nofollow">[% type.term %] ([% type.count %])</a></li>
-      [% ELSE %]
-      <li>[% type.term %] ([% type.count %])</li>
-      [% END %]
+      [% FOREACH stat IN facets.status.terms %]
+      <li><a class="search-facet" data-index="status" data-val="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
       [% END %]
     </ul>
     </div>
@@ -92,72 +88,57 @@
   </li>
   [% END %]
 
-  [% IF facets.type.terms.0 %]
+  [% IF facets.type.terms.size > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#documentType_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publication Type ([% facets.type.terms.size %])</a></button>
+    <button data-toggle="collapse" data-target="#type_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publication Type ([% facets.type.terms.size %])</a></button>
     <div class="facettecollapse">
-    <ul id="documentType_[% tabmodus %]" class="collapse[% IF qp.publicationtype %] in[% END %]">
+    <ul id="type_[% tabmodus %]" class="collapse">
       [% FOREACH type IN facets.type.terms %]
       [% typeName = h.display_doctypes(type.term) %]
-      [% IF qp.publicationtype.grep("^$type.term\$").0 %]
-      <li>[% typeName %] ([% type.count %])</li>
-      [% ELSE %]
-      <li><a href="[% h.newuri_for("$path", qp, q="$type.term") %]" rel="nofollow">[% typeName %] ([% type.count %])</a></li>
-      [% END %]
+      <li><a class="search-facet" data-index="type" data-val="[% type.term %]" href="#" rel="nofollow">[% typeName %] ([% type.count %])</a></li>
       [% END %]
     </ul>
     </div>
   </li>
  [% END %]
 
- [% IF facets.author.terms.0 %]
+ [% IF facets.author.terms.size > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#co_authors_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Authors ([% facets.author.terms.size %])</a></button>
+    <button data-toggle="collapse" data-target="#authors_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Authors ([% facets.author.terms.size %])</a></button>
     <div class="facettecollapse">
-    <ul id="co_authors_[% tabmodus %]" class="collapse[% IF qp.author %] in[% END %]">
+    <ul id="authors_[% tabmodus %]" class="collapse">
       [% FOREACH au IN facets.author.terms %]
       [% name = h.getPerson(au.term) %]
-      [% IF qp.author.grep("$au.term").0 %]
-      <li>[% name.full_name %] (<a href="/person/[% au.term %]">publication list</a>)</li>
-      [% ELSE %]
-          <li><a href="[% h.newuri_for("$path", qp, q="author=$au.term") %]" rel="nofollow">[% name.full_name %] ([% au.count %])</a></li>
-      [% END %]
+      <li><a class="search-facet" data-index="author" data-val="[% au.term %]" href="#" rel="nofollow">[% name.full_name %] ([% au.count %])</a></li>
       [% END %]
     </ul>
     </div>
   </li>
   [% END %]
 
-  [% IF facets.editor.terms.0 %]
+  [% IF facets.editor.terms.size > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#co_editors_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Editors ([% facets.editor.terms.size %])</a></button>
+    <button data-toggle="collapse" data-target="#editors_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Editors ([% facets.editor.terms.size %])</a></button>
     <div class="facettecollapse">
-    <ul id="co_editors_[% tabmodus %]" class="collapse[% IF qp.editor %] in[% END %]">
+    <ul id="editors_[% tabmodus %]" class="collapse">
       [% FOREACH ed IN facets.editor.terms %]
       [% name = h.getPerson(ed.term) %]
-      [% IF qp.editor.grep("$ed.term").0 %]
-      <li>[% name.full_name %] (<a href="/person/[% ed.term %]">publication list</a>)</li>
-      [% ELSE %]
-          <li><a href="[% h.newuri_for("$path", qp, q="editor=$ed.term") %]" rel="nofollow">[% name.full_name %] ([% ed.count %])</a></li>
-      [% END %]
+      <li><a class="search-facet" data-index="editor" data-val="[% ed.term %]" href="#" rel="nofollow">[% name.full_name %] ([% ed.count %])</a></li>
       [% END %]
     </ul>
     </div>
   </li>
   [% END %]
-  [% IF facets.year.terms.0 %]
+
+  [% IF facets.year.terms.size > 1 %]
   <li>
     <button data-target="#year_[% tabmodus %]" data-toggle="collapse"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publishing Year ([% facets.year.terms.size %])</a></button>
     <div class="facettecollapse">
-    <ul id="year_[% tabmodus %]" class="collapse[% IF qp.publishingyear %] in[% END %]">
+    <ul id="year_[% tabmodus %]" class="collapse">
       [% FOREACH y IN facets.year.terms %]
       [%- year = (y.term) / 1000; -%]
       [%- yf = date.format(year); -%]
-      [% IF qp.year.grep("^$yf\$").0 %]
-      <li>[% yf %] ([% y.count %])</li>
-      [% ELSE %]
-          <li><a href="[% h.newuri_for("$path", qp, q="publishingyear=$yf") %]" rel="nofollow">[% yf %] ([% y.count %])</a></li>
-      [% END %]
+      <li><a class="search-facet" data-index="year" data-val="[% yf %]" href="#" rel="nofollow">[% yf %] ([% y.count %])</a></li>
       [% END %]
     </ul>
     </div>
@@ -171,20 +152,20 @@
 
   [% IF facets.popular_science.total %]
   <li>
-    <a href="[% h.newuri_for("$path", qp, q="popular_science=1") %]" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% facets.popularScience.total %] Popular Science</a>
+    <a class="search-facet" data-index="popular_science" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% facets.popularScience.total %] Popular Science</a>
   </li>
   [% END %]
 
   [% IF facets.extern.total %]
   <li>
-    <a href="[% h.newuri_for("$path", qp, q="extern=1") %]" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% facets.nonlu.total %] External Publications</a>
+    <a class="search-facet" data-index="extern" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% facets.nonlu.total %] External Publications</a>
   </li>
   [% END %]
 
   <li>
     [% FOREACH term IN facets.open_access.terms %]
       [% NEXT IF term.term == "0" %]
-      <a href="[% h.uri_for("$path", qp, q="fulltext=1") %]" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% term.count %] OA Fulltexts</a>
+      <a class="search-facet" data-index="oa" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% term.count %] OA Fulltexts</a>
     [% END %]
   </li>
 
@@ -280,5 +261,21 @@
     </div>
   </li>
 </ul>
+
+<script>
+var baseURL = '[% uri_base %]',
+searchParams = [% h.extract_params.json %];
+// search facets
+$('a.search-facet').click(function() {
+    var select = $(this),
+        index = select.data('index'),
+        term = select.data('val');
+    searchParams.q.push(index+' exact '+term);
+    delete searchParams.start;
+    var url = 'http://localhost:3000/myPUB/search/admin?'+ $.param($.extend({}, searchParams), true);
+    alert('URL:'+url);
+    window.location.replace(url);
+});
+</script>
 
 <!-- END facettes.tt -->

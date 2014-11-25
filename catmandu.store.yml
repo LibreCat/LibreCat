@@ -512,7 +512,7 @@ search:
                 '=': true
                 '<>': true
                 'exact': {field: ['author.full_name.exact', 'author.id']}
-              field: ['author.fullN_name', 'author.id']
+              field: ['author.full_name', 'author.id']
               sort: {field: 'first_author'}
             editor:
               op:

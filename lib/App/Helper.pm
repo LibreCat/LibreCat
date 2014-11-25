@@ -98,8 +98,6 @@ sub extract_params {
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 	$p->{q} = $self->string_array($params->{q});
 
-#	$p->{cql_query} = join(' AND ', @{$p->{q}});
-
 #	my $formats = keys %{ $self->config->{exporter}->{publication} };
 #	$p->{fmt} = array_includes($formats, $params->{fmt}) ? $params->{fmt}
 #		: $self->config->{default_fmt};
@@ -209,7 +207,9 @@ sub shost {
 sub search_publication {
 	my ($self, $p) = @_;
 	my $sort;
-	my $cql = join(' AND ', @{$p->{q}});
+	my $cql = "";
+	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
+	#return $cql;
 	my $hits = publication->search(
 	    cql_query => $cql,
 #		sru_sortkeys => $sort,

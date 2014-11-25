@@ -42,7 +42,6 @@ prefix '/myPUB/search' => sub {
     get '/admin' => needs role => 'super_admin' => sub {
 
         my $p = params;
-        push @{$p->{q}}, "year>1950";
         $p = h->extract_params($p);
 
         $p->{facets} = {
@@ -68,6 +67,7 @@ prefix '/myPUB/search' => sub {
         };
 
         my $hits = h->search_publication($p);
+        #return to_dumper $hits;
         $hits->{modus} = "admin";
         template "home", $hits;
 
