@@ -1,1 +1,0 @@
-<div class="form-group row innerrow"><div class="col-md-9"><input type="text" name="alternative_title.' + index + '" id="id_alternative_title_' + index + '" value="" placeholder="' + placeholder + '" class="form-control"></div></div>

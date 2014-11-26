@@ -223,6 +223,7 @@ publicationTypes:
           placeholder: "(Published while not employed at Bielefeld University)"
         alternative_title: &alternative_title
           label: "Alternative Title"
+          multiple: 1
         publication_status: &publication_status
           label: "Publication Status"
         external_id: &external_id

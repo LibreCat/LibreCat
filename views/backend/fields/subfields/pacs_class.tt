@@ -1,1 +1,0 @@
-<div class="form-group row innerrow"><div class="col-md-9"><input type="text" name="pacs_class" id="pacs_class_' + index + '" value="" class="form-control" placeholder="' + placeholder + '" /></div><div class="col-md-1"><div class="glyphicon glyphicon-minus single"></div></div></div>

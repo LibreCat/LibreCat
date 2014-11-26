@@ -186,116 +186,7 @@ $('#authedtrans_0').change(function() {
   $('.authedtrans:not(#authedtrans_0)').append('<option value="' + selected + '">' + seltext + '</option>');
 });
 
-
-$('#plusKeyword').click(function(){
-  var items = $('#keyword div.form-group');
-  var index = items.index($('#keyword div.form-group').last()) + 1;
-  {% IF fields.basic_fields.keyword.placeholder || fields.supplementary_fields.keyword.placeholder %}
-	var placeholder = "{% fields.basic_fields.keyword.placeholder %}{% fields.supplementary_fields.keyword.placeholder %}";
-  {% END %}
-  $('#keyword').append('[% INCLUDE backend/fields/subfields/keyword.tt %]');
-});
-
-$('#plusAlttitle').click(function(){
-  var items = $('#alternative_title div.form-group');
-  var index = items.index($('#alternative_title div.form-group').last()) + 1;
-  {% IF fields.basic_fields.alternative_title.placeholder || fields.supplementary_fields.alternative_title.placeholder %}
-	var placeholder = "{% fields.basic_fields.alternative_title.placeholder %}{% fields.supplementary_fields.alternative_title.placeholder %}";
-  {% END %}
-  $('#alternative_title').append('[% INCLUDE backend/fields/subfields/alternative_title.tt %]');
-});
-
-$('#pluspacs_class').click(function(){
-  var items = $('#pacs_class div.form-group');
-  var index = items.index($('#pacs_class div.form-group').last()) + 1;
-  {% IF fields.basic_fields.pacs_class.placeholder || fields.supplementary_fields.pacs_class.placeholder %}
-	var placeholder = "{% fields.basic_fields.pacs_class.placeholder %}{% fields.supplementary_fields.pacs_class.placeholder %}";
-  {% END %}
-  $('#pacs_class').append('[% INCLUDE backend/fields/subfields/pacs_class.tt %]');
-});
-
-$('#plusmsc_class').click(function(){
-  var items = $('#msc_class div.form-group');
-  var index = items.index($('#msc_class div.form-group').last()) + 1;
-  {% IF fields.basic_fields.msc_class.placeholder || fields.supplementary_fields.msc_class.placeholder %}
-	var placeholder = "{% fields.basic_fields.msc_class.placeholder %}{% fields.supplementary_fields.msc_class.placeholder %}";
-  {% END %}
-  $('#msc_class').append('[% INCLUDE backend/fields/subfields/msc_class.tt %]');
-});
-
-$('#plusccs_class').click(function(){
-  var items = $('#ccs_class div.form-group');
-  var index = items.index($('#ccs_class div.form-group').last()) + 1;
-  {% IF fields.basic_fields.ccs_class.placeholder || fields.supplementary_fields.ccs_class.placeholder %}
-	var placeholder = "{% fields.basic_fields.ccs_class.placeholder %}{% fields.supplementary_fields.ccs_class.placeholder %}";
-  {% END %}
-  $('#ccs_class').append('[% INCLUDE backend/fields/subfields/ccs_class.tt %]');
-});
-
-$('#plusDdc').click(function(){
-  var items = $('#ddc div.form-group');
-  var index = items.index($('#ddc div.form-group').last()) + 1;
-  $('#ddc').append('[% INCLUDE backend/fields/subfields/ddc.tt %]');
-});
-
-$('#plusAbstract').click(function(){
-  var items = $('#abstract div.form-group');
-  var index = items.index($('#abstract div.form-group').last()) + 1;
-  $('#abstract').append('[% INCLUDE backend/fields/subfields/abstract.tt %]');
-});
-
-$('#plusLanguage').click(function(){
-  var items = $('#language div.form-group');
-  var index = items.index($('#language div.form-group').last()) + 1;
-  $('#language').append('[% INCLUDE backend/fields/subfields/language.tt %]');
-});
-
-
-
 // minus
-$(document).on('click', '.group', function(){
-  var index = $(this).parent().parent().index();
-  if(parseInt(index) != 0){
-    $(this).parent().parent().remove();
-  }
-});
-$(document).on('click', '.single', function(){
-  var index = $(this).parent().parent().index();
-  if(parseInt(index) != 0){
-    $(this).parent().parent().remove();
-  }
-});
-$(document).on('click', '.fullrow', function(){
-  var index = $(this).parent().parent().parent().parent().index();
-  if(parseInt(index) != 0){
-    $(this).parent().parent().parent().parent().remove();
-  }
-});
-$(document).on('click', '.author', function(){
-  var container = $(this).parent().parent();
-  container.children('input').each(function(){
-    if($(this).attr("readonly")){
-      $(this).removeAttr("readonly");
-    }
-    if($(this).is(':checked')){
-      $(this).removeAttr("checked");
-    }
-    this.value = "";
-  });
-  container.children('span').children('input').each(function(){
-    if($(this).attr("readonly")){
-      $(this).removeAttr("readonly");
-    }
-    if($(this).is(':checked')){
-      $(this).removeAttr("checked");
-    }
-    this.value = "";
-  });
-  container.find('img').each(function(){
-    this.title = "";
-    this.src = "/images/biNotAuthorized.png";
-  });  
-});
 $(document).on('click', '.connect', function(){
   var index = $(this).parent().parent().parent().index();
   $(this).parent().parent().parent().remove();
@@ -391,14 +282,6 @@ function angularSearch($scope, $compile) {
 	if($(myVal).attr('data-mandatory') == "yes"){
 	  $('#editorOnly span:last-child label').append('<span class="starMandatory">*</span>');
 	}
-  };
-  $scope.cloneCorped = function(myVal){
-    var items = $('#corporate_editor div.form-group');
-    var index = items.index($('#corporate_editor div.form-group').last()) + 1;
-    {% IF fields.basic_fields.corporate_editor.placeholder || fields.supplementary_fields.corporate_editor.placeholder %}
-	  var placeholder = "{% fields.basic_fields.corporate_editor.placeholder %}{% fields.supplementary_fields.corporate_editor.placeholder %}";
-    {% END %}
-    $('#corporate_editor').append('[% INCLUDE backend/fields/subfields/corporate_editor.tt %]');
   };
   $scope.cloneSupervisor = function(myVal){
     var items = $('#supervisor div.creator div.innerrow');

@@ -387,9 +387,13 @@ function add_field(name, placeholder){
 	var index = items.index($('#' + name + ' div.form-group').last()) + 1;
 	var blueprint = $(items[0]).clone(true,true);
 	
-	$(blueprint).find('input, textarea, img, button').each(function(){
+	$(blueprint).find('input, textarea, img, button, select').each(function(){
 		var newid = $(this).attr('id').replace(/0/g,index);
 		$(this).attr('id', newid);
+		if($(this).attr('name')){
+			var newname = $(this).attr('name').replace(/0/g,index);
+			$(this).attr('name', newname);
+		}
 		$(this).attr('disabled',false);
 		$(this).attr('readonly',false);
 		$(this).removeAttr('autocomplete');
@@ -428,11 +432,16 @@ function remove_field(object){
 	  $(container).remove();
 	}
 	else if(parseInt(index) == 0){
-		$(container).find('input[type="text"], input[type="hidden"]').val('');
-		$(container).find('input[type="text"]').attr('disabled',false);
-		$(container).find('input[type="text"]').attr('readonly',false);
-		$(container).find('img').attr('src','/images/biNotAuthorized.png');
-		$(container).find('img').attr('alt', 'Not Authorized');
+		$(container).find('input, textarea, img, select').each(function(){
+			$(this).val('');
+			$(this).attr('disabled',false);
+			$(this).attr('readonly',false);
+			$(this).removeAttr('autocomplete');
+			if($(this).prop('tagName') == "IMG"){
+				$(this).attr('src','/images/biNotAuthorized.png');
+				$(this).attr('alt', 'Not Authorized');
+			}
+		});
 	}
 }
 
