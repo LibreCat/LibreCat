@@ -3,7 +3,7 @@
 <h5>Search</h5>
 <form action="#" method="get" class="form-inline" role="form">
     <span class="input-group">
-      <input type="text" value='[% qp.q %]' class="form-control" name="q" placeholder="Search" />
+      <input type="text" value='[% qp.q.join(' and ') %]' class="form-control" name="q" placeholder="Search" />
       <span class="input-group-btn">
         <button type="button" class="btn btn-default">Go!</button>
       </span>
@@ -263,17 +263,17 @@
 </ul>
 
 <script>
-var baseURL = '[% uri_base %]',
+var path = '[% request.path %]',
 searchParams = [% h.extract_params.json %];
-// search facets
+
 $('a.search-facet_[% tabmodus %]').click(function() {
     var select = $(this),
         index = select.data('index'),
         term = select.data('val');
     searchParams.q.push(index+' exact '+term);
     delete searchParams.start;
-    var url = 'http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/search/admin?'+ $.param($.extend({}, searchParams), true);
-    alert('URL:'+url);
+    var url = path+'?'+ $.param($.extend({}, searchParams), true);
+    //alert('URL:'+url);
     window.location.replace(url);
 });
 </script>

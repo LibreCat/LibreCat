@@ -8,7 +8,7 @@ package App::Search::Route::publication;
 
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
-# use App::Searcher;
+use App::Helper;
 # what for?
 =head2 GET /{data|publication}/:id/:style
 
@@ -36,40 +36,39 @@ get qr{/(data|publication)/(\d{1,})/(\w{1,})/*} => sub {
 =cut
 get qr{/(data|publication)/(\d{1,})/*} => sub {
 	my ($bag, $id) = splat;
+	my $p = h->extract_params();
+	push @{$p->{q}}, "id=$id";
 
-	my $p = {
-		q => "id=$id",
-		limit => 1,
-		style => $fd_style,
-		tmpl => "frontdoor/record",
-		fmt => params->{fmt} || '',
-	};
-	$p->{'bag'} = "researchData" if $bag eq "data";
 	my $hits = h->search_publication($p);
+	$hits->{bag} = "researchData" if $bag eq "data";
+	template "frontdoor/record", $hits;
 };
 
 # /data/doi/:doi
-get qr{/data/doi/(.*?)/*} => sub {
-	my ($doi) = splat;
-
-	my $p = extract_params;
-	$p->{'bag'} = 'researchData';
-	$p->{'q'} = "doi=$doi";
-	#handle_request(\%p);
-};
+# get qr{/data/doi/(.*?)/*} => sub {
+# 	my ($doi) = splat;
+#
+# 	my $p = h->extract_params();
+# 	$p->{'bag'} = 'researchData';
+# 	$p->{'q'} = "doi=$doi";
+# 	#handle_request(\%p);
+# };
 
 # api for data publication lists
 get qr{/data/*} => sub {
-	my $p = extract_params;
+	my $p = h->extract_params();
 
-	$p->{'bag'} = 'researchData';
+	#$p->{'bag'} = 'researchData';
 	my $hits = h->search_publication($p);
+	$hits->{bag} = 'researchData';
+	template "website/home", $hits;
 };
 
 # api for publication lists
 get qr{/publication/*} => sub {
-	my $p = h->extract_params;
-	my $hits = h->search_publication();
+	my $p = h->extract_params();
+	my $hits = h->search_publication($p);
+	template "website/home", $hits;
 };
 
 1;

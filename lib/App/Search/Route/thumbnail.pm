@@ -14,7 +14,7 @@ use Dancer qw/:syntax :script/;
     Get a thumbnail image for a given id and file name.
 
 =cut
-ajax '/thumbnail/:id/:file_name' => sub {
+get '/thumbnail/:id/:file_name' => sub {
     my $id = params->{id};
     my $filename = params->{file_name};
 

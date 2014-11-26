@@ -93,7 +93,7 @@ sub extract_params {
 	my ($self, $params) = @_;
 	$params ||= params;
 	my $p = {};
-
+	return $p if ref $params ne 'HASH';
 	$p->{start} = $params->{start} if is_natural $params->{start};
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 	$p->{q} = $self->string_array($params->{q});

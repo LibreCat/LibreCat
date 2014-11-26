@@ -15,7 +15,7 @@ get '/unapi' => sub {
 
     content_type 'xml';
 
-    my $specs = $id ? h->config->{exporter}->{publication};
+    my $specs = $id && h->config->{exporter}->{publication};
     my $out = qq(<?xml version="1.0" encoding="UTF-8" ?>\n);
 
     if ($id) {

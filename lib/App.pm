@@ -12,7 +12,7 @@ use Catmandu::Sane;
 use Dancer ':syntax';
 
 use App::Catalog; # the backend
-#use App::Search; # the frontend
+use App::Search; # the frontend
 
 use App::Helper;
 use Authentication::Authenticate;

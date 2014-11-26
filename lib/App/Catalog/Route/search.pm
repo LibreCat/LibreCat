@@ -41,8 +41,7 @@ prefix '/myPUB/search' => sub {
 =cut
     get '/admin' => needs role => 'super_admin' => sub {
 
-        my $p = params;
-        $p = h->extract_params($p);
+        my $p = h->extract_params();
 
         $p->{facets} = {
             author => {
@@ -67,7 +66,6 @@ prefix '/myPUB/search' => sub {
         };
 
         my $hits = h->search_publication($p);
-        #return to_dumper $hits;
         $hits->{modus} = "admin";
         template "home", $hits;
 
@@ -80,27 +78,26 @@ prefix '/myPUB/search' => sub {
 =cut
     get '/reviewer' => needs role => 'reviewer' => sub {
 
-        my $p = params;
-        return to_dumper $p;
-        # $p->{facets} = {
-        #     coAuthor => {
-        #         terms => {
-        #             field   => 'author.id',
-        #             size    => 20,
-        #         }
-        #     },
-        #     coEditor => {
-        #         terms => {
-        #             field   => 'editor.id',
-        #             size    => 20,
-        #         }
-        #     },
-        #     open_access => { terms => { field => 'file.open_access', size => 1 } },
-        #     quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
-        #     popular_science => { terms => { field => 'popular_science', size => 1 } },
-        #     extern => { terms => { field => 'extern', size => 1 } },
-        #     status => { terms => { field => 'status', size => 5 } },
-        # };
+        my $p = h->extract_params();
+        $p->{facets} = {
+            coAuthor => {
+                terms => {
+                    field   => 'author.id',
+                    size    => 20,
+                }
+            },
+            coEditor => {
+                terms => {
+                    field   => 'editor.id',
+                    size    => 20,
+                }
+            },
+            open_access => { terms => { field => 'file.open_access', size => 1 } },
+            quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
+            popular_science => { terms => { field => 'popular_science', size => 1 } },
+            extern => { terms => { field => 'extern', size => 1 } },
+            status => { terms => { field => 'status', size => 5 } },
+        };
 
         my $hits = h->search_publication($p);
         $hits->{modus} = "reviewer";
@@ -115,27 +112,26 @@ prefix '/myPUB/search' => sub {
 =cut
     get '/datamanager' => needs role => 'dataManager' => sub {
 
-        my $p = params;
-        return to_dumper $p;
-        # $p->{facets} = {
-        #     coAuthor => {
-        #         terms => {
-        #             field   => 'author.id',
-        #             size    => 20,
-        #         }
-        #     },
-        #     coEditor => {
-        #         terms => {
-        #             field   => 'editor.id',
-        #             size    => 20,
-        #         }
-        #     },
-        #     open_access => { terms => { field => 'file.open_access', size => 1 } },
-        #     quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
-        #     popular_science => { terms => { field => 'popular_science', size => 1 } },
-        #     extern => { terms => { field => 'extern', size => 1 } },
-        #     status => { terms => { field => 'status', size => 5 } },
-        # };
+        my $p = h->extract_params();
+        $p->{facets} = {
+            coAuthor => {
+                terms => {
+                    field   => 'author.id',
+                    size    => 20,
+                }
+            },
+            coEditor => {
+                terms => {
+                    field   => 'editor.id',
+                    size    => 20,
+                }
+            },
+            open_access => { terms => { field => 'file.open_access', size => 1 } },
+            quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
+            popular_science => { terms => { field => 'popular_science', size => 1 } },
+            extern => { terms => { field => 'extern', size => 1 } },
+            status => { terms => { field => 'status', size => 5 } },
+        };
 
         my $hits = h->search_publication($p);
         $hits->{modus} = "data_manager";
@@ -150,10 +146,11 @@ prefix '/myPUB/search' => sub {
 
 =cut
     get '/delegate/:delegate_id' => sub {
-        my $p = params;
-        return to_dumper $p;
-        #$params->{modus} = "delegate_".$params->{delegate_id};
-        #search_publication($params);
+        my $p = h->extract_params();
+
+        my $hits = h->search_publication($p);
+        $hits->{modus} = "delegate_".$p->{delegate_id};
+        template "home", $hits;
     };
 
 =head2 GET /
@@ -163,30 +160,29 @@ prefix '/myPUB/search' => sub {
 =cut
     get '/' => needs login => sub {
 
-        my $p = h->extract_params(params);
-        return to_dumper $p;
-        # my $id = session 'personNumber';
-        # $p->{facets} = {
-        #     coAuthor => {
-        #         terms => {
-        #             field   => 'author.id',
-        #             size    => 20,
-        #             exclude => [$id]
-        #         }
-        #     },
-        #     coEditor => {
-        #         terms => {
-        #             field   => 'editor.id',
-        #             size    => 20,
-        #             exclude => [$id]
-        #         }
-        #     },
-        #     open_access => { terms => { field => 'file.open_access', size => 1 } },
-        #     quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
-        #     popular_science => { terms => { field => 'popular_science', size => 1 } },
-        #     extern => { terms => { field => 'extern', size => 1 } },
-        #     status => { terms => { field => 'status', size => 5 } },
-        # };
+        my $p = h->extract_params();
+        my $id = session 'personNumber';
+        $p->{facets} = {
+            coAuthor => {
+                terms => {
+                    field   => 'author.id',
+                    size    => 20,
+                    exclude => [$id]
+                }
+            },
+            coEditor => {
+                terms => {
+                    field   => 'editor.id',
+                    size    => 20,
+                    exclude => [$id]
+                }
+            },
+            open_access => { terms => { field => 'file.open_access', size => 1 } },
+            quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
+            popular_science => { terms => { field => 'popular_science', size => 1 } },
+            extern => { terms => { field => 'extern', size => 1 } },
+            status => { terms => { field => 'status', size => 5 } },
+        };
 
         my $hits = h->search_publication($p);
         $hits->{modus} = "user";
