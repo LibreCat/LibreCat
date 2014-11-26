@@ -97,25 +97,30 @@ prefix '/myPUB' => sub {
 		my $fullsort;
 		
 		if($fmt eq "autocomplete"){
-			foreach (@{$hits->{hits}}){
-				my $label = "";
-				
-				if($_->{tree}){
-					foreach my $dep (@{$_->{tree}}){
-						next if $dep eq $_->{_id};
-						my $info = h->getDepartment($dep);
-						my $name = $info->{name};
-						$label .= $name . " | ";
+			if($hits->{total} > 0){
+				foreach (@{$hits->{hits}}){
+					my $label = "";
+					
+					if($_->{tree}){
+						foreach my $dep (@{$_->{tree}}){
+							next if $dep eq $_->{_id};
+							my $info = h->getDepartment($dep);
+							my $name = $info->{name};
+							$label .= $name . " | ";
+						}
+						$label =~ s/ \| $//g;
+						$label =  "(" . $label . ")" if $label ne "";
 					}
-					$label =~ s/ \| $//g;
-					$label =  "(" . $label . ")" if $label ne "";
+					
+					$label = $_->{name} . " " . $label;
+					
+					$label =~ s/"/\\"/g;
+					$label =~ s/\s+$//g;
+					push @$jsonhash, {id => $_->{_id}, label => $label};
 				}
-				
-				$label = $_->{name} . " " . $label;
-				
-				$label =~ s/"/\\"/g;
-				$label =~ s/\s+$//g;
-				push @$jsonhash, {id => $_->{_id}, label => $label};
+			}
+			else {
+				$jsonhash = [];
 			}
 		}
 		else{
