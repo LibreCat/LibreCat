@@ -186,34 +186,6 @@ $('#authedtrans_0').change(function() {
   $('.authedtrans:not(#authedtrans_0)').append('<option value="' + selected + '">' + seltext + '</option>');
 });
 
-$('#plusDepartment').click(function(){
-  var items = $('#department div.innerrow');
-  var index = items.index($('#department div.form-group').last()) + 1;
-  {% IF fields.basic_fields.department.placeholder || fields.supplementary_fields.department.placeholder %}
-	var placeholder = "{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}";
-  {% END %}
-  $('#department').append('[% INCLUDE backend/fields/subfields/department.tt %]');
-  enable_autocomplete("dp",index);
-});
-
-$('#plusProject').click(function(){
-  var items = $('#project div.innerrow');
-  var index = items.index($('#project div.form-group').last()) + 1;
-  {% IF fields.basic_fields.project.placeholder || fields.supplementary_fields.project.placeholder %}
-	var placeholder = "{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}";
-  {% END %}
-  $('#project').append('[% INCLUDE backend/fields/subfields/project.tt %]');
-  $('#project').bind("click", function(){
-    $( "#pj_autocomplete_" + index ).autocomplete({
-      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
-      minLength: 2,
-      select: function( event, ui ) {
-        $( "#pj_autocomplete_" + index ).val( ui.item.label );
-        $( "#pj_idautocomplete_" + index ).val( ui.item.id );
-      }
-    });
-  });
-});
 
 $('#plusKeyword').click(function(){
   var items = $('#keyword div.form-group');

@@ -18,11 +18,11 @@
       </div>
     
       <div class="col-md-2">
-        <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0" value="Select"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} disabled {% END %}/>
+        <button type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} disabled {% END %}>Select</button>
       </div>
         
       <div class="col-md-1">
-        <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
+        <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
       </div>
     </div>
     {% IF fields.basic_fields.department.multiple OR fields.supplementary_fields.department.multiple %}
@@ -36,15 +36,11 @@
       </div>
           
       <div class="col-md-2">
-        <input type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]" value="Select"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} disabled {% END %}/>
+        <button type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} disabled {% END %}>Select</button>
       </div>
           
       <div class="col-md-1">
-        [% IF loop.index == 0 %]
-        <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';"></span>
-        [% ELSE %]
-        <span class="glyphicon glyphicon-minus single"></span>
-        [% END %]
+        <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
       </div>
     </div>
     [% END %]
