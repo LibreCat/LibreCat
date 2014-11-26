@@ -1,0 +1,9 @@
+[% IF bag == "data" %]
+[% hits = researchhits.hits %]
+[% END %]
+[% INCLUDE websites/hits.tt %]
+
+
+
+
+

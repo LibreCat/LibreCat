@@ -1,0 +1,148 @@
+<!-- BEGIN websites/hits.tt -->
+
+<!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->
+[% num = total; n = 0 %]
+[% USE MDSimple %]
+
+<div class="row" style="padding-left:13px;">
+  <div class="col-md-9">
+    <h5>[% total %] [% lang ? "Publications" : "Publikationen" %]</h5>
+  </div>
+</div>
+
+[% UNLESS bag == "project" %]
+<div class="row">
+  <div class="col-md-12">
+    <div class="row" style="padding-left:13px;">
+    <form action="/publication" method="get" class="form-inline">
+      [% FOREACH key IN qp.keys %]
+        [% NEXT IF key == "q" %]
+        [% IF qp.$key.0 %]
+          [% FOREACH val in qp.$key %]
+            <input type="hidden" name="[% key %]" value="[% val %]" />
+          [% END %]
+        [% ELSE %]
+          <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
+        [% END %]
+      [% END %]
+      <div class="col-xs-7">
+        <div class="input-group">
+          <input type="text" name="q" id="q_id" ng-model="yourQuery" ng-init="yourQuery='[% qp.q | replace('"', '&quot;') %]'" value="[% qp.q %]" class="form-control input-sm" placeholder="[% lang ? "Search" : "Suche" %]" />
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-sm btn-default">[% lang ? "Go!" : "Los!" %]</button>
+          </span>
+        </div>
+      </div>
+        <div class="col-xs-5">
+          <div class="btn-group">
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+              [% lang ? "Fields" : "Felder" %] <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li ng-repeat="field in fields"><a href="" class="ngadd" ng-click="addField(field.value)">{{field.text}}</a></li>
+              </ul>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+              [% lang ? "Operators" : "Operatoren" %] <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li ng-repeat="operator in operators"><a href="" class="ngadd" ng-click="addOperator(operator.value)">{{operator.text}}</a></li>
+              </ul>
+            </div>
+          </div>
+          &nbsp;&nbsp;
+          <a href="[% h.host %]/doc/api/intro.html#cql">[% lang ? "Help" : "Hilfe" %]</a>
+        </div>
+      </form>
+    [% IF qp.q %]
+      <span class="text-muted" style="padding-left:13px;"><a href="[% h.newuri_for("$data", qp, q="") %]" rel="nofollow"><span class="fa fa-times"></span></a> [% lang ? 'Search' : 'Suche' %]: [% newq %]</span>
+    [% END %]
+    [% IF deletedq %]
+      <span class="text-muted" style="padding-left:20px;">[% FOREACH del IN deletedq %]<strike>[% del %]</strike>&nbsp;&nbsp;[% END %]</span>
+    [% END %]
+    </div>
+  </div>
+</div>
+
+<div class="row" style="padding-left:13px;">
+  [% INCLUDE pagination.tt %]
+</div>
+[% END %]
+
+[% IF error %]
+<div class="row" style="padding-left:13px;">
+  <div class="col-md-10">
+    <div  class="alert alert-danger"><strong>[% error %]</strong></div>
+  </div>
+</div>
+[% END %]
+
+[% IF request.path == "/marked" %]<ul style="list-style-type:none;" id="sortable">[% END %]
+[% FOREACH entry IN hits %]
+[% bag = entry.documentType == "researchData" ? "data" : "publication" %]
+[% IF request.path == "/marked" %]<li style="margin-left:-25px;min-height:120px;" class="ui-state-default" id="fade_[% n+1 %]">[% END %]
+[% n = n +1 %]
+<div class="row" style="padding-left:13px;">
+  <div class="col-md-12">
+    <i>[% entry.publishingYear %] | [% h.display_doctypes(entry.documentType) %] | PUB-ID: <span class="pubid">[% entry.oId %]</span></i>
+  </div>
+</div>
+
+<div class="row" style="padding-left:13px;">
+  <div class="col-md-12" style="margin-right:20px;">
+   [% IF style == 'frontShort' %]
+	<a href="/[% bag %]/[% entry.oId %]">[% entry.mainTitle | md_simple %]</a><br />
+   [% END %]
+   [% entry.citation.$style | md_simple %][% IF style != "apa_indent" AND style != "dgps" %]<br />[% END %]
+   [% INCLUDE links.tt %]
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">&nbsp;</div>
+</div>
+[% IF request.path == "/marked" %]
+<script type="text/javascript" charset="utf-8">
+$('#clickme_[% n %]').click(function() {
+  $('#fade_[% n %]').fadeOut('slow', function() {
+  });
+});
+</script>
+[% END %]
+[% IF request.path == "/marked" %]</li>[% END %]
+
+[% END %]
+[% IF request.path == "/marked" %]</ul>[% END %]
+[% INCLUDE pagination.tt %]
+
+<script type="text/javascript" charset="utf-8">
+
+// mark
+
+$('a.mark').click(function(evt) {
+  evt.preventDefault();
+  var a = $(this);
+  var marked = a.data('marked');
+  if (marked == 0) {
+    $('div.unmark_all').empty().append('<a class="unmark-all" href="#">Unmark all</a>');
+    $.post('[% h.host %]/marked/'+a.data('id'), function(res) {
+      $('.total-marked').text(res.total);
+      a.data('marked', 1).text('Unmark');
+    }, 'json');
+  } else {
+    $.post('[% h.host %]/marked/'+a.data('id')+'?x-tunneled-method=DELETE', function(res) {
+      $('.total-marked').text(res.total);
+      a.data('marked', 0).text('Mark');
+    }, 'json');
+    if(res.total != "0"){
+      $('div.unmark_all').empty().append('<a class="unmark-all" href="#">Unmark all</a>');
+    }
+    if(res.total == "0") {
+      $('div.unmark_all').empty();
+    }
+  }
+});
+</script>
+<!-- END websites/hits.tt -->

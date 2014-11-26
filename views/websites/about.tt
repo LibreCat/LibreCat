@@ -1,0 +1,96 @@
+<div class="row" style="padding-left:13px;">
+
+<div class="col-xs-9">
+
+<h4>PUB &ndash; Publikationen an der Universit&auml;t Bielefeld</h4>
+
+<h5>Ihr Zugang zur Forschung an der Universit&auml;t Bielefeld</h5>
+<p>
+PUB &ndash; Publikationen an der Universit&auml;t Bielefeld ist der offizielle Nachweisort f&uuml;r Literaturver&ouml;ffentlichungen und Forschungsdaten an der Hochschule. Zudem bietet PUB die Sicht auf Personenseiten und das elektronische Ver&ouml;ffentlichen von Dissertationen an.
+</p>
+
+
+<h5>Weltweit auffindbar</h5>
+
+<p>
+PUB ist optimiert f&uuml;r die ma&szlig;geblichen Suchmaschinen wie Google, Bing oder Google Scholar. Damit sind alle Bielefelder Forschungsaktivit&auml;ten einfach und prominent im Web auffindbar.
+</p>
+
+<h5>Vernetzte wissenschaftliche Information</h5>
+
+<p>Regelm&auml;&szlig;ige Importe aus dem <a href="http://apps.webofknowledge.com/WOS_GeneralSearch_input.do?product=WOS&search_mode=GeneralSearch&preferencesSaved=">Web of Science</a>, <a href="http://apps.webofknowledge.com/MEDLINE_GeneralSearch_input.do?highlighted_tab=MEDLINE&product=MEDLINE&last_prod=MEDLINE&search_mode=GeneralSearch">PubMed</a>, <a href="http://crossref.org/">CrossRef</a>, <a href="http://arxiv.org/">arXiv</a> oder <a href="http://inspirehep.net/">INSPIRE</a> vernetzen die Bielefelder Forschung mit den f&uuml;hrenden Nachweisorten f&uuml;r wissenschaftliche Ver&ouml;ffentlichungen.</p>
+
+<p>PUB ist Datenprovider f&uuml;r eine stetig wachsende Zahl an Diensten. Hierzu z&auml;hlen <a href="http://www.datacite.org/">DataCite</a>, <a href="http://europepmc.org/">Europe PMC</a>, <a href="http://www.dnb.de/">DNB</a> und <a href="http://base-search.net/">BASE</a>.</p>
+
+<p>DOIs f&uuml;r Forschungsdaten und URNs f&uuml;r Literaturver&ouml;ffentlichungen sichern die verl&auml;ssliche Zitierung &ndash; und das dauerhaft.</p>
+
+<h5>Trusted Open Access</h5>
+<p>PUB ermöglicht die kostenfreie Ver&ouml;ffentlichung und Archivierung Ihrer Publikationen und Daten in der Universit&auml;t. F&uuml;r die sichere Speicherung in einer gesch&uuml;tzten Umgebung arbeitet die Bibliothek eng mit dem Rechenzentrum zusammen.</p>
+<p>Ob Sie Listen in Word exportieren wollen oder Ihre Ver&ouml;ffentlichungen in eine Webanwendung integrieren wollen: PUB bietet eine Vielzahl an <a href="/doc/api">Schnittstellen und Formaten</a>.</p>
+
+<h5>Beispiele</h5>
+
+<div class="row">
+  <div class="col-md-12" style="margin-left:0px;">
+    <div id="pubScreenshots" class="carousel slide img-thumbnail" data-pause="hover" data-interval="3000">
+      <!-- Carousel items -->
+      <div class="carousel-inner">
+        <div class="active item">
+          <a href="http://ub.unibi.de/pubbghs" target="_blank"><img src="/images/screenshots/carousel_publist_bghs.jpeg" /></a>
+          <div class="carousel-caption" style="text-align:center;"><p><em><strong>Publikationenportal einer Graduiertenschule (hier: BGHS)</strong></em></p></div>
+        </div>
+        <div class="item">
+          <a href="http://pub.uni-bielefeld.de/person/73476" target="_blank"><img src="/images/screenshots/carousel_personenseite.gif" /></a>
+          <div class="carousel-caption" style="text-align:center;"><p><em><strong>Personenseite mit Publikationsliste und Filter-, Sortier- und Exportoptionen</strong></em></p></div>
+        </div>
+        <div class="item">
+          <a href="http://www.wiwi.uni-bielefeld.de/marketing/research/publications0.html" target="_blank"><img src="/images/screenshots/carousel_publist_bwl.jpeg" /></a>
+          <div class="carousel-caption" style="text-align:center;"><p><em><strong>Publikationenportal eines Lehrstuhls (hier: BWL, insb. Marketing)</strong></em></p></div>
+        </div>
+        <div class="item">
+          <a href="http://ub.unibi.de/pubcitec" target="_blank"><img src="/images/screenshots/carousel_publist_citec.jpeg" /></a>
+          <div class="carousel-caption" style="text-align:center;"><p><em><strong>Publikationenportal einer zentralen wiss. Einrichtung (hier: CITEC)</strong></em></p></div>
+        </div>
+        <div class="item">
+          <a href="http://pub.uni-bielefeld.de/publication/2034623" target="_blank"><img src="/images/screenshots/carousel_frontdoor_pub.gif" /></a>
+          <div class="carousel-caption" style="text-align:center;"><p><em><strong>Darstellungseite einer Publikation in PUB </strong></em></p></div>
+        </div>
+        <div class="item">
+          <a href="https://toolkit.cit-ec.uni-bielefeld.de/publications/using-articulated-scene-models-dynamic-3d-scene-analysis-vista-spaces" target="_blank"><img src="/images/screenshots/carousel_frontdoor_citec.gif" /></a>
+          <div class="carousel-caption" style="text-align:center;"><p><em><strong>Darstellungsseite einer Publikation aus PUB, die in ein anderes System integriert wurde </strong></em></p></div>
+        </div>
+        <div class="item">
+          <a href="http://www.uni-bielefeld.de/lili/personen/dschlangen/publications.html" target="_blank"><img src="/images/screenshots/carousel_publist_schlangen.jpeg" /></a>
+          <div class="carousel-caption" style="text-align:center"><p><em><strong>Publikationsliste eines Wissenschaftlers, eingebettet in seine Homepage</strong></em></p></div>
+        </div>
+        <div class="item">
+          <a href="http://www.uni-bielefeld.de/erziehungswissenschaft/publikation.html" target="_blank"><img src="/images/screenshots/carousel_publist_erzwiss.jpeg" /></a>
+          <div class="carousel-caption" style="text-align:center;"><p><em><strong>Publikationenportal einer Fakultät (hier: Erziehungswissenschaft)</strong></em></p></div>
+        </div>
+        <div class="item">
+          <a href="http://www.uni-bielefeld.de/geschichte/forschung/publikationen.html" target="_blank"><img src="/images/screenshots/carousel_publist_geschichte.jpeg" /></a>
+          <div class="carousel-caption" style="text-align:center;"><p><em><strong>Publikationenportal einer Abteilung (hier: Geschichte, Schule für Historische Forschung)</strong></em></p></div>
+        </div>
+        <div class="item">
+          <a href="http://www2.physik.uni-bielefeld.de/e6_pub.html" target="_blank"><img src="/images/screenshots/carousel_publist_hep.jpeg" /></a>
+          <div class="carousel-caption" style="text-align:center;"><p><em><strong>Publikationenportal einer Arbeitsgruppe (hier: Hochenergiephysik)</strong></em></p></div>
+        </div>
+      </div>
+      <!-- Carousel nav -->
+      <a class="carousel-control left" href="#pubScreenshots" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+      <a class="carousel-control right" href="#pubScreenshots" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="col-xs-3">
+  [% INCLUDE websites/logo_contact.tt %]
+</div>
+
+</div>

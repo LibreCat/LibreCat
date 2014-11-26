@@ -1,0 +1,151 @@
+[% path = request.path %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
+
+[% IF lang == "" %]
+[% INCLUDE websites/header.tt %]
+[% ELSE %]
+[% INCLUDE websites/en/header.tt %]
+[% END %]
+
+<span id="language_id" style="display:none;">[% lang %]</span>
+<!-- BEGIN websites/index_publication.tt -->
+
+<!--[IF !IE]> -->
+<link rel="stylesheet" href="/css/bootstrap3.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+<!-- <![ENDIF]-->
+
+<!--[if gt IE 9]>
+<link rel="stylesheet" href="/css/bootstrap3.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css" />
+<![endif]-->
+
+<!--[if lt IE 10]>
+<link rel="stylesheet" type="text/css" href="/css/ltIE10.css" />
+<![endif]-->
+
+<script src="/javascripts/bootstrap3.js"></script>
+[% INCLUDE websites/mathjax.tt %]
+
+<div class="row" style="padding-top:270px;min-width:970px;"><!-- outer border -->
+
+<div class="ltIEten">
+  <h5>Please note that PUB no longer supports Internet Explorer versions 8 or 9 (or earlier).</h5>
+  <p>We recommend upgrading to the latest <a href="http://windows.microsoft.com/ie" target="_blank">Internet Explorer</a>, <a href="https://chrome.google.com" target="_blank">Google Chrome</a>, or <a href="https=//mozilla.org/firefox/" target="_blank">Firefox</a>.</p>
+</div>
+
+  <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->
+    <div class="row">
+      <div class="col-md-10">
+        <ul class="nav nav-tabs" id="indexTab">
+          <li><a href="[% h.host %][% lang ? "/en" : "" %]/#tab_home">Home</a></li>
+          <li[% IF bag == 'publication' %] class="active"[% END %]><a href="/publication?[% lang ? "lang=en&" : "" %][% qp.q ? "q=$qp.q" : "" %]">[% lang ? "Publications" : "Publikationen" %]</a></li>
+          <li[% IF bag == 'data' %] class="active"[% END %]><a href="/data?[% lang ? "lang=en&" : "" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? 'Data Publications' : 'Datenpublikationen' %]</a></li>
+          <!--
+          <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project?[% lang ? "lang=en&" : "" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? 'Projects' : 'Projekte' %]</a></li>
+          -->
+          <li[% IF bag == 'authorlist' %] class="active"[% END %]><a href="/authorlist?[% lang ? "lang=en" : "" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? "Authors" : "Autoren" %]</a></li>
+          <li><a href="[% h.host %][% lang ? "/en" : "" %]/pubtheses">PUB Theses</a></li>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lang ? "About PUB" : "&Uuml;ber PUB" %] <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="[% h.host %][% lang ? "/en" : "" %]/#tab_about">[% lang ? "Features" : "Features" %]</a></li>
+              <li><a href="[% h.host %]/doc/api">API [% lang ? "Documentation" : "Dokumentation" %]</a></li>
+              <li><a href="[% h.host %][% lang ? "/en" : "" %]/faq">FAQ</a></li>
+              <li><a href="[% h.host %][% lang ? "/en" : "" %]/contact">[% lang ? "Contact" : "Kontakt" %]</a></li>
+            </ul>
+          </li>
+          <li><a href="[% h.host %][% lang ? "/en" : "" %]/#tab_policy" data-toggle="tab" style="display:none;">Policy</a></li>
+          <div style="text-align:right;padding-top:10px;"><a href="[% h.host %]/[% bag %][% lang ? "" : "?lang=en" %]" class="select-language"><img border="0" src="http://www.uni-bielefeld.de/icons/[% lang ? "de" : "en" %].gif" alt="[% lang ? "Deutsch" : "English" %]" /> [% lang ? "Deutsch" : "English" %]</a></div>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-10 tab-content">
+
+        <div class="tab-pane[% bag == 'publication' ? ' active' : '' %]" id="publ">
+          [% IF bag == "publication" %]
+          <div class="row">
+            <div class="col-xs-9">
+              [% INCLUDE websites/hits.tt %]
+            </div>
+
+            <div class="col-xs-3">
+              [% INCLUDE websites/login_box.tt %]
+              [% INCLUDE facettes.tt %]
+              [% INCLUDE websites/logo_contact.tt %]
+            </div>
+          </div>
+          [% END %]
+        </div>
+
+        <div class="tab-pane[% bag == 'data' ? ' active' : '' %]" id="research">
+          [% IF bag == "data" %]
+          <div class="row">
+            <div class="col-xs-9">
+              [% INCLUDE websites/hits_research.tt %]
+            </div>
+
+            <div class="col-xs-3">
+              [% INCLUDE websites/login_box.tt %]
+              [% INCLUDE facettes.tt %]
+              [% INCLUDE websites/logo_contact.tt %]
+            </div>
+          </div>
+          [% END %]
+        </div>
+
+        <!--
+        <div class="tab-pane[% bag == 'project' ? ' active' : '' %]" id="project">
+          [% IF bag == "project" %]
+          <div class="row">
+            INCLUDE websites/hits_project.tt
+          </div>
+          [% END %]
+        </div>
+        -->
+
+        <div class="tab-pane[% bag == 'authorlist' ? ' active' : '' %]" id="people">
+          <div class="row">
+            [% INCLUDE websites/hits_people.tt %]
+          </div>
+        </div>
+
+      </div><!-- tab-content -->
+    </div>
+  </div><!-- main content left -->
+
+</div><!-- div row -->
+
+<div class="row">
+  <div class="col-md-11">
+  [% INCLUDE websites/footer.tt %]
+  </div>
+</div>
+
+<script>
+//var url = document.location.toString();
+var hash = document.location.hash;
+var prefix = "tab_";
+if (hash) {
+  $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show');
+}
+
+// Change hash for page-reload
+$('.nav-tabs a').on('shown', function (e) {
+    window.location.hash = e.target.hash.replace("#", "#" + prefix);
+});
+
+$('[data-toggle="collapse"] a').click(function(e){
+  e.preventDefault();
+});
+
+
+$(document).ready(function() {
+  $(".ngadd").click(function() {
+    $("#q_id").focus();
+  });
+});
+</script>

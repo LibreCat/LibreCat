@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>LOCKSS PLN Manifest Page</title>
+</head>
+<body>
+<h1>LOCKSS PLN Manifest Page</h1>
+
+[% FOREACH entry IN hits %]
+[% FOREACH fi IN entry.file %]
+<a href="http://lockss.ub.uni-bielefeld.de/lockss/openaccess/[% fi.yearLastUploaded %]/entry-[% entry.oId %]-file-[% fi.fileOId %].pdf">[% h.host %]/download/[% entry.oId %]/[% fi.fileOId %]</a><br/>
+[% END %]
+[% END %]
+
+<p><img alt="LOCKSS logo" align="middle" src="http://www.lockss.org/LOCKSS.logo.1%27.gif" width="108" height="108" />LOCKSS system has permission to collect, preserve, and serve this Archival Unit.</p>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<div class="row" style="padding-left:13px;">
+
+<div class="col-xs-9">
+
+<h4>PUB &ndash; Publications at Bielefeld University</h4>
+
+<h5>Your access point to research at Bielefeld University</h5>
+<p>
+PUB &ndash; Publications at Bielefeld University is the official documenting location for literary publications and research data at the university. In addition, PUB provides views of personal pages and electronic publishing of dissertations.
+</p>
+
+
+<h5>Worldwide discoverable</h5>
+
+<p>
+PUB is optimized for the relevant search engines like Google, Bing or Google Scholar. This ensures that all Bielefeld research activity can be found easily and prominently on the Web.
+</p>
+
+<h5>Networked Scientific Information</h5>
+
+<p>Regular imports from <a href="http://apps.webofknowledge.com/WOS_GeneralSearch_input.do?product=WOS&search_mode=GeneralSearch&preferencesSaved=">Web of Science</a>, <a href="http://apps.webofknowledge.com/MEDLINE_GeneralSearch_input.do?highlighted_tab=MEDLINE&product=MEDLINE&last_prod=MEDLINE&search_mode=GeneralSearch">PubMed</a>, <a href="http://crossref.org/">CrossRef</a>, <a href="http://arxiv.org/">arXiv</a> or <a href="http://inspirehep.net/">INSPIRE</a> connect Bielefeld research with the leading online services for scientific publications.</p>
+
+<p>PUB is the data provider for a growing number of services. These include <a href="http://www.datacite.org/">DataCite</a>, <a href="http://europepmc.org/">Europe PMC</a>, <a href="http://www.dnb.de/">DNB</a> and <a href="http://base-search.net/">BASE</a>.</p>
+
+<p>DOIs for research data and URNs for literature publications ensure reliable citations &ndash; permanently.
+
+<h5>Trusted Open Access</h5>
+<p>Free publication and archiving of your publications and data in the university. The university library works closely with the data center to ensure secure storage in a protected environment.</p>
+<p>Whether you want to export lists to Word or want to integrate your publications into a web application: PUB offers a variety of <a href="/doc/api">interfaces and formats</a>.</p>
+
+<h5>Examples</h5>
+
+<div class="row">
+  <div class="col-md-12" style="margin-left:0px;">
+<div id="pubScreenshots" class="carousel slide span7 img-polaroid" data-pause="hover" data-interval="3000">
+  <!-- Carousel items -->
+  <div class="carousel-inner">
+    <div class="active item"><a href="http://ub.unibi.de/pubbghs" target="_blank"><img src="/images/screenshots/carousel_publist_bghs.jpeg" /></a>
+      <div class="carousel-caption" style="text-align:center;"><p><em><strong>Publication portal of a Graduate School (here: BGHS)</strong></em></p></div>
+    </div>
+    <div class="item"><a href="http://pub.uni-bielefeld.de/person/73476" target="_blank"><img src="/images/screenshots/carousel_personenseite.gif" /></a>
+      <div class="carousel-caption" style="text-align:center;"><p><em><strong>Person page with list of publications and filter, sort and export options</strong></em></p></div>
+    </div>
+    <div class="item"><a href="http://www.wiwi.uni-bielefeld.de/marketing/research/publications0.html" target="_blank"><img src="/images/screenshots/carousel_publist_bwl.jpeg" /></a>
+      <div class="carousel-caption" style="text-align:center;"><p><em><strong>Publication portal of a faculty (here: Business Administration - Marketing)</strong></em></p></div>
+    </div>
+    <div class="item"><a href="http://ub.unibi.de/pubcitec" target="_blank"><img src="/images/screenshots/carousel_publist_citec.jpeg" /></a>
+      <div class="carousel-caption" style="text-align:center;"><p><em><strong>Publication portal of a central scientific institute (here: CITEC)</strong></em></p></div>
+    </div>
+    <div class="item"><a href="http://pub.uni-bielefeld.de/publication/2034623" target="_blank"><img src="/images/screenshots/carousel_frontdoor_pub.gif" /></a>
+      <div class="carousel-caption" style="text-align:center;"><p><em><strong>Landing page of a publication in PUB</strong></em></p></div>
+    </div>
+    <div class="item"><a href="https://toolkit.cit-ec.uni-bielefeld.de/publications/using-articulated-scene-models-dynamic-3d-scene-analysis-vista-spaces" target="_blank"><img src="/images/screenshots/carousel_frontdoor_citec.gif" /></a>
+      <div class="carousel-caption" style="text-align:center;"><p><em><strong>Landing page of a publication from PUB, integrated into another system</strong></em></p></div>
+    </div>
+    <div class="item"><a href="http://www.uni-bielefeld.de/lili/personen/dschlangen/publications.html" target="_blank"><img src="/images/screenshots/carousel_publist_schlangen.jpeg" /></a>
+      <div class="carousel-caption" style="text-align:center"><p><em><strong>Publication list of a scientist, embedded into their website</strong></em></p></div>
+    </div>
+    <div class="item"><a href="http://www.uni-bielefeld.de/erziehungswissenschaft/publikation.html" target="_blank"><img src="/images/screenshots/carousel_publist_erzwiss.jpeg" /></a>
+      <div class="carousel-caption" style="text-align:center;"><p><em><strong>Publication portal of a faculty (here: Educational Science)</strong></em></p></div>
+    </div>
+    <div class="item"><a href="http://www.uni-bielefeld.de/geschichte/forschung/publikationen.html" target="_blank"><img src="/images/screenshots/carousel_publist_geschichte.jpeg" /></a>
+      <div class="carousel-caption" style="text-align:center;"><p><em><strong>Publication portal of a department (here: History - School of Historical Research)</strong></em></p></div>
+    </div>
+    <div class="item"><a href="http://www2.physik.uni-bielefeld.de/e6_pub.html" target="_blank"><img src="/images/screenshots/carousel_publist_hep.jpeg" /></a>
+      <div class="carousel-caption" style="text-align:center;"><p><em><strong>Publication portal of a work group (here: High Energy Physics)</strong></em></p></div>
+    </div>
+  </div>
+  <!-- Carousel nav -->
+  <a class="carousel-control left" href="#pubScreenshots" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="carousel-control right" href="#pubScreenshots" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="col-xs-3">
+  [% INCLUDE websites/logo_contact.tt %]
+</div>
+
+</div>

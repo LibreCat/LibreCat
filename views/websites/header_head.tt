@@ -1,0 +1,89 @@
+<!doctype html>
+<html ng-app="angularController" xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+
+<!-- BEGIN websites/header_head.tt -->
+
+<head>
+[% IF personPageTitle %]
+<title>[% personPageTitle %]</title>
+[% ELSIF mainTitle %]
+<title>[% mainTitle %]</title>
+[% ELSE %]
+<title>PUB &ndash; Publications at Bielefeld University</title>
+[% END %]
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-language" content="de,en" />
+<meta http-equiv="language" content="de,en" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="language" content="deutsch, de, english, en" />
+
+[% IF preview %]
+<meta http-equiv="refresh" content="120; URL=[% h.host %]/publication/[% oId %]">
+[% END %]
+
+<meta name="citation_title" content="[% mainTitle %]" />
+[% FOREACH author_entry IN author %]<meta name="citation_author" content="[% author_entry.fullName %]" />
+[% END %]
+<meta name="citation_date" content="[% publishingYear %]" />
+[% FOREACH fi IN file %][% IF fi.fileName %]<meta name="citation_pdf_url" content="[% h.host %]/download/[% _id %]/[% fi.fileOId %]" />[% END %][% END %]
+[% IF doi %]<meta name="citation_pdf_url" content="http://doi.org/[% doi %]" />
+[% ELSIF doiInfo.doi %]<meta name="citation_pdf_url" content="http://doi.org/[% doiInfo.doi %]" />
+[% ELSE %][% IF link %]<meta name="citation_pdf_url" content="[% link.url %]" />[% END %][% END %]
+[% IF issn %]<meta name="citation_issn" content="[% issn.0 %]" />[% END %][% IF isbn %]<meta name="citation_isbn" content="[% isbn.0 %]" />[% END %]
+
+<!-- DC-Tags -->
+
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+<meta name="DC.title" content="[% IF personPageTitle %][% personPageTitle %][% ELSE %][% mainTitle %][% END %]" />
+[% FOREACH author_entry IN author %]<meta name="DC.creator" content="[% author_entry.fullName %]" />
+[% END %]
+[% IF publishingYear %]<meta name="DC.date" content="[% publishingYear %]" />[% END %]
+[% IF language %]<meta name="DC.language" scheme="ISO639-1" content="[% language.iso %]" />[% END %]
+<meta name="DC.identifier" content="[% request.path %]/[% _id %]" />
+[% IF abstract %][% FOREACH abstract_entry IN abstract %][% UNLESS loop.first %][% END %]<meta name="DC.description" content="[% abstract_entry.text | html %]" />[% END %][% END %]
+[% FOREACH rel_entry IN entry.host %][% IF rel_entry.issn %]<meta name="DC.source.ISSN" content="[% rel_entry.issn.0 %]" />[% END %][% IF rel_entry.isbn %]<meta name="DC.source.ISBN" content="[% rel_entry.isbn.0 %]" />[% END %][% END %]
+<meta name="DC.type" content="[% h.display_gs_doctypes(documentType) %]" />
+
+[% IF doi %]<link rel="DC.relation" href="http://doi.org/[% doi %]" />
+[% ELSIF doiInfo.doi %]<link rel="DC.relation" href="http://doi.org/[% doiInfo.doi %]" />[% END %]
+[% IF urn %]<link rel="DC.relation" href="[% urn %]" />[% END %]
+[% IF issn %]<link rel="DC.relation" href="urn:ISSN:[% issn.0 %]" />[% END %][% IF isbn %]<link rel="DC.relation" href="urn:ISBN:[% isbn.0 %]" />[% END %]
+
+[% reqpath = request.path %]
+[% personid = reqpath.search('person/(\d{1,})') %]
+[% query = qp.q | replace('"', '&quot;') %]
+[% IF personPageTitle %]
+<link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/daily', qp, q="person=$personid") %]" title="[% personPageTitle %] (today)" />
+<link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/weekly', qp, q="person=$personid") %]" title="[% personPageTitle %] (last week)" />
+<link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/monthly', qp, q="person=$personid") %]" title="[% personPageTitle %] (last month)" />
+[% ELSE %]
+<link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/monthly', qp, q="$query") %]" title="Publications last month" />
+[% END %]
+<link rel="icon" href="//www.uni-bielefeld.de/icons/uni-logo-icon-16.png" type="image/png" />
+<link rel="search" href="//search.uni-bielefeld.de/" type="text/html" />
+<link href="//www.uni-bielefeld.de/Universitaet/impressum.html" rel="copyright" type="text/html" />
+<link rel="stylesheet" media="screen" href="//www.uni-bielefeld.de/css/unistandard_2009.css" />
+<link rel="stylesheet" media="screen" href="/css/frontend.css" />
+<link rel="stylesheet" media="print" href="/css/print.css" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="/pub-opensearch.xml" title="PUB" />
+<script src="//www.uni-bielefeld.de/javascript/CrossPlatform.js"></script>
+<script src="//www.uni-bielefeld.de/javascript/Popup.js"></script>
+<script src="/javascripts/jquery.js"></script>
+<script src="/javascripts/tabs.js"></script>
+<script src="/javascripts/angular-1.2.14.min.js"></script>
+<script src="/javascripts/angularSearch.js"></script>
+
+
+<script type="text/javascript">
+</script>
+
+<style type="text/css">
+<!--
+/* don't display link in suggested citation */
+.frontdoor_hidden { display:none; }
+-->
+</style>
+
+<!-- END websites/header_head.tt -->

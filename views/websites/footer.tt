@@ -1,0 +1,41 @@
+<!-- BEGIN websites/footer.tt -->
+<div>
+<div id="fussstrich"></div>
+<div id="fussmenu" style="padding-left:250px;padding-top:10px;">
+<div style="width=100%;text-align:center">
+
+<div style="display:inline-block;padding-left:50px;padding-right:50px;">
+<a href="http://www.dini.de/dini-zertifikat/" target="_blank">
+<img src="/images/logo_dini_2010.png" alt="DINI-Zertifikat 2010 für Dokumenten- und Publikationsservices" title="PUB ist mit dem DINI-Zertifikat 2010 ausgezeichnet" border="0" width="60" height="60"/>
+</a>
+</div>
+
+<div style="display:inline-block;padding-left:50px;padding-right:50px;">
+<a href="http://www.openaire.eu/" target="_blank">
+<img src="/images/logo_openaire_val.png" alt="OpenAIRE Validierungszeichen" title="PUB ist 100% OpenAire-valide" border="0" />
+</a>
+</div>
+
+<div style="display:inline-block;padding-left:50px;padding-right:50px;">
+<a href="http://www.openarchives.org/Register/BrowseSites" target="_blank">
+<img src="/images/logo_oai.gif" alt="Open Archives" title="PUB ist registrierter Daten-Provider der Open Archives Initiative" border="0" height="40"/>
+</a>
+</div>
+
+<div style="display:inline-block;padding-left:50px;padding-right:50px;">
+<a href="http://www.datacite.org/" target="_blank">
+<img src="/images/logo_datacite.png" alt="DataCite" title="PUB registriert Forschungsdaten bei DataCite" border="0" height="60"/>
+</a>
+</div>
+</div>
+<ul>
+<li><span class="footer">&copy; 2010-2014 <a href="http://www.ub.uni-bielefeld.de/english/">Bielefeld University Library</a></li>
+<li><span class="footer">Built with <a href="http://www.librecat.org/">LibreCat<img src="/images/librecat.png" alt="" style="vertical-align:middle; margin-left:10px;" /></a> (Software developed by <a href="http://www.lub.lu.se/en.html" target="_blank">Lund</a>, <a href="http://lib.ugent.be/en">Ghent</a> and Bielefeld Univ. Libraries)</span></li>
+<li><span class="footer">PUB is supported by the <a href="http://www.dfg.de/">DFG</a></span></li>
+<li class="screen"><a href="[% h.host %][% lang ? "/en" : "" %]/policy">Policy</a></li>
+<li class="screen"><a href="http://www.ub.uni-bielefeld.de/biblio/kontakt/impressum/" target="Imprint" onclick="window.open(this.href,'Imprint','width=900,height=650,left=1,top=1,directories=yes,toolbar=yes,location=yes,menubar=yes,status=yes,scrollbars=yes,resizable=yes')" class="footer">Imprint</a></li>
+</ul>
+</div>
+</div>
+
+<!-- END websites/footer.tt -->

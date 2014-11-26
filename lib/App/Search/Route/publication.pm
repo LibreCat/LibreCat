@@ -41,7 +41,8 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 
 	my $hits = h->search_publication($p);
 	$hits->{bag} = "researchData" if $bag eq "data";
-	template "frontdoor/record", $hits;
+	#return to_dumper $hits;
+	template "frontdoor/record", $hits->{hits}->[0];
 };
 
 # /data/doi/:doi

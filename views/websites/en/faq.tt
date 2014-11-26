@@ -1,0 +1,430 @@
+<!-- BEGIN websites/en/faq.tt -->
+<div class="row" style="padding-left:13px;">
+
+<div class="col-xs-9">
+  <h5>Frequently Asked Questions</h5>
+
+  <div class="panel-group" id="accordion_faq">
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#wasistpub">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> What is PUB - Publications at Bielefeld University?
+        </a>
+      </div>
+      <div id="wasistpub" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>The publication server of Bielefeld University &quot;PUB&quot; is the central register for all publications of the Bielefeld University academics.
+		PUB allows a well-arranged presentation of publications in individual publication lists which are easy to maintain and easy made visible on the web.
+		Besides the descriptive bibliographic data of an publication, the records can include abstracts, keywords and classification as well as a link to the original publication via DOI.
+		Optionally, the records can be enriched by the fulltexts or supplementary material. Research data can be either linked (e.g. from GenBank, NASC or EBI) or can be uploaded in PUB,
+		as well as get registered or licenced. All data of the university's former research
+		database &quot;FoDa&quot; and of the post-print server &quot;BiPrints&quot; have been merged and formed PUB's initial database. Meanwhile, many thousands of entries have been added:
+		either by the academics themselves or by our regularly performed update from Web of Knowledge. PUB provides:</p>
+          <ul id="listen">
+            <li>discipline-specific publication types for flexible proof of your publications,</li>
+            <li>the automatic integration of the personal publication list in your entry in the Directory of Staff and Departments (PEVZ)</li>
+            <li>import options to avoid manual typing,</li>
+            <li>export options for easy processing of your list, or parts thereof for project applications, project reports, CVs, etc.</li>
+            <li>embedding options to use your list, or parts thereof, on personal, chair or faculty websites</li>
+            <li>active support by the Support Team of the University Library.</li>
+          </ul>
+          <p>The sub-collection &quot;PUB Theses&quot; is the platform for electronic publication of Bielefeld dissertations and other types of exam papers
+		(see <b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#Diss">Where and how can I publish my dissertation online?</a></b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#zustaendig">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Who is responsible for matters relating to PUB?
+        </a>
+      </div>
+      <div id="zustaendig" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Your first and foremost contact is the Support Team &quot;Publication Services&quot; (contact see right column). We will process all inquiries and forward if necessary.
+		We are happy to answer your questions personally and look forward to your suggestions.</p>
+        </div>
+      </div>
+    </div>
+
+	<div class="panel panel-default">
+	  <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#publogin">
+       	<a class="accordion-toggle">
+       	   <span class="fa fa-chevron-down"></span> How do I register for PUB? How do I log in?
+        </a>
+      </div>
+	  <div id="publogin" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>To register and for future login you only need your HRZ user ID and the corresponding password. This is the ID you usually use for your webmail account and for Stud.IP.
+		If you have forgotten your password, your local IT support can help you.</p>
+
+	      <p>If you use PUB for the first time you have to register first. For first-time registration please click on &quot;Login to PUB&quot; and then &quot;Register for PUB&quot;.
+		The registration form will show the data that was entered into PUB from the University BIS system concerning your person. Please verify the accuracy and change or add, if necessary,
+		your assignment to university departments (&quot;affiliation&quot;). You can change an assignment by clicking on &quot;Select&quot; and choose a new affiliation.
+		You can generate an extra blank line
+		by clicking on the blue cross. So you can add more affiliations yourself.<br />
+	      Please complete, if necessary, information like Researcher ID etc.. Save or confirm the entries with "Submit". The window closes and you will be directed to your internal working area
+		 (&quot;My Publication List Manager&quot;). For any subsequent use of PUB, please enter the system via &quot;Login to PUB&quot;.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#backend">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> What will I see after successful login?
+        </a>
+      </div>
+      <div id="backend" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>After registration, you will first see an internal view for the management of your publication data. In PUB you find all the data of the former university research database
+		&quot;FoDa&quot; and of the post-print server &quot;BiPrints&quot; and data brought in by regular updates from Web of Knowledge. The latter is indicated by the designation
+		&quot;ISI&quot; or &quot;Medline&quot; in the column &quot;Data Source&quot;.</p>
+
+	      <p>Your list of publications is sorted by default in descending chronological order. Core of the list is the column &quot;Publication&quot;, that summarizes the author's name, title and the source of your publication. The column &quot;Data Source&quot; shows the origin of the data, the column &quot;Publication Type&quot; indicates the type of publication.</p>
+
+          <p>The column &quot;Status in PUB&quot; may show the following conditions:</p>
+          <ul id="listen">
+            <li>Public: This record is publicly visible on the web as an entry in your personal list of publications</li>
+            <li>Private: This record is visible only in your workspace.</li>
+            <li>Returned: This record was &quot;drawn back&quot; from the public view, and is now only visible in your workspace.</li>
+          </ul>
+
+	      <p>You can check the view of your publication list when you click &quot;Public View&quot; in the navigation bar. Under the menu item "Citation Style Settings", you can specify a citation style
+		and the sort order by year (ascending or descending). Under "Add new Publication" you will find the selection of possible publication types in PUB.
+		To enter a new citation, select the appropriate publication type and enter the bibliographic data into the form.
+		(For more on this, see <b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">How can I edit a record?</a></b>).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#sources">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> What does the data mean in the &quot;Data Source&quot; column?
+        </a>
+      </div>
+      <div id="sources" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>In the column "Data source" the following terms may show up:
+		  <ul id="listen">
+		  <li>BiPrints: the former post-print server of the University Library. These are quality controlled entries, all of which are provided with full texts. These should keep the status &quot;public&quot;.</li>
+		  <li>ISI or Medline: entries created by regular imports from the databases of Web of Knowledge (ISI). These are usually top quality and can be reused.<br />
+		  It may be necessary to add the original title and copy the existing translated title into the field &quot;Alternative Title&quot;.</li>
+		  <li>FoDa: Data was taken from the former university research database &quot;FoDa&quot;. Since PUB has more and more differentiated input fields compared to FoDa, you should check these references and correct them if necessary.</li>
+		  <li>AHF: Imports from the &quot;Historical Bibliography Online&quot; of the Arbeitsgemeinschaft historischer Forschungseinrichtungen in der Bundesrepublik Deutschland e.V. (AHF).</li>
+		  <li>Inspire: entries from INSPIRE, the information system of high energy physics.</li>
+		  <li>arXiv.org: publication data from the preprint server of same name, primarily from the area of physics, mathematics and computer science.</li>
+		  </ul>
+         </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> How can I edit a record?
+        </a>
+      </div>
+      <div id="edit" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>To see all the data of a citation, click on &quot;Internal View&quot;. You see a tabular list of all the data entered for this item.<br />
+          If you want to add or edit a citation, click on its title in your list. This will take you to the edit form.</p>
+
+          <p>The edit menu is divided into the areas &quot;Work&quot;, &quot;Abstract + Subject&quot;, &quot;Full Text&quot; and &quot;Message&quot;. Click on a tab to switch the submenu.</p>
+
+		  <p><a href="javascript:anzeigen('eins');"><i>Figure 1</i></a></p>
+		  <div class="contentbox" style="display:none;"  id="eins">
+		  <p><img src="/images/screenshots/edit2.png" alt="" /></p>
+		  </div>
+
+          <p><strong>Work:</strong> Find the individual fields that are important for the formal description of your publication. After you have entered your name (order: first name last name!),
+		it is important to check the box &quot;Link to PEVZ Account&quot;. This ensures a link to the Directory of Staff and Departments and the publication list accessible through it.
+		If the link is missing, the publication entry will be missing from this list as well! Please procedd alike with the names of your Bielefeld co-authors.</p>
+
+		  <p><a href="javascript:anzeigen('zwei');"><i>Figure 2</i></a></p>
+		  <div class="contentbox" style="display:none;"  id="zwei">
+		    <p><img src="/images/screenshots/edit3.png" alt="" /></p>
+		  </div>
+
+          <p>In most cases, there is exactly one person of that name, so that the connection is set immediately. If there are several persons with this name, you see a selection window,
+		allowing you to click on the appropriate name. If your name is not found right away, you can coarsen your search query in the search box e.g. by deleting a middle name or entering
+		only the initial and clicking &quot;Search Again&quot;.</p>
+
+          <p><a href="javascript:anzeigen('drei');"><i>Figure 3</i></a></p>
+          <div class="contentbox" style="display:none;"  id="drei">
+            <p><img src="/images/screenshots/edit4.png" alt="" /></p>
+          </div>
+
+          <p>If the linking has been successful, the University's logo appears next to the name and the fields are grayed out.</p>
+          <p><a href="javascript:anzeigen('vier');"><i>Figure 4</i></a></p>
+          <div class="contentbox" style="display:none;"  id="vier">
+            <p><img src="/images/screenshots/edit5.png" alt="" /></p>
+          </div>
+
+          <p>Your membership will automatically appear in the &quot;Department/ Affiliation&quot; field. To add a department or a chair, click on the blue &quot;+&quot; sign to generate another input field.
+		Then click on &quot;select&quot; and select your department from the list. You can also start typing directly into the input field, the auto-complete function of PUB then offers you departments
+		to choose from.<br />
+          	Should the work not have been created during your membership with Bielefeld University, please mark the box "Published while not employed at UniBi".</p>
+
+          <p><strong>Abstract + Subject</strong> is the area in which you can further describe your publication content.</p>
+          <p><strong>Fulltext</strong> allows you to upload a document or link to it.</p>
+          <p><strong>Message</strong> is the area for your notes.</p>
+
+          <p>The button &quot;Show all tabs on one page&quot; shows the content of all tabs one below the other, which spares switching tabs.</p>
+
+          <p>For each data field, you can display explanations by clicking on the respective question mark on the right.</p>
+
+          <p>You can always save your data with &quot;Save&quot;. Clicking &quot;publish&quot; directly - if the entry was not yet &quot;public&quot; - will let the citation appear publicly in your
+		personal list of publications.</p>
+
+          <p>If you want to change the publication type (e.g. from conference paper to journal article or vice-versa), click on &quot;Change Type&quot;. The existing data will be transferred,
+		as far as they are necessary for the other type of publication.</p>
+
+          <p><a href="javascript:anzeigen('fuenf');"><i>Figure 5</i></a></p>
+          <div class="contentbox" style="display:none;"  id="fuenf">
+            <p><img src="/images/screenshots/edit6.png" alt="" /></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#add">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> How can I make new additions to my publication list?
+        </a>
+      </div>
+      <div id="add" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>You can add new references to your list at any time. Please check first if the record that you want to enter is not already existing - by using &quot;search similar titles&quot; or the search form.<br />
+          In your &quot;Control Panel&quot; in the left navigation bar, you will find the item &quot;Add new Publication&quot;. Select the appropriate publication type, and you get a blank input form.
+		Apart from a few mandatory fields you are free to select the fields to be filled. All further steps are explained under
+		<b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">How can I edit a record?</a></b>.</p>
+          <p>After you have entered a record and made it public (= have clicked &quot;publish&quot;), you can see &ndash; via the link &quot;Preview Page&quot;, with a short delay &ndash; how the publication is displayed publicly.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#addFoda">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> What should I consider when adding a new research data set?
+        </a>
+      </div>
+      <div id="addFoda" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>In your &quot;Control Panel&quot; in the left navigation bar, you will find the item &quot;Add new Data Publication&quot;, through which you can create a new data publication.</p>
+
+          <p><strong>Creating a data set with existing DOI (DOI Fetch):</strong><br />
+          If your record has a DOI (Digital Object Identifier), enter it in the DOI field and we get all the related data from DataCite and fill out the entry form for you.
+		You can make additions or changes and add files before you save or submit your data.
+          </p>
+          <p><strong>Creating a data set without DOI:</strong><br />
+          If you have no DOI, the button &quot;Fill out the empty form yourself&quot; will lead you directly to an empty form.
+          </p>
+          <p><strong>Attach files:</strong><br />
+          You can enrich your metadata record with files using Drag &amp; Drop. Files are stored directly on our local PUB server. After your record has been published, attached files are shown on the
+		landing page and described in more detail in a separate tab.
+          </p>
+          <p><strong>Linking to Publications:</strong><br />
+          If your research data set was referenced in a publication, you can link the two records together. After publication, a tab is displayed on the landing page of the research data set with links to
+		and information about the citing publications. On the landing page of the publication a respective tab with a link to the research data record is displayed.
+          </p>
+          <p><strong>Save and publish:</strong><br />
+          After entering or amending and correcting data in the input form, you can either save the record without publishing it (e.g. for later editing) with the button &quot;Save&quot;.<br />
+          Or you can submit the data directly for publication (via the button &quot;Publish&quot;). If you click on &quot;Publish&quot; the record is saved and marked as &quot;submitted&quot;.
+		Once your record has been reviewed by one of our staff members, it is published.
+          </p>
+          <p><strong>DOI assignment and registration:</strong><br />
+          In the event that your data set does not have a DOI, a DOI is automatically assigned when publishing the record in the PUB system and your data will be registered with DataCite.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#import">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> How do I import my publications from a reference management program?
+        </a>
+      </div>
+      <div id="import" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>If you organize your publication list with a reference management program, you can upload your bibliography to PUB in BibTeX format.<br />
+          To do so, click &quot;Import&quot; in the left navigation bar, select your file and click &quot;Submit&quot;.</p>
+          <p><a href="javascript:anzeigen('sechs');"><i>Figure 6</i></a></p>
+          <div class="contentbox" style="display:none;"  id="sechs">
+            <p><img src="/images/screenshots/import1.png" alt="" /></p>
+          </div>
+
+          <p>This takes you to a brief overview page. The click on &quot;Show imported records&quot; transfers your references into your internal workspace.</p>
+          <p><a href="javascript:anzeigen('sieben');"><i>Figure 7</i></a></p>
+          <div class="contentbox" style="display:none;"  id="sieben">
+            <p><img src="/images/screenshots/import2.png" alt="" /></p>
+          </div>
+          <p>Please assign yourself and your co-authors of Bielefeld University. To do this click on each title in your imported list. The further steps are explained under
+		<b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">How can I edit a record?</a></b>.</p>
+          <p>If you want to import a format other than BibTeX, send the file to our Support Team &quot;Publication Services&quot; (contact see right column). We are happy to take care of your references for you.</p>
+         </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#export">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> How can I export my data from PUB again?
+        </a>
+      </div>
+      <div id="export" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Of course you can also export your references from PUB. Proceed to your personal list of publications (http://pub.uni-bielefeld.de/person/[PEVZ-ID]). There you will find the option &quot;Export as&quot;
+		in the right column where several export formats such as BibTeX or RTF are available.
+		With just a few clicks you can export your entire list of publications or any list filtered according to different aspects. The export as unformatted text document in RTF format lends itself
+		to the rapid processing of lists for project reports, applications, CVs, and so on.</p>
+         </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#faq04">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> How should I deal with duplicate records?
+        </a>
+      </div>
+      <div id="faq04" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Each publication should exist in PUB only once, as all authors involved have access to the same record through the link to their PEVZ account. Duplicate entries would therefore appear twice in everyone's list.
+		If you encounter double entries, e.g. produced by an import, one of them should be set to &quot;public&quot; and the other should remain in the status &quot;private&quot;.<br />
+          	During our frequent data maintenance, the duplicates will be found and deleted.</p>
+          <p>If two records have been made &quot;public&quot; by mistake​​, please leave the more complete one in the status &quot;public&quot; and &quot;return&quot; the other one.
+		Please do not use the trash icon for this purpose, because it does not cause the title to be removed from public view! Returned entries will be deleted during data maintenance.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#public">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Where will my personal list be visible?
+        </a>
+      </div>
+      <div id="public" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Your personal publication list is visible by default on your "Contact" page in the Directory of Staff and Departments (PEVZ). Simply click the "Publications" link on the right.
+		In this list all records which you set to "Public" status will be displayed.<br />
+          	Clicking on &quot;Public View&quot; (in the left navigation bar in your "Personal Publication ) will take you there directly.</p>
+          <p>The link &quot;PUB&quot; below each publication entry takes you to the landing page (detailed display) of the publication.</p>
+
+          <p>Of course, you can edit already published entries in your workspace at any time. If you want to remove a post from your publicly visible list of publications, click &quot;Return&quot; in
+		the &quot;Publication List Manager&quot; or in the editing form.<br />
+          	Entries that have been drawn back with &quot;Return&quot; can only be made public again in the edit form through clicking &quot;Publish&quot;.</p>
+
+          <p>PUB offers a choice of different citation styles, which are applied both in the publication list in PEVZ and embeddings of your list into a website (for further information on embeddings see
+		<b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#embed">How can I make my personal list visible on my page?</a></b>.
+		The list of styles available can be found under &quot;Citation Style Settings&quot;.</p>
+	 </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#embed">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> How can I make my personal list visible on my page?
+        </a>
+      </div>
+      <div id="embed" class="panel-collapse collapse">
+        <div class="panel-body">
+
+ 		<p>The integration of the personal publication list is easily possible from the person page in the Directory of Staff and Departments (PEVZ).<br />
+ 		The item &quot;Embed As&quot; in the right menu provides HTML source code snippets for static links, JavaScript and iFrame code. The particular filtered and sorted selection or the complete list
+		with the selected citation style, which is displayed on the screen, is used for the code snippet generation.<br />
+ 		You only need to copy the source code and paste it into your site.</p>
+
+		<p>In addition to the above embedding options that you can implement yourself, we offer on request to create so-called department portals for all organizational units.
+		The complete list of publications is supplemented by various filters, e.g. by author, department, year, publication type, citation style or language. Also a full text search
+		of the bibliographic data can be implemented.<br />
+		The department portal is integrated by you into the web presence of your department. It is adapted to your corporate design and by its link to the PUB database it is always up to date.</p>
+	    </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#faq05">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> A systematic list of publications already exists within my organization or by my own initiative. Do I still have to do something?
+        </a>
+      </div>
+      <div id="faq05" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>We have already connected multiple existing systematic local solutions with PUB. In this case please contact the Support Team &quot;Publication Services&quot; (contact see right column).</p>
+        </div>
+      </div>
+    </div>
+
+ 	<div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#Diss">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Where and how can I publish my dissertation online?
+        </a>
+      </div>
+      <div id="Diss" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>The sub-collection <a href="[% h.host %]/en/pubtheses">PUB Theses</a> is the platform for the electronic publication of Bielefeld doctoral and postdoctoral theses.
+		On the supervisor's recommendation outstandingly excellent bachelor's and master's theses may be published as well.<br /> The authors themselves upload their work, including the description,
+		 we permanently archive them and ensure the global presence in search engines and databases.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#faq06">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> What happens to information about projects, dissertations, postdoctoral theses and scientific awards?
+        </a>
+      </div>
+      <div id="faq06" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>The first step in the modernization of the research information system at the university relates exclusively to publication data in PUB as an essential form of external representation for research.
+		For projects, dissertations, postdoctoral theses and scientific awards pilots (e.g. FP7 projects) are built successively after consultation with faculties and departments.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#support">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> For further questions or suggestions, I turn to...?
+        </a>
+      </div>
+      <div id="support" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>We are continuously working on extending the service. We are happy to answer your questions personally and look forward to your suggestions. Please contact us at:</p>
+          <p><b>Support Team "Publication Services"</b><br />
+          Susanne Riedel<br />
+          Tel.: 0521/106-4058<br />
+          E-Mail: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;">&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a></p>
+        </div>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-parent="#accordion_faq">
+        <a href="[% h.host %]/en/policy" class="accordion-toggle">
+          <span class="fa fa-chevron-right"></span> Guidelines for PUB
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-3">
+  [% INCLUDE websites/logo_contact.tt %]
+</div>
+
+</div><!-- row -->
+<!-- END websites/en/faq.tt -->

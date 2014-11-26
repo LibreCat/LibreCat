@@ -1,0 +1,190 @@
+<!-- BEGIN websites/hits-project.tt -->
+
+[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
+
+<div class="col-md-9">
+<div class="row" style="padding-left:13px;">
+  <div class="col-md-9">
+    <h5>[% total %] [% lang ? "Projects" : "Projekte" %]</h5>
+  </div>
+</div>
+
+<div class="row" style="padding-left:13px;">
+  <div class="col-md-7">
+    <form action="/project" method="get" class="form-inline">
+      [% FOREACH key IN qp.keys %]
+        [% NEXT IF key == "q" %]
+        [% IF qp.$key.0 %]
+          [% FOREACH val in qp.$key %]
+            <input type="hidden" name="[% key %]" value="[% val %]" />
+          [% END %]
+        [% ELSE %]
+          <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
+        [% END %]
+      [% END %]
+      <div class="input-group">
+        <input type="text" name="q" id="q_id" value="[% qp.q | replace('"', '&quot;') %]"' class="form-control input-sm" placeholder="[% lang ? "Search" : "Suche" %]" />
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-sm btn-default">[% lang ? "Go!" : "Los!" %]</button>
+        </span>
+      </div>
+      [% IF qp.q %]
+        <p class="text-muted"><a href="[% h.newuri_for("$data", qp, q="") %]" rel="nofollow"><span class="fa fa-times"></span></a> [% lang ? 'Search' : 'Suche' %]: [% qp.q %]</p>
+      [% END %]
+    </form>
+  </div>
+</div>
+
+<div class="row" style="padding-left:13px;">
+  [% INCLUDE pagination.tt %]
+</div>
+
+<div class="row" style="padding-left:13px;">
+  <div class="col-md-12" style="margin-right:20px;">
+  [% FOREACH project IN hits %]
+    <a href="/project/[% project.projectId %]">[% project.name %][% IF project.acronym %] ([% project.acronym %])[% END %]</a><br />
+    <div style="margin-left:10px;">
+      <p class="text-muted">
+      [% IF project.startYear AND project.endYear %]
+        [% project.startYear %] - [% project.endYear %]<br />
+      [% END %]
+
+      [% IF project.description %]
+        [% IF project.description.length() > 200 %]
+          [% project.description.substr(0, 200); %]...
+        [% ELSE %]
+          [% project.description %]
+        [% END %]
+      [% ELSE %]
+        [% project.callIdentifier %]
+      [% END %]
+      </p>
+    </div>
+  [% END %]
+  </div>
+</div>
+
+</div>
+
+<div class="col-md-3">
+  [% INCLUDE websites/rightBoxLogin.tt %]
+
+  <h5>[% lang ? 'Filter' : 'Filtern' %]</h5>
+  [% IF qp.keys.0 %]
+    [% IF qp.startYear %]
+      <p class="text-muted"><a href="[% h.newuri_for("/project", qp, startYear="") %]" rel="nofollow"><span class="fa fa-times"></span></a> startYear: [% qp.startYear %]</p>
+    [% END %]
+    [% IF qp.endYear %]
+      <p class="text-muted"><a href="[% h.newuri_for("/project", qp, endYear="") %]" rel="nofollow"><span class="fa fa-times"></span></a> endYear: [% qp.endYear %]</p>
+    [% END %]
+    [% IF qp.funder %]
+      <p class="text-muted"><a href="[% h.newuri_for("/project", qp, funder="") %]" rel="nofollow"><span class="fa fa-times"></span></a> funder: [% qp.funder %]</p>
+    [% END %]
+    [% IF qp.sc39 %]
+      <p class="text-muted"><a href="[% h.newuri_for("/project", qp, sc39="") %]" rel="nofollow"><span class="fa fa-times"></span></a> sc39: [% qp.sc39 %]</p>
+    [% END %]
+    [% IF qp.sorting %]
+      <p class="text-muted"><a href="[% h.newuri_for("/project", qp, sorting="") %]" rel="nofollow"><span class="fa fa-times"></span></a> sorting: [% qp.sorting %]</p>
+    [% END %]
+  [% END %]
+
+  [% IF facets.startYear.terms.0 OR facets.endYear.terms.0 OR facets.funder.terms.0 %]
+  <ul class="nav nav-tabs nav-stacked">
+    [% IF facets.startYear.terms.0 %]
+      <li>
+        <button data-toggle="collapse" data-target="#startYear"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Start Year' : 'Startjahr' %] ([% facets.startYear.terms.size %])</a></button>
+        <div class="facettecollapse">
+        <ul id="startYear" class="collapse[% IF qp.startYear %] in[% END %]">
+          [% FOREACH date IN facets.startYear.terms %]
+          [% IF qp.startYear.grep("^$date.term\$").0 %]
+          <li>[% date.term %] ([% date.count %])</li>
+          [% ELSE %]
+          <li><a href="[% h.newuri_for("$path", qp, startYear="$date.term") %]" rel="nofollow">[% date.term %] ([% date.count %])</a></li>
+          [% END %]
+          [% END %]
+        </ul>
+        </div>
+      </li>
+    [% END %]
+    [% IF facets.endYear.terms.0 %]
+      <li>
+        <button data-toggle="collapse" data-target="#endYear"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'End Year' : 'Endjahr' %] ([% facets.endYear.terms.size %])</a></button>
+        <div class="facettecollapse">
+        <ul id="endYear" class="collapse[% IF qp.endYear %] in[% END %]">
+          [% FOREACH date IN facets.endYear.terms %]
+          [% IF qp.endYear.grep("^$date.term\$").0 %]
+          <li>[% date.term %] ([% date.count %])</li>
+          [% ELSE %]
+          <li><a href="[% h.newuri_for("$path", qp, endYear="$date.term") %]" rel="nofollow">[% date.term %] ([% date.count %])</a></li>
+          [% END %]
+          [% END %]
+        </ul>
+        </div>
+      </li>
+    [% END %]
+    [% IF facets.funder.terms.0 %]
+      <li>
+        <button data-toggle="collapse" data-target="#funder"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Funding Organisation' : 'F&ouml;rderer' %] ([% facets.funder.terms.size %])</a></button>
+        <div class="facettecollapse">
+        <ul id="funder" class="collapse[% IF qp.funder %] in[% END %]">
+          [% FOREACH fund IN facets.funder.terms %]
+          [% IF qp.funder.grep("^$fund.term\$").0 %]
+          <li>[% fund.term %] ([% fund.count %])</li>
+          [% ELSE %]
+          <li><a href="[% h.newuri_for("$path", qp, funder="$fund.term") %]" rel="nofollow">[% fund.term %] ([% fund.count %])</a></li>
+          [% END %]
+          [% END %]
+        </ul>
+        </div>
+      </li>
+    [% END %]
+  </ul>
+  <br />
+  [% END %]
+
+  <ul class="nav nav-tabs nav-stacked">
+    <li>
+      <a href="[% h.newuri_for("$path", qp, sc39="yes") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp; SC39 [% lang? 'Projects' : 'Projekte' %]</a>
+    </li>
+  </ul>
+  <br />
+
+  <ul class="nav nav-tabs nav-stacked">
+    <li>
+      <button data-toggle="collapse" data-target="#projecthitsperpage"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% qp.limit %][% ELSE %]: 20[% END %]</a></button>
+      <div class="facettecollapse">
+        <ul id="projecthitsperpage" class="collapse">
+          [% FOREACH limiting IN h.config.store.pagination_options %]
+            [% IF limiting == qp.limit %]
+              <li>[% limiting %]</li>
+            [% ELSE %]
+              <li><a href="[% h.newuri_for("/project", qp, limit="$limiting") %]" rel="nofollow">[% limiting %]</a></li>
+            [% END %]
+          [% END %]
+        </ul>
+      </div>
+    </li>
+    <li>
+        <button data-toggle="collapse" data-target="#sort"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Sorting' : 'Sortierung' %]</a></button>
+        <div class="facettecollapse">
+        <ul id="sort" class="collapse[% IF qp.defined('sorting') AND qp.item('sorting') != "" %] in[% END %]">
+          [% FOREACH sortme IN h.config.store.project_sort_options %]
+            [% IF qp.sorting.grep("$sortme.key").0 %]
+            <li>[% sortme.label %]</li>
+            [% ELSE %]
+              [% sortasc = sortme.key _ ".asc" %]
+              [% sortdesc = sortme.key _ ".desc" %]
+              <li><a href="[% h.newuri_for("$bag", qp, sorting="$sortasc") %]" rel="nofollow">[% sortme.label %]&nbsp;<span class="fa fa-arrow-up"></span></a>&nbsp;&nbsp;<a href="[% h.newuri_for("$path", qp, sorting="$sortdesc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
+            [% END %]
+          [% END %]
+        </ul>
+        </div>
+      </li>
+  </ul>
+
+  <div>&nbsp;</div>
+
+  [% INCLUDE websites/rightBoxTwitter.tt %]
+</div>
+
+<!-- END websites/hits_project.tt -->

@@ -1,0 +1,163 @@
+[% path = request.path %]
+[% lang = path.search('/en') ? "en" : "" %]
+
+[% IF lang == "" %]
+[% INCLUDE websites/header.tt %]
+[% ELSE %]
+[% INCLUDE websites/en/header.tt %]
+[% END %]
+
+<span id="language_id" style="display:none;">[% lang %]</span>
+
+<!-- BEGIN websites/index.tt -->
+
+<!--[IF !IE]> -->
+<link rel="stylesheet" href="/css/bootstrap3.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+<!-- <![ENDIF]-->
+
+<!--[if gt IE 9]>
+<link rel="stylesheet" href="/css/bootstrap3.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css" />
+<![endif]-->
+
+<!--[if lt IE 10]>
+<link rel="stylesheet" href="/css/ltIE10.css" />
+<![endif]-->
+
+<style>
+.statalign {
+  display: inline-block;
+  min-width: 80px;
+  text-align: right;
+}
+</style>
+<script src="/javascripts/bootstrap3.js"></script>
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+
+<div class="row" style="padding-top:270px;min-width:970px;"><!-- outer border -->
+
+<div class="ltIEten">
+  <h5>Please note that PUB no longer supports Internet Explorer versions 8 or 9 (or earlier).</h5>
+  <p>We recommend upgrading to the latest <a href="http://windows.microsoft.com/ie" target="_blank">Internet Explorer</a>, <a href="https://chrome.google.com" target="_blank">Google Chrome</a>, or <a href="https=//mozilla.org/firefox/" target="_blank">Firefox</a>.</p>
+</div>
+
+  <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->
+    <div class="row">
+      <div class="col-md-10">
+        <ul class="nav nav-tabs" id="indexTab">
+          <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+          <li><a href="/publication[% lang ? '?lang=en">Publications' : '">Publikationen' %]</a></li>
+          <li><a href="/data[% lang ? '?lang=en' : '' %]">[% lang ? 'Data Publications' : 'Datenpublikationen' %]</a></li>
+          <!---
+          <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project?[% lang ? "lang=en&" : "" %][% qp.ftext ? "ftext=$qp.ftext" : "" %]">[% lang ? 'Projects' : 'Projekte' %]</a></li>
+          --->
+          <li><a href="/authorlist[% lang ? '?lang=en' : '' %]">[% lang ? "Authors" : "Autoren" %]</a></li>
+          <li><a href="#pubtheses" data-toggle="tab">PUB Theses</a></li>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lang ? 'About PUB' : '&Uuml;ber PUB' %] <span class="caret" style="font-color:black;"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#about" data-toggle="tab">[% lang ? "Features" : "Features" %]</a></li>
+              <li><a href="/doc/api">API [% lang ? "Documentation" : "Dokumentation" %]</a></li>
+              <li><a href="#faq" data-toggle="tab">FAQ</a></li>
+              <li><a href="#contact" data-toggle="tab">[% lang ? "Contact" : "Kontakt" %]</a></li>
+            </ul>
+          </li>
+          <li><a href="#policy" data-toggle="tab" style="display:none;">Policy</a></li>
+          <div style="text-align:right;padding-top:10px;"><a href="/[% lang ? "" : "en" %]" class="select-language"><img border="0" src="http://www.uni-bielefeld.de/icons/[% lang ? "de" : "en" %].gif" alt="[% lang ? "Deutsch" : "English" %]" /> [% lang ? "Deutsch" : "English" %]</a></div>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-10 tab-content">
+        <div class="tab-pane active" id="home">
+          [% INCLUDE websites/home.tt %]
+        </div>
+
+        <div class="tab-pane" id="pubtheses">
+          [% IF lang %]
+          [% INCLUDE websites/en/pubtheses.tt %]
+          [% ELSE %]
+          [% INCLUDE websites/pubtheses.tt %]
+          [% END %]
+        </div>
+
+        <div class="tab-pane" id="about">
+          [% IF lang %]
+          [% INCLUDE websites/en/about.tt %]
+          [% ELSE %]
+          [% INCLUDE websites/about.tt %]
+          [% END %]
+        </div>
+
+        <div class="tab-pane" id="policy">
+          [% IF lang %]
+          [% INCLUDE websites/en/policy.tt %]
+          [% ELSE %]
+          [% INCLUDE websites/policy.tt %]
+          [% END %]
+        </div>
+
+        <div class="tab-pane" id="faq">
+          [% IF lang %]
+          [% INCLUDE websites/en/faq.tt %]
+          [% ELSE %]
+          [% INCLUDE websites/faq.tt %]
+          [% END %]
+        </div>
+
+        <div class="tab-pane" id="contact">
+          [% IF lang %]
+          [% INCLUDE websites/en/contact.tt %]
+          [% ELSE %]
+          [% INCLUDE websites/contact.tt %]
+          [% END %]
+        </div>
+
+      </div><!-- tab-content -->
+    </div>
+  </div><!-- main content left -->
+
+</div><!-- div row -->
+
+<div class="row">
+  <div class="col-md-11">
+  [% INCLUDE websites/footer.tt %]
+  </div>
+</div>
+
+<script>
+var hash = document.location.hash;
+var prefix = "tab_";
+if (hash) {
+  $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show');
+  window.scrollTo(0, 0);
+}
+
+// Change hash for page-reload
+$('.nav-tabs a').on('shown', function (e) {
+    window.location.hash = e.target.hash.replace("#", "#" + prefix);
+});
+
+$("a.linkabout").click(function() {
+  $('#indexTab li.active').removeClass("active");
+  $('#indexTab a[href="#about"]').parent().addClass("active");
+});
+
+$("a.linktheses").click(function() {
+  $('#indexTab li.active').removeClass("active");
+  $('#indexTab a[href="#pubtheses"]').parent().addClass("active");
+});
+
+$("a.linkpeople").click(function() {
+  $('#indexTab li.active').removeClass("active");
+  $('#indexTab a[href="#people"]').parent().addClass("active");
+});
+
+$(document).ready(function() {
+  $(".ngadd").click(function() {
+    $("#q_id").focus();
+  });
+});
+</script>

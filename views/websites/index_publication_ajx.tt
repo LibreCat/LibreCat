@@ -1,0 +1,10 @@
+[% IF bag == "data" %]
+[% hits = researchhits.hits %]
+[% total = researchhits.total %]
+[% END %]
+[% INCLUDE hits.tt %]
+
+
+
+
+

@@ -1,0 +1,90 @@
+<div class="row" style="padding-left:13px;">
+
+<div class="col-xs-9">
+  <h4>PUB Theses</h4>
+  <p>PUB Theses ist die Plattform der Universit&auml;t Bielefeld, &uuml;ber die Habilitationsschriften, Dissertationen und andere Pr&uuml;fungsarbeiten als elektronische Publikationen kostenfrei im Internet ver&ouml;ffentlicht werden k&ouml;nnen.</p>
+  <div class="well"><span class="fa fa-chevron-right icon-green"></span>
+  <a href="/publication?publicationtype=bi*">PUB Theses Gesamtliste</a></div>
+  <p>Die Autoren laden ihre Arbeiten inklusive der Beschreibungsdaten selbst&auml;ndig hoch, die Universit&auml;tsbibliothek archiviert sie dauerhaft und sorgt f&uuml;r den weltweiten Nachweis in Suchmaschinen und Datenbanken (<a href="/pubtheses/pubtheses_kurzgefasst.pdf">PUB Theses kurzgefasst</a>).</p>
+
+  <h4>Pr&uuml;fungsarbeit ver&ouml;ffentlichen</h4>
+  <div class="well">
+  <span class="fa fa-chevron-right icon-green"></span> <a href="[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biDissertation&amp;tab=all" target="publish" onclick="javascript:{openWdw('[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biDissertation&amp;tab=all','900','900','0','0','publish');}">Dissertation</a><br />
+  <span class="fa fa-chevron-right icon-green"></span> <a href="[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biPostdocThesis&amp;tab=all" target="publish" onclick="javascript:{openWdw('[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biPostdocThesis&amp;tab=all','900','900','0','0','publish');}">Habilitationsschrift</a><br />
+  <span class="fa fa-chevron-right icon-green"></span> <a href="[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biMasterThesis&amp;tab=all" target="publish" onclick="javascript:{openWdw('[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biMasterThesis&amp;tab=all','900','900','0','0','publish');}">Masterarbeit</a><br />
+  <span class="fa fa-chevron-right icon-green"></span> <a href="[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biBachelorThesis&amp;tab=all" target="publish" onclick="javascript:{openWdw('[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biBachelorThesis&amp;tab=all','900','900','0','0','publish');}">Bachelorarbeit</a>
+  </div>
+
+  <div class="panel-group" id="accordion2">
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion2" href="#berechtigte">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Hinweise f&uuml;r Autorinnen und Autoren
+        </a>
+      </div>
+      <div id="berechtigte" class="panel-collapse collapse">
+        <div class="panel-body">
+          [% INCLUDE websites/berechtigte.tt %]
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion2" href="#hinweise_diss">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Besonderheiten bei Dissertationen
+        </a>
+      </div>
+      <div id="hinweise_diss" class="panel-collapse collapse">
+        <div class="panel-body">
+          [% INCLUDE websites/hinweise_diss.tt %]
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion2" href="#hinweise_ba_ma">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Besonderheiten bei Bachelor- und Masterarbeiten
+        </a>
+      </div>
+      <div id="hinweise_ba_ma" class="panel-collapse collapse">
+        <div class="panel-body">
+          [% INCLUDE websites/hinweise_ba_ma.tt %]
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion2" href="#anforderungen">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Technische Anforderungen an die zu speichernden Dokumente
+        </a>
+      </div>
+      <div id="anforderungen" class="panel-collapse collapse">
+        <div class="panel-body">
+          [% INCLUDE websites/anforderungen.tt %]
+        </div>
+      </div>
+    </div>
+    <div>
+    &nbsp;
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <a class="accordion-toggle" href="/pubtheses/revers_hochschulschriften.pdf">
+          <span class="fa fa-chevron-right"></span> Schriftliche Erkl&auml;rung zur Einr&auml;umung von Nutzungsrechten (pdf-Formular Download)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <h5>Ansprechpartnerin:</h5>
+  <p>Bettina Weingarten<br />
+  Tel.: 0521/106-4021, Zimmer: A1-136<br />
+  E-Mail: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#116;&#116;&#105;&#110;&#97;&#46;&#119;&#101;&#105;&#110;&#103;&#97;&#114;&#116;&#101;&#110;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;">&#98;&#101;&#116;&#116;&#105;&#110;&#97;&#46;&#119;&#101;&#105;&#110;&#103;&#97;&#114;&#116;&#101;&#110;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a></p>
+  </p>
+</div>
+
+<div class="col-xs-3">
+  [% INCLUDE websites/logo_contact.tt %]
+</div>
+
+</div>

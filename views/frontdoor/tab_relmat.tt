@@ -1,0 +1,130 @@
+<!-- BEGIN tab_relmat -->
+	
+<div class="tab-pane" id="relMat">
+  <div class="frontdoor">
+    
+    [% IF relToc.size %]
+      <div class="frontdoor_left">
+        Table of Contents
+      </div>
+      <div class="frontdoor_right">
+        [% FOREACH file IN relToc %]
+          <a href="[% h.shost %]/download/[% oId %]/[% file.file.fileOId %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF file.file.description %]<i>Description:</i><br />[% file.file.description %]<br /><br />[% END %]<i>Filename:</i><br />[% file.file.fileName %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% file.file.fileTitle ? file.file.fileTitle : file.file.fileName %]</a><br />
+          <script>
+            $('a.description').tooltip();
+          </script>
+        [% END %]
+      </div>
+      <div>&nbsp;</div>
+    [% END %]
+    
+    [% IF relFile.size %]
+      <div class="frontdoor_left">
+        File
+      </div>
+      <div class="frontdoor_right">
+        [% FOREACH file IN relFile %]
+          <a href="[% h.shost %]/download/[% oId %]/[% file.file.fileOId %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF file.file.description %]<i>Description:</i><br />[% file.file.description %]<br /><br />[% END %]<i>Filename:</i><br />[% file.file.fileName %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% file.file.fileTitle ? file.file.fileTitle : file.file.fileName %]</a><br />
+          <script>
+            $('a.description').tooltip();
+          </script>
+        [% END %]
+      </div>
+      <div>&nbsp;</div>
+    [% END %]
+    
+    [% IF relLink.size %]
+      <div class="frontdoor_left">
+        Link
+      </div>
+      <div class="frontdoor_right">
+        [% FOREACH link IN relLink %]
+          <a href="[% link.link.url %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF link.link.description %]<i>Description:</i><br />[% link.link.description %]<br /><br />[% END %]<i>Location:</i><br />[% link.link.url %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% link.link.linkTitle ? link.link.linkTitle : link.link.url %]</a><br />
+          <script>
+            $('a.description').tooltip();
+          </script>
+        [% END %]
+      </div>
+      <div>&nbsp;</div>
+    [% END %]
+    
+    [% IF relMat.size %]
+      <div class="frontdoor_left">
+        Rel. Material
+      </div>
+      <div class="frontdoor_right">
+        [% FOREACH rel IN relMat %]
+          [% IF rel.relatesTo.mainTitle %]
+            [% rel_oId = rel.relatesTo.oId %]
+            [% rel_name_to = rel.materialRelationType.relationNameFrom.0 ? rel.materialRelationType.relationNameFrom.0.text : "Related Material" %]
+            [% rel_title = rel.relatesTo.mainTitle %]
+            [% rel_location = h.host _ "/publication/" _ rel_oId %]
+          [% ELSIF rel.relatesFrom.mainTitle %]
+            [% rel_oId = rel.relatesFrom.oId %]
+            [% rel_name_from = rel.materialRelationType.relationNameTo.0 ? rel.materialRelationType.relationNameTo.0.text : "Related Material" %]
+            [% rel_title = rel.relatesFrom.mainTitle %]
+            [% rel_location = h.host _ "/publication/" _ rel_oId %]
+          [% END %]
+          
+          [% IF rel.relatesTo.mainTitle %]
+            [% SWITCH rel_name_to %]
+
+              [% CASE "Related object is earlier version" %]
+              [% rel_name_to = "Earlier Version" %]
+
+              [% CASE "Related object is part of" %]
+              [% rel_name_to = "Contains Document" %]
+
+              [% CASE "Related object is article/paper in dissertation" %]
+              [% rel_name_to = "Article/Paper in Dissertation" %]
+
+              [% CASE "Related object is new edition" %]
+              [% rel_name_to = "New Edition" %]
+
+              [% CASE "Related object is continued by" %]
+              [% rel_name_to = "Previous Object" %]
+
+              [% CASE "Related object is popular science" %]
+              [% rel_name_to = "Popular Science" %]
+            [% END %]
+            
+            <a href="[% h.host %]/publication/[% rel_oId %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="<i>Title:</i><br />[% rel_title | replace('"','&quot;') %]<br /><br /><i>Location:</i><br />[% rel_location %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% rel_name_to %]</a><br />
+            <script>
+              $('a.description').tooltip();
+            </script>
+          [% END %]
+            
+          [% IF rel.relatesFrom.mainTitle %]
+            [% SWITCH rel_name_from %]
+              [% CASE "Related object is later version" %]
+              [% rel_name_from = "Later Version" %]
+
+              [% CASE "Related object is old edition" %]
+              [% rel_name_from = "Old Edition" %]
+
+              [% CASE "This document is part of related object" %]
+              [% rel_name_from = "Published in" %]
+
+              [% CASE "This document is a part of Dissertation" %]
+              [% rel_name_from = "Published in Dissertation" %]
+
+              [% CASE "Related object continues" %]
+              [% rel_name_from = "Continuation" %]
+
+              [% CASE "This object is popular science of related object" %]
+              [% rel_name_from = "Research Paper" %]
+            [% END %]
+            
+            <a href="[% h.host %]/publication/[% rel_oId %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="<i>Title:</i><br />[% rel_title | replace('"','&quot;') %]<br /><br /><i>Location:</i><br />[% rel_location %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% rel_name_from %]</a><br />
+            <script>
+              $('a.description').tooltip();
+            </script>
+          [% END %]
+        [% END %]
+      </div>
+      <div>&nbsp;</div>
+    [% END %]
+  </div><!-- frontdoor -->
+</div><!-- tab-pane relMat -->
+
+<!-- END tab_relmat -->

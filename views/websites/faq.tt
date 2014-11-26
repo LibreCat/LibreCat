@@ -1,0 +1,444 @@
+<!-- BEGIN websites/faq.tt -->
+<div class="row" style="padding-left:13px;">
+
+<div class="col-xs-9">
+  <h5>Frequently Asked Questions</h5>
+
+  <div class="panel-group" id="accordion_faq">
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#wasistpub">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Was ist PUB - Publikationen an der Universit&auml;t Bielefeld?
+        </a>
+      </div>
+      <div id="wasistpub" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Der Publikationenserver der Universit&auml;t Bielefeld "PUB" ist der zentrale Nachweisort aller Publikationen der Bielefelder Wissenschaftlerinnen und Wissenschaftler.
+		PUB erm&ouml;glicht die &uuml;bersichtliche Darstellung der Publikationen in pers&ouml;nlichen Literaturlisten, die einfach zu pflegen und im Web recherchierbar zu machen sind.<br>
+		Die Publikationsnachweise enthalten neben den beschreibenden bibliographischen Daten der Ver&ouml;ffentlichung ggf. Abstracts, Keywords und Klassifikationszuordnungen
+		sowie die Verlinkung zur Ver&ouml;ffentlichung selbst &uuml;ber DOIs. Optional k&ouml;nnen die Nachweise mit Volltexten oder Zusatzmaterialien erg&auml;nzt werden. Forschungsdaten k&ouml;nnen entweder nur
+		verlinkt (z.B. <a href="/publication/1609190">aus GenBank, NASC und EBI</a>) oder in PUB direkt hochgeladen, ggf. registriert und lizenziert werden.</p>
+		Alle Daten der ehemaligen Forschungsdatenbank &quot;FoDa&quot; der Universit&auml;t und des Postprintserver "BiPrints" sind in darin aufgegangen und bildeten die initiale Datenbasis.
+		Inzwischen sind viele Tausend Eintr&auml;ge aus den verschiedenen Einrichtungen der Universit&auml;t sowie durch die regelm&auml;&szlig;ige Aktualisierung
+		aus dem Web of Knowledge hinzugekommen. PUB bietet:</p>
+          <ul id="listen">
+            <li>disziplinspezifische Publikationstypen f&uuml;r den flexiblen Nachweis Ihrer Ver&ouml;ffentlichungen,</li>
+            <li>die automatische Einbindung der pers&ouml;nlichen Publikationsliste in Ihrem Eintrag im Personen- und Einrichtungsverzeichnis (PEVZ),</li>
+            <li>Importoptionen zur Erleichterung der Schreibarbeit,</li>
+            <li>Exportoptionen zur einfachen Weiterverarbeitung Ihrer Liste oder Teile davon (Antr&auml;ge, Projektberichte, CVs etc.),</li>
+            <li>Einbettungsoptionen zur Verwendung Ihrer Liste oder Teilen davon auf pers&ouml;nlichen, Lehrstuhl- oder Fakult&auml;tswebsites, </li>
+            <li>die aktive Betreuung durch das Support-Team der Universit&auml;tsbibliothek.</li>
+          </ul>
+	   <p>Die Untercollection &quot;PUB Theses&quot;	ist die Plattform f&uuml;r die elektronische Erstver&ouml;ffentlichung von Bielefelder Pr&uuml;fungsschriften
+	     (s. <b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#Diss">Wo und wie kann ich meine Dissertation online ver&ouml;ffentlichen?</a></b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#zustaendig">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Wer ist zust&auml;ndig f&uuml;r Fragen zu PUB?
+        </a>
+      </div>
+      <div id="zustaendig" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Der erste Anlaufpunkt ist das <b>Support-Team &quot;Publikationsdienste&quot;</b> (Kontakt s. rechte Spalte).
+		Dort werden alle Anfragen bearbeitet und gegebenenfalls weitergeleitet.
+		Gern beantworten wir Ihre Fragen pers&ouml;nlich und freuen uns auf Ihre Anregungen.</p>
+        </div>
+      </div>
+    </div>
+
+	<div class="panel panel-default">
+	  <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#publogin">
+       	<a class="accordion-toggle">
+       	   <span class="fa fa-chevron-down"></span> Wie registriere ich mich f&uuml;r PUB? Wie logge ich mich ein?
+        </a>
+      </div>
+	  <div id="publogin" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Zur Registrierung und zum sp&auml;teren Login ben&ouml;tigen Sie nur Ihre HRZ-Benutzerkennung und das dazugeh&ouml;rige Passwort. Diese Kennung nutzen Sie i.d.R. f&uuml;r Ihren Webmail-Account
+	      und f&uuml;r Stud.IP. Falls Sie Ihr Passwort vergessen haben, hilft Ihnen der/die lokale EDV-Betreuer/in der Fakult&auml;t oder Einrichtung weiter.</p>
+
+	   <p>Wenn Sie PUB zum ersten Mal nutzen, m&uuml;ssen Sie sich erst registrieren. <br>
+	      Dazu klicken Sie auf der PUB-Startseite auf den Button &quotPUB Login&quot;. Klicken Sie dann &quot;Register for PUB&quot;, geben Ihre HRZ-Benutzerkennung
+	      und das dazugeh&ouml;rige Passwort ein. Es werden Ihnen die Daten angezeigt, die aus dem BIS-System der Universit&auml;t f&uuml;r Ihre Person in PUB eingetragen wurden.
+	      Bitte pr&uuml;fen Sie die Richtigkeit und &auml;ndern Sie ggf. Ihre Zuordnung zu Einrichtungen der Universit&auml;t ("Affiliation"). Sie &auml;ndern eine Zuordnung mit Klick
+	      auf "Select" und w&auml;hlen eine Einrichtung aus. Erg&auml;nzen Sie bitte ggf. Informationen wie Researcher ID usw..
+	      Speichern bzw. best&auml;tigen Sie die Eintr&auml;ge mit "Submit". <br>
+	      Das Fenster schlie&szlig;t sich und Sie gelangen auf Ihre interne Arbeitsoberfl&auml;che ("My Publication List Manager"). Damit ist die Registrierung abgeschlossen.<br><br>
+
+	      Bei der n&auml;chsten PUB-Nutzung tragen Sie Ihre Kennung und das Passwort nur noch in die Felder im Kasten &quot;Login for PUB&quot; ein.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#backend">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Was erwartet mich nach der erfolgten Anmeldung?
+        </a>
+      </div>
+      <div id="backend" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Nach der Anmeldung sehen Sie zun&auml;chst eine interne Ansicht zum Management Ihrer Publikationsdaten. In PUB finden Sie alle Daten der ehemaligen Forschungsdatenbank "FoDa" der Universit&auml;t
+		  und des Postprintservers "BiPrints" vor sowie die durch regelm&auml;&szlig;ige Aktualisierung aus dem Web of Knowledge hinzugekommenen Daten.
+		  Letzere erkennen Sie an der Bezeichnung "ISI" oder "Medline" in der Spalte "Data Source".</p>
+
+	      <p>Die Liste sortiert Ihre Publikationen standardm&auml;&szlig;ig chronologisch absteigend. Kern der Liste ist die Spalte &quot;Publication&quot;, die Autorennamen, Titel
+		  und die Quelle Ihrer Ver&ouml;ffentlichung zusammenfasst. Die Spalte &quot;Data Source&quot; weist die Herkunft der Literaturangaben nach, die Spalte &quot;Publication Type&quot; zeigt den Publikationstyp.</p>
+
+          <p>Die Spalte &quot;Status in PUB&quot; kann mehrere Angaben enthalten:</p>
+          <ul id="listen">
+            <li>Public: Die Literaturangabe ist &ouml;ffentlich im Web sichtbar als Eintrag in Ihrer pers&ouml;nlichen Publikationsliste</li>
+            <li>Private: Die Literaturangabe ist nur in Ihrem Arbeitsbereich sichtbar.</li>
+            <li>Returned: Die Literaturangabe wurde aus der &ouml;ffentlichen Sicht "zur&uuml;ckgeholt" und ist jetzt nur intern sichtbar.</li>
+          </ul>
+
+	      <p>Die &ouml;ffentliche Ansicht Ihrer Publikationsliste ist in der Navigationsleiste &uuml;ber den Punkt &quot;Public View&quot; erreichbar.
+ 		  Unter dem Men&uuml;punkt &quot;Citation Style Settings&quot; k&ouml;nnen Sie einen Zitationsstil und die Sortierreihenfolge nach Jahren auf- oder absteigend festlegen.
+		  Unter "Add new Publication" finden Sie die Auswahl der in PUB m&ouml;glichen Publikationstypen. Zum Eintragen einer neuen Literaturangabe w&auml;hlen Sie den passenden Publikationstyp aus und tragen die bibliographischen Daten
+		  in das Formular ein. (Mehr dazu s. <b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">Wie kann ich eine Literaturangabe &uuml;berarbeiten?</a></b>) </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#sources">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Was bedeuten die Angaben in der Spalte "Data Source"?
+        </a>
+      </div>
+      <div id="sources" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>In der Spalte "Data Source" k&ouml;nnen die folgenden K&uuml;rzel auftauchen:
+		  <ul id="listen">
+		  <li>BiPrints: der ehemalige Postprintserver der Universit&auml;tbibliothek. Dieses sind qualit&auml;tsgepr&uuml;fte Eintr&auml;ge, die alle mit Volltexten versehen sind. Diese sollen den Status "public" behalten.</li>
+		  <li>ISI oder Medline: Eintr&auml;ge, die per regelm&auml;&szlig;igem Import aus den Datenbanken des Web of Knowledge (ISI) stammen. Diese sind i.d.R. hochwertig und k&ouml;nnen weiterverwendet werden.
+		    Es ist ggf. notwendig, den Originaltitel zu erg&auml;nzen und  den vorhandenen &uuml;bersetzten Titel ins Feld &quot;Alternative Title&quot; einzutragen.</li>
+		  <li>FoDa: Daten, die aus der ehemaligen Forschungsdatenbank "FoDa" der Universit&auml;t &uuml;bernommen wurden. Da PUB im Vergleich zur FoDa &uuml;ber mehr und differenziertere Eingabefelder verf&uuml;gt,
+		    sollten Sie die diese Literaturangaben &uuml;berpr&uuml;fen und gegebenenfalls berichtigen.</li>
+		  <li>AHF: Importe aus der "Historischen Bibliographie Online" der Arbeitsgemeinschaft historischer Forschungseinrichtungen in der Bundesrepublik Deutschland e.V. (AHF).</li>
+		  <li>Inspire: Eintr&auml;ge aus INSPIRE, dem Informationssystem der Hochenergiephysik.</li>
+		  <li>arXiv.org: Publikationsdaten vom gleichnamigen Preprintserver, vornehmlich aus den Bereichen Physik, Mathematik und Informatik.</li>
+		  </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Wie kann ich eine Literaturangabe &uuml;berarbeiten?
+        </a>
+      </div>
+      <div id="edit" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Um alle Daten einer Literaturangabe anschauen zu k&ouml;nnen, klicken Sie auf &quot;Internal View&quot;. Sie erhalten eine tabellarische &Uuml;bersicht aller dazu eingetragenen Daten. <br />
+		  M&ouml;chten Sie eine Literaturangabe erg&auml;nzen oder bearbeiten, klicken Sie auf Ihrer Liste auf den Titel. Sie gelangen so in das Bearbeitungsformular.</p>
+
+          <p>Das Bearbeitungsmen&uuml; unterteilt sich in die Bereiche Work, Abstract + Subject, Fulltext und Message. Klicken Sie auf einen Reiter, um das Untermen&uuml; zu wechseln.</p>
+
+		  <p><a href="javascript:anzeigen('eins');"><i>Abbildung 1</i></a></p>
+		  <div class="contentbox" style="display:none;"  id="eins">
+		  <p><img src="/images/screenshots/edit2.png" alt="" /></p>
+		  </div>
+
+          <p><strong>Work:</strong> Hier finden Sie die einzelnen Felder, die f&uuml;r die formale Beschreibung Ihrer Ver&ouml;ffentlichung wichtig sind.
+		  Nachdem Sie Ihren Namen eingetragen haben (Reihenfolge: Vorname Nachname!), klicken Sie bitte unbedingt das K&auml;stchen mit "Link to PEVZ Account" an.
+		  Damit wird eine Verbindung zum Personen- und Einrichtungsverzeichnis und die dort befindliche Publikationsliste hergestellt. Wenn der Link fehlt, fehlt auch der Publikationseintrag!
+		  Bitte verfahren Sie genauso bei Ihren Bielefelder Co-Autoren. </p>
+
+		  <p><a href="javascript:anzeigen('zwei');"><i>Abbildung 2</i></a></p>
+		  <div class="contentbox" style="display:none;"  id="zwei">
+		    <p><img src="/images/screenshots/edit3.png" alt="" /></p>
+		  </div>
+
+          <p>In den meisten F&auml;llen gibt es genau eine Person des Namens, so dass die Verbindung unmittelbar eingetragen wird. Falls es mehrere Personen des Namens gibt,
+		  bekommen Sie ein Auswahlfenster angezeigt, in dem Sie den zutreffenden Namen bitte durch Anklicken best&auml;tigen. Sollte Ihr Name nicht auf Anhieb gefunden werden,
+		  vergr&ouml;bern Sie Ihre Suchanfrage im Suchfeld z.B. durch L&ouml;schen eines zweiten Vornamens oder die Eingabe nur der Initiale und klicken anschlie&szlig;end auf &quot;Search Again&quot;.</p>
+
+          <p><a href="javascript:anzeigen('drei');"><i>Abbildung 3</i></a></p>
+          <div class="contentbox" style="display:none;"  id="drei">
+            <p><img src="/images/screenshots/edit4.png" alt="" /></p>
+          </div>
+
+          <p>Wenn die Zuordnung erfolgreich war, erscheint neben dem Namen das Logo der Universit&auml;t, und die Felder sind grau unterlegt.</p>
+          <p><a href="javascript:anzeigen('vier');"><i>Abbildung 4</i></a></p>
+          <div class="contentbox" style="display:none;"  id="vier">
+            <p><img src="/images/screenshots/edit5.png" alt="" /></p>
+          </div>
+
+          <p>Ihre Einrichtungszugeh&ouml;rigkeit erscheint automatisch im Feld &quot;Department/Affiliation&quot;. Um eine Einrichtung oder einen Lehrstuhl hinzuzuf&uuml;gen, klicken Sie auf das blaue &quot;+&quot;,
+		  um ein weiteres Eingabefeld zu generieren. Anschlie&szlig;end klicken Sie auf &quot;select&quot; und w&auml;hlen Ihre Einrichtung aus.
+		  Sie k&ouml;nnen auch direkt in das Eingabefeld schreiben, die Auto-Complete-Funktion von PUB bietet Ihnen dann Einrichtungen zur Auswahl an.<br />
+		  Sollte die Arbeit nicht w&auml;hrend Ihrer Zugeh&ouml;rigkeit zur Universit&auml;t Bielefeld entstanden sein, markieren Sie bitte das K&auml;stchen &quot;Published while not employed at UniBi&quot;.</p>
+
+          <p><strong>Abstract + Subject</strong> ist der Bereich, in dem Sie Ihre Ver&ouml;ffentlichung inhaltlich n&auml;her bestimmen k&ouml;nnen.</p>
+          <p><strong>Fulltext</strong> gibt Ihnen die M&ouml;glichkeit, ein Dokument hochzuladen oder es zu verlinken.</p>
+          <p><strong>Message</strong> ist der Bereich f&uuml;r Ihre Notizen.</p>
+
+          <p>Der Button &quot;Show all tabs on one page&quot; zeigt die Inhalte alle Reiter untereinander an. So ersparen Sie sich das Hin- und Herklicken.</p>
+
+          <p>F&uuml;r jedes Datenfeld k&ouml;nnen Sie sich Erl&auml;uterungen anzeigen lassen, indem Sie auf das jeweilige Fragezeichen am rechten Rand klicken.</p>
+
+          <p>Sie k&ouml;nnen jederzeit Ihre Eingaben mit &quot;Save&quot; speichern oder direkt - falls der Eintrag noch nicht &quot;public&quot; war - auf &quot;publish&quot; klicken,
+		  um die Literaturangabe in Ihrer pers&ouml;nlichen Publikationsliste &ouml;ffentlich zu stellen.</p>
+
+          <p>Wenn Sie den Publikationstyp &auml;ndern m&ouml;chten (z.B. conference paper wird zu journal article oder umgekehrt), klicken Sie auf &quot;Change Type&quot;. Ihre Eingaben werden,
+		  soweit sie f&uuml;r den anderen Publikationstyp notwendig sind, &uuml;bernommen.</p>
+
+          <p><a href="javascript:anzeigen('fuenf');"><i>Abbildung 5</i></a></p>
+          <div class="contentbox" style="display:none;"  id="fuenf">
+            <p><img src="/images/screenshots/edit6.png" alt="" /></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#add">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Wie nehme ich eine neue Ver&ouml;ffentlichung in meine Publikationsliste auf?
+        </a>
+      </div>
+      <div id="add" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Sie k&ouml;nnen Ihre Liste jederzeit mit neuen Literaturangaben erg&auml;nzen. Bitte pr&uuml;fen Sie erst, ob die Angabe, die Sie eingeben wollen, wirklich noch nicht vorhanden ist -
+		&uuml;ber &quot;search similar titles&quot; oder das Suchformular. <br>
+		In Ihrem &quot;Control Panel&quot; in der linken Navigationsleiste finden Sie den Punkt &quot;Add new Publication&quot;. W&auml;hlen Sie den passenden Publikationstyp aus und Sie
+		 bekommen ein leeres Eingabeformular. Bis auf wenige Pflichtfelder sind Sie frei in der Auswahl der zu f&uuml;llenden Felder. Die weiteren Schritte werden unter dem Punkt
+		<b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">Wie kann ich eine Literaturangabe &uuml;berarbeiten?</a></b> erkl&auml;rt.</p>
+          <p>Nachdem Sie einen Datensatz eingetragen und frei gestellt haben (= auf &quot;publish&quot; geklickt haben), k&ouml;nnen Sie sich &uuml;ber den Link &quot;Preview Page&quot; mit kurzer zeitlicher Verz&ouml;gerung anschauen, wie die Publikation &ouml;ffentlich dargestellt wird.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#addFoda">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Was muss ich beim Hinzuf&uuml;gen eines neuen Forschungsdatensatzes beachten?
+        </a>
+      </div>
+      <div id="addFoda" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>In Ihrem &quot;Control Panel&quot; in der linken Navigationsleiste finden Sie den Punkt &quot;Add new Data Publication&quot;, &uuml;ber den Sie eine neue Datenpublikation anlegen k&ouml;nnen.</p>
+          <p><strong>Anlegen eines Datensatzes mit vorhandener DOI (DOI-Fetch):</strong><br />
+          Wenn Sie eine DOI (Digital Object Identifier) f&uuml;r Ihren Datensatz haben, geben Sie diese im DOI Feld ein und wir holen alle zugeh&ouml;rigen Daten von DataCite und f&uuml;llen das Eingabeformular f&uuml;r Sie aus. Sie k&ouml;nnen dann noch Erg&auml;nzungen machen, Dateien hinzu f&uuml;gen oder &Auml;nderungen durchf&uuml;hren, bevor Sie Ihren Datensatz abspeichern oder freigeben.<br />
+          </p>
+          <p><strong>Anlegen eines Datensatzes ohne DOI:</strong><br />
+          Wenn sie keine DOI haben, gelangen Sie &uuml;ber den Button "fill out the empty form yourself" direkt zu einem leeren Eingabeformular.
+          </p>
+          <p><strong>Dateien anh&auml;ngen:</strong><br />
+          Sie k&ouml;nnen Ihren Metadatensatz per Drag &amp; Drop mit Forschungsdaten anreichern, die direkt bei uns auf dem PUB-Server gespeichert werden. Angeh&auml;ngte Dateien werden nach Ver&ouml;ffentlichung des Metadatensatzes auf der Frontdoor verlinkt und in einem eigenen Reiter n&auml;her beschrieben.
+          </p>
+          <p><strong>Verlinkung zu Publikationen:</strong><br />
+          Wenn Ihr Forschungsdatensatz in einer Publikation referenziert wurde, k&ouml;nnen Sie die beiden Datens&auml;tze miteinander verkn&uuml;pfen. Nach Ver&ouml;ffentlichung wird auf der Frontdoor
+		des Forschungsdatensatzes dann ein Reiter mit Link und Informationen zu zitierenden Publikationen angezeigt und auf der Frontdoor der Publikation ein jeweiliger Reiter mit Link zum Forschungsdatensatz.
+          </p>
+          <p><strong>Speichern und Ver&ouml;ffentlichen:</strong><br />
+          Nach Eintragung bzw. Erg&auml;nzung und Korrektur aller Daten im Eingabeformular k&ouml;nnen Sie den Datensatz entweder abspeichern, ohne ihn zu ver&ouml;ffentlichen
+		(z.B. f&uuml;r sp&auml;teres Bearbeiten) &uuml;ber den Button "Save".<br />
+          Oder Sie k&ouml;nnen den Datensatz direkt zur Ver&ouml;ffentlichung freigeben (&uuml;ber den Button "Publish"). Bei Klick auf "Publish" wird der Datensatz gespeichert und als "submitted" gekennzeichnet. Sobald Ihr Datensatz von einem unserer Mitarbeiter gepr&uuml;ft wurde, wird er ver&ouml;ffentlicht.
+          </p>
+          <p><strong>DOI-Vergabe und -Registrierung:</strong><br />
+          F&uuml;r den Fall, dass Ihr Datensatz noch keinen DOI hat, wird bei Ver&ouml;ffentlichung im PUB-System automatisch ein DOI vergeben und Ihre Daten werden bei DataCite registriert.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#import">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Wie importiere ich meine Ver&ouml;ffentlichungen aus einem Literaturverwaltungsprogramm?
+        </a>
+      </div>
+      <div id="import" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Falls Sie Ihre Publikationsliste mit einem Literaturverwaltungsprogramm organisieren, k&ouml;nnen Sie Ihre Literaturangaben im BibTeX-Format in PUB hochladen.
+		Gehen Sie hierf&uuml;r auf &quot;Import&quot; in der linken Navigationsleiste, w&auml;hlen Sie Ihre Datei und klicken Sie auf &quot;Submit&quot;.</p>
+          <p><a href="javascript:anzeigen('sechs');"><i>Abbildung 6</i></a></p>
+          <div class="contentbox" style="display:none;"  id="sechs">
+            <p><img src="/images/screenshots/import1.png" alt="" /></p>
+          </div>
+
+          <p>Sie gelangen auf eine kurze &Uuml;berblicksseite. Der Klick auf &quot;Show imported records&quot; &uuml;berf&uuml;hrt Ihre Literaturangaben in Ihren internen Arbeitsbereich.</p>
+          <p><a href="javascript:anzeigen('sieben');"><i>Abbildung 7</i></a></p>
+          <div class="contentbox" style="display:none;"  id="sieben">
+            <p><img src="/images/screenshots/import2.png" alt="" /></p>
+          </div>
+          <p>Bitte ordnen Sie sich und Ihre Bielefelder Co-Autoren zu. Klicken Sie dazu in Ihrer importierten Liste jeweils auf den Titel. Die weiteren Schritte werden unter dem Punkt
+		<b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">Wie kann ich eine Literaturangabe &uuml;berarbeiten?</a></b> erkl&auml;rt.</p>
+          <p>M&ouml;chten Sie ein anderes Format als BibTeX importieren, schicken Sie die Datei an unser <b>Support-Team &quot;Publikationsdienste&quot;</b> (Kontakt s. rechte Spalte).
+		Wir pflegen Ihre Literaturangaben gerne ein.</p>
+         </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#export">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Wie kann ich meine Daten aus PUB wieder exportieren?
+        </a>
+      </div>
+      <div id="export" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Selbstverst&auml;ndlich k&ouml;nnen Sie Ihre Literaturangaben auch wieder exportieren. Gehen Sie dazu auf Ihre pers&ouml;nliche Publikationsliste (http://pub.uni-bielefeld.de/person/[PEVZ-ID]). Dort finden Sie in der rechten Spalte
+		die Option &quot;Export as&quot;, wo mehrere Exportformate wie BibTeX oder auch RTF zur Auswahl stehen. Damit k&ouml;nnen Sie mit wenigen Klicks Ihre komplette Publikationsliste oder eine nach
+		verschiedenen Aspekten gefilterte und sortierte Liste exportieren. Der Export als unformatiertes Textdokument im RTF-Format bietet sich f&uuml;r die rasche Weiterverarbeitung einer Liste
+		f&uuml;r Projektberichte, Antr&auml;ge, CVs usw. an.</p>
+         </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#faq04">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Wie soll ich mit doppelten Datens&auml;tzen umgehen?
+        </a>
+      </div>
+      <div id="faq04" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Jede Publikation soll nur einmal in PUB nachgewiesen sein, da alle beteiligten Autoren durch die Verkn&uuml;pfung im PEVZ auf ein und denselben Datensatz zugreifen. Doppelte Eintr&auml;ge w&uuml;rden
+		daher bei allen doppelt auftauchen. Falls es doch mal Doppeleintr&auml;ge geben sollte, was z.B. durch einen Import passieren kann, sollte einer "public" gestellt werden und der andere
+		verbleibt im Status "private".
+		Bei unseren regelm&auml;&szlig;gen Datenpflegearbeiten fallen die Doppeleintr&auml;ge auf und werden gel&ouml;scht.</p>
+	   <p>Sollten f&auml;lschlich zwei Datens&auml;tze "public" gestellt worden sein, belassen Sie bitte den vollst&auml;ndigeren im Status "public" und "returnen" Sie den anderen.
+		Bitte verwenden Sie daf&uuml;r nicht den Papierkorb, da der Papierkorb nicht bewirkt, dass der Titel aus der &ouml;ffentlichen Sicht entfernt wird!
+		Auch die Return-F&auml;lle werden bei Datenpflegearbeiten von uns gel&ouml;scht.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#public">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Wo wird meine pers&ouml;nliche Liste sichtbar sein?
+        </a>
+      </div>
+      <div id="public" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Nach der Freigabe Ihrer Literaturangaben ist Ihre pers&ouml;nliche Publikationsliste standardm&auml;&szlig;ig in Ihrem Personeneintrag im Personen- und Einrichtungsverzeichnis (PEVZ) sichtbar.
+		Mit Klick auf &quot;Public View&quot; (in der linken Navigationsleiste) gelangen Sie direkt dorthin.</p>
+          <p>&Uuml;ber den Link &quot;PUB&quot; unterhalb eines jeden Publikationseintrags gelangen Sie auf die detaillierte Anzeige der Ver&ouml;ffentlichung.</p>
+
+          <p>Selbstverst&auml;ndlich k&ouml;nnen Sie bereits ver&ouml;ffentlichte Literaturangaben in Ihrem Arbeitsbereich weiterhin bearbeiten. Wenn Sie einen Beitrag von Ihrer &ouml;ffentlich
+		sichtbaren Publikationsliste entfernen m&ouml;chten, klicken Sie im &quot;Publication List Manager&quot; oder im Bearbeitungsformular auf &quot;Return&quot;.
+		Eintr&auml;ge, die mit &quot;Return&quot; zur&uuml;ckgeholt wurden, k&ouml;nnen nur &uuml;ber den Klick auf &quot;Publish&quot; im Bearbeitungsformular wieder &ouml;ffentlich gestellt werden.</p>
+
+          <p>In PUB stehen mehrere Zitationsstile zur Auswahl, die in der Publikationsliste im PEVZ und bei Einbettungen Ihrer Liste in eine Website verwendet werden (n&auml;here Informationen
+		zu Einbettungen s. <b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#embed">Wie kann ich meine pers&ouml;nliche Liste
+		auf meiner Homepage sichtbar machen?</a></b>).
+		Die zur Wahl stehenden Stile finden Sie unter &quot;Citation Style Settings&quot;. </p>
+	 </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#embed">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Wie kann ich meine pers&ouml;nliche Liste auf meiner Homepage sichtbar machen?
+        </a>
+      </div>
+      <div id="embed" class="panel-collapse collapse">
+        <div class="panel-body">
+
+ 		<p>Die Einbindung der pers&ouml;nlichen Publikationslisten ist ganz einfach von der Personenseite im Personal- und Einrichtungsverzeichnis (PEVZ) aus m&ouml;glich.<br>
+		Der Punkt &quot;Embed As&quot; im rechten Men&uuml; stellt HTML-Quellcodeschnipsel f&uuml;r statische Links, JavaScript- und iFrame-Code zur Verf&uuml;gung. Es wird die jeweilige
+		gefilterte und sortierte Auswahl oder die komplette Liste mit dem ausgew&auml;hlten Zitationsstil, die auf dem Bildschirm angezeigt wird, im Codeschnipsel umgesetzt.
+		Sie brauchen den Quellcode nur noch zu kopieren und in Ihre Website einzusetzen.</p>
+
+		<p>Neben den oben beschriebenen Einbettungsm&ouml;glichkeiten, die Sie selbst realisieren k&ouml;nnen, bieten wir auf Anfrage an, f&uuml;r ganze Organisationseinheiten
+		 sog. Einrichtungsportale zu erstellen. Die komplette Publikationsliste wird dabei durch verschiedene Filter erg&auml;nzt, z.B. nach Autoren, Unterorganisationen, Jahr,
+		Publikationstyp, Zitationsstil und Sprache. Auch eine Volltextsuche &uuml;ber die bibliographischen Daten kann implementiert werden.<br>
+
+		Das Einrichtungsportal wird von Ihnen in den Webauftritt Ihrer Einrichtung integriert, ist so Ihrem Design angepasst und ist durch die Verkn&uuml;pfung zu PUB
+		immer auf dem aktuellen Stand.</p>
+	    </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#faq05">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Eine systematische Publikationsliste ist bereits durch meine Einrichtung oder meine eigene Initiative vorhanden. Muss ich trotzdem etwas machen?
+        </a>
+      </div>
+      <div id="faq05" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Wir haben bereits mehrfach bestehende systematische lokale L&ouml;sungen mit PUB verbunden. Bitte melden Sie sich bei Interesse beim
+	      <b>Support-Team &quot;Publikationsdienste&quot;</b> (Kontakt s. rechte Spalte).</p>
+        </div>
+      </div>
+    </div>
+
+ 	<div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#Diss">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Wo und wie kann ich meine Dissertation online ver&ouml;ffentlichen?
+        </a>
+      </div>
+      <div id="Diss" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Die Untercollection <a href="[% h.host %]/pubtheses">PUB Theses</a> ist die Plattform f&uuml;r die elektronische Ver&ouml;ffentlichung
+	      von Bielefelder Dissertationen und Habilitationen. Auf Empfehlung der Pr&uuml;fer k&ouml;nnen auch besonders gute Bachelor- und Masterarbeiten ver&ouml;ffentlicht werden.
+	      Die Autorinnen und Autoren laden ihre Arbeiten inklusive der Beschreibungsdaten selbst&auml;ndig hoch, wir archivieren sie dauerhaft und sorgen f&uuml;r den weltweiten Nachweis
+	      in Suchmaschinen und Datenbanken. </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#faq06">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Was geschieht mit Informationen zu Projekten, Dissertationen, Habilitationen und Wissenschaftspreisen?
+        </a>
+      </div>
+      <div id="faq06" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Der erste Schritt der Modernisierung des Forschungsinformationssystems an der Universit&auml;t betrifft ausschlie&szlig;lich Publikationsdaten in PUB als essentielle
+	      Form der Au&szlig;endarstellung f&uuml;r die Forschung. F&uuml;r Projekte, Dissertationen, Habilitationen und Wissenschaftspreise werden nach erfolgter Abstimmung mit
+	      Fakult&auml;ten und Einrichtungen bei Bedarf sukzessive Piloten (z.B. FP7-Projekte) aufgebaut.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#support">
+        <a class="accordion-toggle">
+          <span class="fa fa-chevron-down"></span> Bei weiteren Fragen oder Anregungen wende ich mich an...?
+        </a>
+      </div>
+      <div id="support" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p>Wir arbeiten kontinuierlich an der Erweiterung des Angebots. Gerne beantworten wir Ihre Fragen pers&ouml;nlich und freuen uns auf Ihre Anregungen. Bitte wenden Sie sich an:</p>
+          <p><b>Support Publikationsdienste</b><br />
+          Susanne Riedel<br />
+          Tel.: 0521/106-4058<br />
+          E-Mail: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;">&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a></p>
+        </div>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+
+    <div class="panel panel-default">
+      <div class="panel-heading" data-parent="#accordion_faq">
+        <a href="[% h.host %]/policy" class="accordion-toggle">
+          <span class="fa fa-chevron-right"></span> Leitlinien für PUB
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-3">
+  [% INCLUDE websites/logo_contact.tt %]
+</div>
+
+</div><!-- row -->
+<!-- END websites/faq.tt -->

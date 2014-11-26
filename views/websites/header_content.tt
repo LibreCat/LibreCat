@@ -1,0 +1,13 @@
+<!-- BEGIN websites/header_content.tt -->
+
+</head>
+
+<body ng-controller="angularSearch" itemscope itemtype="http://schema.org/WebPage">
+
+<script type="text/javascript">
+
+</script>
+
+[% INCLUDE websites/header_topnav.tt %]
+
+<!-- END websites/header_content.tt -->

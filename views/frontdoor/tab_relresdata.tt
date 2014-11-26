@@ -1,0 +1,16 @@
+<!-- BEGIN tab_relresdata -->
+	
+<div class="tab-pane" id="relResData">
+  This publication cites the following data publications:<br />
+  [% FOREACH resDat IN relResData %]
+    [% NEXT IF resDat.relatesTo.submissionStatus != "public" %]
+    [% resCit = h.getCitation(resDat.relatesTo.oId) %]
+    <div class="frontdoor_left">[% resDat.relatesTo.oId %]</div>
+    <div class="frontdoor_right">
+      <a href="/data/[% resDat.relatesTo.oId %]">[% resDat.relatesTo.mainTitle %]</a><br />
+      [% resCit.frontShort %]<br />
+    </div>
+  [% END %]
+</div><!-- tab-pane relPubl -->
+
+<!-- ENd tab_relresdata -->
