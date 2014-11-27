@@ -58,6 +58,9 @@ prefix '/myPUB/search' => sub {
     get '/reviewer' => needs role => 'reviewer' => sub {
 
         my $p = h->extract_params();
+        my $account = h->getAccount(session->{user})->[0];
+        map {push @{$p->{q}}, "department=$_->{id}";} @{$account->{reviewer}};
+	
         $p->{facets} = h->default_facets();
 
         my $hits = h->search_publication($p);
@@ -71,9 +74,12 @@ prefix '/myPUB/search' => sub {
     Performs search for data manager.
 
 =cut
-    get '/datamanager' => needs role => 'dataManager' => sub {
+    get '/data_manager' => needs role => 'data_manager' => sub {
 
         my $p = h->extract_params();
+        my $account = h->getAccount(session->{user})->[0];
+        map {push @{$p->{q}}, "department=$_->{id}";} @{$account->{data_manager}};
+        push @{$p->{q}}, "(type=researchData OR type=dara)";
         $p->{facets} = h->default_facets();
 
         my $hits = h->search_publication($p);
@@ -90,9 +96,27 @@ prefix '/myPUB/search' => sub {
 =cut
     get '/delegate/:delegate_id' => sub {
         my $p = h->extract_params();
-
+        my $id = params->{delegate_id};
+        push @{$p->{q}}, "person=$id";
+        $p->{facets} = h->default_facets;
+        
+        $p->{facets}->{author} = {
+            terms => {
+                field   => 'author.id',
+                size    => 20,
+                exclude => [$id]
+            }
+        };
+        $p->{facets}->{editor} = {
+            terms => {
+                field   => 'editor.id',
+                size    => 20,
+                exclude => [$id]
+            }
+        };
+        
         my $hits = h->search_publication($p);
-        $hits->{modus} = "delegate_".$p->{delegate_id};
+        $hits->{modus} = "delegate_".$id;
         template "home", $hits;
     };
 
@@ -105,6 +129,7 @@ prefix '/myPUB/search' => sub {
 
         my $p = h->extract_params();
         my $id = session 'personNumber';
+        push @{$p->{q}}, "person=$id"; #creator=$id
         $p->{facets} = h->default_facets();
 
         # override default author/editor facette

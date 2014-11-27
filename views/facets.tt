@@ -13,13 +13,13 @@
 <div class="col-md-12">&nbsp;</div>
 
 <h5>Filter Publications</h5>
-
 [%- IF h.extract_params.q.size > 0 %]
 [%- FOREACH val IN h.extract_params.q %]
 [%- removed = [] -%]
+
 [%- CALL removed.import(h.extract_params.q) -%]
 [%- CALL removed.splice(loop.index, 1) -%]
-<p class="text-muted"><a href="[% h.newri_for("$path", q=removed) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
+<p class="text-muted"><a href="[% path %]?q=[% removed.join('&q=') %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
 [%- END %]
 [%- END %]
 
@@ -270,7 +270,7 @@ $('a.search-facet_[% tabmodus %]').click(function() {
     var select = $(this),
         index = select.data('index'),
         term = select.data('val');
-    searchParams.q.push(index+' exact '+term);
+    searchParams.q.push(index+'='+term);
     delete searchParams.start;
     var url = path+'?'+ $.param($.extend({}, searchParams), true);
     //alert('URL:'+url);

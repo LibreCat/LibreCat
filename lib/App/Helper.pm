@@ -153,7 +153,7 @@ sub getPerson {
 		$user = $_[0]->authority_user->get($_[1]);
 		$admin = $_[0]->authority_admin->get($_[1]);
 
-		my @fields = qw(full_name last_name first_name email department super_admin reviewer dataManager delegate);
+		my @fields = qw(full_name last_name first_name email department super_admin reviewer data_manager delegate);
 		map {
 			$user->{$_} = $admin->{$_};
 		} @fields;
@@ -227,7 +227,9 @@ sub default_facets {
 		quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
 		popular_science => { terms => { field => 'popular_science', size => 1 } },
 		extern => { terms => { field => 'extern', size => 1 } },
-		status => { terms => { field => 'status', size => 5 } },
+		status => { terms => { field => 'status', size => 8 } },
+		year => { terms => { field => 'year'} },
+		type => { terms => { field => 'type', size => 25 } },
 	};
 }
 

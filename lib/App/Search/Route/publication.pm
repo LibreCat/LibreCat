@@ -65,7 +65,7 @@ get qr{/data/*} => sub {
 get qr{/publication/*} => sub {
 	my $p = h->extract_params();
 	$p->{facets} = h->default_facets();
-	#push @{$p->{q}}, "status=public AND type<>researchData";
+	push @{$p->{q}}, "status=public AND type<>researchData";
 
 	my $hits = h->search_publication($p);
 	$hits->{bag} = 'publication';
