@@ -1,4 +1,4 @@
-<!-- BEGIN facettes.tt -->
+<!-- BEGIN facets.tt -->
 [%- USE JSON -%]
 <h5>Search</h5>
 <form action="#" method="get" class="form-inline" role="form">
@@ -278,4 +278,4 @@ $('a.search-facet_[% tabmodus %]').click(function() {
 });
 </script>
 
-<!-- END facettes.tt -->
+<!-- END facets.tt -->

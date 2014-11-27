@@ -75,7 +75,7 @@
 
             <div class="col-xs-3">
               [% INCLUDE websites/login_box.tt %]
-              [% INCLUDE facettes.tt %]
+              [% INCLUDE facets.tt %]
               [% INCLUDE websites/logo_contact.tt %]
             </div>
           </div>
@@ -91,7 +91,7 @@
 
             <div class="col-xs-3">
               [% INCLUDE websites/login_box.tt %]
-              [% INCLUDE facettes.tt %]
+              [% INCLUDE facets.tt %]
               [% INCLUDE websites/logo_contact.tt %]
             </div>
           </div>

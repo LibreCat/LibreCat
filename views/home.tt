@@ -66,7 +66,7 @@
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
-              [% INCLUDE facettes.tt %]
+              [% INCLUDE facets.tt %]
             </div>
           </div>
           [% END %]
@@ -76,7 +76,7 @@
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
-              [% INCLUDE facettes.tt %]
+              [% INCLUDE facets.tt %]
             </div>
           </div>
           [% IF session.role == "reviewer" OR (session.role == "super_admin" AND modus == "reviewer") %]
@@ -86,7 +86,7 @@
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
-              [% INCLUDE facettes.tt %]
+              [% INCLUDE facets.tt %]
             </div>
           </div>
           [% END %]
@@ -97,7 +97,7 @@
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
-              [% INCLUDE facettes.tt %]
+              [% INCLUDE facets.tt %]
             </div>
           </div>
           [% END %]
@@ -108,7 +108,7 @@
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
-              [% INCLUDE facettes.tt %]
+              [% INCLUDE facets.tt %]
             </div>
           </div>
           [% END %]
