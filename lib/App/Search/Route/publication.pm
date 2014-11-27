@@ -17,16 +17,12 @@ use App::Helper;
 =cut
 get qr{/(data|publication)/(\d{1,})/(\w{1,})/*} => sub {
 	my ($bag, $id, $style) = splat;
+	my $p;
+	push @{$p->{q}}, "status=public AND id=$id";
 
-	my $p = {
-		q => "id=$id",
-		style => $style,
-		limit => 1,
-		tmpl => "frontdoor/record",
-		fmt => params->{fmt} || '',
-	};
-	$p->{'bag'} = "researchData" if $bag eq "data";
 	my $hits = h->search_publication($p);
+	$hits->{bag} = $bag;
+	template "frontdoor/record", $hits->{hits}->[0];
 };
 
 =head2 GET /{data|publication}/:id
@@ -37,10 +33,10 @@ get qr{/(data|publication)/(\d{1,})/(\w{1,})/*} => sub {
 get qr{/(data|publication)/(\d{1,})/*} => sub {
 	my ($bag, $id) = splat;
 	my $p = h->extract_params();
-	push @{$p->{q}}, "id=$id";
+	push @{$p->{q}}, "status=public AND id=$id";
 
 	my $hits = h->search_publication($p);
-	$hits->{bag} = "researchData" if $bag eq "data";
+	$hits->{bag} = $bag;
 	template "frontdoor/record", $hits->{hits}->[0];
 };
 
@@ -57,15 +53,20 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 # api for data publication lists
 get qr{/data/*} => sub {
 	my $p = h->extract_params();
+	$p->{facets} = h->default_facets();
+	push @{$p->{q}}, "status=public AND type=researchData";
 
 	my $hits = h->search_publication($p);
-	$hits->{bag} = 'researchData';
+	$hits->{bag} = 'data';
 	template "websites/index_publication", $hits;
 };
 
 # api for publication lists
 get qr{/publication/*} => sub {
 	my $p = h->extract_params();
+	$p->{facets} = h->default_facets();
+	#push @{$p->{q}}, "status=public AND type<>researchData";
+
 	my $hits = h->search_publication($p);
 	$hits->{bag} = 'publication';
 	template "websites/index_publication", $hits;

@@ -15,7 +15,7 @@
 <h5>Filter Publications</h5>
 
 [%- IF h.extract_params.q.size > 0 %]
-[%- FOREACH val IN h.search_params.q %]
+[%- FOREACH val IN h.extract_params.q %]
 [%- removed = [] -%]
 [%- CALL removed.import(h.extract_params.q) -%]
 [%- CALL removed.splice(loop.index, 1) -%]
@@ -24,7 +24,7 @@
 [%- END %]
 
 <ul class="nav nav-tabs nav-stacked">
-  [% IF facets.status.terms.size > 1 %]
+  [% IF facets.status.terms && facets.status.terms.size > 1 %]
   <li>
     <button data-toggle="collapse" data-target="#status_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Submission Status ([% facets.status.terms.size %])</a></button>
     <div class="facettecollapse">
@@ -88,7 +88,7 @@
   </li>
   [% END %]
 
-  [% IF facets.type.terms.size > 1 %]
+  [% IF facets.type.terms && facets.type.terms.size > 1 %]
   <li>
     <button data-toggle="collapse" data-target="#type_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publication Type ([% facets.type.terms.size %])</a></button>
     <div class="facettecollapse">
@@ -102,7 +102,7 @@
   </li>
  [% END %]
 
- [% IF facets.author.terms.size > 1 %]
+ [% IF facets.author.terms && facets.author.terms.size > 1 %]
   <li>
     <button data-toggle="collapse" data-target="#authors_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Authors ([% facets.author.terms.size %])</a></button>
     <div class="facettecollapse">
@@ -116,7 +116,7 @@
   </li>
   [% END %]
 
-  [% IF facets.editor.terms.size > 1 %]
+  [% IF facets.editor.terms && facets.editor.terms.size > 1 %]
   <li>
     <button data-toggle="collapse" data-target="#editors_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Editors ([% facets.editor.terms.size %])</a></button>
     <div class="facettecollapse">
@@ -130,7 +130,7 @@
   </li>
   [% END %]
 
-  [% IF facets.year.terms.size > 1 %]
+  [% IF facets.year.terms && facets.year.terms.size > 1 %]
   <li>
     <button data-target="#year_[% tabmodus %]" data-toggle="collapse"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publishing Year ([% facets.year.terms.size %])</a></button>
     <div class="facettecollapse">

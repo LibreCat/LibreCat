@@ -42,28 +42,7 @@ prefix '/myPUB/search' => sub {
     get '/admin' => needs role => 'super_admin' => sub {
 
         my $p = h->extract_params();
-
-        $p->{facets} = {
-            author => {
-                terms => {
-                    field   => 'author.id',
-                    size    => 20,
-                }
-            },
-            editor => {
-                terms => {
-                    field   => 'editor.id',
-                    size    => 20,
-                }
-            },
-            year => { terms => { field => 'year'} },
-            type => { terms => { field => 'type', size => 20 } },
-            open_access => { terms => { field => 'file.open_access', size => 1 } },
-            quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
-            popular_science => { terms => { field => 'popular_science', size => 1 } },
-            extern => { terms => { field => 'extern', size => 1 } },
-            status => { terms => { field => 'status', size => 5 } },
-        };
+        $p->{facets} = h->default_facets();
 
         my $hits = h->search_publication($p);
         $hits->{modus} = "admin";
@@ -79,25 +58,7 @@ prefix '/myPUB/search' => sub {
     get '/reviewer' => needs role => 'reviewer' => sub {
 
         my $p = h->extract_params();
-        $p->{facets} = {
-            coAuthor => {
-                terms => {
-                    field   => 'author.id',
-                    size    => 20,
-                }
-            },
-            coEditor => {
-                terms => {
-                    field   => 'editor.id',
-                    size    => 20,
-                }
-            },
-            open_access => { terms => { field => 'file.open_access', size => 1 } },
-            quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
-            popular_science => { terms => { field => 'popular_science', size => 1 } },
-            extern => { terms => { field => 'extern', size => 1 } },
-            status => { terms => { field => 'status', size => 5 } },
-        };
+        $p->{facets} = h->default_facets();
 
         my $hits = h->search_publication($p);
         $hits->{modus} = "reviewer";
@@ -113,25 +74,7 @@ prefix '/myPUB/search' => sub {
     get '/datamanager' => needs role => 'dataManager' => sub {
 
         my $p = h->extract_params();
-        $p->{facets} = {
-            coAuthor => {
-                terms => {
-                    field   => 'author.id',
-                    size    => 20,
-                }
-            },
-            coEditor => {
-                terms => {
-                    field   => 'editor.id',
-                    size    => 20,
-                }
-            },
-            open_access => { terms => { field => 'file.open_access', size => 1 } },
-            quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
-            popular_science => { terms => { field => 'popular_science', size => 1 } },
-            extern => { terms => { field => 'extern', size => 1 } },
-            status => { terms => { field => 'status', size => 5 } },
-        };
+        $p->{facets} = h->default_facets();
 
         my $hits = h->search_publication($p);
         $hits->{modus} = "data_manager";
@@ -162,26 +105,22 @@ prefix '/myPUB/search' => sub {
 
         my $p = h->extract_params();
         my $id = session 'personNumber';
-        $p->{facets} = {
-            coAuthor => {
-                terms => {
-                    field   => 'author.id',
-                    size    => 20,
-                    exclude => [$id]
-                }
-            },
-            coEditor => {
-                terms => {
-                    field   => 'editor.id',
-                    size    => 20,
-                    exclude => [$id]
-                }
-            },
-            open_access => { terms => { field => 'file.open_access', size => 1 } },
-            quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
-            popular_science => { terms => { field => 'popular_science', size => 1 } },
-            extern => { terms => { field => 'extern', size => 1 } },
-            status => { terms => { field => 'status', size => 5 } },
+        $p->{facets} = h->default_facets();
+
+        # override default author/editor facette
+        $p->{facets}->{author} = {
+            terms => {
+                field   => 'author.id',
+                size    => 20,
+                exclude => [$id]
+            }
+        };
+        $p->{facets}->{editor} = {
+            terms => {
+                field   => 'editor.id',
+                size    => 20,
+                exclude => [$id]
+            }
         };
 
         my $hits = h->search_publication($p);

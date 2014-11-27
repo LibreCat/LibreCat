@@ -190,6 +190,47 @@ sub get_list {
 	$map;
 }
 
+# sub get_statistics {
+# 	my ($self) = @_;
+# 	my $stats;
+# 	my $hits = $self->search_publication({q => ""});
+# 	my $reshits = $self->search_publication({q => "", bag => "data"});
+# 	my $oahits = $self->search_publication({q => "fulltext=1"});
+# 	my $disshits = $self->search_publication({q => "documenttype=bi*"});
+# 	my $people = $self->search_researcher({q => ""});
+#
+# 	$stats->{publications} = $hits->{total} if $hits and $hits->{total};
+# 	$stats->{researchdata} = $reshits->{total} if $reshits and $reshits->{total};
+# 	$stats->{oahits} = $oahits->{total} if $oahits and $oahits->{total};
+# 	$stats->{theseshits} = $disshits->{total} if $disshits and $disshits->{total};
+# 	$stats->{pubpeople} = $people->{total} if $people and $people->{total};
+#
+# 	return $stats;
+#
+# }
+
+sub default_facets {
+	return {
+		author => {
+			terms => {
+				field   => 'author.id',
+				size    => 20,
+			}
+		},
+		editor => {
+			terms => {
+				field   => 'editor.id',
+				size    => 20,
+			}
+		},
+		open_access => { terms => { field => 'file.open_access', size => 1 } },
+		quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
+		popular_science => { terms => { field => 'popular_science', size => 1 } },
+		extern => { terms => { field => 'extern', size => 1 } },
+		status => { terms => { field => 'status', size => 5 } },
+	};
+}
+
 sub display_doctypes {
 	my $map = config->{forms}{publicationTypes};
 	my $doctype = $map->{lc $_[1]}->{label};
