@@ -119,7 +119,7 @@ sub now {
 	 return $now;
 }
 
-sub genereteURN {
+sub generateURN {
     my ($self, $prefix, $id) = @_;
     my $nbn = $prefix . $id;
     my $weighting  = ' 012345678 URNBDE:AC FGHIJLMOP QSTVWXYZ- 9K_ / . +#';
