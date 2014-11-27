@@ -124,46 +124,42 @@
       </div>
     </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label>Department <span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span>
+      <div class="col-md-2"><label>Department <span class="glyphicon glyphicon-plus" onclick="add_field('department');"></span>
       </label></div>
-      <div class="col-md-10" id="affiliation">
+      <div class="col-md-10" id="department">
       [% IF !department %]
         <div class="form-group row innerrow">
-          <input type="hidden" name="department.0.id" id="aff_idautocomplete_0" />
-          <input type="hidden" name="department.0.name" id="aff_nameautocomplete_0" />
+          <input type="hidden" name="department.0.id" id="dp_idautocomplete_0" />
+          <input type="hidden" name="department.0.name" id="dp_nameautocomplete_0" />
 
           <span class="col-md-7">
-            <input type="text" class="form-control" onfocus="enable_autocomplete('aff', 0);" id="aff_autocomplete_0" value="" />
+            <input type="text" class="form-control" onfocus="enable_autocomplete('dp', 0);" id="dp_autocomplete_0" value="" />
           </span>
           <span class="col-md-2">
-            <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_0" value="Select"/>
+            <button type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0">Select</button>
           </span>
           <span class="col-md-1">
-            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';document.getElementById('aff_autocomplete_0').disabled = false;"></span>
+            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
           </span>
         </div>
       [% ELSE %]
       [% FOREACH dept IN department %]
         <div class="form-group row innerrow">
-          <input type="hidden" name="department.[% loop.index %].id" id="aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
-          <input type="hidden" name="department.[% loop.index %].name" id="aff_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
+          <input type="hidden" name="department.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+          <input type="hidden" name="department.[% loop.index %].name" id="dp_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
           <span class="col-md-7">
-            <input type="text" class="form-control" onfocus="enable_autocomplete('aff', [% loop.index %]);" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+            <input type="text" class="form-control" onfocus="enable_autocomplete('dp', [% loop.index %]);" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
           </span>
           <span class="col-md-2">
-            <input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_[% loop.index %]" value="Select"/>
+            <button type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]">Select</button>
           </span>
           <span class="col-md-1">
-          [% IF loop.index == 0 %]
-            <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';document.getElementById('aff_autocomplete_0').disabled=false;"></span>
-          [% ELSE %]
-            <span class="glyphicon glyphicon-minus single"></span>
-          [% END %]
+            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
           </span>
           </div>
       [% END %]
       [% END %]
-        <div class="modal" id="selectModal">
+        <div class="modal" id="select_modal">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -219,20 +215,24 @@
       </div>
     </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_principal_investigator">Principal Investigator</label> <span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus" id="plusPi"></span></div>
+      <div class="col-md-2"><label for="id_principal_investigator">Principal Investigator</label> <span class="glyphicon glyphicon-plus" onclick="add_field('principal_investigator')"></span></div>
       <div class="col-md-10" id="principal_investigator">
       [% IF !principal_investigator %]
-        <div class="row innerrow">
-          <div class="col-md-5 form-group">
-            <input type="text" name="principal_investigator.0.first_name" id="id_principal_investigator_first_name" value="[% principal_investigator.0.first_name %]" class="form-control" placeholder="First Name" />
+        <div class="form-group row innerrow">
+          <input type="hidden" id="principal_investigator_orig_first_name_0" value="" />
+          <input type="hidden" id="principal_investigator_orig_last_name_0" value="" />
+          <div class="col-md-5">
+            <input type="text" name="principal_investigator.0.first_name" id="principal_investigator_first_name_0" value="[% principal_investigator.0.first_name %]" class="form-control" placeholder="First Name" />
           </div>
-          <div class="col-md-5 form-group">
-            <input type="text" name="principal_investigator.0.last_name" id="id_principal_investigator_last_name" value="[% principal_investigator.0.last_name %]" class="form-control" placeholder="Last Name" />
+          <div class="col-md-5">
+            <input type="text" name="principal_investigator.0.last_name" id="principal_investigator_last_name_0" value="[% principal_investigator.0.last_name %]" class="form-control" placeholder="Last Name" />
           </div>
+          <input type="hidden" id="principal_investigator_id_0" name="principal_investigator.0.id" value="" />
+          <input type="hidden" id="principal_investigator_full_name_0" name="principal_investigator.0.full_name" value="">
           <span class="col-md-2">
-            <button type="button" class="btn btn-default btn-xs" id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
-            <button type="button" id="revert_0" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
-            <span class="glyphicon glyphicon-minus author"></span>
+            <button type="button" class="btn btn-default btn-xs" id="principal_investigator_link_pevz_0" onclick="linkPevz(this);" data-type="principal_investigator_"><img id="principal_investigator_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+            <button type="button" id="principal_investigator_revert_0" data-type="principal_investigator_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
             <script>
               $('#revert_0').tooltip();
             </script>
@@ -240,17 +240,21 @@
         </div>
       [% ELSE %]
         [% FOREACH pi IN principal_investigator %]
-        <div class="row innerrow">
-          <div class="col-md-5 form-group">
+        <div class="form-group row innerrow">
+          <input type="hidden" id="principal_investigator_orig_first_name_[% loop.index %]" value="[% pi.first_name %]" />
+          <input type="hidden" id="principal_investigator_orig_last_name_[% loop.index %]" value="[% pi.last_name %]" />
+          <div class="col-md-5">
             <input type="text" name="principal_investigator.[% loop.index %].first_name" id="id_principal_investigator_[% loop.index %]_first_name" value="[% pi.first_name %]" class="form-control" placeholder="First Name" />
           </div>
-          <div class="col-md-5 form-group">
+          <div class="col-md-5">
             <input type="text" name="principal_investigator.[% loop.index %].last_name" id="id_principal_investigator_[% loop.index %]_last_name" value="[% pi.last_name %]" class="form-control" placeholder="Last Name" />
           </div>
+          <input type="hidden" id="principal_investigator_id_0" name="principal_investigator.0.id" value="" />
+          <input type="hidden" id="principal_investigator_full_name_0" name="principal_investigator.0.full_name" value="">
           <span class="col-md-2">
-            <button type="button" class="btn btn-default btn-xs" id="link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
-            <button type="button" id="revert_[% loop.index %]" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
-            <span class="glyphicon glyphicon-minus author"></span>
+            <button type="button" class="btn btn-default btn-xs" id="principal_investigator_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="principal_investigator_"><img id="principal_investigator_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+            <button type="button" id="principal_investigator_revert_[% loop.index %]" data-type="principal_investigator_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
             <script>
               $('#revert_[% loop.index %]').tooltip();
             </script>
@@ -261,20 +265,24 @@
       </div>
     </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_member">Members</label> <span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus" id="plusMember"></span></div>
+      <div class="col-md-2"><label for="id_member">Members</label> <span class="glyphicon glyphicon-plus" onclick="add_field('member');"></span></div>
       <div class="col-md-10" id="member">
       [% IF !member %]
-        <div class="row innerrow">
-          <div class="col-md-5 form-group">
-            <input type="text" name="member.0.first_name" id="id_member_first_name" value="[% member.0.first_name %]" class="form-control" placeholder="First Name" />
+        <div class="form-group row innerrow">
+          <input type="hidden" id="member_orig_first_name_0" value="[% name.first_name %]" />
+          <input type="hidden" id="member_orig_last_name_0" value="[% name.last_name %]" />
+          <div class="col-md-5">
+            <input type="text" name="member.0.first_name" id="member_first_name_0" value="[% member.0.first_name %]" class="form-control" placeholder="First Name" />
           </div>
-          <div class="col-md-5 form-group">
-            <input type="text" name="member.0.last_name" id="id_member_last_name" value="[% member.0.last_name %]" class="form-control" placeholder="Last Name" />
+          <div class="col-md-5">
+            <input type="text" name="member.0.last_name" id="member_last_name_0" value="[% member.0.last_name %]" class="form-control" placeholder="Last Name" />
           </div>
+          <input type="hidden" id="member_id_0" name="member.0.id" value="" />
+          <input type="hidden" id="member_full_name_0" name="member.0.full_name" value="">
           <span class="col-md-2">
-            <button type="button" class="btn btn-default btn-xs" id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
-            <button type="button" id="revert_0" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
-            <span class="glyphicon glyphicon-minus author"></span>
+            <button type="button" class="btn btn-default btn-xs" id="member_link_pevz_0" onclick="linkPevz(this);" data-type="member_"><img id="member_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+            <button type="button" id="member_revert_0" data-type="member_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
             <script>
               $('#revert_0').tooltip();
             </script>
@@ -282,17 +290,19 @@
         </div>
       [% ELSE %]
         [% FOREACH mem IN member %]
-        <div class="row innerrow">
-          <div class="col-md-5 form-group">
-            <input type="text" name="member.[% loop.index %].first_name" id="id_member_[% loop.index %]_first_name" value="[% mem.first_name %]" class="form-control" placeholder="First Name" />
+        <div class="form-group row innerrow">
+          <input type="hidden" id="member_orig_first_name_[% loop.index %]" value="[% mem.first_name %]" />
+          <input type="hidden" id="member_orig_last_name_[% loop.index %]" value="[% mem.last_name %]" />
+          <div class="col-md-5">
+            <input type="text" name="member.[% loop.index %].first_name" id="member_first_name_[% loop.index %]" value="[% mem.first_name %]" class="form-control" placeholder="First Name" />
           </div>
-          <div class="col-md-5 form-group">
-            <input type="text" name="member.[% loop.index %].last_name" id="id_member_[% loop.index %]_last_name" value="[% mem.last_name %]" class="form-control" placeholder="Last Name" />
+          <div class="col-md-5">
+            <input type="text" name="member.[% loop.index %].last_name" id="member_last_name_[% loop.index %]" value="[% mem.last_name %]" class="form-control" placeholder="Last Name" />
           </div>
           <span class="col-md-2">
-            <button type="button" class="btn btn-default btn-xs" id="link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
-            <button type="button" id="revert_[% loop.index %]" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
-            <span class="glyphicon glyphicon-minus author"></span>
+            <button type="button" class="btn btn-default btn-xs" id="member_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="member_"><img id="member_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+            <button type="button" id="member_revert_[% loop.index %]" data-type="member_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
             <script>
               $('#revert_[% loop.index %]').tooltip();
             </script>
@@ -303,25 +313,25 @@
       </div>
     </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_cooperator">Cooperators</label> <span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus" id="plusMember"></span></div>
+      <div class="col-md-2"><label for="id_cooperator">Cooperators</label> <span class="glyphicon glyphicon-plus" onclick="add_field('cooperator');"></span></div>
       <div class="col-md-10" id="cooperator">
       [% IF !cooperator %]
-      <div class="row innerrow">
-        <div class="col-md-11 form-group">
-          <input type="text" name="cooperator.0" id="id_cooperator" value="[% cooperator.0 %]" class="form-control" />
+      <div class="form-group row innerrow">
+        <div class="col-md-11">
+          <input type="text" name="cooperator.0" id="id_cooperator_0" value="" class="form-control" />
         </div>
         <div class="col-md-1">
-          <span class="glyphicon glyphicon-minus author"></span>
+          <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
         </div>
       </div>
       [% ELSE %]
         [% FOREACH co IN cooperator %]
-        <div class="row innerrow">
-          <div class="col-md-11 form-group">
+        <div class="form-group row innerrow">
+          <div class="col-md-11">
             <input type="text" name="cooperator.[% loop.index %]" id="id_cooperator_[% loop.index %]" value="[% co %]" class="form-control" />
           </div>
           <div class="col-md-1">
-            <span class="glyphicon glyphicon-minus author"></span>
+            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
           </div>
         </div>
         [% END %]
@@ -329,25 +339,25 @@
       </div>
     </div>
     <div class="row innerrow">
-      <div class="col-md-2"><label for="id_funder">Ext. Funders</label> <span ng-click="cloneAuthedtrans($event)" class="glyphicon glyphicon-plus" id="plusMember"></span></div>
+      <div class="col-md-2"><label for="id_funder">Ext. Funders</label> <span class="glyphicon glyphicon-plus" onclick="add_field('funder');"></span></div>
       <div class="col-md-10" id="funder">
       [% IF !funder %]
-      <div class="row innerrow">
-        <div class="col-md-11 form-group">
-          <input type="text" name="funder.0" id="id_funder" value="[% funder.0 %]" class="form-control" />
+      <div class="form-group row innerrow">
+        <div class="col-md-11">
+          <input type="text" name="funder.0" id="id_funder_0" value="[% funder.0 %]" class="form-control" />
         </div>
         <div class="col-md-1">
-          <span class="glyphicon glyphicon-minus author"></span>
+          <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
         </div>
       </div>
       [% ELSE %]
         [% FOREACH fun IN funder %]
-        <div class="row innerrow">
-          <div class="col-md-11 form-group">
+        <div class="form-group row innerrow">
+          <div class="col-md-11">
             <input type="text" name="funder.[% loop.index %]" id="id_funder_[% loop.index %]" value="[% fun %]" class="form-control" />
           </div>
           <div class="col-md-1">
-            <span class="glyphicon glyphicon-minus author"></span>
+            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
           </div>
         </div>
         [% END %]
@@ -398,6 +408,19 @@
       </div>
     </div>
   </form>
+  
+  <div class="modal" id="linkPevzModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Several PEVZ Accounts found... make a choice</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>
 
 </div><!-- col-md-9 col-md-offset-1 -->
 </div><!-- row -->
@@ -416,8 +439,8 @@ function selectButton(element){
 	var type_name;
 
 	var index = $(element).attr('id').replace(type + '_select_','').trim();
-	var modal = $('#selectModal');
-	var container = $('#selectModal').find('.modal-body').first();
+	var modal = $('#select_modal');
+	var container = $('#select_modal').find('.modal-body').first();
 	container.html("");
 	if(type == "data_manager"){
 	    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
@@ -434,6 +457,11 @@ function selectButton(element){
         type_short = "aff";
         type_name = "Department";
     }
+    else if (type == "department") {
+        container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+        type_short = "dp";
+        type_name = "Department";
+    }
 	var heading = modal.find('h4').first();
 	heading.html("");
 	heading.append('Choose a ' + type_name);
@@ -443,7 +471,8 @@ function selectButton(element){
 	    $('#' + type_short + '_idautocomplete_' + index).val(id);
 	    $('#' + type_short + '_nameautocomplete_' + index).val(name);
 	    $('#' + type_short + '_autocomplete_' + index).val(name);
-	    $('#selectModal').modal('hide');
+	    $('#' + type_short + '_autocomplete_' + index).attr('disabled','disabled');
+	    $('#select_modal').modal('hide');
 	});
 	modal.modal('show');
 }

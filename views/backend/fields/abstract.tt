@@ -4,7 +4,7 @@
     <label for="abstract">
       {% fields.basic_fields.abstract.label %}{% fields.supplementary_fields.abstract.label %}
     </label>
-    {% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}</span>&nbsp;{% END %}{% IF fields.basic_fields.abstract.multiple OR fields.supplementary_fields.abstract.multiple %}<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} data-mandatory="yes"{% END %} id="plusAbstract"></span>{% END %}
+    {% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}</span>&nbsp;{% END %}{% IF fields.basic_fields.abstract.multiple OR fields.supplementary_fields.abstract.multiple %}<span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} data-mandatory="yes"{% END %} onclick="add_field('abstract');"></span>{% END %}
   </div>
   <div class="col-md-10" id="abstract">
     {% IF fields.basic_fields.abstract.multiple OR fields.supplementary_fields.abstract.multiple %}
@@ -19,7 +19,7 @@
         {% fields.basic_fields.abstract.label2 %}{% fields.supplementary_fields.abstract.label2 %}
       </label>
     </div>
-    <div class="form-group col-md-3">
+    <div class="col-md-3">
       <select name="abstract.0.lang" id="id_abstract_language_0" class="form-control">
       [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
         <option value="[% h.get_list('language_preselect').$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
@@ -31,7 +31,7 @@
       </select>
     </div>
     <div class="col-md-1">
-      <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('id_abstract_0').value = '';javascript:document.getElementById('id_abstract_language_0').value = 'eng';"></div>
+      <div class="glyphicon glyphicon-minus" onclick="remove_field(this);"></div>
     </div>
     </div>
     {% IF fields.basic_fields.abstract.multiple OR fields.supplementary_fields.abstract.multiple %}
@@ -46,7 +46,7 @@
           {% fields.supplementary_fields.abstract.label2 %}
         </label>
       </div>
-      <div class="form-group col-md-3">
+      <div class="col-md-3">
         <select name="abstract.[% loop.index %].lang" id="id_abstract_language_[% loop.index %]" class="form-control">
         [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
           <option value="[% h.get_list('language_preselect').$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
@@ -58,11 +58,7 @@
         </select>
       </div>
       <div class="col-md-1">
-        [% IF loop.index == "0" %]
-        <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('id_abstract_[% loop.index %]').value = '';javascript:document.getElementById('id_abstract_language_[% loop.index %]').value = 'eng';"></div>
-        [% ELSE %]
-        <div class="glyphicon glyphicon-minus single"></div>
-        [% END %]
+        <div class="glyphicon glyphicon-minus" onclick="remove_field(this);"></div>
       </div>
       </div>
       [% END %]

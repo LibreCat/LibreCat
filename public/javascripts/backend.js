@@ -54,8 +54,7 @@ function linkPevz(element){
 	var type = "";
 	type = $(element).attr('data-type');
 	var lineId = $(element).attr('id').replace(type + 'link_pevz_','');
-	
-	// Someone unchecked the "Link to PEVZ Account" checkbox
+
 	if($('#' + type + 'Authorized' + lineId).attr('alt') == "Not Authorized"){
 		var puburl = '/myPUB/search_researcher?ftext=';
 		var narrowurl = "";
@@ -388,18 +387,75 @@ function add_field(name, placeholder){
 	var index = items.index($('#' + name + ' div.form-group').last()) + 1;
 	var blueprint = $(items[0]).clone(true,true);
 	
-	$(blueprint).find('input, textarea').each(function(){
+	$(blueprint).find('input, textarea, img, button, select').each(function(){
 		var newid = $(this).attr('id').replace(/0/g,index);
 		$(this).attr('id', newid);
+		if($(this).attr('name')){
+			var newname = $(this).attr('name').replace(/0/g,index);
+			$(this).attr('name', newname);
+		}
+		$(this).attr('disabled',false);
+		$(this).attr('readonly',false);
+		$(this).removeAttr('autocomplete');
+		if(placeholder){
+			$(this).attr('placeholder', placeholder);
+		}
+		if ($(this).prop('tagName') != "BUTTON"){
+			$(this).val('');
+		}
+		if($(this).prop('tagName') == "IMG"){
+			$(this).attr('src','/images/biNotAuthorized.png');
+			$(this).attr('alt', 'Not Authorized');
+		}
 	});
 	$('#' + name).append(blueprint);
-	var abbrev = name == "department" ? "dp" : "aff";
-	enable_autocomplete(abbrev, index);
+	var abbrev;
+	switch(name) {
+	case "department":
+		enable_autocomplete("dp", index)
+			break;
+	case "affiliation":
+		enable_autocomplete("aff", index)
+			break;
+	case "project":
+		enable_autocomplete("pj", index)
+			break;
+    }
+	
+}
+
+function remove_field(object){
+	var container = $(object).closest('div.form-group');
+	var index = $(container).index();
+	
+	if(parseInt(index) > 0){
+	  $(container).remove();
+	}
+	else if(parseInt(index) == 0){
+		$(container).find('input, textarea, img, select').each(function(){
+			$(this).val('');
+			$(this).attr('disabled',false);
+			$(this).attr('readonly',false);
+			$(this).removeAttr('autocomplete');
+			if($(this).prop('tagName') == "IMG"){
+				$(this).attr('src','/images/biNotAuthorized.png');
+				$(this).attr('alt', 'Not Authorized');
+			}
+		});
+	}
 }
 
 function enable_autocomplete(field, index){
+	var type;
+	switch(field) {
+	case "pj":
+		type = "project"
+			break;
+	default:
+		type = "department"
+	}
 	$( "#" + field + "_autocomplete_" + index ).autocomplete({
-		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=" + type,
 		minLength: 2,
 		select: function( event, ui ) {
 			$( "#" + field + "_autocomplete_" + index ).val( ui.item.label );

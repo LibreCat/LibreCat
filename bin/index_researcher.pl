@@ -63,7 +63,7 @@ else { # initial indexing
 		map {
 			$researcher_user->{$_} = $researcher_admin->{$_} if $researcher_admin->{$_};
 		} @fields;
-		add_to_index($researcher_user);
+		add_to_index($researcher_user) if $researcher_user;
 		#print Dumper $researcher_user;
 	}
 }

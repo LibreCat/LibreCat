@@ -586,13 +586,14 @@ search:
               field: 'publication_status'
               sort: true
               values: "see the list of publication statuses"
-            status:
+            status: &status
               op:
                 '=': true
                 'exact': true
                 '<>': true
               field: 'status'
               sort: true
+            submissionstatus: *status
             fulltext:
               op:
                 '=': true

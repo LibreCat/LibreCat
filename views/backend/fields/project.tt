@@ -4,74 +4,38 @@
     <label for="project">
       {% fields.basic_fields.project.label %}{% fields.supplementary_fields.project.label %}
     </label>
-    {% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}</span>{% END %}{% IF fields.basic_fields.project.multiple OR fields.supplementary_fields.project.multiple %} <span class="glyphicon glyphicon-plus" id="plusProject"></span>{% END %}
+    {% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}</span>{% END %}{% IF fields.basic_fields.project.multiple OR fields.supplementary_fields.project.multiple %} <span class="glyphicon glyphicon-plus" onclick="add_field('project'{% IF fields.basic_fields.project.placeholder || fields.supplementary_fields.project.placeholder %},'{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}'{% END %});"></span>{% END %}
   </div>
   <div class="col-md-10" id="project">
     {% IF fields.basic_fields.project.multiple OR fields.supplementary_fields.project.multiple %}
     [% IF !project %]
     {% END %}
-    <div class="row innerrow">
+    <div class="form-group row innerrow">
       <input type="hidden" name="project.0.id" id="pj_idautocomplete_0" value="" />
-          
-      <div class="form-group col-md-7">
-        <input type="text" name="project.0.name" class="form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_0" value=""{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
+      <div class="col-md-7">
+        <input type="text" onfocus="enable_autocomplete('pj',0);" name="project.0.name" class="form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_0" value=""{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
       </div>
-        
-      <div class="form-group col-md-2">
-        <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_0" value="Select"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} disabled {% END %}/>
+      <div class="col-md-2">
+        <button type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_0"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} disabled {% END %}>Select</button>
       </div>
-        
       <div class="col-md-1">
-        <span class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
+        <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
       </div>
-        
-      <script>
-      $(function() {
-        $( "#pj_autocomplete_0" ).autocomplete({
-          source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
-          minLength: 2,
-          select: function( event, ui ) {
-            $( "#pj_autocomplete_0" ).val( ui.item.label );
-            $( "#pj_idautocomplete_0" ).val( ui.item.id );
-          }
-        });
-      });
-      </script>
     </div>
     {% IF fields.basic_fields.project.multiple OR fields.supplementary_fields.project.multiple %}
     [% ELSE %]
     [% FOREACH proj IN project %]
-    <div class="row innerrow">
+    <div class="form-group row innerrow">
       <input type="hidden" name="project.[% loop.index %].id" id="pj_idautocomplete_[% loop.index %]" value="[% proj.oId %]" />
-          
-      <div class="form-group col-md-7">
-        <input type="text" name="project.[% loop.index %].name" class="form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name %]"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
+      <div class="col-md-7">
+        <input type="text" onfocus="enable_autocomplete('pj',0);" name="project.[% loop.index %].name" class="form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name %]"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
       </div>
-
-      <div class="form-group col-md-2">
-        <input type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_[% loop.index %]" value="Select"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} disabled {% END %}/>
+      <div class="col-md-2">
+        <button type="button" onclick="selectButton(this);" class="btn select_button project" id="project_select_[% loop.index %]"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} disabled {% END %}>Select</button>
       </div>
-          
       <div class="col-md-1">
-        [% IF loop.index == 0 %]
-        <span class="icon-minus" onclick="javascript:document.getElementById('pj_autocomplete_0').value = '';document.getElementById('pj_idautocomplete_0').value='';"></span>
-        [% ELSE %]
-        <span class="icon-minus single"></span>
-        [% END %]
+        <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
       </div>
-          
-      <script>
-      $(function() {
-        $( "#pj_autocomplete_[% loop.index %]" ).autocomplete({
-          source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=project",
-          minLength: 2,
-          select: function( event, ui ) {
-            $( "#pj_autocomplete_[% loop.index %]" ).val( ui.item.label );
-            $( "#pj_idautocomplete_[% loop.index %]" ).val( ui.item.id );
-          }
-        });
-      });
-      </script>
     </div>
     [% END %]
     [% END %]

@@ -6,7 +6,7 @@
     <label for="language">
       {% fields.basic_fields.language.label %}{% fields.supplementary_fields.language.label %}
     </label>
-    {% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}</span>{% END %}{% IF fields.basic_fields.language.multiple OR fields.supplementary_fields.language.multiple %} <span class="glyphicon glyphicon-plus" id="plusLanguage"></span>{% END %}
+    {% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}</span>{% END %}{% IF fields.basic_fields.language.multiple OR fields.supplementary_fields.language.multiple %} <span class="glyphicon glyphicon-plus" onclick="add_field('language');"></span>{% END %}
   </div>
   <div class="col-md-10" id="language">
     {% IF fields.basic_fields.language.multiple OR fields.supplementary_fields.language.multiple %}
@@ -14,7 +14,7 @@
     {% END %}
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <select name="language.0.name" ng-model="language.0" ng-init="language.0='English'" class="form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} required{% END %}" id="select_language_0">
+        <select name="language.0.name" class="form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} required{% END %}" id="select_language_0">
           [% FOREACH lang IN language_preselect.keys.sort %]
             <option value="[% lang %]"[% IF lang == language.name || (!language AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>
           [% END %]
@@ -24,13 +24,16 @@
           [% END %]
         </select>
       </div>
+      <div class="col-md-1">
+        <div class="glyphicon glyphicon-minus" onclick="remove_field(this);"></div>
+      </div>
     </div>
     {% IF fields.basic_fields.language.multiple OR fields.supplementary_fields.language.multiple %}
     [% ELSE %]
       [% FOREACH lan IN language %]
       <div class="form-group row innerrow">
         <div class="col-md-9">
-          <select name="language.[% loop.index %].name" ng-model="language.[% loop.index %]" ng-init="language.[% loop.index %]='[% lan.name %]'" class="form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_language_[% loop.index %]">
+          <select name="language.[% loop.index %].name" class="form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_language_[% loop.index %]">
             [% FOREACH lang IN language_preselect.keys.sort %]
               <option value="[% lang %]"[% IF lang == lan.name %] selected="selected"[% END %]>[% lang %]</option>
             [% END %]
@@ -40,11 +43,9 @@
             [% END %]
           </select>
         </div>
-        [% IF loop.index != "0" %]
         <div class="col-md-1">
-          <div class="glyphicon glyphicon-minus single"></div>
+          <div class="glyphicon glyphicon-minus" onclick="remove_field(this);"></div>
         </div>
-        [% END %]
       </div>
       [% END %]
     [% END %]
