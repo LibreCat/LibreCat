@@ -19,15 +19,17 @@
       <form action="/myPUB/person/author_id" method="POST">
       <input type="hidden" name="_id" value="[% session.personNumber %]" />
       [% IF !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire) %]
+      <div class="row">
       <div class="col-md-10">
         <span class="text-muted">No Author IDs set.</span>&nbsp;
-        <a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a href="#" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
+      </div>
       </div>
       [% END %]
 
       [% FOREACH  k IN h.config.lists.author_id.keys.sort %]
       [% IF thisPerson.$k %]
-      <span class="authorIds">
+      <span class="row authorIds">
         <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
         <div class="col-md-6">
         [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]" target="_blank">[% thisPerson.$k %]</a>
@@ -35,14 +37,13 @@
         &nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
       </span>
       [% END %]<!-- end if -->
-      <span class="authorIds_input" style="display:none;">
+      <span class="row authorIds_input" style="display:none;">
         <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
         <div class="col-md-6"><input type="text" class="form-control input-sm" name="[% k %]" id="[% k %]_input" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
       </span>
       [% END %]<!-- END foreach -->
 
-      <span class="authorIds_input" style="display:none;"><div class="col-md-11">&nbsp;</div></span>
-      <span class="authorIds_input" style="display:none;">
+      <span class="row authorIds_input" style="display:none;">
         <div class="col-md-4">
           <span class="glyphicon glyphicon-question-sign" id="authorid_help" data-toggle="tooltip" data-placement="right" title="These IDs will be visible on your public person page immediately after saving."></span>
           <script>
