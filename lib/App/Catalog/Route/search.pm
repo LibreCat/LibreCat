@@ -71,7 +71,7 @@ prefix '/myPUB/search' => sub {
     Performs search for data manager.
 
 =cut
-    get '/datamanager' => needs role => 'dataManager' => sub {
+    get '/data_manager' => needs role => 'data_manager' => sub {
 
         my $p = h->extract_params();
         $p->{facets} = h->default_facets();
@@ -91,7 +91,7 @@ prefix '/myPUB/search' => sub {
     get '/delegate/:delegate_id' => sub {
         my $p = h->extract_params();
 
-        my $hits = h->search_publication($p);
+	 my $hits = h->search_publication($p);
         $hits->{modus} = "delegate_".$p->{delegate_id};
         template "home", $hits;
     };

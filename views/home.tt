@@ -48,8 +48,8 @@
         [% IF session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer") %]
           <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/search/reviewer">Publications for Review</a></li>
         [% END %]
-        [% IF session.role == "dataManager" OR (session.role == "super_admin" AND modus == "dataManager") %]
-          <li[% IF modus == "dataManager" %] class="active"[% END %]><a href="/myPUB/search/datamanager">Data Publications for Review</a></li>
+        [% IF session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager") %]
+          <li[% IF modus == "data_manager" %] class="active"[% END %]><a href="/myPUB/search/data_manager">Data Publications for Review</a></li>
         [% END %]
         [% FOREACH delegate_id IN thisPerson.delegate %]
           <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. of [% h.getPerson(delegate_id).last_name %]</a></li>
@@ -90,10 +90,10 @@
             </div>
           </div>
           [% END %]
-          [% IF session.role == "dataManager" OR (session.role == "super_admin" AND modus == "dataManager") %]
-          <div class="tab-pane[% IF modus == 'dataManager' %] active[%END %]" id="data">
+          [% IF session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager") %]
+          <div class="tab-pane[% IF modus == 'data_manager' %] active[%END %]" id="data">
             <div class="col-md-8">
-              [% tabmodus = 'dataManager' %]
+              [% tabmodus = 'data_manager' %]
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">

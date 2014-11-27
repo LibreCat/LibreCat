@@ -59,8 +59,8 @@ get '/myPUB/change_role/:role' => needs login => sub {
     if ( params->{role} eq "reviewer" and $user->{reviewer} ) {
         session role => "reviewer";
     }
-    elsif ( params->{role} eq "dataManager" and $user->{dataManager} ) {
-        session role => "dataManager";
+    elsif ( params->{role} eq "data_manager" and $user->{data_manager} ) {
+        session role => "data_manager";
     }
     elsif ( params->{role} eq "admin" and $user->{super_admin} ) {
         session role => "super_admin";
