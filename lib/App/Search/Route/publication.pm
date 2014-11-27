@@ -41,7 +41,6 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 
 	my $hits = h->search_publication($p);
 	$hits->{bag} = "researchData" if $bag eq "data";
-	#return to_dumper $hits;
 	template "frontdoor/record", $hits->{hits}->[0];
 };
 
@@ -59,17 +58,17 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 get qr{/data/*} => sub {
 	my $p = h->extract_params();
 
-	#$p->{'bag'} = 'researchData';
 	my $hits = h->search_publication($p);
 	$hits->{bag} = 'researchData';
-	template "website/home", $hits;
+	template "websites/index_publication", $hits;
 };
 
 # api for publication lists
 get qr{/publication/*} => sub {
 	my $p = h->extract_params();
 	my $hits = h->search_publication($p);
-	template "website/home", $hits;
+	$hits->{bag} = 'publication';
+	template "websites/index_publication", $hits;
 };
 
 1;

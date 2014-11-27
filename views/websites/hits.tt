@@ -2,7 +2,6 @@
 
 <!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->
 [% num = total; n = 0 %]
-[% USE MDSimple %]
 
 <div class="row" style="padding-left:13px;">
   <div class="col-md-9">
@@ -81,22 +80,21 @@
 
 [% IF request.path == "/marked" %]<ul style="list-style-type:none;" id="sortable">[% END %]
 [% FOREACH entry IN hits %]
-[% bag = entry.documentType == "researchData" ? "data" : "publication" %]
+[% bag = entry.type == "researchData" ? "data" : "publication" %]
 [% IF request.path == "/marked" %]<li style="margin-left:-25px;min-height:120px;" class="ui-state-default" id="fade_[% n+1 %]">[% END %]
 [% n = n +1 %]
 <div class="row" style="padding-left:13px;">
   <div class="col-md-12">
-    <i>[% entry.publishingYear %] | [% h.display_doctypes(entry.documentType) %] | PUB-ID: <span class="pubid">[% entry.oId %]</span></i>
+    <i>[% entry.year %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry._id %]</span></i>
   </div>
 </div>
 
 <div class="row" style="padding-left:13px;">
   <div class="col-md-12" style="margin-right:20px;">
    [% IF style == 'frontShort' %]
-	<a href="/[% bag %]/[% entry.oId %]">[% entry.mainTitle | md_simple %]</a><br />
+	<a href="/[% bag %]/[% entry._id %]">[% entry.title %]</a><br />
    [% END %]
-   [% entry.citation.$style | md_simple %][% IF style != "apa_indent" AND style != "dgps" %]<br />[% END %]
-   [% INCLUDE links.tt %]
+   [% entry.citation.$style %][% IF style != "apa_indent" AND style != "dgps" %]<br />[% END %]
   </div>
 </div>
 
@@ -118,7 +116,6 @@ $('#clickme_[% n %]').click(function() {
 [% INCLUDE pagination.tt %]
 
 <script type="text/javascript" charset="utf-8">
-
 // mark
 
 $('a.mark').click(function(evt) {

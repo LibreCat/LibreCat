@@ -44,7 +44,7 @@
     <div class="citation-block-div">
     <i>[% entry.year %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry.item('_id') %]</span></i><br />
     [% IF style == 'frontShort' %]
-	<a href="/myPUB/record/edit/[% entry.item('_id') %]">[% entry.title %]</a><br />
+	<a href="/myPUB/record/edit/[% entry._id %]">[% entry.title %]</a><br />
 	[% END %]
 	<a href="javascript:void(0);" onclick="window.location='/myPUB/record/edit/[% entry._id %]'" class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="Edit <i>[% entry.title | html %]</i>"></a>
     [% entry.citation.$style %][% IF style != "apa_indent" %]<br />[% END %]

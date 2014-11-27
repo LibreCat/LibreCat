@@ -140,6 +140,12 @@ sub genereteURN {
     return $nbn . ( int( $productSum / $lastcifer ) % 10 );
 }
 
+sub is_marked {
+	my ($self, $id) = @_;
+	my $marked = Dancer::session 'marked';
+	return Catmandu::Util::array_includes($marked, $id);
+}
+
 sub getPerson {
 	my $user;
 	my $admin;

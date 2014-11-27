@@ -65,7 +65,7 @@
 </div>
 
 <div class="col-xs-3">
-  [% INCLUDE websites/rightBoxLogin.tt %]
+  [% INCLUDE websites/logo_contact.tt %]
 
   <h5>[% lang ? 'Filter' : 'Filtern' %]</h5>
   [% IF qp.keys.0 %]
@@ -127,7 +127,7 @@
 
   <div>&nbsp;</div>
 
-  [% INCLUDE websites/rightBoxTwitter.tt %]
+  [% INCLUDE websites/logo_contact.tt %]
 </div>
 
 <!-- END websites/hits_people.tt -->

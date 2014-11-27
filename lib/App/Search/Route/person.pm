@@ -1,5 +1,10 @@
 package App::Search::Route::person;
 
+=head1 NAME
+
+App::Search::Route::person - handles routes for person sites
+
+=cut
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use App::Helper;
@@ -44,10 +49,23 @@ get '/authorlist' => sub {
 	template $tmpl, $hits;
 };
 
+=head2 GET /person/:id
+
+Returns a person's profile page, including publications,
+research data and author IDs.
+
+=cut
 get qr{/person/(^\d{1,})/*} => sub {
-  # needs improvement...
+	my ($id) = splat;
+	my $p = h->extract_params();
 };
 
+=head2 GET /person/alias
+
+Find a person's ID via alias.
+Forwards to /person/:ID
+
+=cut
 get qr{/person/(\w+)/*} => sub {
 	my ($alias) = splat;
 
@@ -55,6 +73,9 @@ get qr{/person/(\w+)/*} => sub {
 	forward "/person/$person->{_id}";
 };
 
+=head2 GET /person
+
+=cut
 get qr{/person/$} => sub {
     my $path = h->host . '/authorlist';
     redirect $path;

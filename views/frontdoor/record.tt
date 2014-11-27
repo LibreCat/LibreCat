@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="/css/reset.css" />
 
 [% IF status != "public" %]
-<!--<div class="blogger-clickTrap" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 10; cursor: default; background: none repeat scroll 0% 0% white; opacity: 0.01;">&nbsp;</div>-->
 <div style="position: absolute; top: 175px; left: -125px; width: 600px; padding: 10px; font-size: 24px; text-align: center; color: rgb(255, 255, 255); font-family: 'trebuchet ms', verdana, arial, sans-serif; transform: rotate(-45deg); -webkit-transform: rotate(-45deg); transform-origin: 50% 0px 0px; -webkit-transform-origin: 50% 0px; background-color: rgb(0, 0, 0); border: 1px solid rgb(170, 170, 170); z-index: 12; opacity: 0.5;">Preview</div>
 [% END %]
 
@@ -502,12 +501,12 @@ $('a.mark').click(function(evt) {
   var marked = a.data('marked');
   if (marked == 0) {
     $('div.unmark_all').empty().append('<a class="unmark-all" href="#">Unmark all</a>');
-    $.post('[% h.unhost %]/marked/'+a.data('id'), function(res) {
+    $.post('[% h.unhost %]/mark/'+a.data('id'), function(res) {
       $('.total-marked').text(res.total);
       a.data('marked', 1).text('Unmark');
     }, 'json');
   } else {
-    $.post('[% h.unhost %]/marked/'+a.data('id')+'?x-tunneled-method=DELETE', function(res) {
+    $.post('[% h.unhost %]/mark/'+a.data('id')+'?x-tunneled-method=DELETE', function(res) {
       $('.total-marked').text(res.total);
       a.data('marked', 0).text('Mark');
     }, 'json');

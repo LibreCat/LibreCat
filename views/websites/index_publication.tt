@@ -2,6 +2,7 @@
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
+[% style = qp.style || 'frontShort' %]
 
 [% IF lang == "" %]
 [% INCLUDE websites/header.tt %]
