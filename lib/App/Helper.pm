@@ -227,7 +227,9 @@ sub default_facets {
 		quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
 		popular_science => { terms => { field => 'popular_science', size => 1 } },
 		extern => { terms => { field => 'extern', size => 1 } },
-		status => { terms => { field => 'status', size => 5 } },
+		status => { terms => { field => 'status', size => 8 } },
+		year => { terms => { field => 'year'} },
+		type => { terms => { field => 'type', size => 25 } },
 	};
 }
 
