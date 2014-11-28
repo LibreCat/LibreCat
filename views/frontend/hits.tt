@@ -1,0 +1,19 @@
+<!-- BEGIN hits.tt -->
+
+<ul class="pub_hitlist">
+<!-- Found [% total %] entries -->
+<!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->
+[% FOREACH entry IN hits %]
+  <li>
+    [% IF style == "frontShort" %]
+    <a href="[% h.host %]/[% bag %]/[% entry.oId %]">[% entry.mainTitle %]</a><br />
+    [% END %]
+	[% entry.citation.$style %][% IF style != "apa_indent" %]<br />[% END %]
+	[% IF !phillister %]
+	[% INCLUDE frontdoor/links.tt %]
+	[% END %]
+  </li>
+[% END %]
+</ul>
+
+<!-- END hits.tt -->
