@@ -11,6 +11,7 @@
       <script src="../../assets/js/respond.min.js"></script>
     <![endif]-->
     <link href="/css/bootstrap3.css" rel="stylesheet" media="screen">
+    <link href="/css/mypub.css" rel="stylesheet" media="screen">
     <link href="/css/bootstrap-select.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript" src="/javascripts/jquery-latest.js"></script>
