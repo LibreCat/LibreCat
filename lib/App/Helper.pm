@@ -98,13 +98,16 @@ sub extract_params {
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 	$p->{q} = $self->string_array($params->{q});
 
+	# now $p->{q} is an arrayref
+	push @{$p->{q}}, $params->{text} if $params->{text};
+
 #	my $formats = keys %{ $self->config->{exporter}->{publication} };
 #	$p->{fmt} = array_includes($formats, $params->{fmt}) ? $params->{fmt}
 #		: $self->config->{default_fmt};
 
-	my $styles = $self->config->{lists}->{styles};
-	$p->{style} = array_includes($styles, $params->{style}) ? $params->{style}
-			: $self->config->{store}->{default_style};
+#	my $styles = $self->config->{lists}->{styles};
+#	$p->{style} = array_includes($styles, $params->{style}) ? $params->{style}
+#			: $self->config->{store}->{default_style};
 
 	my $sort = $self->string_array($params->{sort});
 	$sort = [ grep { exists $self->sort_options->{$_} } map { s/(?<=[^_])_(?=[^_])//g; lc $_ } split /,/, join ',', @$sort ];

@@ -60,9 +60,9 @@ prefix '/myPUB/record' => sub {
         if ( $type eq "researchData" ) {
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
         }
-        
+
         my $templatepath = "backend/forms";
-        
+
         if(($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
         	$templatepath .= "/expert";
         }
@@ -90,7 +90,7 @@ prefix '/myPUB/record' => sub {
         catch {
             template 'error', { error => "Something went wrong: $_" };
         };
-        
+
         my $templatepath = "backend/forms";
         if(($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
         	$templatepath .= "/expert";
@@ -149,7 +149,7 @@ prefix '/myPUB/record' => sub {
             : ( $params->{approved} = 0 );
 
         $params->{creator}->{login} = session 'user' unless $params->{creator};
-	$params->{creator}->{id} = session 'personNumber' unless $params->{creator};
+        $params->{creator}->{id} = session 'personNumber' unless $params->{creator};
         my $result = update_publication($params);
 
         redirect '/myPUB';
@@ -233,7 +233,7 @@ prefix '/myPUB/record' => sub {
 
         redirect '/myPUB';
     };
-    
+
 =head2 GET /change_mode
 
     Prints the frontdoor for every record.
@@ -243,10 +243,10 @@ prefix '/myPUB/record' => sub {
     post '/change_mode' => sub {
     	my $mode = params->{edit_mode};
         my $params = params;
-        
+
         $params->{file} = [$params->{file}] if ($params->{file} and ref $params->{file} ne "ARRAY");
         $params->{file_order} = [$params->{file_order}] if ($params->{file_order} and ref $params->{file_order} ne "ARRAY");
-        
+
         foreach my $key ( keys %$params ) {
             if ( ref $params->{$key} eq "ARRAY" ) {
                 my $i = 0;
@@ -262,11 +262,11 @@ prefix '/myPUB/record' => sub {
         	$fi = from_json($fi);
         	$fi->{file_json} = to_json($fi);
         }
-        
+
         my $path = "backend/forms/";
         $path .= "expert/" if $mode eq "expert";
         $path .= params->{type} . ".tt";
-        
+
         template $path, $params;
     };
 };
