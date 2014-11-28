@@ -246,7 +246,7 @@ sub display_gs_doctypes {
 }
 
 sub host {
-	return "http://" . hostname_long;
+	return "http://" . hostname_long . ":3000";
 }
 
 sub shost {
