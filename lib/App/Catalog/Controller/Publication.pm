@@ -76,6 +76,9 @@ sub save_publication {
     }
 
     $data = delete_empty_fields($data);
+    if($data->{finalSubmit} eq "recPublish"){
+    	$data->{status} = "public";
+    }
 
     # citations
     use Citation;
