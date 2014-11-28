@@ -59,7 +59,7 @@ my $pre_fixer = Catmandu::Fix->new(
         'move_field("dateCreated", "date_created")',
         'move_field("record_creator.login", "tmp.record_creator")',
         'remove_field("record_creator")',
-        'move_field("tmp.record_creator", "record_creator")',
+        'move_field("tmp.record_creator", "creator.login")',
         'move_field("doi.doi", "tmp.doi")',
         'remove_field("doi")',
         'move_field("tmp.doi", "doi")',

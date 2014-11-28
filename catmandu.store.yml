@@ -530,6 +530,14 @@ search:
                 '<>': true
                 'exact': {field: ['translator.full_name.exact', 'translator.id']}
               field: ['translator.full_name', 'translator.id']
+            creator:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+                'exact': {field: 'creator.id'}
+              field: 'creator.id'
             person:
               op:
                 'any': true
@@ -1252,18 +1260,22 @@ search:
               exact: {type: string, analyzer: tag}
           alternative_title: *titleField
           author: &personField
-             type: object
-             properties:
-               id: {type: string, include_in_all: true}
-               full_name:
-                 type: multi_field
-                 fields:
-                   full_name: {type: string, include_in_all: true}
-                   exact: {type: string, analyzer: tag}
-               autoren_ansetzung: {type: string}
+            type: object
+            properties:
+              id: {type: string, include_in_all: true}
+              full_name:
+                type: multi_field
+                fields:
+                  full_name: {type: string, include_in_all: true}
+                  exact: {type: string, analyzer: tag}
+              autoren_ansetzung: {type: string}
           first_author: {type: string, analyzer: tag}
           editor: *personField
           translator: *personField
+          creator:
+            properties:
+              id: {type: string, analyzer: tag}
+              login: {type: string, analyzer: tag}
           type: {type: string, analyzer: tag}
           year: {type: date, format: year, include_in_all: true}
           language:

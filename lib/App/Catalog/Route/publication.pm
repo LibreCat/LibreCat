@@ -147,9 +147,12 @@ prefix '/myPUB/record' => sub {
         ( session->{role} eq "super_admin" )
             ? ( $params->{approved} = 1 )
             : ( $params->{approved} = 0 );
-
-        $params->{creator}->{login} = session 'user' unless $params->{creator};
-	$params->{creator}->{id} = session 'personNumber' unless $params->{creator};
+            
+        unless($params->{creator}){
+        	$params->{creator}->{login} = session 'user';
+        	$params->{creator}->{id} = session 'personNumber';
+        }
+        
         my $result = update_publication($params);
 
         redirect '/myPUB';
