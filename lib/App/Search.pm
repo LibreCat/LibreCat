@@ -12,10 +12,11 @@ use App::Search::Route::publication;
 use App::Search::Route::thumbnail;
 use App::Search::Route::uri;
 use App::Search::Route::unapi;
+use App::Search::Route::directoryindex;
 #use App::Search::Route::
 
 get '/' => sub {
-    template '/websites/index';
+    template '/websites/index_publication.tt', {bag => "home"};
 };
 
 1;
