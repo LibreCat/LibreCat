@@ -83,11 +83,6 @@ sub edit_person {
 
 sub delete_person {
     confess "Don't do that! Seriously.";
-    # my $id = shift;
-    # return "Error" unless $id;
-
-    # h->authority('admin')->delete($id);
-    # h->authority('admin')->commit;
 }
 
 sub import_person {
@@ -172,7 +167,7 @@ sub update_project {
 #    my $old = h->project->get( $data->{_id} );
 #    my $merger = Hash::Merge->new();           #left precedence by default!
 #    my $new = $merger->merge( $data, $old );
-    
+
     my $new = h->nested_params($data);
     return $new;
     my $bag = Catmandu->store('project')->bag;

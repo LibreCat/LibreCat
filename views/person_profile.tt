@@ -37,9 +37,9 @@
         &nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
       </span>
       [% END %]<!-- end if -->
-      <span class="row authorIds_input" style="display:none;">
+      <span class="row authorIds_input form-group" style="display:none;">
         <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
-        <div class="col-md-6"><input type="text" class="form-control input-sm" name="[% k %]" id="[% k %]_input" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
+        <div class="col-md-6"><input type="text" class="form-control input-sm check_[% k %]" name="[% k %]" id="[% k %]" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
       </span>
       [% END %]<!-- END foreach -->
 

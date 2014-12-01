@@ -80,6 +80,14 @@
     </div>
 
     <div class="row innerrow">
+      <div class="col-md-2"><label for="id_alias">Alias</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-6">
+          <input type="text" name="alias" id="id_alias" value="[% alias %]" class="check_alias form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
       <div class="col-md-2"><label for="id_old_last_name">Last Name used before</label></div>
       <div class="col-md-10">
         <div class="form-group col-md-6">
@@ -236,7 +244,7 @@
         </div>
       </div>
     </div>
-    
+
     <span id="delegate">
     [% IF delegate %]
       [% FOREACH del IN delegate %]
