@@ -247,15 +247,11 @@
   <li>
     <button data-toggle="collapse" data-target="#sort_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Sorting</a></button>
     <div class="facettecollapse">
-    <ul id="sort_[% tabmodus %]" class="collapse[% IF qp.defined('sort') %] in[% END %]">
-      [% FOREACH sorting IN h.config.store.sort_options %]
-        [% IF qp.item('sort').grep("$sorting.key").0 %]
-        <li>[% sorting.label %]</li>
-        [% ELSE %]
-          [% sortasc = sorting.key _ ".asc" %]
-          [% sortdesc = sorting.key _ ".desc" %]
-          <li><a href="[% h.newuri_for("$path", qp, sort="$sortasc") %]" rel="nofollow">[% sorting.label %]&nbsp;<span class="glyphicon glyphicon-arrow-up"></span></a>&nbsp;&nbsp;<a href="[% h.newuri_for("$path", qp, sort="$sortdesc") %]" rel="nofollow"><span class="glyphicon glyphicon-arrow-down"></span></a></li>
-        [% END %]
+    <ul id="sort_[% tabmodus %]" class="collapse">
+      [% FOREACH s IN h.config.store.sort_options %]
+        <li><a href="#" class="sort-facet_[% tabmodus %] asc" data-val="[% s.key %]" rel="nofollow">[% s.label %]&nbsp;<span class="glyphicon glyphicon-arrow-up"></span></a>&nbsp;&nbsp;
+        <a href="#" class="sort-facet_[% tabmodus %] desc" data-val="[% s.key %]" rel="nofollow">
+        <span class="glyphicon glyphicon-arrow-down"></span></a></li>
       [% END %]
     </ul>
     </div>
@@ -275,6 +271,22 @@ $('a.search-facet_[% tabmodus %]').click(function() {
     var url = path+'?'+ $.param($.extend({}, searchParams), true);
     //alert('URL:'+url);
     window.location.replace(url);
+});
+
+$('a.sort-facet_[% tabmodus %]').click(function() {
+    var object = $(this),
+        key = object.data('val');
+    //console.log(key);
+    if (object.hasClass("asc")) {
+        console.log("asc");
+        //searchParams.sort.push(key+'.asc');
+    } else {
+        console.log("desc");
+        //searchParams.sort.push(key+'.desc');
+    }
+    var url = path+'?'+ $.param($.extend({}, searchParams), true);
+    alert('URL:'+url);
+    //window.location.replace(url);
 });
 </script>
 

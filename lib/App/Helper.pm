@@ -99,7 +99,6 @@ sub extract_params {
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 	$p->{q} = $self->string_array($params->{q});
 
-	# now $p->{q} is an arrayref
 	push @{$p->{q}}, $params->{text} if $params->{text};
 
 #	my $formats = keys %{ $self->config->{exporter}->{publication} };
@@ -113,9 +112,14 @@ sub extract_params {
 #			: $self->config->{store}->{default_style};
 
 	my $sort = $self->string_array($params->{sort});
-	$sort = [ grep { exists $self->sort_options->{$_} } map { s/(?<=[^_])_(?=[^_])//g; lc $_ } split /,/, join ',', @$sort ];
-	$sort = [] if is_same $sort, $self->config->{default_publication_sort};
-	$p->{sort} = $sort;
+	$p->{sort} = map {
+		my @tmp = split(/\./, $_);
+		my $sru_sort = "$tmp[0],,";
+		$sru_sort .= $tmp[1] eq 'asc' ? "1 " : "0 ";
+	} @$sort;
+	#$sort = [ grep { exists $self->sort_options->{$_} } map { s/(?<=[^_])_(?=[^_])//g; lc $_ } split /,/, join ',', @$sort ];
+	#$sort = [] if is_same $sort, $self->config->{default_sort};
+	#$p->{sort} = $sort || [];
 
 	$p;
 }
@@ -261,13 +265,13 @@ sub shost {
 
 sub search_publication {
 	my ($self, $p) = @_;
-	my $sort;
+	my $sort = $p->{sort} || $self->config->{store}->{default_sort};
 	my $cql = "";
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
-	#return $cql;
+
 	my $hits = publication->search(
 	    cql_query => $cql,
-#		sru_sortkeys => $sort,
+		sru_sortkeys => $sort,
 		limit => $p->{limit} ||= config->{default_page_size},
 		start => $p->{start} ||= 0,
 		facets => $p->{facets} ||= {},
