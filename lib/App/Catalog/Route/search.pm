@@ -97,7 +97,7 @@ prefix '/myPUB/search' => sub {
     get '/delegate/:delegate_id' => sub {
         my $p = h->extract_params();
         my $id = params->{delegate_id};
-        push @{$p->{q}}, "person=$id";
+        push @{$p->{q}}, "(person=$id OR creator=$id)";
         $p->{facets} = h->default_facets;
         
         $p->{facets}->{author} = {
@@ -129,7 +129,7 @@ prefix '/myPUB/search' => sub {
 
         my $p = h->extract_params();
         my $id = session 'personNumber';
-        push @{$p->{q}}, "person=$id"; #creator=$id
+        push @{$p->{q}}, "(person=$id OR creator=$id)";
         $p->{facets} = h->default_facets();
 
         # override default author/editor facette
