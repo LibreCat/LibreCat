@@ -1502,7 +1502,7 @@ default_sort:
   - publishingyear.desc
   - datelastchanged.desc
 default_sort_backend:
-  - publishingyear.desc
-  - datelastchanged.desc
+  - year.desc
+  - date_updated.desc
 default_style: frontShort
 default_fd_style: frontShort
