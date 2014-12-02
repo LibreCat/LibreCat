@@ -8,7 +8,7 @@ on 'test', sub {
 
 # Catmandu
 requires 'Catmandu';
-requires 'Catmandu::Store::ElasticSearch';
+requires 'Catmandu::Store::Elasticsearch';
 requires 'Catmandu::Store::MongoDB';
 requires 'Catmandu::Importer::XML';
 requires 'Catmandu::Importer::ArXiv';
