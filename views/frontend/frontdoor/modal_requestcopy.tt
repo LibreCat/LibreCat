@@ -1,0 +1,23 @@
+<!-- BEGIN frontdoor/modal_requestcopy.tt -->
+<p><a href="#rc" data-toggle="modal"> Request a Copy</a></p>
+
+<div id="rc" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Request a Copy</h3>
+  </div>
+  <div class="modal-body">
+  	<form class="form-horizontal" method="POST" action="/requestCopy">
+  	  <div class="control-group">
+  	    <input type="text" id="inputEmail" placeholder="Email">
+  	  </div>
+  	  <div class="control-group">
+  	    <textarea rows="3" id="inputComment" placeholder="Your comment"></textarea>
+  	  </div>
+  	  <div class="control-group">
+  	    <button type="submit" class="btn">Send</button>
+  	  </div>
+	</form>     
+  </div>
+</div>
+<!-- END modal frontdoor/modal_requestcopy.tt -->

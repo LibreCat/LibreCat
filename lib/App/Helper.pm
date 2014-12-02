@@ -74,6 +74,13 @@ sub sort_options {
 	};
 }
 
+#sub trim {
+#	my ($self, $str) = @_;
+#	$str =~ s/^\s+//;
+#	$str =~ s/\s+$//;
+#	return $str;
+#}
+
 # helper for params handling
 ############################
 sub nested_params {
@@ -98,6 +105,7 @@ sub extract_params {
 	$p->{start} = $params->{start} if is_natural $params->{start};
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 	$p->{q} = $self->string_array($params->{q});
+	$p->{text} = $params->{text} if $params->{text};
 
 	push @{$p->{q}}, $params->{text} if $params->{text};
 
@@ -122,6 +130,49 @@ sub extract_params {
 	#$p->{sort} = $sort || [];
 
 	$p;
+}
+
+sub get_sort_style {
+	my ($self, $style, $sort) = @_;
+	my $user = $self->getAccount( Dancer::session->{user} )->[0];
+	my $return;
+
+	# set default values - to be overriden by more important values
+	my $return_style = $style || $user->{stylePreference} || $self->config->{store}->{default_style};
+	my $return_sort = $sort || $user->{sortPreference} || $self->config->{store}->{default_sort};
+	my $return_sort_backend = $sort || $user->{sortPreference} || $self->config->{store}->{default_sort_backend};
+
+	$return_sort = [$return_sort] if(ref $return_sort ne "ARRAY");
+	foreach my $s (@{$return_sort}){
+		if($s =~ /(\w)\.(\w)/){
+			my $sorting = "$1,,";
+			$sorting .= $2 eq "asc" ? "1 " : "0 ";
+			$return->{'sort'} .= $sorting;
+		}
+		else{
+			$return->{'sort'} .= "$s,,0 ";
+		}
+	}
+	$return_sort_backend = [$return_sort_backend] if(ref $return_sort_backend ne "ARRAY");
+	foreach my $s (@{$return_sort_backend}){
+		if($s =~ /(\w)\.(\w)/){
+			my $sorting = "$1,,";
+			$sorting .= $2 eq "asc" ? "1 " : "0 ";
+			$return->{sort_backend} .= $sorting;
+		}
+		else{
+			$return->{sort_backend} .= "$s,,0 ";
+		}
+	}
+	$return->{'sort'} = trim($return->{'sort'});
+	$return->{sort_backend} = trim($return->{sort_backend});
+
+	# see if style param is set
+	if(array_includes($self->config->{lists}->{styles},$style)){
+		$return->{style} = $style;
+	}
+
+	return $return;
 }
 
 sub now {
@@ -355,6 +406,14 @@ sub search_project {
     #    $hits->{$_} = $hits->$_;
     #}
     return $hits;
+}
+
+sub get_file_path {
+	my ($self, $pub_id) = @_;
+	my $dest_dir = sprintf("%09d", $pub_id);
+	my @dest_dir_parts = unpack 'A3' x 3, $dest_dir;
+	$dest_dir = join '/', config->{upload_dir}, @dest_dir_parts;
+	return $dest_dir;
 }
 
 sub embed_string {

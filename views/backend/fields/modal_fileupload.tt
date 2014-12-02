@@ -91,6 +91,11 @@
 <script>
 
 if(navigator.userAgent.indexOf('MSIE') == -1){
+  $("#id_file").change(function (){
+    var fileName = $(this).val().replace(/C:\\fakepath\\/,"");
+    $("#id_fileName").val(fileName);
+  });
+  
   $('#fileSubmit').click( function() {    
     var inputs = $(":file");
     var file_id = $('#id_file_id').val();
@@ -107,7 +112,7 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
     if(tempid){
       formData.append("tempid", tempid);
     }
-    formData.append("old_file_name", $('#id_fileName').val());
+    formData.append("file_name", $('#id_fileName').val());
     formData.append("creator", $('#id_creator').val());
     formData.append("relation", $('#id_select_relation').val());
     
@@ -145,6 +150,7 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
       type: 'POST',
       dataType: "json",
       success: function(data){
+        alert(data.file_name);
         var accessLevel;
         if(data.access_level == "openAccess"){
           accessLevel = "Open Access";
@@ -168,6 +174,11 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
         var use_file_id;
         use_file_id = file_id ? file_id : tempid;
         
+        var a = $('#' + use_file_id + ' div.padded a');
+        a.attr('title','');
+        a.attr('title',data.file_name);
+        a.html('');
+        a.html(data.file_name);
         $('#filename_' + use_file_id).html("");
         $('#filename_' + use_file_id).html('<a href="[% h.shost %]/download/[% id %]/' + use_file_id + '" target="_blank" title="' + data.file_name + '">' + data.file_name + '</a>');
         $('#access_' + use_file_id).html(accessLevel);

@@ -1,6 +1,7 @@
 package App::Catalog::Controller::File;
 
 use Catmandu::Sane;
+use Catmandu::Util qw(join_path segmented_path);
 use App::Helper;
 use Dancer::FileUtils qw/path dirname/;
 use Carp;
@@ -31,21 +32,19 @@ sub handle_file {
 	$pub->{file} = [$pub->{file}] if ref $pub->{file} ne "ARRAY";
 	$pub->{file_order} = [$pub->{file_order}] if ref $pub->{file_order} ne "ARRAY";
 	my $previous_pub = h->publication->get($pub->{_id});
+	my $dest_dir = h->get_file_path($pub->{_id});
 
 	if(!$previous_pub){
 		foreach my $fi (@{$pub->{file}}){
 			$fi = from_json($fi);
 			$fi->{file_id} = new_file();
-			my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
-			$pub->{file_order}->[$index] = $fi->{file_id};
+			#my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
+			push @{$pub->{file_order}}, $fi->{file_id};
 
-			my $path = h->config->{upload_dir} . "/" . $pub->{_id};
-			mkdir $path || croak "Could not create path $path: $!";
-#			my $pathh = path(h->config->{upload_dir}, $pub->{_id}, $fi->{file_id});
-#			mkdir $pathh || croak "Could not create pathh $pathh: $!";
-			my $filepath = path(h->config->{upload_dir}, $fi->{file_name});
-			my $newfilepath = path(h->config->{upload_dir}, $pub->{_id}, $fi->{file_name});
-			move($filepath, $newfilepath);
+			my $filepath = path(h->config->{upload_dir}, $fi->{tempid}, $fi->{file_name});			
+			system "mkdir -p $dest_dir" unless -d $dest_dir;
+	
+			move($filepath,$dest_dir);
 
 			delete $fi->{tempid} if $fi->{tempid};
 			delete $fi->{tempname} if $fi->{tempname};
@@ -63,12 +62,13 @@ sub handle_file {
 				my( $index )= grep { $previous_pub->{file}->[$_]->{file_id} eq $fi->{file_id} } 0..$#{$previous_pub->{file}};
 				my $previous_file = $previous_pub->{file}->[$index];
 				#unlink previous file
-				my $file = $upload_dir ."/$pub->{_id}/$previous_file->{file_name}";
+				
+				my $file = "$dest_dir/$previous_file->{file_name}";
 				unlink($file);
 				#copy new file to previous file's folder
-				my $filepath = path(h->config->{upload_dir}, $fi->{file_name});
-				my $newfilepath = path(h->config->{upload_dir}, $pub->{_id}, $fi->{file_name});
-				move($filepath, $newfilepath);
+				my $filepath = path(h->config->{upload_dir}, $fi->{tempid}, $fi->{file_name});
+				#my $newfilepath = path(h->config->{upload_dir}, $pub->{_id}, $fi->{file_name});
+				move($filepath, $dest_dir);
 
 				delete $fi->{tempid} if $fi->{tempid};
 				delete $fi->{tempname} if $fi->{tempname};
@@ -85,13 +85,9 @@ sub handle_file {
 				my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
 				$pub->{file_order}->[$index] = $fi->{file_id};
 
-				my $path = h->config->{upload_dir} . "/" . $pub->{_id};
-				mkdir $path || croak "Could not create path $path: $!";
-#				my $pathh = path(h->config->{upload_dir}, $pub->{_id}, $fi->{file_id});
-#				mkdir $pathh || croak "Could not create pathh $pathh: $!";
-				my $filepath = path(h->config->{upload_dir}, $fi->{file_name});
-				my $newfilepath = path(h->config->{upload_dir}, $pub->{_id}, $fi->{file_name});
-				move($filepath, $newfilepath);
+				system "mkdir -p $dest_dir" unless -d $dest_dir;
+				my $filepath = path(h->config->{upload_dir}, $fi->{tempid}, $fi->{file_name});
+				move($filepath, $dest_dir);
 
 				delete $fi->{tempid} if $fi->{tempid};
 				delete $fi->{tempname} if $fi->{tempname};
@@ -146,14 +142,14 @@ sub update_file {
 sub delete_file {
 	my $pub_id = shift;
     my $file_name = shift;
+    my $dest_dir = h->get_file_path($pub_id);
     my $status;
     if($file_name){
-    	my $file = path(h->config->{upload_dir}, $pub_id, $file_name);
+    	my $file = path($dest_dir, $file_name);
     	$status = unlink($file);
     }
     else {
-    	my $dir = path(h->config->{upload_dir}, $pub_id);
-    	$status = rmtree [$dir] if -e $dir || 0;
+    	$status = rmtree [$dest_dir] if -e $dest_dir || 0;
     }
     return $status;
 }

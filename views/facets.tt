@@ -1,9 +1,12 @@
 <!-- BEGIN facets.tt -->
 [%- USE JSON -%]
 <h5>Search</h5>
+[% IF h.extract_params.text %]
+<p class="text-muted"><a href="[% path %]?q=[% h.extract_params.q.join('&q=') %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> search=[% h.extract_params.text |html %]</p>
+[% END %]
 <form action="#" method="get" class="form-inline" role="form">
     <span class="input-group">
-      <input type="text" value='[% qp.q.join(' and ') %]' class="form-control" name="q" placeholder="Search" />
+      <input type="text" value='[% qp.text %]' class="form-control" name="text" placeholder="Search" />
       <span class="input-group-btn">
         <button type="button" class="btn btn-default">Go!</button>
       </span>
@@ -279,10 +282,10 @@ $('a.sort-facet_[% tabmodus %]').click(function() {
     //console.log(key);
     if (object.hasClass("asc")) {
         console.log("asc");
-        //searchParams.sort.push(key+'.asc');
+        searchParams.sort.push(key+'.asc');
     } else {
         console.log("desc");
-        //searchParams.sort.push(key+'.desc');
+        searchParams.sort.push(key+'.desc');
     }
     var url = path+'?'+ $.param($.extend({}, searchParams), true);
     alert('URL:'+url);

@@ -13,7 +13,9 @@ use App::Catalog::Controller::File qw/delete_file/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;
 use File::Copy;
+use Carp;
 use Dancer::Plugin::Auth::Tiny;
+use Digest::MD5 qw/md5_hex/;
 
 =head1 PREFIX /myPUB
 
@@ -47,9 +49,17 @@ prefix '/myPUB' => sub {
             tempname => $file->{tempname},
             tempid => $tempid,
           };
-          $file_data->{file_json} = to_json($file_data);
-          my $filepath = path(h->config->{upload_dir}, $file->{filename});
+          my $filedir = path(h->config->{upload_dir}, $tempid);
+          mkdir $filedir || croak "Could not create dir $filedir: $!";
+          my $filepath = path(h->config->{upload_dir}, $tempid, $file->{filename});
       	  copy($file->{tempname}, $filepath);
+      	  
+      	  my $ctx = Digest::MD5->new;
+      	  $ctx->addfile($file->file_handle());
+      	  my $digest = $ctx->md5_hex;
+      	  $file_data->{checksum} = $digest;
+      	  
+      	  $file_data->{file_json} = to_json($file_data);
       	  my $status = unlink $file->{tempname};
       }
       else{
@@ -98,15 +108,14 @@ prefix '/myPUB' => sub {
       });
       push @{$record->{file_order}}, $file_id;
 
-      my $path = path( h->config->{upload_dir}, $id, $file_name );
-      my $dir = dirname($path);
-      mkdir $dir unless -e $dir;
-      move( path(h->config->{upload_dir}, $file_name), $path );
+      my $path = h->get_file_path($id);
+      system "mkdir -p $path" unless -d $path;
+      my $result = move( path(h->config->{upload_dir}, params->{tempid}, $file_name), $path ) || die $!;
 
       my $response = update_publication($record);
 
     } else {
-      my $path = path( h->config->{upload_dir}, $file_name);
+      my $path = path( h->config->{upload_dir}, params->{tempid}, $file_name);
       unlink $path;
     }
 

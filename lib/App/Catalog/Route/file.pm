@@ -22,7 +22,8 @@ use Dancer::Plugin::Auth::Tiny;
 ##############
 sub send_it {
 	my ($id, $file_name) = @_;
-	my $path_to_file = path(h->config->{upload_dir}, $id, $file_name);
+	my $dest_dir = h->get_file_path($id);
+	my $path_to_file = path($dest_dir, $file_name);
 	return Dancer::send_file($path_to_file, system_path => 1);
 }
 
