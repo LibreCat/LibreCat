@@ -84,7 +84,7 @@ prefix '/myPUB/admin' => sub {
     post '/account/update' => needs role => 'super_admin' => sub {
         my $p = params;
         $p = h->nested_params($p);
-
+        
         update_person($p);
         template 'admin/account';
     };
@@ -111,30 +111,30 @@ prefix '/myPUB/admin' => sub {
     get '/import' => sub {
         return "Not implemented.";
     };
-    
+
     get '/project' => needs role => 'super_admin' => sub {
     	my $hits = h->search_project({q => "", limit => 100});
         template 'admin/project', $hits;
     };
-    
+
     get '/project/search' => sub {
         my $params = params;
         my $p;
-        
+
         $p->{q} = $params->{q} || "";
         $p->{limit} = $params->{limit} || h->config->{default_searchpage_size};
         $p->{start} = $params->{start} || 0;
         my $hits = h->search_project($p);
-        
+
         template 'admin/project', $hits;
     };
-    
+
     get '/project/edit/:id' => needs role => 'super_admin' => sub {
         my $id     = param 'id';
         my $project = edit_project($id);
         template 'admin/edit_project', $project;
     };
-    
+
     post '/project/update' => needs role => 'super_admin' => sub {
     	my $params = params;
     	my $return = update_project($params);

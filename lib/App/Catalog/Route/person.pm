@@ -76,10 +76,12 @@ prefix '/myPUB/person' => sub {
 =cut
     post '/author_id' => needs login => sub {
 
-        my $person     = h->authority_user->get( params->{_id} );
+        my $id = params->{_id};
+        my $person = h->authority_user->get( $id ) || {_id => $id};
         my @identifier = keys %{h->config->{lists}->{author_id}};
 
         map { $person->{$_} = params->{$_} ? params->{$_} : "" } @identifier;
+        redirect '/myPUB' if keys %{$person} > 1;
 
         my $bag = h->authority_user->add($person);
 
