@@ -347,6 +347,14 @@ sub search_project {
     return $hits;
 }
 
+sub get_file_path {
+	my ($self, $pub_id) = @_;
+	my $dest_dir = sprintf("%09d", $pub_id);
+	my @dest_dir_parts = unpack 'A3' x 3, $dest_dir;
+	$dest_dir = join '/', config->{upload_dir}, @dest_dir_parts;
+	return $dest_dir;
+}
+
 sub embed_string {
 	my ($self, $query, $bag, $id, $style, %params) = @_;
 	my $embed;
