@@ -97,6 +97,7 @@ sub extract_params {
 	$p->{start} = $params->{start} if is_natural $params->{start};
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 	$p->{q} = $self->string_array($params->{q});
+	$p->{text} = $params->{text} if $params->{text};
 
 #	my $formats = keys %{ $self->config->{exporter}->{publication} };
 #	$p->{fmt} = array_includes($formats, $params->{fmt}) ? $params->{fmt}
