@@ -3,7 +3,6 @@
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
 [% thisPerson = h.getPerson(session.personNumber) %]
-[% style = qp.style  || 'frontShort' %]
 
 [% INCLUDE navbar.tt %]
 
@@ -62,8 +61,6 @@
           [% IF session.role == 'super_admin' %]
           <div class="tab-pane[% IF modus == 'admin' %] active[% END %]" id="adminPubl">
             <div class="col-md-8">
-              [% USE Dumper; Dumper.dump(item('sort')) %]
-              [% Dumper.dump(style) %]
               [% tabmodus = 'admin' %]
               [% INCLUDE hits.tt %]
             </div>

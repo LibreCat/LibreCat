@@ -27,41 +27,10 @@ prefix '/myPUB/person' => sub {
 
 =cut
     get '/preference' => needs login => sub {
-
         my $person = h->getPerson( session('personNumber') );
-        my $style;
-        my $sort;
-        if (    $person->{stylePreference}
-            and $person->{stylePreference} =~ /(\w{1,})\.(\w{1,})/ )
-        {
-            if ( array_includes( h->config->{lists}->{styles}, $1 ) ) {
-                $style = $1 unless $1 eq "pub";
-            }
-            $sort = $2;
-        }
-        elsif ( $person->{stylePreference}
-            and $person->{stylePreference} !~ /\w{1,}\.\w{1,}/ )
-        {
-            if (array_includes(
-                    h->config->{lists}->{styles},
-                    $person->{stylePreference}
-                )
-                )
-            {
-                $style = $person->{stylePreference}
-                    unless $person->{stylePreference} eq "pub";
-            }
-        }
-
-        if ( $person->{sortPreference} ) {
-            $sort = $person->{sortPreference};
-        }
-
-        $person->{stylePreference}
-            = params->{style}
-            || $style
-            || h->config->{store}->{default_fd_style};
-        $person->{sortPreference} = params->{'sort'} || $sort || "desc";
+        my $tmp = h->get_sort_style(params->{sort} || '', params->{style} || '');
+        $person->{sort} = $tmp->{sort};
+        $person->{style} = $tmp->{style};
 
         h->authority_user->add($person);
 

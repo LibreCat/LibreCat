@@ -74,13 +74,6 @@ sub sort_options {
 	};
 }
 
-#sub trim {
-#	my ($self, $str) = @_;
-#	$str =~ s/^\s+//;
-#	$str =~ s/\s+$//;
-#	return $str;
-#}
-
 # helper for params handling
 ############################
 sub nested_params {
@@ -113,24 +106,14 @@ sub extract_params {
 #	$p->{fmt} = array_includes($formats, $params->{fmt}) ? $params->{fmt}
 #		: $self->config->{default_fmt};
 
-#	my $style = $params->{style} || = $self->config->{default_style};
-#	my $styles = $self->config->{lists}->{styles};
-
-#	$p->{style} = array_includes($styles, $params->{style}) ? $params->{style}
-#			: $self->config->{store}->{default_style};
-
-	my $sort = $self->string_array($params->{sort});
-	$p->{sort} = map {
-		my @tmp = split(/\./, $_);
-		my $sru_sort = "$tmp[0],,";
-		$sru_sort .= $tmp[1] eq 'asc' ? "1 " : "0 ";
-	} @$sort;
+	$p->{style} = $params->{style} if $params->{style};
+	$p->{sort} = $self->string_array($params->{sort});
 
 	$p;
 }
 
 sub get_sort_style {
-	my ($self, $style, $sort) = @_;
+	my ($self, $sort, $style) = @_;
 	my $user = $self->getAccount( Dancer::session->{user} )->[0];
 	my $return;
 

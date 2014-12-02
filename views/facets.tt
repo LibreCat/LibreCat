@@ -168,7 +168,7 @@
   <li>
     [% FOREACH term IN facets.open_access.terms %]
       [% NEXT IF term.term == "0" %]
-      <a class="search-facet_[% tabmodus %]" data-index="oa" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% term.count %] OA Fulltexts</a>
+      <a class="search-facet_[% tabmodus %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% term.count %] OA Fulltexts</a>
     [% END %]
   </li>
 
@@ -272,24 +272,19 @@ $('a.search-facet_[% tabmodus %]').click(function() {
     searchParams.q.push(index+'='+term);
     delete searchParams.start;
     var url = path+'?'+ $.param($.extend({}, searchParams), true);
-    //alert('URL:'+url);
     window.location.replace(url);
 });
 
 $('a.sort-facet_[% tabmodus %]').click(function() {
     var object = $(this),
         key = object.data('val');
-    //console.log(key);
     if (object.hasClass("asc")) {
-        console.log("asc");
         searchParams.sort.push(key+'.asc');
     } else {
-        console.log("desc");
         searchParams.sort.push(key+'.desc');
     }
     var url = path+'?'+ $.param($.extend({}, searchParams), true);
-    alert('URL:'+url);
-    //window.location.replace(url);
+    window.location.replace(url);
 });
 </script>
 
