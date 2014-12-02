@@ -121,8 +121,8 @@ sub extract_params {
 #			: $self->config->{store}->{default_style};
 
 	my $sort = $self->string_array($params->{sort});
-	$sort = [ grep { exists $self->sort_options->{$_} } map { s/(?<=[^_])_(?=[^_])//g; lc $_ } split /,/, join ',', @$sort ];
-	$sort = [] if is_same $sort, $self->config->{default_publication_sort};
+#	$sort = [ grep { exists $self->sort_options->{$_} } map { s/(?<=[^_])_(?=[^_])//g; lc $_ } split /,/, join ',', @$sort ];
+#	$sort = [] if is_same $sort, $self->config->{default_publication_sort};
 	$p->{sort} = $sort;
 
 	$p;
@@ -140,7 +140,7 @@ sub get_sort_style {
 	
 	$return_sort = [$return_sort] if(ref $return_sort ne "ARRAY");
 	foreach my $s (@{$return_sort}){
-		if($s =~ /(\w)\.(\w)/){
+		if($s =~ /(\w{1,})\.(\w{1,})/){
 			my $sorting = "$1,,";
 			$sorting .= $2 eq "asc" ? "1 " : "0 ";
 			$return->{'sort'} .= $sorting;
@@ -151,7 +151,7 @@ sub get_sort_style {
 	}
 	$return_sort_backend = [$return_sort_backend] if(ref $return_sort_backend ne "ARRAY");
 	foreach my $s (@{$return_sort_backend}){
-		if($s =~ /(\w)\.(\w)/){
+		if($s =~ /(\w{1,})\.(\w{1,})/){
 			my $sorting = "$1,,";
 			$sorting .= $2 eq "asc" ? "1 " : "0 ";
 			$return->{sort_backend} .= $sorting;
@@ -164,8 +164,8 @@ sub get_sort_style {
 	$return->{sort_backend} = trim($return->{sort_backend});
 	
 	# see if style param is set
-	if(array_includes($self->config->{lists}->{styles},$style)){
-		$return->{style} = $style;
+	if(array_includes($self->config->{lists}->{styles},$return_style)){
+		$return->{style} = $return_style;
 	}
 	
 	return $return;

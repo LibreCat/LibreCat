@@ -44,8 +44,12 @@ prefix '/myPUB/search' => sub {
         my $p = h->extract_params();
         (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
         $p->{facets} = h->default_facets();
+        my $sort_style = h->get_sort_style("$p->{style}", "$p->{sort}");
+        $p->{sort} = $sort_style->{sort_backend};
 
         my $hits = h->search_publication($p);
+        $hits->{style} = $sort_style->{style};
+        $hits->{sort} = $p->{sort};
         $hits->{modus} = "admin";
         template "home", $hits;
 
