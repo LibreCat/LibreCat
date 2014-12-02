@@ -68,6 +68,8 @@ prefix '/myPUB/search' => sub {
         (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
 
         $p->{facets} = h->default_facets();
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
 
         my $hits = h->search_publication($p);
         $hits->{modus} = "reviewer";
@@ -88,6 +90,8 @@ prefix '/myPUB/search' => sub {
         push @{$p->{q}}, "(type=researchData OR type=dara)";
         (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
         $p->{facets} = h->default_facets();
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
 
         my $hits = h->search_publication($p);
         $hits->{modus} = "data_manager";
@@ -107,6 +111,8 @@ prefix '/myPUB/search' => sub {
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
         $p->{facets} = h->default_facets;
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
 
         $p->{facets}->{author} = {
             terms => {
@@ -140,6 +146,8 @@ prefix '/myPUB/search' => sub {
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
         $p->{facets} = h->default_facets();
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
 
         # override default author/editor facette
         $p->{facets}->{author} = {
