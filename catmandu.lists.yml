@@ -28,7 +28,7 @@ author_id:
     url: "http://www.scopus.com/authid/detail.url?authorId="
   alias:
     label: Alias
-    url: "http://pub.uni-bielefeld.de/person/"
+    url: "/person/"
 
 styles_public:
   - ama

@@ -1,13 +1,33 @@
 /**
- * 
+ *
  * myPUB main/search page
- * 
+ *
  */
 
+/**
+ * check if alias is already used
+ */
+$(function () {
+$('.check_alias').keyup(function() {
+	var object =$(this),
+		val = object.val();
+	$.ajax({
+		url: '/myPUB/autocomplete_alias/'+val,
+		dataType: 'json',
+		success: function(data,textStatus){
+			if (data.ok == 0) {
+				object.closest('.form-group').addClass('has-error');
+			} else {
+				object.closest('.form-group').removeClass('has-error');
+			}
+		},
+	});
+});
+});
 
 /**
  * Display/hide edit form for author IDs
- * 
+ *
  * @param direction = [edit|cancel] display or hide form
  */
 function editAuthorIds(direction){
@@ -39,9 +59,9 @@ function generate_link(file_id, pub_id){
 
 
 /**
- * 
+ *
  * Publication Edit Form
- * 
+ *
  */
 
 
@@ -112,7 +132,7 @@ function linkPevz(element){
 		else if(narrowurl == "" && longurl != ""){
 			narrowurl = puburl + longurl;
 		}
-		
+
 		$.get(narrowurl, function(response) {
 			var objJSON = eval("(function(){return " + response + ";})()");
 
@@ -122,7 +142,7 @@ function linkPevz(element){
 				var pevzId = "";
 				var first_name = "";
 				var last_name = "";
-				
+
 				$.each(data, function(key, value){
 					if(key == "_id"){
 						pevzId = value;
@@ -134,7 +154,7 @@ function linkPevz(element){
 						last_name = value;
 					}
 				});
-				
+
 				$('#' + type + 'first_name_' + lineId).val(first_name);
 				$('#' + type + 'last_name_' + lineId).val(last_name);
 				$('#' + type + 'full_name_' + lineId).val(last_name + ", " + first_name);
@@ -143,12 +163,12 @@ function linkPevz(element){
 				$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
 				$('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
 				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
-				
+
 				pevzId = "";
 				first_name = "";
 				last_name = "";
 			}
-			
+
 			// If more than one hit... show modal with choices
 			else if(objJSON.length > 1 || (objJSON.length == 1 && objJSON[0].old_full_name && objJSON[0].full_name)){
 				var container = $('#linkPevzModal').find('.modal-body').first();
@@ -157,7 +177,7 @@ function linkPevz(element){
 				var rows = "";
 				var table2 = '<p><strong>Further hits:</strong></p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>PEVZ-ID</th><th>Name</th></tr>';
 				var rows2 = "";
-				
+
 				for(var i=0;i<objJSON.length;i++){
 					var data = objJSON[i];
 					var pevzId = "";
@@ -186,7 +206,7 @@ function linkPevz(element){
 							old_last_nameLc = value.toLowerCase();
 						}
 					});
-					
+
 					if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase()) || (firstname == old_first_name.toLowerCase() && lastname == "") || (lastname == old_last_name.toLowerCase() && firstname == "") || (lastname == old_last_name.toLowerCase() && firstname == old_first_name.toLowerCase())){
 						rows += '<tr data-id="' + pevzId + '"><td><a href="#" class="pevzLink">' + pevzId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="pevzLink">' + first_name + " " + last_name + '</a></td></tr>';
 						if(old_first_name || old_last_name){
@@ -196,16 +216,16 @@ function linkPevz(element){
 					else {
 						rows2 += '<tr data-id="' + pevzId + '"><td><a href="#" class="pevzLink">' + pevzId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="pevzLink">' + first_name + " " + last_name + '</a></td></tr>';
 					}
-					
+
 				}
-				
+
 				if(rows == ""){
 					table = "<p><strong>Exact hits:</strong></p><p>There were no exact hits for <em>'" + firstname + " " + lastname + "'</em>.</p>";
 				}
 				else{
 					table += rows + "</table>";
 				}
-				
+
 				if(rows2 == ""){
 					table2 = "";
 				}
@@ -215,14 +235,14 @@ function linkPevz(element){
 
 				container.append(table);
 				container.append(table2);
-				
+
 				$('.pevzLink').bind("click", function() {
 					var pevzId = $(this).parent().parent().attr('data-id');
 					var first_name = $(this).parent().parent().find('.name').attr('data-firstname');
 					var last_name = $(this).parent().parent().find('.name').attr('data-lastname');
-					
+
 					var lineId = $(this).parents('.table').attr('id').replace('lineId','');
-					
+
 					$('#' + type + 'first_name_' + lineId).val("");
 					$('#' + type + 'first_name_' + lineId).val(first_name);
 					$('#' + type + 'last_name_' + lineId).val("");
@@ -230,7 +250,7 @@ function linkPevz(element){
 					$('#' + type + 'full_name_' + lineId).val(last_name + ", " + first_name);
 					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
 					$('#' + type + 'id_' + lineId).val(pevzId);
-					
+
 					$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
 					$('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
 					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
@@ -240,7 +260,7 @@ function linkPevz(element){
 
 				$('#linkPevzModal').modal("show");
 			}
-			
+
 			// No results found
 			else {
 				var container = $('#linkPevzModal').find('.modal-body').first();
@@ -264,7 +284,7 @@ function revert_name(element){
 	orig_first_name = $('#' + type + 'orig_first_name_' + lineId).val();
 	var orig_last_name = "";
 	orig_last_name = $('#' + type + 'orig_last_name_' + lineId).val();
-	
+
 	if($('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
 		// Uncheck, release input fields and change img back to gray
 		$('#' + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
@@ -272,7 +292,7 @@ function revert_name(element){
 		$('#' + type + 'id_' + lineId).val("");
 		$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
 	}
-	
+
 	$('#' + type + 'first_name_' + lineId).val(orig_first_name);
 	$('#' + type + 'orig_first_name_' + lineId).val("");
 	$('#' + type + 'last_name_' + lineId).val(orig_last_name);
@@ -286,7 +306,7 @@ function revert_name(element){
 
 /**
  * Edit uploaded files
- * 
+ *
  * @param fileId = file ID
  * @param id = record ID
  */
@@ -301,21 +321,21 @@ function edit_file(fileId, id){
 	$('#id_record_id').val(id);
 	$('#id_fileName').val(json.file_name);
 	$('#id_creator').val(json.creator);
-	
+
 	if(json.title){
 		$('#id_fileTitle').val(json.title);
 	}
 	if(json.description){
 		$('#id_fileDescription').val(json.description);
 	}
-	
+
 	if(json.relation != "main_file"){
 		$('#id_select_relation option[value="' + json.relation + '"]').prop('selected', true);
 	}
 	else {
 		$('#id_select_relation option[value="main_file"]').prop('selected', true);
 	}
-	
+
 	if(json.access_level == "openAccess"){
 		$('#id_accessLevel_openAccess').prop('checked',true);
 		$('#id_accessEmbargo').prop('disabled',true);
@@ -339,7 +359,7 @@ function edit_file(fileId, id){
 	    $('#id_embargo').prop('disabled', false);
 	    $('#id_embargo').val(json.embargo);
 	}
-	  
+
 	var fileNameTag = self.document.getElementById('fileNameTag');
 	fileNameTag.style.display = "block";
 	$('#upload_file').modal('show');
@@ -348,7 +368,7 @@ function edit_file(fileId, id){
 
 /**
  * Delete uploaded files
- * 
+ *
  * @param fileId = file ID
  * @param id = record ID
  * @param fileName = file name
@@ -388,7 +408,7 @@ function add_field(name, placeholder){
 	var items = $('#' + name + ' div.form-group');
 	var index = items.index($('#' + name + ' div.form-group').last()) + 1;
 	var blueprint = $(items[0]).clone(true,true);
-	
+
 	$(blueprint).find('input, textarea, img, button, select').each(function(){
 		var newid = $(this).attr('id').replace(/0/g,index);
 		$(this).attr('id', newid);
@@ -423,13 +443,13 @@ function add_field(name, placeholder){
 		enable_autocomplete("pj", index)
 			break;
     }
-	
+
 }
 
 function remove_field(object){
 	var container = $(object).closest('div.form-group');
 	var index = $(container).index();
-	
+
 	if(parseInt(index) > 0){
 	  $(container).remove();
 	}

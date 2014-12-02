@@ -236,7 +236,7 @@
         </div>
       </div>
     </div>
-    
+
     <span id="delegate">
     [% IF delegate %]
       [% FOREACH del IN delegate %]
@@ -425,7 +425,17 @@
         </div>
       </div>
     </div>
-
+ 
+    [%  FOREACH k IN h.config.lists.author_id.keys.sort %]
+    <div class="row innerrow">
+      <div class="col-md-2"><label for="id_[% k %]">[% h.config.lists.author_id.$k.label %]</label></div>
+      <div class="col-md-10">
+        <div class="form-group col-md-2">
+          <input type="text" name="[% k %]" id="id_[% k %]" value="[% $k %]" class="form-control check_[% k %]">
+        </div>
+      </div>
+    </div>
+    [% END %]
 
     <div class="row innerrow"><!-- button -->
       <div class="col-md-12 buttonrow">
