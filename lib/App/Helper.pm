@@ -74,6 +74,13 @@ sub sort_options {
 	};
 }
 
+#sub trim {
+#	my ($self, $str) = @_;
+#	$str =~ s/^\s+//;
+#	$str =~ s/\s+$//;
+#	return $str;
+#}
+
 # helper for params handling
 ############################
 sub nested_params {
@@ -119,6 +126,49 @@ sub extract_params {
 	$p->{sort} = $sort;
 
 	$p;
+}
+
+sub get_sort_style {
+	my ($self, $style, $sort) = @_;
+	my $user = $self->getAccount( Dancer::session->{user} )->[0];
+	my $return;
+	
+	# set default values - to be overriden by more important values
+	my $return_style = $style || $user->{stylePreference} || $self->config->{store}->{default_style};
+	my $return_sort = $sort || $user->{sortPreference} || $self->config->{store}->{default_sort};
+	my $return_sort_backend = $sort || $user->{sortPreference} || $self->config->{store}->{default_sort_backend};
+	
+	$return_sort = [$return_sort] if(ref $return_sort ne "ARRAY");
+	foreach my $s (@{$return_sort}){
+		if($s =~ /(\w)\.(\w)/){
+			my $sorting = "$1,,";
+			$sorting .= $2 eq "asc" ? "1 " : "0 ";
+			$return->{'sort'} .= $sorting;
+		}
+		else{
+			$return->{'sort'} .= "$s,,0 ";
+		}
+	}
+	$return_sort_backend = [$return_sort_backend] if(ref $return_sort_backend ne "ARRAY");
+	foreach my $s (@{$return_sort_backend}){
+		if($s =~ /(\w)\.(\w)/){
+			my $sorting = "$1,,";
+			$sorting .= $2 eq "asc" ? "1 " : "0 ";
+			$return->{sort_backend} .= $sorting;
+		}
+		else{
+			$return->{sort_backend} .= "$s,,0 ";
+		}
+	}
+	$return->{'sort'} = trim($return->{'sort'});
+	$return->{sort_backend} = trim($return->{sort_backend});
+	
+	# see if style param is set
+	if(array_includes($self->config->{lists}->{styles},$style)){
+		$return->{style} = $style;
+	}
+	
+	return $return;
 }
 
 sub now {
@@ -262,13 +312,13 @@ sub shost {
 
 sub search_publication {
 	my ($self, $p) = @_;
-	my $sort;
+	my $sort = $p->{sort};
 	my $cql = "";
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 	#return $cql;
 	my $hits = publication->search(
 	    cql_query => $cql,
-#		sru_sortkeys => $sort,
+		sru_sortkeys => $sort,
 		limit => $p->{limit} ||= config->{default_page_size},
 		start => $p->{start} ||= 0,
 		facets => $p->{facets} ||= {},

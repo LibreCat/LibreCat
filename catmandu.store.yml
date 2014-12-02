@@ -1499,9 +1499,10 @@ project_sort_options:
     - {key: acronym, label: "Acronym"}
     - {key: startyear, label: "Start Year"}
 default_sort:
-  - {field: publishingyear, order: desc}
-  - {field: datelastchanged, order: desc}
+  - publishingyear.desc
+  - datelastchanged.desc
 default_sort_backend:
-  - {field: datelastchanged, order: desc}
-default_style: pub
+  - publishingyear.desc
+  - datelastchanged.desc
+default_style: frontShort
 default_fd_style: frontShort
