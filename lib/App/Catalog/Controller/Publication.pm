@@ -76,7 +76,7 @@ sub save_publication {
     }
 
     $data = delete_empty_fields($data);
-    if($data->{finalSubmit} eq "recPublish"){
+    if($data->{finalSubmit} and $data->{finalSubmit} eq "recPublish"){
     	$data->{status} = "public";
     }
 
