@@ -124,7 +124,7 @@ prefix '/myPUB' => sub {
 
   post '/upload/update' => needs login =>  sub {
       my $file          = request->upload('file');
-      my $old_file_name = params->{old_file_name};
+      my $old_file_name = params->{old_file_name} || params->{file_name};
       my $id            = params->{id};
       my $file_id       = params->{file_id};
       my $tempid		= params->{tempid};
