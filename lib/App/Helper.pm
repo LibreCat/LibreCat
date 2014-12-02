@@ -10,6 +10,7 @@ use Template;
 use Moo;
 use POSIX qw(strftime);
 use List::Util;
+use Hash::Merge::Simple qw/merge/;
 
 Catmandu->load(':up');
 
@@ -105,7 +106,9 @@ sub extract_params {
 #	$p->{fmt} = array_includes($formats, $params->{fmt}) ? $params->{fmt}
 #		: $self->config->{default_fmt};
 
+#	my $style = $params->{style} || = $self->config->{default_style};
 #	my $styles = $self->config->{lists}->{styles};
+
 #	$p->{style} = array_includes($styles, $params->{style}) ? $params->{style}
 #			: $self->config->{store}->{default_style};
 
@@ -155,12 +158,12 @@ sub getPerson {
 	if($_[1] and $_[1] =~ /\d{1,}/){
 		$user = $_[0]->authority_user->get($_[1]);
 		$admin = $_[0]->authority_admin->get($_[1]);
-
-		my @fields = qw(full_name last_name first_name email department super_admin reviewer data_manager delegate);
-		map {
-			$user->{$_} = $admin->{$_};
-		} @fields;
-		$user;
+		return merge ( $admin, $user );
+		#my @fields = qw(full_name last_name first_name email department super_admin reviewer data_manager delegate);
+		#map {
+		#	$user->{$_} = $admin->{$_};
+		#} @fields;
+		#$user;
 	}
 }
 

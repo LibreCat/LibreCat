@@ -71,14 +71,22 @@ sub update_person {
     $data->{old_full_name} = $data->{old_last_name} . ", " . $data->{old_first_name}
         if $data->{old_last_name} && $data->{old_first_name};
     $fixer->fix($data);
+    my @ids = keys %{h->config->{lists}->{author_id}};
 
+    my $user_data = {
+        _id => $data->{_id},
+    };
+    map { $user_data->{$_} = $data->{$_} } @ids;
+    h->authority_user->add($user_data);
+
+    delete $data->{$_} for @ids;
     h->authority_admin->add($data);
-    h->authority_admin->commit;
 }
 
 sub edit_person {
     my $id = shift;
-    return h->authority_admin->get($id);
+    #return h->authority_admin->get($id);
+    return h->getPerson($id);
 }
 
 sub delete_person {
