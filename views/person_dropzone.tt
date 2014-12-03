@@ -20,7 +20,7 @@
   
   <div class="dropzone well col-md-10" style="margin-left:25px;" id="uploadFiles">
   
-  <div style="margin-left:25px;"><a href="http://pub.uni-bielefeld.de/policy.html#depositpolicy">PUB Deposit Policy</a></div>
+  <div style="margin-left:25px;"><a href="http://pub.uni-bielefeld.de/policy.html#depositpolicy" target="_blank">PUB Deposit Policy</a></div>
   </div>
 </div>
 <!-- END person/profile.tt -->
