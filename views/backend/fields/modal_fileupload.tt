@@ -150,7 +150,6 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
       type: 'POST',
       dataType: "json",
       success: function(data){
-        alert(data.file_name);
         var accessLevel;
         if(data.access_level == "openAccess"){
           accessLevel = "Open Access";
