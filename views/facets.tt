@@ -260,15 +260,47 @@
     </div>
   </li>
 </ul>
+<br />
+
+<ul class="nav nav-tabs nav-stacked">
+  <li>
+    <button data-toggle="collapse" data-target="#export_[% tabmodus %]">
+      <a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? "Export as" : "Exportieren als" %]</a>
+    </button>
+    <div class="facettecollapse">
+    <ul id="export_[% tabmodus %]" class="collapse">
+      <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="rtf" data-toggle="modal" rel="nofollow"><span class="fa fa-share-square-o"></span> RTF (e.g. Word, Office)</a></li>
+      <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="bibtex" rel="nofollow"><span class="fa fa-share-square-o"></span> BibTeX</a></li>
+      <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="ris" rel="nofollow"><span class="fa fa-share-square-o"></span> RIS</a></li>
+      <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="json" rel="nofollow"><span class="fa fa-share-square-o"></span> JSON</a></li>
+      <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="yaml" rel="nofollow"><span class="fa fa-share-square-o"></span> YAML</a></li>
+    </ul>
+    </div>
+  </li>
+  <li>
+    <button data-toggle="collapse" data-target="#embed_[% tabmodus %]">
+      <a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? "Embed as" : "Einbetten als" %]</a>
+    </button>
+    <div class="facettecollapse">
+    <ul id="embed_[% tabmodus %]" class="collapse">
+    [% FOREACH emb IN ['js', 'iframe', 'link'] %]
+    <li><span class="fa fa-arrow-circle-o-down"></span> <strong>[% emb %]</strong>
+      <textarea class="form-control embed-facet_[% tabmodus %]" name="[% emb %]text" rows="2" id="id_[% emb %]text" onclick="this.focus();this.select()" readonly="readonly">[% embedstringsRd.js %]</textarea>
+    </li>
+    [% END %]
+    </ul>
+    </div>
+  </li>
+</ul>
 
 <script>
 var path = '[% request.path %]',
 searchParams = [% h.extract_params.json %];
 
 $('a.search-facet_[% tabmodus %]').click(function() {
-    var select = $(this),
-        index = select.data('index'),
-        term = select.data('val');
+    var object = $(this),
+        index = object.data('index'),
+        term = object.data('val');
     searchParams.q.push(index+'='+term);
     delete searchParams.start;
     var url = path+'?'+ $.param($.extend({}, searchParams), true);
@@ -286,6 +318,15 @@ $('a.sort-facet_[% tabmodus %]').click(function() {
     var url = path+'?'+ $.param($.extend({}, searchParams), true);
     window.location.replace(url);
 });
+
+$('a.export_[% tabmodus%]').click(function() {
+  console.log("Yeah");
+  searchParams.fmt = $(this).data('fmt')
+  var url = path+'?'+ $.param($.extend({}, searchParams), true);
+  window.location.replace(url);
+});
+
+$('').click(function () {});
 </script>
 
 <!-- END facets.tt -->
