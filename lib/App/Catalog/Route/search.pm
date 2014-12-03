@@ -67,9 +67,14 @@ prefix '/myPUB/search' => sub {
         map {push @{$p->{q}}, "department=$_->{id}";} @{$account->{reviewer}};
         (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
 
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
+
         $p->{facets} = h->default_facets();
 
         my $hits = h->search_publication($p);
+        $hits->{style} = $sort_style->{style};
+        $hits->{sort} = $p->{sort};
         $hits->{modus} = "reviewer";
         template "home", $hits;
 
@@ -87,9 +92,15 @@ prefix '/myPUB/search' => sub {
         map {push @{$p->{q}}, "department=$_->{id}";} @{$account->{data_manager}};
         push @{$p->{q}}, "(type=researchData OR type=dara)";
         (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
+
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
+
         $p->{facets} = h->default_facets();
 
         my $hits = h->search_publication($p);
+        $hits->{style} = $sort_style->{style};
+        $hits->{sort} = $p->{sort};
         $hits->{modus} = "data_manager";
         template "home", $hits;
 
@@ -106,6 +117,10 @@ prefix '/myPUB/search' => sub {
         my $id = params->{delegate_id};
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
+
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
+
         $p->{facets} = h->default_facets;
 
         $p->{facets}->{author} = {
@@ -124,6 +139,8 @@ prefix '/myPUB/search' => sub {
         };
 
         my $hits = h->search_publication($p);
+        $hits->{style} = $sort_style->{style};
+        $hits->{sort} = $p->{sort};
         $hits->{modus} = "delegate_".$id;
         template "home", $hits;
     };
@@ -139,6 +156,10 @@ prefix '/myPUB/search' => sub {
         my $id = session 'personNumber';
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
+
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
+
         $p->{facets} = h->default_facets();
 
         # override default author/editor facette
@@ -158,6 +179,8 @@ prefix '/myPUB/search' => sub {
         };
 
         my $hits = h->search_publication($p);
+        $hits->{style} = $sort_style->{style};
+        $hits->{sort} = $p->{sort};
         $hits->{modus} = "user";
         template "home", $hits;
 
