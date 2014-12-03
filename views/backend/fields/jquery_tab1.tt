@@ -187,6 +187,37 @@ $('#authedtrans_0').change(function() {
 });
 
 // minus
+$(document).on('click', '.fullrow', function(){
+  var index = $(this).parent().parent().parent().parent().index();
+  if(parseInt(index) != 0){
+    $(this).parent().parent().parent().parent().remove();
+  }
+});
+$(document).on('click', '.author', function(){
+  var container = $(this).parent().parent();
+  container.children('input').each(function(){
+    if($(this).attr("readonly")){
+      $(this).removeAttr("readonly");
+    }
+    if($(this).is(':checked')){
+      $(this).removeAttr("checked");
+    }
+    this.value = "";
+  });
+  container.children('span').children('input').each(function(){
+    if($(this).attr("readonly")){
+      $(this).removeAttr("readonly");
+    }
+    if($(this).is(':checked')){
+      $(this).removeAttr("checked");
+    }
+    this.value = "";
+  });
+  container.find('img').each(function(){
+    this.title = "";
+    this.src = "/images/biNotAuthorized.png";
+  });  
+});
 $(document).on('click', '.connect', function(){
   var index = $(this).parent().parent().parent().index();
   $(this).parent().parent().parent().remove();
