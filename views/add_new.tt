@@ -40,12 +40,14 @@
       <div class="col-md-12">&nbsp;</div>
     </div>
     
+    <!--
     <div class="row">
       <div class="col-md-6">
       <h5>Or drop Open Access fulltext (pdf) here and let us do the rest:</h5>
-      [% INCLUDE person_dropzone.tt %]
+      % INCLUDE person_dropzone.tt %
       </div>
     </div>
+    -->
     
     <div class="row">
       <div class="col-md-12">&nbsp;</div>
@@ -57,23 +59,39 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-5">
-        [% FOREACH heading IN h.config.forms.publicationTypeOrder.left.keys %]
-          <strong>[% heading %]</strong><br />
-          [% FOREACH doctype IN h.config.forms.publicationTypeOrder.left.$heading %]
-            [% NEXT IF doctype == "bithesis" AND session.role != "super_admin" %]
-      	    <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
-          [% END %]
-          <br /><br />
+      <!-- % INCLUDE publication_types.tt % -->
+      [% tabelle_r = [
+        'book',
+        'bookeditor',
+        'bookchapter',
+        'review',
+        'conferenceabstract',
+        'conferenceeditor',
+        'conference',
+        'dissertation',
+        'encyclopediaarticle',
+        ]
+      %]
+      [% tabelle_l = [
+        'journalarticle',
+        'journaleditor',
+        'newspaperarticle',
+        'patent',
+        'preprint',
+        'report',
+        'researchdata',
+        'workingpaper',
+        'bithesis',
+        ]
+      %]
+      <div class="col-md-3">
+        [% FOREACH doctype IN tabelle_r %]
+          <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
         [% END %]
       </div>
       <div class="col-md-5">
-        [% FOREACH heading IN h.config.forms.publicationTypeOrder.right.keys %]
-          <strong>[% heading %]</strong><br />
-          [% FOREACH doctype IN h.config.forms.publicationTypeOrder.right.$heading %]
-            <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
-          [% END %]
-          <br /><br />
+        [% FOREACH doctype IN tabelle_l %]
+          <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
         [% END %]
       </div>
     </div>

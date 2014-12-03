@@ -71,6 +71,8 @@ prefix '/myPUB/search' => sub {
         $p->{sort} = $sort_style->{sort_backend};
 
         $p->{facets} = h->default_facets();
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
 
         my $hits = h->search_publication($p);
         $hits->{style} = $sort_style->{style};
@@ -97,6 +99,8 @@ prefix '/myPUB/search' => sub {
         $p->{sort} = $sort_style->{sort_backend};
 
         $p->{facets} = h->default_facets();
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
 
         my $hits = h->search_publication($p);
         $hits->{style} = $sort_style->{style};
@@ -122,6 +126,8 @@ prefix '/myPUB/search' => sub {
         $p->{sort} = $sort_style->{sort_backend};
 
         $p->{facets} = h->default_facets;
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
 
         $p->{facets}->{author} = {
             terms => {
@@ -161,6 +167,8 @@ prefix '/myPUB/search' => sub {
         $p->{sort} = $sort_style->{sort_backend};
 
         $p->{facets} = h->default_facets();
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
 
         # override default author/editor facette
         $p->{facets}->{author} = {

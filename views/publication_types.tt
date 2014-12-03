@@ -1,0 +1,19 @@
+      <div class="col-md-5">
+        [% FOREACH heading IN h.config.forms.publicationTypeOrder.left.keys %]
+          <strong>[% heading %]</strong><br />
+          [% FOREACH doctype IN h.config.forms.publicationTypeOrder.left.$heading %]
+            [% NEXT IF doctype == "bithesis" AND session.role != "super_admin" %]
+      	    <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+          [% END %]
+          <br /><br />
+        [% END %]
+      </div>
+      <div class="col-md-5">
+        [% FOREACH heading IN h.config.forms.publicationTypeOrder.right.keys %]
+          <strong>[% heading %]</strong><br />
+          [% FOREACH doctype IN h.config.forms.publicationTypeOrder.right.$heading %]
+            <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+          [% END %]
+          <br /><br />
+        [% END %]
+      </div>

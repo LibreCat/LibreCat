@@ -116,7 +116,8 @@ sub get_sort_style {
 	my ($self, $sort, $style) = @_;
 	my $user = $self->getAccount( Dancer::session->{user} )->[0];
 	my $return;
-
+	$sort = undef if !$sort->[0];
+	$style = undef if $style eq "";
 	# set default values - to be overriden by more important values
 	my $return_style = $style || $user->{stylePreference} || $self->config->{store}->{default_style};
 	my $return_sort = $sort || $user->{sortPreference} || $self->config->{store}->{default_sort};
@@ -296,7 +297,7 @@ sub shost {
 
 sub search_publication {
 	my ($self, $p) = @_;
-	my $sort = $p->{sort} || $self->config->{store}->{default_sort};
+	my $sort = $p->{sort};
 	my $cql = "";
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
