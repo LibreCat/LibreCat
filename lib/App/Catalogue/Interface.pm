@@ -1,4 +1,4 @@
-package App::Catalog::Interface;
+package App::Catalogue::Interface;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(:array);

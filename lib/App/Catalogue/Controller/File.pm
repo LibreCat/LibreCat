@@ -1,4 +1,4 @@
-package App::Catalog::Controller::File;
+package App::Catalogue::Controller::File;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(join_path segmented_path);
@@ -41,9 +41,9 @@ sub handle_file {
 			#my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
 			push @{$pub->{file_order}}, $fi->{file_id};
 
-			my $filepath = path(h->config->{upload_dir}, $fi->{tempid}, $fi->{file_name});			
+			my $filepath = path(h->config->{upload_dir}, $fi->{tempid}, $fi->{file_name});
 			system "mkdir -p $dest_dir" unless -d $dest_dir;
-	
+
 			move($filepath,$dest_dir);
 
 			delete $fi->{tempid} if $fi->{tempid};
@@ -62,7 +62,7 @@ sub handle_file {
 				my( $index )= grep { $previous_pub->{file}->[$_]->{file_id} eq $fi->{file_id} } 0..$#{$previous_pub->{file}};
 				my $previous_file = $previous_pub->{file}->[$index];
 				#unlink previous file
-				
+
 				my $file = "$dest_dir/$previous_file->{file_name}";
 				unlink($file);
 				#copy new file to previous file's folder
