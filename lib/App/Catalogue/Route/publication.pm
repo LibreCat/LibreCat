@@ -1,6 +1,6 @@
-package App::Catalog::Route::publication;
+package App::Catalogue::Route::publication;
 
-=head1 NAME App::Catalog::Route::publication
+=head1 NAME App::Catalogue::Route::publication
 
     Route handler for publications.
 
@@ -8,7 +8,7 @@ package App::Catalog::Route::publication;
 
 use Catmandu::Sane;
 use App::Helper;
-use App::Catalog::Controller::Publication;
+use App::Catalogue::Controller::Publication;
 use Dancer ':syntax';
 use Try::Tiny;
 use Dancer::Plugin::Auth::Tiny;

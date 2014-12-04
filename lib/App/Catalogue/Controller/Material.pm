@@ -1,4 +1,4 @@
-package App::Catalog::Controller::Material;
+package App::Catalogue::Controller::Material;
 
 use Catmandu::Sane;
 use Catmandu;

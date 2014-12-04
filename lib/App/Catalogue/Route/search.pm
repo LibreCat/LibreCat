@@ -1,4 +1,4 @@
-package App::Catalog::Route::search;
+package App::Catalogue::Route::search;
 
 =head1 NAME
 
@@ -9,7 +9,7 @@ package App::Catalog::Route::search;
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use App::Helper;
-use App::Catalog::Controller::Search qw/search_publication/;
+use App::Catalogue::Controller::Search qw/search_publication/;
 use Dancer::Plugin::Auth::Tiny;
 
 Dancer::Plugin::Auth::Tiny->extend(

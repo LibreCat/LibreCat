@@ -1,4 +1,4 @@
-package App::Catalog::Controller::InspireMonitor;
+package App::Catalogue::Controller::InspireMonitor;
 
 use Catmandu::Sane;
 use Catmandu;

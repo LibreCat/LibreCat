@@ -11,7 +11,7 @@ our $VERSION = '0.01';
 use Catmandu::Sane;
 use Dancer ':syntax';
 
-use App::Catalog; # the backend
+use App::Catalogue; # the backend
 use App::Search; # the frontend
 
 use App::Helper;
