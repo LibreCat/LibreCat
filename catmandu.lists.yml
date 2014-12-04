@@ -140,7 +140,7 @@ publication_status:
   inpress: "In Press"
   accepted: "Accepted"
   submitted: "Submitted"
-  unpublished: "Unpublished"
+  epub_ahead: "E-pub ahead of print"
 
 rd_relation:
   00:
