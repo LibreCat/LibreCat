@@ -345,6 +345,16 @@ div.frontdoor_right {
 	padding-left:40px;
 }
 
+.dz-default.dz-message{
+	min-height:40px;
+}
+.dz-default.dz-message.qae {
+	background-color:#fff;
+	padding:5px;
+	margin-bottom:5px;
+	text-align:center;
+}
+
 .back-button, .next-button {
 	min-height: 36px;
 	color: #000;
@@ -408,13 +418,6 @@ select.mylabel {
 }
 .tab_section {
 	padding-bottom: 20px;
-}
-
-.starMandatory:after {
-    content: "*";
-    font-size: 2.2em;
-    margin-left: 0.2em;
-    vertical-align: text-top;
 }
 
 .starMandatory:after {
