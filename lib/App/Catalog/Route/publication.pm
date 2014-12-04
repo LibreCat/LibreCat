@@ -204,7 +204,7 @@ prefix '/myPUB/record' => sub {
         $hits->{style}
             = h->config->{store}->{default_fd_style} || "frontShort";
         $hits->{marked}  = 0;
-        template 'frontend/frontdoor/record.tt', $hits;
+        template 'frontdoor/record.tt', $hits;
     };
 
     get '/publish/:id' => needs login => sub {

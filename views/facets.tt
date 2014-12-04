@@ -155,7 +155,7 @@
 
   [% IF facets.popular_science.total %]
   <li>
-    <a class="search-facet_[% tabmodus %]" data-index="popular_science" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% facets.popularScience.total %] Popular Science</a>
+    <a class="search-facet_[% tabmodus %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% facets.popularScience.total %] Popular Science</a>
   </li>
   [% END %]
 
@@ -319,8 +319,7 @@ $('a.sort-facet_[% tabmodus %]').click(function() {
     window.location.replace(url);
 });
 
-$('a.export_[% tabmodus%]').click(function() {
-  console.log("Yeah");
+$('a.export-facet_[% tabmodus%]').click(function() {
   searchParams.fmt = $(this).data('fmt')
   var url = path+'?'+ $.param($.extend({}, searchParams), true);
   window.location.replace(url);

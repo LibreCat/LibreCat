@@ -231,28 +231,28 @@
     <div class="col-xs-8">
       <div class="tab tab-content" style="padding-left:13px;">
 
-        [% INCLUDE frontend/frontdoor/tab_details.tt %]
+        [% INCLUDE frontdoor/tab_details.tt %]
 
-        [% IF file AND file.0.file_name %] [% INCLUDE frontend/frontdoor/tab_filedetails.tt %] [% END %]
+        [% IF file AND file.0.file_name %] [% INCLUDE frontdoor/tab_filedetails.tt %] [% END %]
 
-        [% IF relPubl %] [% INCLUDE frontend/frontdoor/tab_relpubl.tt %] [% END %]
+        [% IF relPubl %] [% INCLUDE frontdoor/tab_relpubl.tt %] [% END %]
 
-        [% IF relResData %] [% INCLUDE frontend/frontdoor/tab_relresdata.tt %] [% END %]
+        [% IF relResData %] [% INCLUDE frontdoor/tab_relresdata.tt %] [% END %]
 
-        [% IF toolkitData %] [% INCLUDE frontend/frontdoor/tab_toolkit.tt %] [% END %]
+        [% IF toolkitData %] [% INCLUDE frontdoor/tab_toolkit.tt %] [% END %]
 
-        [% IF ebiData.dbLinks %] [% INCLUDE frontend/frontdoor/tab_ebi_links.tt %] [% END %]
+        [% IF ebiData.dbLinks %] [% INCLUDE frontdoor/tab_ebi_links.tt %] [% END %]
 
-        [% IF ebiData.citations %] [% INCLUDE frontend/frontdoor/tab_ebi_cit.tt %] [% END %]
+        [% IF ebiData.citations %] [% INCLUDE frontdoor/tab_ebi_cit.tt %] [% END %]
 
-        [% IF ebiData.references %] [% INCLUDE frontend/frontdoor/tab_ebi_ref.tt %] [% END %]
+        [% IF ebiData.references %] [% INCLUDE frontdoor/tab_ebi_ref.tt %] [% END %]
 
         [% IF relMat.size OR relLink.size OR relFile.size OR relToc.size %]
-          [% INCLUDE frontend/frontdoor/tab_relmat.tt %]
+          [% INCLUDE frontdoor/tab_relmat.tt %]
         [% END %]
 
         [% IF confLetter.size %]
-          [% INCLUDE frontend/frontdoor/tab_confletter.tt %]
+          [% INCLUDE frontdoor/tab_confletter.tt %]
         [% END %]
 
       </div><!-- tab-content -->
