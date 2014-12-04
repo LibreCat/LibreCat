@@ -9,6 +9,24 @@
 
 [% INCLUDE websites/header.tt %]
 
+<!--[IF !IE]> -->
+<link rel="stylesheet" href="/css/bootstrap3.css" />
+<link rel="stylesheet" href="/css/mypub.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+<!-- <![ENDIF]-->
+
+<!--[if gt IE 9]>
+<link rel="stylesheet" href="/css/bootstrap3.css" />
+<link rel="stylesheet" href="/css/mypub.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css" />
+<![endif]-->
+
+<!--[if lt IE 10]>
+<link rel="stylesheet" type="text/css" href="/css/ltIE10.css" />
+<![endif]-->
+
+<script src="/javascripts/bootstrap3.js"></script>
+
 <div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->
   <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->
 

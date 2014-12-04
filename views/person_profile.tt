@@ -15,7 +15,7 @@
       [% END %]
       <br /><br />
 
-      <div class="row">
+      <div class="row hidden-xs">
       <form action="/myPUB/person/author_id" method="POST">
       <input type="hidden" name="_id" value="[% session.personNumber %]" />
       [% IF !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire) %]

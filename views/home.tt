@@ -11,7 +11,7 @@
   <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->
 
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-2 hidden-xs">
         [% IF thisPerson.bis.photo %]
         <object data="[% thisPerson.bis.photo %]" class="img-thumbnail" style="max-width:140px;" itemprop="image">
           <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail">
@@ -25,7 +25,7 @@
         [% INCLUDE person_profile.tt %]
       </div>
 
-      <div class="col-md-3" style="margin-left:20px;margin-top:10px;">
+      <div class="col-md-3 hidden-xs hidden-sm" style="margin-left:20px;margin-top:10px;">
         [% INCLUDE person_dropzone.tt %]
       </div>
 
@@ -63,9 +63,10 @@
               [% tabmodus = 'admin' %]
               [% INCLUDE hits.tt %]
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 hidden-xs hidden-sm">
               [% INCLUDE facets.tt %]
             </div>
+            <aside class="side col-md-3 left responsive-side hidden-md hidden-lg">test</aside>
           </div>
           [% END %]
           <div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ">

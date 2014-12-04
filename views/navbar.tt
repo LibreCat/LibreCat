@@ -69,7 +69,8 @@
        <ul class="nav navbar-nav">
          <li><a href="/myPUB"><span class="glyphicon glyphicon-list"></span> Home</a></li>
          [% IF session AND session.user %]
-         <li><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
+         <li class="hidden-xs hidden-sm"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
+         <li class="hidden-md hidden-lg"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New</a></li>
          <li><a href="[% h.host %]/person/[% session.personNumber %]"><span class="glyphicon glyphicon-eye-open"></span> My Public Author Page</a></li>
          [% IF session.role == "super_admin" %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="glyphicon glyphicon-chevron-down"></a>
@@ -90,10 +91,10 @@
             [% INCLUDE person_affiliation.tt %]
             </div>
          </li>
-         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Logged in as: <em>[% session.user %]</em></a></li>
+         <li><a href="#"><span class="glyphicon glyphicon-user"></span> <em>[% session.user %]</em></a></li>
 
          [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Role: <em>[% session.role %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% session.role %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="/myPUB/change_role/user">User</a></li>
             [% IF thisPerson.reviewer %]
