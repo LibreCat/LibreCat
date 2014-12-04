@@ -15,15 +15,15 @@ use App::Helper;
   Splash page style param '/publication/:id/:style' or '/data/:id/:style'
 
 =cut
-get qr{/(data|publication)/(\d{1,})/(\w{1,})/*} => sub {
-	my ($bag, $id, $style) = splat;
-	my $p;
-	push @{$p->{q}}, "status=public AND id=$id";
-
-	my $hits = h->search_publication($p);
-	$hits->{bag} = $bag;
-	template "frontdoor/record", $hits->{hits}->[0];
-};
+# get qr{/(data|publication)/(\d{1,})/(\w{1,})/*} => sub {
+# 	my ($bag, $id, $style) = splat;
+# 	my $p;
+# 	push @{$p->{q}}, "status=public AND id=$id";
+#
+# 	my $hits = h->search_publication($p);
+# 	$hits->{bag} = $bag;
+# 	template "frontdoor/record", $hits->{hits}->[0];
+# };
 
 =head2 GET /{data|publication}/:id
 

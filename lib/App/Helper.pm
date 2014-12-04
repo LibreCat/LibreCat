@@ -113,8 +113,8 @@ sub extract_params {
 }
 
 sub get_sort_style {
-	my ($self, $sort, $style) = @_;
-	my $user = $self->getAccount( Dancer::session->{user} )->[0];
+	my ($self, $sort, $style, $id) = @_;
+	my $user = $self->getAccount( Dancer::session->{user} || $id )->[0];
 	my $return;
 	$sort = undef if !$sort->[0];
 	$style = undef if $style eq "";

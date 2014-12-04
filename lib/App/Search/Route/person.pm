@@ -55,9 +55,19 @@ Returns a person's profile page, including publications,
 research data and author IDs.
 
 =cut
-get qr{/person/(^\d{1,})/*} => sub {
+get qr{/person/(\d{1,})/*} => sub {
 	my ($id) = splat;
 	my $p = h->extract_params();
+
+	push @{$p->{q}}, "person=$id";
+	my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '', $id);
+	$p->{sort} = $sort_style->{sort};
+	$p->{facets} = h->default_facets();
+
+	my $hits = h->search_publication($p);
+	$hits->{style} = $sort_style->{style};
+	$hits->{sort} = $p->{sort};
+	template "person/person", $hits;
 };
 
 =head2 GET /person/alias
@@ -76,12 +86,9 @@ get qr{/person/(\w+)/*} => sub {
 =head2 GET /person
 
 =cut
-get qr{/person/$} => sub {
+get qr{/person/*} => sub {
     my $path = h->host . '/authorlist';
     redirect $path;
 };
 
-get qr{/person$} => sub {
-	my $path = h->host . '/authorlist';
-	redirect $path;
-};
+1;
