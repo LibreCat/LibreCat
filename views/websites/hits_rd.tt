@@ -1,6 +1,6 @@
-<!-- BEGIN hits_research.tt -->
+<!-- BEGIN hits_rd.tt -->
 
-<!-- This publication list is displayed in "[% researchhits.style %]" style and sorted "[% researchhits.sorto %]" -->
+<!-- This publication list is displayed in "[% style %]" style and sorted "[% sort %]" -->
 [% num = researchhits.total; n = 0 %]
 [% next_page = researchhits.next_page %]
 [% previous_page = researchhits.previous_page %]
@@ -80,20 +80,20 @@
 [% END %]
 
 [% IF request.path == "/marked" %]<ul style="list-style-type:none;" id="sortable">[% END %]
-[% FOREACH entry IN researchhits.hits %]
+[% FOREACH entry IN hits %]
 [% IF request.path == "/marked" %]<li style="margin-left:-25px;min-height:120px;" class="ui-state-default" id="fade_[% n+1 %]">[% END %]
 [% n = n +1 %]
 
 <div class="row" style="padding-left:13px;">
   <div class="col-md-12">
-    <i>[% entry.publishingYear %] | [% h.display_doctypes(entry.documentType) %] | PUB-ID: <span class="pubid">[% entry.oId %]</span></i>
+    <i>[% entry.year %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry._id %]</span></i>
   </div>
 </div>
 
 <div class="row" style="padding-left:13px;">
   <div class="col-md-12" style="margin-right:20px;">
    [% IF style == 'frontShort' %]
-	<a href="/data/[% entry.oId %]">[% entry.mainTitle %]</a><br />
+	<a href="/data/[% entry._id %]">[% entry.title %]</a><br />
    [% END %]
    [% entry.citation.$style %][% IF style != "apa_indent" AND style != "dgps" %]<br />[% END %]
    [% INCLUDE links.tt %]

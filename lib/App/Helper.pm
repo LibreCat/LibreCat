@@ -232,24 +232,23 @@ sub get_list {
 	$map;
 }
 
-# sub get_statistics {
-# 	my ($self) = @_;
-# 	my $stats;
-# 	my $hits = $self->search_publication({q => ""});
-# 	my $reshits = $self->search_publication({q => "", bag => "data"});
-# 	my $oahits = $self->search_publication({q => "fulltext=1"});
-# 	my $disshits = $self->search_publication({q => "documenttype=bi*"});
-# 	my $people = $self->search_researcher({q => ""});
-#
-# 	$stats->{publications} = $hits->{total} if $hits and $hits->{total};
-# 	$stats->{researchdata} = $reshits->{total} if $reshits and $reshits->{total};
-# 	$stats->{oahits} = $oahits->{total} if $oahits and $oahits->{total};
-# 	$stats->{theseshits} = $disshits->{total} if $disshits and $disshits->{total};
-# 	$stats->{pubpeople} = $people->{total} if $people and $people->{total};
-#
-# 	return $stats;
-#
-# }
+sub get_statistics {
+	my ($self) = @_;
+	my $stats;
+	my $hits = $self->search_publication({q => ["status=public"]});
+	my $reshits = $self->search_publication({q => ["status=public","(type=researchData OR type=dara)"]});
+	my $oahits = $self->search_publication({q => ["status=public","fulltext=1"]});
+	my $disshits = $self->search_publication({q => ["status=public","type=bi*"]});
+	#my $people = $self->search_researcher({q => [""]});
+
+	$stats->{publications} = $hits->{total} if $hits and $hits->{total};
+	$stats->{researchdata} = $reshits->{total} if $reshits and $reshits->{total};
+	$stats->{oahits} = $oahits->{total} if $oahits and $oahits->{total};
+	$stats->{theseshits} = $disshits->{total} if $disshits and $disshits->{total};
+	$stats->{pubpeople} = 0;#$people->{total} if $people and $people->{total};
+
+	return $stats;
+}
 
 sub default_facets {
 	return {

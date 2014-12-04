@@ -85,7 +85,7 @@ post '/login' => sub {
 =cut
 any '/logout' => sub {
     session->destroy;
-    redirect '/login';
+    redirect '/';
 };
 
 =head2 ANY /access_denied

@@ -1,34 +1,42 @@
 <!-- BEGIN links. tt -->
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
+[% IF backend %]
   [% IF entry.status == "public" %]
-	<a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]/preview" title="Show complete bibliographic and access information" target="_blank"><span class="glyphicon glyphicon-chevron-right"></span> Public View</a>
+	<a href="/[% bag %]/[% entry._id %]" title="Show complete bibliographic and access information" target="_blank">
+      <span class="glyphicon glyphicon-chevron-right"></span> Public View</a>
   [% ELSE %]
-    <a href="/myPUB/record/preview/[% entry.item('_id') %]" target="_blank"><span class="glyphicon glyphicon-chevron-right"></span> Preview</a>
+    <a href="/myPUB/record/preview/[% entry._id %]" target="_blank">
+      <span class="glyphicon glyphicon-chevron-right"></span> Preview</a>
   [% END %]
-  | <a data-toggle="collapse" href="#[% tabmodus %]_[% entry.item('_id') %]"><span class="glyphicon glyphicon-chevron-down"></span> Details</a>
+  | <a data-toggle="collapse" href="#[% tabmodus %]_[% entry._id %]">
+    <span class="glyphicon glyphicon-chevron-down"></span> Details</a>
   [% IF session.role == "super_admin" %]
-  | <a data-toggle="collapse" href="#[% tabmodus %]_iv_[% entry.item('_id') %]"><span class="glyphicon glyphicon-chevron-down"></span> Internal View</a>
+  | <a data-toggle="collapse" href="#[% tabmodus %]_iv_[% entry._id %]">
+    <span class="glyphicon glyphicon-chevron-down"></span> Internal View</a>
   [% END %]
-  
+[% END %]
   [% request = 0 %]
-
+  [% IF entry.file|| entry.related_material || entry.externalFiles == "1" %]
+  <a href="/[% bag %]/[% entry._id %]" class="label label-success">Files available</a>
+  [% END %]
+<!--
   [% FOREACH file IN entry.file %]
 	[% IF file.request_a_copy %][% request = 1 %][% END %]
 	[% IF file AND bag == "publication" %]
 	  [% SWITCH file.content_type %]
 		[% CASE 'application/pdf' %]
-	    | <a href="[% h.host %]/download/[% entry.item('_id') %]/[% file.id %]" title="[% file.name %]" target="_top">PDF</a>
+	    | <a href="/download/[% entry._id %]/[% file.id %]" title="[% file.name %]" target="_top">PDF</a>
 		[% CASE 'application/ps' %]
-	 	| <a href="[% h.host %]/download/[% entry.item('_id') %]/[% file.id %]" title="[% file.name %]" target="_top">PS</a>
+	 	| <a href="/download/[% entry._id %]/[% file.id %]" title="[% file.name %]" target="_top">PS</a>
 	  [% END %]
 	[% END %]
   [% END %]
   [% IF request %]
   | <a data-toggle="collapse" href="#[% tabmodus %]_rac_[% entry._id %]"><span class="glyphicon glyphicon-chevron-down"></span> Request a Copy</a>
   [% END %]
-  
-  [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="[% h.host %]/download/[% entry.item('_id')  %]/[% supp.file.file_id %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
 
+  [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="/download/[% entry._id  %]/[% supp.file.file_id %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
+-->
   [% IF entry.link AND bag != "data" %] | <a href="[% entry.link.url %]">URL</a>[% END %]
   [% IF entry.doi %]| <a href="http://dx.doi.org/[% entry.doi %]" target="_top">DOI</a>[% END %]
   [% IF entry.external_id.pmid %] | <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% entry.external_id.pmid %]" target="_top">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% entry.external_id.pmid %]">Europe PMC</a>[% END %]
@@ -40,8 +48,10 @@
   [% IF qp.timescited && entry.metrics.timesCited %]
 	| <a href="[% entry.metrics.citingURL %]" target="_parent">WOS&reg; Times Cited: [% entry.metrics.timesCited %]</a>
   [% END %]
-  [% IF bag == "data" %]
-	[% IF entry.externalFiles == "1" %]
+
+<!--  
+    [% IF bag == "data" %]
+  	[% IF entry.externalFiles == "1" %]
 	  | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-success">Files available</a>
 	[% ELSE %]
 	  [% FOREACH file IN entry.file %]
@@ -52,4 +62,5 @@
 	  [% END %]
 	[% END %]
   [% END %]
+-->
 <!-- END links. tt -->

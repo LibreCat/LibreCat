@@ -1,4 +1,3 @@
-[% USE date(format => '%Y') %]
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]

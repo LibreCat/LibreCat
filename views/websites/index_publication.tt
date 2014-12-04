@@ -67,7 +67,7 @@
 
     <div class="row">
       <div class="col-md-10 tab-content">
-      
+
         <div class="tab-pane[% IF !bag || bag == 'home' %] active[% END %]" id="home">
           [% IF bag == 'home' || !bag %]
             [% INCLUDE websites/home.tt %]
@@ -78,7 +78,7 @@
           [% IF bag == "publication" %]
           <div class="row">
             <div class="col-xs-9">
-              [% INCLUDE websites/hits.tt %]
+              [% INCLUDE hits.tt %]
             </div>
 
             <div class="col-xs-3">
@@ -94,7 +94,7 @@
           [% IF bag == "data" %]
           <div class="row">
             <div class="col-xs-9">
-              [% INCLUDE websites/hits_research.tt %]
+              [% INCLUDE hits.tt %]
             </div>
 
             <div class="col-xs-3">
@@ -123,7 +123,7 @@
           </div>
           [% END %]
         </div>
-        
+
         <div class="tab-pane[% bag == 'pubtheses' ? ' active' : '' %]" id="pubtheses">
           [% IF bag == 'pubtheses' %]
           [% IF lang %]
@@ -133,7 +133,7 @@
           [% END %]
           [% END %]
         </div>
-        
+
         <div class="tab-pane[% bag == 'about' ? ' active' : '' %]" id="about">
           [% IF bag == 'about' %]
           [% IF lang %]

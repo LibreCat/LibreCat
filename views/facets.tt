@@ -1,5 +1,6 @@
 <!-- BEGIN facets.tt -->
 [%- USE JSON -%]
+[%- USE date(format => '%Y') -%]
 <h5>Search</h5>
 [% IF h.extract_params.text %]
 <p class="text-muted"><a href="[% path %]?q=[% h.extract_params.q.join('&q=') %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> search=[% h.extract_params.text |html %]</p>
