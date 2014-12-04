@@ -27,7 +27,7 @@ sub _authenticate {
     my $user = h->getAccount( $login )->[0];
     return 0 unless $user;
 
-    if ($user->{account_type} ne 'external') {
+    if ($user->{account_type} and $user->{account_type} ne 'external') {
         my $verify = verifyUser( params->{user}, params->{pass} );
         if ( $verify and $verify ne "error" ) {
             return $user;
