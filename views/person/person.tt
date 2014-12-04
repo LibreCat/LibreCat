@@ -1,11 +1,13 @@
+[% USE date(format => '%Y') %]
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% thisPerson = h.getPerson(session.personNumber) %]
+[% person_id = path.match('') %]
+[% thisPerson = h.getPerson('86212') %]
 
-[% INCLUDE navbar.tt %]
+<!-- BEGIN person/person.tt -->
 
-<!-- BEGIN admin.tt -->
+[% INCLUDE websites/header.tt %]
 
 <div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->
   <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->
@@ -23,10 +25,6 @@
 
       <div class="col-md-5">
         [% INCLUDE person_profile.tt %]
-      </div>
-
-      <div class="col-md-3" style="margin-left:20px;margin-top:10px;">
-        [% INCLUDE person_dropzone.tt %]
       </div>
 
     </div>
@@ -124,6 +122,5 @@
 
 </div><!-- row outer border -->
 
-<!-- END admin.tt -->
-
 [% INCLUDE footer.tt %]
+<!-- END person/person.tt -->

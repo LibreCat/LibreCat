@@ -15,15 +15,15 @@ use App::Helper;
   Splash page style param '/publication/:id/:style' or '/data/:id/:style'
 
 =cut
-get qr{/(data|publication)/(\d{1,})/(\w{1,})/*} => sub {
-	my ($bag, $id, $style) = splat;
-	my $p;
-	push @{$p->{q}}, "status=public AND id=$id";
-
-	my $hits = h->search_publication($p);
-	$hits->{bag} = $bag;
-	template "frontdoor/record", $hits->{hits}->[0];
-};
+# get qr{/(data|publication)/(\d{1,})/(\w{1,})/*} => sub {
+# 	my ($bag, $id, $style) = splat;
+# 	my $p;
+# 	push @{$p->{q}}, "status=public AND id=$id";
+#
+# 	my $hits = h->search_publication($p);
+# 	$hits->{bag} = $bag;
+# 	template "frontdoor/record", $hits->{hits}->[0];
+# };
 
 =head2 GET /{data|publication}/:id
 
@@ -33,7 +33,7 @@ get qr{/(data|publication)/(\d{1,})/(\w{1,})/*} => sub {
 get qr{/(data|publication)/(\d{1,})/*} => sub {
 	my ($bag, $id) = splat;
 	my $p = h->extract_params();
-	push @{$p->{q}}, "status=public AND id=$id";
+	push @{$p->{q}}, ("status=public","id=$id");
 
 	my $hits = h->search_publication($p);
 	$hits->{bag} = $bag;
@@ -54,10 +54,11 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 get qr{/data/*} => sub {
 	my $p = h->extract_params();
 	$p->{facets} = h->default_facets();
-	push @{$p->{q}}, "status=public AND type=researchData";
+	push @{$p->{q}}, ("status=public","(type=researchData OR type=dara)");
 
 	my $hits = h->search_publication($p);
 	$hits->{bag} = 'data';
+	#return to_dumper $hits;
 	template "websites/index_publication", $hits;
 };
 
@@ -65,7 +66,7 @@ get qr{/data/*} => sub {
 get qr{/publication/*} => sub {
 	my $p = h->extract_params();
 	$p->{facets} = h->default_facets();
-	push @{$p->{q}}, "status=public AND type<>researchData";
+	push @{$p->{q}}, ("status=public","type<>researchData","type<>dara");
 
 	my $hits = h->search_publication($p);
 	$hits->{bag} = 'publication';

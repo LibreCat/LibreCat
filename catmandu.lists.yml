@@ -137,10 +137,10 @@ publication_identifier:
 
 publication_status:
   published: "Published"
+  epub_ahead: "E-pub ahead of print"
   inpress: "In Press"
   accepted: "Accepted"
   submitted: "Submitted"
-  unpublished: "Unpublished"
 
 rd_relation:
   00:

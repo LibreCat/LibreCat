@@ -18,7 +18,7 @@
   [% IF au.id %]<a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]</a><sup class="muted">UniBi</sup>[% ELSE %]<span itemprop="author">[% au.full_name %]</span>[% END %]
   [% IF loop.count > 11 %]
     <span id="showAut">
-      <br /><a href="#" onclick="ShowAuthors();"><img src="[% h.host %]/images/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a>
+      <br /><a href="#" onclick="ShowAuthors();"><img src="/images/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a>
     </span>
     </div>
   </div>
@@ -73,7 +73,7 @@
     <div class="frontdoor_left">Project</div>
     <div class="frontdoor_right">
   [% ELSE %]<br />[% END %]
-  <!--<a href="[% h.host %]/project/[% proj.projectId %]">-->
+  <!--<a href="/project/[% proj.projectId %]">-->
   [% proj.name.0.text %]
   <!--</a>-->
   [% IF loop.last %]</div></div>[% END %]
@@ -241,7 +241,7 @@
   <div class="frontdoor">
     <div class="frontdoor_left">PUB-ID</div>
     <div class="frontdoor_right">
-    [% _id %] | Link: <a itemprop="url" href="[% h.host %]/[% bag %]/[% _id %]">[% h.host %]/[% bag %]/[% _id %]</a>
+    [% _id %] | Link: <a itemprop="url" href="/[% bag %]/[% _id %]">[% request.uri_base %][% request.uri %]</a>
     </div>
   </div>
 </div>
