@@ -154,7 +154,7 @@ publicationTypes:
           multiple: 1
           label:
             "Editor" : "editor"
-          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         corporate_editor: &corporate_editor
           mandatory: 0
           multiple: 1
@@ -266,7 +266,7 @@ publicationTypes:
           multiple: 1
           label:
             "Editor" : "editor"
-          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         corporate_editor: *corporate_editor
         department: *department
         project: *project
@@ -481,7 +481,7 @@ publicationTypes:
           multiple: 1
           label:
             "Author" : "author"
-          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         supervisor:
           first_name:
             placeholder: "First Name"
@@ -968,7 +968,7 @@ publicationTypes:
           multiple: 1
           label:
             "Author" : "author"
-          pevz_tooltip: "This publication has been linked to your PEVZ account. Keeping this checked will make it visible on your publication list.<br /><br />(Tip: you can also link co-authors to their PEVZ accounts to make this publication show up on their lists as well.)"
+          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         email: &email
           label: "E-Mail address"
           placeholder: "me@example.com"
@@ -985,6 +985,7 @@ publicationTypes:
           mandatory: 1
           multiple: 1
           label: "Supervisor"
+          pevz_tooltip: "Link this publication<br />to your supervisor's PEVZ account.<br />Keeping this checked<br />will make it visible on<br />their publication list."
         title: *title
         language: &language_diss
           label: "Language"
