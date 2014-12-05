@@ -487,3 +487,21 @@ function enable_autocomplete(field, index){
         }
 	});
 }
+
+$(function(){
+	$('input.pub').on("focus",function(){
+		var element = $(this).parent('div.input-group').children('div.input-group-addon.pub');
+		element.css("border-color","#66afe9");
+		element.css("border-right","none");
+		element.css("outline", "0");
+		element.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+		element.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+	});
+	$('input.pub').on("blur", function(){
+		var element = $(this).parent('div.input-group').children('div.input-group-addon.pub');
+		element.css("border","1px solid #cccccc");
+		element.css("-webkit-box-shadow", "none");
+		element.css("box-shadow","none");
+		element.css("border-right","none");
+	});
+});

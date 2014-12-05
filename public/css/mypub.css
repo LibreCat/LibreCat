@@ -427,10 +427,6 @@ select.mylabel {
     vertical-align: text-top;
 }
 
-body {
-	line-height: 20px;
-}
-
 /**
 menu right hand side on small screens
 */
@@ -490,6 +486,18 @@ ul.scroll-menu {
 END menu right hand side on small screens
 */
 
+input.pub {
+  border-left:none;
+}
+div.input-group-addon.pub{
+	background-color:transparent;
+	border-right:none;
+	color:lightgray;
+}
+
+body {
+	line-height: 20px;
+}
 /**
 End modifications for PUB
 */
