@@ -1,0 +1,15 @@
+[% IF submit_response %]
+<div class="alert alert-success" role="alert">[% submit_response %]</div>
+[% END %]
+<!-- BEGIN theses_dropzone.tt -->
+<div class="row" id="dropzone_row">
+  <div class="well col-md-5 col-md-offset-1">
+  
+  <div class="dropzone" id="thesesUpload"></div>
+  <div><a href="http://pub.uni-bielefeld.de/policy.html#depositpolicy" target="_blank">PUB Deposit Policy</a></div>
+  </div>
+  
+  <div class="dropzone-previews col-md-10" id="theses_dz_preview"></div>
+  
+</div>
+<!-- END theses_dropzone.tt -->

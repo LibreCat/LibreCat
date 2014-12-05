@@ -68,6 +68,48 @@ prefix '/myPUB' => sub {
 
       return to_json($file_data);
   };
+  
+  post '/thesesupload' => sub {
+      my $file    = request->upload('file');
+      my $file_data;
+
+      if($file){
+      	  my $now = h->now;
+      	  my $tempid = $file->{tempname};
+      	  $tempid =~ s/.*\/([^\/\.]*)\..*/$1/g;
+          $file_data = {
+            success => 1,
+            file_name => $file->{filename},
+            creator => session->{user},
+            file_size => $file->{size},
+            date_updated => $now,
+            date_created => $now,
+            access_level => "openAccess",
+            content_type => $file->{headers}->{"Content-Type"},
+            relation => "main_file",
+            year_last_uploaded => substr($now,0,4),
+            tempname => $file->{tempname},
+            tempid => $tempid,
+          };
+          my $filedir = path(h->config->{upload_dir}, $tempid);
+          mkdir $filedir || croak "Could not create dir $filedir: $!";
+          my $filepath = path(h->config->{upload_dir}, $tempid, $file->{filename});
+      	  copy($file->{tempname}, $filepath);
+      	  
+      	  my $ctx = Digest::MD5->new;
+      	  $ctx->addfile($file->file_handle());
+      	  my $digest = $ctx->md5_hex;
+      	  $file_data->{checksum} = $digest;
+      	  
+      	  $file_data->{file_json} = to_json($file_data);
+      	  my $status = unlink $file->{tempname};
+      }
+      else{
+      	$file_data = {success => 0, error_message => 'Sorry! The file upload failed.'}
+      }
+
+      return to_json($file_data);
+  };
 
   post '/upload/qae/submit' => needs login => sub {
     my $submit_or_cancel = params->{submit_or_cancel} || "Cancel";
@@ -120,6 +162,63 @@ prefix '/myPUB' => sub {
     }
 
     redirect '/myPUB';
+  };
+  
+  post '/thesesupload/submit' => sub {
+    my $submit_or_cancel = params->{submit_or_cancel} || "Cancel";
+    my $file_name = params->{file_name};
+    my $file_data;
+
+    if($submit_or_cancel eq "Submit"){
+      my $id = new_publication();
+      my $file_id = new_publication();
+      my $now = h->now();
+      $file_data->{saved} = 1;
+      my $record = {
+        _id => $id,
+        status => "new",
+        accept => 1,
+        title => params->{title},
+        type => params->{type},
+        email => params->{email},
+        publisher => "Universität Bielefeld",
+        place => "Bielefeld",
+        author => [{
+          first_name => params->{'author.first_name'},
+          last_name => params->{'author.last_name'},
+          full_name => params->{'author.last_name'} . ", " . params->{'author.first_name'},
+          }],
+        year => substr($now, 0, 4),
+        supervisor => [{
+        	first_name => params->{'supervisor.first_name'},
+        	last_name => params->{'supervisor.last_name'},
+        	full_name => params->{'supervisor.last_name'} . ", " . params->{'supervisor.first_name'},
+        }],
+      };
+      push @{$record->{file}}, to_json({
+        file_name => $file_name,
+        file_id => $file_id,
+        access_level => "openAccess",
+        date_updated => $now,
+        date_created => $now,
+        creator => "pubtheses",
+        open_access => 1,
+        relation => "main_file",
+      });
+      push @{$record->{file_order}}, $file_id;
+
+      my $path = h->get_file_path($id);
+      system "mkdir -p $path" unless -d $path;
+      my $result = move( path(h->config->{upload_dir}, params->{tempid}, $file_name), $path ) || die $!;
+
+      my $response = update_publication($record);
+
+    } else {
+      my $path = path( h->config->{upload_dir}, params->{tempid}, $file_name);
+      unlink $path;
+    }
+
+    template 'websites/index_publication.tt', {bag => 'pubtheses', submit_response => "You have successfully submitted your thesis. We will contact you with further information. Thank you!"};
   };
 
   post '/upload/update' => needs login =>  sub {

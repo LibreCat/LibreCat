@@ -9,10 +9,7 @@
 
   <h4>Pr&uuml;fungsarbeit ver&ouml;ffentlichen</h4>
   <div class="well">
-  <span class="fa fa-chevron-right icon-green"></span> <a href="[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biDissertation&amp;tab=all" target="publish" onclick="javascript:{openWdw('[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biDissertation&amp;tab=all','900','900','0','0','publish');}">Dissertation</a><br />
-  <span class="fa fa-chevron-right icon-green"></span> <a href="[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biPostdocThesis&amp;tab=all" target="publish" onclick="javascript:{openWdw('[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biPostdocThesis&amp;tab=all','900','900','0','0','publish');}">Habilitationsschrift</a><br />
-  <span class="fa fa-chevron-right icon-green"></span> <a href="[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biMasterThesis&amp;tab=all" target="publish" onclick="javascript:{openWdw('[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biMasterThesis&amp;tab=all','900','900','0','0','publish');}">Masterarbeit</a><br />
-  <span class="fa fa-chevron-right icon-green"></span> <a href="[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biBachelorThesis&amp;tab=all" target="publish" onclick="javascript:{openWdw('[% h.shost %]/luur/Record?func=editThesisRecord&amp;recordType=biBachelorThesis&amp;tab=all','900','900','0','0','publish');}">Bachelorarbeit</a>
+    [% INCLUDE websites/theses_dropzone.tt %]
   </div>
 
   <div class="panel-group" id="accordion2">

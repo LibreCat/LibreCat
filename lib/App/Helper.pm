@@ -276,7 +276,11 @@ sub default_facets {
 
 sub display_doctypes {
 	my $map = config->{forms}{publicationTypes};
-	my $doctype = $map->{lc $_[1]}->{label};
+	my $doctype;
+	$doctype = $map->{lc $_[1]}->{label};
+	$doctype = "biDissertation" if (lc $_[1] eq "bidissertation");
+	$doctype = "Translation" if(lc $_[1] eq "translation");
+	$doctype = "Case Study" if (lc $_[1] eq "casestudy");
 	$doctype;
 }
 

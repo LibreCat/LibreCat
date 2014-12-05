@@ -70,7 +70,9 @@
 <link rel="search" type="application/opensearchdescription+xml" href="/pub-opensearch.xml" title="PUB" />
 <script src="//www.uni-bielefeld.de/javascript/CrossPlatform.js"></script>
 <script src="//www.uni-bielefeld.de/javascript/Popup.js"></script>
-<script src="/javascripts/jquery.js"></script>
+<script src="/javascripts/jquery-latest.js"></script>
+<script src="/javascripts/dropzone3.0.js"></script>
+<script src="/javascripts/pub_dropzones.js"></script>
 <script src="/javascripts/tabs.js"></script>
 <script src="/javascripts/angular-1.2.14.min.js"></script>
 <script src="/javascripts/angularSearch.js"></script>
