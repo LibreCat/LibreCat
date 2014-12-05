@@ -67,7 +67,7 @@
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
        <ul class="nav navbar-nav">
-         <li><a href="/myPUB"><span class="glyphicon glyphicon-list"></span> Home</a></li>
+         <li><a href="/myPUB"><span class="glyphicon glyphicon-home"></span> Home</a></li>
          [% IF session AND session.user %]
          <li class="hidden-xs hidden-sm"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
          <li class="hidden-md hidden-lg"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New</a></li>

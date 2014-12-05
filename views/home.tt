@@ -28,7 +28,17 @@
       <div class="col-md-3 hidden-xs hidden-sm" style="margin-left:20px;margin-top:10px;">
         [% INCLUDE person_dropzone.tt %]
       </div>
-
+      <div class="col-xs-3 hidden-md hidden-lg dropdown">
+        <button class="btn btn-default dropdown-toggle fixed sidebar-expand-button navbar-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"><span class="fa fa-list fa-2x"></span></button>
+        <ul class="dropdown-menu fixed sidebar-expand-button rightMenu" role="menu" aria-labelledby="dropdownMenu1">
+          <li>
+            <ul class="scroll-menu">
+              <li role="presentation">[% INCLUDE person_dropzone.tt %]</li>
+              <li role="presentation">[% INCLUDE facets.tt %]</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="row"> <!-- empty row span8 -->
