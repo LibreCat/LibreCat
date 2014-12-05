@@ -1,8 +1,8 @@
-package App::Catalog::Route::admin;
+package App::Catalogue::Route::admin;
 
 =head1 NAME
 
-    App::Catalog::Route::admin - Route handler for admin actions
+    App::Catalogue::Route::admin - Route handler for admin actions
 
 =cut
 
@@ -10,7 +10,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(trim);
 use Dancer ':syntax';
 use App::Helper;
-use App::Catalog::Controller::Admin qw/:all/;
+use App::Catalogue::Controller::Admin qw/:all/;
 use Dancer::Plugin::Auth::Tiny;
 
 Dancer::Plugin::Auth::Tiny->extend(
@@ -84,7 +84,7 @@ prefix '/myPUB/admin' => sub {
     post '/account/update' => needs role => 'super_admin' => sub {
         my $p = params;
         $p = h->nested_params($p);
-        
+
         update_person($p);
         template 'admin/account';
     };

@@ -1,8 +1,8 @@
-package App::Catalog::Route::file;
+package App::Catalogue::Route::file;
 
 =head1 NAME
 
-    App::Catalog::Route::file - routes for file handling:
+    App::Catalogue::Route::file - routes for file handling:
     upload & download files, request-a-copy.
 		All these must be public.
 
@@ -13,7 +13,7 @@ use Catmandu qw/export_to_string/;
 use Dancer ':syntax';
 use Dancer::Request;
 use App::Helper;
-use App::Catalog::Controller::Permission qw/can_download/;
+use App::Catalogue::Controller::Permission qw/can_download/;
 use DateTime;
 use Try::Tiny;
 use Dancer::Plugin::Auth::Tiny;
@@ -59,7 +59,7 @@ prefix '/requestcopy' => sub {
 		my $bag = Catmandu->store->bag('request');
 		my $file_name = get_file_name(params->{id}, params->{file_id});
 		my $date_expires = calc_date();
-		
+
 		my $query = {
 			"approved"     => "1",
 			"file_id"      => params->{file_id},
@@ -71,7 +71,7 @@ prefix '/requestcopy' => sub {
 		    query => $query,
 		    limit => 1
 		);
-		
+
 		if($hits->{hits}->[0]){
 			my $rec = $hits->{hits}->[0];
 			return h->host . ":3000/requestcopy/download/" . $rec->{_id};
@@ -85,7 +85,7 @@ prefix '/requestcopy' => sub {
 				email => params->{email} || "",
 				approved => params->{approved} || 0,
 			});
-			
+
 			if(params->{email}){
 				my $pub = edit_publication(params->{id});
 				my $mail_body = export_to_string({

@@ -1,11 +1,11 @@
-package App::Catalog::Controller::Publication;
+package App::Catalogue::Controller::Publication;
 
 use lib qw(/srv/www/sbcat/lib/extension);
 use Catmandu::Sane;
 use Catmandu;
 use App::Helper;
-use App::Catalog::Controller::Corrector qw/delete_empty_fields correct_hash_array/;
-use App::Catalog::Controller::File qw/handle_file delete_file/;
+use App::Catalogue::Controller::Corrector qw/delete_empty_fields correct_hash_array/;
+use App::Catalogue::Controller::File qw/handle_file delete_file/;
 use Catmandu::Validator::PUB;
 use Hash::Merge qw/merge/;
 use Carp;

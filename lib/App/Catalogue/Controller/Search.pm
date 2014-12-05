@@ -1,4 +1,4 @@
-package App::Catalog::Controller::Search;
+package App::Catalogue::Controller::Search;
 
 use App::Helper;
 use Catmandu::Util qw(:is :array);

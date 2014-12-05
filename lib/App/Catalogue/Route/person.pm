@@ -1,8 +1,8 @@
-package App::Catalog::Route::person;
+package App::Catalogue::Route::person;
 
 =head1 NAME
 
-    App::Catalog::Route::person - handles person settings
+    App::Catalogue::Route::person - handles person settings
 
 =cut
 
@@ -10,7 +10,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(:array);
 use Dancer ':syntax';
 use App::Helper;
-use App::Catalog::Controller::Admin qw/:person/;
+use App::Catalogue::Controller::Admin qw/:person/;
 use Dancer::Plugin::Auth::Tiny;
 
 =head1 PREFIX /myPUB/person

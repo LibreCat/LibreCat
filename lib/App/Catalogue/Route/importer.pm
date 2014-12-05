@@ -1,14 +1,14 @@
-package App::Catalog::Route::import;
+package App::Catalogue::Route::importer;
 
 =head1 NAME
 
-    App::Catalog::Route::import - central handler for import routes
+    App::Catalogue::Route::importer - central handler for import routes
 
 =cut
 
 use Dancer ':syntax';
 use Try::Tiny;
-use App::Catalog::Controller::Import;
+use App::Catalogue::Controller::Import;
 use Dancer::Plugin::Auth::Tiny;
 
 =head2 POST /myPUB/record/import

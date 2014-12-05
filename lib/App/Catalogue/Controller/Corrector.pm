@@ -1,4 +1,4 @@
-package App::Catalog::Controller::Corrector;
+package App::Catalogue::Controller::Corrector;
 
 use Catmandu::Sane;
 use Catmandu;

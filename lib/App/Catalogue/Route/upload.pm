@@ -1,6 +1,6 @@
-package App::Catalog::Route::upload;
+package App::Catalogue::Route::upload;
 
-=head1 NAME App::Catalog::Route::upload
+=head1 NAME App::Catalogue::Route::upload
 
     Route handler for uploading files.
 
@@ -8,8 +8,8 @@ package App::Catalog::Route::upload;
 
 use Catmandu::Sane;
 use App::Helper;
-use App::Catalog::Controller::Publication qw/update_publication new_publication/;
-use App::Catalog::Controller::File qw/delete_file/;
+use App::Catalogue::Controller::Publication qw/update_publication new_publication/;
+use App::Catalogue::Controller::File qw/delete_file/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;
 use File::Copy;
@@ -53,12 +53,12 @@ prefix '/myPUB' => sub {
           mkdir $filedir || croak "Could not create dir $filedir: $!";
           my $filepath = path(h->config->{upload_dir}, $tempid, $file->{filename});
       	  copy($file->{tempname}, $filepath);
-      	  
+
       	  my $ctx = Digest::MD5->new;
       	  $ctx->addfile($file->file_handle());
       	  my $digest = $ctx->md5_hex;
       	  $file_data->{checksum} = $digest;
-      	  
+
       	  $file_data->{file_json} = to_json($file_data);
       	  my $status = unlink $file->{tempname};
       }

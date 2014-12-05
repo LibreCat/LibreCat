@@ -1,4 +1,4 @@
-package App::Catalog::Controller::Permission;
+package App::Catalogue::Controller::Permission;
 
 use Catmandu::Sane;
 use Catmandu;

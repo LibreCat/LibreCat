@@ -1,4 +1,4 @@
-package App::Catalog::Controller::Admin;
+package App::Catalogue::Controller::Admin;
 
 use Catmandu::Sane;
 use Catmandu;
