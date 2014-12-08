@@ -113,7 +113,7 @@ my $file_fixer = Catmandu::Fix->new(
         'move_array_field("file.*.openAccessDate","file.*.embargo")',
         'remove_array_field("file.*.type")',
         'remove_array_field("file.*.uploader")',
-        
+
     ]
 );
 
@@ -234,10 +234,10 @@ sub add_to_index {
     $date_fixer->fix($rec);
     $rec->{citation} = $citbag->get( $rec->{_id} ) if $rec->{_id};
     $post_fixer->fix($rec);
-    
+
     foreach my $key (keys %$rec){
     	my $ref = ref $rec->{$key};
-    	
+
     	if($ref eq "ARRAY"){
     		if(!$rec->{$key}->[0]){
     			delete $rec->{$key};
@@ -257,26 +257,12 @@ sub add_to_index {
 
     ( $rec->{project} ) && ( $rec->{proj} = 1 );
 
-    #print Dumper $rec;
-
-    #exit;
-    #my $validator = Catmandu::Validator::PUB->new(
-    #    handler => sub {
-    #        $data = shift;
-    #    }
-    #);
-
-    #if ( $validator->is_valid($data) ) {
-    #    #h->publication->add($data);
-    #    #my $result = $bag->add($rec);
-    #    print STDERR "OK";
-    #}
-    #else {
-    #    print STDERR $validator->last_errors;
-    #}
+    # normalize status
+    ($rec->{status} eq 'unsubmitted') && ($rec->{status} = 'private');
+    ($rec->{status} eq 'returned') && ($rec->{status} = 'private');
+    ($rec->{status} eq 'pdeleted') && ($rec->{status} = 'deleted');
 
     my $result = $bag->add($rec);
-    #print Dumper $result;
     $publbag->add($result);
 }
 
@@ -285,12 +271,12 @@ my $types = $luur->getChildrenTypes( type => 'publicationItem' );
 
 # foreach type get records
 foreach (@$types) {
-	
+
     my $obj = $luur->getObjectsByType( type => $_ );
     foreach (@$obj) {
         my $rec = $db->get($_);
         if ($rec->{isOfType}->{typeName} ne "unknown" and $rec->{isOfType}->{typeName} ne "studentPaper" and $rec->{submissionStatus}){
-        	add_to_index($rec);
+        	add_to_index($rec) unless $rec->{submissionStatus} eq 'invalid';
         }
     }
 }
@@ -326,4 +312,3 @@ perl index_publication.pl -u 'DATETIME'
 # fetches all records with dateLastChanged > 'DATETIME' (e.g. 2012-10-15 21:34:02) and pushes it into the search store
 
 =cut
-
