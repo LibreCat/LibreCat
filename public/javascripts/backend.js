@@ -496,15 +496,11 @@ function enable_autocomplete(field, index, viewport){
 }
 
 $(function(){
-	$('input.pub').on("focus",function(){
-		var addon = $(this).parent('div.input-group').children('div.input-group-addon.pub');
-		addon.css("border-color","#66afe9");
-		addon.css("outline", "0");
-		addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
-		addon.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
-		
+	$('input.pub, select.pub').on("focus",function(){
 		var first_addon = $(this).parent('div.input-group').children('div.input-group-addon:first-child.pub');
-		first_addon.css("border-right","none");
+		first_addon.css("display","none");
+		$(this).css("border-bottom-left-radius","4px");
+		$(this).css("border-top-left-radius","4px");
 		
 		var last_addon = $(this).parent('div.input-group').children('div.input-group-addon:last-child.pub');
 		last_addon.css("border-left", "none");
@@ -513,21 +509,54 @@ $(function(){
 		not_first_last.css("border-left", "none");
 		not_first_last.css("border-right", "none");
 		
+		var addon = $(this).parent('div.input-group').children('div.input-group-addon.pub');
+		if($(this).parent('div.input-group').hasClass('mandatory')){
+			addon.css("border-color", "#953b39");
+			$(this).css("border-left", "1px solid #953b39");
+			addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
+			addon.css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
+		}
+		else {
+			addon.css("border-color","#66afe9");
+			$(this).css("border-left","1px solid #66afe9");
+			addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+			addon.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+		}
+		
+		addon.css("outline", "0");
+		
 	    var mymatch = $(this).attr('name').match(/department\.(\d{1,})\.name/);
 		if(mymatch && mymatch[1]){
 			var index = mymatch[1];
 			enable_autocomplete("dp", index, "_sm");
 		}
+		mymatch = $(this).attr('name').match(/project\.(\d{1,})\.name/);
+		if(mymatch && mymatch[1]){
+			var index = mymatch[1];
+			enable_autocomplete("pj", index, "_sm");
+		}
 	});
 	
-	$('input.pub').on("blur", function(){
+	$('input.pub, select.pub').on("blur", function(){
 		var addon = $(this).parent('div.input-group').children('div.input-group-addon.pub');
-		addon.css("border","1px solid #cccccc");
-		addon.css("-webkit-box-shadow", "none");
-		addon.css("box-shadow","none");
-		
+		if(addon.parent('div.input-group').hasClass('mandatory')){
+			addon.css("border-color","#b94a48");
+		}
+		else {
+			addon.css("border","1px solid #cccccc");
+		}
+		addon.css("-webkit-box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
+        addon.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
+        
 		var first_addon = $(this).parent('div.input-group').children('div.input-group-addon:first-child.pub');
+		first_addon.css("display", "table-cell");
+		first_addon.css("-webkit-box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
+		first_addon.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
 		first_addon.css("border-right","none");
+		
+		$(this).css("border-left","none");
+		$(this).css("border-bottom-left-radius","0");
+		$(this).css("border-top-left-radius","0");
 		
 		var last_addon = $(this).parent('div.input-group').children('div.input-group-addon:last-child.pub');
 		last_addon.css("border-left", "none");
