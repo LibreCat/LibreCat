@@ -52,7 +52,9 @@
         [% IF session.role == 'super_admin' %]
           <li[% IF modus == "admin" %] class="active"[% END %]><a href="/myPUB/search/admin">All Publications</a></li>
         [% END %]
+        [% IF session.role == 'user' %]
           <li[% IF modus == "user" %] class="active"[% END %]><a href="/myPUB/search">My Publications</a></li>
+        [% END %]
         [% IF session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer") %]
           <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/search/reviewer">Publications for Review</a></li>
         [% END %]
@@ -79,6 +81,7 @@
             <aside class="side col-md-3 left responsive-side hidden-md hidden-lg">test</aside>
           </div>
           [% END %]
+          [% IF session.role == 'user' %]
           <div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ">
             <div class="col-md-8">
               [% tabmodus = 'user' %]
@@ -88,6 +91,7 @@
               [% INCLUDE facets.tt %]
             </div>
           </div>
+          [% END %]
           [% IF session.role == "reviewer" OR (session.role == "super_admin" AND modus == "reviewer") %]
           <div class="tab-pane[% IF modus == 'reviewer' %] active[%END %]" id="review">
             <div class="col-md-8">
