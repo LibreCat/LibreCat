@@ -486,13 +486,27 @@ ul.scroll-menu {
 END menu right hand side on small screens
 */
 
-input.pub {
-  border-left:none;
-}
 div.input-group-addon.pub{
 	background-color:transparent;
+	color: #999999;
+}
+
+.input-group-addon.pub:not(:first-child):not(:last-child),
+.input-group .form-control.pub:not(:first-child):not(:last-child),
+.input-group .form-control.pub:not(:first-child):not(:last-child):focus {
+  border-right:none;
+  border-left:none;
+}
+
+.input-group-addon.pub:first-child,
+.input-group .form-control.pub:first-child,
+.input-group .form-control.pub:first-child:focus {
 	border-right:none;
-	color:lightgray;
+}
+.input-group-addon.pub:last-child,
+.input-group .form-control.pub:last-child,
+.input-group .form-control.pub:last-child:focus{
+	border-left:none;
 }
 
 body {

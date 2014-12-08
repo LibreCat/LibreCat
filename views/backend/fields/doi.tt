@@ -1,5 +1,5 @@
 <div class="row innerrow">
-  <div class="col-md-2">
+  <div class="col-md-2 hidden-xs hidden-sm">
     {% IF fields.basic_fields.doi.mandatory OR fields.supplementary_fields.doi.mandatory %}<span class="starMandatory">{% END %}
     <label for="id_doi">
       {% fields.basic_fields.doi.label %}{% fields.supplementary_fields.doi.label %}
@@ -8,8 +8,11 @@
   </div>
   <div class="col-md-10">
     <div class="form-group row innerrow">
-      <div class="col-md-9">
-        <input type="text" name="doi" id="id_doi" value="[% doi %]" class="form-control{% IF fields.basic_fields.doi.mandatory OR fields.supplementary_fields.doi.mandatory %} required{% END %}"{% IF fields.basic_fields.doi.readonly OR fields.supplementary_fields.doi.readonly %} readonly="readonly"{% END %}>
+      <div class="col-md-9 col-xs-11">
+        <div class="input-group">
+          <div class="input-group-addon pub">DOI</div>
+          <input type="text" name="doi" id="id_doi" value="[% doi %]" placeholder="{% fields.basic_fields.doi.placeholder %}{% fields.supplementary_fields.doi.placeholder %}" class="pub form-control{% IF fields.basic_fields.doi.mandatory OR fields.supplementary_fields.doi.mandatory %} required{% END %}"{% IF fields.basic_fields.doi.readonly OR fields.supplementary_fields.doi.readonly %} readonly="readonly"{% END %}>
+        </div>
       </div>
     </div>
   </div>

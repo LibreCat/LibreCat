@@ -131,14 +131,15 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: &doi
           label: "DOI"
+          placeholder: "10.4119/unibi/2695161"
         title: &title
           mandatory: 1
           label: "Title"
         author: &author_translator
           first_name:
-            placeholder: "First Name"
+            placeholder: "John"
           last_name:
-            placeholder: "Last Name"
+            placeholder: "Appleseed"
           mandatory: 1
           multiple: 1
           label:

@@ -1,7 +1,7 @@
 [% language_preselect = h.get_list('language_preselect') %]
 [% language_list = h.get_list('language') %]
 <div class="row innerrow">
-  <div class="col-md-2">
+  <div class="col-md-2 hidden-xs hidden-sm">
     {% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}<span class="starMandatory">{% END %}
     <label for="language">
       {% fields.basic_fields.language.label %}{% fields.supplementary_fields.language.label %}
@@ -13,8 +13,10 @@
     [% IF !language %]
     {% END %}
     <div class="form-group row innerrow">
-      <div class="col-md-9">
-        <select name="language.0.name" class="form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} required{% END %}" id="select_language_0">
+      <div class="col-md-9 col-xs-11">
+        <div class="input-group">
+          <div class="input-group-addon pub">{% fields.basic_fields.language.label %}{% fields.supplementary_fields.language.label %}</div>
+        <select name="language.0.name" class="pub form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} required{% END %}" id="select_language_0">
           [% FOREACH lang IN language_preselect.keys.sort %]
             <option value="[% lang %]"[% IF lang == language.name || (!language AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>
           [% END %]
@@ -23,8 +25,11 @@
             <option value="[% lang %]"[% IF lang == language.name %] selected="selected"[% END %]>[% lang %]</option>
           [% END %]
         </select>
+          <div class="input-group-addon pub"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon pub"><span class="glyphicon glyphicon-minus"></span></div>
+        </div>
       </div>
-      <div class="col-md-1">
+      <div class="col-md-1 hidden-xs hidden-sm">
         <div class="glyphicon glyphicon-minus" onclick="remove_field(this);"></div>
       </div>
     </div>
@@ -32,8 +37,10 @@
     [% ELSE %]
       [% FOREACH lan IN language %]
       <div class="form-group row innerrow">
-        <div class="col-md-9">
-          <select name="language.[% loop.index %].name" class="form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_language_[% loop.index %]">
+        <div class="col-md-9 col-xs-11">
+          <div class="input-group">
+            <div class="input-group-addon pub">{% fields.basic_fields.language.label %}{% fields.supplementary_fields.language.label %}</div>
+          <select name="language.[% loop.index %].name" class="pub form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_language_[% loop.index %]">
             [% FOREACH lang IN language_preselect.keys.sort %]
               <option value="[% lang %]"[% IF lang == lan.name %] selected="selected"[% END %]>[% lang %]</option>
             [% END %]
@@ -42,8 +49,11 @@
               <option value="[% lang %]"[% IF lang == lan.name %] selected="selected"[% END %]>[% lang %]</option>
             [% END %]
           </select>
+            <div class="input-group-addon pub"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon pub"><span class="glyphicon glyphicon-minus"></span></div>
+          </div>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-1 hidden-xs hidden-sm">
           <div class="glyphicon glyphicon-minus" onclick="remove_field(this);"></div>
         </div>
       </div>

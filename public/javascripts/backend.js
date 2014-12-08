@@ -467,8 +467,11 @@ function remove_field(object){
 	}
 }
 
-function enable_autocomplete(field, index){
+function enable_autocomplete(field, index, viewport){
 	var type;
+	if(!viewport){
+		viewport = "";
+	}
 	switch(field) {
 	case "pj":
 		type = "project"
@@ -476,32 +479,61 @@ function enable_autocomplete(field, index){
 	default:
 		type = "department"
 	}
-	$( "#" + field + "_autocomplete_" + index ).autocomplete({
+	$( "#" + field + viewport + "_autocomplete_" + index ).autocomplete({
 		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=" + type,
 		minLength: 2,
 		select: function( event, ui ) {
-			$( "#" + field + "_autocomplete_" + index ).val( ui.item.label );
-            $( "#" + field + "_nameautocomplete_" + index ).val( ui.item.label );
+			$( "#" + field + viewport + "_autocomplete_" + index ).val( ui.item.label );
+            //$( "#" + field + "_nameautocomplete_" + index ).val( ui.item.label );
             $( "#" + field + "_idautocomplete_" + index ).val( ui.item.id );
-            $( "#" + field + "_autocomplete_" + index ).attr("disabled", "disabled");
-        }
+            $( "#" + field + viewport + "_autocomplete_" + index ).attr("disabled", "disabled");
+            $('input.pub').blur();
+        },
+	    close: function(){
+	    	$('input.pub').blur();
+	    },
 	});
 }
 
 $(function(){
 	$('input.pub').on("focus",function(){
-		var element = $(this).parent('div.input-group').children('div.input-group-addon.pub');
-		element.css("border-color","#66afe9");
-		element.css("border-right","none");
-		element.css("outline", "0");
-		element.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
-		element.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+		var addon = $(this).parent('div.input-group').children('div.input-group-addon.pub');
+		addon.css("border-color","#66afe9");
+		addon.css("outline", "0");
+		addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+		addon.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+		
+		var first_addon = $(this).parent('div.input-group').children('div.input-group-addon:first-child.pub');
+		first_addon.css("border-right","none");
+		
+		var last_addon = $(this).parent('div.input-group').children('div.input-group-addon:last-child.pub');
+		last_addon.css("border-left", "none");
+		
+		var not_first_last = $(this).parent('div.input-group').children('div.input-group-addon:not(:first-child):not(:last-child).pub');
+		not_first_last.css("border-left", "none");
+		not_first_last.css("border-right", "none");
+		
+	    var mymatch = $(this).attr('name').match(/department\.(\d{1,})\.name/);
+		if(mymatch && mymatch[1]){
+			var index = mymatch[1];
+			enable_autocomplete("dp", index, "_sm");
+		}
 	});
+	
 	$('input.pub').on("blur", function(){
-		var element = $(this).parent('div.input-group').children('div.input-group-addon.pub');
-		element.css("border","1px solid #cccccc");
-		element.css("-webkit-box-shadow", "none");
-		element.css("box-shadow","none");
-		element.css("border-right","none");
+		var addon = $(this).parent('div.input-group').children('div.input-group-addon.pub');
+		addon.css("border","1px solid #cccccc");
+		addon.css("-webkit-box-shadow", "none");
+		addon.css("box-shadow","none");
+		
+		var first_addon = $(this).parent('div.input-group').children('div.input-group-addon:first-child.pub');
+		first_addon.css("border-right","none");
+		
+		var last_addon = $(this).parent('div.input-group').children('div.input-group-addon:last-child.pub');
+		last_addon.css("border-left", "none");
+		
+		var not_first_last = $(this).parent('div.input-group').children('div.input-group-addon:not(:first-child):not(:last-child).pub');
+		not_first_last.css("border-left", "none");
+		not_first_last.css("border-right", "none");
 	});
 });
