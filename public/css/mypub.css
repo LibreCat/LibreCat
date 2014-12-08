@@ -427,6 +427,7 @@ select.mylabel {
     vertical-align: text-top;
 }
 
+
 /**
 menu right hand side on small screens
 */
@@ -488,7 +489,9 @@ END menu right hand side on small screens
 
 div.input-group-addon.pub{
 	background-color:transparent;
-	color: #999999;
+	color: lightgray;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 
 .input-group-addon.pub:not(:first-child):not(:last-child),
@@ -507,6 +510,20 @@ div.input-group-addon.pub{
 .input-group .form-control.pub:last-child,
 .input-group .form-control.pub:last-child:focus{
 	border-left:none;
+}
+
+.input-group.mandatory .input-group-addon.pub,
+.input-group.mandatory input.pub,
+.input-group.mandatory select.pub {
+  border-color: #b94a48;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.input-group.mandatory input.pub:focus,
+.input-group.mandatory select.pub:focus {
+  border-color: #953b39;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
 }
 
 body {

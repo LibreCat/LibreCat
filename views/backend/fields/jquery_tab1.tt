@@ -191,9 +191,11 @@ $(document).on('click', '.inner_row', function(){
   $(this).closest('div.innerrow').remove();
 });
 $(document).on('click', '.fullrow', function(){
-  var index = $(this).parent().parent().parent().parent().index();
+  //var index = $(this).parent().parent().parent().parent().index();
+  var index = $(this).closest('.row.authorspan').index();
   if(parseInt(index) != 0){
-    $(this).parent().parent().parent().parent().remove();
+    //$(this).parent().parent().parent().parent().remove();
+    $(this).closest('.row.authorspan').remove();
   }
 });
 $(document).on('click', '.author', function(){
