@@ -1,0 +1,88 @@
+[%- USE XML::Strict -%]
+<xMetaDiss:xMetaDiss xmlns:xMetaDiss="http://www.d-nb.de/standards/xmetadissplus/" 
+	xmlns:cc="http://www.d-nb.de/standards/cc/" 
+	xmlns:dc="http://purl.org/dc/elements/1.1/" 
+	xmlns:dcmitype="http://purl.org/dc/dcmitype/" 
+	xmlns:dcterms="http://purl.org/dc/terms/" 
+	xmlns:pc="http://www.d-nb.de/standards/pc/" 
+	xmlns:urn="http://www.d-nb.de/standards/urn/" 
+	xmlns:hdl="http://www.d-nb.de/standards/hdl/" 
+	xmlns:doi="http://www.d-nb.de/standards/doi/" 
+	xmlns:thesis="http://www.ndltd.org/standards/metadata/etdms/1.0/" 
+	xmlns:ddb="http://www.d-nb.de/standards/ddb/" 
+	xmlns:dini="http://www.d-nb.de/standards/xmetadissplus/type/" 
+	xmlns="http://www.d-nb.de/standards/subject/" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.d-nb.de/standards/xmetadissplus/ http://files.dnb.de/standards/xmetadissplus/xmetadissplus.xsd">
+
+	<dc:title xsi:type="ddb:titleISO639-2" lang="[% language.iso %]">[% title | xml_strict %]</dc:title>
+	[%- FOREACH au IN author %]
+	<dc:creator xsi:type="pc:MetaPers">
+		<pc:person>
+			<pc:name type="nameUsedByThePerson">
+			<pc:foreName>[% au.givenName %]</pc:foreName>
+			<pc:surName>[% au.surname %]</pc:surName>
+			</pc:name>
+			[% IF au.email %]<pc:email>[% au.email %]</pc:email>[% END %]
+		</pc:person>
+	</dc:creator>
+	[%- END %]
+	[%- FOREACH class in ddc %]
+	<dc:subject xsi:type="xMetaDiss:DDC-SG">[% class %]</dc:subject>
+	[%- END %]
+	[% FOREACH val IN subject %]
+	<dc:subject xsi:type="xMetaDiss:noScheme">[% val | xml_strict %]</dc:subject>
+	[%- END %]
+	[% IF abstract %]
+	<dcterms:abstract xsi:type="ddb:contentISO639-2" lang="[% abstract.0.lang %]" ddb:type="noScheme">[% abstract.0.text | xml_strict %]</dcterms:abstract>
+	[% END %]
+	<dc:publisher xsi:type="cc:Publisher" type="dcterms:ISO3166" countryCode="DE">
+		<cc:universityOrInstitution cc:GKD-Nr="[% uni.gndLib %]">
+			<cc:name>[% uni.nameLib %]</cc:name>
+			<cc:place>[% uni.place %]</cc:place>
+		</cc:universityOrInstitution>
+		<cc:address cc:Scheme="DIN5008">[% uni.address %]</cc:address>
+	</dc:publisher>
+	[% IF thesis %]
+		[%- FOREACH sv supervisor %]
+		<dc:contributor xsi:type="pc:Contributor" thesis:role="advisor" type="dcterms:ISO3166" countryCode="DE">
+		<pc:name type="nameUsedByThePerson">
+		<pc:foreName>[% sv.givenName %]</pc:foreName>
+		<pc:surName>[% sv.surname %]</pc:surName>
+		</pc:name>
+		</dc:contributor>
+		[% END %]
+	[% END %]
+	[%IF defenseDate %]<dcterms:dateAccepted xsi:type="dcterms:W3CDTF">[% defenseDate %]</dcterms:dateAccepted>[% END %]
+	<dcterms:issued xsi:type="dcterms:W3CDTF">[% date %]</dcterms:issued>
+	<dc:type xsi:type="dini:PublType">[% diniType %]</dc:type>
+	<dc:type xsi:type="dcterms:DCMIType">Text</dc:type>
+	<dini:version_driver>publishedVersion</dini:version_driver>
+	<dc:identifier xsi:type="urn:nbn">[% urn | xml_strict %]</dc:identifier>
+	[% IF doi %]<dc:identifier xsi:type="doi:doi">[% doi | xml_strict %]</dc:identifier>[% END %]
+	[% IF file %]
+	<dcterms:medium xsi:type="dcterms:IMT">[% file.0.contentType | xml_strict%]</dcterms:medium>
+	[% END %]
+	<dcterms:bibliographicCitation>[% citation.ama | xml %]</dcterms:bibliographicCitation>
+	<dc:language xsi:type="dcterms:ISO639-2">[% language.iso %]</dc:language>
+	[% IF thesis %]
+		<thesis:degree>
+		<thesis:level>[% thesisLevel %]</thesis:level>
+		<thesis:grantor xsi:type="cc:Corporate" type="dcterms:ISO3166" countryCode="DE">
+		<cc:universityOrInstitution cc:GKD-Nr="[% uni.gndLib %]">
+		<cc:name>[% uni.name %]</cc:name>
+		<cc:place>[% uni.place %]</cc:place>
+		</cc:universityOrInstitution>
+		</thesis:grantor>
+		</thesis:degree>
+	[% END %]
+	<ddb:contact ddb:contactID="[% uni.dnbContactID %]" />
+	[% IF file %]
+	<ddb:fileNumber>1</ddb:fileNumber>
+	<ddb:fileProperties ddb:fileName="[% file.0.fileName %]" ddb:fileID="[% file.0.fileOId %]">aus: Praesentationsformat</ddb:fileProperties>
+	<ddb:transfer ddb:type="dcterms:URI">
+	[% host %]/download/[% oId %]/[% file.0.fileOId %]</ddb:transfer>
+	[% END %]
+	<ddb:identifier ddb:type="URL">[% host %]/publication/[% oId %]</ddb:identifier>
+	<ddb:rights ddb:kind="free"/>	
+</xMetaDiss:xMetaDiss>

@@ -1,0 +1,409 @@
+[% IF !noRoot -%]
+[%- IF xmlHeader %]<?xml version='1.0' encoding='UTF-8'?>[% END %]
+[%- USE XML::Strict -%]
+[% IF xsl %]<?xml-stylesheet type="text/xsl" href="[% xsl | xml_strict %]"?>[% END %]
+<mods version="3.3"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.loc.gov/mods/v3"
+      xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-3.xsd">
+[% END %]
+[%- USE XML::Strict -%]
+
+<genre
+[%- SWITCH type -%]
+  [%- CASE 'journalArticle' -%]
+    [%- SWITCH articleType  -%]
+      [%- CASE 'letterNote' -%]
+  type="letter"
+      [%- CASE 'original'   -%]
+  type="originalArticle"
+      [%- CASE 'review'     -%]
+  type="reviewX"
+    [%- END -%]
+[%- END -%]
+>[% genre | xml_strict %]</genre>
+
+<titleInfo>
+  <title>[% title | xml_strict %]</title>
+</titleInfo>
+
+[% FOREACH altt IN alternativeTitle %]
+  [% IF originalLanguage %]
+<titleInfo type="alternative" lang="[% originalLanguage.languageCode %]">
+  [% END %]
+  [% IF !originalLanguage %]
+<titleInfo type="alternative">
+  [% END %]
+  <title>[% altt | xml_strict %]</title>
+</titleInfo>
+[% END %]
+
+[% IF publication_status %]
+<note type="publicationStatus">[% publication_status %]</note>
+[% END %]
+
+[% IF defensePlace %]
+<note type="venue">[% defensePlace | xml_strict %]</note>
+[% END %]
+
+[% IF popular_science %]
+<targetAudience>general</targetAudience>
+[% END %]
+
+[% IF quality_controlled %]
+<note type="qualityControlled">yes</note>
+[% END %]
+
+[% FOREACH au IN author %]
+<name type="personal">
+  [% IF au.first_name %]
+  <namePart type="given">[% au.first_name | xml_strict %]</namePart>
+  [% END %]
+  [% IF au.last_name %]
+  <namePart type="family">[% au.last_name | xml_strict %]</namePart>
+  [% END %]
+  [% IF type == 'review' %]
+  <role> <roleTerm type="text">reviewer</roleTerm> </role>
+  [% END %]
+
+  [% IF type == 'translation' %]
+  <role> <roleTerm type="text">translator</roleTerm> </role>
+  [% END %]
+  [% IF type != 'translation' %]
+  <role> <roleTerm type="text">author</roleTerm> </role>
+  [% END %]
+  [% IF au.id %]
+  <identifier type="unibi">[% au.id %]</identifier>
+  [% END %]
+  [% IF au.orcid %]
+  <description xsi:type="identifierDefinition" type="orcid">[% au.orcid %]</description>
+  [% END %]
+</name>
+[% END %]
+
+[% FOREACH tw IN translatedWorkAuthor %]
+<name type="personal">
+  [% IF tw.givenName %]
+  <namePart type="given">[% tw.givenName | xml_strict %]</namePart>
+  [% END %]
+  [% IF tw.surname %]
+  <namePart type="family">[% tw.surname | xml_strict %]</namePart>
+  [% END %]
+  <role> <roleTerm type="text">author: translated work</roleTerm> </role>
+  [% IF tw.externalAffiliation %]
+  <affiliation>[% tw.externalAffiliation | xml_strict %]</affiliation>
+  [% END %]
+</name>
+[% END %]
+
+[% FOREACH ed IN editor %]
+<name type="personal">
+  [% IF ed.first_name %]
+  <namePart type="given">[% ed.first_name | xml_strict %]</namePart>
+  [% END %]
+  [% IF ed.last_name %]
+  <namePart type="family">[% ed.last_name | xml_strict %]</namePart>
+  [% END %]
+  <role> <roleTerm type="text">editor</roleTerm> </role>
+  [% IF ed.id %]
+  <identifier type="unibi">[% ed.id %]</identifier>
+  [% END %]
+</name>
+[% END %]
+
+[% FOREACH sv IN supervisor %]
+<name type="personal">
+  [% IF sv.first_name %]
+  <namePart type="given">[% sv.first_name | xml_strict %]</namePart>
+  [% END %]
+  [% IF sv.last_name %]
+  <namePart type="family">[% sv.last_name | xml_strict %]</namePart>
+  [% END %]
+  <role> <roleTerm type="text">supervisor</roleTerm> </role>
+</name>
+[% END %]
+
+[% FOREACH dp IN department %]
+<name type="corporate">
+  <namePart>[% dp.name | xml_strict %]</namePart>
+  <identifier type="unibi">[% dp.id | xml_strict %]</identifier>
+  <role>
+    <roleTerm type="text">department</roleTerm>
+  </role>
+</name>
+[% END %]
+
+[% IF conference.name %]
+<name type="conference">
+  <namePart>[% conference.name | xml_strict %]</namePart>
+</name>
+[% END %]
+
+[% FOREACH rg IN researchGroup %]
+<name type="corporate">
+  <namePart>[% rg.name | xml_strict %]</namePart>
+  <role>
+    <roleTerm type="text">research group</roleTerm>
+  </role>
+</name>
+[% END %]
+
+[% FOREACH pr IN project %]
+<name type="corporate">
+  <namePart>[% pr.name | xml_strict %]</namePart>
+  <role>
+    <roleTerm type="text">project</roleTerm>
+  </role>
+</name>
+[% END %]
+
+[% FOREACH fu IN funder %]
+<name type="corporate">
+  <namePart>[% fu.name.lang(my_lang) | xml_strict %]</namePart>
+  <role>
+    <roleTerm type="text">funder</roleTerm>
+  </role>
+</name>
+[% END %]
+
+[% IF reviewedWork %]
+<note type="reviewedWorks">
+  [% FOREACH rw IN reviewedWork %]
+au: [% rw.reviewedWorkAuthors | xml_strict %]
+ti: [% rw.reviewedWorkTitle | xml_strict %]
+  [% END %]
+</note>
+[% END %]
+
+[% FOREACH ab IN abstract %]
+<abstract lang="[% ab.lang | xml_strict %]">[% ab.text | xml_strict %]</abstract>
+[% END %]
+
+[% FOREACH fi IN file %]
+<relatedItem type="constituent">
+  <location>
+    <url displayLabel="[% fi.file_name | xml_strict %]">[% host %]/download/[% _id %]/[% fi.file_id | xml_strict %]</url>
+  </location>
+
+  [% IF fi.content_type %]
+  <physicalDescription>
+    <internetMediaType>[% fi.content_type | xml_strict %]</internetMediaType>
+  </physicalDescription>
+  [% END %]
+
+  [% IF fi.embargo %]
+  <accessCondition type="allowOAdate">[% fi.embargo | xml_strict %]</accessCondition>
+  [% END %]
+
+  [% IF fi.open_access == '1' %]
+  <accessCondition type="restrictionOnAccess">[% fi.accessRestriction | xml_strict %]</accessCondition>
+  [% END %]
+</relatedItem>
+[% END %]
+
+[% IF rightsOwnersStatement %]
+<accessCondition type="rightOwnersStatement">[% rightsOwnersStatement | xml_strict %]</accessCondition>
+[% END %]
+
+[% IF publisher or publishingDate or publishingYear or conferenceDate or conferenceLocation %]
+<originInfo>
+  [% IF publisher %]
+  <publisher>[% publisher | xml_strict %]</publisher>
+  [% END %]
+  [% IF publishingDate AND !publishingDate.match('1970-01-01 01:00:00') %]
+  <dateIssued encoding="w3cdtf">[% publishingDate %]</dateIssued>
+  [% END %]
+  [% IF publishingYear AND (!publishingDate OR publishingDate.match('1970-01-01 01:00:00')) %]
+  <dateIssued encoding="w3cdtf">[% publishingYear | xml_strict %]</dateIssued>
+  [% END %]
+  [% IF conferenceDate %]
+  <dateOther type="conferenceDate">[% conferenceDate | xml_strict %]</dateOther>
+  [% END %]
+  [% IF conferenceLocation %]
+  <place>
+    <placeTerm type="text">[% conferenceLocation | xml_strict %]</placeTerm>
+  </place>
+  [% END %]
+</originInfo>
+[% END %]
+
+[% IF language %]
+<language>
+  <languageTerm authority="iso639-2b" type="code">[% language.iso %]</languageTerm>
+</language>
+[% END %]
+
+[% IF keyword %]
+<subject>
+  [% FOREACH key IN keyword %]
+  <topic>[% key | xml_strict %]</topic>
+  [% END %]
+</subject>
+[% END %]
+
+[% FOREACH ln IN link %]
+<relatedItem type="host">
+  <location>
+    <url>[% ln.url | xml_strict %]</url>
+  </location>
+</relatedItem>
+[% END %]
+
+<relatedItem type="host">
+[% IF publication %]
+  <titleInfo>
+    <title>[% publication | xml_strict %]</title>
+  </titleInfo>
+[% END %]
+
+[% FOREACH i IN issn %]
+  <identifier type="issn">[% i | xml_strict %]</identifier>
+[% END %]
+
+[% FOREACH j IN isbn %]
+  <identifier type="isbn">[% j | xml_strict %]</identifier>
+[% END %]
+
+[% FOREACH opi IN otherPublicationIdentifier %]
+  <identifier type="other">[% opi | xml_strict %]</identifier>
+[% END %]
+
+[% IF arxiv %]
+  <identifier type="arXiv">[% arxiv| xml_strict %]</identifier>
+[% END %]
+[% IF inspire %]
+  <identifier type="INSPIRE">[% inspire | xml_strict %]</identifier>
+[% END %]
+[% IF medline %]
+  <identifier type="MEDLINE">[% medline | xml_strict %]</identifier>
+[% END %]
+[% IF isi %]
+  <identifier type="ISI">[% isi | xml_strict %]</identifier>
+[% END %]
+[% IF urn %]
+  <identifier type="urn">[% urn | xml_strict %]</identifier>
+[% END %]
+
+[% IF doi %]
+  <location>
+    <url>http://doi.org/[% doi | xml_strict %]</url>
+  </location>
+[% END %]
+
+  <part>
+[% IF volume %]
+    <detail type="volume">
+      <number>[% volume | xml_strict %]</number>
+    </detail>
+[% END %]
+[% IF issue %]
+    <detail type="issue">
+      <number>[% issue | xml_strict %]</number>
+    </detail>
+[% END %]
+[% IF reportNumber %]
+    <detail type="reportNumber">
+      <number>[% reportNumber | xml_strict %]</number>
+    </detail>
+[% END %]
+[% IF pagesCount and !pagesStart and !pagesEnd %]
+    <extent unit="pages">[% pagesCount | xml_strict %]</extent>
+[% ELSIF pagesStart %]
+    <extent unit="pages">
+      <start>[% pagesStart | xml_strict %]</start>
+  [% IF pagesEnd %]
+      <end>[% pagesEnd | xml_strict %]</end>
+  [% END %]
+  [% IF pagesCount %]
+      <total>[% pagesCount | xml_strict %]</total>
+  [% END %]
+    </extent>
+[% END %]
+  </part>
+</relatedItem>
+
+[% FOREACH rm IN relatedMaterial %]
+<relatedItem type="Supplementary material">
+  <titleInfo>
+    <title>[% rm.title | xml_strict %]</title>
+  </titleInfo>
+  <location>
+  [% IF rm.type.typeName == 'relatedMaterialRecord' %]
+     <url>[% host %]/publication/[% rm.otherRecordOId %]</url>
+  [% END %]
+
+  [% IF rm.type.typeName == 'relatedMaterialFile' %]
+     <url>[% host %]/download/[% oId %]/[% rm.fileOId | xml_strict %]</url>
+  [% END %]
+
+  [% IF rm.type.typeName == 'relatedMaterialLink' %]
+     <url>[% rm.url | xml_strict %]</url>
+  [% END %]
+  </location>
+
+  [% IF rm.contentType %]
+  <physicalDescription>
+     <internetMediaType>[% rm.contentType | xml_strict %]</internetMediaType>
+  </physicalDescription>
+  [% END %]
+
+  [% IF rm.description %]
+  <note type="description">[% rm.description | xml_strict %]</note>
+  [% END %]
+
+  [% IF rm.accessRestriction %]
+  <accessCondition type="restrictionOnAccess">[% rm.accessRestriction | xml_strict %]</accessCondition>
+  [% END %]
+
+  [% IF rm.openAccessDate %]
+  <accessCondition type="allowOAdate">[% rm.openAccessDate | xml_strict %]</accessCondition>
+  [% END %]
+</relatedItem>
+[% END %]
+
+[% IF extern %]
+<note type="nonBielefeld">yes</note>
+[% END %]
+
+[% IF isFundedByUBI %]
+<note>
+<funding type="UNIBI">
+We acknowledge support for the Article Processing Charge by the Deutsche Forschungsgemeinschaft and the Open Access Publication Funds of Bielefeld University Library.
+</funding>
+</note>
+[% END %]
+
+[% IF workReferences %]
+<note type="references">[% workReferences | xml_strict %]</note>
+[% END %]
+
+[% IF defenseDateTime %]
+<dateOther encoding="w3cdtf" type="defenseDate">[% defenseDateTime | xml_strict %]</dateOther>
+[% END %]
+
+[% IF additionalInformation %]
+<note type="additionalInfo">[% additionalInformation | xml_strict %]</note>
+[% END %]
+
+<extension>
+<bibliographicCitation>
+[% FOREACH sty IN citation.keys %]
+<[% sty %]>[% citation.$sty | xml_strict %]</[% sty %]>
+[% END %]
+</bibliographicCitation>
+</extension>
+
+<recordInfo>
+  <recordIdentifier>[% _id %]</recordIdentifier>
+[% IF date_created %]
+  <recordCreationDate encoding="w3cdtf">[% date_created %]</recordCreationDate>
+[% END %]
+[% IF date_updated %]
+  <recordChangeDate encoding="w3cdtf">[% date_updated %]</recordChangeDate>
+[% END %]
+</recordInfo>
+
+[% IF !noRoot %]
+</mods>
+[% END %]
