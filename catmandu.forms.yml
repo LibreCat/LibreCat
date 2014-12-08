@@ -135,6 +135,7 @@ publicationTypes:
         title: &title
           mandatory: 1
           label: "Title"
+          placeholder: "Handbook of eBook Publishing"
         author: &author_translator
           first_name:
             placeholder: "John"
@@ -163,15 +164,16 @@ publicationTypes:
           placeholder: "Corporate Editor"
         department: &department
           label: "Department"
-          placeholder: "Department"
+          label_short: "Dept."
+          placeholder: "Department of Physics"
           multiple: 1
         project: &project
           label: "Project"
-          placeholder: "Project"
+          placeholder: "2nd-Generation Open Access Infrastructure for Research in Europe"
           multiple: 1
         publisher: &publisher
           label: "Publisher"
-          placeholder: "Publisher"
+          placeholder: "Elsevier"
         language: &language
           label: "Language"
           default: "eng"
@@ -179,7 +181,8 @@ publicationTypes:
         year: &year
           mandatory: 1
           label: "Publishing Year"
-          placeholder: "YYYY"
+          label_short: "Year"
+          placeholder: "2025"
       file_upload: &file_upload
         tab_name: "File Upload"
         dropzone_mainDoc:
