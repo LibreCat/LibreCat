@@ -4,12 +4,12 @@ use Catmandu;
 use Catmandu::Sane;
 use Moo;
 
-my $bag = Catmandu->store('search')->bag('publicationItem');
+my $bag = Catmandu->store('search')->bag('publication');
 my $researchBag = Catmandu->store('search')->bag('researchData');
 
 sub fix {
     my ( $self, $rec ) = @_;
-    
+
     if($rec->{_id}){
     	my $hits = $bag->search(
 		  cql_query => "person=$rec->{_id} AND submissionStatus exact public",
@@ -25,7 +25,7 @@ sub fix {
 		$rec->{research_hits} = $resHits->{total};
 		$rec->{combined_hits} = int($hits->{total}) + int($resHits->{total});
     }
-    
+
     $rec;
 }
 

@@ -27,7 +27,7 @@ sub bag {
 }
 
 sub publication {
-	state $bag = Catmandu->store('search')->bag('publicationItem');
+	state $bag = Catmandu->store('search')->bag('publication');
 }
 
 sub project {

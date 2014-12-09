@@ -208,7 +208,7 @@ my $post_fixer = Catmandu::Fix->new(
     ]
 );
 
-my $bag    = Catmandu->store('search', index_name => $index_name)->bag('publicationItem');
+my $bag    = Catmandu->store('search', index_name => $index_name)->bag('publication');
 my $citbag = Catmandu->store('citation')->bag;
 my $publbag = Catmandu->store->bag('publication');
 my $authors;

@@ -120,6 +120,7 @@ prefix '/myPUB/search' => sub {
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
 
+        # override default author/editor facet
         $p->{facets}->{author} = {
             terms => {
                 field   => 'author.id',
@@ -158,7 +159,7 @@ prefix '/myPUB/search' => sub {
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
 
-        # override default author/editor facette
+        # override default author/editor facet
         $p->{facets}->{author} = {
             terms => {
                 field   => 'author.id',
@@ -179,6 +180,10 @@ prefix '/myPUB/search' => sub {
         $hits->{sort} = $p->{sort};
         $hits->{modus} = "user";
         template "home", $hits;
+
+    };
+
+    get '/data' => sub {
 
     };
 
