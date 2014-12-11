@@ -38,6 +38,7 @@ field_order:
     - title
     - publication
     - volume
+    - volume_issue_page
     - author
     - email
     - supervisor
@@ -61,10 +62,12 @@ field_order:
     - extern
     - alternative_title
     - publication_status
+    - conference.divider
     - conference.name
     - conference.location
     - conference.start_date
     - conference.end_date
+    - conference.date
     - page
     - page_range
     - publication_identifier
@@ -84,6 +87,7 @@ field_order:
     - doi
     - title
     - volume
+    - volume_issue_page
     - corporate_editor
     - department
     - project
@@ -101,10 +105,12 @@ field_order:
     - extern
     - alternative_title
     - publication_status
+    - conference.divider
     - conference.name
     - conference.location
     - conference.start_date
     - conference.end_date
+    - conference.date
     - page
     - page_range
     - publication_identifier
@@ -161,7 +167,7 @@ publicationTypes:
           mandatory: 0
           multiple: 1
           label: "Corporate Editor"
-          placeholder: "Corporate Editor"
+          placeholder: "World Health Organization - Regional Office for Europe (WHO-Europe)"
         department: &department
           label: "Department"
           label_short: "Dept."
@@ -201,17 +207,19 @@ publicationTypes:
         tab_name: "Additional Information"
         series_title: &publication_series
           label: "Publication/<br />Series Title"
+          label_short: "Series Title"
           placeholder: "E.g. Lecture Notes in Computer Science"
         abstract: &abstract
           label: "Abstract"
           label2: "Abstract Language"
+          placeholder: "Abstract Text"
           multiple: 1
         edition: &edition
           label: "Edition"
-          placerholder: "2"
+          placeholder: "2"
         keyword: &keyword
           label: "Keywords"
-          placeholder: "Keyword (for more keyword fields click +)"
+          placeholder: "Keyword"
           multiple: 1
         volume: &volume
          label: "Volume"
@@ -227,6 +235,7 @@ publicationTypes:
           placeholder: "(Published while not employed at Bielefeld University)"
         alternative_title: &alternative_title
           label: "Alternative Title"
+          placeholder: "Handbook of eBook Publishing - with a subtitle"
           multiple: 1
         publication_status: &publication_status
           label: "Publication Status"
@@ -399,10 +408,20 @@ publicationTypes:
         department: *department
         project: *project
         year: *year
-        conference.name: *conference_name
-        conference.location: *conference_location
-        conference.start_date: *conference_startdate
-        conference.end_date: *conference_enddate
+        conference.divider:
+          label: "Conference Details"
+        conference.name:
+          label: "Name"
+          placeholder: "e.g. 3rd Conference on Nano-Physics"
+        conference.location:
+          label: "Location"
+          placeholder: "Berlin, BE, Germany"
+        conference.date: &conference_date
+          label: "Date (start and end)"
+          label_start: "Start"
+          label_end: "End"
+          placeholder_start: "2014-11-03"
+          placeholder_end: "2014-11-05"
         language: *language
       file_upload: *file_upload
       supplementary_fields:
@@ -577,8 +596,15 @@ publicationTypes:
         alternative_title: *alternative_title
         publication: &publication_jtitle
           label: "Journal Title"
-        volume: *volume
-        issue: *issue
+          placeholder: "Nature Genetics"
+        volume_issue_page: &volume_issue_page
+          label: "Vol./Issue/Page"
+          placeholder_volume: ""
+          label_volume: "Volume"
+          placeholder_issue: ""
+          label_issue: "Issue"
+          placeholder_page: "12 - 20"
+          label_page: "Page"
         abstract: *abstract
         ddc: *ddc
         keyword: *keyword
@@ -587,7 +613,6 @@ publicationTypes:
         external_id: *external_id
         publication_identifier: *publication_identifier
         publication_status: *publication_status
-        page_range: *page_range
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material

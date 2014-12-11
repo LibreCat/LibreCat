@@ -1,36 +1,65 @@
 <div class="row innerrow">
-  <div class="col-md-2">
-    {% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %}<span class="starMandatory">{% END %}
+  <div class="col-md-2 hidden-xs hidden-sm">
     <label for="ccs_class">
       {% fields.basic_fields.ccs_class.label %}{% fields.supplementary_fields.ccs_class.label %}
     </label>
-    {% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %}</span>{% END %}{% IF fields.basic_fields.ccs_class.multiple OR fields.supplementary_fields.ccs_class.multiple %} <span class="glyphicon glyphicon-plus" onclick="add_field('ccs_class'{% IF fields.basic_fields.ccs_class.placeholder || fields.supplementary_fields.ccs_class.placeholder %}, '{% fields.basic_fields.ccs_class.placeholder %}{% fields.supplementary_fields.ccs_class.placeholder %}'{% END %});"></span>{% END %}
+    {% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10" id="ccs_class">
     {% IF fields.basic_fields.ccs_class.multiple OR fields.supplementary_fields.ccs_class.multiple %}
     [% IF !ccs_class %]
-    {% END %}
-    <div class="form-group row innerrow">
-      <div class="col-md-9">
-        <input type="text" name="ccs_class" id="ccs_class_0" value="" class="form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.ccs_class.placeholder %}{% fields.supplementary_fields.ccs_class.placeholder %}"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
+    <div class="row innerrow">
+      <div class="form-group col-md-10 hidden-xs hidden-sm">
+        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} mandatory{% END %}">
+          <input type="text" name="ccs_class" id="ccs_class_0" value="" class="sticky form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.ccs_class.placeholder %}{% fields.supplementary_fields.ccs_class.placeholder %}"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('ccs_class'{% IF fields.basic_fields.ccs_class.placeholder || fields.supplementary_fields.ccs_class.placeholder %}, '{% fields.basic_fields.ccs_class.placeholder %}{% fields.supplementary_fields.ccs_class.placeholder %}'{% END %});"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+        </div>
       </div>
-      <div class="col-md-1">
-        <div class="glyphicon glyphicon-minus" onclick="remove_field(this);"></div>
+      <div class="form-group col-xs-11 hidden-lg hidden-md">
+        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon">{% fields.basic_fields.ccs_class.label %}{% fields.supplementary_fields.ccs_class.label %}</div>
+          <input type="text" name="ccs_class" id="ccs_class_0" value="" class="sticky form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.ccs_class.placeholder %}{% fields.supplementary_fields.ccs_class.placeholder %}"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('ccs_class'{% IF fields.basic_fields.ccs_class.placeholder || fields.supplementary_fields.ccs_class.placeholder %}, '{% fields.basic_fields.ccs_class.placeholder %}{% fields.supplementary_fields.ccs_class.placeholder %}'{% END %});"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+        </div>
       </div>
     </div>
-    {% IF fields.basic_fields.ccs_class.multiple OR fields.supplementary_fields.ccs_class.multiple %}
     [% ELSE %]
     [% FOREACH keyw IN ccs_class %]
-    <div class="form-group row innerrow">
-      <div class="col-md-9">
-        <input type="text" name="ccs_class" id="ccs_class_[% loop.index %]" value="[% keyw %]" class="form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
+    <div class="row innerrow">
+      <div class="form-group col-md-10 hidden-xs hidden-sm">
+        <div class="input-group input-group-sm{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} mandatory{% END %}">
+          <input type="text" name="ccs_class" id="ccs_class_[% loop.index %]" value="[% keyw %]" class="sticky form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('ccs_class'{% IF fields.basic_fields.ccs_class.placeholder || fields.supplementary_fields.ccs_class.placeholder %}, '{% fields.basic_fields.ccs_class.placeholder %}{% fields.supplementary_fields.ccs_class.placeholder %}'{% END %});"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+        </div>
       </div>
-      <div class="col-md-1">
-        <div class="glyphicon glyphicon-minus" onclick="remove_field('ccs_class');"></div>
+      <div class="form-group col-xs-11 hidden-lg hidden-md">
+        <div class="input-group input-group-sm{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon">{% fields.basic_fields.ccs_class.label %}{% fields.supplementary_fields.ccs_class.label %}</div>
+          <input type="text" name="ccs_class" id="ccs_class_[% loop.index %]" value="[% keyw %]" class="sticky form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('ccs_class'{% IF fields.basic_fields.ccs_class.placeholder || fields.supplementary_fields.ccs_class.placeholder %}, '{% fields.basic_fields.ccs_class.placeholder %}{% fields.supplementary_fields.ccs_class.placeholder %}'{% END %});"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+        </div>
       </div>
     </div>
     [% END %]
     [% END %]
+    {% ELSE %}
+    <div class="row innerrow">
+      <div class="form-group col-md-10 hidden-xs hidden-sm">
+        <div class="sticky{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} mandatory{% END %}">
+          <input type="text" name="ccs_class" id="ccs_class_0" value="" class="sticky form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.ccs_class.placeholder %}{% fields.supplementary_fields.ccs_class.placeholder %}"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
+        </div>
+      </div>
+      <div class="form-group col-xs-11 hidden-lg hidden-md">
+        <div class="input-group input-group-sm{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon">{% fields.basic_fields.ccs_class.label %}{% fields.supplementary_fields.ccs_class.label %}</div>
+          <input type="text" name="ccs_class" id="ccs_class_0" value="" class="sticky form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.ccs_class.placeholder %}{% fields.supplementary_fields.ccs_class.placeholder %}"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
+        </div>
+      </div>
+    </div>
     {% END %}
   </div>
 </div>

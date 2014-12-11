@@ -1,0 +1,35 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_conference_end_date">
+      {% fields.basic_fields.item('conference.date').label || fields.supplementary_fields.item('conference.date').label %}
+    </label>
+    {% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %}<span class="starMandatory"></span>{% END %}
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="form-group col-md-5 hidden-xs hidden-sm">
+        <div class="sticky{% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %} mandatory{% END %}">
+          <input type="text" name="conference.start_date" id="id_conference_start_date" value="[% conference.start_date %]" placeholder="{% fields.basic_fields.item('conference.date').placeholder_start || fields.supplementary_fields.item('conference.date').placeholder_start %}" class="sticky input-sm form-control{% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %} required{% END %}">
+        </div>
+      </div>
+      <div class="form-group col-md-5 hidden-xs hidden-sm">
+        <div class="sticky{% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %} mandatory{% END %}">
+          <input type="text" name="conference.end_date" id="id_conference_end_date" value="[% conference.end_date %]" placeholder="{% fields.basic_fields.item('conference.date').placeholder_end || fields.supplementary_fields.item('conference.date').placeholder_end %}" class="sticky input-sm form-control{% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %} required{% END %}">
+        </div>
+      </div>
+      <div class="form-group col-xs-5 hidden-lg hidden-md">
+        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %} mandatory{% END %}">
+          <div class="input-group-addon">{% fields.basic_fields.item('conference.date').label_start %}{% fields.supplementary_fields.item('conference.date').label_start %}</div>
+          <input type="text" name="conference.start_date" id="id_conference_start_date" value="[% conference.start_date %]" placeholder="{% fields.basic_fields.item('conference.date').placeholder_start || fields.supplementary_fields.item('conference.date').placeholder_start %}" class="sticky form-control{% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %} required{% END %}">
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+      <div class="form-group col-xs-6 hidden-lg hidden-md">
+        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %} mandatory{% END %}">
+          <div class="input-group-addon">{% fields.basic_fields.item('conference.date').label_end %}{% fields.supplementary_fields.item('conference.date').label_end %}</div>
+          <input type="text" name="conference.end_date" id="id_conference_end_date" value="[% conference.end_date %]" placeholder="{% fields.basic_fields.item('conference.date').placeholder_end || fields.supplementary_fields.item('conference.date').placeholder_end %}" class="sticky form-control{% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %} required{% END %}">
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+  </div>
+</div>

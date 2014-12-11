@@ -1,49 +1,31 @@
 <div class="row innerrow">
-  <div class="col-md-2">
+  <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_bi_doctype">
-      {% fields.basic_fields.bi_doctype.label %}{% IF fields.basic_fields.bi_doctype.mandatory OR fields.supplementary_fields.bi_doctype.mandatory %}<span class="starMandatory"></span>{% END %}
+      {% fields.basic_fields.bi_doctype.label %}
     </label>
   </div>
   <div class="col-md-10">
-    <div class="checkbox" id="id_bi_doctype">
-      <div class="col-md-2">
-        <div class="row innerrow">
-          <div class="checkbox">
-            <label>
-              <input type="radio" name="type" value="biDissertation" [% IF type == 'biDissertation' || !type %]checked="checked"[% END %]>
-              biDissertation
-            </label>
-          </div>
+    <div class="row innerrow">
+      <div class="form-group col-md-10 hidden-xs hidden-sm">
+        <div class="sticky mandatory">
+          <select name="type" class="sticky form-control input-sm">
+            <option value="biDissertation"[% IF type == 'biDissertation' || !type %] selected="selected"[% END %]>biDissertation</option>
+            <option value="biBachelorThesis"[% IF type == 'biBachelorThesis' %] selected="selected"[% END %]>biBachelorThesis</option>
+            <option value="biMasterThesis"[% IF type == 'biMasterThesis' %] selected="selected"[% END %]>biMasterThesis</option>
+            <option value="biPostdocThesis"[% IF type == 'biPostdocThesis' %] selected="selected"[% END %]>biPostdocthesis</option>
+          </select>
         </div>
       </div>
-      <div class="col-md-2">
-        <div class="row innerrow">
-          <div class="checkbox">
-            <label>
-              <input type="radio" name="type" value="biBachelorThesis" [% IF type == 'biBachelorThesis' %]checked="checked"[% END %]>
-              biBachelorThesis
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="row innerrow">
-          <div class="checkbox">
-            <label>
-              <input type="radio" name="type" value="biMasterThesis" [% IF type == 'biMasterThesis' %]checked="checked"[% END %]>
-              biMasterThesis
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="row innerrow">
-          <div class="checkbox">
-            <label>
-              <input type="radio" name="type" value="biPostdocThesis" [% IF type == 'biPostdocThesis' %]checked="checked"[% END %]>
-              biPostdocThesis
-            </label>
-          </div>
+      <div class="form-group col-xs-11 hidden-lg hidden-md">
+        <div class="input-group input-group-sm sticky mandatory">
+          <div class="input-group-addon">{% fields.basic_fields.bi_doctype.label %}</div>
+          <select name="type" class="sticky form-control">
+            <option value="biDissertation"[% IF type == 'biDissertation' || !type %] selected="selected"[% END %]>biDissertation</option>
+            <option value="biBachelorThesis"[% IF type == 'biBachelorThesis' %] selected="selected"[% END %]>biBachelorThesis</option>
+            <option value="biMasterThesis"[% IF type == 'biMasterThesis' %] selected="selected"[% END %]>biMasterThesis</option>
+            <option value="biPostdocThesis"[% IF type == 'biPostdocThesis' %] selected="selected"[% END %]>biPostdocthesis</option>
+          </select>
+          <div class="input-group-addon"></div>
         </div>
       </div>
     </div>

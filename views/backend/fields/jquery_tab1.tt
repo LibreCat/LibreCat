@@ -288,8 +288,8 @@ function angularSearch($scope, $compile) {
 	{% IF fields.basic_fields.author.last_name.placeholder %}
 	  var ln_placeholder = "{% fields.basic_fields.author.last_name.placeholder %}";
 	{% END %}
-	$('#authorEditorTranslator').append($compile('[% INCLUDE backend/fields/subfields/author_more.tt %]')($scope));
 	var selected = $('#authedtrans_0').val();
+	$('#authorEditorTranslator').append($compile('[% INCLUDE backend/fields/subfields/author_more.tt %]')($scope));
 	{% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}
 	  if(selected == "{% fields.basic_fields.author.label.$creator %}"){
 	    $('#authorEditorTranslator div:last-child select').append('<option value="{% fields.basic_fields.author.label.$creator %}">{% creator %}</option>');
