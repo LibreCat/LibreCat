@@ -1,6 +1,10 @@
 _prefix:
   importer:
 
+wos:
+  package: Endnote
+  options:
+    fix: ['fixes/wos_mapping.fix']
 inspire:
   package: Inspire
   options:

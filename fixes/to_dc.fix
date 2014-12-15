@@ -1,5 +1,0 @@
-# fix file
-# transforms a publication to dublin core
-
-move_field('author.*.full_name','creator')
-move_field('editor.*.full_name','creator')
