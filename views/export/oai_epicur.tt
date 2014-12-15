@@ -1,5 +1,5 @@
 [%- USE XML::Strict -%]
-<epicur xmlns="urn:nbn:de:1111-2004033116" 
+<epicur xmlns="urn:nbn:de:1111-2004033116"
 		xsi:schemaLocation="urn:nbn:de:1111-2004033116 http://www.persistent-identifier.de/xepicur/version1.0/xepicur.xsd">
 	<administrative_data>
 		<delivery>
@@ -7,9 +7,9 @@
 		</delivery>
 	</administrative_data>
 	<record>
-		<identifier scheme="urn:nbn:de" type="frontpage" role="primary">[% urn | xml_strict %]</identifier>
+		<identifier scheme="urn:nbn:de" type="frontpage" role="primary">[% publication_identifier.urn.0 | xml_strict %]</identifier>
 		<resource>
-			<identifier scheme="url" type="frontpage" role="primary">[% splash_url %]</identifier>
+			<identifier scheme="url" type="frontpage" role="primary">[% host %]/publication/[% _id %]</identifier>
 			<format scheme="imt">text/html</format>
 		</resource>
 	</record>
