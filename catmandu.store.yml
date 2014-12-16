@@ -303,7 +303,7 @@ search:
                 '<>': true
               field: 'comment'
 
-      publicationItem:
+      publication:
         cql_mapping:
           default_index: basic
           indexes:
@@ -1249,7 +1249,7 @@ search:
           url: {type: string, index: not_analyzed}
           comment: {type: string}
 
-      publicationItem:
+      publication:
         include_in_all: false
         properties:
           _id: {type: string, include_in_all: true}
