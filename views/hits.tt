@@ -2,7 +2,10 @@
 
 <!-- This publication list is displayed in "[% style %]" style and sorted "[% sort %]" -->
 [% path = request.path %]
-[% backend = path.match('myPUB') ? 1 : 0 %]
+[% IF tabmodus == "data" %]
+[% hits = researchhits.hits %]
+[% total = researchhits.total %]
+[% END %]
 
 [% num = total; n = 0 %]
 

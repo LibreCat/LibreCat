@@ -152,6 +152,8 @@ prefix '/myPUB/search' => sub {
 
         my $p = h->extract_params();
         my $id = session 'personNumber';
+        my @orig_q = @{$p->{q}};
+        
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         push @{$p->{q}}, "type<>researchData";
         push @{$p->{q}}, "type<>dara";
@@ -178,6 +180,15 @@ prefix '/myPUB/search' => sub {
         };
 
         my $hits = h->search_publication($p);
+        
+        my $researchhits;
+        @{$p->{q}} = @orig_q;
+        push @{$p->{q}}, "(person=$id OR creator=$id)";
+        push @{$p->{q}}, "(type=researchData OR type=dara)";
+        (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
+        $researchhits = h->search_publication($p);
+        $hits->{researchhits} = $researchhits if $researchhits;
+        
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
         $hits->{modus} = "user";
@@ -188,6 +199,8 @@ prefix '/myPUB/search' => sub {
     get '/data' => sub {
     	my $p = h->extract_params();
         my $id = session 'personNumber';
+        my @orig_q = @{$p->{q}};
+        
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         push @{$p->{q}}, "(type=researchData OR type=dara)";
         (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
@@ -213,6 +226,15 @@ prefix '/myPUB/search' => sub {
         };
 
         my $hits = h->search_publication($p);
+        
+        my $researchhits;
+        @{$p->{q}} = @orig_q;
+        push @{$p->{q}}, "(person=$id OR creator=$id)";
+        push @{$p->{q}}, "(type=researchData OR type=dara)";
+        (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
+        $researchhits = h->search_publication($p);
+        $hits->{researchhits} = $researchhits if $researchhits;
+        
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
         $hits->{modus} = "data";
