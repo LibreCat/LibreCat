@@ -4,51 +4,69 @@
 <span id="editorOnly" ng-controller="angularSearch">
   [% IF !editor %]
   <div class="row authorspan innerrow">
-    <div class="col-md-2 form-group">
+    <div class="col-md-2 form-group hidden-xs hidden-sm">
       <label>
-        <select class="mylabel ed_only form-control" id="ed_0">
+        <select class="mylabel ed_only input-sm form-control" id="ed_0">
         {% FOREACH creator IN fields.basic_fields.editor.label.keys %}
         <option value="{% fields.basic_fields.editor.label.$creator %}">{% creator %}</option>
         {% END %}
         </select>
       </label>
-      {% IF fields.basic_fields.editor.mandatory %}<span class="starMandatory"></span>{% END %}&nbsp;<span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span>
+      {% IF fields.basic_fields.editor.mandatory %}<span class="starMandatory"></span>{% END %}
     </div>
     <div class="col-md-10 creator">
       <div class="row innerrow">
         <input type="hidden" id="editor_orig_first_name_0" value="" />
         <input type="hidden" id="editor_orig_last_name_0" value="" />
             
-        <span class="form-group col-md-4">
-          <input type="text" id="editor_first_name_0" ng-model="editor.0.first_name" name="editor.0.first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
+        <span class="form-group col-md-4 hidden-xs hidden-sm">
+          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.editor.mandatory OR fields.supplementary_fields.editor.mandatory %} mandatory{% END %}">
+            <div class="input-group-addon">First Name</div>
+            <input type="text" id="editor_first_name_0" ng-model="editor.0.first_name" name="editor.0.first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
+            <div class="input-group-addon"></div>
+          </div>
         </span>
-        <span class="form-group col-md-5">
-          <input type="text" id="editor_last_name_0" ng-model="editor.0.last_name" name="editor.0.last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
-        </span>
-        <input type="hidden" id="editor_id_0" name="editor.0.id" value="" />
-        <input type="hidden" id="editor_full_name_0" name="editor.0.full_name" value="{{editor.0.last_name}}, {{editor.0.first_name}}">
-        
-        <span class="col-md-1">
-          <span class="glyphicon glyphicon-minus author"></span>
-        </span>
-          
-        <span class="col-md-2">
-          <button type="button" class="btn btn-default btn-xs" id="editor_link_pevz_0" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip %}" /></button>
-          <button type="button" id="editor_revert_0" data-type="editor_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+        <span class="form-group col-md-6 hidden-xs hidden-sm">
+          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.editor.mandatory OR fields.supplementary_fields.editor.mandatory %} mandatory{% END %}">
+            <div class="input-group-addon">Last Name</div>
+            <input type="text" id="editor_last_name_0" ng-model="editor.0.last_name" name="editor.0.last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
+            <div class="input-group-addon"><span class="glyphicon glyphicon-minus author"></span></div>
+            <div class="input-group-addon"><span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span></div>
+            <div class="input-group-addon"><span id="editor_link_pevz_0" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="editor_revert_0" data-type="editor_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
+          </div>
           <script>
             $('#editor_Authorized0').tooltip();
             $('#editor_revert_0').tooltip();
           </script>
         </span>
+        
+        <span class="form-group col-xs-11 hidden-lg hidden-md">
+          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.editor.mandatory OR fields.supplementary_fields.editor.mandatory %} mandatory{% END %}">
+            <div class="input-group-addon">Editor- First</div>
+            <input type="text" id="editor_first_name_0" ng-model="editor.0.first_name" name="editor.0.first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
+            <div class="input-group-addon"><span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span></div>
+          </div>
+        </span>
+        <span class="form-group col-xs-11 hidden-lg hidden-md">
+          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.editor.mandatory OR fields.supplementary_fields.editor.mandatory %} mandatory{% END %}">
+            <div class="input-group-addon">Editor- Last</div>
+            <input type="text" id="editor_last_name_0" ng-model="editor.0.last_name" name="editor.0.last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.editor.mandatory == "1" %} required{% END %}" value="" />
+            <div class="input-group-addon"><span id="editor_link_pevz_0" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20px" alt="Not Authorized" /></span></div>
+            <div class="input-group-addon"><span id="editor_revert_0" data-type="editor_" onclick="revert_name(this);"><span class="fa fa-undo"></span></span></div>
+          </div>
+        </span>
+        <input type="hidden" id="editor_id_0" name="editor.0.id" value="" />
+        <input type="hidden" id="editor_full_name_0" name="editor.0.full_name" value="{{editor.0.last_name}}, {{editor.0.first_name}}">
       </div>
     </div>
   </div>
   [% ELSE %]
   [% FOREACH name IN editor %]
   <div class="row authorspan innerrow">
-    <div class="col-md-2 form-group">
+    <div class="col-md-2 form-group hidden-xs hidden-sm">
       <label>
-        <select class="mylabel ed_only form-control" id="ed_[% loop.index %]">
+        <select class="mylabel ed_only input-sm form-control" id="ed_[% loop.index %]">
           [% author_index = loop.index %]
           [% FOREACH creator IN confpath.fields.basic_fields.editor.label.keys.sort %]
             [% IF author_index == 0 OR confpath.fields.basic_fields.editor.label.$creator == "editor" %]
@@ -64,46 +82,50 @@
         <input type="hidden" id="editor_orig_first_name_[% loop.index %]" value="[% name.first_name %]" />
         <input type="hidden" id="editor_orig_last_name_[% loop.index %]" value="[% name.last_name %]" />
             
-        <span class="form-group col-md-4">
-          <input type="text" id="editor_first_name_[% loop.index %]" ng-model="editor.[% loop.index %].first_name" ng-init="editor.[% loop.index %].first_name='[% name.first_name %]'" name="editor.[% loop.index %].first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+        <span class="form-group col-md-4 hidden-xs hidden-sm">
+          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.editor.mandatory OR fields.supplementary_fields.editor.mandatory %} mandatory{% END %}">
+            <div class="input-group-addon">First Name</div>
+            <input type="text" id="editor_first_name_[% loop.index %]" ng-model="editor.[% loop.index %].first_name" ng-init="editor.[% loop.index %].first_name='[% name.first_name %]'" name="editor.[% loop.index %].first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+            <div class="input-group-addon"></div>
+          </div>
         </span>
-        <span class="form-group col-md-5">
-          <input type="text" id="editor_last_name_[% loop.index %]" ng-model="editor.[% loop.index %].last_name" ng-init="editor.[% loop.index %].last_name='[% name.last_name %]'" name="editor.[% loop.index %].last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+        <span class="form-group col-md-6 hidden-xs hidden-sm">
+          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.editor.mandatory OR fields.supplementary_fields.editor.mandatory %} mandatory{% END %}">
+            <div class="input-group-addon">Last Name</div>
+            <input type="text" id="editor_last_name_[% loop.index %]" ng-model="editor.[% loop.index %].last_name" ng-init="editor.[% loop.index %].last_name='[% name.last_name %]'" name="editor.[% loop.index %].last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+            [% IF loop.index == 0 %]
+            <div class="input-group-addon"><span class="glyphicon glyphicon-minus author"></span></div>
+            [% ELSE %]
+            <div class="input-group-addon"><span class="glyphicon glyphicon-minus fullrow"></span></div>
+            [% END %]
+            <div class="input-group-addon"><span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span></div>
+            <div class="input-group-addon"><span id="editor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] border="0" height="20px" [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="editor_revert_[% loop.index %]" data-type="editor_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
+          </div>
+        </span>
+        
+        <span class="form-group col-xs-11 hidden-lg hidden-md">
+          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.editor.mandatory OR fields.supplementary_fields.editor.mandatory %} mandatory{% END %}">
+            <div class="input-group-addon">Editor- First</div>
+            <input type="text" id="editor_first_name_[% loop.index %]" ng-model="editor.[% loop.index %].first_name" ng-init="editor.[% loop.index %].first_name='[% name.first_name %]'" name="editor.[% loop.index %].first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+            [% IF loop.index == 0 %]
+            <div class="input-group-addon"><span class="glyphicon glyphicon-minus author"></span></div>
+            [% ELSE %]
+            <div class="input-group-addon"><span class="glyphicon glyphicon-minus fullrow"></span></div>
+            [% END %]
+            <div class="input-group-addon"><span ng-click="cloneEdonly($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory %} data-mandatory="yes"{% END %} id="plusEditorMore"></span></div>
+          </div>
+        </span>
+        <span class="form-group col-md-11 hidden-lg hidden-md">
+          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.editor.mandatory OR fields.supplementary_fields.editor.mandatory %} mandatory{% END %}">
+            <div class="input-group-addon">Editor- Last</div>
+            <input type="text" id="editor_last_name_[% loop.index %]" ng-model="editor.[% loop.index %].last_name" ng-init="editor.[% loop.index %].last_name='[% name.last_name %]'" name="editor.[% loop.index %].last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder %}" class="form-control[% loop.first ? '{% fields.basic_fields.editor.mandatory == "1" ? " required" : "" %}' : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+            <div class="input-group-addon"><span id="editor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] border="0" height="20px" [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="editor_revert_[% loop.index %]" data-type="editor_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
+          </div>
         </span>
         <input type="hidden" id="editor_id_[% loop.index %]" value="[% name.id %]" />
         <input type="hidden" id="editor_full_name_[% loop.index %]" name="editor.[% loop.index %].full_name" value="{{editor.[% loop.index %].last_name}}, {{editor.[% loop.index %].first_name}}">
-            
-        <span class="col-md-1">
-          [% IF loop.index == 0 %]
-          <span class="glyphicon glyphicon-minus author"></span>
-          [% ELSE %]
-          <span class="glyphicon glyphicon-minus fullrow"></span>
-          [% END %]
-        </span>
-            
-        <span class="col-md-2">
-          <input class="linkPevz" onclick="linkPevz(this);" id="id_linkPevz_[% loop.index %]" value="1" type="checkbox" [% IF name.id %]checked="checked"[% END %]/>
-          [% IF name.id %]
-            <img id="editor_Authorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="{% fields.basic_fields.editor.pevz_tooltip %}" />
-            <script>
-              $('#editor_Authorized[% loop.index %]').tooltip();
-          </script>
-          [% ELSE %]
-            <img id="editor_Authorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="not Authorized" title="[% name.id %]"/>
-          [% END %]
-        </span>
-        <span class="col-md-2">
-          [% IF name.id %]
-            <button type="button" class="btn btn-default btn-xs" id="editor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized[% loop.index %]" src="/images/biAuthorized.png" border="0" alt="Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% name.id %]" /></button>
-          [% ELSE %]
-            <button type="button" class="btn btn-default btn-xs" id="editor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip %}" /></button>
-          [% END %]
-          <button type="button" id="editor_revert_[% loop.index %]" data-type="editor_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
-          <script>
-            $('#editor_Authorized[% loop.index %]').tooltip();
-            $('#editor_revert_[% loop.index %]').tooltip();
-          </script>
-        </span>
       </div>
     </div>
   </div>

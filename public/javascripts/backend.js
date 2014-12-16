@@ -564,11 +564,11 @@ $(function(){
 	$('div.input-group.sticky .input-group-addon:first-child').on("click", function(){
 		$(this).parent('div.input-group.sticky').children('input, select').focus();
 	});
-	$('input.sticky, select.sticky').on("focus",function(){
+	$('input.sticky, select.sticky, textarea.sticky').on("focus",function(){
 		var input_group = $(this).parent('div.sticky');
 		var first_addon = input_group.children('div.input-group-addon:first-child');
 		if(input_group.parent('.form-group').hasClass('hidden-lg') || input_group.parent('.form-group').hasClass('hidden-md')){
-			if(first_addon){
+			if(first_addon && $(this).prop('tagName') != 'SELECT'){
 				first_addon.css("display","none");
 				$(this).css("border-bottom-left-radius","3px");
 				$(this).css("border-top-left-radius","3px");
@@ -626,7 +626,7 @@ $(function(){
 		}
 	});
 	
-	$('input.sticky, select.sticky').on("blur", function(){
+	$('input.sticky, select.sticky, textarea.sticky').on("blur", function(){
 		var addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon');
 //		if(addon.parent('div.input-group').hasClass('mandatory')){
 //			addon.css("border-color","#b94a48");

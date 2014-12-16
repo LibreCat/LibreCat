@@ -541,6 +541,10 @@ div.sticky span.label.label-default {
 	color: inherit;
 }
 
+.checkbox-inline input[type='checkbox'] {
+	margin-top: 0px;
+}
+
 /* .input-group.pub .input-group-addon:not(:first-child):not(:last-child),
 .input-group.pub .form-control:not(:first-child):not(:last-child),
 .input-group.pub .form-control:not(:first-child):not(:last-child):focus {

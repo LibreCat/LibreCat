@@ -1,17 +1,19 @@
 <div class="row innerrow">
-  <div class="col-md-2">
+  <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_extern">
       {% fields.basic_fields.extern.label %}{% fields.supplementary_fields.extern.label %}
     </label>
   </div>
   <div class="col-md-10">
-    <div class="checkbox">
-      <label>
-        <span class="form-group col-md-1">
-          <input type="checkbox" name="extern" id="id_extern" value="extern"[% IF extern %] checked="checked[% END %]>
-        </span>
-        {% fields.basic_fields.extern.placeholder %}{% fields.supplementary_fields.extern.placeholder %}
-      </label>
+    <div class="row innerrow">
+      <div class="col-md-10 col-xs-11">
+        <div class="checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="extern" id="id_extern" value="extern"[% IF extern %] checked="checked[% END %]>
+            {% fields.basic_fields.extern.placeholder %}{% fields.supplementary_fields.extern.placeholder %}
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 </div>

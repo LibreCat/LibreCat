@@ -225,6 +225,7 @@ publicationTypes:
          label: "Volume"
         place: &place
           label: "Place<br />(of publication)"
+          label_short: "Place"
           placeholder: "Berlin, BE, Germany"
         ddc: &ddc
           label: DDC
@@ -232,20 +233,23 @@ publicationTypes:
           label: "Total Pages"
         extern: &extern
           label: "External<br />Publication"
-          placeholder: "(Published while not employed at Bielefeld University)"
+          placeholder: "Published while not employed at Bielefeld University"
         alternative_title: &alternative_title
           label: "Alternative Title"
           placeholder: "Handbook of eBook Publishing - with a subtitle"
           multiple: 1
         publication_status: &publication_status
           label: "Publication Status"
+          label_short: "Publ. Status"
         external_id: &external_id
           label: "External Identifier"
+          label_short: "Ext. Id."
           multiple: 1
         message: &message
           label: "Admin Comments"
         publication_identifier: &publication_identifier
           label: "Publication<br />Identifier"
+          label_short: "Publ. Id."
           multiple: 1
         popular_science: &popular_science
           label: "Popular Science"
@@ -703,9 +707,11 @@ publicationTypes:
         language: *language
         ipn:
           label: "International Patent<br />Number"
+          label_short: "IPN"
           mandatory: 1
         ipc:
           label: "International Patent<br />Classification"
+          label_short: "IPC"
           mandatory: 1
       file_upload: *file_upload
       supplementary_fields:
@@ -1000,6 +1006,7 @@ publicationTypes:
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         email: &email
           label: "E-Mail address"
+          label_short: "E-Mail"
           placeholder: "me@example.com"
           mandatory: 1
         department: &department_diss
@@ -1031,6 +1038,7 @@ publicationTypes:
           mandatory: 1
         place: &place_diss
           label: "Place<br />(of publication)"
+          label_short: "Place"
           placeholder: "Berlin, BE, Germany"
           mandatory: 1
         ddc: &ddc_diss
