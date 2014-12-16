@@ -7,6 +7,8 @@ move_field("rec.titles.secondary-title","rec.publication")
 remove_field("rec.titles")
 move_field("rec.dates.year","rec.year")
 remove_field("rec.dates")
+add_field("rec.publication_status","published")
+add_field("rec.quality_controlled","1")
 
 # abstract, keywords
 if exists("rec.abstract")
@@ -15,6 +17,9 @@ if exists("rec.abstract")
 	set_field("rec.abstract.0.lang","eng")
 end
 move_field("rec.keywords.keyword","keyword")
+
+# set default ddc 'physics' for inspire
+add_field("rec.ddc","530")
 
 move_field("rec.electronic-resource-num","rec.doi")
 if_any_match("rec.number","\d+|\w+");
@@ -28,12 +33,7 @@ remove_field("rec.pages")
 
 # author
 #move_field("rec.contributors.authors.author", "author.full_name")
-copy_field("rec.contributors.authors.author.$first", "author1.")
+#copy_field("rec.contributors.authors.author.$first", "author1.")
 #remove_field("rec.contributors")
 
-#retain_field("rec")
-#move_field("rec","");
-#split_field("contributors.authors.author.*",", ")
-#do list(path => "contributors.authors.author")
-#
-#end
+retain_field("rec")

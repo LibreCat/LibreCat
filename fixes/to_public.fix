@@ -1,0 +1,7 @@
+remove_field('author.*.login')
+remove_field('author.*.email')
+remove_field('author.*')
+remove_field('')
+remove_field('')
+remove_field('')
+remove_field('')

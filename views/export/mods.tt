@@ -28,23 +28,19 @@
   <title>[% title | xml_strict %]</title>
 </titleInfo>
 
-[% FOREACH altt IN alternativeTitle %]
+[% FOREACH alt IN alternative_title %]
   [% IF originalLanguage %]
 <titleInfo type="alternative" lang="[% originalLanguage.languageCode %]">
   [% END %]
   [% IF !originalLanguage %]
 <titleInfo type="alternative">
   [% END %]
-  <title>[% altt | xml_strict %]</title>
+  <title>[% alt | xml_strict %]</title>
 </titleInfo>
 [% END %]
 
 [% IF publication_status %]
 <note type="publicationStatus">[% publication_status %]</note>
-[% END %]
-
-[% IF defensePlace %]
-<note type="venue">[% defensePlace | xml_strict %]</note>
 [% END %]
 
 [% IF popular_science %]
@@ -197,7 +193,7 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
   [% END %]
 
   [% IF fi.open_access == '1' %]
-  <accessCondition type="restrictionOnAccess">[% fi.accessRestriction | xml_strict %]</accessCondition>
+  <accessCondition type="restrictionOnAccess">no]</accessCondition>
   [% END %]
 </relatedItem>
 [% END %]
@@ -230,7 +226,9 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 
 [% IF language %]
 <language>
-  <languageTerm authority="iso639-2b" type="code">[% language.iso %]</languageTerm>
+[% FOREACH lang IN language %]
+  <languageTerm authority="iso639-2b" type="code">[% lang.iso %]</languageTerm>
+[% END %]
 </language>
 [% END %]
 
@@ -245,7 +243,7 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 [% FOREACH ln IN link %]
 <relatedItem type="host">
   <location>
-    <url>[% ln.url | xml_strict %]</url>
+    <url>[% ln | xml_strict %]</url>
   </location>
 </relatedItem>
 [% END %]
@@ -257,11 +255,11 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
   </titleInfo>
 [% END %]
 
-[% FOREACH i IN issn %]
+[% FOREACH i IN publication_identifier.issn %]
   <identifier type="issn">[% i | xml_strict %]</identifier>
 [% END %]
 
-[% FOREACH j IN isbn %]
+[% FOREACH j IN publication_identifier.isbn %]
   <identifier type="isbn">[% j | xml_strict %]</identifier>
 [% END %]
 
@@ -269,20 +267,20 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
   <identifier type="other">[% opi | xml_strict %]</identifier>
 [% END %]
 
-[% IF arxiv %]
-  <identifier type="arXiv">[% arxiv| xml_strict %]</identifier>
+[% IF external_identifier.arxiv %]
+  <identifier type="arXiv">[% external_identifier.arxiv| xml_strict %]</identifier>
 [% END %]
-[% IF inspire %]
-  <identifier type="INSPIRE">[% inspire | xml_strict %]</identifier>
+[% IF external_identifier.inspire %]
+  <identifier type="INSPIRE">[% external_identifier.inspire | xml_strict %]</identifier>
 [% END %]
-[% IF medline %]
-  <identifier type="MEDLINE">[% medline | xml_strict %]</identifier>
+[% IF external_identifier.pmid %]
+  <identifier type="MEDLINE">[% external_identifier.pmid | xml_strict %]</identifier>
 [% END %]
-[% IF isi %]
-  <identifier type="ISI">[% isi | xml_strict %]</identifier>
+[% IF external_identifier.isi %]
+  <identifier type="ISI">[% external_identifier.isi | xml_strict %]</identifier>
 [% END %]
-[% IF urn %]
-  <identifier type="urn">[% urn | xml_strict %]</identifier>
+[% IF publication_identifier.urn %]
+  <identifier type="urn">[% publication_identifier.urn | xml_strict %]</identifier>
 [% END %]
 
 [% IF doi %]
@@ -366,7 +364,7 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 <note type="nonBielefeld">yes</note>
 [% END %]
 
-[% IF isFundedByUBI %]
+[% IF ubi_funded %]
 <note>
 <funding type="UNIBI">
 We acknowledge support for the Article Processing Charge by the Deutsche Forschungsgemeinschaft and the Open Access Publication Funds of Bielefeld University Library.
@@ -378,21 +376,14 @@ We acknowledge support for the Article Processing Charge by the Deutsche Forschu
 <note type="references">[% workReferences | xml_strict %]</note>
 [% END %]
 
-[% IF defenseDateTime %]
-<dateOther encoding="w3cdtf" type="defenseDate">[% defenseDateTime | xml_strict %]</dateOther>
+[% IF defense_date %]
+<dateOther encoding="w3cdtf" type="defenseDate">[% defense_date | xml_strict %]</dateOther>
 [% END %]
 
 [% IF additionalInformation %]
 <note type="additionalInfo">[% additionalInformation | xml_strict %]</note>
 [% END %]
 
-<extension>
-<bibliographicCitation>
-[% FOREACH sty IN citation.keys %]
-<[% sty %]>[% citation.$sty | xml_strict %]</[% sty %]>
-[% END %]
-</bibliographicCitation>
-</extension>
 
 <recordInfo>
   <recordIdentifier>[% _id %]</recordIdentifier>
