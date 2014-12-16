@@ -53,7 +53,8 @@
           <li[% IF modus == "admin" %] class="active"[% END %]><a href="/myPUB/search/admin">All Publications</a></li>
         [% END %]
         [% IF session.role == 'user' %]
-          <li[% IF modus == "user" %] class="active"[% END %]><a href="/myPUB/search">My Publications</a></li>
+          <li[% IF modus == "user" %] class="active"[% END %]><a href="/myPUB/search">Publications</a></li>
+          <li[% IF modus == "data" %] class="active"[% END %]><a href="/myPUB/search/data">Data Publications</a></li>
         [% END %]
         [% IF session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer") %]
           <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/search/reviewer">Publications for Review</a></li>
@@ -85,6 +86,15 @@
           <div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ">
             <div class="col-md-8">
               [% tabmodus = 'user' %]
+              [% INCLUDE hits.tt %]
+            </div>
+            <div class="col-md-3">
+              [% INCLUDE facets.tt %]
+            </div>
+          </div>
+          <div class="tab-pane[% IF modus == 'data' %] active[% END %]" id="publ">
+            <div class="col-md-8">
+              [% tabmodus = 'data' %]
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-md-3">
