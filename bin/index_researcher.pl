@@ -22,7 +22,7 @@ if ( $opt_m ) {
 	}
 }
 
-Catmandu->load('/srv/www/app-catalog/');
+Catmandu->load(':up');
 my $conf = Catmandu->config;
 my $mongoBag = Catmandu->store('authority')->bag('admin');
 my $userBag = Catmandu->store('authority')->bag('user');
@@ -30,7 +30,7 @@ my $bag = Catmandu->store('search', index_name => $index_name)->bag('researcher'
 
 my $pre_fixer = Catmandu::Fix->new(fixes => [
 			'add_num_of_publs()',
-			'copy_field("_id","oId")',
+			#'copy_field("_id","oId")',
 		]);
 
 sub add_to_index {

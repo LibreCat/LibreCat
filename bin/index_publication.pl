@@ -65,7 +65,7 @@ my $post_fixer = Catmandu::Fix->new(
 my $separate_fixer = Catmandu::Fix->new(
     fixes => [ 'remove_field("additionalInformation")', ] );
 
-my $bag    = Catmandu->store('search', index_name => $index_name)->bag('publicationItem');
+my $bag    = Catmandu->store('search', index_name => $index_name)->bag('publication');
 my $citbag = Catmandu->store('citation')->bag;
 my $authors;
 

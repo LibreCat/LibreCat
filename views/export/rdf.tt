@@ -1,0 +1,80 @@
+[%- USE XML::Strict -%]
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/terms/"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:bibo="http://purl.org/ontology/bibo/"
+         xmlns:fabio="http://purl.org/spar/fabio/"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xmlns:event="http://purl.org/NET/c4dm/event.owl#"
+         xmlns:ore="http://www.openarchives.org/ore/terms/">
+    <rdf:Description rdf:about="/publication/[% oId %]">
+        <ore:isDescribedBy rdf:resource="/publication/[% oId %]"/>
+        <dc:title>[% mainTitle | xml_strict %]</dc:title>
+        [%- IF author %]
+        <bibo:authorList rdf:parseType="Collection">
+            [%- FOREACH person IN author %]
+            <foaf:Person[% IF person.personNumber %] rdf:about="http://pub.uni-bielefeld.de/person/[% person.personNumber %]"[% END %]>
+                <foaf:name>[% person.fullName | xml_strict %]</foaf:name>
+                <foaf:surname>[% person.surname | xml_strict %]</foaf:surname>
+                <foaf:givenname>[% person.givenName | xml_strict %]</foaf:givenname>
+                [% IF person.personNumber %]
+                <foaf:workInfoHomepage rdf:resource="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% person.personNumber | xml_strict %]"/>
+                [% END %]
+            </foaf:Person>
+            [%- END %]
+        </bibo:authorList>
+        [%- END %]
+        [%- FOREACH val IN abstract %]
+        <bibo:abstract>[% val.text | xml_strict %]</bibo:abstract>
+        [%- END %]
+        [%- FOREACH val IN subject %]
+        <dc:subject>[% val | xml_strict %]</dc:subject>
+        [%- END %]
+        [%- IF volume %]
+        <bibo:volume>[% volume | xml_strict %]</bibo:volume>
+        [%- END %]
+        [%- IF issue %]
+        <bibo:issue>[% issue | xml_strict %]</bibo:issue>
+        [%- END %]
+        [%- IF page.defined('first') %]
+        <bibo:startPage>[% page.item('first') | xml_strict %]</bibo:startPage>
+        [%- END %]
+        [%- IF page.defined('last') %]
+        <bibo:endPage>[% page.item('last') | xml_strict %]</bibo:endPage>
+        [%- END %]
+        [%- IF language.iso %]
+        <dc:language>[% language.iso | xml_strict %]</dc:language>
+        [%- END %]
+        [%- IF publisher %]
+        <dc:publisher>[% publisher | xml_strict %]</dc:publisher>
+        [%- END %]
+        [%- IF publishingYear %]
+        <fabio:hasPublishingYear>[% publishingYear | xml_strict %]</fabio:hasPublishingYear>
+        [%- END %]
+        [%- IF copyright_statement %]
+        <dc:rights>[% copyright_statement | xml_strict %]</dc:rights>
+        [%- END %]
+        [%- IF file.size %]
+        <dc:format>[% file.0.content_type %]</dc:format>
+        [%- FOREACH f IN file %]
+        <ore:aggregates rdf:resource="http://pub.uni-bielefeld.de/download/[% oId | xml_strict %]/[% f.fileOId | xml_strict %]"/>
+        [%- END %]
+        [%- END %]
+        [%- FOREACH val IN issn %]
+        <dc:isPartOf rdf:resource="urn:issn:[% val | xml_strict %]"/>
+        [%- END %]
+        [%- FOREACH val IN isbn %]
+        <dc:isPartOf rdf:resource="urn:isbn:[% val | xml_strict %]"/>
+        [%- END %]
+        [%- IF urn %]
+        <dc:identifier rdf:resource="[% urn | xml_strict %]"/>
+        [%- END %]
+        [%- IF doi || doiInfo.doi %]
+        <bibo:doi rdf:resource="[% doi || doiInfo.doi | xml_strict %]" />
+        <ore:similarTo rdf:resource="info:doi/[% doi || doiInfo.doi | xml_strict %]"/>
+        [%- END %]
+        [%- IF pmid %]
+        <fabio:hasPubMedId>[% pmid %]</fabio>
+        [% END %]
+    </rdf:Description>
+</rdf:RDF>

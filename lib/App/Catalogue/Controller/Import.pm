@@ -6,7 +6,7 @@ use Carp;
 use Exporter qw/import/;
 
 our @EXPORT    = qw/import_publication/;
-our @EXPORT_OK = qw/arxiv inspire crossref pmc/;
+our @EXPORT_OK = qw/arxiv inspire crossref pmc wos/;
 
 my %dispatch = (
     arxiv    => \&arxiv,
@@ -23,6 +23,13 @@ sub import_publication {
     else {
         croak "No source provided";
     }
+}
+
+sub wos {
+    my $fh = shift;
+    my $pub = Catmandu->importer('wos')->to_array;
+
+    return $pub;
 }
 
 sub arxiv {

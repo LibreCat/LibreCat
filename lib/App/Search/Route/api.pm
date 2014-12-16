@@ -8,6 +8,7 @@ package App::Search::Route::api;
 
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
+use lib qw(/home/vitali/projects/LibreCat/Dancer-Plugin-Catmandu-OAI/lib);
 use Dancer::Plugin::Catmandu::OAI;
 use Dancer::Plugin::Catmandu::SRU;
 
@@ -31,7 +32,7 @@ oai_provider '/oai',
         my $pub = $_[0];
         my $specs = [$pub->{type}];
 
-        if ($pub->{ecFunded} eq '1') {
+        if ($pub->{ec_funded} && $pub->{ec_funded} eq '1') {
             if ($pub->{type} eq 'researchData') {
                 push @$specs, "openaire_data";
             } else {
@@ -39,8 +40,8 @@ oai_provider '/oai',
             }
 	    }
 
-        if ($pub->{file} && $pub->{file}->[0]->{openAccess} eq '1') {
-            push @$specs, "$pub->{documentType}Ftxt", "driver", "open_access";
+        if ($pub->{file}->[0]->{open_access} && $pub->{file}->[0]->{open_access} eq '1') {
+            push @$specs, "$pub->{type}Ftxt", "driver", "open_access";
         }
         $specs;
     };
