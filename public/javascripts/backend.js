@@ -75,16 +75,18 @@ function generate_link(file_id, pub_id){
 function linkPevz(element){
 	var type = "";
 	type = $(element).attr('data-type');
-	var lineId = $(element).attr('id').replace(type + 'link_pevz_','');
+	var viewport = "";
+	viewport = $(element).attr('data-viewport');
+	var lineId = $(element).attr('id').replace(viewport + type + 'link_pevz_','');
 
-	if($('#' + type + 'Authorized' + lineId).attr('alt') == "Not Authorized"){
+	if($('#' + viewport + type + 'Authorized' + lineId).attr('alt') == "Not Authorized"){
 		var puburl = '/myPUB/search_researcher?ftext=';
 		var narrowurl = "";
 		var longurl = "";
-		var first_name = $('#' + type + 'first_name_' + lineId).val();
+		var first_name = $('#' + viewport + type + 'first_name_' + lineId).val();
 		$('#' + type + 'orig_first_name_' + lineId).val(first_name);
 		var firstname = first_name.toLowerCase();
-		var last_name = $('#' + type + 'last_name_' + lineId).val();
+		var last_name = $('#' + viewport + type + 'last_name_' + lineId).val();
 		$('#' + type + 'orig_last_name_' + lineId).val(last_name);
 		var lastname = last_name.toLowerCase();
 		if(firstname){
@@ -155,14 +157,14 @@ function linkPevz(element){
 					}
 				});
 
-				$('#' + type + 'first_name_' + lineId).val(first_name);
-				$('#' + type + 'last_name_' + lineId).val(last_name);
+				$('#' + viewport + type + 'first_name_' + lineId).val(first_name);
+				$('#' + viewport + type + 'last_name_' + lineId).val(last_name);
 				$('#' + type + 'full_name_' + lineId).val(last_name + ", " + first_name);
 				$('#' + type + 'id_' + lineId).val(pevzId);
-				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
-				$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
-				$('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
-				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
+				$('#' + viewport + type + 'first_name_' + lineId + ', #' + viewport + type + 'last_name_' + lineId).attr("readonly","readonly");
+				$('#' + viewport + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
+				$('#' + viewport + type + 'Authorized' + lineId).attr('alt','Authorized');
+				$('#' + viewport + type + 'first_name_' + lineId + ', #' + viewport + type + 'last_name_' + lineId).parent().removeClass("has-error");
 
 				pevzId = "";
 				first_name = "";
@@ -243,17 +245,17 @@ function linkPevz(element){
 
 					var lineId = $(this).parents('.table').attr('id').replace('lineId','');
 
-					$('#' + type + 'first_name_' + lineId).val("");
-					$('#' + type + 'first_name_' + lineId).val(first_name);
-					$('#' + type + 'last_name_' + lineId).val("");
-					$('#' + type + 'last_name_' + lineId).val(last_name);
+					$('#' + viewport + type + 'first_name_' + lineId).val("");
+					$('#' + viewport + type + 'first_name_' + lineId).val(first_name);
+					$('#' + viewport + type + 'last_name_' + lineId).val("");
+					$('#' + viewport + type + 'last_name_' + lineId).val(last_name);
 					$('#' + type + 'full_name_' + lineId).val(last_name + ", " + first_name);
-					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
+					$('#' + viewport + type + 'first_name_' + lineId + ', #' + viewport + type + 'last_name_' + lineId).attr("readonly","readonly");
 					$('#' + type + 'id_' + lineId).val(pevzId);
 
-					$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
-					$('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
-					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
+					$('#' + viewport + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
+					$('#' + viewport + type + 'Authorized' + lineId).attr('alt','Authorized');
+					$('#' + viewport + type + 'first_name_' + lineId + ', #' + viewport + type + 'last_name_' + lineId).parent().removeClass("has-error");
 					$('#linkPevzModal').modal("hide");
 					$('#linkPevzModal').find('.modal-body').first().html('');
 				});
@@ -279,23 +281,25 @@ function linkPevz(element){
 function revert_name(element){
 	var type = "";
 	type = $(element).attr('data-type');
-	var lineId = $(element).attr('id').replace(type + 'revert_','');
+	var viewport = "";
+	viewport = $(element).attr('data-viewport');
+	var lineId = $(element).attr('id').replace(viewport + type + 'revert_','');
 	var orig_first_name = "";
 	orig_first_name = $('#' + type + 'orig_first_name_' + lineId).val();
 	var orig_last_name = "";
 	orig_last_name = $('#' + type + 'orig_last_name_' + lineId).val();
 
-	if($('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
+	if($('#' + viewport + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
 		// Uncheck, release input fields and change img back to gray
-		$('#' + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
-		$('#' + type + 'Authorized' + lineId).attr('alt','Not Authorized');
+		$('#' + viewport + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
+		$('#' + viewport + type + 'Authorized' + lineId).attr('alt','Not Authorized');
 		$('#' + type + 'id_' + lineId).val("");
-		$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
+		$('#' + viewport + type + 'first_name_' + lineId + ', #' + viewport + type + 'last_name_' + lineId).removeAttr("readonly");
 	}
 
-	$('#' + type + 'first_name_' + lineId).val(orig_first_name);
+	$('#' + viewport + type + 'first_name_' + lineId).val(orig_first_name);
 	$('#' + type + 'orig_first_name_' + lineId).val("");
-	$('#' + type + 'last_name_' + lineId).val(orig_last_name);
+	$('#' + viewport + type + 'last_name_' + lineId).val(orig_last_name);
 	$('#' + type + 'orig_last_name_' + lineId).val("");
 }
 
@@ -405,8 +409,8 @@ $(function () {
 });
 
 function add_field(name, placeholder){
-	var items = $('#' + name + ' div.form-group');
-	var index = items.index($('#' + name + ' div.form-group').last()) + 1;
+	var items = $('#' + name + ' div.row.innerrow');
+	var index = items.index($('#' + name + ' div.row.innerrow').last()) + 1;
 	var blueprint = $(items[0]).clone(true,true);
 
 	$(blueprint).find('input, textarea, img, button, select').each(function(){
@@ -447,7 +451,7 @@ function add_field(name, placeholder){
 }
 
 function remove_field(object){
-	var container = $(object).closest('div.form-group');
+	var container = $(object).closest('div.row.innerrow');
 	var index = $(container).index();
 
 	if(parseInt(index) > 0){
@@ -487,53 +491,177 @@ function enable_autocomplete(field, index, viewport){
             //$( "#" + field + "_nameautocomplete_" + index ).val( ui.item.label );
             $( "#" + field + "_idautocomplete_" + index ).val( ui.item.id );
             $( "#" + field + viewport + "_autocomplete_" + index ).attr("disabled", "disabled");
-            $('input.pub').blur();
+            $('input.sticky').blur();
         },
 	    close: function(){
-	    	$('input.pub').blur();
+	    	$('input.sticky').blur();
 	    },
 	});
 }
 
+//$(function(){
+//	$('input.pub, select.pub').on("focus",function(){
+//		var addon = $(this).parent('div.input-group').children('div.input-group-addon.pub');
+//		if($(this).parent('div.input-group').hasClass('mandatory')){
+//			addon.css("border-color", "#953b39");
+//			addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
+//			addon.css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
+//		}
+//		else {
+//			addon.css("border-color","#66afe9");
+//			addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+//			addon.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+//		}
+//		
+//		addon.css("outline", "0");
+//		
+//		var first_addon = $(this).parent('div.input-group').children('div.input-group-addon:first-child.pub');
+//		first_addon.css("border-right","none");
+//		
+//		var last_addon = $(this).parent('div.input-group').children('div.input-group-addon:last-child.pub');
+//		last_addon.css("border-left", "none");
+//		
+//		var not_first_last = $(this).parent('div.input-group').children('div.input-group-addon:not(:first-child):not(:last-child).pub');
+//		not_first_last.css("border-left", "none");
+//		not_first_last.css("border-right", "none");
+//		
+//	    var mymatch = $(this).attr('name').match(/department\.(\d{1,})\.name/);
+//		if(mymatch && mymatch[1]){
+//			var index = mymatch[1];
+//			enable_autocomplete("dp", index, "_sm");
+//		}
+//		mymatch = $(this).attr('name').match(/project\.(\d{1,})\.name/);
+//		if(mymatch && mymatch[1]){
+//			var index = mymatch[1];
+//			enable_autocomplete("pj", index, "_sm");
+//		}
+//	});
+//	
+//	$('input.pub, select.pub').on("blur", function(){
+//		var addon = $(this).parent('div.input-group').children('div.input-group-addon.pub');
+//		if(addon.parent('div.input-group').hasClass('mandatory')){
+//			addon.css("border-color","#b94a48");
+//		}
+//		else {
+//			addon.css("border","1px solid #cccccc");
+//		}
+//		addon.css("-webkit-box-shadow", "none");
+//		addon.css("box-shadow","none");
+//		
+//		var first_addon = $(this).parent('div.input-group').children('div.input-group-addon:first-child.pub');
+//		first_addon.css("border-right","none");
+//		
+//		var last_addon = $(this).parent('div.input-group').children('div.input-group-addon:last-child.pub');
+//		last_addon.css("border-left", "none");
+//		
+//		var not_first_last = $(this).parent('div.input-group').children('div.input-group-addon:not(:first-child):not(:last-child).pub');
+//		not_first_last.css("border-left", "none");
+//		not_first_last.css("border-right", "none");
+//	});
+//});
+
 $(function(){
-	$('input.pub').on("focus",function(){
-		var addon = $(this).parent('div.input-group').children('div.input-group-addon.pub');
-		addon.css("border-color","#66afe9");
-		addon.css("outline", "0");
-		addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
-		addon.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+	$('div.input-group.sticky .input-group-addon:first-child').on("click", function(){
+		$(this).parent('div.input-group.sticky').children('input, select').focus();
+	});
+	$('input.sticky, select.sticky').on("focus",function(){
+		var input_group = $(this).parent('div.sticky');
+		var first_addon = input_group.children('div.input-group-addon:first-child');
+		if(input_group.parent('.form-group').hasClass('hidden-lg') || input_group.parent('.form-group').hasClass('hidden-md')){
+			if(first_addon){
+				first_addon.css("display","none");
+				$(this).css("border-bottom-left-radius","3px");
+				$(this).css("border-top-left-radius","3px");
+			}
+		}
 		
-		var first_addon = $(this).parent('div.input-group').children('div.input-group-addon:first-child.pub');
-		first_addon.css("border-right","none");
+		$(this).css("border","none");
 		
-		var last_addon = $(this).parent('div.input-group').children('div.input-group-addon:last-child.pub');
-		last_addon.css("border-left", "none");
+//		var last_addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon:last-child');
+//		last_addon.css("border-left", "none");
 		
-		var not_first_last = $(this).parent('div.input-group').children('div.input-group-addon:not(:first-child):not(:last-child).pub');
-		not_first_last.css("border-left", "none");
-		not_first_last.css("border-right", "none");
+//		var not_first_last = $(this).parent('div.input-group.sticky').children('div.input-group-addon:not(:first-child):not(:last-child)');
+//		not_first_last.css("border-left", "none");
+//		not_first_last.css("border-right", "none");
+		
+		var addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon');
+//		if($(this).parent('div.input-group').hasClass('mandatory')){
+//			addon.css("border-color", "#953b39");
+//			$(this).css("border-left", "1px solid #953b39");
+//			addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
+//			addon.css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
+//		}
+//		else {
+//			addon.css("border-color","#66afe9");
+//		addon.css("border","none");
+//			$(this).css("border-left","1px solid #66afe9");
+//			addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+//			addon.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+//		}
+		if($(this).parent('div.sticky').hasClass('mandatory')){
+			$(this).parent('div.sticky').css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
+			$(this).parent('div.sticky').css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
+			$(this).parent('div.sticky').css("border", "1px solid #953b39");
+			$(this).css("box-shadow", "inset 0 1px 1px -1px rgba(0, 0, 0, 0.075), 0 0 6px -6px #d59392");
+		}
+		else {
+			$(this).parent('div.sticky').css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+			$(this).parent('div.sticky').css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
+			$(this).parent('div.sticky').css("border", "1px solid #66afe9");
+			$(this).css("box-shadow", "inset 0 1px 1px -1px rgba(0, 0, 0, 0.075), 0 0 8px -8px rgba(102, 175, 233, 0.6)");
+		}
+		
+		
+//		addon.css("outline", "0");
 		
 	    var mymatch = $(this).attr('name').match(/department\.(\d{1,})\.name/);
 		if(mymatch && mymatch[1]){
 			var index = mymatch[1];
 			enable_autocomplete("dp", index, "_sm");
 		}
+		mymatch = $(this).attr('name').match(/project\.(\d{1,})\.name/);
+		if(mymatch && mymatch[1]){
+			var index = mymatch[1];
+			enable_autocomplete("pj", index, "_sm");
+		}
 	});
 	
-	$('input.pub').on("blur", function(){
-		var addon = $(this).parent('div.input-group').children('div.input-group-addon.pub');
-		addon.css("border","1px solid #cccccc");
-		addon.css("-webkit-box-shadow", "none");
-		addon.css("box-shadow","none");
+	$('input.sticky, select.sticky').on("blur", function(){
+		var addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon');
+//		if(addon.parent('div.input-group').hasClass('mandatory')){
+//			addon.css("border-color","#b94a48");
+//		}
+//		else {
+//			addon.css("border","1px solid #cccccc");
+//		}
+		addon.css("border","none");
+		if($(this).parent('div.sticky').hasClass('mandatory')){
+			$(this).parent('div.sticky').css("border", "1px solid #b94a48");
+		}
+		else{
+			$(this).parent('div.sticky').css("border", "1px solid #cccccc");
+		}
+		$(this).parent('div.sticky').css("-webkit-box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
+        $(this).parent('div.sticky').css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
+        $(this).parent('div.sticky').css("-webkit-box-shadow", "none");
+        $(this).parent('div.sticky').css("box-shadow","none");
+        $(this).parent('div.sticky').css("border-radius","3px");
+        
+		var first_addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon:first-child');
+		first_addon.css("display", "table-cell");
+//		first_addon.css("border-right","none");
+//		$(this).css("border-left","none");
+//		$(this).css("border-bottom-left-radius","0");
+//		$(this).css("border-top-left-radius","0");
 		
-		var first_addon = $(this).parent('div.input-group').children('div.input-group-addon:first-child.pub');
-		first_addon.css("border-right","none");
+//		first_addon.css("-webkit-box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
+//		first_addon.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
 		
-		var last_addon = $(this).parent('div.input-group').children('div.input-group-addon:last-child.pub');
-		last_addon.css("border-left", "none");
+//		var last_addon = $(this).parent('div.input-group').children('div.input-group-addon:last-child.pub');
+//		last_addon.css("border-left", "none");
 		
-		var not_first_last = $(this).parent('div.input-group').children('div.input-group-addon:not(:first-child):not(:last-child).pub');
-		not_first_last.css("border-left", "none");
-		not_first_last.css("border-right", "none");
+//		var not_first_last = $(this).parent('div.input-group').children('div.input-group-addon:not(:first-child):not(:last-child).pub');
+//		not_first_last.css("border-left", "none");
+//		not_first_last.css("border-right", "none");
 	});
 });

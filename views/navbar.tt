@@ -68,13 +68,13 @@
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
        <ul class="nav navbar-nav">
-         <li class="hidden-xs hidden-sm"><a href="/myPUB"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-         <li class="hidden-md hidden-lg"><a href="/myPUB"><span class="glyphicon glyphicon-home"></span></a></li>
+         <li class="hidden-sm"><a href="/myPUB"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+         <li class="hidden-xs hidden-md hidden-lg"><a href="/myPUB"><span class="glyphicon glyphicon-home"></span></a></li>
          [% IF session AND session.user %]
-         <li class="hidden-xs hidden-sm"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New</a></li>
-         <li class="hidden-md hidden-lg"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span></a></li>
-         <li class="hidden-xs hidden-sm"><a href="[% h.host %]/person/[% session.personNumber %]"><span class="glyphicon glyphicon-eye-open"></span> My Public Author Page</a></li>
-         <li class="hidden-md hidden-lg"><a href="[% h.host %]/person/[% session.personNumber %]"><span class="glyphicon glyphicon-eye-open"></span></a></li>
+         <li class="hidden-sm"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
+         <li class="hidden-xs hidden-md hidden-lg"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span></a></li>
+         <li class="hidden-sm"><a href="[% h.host %]/person/[% session.personNumber %]"><span class="fa fa-list-alt"></span> My Public Author Page</a></li>
+         <li class="hidden-xs hidden-md hidden-lg"><a href="[% h.host %]/person/[% session.personNumber %]"><span class="fa fa-list-alt"></span></a></li>
          [% IF session.role == "super_admin" %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="glyphicon glyphicon-chevron-down"></a>
           <ul class="dropdown-menu" role="menu">
@@ -89,8 +89,13 @@
        </ul>
        <ul class="nav navbar-nav navbar-right">
          [% IF session AND session.user %]
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> My Settings <span class="glyphicon glyphicon-chevron-down"></span></a>
-            <div class="dropdown-menu" id="aff_dropdown" style="width: 550px">
+         <li class="dropdown hidden-sm"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> My Settings <span class="glyphicon glyphicon-chevron-down"></span></a>
+            <div class="dropdown-menu" style="width: 550px">
+            [% INCLUDE person_affiliation.tt %]
+            </div>
+         </li>
+         <li class="dropdown hidden-lg hidden-md hidden-xs"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></a>
+            <div class="dropdown-menu" style="width: 550px">
             [% INCLUDE person_affiliation.tt %]
             </div>
          </li>
@@ -112,11 +117,11 @@
           </ul>
          </li>
          [% END %]
-         <li class="hidden-xs hidden-sm"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-         <li class="hidden-md hidden-lg"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
+         <li class="hidden-sm"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+         <li class="hidden-xs hidden-lg hidden-md"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
          [% ELSE %]
-         <li class="hidden-xs hidden-sm"><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-         <li class="hidden-md hidden-lg"><a href="/login"><span class="glyphicon glyphicon-log-in"></span></a></li>
+         <li class="hidden-sm"><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+         <li class="hidden-xs hidden-lg hidden-md"><a href="/login"><span class="glyphicon glyphicon-log-in"></span></a></li>
          [% END %]
        </ul>
      </div><!-- /.navbar-collapse -->
@@ -124,10 +129,10 @@
 
 <!-- offset -->
 <div class="row">
-  hi there!
+  &nbsp;
 </div>
 <div class="row">
-  hi there!
+  &nbsp;
 </div>
 <!-- offset -->
 

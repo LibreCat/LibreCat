@@ -191,9 +191,11 @@ $(document).on('click', '.inner_row', function(){
   $(this).closest('div.innerrow').remove();
 });
 $(document).on('click', '.fullrow', function(){
-  var index = $(this).parent().parent().parent().parent().index();
+  //var index = $(this).parent().parent().parent().parent().index();
+  var index = $(this).closest('.row.authorspan').index();
   if(parseInt(index) != 0){
-    $(this).parent().parent().parent().parent().remove();
+    //$(this).parent().parent().parent().parent().remove();
+    $(this).closest('.row.authorspan').remove();
   }
 });
 $(document).on('click', '.author', function(){
@@ -286,8 +288,8 @@ function angularSearch($scope, $compile) {
 	{% IF fields.basic_fields.author.last_name.placeholder %}
 	  var ln_placeholder = "{% fields.basic_fields.author.last_name.placeholder %}";
 	{% END %}
-	$('#authorEditorTranslator').append($compile('[% INCLUDE backend/fields/subfields/author_more.tt %]')($scope));
 	var selected = $('#authedtrans_0').val();
+	$('#authorEditorTranslator').append($compile('[% INCLUDE backend/fields/subfields/author_more.tt %]')($scope));
 	{% FOREACH creator IN fields.basic_fields.author.label.keys.sort %}
 	  if(selected == "{% fields.basic_fields.author.label.$creator %}"){
 	    $('#authorEditorTranslator div:last-child select').append('<option value="{% fields.basic_fields.author.label.$creator %}">{% creator %}</option>');

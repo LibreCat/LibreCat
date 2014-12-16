@@ -1,0 +1,33 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_issue">
+      {% fields.basic_fields.volume_issue_page.label %}{% fields.supplementary_fields.volume_issue_page.label %}
+    </label>
+    {% IF fields.basic_fields.volume_issue_page.mandatory OR fields.supplementary_fields.volume_issue_page.mandatory %}<span class="starMandatory"></span>{% END %}
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="form-group col-md-3 col-xs-3">
+        <div class="input-group input-group-sm sticky">
+          <div class="input-group-addon">{% fields.basic_fields.volume_issue_page.label_volume %}{% fields.supplementary_fields.volume_issue_page.label_volume %}</div>
+          <input type="text" name="volume" id="id_volume" value="[% volume %]" placeholder="{% fields.basic_fields.volume.placeholder %}{% fields.supplementary_fields.volume.placeholder %}" class="sticky form-control{% IF fields.basic_fields.volume.mandatory OR fields.supplementary_fields.volume.mandatory %} required{% END %}"{% IF fields.basic_fields.volume.readonly OR fields.supplementary_fields.volume.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+      <div class="form-group col-md-3 col-xs-3">
+        <div class="input-group input-group-sm sticky">
+          <div class="input-group-addon">{% fields.basic_fields.volume_issue_page.label_issue %}{% fields.supplementary_fields.volume_issue_page.label_issue %}</div>
+          <input type="text" name="issue" id="id_issue" value="[% issue %]" placeholder="{% fields.basic_fields.volume_issue_page.placeholder %}{% fields.supplementary_fields.volume_issue_page.placeholder %}" class="sticky form-control{% IF fields.basic_fields.volume_issue_page.mandatory OR fields.supplementary_fields.volume_issue_page.mandatory %} required{% END %}"{% IF fields.basic_fields.volume_issue_page.readonly OR fields.supplementary_fields.volume_issue_page.readonly %} readonly="readonly"{% END %}/>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+      <div class="form-group col-md-4 col-xs-5">
+        <div class="input-group input-group-sm sticky">
+          <div class="input-group-addon">{% fields.basic_fields.volume_issue_page.label_page %}{% fields.supplementary_fields.volume_issue_page.label_page %}</div>
+          <input type="text" name="page.count" id="id_page" value="[% page.count %]" placeholder="{% fields.basic_fields.volume_issue_page.placeholder_page %}{% fields.supplementary_fields.volume_issue_page.placeholder_page %}" class="sticky form-control{% IF fields.basic_fields.volume_issue_page.mandatory OR fields.supplementary_fields.volume_issue_page.mandatory %} required{% END %}"{% IF fields.basic_fields.volume_issue_page.readonly OR fields.supplementary_fields.volume_issue_page.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

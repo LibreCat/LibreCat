@@ -1,14 +1,24 @@
 <div class="row innerrow">
-  <div class="col-md-2">
-    {% IF fields.basic_fields.series_title.mandatory OR fields.supplementary_fields.series_title.mandatory %}<span class="starMandatory">{% END %}
+  <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_series_title">
       {% fields.basic_fields.series_title.label %}{% fields.supplementary_fields.series_title.label %}
     </label>
-    {% IF fields.basic_fields.series_title.mandatory OR fields.supplementary_fields.series_title.mandatory %}</span>{% END %}
+    {% IF fields.basic_fields.series_title.mandatory OR fields.supplementary_fields.series_title.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10">
-    <span class="form-group col-md-9">
-      <input type="text" name="series_title" id="id_series_title" value="[% series_title %]" placeholder="{% fields.basic_fields.series_title.placeholder %}{% fields.supplementary_fields.series_title.placeholder %}" class="form-control{% IF fields.basic_fields.series_title.mandatory OR fields.supplementary_fields.series_title.mandatory %} required{% END %}"{% IF fields.basic_fields.series_title.readonly OR fields.supplementary_fields.series_title.readonly %} readonly="readonly"{% END %}>
+    <div class="row innerrow">
+      <div class="form-group col-md-10 hidden-xs hidden-sm">
+        <div class="sticky{% IF fields.basic_fields.series_title.mandatory OR fields.supplementary_fields.series_title.mandatory %} mandatory{% END %}">
+          <input type="text" name="series_title" id="id_series_title" value="[% series_title %]" placeholder="{% fields.basic_fields.series_title.placeholder %}{% fields.supplementary_fields.series_title.placeholder %}" class="sticky input-sm form-control{% IF fields.basic_fields.series_title.mandatory OR fields.supplementary_fields.series_title.mandatory %} required{% END %}"{% IF fields.basic_fields.series_title.readonly OR fields.supplementary_fields.series_title.readonly %} readonly="readonly"{% END %}>
+        </div>
+      </div>
+      <div class="form-group col-xs-11 hidden-lg hidden-md">
+        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.series_title.mandatory OR fields.supplementary_fields.series_title.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon">{% fields.basic_fields.series_title.label_short || fields.basic_fields.series_title.label %}{% fields.supplementary_fields.series_title.label_short || fields.supplementary_fields.series_title.label %}</div>
+          <input type="text" name="series_title" id="id_series_title" value="[% series_title %]" placeholder="{% fields.basic_fields.series_title.placeholder %}{% fields.supplementary_fields.series_title.placeholder %}" class="sticky form-control{% IF fields.basic_fields.series_title.mandatory OR fields.supplementary_fields.series_title.mandatory %} required{% END %}"{% IF fields.basic_fields.series_title.readonly OR fields.supplementary_fields.series_title.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
     </span>
   </div>
 </div>

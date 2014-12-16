@@ -1,56 +1,129 @@
 <div class="row innerrow">
-  <div class="col-md-2">
-    {% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}<span class="starMandatory">{% END %}
+  <div class="col-md-2 hidden-xs hidden-sm">
     <label for="ddc">
       {% fields.basic_fields.ddc.label %}{% fields.supplementary_fields.ddc.label %}
     </label>
-    {% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}</span>{% END %}{% IF fields.basic_fields.ddc.multiple OR fields.supplementary_fields.ddc.multiple %} <span class="glyphicon glyphicon-plus" onclick="add_field('ddc');"></span>{% END %}
+    {% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10" id="ddc">
     {% IF fields.basic_fields.ddc.multiple OR fields.supplementary_fields.ddc.multiple %}
     [% IF !ddc %]
-    {% END %}
-    <div class="form-group row innerrow">
-      <div class="col-md-9">
-        <select name="ddc.0" class="form-control{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} required{% END %}" id="select_ddc_0" onchange="changeSelectColor()">
-          <option value=""[% IF !ddc %] selected="selected"[% END %]>--- Select DDC ---</option>
-          [% FOREACH group IN h.get_list('ddc').keys.sort %]
-            <optgroup label="[% h.get_list('ddc').$group.optgroup %]">
-            [% FOREACH xddc IN h.get_list('ddc').$group.keys.sort %]
-              [% NEXT IF xddc == "optgroup" %]
-              <option id="[% xddc %]" value="[% xddc %]"[% IF xddc == ddc %] selected="selected"[% END %]>[% h.get_list('ddc').$group.$xddc %]</option>
-            [% END %]
-            </optgroup>
-          [% END %]
-        </select>
-      </div>
-      <div class="col-md-1">
-        <div class="glyphicon glyphicon-minus" onclick="remove_field(this);"></div>
-      </div>
-    </div>
-    {% IF fields.basic_fields.ddc.multiple OR fields.supplementary_fields.ddc.multiple %}
-    [% ELSE %]
-      [% FOREACH d IN ddc %]
-      <div class="form-group row innerrow">
-        <div class="col-md-9">
-          <select name="ddc.[% loop.index %]" class="form-control{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_ddc_[% loop.index %]" onchange="changeSelectColor()">
-            <option value="">--- Select DDC ---</option>
+    <div class="row innerrow">
+      <div class="form-group col-md-10 hidden-xs hidden-sm">
+        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
+          <select name="ddc.0" class="sticky form-control{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} required{% END %}" id="select_ddc_0">
+            <option value=""[% IF !ddc %] selected="selected"[% END %]>--- Select DDC ---</option>
             [% FOREACH group IN h.get_list('ddc').keys.sort %]
               <optgroup label="[% h.get_list('ddc').$group.optgroup %]">
               [% FOREACH xddc IN h.get_list('ddc').$group.keys.sort %]
                 [% NEXT IF xddc == "optgroup" %]
-                <option id="[% xddc %]" value="[% xddc %]"[% IF xddc == d %] selected="selected"[% END %]>[% h.get_list('ddc').$group.$xddc %]</option>
+                <option id="[% xddc %]" value="[% xddc %]"[% IF xddc == ddc %] selected="selected"[% END %]>[% h.get_list('ddc').$group.$xddc %]</option>
               [% END %]
               </optgroup>
             [% END %]
           </select>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('ddc');"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
         </div>
-        <div class="col-md-1">
-          <div class="glyphicon glyphicon-minus" onclick="remove_field(this);"></div>
+      </div>
+      <div class="form-group col-xs-11 hidden-lg hidden-md">
+        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon">{% fields.basic_fields.ddc.label %}{% fields.supplementary_fields.ddc.label %}</div>
+          <select name="ddc.0" class="sticky form-control{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} required{% END %}" id="select_ddc_0">
+            <option value=""[% IF !ddc %] selected="selected"[% END %]>--- Select DDC ---</option>
+            [% FOREACH group IN h.get_list('ddc').keys.sort %]
+              <optgroup label="[% h.get_list('ddc').$group.optgroup %]">
+              [% FOREACH xddc IN h.get_list('ddc').$group.keys.sort %]
+                [% NEXT IF xddc == "optgroup" %]
+                <option id="[% xddc %]" value="[% xddc %]"[% IF xddc == ddc %] selected="selected"[% END %]>[% h.get_list('ddc').$group.$xddc %]</option>
+              [% END %]
+              </optgroup>
+            [% END %]
+          </select>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('ddc');"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+        </div>
+      </div>
+    </div>
+    [% ELSE %]
+      [% FOREACH d IN ddc %]
+      <div class="row innerrow">
+        <div class="form-group col-md-10 hidden-xs hidden-sm">
+          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
+            <select name="ddc.[% loop.index %]" class="sticky form-control{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_ddc_[% loop.index %]">
+              <option value="">--- Select DDC ---</option>
+              [% FOREACH group IN h.get_list('ddc').keys.sort %]
+                <optgroup label="[% h.get_list('ddc').$group.optgroup %]">
+                [% FOREACH xddc IN h.get_list('ddc').$group.keys.sort %]
+                  [% NEXT IF xddc == "optgroup" %]
+                  <option id="[% xddc %]" value="[% xddc %]"[% IF xddc == d %] selected="selected"[% END %]>[% h.get_list('ddc').$group.$xddc %]</option>
+                [% END %]
+                </optgroup>
+              [% END %]
+            </select>
+            <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('ddc');"></span></div>
+            <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          </div>
+        </div>
+        <div class="form-group col-xs-11 hidden-lg hidden-md">
+          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
+            <div class="input-group-addon">{% fields.basic_fields.ddc.label %}{% fields.supplementary_fields.ddc.label %}</div>
+            <select name="ddc.[% loop.index %]" class="sticky form-control{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_ddc_[% loop.index %]">
+              <option value="">--- Select DDC ---</option>
+              [% FOREACH group IN h.get_list('ddc').keys.sort %]
+                <optgroup label="[% h.get_list('ddc').$group.optgroup %]">
+                [% FOREACH xddc IN h.get_list('ddc').$group.keys.sort %]
+                  [% NEXT IF xddc == "optgroup" %]
+                  <option id="[% xddc %]" value="[% xddc %]"[% IF xddc == d %] selected="selected"[% END %]>[% h.get_list('ddc').$group.$xddc %]</option>
+                [% END %]
+                </optgroup>
+              [% END %]
+            </select>
+            <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('ddc');"></span></div>
+            <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          </div>
         </div>
       </div>
       [% END %]
     [% END %]
+    {% ELSE %}
+    <div class="row innerrow">
+      <div class="form-group col-md-10 hidden-xs hidden-sm">
+        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
+          <select name="ddc.0" class="sticky form-control{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} required{% END %}" id="select_ddc_0">
+            <option value=""[% IF !ddc %] selected="selected"[% END %]>--- Select DDC ---</option>
+            [% FOREACH group IN h.get_list('ddc').keys.sort %]
+              <optgroup label="[% h.get_list('ddc').$group.optgroup %]">
+              [% FOREACH xddc IN h.get_list('ddc').$group.keys.sort %]
+                [% NEXT IF xddc == "optgroup" %]
+                <option id="[% xddc %]" value="[% xddc %]"[% IF xddc == ddc %] selected="selected"[% END %]>[% h.get_list('ddc').$group.$xddc %]</option>
+              [% END %]
+              </optgroup>
+            [% END %]
+          </select>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('ddc');"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+        </div>
+      </div>
+      <div class="form-group col-xs-11 hidden-lg hidden-md">
+        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon">{% fields.basic_fields.ddc.label %}{% fields.supplementary_fields.ddc.label %}</div>
+          <select name="ddc.0" class="sticky form-control{% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} required{% END %}" id="select_ddc_0">
+            <option value=""[% IF !ddc %] selected="selected"[% END %]>--- Select DDC ---</option>
+            [% FOREACH group IN h.get_list('ddc').keys.sort %]
+              <optgroup label="[% h.get_list('ddc').$group.optgroup %]">
+              [% FOREACH xddc IN h.get_list('ddc').$group.keys.sort %]
+                [% NEXT IF xddc == "optgroup" %]
+                <option id="[% xddc %]" value="[% xddc %]"[% IF xddc == ddc %] selected="selected"[% END %]>[% h.get_list('ddc').$group.$xddc %]</option>
+              [% END %]
+              </optgroup>
+            [% END %]
+          </select>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('ddc');"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+        </div>
+      </div>
+    </div>
     {% END %}
   </div>
 </div>
