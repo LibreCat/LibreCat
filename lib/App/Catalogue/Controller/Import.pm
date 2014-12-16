@@ -27,7 +27,7 @@ sub import_publication {
 
 sub wos {
     my $fh = shift;
-    my $pub = Catmandu->importer(wos)->to_array;
+    my $pub = Catmandu->importer('wos')->to_array;
 
     return $pub;
 }
