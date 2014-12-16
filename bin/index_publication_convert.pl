@@ -261,6 +261,21 @@ sub add_to_index {
     ($rec->{status} eq 'unsubmitted') && ($rec->{status} = 'private');
     ($rec->{status} eq 'returned') && ($rec->{status} = 'private');
     ($rec->{status} eq 'pdeleted') && ($rec->{status} = 'deleted');
+    
+    if ( $rec->{author} ) {
+    	foreach ( @{ $rec->{author} } ) {
+    		if ( $_->{personNumber} ) {
+    			$authors->{ $_->{personNumber} } = "true";
+    		}
+    	}
+    }
+    if ( $rec->{editor} ) {
+    	foreach ( @{ $rec->{editor} } ) {
+    		if ( $_->{personNumber} ) {
+    			$authors->{ $_->{personNumber} } = "true";
+    		}
+    	}
+    }
 
     my $result = $bag->add($rec);
     $publbag->add($result);
