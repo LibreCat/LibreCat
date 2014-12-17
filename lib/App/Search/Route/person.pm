@@ -54,11 +54,13 @@ get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
 	my @orig_q = @{$p->{q}};
 	
 	push @{$p->{q}}, "person=$id";
+	push @{$p->{q}}, "status=public";
 	push @{$p->{q}}, "type<>researchData";
 	push @{$p->{q}}, "type<>dara";
 	my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '', $id);
 	$p->{sort} = $sort_style->{sort};
 	$p->{facets} = h->default_facets();
+	$p->{limit} = h->config->{store}->{maximum_page_size};
 
 	my $hits = h->search_publication($p);
 	
@@ -66,14 +68,21 @@ get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
 	@{$p->{q}} = @orig_q;
 	push @{$p->{q}}, "person=$id";
 	push @{$p->{q}}, "(type=researchData OR type=dara)";
+	$p->{limit} = 1;
 	$researchhits = h->search_publication($p);
 	
 	$hits->{researchhits} = $researchhits;
 	
+	$p->{limit} = h->config->{store}->{maximum_page_size};
 	$hits->{style} = $sort_style->{style};
 	$hits->{sort} = $p->{sort};
 	$hits->{id} = $id;
 	$hits->{modus} = $modus || "user";
+	
+	my $marked = session 'marked';
+    $marked ||= [];
+    $hits->{marked} = @$marked;
+        
 	template "home.tt", $hits;
 };
 
@@ -86,8 +95,14 @@ Forwards to /person/:ID
 get qr{/person/(\w+)/*} => sub {
 	my ($alias) = splat;
 
-	my $person = h->authority_user->select({"alias", $alias})->first;
-	forward "/person/$person->{_id}";
+	my $person = h->authority_user->select("alias", $alias)->first;
+	if(!$person){
+		status '404';
+		template 'special_404', { path => request->path };
+	}
+	else {
+		forward "/person/$person->{_id}";
+	}
 };
 
 =head2 GET /person

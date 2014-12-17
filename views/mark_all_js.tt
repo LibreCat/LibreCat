@@ -1,0 +1,25 @@
+<script>
+var path = '[% request.path %]',
+searchParams = [% h.extract_params.json %];
+searchParams.q.push('person=$id');
+var url = '/marked?'+ $.param($.extend({}, searchParams), true);
+
+$('a.mark-all').click(function(evt) {
+  evt.preventDefault();
+  $.post(url, function(res) {
+      if (res.message) {
+        showAlertMessage(res.ok ? 'info' : 'warning', res.message);
+      }
+      $('a.mark').data('marked', 1).text('Unmark');
+      $('.unmark_all').html('<a class="unmark-all" href="#" rel="nofollow">Unmark all</a>');
+      $('.total-marked').text(res.total);
+    }, 'json');
+});
+
+$('a.unmark-all').on("click", function(evt) {
+  evt.preventDefault();
+  $.post('/marked?x-tunneled-method=DELETE', function(res) {
+    window.location.reload();
+  }, 'json');
+});
+</script>

@@ -1,7 +1,24 @@
 <!-- BEGIN rightBoxLogin.tt -->
-<div>
-  <a href="[% h.shost %]/luur" class="btn btn-sm btn-block pubbutton" style="font-size:105%;"><span class="fa fa-sign-in"></span>&nbsp;&nbsp;&nbsp;[% lang ? "Login to PUB" : "PUB Login" %]</a>
+<div class="row">
+  <div class="col-md-12">&nbsp;</div>
 </div>
 
-<div>&nbsp;</div>
+<div class="row">
+  <div class="col-md-12">
+    <a href="[% h.shost %]/myPUB" class="btn btn-sm btn-block pubbutton" style="font-size:105%;">[% IF !session.user %]<span class="fa fa-sign-in"></span>&nbsp;&nbsp;&nbsp;[% lang ? "Login to PUB" : "PUB Login" %][% ELSE %]myPUB[% END %]</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">&nbsp;</div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow">Your Marked Publications <span class="badge total-marked">[% marked %]</span></a>
+    <div class="unmark_all">[% IF marked %]<a class="unmark-all" href="#" rel="nofollow">Unmark all</a>[% END %]</div>
+  </div>
+</div>
+
+
 <!-- END rightBoxLogin.tt -->

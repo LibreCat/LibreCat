@@ -87,10 +87,12 @@ post '/mark/:id' => sub {
 
 post '/marked' => sub {
 
-	my $p = params;
+	my $p = h->extract_params();
 	my $del = params->{'x-tunneled-method'};
-	my $marked = session 'marked' ||= [];
-    my $query = h->make_cql($p);
+	my $marked = [];
+	$marked = session 'marked';
+    $p->{limit} = h->config->{store}->{maximum_page_size};
+    $p->{start} = 0;
 
 	if($del){
 		if (session 'marked') {
@@ -102,20 +104,16 @@ post '/marked' => sub {
 		};
 	}
 
-    if (@$marked > 500) { #should be >500 ??
-    	content_type 'application/json';
-        return to_json {
-            ok => false,
-            message => "the marked list has a limit of 500 records, remove some records first",
-            total => scalar @$marked,
-        };
-    }
+#    if (@$marked > 500) { #should be >500 ??
+#    	content_type 'application/json';
+#        return to_json {
+#            ok => false,
+#            message => "the marked list has a limit of 500 records, remove some records first",
+#            total => scalar @$marked,
+#        };
+#    }
 
-    my $hits = h->publication->search(
-        cql_query => $query,
-        limit => h->config->{store}->{maximum_page_size},
-        start => 0,
-        );
+    my $hits = h->search_publication($p);
 
     if ($hits->{total} > $hits->{limit} && @$marked == 500) {
         return to_json {

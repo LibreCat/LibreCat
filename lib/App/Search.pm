@@ -7,6 +7,7 @@ use App::Helper;
 use App::Search::Route::api;
 #use App::Search::Route::award;
 use App::Search::Route::person;
+use App::Search::Route::mark;
 #use App::Search::Route::project;
 use App::Search::Route::publication;
 use App::Search::Route::thumbnail;

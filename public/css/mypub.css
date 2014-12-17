@@ -427,6 +427,10 @@ select.mylabel {
     vertical-align: text-top;
 }
 
+a .badge {
+	color: #fff;
+}
+
 
 /**
 menu right hand side on small screens
