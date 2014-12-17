@@ -217,6 +217,7 @@
 [% END %]
 
 <ul class="nav nav-tabs nav-stacked">
+[% IF !path.match('person') %]
   <li>
     <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.store.default_searchpage_size %][% END %]</a></button>
     <div class="facettecollapse">
@@ -231,6 +232,7 @@
     </ul>
     </div>
   </li>
+[% END %]
   <li>
     <button data-toggle="collapse" data-target="#style_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Citation Style[% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</a></button>
     <div class="facettecollapse">

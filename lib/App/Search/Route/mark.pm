@@ -23,33 +23,20 @@ use App::Helper;
 =cut
 get '/marked' => sub {
 
-    my $fmt = params->{fmt};
-    my $explinks = params->{explinks};
+    my $p = h->extract_params();
+    my $fmt = $p->{fmt};
+    my $explinks = $p->{explinks};
     my $marked = session 'marked';
-
-    my $bag = h->publication;
-
     my $hits;
-    my $markedlist = [];
-    if ($marked and ref $marked eq 'ARRAY') {
-        foreach (@$marked){
-        	$hits = $bag->search(
-        	  cql_query => "id=$_",
-        	  limit => 1,
-        	);
-        	push @{$markedlist}, $hits->{hits}->[0];
-        }
-
-        $hits->{hits} = $markedlist;
-        $hits->{total} = @$markedlist;
-        $hits->{marked} = $marked;
-
+    
+    if($marked and ref $marked eq "ARRAY"){
+    	push @{$p->{q}}, "(id=".join(' OR id=', @$marked). ")"; 
+    	$hits = h->search_publication($p);
+    	$hits->{explinks} = $explinks;
+    	$hits->{style} = params->{style} || h->config->{store}->{default_style};
     }
-
-    $hits->{explinks} = $explinks;
-
-    $hits->{style} = params->{style} ||= h->luurConf->{citation_db}->{fd_style};
-
+    
+    
     if($fmt and $hits->{total} ne "0"){
     	h->export_publication( $hits, $fmt );
     }
@@ -89,10 +76,18 @@ post '/marked' => sub {
 
 	my $p = h->extract_params();
 	my $del = params->{'x-tunneled-method'};
+	my $tab = params->{'tab'};
 	my $marked = [];
 	$marked = session 'marked';
-    $p->{limit} = h->config->{store}->{maximum_page_size};
-    $p->{start} = 0;
+    	$p->{limit} = h->config->{store}->{maximum_page_size};
+    	$p->{start} = 0;
+	push @{$p->{q}}, "status exact public";
+
+	if ($tab) {
+		push @{$p->{q}}, "research_data=1";
+	} else {
+		push @{$p->{q}}, "research_data<>1";
+	}
 
 	if($del){
 		if (session 'marked') {
