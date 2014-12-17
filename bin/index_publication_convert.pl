@@ -261,7 +261,9 @@ sub add_to_index {
     ($rec->{status} eq 'unsubmitted') && ($rec->{status} = 'private');
     ($rec->{status} eq 'returned') && ($rec->{status} = 'private');
     ($rec->{status} eq 'pdeleted') && ($rec->{status} = 'deleted');
-    
+    if ($rec->{type} eq 'researchData' || $rec->{type} eq 'dara') {
+	$rec->{research_data} = 1;
+    }    
     if ( $rec->{author} ) {
     	foreach ( @{ $rec->{author} } ) {
     		if ( $_->{personNumber} ) {

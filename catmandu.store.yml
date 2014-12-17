@@ -574,6 +574,12 @@ search:
               field: 'type'
               sort: true
               values: "see the list of publication types"
+            research_data:
+              op:
+                '=': true
+                'exact': true
+                '<>': true
+              field: 'research_data'
             date_updated:
               op:
                 '>': true
@@ -929,6 +935,7 @@ search:
               id: {type: string, analyzer: tag}
               login: {type: string, analyzer: tag}
           type: {type: string, analyzer: tag}
+          research_data: {type: byte}
           year: {type: date, format: year, include_in_all: true}
           language:
             properties:
