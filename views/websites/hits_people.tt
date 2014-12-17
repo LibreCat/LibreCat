@@ -52,7 +52,7 @@
 <div class="row" style="padding-left:13px;">
   <div class="col-md-12" style="margin-right:20px;">
   [% FOREACH person IN hits %]
-   <a href="/person/[% person.id %]">[% person.full_name %][% IF person.bis_personTitle %], [% person.bis_personTitle %][% END %] ([% person.publication_hits %] publications[% IF person.research_hits %], [% person.research_hits %] data publications[% END %])</a><br />
+   <a href="/person/[% person._id %]">[% person.full_name %][% IF person.bis_personTitle %], [% person.bis_personTitle %][% END %] ([% person.publication_hits %] publications[% IF person.research_hits %], [% person.research_hits %] data publications[% END %])</a><br />
    <div style="margin-left:10px;">
      [% FOREACH affil IN person.department %]
        <span class="text-muted">[% affil.name %]</span>[% IF !loop.last %], [% END %]
