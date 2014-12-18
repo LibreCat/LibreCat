@@ -282,25 +282,37 @@
     </ul>
     </div>
   </li>
+  [% IF !backend %]
   <li>
-    <button data-toggle="collapse" data-target="#embed_[% tabmodus %]">
+    <button data-toggle="collapse" data-target="#embed_[% tabmodus %]" id="id_button_embed_[% tabmodus %]">
       <a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? "Embed as" : "Einbetten als" %]</a>
     </button>
     <div class="facettecollapse">
     <ul id="embed_[% tabmodus %]" class="collapse">
     [% FOREACH emb IN ['js', 'iframe', 'link'] %]
     <li><span class="fa fa-arrow-circle-o-down"></span> <strong>[% emb %]</strong>
-      <textarea class="form-control embed-facet_[% tabmodus %]" name="[% emb %]text" rows="2" id="id_[% emb %]text" onclick="this.focus();this.select()" readonly="readonly">[% embedstringsRd.js %]</textarea>
+      <textarea class="form-control embed-facet_[% tabmodus %]" name="[% emb %]text" rows="2" id="id_[% emb %]text_[% tabmodus %]" onclick="this.focus();this.select()" readonly="readonly"></textarea>
     </li>
     [% END %]
     </ul>
     </div>
   </li>
+  [% END %]
 </ul>
 
 <script>
 var path = '[% request.path %]',
 searchParams = [% h.extract_params.json %];
+
+$('#id_button_embed_[% tabmodus %]').click(function() {
+    var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ window.location.href +'&ftyp=js"><\/script><noscript><a href="'+ window.location.href +'" target="_blank">Pers&ouml;nliche Publikationsliste &gt;&gt; / My Publication List &gt;&gt;</a></noscript></div>';
+    console.log(path);
+    var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="'+ window.location.href +'&ftyp=iframe"></iframe>';
+    var emb_link = '<a href="'+ window.location.href +'">My Publication List</a>';
+    $('#id_jstext_[% tabmodus %]').val(emb_js);
+    $('#id_iframetext_[% tabmodus %]').val(emb_iframe);
+    $('#id_linktext_[% tabmodus %]').val(emb_link);
+});
 
 $('a.search-facet_[% tabmodus %]').click(function() {
     var object = $(this),
