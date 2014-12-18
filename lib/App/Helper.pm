@@ -239,13 +239,13 @@ sub get_statistics {
 	my $reshits = $self->search_publication({q => ["status=public","(type=researchData OR type=dara)"]});
 	my $oahits = $self->search_publication({q => ["status=public","fulltext=1"]});
 	my $disshits = $self->search_publication({q => ["status=public","type=bi*"]});
-	#my $people = $self->search_researcher({q => [""]});
+	my $people = $self->search_researcher();
 
 	$stats->{publications} = $hits->{total} if $hits and $hits->{total};
 	$stats->{researchdata} = $reshits->{total} if $reshits and $reshits->{total};
 	$stats->{oahits} = $oahits->{total} if $oahits and $oahits->{total};
 	$stats->{theseshits} = $disshits->{total} if $disshits and $disshits->{total};
-	$stats->{pubpeople} = 0;#$people->{total} if $people and $people->{total};
+	$stats->{pubpeople} = $people->{total} if $people and $people->{total};
 
 	return $stats;
 }
@@ -344,13 +344,14 @@ sub search_publication {
 
 sub search_researcher {
 	my ($self, $p) = @_;
-	my $q = $p->{q} ||= "";
+	my $cql = "";
+	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
 	my $hits = researcher->search(
-	  cql_query => $q,
+	  cql_query => $cql,
 	  limit => $p->{limit} ||= config->{store}->{maximum_page_size},
 	  start => $p->{start} ||= 0,
-	  #sru_sortkeys => $p->{sorting} || "full_name,,1",
+	  sru_sortkeys => $p->{sorting} || "fullname,,1",
 	);
 
 	foreach (qw(next_page last_page page previous_page pages_in_spread)) {

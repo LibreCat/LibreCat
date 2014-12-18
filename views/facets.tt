@@ -29,6 +29,7 @@
 
 <ul class="nav nav-tabs nav-stacked">
   [% IF facets.status.terms && facets.status.terms.size > 1 %]
+  [% IF backend %]
   <li>
     <button data-toggle="collapse" data-target="#status_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Submission Status ([% facets.status.terms.size %])</a></button>
     <div class="facettecollapse">
@@ -40,8 +41,9 @@
     </div>
   </li>
   [% END %]
+  [% END %]
 
-  [% IF session.role == "super_admin" %]
+  [% IF backend AND session.role == "super_admin" %]
   <li>
     <button data-toggle="collapse" data-target="#department_new_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Department</a></button>
     <div class="facettecollapse">
@@ -215,6 +217,7 @@
 [% END %]
 
 <ul class="nav nav-tabs nav-stacked">
+[% IF !path.match('person') %]
   <li>
     <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.store.default_searchpage_size %][% END %]</a></button>
     <div class="facettecollapse">
@@ -229,6 +232,7 @@
     </ul>
     </div>
   </li>
+[% END %]
   <li>
     <button data-toggle="collapse" data-target="#style_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Citation Style[% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</a></button>
     <div class="facettecollapse">
@@ -332,7 +336,7 @@ $('a.sort-facet_[% tabmodus %]').click(function() {
     window.location.replace(url);
 });
 
-$('a.export-facet_[% tabmodus%]').click(function() {
+$('a.export-facet_[% tabmodus %]').click(function() {
   searchParams.fmt = $(this).data('fmt')
   var url = path+'?'+ $.param($.extend({}, searchParams), true);
   window.location.replace(url);

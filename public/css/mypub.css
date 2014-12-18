@@ -427,6 +427,10 @@ select.mylabel {
     vertical-align: text-top;
 }
 
+a .badge {
+	color: #fff;
+}
+
 
 /**
 menu right hand side on small screens
@@ -539,6 +543,10 @@ div.sticky span.label.label-default {
 	background-color: transparent;
 	border: 1px solid #cccccc;
 	color: inherit;
+}
+
+.checkbox-inline input[type='checkbox'] {
+	margin-top: 0px;
 }
 
 /* .input-group.pub .input-group-addon:not(:first-child):not(:last-child),

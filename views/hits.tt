@@ -2,13 +2,20 @@
 
 <!-- This publication list is displayed in "[% style %]" style and sorted "[% sort %]" -->
 [% path = request.path %]
-[% backend = path.match('myPUB') ? 1 : 0 %]
+[% IF tabmodus == "data" %]
+[% hits = researchhits.hits %]
+[% total = researchhits.total %]
+[% END %]
 
 [% num = total; n = 0 %]
 
 <div class="row">
-  <div class="col-md-9">
-    <h5>[% total %] [% lang ? "Publications" : "Publikationen" %]</h5>
+  <div class="col-md-12">
+    <h5>[% total %] [% lang ? "Publications" : "Publikationen" %]
+    [% IF !backend AND request.path != "/marked" %]
+      <div class="pull-right"><i><a class="mark-all" href="#">Mark all</a></i></div>
+    [% END %]
+    </h5>
   </div>
 </div>
 
@@ -16,10 +23,14 @@
   [% INCLUDE pagination.tt %]
 </div>
 
+<!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->
+[% num = total; n = 0 %]
+[% IF request.path == "/marked" %]<ul style="list-style-type:none;" id="sortable">[% END %]
 [% FOREACH entry IN hits %]
+[% IF request.path == "/marked" %]<li class="markedme" id="fade_[% n+1 %]">[% END %]
 <div class="row">
   [% bag = entry.type == "researchData" ? "data" : "publication" %]
-[% IF backend %]
+[% IF backend  %]
   <div class="col-md-1" style="text-align:right">
     [% SWITCH entry.status %]
     [% CASE "public" %]
@@ -40,16 +51,23 @@
     <div data-toggle="tooltip" data-placement="right" title="Publish" class="librarian-approved"><button type="button" class="btn btn-default btn-xs librarian-approved" onClick="if(confirm('Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified.')) window.location = '/myPUB/record/publish/[% entry._id %]'"><span class="fa fa-share-square-o"></span></button></div>
     [% END %]
   </div>
+[% ELSE %]
+  <div class="col-xs-1" style="text-align:right">
+    [[% num - n %]] [% n = n +1 %]
+  </div>
 [% END %]
   <div class="col-md-11">
+    <i>[% entry.year %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry._id %]</span> [% IF request.path != "/marked" %]<span style="width:100%"><div class="pull-right"><a [% IF request.path == "/marked" %]id="clickme_[% n %]" [% END %]class="mark" href="#" data-marked="[% h.is_marked(entry._id) %]" data-id="[% entry._id %]">[% IF h.is_marked(entry._id) %]Unmark[% ELSE %]Mark[% END %]</a></div></span>[% END %]</i><br />
     <div class="citation-block-div">
-    <i>[% entry.year %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry._id %]</span></i><br />
     [% IF style == 'frontShort' %]
 	<a href="/myPUB/record/edit/[% entry._id %]">[% entry.title %]</a><br />
 	[% END %]
-	<a href="javascript:void(0);" onclick="window.location='[% IF backend %]/myPUB/record/edit[% ELSE%]/[% bag %][% END %]/[% entry._id %]'"
+	[% IF request.path != "/marked" %]
+	<a href="javascript:void(0);" onclick="window.location='[% IF backend %]/myPUB/record/edit[% ELSE %]/[% bag %][% END %]/[% entry._id %]'"
       class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top"
-      title="Edit <i>[% entry.title | html %]</i>"></a>
+      [% IF backend %]title="Edit <i>[% entry.title | html %]</i>"
+      [% ELSE %]title="View details for <i>[% entry.title | html %]</i>"[% END %]></a>
+    [% END %]
     [% entry.citation.$style %][% IF style != "apa_indent" %]<br />[% END %]
     </div>
     [% INCLUDE links.tt %]
@@ -58,8 +76,16 @@
   </div>
 </div>
 <div class="row">&nbsp;</div>
-
+[% IF request.path == "/marked" %]</li>
+<script type="text/javascript" charset="utf-8">
+$('#clickme_[% n %]').click(function() {
+  $('#fade_[% n %]').fadeOut('slow', function() {
+  });
+});
+</script>
 [% END %]
+[% END %]
+[% IF request.path == "/marked" %]</ul>[% END %]
 
 <div class="row">
   [% INCLUDE pagination.tt %]

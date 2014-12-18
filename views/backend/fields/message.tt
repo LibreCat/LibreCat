@@ -1,14 +1,25 @@
 [% IF session.role == "super_admin" %]
 <div class="row innerrow">
-  <div class="col-md-2">
+  <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_message">
       {% fields.basic_fields.message.label %}{% fields.supplementary_fields.message.label %}
     </label>
   </div>
   <div class="col-md-10">
-    <span class="form-group col-md-9">
-      <textarea rows="3" name="message" id="id_message" value="[% FILTER html %][% message %][% END %]" class="form-control">[% FILTER html %][% message %][% END %]</textarea>
-    </span>
+    <div class="row innerrow">
+      <div class="form-group col-md-10 hidden-xs hidden-sm">
+        <div class="sticky">
+          <textarea rows="3" name="message" id="id_message" value="[% FILTER html %][% message %][% END %]" class="sticky input-sm form-control">[% FILTER html %][% message %][% END %]</textarea>
+        </div>
+      </div>
+      <div class="form-group col-xs-11 hidden-lg hidden-md">
+        <div class="input-group input-group-sm sticky">
+          <div class="input-group-addon">{% fields.basic_fields.message.label %}{% fields.supplementary_fields.message.label %}</div>
+          <textarea name="message" id="id_message" value="[% message | html %]" class="sticky form-control"></textarea>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 [% END %]
