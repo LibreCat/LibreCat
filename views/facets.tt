@@ -1,10 +1,12 @@
 <!-- BEGIN facets.tt -->
 [%- USE JSON -%]
 [%- USE date(format => '%Y') -%]
+[% IF request.path != "/marked" %]
 <h5>Search</h5>
 [% IF h.extract_params.text %]
 <p class="text-muted"><a href="[% path %]?q=[% h.extract_params.q.join('&q=') %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> search=[% h.extract_params.text |html %]</p>
 [% END %]
+
 <form action="#" method="get" class="form-inline" role="form">
     <span class="input-group">
       <input type="text" value='[% qp.text %]' class="form-control" name="text" placeholder="Search" />
@@ -31,7 +33,7 @@
   [% IF facets.status.terms && facets.status.terms.size > 1 %]
   [% IF backend %]
   <li>
-    <button data-toggle="collapse" data-target="#status_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Submission Status ([% facets.status.terms.size %])</a></button>
+    <button data-toggle="collapse" data-target="#status_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Submission Status ([% facets.status.terms.size %])</a></button>
     <div class="facettecollapse">
     <ul id="status_[% tabmodus %]" class="collapse[% IF qp.q.grep($facets.status.terms.0.term).0 %] in[% END %]">
       [% FOREACH stat IN facets.status.terms %]
@@ -45,7 +47,7 @@
 
   [% IF backend AND session.role == "super_admin" %]
   <li>
-    <button data-toggle="collapse" data-target="#department_new_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Department</a></button>
+    <button data-toggle="collapse" data-target="#department_new_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Department</a></button>
     <div class="facettecollapse">
     <ul id="department_new_[% tabmodus %]" class="collapse[% IF qp.department %] in[% END %]">
     [% IF qp.department %]
@@ -57,7 +59,7 @@
       [% thisdept = departments.$dept %]
       <a href="[% h.newuri_for("$path", qp, department="$thisdept.oId") %]" class="selectme" data-index="[% loop.index %]" id="[% departments.$dept.oId %]">[% dept %]</a>
       [% IF departments.$dept.keys.size > 1 %] <a href="#subdepts_[% departments.$dept.oId %]" data-toggle="collapse">
-        <span class="glyphicon glyphicon-chevron-down"></span>
+        <span class="fa fa-chevron-down"></span>
       </a>[% END %]
       <br />
       <div id="subdepts_[% departments.$dept.oId %]" class="panel-collapse collapse">
@@ -70,7 +72,7 @@
           </a>
         </span>
         [% IF departments.$dept.$subdept.keys.size >1 %] <a href="#subsubdepts_[% departments.$dept.$subdept.oId %]" data-toggle="collapse">
-          <span class="glyphicon glyphicon-chevron-down"></span>
+          <span class="fa fa-chevron-down"></span>
         </a>[% END %]
         <br />
         <div id="subsubdepts_[% departments.$dept.$subdept.oId %]" class="panel-collapse collapse">
@@ -96,7 +98,7 @@
 
   [% IF facets.type.terms && facets.type.terms.size > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#type_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publication Type ([% facets.type.terms.size %])</a></button>
+    <button data-toggle="collapse" data-target="#type_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Publication Type ([% facets.type.terms.size %])</a></button>
     <div class="facettecollapse">
     <ul id="type_[% tabmodus %]" class="collapse">
       [% FOREACH type IN facets.type.terms %]
@@ -110,7 +112,7 @@
 
  [% IF facets.author.terms && facets.author.terms.size > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#authors_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Authors ([% facets.author.terms.size %])</a></button>
+    <button data-toggle="collapse" data-target="#authors_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Uni-Bi Authors ([% facets.author.terms.size %])</a></button>
     <div class="facettecollapse">
     <ul id="authors_[% tabmodus %]" class="collapse">
       [% FOREACH au IN facets.author.terms %]
@@ -124,7 +126,7 @@
 
   [% IF facets.editor.terms && facets.editor.terms.size > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#editors_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Uni-Bi Editors ([% facets.editor.terms.size %])</a></button>
+    <button data-toggle="collapse" data-target="#editors_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Uni-Bi Editors ([% facets.editor.terms.size %])</a></button>
     <div class="facettecollapse">
     <ul id="editors_[% tabmodus %]" class="collapse">
       [% FOREACH ed IN facets.editor.terms %]
@@ -138,7 +140,7 @@
 
   [% IF facets.year.terms && facets.year.terms.size > 1 %]
   <li>
-    <button data-target="#year_[% tabmodus %]" data-toggle="collapse"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Publishing Year ([% facets.year.terms.size %])</a></button>
+    <button data-target="#year_[% tabmodus %]" data-toggle="collapse"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Publishing Year ([% facets.year.terms.size %])</a></button>
     <div class="facettecollapse">
     <ul id="year_[% tabmodus %]" class="collapse">
       [% FOREACH y IN facets.year.terms %]
@@ -158,30 +160,31 @@
 
   [% IF facets.popular_science.total %]
   <li>
-    <a class="search-facet_[% tabmodus %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% facets.popularScience.total %] Popular Science</a>
+    <a class="search-facet_[% tabmodus %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp;[% facets.popularScience.total %] Popular Science</a>
   </li>
   [% END %]
 
   [% IF facets.extern.total %]
   <li>
-    <a class="search-facet_[% tabmodus %]" data-index="extern" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% facets.nonlu.total %] External Publications</a>
+    <a class="search-facet_[% tabmodus %]" data-index="extern" data-val="1" href="#" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp;[% facets.nonlu.total %] External Publications</a>
   </li>
   [% END %]
 
   <li>
     [% FOREACH term IN facets.open_access.terms %]
       [% NEXT IF term.term == "0" %]
-      <a class="search-facet_[% tabmodus %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;[% term.count %] OA Fulltexts</a>
+      <a class="search-facet_[% tabmodus %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp;[% term.count %] OA Fulltexts</a>
     [% END %]
   </li>
 
 </ul>
 
 <p>&nbsp;</p>
+[% END %]
 
 <h5>Display Publications</h5>
 
-[% IF qp.style OR qp.item('sort') %]
+[% IF (qp.style OR qp.item('sort')) AND request.path != "/marked" %]
 <p class="text-warning"><strong>Your current settings:</strong><br />
 [% IF qp.style AND qp.style != personStyle %]
   <a href="[% h.newuri_for("$path", qp, style="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <strong>style:</strong> [% qp.style %][% IF qp.style == "frontShort" %] (default)[% END %]<br />
@@ -217,9 +220,9 @@
 [% END %]
 
 <ul class="nav nav-tabs nav-stacked">
-[% IF !path.match('person') %]
+[% IF !request.path.match('person') AND !request.path.match('marked') %]
   <li>
-    <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.store.default_searchpage_size %][% END %]</a></button>
+    <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.store.default_searchpage_size %][% END %]</a></button>
     <div class="facettecollapse">
     <ul id="hitsperpage_[% tabmodus %]" class="collapse">
       [% FOREACH lim IN h.config.store.pagination_options %]
@@ -234,7 +237,7 @@
   </li>
 [% END %]
   <li>
-    <button data-toggle="collapse" data-target="#style_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Citation Style[% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</a></button>
+    <button data-toggle="collapse" data-target="#style_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Citation Style[% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</a></button>
     <div class="facettecollapse">
     <ul id="style_[% tabmodus %]" class="collapse">
       [% IF qp.style AND qp.style == "frontShort" %]
@@ -252,8 +255,9 @@
     </ul>
     </div>
   </li>
+  [% IF !request.path.match('marked') %]
   <li>
-    <button data-toggle="collapse" data-target="#sort_[% tabmodus %]"><a href="#"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Sorting</a></button>
+    <button data-toggle="collapse" data-target="#sort_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Sorting</a></button>
     <div class="facettecollapse">
     <ul id="sort_[% tabmodus %]" class="collapse">
       [% FOREACH s IN h.config.store.sort_options %]
@@ -264,6 +268,7 @@
     </ul>
     </div>
   </li>
+  [% END %]
 </ul>
 <br />
 
@@ -282,7 +287,7 @@
     </ul>
     </div>
   </li>
-  [% IF !backend %]
+  [% IF !backend AND !request.path.match('marked') %]
   <li>
     <button data-toggle="collapse" data-target="#embed_[% tabmodus %]" id="id_button_embed_[% tabmodus %]">
       <a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? "Embed as" : "Einbetten als" %]</a>
@@ -299,6 +304,19 @@
   </li>
   [% END %]
 </ul>
+
+<br />
+
+[% IF request.path.match('marked') AND total %]
+<ul class="nav nav-tabs nav-stacked">
+  <li>
+    <a class="unmark-all" href="#"><span class="fa fa-chevron-right"></span> Unmark all</a>
+  </li>
+  <li>
+    <a href="javascript:history.back()"><span class="fa fa-chevron-right"></span> Back to previous page</a>
+  </li>
+</ul>
+[% END %]
 
 <script>
 var path = '[% request.path %]',

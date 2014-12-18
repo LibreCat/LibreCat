@@ -1,4 +1,6 @@
 [% INCLUDE navbar.tt %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
 
 <script src="/javascripts/jquery-sortable.js"></script>
 <script>
@@ -71,4 +73,5 @@ body.dragging, body.dragging * {
   </div>
 </div>
 
+[% INCLUDE mark_all_js.tt %]
 [% INCLUDE footer.tt %]
