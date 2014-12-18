@@ -27,16 +27,23 @@ get '/marked' => sub {
     my $fmt = $p->{fmt};
     my $explinks = $p->{explinks};
     my $marked = session 'marked';
-    my $hits;
-    
+    #$p->{sort} = h->config->{store}->{default_sort};
+    my ($hits, @tmp_hits);
+
     if($marked and ref $marked eq "ARRAY"){
-    	push @{$p->{q}}, "(id=".join(' OR id=', @$marked). ")"; 
-    	$hits = h->search_publication($p);
+        while ( my @chunks = splice(@$marked,0,100) ) {
+            $p->{q} = ["(id=".join(' OR id=', @chunks). ")"];
+            $p->{limit} = 100;
+            $hits = h->search_publication($p);
+            push @tmp_hits, @{$hits->{hits}};
+        }
     	$hits->{explinks} = $explinks;
     	$hits->{style} = params->{style} || h->config->{store}->{default_style};
     }
-    
-    
+
+    $hits->{hits} = \@tmp_hits;
+    $hits->{total} = scalar @tmp_hits;
+
     if($fmt and $hits->{total} ne "0"){
     	h->export_publication( $hits, $fmt );
     }
