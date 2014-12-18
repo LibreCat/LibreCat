@@ -1,5 +1,8 @@
 <!-- BEGIN links. tt -->
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
+[% IF !backend %]
+<a href="[% h.host %]/[% bag %]/[% entry._id %]" title="Show complete bibliographic and access information" target="_top">PUB</a>
+[% END %]
 [% IF backend %]
   [% IF entry.status == "public" %]
 	<a href="/[% bag %]/[% entry._id %]" title="Show complete bibliographic and access information" target="_blank">
@@ -17,7 +20,7 @@
 [% END %]
   [% request = 0 %]
   [% IF entry.file|| entry.related_material || entry.externalFiles == "1" %]
-  <a href="/[% bag %]/[% entry._id %]" class="label label-success">Files available</a>
+  | <a href="/[% bag %]/[% entry._id %]" class="label label-success">Files available</a>
   [% END %]
 <!--
   [% FOREACH file IN entry.file %]
