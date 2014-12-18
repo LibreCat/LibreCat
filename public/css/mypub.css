@@ -6,6 +6,12 @@ Modifications for PUB
 	display: none;
 }
 
+.statalign {
+  display: inline-block;
+  min-width: 80px;
+  text-align: right;
+}
+
 .citation-block-link{
   position:absolute;
   width:100%;
