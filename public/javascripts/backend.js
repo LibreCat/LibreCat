@@ -488,7 +488,7 @@ function enable_autocomplete(field, index, viewport){
 		minLength: 2,
 		select: function( event, ui ) {
 			$( "#" + field + viewport + "_autocomplete_" + index ).val( ui.item.label );
-            //$( "#" + field + "_nameautocomplete_" + index ).val( ui.item.label );
+            $( "#" + field + "_nameautocomplete_" + index ).val( ui.item.label );
             $( "#" + field + "_idautocomplete_" + index ).val( ui.item.id );
             $( "#" + field + viewport + "_autocomplete_" + index ).attr("disabled", "disabled");
             $('input.sticky').blur();
