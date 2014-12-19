@@ -13,14 +13,6 @@
   [% ELSE %]
   <h3><input style="float:right;" type="button" class="btn btn-default change_mode" value="Change to long edit form" /> Add New {% label %}</h3>
   [% END %]
-  
-  <script>
-  $('.change_mode').click(function(){
-    $('#edit_form').find('input[name="edit_mode"]').val('expert');
-    $('#edit_form').attr('action','/myPUB/record/change_mode');
-    $('#edit_form').submit();
-  });
-  </script>
 
   <ul class="nav nav-tabs" id="tabs-left">
     <li id="li_basic_fields" class="active">

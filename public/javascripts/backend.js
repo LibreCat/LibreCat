@@ -25,6 +25,19 @@ $('.check_alias').keyup(function() {
 });
 });
 
+$(function () {
+	$('.change_mode').click(function(){
+		$('#edit_form').find('input[name="edit_mode"]').val('normal');
+		$('#edit_form').attr('action','/myPUB/record/change_mode');
+		$('#edit_form').submit();
+	});
+	$('.change_type').click(function(){
+		$('#id_type').val('book');
+		$('#edit_form').attr('action','/myPUB/record/change_mode');
+		$('#edit_form').submit();
+	});
+});
+
 /**
  * Display/hide edit form for author IDs
  *

@@ -11,14 +11,6 @@
   [% ELSE %]
   <h3><input style="float:right;" type="button" class="btn btn-default change_mode hidden-xs hidden-sm" value="Change to normal edit form" /> Add New {% label %}</h3>
   [% END %]
-  
-  <script>
-  $('.change_mode').click(function(){
-    $('#edit_form').find('input[name="edit_mode"]').val('normal');
-    $('#edit_form').attr('action','/myPUB/record/change_mode');
-    $('#edit_form').submit();
-  });
-  </script>
 
   <form action="/myPUB/record/update" method="POST" id="edit_form">
     <input type="hidden" name="type" value="{% tmpl %}" id="id_type"/>
