@@ -252,11 +252,12 @@ prefix '/myPUB/record' => sub {
 
         foreach my $key ( keys %$params ) {
             if ( ref $params->{$key} eq "ARRAY" ) {
-                my $i = 0;
-                foreach my $entry ( @{ $params->{$key} } ) {
-                    $params->{ $key . "." . $i } = $entry, $i++;
-                }
-                delete $params->{$key};
+            	$params->{$key} = $params->{$key}->[0];
+#                my $i = 0;
+#                foreach my $entry ( @{ $params->{$key} } ) {
+#                    $params->{ $key . "." . $i } = $entry, $i++;
+#                }
+#                delete $params->{$key};
             }
         }
 
