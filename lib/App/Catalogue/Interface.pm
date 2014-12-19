@@ -10,7 +10,8 @@ prefix '/myPUB' => sub {
 
 	get '/search_researcher' => sub {
 
-		my $q = params->{'ftext'};
+		my $q;
+		push @$q, params->{'ftext'};
 		my $hits = h->search_researcher({q => $q});
 
 		to_json($hits->{hits});
