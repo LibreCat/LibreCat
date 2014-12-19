@@ -199,17 +199,8 @@ $(document).on('click', '.fullrow', function(){
   }
 });
 $(document).on('click', '.author', function(){
-  var container = $(this).parent().parent();
-  container.children('input').each(function(){
-    if($(this).attr("readonly")){
-      $(this).removeAttr("readonly");
-    }
-    if($(this).is(':checked')){
-      $(this).removeAttr("checked");
-    }
-    this.value = "";
-  });
-  container.children('span').children('input').each(function(){
+  var container = $(this).closest('div.creator');
+  container.find('input').each(function(){
     if($(this).attr("readonly")){
       $(this).removeAttr("readonly");
     }
