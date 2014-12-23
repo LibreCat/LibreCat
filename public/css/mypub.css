@@ -331,10 +331,6 @@ div.frontdoor_right {
 	color:#aaa !important;
 }
 
-.form-group.has-error input{
-	background-color:#ffcfce;
-}
-
 .tab-pane.active {
 	padding-top:25px;
 }
@@ -551,41 +547,13 @@ div.sticky span.label.label-default {
 	color: inherit;
 }
 
+input.has-error {
+	background-color:#ffcfce;
+}
+
 .checkbox-inline input[type='checkbox'] {
 	margin-top: 0px;
 }
-
-/* .input-group.pub .input-group-addon:not(:first-child):not(:last-child),
-.input-group.pub .form-control:not(:first-child):not(:last-child),
-.input-group.pub .form-control:not(:first-child):not(:last-child):focus {
-  border-right:none;
-  border-left:none;
-} */
-
-/* .input-group.pub .input-group-addon:first-child,
-.input-group.pub .form-control:first-child,
-.input-group.pub .form-control:first-child:focus {
-	border-right:none;
-} */
-/* .input-group.pub .input-group-addon:last-child,
-.input-group.pub .form-control:last-child,
-.input-group.pub .form-control:last-child:focus {
-	border-left:none;
-} */
-
-/* .input-group.pub.mandatory .input-group-addon,
-.input-group.pub.mandatory input,
-.input-group.pub.mandatory select {
-  border-color: #b94a48;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-}
-.input-group.pub.mandatory input:focus,
-.input-group.pub.mandatory select:focus {
-  border-color: #953b39;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
-} */
 
 body {
 	line-height: 20px;
