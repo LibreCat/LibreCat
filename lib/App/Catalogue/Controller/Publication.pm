@@ -4,7 +4,7 @@ use lib qw(/srv/www/sbcat/lib/extension);
 use Catmandu::Sane;
 use Catmandu;
 use App::Helper;
-use App::Catalogue::Controller::Corrector qw/delete_empty_fields correct_hash_array/;
+use App::Catalogue::Controller::Corrector qw/delete_empty_fields correct_hash_array correct_writer/;
 use App::Catalogue::Controller::File qw/handle_file delete_file/;
 use Catmandu::Validator::PUB;
 use Hash::Merge qw/merge/;
@@ -33,6 +33,7 @@ sub save_publication {
 
     $data = delete_empty_fields($data);
     $data = correct_hash_array($data);
+    $data = correct_writer($data) if $data->{writer};
 
     # html encoding
     foreach (qw/message/) {
@@ -42,19 +43,8 @@ sub save_publication {
 
     if($data->{file}){
     	$data->{file} = handle_file($data);
-    	#return handle_file($data);
-#    	my $file = ();
-#    	foreach my $recfile (@{$data->{file}}){
-#    		my $rfile = $json->decode($recfile);
-#    		my @array = @{$data->{file_order}};
-#    		my $search_for = $rfile->{file_id};
-#    		my( $index )= grep { $array[$_] eq $search_for } 0..$#array;
-#    		$rfile->{file_order} = sprintf("%03d", $index);
-#    		$rfile->{file_json} = $recfile;
-#    		push @$file, $rfile;
-#    	}
-#    	$data->{file} = $file;
     }
+    
     if($data->{language}){
     	foreach my $lang (@{$data->{language}}){
     		if($lang->{name} eq "English" or $lang->{name} eq "German"){

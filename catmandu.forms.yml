@@ -39,7 +39,7 @@ field_order:
     - publication
     - volume
     - volume_issue_page
-    - author
+    - writer
     - email
     - supervisor
     - editor
@@ -142,7 +142,7 @@ publicationTypes:
           mandatory: 1
           label: "Title"
           placeholder: "Handbook of eBook Publishing"
-        author: &author_translator
+        writer: &author_translator
           first_name:
             placeholder: "John"
           last_name:
@@ -160,8 +160,7 @@ publicationTypes:
             placeholder: "Last Name"
           mandatory: 0
           multiple: 1
-          label:
-            "Editor" : "editor"
+          label: "Editor"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         corporate_editor: &corporate_editor
           mandatory: 0
@@ -281,8 +280,7 @@ publicationTypes:
             placeholder: "Last Name"
           mandatory: 1
           multiple: 1
-          label:
-            "Editor" : "editor"
+          label: "Editor"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         corporate_editor: *corporate_editor
         department: *department
@@ -320,7 +318,7 @@ publicationTypes:
         title:
           label: "Chapter Title"
           mandatory: 1
-        author: *author_translator
+        writer: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
         department: *department
@@ -360,22 +358,26 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_translator
+        writer: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
         department: *department
         project: *project
         year: *year
+        conference.divider:
+          label: "Conference Details"
         conference.name: &conference_name
           label: "Conference Name"
           placeholder: "e.g. 3rd Conference on Nano-Physics"
         conference.location: &conference_location
           label: "Conference Location"
           placeholder: "Berlin, BE, Germany"
-        conference.start_date: &conference_startdate
-          label: "Conference Date<br />(start date)"
-        conference.end_date: &conference_enddate
-          label: "Conference Date<br />(end date)"
+        conference.date: &conference_date
+          label: "Date (start and end)"
+          label_start: "Start"
+          label_end: "End"
+          placeholder_start: "2014-11-03"
+          placeholder_end: "2014-11-05"
         language: *language
       file_upload: *file_upload
       supplementary_fields:
@@ -420,12 +422,7 @@ publicationTypes:
         conference.location:
           label: "Location"
           placeholder: "Berlin, BE, Germany"
-        conference.date: &conference_date
-          label: "Date (start and end)"
-          label_start: "Start"
-          label_end: "End"
-          placeholder_start: "2014-11-03"
-          placeholder_end: "2014-11-05"
+        conference.date: *conference_date
         language: *language
       file_upload: *file_upload
       supplementary_fields:
@@ -455,7 +452,7 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_translator
+        writer: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
         department: *department
@@ -465,10 +462,11 @@ publicationTypes:
         series_title: &series_title
           label: "Series Title"
         year: *year
+        conference.divider:
+          label: "Conference Details"
         conference.name: *conference_name
         conference.location: *conference_location
-        conference.start_date: *conference_startdate
-        conference.end_date: *conference_enddate
+        conference.date: *conference_date
         language: *language
       file_upload: *file_upload
       supplementary_fields:
@@ -499,7 +497,7 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author:
+        writer:
           first_name:
             placeholder: "First Name"
           last_name:
@@ -549,7 +547,7 @@ publicationTypes:
         title:
           label: "Article Title"
           mandatory: 1
-        author: *author_translator
+        writer: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
         department: *department
@@ -587,7 +585,7 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_translator
+        writer: *author_translator
         department: *department
         project: *project
         publisher: *publisher
@@ -662,7 +660,7 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi: *doi
-        author: *author_translator
+        writer: *author_translator
         title: *title
         department: *department
         project: *project
@@ -699,7 +697,7 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_translator
+        writer: *author_translator
         department: *department
         project: *project
         year: *year
@@ -739,7 +737,7 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_translator
+        writer: *author_translator
         department: *department
         project: *project
         year: *year
@@ -772,7 +770,7 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_translator
+        writer: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
         department: *department
@@ -807,7 +805,7 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_translator
+        writer: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
         department: *department
@@ -847,7 +845,7 @@ publicationTypes:
           label: "DOI"
           readonly: 1
         title: *title
-        author:
+        writer:
           first_name:
             placeholder: "First Name"
           last_name:
@@ -904,7 +902,7 @@ publicationTypes:
           label: "DOI"
           readonly: 1
         title: *title
-        author:
+        writer:
           first_name:
             placeholder: "First Name"
           last_name:
@@ -958,7 +956,7 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        author: *author_translator
+        writer: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
         department: *department
@@ -994,7 +992,7 @@ publicationTypes:
         bi_doctype:
           label: "Documenttype"
           mandatory: 1
-        author: &author
+        writer: &author
           first_name:
             placeholder: "First Name"
           last_name:
@@ -1065,136 +1063,6 @@ publicationTypes:
         ccs_class: &ccs
           label: "CCS Code"
           multiple: 1
-        message: *message
-        ubi_funded: *ubi_funded
-      related_material: *related_material
-  bibachelorthesis:
-    label: "Bielefeld Bachelor Thesis"
-    tmpl: biBachelorThesis
-    fields:
-      basic_fields:
-        tab_name: "Basic Fields"
-        author: *author
-        email: *email
-        department: *department_diss
-        supervisor:
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
-          mandatory: 0
-          multiple: 1
-          label: "Supervisor"
-        title: *title
-        language: *language_diss
-        year: *year
-        defense_date:
-          label: "Date of Defense"
-          placeholder: "YYYY-MM-DD"
-        publisher: *publisher_diss
-        place: *place_diss
-        ddc: *ddc_diss
-      file_upload: *file_upload
-      supplementary_fields:
-        tab_name: "Additional Information"
-        alternative_title: *alternative_title
-        doi: *doi
-        page: *page
-        publication: *publication_series
-        publication_identifier: *publication_identifier
-        external_id: *external_id
-        volume: *volume
-        abstract: *abstract
-        keyword: *keyword
-        pacs_class: *pacs
-        msc_class: *msc
-        ccs_class: *ccs
-        message: *message
-        ubi_funded: *ubi_funded
-      related_material: *related_material
-  bimasterthesis:
-    label: "Bielefeld Master Thesis"
-    tmpl: biMasterThesis
-    fields:
-      basic_fields:
-        tab_name: "Basic Fields"
-        author: *author
-        email: *email
-        department: *department_diss
-        supervisor:
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
-          mandatory: 0
-          multiple: 1
-          label: "Supervisor"
-        title: *title
-        language: *language_diss
-        year: *year
-        defense_date:
-          label: "Date of Defense"
-          placeholder: "YYYY-MM-DD"
-        publisher: *publisher_diss
-        place: *place_diss
-        ddc: *ddc_diss
-      file_upload: *file_upload
-      supplementary_fields:
-        tab_name: "Additional Information"
-        alternative_title: *alternative_title
-        page: *page
-        publication: *publication_series
-        publication_identifier: *publication_identifier
-        external_id: *external_id
-        volume: *volume
-        abstract: *abstract
-        doi: *doi
-        keyword: *keyword
-        pacs_class: *pacs
-        msc_class: *msc
-        ccs_class: *ccs
-        message: *message
-        ubi_funded: *ubi_funded
-      related_material: *related_material
-  bipostdocthesis:
-    label: "Bielefeld Postdoctoral Thesis/ Habilitation"
-    tmpl: biPostdocThesis
-    fields:
-      basic_fields:
-        tab_name: "Basic Fields"
-        author: *author
-        email: *email
-        department: *department_diss
-        supervisor:
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
-          mandatory: 0
-          multiple: 1
-          label: "Supervisor"
-        title: *title
-        language: *language_diss
-        year: *year
-        defense_date: *defense_date
-        publisher: *publisher_diss
-        place: *place_diss
-        ddc: *ddc_diss
-      file_upload: *file_upload
-      supplementary_fields:
-        tab_name: "Additional Information"
-        alternative_title: *alternative_title
-        page: *page
-        publication: *publication_series
-        publication_identifier: *publication_identifier
-        external_id: *external_id
-        volume: *volume
-        abstract: *abstract
-        keyword: *keyword
-        doi: *doi
-        pacs_class: *pacs
-        msc_class: *msc
-        ccs_class: *ccs
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material

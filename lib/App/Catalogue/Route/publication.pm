@@ -53,6 +53,7 @@ prefix '/myPUB/record' => sub {
         my $data;
         my $id = new_publication();
         $data->{_id} = $id;
+        $data->{type} = $type;
         my $user = h->getPerson( session->{personNumber} );
         $data->{department} = $user->{department};
         $edit_mode = $user->{edit_mode} if $user->{edit_mode};
