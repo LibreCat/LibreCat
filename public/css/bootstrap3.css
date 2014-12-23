@@ -6518,9 +6518,9 @@ td.visible-lg {
   }
 }
 
-.hidden-xs {
+/* .hidden-xs {
   display: block !important;
-}
+} */
 
 tr.hidden-xs {
   display: table-row !important;
@@ -6583,9 +6583,9 @@ td.hidden-xs {
   }
 }
 
-.hidden-sm {
+/* .hidden-sm {
   display: block !important;
-}
+} */
 
 tr.hidden-sm {
   display: table-row !important;
@@ -6648,9 +6648,9 @@ td.hidden-sm {
   }
 }
 
-.hidden-md {
+/* .hidden-md {
   display: block !important;
-}
+} */
 
 tr.hidden-md {
   display: table-row !important;
@@ -6713,9 +6713,9 @@ td.hidden-md {
   }
 }
 
-.hidden-lg {
+/* .hidden-lg {
   display: block !important;
-}
+} */
 
 tr.hidden-lg {
   display: table-row !important;
