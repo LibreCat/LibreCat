@@ -7,14 +7,9 @@
   </div>
   <div class="col-md-10">
     <div class="row innerrow">
-      <div class="form-group col-md-10 hidden-xs hidden-sm">
-        <div class="sticky{% IF fields.basic_fields.item('conference.name').mandatory || fields.supplementary_fields.item('conference.name').mandatory %} mandatory{% END %}">
-          <input type="text" name="conference.name" id="id_conference_name" value="[% conference.name %]" placeholder="{% fields.basic_fields.item('conference.name').placeholder %}{% fields.supplementary_fields.item('conference.name').placeholder %}" class="sticky input-sm form-control">
-        </div>
-      </div>
-      <div class="form-group col-xs-11 hidden-lg hidden-md">
+      <div class="form-group col-md-10 col-xs-11">
         <div class="input-group input-group-sm sticky{% IF fields.basic_fields.item('conference.name').mandatory || fields.supplementary_fields.item('conference.name').mandatory %} mandatory{% END %}">
-          <div class="input-group-addon">{% fields.basic_fields.item('conference.name').label %}{% fields.supplementary_fields.item('conference.name').label %}</div>
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.item('conference.name').label %}{% fields.supplementary_fields.item('conference.name').label %}</div>
           <input type="text" name="conference.name" id="id_conference_name" value="[% conference.name %]" placeholder="{% fields.basic_fields.item('conference.name').placeholder %}{% fields.supplementary_fields.item('conference.name').placeholder %}" class="sticky form-control">
           <div class="input-group-addon"></div>
         </div>

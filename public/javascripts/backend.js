@@ -25,19 +25,6 @@ $('.check_alias').keyup(function() {
 });
 });
 
-$(function () {
-	$('.change_mode').click(function(){
-		$('#edit_form').find('input[name="edit_mode"]').val('normal');
-		$('#edit_form').attr('action','/myPUB/record/change_mode');
-		$('#edit_form').submit();
-	});
-	$('.change_type').click(function(){
-		$('#id_type').val('book');
-		$('#edit_form').attr('action','/myPUB/record/change_mode');
-		$('#edit_form').submit();
-	});
-});
-
 /**
  * Display/hide edit form for author IDs
  *
@@ -82,31 +69,43 @@ function generate_link(file_id, pub_id){
  * Section Basic Fields
  */
 
+$(function () {
+	$('.change_mode').click(function(){
+		$('#edit_form').find('input[name="edit_mode"]').val('normal');
+		$('#edit_form').attr('action','/myPUB/record/change_mode');
+		$('#edit_form').submit();
+	});
+	$('.change_type').click(function(){
+		$('#id_type').val('book');
+		$('#edit_form').attr('action','/myPUB/record/change_mode');
+		$('#edit_form').submit();
+	});
+});
+
+
 /**
  * Link author name to PEVZ account
  */
 function linkPevz(element){
 	var type = "";
 	type = $(element).attr('data-type');
-	var viewport = "";
-	viewport = $(element).attr('data-viewport');
-	var lineId = $(element).attr('id').replace(viewport + type + 'link_pevz_','');
+	var lineId = $(element).attr('id').replace(type + 'link_pevz_','');
 
-	if($('#' + viewport + type + 'Authorized' + lineId).attr('alt') == "Not Authorized"){
+	if($('#' + type + 'Authorized' + lineId).attr('alt') == "Not Authorized"){
 		var puburl = '/myPUB/search_researcher?ftext=';
 		var narrowurl = "";
 		var longurl = "";
-		var first_name = $('#' + viewport + type + 'first_name_' + lineId).val();
+		var first_name = $('#' + type + 'first_name_' + lineId).val();
 		$('#' + type + 'orig_first_name_' + lineId).val(first_name);
 		var firstname = first_name.toLowerCase();
-		var last_name = $('#' + viewport + type + 'last_name_' + lineId).val();
+		var last_name = $('#' + type + 'last_name_' + lineId).val();
 		$('#' + type + 'orig_last_name_' + lineId).val(last_name);
 		var lastname = last_name.toLowerCase();
 		if(firstname){
 			// if name consists of more than one word, use any and ""
 			if(firstname.indexOf(" ") > -1){
-				narrowurl += '(firstname any "' + firstname + '"';
-				longurl += '(oldfirstname any "' + firstname + '"';
+				narrowurl += 'firstname any "' + firstname + '"';
+				longurl += 'oldfirstname any "' + firstname + '"';
 			}
 			// if name contains [-äöüß], truncating won't work, so use literal search
 			else if(firstname.indexOf("-") > -1 || firstname.indexOf("\u00E4") > -1 || firstname.indexOf("\u00F6") > -1 || firstname.indexOf("\u00FC")> -1 || firstname.indexOf("\u00DF") > -1){
@@ -169,16 +168,16 @@ function linkPevz(element){
 						last_name = value;
 					}
 				});
+				
+				$('#' + type + 'first_name_' + lineId).val(first_name);
+				$('#' + type + 'last_name_' + lineId).val(last_name);
+				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly", "readonly");
+				$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
+				$('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
+				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 
-				$('#' + viewport + type + 'first_name_' + lineId).val(first_name);
-				$('#' + viewport + type + 'last_name_' + lineId).val(last_name);
-				$('#' + type + 'full_name_' + lineId).val(last_name + ", " + first_name);
 				$('#' + type + 'id_' + lineId).val(pevzId);
-				$('#' + viewport + type + 'first_name_' + lineId + ', #' + viewport + type + 'last_name_' + lineId).attr("readonly","readonly");
-				$('#' + viewport + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
-				$('#' + viewport + type + 'Authorized' + lineId).attr('alt','Authorized');
-				$('#' + viewport + type + 'first_name_' + lineId + ', #' + viewport + type + 'last_name_' + lineId).parent().removeClass("has-error");
-
+				
 				pevzId = "";
 				first_name = "";
 				last_name = "";
@@ -257,18 +256,18 @@ function linkPevz(element){
 					var last_name = $(this).parent().parent().find('.name').attr('data-lastname');
 
 					var lineId = $(this).parents('.table').attr('id').replace('lineId','');
-
-					$('#' + viewport + type + 'first_name_' + lineId).val("");
-					$('#' + viewport + type + 'first_name_' + lineId).val(first_name);
-					$('#' + viewport + type + 'last_name_' + lineId).val("");
-					$('#' + viewport + type + 'last_name_' + lineId).val(last_name);
-					$('#' + type + 'full_name_' + lineId).val(last_name + ", " + first_name);
-					$('#' + viewport + type + 'first_name_' + lineId + ', #' + viewport + type + 'last_name_' + lineId).attr("readonly","readonly");
+					
+					$('#' + type + 'first_name_' + lineId).val("");
+					$('#' + type + 'first_name_' + lineId).val(first_name);
+					$('#' + type + 'last_name_' + lineId).val("");
+					$('#' + type + 'last_name_' + lineId).val(last_name);
+					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
+					$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
+					$('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
+					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
+					
 					$('#' + type + 'id_' + lineId).val(pevzId);
-
-					$('#' + viewport + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
-					$('#' + viewport + type + 'Authorized' + lineId).attr('alt','Authorized');
-					$('#' + viewport + type + 'first_name_' + lineId + ', #' + viewport + type + 'last_name_' + lineId).parent().removeClass("has-error");
+					
 					$('#linkPevzModal').modal("hide");
 					$('#linkPevzModal').find('.modal-body').first().html('');
 				});
@@ -426,15 +425,19 @@ function add_field(name, placeholder){
 	var index = items.index($('#' + name + ' div.row.innerrow').last()) + 1;
 	var blueprint = $(items[0]).clone(true,true);
 
-	$(blueprint).find('input, textarea, img, button, select').each(function(){
-		var newid = $(this).attr('id').replace(/0/g,index);
-		$(this).attr('id', newid);
+	$(blueprint).find('input, textarea, img, button, select, span').each(function(){
+		if($(this).attr('id')){
+			var newid = $(this).attr('id').replace(/0/g,index);
+			$(this).attr('id', newid);
+		}
+		
 		if($(this).attr('name')){
 			var newname = $(this).attr('name').replace(/0/g,index);
 			$(this).attr('name', newname);
 		}
 		$(this).attr('disabled',false);
 		$(this).attr('readonly',false);
+		$(this).removeClass('has-error');
 		$(this).removeAttr('autocomplete');
 		if(placeholder){
 			$(this).attr('placeholder', placeholder);
@@ -512,66 +515,6 @@ function enable_autocomplete(field, index, viewport){
 	});
 }
 
-//$(function(){
-//	$('input.pub, select.pub').on("focus",function(){
-//		var addon = $(this).parent('div.input-group').children('div.input-group-addon.pub');
-//		if($(this).parent('div.input-group').hasClass('mandatory')){
-//			addon.css("border-color", "#953b39");
-//			addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
-//			addon.css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
-//		}
-//		else {
-//			addon.css("border-color","#66afe9");
-//			addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
-//			addon.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
-//		}
-//		
-//		addon.css("outline", "0");
-//		
-//		var first_addon = $(this).parent('div.input-group').children('div.input-group-addon:first-child.pub');
-//		first_addon.css("border-right","none");
-//		
-//		var last_addon = $(this).parent('div.input-group').children('div.input-group-addon:last-child.pub');
-//		last_addon.css("border-left", "none");
-//		
-//		var not_first_last = $(this).parent('div.input-group').children('div.input-group-addon:not(:first-child):not(:last-child).pub');
-//		not_first_last.css("border-left", "none");
-//		not_first_last.css("border-right", "none");
-//		
-//	    var mymatch = $(this).attr('name').match(/department\.(\d{1,})\.name/);
-//		if(mymatch && mymatch[1]){
-//			var index = mymatch[1];
-//			enable_autocomplete("dp", index, "_sm");
-//		}
-//		mymatch = $(this).attr('name').match(/project\.(\d{1,})\.name/);
-//		if(mymatch && mymatch[1]){
-//			var index = mymatch[1];
-//			enable_autocomplete("pj", index, "_sm");
-//		}
-//	});
-//	
-//	$('input.pub, select.pub').on("blur", function(){
-//		var addon = $(this).parent('div.input-group').children('div.input-group-addon.pub');
-//		if(addon.parent('div.input-group').hasClass('mandatory')){
-//			addon.css("border-color","#b94a48");
-//		}
-//		else {
-//			addon.css("border","1px solid #cccccc");
-//		}
-//		addon.css("-webkit-box-shadow", "none");
-//		addon.css("box-shadow","none");
-//		
-//		var first_addon = $(this).parent('div.input-group').children('div.input-group-addon:first-child.pub');
-//		first_addon.css("border-right","none");
-//		
-//		var last_addon = $(this).parent('div.input-group').children('div.input-group-addon:last-child.pub');
-//		last_addon.css("border-left", "none");
-//		
-//		var not_first_last = $(this).parent('div.input-group').children('div.input-group-addon:not(:first-child):not(:last-child).pub');
-//		not_first_last.css("border-left", "none");
-//		not_first_last.css("border-right", "none");
-//	});
-//});
 
 $(function(){
 	$('div.input-group.sticky .input-group-addon:first-child').on("click", function(){
@@ -588,29 +531,9 @@ $(function(){
 			}
 		}
 		
-		$(this).css("border","none");
-		
-//		var last_addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon:last-child');
-//		last_addon.css("border-left", "none");
-		
-//		var not_first_last = $(this).parent('div.input-group.sticky').children('div.input-group-addon:not(:first-child):not(:last-child)');
-//		not_first_last.css("border-left", "none");
-//		not_first_last.css("border-right", "none");
-		
+		$(this).css("border","none");		
 		var addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon');
-//		if($(this).parent('div.input-group').hasClass('mandatory')){
-//			addon.css("border-color", "#953b39");
-//			$(this).css("border-left", "1px solid #953b39");
-//			addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
-//			addon.css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
-//		}
-//		else {
-//			addon.css("border-color","#66afe9");
-//		addon.css("border","none");
-//			$(this).css("border-left","1px solid #66afe9");
-//			addon.css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
-//			addon.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
-//		}
+
 		if($(this).parent('div.sticky').hasClass('mandatory')){
 			$(this).parent('div.sticky').css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
 			$(this).parent('div.sticky').css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
@@ -623,9 +546,6 @@ $(function(){
 			$(this).parent('div.sticky').css("border", "1px solid #66afe9");
 			$(this).css("box-shadow", "inset 0 1px 1px -1px rgba(0, 0, 0, 0.075), 0 0 8px -8px rgba(102, 175, 233, 0.6)");
 		}
-		
-		
-//		addon.css("outline", "0");
 		
 	    var mymatch = $(this).attr('name').match(/department\.(\d{1,})\.name/);
 		if(mymatch && mymatch[1]){
@@ -641,12 +561,6 @@ $(function(){
 	
 	$('input.sticky, select.sticky, textarea.sticky').on("blur", function(){
 		var addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon');
-//		if(addon.parent('div.input-group').hasClass('mandatory')){
-//			addon.css("border-color","#b94a48");
-//		}
-//		else {
-//			addon.css("border","1px solid #cccccc");
-//		}
 		addon.css("border","none");
 		if($(this).parent('div.sticky').hasClass('mandatory')){
 			$(this).parent('div.sticky').css("border", "1px solid #b94a48");
@@ -662,19 +576,5 @@ $(function(){
         
 		var first_addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon:first-child');
 		first_addon.css("display", "table-cell");
-//		first_addon.css("border-right","none");
-//		$(this).css("border-left","none");
-//		$(this).css("border-bottom-left-radius","0");
-//		$(this).css("border-top-left-radius","0");
-		
-//		first_addon.css("-webkit-box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
-//		first_addon.css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
-		
-//		var last_addon = $(this).parent('div.input-group').children('div.input-group-addon:last-child.pub');
-//		last_addon.css("border-left", "none");
-		
-//		var not_first_last = $(this).parent('div.input-group').children('div.input-group-addon:not(:first-child):not(:last-child).pub');
-//		not_first_last.css("border-left", "none");
-//		not_first_last.css("border-right", "none");
 	});
 });
