@@ -8,20 +8,10 @@
   </div>
   <div class="col-md-10" id="publication_status">
     <div class="row innerrow">
-      <div class="form-group col-md-10 hidden-xs hidden-sm">
-        <div class="sticky{% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %} mandatory{% END %}">
-          <select name="publication_status" class="sticky input-sm form-control{% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %} required{% END %}" id="select_publication_status">
-            <option value=""[% IF !publication_status %] selected="selected"[% END %]>--- Select ---</option>
-            [% FOREACH pi IN publ_status.keys %]
-              <option value="[% pi %]" [% IF publication_status == pi %]selected="selected"[% END %]>[% publ_status.$pi %]</option>
-            [% END %]
-          </select>
-        </div>
-      </div>
-      <div class="form-group col-xs-11 hidden-lg hidden-md">
+      <div class="form-group col-md-10 col-xs-11">
         <div class="input-group input-group-sm sticky{% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon">{% fields.basic_fields.publication_status.label_short %}{% fields.supplementary_fields.publication_status.label_short %}</div>
-          <select name="publication_status" class="sticky form-control{% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %} required{% END %}" id="select_publication_status">
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.publication_status.label_short %}{% fields.supplementary_fields.publication_status.label_short %}</div>
+          <select name="publication_status" class="sticky input-sm form-control{% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %} required{% END %}" id="select_publication_status">
             <option value=""[% IF !publication_status %] selected="selected"[% END %]>--- Select ---</option>
             [% FOREACH pi IN publ_status.keys %]
               <option value="[% pi %]" [% IF publication_status == pi %]selected="selected"[% END %]>[% publ_status.$pi %]</option>

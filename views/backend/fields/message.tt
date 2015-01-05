@@ -7,15 +7,10 @@
   </div>
   <div class="col-md-10">
     <div class="row innerrow">
-      <div class="form-group col-md-10 hidden-xs hidden-sm">
-        <div class="sticky">
-          <textarea rows="3" name="message" id="id_message" value="[% FILTER html %][% message %][% END %]" class="sticky input-sm form-control">[% FILTER html %][% message %][% END %]</textarea>
-        </div>
-      </div>
-      <div class="form-group col-xs-11 hidden-lg hidden-md">
+      <div class="form-group col-md-10 col-xs-11">
         <div class="input-group input-group-sm sticky">
-          <div class="input-group-addon">{% fields.basic_fields.message.label %}{% fields.supplementary_fields.message.label %}</div>
-          <textarea name="message" id="id_message" value="[% message | html %]" class="sticky form-control"></textarea>
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.message.label %}{% fields.supplementary_fields.message.label %}</div>
+          <textarea rows="3" name="message" id="id_message" value="[% FILTER html %][% message %][% END %]" class="sticky input-sm form-control">[% FILTER html %][% message %][% END %]</textarea>
           <div class="input-group-addon"></div>
         </div>
       </div>

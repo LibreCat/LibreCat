@@ -10,24 +10,9 @@
     {% IF fields.basic_fields.external_id.multiple OR fields.supplementary_fields.external_id.multiple %}
     [% IF !external_id %]
     <div class="row innerrow">
-      <div class="form-group col-md-10 hidden-xs hidden-sm">
+      <div class="form-group col-md-10 col-xs-11">
         <div class="input-group input-group-sm sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
-          <span class="input-group-btn">
-            <select class="btn btn-default" ng-model="external_id_source_0">
-              <option value="">-- Select --</option>
-              [% FOREACH extid IN external_identifier_list.keys %]
-              <option value="[% extid %]">[% external_identifier_list.$extid.name %]</option>
-              [% END %]
-            </select>
-          </span>
-          <input type="text" value="" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} required{% END %}" name="external_id.{{external_id_source_0}}" id="external_id_0"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonly="readonly"{% END %} />
-          <div class="input-group-addon"><div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('external_id_0').value = '';"></div></div>
-          <div class="input-group-addon"><span ng-click="cloneExtid($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %} id="plusExtId"></span></div>
-        </div>
-      </div>
-      <div class="form-group col-xs-11 hidden-lg hidden-md">
-        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon">{% fields.basic_fields.external_id.label_short || fields.basic_fields.external_id.label %}{% fields.supplementary_fields.external_id.label_short || fields.supplementary_fields.external_id.label %}</div>
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.external_id.label_short || fields.basic_fields.external_id.label %}{% fields.supplementary_fields.external_id.label_short || fields.supplementary_fields.external_id.label %}</div>
           <span class="input-group-btn">
             <select class="btn btn-default" ng-model="external_id_source_0">
               <option value="">-- Select --</option>
@@ -45,30 +30,9 @@
     [% ELSE %]
       [% FOREACH ext_id IN external_id.keys %]
       <div class="row innerrow">
-        <div class="form-group col-md-10 hidden-xs hidden-sm">
+        <div class="form-group col-md-10 col-xs-11">
           <div class="input-group input-group-sm sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
-            <span class="input-group-btn">
-              <select class="btn btn-default" ng-model="external_id_source_[% loop.index %]" ng-init="external_id_source_[% loop.index %]='[% ext_id %]'">
-                <option value="">-- Select --</option>
-                [% FOREACH extid IN external_identifier_list.keys %]
-                <option value="[% extid %]"[% IF extid == ext_id %] selected="selected"[% END %]>[% external_identifier_list.$extid.name %]</option>
-                [% END %]
-              </select>
-            </span>
-            <input type="text" value="[% external_id.$ext_id %]" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF loop.first %] required[% END %]{% END %}" name="external_id.{{external_id_source_[% loop.index %]}}" id="external_id_[% loop.index %]"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonyl="readonly"{% END %} />
-            <div class="input-group-addon">
-            [% IF loop.index == "0" %]
-            <div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('external_id_[% loop.index %]').value = '';"></div>
-            [% ELSE %]
-            <div class="glyphicon glyphicon-minus single"></div>
-            [% END %]
-            </div>
-            <div class="input-group-addon"><span ng-click="cloneExtid($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %} id="plusExtId"></span></div>
-          </div>
-        </div>
-        <div class="form-group col-xs-11 hidden-lg hidden-md">
-          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
-            <div class="input-group-addon">{% fields.basic_fields.external_id.label_short || fields.basic_fields.external_id.label %}{% fields.supplementary_fields.external_id.label_short || fields.supplementary_fields.external_id.label %}</div>
+            <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.external_id.label_short || fields.basic_fields.external_id.label %}{% fields.supplementary_fields.external_id.label_short || fields.supplementary_fields.external_id.label %}</div>
             <span class="input-group-btn">
               <select class="btn btn-default" ng-model="external_id_source_[% loop.index %]" ng-init="external_id_source_[% loop.index %]='[% ext_id %]'">
                 <option value="">-- Select --</option>
@@ -93,24 +57,9 @@
     [% END %]
     {% ELSE %}
     <div class="row innerrow">
-      <div class="form-group col-md-10 hidden-xs hidden-sm">
+      <div class="form-group col-md-10 col-xs-11">
         <div class="input-group input-group-sm sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
-          <span class="input-group-btn">
-            <select class="btn btn-default" ng-model="external_id_source_0">
-              <option value="">-- Select --</option>
-              [% FOREACH extid IN external_identifier_list.keys %]
-              <option value="[% extid %]">[% external_identifier_list.$extid.name %]</option>
-              [% END %]
-            </select>
-          </span>
-          <input type="text" value="" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} required{% END %}" name="external_id.{{external_id_source_0}}" id="external_id_0"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonly="readonly"{% END %} />
-          <div class="input-group-addon"><div class="glyphicon glyphicon-minus" onclick="javascript:document.getElementById('external_id_0').value = '';"></div></div>
-          <div class="input-group-addon"><span ng-click="cloneExtid($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %} id="plusExtId"></span></div>
-        </div>
-      </div>
-      <div class="form-group col-xs-11 hidden-lg hidden-md">
-        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon">{% fields.basic_fields.external_id.label_short || fields.basic_fields.external_id.label %}{% fields.supplementary_fields.external_id.label_short || fields.supplementary_fields.external_id.label %}</div>
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.external_id.label_short || fields.basic_fields.external_id.label %}{% fields.supplementary_fields.external_id.label_short || fields.supplementary_fields.external_id.label %}</div>
           <span class="input-group-btn">
             <select class="btn btn-default" ng-model="external_id_source_0">
               <option value="">-- Select --</option>
