@@ -35,7 +35,13 @@ sub delete_empty_fields {
 sub correct_hash_array {
 	my $data = shift;
 	my $conf = h->config;
-	my $fields = $conf->{forms}->{publicationTypes}->{$data->{type}}->{fields};
+    my $tmp_type;
+    if ($data->{type} =~ /^bi[A-Z]/) {
+        $tmp_type = "bithesis";
+    } else {
+        $tmp_type = $data->{type};
+    }
+	my $fields = $conf->{forms}->{publicationTypes}->{$tmp_type}->{fields};
 
 	foreach my $key (keys %$data){
 		my $ref = ref $data->{$key};
@@ -54,19 +60,19 @@ sub correct_hash_array {
 
 sub correct_writer {
 	my $data = shift;
-	
+
 	$data->{writer_type} = "author" if !$data->{writer_type};
-	
+
 	foreach my $crea (@{$data->{writer}}){
-		$crea->{first_name} = $crea->{first_name}->[0];
-		$crea->{last_name} = $crea->{last_name}->[0];
-    	$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
+		#$crea->{first_name} = $crea->{first_name}->[0];
+		#$crea->{last_name} = $crea->{last_name}->[0];
+    	#$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
     	push @{$data->{$data->{writer_type}}}, $crea;
     }
-    
+
     delete $data->{writer};
     delete $data->{writer_type};
-    
+
     return $data;
 }
 

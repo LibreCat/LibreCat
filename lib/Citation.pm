@@ -125,6 +125,7 @@ Updated version of id2citations for new backend
 sub id2citation {
 	my ($rec, $verbose, $returnType, @styles) = @_;
 
+	$returnType = '' if !$returnType;
 	my $lang = "en"; #default
 	my $recId = $rec->{_id};
 

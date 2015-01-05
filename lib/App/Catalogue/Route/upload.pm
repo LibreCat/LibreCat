@@ -7,11 +7,14 @@ package App::Catalogue::Route::upload;
 =cut
 
 use Catmandu::Sane;
+use Catmandu qw/export_to_string/;
 use App::Helper;
 use App::Catalogue::Controller::Publication qw/update_publication new_publication/;
 use App::Catalogue::Controller::File qw/delete_file/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;
+use Dancer::Plugin::Email;
+use Try::Tiny;
 use File::Copy;
 use Carp;
 use Dancer::Plugin::Auth::Tiny;
@@ -68,7 +71,7 @@ prefix '/myPUB' => sub {
 
       return to_json($file_data);
   };
-  
+
   post '/thesesupload' => sub {
       my $file    = request->upload('file');
       my $file_data;
@@ -95,12 +98,12 @@ prefix '/myPUB' => sub {
           mkdir $filedir || croak "Could not create dir $filedir: $!";
           my $filepath = path(h->config->{upload_dir}, $tempid, $file->{filename});
       	  copy($file->{tempname}, $filepath);
-      	  
+
       	  my $ctx = Digest::MD5->new;
       	  $ctx->addfile($file->file_handle());
       	  my $digest = $ctx->md5_hex;
       	  $file_data->{checksum} = $digest;
-      	  
+
       	  $file_data->{file_json} = to_json($file_data);
       	  my $status = unlink $file->{tempname};
       }
@@ -163,7 +166,7 @@ prefix '/myPUB' => sub {
 
     redirect '/myPUB';
   };
-  
+
   post '/thesesupload/submit' => sub {
     my $submit_or_cancel = params->{submit_or_cancel} || "Cancel";
     my $file_name = params->{file_name};
@@ -183,7 +186,7 @@ prefix '/myPUB' => sub {
         email => params->{email},
         publisher => "Universität Bielefeld",
         place => "Bielefeld",
-        author => [{
+        writer => [{
           first_name => params->{'author.first_name'},
           last_name => params->{'author.last_name'},
           full_name => params->{'author.last_name'} . ", " . params->{'author.first_name'},
@@ -212,6 +215,27 @@ prefix '/myPUB' => sub {
       my $result = move( path(h->config->{upload_dir}, params->{tempid}, $file_name), $path ) || die $!;
 
       my $response = update_publication($record);
+
+      # send mail to librarian
+      my $mail_body = export_to_string({
+          title => $record->{title},
+          _id => $id,
+          },
+          'Template',
+          template => 'views/email/new_thesis.tt'
+      );
+
+      try {
+          email {
+              to => 'vitali.peil@uni-bielefeld.de',#h->config->{thesis}->{to},
+              #from => h->config->{thesis}->{from},
+              reply_to => $record->{email},
+              subject => h->config->{thesis}->{subject},
+              body => $mail_body,
+          };
+      } catch {
+          error "Could not send email: $_";
+      }
 
     } else {
       my $path = path( h->config->{upload_dir}, params->{tempid}, $file_name);

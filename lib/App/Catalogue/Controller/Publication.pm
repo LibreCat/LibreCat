@@ -33,6 +33,7 @@ sub save_publication {
 
     $data = delete_empty_fields($data);
     $data = correct_hash_array($data);
+
     $data = correct_writer($data) if $data->{writer};
 
     # html encoding
@@ -44,7 +45,7 @@ sub save_publication {
     if($data->{file}){
     	$data->{file} = handle_file($data);
     }
-    
+
     if($data->{language}){
     	foreach my $lang (@{$data->{language}}){
     		if($lang->{name} eq "English" or $lang->{name} eq "German"){
