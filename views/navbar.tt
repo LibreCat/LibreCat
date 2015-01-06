@@ -61,19 +61,16 @@
       	  <span class="icon-bar"></span>
       	  <span class="icon-bar"></span>
       	</button>
-      	<a class="navbar-brand" href="#"><span class="glyphicon glyphicon-home"></span> <img src="/images/PUB_UNIBI_logo_gruen.gif" height="30" /></a>
+      	<a class="navbar-brand" href="#"><img src="/images/PUB_UNIBI_logo_gruen.gif" height="30" /></a>
      </div>
 
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
        <ul class="nav navbar-nav">
-         <li class="hidden-sm"><a href="/myPUB"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-         <li class="hidden-xs hidden-md hidden-lg"><a href="/myPUB"><span class="glyphicon glyphicon-home"></span></a></li>
+         <li><a href="/myPUB"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm"> Home</span></a></li>
          [% IF session AND session.user %]
-         <li class="hidden-sm"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
-         <li class="hidden-xs hidden-md hidden-lg"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span></a></li>
-         <li class="hidden-sm"><a href="[% h.host %]/person/[% session.personNumber %]"><span class="fa fa-list-alt"></span> My Public Author Page</a></li>
-         <li class="hidden-xs hidden-md hidden-lg"><a href="[% h.host %]/person/[% session.personNumber %]"><span class="fa fa-list-alt"></span></a></li>
+         <li><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span><span class="hidden-sm"> Add New Publication</span></a></li>
+         <li><a href="[% h.host %]/person/[% session.personNumber %]"><span class="fa fa-list-alt"></span><span class="hidden-sm"> My Public Author Page</span></a></li>
          [% IF session.role == "super_admin" %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="glyphicon glyphicon-chevron-down"></a>
           <ul class="dropdown-menu" role="menu">
@@ -88,12 +85,7 @@
        </ul>
        <ul class="nav navbar-nav navbar-right">
          [% IF session AND session.user %]
-         <li class="dropdown hidden-sm"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> My Settings <span class="glyphicon glyphicon-chevron-down"></span></a>
-            <div class="dropdown-menu" style="width: 550px">
-            [% INCLUDE person_affiliation.tt %]
-            </div>
-         </li>
-         <li class="dropdown hidden-lg hidden-md hidden-xs"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></a>
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><span class="hidden-sm"> My Settings </span><span class="glyphicon glyphicon-chevron-down"></span></a>
             <div class="dropdown-menu" style="width: 550px">
             [% INCLUDE person_affiliation.tt %]
             </div>
@@ -116,11 +108,9 @@
           </ul>
          </li>
          [% END %]
-         <li class="hidden-sm"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-         <li class="hidden-xs hidden-lg hidden-md"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
+         <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm"> Logout</span></a></li>
          [% ELSE %]
-         <li class="hidden-sm"><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-         <li class="hidden-xs hidden-lg hidden-md"><a href="/login"><span class="glyphicon glyphicon-log-in"></span></a></li>
+         <li class="hidden-sm"><a href="/login"><span class="glyphicon glyphicon-log-in"></span><span class="hidden-sm"> Login</span></a></li>
          [% END %]
        </ul>
      </div><!-- /.navbar-collapse -->
