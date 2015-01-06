@@ -4,7 +4,7 @@ use lib qw(/srv/www/sbcat/lib/extension);
 use Catmandu::Sane;
 use Catmandu;
 use App::Helper;
-use App::Catalogue::Controller::Corrector qw/delete_empty_fields correct_hash_array correct_writer/;
+use App::Catalogue::Controller::Corrector qw/delete_empty_fields correct_hash_array correct_writer correct_publid/;
 use App::Catalogue::Controller::File qw/handle_file delete_file/;
 use Catmandu::Validator::PUB;
 use Hash::Merge qw/merge/;
@@ -35,6 +35,7 @@ sub save_publication {
     $data = correct_hash_array($data);
 
     $data = correct_writer($data) if $data->{writer};
+    $data = correct_publid($data);
 
     # html encoding
     foreach (qw/message/) {

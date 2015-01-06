@@ -60,7 +60,7 @@
             <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false);" /> Closed Access (Author/Reviewer only)
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_request" value="request" onclick="oamode(thisform,false);" /> Request a Copy (Closed Access except upon request)
+            <input type="radio" name="accessLevel" id="id_accessLevel_request" value="request" onclick="oamode(this.form,false);" /> Request a Copy (Closed Access except upon request)
           </label>
           <label class="checkbox control-label">
             <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />Switch to Open Access on:<br />
@@ -80,8 +80,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <input type="submit" class="btn" value="Submit" name="finalSubmit" id="fileSubmit" />
-        <input type=button class="btn" data-dismiss="modal" aria-hidden="true" value="Cancel" />
+        <input type="button" class="btn" value="Submit" name="finalSubmit" id="fileSubmit" />
+        <input type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="Cancel" />
       </div>
     </div>
   </div>

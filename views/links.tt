@@ -19,10 +19,10 @@
   [% END %]
 [% END %]
   [% request = 0 %]
-  [% IF entry.file|| entry.related_material || entry.externalFiles == "1" %]
+  [% IF entry.file || entry.related_material || entry.externalFiles == "1" %]
   | <a href="/[% bag %]/[% entry._id %]" class="label label-success">Files available</a>
   [% END %]
-<!--
+
   [% FOREACH file IN entry.file %]
 	[% IF file.request_a_copy %][% request = 1 %][% END %]
 	[% IF file AND bag == "publication" %]
@@ -39,7 +39,7 @@
   [% END %]
 
   [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="/download/[% entry._id  %]/[% supp.file.file_id %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
--->
+
   [% IF entry.link AND bag != "data" %] | <a href="[% entry.link.url %]">URL</a>[% END %]
   [% IF entry.doi %]| <a href="http://dx.doi.org/[% entry.doi %]" target="_top">DOI</a>[% END %]
   [% IF entry.external_id.pmid %] | <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% entry.external_id.pmid %]" target="_top">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% entry.external_id.pmid %]">Europe PMC</a>[% END %]
