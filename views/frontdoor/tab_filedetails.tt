@@ -55,7 +55,7 @@
         [% INCLUDE websites/oa_lock.tt %] UniBi Only
 
         [% CASE 'admin' %]
-        [% INCLUDE wesites/oa_lock.tt %] Author/Reviewer/Admin Only
+        [% INCLUDE websites/oa_lock.tt %] Author/Reviewer/Admin Only
       [% END %]
     </div>
     </div>
