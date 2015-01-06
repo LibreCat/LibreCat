@@ -57,7 +57,7 @@
   </div>
 [% END %]
   <div class="col-md-11">
-    <i>[% entry.year %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry._id %]</span> [% IF request.path != "/marked" %]<span style="width:100%"><div class="pull-right"><a [% IF request.path == "/marked" %]id="clickme_[% n %]" [% END %]class="mark" href="#" data-marked="[% h.is_marked(entry._id) %]" data-id="[% entry._id %]">[% IF h.is_marked(entry._id) %]Unmark[% ELSE %]Mark[% END %]</a></div></span>[% END %]</i><br />
+    <i>[% entry.year %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry._id %]</span> [% IF !backend %][% IF request.path != "/marked" %]<span style="width:100%"><div class="pull-right"><a [% IF request.path == "/marked" %]id="clickme_[% n %]" [% END %]class="mark" href="#" data-marked="[% h.is_marked(entry._id) %]" data-id="[% entry._id %]">[% IF h.is_marked(entry._id) %]Unmark[% ELSE %]Mark[% END %]</a></div></span>[% END %]</i>[% END %]<br />
     <div class="citation-block-div">
     [% IF style == 'frontShort' %]
 	<a href="/myPUB/record/edit/[% entry._id %]">[% entry.title %]</a><br />

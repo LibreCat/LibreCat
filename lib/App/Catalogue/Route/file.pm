@@ -75,8 +75,8 @@ prefix '/requestcopy' => sub {
 		);
 
 		if($hits->{hits}->[0]){
-			my $rec = $hits->{hits}->[0];
-			return "/requestcopy/download/" . $rec->{_id};
+			my $obj = $hits->{hits}->[0];
+			return "/requestcopy/download/" . $obj->{_id};
 		}
 		else{
 			my $stored = $bag->add({
