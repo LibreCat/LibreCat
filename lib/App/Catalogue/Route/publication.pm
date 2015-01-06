@@ -246,7 +246,6 @@ prefix '/myPUB/record' => sub {
         my $publbag = Catmandu->store->bag('publication');
         $publbag->add($result);
         h->publication->commit;
-return to_dumper $result;
         redirect '/myPUB';
     };
 

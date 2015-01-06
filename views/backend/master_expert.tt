@@ -15,7 +15,7 @@
   <form action="/myPUB/record/update" method="POST" id="edit_form">
     <input type="hidden" name="type" value="{% tmpl %}" id="id_type"/>
     <input type="hidden" name="_id" value="[% _id %]"/>
-    <input type="hidden" name="status" value="unsubmitted"/>
+    <input type="hidden" name="status" value="private"/>
     <input type="hidden" name="date_created" value="[% date_created %]" />
     <input type="hidden" name="edit_mode" value="expert" />
 
@@ -23,7 +23,7 @@
 
       <!-- STEP 1 -->
       <div id="basic_fields" class="tab_section">
-        
+
 {% IF fields.basic_fields %}
   <h4>{% fields.basic_fields.tab_name %}</h4>
   {% FOREACH key IN field_order.basic_fields %}
@@ -80,7 +80,7 @@
 {% END %}
 
       </div><!-- tab-pane -->
-      
+
       {% INCLUDE fields/buttonrow_tab1.tt %}
 
     </div><!-- tab-content -->
