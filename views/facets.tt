@@ -6,7 +6,6 @@
 [% IF h.extract_params.text %]
 <p class="text-muted"><a href="[% path %]?q=[% h.extract_params.q.join('&q=') %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> search=[% h.extract_params.text |html %]</p>
 [% END %]
-
 <form action="#" method="get" class="form-inline" role="form">
     <span class="input-group">
       <input type="text" value='[% qp.text %]' class="form-control" name="text" placeholder="Search" />
@@ -35,7 +34,7 @@
   <li>
     <button data-toggle="collapse" data-target="#status_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Submission Status ([% facets.status.terms.size %])</a></button>
     <div class="facettecollapse">
-    <ul id="status_[% tabmodus %]" class="collapse[% IF qp.q.grep($facets.status.terms.0.term).0 %] in[% END %]">
+    <ul id="status_[% tabmodus %]" class="collapse">
       [% FOREACH stat IN facets.status.terms %]
       <li><a class="search-facet_[% tabmodus %]" data-index="status" data-val="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
       [% END %]
@@ -333,13 +332,14 @@ $('#id_button_embed_[% tabmodus %]').click(function() {
 });
 
 $('a.search-facet_[% tabmodus %]').click(function() {
-    var object = $(this),
-        index = object.data('index'),
-        term = object.data('val');
-    searchParams.q.push(index+'='+term);
-    delete searchParams.start;
-    var url = path+'?'+ $.param($.extend({}, searchParams), true);
-    window.location.replace(url);
+    console.log(searchParams.q);
+//    var object = $(this),
+//        index = object.data('index'),
+//        term = object.data('val');
+//    searchParams.q.push(index+'='+term);
+//    delete searchParams.start;
+//    var url = path+'?'+ $.param($.extend({}, searchParams), true);
+//    window.location.replace(url);
 });
 
 $('a.sort-facet_[% tabmodus %]').click(function() {
@@ -360,7 +360,7 @@ $('a.export-facet_[% tabmodus %]').click(function() {
   window.location.replace(url);
 });
 
-$('').click(function () {});
+//$('').click(function () {});
 </script>
 
 <!-- END facets.tt -->

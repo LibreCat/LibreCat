@@ -33,7 +33,7 @@ sub calc_date {
 	return $date_expires;
 }
 
-sub get_file_name {
+sub get_file_info {
 	my ($pub_id, $file_id) = @_;
 	my $rec = h->publication->get($pub_id);
 	if($rec->{file} and ref $rec->{file} eq "ARRAY"){
@@ -57,13 +57,15 @@ prefix '/requestcopy' => sub {
 =cut
 	post '/:id/:file_id' => sub {
 		my $bag = Catmandu->store->bag('request');
-		my $file_name = get_file_name(params->{id}, params->{file_id});
+		my $file = get_file_info(params->{id}, params->{file_id});
+		return unless $file->{request_a_copy} == 1;
+
 		my $date_expires = calc_date();
 
 		my $query = {
 			"approved"     => "1",
 			"file_id"      => params->{file_id},
-			"file_name"    => $file_name,
+			"file_name"    => $file->{file_name},
 			"date_expires" => $date_expires,
 			"record_id"    => params->{id}
 		};
@@ -74,30 +76,33 @@ prefix '/requestcopy' => sub {
 
 		if($hits->{hits}->[0]){
 			my $rec = $hits->{hits}->[0];
-			return h->host . ":3000/requestcopy/download/" . $rec->{_id};
+			return "/requestcopy/download/" . $rec->{_id};
 		}
 		else{
 			my $stored = $bag->add({
 				record_id => params->{id},
 				file_id => params->{file_id},
-				file_name => $file_name || "",
+				file_name => $file->{file_name},
 				date_expires => $date_expires,
-				email => params->{email} || "",
+				email => params->{user_email},
 				approved => params->{approved} || 0,
 			});
 
-			if(params->{email}){
+			my $file_creator_email = h->getAccount($file->{creator})->[0]->{email};
+
+			if(params->{user_email}){
 				my $pub = edit_publication(params->{id});
 				my $mail_body = export_to_string({
 					title => $pub->{title},
 					user_name => params->{user_name},
 					key => $stored->{_id},
-				},
-				'Template',
-				template => 'email/req_copy.tt');
+					},
+					'Template',
+					template => 'email/req_copy.tt',
+				);
 				try {
 					email {
-						to => params->{email},
+						to => $file_creator_email,
 						subject => h->config->{request_copy}->{subject},
 						body => $mail_body,
 					};
@@ -118,18 +123,19 @@ prefix '/requestcopy' => sub {
 
 =cut
 	get '/approve/:key' => sub {
-		my $bag = 'x';
+		my $bag = Catmandu->store->bag('request');
 		my $data = $bag->get(params->{key});
+		return unless $data;
+
 		$data->{approved} = 1;
 		$bag->add($data);
-		my $mail_body = export_to_string({
-			key => param->{key}
-			},
+		my $mail_body = export_to_string(
+			{ key => params->{key} },
 			'Template',
 			template => 'email/req_copy_approve.tt');
 		try {
 			email {
-				to => $data->{email},
+				to => $data->{user_email},
 				subject => h->config->{request_copy}->{subject},
 				body => $mail_body;
 			};
@@ -145,13 +151,15 @@ prefix '/requestcopy' => sub {
 
 =cut
 	get '/deny/:key' => sub {
-		my $bag = 'x';
+		my $bag = Catmandu->store->bag('request');
 		my $data = $bag->get(params->{key});
+		return unless $data;
+
 		$bag->delete(params->{key});
 		my $mail_body = export_to_string({}, 'Template', template => 'email/req_copy_refuse.tt');
 		try {
 			email {
-				to => $data->{email},
+				to => $data->{user_email},
 				subject => h->config->{request_copy}->{subject},
 				body => $mail_body,
 			};
@@ -179,7 +187,7 @@ prefix '/requestcopy' => sub {
 
 =head2 GET /download/:id/:file_id
 
-    Download the document. Access level of the document
+    Download a document. Access level of the document
     and user rights will be checked before.
 
 =cut
@@ -197,74 +205,3 @@ get '/download/:id/:file_id' => sub {
 };
 
 1;
-
-__END__
-	# my $access = "admin";
-	#
-	# foreach my $file (@{$pub->{file}}){
-	# 	if($file->{file_id} eq params->{file_id}){
-	# 		$access = $file->{access_level};
-	# 		$file_name = $file->{file_name};
-	# 		last;
-	# 	}
-	# }
-	#
-	# # openAccess
-	# if ($access eq 'openAccess') {
-	# 	send_it(params->{id}, $file_name);
-	# } elsif (exists session->{user} && session->{role} eq 'admin') {
-	# 	send_it(params->{id}, $file_name);
-	# }
-	#
-	# # unibi
-	# my $ip = request->{remote_adress};
-	# if ($access eq 'unibi' && $ip =~ /^129.70/) {
-	# 	send_it(params->{id}, $file_name);
-	# }
-	#
-	# # user/admin/reviewer
-	# my $account = h->getAccount(session->{user})->[0];
-	# my $role = session->{role};
-	#
-	# if ($access eq 'admin' && ($role eq 'reviewer' || $role eq 'data_manager')) {
-	#
-	# 	my $access_ok;
-	# 	if($role eq "reviewer"){
-	# 		foreach my $item (@{$account->{reviewer}}){
-	# 			if(grep ($item, @{$pub->{department}})){
-	# 				$access_ok = 1;
-	# 			}
-	# 		}
-	# 	}
-	# 	elsif($role eq "data_manager"){
-	# 		if($pub->{type} eq "researchData" or $pub->{type} eq "dara"){
-	# 			foreach my $item (@{$account->{department}}) {
-	# 				if (grep ($item, @{$pub->{department}})) {
-	# 					$access_ok = 1;
-	# 				}
-	# 			}
-	# 		}
-	# 	}
-	#
-	#
-	# 	if ($access_ok) {
-	# 		send_it(params->{id}, $file_name);
-	# 	} else {
-	# 		template 'error', {message => "Something went wrong. You don't have permission to see this document."};
-	# 	}
-	# } elsif ($access eq 'admin' && session->{role} eq 'user') {
-	# 	my $access_ok;
-	# 	foreach my $item (@{$pub->{author}}) {
-	# 		if ($account->{_id} == $item->{id}) {
-	# 			$access_ok = 1;
-	# 		}
-	# 	}
-	#
-	# 	if ($access_ok) {
-	# 		send_it(params->{id}, $file_name);
-	# 	} else {
-	# 		template 'error', {message => "Something went wrong. You don't have permission to see this document."};
-	# 	}
-	# } else {
-	# 	template 'error', {message => "Something went wrong. You don't have permission to see this document."};
-	# }

@@ -227,9 +227,7 @@ prefix '/myPUB' => sub {
 
       try {
           email {
-              to => 'vitali.peil@uni-bielefeld.de',#h->config->{thesis}->{to},
-              #from => h->config->{thesis}->{from},
-              reply_to => $record->{email},
+              to => h->config->{thesis}->{to},
               subject => h->config->{thesis}->{subject},
               body => $mail_body,
           };

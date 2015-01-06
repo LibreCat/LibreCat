@@ -23,16 +23,16 @@
   <div class="frontdoor">
     <div class="frontdoor_left">File Name</div>
     <div class="frontdoor_right">
-      <a href="[% h.shost %]/download/[% oId %]/[% fi.fileOId %]">
-        [% fi.fileName %]
-      </a><span class="text-muted"> [% h.get_file_size(oId, fi.fileName) %]</span>
+      <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]">
+        [% fi.file_name %]
+      </a><span class="text-muted"> [% fi.size %]</span>
     </div>
   </div>
-    [% IF fi.fileTitle %]
+    [% IF fi.title %]
     <div class="frontdoor">
       <div class="frontdoor_left">File Title</div>
       <div class="frontdoor_right">
-        [% fi.fileTitle %]
+        [% fi.title %]
       </div>
     </div>
     [% END %]
@@ -47,11 +47,11 @@
     <div class="frontdoor">
     <div class="frontdoor_left">Access Level</div>
     <div class="frontdoor_right">
-      [% SWITCH fi.accessLevel %]
-        [% CASE 'openAccess' %]
+      [% SWITCH fi.access_level %]
+        [% CASE 'open_access' %]
         [% INCLUDE websites/oa_lock.tt %] Open Access
 
-        [% CASE 'lu' %]
+        [% CASE 'local' %]
         [% INCLUDE websites/oa_lock.tt %] UniBi Only
 
         [% CASE 'admin' %]
@@ -59,11 +59,11 @@
       [% END %]
     </div>
     </div>
-    [% IF fi.dateLastUploaded %]
+    [% IF fi.date_updated %]
     <div class="frontdoor">
       <div class="frontdoor_left">Last Uploaded</div>
       <div class="frontdoor_right">
-        [% fi.dateLastUploaded %]
+        [% fi.date_updated %]
       </div>
     </div>
     [% END %]
