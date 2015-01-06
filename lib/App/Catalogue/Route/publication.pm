@@ -213,20 +213,34 @@ prefix '/myPUB/record' => sub {
         my $record = h->publication->get($id);
 
         #check if all mandatory fields are filled
-        my $publtype = lc $record->{type};
+        my $publtype;
+        if ($record->{type} =~ /^bi[A-Z]/) {
+        	$publtype = "bithesis";
+        } else {
+        	$publtype = lc($record->{type});
+        }
+
         my $basic_fields = h->config->{forms}->{publicationTypes}->{$publtype}->{fields}->{basic_fields};
         my $field_check = 1;
 
         foreach my $key ( keys %$basic_fields ) {
             next if $key eq "tab_name";
-            if (    $basic_fields->{$key}->{mandatory}
-                and $basic_fields->{$key}->{mandatory} eq "1"
+            if($key eq "writer"){
+            	my $writer_check = 0;
+            	foreach my $label (keys %{$basic_fields->{$key}->{label}}){
+            		if($record->{$basic_fields->{$key}->{label}->{$label}} and $record->{$basic_fields->{$key}->{label}->{$label}} ne ""){
+            			$writer_check = 1;
+            		}
+            	}
+            	$field_check = 0 if !$writer_check;
+            }
+            elsif ( $basic_fields->{$key}->{mandatory} and $basic_fields->{$key}->{mandatory} eq "1"
                 and ( !$record->{$key} || $record->{$key} eq "" ) )
             {
                 $field_check = 0;
             }
         }
-return to_dumper $field_check;
+
         $record->{status} = "public" if $field_check;
         my $result  = h->publication->add($record);
         my $publbag = Catmandu->store->bag('publication');
