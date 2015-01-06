@@ -4,7 +4,7 @@ use Catmandu::Sane;
 use Catmandu;
 use App::Helper;
 use Exporter qw/import/;
-our @EXPORT = qw/delete_empty_fields correct_hash_array correct_writer/;
+our @EXPORT = qw/delete_empty_fields correct_hash_array correct_writer correct_publid/;
 
 sub delete_empty_fields {
     my $data = shift;
@@ -39,7 +39,7 @@ sub correct_hash_array {
     if ($data->{type} =~ /^bi[A-Z]/) {
         $tmp_type = "bithesis";
     } else {
-        $tmp_type = $data->{type};
+        $tmp_type = lc($data->{type});
     }
 	my $fields = $conf->{forms}->{publicationTypes}->{$tmp_type}->{fields};
 
@@ -66,7 +66,7 @@ sub correct_writer {
 	foreach my $crea (@{$data->{writer}}){
 		#$crea->{first_name} = $crea->{first_name}->[0];
 		#$crea->{last_name} = $crea->{last_name}->[0];
-    	#$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
+    	$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
     	push @{$data->{$data->{writer_type}}}, $crea;
     }
 
@@ -74,6 +74,21 @@ sub correct_writer {
     delete $data->{writer_type};
 
     return $data;
+}
+
+sub correct_publid {
+	my $data = shift;
+	
+	if($data->{publication_identifier} and ref $data->{publication_identifier} eq "ARRAY"){
+		my $publid_hash;
+		foreach my $publid (@{$data->{publication_identifier}}){
+			$publid_hash->{$publid->{type}} = [] if !$publid_hash->{$publid->{type}};
+			push @{$publid_hash->{$publid->{type}}}, $publid->{value};
+		}
+		delete $data->{publication_identifier};
+		$data->{publication_identifier} = $publid_hash;
+	}
+	return $data;
 }
 
 1;
