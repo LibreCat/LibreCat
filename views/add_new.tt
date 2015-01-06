@@ -81,6 +81,9 @@
         'report',
         'researchdata',
         'workingpaper',
+        ]
+      %]
+      [% tabelle_admin = [
         'bithesis',
         ]
       %]
@@ -92,6 +95,11 @@
       <div class="col-md-5">
         [% FOREACH doctype IN tabelle_l %]
           <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+        [% END %]
+        [% IF session.role == "super_admin" %]
+        [% FOREACH doctype IN tabelle_admin %]
+          <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+        [% END %]
         [% END %]
       </div>
     </div>
