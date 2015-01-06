@@ -90,7 +90,7 @@
 
 <script>
 
-if(navigator.userAgent.indexOf('MSIE') == -1){
+//if(navigator.userAgent.indexOf('MSIE') == -1){
   $("#id_file").change(function (){
     var fileName = $(this).val().replace(/C:\\fakepath\\/,"");
     $("#id_fileName").val(fileName);
@@ -143,7 +143,7 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
     }
 
     $.ajax({
-      url: 'http://pub-dev.ub.uni-bielefeld.de:3000/myPUB/upload/update',
+      url: '/myPUB/upload/update',
       data: formData,
       processData: false,
       contentType: false,
@@ -192,12 +192,10 @@ if(navigator.userAgent.indexOf('MSIE') == -1){
     });
   });
   
-}
-else {
-  $('#upLoad').attr('target','_blank');
-  $('#upLoad').attr('action','[% luurBase %]/record_material');
-  $('#upLoad').attr('method','post');
-}
+//}
+//else {
+  // Add IE8 fallback??? ... or not???
+//}
 
 $('#id_accessEmbargo').bind('change', function(){
   if($(this).is(':checked')){
