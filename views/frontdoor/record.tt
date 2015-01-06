@@ -78,6 +78,7 @@
         <div class="frontdoor_right">
           [% INCLUDE websites/oa_lock.tt %] <a itemprop="url" href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.file_name %]</a>
           <span class="text-muted"> [% h.get_file_size(_id, fi.file_name) %]</span>
+          <a href="#myModal_[% fi.file_id %]" data-toggle="modal" > --> Request a copy</a>
       [% END %]
       [% IF loop.count > 1 %]
           <br />[% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.file_name %]</a>
