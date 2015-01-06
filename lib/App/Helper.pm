@@ -2,7 +2,7 @@ package App::Helper::Helpers;
 
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
-use Catmandu::Util qw(:is :array trim);
+use Catmandu::Util qw(:is :array :human trim);
 use Catmandu::Fix qw /expand/;
 use Dancer qw(:syntax vars params request);
 use Sys::Hostname::Long;
@@ -159,6 +159,11 @@ sub get_sort_style {
 sub now {
 	 my $now = strftime($_[0]->config->{time_format}, gmtime(time));
 	 return $now;
+}
+
+sub pretty_byte_size {
+	my ($self, $number) = @_;
+	return human_byte_size($number);
 }
 
 sub generateURN {

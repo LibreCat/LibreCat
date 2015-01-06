@@ -25,7 +25,7 @@
     <div class="frontdoor_right">
       <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]">
         [% fi.file_name %]
-      </a><span class="text-muted"> [% fi.size %]</span>
+      </a><span class="text-muted"> [% h.pretty_byte_size(fi.size) %]</span>
     </div>
   </div>
     [% IF fi.title %]
@@ -48,7 +48,7 @@
     <div class="frontdoor_left">Access Level</div>
     <div class="frontdoor_right">
       [% SWITCH fi.access_level %]
-        [% CASE 'open_access' %]
+        [% CASE 'openAccess' %]
         [% INCLUDE websites/oa_lock.tt %] Open Access
 
         [% CASE 'local' %]

@@ -214,9 +214,7 @@ prefix '/myPUB/record' => sub {
 
         #check if all mandatory fields are filled
         my $publtype = lc $record->{type};
-        my $basic_fields
-            = h->config->{forms}->{publicationTypes}->{$publtype}->{fields}
-            ->{basic_fields};
+        my $basic_fields = h->config->{forms}->{publicationTypes}->{$publtype}->{fields}->{basic_fields};
         my $field_check = 1;
 
         foreach my $key ( keys %$basic_fields ) {
@@ -228,13 +226,13 @@ prefix '/myPUB/record' => sub {
                 $field_check = 0;
             }
         }
-
+return to_dumper $field_check;
         $record->{status} = "public" if $field_check;
         my $result  = h->publication->add($record);
         my $publbag = Catmandu->store->bag('publication');
         $publbag->add($result);
         h->publication->commit;
-
+return to_dumper $result;
         redirect '/myPUB';
     };
 
