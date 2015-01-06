@@ -226,13 +226,12 @@ prefix '/myPUB/record' => sub {
                 $field_check = 0;
             }
         }
-return to_dumper $field_check;
+
         $record->{status} = "public" if $field_check;
         my $result  = h->publication->add($record);
         my $publbag = Catmandu->store->bag('publication');
         $publbag->add($result);
         h->publication->commit;
-return to_dumper $result;
         redirect '/myPUB';
     };
 
