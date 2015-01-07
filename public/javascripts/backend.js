@@ -487,11 +487,8 @@ function remove_field(object){
 	}
 }
 
-function enable_autocomplete(field, index, viewport){
+function enable_autocomplete(field, index){
 	var type;
-	if(!viewport){
-		viewport = "";
-	}
 	switch(field) {
 	case "pj":
 		type = "project"
@@ -499,14 +496,14 @@ function enable_autocomplete(field, index, viewport){
 	default:
 		type = "department"
 	}
-	$( "#" + field + viewport + "_autocomplete_" + index ).autocomplete({
+	$( "#" + field + "_autocomplete_" + index ).autocomplete({
 		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=" + type,
 		minLength: 2,
 		select: function( event, ui ) {
-			$( "#" + field + viewport + "_autocomplete_" + index ).val( ui.item.label );
+			$( "#" + field + "_autocomplete_" + index ).val( ui.item.label );
             $( "#" + field + "_nameautocomplete_" + index ).val( ui.item.label );
             $( "#" + field + "_idautocomplete_" + index ).val( ui.item.id );
-            $( "#" + field + viewport + "_autocomplete_" + index ).attr("disabled", "disabled");
+            $( "#" + field + "_autocomplete_" + index ).attr("disabled", "disabled");
             $('input.sticky').blur();
         },
 	    close: function(){
@@ -547,15 +544,17 @@ $(function(){
 			$(this).css("box-shadow", "inset 0 1px 1px -1px rgba(0, 0, 0, 0.075), 0 0 8px -8px rgba(102, 175, 233, 0.6)");
 		}
 		
-	    var mymatch = $(this).attr('name').match(/department\.(\d{1,})\.name/);
-		if(mymatch && mymatch[1]){
-			var index = mymatch[1];
-			enable_autocomplete("dp", index, "_sm");
-		}
-		mymatch = $(this).attr('name').match(/project\.(\d{1,})\.name/);
-		if(mymatch && mymatch[1]){
-			var index = mymatch[1];
-			enable_autocomplete("pj", index, "_sm");
+		if($(this).attr('id')){
+			var mymatch = $(this).attr('id').match(/dp_autocomplete_(\d{1,})/);
+			if(mymatch && mymatch[1]){
+				var index = mymatch[1];
+				enable_autocomplete("dp", index);
+			}
+			mymatch = $(this).attr('id').match(/pj_autocomplete_(\d{1,})/);
+			if(mymatch && mymatch[1]){
+				var index = mymatch[1];
+				enable_autocomplete("pj", index);
+			}
 		}
 	});
 	
