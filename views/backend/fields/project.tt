@@ -5,15 +5,17 @@
     </label>
     {% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
-  <div class="col-md-10" id="project">
+  <div class="col-md-10 col-xs-12" id="project">
     {% IF fields.basic_fields.project.multiple OR fields.supplementary_fields.project.multiple %}
     [% IF !project %]
     <div class="row innerrow">
       <input type="hidden" name="project.0.id" id="pj_idautocomplete_0" value="" />
+      <input type="hidden" name="project.0.name" id="pj_nameautocomplete_0" value="" />
+      
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group input-group-sm sticky{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.project.label %}{% fields.supplementary_fields.project.label %}</div>
-          <input type="text" onfocus="enable_autocomplete('pj',0);" name="project.0.name" class="sticky form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_0" value=""{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
+          <input type="text" onfocus="enable_autocomplete('pj',0);" class="sticky form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_0" value=""{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
           <div class="input-group-addon"><span onclick="selectButton(this);" class="project" id="project_select_0"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} disabled {% END %}>Select</span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('project'{% IF fields.basic_fields.project.placeholder || fields.supplementary_fields.project.placeholder %},'{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}'{% END %});"></span></div>
@@ -23,11 +25,13 @@
     [% ELSE %]
     [% FOREACH proj IN project %]
     <div class="row innerrow">
-      <input type="hidden" name="project.[% loop.index %].id" id="pj_idautocomplete_[% loop.index %]" value="[% proj.oId %]" />
+      <input type="hidden" name="project.[% loop.index %].id" id="pj_idautocomplete_[% loop.index %]" value="[% proj.id %]" />
+      <input type="hidden" name="project.[% loop.index %].name" id="pj_nameautocomplete_[% loop.index %]" value="[% proj.name %]" />
+      
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group input-group-sm sticky{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.project.label %}{% fields.supplementary_fields.project.label %}</div>
-          <input type="text" onfocus="enable_autocomplete('pj',0);" name="project.[% loop.index %].name" class="sticky form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name %]"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
+          <input type="text" onfocus="enable_autocomplete('pj',[% loop.index %]);" class="sticky form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_[% loop.index %]" value="[% proj.name %]"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %} disabled="disabled"/>
           <div class="input-group-addon"><span onclick="selectButton(this);" class="project" id="project_select_[% loop.index %]"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} disabled {% END %}>Select</span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('project'{% IF fields.basic_fields.project.placeholder || fields.supplementary_fields.project.placeholder %},'{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}'{% END %});"></span></div>
@@ -39,13 +43,13 @@
     {% ELSE %}
     <div class="row innerrow">
       <input type="hidden" name="project.0.id" id="pj_idautocomplete_0" value="" />
+      <input type="hidden" name="project.0.name" id="pj_nameautocomplete_0" value="" />
+      
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group input-group-sm sticky{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.project.label %}{% fields.supplementary_fields.project.label %}</div>
-          <input type="text" onfocus="enable_autocomplete('pj',0);" name="project.0.name" class="sticky form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_0" value=""{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
+          <input type="text" onfocus="enable_autocomplete('pj',0);" class="sticky form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}" id="pj_autocomplete_0" value=""{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
           <div class="input-group-addon"><span onclick="selectButton(this);" class="project" id="project_select_0"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} disabled {% END %}>Select</span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('project'{% IF fields.basic_fields.project.placeholder || fields.supplementary_fields.project.placeholder %},'{% fields.basic_fields.project.placeholder %}{% fields.supplementary_fields.project.placeholder %}'{% END %});"></span></div>
         </div>
       </div>
     </div>
