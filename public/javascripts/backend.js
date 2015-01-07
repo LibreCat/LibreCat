@@ -439,6 +439,7 @@ function add_field(name, placeholder){
 		$(this).attr('readonly',false);
 		$(this).removeClass('has-error');
 		$(this).removeAttr('autocomplete');
+		$(this).removeAttr('onfocus');
 		if(placeholder){
 			$(this).attr('placeholder', placeholder);
 		}
