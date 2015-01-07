@@ -1082,10 +1082,10 @@ project_sort_options:
     - {key: acronym, label: "Acronym"}
     - {key: startyear, label: "Start Year"}
 default_sort:
-  - publishingyear.desc
-  - datelastchanged.desc
-default_sort_backend:
   - year.desc
   - date_updated.desc
+default_sort_backend:
+  - date_updated.desc
+  - year.desc
 default_style: frontShort
 default_fd_style: frontShort
