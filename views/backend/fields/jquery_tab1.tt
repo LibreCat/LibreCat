@@ -340,7 +340,7 @@ $(function() {
   [% ELSIF modus == "user" OR session.role == "user" %]
     puburl += 'person=[% session.personNumber %] OR ';
   [% END %]
-  [% IF thisPerson.delegate %]
+  [% IF thisPerson.delegate AND session.role != "super_admin" %]
     [% FOREACH prof IN thisPerson.delegate %]
       puburl += 'person=[% prof %] OR ';
     [% END %]
