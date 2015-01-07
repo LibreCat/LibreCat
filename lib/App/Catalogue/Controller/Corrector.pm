@@ -88,6 +88,15 @@ sub correct_publid {
 		delete $data->{publication_identifier};
 		$data->{publication_identifier} = $publid_hash;
 	}
+	if($data->{external_id} and ref $data->{external_id} eq "ARRAY"){
+		my $publid_hash;
+		foreach my $publid (@{$data->{external_id}}){
+			next if $publid_hash->{$publid->{type}};
+			$publid_hash->{$publid->{type}} = $publid->{value};
+		}
+		delete $data->{external_id};
+		$data->{external_id} = $publid_hash;
+	}
 	return $data;
 }
 

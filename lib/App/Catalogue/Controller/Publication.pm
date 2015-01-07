@@ -32,10 +32,10 @@ sub save_publication {
     my $json = new JSON;
 
     $data = delete_empty_fields($data);
+    $data = correct_publid($data);
     $data = correct_hash_array($data);
 
     $data = correct_writer($data) if $data->{writer};
-    $data = correct_publid($data);
 
     # html encoding
     foreach (qw/message/) {
