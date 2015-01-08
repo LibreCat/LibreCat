@@ -237,7 +237,7 @@
       </div>
     </div>
 
-    <span id="delegate">
+    <div class="row innerrow" id="delegate">
     [% IF delegate %]
       [% FOREACH del IN delegate %]
       [% thisPerson = h.getPerson(del) %]
@@ -251,7 +251,7 @@
       </div>
       [% END %]
     [% END %]
-    </span>
+    </div>
 
     <div class="row innerrow">
       <div class="col-md-2"><label>
@@ -500,7 +500,7 @@ function selectButton(element){
 }
 
 function addDelegate(element){
-  var index = $('#delegate').children('input').length;
+  var index = $('#delegate').find('input').length;
   var id = $('#id_delegate').val();
   var person = "";
   $.getJSON("/myPUB/authority_user/" + id, function(data,status){

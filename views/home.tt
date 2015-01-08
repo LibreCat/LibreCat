@@ -71,7 +71,7 @@
         [% END %]
         [% IF backend AND session.role == "delegate" %]
           [% FOREACH delegate_id IN thisPerson.delegate %]
-          <li[% IF loop.first %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. [% lang ? "by" : "von" %] [% h.getPerson(delegate_id).last_name %]</a></li>
+          <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. [% lang ? "by" : "von" %] [% h.getPerson(delegate_id).last_name %]</a></li>
           [% END %]
         [% END %]
         </ul>

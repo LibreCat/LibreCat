@@ -107,7 +107,7 @@ prefix '/myPUB/search' => sub {
 	get '/delegate' => needs role => "delegate" => sub {
 		#my $p = h->extract_params();
 		my $account = h->getAccount(session->{user})->[0];
-		redirect "/myPUB/search/delegate/$account->{delegate}->[0]";
+		forward "/myPUB/search/delegate/$account->{delegate}->[0]", params;
 	};
 	
 =head2 GET '/delegate/:delegate_id'
