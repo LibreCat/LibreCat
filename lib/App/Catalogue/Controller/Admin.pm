@@ -42,7 +42,7 @@ sub search_person {
         $query = { "_id" => $p->{q} };
     }
     elsif ( is_string( $p->{q} ) ) {
-        $query = { "full_name" => qr/$p->{q}/i };
+        $query = { '$or' => [{"full_name" => qr/$p->{q}/i}, {"old_full_name" => qr/$p->{q}/i}] };
     }
 
     my $hits = h->authority_admin->search(
