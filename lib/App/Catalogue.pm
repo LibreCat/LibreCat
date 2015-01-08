@@ -31,7 +31,7 @@ use App::Catalogue::Route::upload;
 =cut
 get '/myPUB' => needs login => sub {
     my $params = params;
-
+    
     if ( session->{role} eq "super_admin" ) {
         forward '/myPUB/search/admin', $params;
     }
@@ -39,7 +39,10 @@ get '/myPUB' => needs login => sub {
         forward '/myPUB/search/reviewer', $params;
     }
     elsif ( session->{role} eq "dataManager" ) {
-        forward '/myPUB/search/datamanager', $params;
+        forward '/myPUB/search/data_manager', $params;
+    }
+    elsif ( session->{role} eq "delegate" ) {
+    	forward '/myPUB/search/delegate', $params;
     }
     else {
         forward '/myPUB/search', $params;
@@ -55,8 +58,11 @@ get '/myPUB/change_role/:role' => needs login => sub {
     my $user = h->getAccount( session->{user} )->[0];
 
     # is user allowed to take this role?
-
-    if ( params->{role} eq "reviewer" and $user->{reviewer} ) {
+	
+	if ( params->{role} eq "delegate" and $user->{delegate} ) {
+		session role => "delegate";
+	}
+    elsif ( params->{role} eq "reviewer" and $user->{reviewer} ) {
         session role => "reviewer";
     }
     elsif ( params->{role} eq "data_manager" and $user->{data_manager} ) {

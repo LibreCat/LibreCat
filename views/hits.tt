@@ -12,6 +12,9 @@
 <div class="row innerrow">
   <div class="col-md-12">
     <h5>[% total %] [% lang ? "Publications" : "Publikationen" %]
+    [% IF backend AND session.role == "delegate" %]
+    [% lang ? "by" : "von" %] [% delegate_name %]
+    [% END %]
     [% IF !backend AND request.path != "/marked" %]
       <div class="pull-right"><i><a class="mark-all" href="#">Mark all</a></i></div>
     [% END %]

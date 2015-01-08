@@ -63,8 +63,9 @@ post '/login' => sub {
     if ($user) {
         my $super_admin = "super_admin" if $user->{super_admin};
         my $reviewer = "reviewer" if $user->{reviewer};
-        my $dataManager = "dataManager" if $user->{dataManager};
-        session role => $super_admin || $reviewer || $dataManager || "user";
+        my $data_manager = "data_manager" if $user->{data_manager};
+        my $delegate = "delegate" if $user->{delegate};
+        session role => $super_admin || $reviewer || $data_manager || $delegate || "user";
         session user         => $user->{login};
         session personNumber => $user->{_id};
 
