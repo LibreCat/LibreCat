@@ -99,12 +99,14 @@ sub extract_params {
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 	$p->{q} = $self->string_array($params->{q});
 	$p->{text} = $params->{text} if $params->{text};
+	
+	if($params->{fmt}){
+		$p->{fmt} = $params->{fmt};
+		#my $formats = $self->config->{exporter}->{publication};
+		#$p->{fmt} = $formats->{$params->{fmt}} ? $params->{fmt} : $self->config->{store}->{default_fmt};
+	}
 
 	push @{$p->{q}}, $params->{text} if $params->{text};
-
-#	my $formats = keys %{ $self->config->{exporter}->{publication} };
-#	$p->{fmt} = array_includes($formats, $params->{fmt}) ? $params->{fmt}
-#		: $self->config->{default_fmt};
 
 	$p->{style} = $params->{style} if $params->{style};
 	$p->{sort} = $self->string_array($params->{sort});
@@ -322,6 +324,145 @@ sub search_publication {
     }
 
 	return $hits;
+}
+
+sub export_hits {
+	my ($self, $hits) = @_;
+	my $tmpl = $hits->{tmpl} ||= 'websites/index_publication.tt';
+	my $params = $hits->{params};
+	
+	my $marked = Dancer::session 'marked';
+    $marked ||= [];
+    
+	if ( !$params->{fmt} || $params->{fmt} eq 'html' ) {
+		if ($params->{ftyp}) {
+			$tmpl .= "_". $params->{ftyp};
+			#header("Content-Type" => "text/plain") unless ($params->{ftyp} eq 'iframe' || $params->{ftyp} eq 'pln');
+			$hits->{header} = "text/plain" unless ($params->{ftyp} eq 'iframe' || $params->{ftyp} eq "pln");
+			$tmpl .= "_num" if ($params->{enum} and $params->{enum} eq "1");
+			$tmpl .= "_numasc" if ($params->{enum} and $params->{enum} eq "2");
+			$hits->{tmpl} = $tmpl;
+			#template $tmpl, $hits;
+		}
+		 
+		if($params->{limit} == 1 && @{$hits->{hits}}[0]){
+			@{$hits->{hits}}[0]->{style} = $params->{style} if $params->{style};
+			@{$hits->{hits}}[0]->{marked} = @$marked;
+			@{$hits->{hits}}[0]->{bag} = $hits->{bag};
+			@{$hits->{hits}}[0]->{tmpl} = "frontdoor/record.tt";
+			$hits = @{$hits->{hits}}[0];
+			#template "frontdoor/record.tt", @{$hits->{hits}}[0];
+		} else {
+			#template $tmpl, $hits;
+			$hits->{tmpl} = $tmpl;
+		}
+		return $hits;
+	}
+	elsif($params->{fmt} eq 'jsonintern'){
+		my $jsonstring = "[";
+		
+#		if($params->{bag} and $researchhits->{total}){
+#			foreach (@{$researchhits->{hits}}){
+#				my $mainTitle = $_->{mainTitle};
+#				$mainTitle =~ s/"/\\"/g;
+#				my $citation = $_->{citation}->{$style};
+#				$citation =~ s/"/\\"/g;
+#				$jsonstring .= "{oId:\"" . $_->{oId} . "\", title:\"" . $mainTitle . "\", citation:\"" . $citation . "\"},";
+#			}
+#		}
+#		else{
+			foreach (@{$hits->{hits}}){
+				my $mainTitle = $_->{title};
+				$mainTitle =~ s/"/\\"/g;
+				my $citation = $params->{style} ? $_->{citation}->{$params->{style}} : $_->{citation}->{"frontShort"};
+				$citation =~ s/"/\\"/g;
+				$jsonstring .= "{oId:\"" . $_->{_id} . "\", title:\"" . $mainTitle . "\", citation:\"" . $citation . "\"},";
+			}	
+#		}
+		$jsonstring =~ s/,$//g;
+		$jsonstring .= "]";
+		$hits->{tmpl} = "json";
+		$hits->{jsonstring} = $jsonstring;
+		#return $jsonstring;
+		return $hits;
+	}
+	else {
+#		if($params->{bag} and $researchhits->{total}){
+#			$researchhits->{explinks} = $explinks if $explinks;
+#			$self->export_publication($researchhits, $fmt);
+#		}
+#		else {
+			$hits->{explinks} = $params->{explinks} if $params->{explinks};
+			$self->export_publication( $hits, $params->{fmt} );
+#		}
+	}
+	
+}
+
+sub export_publication {
+	my ($self, $hits, $fmt) = @_;
+	
+	if ($fmt eq 'csl_json') {
+		$self->export_csl_json($hits);
+	}
+
+	if ( my $spec = config->{export}->{publication}->{$fmt} ) {
+	   my $package = $spec->{package};
+	   my $options = $spec->{options} || {};
+	   if($hits->{style} and $hits->{style} ne "frontShort"){
+			$options->{style} = $hits->{style};
+	   }
+	   else {
+	      $options->{style} = "frontShortTitle";
+	   }
+	   $options->{explinks} = $hits->{explinks};
+	   my $content_type = $spec->{content_type} || mime->for_name($fmt);
+	   my $extension    = $spec->{extension} || $fmt;
+
+	   my $export_obj;
+	   my $rec;
+	   my $meta;
+
+	   if ($fmt eq 'json' || $fmt eq 'yaml') {
+	   		$meta->{downloaded_from} = $self->host;
+	   		$meta->{date_downloaded} = $self->current_time;
+	   		$meta->{total_records} = $hits->total;
+	   		foreach my $r (@{$hits->{hits}}) {
+	   			push @{$export_obj->{records}}, {record => $r};
+	   		}
+	   		$export_obj->{meta} = $meta;
+	   	} else {
+	   		$export_obj = $hits->{hits};
+	   	}
+  	   
+	   my $f = export_to_string( $export_obj, $package, $options );
+	   ($fmt eq 'bibtex') && ($f =~ s/(\\"\w)\s/{$1}/g);
+	   return Dancer::send_file (
+   	      \$f,
+	      content_type => $content_type,
+	      filename     => "publications.$extension"
+	   );
+	}
+
+}
+
+sub export_csl_json{
+	my ($self, $hits) = @_;
+
+	my $spec = config->{export}->{publication}->{csl_json};
+	my $out;
+	$hits->each(sub {
+		my $id = $_[0]->{_id};
+		my $csl = Citation::id2citation($id,0,'csl_json');
+		push @$out, $csl;
+		});
+	
+	my $f = export_to_string($out, $spec->{package}, $spec->{options} || {});
+	return Dancer::send_file (
+   	    \$f,
+	    content_type => $spec->{content_type},
+	    filename     => "publications.$spec->{extension}"
+	   );
 }
 
 # sub return_publication {

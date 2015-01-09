@@ -46,13 +46,32 @@ prefix '/myPUB/search' => sub {
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
-#return to_dumper $p;
+
         my $hits = h->search_publication($p);
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
         $hits->{modus} = "admin";
-        template "home", $hits;
-#return to_dumper $p;
+        #$hits->{tmpl} = "home";
+        if ($p->{fmt} and $p->{fmt} ne ""){
+        	$hits->{params} = params;
+        	my $export_hits = h->export_hits($hits);
+        	$hits = $export_hits if $export_hits;
+        	
+        	if($hits->{header} and $hits->{header} eq "text/plain"){
+        		header("Content-Type" => "text/plain");
+        	}
+        	if($hits->{tmpl} eq "json"){
+        		return $hits->{jsonstring};
+        	}
+        	else{
+        		template $hits->{tmpl}, $hits;
+        	}
+        	
+        }
+        else {
+        	template "home", $hits;
+        }
+
     };
 
 =head2 GET /reviewer

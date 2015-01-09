@@ -1089,3 +1089,4 @@ default_sort_backend:
   - year.desc
 default_style: frontShort
 default_fd_style: frontShort
+default_format: html
