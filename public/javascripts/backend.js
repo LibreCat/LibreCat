@@ -71,7 +71,12 @@ function generate_link(file_id, pub_id){
 
 $(function () {
 	$('.change_mode').click(function(){
-		$('#edit_form').find('input[name="edit_mode"]').val('normal');
+		if($('#edit_mode').val() == "normal"){
+			$('#edit_mode').val('expert');
+		}
+		else{
+			$('#edit_mode').val('normal');
+		}
 		$('#edit_form').attr('action','/myPUB/record/change_mode');
 		$('#edit_form').submit();
 	});
