@@ -11,12 +11,12 @@
         <button type="submit" name="finalSubmit" value="recSave" alt="Save" class="btn btn-default btn-sm oneToTwo"><img src="/images/edit-save.png"/><span class="hidden-xs"> Save</span></button>
         [% IF session.role == "super_admin" %]
         <a class="btn btn-default btn-sm" alt="Delete" href="/myPUB/record/delete/[% _id %]" onClick="return confirm('Are you sure you want to delete this record?');" name="delete" value="Delete"><img src="/images/edit-delete.png"/><span class="hidden-xs"> Delete</span></a>
-        [% IF status != "public" %]
+        [% IF (status != "public" AND status != "submitted") OR (status == "submitted" AND session.role == "super_admin") %]
         <button type="submit" name="finalSubmit" value="recPublish" alt="Publish" class="btn btn-default btn-sm oneToTwo"><img src="/images/edit-submit.png"/> Publish</button>
         [% END %]
         [% END %]
         [% IF !edit_mode OR edit_mode == "normal" %]
-        <button class="btn btn-default oneToTwo" alt="Next" href="#file_upload"><span class="hidden-xs">Next </span><span class="fa fa-angle-double-right"></span></button>
+        <button type="button" class="btn btn-default oneToTwo" alt="Next" href="#file_upload"><span class="hidden-xs">Next </span><span class="fa fa-angle-double-right"></span></button>
         [% END %]
       </div>
     </div>

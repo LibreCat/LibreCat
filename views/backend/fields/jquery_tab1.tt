@@ -33,19 +33,19 @@ $(document).keypress(function(e){
 $('.oneToTwo').click(function(e){
   var check = 1;
   var oneauthor = 0;
-  
+
   $('.creator').children('div.row').each(function(){
     if($(this).find('input[type!="hidden"]').eq(0).hasClass('required') &&  !$(this).find('input[type!="hidden"]').eq(0).val()){
       $(this).find('input[type!="hidden"]').addClass("has-error");
     }
-    else if(($this).find('input[type!="hidden"]').eq(0).val() && $(this).find('input[type!="hidden"]').eq(0).hasClass('has-error')){
+    else if($(this).find('input[type!="hidden"]').eq(0).val() && $(this).find('input[type!="hidden"]').eq(0).hasClass('has-error')){
       $(this).find('input[type!="hidden"]').removeClass("has-error");
     }
     
     if($(this).find('input[type!="hidden"]').eq(1).hasClass('required') &&  !$(this).find('input[type!="hidden"]').eq(1).val()){
       $(this).find('input[type!="hidden"]').addClass("has-error");
     }
-    else if(($this).find('input[type!="hidden"]').eq(1).val() && $(this).find('input[type!="hidden"]').eq(1).hasClass('has-error')){
+    else if($(this).find('input[type!="hidden"]').eq(1).val() && $(this).find('input[type!="hidden"]').eq(1).hasClass('has-error')){
       $(this).find('input[type!="hidden"]').removeClass("has-error");
     }
     
@@ -56,7 +56,7 @@ $('.oneToTwo').click(function(e){
   if(!oneauthor){
     check = 0;
   }
-  
+
   $('.required').each(function(){
     if(!$(this).val()){
       $(this).addClass('has-error');
@@ -81,7 +81,7 @@ $('.oneToTwo').click(function(e){
     $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
   }
   
-  {% IF edit_mode == "expert" %}
+  [% IF edit_mode == "expert" %]
   if($('#id_data_reuse_license').length || $('#id_open_data_release').length){
     if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
       if($('#id_data_reuse_license').val() == ''){
@@ -161,7 +161,7 @@ $('.oneToTwo').click(function(e){
       }
     }
   }
-  {% END %}
+  [% END %]
   
   if(check){
     $('.creator.has-error').removeClass('has-error');
