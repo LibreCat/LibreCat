@@ -17,7 +17,7 @@
     <input type="hidden" name="_id" value="[% _id %]"/>
     <input type="hidden" name="status" value="[% status || 'private' %]"/>
     <input type="hidden" name="date_created" value="[% date_created %]" />
-    <input type="hidden" name="edit_mode" value="expert" />
+    <input type="hidden" name="edit_mode" id="edit_mode" value="expert" />
 
     <div class="tab tab-content edit-form">
 

@@ -3,13 +3,11 @@
 [% thisPerson = h.getPerson(session.personNumber) %]
 <!-- BEGIN /backend/forms/{% tmpl %} -->
 
-<script src="/javascripts/dropzone3.js"></script>
-
 <div class="row">
 
 <div class="col-md-9 col-md-offset-1">
   [% IF title %]
-  <h3><input style="float: right" type="button" class="btn btn-default change_mode" value="Change to long edit form" /> [% title %] ([% type %])</h3>
+  <h3><input style="float:right;" type="button" class="btn btn-default change_mode" value="Change to long edit form" /> [% title %] <a href="#" class="change_type" title="Change type" />([% type %])</a></h3>
   [% ELSE %]
   <h3><input style="float:right;" type="button" class="btn btn-default change_mode" value="Change to long edit form" /> Add New {% label %}</h3>
   [% END %]
@@ -46,7 +44,7 @@
     <input type="hidden" name="_id" value="[% _id %]"/>
     <input type="hidden" name="status" value="[% status || 'private' %]"/>
     <input type="hidden" name="date_created" value="[% date_created %]" />
-    <input type="hidden" name="edit_mode" value="normal" />
+    <input type="hidden" name="edit_mode" id="edit_mode" value="normal" />
 
     <div class="tab tab-content edit-form">
 

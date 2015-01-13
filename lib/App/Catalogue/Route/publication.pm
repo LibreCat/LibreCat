@@ -85,7 +85,7 @@ prefix '/myPUB/record' => sub {
             forward '/access_denied';
         }
         my $person = h->getPerson(session->{personNumber});
-        my $edit_mode = params->{edit_mode} || $person->{edit_mode} || "";
+        my $edit_mode = params->{edit_mode} || $person->{edit_mode};
 
         forward '/' unless $id;
         my $rec;
@@ -99,8 +99,10 @@ prefix '/myPUB/record' => sub {
         my $templatepath = "backend/forms";
         if(($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
         	$templatepath .= "/expert";
+        	$edit_mode = "expert";
         }
         if ($rec) {
+        	$rec->{edit_mode} = $edit_mode if $edit_mode;
             template $templatepath . "/$rec->{type}", $rec;
         }
         else {
@@ -283,16 +285,16 @@ prefix '/myPUB/record' => sub {
         $params->{file} = [$params->{file}] if ($params->{file} and ref $params->{file} ne "ARRAY");
         $params->{file_order} = [$params->{file_order}] if ($params->{file_order} and ref $params->{file_order} ne "ARRAY");
 
-        foreach my $key ( keys %$params ) {
-            if ( ref $params->{$key} eq "ARRAY" ) {
-            	$params->{$key} = $params->{$key}->[0];
+#        foreach my $key ( keys %$params ) {
+#            if ( ref $params->{$key} eq "ARRAY" ) {
+#            	$params->{$key} = $params->{$key}->[0];
 #                my $i = 0;
 #                foreach my $entry ( @{ $params->{$key} } ) {
 #                    $params->{ $key . "." . $i } = $entry, $i++;
 #                }
 #                delete $params->{$key};
-            }
-        }
+#            }
+#        }
 
         $params = h->nested_params($params);
         foreach my $fi (@{$params->{file}}){
