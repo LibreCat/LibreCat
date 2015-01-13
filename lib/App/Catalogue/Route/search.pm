@@ -9,7 +9,6 @@ package App::Catalogue::Route::search;
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use App::Helper;
-use App::Catalogue::Controller::Search qw/search_publication/;
 use Dancer::Plugin::Auth::Tiny;
 
 Dancer::Plugin::Auth::Tiny->extend(
@@ -56,7 +55,7 @@ prefix '/myPUB/search' => sub {
         	$hits->{params} = params;
         	my $export_hits = h->export_hits($hits);
         	$hits = $export_hits if $export_hits;
-        	
+
         	if($hits->{header} and $hits->{header} eq "text/plain"){
         		header("Content-Type" => "text/plain");
         	}
@@ -66,7 +65,7 @@ prefix '/myPUB/search' => sub {
         	else{
         		template $hits->{tmpl}, $hits;
         	}
-        	
+
         }
         else {
         	template "home", $hits;
@@ -128,7 +127,7 @@ prefix '/myPUB/search' => sub {
 		my $account = h->getAccount(session->{user})->[0];
 		forward "/myPUB/search/delegate/$account->{delegate}->[0]", params;
 	};
-	
+
 =head2 GET '/delegate/:delegate_id'
 
     Performs a search of records for delegated person's

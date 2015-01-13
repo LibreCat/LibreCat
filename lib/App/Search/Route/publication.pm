@@ -58,7 +58,7 @@ get qr{/data/*} => sub {
 
 	my $hits = h->search_publication($p);
 	$hits->{bag} = 'data';
-	#return to_dumper $hits;
+
 	template "websites/index_publication", $hits;
 };
 

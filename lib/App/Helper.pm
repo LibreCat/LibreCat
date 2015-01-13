@@ -99,7 +99,7 @@ sub extract_params {
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 	$p->{q} = $self->string_array($params->{q});
 	$p->{text} = $params->{text} if $params->{text};
-	
+
 	if($params->{fmt}){
 		$p->{fmt} = $params->{fmt};
 		#my $formats = $self->config->{exporter}->{publication};
@@ -118,12 +118,12 @@ sub get_sort_style {
 	my ($self, $sort, $style, $id) = @_;
 	my $user = $self->getAccount( Dancer::session->{user} || $id )->[0];
 	my $return;
-	$sort = undef if !$sort->[0];
-	$style = undef if $style eq "";
+	#$sort = undef if !$sort->[0];
+	#$style = undef if $style eq "";
 	# set default values - to be overriden by more important values
-	my $return_style = $style || $user->{stylePreference} || $self->config->{store}->{default_style};
-	my $return_sort = $sort || $user->{sortPreference} || $self->config->{store}->{default_sort};
-	my $return_sort_backend = $sort || $user->{sortPreference} || $self->config->{store}->{default_sort_backend};
+	my $return_style = $style || $user->{style} || $self->config->{store}->{default_style};
+	my $return_sort = $sort || $user->{sort} || $self->config->{store}->{default_sort};
+	my $return_sort_backend = $sort || $user->{sort} || $self->config->{store}->{default_sort_backend};
 
 	$return_sort = [$return_sort] if(ref $return_sort ne "ARRAY");
 	foreach my $s (@{$return_sort}){
@@ -211,13 +211,9 @@ sub getPerson {
 }
 
 sub getAccount {
-	if($_[1]){# and $_[1] =~ /\w{1,}/){
+	if ($_[1]) {
 		$_[0]->authority_admin->select("login", $_[1])->to_array;
-		#$_[0]->authority_admin->select("luLdapId", $_[1])->to_array;
 	}
-	#else {
-	#	$_[0]->authority_admin->to_array;
-	#}
 }
 
 sub getDepartment {
@@ -330,10 +326,10 @@ sub export_hits {
 	my ($self, $hits) = @_;
 	my $tmpl = $hits->{tmpl} ||= 'websites/index_publication.tt';
 	my $params = $hits->{params};
-	
+
 	my $marked = Dancer::session 'marked';
     $marked ||= [];
-    
+
 	if ( !$params->{fmt} || $params->{fmt} eq 'html' ) {
 		if ($params->{ftyp}) {
 			$tmpl .= "_". $params->{ftyp};
@@ -344,7 +340,7 @@ sub export_hits {
 			$hits->{tmpl} = $tmpl;
 			#template $tmpl, $hits;
 		}
-		 
+
 		if($params->{limit} == 1 && @{$hits->{hits}}[0]){
 			@{$hits->{hits}}[0]->{style} = $params->{style} if $params->{style};
 			@{$hits->{hits}}[0]->{marked} = @$marked;
@@ -360,7 +356,7 @@ sub export_hits {
 	}
 	elsif($params->{fmt} eq 'jsonintern'){
 		my $jsonstring = "[";
-		
+
 #		if($params->{bag} and $researchhits->{total}){
 #			foreach (@{$researchhits->{hits}}){
 #				my $mainTitle = $_->{mainTitle};
@@ -377,7 +373,7 @@ sub export_hits {
 				my $citation = $params->{style} ? $_->{citation}->{$params->{style}} : $_->{citation}->{"frontShort"};
 				$citation =~ s/"/\\"/g;
 				$jsonstring .= "{oId:\"" . $_->{_id} . "\", title:\"" . $mainTitle . "\", citation:\"" . $citation . "\"},";
-			}	
+			}
 #		}
 		$jsonstring =~ s/,$//g;
 		$jsonstring .= "]";
@@ -396,12 +392,12 @@ sub export_hits {
 			$self->export_publication( $hits, $params->{fmt} );
 #		}
 	}
-	
+
 }
 
 sub export_publication {
 	my ($self, $hits, $fmt) = @_;
-	
+
 	if ($fmt eq 'csl_json') {
 		$self->export_csl_json($hits);
 	}
@@ -434,7 +430,7 @@ sub export_publication {
 	   	} else {
 	   		$export_obj = $hits->{hits};
 	   	}
-  	   
+
 	   my $f = export_to_string( $export_obj, $package, $options );
 	   ($fmt eq 'bibtex') && ($f =~ s/(\\"\w)\s/{$1}/g);
 	   return Dancer::send_file (
@@ -456,7 +452,7 @@ sub export_csl_json{
 		my $csl = Citation::id2citation($id,0,'csl_json');
 		push @$out, $csl;
 		});
-	
+
 	my $f = export_to_string($out, $spec->{package}, $spec->{options} || {});
 	return Dancer::send_file (
    	    \$f,

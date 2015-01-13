@@ -25,8 +25,10 @@ sub new_publication {
     return _create_id;
 }
 
-sub save_publication {
+sub update_publication {
     my $data      = shift;
+
+    croak "Error: No _id specified" unless $data->{_id};
     #my $validator = Catmandu::Validator::PUB->new();
 
     my $json = new JSON;
@@ -42,7 +44,6 @@ sub save_publication {
         $data->{$_} = encode_entities($data->{$_});
     }
 
-
     if($data->{file}){
     	$data->{file} = handle_file($data);
     }
@@ -57,6 +58,7 @@ sub save_publication {
     		}
     	}
     }
+    
     if($data->{abstract}){
     	my $i = 0;
     	foreach my $ab (@{$data->{abstract}}){
@@ -101,18 +103,18 @@ sub save_publication {
 
 }
 
-sub update_publication {
-    my $data = shift;
-    croak "Error: No _id specified" unless $data->{_id};
-
-    #my $old = h->publication->get( $data->{_id} );
-    #my $merger = Hash::Merge->new();
-    #left precedence by default!
-    #my $new = $merger->merge( $data, $old );
-
-    my $result = save_publication($data);
-    return $result;
-}
+# sub update_publication {
+#     my $data = shift;
+#     croak "Error: No _id specified" unless $data->{_id};
+#
+#     #my $old = h->publication->get( $data->{_id} );
+#     #my $merger = Hash::Merge->new();
+#     #left precedence by default!
+#     #my $new = $merger->merge( $data, $old );
+#
+#     my $result = save_publication($data);
+#     return $result;
+# }
 
 sub edit_publication {
     my $id = shift;

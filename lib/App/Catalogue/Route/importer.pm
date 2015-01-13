@@ -8,25 +8,36 @@ package App::Catalogue::Route::importer;
 
 use Dancer ':syntax';
 use Try::Tiny;
-use App::Catalogue::Controller::Import;
 use Dancer::Plugin::Auth::Tiny;
+
+use App::Helper;
+use App::Catalogue::Controller::Import;
 
 =head2 POST /myPUB/record/import
 
-    Input is a source and an identifier.
-    Returns a form with imported data.
+Returns a form with imported data.
 
 =cut
 post '/myPUB/record/import' => needs login => sub {
 	my $p = params;
 
     my $pub;
+	my $user = h->getPerson( session->{personNumber} );
+	my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
+
     try {
         $pub = import_publication($p->{source}, $p->{id});
-		#return to_dumper $pub;
+
         if ($pub) {
-			my $tmpl = $pub->{type} || 'journalArticle';
-			return template "backend/forms/$tmpl", $pub;
+			my $type = $pub->{type} || 'journalArticle';
+			my $templatepath = "backend/forms";
+			$pub->{department} = $user->{department};
+
+			if (($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
+				$templatepath .= "/expert";
+			}
+
+			return template $templatepath . "/$type", $pub;
         } else {
             return template "add_new",
                 {error => "No record found with ID $p->{id} in $p->{source}."};

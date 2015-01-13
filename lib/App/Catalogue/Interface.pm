@@ -48,32 +48,22 @@ prefix '/myPUB' => sub {
 		elsif($term ne "" and $q ne "") {
 			$q = $q . " AND " . $term . "*";
 		}
-		
+
 		my $p = {limit => 1000, sort => "title,,0"};
 		push @{$p->{q}}, $q;
 
 		my $hits = h->search_publication($p);
 
 		my $jsonhash = [];
-		
-		if($hits->{total}){
-			foreach my $hit (@{$hits->{hits}}){
-				my $label = "$hit->{title} ($hit->{year}, ";
-				if(!$hit->{author} and $hit->{editor}){
-					$label .= $hit->{editor}->[0]->{first_name} . " " . $hit->{editor}->[0]->{last_name};
-					$label .= ", 1st ed.)";
-				}
-				elsif($hit->{author}){
-					$label .= $hit->{author}->[0]->{first_name} . " " . $hit->{author}->[0]->{last_name};
-					$label .= ", 1st auth.)",
-				}
-				else{
-					$label =~ s/, $/)/g;
-				}
-				push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
-			}
-		}
 
+		$hits->each( sub{
+			my $hit = $_->[0];
+			my $label = "$hit->{title} ($hit->{year}";
+			my $author = $hit->{author} || $hit->{editor} || '';
+			$label .= ", " .$author->[0]->{first_name} . " "
+				. $author->[0]->{last_name} .")" if $author;
+			push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
+		});
 		my $json = to_json($jsonhash);
 		return $json;
 	};
