@@ -57,7 +57,7 @@ prefix '/myPUB' => sub {
 		my $jsonhash = [];
 
 		$hits->each( sub{
-			my $hit = $_->[0];
+			my $hit = $_[0];
 			my $label = "$hit->{title} ($hit->{year}";
 			my $author = $hit->{author} || $hit->{editor} || '';
 			$label .= ", " .$author->[0]->{first_name} . " "
