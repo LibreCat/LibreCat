@@ -126,8 +126,8 @@ field_order:
     - ubi_funded
     - message
   related_material:
-    - link_publication
-    - url
+    - related_material.record
+    - related_material.url
 publicationTypes:
   book:
     label: "Book"
@@ -257,10 +257,10 @@ publicationTypes:
           placeholder: "Funded by the 'Publikationsfonds' at Bielefeld University"
       related_material: &related_material
         tab_name: "Related Material"
-        link_publication:
+        related_material.record:
           label: "Documents within PUB"
           placeholder: "Start typing to search your publications."
-        url:
+        related_material.url:
           label: "Documents outside PUB"
           placeholder: "Enter a remote location (URL) of your file here"
         publish_button:

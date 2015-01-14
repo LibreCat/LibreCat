@@ -1,10 +1,10 @@
 <div class="row innerrow">
   <div class="col-md-2">
-    {% IF fields.related_material.url.mandatory %}<span class="starMandatory">{% END %}
+    {% IF fields.related_material.item('related_material.url').mandatory %}<span class="starMandatory">{% END %}
     <label>
-    {% fields.related_material.url.label %}
+    {% fields.related_material.item('related_material.url').label %}
     </label>
-    {% IF fields.related_material.url.mandatory %}</span>{% END %}
+    {% IF fields.related_material.item('related_material.url').mandatory %}</span>{% END %}
   </div>
   <div class="col-md-10">
     <div class="form-group">
@@ -31,20 +31,22 @@
 </div>
 <div id="url">
 [% IF related_material %]
-[% FOREACH u IN related_material %]
+[% FOREACH u IN related_material.link %]
 [% NEXT IF u.record %]
 <div class="row innerrow">
   <div class="col-md-2">
-    <select class="relurl" id="urlselect_[% loop.index %]">
+    <select class="relurl input-sm form-control" name="related_material.link.[% index %].relation">
       [% FOREACH key IN h.config.lists.relations_link.keys.nsort %]
-      <option value="[% h.config.lists.relations_link.$key.relation %]"[% IF h.config.lists.relations_link.$key.relation == u.link.relation %] selected="selected"[% END %]>[% h.config.lists.relations_link.$key.link_text %]</option>
+      <option value="[% h.config.lists.relations_link.$key.relation %]"[% IF h.config.lists.relations_link.$key.relation == u.relation %] selected="selected"[% END %]>[% h.config.lists.relations_link.$key.link_text %]</option>
       [% END %]
     </select>
   </div>
   <div class="col-md-10">
     <span class="form-group col-md-9">
-      <span class="glyphicon glyphicon-link"></span> <a href="[% u.link.url %]" target="_blank">[% u.link.title %]</a><br /><span class="text-muted">[% u.link.description %]</span>
-      <input type="hidden" id="relurljson_[% loop.index %]" name="related_material" value='{"link": {"url": "[% u.link.url %]", "title": "[% u.link.title %]", "description": "[% u.link.description %]", "relation": "[% u.link.relation %]"}}' />
+      <span class="glyphicon glyphicon-link"></span> <a href="[% u.url %]" target="_blank">[% u.title %]</a><br /><span class="text-muted">[% u.description %]</span>
+      <input type="hidden" name="related_material.link.[% index %].url" value="[% u.url %]" />
+      <input type="hidden" name="related_material.link.[% index %].title" value="[% u.title %]" />
+      <input type="hidden" name="related_material.link.[% index %].description" value="[% u.description %]" />
     </span>
     <span class="col-md-1">
       <span class="glyphicon glyphicon-minus connect"></span>

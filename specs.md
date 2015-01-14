@@ -246,15 +246,16 @@ message: "Just a message"
 ubi_funded: 0|1
 ec_funded: 0|1
 related_material:
-	-
-		link:
-			url: "www.example.com"
-			title: "test"
-			description: "This describes something"
-			relation: "supplementary_file"
-		record:
-			id: 123456
-			relation: is_part_of
+	link:
+	  -
+	    url: "www.example.com"
+		title: "test"
+		description: "This describes something"
+		relation: "supplementary_file"
+	record:
+	  -
+	    id: 123456
+		relation: is_part_of
 ```
 
 ## project fields
