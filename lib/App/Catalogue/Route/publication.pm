@@ -47,7 +47,7 @@ prefix '/myPUB/record' => sub {
     get '/new' => needs login => sub {
         my $type = params->{type};
         my $user = h->getPerson(session->{personNumber});
-        my $edit_mode = params->{edit_mode} || $person->{edit_mode} || "";
+        my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
         return template 'add_new' unless $type;
 
