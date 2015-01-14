@@ -9,6 +9,7 @@ package App::Catalogue::Route::publication;
 use Catmandu::Sane;
 use App::Helper;
 use App::Catalogue::Controller::Publication;
+use App::Catalogue::Controller::Permission qw/:can/;
 use Dancer ':syntax';
 use Try::Tiny;
 use Dancer::Plugin::Auth::Tiny;
@@ -45,8 +46,8 @@ prefix '/myPUB/record' => sub {
 
     get '/new' => needs login => sub {
         my $type = params->{type};
-        my $person = h->getPerson(session->{personNumber});
-        my $edit_mode = params->{edit_mode} || $person->{edit_mode} || "";
+        my $user = h->getPerson(session->{personNumber});
+        my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
         return template 'add_new' unless $type;
 
@@ -54,9 +55,7 @@ prefix '/myPUB/record' => sub {
         my $id = new_publication();
         $data->{_id} = $id;
         $data->{type} = $type;
-        my $user = h->getPerson( session->{personNumber} );
         $data->{department} = $user->{department};
-        $edit_mode = $user->{edit_mode} if $user->{edit_mode};
 
         if ( $type eq "researchData" ) {
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
@@ -80,6 +79,11 @@ prefix '/myPUB/record' => sub {
 
     get '/edit/:id' => needs login => sub {
         my $id = param 'id';
+
+        unless (can_edit($id, session->{user}, session->{role})) {
+            status '403';
+            forward '/access_denied';
+        }
         my $person = h->getPerson(session->{personNumber});
         my $edit_mode = params->{edit_mode} || $person->{edit_mode};
 
@@ -116,6 +120,11 @@ prefix '/myPUB/record' => sub {
 
     post '/update' => needs login => sub {
         my $params = params;
+
+        unless (can_edit($params->{_id}, session->{user}, session->{role})) {
+            status '403';
+            forward '/access_denied';
+        }
 
         foreach my $key ( keys %$params ) {
             if ( ref $params->{$key} eq "ARRAY" ) {
@@ -155,7 +164,7 @@ prefix '/myPUB/record' => sub {
         	$params->{creator}->{login} = session 'user';
         	$params->{creator}->{id} = session 'personNumber';
         }
-
+#return to_dumper $params;
         my $result = update_publication($params);
 
         redirect '/myPUB';
@@ -170,8 +179,14 @@ prefix '/myPUB/record' => sub {
 
     get '/return/:id' => needs login => sub {
         my $id  = params->{id};
+
+        unless (can_edit($id, session->{user}, session->{role})) {
+            status '403';
+            forward '/access_denied';
+        }
+
         my $rec = h->publication->get($id);
-        $rec->{status} = "returned";
+        $rec->{status} = "private";
         try {
             update_publication($rec);
         }
@@ -212,6 +227,12 @@ prefix '/myPUB/record' => sub {
 
     get '/publish/:id' => needs login => sub {
         my $id     = params->{id};
+
+        unless (can_edit($id, session->{user}, session->{role})) {
+            status '403';
+            forward '/access_denied';
+        }
+
         my $record = h->publication->get($id);
 
         #check if all mandatory fields are filled

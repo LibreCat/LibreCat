@@ -48,7 +48,7 @@ prefix '/myPUB' => sub {
 		elsif($term ne "" and $q ne "") {
 			$q = $q . " AND " . $term . "*";
 		}
-		
+
 		my $p = {limit => 1000, sort => "title,,0"};
 		push @{$p->{q}}, $q;
 
@@ -57,27 +57,23 @@ prefix '/myPUB' => sub {
 		my $jsonhash = [];
 		
 		if($hits->{total}){
-			foreach my $hit (@{$hits->{hits}}){
-				if($hit->{title} && $hit->{year}){
-					my $label = "$hit->{title} ($hit->{year}, ";
-					if(!$hit->{author} and $hit->{editor} and $hit->{editor}->[0]->{first_name} and $hit->{editor}->[0]->{last_name}){
-						$label .= $hit->{editor}->[0]->{first_name} . " " . $hit->{editor}->[0]->{last_name};
-						$label .= ", 1st ed.)";
-					}
-					elsif($hit->{author} and $hit->{author}->[0]->{first_name} and $hit->{author}->[0]->{last_name}){
-						$label .= $hit->{author}->[0]->{first_name} . " " . $hit->{author}->[0]->{last_name};
-						$label .= ", 1st auth.)";
-					}
-					else{
-						$label =~ s/, $/)/g;
-					}
-					push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
-				}
-			}
-		}
-
-		my $json = to_json($jsonhash);
-		return $json;
+        	$hits->each( sub{
+        		my $hit = $_[0];
+        		if($hit->{title} && $hit->{year}){
+        			my $label = "$hit->{title} ($hit->{year}";
+        			my $author = $hit->{author} || $hit->{editor} || [];
+        			if($author && $author->[0]->{first_name} && $author->[0]->{last_name}){
+        				$label .= ", " .$author->[0]->{first_name} . " " . $author->[0]->{last_name} .")";
+        			}
+        			else{
+        				$label .= ")";
+        			}
+        			push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
+        		}
+        	});
+        	my $json = to_json($jsonhash);
+        	return $json;
+        }
 	};
 
 	get '/autocomplete_hierarchy' => sub {

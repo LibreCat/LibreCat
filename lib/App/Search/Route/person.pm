@@ -23,9 +23,9 @@ get '/authorlist' => sub {
 		(params->{former} eq "yes") ? ($former = "former=1") : ($former = "former=0");
 		push @{$p->{q}}, $former;
 	}
-	
+
 	push @{$p->{q}}, "publcount>0";
-	
+
 	my $cqlsort;
 	if(params->{sorting} and params->{sorting} =~ /(\w{1,})\.(\w{1,})/){
 		$cqlsort = $1 . ",,";
@@ -50,9 +50,9 @@ research data and author IDs.
 get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
 	my ($id, $modus) = splat;
 	my $p = h->extract_params();
-	
+
 	my @orig_q = @{$p->{q}};
-	
+
 	push @{$p->{q}}, "person=$id";
 	push @{$p->{q}}, "status=public";
 	push @{$p->{q}}, "type<>researchData";
@@ -63,26 +63,26 @@ get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
 	$p->{limit} = h->config->{store}->{maximum_page_size};
 
 	my $hits = h->search_publication($p);
-	
+
 	my $researchhits;
 	@{$p->{q}} = @orig_q;
 	push @{$p->{q}}, "person=$id";
 	push @{$p->{q}}, "(type=researchData OR type=dara)";
 	$p->{limit} = 1;
 	$researchhits = h->search_publication($p);
-	
+
 	$hits->{researchhits} = $researchhits;
-	
+
 	$p->{limit} = h->config->{store}->{maximum_page_size};
 	$hits->{style} = $sort_style->{style};
 	$hits->{sort} = $p->{sort};
 	$hits->{id} = $id;
 	$hits->{modus} = $modus || "user";
-	
+
 	my $marked = session 'marked';
     $marked ||= [];
     $hits->{marked} = @$marked;
-        
+
 	template "home.tt", $hits;
 };
 

@@ -28,10 +28,11 @@ prefix '/myPUB/person' => sub {
 =cut
     get '/preference' => needs login => sub {
         my $person = h->getPerson( session('personNumber') );
+#return to_dumper $person;
         my $tmp = h->get_sort_style(params->{sort} || '', params->{style} || '');
         $person->{sort} = $tmp->{sort};
         $person->{style} = $tmp->{style};
-
+#return to_dumper $person;
         h->authority_user->add($person);
 
         redirect '/myPUB';

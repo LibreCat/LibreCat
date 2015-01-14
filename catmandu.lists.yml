@@ -137,7 +137,7 @@ publication_identifier:
 
 publication_status:
   published: "Published"
-  epub_ahead: "E-pub ahead of print"
+  epub_ahead: "Epub ahead of print"
   inpress: "In Press"
   accepted: "Accepted"
   submitted: "Submitted"
