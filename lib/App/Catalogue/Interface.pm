@@ -39,7 +39,7 @@ prefix '/myPUB' => sub {
 
 		if($term ne "" and $q eq ""){
 			if(session->{role} ne "user"){
-				$q = "title=" . $term . "* OR person=" . $term . "*",
+				$q = "title=" . $term . "* OR person=" . $term . "*";
 			}
 			else {
 				$q = "title=" . $term . "*";
@@ -58,19 +58,21 @@ prefix '/myPUB' => sub {
 		
 		if($hits->{total}){
 			foreach my $hit (@{$hits->{hits}}){
-				my $label = "$hit->{title} ($hit->{year}, ";
-				if(!$hit->{author} and $hit->{editor}){
-					$label .= $hit->{editor}->[0]->{first_name} . " " . $hit->{editor}->[0]->{last_name};
-					$label .= ", 1st ed.)";
+				if($hit->{title} && $hit->{year}){
+					my $label = "$hit->{title} ($hit->{year}, ";
+					if(!$hit->{author} and $hit->{editor} and $hit->{editor}->[0]->{first_name} and $hit->{editor}->[0]->{last_name}){
+						$label .= $hit->{editor}->[0]->{first_name} . " " . $hit->{editor}->[0]->{last_name};
+						$label .= ", 1st ed.)";
+					}
+					elsif($hit->{author} and $hit->{author}->[0]->{first_name} and $hit->{author}->[0]->{last_name}){
+						$label .= $hit->{author}->[0]->{first_name} . " " . $hit->{author}->[0]->{last_name};
+						$label .= ", 1st auth.)";
+					}
+					else{
+						$label =~ s/, $/)/g;
+					}
+					push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
 				}
-				elsif($hit->{author}){
-					$label .= $hit->{author}->[0]->{first_name} . " " . $hit->{author}->[0]->{last_name};
-					$label .= ", 1st auth.)",
-				}
-				else{
-					$label =~ s/, $/)/g;
-				}
-				push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
 			}
 		}
 
