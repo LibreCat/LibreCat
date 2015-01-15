@@ -183,39 +183,32 @@
 
 <h5>Display Publications</h5>
 
-[% IF (qp.style OR qp.item('sort')) AND request.path != "/marked" %]
-<p class="text-warning"><strong>Your current settings:</strong><br />
-[% IF qp.style AND qp.style != personStyle %]
-  <a href="[% h.newuri_for("$path", qp, style="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <strong>style:</strong> [% qp.style %][% IF qp.style == "frontShort" %] (default)[% END %]<br />
-[% ELSIF personStyle %]
-  <span class="text-success"><strong>style:</strong> [% personStyle %][% IF personStyle == "frontShort" %] (default)[% END %]</span><br />
-[% END %]
-
-[% IF qp.item('sort').0 %]
-  [% FOREACH sortme IN qp.item('sort') %]
-    [% IF (personSort.0 AND personSort.defined(sortme)) OR personSort == sortme %]
-      <a href="[% h.newuri_for("$path", qp, sort="del_$sortme") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <span class="text-success"><strong>sort:</strong> [% sortme %]</strong></span><br />
-    [% ELSE %]
-      <a href="[% h.newuri_for("$path", qp, sort="del_$sortme") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <strong>sort:</strong> [% sortme %]</strong><br />
+[% IF user_settings %]
+  [% IF user_settings.sort_up_to_date %]
+    <span class="text-success">
+  [% ELSE %]
+    <span class="text-warning">
+  [% END %]
+  [% IF user_settings.item('sort') %]
+    <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> 
+    <strong>Sorted by:</strong> 
+    [% FOREACH setting IN user_settings.item('sort') %]
+      [% setting %][% UNLESS loop.last %], [% END %]
     [% END %]
   [% END %]
-[% ELSIF qp.defined('sort') AND qp.item('sort') != "" %]
-  [% IF (personSort.0 AND personSort.defined(qp.item('sort'))) OR personSort == qp.item('sort') %]
-    <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <span class="text-success"><strong>sort:</strong> [% qp.item('sort') %]</strong></span><br />
+  </span>
+    <br />
+  [% IF user_settings.style_up_to_date %]
+    <span class="text-success">
   [% ELSE %]
-    <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <strong>sort:</strong> [% qp.item('sort') %]<br />
+    <span class="text-warning">
   [% END %]
-[% ELSE %]
-  [% IF personSort.0 %]
-    [% FOREACH ps IN personSort %]
-      <span class="text-success"><strong>sort:</strong> [% ps %]</strong></span><br />
-    [% END %]
-  [% ELSE %]
-    <span class="text-success"><strong>sort:</strong> [% personSort %]</strong></span><br />
+    <strong>Citation style:</strong> [% user_settings.style %]
+    </span>
+  
+  [% IF (!user_settings.sort_up_to_date AND qp.item('sort')) OR (!user_settings.style_up_to_date AND qp.style) %]
+    <a type="button" href="[% h.uri_for("/myPUB/person/preference", qp) %]" name="save_settings" id="id_save_settings" class="btn btn-xs btn-block btn-warning">Save this as public default</a><br />
   [% END %]
-[% END %]
-<a type="button" href="[% h.uri_for("/myPUB/person/preference", qp) %]" name="save_settings" id="id_save_settings" class="btn btn-xs btn-block btn-warning">Save this as public default</a>
-</p>
 [% END %]
 
 <ul class="nav nav-tabs nav-stacked">

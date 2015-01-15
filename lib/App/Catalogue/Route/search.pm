@@ -49,6 +49,7 @@ prefix '/myPUB/search' => sub {
         my $hits = h->search_publication($p);
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
+        $hits->{user_settings} = $sort_style;
         $hits->{modus} = "admin";
         #$hits->{tmpl} = "home";
         if ($p->{fmt} and $p->{fmt} ne ""){

@@ -116,43 +116,98 @@ sub extract_params {
 
 sub get_sort_style {
 	my ($self, $sort, $style, $id) = @_;
-	my $user = $self->getAccount( Dancer::session->{user} || $id )->[0];
+	my $user = $self->getPerson( Dancer::session->{personNumber} || $id );
 	my $return;
-	#$sort = undef if !$sort->[0];
-	#$style = undef if $style eq "";
+	$sort = undef if ($sort eq "" or (ref $sort eq "ARRAY" and !$sort->[0]));
+	$style = undef if $style eq "";
 	# set default values - to be overriden by more important values
 	my $return_style = $style || $user->{style} || $self->config->{store}->{default_style};
-	my $return_sort = $sort || $user->{sort} || $self->config->{store}->{default_sort};
-	my $return_sort_backend = $sort || $user->{sort} || $self->config->{store}->{default_sort_backend};
+	my $return_sort;
+	my $return_sort_backend;
+	if($sort){
+		$sort = [$sort] if ref $sort ne "ARRAY";
+		foreach my $s (@{$sort}){
+			push @$return_sort, $s;
+			push @$return_sort_backend, $s;
+		}
+	}
+	elsif($user->{'sort'}){
+		foreach my $s (@{$user->{'sort'}}){
+			push @$return_sort, $s;
+			push @$return_sort_backend, $s;
+		}
+	}
+	else{
+		foreach my $s (@{$self->config->{store}->{default_sort}}){
+			push @{$return_sort}, $s;
+		}
+		foreach my $s (@{$self->config->{store}->{default_sort_backend}}){
+			push @{$return_sort_backend}, $s;
+		}
+	}
 
-	$return_sort = [$return_sort] if(ref $return_sort ne "ARRAY");
-	foreach my $s (@{$return_sort}){
-		if($s =~ /(\w{1,})\.(\w{1,})/){
-			my $sorting = "$1,,";
-			$sorting .= $2 eq "asc" ? "1 " : "0 ";
-			$return->{'sort'} .= $sorting;
-		}
-		else{
-			$return->{'sort'} .= "$s,,0 ";
-		}
-	}
-	$return_sort_backend = [$return_sort_backend] if(ref $return_sort_backend ne "ARRAY");
-	foreach my $s (@{$return_sort_backend}){
-		if($s =~ /(\w{1,})\.(\w{1,})/){
-			my $sorting = "$1,,";
-			$sorting .= $2 eq "asc" ? "1 " : "0 ";
-			$return->{sort_backend} .= $sorting;
-		}
-		else{
-			$return->{sort_backend} .= "$s,,0 ";
-		}
-	}
-	$return->{'sort'} = trim($return->{'sort'});
-	$return->{sort_backend} = trim($return->{sort_backend});
+	#$return_sort = [$return_sort] if(ref $return_sort ne "ARRAY");
+#	foreach my $s (@{$return_sort}){
+#		if($s =~ /(\w{1,})\.(\w{1,})/){
+#			my $sorting = "$1,,";
+#			$sorting .= $2 eq "asc" ? "1 " : "0 ";
+#			$return->{'sort'} .= $sorting;
+#		}
+#		else{
+#			$return->{'sort'} .= "$s,,0 ";
+#		}
+#	}
+	#$return_sort_backend = [$return_sort_backend] if(ref $return_sort_backend ne "ARRAY");
+#	foreach my $s (@{$return_sort_backend}){
+#		if($s =~ /(\w{1,})\.(\w{1,})/){
+#			my $sorting = "$1,,";
+#			$sorting .= $2 eq "asc" ? "1 " : "0 ";
+#			$return->{sort_backend} .= $sorting;
+#		}
+#		else{
+#			$return->{sort_backend} .= "$s,,0 ";
+#		}
+#	}
+	$return->{'sort'} = $return_sort;
+	$return->{sort_backend} = $return_sort_backend;
+	$return->{user_sort} = $user->{'sort'} if $user->{'sort'};
+	$return->{user_style} = $user->{style} if $user->{style};
 
 	# see if style param is set
 	if(array_includes($self->config->{lists}->{styles},$return_style)){
 		$return->{style} = $return_style;
+	}
+	
+	foreach my $key (keys %$return){
+		my $ref = ref $return->{$key};
+
+    	if($ref eq "ARRAY"){
+    		if(!$return->{$key}->[0]){
+    			delete $return->{$key};
+    		}
+    	}
+    	elsif($ref eq "HASH"){
+    		if(!%{$return->{$key}}){
+    			delete $return->{$key};
+    		}
+    	}
+    	else{
+    		if($return->{$key} and $return->{$key} eq ""){
+    			delete $return->{$key};
+    		}
+    	}
+	}
+	
+	my $user_eq_backend = "";
+	my $backend_eq_default = "";
+	$user_eq_backend = @{$return->{user_sort}} ~~ @{$return->{sort_backend}} if $return->{user_sort};
+	$backend_eq_default = @{$return->{sort_backend}} ~~ @{$self->config->{store}->{default_sort_backend}};
+	
+	if($user_eq_backend ne "" or (!$return->{user_sort} and $backend_eq_default ne "")){
+		$return->{sort_up_to_date} = 1;
+	}
+	if(($return->{user_style} and $return->{style} eq $return->{user_style}) or (!$return->{user_style} and $return->{style} eq $self->config->{store}->{default_style})){
+		$return->{style_up_to_date} = 1;
 	}
 
 	return $return;
@@ -277,6 +332,19 @@ sub default_facets {
 	};
 }
 
+sub sort_to_sru {
+	my ($self, $sort) = @_;
+	my $cql_sort;
+	foreach my $s (@$sort){
+		if($s =~ /(\w{1,})\.(asc|desc)/){
+			$cql_sort .= "$1,,";
+			$cql_sort .= $2 eq "asc" ? "1 " : "0 ";
+		}
+	}
+	$cql_sort = trim($cql_sort);
+	return $cql_sort;
+}
+
 sub display_doctypes {
 	my $map = config->{forms}{publicationTypes};
 	my $doctype;
@@ -303,7 +371,7 @@ sub shost {
 
 sub search_publication {
 	my ($self, $p) = @_;
-	my $sort = $p->{sort};
+	my $sort = $self->sort_to_sru($p->{sort});
 	my $cql = "";
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
