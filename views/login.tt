@@ -52,6 +52,12 @@
   </div>
 </div>
 
+<script>
+$(document).ready(function(){
+  $('#id_login').focus();
+});
+</script>
+
 <!-- END /tt_templates/backend/login.tt -->
 
 </body>
