@@ -38,7 +38,7 @@ sub get_file_info {
 	my $rec = h->publication->get($pub_id);
 	if($rec->{file} and ref $rec->{file} eq "ARRAY"){
 		my $matching_items = (grep {$_->{file_id} eq $file_id} @{$rec->{file}})[0];
-		return $matching_items->{file_name};
+		return $matching_items;
 	}
 }
 
