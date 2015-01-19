@@ -203,10 +203,7 @@ extern: 0|1
 popular_science: 0|1
 quality_controlled: 0|1
 # problem in template
-page:
-	start: 20
-	end: 25
-	count: 230
+page: 45-70
 edition: 2
 corporate_editor:
 	- "Gesellschaft für Soziologie"

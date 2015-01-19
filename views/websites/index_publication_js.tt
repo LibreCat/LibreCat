@@ -1,5 +1,4 @@
 <!-- BEGIN websites/index_publication_js.tt -->
-[% USE MDSimple %]
 
 [% IF bag == "data" %]
 [% hits = researchhits.hits %]
@@ -10,12 +9,12 @@ document.write ('<ul[% IF qp.listyle %] style="[% qp.listyle %]"[% END %]>') ;
 [% FOREACH entry IN hits %]
 [% string = entry.citation.$style %]
 [% string2 = string.replace("'", "&apos;") %]
-[% IF style == 'frontShort' %][% title = entry.mainTitle.replace("'", "&apos;") %][% END %]
+[% IF style == 'frontShort' %][% title = entry.title.replace("'", "&apos;") %][% END %]
 document.write('<li>');
 [% IF style == "frontShort" %]
-document.write('<a href="[% h.host %]/[% bag %]/[% entry.oId %]">[% title | md_simple %]</a><br />');
+document.write('<a href="[% h.host %]/[% bag %]/[% entry._id %]">[% title %]</a><br />');
 [% END %]
-document.write('[%- string2 | md_simple -%][% IF style != "apa_indent" AND style != "dgps" %]<br />[% END %] [% IF !phillister %][% INCLUDE links_js.tt %][% END %]</li>');
+document.write('[%- string2 -%][% IF style != "apa_indent" AND style != "dgps" %]<br />[% END %] [% IF !phillister %][% INCLUDE links_js.tt %][% END %]</li>');
 [% END %]
 document.write ('</ul>') ;
 

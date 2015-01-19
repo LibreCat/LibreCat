@@ -274,7 +274,7 @@
 <ul class="nav nav-tabs nav-stacked">
   <li>
     <button data-toggle="collapse" data-target="#export_[% tabmodus %]">
-      <a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? "Export as" : "Exportieren als" %]</a>
+      <a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang != 'de' ? "Export as" : "Exportieren als" %]</a>
     </button>
     <div class="facettecollapse">
     <ul id="export_[% tabmodus %]" class="collapse">
@@ -289,7 +289,7 @@
   [% IF !backend AND !request.path.match('marked') %]
   <li>
     <button data-toggle="collapse" data-target="#embed_[% tabmodus %]" id="id_button_embed_[% tabmodus %]">
-      <a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? "Embed as" : "Einbetten als" %]</a>
+      <a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang != 'de' ? "Embed as" : "Einbetten als" %]</a>
     </button>
     <div class="facettecollapse">
     <ul id="embed_[% tabmodus %]" class="collapse">
