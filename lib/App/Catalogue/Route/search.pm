@@ -47,27 +47,14 @@ prefix '/myPUB/search' => sub {
         $p->{sort} = $sort_style->{sort_backend};
 
         my $hits = h->search_publication($p);
+
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
         $hits->{modus} = "admin";
-        #$hits->{tmpl} = "home";
-        if ($p->{fmt} and $p->{fmt} ne ""){
-        	$hits->{params} = params;
-        	my $export_hits = h->export_hits($hits);
-        	$hits = $export_hits if $export_hits;
 
-        	if($hits->{header} and $hits->{header} eq "text/plain"){
-        		header("Content-Type" => "text/plain");
-        	}
-        	if($hits->{tmpl} eq "json"){
-        		return $hits->{jsonstring};
-        	}
-        	else{
-        		template $hits->{tmpl}, $hits;
-        	}
-
-        }
-        else {
+        if ($p->{fmt} ne 'html') {
+        	h->export_publication($hits, $p->{fmt});
+        } else {
         	template "home", $hits;
         }
 
@@ -93,7 +80,12 @@ prefix '/myPUB/search' => sub {
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
         $hits->{modus} = "reviewer";
-        template "home", $hits;
+
+        if ($p->{fmt} ne 'html') {
+            h->export_publication($hits, $p->{fmt});
+        } else {
+            template "home", $hits;
+        }
 
     };
 
@@ -118,7 +110,12 @@ prefix '/myPUB/search' => sub {
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
         $hits->{modus} = "data_manager";
-        template "home", $hits;
+
+        if ($p->{fmt} ne 'html') {
+            h->export_publication($hits, $p->{fmt});
+        } else {
+            template "home", $hits;
+        }
 
     };
 
@@ -164,7 +161,13 @@ prefix '/myPUB/search' => sub {
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
         $hits->{modus} = "delegate_".$id;
-        template "home", $hits;
+
+        if ($p->{fmt} ne 'html') {
+            h->export_publication($hits, $p->{fmt});
+        } else {
+            template "home", $hits;
+        }
+
     };
 
 =head2 GET /
@@ -216,7 +219,12 @@ prefix '/myPUB/search' => sub {
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
         $hits->{modus} = "user";
-        template "home", $hits;
+
+        if ($p->{fmt} ne 'html') {
+            h->export_publication($hits, $p->{fmt});
+        } else {
+            template "home", $hits;
+        }
 
     };
 
@@ -262,7 +270,13 @@ prefix '/myPUB/search' => sub {
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
         $hits->{modus} = "data";
-        template "home", $hits;
+
+        if ($p->{fmt} ne 'html') {
+            h->export_publication($hits, $p->{fmt});
+        } else {
+            template "home", $hits;
+        }
+
     };
 };
 
