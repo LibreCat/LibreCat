@@ -50,6 +50,7 @@ prefix '/myPUB/search' => sub {
 
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
+        $hits->{user_settings} = $sort_style;
         $hits->{modus} = "admin";
 
         if ($p->{fmt} ne 'html') {
