@@ -335,10 +335,16 @@ sub default_facets {
 sub sort_to_sru {
 	my ($self, $sort) = @_;
 	my $cql_sort;
+	if($sort and ref $sort ne "ARRAY"){
+		$sort = [$sort];
+	}
 	foreach my $s (@$sort){
 		if($s =~ /(\w{1,})\.(asc|desc)/){
 			$cql_sort .= "$1,,";
 			$cql_sort .= $2 eq "asc" ? "1 " : "0 ";
+		}
+		elsif($s =~ /\w{1,},,(0|1)/){
+			$cql_sort .= $s;
 		}
 	}
 	$cql_sort = trim($cql_sort);
