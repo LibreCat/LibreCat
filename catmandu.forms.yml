@@ -127,7 +127,7 @@ field_order:
     - message
   related_material:
     - related_material.record
-    - related_material.url
+    - related_material.link
 publicationTypes:
   book:
     label: "Book"
@@ -260,7 +260,7 @@ publicationTypes:
         related_material.record:
           label: "Documents within PUB"
           placeholder: "Start typing to search your publications."
-        related_material.url:
+        related_material.link:
           label: "Documents outside PUB"
           placeholder: "Enter a remote location (URL) of your file here"
         publish_button:
