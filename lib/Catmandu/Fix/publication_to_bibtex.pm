@@ -35,8 +35,8 @@ sub fix {
 
     my $val;
 
-    if ($val =$pub->{publication}) {
-        if ($bib->{_type} wq 'article') {
+    if ($val = $pub->{publication}) {
+        if ($bib->{_type} eq 'article') {
             $bib->{journal} = $val;
         } elsif ($bib->{_type} =~ /book/) {
             $bib->{booktitle} = $val;
@@ -79,12 +79,12 @@ sub fix {
         $bib->{location} = $val->{location} if $val->{location};
     }
 
-    if ($pub->{type} =~/^bi/) {
+    if ($pub->{type} =~ /^bi/) {
         $bib->{school} = "Bielefeld University";#config->{institution};
     }
 
-    if ($val = $pub->{page) {
-        $bib->{pages} = $val =~ /-/--/;
+    if ($val = $pub->{page}) {
+        $bib->{pages} = $val =~ s/-/--/;
     }
 
     $bib;

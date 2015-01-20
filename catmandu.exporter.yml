@@ -50,6 +50,7 @@ publication:
       fix:
         - publication_to_ris()
     label: 'RIS (reference software)'
+    extension: txt
   rtf:
     package: RTF
     content_type: 'application/rtf'
