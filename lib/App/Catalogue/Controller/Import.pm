@@ -48,7 +48,7 @@ sub inspire {
 
 sub crossref {
     my $id = shift;
-    my $pub = Catmandu->importer( 'crossref', doi => $id, )->first;
+    my $pub = Catmandu->importer( 'crossref', from => "http://api.crossref.org/works/$id", )->first;
 
     return $pub;
 }

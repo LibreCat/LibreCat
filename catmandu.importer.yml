@@ -10,10 +10,9 @@ inspire:
   options:
     fix: ['fixes/inspire_mapping.fix']
 crossref:
-  package: CrossRef
+  package: getJSON
   options:
     fix: ['fixes/crossref_mapping.fix']
-    usr: 'publikationsdienste.ub@uni-bielefeld.de'
 pmc:
   package: EuropePMC
   options:

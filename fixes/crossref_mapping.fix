@@ -1,80 +1,48 @@
 # mapping data from CrossRef to the local repository
 
-# journal_article
-if exists('journal.journal_article')
-    move_field('journal.journal_article','tmp')
+retain_field('message')
+move_field('message','')
+
+#title
+move_field('subtitle.0','title.1')
+join_field('title',' - ')
+remove_field('subtitle')
+
+# identifier
+move_field('DOI','doi')
+move_field('ISSN','issn')
+move_field('ISBN','isbn')
+replace_all('isbn.*','^http://id.crossref.org/isbn/(.*)',$1)
+
+# authors
+do list (path => author)
+    move_field('given', 'first_name')
+    move_field('family','last_name')
+end
+
+# type mapping
+if all_match('type','journal-article')
     set_field('type','journalArticle')
-
-    move_field('tmp.titles.title','title')
-    move_field('tmp.publication_date.0.year','year')
-    move_field('tmp.publication_date.year','year')
-    trim('year')
-    move_field('tmp.doi_data.doi','doi')
-    move_field('tmp.pages.first_page','page.start')
-    move_field('tmp.pages.last_page','page.end')
-    move_field('journal.journal_issue.issue','issue')
-    move_field('journal.journal_issue.journal_volume.volume','volume')
-    move_field('journal.journal_metadata.full_title','publication')
-
-    move_field('journal.journal_metadata.issn.*.content','issn.$append')
-    move_field('journal.journal_metadata.issn.content','issn.$append')
-
-    # author
-    move_field('tmp.contributors.person_name','author')
-    do list (path => author)
-        remove_field('sequence')
-        remove_field('contributor_role')
-        move_field('given_name', 'first_name')
-        move_field('surname','last_name')
-    end
-    remove_field('tmp')
-    remove_field('journal')
+    move_field('container-title.0','publication')
 end
 
-# book_chaper
-if exists('book.content_item')
+if all_match('type','book-chapter')
     set_field('type','bookChapter')
-    # book data
-    move_field('book.book_metadata.isbn.content','isbn.$append')
-    move_field('book.book_metadata.publication_date.0.year','year')
-    move_field('book.book_metadata.publication_date.year','year')
-    trim('year')
-    move_field('book.book_metadata.titles.title','book_title')
-    move_field('book.book_metadata.publisher.publisher_name','publisher')
-
-    # in case of book series
-    move_field('book.book_series_metadata', 'tmp')
-    move_field('tmp.series_metadata.titles.title','series_title')
-    move_field('tmp.titles.title','book_title')
-    move_field('tmp.isbn.*.content','isbn.$append')
-    move_field('tmp.publisher.publisher_name','publisher')
-    move_field('tmp.series_metadata.issn.*.content','issn.$append')
-    move_field('tmp.contributors.person_name','editor')
-    do list (path => editor)
-        remove_field('sequence')
-        remove_field('contributor_role')
-        move_field('given_name', 'first_name')
-        move_field('surname','last_name')
-    end
-
-    # chapter data
-    move_field('book.content_item.titles.title','title')
-    move_field('book.content_item.doi_data.doi','doi')
-    move_field('book.content_item.pages.first_page','page.start')
-    move_field('book.content_item.pages.last_page','page.end')
-    move_field('book.content_item.publication_date.year','year')
-    trim('year')
-    move_field('book.content_item.contributors.person_name','author')
-    do list (path => author)
-        remove_field('sequence')
-        remove_field('contributor_role')
-        move_field('given_name', 'first_name')
-        move_field('surname','last_name')
-    end
-    remove_field('book')
-    remove_field('tmp')
+    move_field('container-title.0','book_title')
+    move_field('container-title.0','series_title')
 end
 
-#if exists('conference.conference_paper')
-#	add_field('data.type','conference')
-#end
+if all_match('type','proceedings-article')
+    set_field('type','conference')
+    move_field('container-title.0','publication')
+end
+
+# cleaning record
+remove_field('score')
+remove_field('deposited')
+remove_field('indexed')
+remove_field('prefix')
+remove_field('URL')
+remove_field('issued')
+remove_field('member')
+remove_field('container-title')
