@@ -7,6 +7,11 @@ move_field('message','')
 move_field('subtitle.0','title.1')
 join_field('title',' - ')
 remove_field('subtitle')
+trim('title')
+
+#year
+move_field('issued.date-parts.0.0','year')
+trim('year')
 
 # identifier
 move_field('DOI','doi')
