@@ -45,6 +45,7 @@ sub correct_hash_array {
 
 	foreach my $key (keys %$data){
 		next if ($key eq "related_material");
+		next if ($key eq "publication_identifier");
 		my $ref = ref $data->{$key};
 		my $fields_tab = $fields->{basic_fields}->{$key} || $fields->{file_upload}->{$key} || $fields->{supplementary_fields}->{$key} || $fields->{related_material}->{$key};
 
