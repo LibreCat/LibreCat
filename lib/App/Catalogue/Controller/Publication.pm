@@ -1,11 +1,12 @@
 package App::Catalogue::Controller::Publication;
 
-use lib qw(/srv/www/sbcat/lib/extension);
+#use lib qw(/srv/www/sbcat/lib/extension);
 use Catmandu::Sane;
 use Catmandu;
 use App::Helper;
 use App::Catalogue::Controller::Corrector qw/delete_empty_fields correct_hash_array correct_writer correct_publid/;
 use App::Catalogue::Controller::File qw/handle_file delete_file/;
+use App::Catalogue::Controller::Material qw/update_related_material/;
 use Catmandu::Validator::PUB;
 use Hash::Merge qw/merge/;
 use Carp;
@@ -69,11 +70,13 @@ sub update_publication {
     	}
     }
 
+    my $return = update_related_material($data);
+
     $data = delete_empty_fields($data);
     if($data->{finalSubmit} and $data->{finalSubmit} eq "recPublish"){
     	$data->{status} = "public";
     }
-
+    
     # citations
     use Citation;
     my $response = Citation::id2citation($data);
