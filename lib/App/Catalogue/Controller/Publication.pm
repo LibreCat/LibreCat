@@ -69,7 +69,7 @@ sub update_publication {
     		$i++;
     	}
     }
-
+#return $data;
     my $return = update_related_material($data);
 
     $data = delete_empty_fields($data);
@@ -135,6 +135,8 @@ sub delete_publication {
         date_deleted => h->now,
         status => 'deleted',
     };
+    
+    my $update_rm = update_related_material($del);
 
     # this will do a hard override of
     # the existing publication
