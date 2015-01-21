@@ -9,11 +9,6 @@ use Exporter qw/import/;
 
 our @EXPORT = qw/update_related_material/;
 
-#my %rel_map = (
-#    is_part_of => "has_part",
-#    has_part   => "is_part_of",
-#);
-
 my $relations_link = h->config->{lists}->{relations_link};
 my $relations_record = h->config->{lists}->{relations_record};
 my $rd_relation = h->config->{lists}->{rd_relation};
