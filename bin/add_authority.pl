@@ -67,6 +67,8 @@ sub getPersonData {
         'clean_reviewer()',
         'remove_field("searchName")',
         'remove_field("personNumber")',
+        'remove_field("citationStyle")',
+        'remove_field("sortDirection")',
 		]);
 
 	my $sbcatPerson = shift;
@@ -184,6 +186,7 @@ sub getPersonData {
 	}
 	$fixer->fix($mongo_data) if $mongo_data;
 	$adminbag->add($mongo_data) if $mongo_data;
+	#print Dumper $mongo_data;
 
 
 	my $id = "";
@@ -193,8 +196,9 @@ sub getPersonData {
 	}
 
 	if($mongo_data){
-		$user_data->{citationStyle} = $citationStyle;
-		$user_data->{sortDirection} = $sortDirection;
+		$user_data->{style} = $citationStyle if $citationStyle;
+		$user_data->{'sort'} = 'year.' . lc $sortDirection if $sortDirection;
+		$user_data->{'sort'} = [$user_data->{'sort'}] if $user_data->{'sort'};
 		# BIS API
 		my $base = 'http://ekvv.uni-bielefeld.de/ws/pevz/PersonKerndaten.xml?';
 		my $base2 = 'http://ekvv.uni-bielefeld.de/ws/pevz/PersonKontaktdaten.xml?';
@@ -225,6 +229,7 @@ sub getPersonData {
 		$fixer->fix($user_data);
 
 		$userbag->add($user_data);
+		#print Dumper $user_data;
 	}
 
 }
