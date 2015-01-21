@@ -1,10 +1,10 @@
 <div class="row innerrow">
   <div class="col-md-2">
-    {% IF fields.related_material.item('related_material.url').mandatory %}<span class="starMandatory">{% END %}
+    {% IF fields.related_material.item('related_material.link').mandatory %}<span class="starMandatory">{% END %}
     <label>
-    {% fields.related_material.item('related_material.url').label %}
+    {% fields.related_material.item('related_material.link').label %}
     </label>
-    {% IF fields.related_material.item('related_material.url').mandatory %}</span>{% END %}
+    {% IF fields.related_material.item('related_material.link').mandatory %}</span>{% END %}
   </div>
   <div class="col-md-10">
     <div class="form-group">
