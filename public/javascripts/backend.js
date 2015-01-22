@@ -81,9 +81,13 @@ $(function () {
 		$('#edit_form').submit();
 	});
 	$('.change_type').click(function(){
-		$('#id_type').val('book');
-		$('#edit_form').attr('action','/myPUB/record/change_mode');
-		$('#edit_form').submit();
+		var sure = confirm("Changing the type of a record may result in loss of data if the new type uses different fields than the old one! Proceed with caution");
+		if(sure){
+			var newtype = $(this).data('val');
+			$('#id_type').val(newtype);
+			$('#edit_form').attr('action','/myPUB/record/change_mode');
+			$('#edit_form').submit();
+		}
 	});
 });
 
