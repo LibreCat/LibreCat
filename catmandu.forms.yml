@@ -202,6 +202,9 @@ publicationTypes:
           info:
             text: "<em>If you have any questions</em>, please contact:<br />"
             contact: "<strong>Support Publication Services<br />Susanne Riedel<br />Phone: 0521/106-4058<br />E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a><br /></strong>"
+          cc_license:
+            mandatory: 0
+            label: "Creative Commons Lizenzen"
       supplementary_fields:
         tab_name: "Additional Information"
         series_title: &publication_series
