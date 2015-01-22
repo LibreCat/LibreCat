@@ -5,11 +5,15 @@
 
 <div class="row">
 
-<div class="col-md-9 col-md-offset-1">
+<div class="col-md-11 col-md-offset-1">
+
   [% IF title %]
-  <h3><input style="float:right;" type="button" class="btn btn-default change_mode" value="Change to long edit form" /> [% title %] <a href="#" class="change_type" title="Change type" />([% type %])</a></h3>
+  <div class="dropdown">
+    <h3><input style="float:right;" type="button" class="btn btn-default hidden-xs hidden-sm change_mode" value="Change to long edit form" /> [% title %] [% INCLUDE change_type_menu.tt %]
+    </h3>
+  </div>
   [% ELSE %]
-  <h3><input style="float:right;" type="button" class="btn btn-default change_mode" value="Change to long edit form" /> Add New {% label %}</h3>
+  <h3><input style="float:right;" type="button" class="btn btn-default change_mode hidden-xs hidden-sm" value="Change to long edit form" /> Add New {% label %}</h3>
   [% END %]
 
   <ul class="nav nav-tabs" id="tabs-left">
