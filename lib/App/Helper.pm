@@ -327,7 +327,7 @@ sub default_facets {
 		popular_science => { terms => { field => 'popular_science', size => 1 } },
 		extern => { terms => { field => 'extern', size => 1 } },
 		status => { terms => { field => 'status', size => 8 } },
-		year => { terms => { field => 'year'} },
+		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
 		type => { terms => { field => 'type', size => 25 } },
 	};
 }
