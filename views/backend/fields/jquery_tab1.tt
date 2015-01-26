@@ -280,8 +280,8 @@ $("#id_conference_location").autocomplete({
   },
   minLength: 3,
   select: function (event, ui) {
-    var selectedObj = ui.item;
-    $("#id_conference_location").val(selectedObj.value);
+    var selectedObj = ui.item.value.replace(/, .*/,'');
+    $("#id_conference_location").val(selectedObj);
     return false;
   },
   open: function () {
@@ -304,8 +304,8 @@ $("#id_place").autocomplete({
   },
   minLength: 3,
   select: function (event, ui) {
-    var selectedObj = ui.item;
-    $("#id_place").val(selectedObj.value);
+    var selectedObj = ui.item.value.replace(/, .*/,'');
+    $("#id_place").val(selectedObj);
     return false;
   },
   open: function () {

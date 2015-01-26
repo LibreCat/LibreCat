@@ -228,7 +228,7 @@ publicationTypes:
         place: &place
           label: "Place<br />(of publication)"
           label_short: "Place"
-          placeholder: "Berlin, BE, Germany"
+          placeholder: "Berlin"
         ddc: &ddc
           label: DDC
         page: &page
@@ -262,9 +262,11 @@ publicationTypes:
         tab_name: "Related Material"
         related_material.record:
           label: "Documents within PUB"
+          label_short: "PUB-Rec."
           placeholder: "Start typing to search your publications."
         related_material.link:
           label: "Documents outside PUB"
+          label_short: "Ext. Link"
           placeholder: "Enter a remote location (URL) of your file here"
         publish_button:
           alert: "Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified."
@@ -374,7 +376,7 @@ publicationTypes:
           placeholder: "e.g. 3rd Conference on Nano-Physics"
         conference.location: &conference_location
           label: "Conference Location"
-          placeholder: "Berlin, BE, Germany"
+          placeholder: "Berlin"
         conference.date: &conference_date
           label: "Date (start and end)"
           label_start: "Start"
@@ -424,7 +426,7 @@ publicationTypes:
           placeholder: "e.g. 3rd Conference on Nano-Physics"
         conference.location:
           label: "Location"
-          placeholder: "Berlin, BE, Germany"
+          placeholder: "Berlin"
         conference.date: *conference_date
         language: *language
       file_upload: *file_upload
@@ -1040,7 +1042,7 @@ publicationTypes:
         place: &place_diss
           label: "Place<br />(of publication)"
           label_short: "Place"
-          placeholder: "Berlin, BE, Germany"
+          placeholder: "Berlin"
           mandatory: 1
         ddc: &ddc_diss
           label: DDC
