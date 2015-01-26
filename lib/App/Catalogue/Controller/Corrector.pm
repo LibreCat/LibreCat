@@ -71,6 +71,10 @@ sub correct_writer {
     	$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
     	push @{$data->{$data->{writer_type}}}, $crea;
     }
+    
+    foreach my $crea (@{$data->{editor}}){
+    	$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
+    }
 
     delete $data->{writer};
     delete $data->{writer_type};

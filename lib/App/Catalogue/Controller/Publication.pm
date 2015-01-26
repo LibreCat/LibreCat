@@ -38,7 +38,7 @@ sub update_publication {
     $data = correct_publid($data);
     $data = correct_hash_array($data);
 
-    $data = correct_writer($data) if $data->{writer};
+    $data = correct_writer($data) if $data->{writer} or $data->{editor};
 
     # html encoding
     foreach (qw/message/) {
