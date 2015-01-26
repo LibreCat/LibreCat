@@ -39,6 +39,7 @@ field_order:
     - publication
     - volume
     - volume_issue_page
+    - translator
     - writer
     - email
     - supervisor
@@ -151,7 +152,7 @@ publicationTypes:
           multiple: 1
           label:
             "Author" : "author"
-            "Translator" : "translator"
+#            "Translator" : "translator"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         editor: &editor_only
           first_name:
@@ -952,6 +953,62 @@ publicationTypes:
         abstract: *abstract
         ddc: *ddc
         keyword: *keyword
+      related_material: *related_material
+  translation:
+    label: "Translation"
+    tmpl: translation
+    fields:
+      basic_fields:
+        tab_name: "Basic Fields"
+        doi: *doi
+        title:
+          mandatory: 1
+          label: "Title (Translation)"
+          label_short: "Title (Trans.)"
+          placeholder: "Handbuch des eBook Publishings"
+        alternative_title:
+          mandatory: 1
+          label: "Title (Original)"
+          label_short: "Title (Orig)"
+          placeholder: "Handbook of eBook Publishing"
+        translator:
+          first_name:
+            placeholder: "John"
+          last_name:
+            placeholder: "Appleseed"
+          mandatory: 1
+          multiple: 1
+          label:
+            "Translator" : "translator"
+          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+        writer:
+          first_name:
+            placeholder: "John"
+          last_name:
+            placeholder: "Appleseed"
+          mandatory: 1
+          multiple: 1
+          label:
+            "Author" : "author"
+          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+        department: *department
+        project: *project
+        language:
+        language:
+        year: *year
+      file_upload: *file_upload
+      supplementary_fields:
+        extern: *extern
+        volume_issue_page: *volume_issue_page
+        publisher: *publisher
+        publication: *publication_series
+        publication_identifier: *publication_identifier
+        external_id: *external_id
+        abstract: *abstract
+        keyword: *keyword
+        ddc: *ddc
+        message: *message
+        ubi_funded: *ubi_funded
       related_material: *related_material
   workingpaper:
     label: "Working Paper"
