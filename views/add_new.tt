@@ -80,6 +80,8 @@
         'preprint',
         'report',
         'researchdata',
+        'dara',
+        'translation',
         'workingpaper',
         ]
       %]
@@ -88,6 +90,11 @@
         ]
       %]
       <div class="col-md-3">
+        [% IF session.role == "super_admin" %]
+          [% FOREACH doctype IN tabelle_admin %]
+          <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+          [% END %]
+        [% END %]
         [% FOREACH doctype IN tabelle_r %]
           <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
         [% END %]
@@ -95,11 +102,6 @@
       <div class="col-md-5">
         [% FOREACH doctype IN tabelle_l %]
           <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
-        [% END %]
-        [% IF session.role == "super_admin" %]
-        [% FOREACH doctype IN tabelle_admin %]
-          <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
-        [% END %]
         [% END %]
       </div>
     </div>
