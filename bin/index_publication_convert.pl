@@ -293,7 +293,7 @@ foreach (@$types) {
     my $obj = $luur->getObjectsByType( type => $_ );
     foreach (@$obj) {
         my $rec = $db->get($_);
-        if ($rec->{isOfType}->{typeName} ne "unknown" and $rec->{isOfType}->{typeName} ne "studentPaper" and $rec->{submissionStatus}){
+        if ($rec->{isOfType}->{typeName} ne "unknown" and $rec->{isOfType}->{typeName} ne "studentPaper" and $rec->{submissionStatus} and $rec->{mainTitle}){
         	add_to_index($rec) unless $rec->{submissionStatus} eq 'invalid';
         }
     }
