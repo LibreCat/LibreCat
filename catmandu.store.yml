@@ -18,22 +18,22 @@ default:
 project:
   package: MongoDB
   options:
-    database_name: PUBProjectNew
+    database_name: PUBProject
 
 award:
   package: MongoDB
   options:
-    database_name: PUBAwards
+    database_name: PUBAward
 
 citation:
   package: MongoDB
   options:
-    database_name: PUBCitations
+    database_name: PUBCitation
 
 authority:
   package: MongoDB
   options:
-    database_name: PUBAuthorityNew
+    database_name: PUBAuthority
     bags:
       admin:
         plugins:
@@ -60,10 +60,10 @@ toolkit:
 metrics:
   package: MongoDB
   options:
-    database_name: Metrics
+    database_name: PUBMetrics
 
 search:
-  package: ElasticSearch
+  package: Elasticsearch
   options:
     bags:
       project:
@@ -778,8 +778,8 @@ search:
                 '=': true
                 'exact': true
 
-    transport: httptiny
-    index_name: backend
+#    transport: httptiny
+    index_name: pub 
     index_settings:
       analysis:
          analyzer:
