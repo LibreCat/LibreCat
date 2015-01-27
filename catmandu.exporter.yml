@@ -18,15 +18,22 @@ publication:
     package: 'JSON'
     content_type: 'application/json'
     options:
-      fix:
-        - publication_to_public()
+      fix: ["fixes/to_public.fix"]
+      array: 1
     label: JSON
+  jsonl:
+    package: 'JSON'
+    content_type: 'application/json'
+    options:
+      fix: ["fixes/to_public.fix"]
+    label: JSONLines
+    extension: jsonl
   yaml:
     package: 'YAML'
     content_type: 'text/x-yaml'
     options:
-      fix:
-        - publication_to_public()
+      fix: ["fixes/to_public.fix"]
+    extension: yml
     label: YAML
   bibtex:
     package: 'BibTeX'
@@ -43,6 +50,7 @@ publication:
       fix:
         - publication_to_ris()
     label: 'RIS (reference software)'
+    extension: txt
   rtf:
     package: RTF
     content_type: 'application/rtf'
@@ -54,7 +62,7 @@ publication:
     options:
       template: views/export/rdf.tt
       fix:
-        - publication_to_templ_exp()
+        - nothing()
       xml: true
     extension: xml
     label: RDF

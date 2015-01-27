@@ -100,17 +100,16 @@ sub extract_params {
 	$p->{q} = $self->string_array($params->{q});
 	$p->{text} = $params->{text} if $params->{text};
 
-	if($params->{fmt}){
-		$p->{fmt} = $params->{fmt};
-		#my $formats = $self->config->{exporter}->{publication};
-		#$p->{fmt} = $formats->{$params->{fmt}} ? $params->{fmt} : $self->config->{store}->{default_fmt};
-	}
+	my $formats = $self->config->{exporter}->{publication};
+	$p->{fmt} = ($params->{fmt} && $formats->{$params->{fmt}})
+		? $params->{fmt} : 'html';
 
 	push @{$p->{q}}, $params->{text} if $params->{text};
 
 	$p->{style} = $params->{style} if $params->{style};
 	$p->{sort} = $self->string_array($params->{sort});
-
+	$p->{ttype} = $params->{ttype} if $params->{ttype};
+	
 	$p;
 }
 
@@ -396,79 +395,6 @@ sub search_publication {
 	return $hits;
 }
 
-sub export_hits {
-	my ($self, $hits) = @_;
-	my $tmpl = $hits->{tmpl} ||= 'websites/index_publication.tt';
-	my $params = $hits->{params};
-
-	my $marked = Dancer::session 'marked';
-    $marked ||= [];
-
-	if ( !$params->{fmt} || $params->{fmt} eq 'html' ) {
-		if ($params->{ftyp}) {
-			$tmpl .= "_". $params->{ftyp};
-			#header("Content-Type" => "text/plain") unless ($params->{ftyp} eq 'iframe' || $params->{ftyp} eq 'pln');
-			$hits->{header} = "text/plain" unless ($params->{ftyp} eq 'iframe' || $params->{ftyp} eq "pln");
-			$tmpl .= "_num" if ($params->{enum} and $params->{enum} eq "1");
-			$tmpl .= "_numasc" if ($params->{enum} and $params->{enum} eq "2");
-			$hits->{tmpl} = $tmpl;
-			#template $tmpl, $hits;
-		}
-
-		if($params->{limit} == 1 && @{$hits->{hits}}[0]){
-			@{$hits->{hits}}[0]->{style} = $params->{style} if $params->{style};
-			@{$hits->{hits}}[0]->{marked} = @$marked;
-			@{$hits->{hits}}[0]->{bag} = $hits->{bag};
-			@{$hits->{hits}}[0]->{tmpl} = "frontdoor/record.tt";
-			$hits = @{$hits->{hits}}[0];
-			#template "frontdoor/record.tt", @{$hits->{hits}}[0];
-		} else {
-			#template $tmpl, $hits;
-			$hits->{tmpl} = $tmpl;
-		}
-		return $hits;
-	}
-	elsif($params->{fmt} eq 'jsonintern'){
-		my $jsonstring = "[";
-
-#		if($params->{bag} and $researchhits->{total}){
-#			foreach (@{$researchhits->{hits}}){
-#				my $mainTitle = $_->{mainTitle};
-#				$mainTitle =~ s/"/\\"/g;
-#				my $citation = $_->{citation}->{$style};
-#				$citation =~ s/"/\\"/g;
-#				$jsonstring .= "{oId:\"" . $_->{oId} . "\", title:\"" . $mainTitle . "\", citation:\"" . $citation . "\"},";
-#			}
-#		}
-#		else{
-			foreach (@{$hits->{hits}}){
-				my $mainTitle = $_->{title};
-				$mainTitle =~ s/"/\\"/g;
-				my $citation = $params->{style} ? $_->{citation}->{$params->{style}} : $_->{citation}->{"frontShort"};
-				$citation =~ s/"/\\"/g;
-				$jsonstring .= "{oId:\"" . $_->{_id} . "\", title:\"" . $mainTitle . "\", citation:\"" . $citation . "\"},";
-			}
-#		}
-		$jsonstring =~ s/,$//g;
-		$jsonstring .= "]";
-		$hits->{tmpl} = "json";
-		$hits->{jsonstring} = $jsonstring;
-		#return $jsonstring;
-		return $hits;
-	}
-	else {
-#		if($params->{bag} and $researchhits->{total}){
-#			$researchhits->{explinks} = $explinks if $explinks;
-#			$self->export_publication($researchhits, $fmt);
-#		}
-#		else {
-			$hits->{explinks} = $params->{explinks} if $params->{explinks};
-			$self->export_publication( $hits, $params->{fmt} );
-#		}
-	}
-
-}
-
 sub export_publication {
 	my ($self, $hits, $fmt) = @_;
 
@@ -476,9 +402,10 @@ sub export_publication {
 		$self->export_csl_json($hits);
 	}
 
-	if ( my $spec = config->{export}->{publication}->{$fmt} ) {
+	if ( my $spec = config->{exporter}->{publication}->{$fmt} ) {
 	   my $package = $spec->{package};
 	   my $options = $spec->{options} || {};
+
 	   if($hits->{style} and $hits->{style} ne "frontShort"){
 			$options->{style} = $hits->{style};
 	   }
@@ -487,25 +414,9 @@ sub export_publication {
 	   }
 	   $options->{explinks} = $hits->{explinks};
 	   my $content_type = $spec->{content_type} || mime->for_name($fmt);
-	   my $extension    = $spec->{extension} || $fmt;
+	   my $extension = $spec->{extension} || $fmt;
 
-	   my $export_obj;
-	   my $rec;
-	   my $meta;
-
-	   if ($fmt eq 'json' || $fmt eq 'yaml') {
-	   		$meta->{downloaded_from} = $self->host;
-	   		$meta->{date_downloaded} = $self->current_time;
-	   		$meta->{total_records} = $hits->total;
-	   		foreach my $r (@{$hits->{hits}}) {
-	   			push @{$export_obj->{records}}, {record => $r};
-	   		}
-	   		$export_obj->{meta} = $meta;
-	   	} else {
-	   		$export_obj = $hits->{hits};
-	   	}
-
-	   my $f = export_to_string( $export_obj, $package, $options );
+	   my $f = export_to_string( $hits, $package, $options );
 	   ($fmt eq 'bibtex') && ($f =~ s/(\\"\w)\s/{$1}/g);
 	   return Dancer::send_file (
    	      \$f,
@@ -513,7 +424,6 @@ sub export_publication {
 	      filename     => "publications.$extension"
 	   );
 	}
-
 }
 
 sub export_csl_json{
@@ -534,29 +444,6 @@ sub export_csl_json{
 	    filename     => "publications.$spec->{extension}"
 	   );
 }
-
-# sub return_publication {
-# 	my ($self, $hits, $opts) = @_;
-# 	if ( $opts->{fmt} eq 'html' ) {
-# 		if ($opts->{ftyp}) {
-# 			$tmpl .= "_". $par->{ftyp};
-# 			header("Content-Type" => "text/plain") unless ($par->{ftyp} eq 'iframe' || $par->{ftyp} eq 'pln');
-# 			$tmpl .= "_num" if ($par->{enum} and $par->{enum} eq "1");
-# 			$tmpl .= "_numasc" if ($par->{enum} and $par->{enum} eq "2");
-# 			template $tmpl, $hits;
-# 		}
-#
-# 		if($limit == 1 && @{$hits->{hits}}[0]){
-# 			@{$hits->{hits}}[0]->{style} = $style;
-# 			@{$hits->{hits}}[0]->{marked} = @$marked;
-# 			@{$hits->{hits}}[0]->{bag} = $hits->{bag};
-# 			template "frontdoor/record.tt", @{$hits->{hits}}[0];
-# 		} else {
-# 			template $tmpl, $hits;
-# 		}
-# 	}
-#
-# }
 
 sub search_researcher {
 	my ($self, $p) = @_;
@@ -615,106 +502,6 @@ sub get_file_path {
 	my @dest_dir_parts = unpack 'A3' x 3, $dest_dir;
 	$dest_dir = join '/', config->{upload_dir}, @dest_dir_parts;
 	return $dest_dir;
-}
-
-sub clean_cql {
-	my ($self, $query) = @_;
-	my $cleancql = "";
-
-	# Strip all leading and trailing whitespaces from full query
-	$query =~ s/^\s+//; $query =~ s/\s+$//;
-
-	# Remove incorrect modifiers directly after q=
-	if($query =~ /^(AND|OR|NOT)(.*)/){
-		my $tail = $2;
-		$tail =~ s/^\s+//; $tail =~ s/\s+$//;
-		$cleancql .= $tail;
-	}
-	else {
-		$cleancql .= $query;
-	}
-
-	# Surround AND, OR and NOT with whitespaces
-	$cleancql =~ s/(AND|OR|NOT)(\S.*)/$1 $2/;
-	$cleancql =~ s/(.*\S)(AND|OR|NOT)/$1 $2/;
-
-	return $cleancql;
-}
-
-sub make_cql {
-	my ($self, $p) = @_;
-
-	my $query;
-	if($p->{q}){
-		return $p->{q};
-	} else {
-		if($p->{person} and $p->{person} ne ""){
-			$query .= "person=" . $p->{person} . " AND hide<>" . $p->{person};
-		}
-		elsif($p->{department} and $p->{department} ne ""){
-			$query .= "department=" . $p->{department};
-		}
-
-
-		if($p->{author} and ref $p->{author} eq 'ARRAY'){
-			foreach (@{$p->{author}}){
-				$query .= " AND author exact ". $_;
-			}
-		}
-		elsif($p->{author} and ref $p->{author} ne 'ARRAY'){
-			$query .= " AND author exact ". $p->{author};
-		}
-
-		if($p->{editor} and ref $p->{editor} eq 'ARRAY'){
-			foreach (@{$p->{editor}}){
-				$query .= " AND editor exact ". $_;
-			}
-		}
-		elsif($p->{editor} and ref $p->{editor} ne 'ARRAY'){
-			$query .= " AND editor exact ". $p->{editor};
-		}
-
-		if($p->{person} and ref $p->{person} eq 'ARRAY'){
-			foreach (@{$p->{person}}){
-				$query .= " AND person exact ". $_;
-			}
-		}
-		elsif($p->{person} and ref $p->{person} ne 'ARRAY'){
-			$query .= " AND person exact ". $p->{person};
-		}
-
-		$query .= " AND qualitycontrolled=". $p->{qualitycontrolled} if $p->{qualitycontrolled};
-		$query .= " AND popularscience=". $p->{popularscience} if $p->{popularscience};
-		$query .= " AND nonlu=". $p->{nonunibi} if $p->{nonunibi};
-		$query .= " AND fulltext=". $p->{fulltext} if $p->{fulltext};
-		$query .= " AND basic=\"" . $p->{ftext} . "\"" if $p->{ftext};
-
-		if($p->{publicationtype} and ref $p->{publicationtype} eq 'ARRAY'){
-			my $tmpquery = "";
-			foreach (@{$p->{publicationtype}}){
-				$tmpquery .= "documenttype=" . $_ . " OR ";
-			}
-			$tmpquery =~ s/ OR $//g;
-			$query .= " AND (" . $tmpquery . ")";
-		}
-		elsif ($p->{publicationtype} and ref $p->{publicationtype} ne 'ARRAY'){
-			$query .= " AND documenttype=". $p->{publicationtype};
-		}
-
-		if($p->{publishingyear} and ref $p->{publishingyear} eq 'ARRAY'){
-			my $tmpquery = "";
-			foreach (@{$p->{publishingyear}}){
-				$tmpquery .= "publishingyear=" . $_ . " OR ";
-			}
-			$tmpquery =~ s/ OR $//g;
-			$query .= " AND (" . $tmpquery . ")";
-		}
-		elsif ($p->{publishingyear} and ref $p->{publishingyear} ne 'ARRAY'){
-			$query .= " AND publishingyear=". $p->{publishingyear};
-		}
-		return $query;
-	}
-
 }
 
 sub uri_for {

@@ -9,25 +9,10 @@ package App::Search::Route::publication;
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use App::Helper;
-# what for?
-=head2 GET /{data|publication}/:id/:style
-
-  Splash page style param '/publication/:id/:style' or '/data/:id/:style'
-
-=cut
-# get qr{/(data|publication)/(\d{1,})/(\w{1,})/*} => sub {
-# 	my ($bag, $id, $style) = splat;
-# 	my $p;
-# 	push @{$p->{q}}, "status=public AND id=$id";
-#
-# 	my $hits = h->search_publication($p);
-# 	$hits->{bag} = $bag;
-# 	template "frontdoor/record", $hits->{hits}->[0];
-# };
 
 =head2 GET /{data|publication}/:id
 
-  Splash page of a given record.
+Splash page for :id.
 
 =cut
 get qr{/(data|publication)/(\d{1,})/*} => sub {
@@ -37,40 +22,35 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 
 	my $hits = h->search_publication($p);
 	$hits->{bag} = $bag;
-	template "frontdoor/record", $hits->{hits}->[0];
+
+	if ($p->{fmt} ne 'html') {
+		h->export_publication($hits, $p->{fmt});
+	} else {
+		template "frontdoor/record", $hits->{hits}->[0];
+	}
 };
 
-# /data/doi/:doi
-# get qr{/data/doi/(.*?)/*} => sub {
-# 	my ($doi) = splat;
-#
-# 	my $p = h->extract_params();
-# 	$p->{'bag'} = 'researchData';
-# 	$p->{'q'} = "doi=$doi";
-# 	#handle_request(\%p);
-# };
+=head2 GET /{data|publication}
 
-# api for data publication lists
-get qr{/data/*} => sub {
+=cut
+get qr{/(data|publication)/*} => sub {
+	my ($bag) = splat;
 	my $p = h->extract_params();
 	$p->{facets} = h->default_facets();
-	push @{$p->{q}}, ("status=public","(type=researchData OR type=dara)");
+
+	($bag eq 'data') ? push @{$p->{q}}, ("status=public","(type=researchData OR type=dara)")
+		: push @{$p->{q}}, ("status=public","type<>researchData","type<>dara");
 
 	my $hits = h->search_publication($p);
-	$hits->{bag} = 'data';
+	$hits->{bag} = $bag;
 
-	template "websites/index_publication", $hits;
-};
-
-# api for publication lists
-get qr{/publication/*} => sub {
-	my $p = h->extract_params();
-	$p->{facets} = h->default_facets();
-	push @{$p->{q}}, ("status=public","type<>researchData","type<>dara");
-
-	my $hits = h->search_publication($p);
-	$hits->{bag} = 'publication';
-	template "websites/index_publication", $hits;
+	if ($p->{fmt} ne 'html') {
+		h->export_publication($hits, $p->{fmt});
+	} elsif ($p->{ttype}) {
+		template "websites/index_publication_$p->{ttype}", $hits;
+	} else {
+		template "websites/index_publication", $hits;
+	}
 };
 
 1;
