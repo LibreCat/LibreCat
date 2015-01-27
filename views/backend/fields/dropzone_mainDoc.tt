@@ -1,5 +1,5 @@
 <div class="row innerrow">
-  <div class="col-md-12">
+  <div class="col-xs-10">
     <strong>{% fields.file_upload.dropzone_mainDoc.label %}</strong>
   </div>
 </div>
@@ -19,18 +19,18 @@
     [% FOREACH fi IN file.nsort('file_order') %]
       <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.file_id %]">
         <div class="row">
-          <div class="col-md-12 padded">
+          <div class="col-md-12 col-xs-10 padded">
             <span class="glyphicon glyphicon-file text-muted"></span> <a href="/myPUB/download/[% _id %]/[% fi.file_id %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-2 text-muted">Access Level:</div>
-          <div class="col-md-3 text-muted">Upload Date:</div>
-          <div class="col-md-3 text-muted">User:</div>
-          <div class="col-md-4 text-muted">Relation:</div>
+          <div class="col-xs-2 text-muted">Access Level:</div>
+          <div class="col-xs-3 text-muted">Upload Date:</div>
+          <div class="col-xs-3 text-muted">User:</div>
+          <div class="col-xs-4 text-muted">Relation:</div>
         </div>
         <div class="row">
-          <div class="col-md-2" id="access_[% fi.file_id %]">
+          <div class="col-xs-2" id="access_[% fi.file_id %]">
             [% SWITCH fi.access_level %]
             [% CASE "admin" %]
             Author/Reviewer
@@ -52,13 +52,13 @@
             
             [% END %]
           </div>
-          <div class="col-md-3" id="updated_[% fi.file_id %]">
+          <div class="col-xs-3" id="updated_[% fi.file_id %]">
             [% fi.date_updated %]
           </div>
-          <div class="col-md-3" id="creator_[% fi.file_id %]">
+          <div class="col-xs-3" id="creator_[% fi.file_id %]">
             [% fi.creator %]
           </div>
-          <div class="col-md-4" id="relation_[% fi.file_id %]">
+          <div class="col-xs-4" id="relation_[% fi.file_id %]">
             [% fi.relation %]
           </div>
         </div>

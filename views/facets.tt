@@ -3,9 +3,6 @@
 [%- USE date(format => '%Y') -%]
 [% IF request.path != "/marked" %]
 <h5>Search</h5>
-[% IF h.extract_params.text %]
-<p class="text-muted"><a href="[% path %]?q=[% h.extract_params.q.join('&q=') %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> search=[% h.extract_params.text |html %]</p>
-[% END %]
 <form action="#" method="get" class="form-inline" role="form">
     <span class="input-group">
       <input type="text" value='[% qp.text %]' class="form-control" name="text" placeholder="Search" />
@@ -13,6 +10,11 @@
         <button type="button" class="btn btn-default">Go!</button>
       </span>
     </span>
+    [%- IF h.extract_params.q.size > 0 %]
+    [%- FOREACH val IN h.extract_params.q %]
+      <input type="hidden" name="q" value="[% val %]" />
+    [% END %]
+    [% END %]
 </form>
 
 <div class="col-md-12">&nbsp;</div>
@@ -190,7 +192,9 @@
     <span class="text-warning">
   [% END %]
   [% IF user_settings.item('sort') %]
+    [% IF !user_settings.sort_up_to_date %]
     <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    [% END %]
     <strong>Sorted by:</strong>
     [% FOREACH setting IN user_settings.item('sort') %]
       [% setting %][% UNLESS loop.last %], [% END %]
@@ -203,7 +207,11 @@
   [% ELSE %]
     <span class="text-warning">
   [% END %]
+  [% IF user_settings.style AND !user_settings.style_up_to_date %]
+    <a href="[% h.newuri_for("$path", qp, style="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <strong>Citation style:</strong> [% user_settings.style %]
+  [% ELSE %]
     <strong>Citation style:</strong> [% user_settings.style %]
+  [% END %]
     </span>
 
   [% IF (!user_settings.sort_up_to_date AND qp.item('sort')) OR (!user_settings.style_up_to_date AND qp.style) %]

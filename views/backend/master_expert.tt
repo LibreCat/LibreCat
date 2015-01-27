@@ -5,11 +5,15 @@
 
 <div class="row">
 
-<div class="col-md-9 col-md-offset-1">
+<div class="col-md-11 col-md-offset-1">
+  
   [% IF title %]
-  <h3><input style="float:right;" type="button" class="btn btn-default change_mode hidden-xs hidden-sm" value="Change to normal edit form" /> [% title %] ([% type %])</h3>
+  <div class="dropdown">
+    <h3><input style="float:right;" type="button" class="btn btn-default hidden-xs hidden-sm change_mode" value="Change to normal edit form" /> [% title %] [% INCLUDE change_type_menu.tt %]
+    </h3>
+  </div>
   [% ELSE %]
-  <h3><input style="float:right;" type="button" class="btn btn-default change_mode hidden-xs hidden-sm" value="Change to normal edit form" /> Add New {% label %}</h3>
+  <h3><input style="float:right;" type="button" class="btn btn-default hidden-xs hidden-sm change_mode" value="Change to normal edit form" /> Add New {% label %}</h3>
   [% END %]
 
   <form action="/myPUB/record/update" method="POST" id="edit_form">
@@ -25,7 +29,7 @@
       <div id="basic_fields" class="tab_section">
 
 {% IF fields.basic_fields %}
-  <h4>{% fields.basic_fields.tab_name %}</h4>
+  <h4 class="expert">{% fields.basic_fields.tab_name %}</h4>
   {% FOREACH key IN field_order.basic_fields %}
     {% IF fields.basic_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -40,7 +44,7 @@
       <div id="file_upload" class="tab_section">
 
 {% IF fields.file_upload %}
-  <h4>{% fields.file_upload.tab_name %}</h4>
+  <h4 class="expert">{% fields.file_upload.tab_name %}</h4>
   {% FOREACH key IN field_order.file_upload %}
     {% IF fields.file_upload.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -55,7 +59,7 @@
       <div id="supplementary_fields" class="tab_section">
 
 {% IF fields.supplementary_fields %}
-  <h4>{% fields.supplementary_fields.tab_name %}</h4>
+  <h4 class="expert">{% fields.supplementary_fields.tab_name %}</h4>
   {% FOREACH key IN field_order.supplementary_fields %}
     {% IF fields.supplementary_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -70,7 +74,7 @@
       <div id="related_material" class="tab_section">
 
 {% IF fields.related_material %}
-  <h4>{% fields.related_material.tab_name %}</h4>
+  <h4 class="expert">{% fields.related_material.tab_name %}</h4>
   {% FOREACH key IN field_order.related_material %}
     {% IF fields.related_material.$key %}
     {% template = "fields/" _ key _ ".tt" %}

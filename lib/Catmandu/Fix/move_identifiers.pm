@@ -27,6 +27,13 @@ sub fix {
 		delete $pub->{isbn};
 	}
 	
+	if($pub->{eisbn} and ref $pub->{eisbn} eq "ARRAY"){
+		foreach my $eisbn (@{$pub->{eisbn}}){
+			push @{$pub->{publication_identifier}->{eisbn}}, $eisbn;
+		}
+		delete $pub->{isbn};
+	}
+	
 	push  @{$pub->{publication_identifier}->{urn}}, $pub->{urn} if $pub->{urn};
 	delete $pub->{urn} if $pub->{urn};
 	
