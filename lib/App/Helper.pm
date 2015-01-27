@@ -109,7 +109,7 @@ sub extract_params {
 	$p->{style} = $params->{style} if $params->{style};
 	$p->{sort} = $self->string_array($params->{sort});
 	$p->{ttype} = $params->{ttype} if $params->{ttype};
-	
+
 	$p;
 }
 
@@ -176,7 +176,7 @@ sub get_sort_style {
 	if(array_includes($self->config->{lists}->{styles},$return_style)){
 		$return->{style} = $return_style;
 	}
-	
+
 	foreach my $key (keys %$return){
 		my $ref = ref $return->{$key};
 
@@ -196,12 +196,12 @@ sub get_sort_style {
     		}
     	}
 	}
-	
+
 	my $user_eq_backend = "";
 	my $backend_eq_default = "";
-	$user_eq_backend = @{$return->{user_sort}} ~~ @{$return->{sort_backend}} if $return->{user_sort};
-	$backend_eq_default = @{$return->{sort_backend}} ~~ @{$self->config->{store}->{default_sort_backend}};
-	
+	#$user_eq_backend = @{$return->{user_sort}} ~~ @{$return->{sort_backend}} if $return->{user_sort};
+	#$backend_eq_default = @{$return->{sort_backend}} ~~ @{$self->config->{store}->{default_sort_backend}};
+
 	if($user_eq_backend ne "" or (!$return->{user_sort} and $backend_eq_default ne "")){
 		$return->{sort_up_to_date} = 1;
 	}
@@ -397,26 +397,21 @@ sub export_publication {
 	}
 
 	if ( my $spec = config->{exporter}->{publication}->{$fmt} ) {
-	   my $package = $spec->{package};
-	   my $options = $spec->{options} || {};
+		my $package = $spec->{package};
+	   	my $options = $spec->{options} || {};
 
-	   if($hits->{style} and $hits->{style} ne "frontShort"){
-			$options->{style} = $hits->{style};
-	   }
-	   else {
-	      $options->{style} = "frontShortTitle";
-	   }
-	   $options->{explinks} = $hits->{explinks};
-	   my $content_type = $spec->{content_type} || mime->for_name($fmt);
-	   my $extension = $spec->{extension} || $fmt;
+		$options->{style} = $hits->{style} || 'frontShortTitle';
+	   	$options->{explinks} = params->{explinks};
+	   	my $content_type = $spec->{content_type} || mime->for_name($fmt);
+	   	my $extension = $spec->{extension} || $fmt;
 
-	   my $f = export_to_string( $hits, $package, $options );
-	   ($fmt eq 'bibtex') && ($f =~ s/(\\"\w)\s/{$1}/g);
-	   return Dancer::send_file (
-   	      \$f,
-	      content_type => $content_type,
-	      filename     => "publications.$extension"
-	   );
+	   	my $f = export_to_string( $hits, $package, $options );
+	   	($fmt eq 'bibtex') && ($f =~ s/(\\"\w)\s/{$1}/g);
+	   	return Dancer::send_file (
+   	    	\$f,
+	      	content_type => $content_type,
+	      	filename     => "publications.$extension"
+	   	);
 	}
 }
 
