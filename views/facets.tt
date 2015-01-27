@@ -190,8 +190,8 @@
     <span class="text-warning">
   [% END %]
   [% IF user_settings.item('sort') %]
-    <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> 
-    <strong>Sorted by:</strong> 
+    <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    <strong>Sorted by:</strong>
     [% FOREACH setting IN user_settings.item('sort') %]
       [% setting %][% UNLESS loop.last %], [% END %]
     [% END %]
@@ -205,7 +205,7 @@
   [% END %]
     <strong>Citation style:</strong> [% user_settings.style %]
     </span>
-  
+
   [% IF (!user_settings.sort_up_to_date AND qp.item('sort')) OR (!user_settings.style_up_to_date AND qp.style) %]
     <a type="button" href="[% h.uri_for("/myPUB/person/preference", qp) %]" name="save_settings" id="id_save_settings" class="btn btn-xs btn-block btn-warning">Save this as public default</a><br />
   [% END %]
@@ -271,7 +271,7 @@
     </button>
     <div class="facettecollapse">
     <ul id="export_[% tabmodus %]" class="collapse">
-      <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="rtf" data-toggle="modal" rel="nofollow"><span class="fa fa-share-square-o"></span> RTF (e.g. Word, Office)</a></li>
+      <li><a a href="#modal_[% tabmodus %]" data-fmt="rtf" data-toggle="modal" rel="nofollow"><span class="fa fa-share-square-o"></span> RTF (e.g. Word, Office)</a></li>
       <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="bibtex" rel="nofollow"><span class="fa fa-share-square-o"></span> BibTeX</a></li>
       <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="ris" rel="nofollow"><span class="fa fa-share-square-o"></span> RIS</a></li>
       <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="json" rel="nofollow"><span class="fa fa-share-square-o"></span> JSON</a></li>
@@ -298,6 +298,29 @@
 </ul>
 
 <br />
+
+<!-- Modal -->
+<div id="modal_[% tabmodus %]" class="modal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+<h5 id="myModalLabel">Export Options</h5>
+</div>
+<div class="modal-body">
+<p><span class="fa fa-chevron-right"></span> <a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]&explinks=yes" class="rtfmodal" rel="nofollow">Export list with links ("PUB | PDF | arXiv" etc.)</a></p>
+<p><span class="fa fa-chevron-right"></span> <a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]" class="rtfmodal" rel="nofollow">Export list without links</a></p>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+$('.rtfmodal').click(function(){
+$('#[% bag == "data" ? "myRdModal" : "myModal" %]').modal('hide');
+});
+</script>
+
 
 [% IF request.path.match('marked') AND total %]
 <ul class="nav nav-tabs nav-stacked">
