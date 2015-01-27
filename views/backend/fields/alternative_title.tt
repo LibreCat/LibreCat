@@ -1,10 +1,9 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    {% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %}<span class="starMandatory">{% END %}
     <label for="id_alternative_title">
       {% fields.basic_fields.alternative_title.label %}{% fields.supplementary_fields.alternative_title.label %}
     </label>
-    {% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %}</span>{% END %}
+    {% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10" id="alternative_title">
     {% IF fields.basic_fields.alternative_title.multiple OR fields.supplementary_fields.alternative_title.multiple %}
