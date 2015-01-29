@@ -3,6 +3,7 @@
 [% qp.delete('splat') %]
 [% backend = path.match('myPUB') ? 1 : 0 %]
 [% thisPerson = backend ? h.getPerson(session.personNumber) : h.getPerson(id) %]
+[% menu = "" %]
 
 [% INCLUDE navbar.tt %]
 <script src="/javascripts/frontend.js"></script>
@@ -84,7 +85,9 @@
       <div class="col-xs-6 pull-right">
 	<button class="btn btn-default dropdown-toggle fixed sidebar-expand-button navbar-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"><span class="fa fa-list fa-2x"></span></button>
 	<ul class="dropdown-menu scrollable-menu fixed sidebar-expand-button" role="menu" aria-labelledby="dropdownMenu1">
+	  [% menu = "_side" %]
 	  <li>[% INCLUDE facets.tt %]</li>
+	  [% menu = "" %]
 	</ul>
       </div>
     </div>

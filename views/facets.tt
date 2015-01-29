@@ -34,11 +34,11 @@
   [% IF facets.status.terms && facets.status.terms.size > 1 %]
   [% IF backend %]
   <li>
-    <button data-toggle="collapse" data-target="#status_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Submission Status ([% facets.status.terms.size %])</a></button>
+    <button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Submission Status ([% facets.status.terms.size %])</a></button>
     <div class="facettecollapse">
-    <ul id="status_[% tabmodus %]" class="collapse">
+    <ul id="status_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH stat IN facets.status.terms %]
-      <li><a class="search-facet_[% tabmodus %]" data-index="status" data-val="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
+      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="status" data-val="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
       [% END %]
     </ul>
     </div>
@@ -48,9 +48,9 @@
 
   [% IF backend AND session.role == "super_admin" %]
   <li>
-    <button data-toggle="collapse" data-target="#department_new_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Department</a></button>
+    <button data-toggle="collapse" data-target="#department_new_[% tabmodus %][% menu %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Department</a></button>
     <div class="facettecollapse">
-    <ul id="department_new_[% tabmodus %]" class="collapse[% IF qp.department %] in[% END %]">
+    <ul id="department_new_[% tabmodus %][% menu %]" class="collapse[% IF qp.department %] in[% END %]">
     [% IF qp.department %]
       [% dept = h.getDepartment(qp.department) %]
       [% dept.name %]
@@ -59,11 +59,13 @@
     [% FOREACH dept IN departments.keys.sort %]
       [% thisdept = departments.$dept %]
       <a href="[% h.newuri_for("$path", qp, department="$thisdept.oId") %]" class="selectme" data-index="[% loop.index %]" id="[% departments.$dept.oId %]">[% dept %]</a>
-      [% IF departments.$dept.keys.size > 1 %] <a href="#subdepts_[% departments.$dept.oId %]" data-toggle="collapse">
+      [% IF departments.$dept.keys.size > 1 %]
+      <a href="#subdepts_[% departments.$dept.oId %][% menu %]" data-toggle="collapse">
         <span class="fa fa-chevron-down"></span>
-      </a>[% END %]
+      </a>
+      [% END %]
       <br />
-      <div id="subdepts_[% departments.$dept.oId %]" class="panel-collapse collapse">
+      <div id="subdepts_[% departments.$dept.oId %][% menu %]" class="panel-collapse collapse">
         [% FOREACH subdept IN departments.$dept.keys.sort %]
         [% NEXT IF subdept == "oId" %]
         [% thissubdept = thisdept.$subdept %]
@@ -72,11 +74,11 @@
             [% subdept %]
           </a>
         </span>
-        [% IF departments.$dept.$subdept.keys.size >1 %] <a href="#subsubdepts_[% departments.$dept.$subdept.oId %]" data-toggle="collapse">
+        [% IF departments.$dept.$subdept.keys.size >1 %] <a href="#subsubdepts_[% departments.$dept.$subdept.oId %][% menu %]" data-toggle="collapse">
           <span class="fa fa-chevron-down"></span>
         </a>[% END %]
         <br />
-        <div id="subsubdepts_[% departments.$dept.$subdept.oId %]" class="panel-collapse collapse">
+        <div id="subsubdepts_[% departments.$dept.$subdept.oId %][% menu %]" class="panel-collapse collapse">
           [% FOREACH subsubdept IN departments.$dept.$subdept.keys.sort %]
           [% NEXT IF subsubdept == "oId" %]
           [% thissubsubdept = thissubdept.$subsubdept %]
@@ -99,12 +101,12 @@
 
   [% IF facets.type.terms && facets.type.terms.size > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#type_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Publication Type ([% facets.type.terms.size %])</a></button>
+    <button data-toggle="collapse" data-target="#type_[% tabmodus %][% menu %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Publication Type ([% facets.type.terms.size %])</a></button>
     <div class="facettecollapse">
-    <ul id="type_[% tabmodus %]" class="collapse">
+    <ul id="type_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH type IN facets.type.terms %]
       [% typeName = h.display_doctypes(type.term) %]
-      <li><a class="search-facet_[%tabmodus %]" data-index="type" data-val="[% type.term %]" href="#" rel="nofollow">[% typeName %] ([% type.count %])</a></li>
+      <li><a class="search-facet_[%tabmodus %][% menu %]" data-index="type" data-val="[% type.term %]" href="#" rel="nofollow">[% typeName %] ([% type.count %])</a></li>
       [% END %]
     </ul>
     </div>
@@ -113,12 +115,12 @@
 
  [% IF facets.author.terms && facets.author.terms.size > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#authors_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Uni-Bi Authors ([% facets.author.terms.size %])</a></button>
+    <button data-toggle="collapse" data-target="#authors_[% tabmodus %][% menu %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Uni-Bi Authors ([% facets.author.terms.size %])</a></button>
     <div class="facettecollapse">
-    <ul id="authors_[% tabmodus %]" class="collapse">
+    <ul id="authors_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH au IN facets.author.terms %]
       [% name = h.getPerson(au.term) %]
-      <li><a class="search-facet_[% tabmodus %]" data-index="author" data-val="[% au.term %]" href="#" rel="nofollow">[% name.full_name %] ([% au.count %])</a></li>
+      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="author" data-val="[% au.term %]" href="#" rel="nofollow">[% name.full_name %] ([% au.count %])</a></li>
       [% END %]
     </ul>
     </div>
@@ -127,12 +129,12 @@
 
   [% IF facets.editor.terms && facets.editor.terms.size > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#editors_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Uni-Bi Editors ([% facets.editor.terms.size %])</a></button>
+    <button data-toggle="collapse" data-target="#editors_[% tabmodus %][% menu %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Uni-Bi Editors ([% facets.editor.terms.size %])</a></button>
     <div class="facettecollapse">
-    <ul id="editors_[% tabmodus %]" class="collapse">
+    <ul id="editors_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH ed IN facets.editor.terms %]
       [% name = h.getPerson(ed.term) %]
-      <li><a class="search-facet_[% tabmodus %]" data-index="editor" data-val="[% ed.term %]" href="#" rel="nofollow">[% name.full_name %] ([% ed.count %])</a></li>
+      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="editor" data-val="[% ed.term %]" href="#" rel="nofollow">[% name.full_name %] ([% ed.count %])</a></li>
       [% END %]
     </ul>
     </div>
@@ -141,13 +143,13 @@
 
   [% IF facets.year.terms && facets.year.terms.size > 1 %]
   <li>
-    <button data-target="#year_[% tabmodus %]" data-toggle="collapse"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Publishing Year ([% facets.year.terms.size %])</a></button>
+    <button data-target="#year_[% tabmodus %][% menu %]" data-toggle="collapse"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Publishing Year ([% facets.year.terms.size %])</a></button>
     <div class="facettecollapse">
-    <ul id="year_[% tabmodus %]" class="collapse">
+    <ul id="year_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH y IN facets.year.terms %]
       [%- year = (y.term) / 1000; -%]
       [%- yf = date.format(year); -%]
-      <li><a class="search-facet_[% tabmodus %]" data-index="year" data-val="[% yf %]" href="#" rel="nofollow">[% yf %] ([% y.count %])</a></li>
+      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="year" data-val="[% yf %]" href="#" rel="nofollow">[% yf %] ([% y.count %])</a></li>
       [% END %]
     </ul>
     </div>
@@ -161,20 +163,20 @@
 
   [% IF facets.popular_science.total %]
   <li>
-    <a class="search-facet_[% tabmodus %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp;[% facets.popularScience.total %] Popular Science</a>
+    <a class="search-facet_[% tabmodus %][% menu %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp;[% facets.popularScience.total %] Popular Science</a>
   </li>
   [% END %]
 
   [% IF facets.extern.total %]
   <li>
-    <a class="search-facet_[% tabmodus %]" data-index="extern" data-val="1" href="#" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp;[% facets.nonlu.total %] External Publications</a>
+    <a class="search-facet_[% tabmodus %][% menu %]" data-index="extern" data-val="1" href="#" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp;[% facets.nonlu.total %] External Publications</a>
   </li>
   [% END %]
 
   <li>
     [% FOREACH term IN facets.open_access.terms %]
       [% NEXT IF term.term == "0" %]
-      <a class="search-facet_[% tabmodus %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp;[% term.count %] OA Fulltexts</a>
+      <a class="search-facet_[% tabmodus %][% menu %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp;[% term.count %] OA Fulltexts</a>
     [% END %]
   </li>
 
@@ -220,9 +222,9 @@
 <ul class="nav nav-tabs nav-stacked">
 [% IF !request.path.match('person') AND !request.path.match('marked') %]
   <li>
-    <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.store.default_searchpage_size %][% END %]</a></button>
+    <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %][% menu %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.store.default_searchpage_size %][% END %]</a></button>
     <div class="facettecollapse">
-    <ul id="hitsperpage_[% tabmodus %]" class="collapse">
+    <ul id="hitsperpage_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH lim IN h.config.store.pagination_options %]
         [% IF (qp.limit AND qp.limit == lim) OR (!qp.limit AND lim == h.config.store.default_searchpage_size) %]
         <li>[% lim %]</li>
@@ -235,9 +237,9 @@
   </li>
 [% END %]
   <li>
-    <button data-toggle="collapse" data-target="#style_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Citation Style[% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</a></button>
+    <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Citation Style[% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</a></button>
     <div class="facettecollapse">
-    <ul id="style_[% tabmodus %]" class="collapse">
+    <ul id="style_[% tabmodus %][% menu %]" class="collapse">
       [% IF qp.style AND qp.style == "frontShort" %]
       <li>default</li>
       [% ELSE %]
@@ -255,9 +257,9 @@
   </li>
   [% IF !request.path.match('marked') %]
   <li>
-    <button data-toggle="collapse" data-target="#sort_[% tabmodus %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Sorting</a></button>
+    <button data-toggle="collapse" data-target="#sort_[% tabmodus %][% menu %]"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;Sorting</a></button>
     <div class="facettecollapse">
-    <ul id="sort_[% tabmodus %]" class="collapse">
+    <ul id="sort_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH s IN h.config.store.sort_options %]
         <li><a href="#" class="sort-facet_[% tabmodus %] asc" data-val="[% s.key %]" rel="nofollow">[% s.label %]&nbsp;<span class="glyphicon glyphicon-arrow-up"></span></a>&nbsp;&nbsp;
         <a href="#" class="sort-facet_[% tabmodus %] desc" data-val="[% s.key %]" rel="nofollow">
@@ -273,11 +275,11 @@
 
 <ul class="nav nav-tabs nav-stacked">
   <li>
-    <button data-toggle="collapse" data-target="#export_[% tabmodus %]">
+    <button data-toggle="collapse" data-target="#export_[% tabmodus %][% menu %]">
       <a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang != 'de' ? "Export as" : "Exportieren als" %]</a>
     </button>
     <div class="facettecollapse">
-    <ul id="export_[% tabmodus %]" class="collapse">
+    <ul id="export_[% tabmodus %][% menu %]" class="collapse">
       <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="rtf" data-toggle="modal" rel="nofollow"><span class="fa fa-share-square-o"></span> RTF (e.g. Word, Office)</a></li>
       <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="bibtex" rel="nofollow"><span class="fa fa-share-square-o"></span> BibTeX</a></li>
       <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="ris" rel="nofollow"><span class="fa fa-share-square-o"></span> RIS</a></li>
@@ -288,14 +290,14 @@
   </li>
   [% IF !backend AND !request.path.match('marked') %]
   <li>
-    <button data-toggle="collapse" data-target="#embed_[% tabmodus %]" id="id_button_embed_[% tabmodus %]">
+    <button data-toggle="collapse" data-target="#embed_[% tabmodus %][% menu %]" id="id_button_embed_[% tabmodus %][% menu %]">
       <a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang != 'de' ? "Embed as" : "Einbetten als" %]</a>
     </button>
     <div class="facettecollapse">
-    <ul id="embed_[% tabmodus %]" class="collapse">
+    <ul id="embed_[% tabmodus %][% menu %]" class="collapse">
     [% FOREACH emb IN ['js', 'iframe', 'link'] %]
     <li><span class="fa fa-arrow-circle-o-down"></span> <strong>[% emb %]</strong>
-      <textarea class="form-control embed-facet_[% tabmodus %]" name="[% emb %]text" rows="2" id="id_[% emb %]text_[% tabmodus %]" onclick="this.focus();this.select()" readonly="readonly"></textarea>
+      <textarea class="form-control embed-facet_[% tabmodus %]" name="[% emb %]text" rows="2" id="id_[% emb %]text_[% tabmodus %][% menu %]" onclick="this.focus();this.select()" readonly="readonly"></textarea>
     </li>
     [% END %]
     </ul>
@@ -321,14 +323,14 @@
 var path = '[% request.path %]',
 searchParams = [% h.extract_params.json %];
 
-$('#id_button_embed_[% tabmodus %]').click(function() {
+$('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ window.location.href +'&ftyp=js"><\/script><noscript><a href="'+ window.location.href +'" target="_blank">Pers&ouml;nliche Publikationsliste &gt;&gt; / My Publication List &gt;&gt;</a></noscript></div>';
     console.log(path);
     var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="'+ window.location.href +'&ftyp=iframe"></iframe>';
     var emb_link = '<a href="'+ window.location.href +'">My Publication List</a>';
-    $('#id_jstext_[% tabmodus %]').val(emb_js);
-    $('#id_iframetext_[% tabmodus %]').val(emb_iframe);
-    $('#id_linktext_[% tabmodus %]').val(emb_link);
+    $('#id_jstext_[% tabmodus %][% menu %]').val(emb_js);
+    $('#id_iframetext_[% tabmodus %][% menu %]').val(emb_iframe);
+    $('#id_linktext_[% tabmodus %][% menu %]').val(emb_link);
 });
 
 $('a.search-facet_[% tabmodus %]').click(function() {
@@ -357,6 +359,10 @@ $('a.export-facet_[% tabmodus %]').click(function() {
   searchParams.fmt = $(this).data('fmt')
   var url = path+'?'+ $.param($.extend({}, searchParams), true);
   window.location.replace(url);
+});
+
+$('.collapse').click(function(e){
+  e.preventDefault();
 });
 
 //$('').click(function () {});
