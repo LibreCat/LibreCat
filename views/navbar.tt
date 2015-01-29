@@ -95,7 +95,7 @@
             [% INCLUDE person_affiliation.tt %]
             </div>
          </li>
-         <li><a href="#"><span class="glyphicon glyphicon-user"></span> <em>[% session.user %]</em></a></li>
+         <li><a><span class="glyphicon glyphicon-user"></span> <em>[% session.user %]</em></a></li>
 
          [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% session.role %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
