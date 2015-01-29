@@ -37,7 +37,7 @@ sub handle_file {
 	if(!$previous_pub){
 		foreach my $fi (@{$pub->{file}}){
 			$fi = from_json($fi);
-			$fi->{file_id} = new_file();
+			$fi->{file_id} = new_file() if !$fi->{file_id};
 			#my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
 			push @{$pub->{file_order}}, $fi->{file_id};
 
