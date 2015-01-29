@@ -8,10 +8,10 @@ Modifications for PUB
 .navbar-fixed-top .navbar-right {padding-right:5px;}
 
 /* display main content below navbar */
-main {padding-top:20px;}
-@media (min-width: 768px) {main{padding-top:30px;}}
-@media (min-width: 992px) {main{padding-top:40px;}}
-@media (min-width: 1200px) {main{padding-top:50px;}}
+main {padding:20px 0;}
+@media (min-width: 768px) {main{padding:30px 0;}}
+@media (min-width: 992px) {main{padding:40px 0;}}
+@media (min-width: 1200px) {main{padding:50px 0;}}
 
 /* header */
 .page-header {margin-bottom:10px;}
@@ -21,7 +21,7 @@ main {padding-top:20px;}
 h1,.h1,h2,.h2,h3,.h3{margin-top:31px;}
 h3:first-child,.h3:first-child{margin-top:0;}
 h3 a {font-size:inherit;}
-h4.expert {border-bottom: 1px dashed #b6c828;}
+h3.expert {border-bottom: 1px dashed #b6c828;}
 
 /* to boldy go, where no link has gone before */
 a {font-weight:bold;}
@@ -31,6 +31,18 @@ a {font-weight:bold;}
 
 /* dont display this */
 .ltIEten {display: none;}
+
+/* some top margins, if needed */
+.margin-top0 { margin-top:0; }
+.margin-top1 { margin-top:20px; }
+.margin-top2 { margin-top:40px; }
+.margin-top3 { margin-top:60px; }
+
+/* some top paddings, if needed */
+.padding-top0 { padding-top:0; }
+.padding-top1 { padding-top:20px; }
+.padding-top2 { padding-top:40px; }
+.padding-top3 { padding-top:60px; }
 
 .statalign {
 display: inline-block;
@@ -224,11 +236,6 @@ color: #9DA0A4;
 border-radius: 0 4px 0 4px;
 }
 
-.starMandatory {
-font-weight:bold;
-color:#ff0000;
-}
-
 .facettecollapse{
 border-left:1px solid #ddd;
 border-right:1px solid #ddd;
@@ -356,20 +363,14 @@ margin-bottom: 5px;
 font-weight: bold;
 font-size: 9pt;
 }
-.starMandatory select.mylabel {
-color: red;
-}
 .tab_section {
 padding-bottom: 20px;
 }
 
 /* mandatory fields */
-.starMandatory:after {
-content: "*";
-font-size: 2.2em;
-margin-left: 0.2em;
-vertical-align: text-top;
-}
+.starMandatory {font-weight:bold;color:#f00;}
+.starMandatory select.mylabel {color:#f00;}
+.starMandatory:after {content:" *";font-size:22px;vertical-align:middle;}
 
 a .badge {
 color: #fff;
