@@ -1,6 +1,6 @@
 [% INCLUDE websites/header.tt %]
 
-<link rel="stylesheet" href="/css/bootstrap3.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/mypub.css" />
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <link rel="stylesheet" href="/css/reset.css" />
@@ -514,8 +514,8 @@
 </div>
 </div>
 
-<script src="/javascripts/jquery-latest.js"></script>
-<script src="/javascripts/bootstrap3.js"></script>
+<script src="/javascripts/jquery.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
 <script charset="utf-8">
 // mark
 $('a.mark').click(function(evt) {
