@@ -1,8 +1,10 @@
-<!-- BEGIN person/profile.tt -->
-<div class="row" id="dropzone_row">
-  <div class="well col-md-10">
-  
-  <div class="dropzone" id="qaeUpload"></div>
+
+<!-- BEGIN person_dropzone.tt -->
+
+<div id="dropzone_row">
+  <div class="well">
+      <div class="dropzone" id="qaeUpload"></div>
   </div>
 </div>
-<!-- END person/profile.tt -->
+
+<!-- END person_dropzone.tt -->

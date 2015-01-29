@@ -1,62 +1,66 @@
-<!-- BEGIN person/profile.tt -->
-<h5>[% IF thisPerson.bis.personTitle %]<span itemprop="honorificPrefix">[% thisPerson.bis.personTitle %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span></h5>
+
+<!-- BEGIN person_profile.tt -->
+
+<h3>[% IF thisPerson.bis.personTitle %]<span itemprop="honorificPrefix">[% thisPerson.bis.personTitle %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span></h3>
+
 [% IF thisPerson.bis.email %]
-<a href="mailto:[% thisPerson.bis.email %]" itemprop="email">[% thisPerson.bis.email.replace('@|&#64;', ' [at] ') %]</a><br />
+<a href="mailto:[% thisPerson.bis.email %]" itemprop="email">[% thisPerson.bis.email.replace('@|&#64;', ' [at] ') %]</a><br>
 [% END %]
-  [% IF !thisPerson %]
-    <p>No info found.</p>
+
+[% IF !thisPerson %]
+  <p>No info found.</p>
+[% ELSE %]
+  [% IF thisPerson.bis.former == "1" %]
+    <p>Former Bielefeld University Researcher</p>
   [% ELSE %]
-    [% IF thisPerson.bis.former == "1" %]
-      <p>Former Bielefeld University Researcher</p>
-    [% ELSE %]
-      View in <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% id %]&lang=en">Directory of Staff and Departments</a>
-      [% IF thisPerson.sfb882_profile %]
-      <br /><br />View <a href="http://www.sfb882.uni-bielefeld.de/en/staff/[% id %]">SFB882-GK Profile</a><br />
-      [% END %]
-      <br /><br />
-
-      <div class="row hidden-xs">
-      <form action="/myPUB/person/author_id" method="POST">
-      <input type="hidden" name="_id" value="[% session.personNumber %]" />
-      [% IF !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire) %]
-      <div class="row">
-      <div class="col-md-10">
-        <span class="text-muted">No Author IDs set.</span>&nbsp;
-        <a href="#" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
-      </div>
-      </div>
-      [% END %]
-
-      [% FOREACH  k IN h.config.lists.author_id.keys.sort %]
-      [% IF thisPerson.$k %]
-      <span class="row authorIds">
-        <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
-        <div class="col-md-6">
-        [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]" target="_blank">[% thisPerson.$k %]</a>
-        [% ELSE %][% thisPerson.$k %][% END %]
-        &nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
-      </span>
-      [% END %]<!-- end if -->
-      <span class="row authorIds_input form-group" style="display:none;">
-        <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
-        <div class="col-md-6"><input type="text" class="form-control input-sm check_[% k %]" name="[% k %]" id="[% k %]" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
-      </span>
-      [% END %]<!-- END foreach -->
-
-      <span class="row authorIds_input" style="display:none;">
-        <div class="col-md-4">
-          <span class="glyphicon glyphicon-question-sign" id="authorid_help" data-toggle="tooltip" data-placement="right" title="These IDs will be visible on your public person page immediately after saving."></span>
-          <script>
-            $('#authorid_help').tooltip();
-          </script>
-        </div>
-        <div class="col-md-6">
-          <button type="submit" id="saveAuthorIds" class="btn btn-success btn-sm">Save</button>
-          <button type="button" onclick="editAuthorIds('cancel');" class="btn btn-danger btn-sm">Cancel</button>
-        </div>
-      </span>
-      </form>
-      </div>
+    View in <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% id %]&amp;lang=en">Directory of Staff and Departments</a>
+    [% IF thisPerson.sfb882_profile %]
+    <br />View <a href="http://www.sfb882.uni-bielefeld.de/en/staff/[% id %]">SFB882-GK Profile</a>
     [% END %]
+
+    <div class="row">&nbsp;</div>
+
+    <div class="col-md-12 row hidden-xs">
+    <form action="/myPUB/person/author_id" method="POST">
+    <input type="hidden" name="_id" value="[% session.personNumber %]" />
+    [% IF !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire) %]
+    <div class="row col-md-12">
+      <span class="text-muted">No Author IDs set.</span>&nbsp;
+      <a href="#" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
+    </div>
+    [% END %]
+
+    [% FOREACH  k IN h.config.lists.author_id.keys.sort %]
+    [% IF thisPerson.$k %]
+    <div class="row authorIds">
+      <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
+      <div class="col-md-6">
+      [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]" target="_blank">[% thisPerson.$k %]</a>
+      [% ELSE %][% thisPerson.$k %][% END %]
+      &nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
+    </div>
+    [% END %]<!-- end if -->
+    <div class="row authorIds_input form-group" style="display:none;">
+      <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
+      <div class="col-md-6"><input type="text" class="form-control input-sm check_[% k %]" name="[% k %]" id="[% k %]" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
+    </div>
+    [% END %]<!-- END foreach -->
+
+    <div class="row authorIds_input" style="display:none;">
+      <div class="col-md-4">
+	<span class="glyphicon glyphicon-question-sign" id="authorid_help" data-toggle="tooltip" data-placement="right" title="These IDs will be visible on your public person page immediately after saving."></span>
+	<script>
+	  $('#authorid_help').tooltip();
+	</script>
+      </div>
+      <div class="col-md-6">
+	<button type="submit" id="saveAuthorIds" class="btn btn-success btn-sm">Save</button>
+	<button type="button" onclick="editAuthorIds('cancel');" class="btn btn-danger btn-sm">Cancel</button>
+      </div>
+    </div>
+    </form>
+    </div>
   [% END %]
-<!-- END person/profile.tt -->
+[% END %]
+
+<!-- END person_profile.tt -->
