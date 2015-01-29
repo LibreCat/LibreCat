@@ -55,22 +55,28 @@ get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
 
 	push @{$p->{q}}, "person=$id";
 	push @{$p->{q}}, "status=public";
-	push @{$p->{q}}, "type<>researchData";
-	push @{$p->{q}}, "type<>dara";
+	
+	if($modus and $modus eq "data"){
+		push @{$p->{q}}, "(type=researchData OR type=dara)";
+	}
+	else{
+		push @{$p->{q}}, "type<>researchData";
+		push @{$p->{q}}, "type<>dara";
+	}
 	my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '', $id);
 	$p->{sort} = $sort_style->{sort};
 	$p->{facets} = h->default_facets();
 	$p->{limit} = h->config->{store}->{maximum_page_size};
 
 	my $hits = h->search_publication($p);
-
+	
+	# search for research hits (only to see if present and to display tab)
 	my $researchhits;
 	@{$p->{q}} = @orig_q;
-	push @{$p->{q}}, "person=$id";
 	push @{$p->{q}}, "(type=researchData OR type=dara)";
+	push @{$p->{q}}, "person=$id";
 	$p->{limit} = 1;
 	$researchhits = h->search_publication($p);
-
 	$hits->{researchhits} = $researchhits;
 
 	$p->{limit} = h->config->{store}->{maximum_page_size};
