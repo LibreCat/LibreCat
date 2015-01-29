@@ -1,0 +1,1 @@
+{"valid":[% IF session AND session.user %]"true"[% ELSE %]"false"[% END %]}

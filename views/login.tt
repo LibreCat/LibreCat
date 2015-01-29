@@ -58,8 +58,6 @@ $(document).ready(function(){
 });
 </script>
 
-<!-- END /tt_templates/backend/login.tt -->
+<!-- END login.tt -->
 
-</body>
-
-</html>
+[% INCLUDE footer.tt %]

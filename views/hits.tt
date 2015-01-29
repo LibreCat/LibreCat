@@ -1,13 +1,7 @@
 
 <!-- BEGIN hits.tt -->
 
-<!-- This publication list is displayed in "[% style %]" style and sorted "[% sort %]" -->
 [% path = request.path %]
-[% IF tabmodus == "data" %]
-[% hits = researchhits.hits %]
-[% total = researchhits.total %]
-[% END %]
-[% USE Dumper; Dumper.dump(researchhits) %]
 
 [% num = total; n = 0 %]
 
@@ -28,8 +22,12 @@
   </div>
 </div>
 
-<div class="row margin-top2">
+[% IF next_page or previous_page %]
+<div class="row">
   [% INCLUDE pagination.tt %]
+[% ELSE %]
+<div class="row margin-top2">
+[% END %]
 </div>
 
 <!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->

@@ -1,4 +1,6 @@
+
 <!-- BEGIN rec_details.tt --> 
+
 <div id="[% tabmodus %]_[% entry.item('_id') %]" class="collapse" style="padding-top:5px;">
 [% IF entry.author %]
   <div class="frontdoor">
@@ -83,4 +85,5 @@
   [% END %]
   </div>
 [% END %]
+
 <!-- END rec_details.tt --> 

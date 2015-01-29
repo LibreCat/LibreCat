@@ -1,3 +1,6 @@
+
+<!-- BEGIN change_type_menu.tt -->
+
 <a class="dropdown-toggle" data-toggle="dropdown" title="Change type" />([% type %])</a>
 <ul class="dropdown-menu" role="menu">
   <li class="disabled"><a href="#">Change Type</a></li>
@@ -8,3 +11,5 @@
   <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
   [% END %]
 </ul>
+
+<!-- END change_type_menu.tt -->
