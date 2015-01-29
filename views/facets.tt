@@ -1,8 +1,10 @@
+
 <!-- BEGIN facets.tt -->
+
 [%- USE JSON -%]
 [%- USE date(format => '%Y') -%]
 [% IF request.path != "/marked" %]
-<h5>Search</h5>
+<h3>Search</h3>
 <form action="#" method="get" class="form-inline" role="form">
     <span class="input-group">
       <input type="text" value='[% qp.text %]' class="form-control" name="text" placeholder="Search" />
@@ -17,9 +19,7 @@
     [% END %]
 </form>
 
-<div class="col-md-12">&nbsp;</div>
-
-<h5>Filter Publications</h5>
+<h3>Filter Publications</h3>
 [%- IF h.extract_params.q.size > 0 %]
 [%- FOREACH val IN h.extract_params.q %]
 [%- removed = [] -%]
@@ -155,7 +155,7 @@
   [% END %]
 </ul>
 
-<p>&nbsp;</p>
+<div class="row">&nbsp;</div>
 
 <ul class="nav nav-tabs nav-stacked">
 
@@ -179,11 +179,9 @@
   </li>
 
 </ul>
-
-<p>&nbsp;</p>
 [% END %]
 
-<h5>Display Publications</h5>
+<h3>Display Publications</h3>
 
 [% IF user_settings %]
   [% IF user_settings.sort_up_to_date %]
@@ -270,7 +268,8 @@
   </li>
   [% END %]
 </ul>
-<br />
+
+<div class="row">&nbsp;</div>
 
 <ul class="nav nav-tabs nav-stacked">
   <li>
