@@ -1,15 +1,21 @@
 
 <!-- BEGIN change_type_menu.tt -->
 
-<a class="dropdown-toggle" data-toggle="dropdown" title="Change type" />([% type %])</a>
-<ul class="dropdown-menu" role="menu">
-  <li class="disabled"><a href="#">Change Type</a></li>
-  <li class="divider"></li>
-  [% FOREACH ptype IN h.config.forms.publicationTypes.keys %]
-  [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
-  [% NEXT IF pubtype == "biThesis" AND session.role != "super_admin" OR pubtype == type %]
-  <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
-  [% END %]
-</ul>
+<div class="btn-group">
+  <button type="button" class="btn btn-default">[% type %]</button>
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Change publication type">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li class="disabled"><a href="#">Change Type</a></li>
+    <li class="divider"></li>
+    [% FOREACH ptype IN h.config.forms.publicationTypes.keys %]
+    [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
+    [% NEXT IF pubtype == "biThesis" AND session.role != "super_admin" OR pubtype == type %]
+    <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
+    [% END %]
+  </ul>
+</div>
 
 <!-- END change_type_menu.tt -->
