@@ -384,7 +384,7 @@ $('a.export-facet_[% tabmodus %]').click(function() {
   window.location.replace(url);
 });
 
-$('.collapse').click(function(e){
+$('button.collapse').click(function(e){
   e.preventDefault();
 });
 
