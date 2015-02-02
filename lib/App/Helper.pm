@@ -197,12 +197,12 @@ sub get_sort_style {
     	}
 	}
 
-	my $user_eq_backend = "";
-	my $backend_eq_default = "";
-	#$user_eq_backend = @{$return->{user_sort}} ~~ @{$return->{sort_backend}} if $return->{user_sort};
-	#$backend_eq_default = @{$return->{sort_backend}} ~~ @{$self->config->{store}->{default_sort_backend}};
+	my $usermongo_eq_currentsort = "";
+	my $currentsort_eq_default = "";
+	$usermongo_eq_currentsort = $self->compare_array($return->{user_sort}, $return->{sort_backend}) if $return->{user_sort};
+	$currentsort_eq_default = $self->compare_array($return->{sort_backend}, $self->config->{store}->{default_sort_backend});
 
-	if($user_eq_backend ne "" or (!$return->{user_sort} and $backend_eq_default ne "")){
+	if($usermongo_eq_currentsort ne "" or (!$return->{user_sort} and $currentsort_eq_default ne "")){
 		$return->{sort_up_to_date} = 1;
 	}
 	if(($return->{user_style} and $return->{style} eq $return->{user_style}) or (!$return->{user_style} and $return->{style} eq $self->config->{store}->{default_style})){
@@ -210,6 +210,30 @@ sub get_sort_style {
 	}
 
 	return $return;
+}
+
+sub compare_array {
+	my ($self, $arr1, $arr2) = @_;
+	
+	my $length1 = scalar @{$arr1};
+	my $length2 = scalar @{$arr2};
+	
+	if($length1 > 0 and $length2 > 0){
+		if($length1 != $length2){
+			return "";
+		}
+		else {
+			for my $i (0 .. $#{$arr1}){
+				if($arr1->[$i] ne $arr2->[$i]){
+					return "";
+				}
+			}
+			return 1;
+		}
+	}
+	else {
+		return "";
+	}
 }
 
 sub now {
