@@ -1,8 +1,8 @@
 package Authentication::Authenticate;
 
 use App::Helper;
-use Authentication::LDAP;
-use Authentication::LDAP::UNIBI;
+use Catmandu::Sane;
+use Net::LDAP;
 use base 'Exporter';
 use strict;
 
@@ -16,34 +16,27 @@ sub verifyUser {
     }
 
     withAuthentication($username, $password);
-    #withAuthentication(sub {
-    #    my $auth = shift; $auth->verify($auth, $username, $password);
-    #});
 }
 
 sub withAuthentication {
-    #my $self       = shift;
     my $username = shift;
     my $password = shift;
-    #my $authAction = shift;
-    my $authResult;
 
     my $cfg = h->config->{authentication};
-    my $authClass = $cfg->{class};
+    my $host = $cfg->{param}->{host};
     my $authParam = $cfg->{param};
+    
+    my $ldap = Net::LDAP->new( $host );
+    my $base = sprintf($authParam->{auth_base}, $username);
+    my $bind = $ldap->bind( $base, password => $password);
+    
+    $ldap->unbind;
 
-    my $auth = $authClass->new(
-        param        => $authParam,
-        debugHandler => sub { my $text = shift; },
-        errorHandler => sub { my $text = shift; },
-    );
-
-    if ($auth->onEnter) {
-    	$authResult = $auth->verify($username, $password);
-    	$auth->onLeave;
+    if ($bind->code == Net::LDAP::LDAP_SUCCESS) {
+    	return 1;
+    } else {
+    	return 0;
     }
-
-    $authResult;
 }
 
 1;
