@@ -7,7 +7,7 @@
       {% IF fields.file_upload.license.data_reuse_license %}
       <strong>{% fields.file_upload.license.data_reuse_license.label %}</strong>[% IF file %]<span class="starMandatory"></span>[% END %]
       <div class="row innerrow">
-        <div class="col-md-12 alert alert-info">
+        <div class="col-md-12 alert alert-info{% IF fields.file_upload.license.data_reuse_license.mandatory %} mandatory{% END %}">
         {% IF fields.file_upload.license.data_reuse_license %}
         Choose a license under which your uploaded data will be available:<br />
         <select name="data_reuse_license" id="id_data_reuse_license" class="form-control">
@@ -43,7 +43,7 @@
       <strong>{% fields.file_upload.license.open_data_release.label %}{% fields.file_upload.license.pub_license.label %}</strong>[% IF file %]<span class="starMandatory"></span>[% END %]<br />
       
       <div class="row innerrow">
-        <div class="col-md-12 alert alert-info"{% IF fields.file_upload.license.open_data_release %} id="odralert"{% ELSIF fields.file_upload.license.pub_license %} id="pub_license_alert"{% END %}>
+        <div class="col-md-12 alert alert-info{% IF fields.file_upload.license.open_data_release.mandatory OR fields.file_upload.license.pub_license.mandatory %} mandatory{% END %}"{% IF fields.file_upload.license.open_data_release %} id="odralert"{% ELSIF fields.file_upload.license.pub_license %} id="pub_license_alert"{% END %}>
         {% IF fields.file_upload.license.open_data_release %}
           {% fields.file_upload.license.open_data_release.disclaimer_text %}
         {% ELSIF fields.file_upload.license.pub_license %}
@@ -65,7 +65,7 @@
       {% IF fields.file_upload.license.cc_license %}
       <strong>{% fields.file_upload.license.cc_license.label %}</strong>
       <div class="row innerrow">
-        <div class="col-md-12 alert alert-info">
+        <div class="col-md-12 alert alert-info{% IF fields.file_upload.license.cc_license.mandatory %} mandatory{% END %}">
         {% IF fields.file_upload.license.cc_license %}
         If your uploaded data is available under a Creative Commons license, you can select it here:<br />
         <select name="cc_license" id="id_cc_license" class="form-control">
