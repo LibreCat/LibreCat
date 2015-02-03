@@ -54,7 +54,7 @@
             <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="openAccess" onclick="oamode(this.form, true);"/> Open Access (File is freely available, effective immediately)
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="unibi" onclick="oamode(this.form,false);" /> Local Access (UniBi only)
+            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="local" onclick="oamode(this.form,false);" /> Local Access (UniBi only)
           </label>
           <label class="radio">
             <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false);" /> Closed Access (Author/Reviewer only)
@@ -120,7 +120,7 @@
       formData.append("access_level", "openAccess");
     }
     else if($('#id_accessLevel_unibi').is(':checked')){
-      formData.append("access_level", "unibi");
+      formData.append("access_level", "local");
     }
     else if($('#id_accessLevel_admin').is(':checked')){
       formData.append("access_level", "admin");
@@ -154,7 +154,7 @@
         if(data.access_level == "openAccess"){
           accessLevel = "Open Access";
         }
-        else if(data.access_level == "unibi"){
+        else if(data.access_level == "local"){
           accessLevel = "UniBi only";
           if(data.embargo){
             accessLevel += "<br />(until " + data.embargo + ")";
@@ -179,7 +179,7 @@
         a.html('');
         a.html(data.file_name);
         $('#filename_' + use_file_id).html("");
-        $('#filename_' + use_file_id).html('<a href="[% h.shost %]/download/[% id %]/' + use_file_id + '" target="_blank" title="' + data.file_name + '">' + data.file_name + '</a>');
+        $('#filename_' + use_file_id).html('<span class="glyphicon glyphicon-file text-muted"></span> <a href="[% h.shost %]/download/[% id %]/' + use_file_id + '" target="_blank" title="' + data.file_name + '">' + data.file_name + '</a>');
         $('#access_' + use_file_id).html(accessLevel);
         $('#updated_' + use_file_id).html(data.date_updated);
         $('#creator_' + use_file_id).html(data.creator);
