@@ -4,7 +4,7 @@
 <div class="text-center">
   <div class="row">
     <strong>[% lang ? 'Open Acces at<br />Bielefeld University' : 'Open Access an der<br />Universit&auml;t Bielefeld' %]</strong><br>
-    <a href="http://oa.uni-bielefeld.de" target="_blank" class="btn btn-default"><img src="/images/logo_oa_orange.png" width="50" alt=""></a>
+    <a href="http://oa.uni-bielefeld.de" target="_blank" class="btn btn-default"><img src="/images/logo_oa.png" width="50" alt=""></a>
   </div>
 
   <hr>
