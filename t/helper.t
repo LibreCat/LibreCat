@@ -22,4 +22,7 @@ is_deeply(
     "nested params ok"
 );
 
+
+is h->generateURN('urn:nbn:de:0070-pub-','2508111'), 'urn:nbn:de:0070-pub-25081113';
+
 done_testing;

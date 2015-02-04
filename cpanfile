@@ -34,7 +34,7 @@ requires 'Net::LDAPS';
 
 #Plack
 requires 'Plack::Middleware::ReverseProxy';
-requires 'Dancer::Middleware::Rebase'
+requires 'Dancer::Middleware::Rebase';
 
 # others
 requires 'DateTime';
