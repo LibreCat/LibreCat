@@ -1,4 +1,5 @@
 <!-- BEGIN frontdoor/modal_requestcopy.tt -->
+
 <p><a href="#rc" data-toggle="modal"> Request a Copy</a></p>
 
 <div id="rc" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -20,4 +21,5 @@
 	</form>     
   </div>
 </div>
+
 <!-- END modal frontdoor/modal_requestcopy.tt -->

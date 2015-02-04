@@ -1,7 +1,8 @@
-<!-- BEGIN tab_filedetails -->
+
+<!-- BEGIN frontdoor/tab_filedetails.tt -->
 
 <div class="tab-pane" id="fileDetails">
-  <div class="frontdoor">
+  <div class="row">
     [% IF dataReuseLicense OR otherDataLicense %]
     <strong>All files available under the following license(s):</strong><br />
     [% END %]
@@ -19,34 +20,34 @@
     [% END %]
     </div>
 
-  [% FOREACH fi IN file.nsort('fileOrder') %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">File Name</div>
-    <div class="frontdoor_right">
+  [% FOREACH fi IN mainFile.nsort('fileOrder') %]
+  <div class="row">
+    <div class="col-md-2">File Name</div>
+    <div class="col-md-10">
       <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]">
         [% fi.file_name %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.size) %]</span>
     </div>
   </div>
     [% IF fi.title %]
-    <div class="frontdoor">
-      <div class="frontdoor_left">File Title</div>
-      <div class="frontdoor_right">
+    <div class="row">
+      <div class="col-md-2">File Title</div>
+      <div class="col-md-10">
         [% fi.title %]
       </div>
     </div>
     [% END %]
     [% IF fi.description %]
-    <div class="frontdoor">
-      <div class="frontdoor_left">Description</div>
-      <div class="frontdoor_right">
+    <div class="row">
+      <div class="col-md-2">Description</div>
+      <div class="col-md-10">
         [% fi.description %]
       </div>
     </div>
     [% END %]
-    <div class="frontdoor">
-    <div class="frontdoor_left">Access Level</div>
-    <div class="frontdoor_right">
+    <div class="row">
+    <div class="col-md-2">Access Level</div>
+    <div class="col-md-10">
       [% SWITCH fi.access_level %]
         [% CASE 'openAccess' %]
         [% INCLUDE websites/oa_lock.tt %] Open Access
@@ -60,15 +61,14 @@
     </div>
     </div>
     [% IF fi.date_updated %]
-    <div class="frontdoor">
-      <div class="frontdoor_left">Last Uploaded</div>
-      <div class="frontdoor_right">
+    <div class="row">
+      <div class="col-md-2">Last Uploaded</div>
+      <div class="col-md-10">
         [% fi.date_updated %]
       </div>
     </div>
     [% END %]
-    <div>&nbsp;</div>
   [% END %]
 </div><!-- tab-pane fileDetails -->
 
-<!-- END tab_filedetails -->
+<!-- END frontdoor/tab_filedetails.tt -->

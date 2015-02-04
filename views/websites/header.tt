@@ -4,6 +4,6 @@
 
 <meta name="robots" content="index,follow,noimageindex" />
 
-<!-- END header.tt -->
+<!-- END websites/header.tt -->
 
 [% INCLUDE websites/header_content.tt %]

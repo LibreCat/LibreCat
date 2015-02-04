@@ -1,24 +1,28 @@
+
 <!-- BEGIN websites/logo_contact.tt -->
-  <div>&nbsp;</div>
 
-  <div style="width:100%;text-align:center;">
-    <span style="font-weight:bold">[% lang ? 'Open Acces at<br />Bielefeld University' : 'Open Access an der<br />Universit&auml;t Bielefeld' %]</span><br /><br />
-    <a href="http://oa.uni-bielefeld.de" target="_blank"><img src="/images/logo_oa.png" width="50"/></a>
+<div class="text-center">
+  <div class="row">
+    <strong>[% lang ? 'Open Acces at<br />Bielefeld University' : 'Open Access an der<br />Universit&auml;t Bielefeld' %]</strong><br>
+    <a href="http://oa.uni-bielefeld.de" target="_blank" class="btn btn-default"><img src="/images/logo_oa.png" width="50" alt=""></a>
   </div>
 
-  <div><hr /></div>
+  <hr>
 
-  <div style="text-align:center;">
-    <span style="font-weight:bold">[% lang ? 'Research Data Management' : 'Forschungsdatenmanagement' %]</span><br /><br />
-    <a href="http://data.uni-bielefeld.de" target="_blank"><span class="fa fa-flask fa-5x"></i></a>
+  <div class="row">
+    <strong>[% lang ? 'Research Data Management' : 'Forschungsdatenmanagement' %]</strong><br>
+    <a href="http://data.uni-bielefeld.de" target="_blank" class="btn btn-info"><span class="fa fa-flask fa-5x"></span></a>
   </div>
 
-  <div><hr /></div>
+  <hr>
 
-  <div style="text-align:center;width:100%;">
+  <div class="row">
     <strong>Support [% lang ? 'Publication Services' : 'Publikationsdienste' %]</strong><br />
     Susanne Riedel<br />
     [% lang ? 'Phone:' : 'Tel.:' %] 0521/106-4058<br />
     <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;">&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;<br/>&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>
   </div>
+</div>
+
 <!-- END websites/logo_contact.tt -->
+

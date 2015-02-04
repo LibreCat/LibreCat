@@ -1,12 +1,13 @@
-<!-- BEGIN tab_confletter -->
+
+<!-- BEGIN frontdoor/tab_confletter.tt -->
 	
 <div class="tab-pane" id="confletter">
-  <div class="frontdoor">
+  <div class="row">
     [% IF confLetter.size %]
-      <div class="frontdoor_left">
+      <div class="col-md-2">
         Confirmation
       </div>
-      <div class="frontdoor_right">
+      <div class="col-md-10">
         [% FOREACH conf IN confLetter %]
           <a href="[% h.shost %]/download/[% oId %]/[% conf.file.fileOId %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF conf.file.description %]<i>Description:</i><br />[% conf.file.description %]<br /><br />[% END %]<i>Filename:</i><br />[% conf.file.fileName %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />Letter of Confirmation</a><br />
           <script>
@@ -14,9 +15,8 @@
           </script>
         [% END %]
       </div>
-      <div>&nbsp;</div>
     [% END %]
   </div><!-- frontdoor -->
 </div><!-- tab-pane relMat -->
 
-<!-- ENd tab_confletter -->
+<!-- ENd frontdoor/tab_confletter.tt -->

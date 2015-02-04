@@ -1,13 +1,14 @@
-<!-- BEGIN tab_relmat -->
+
+<!-- BEGIN frontdoor/tab_relmat.tt -->
 	
 <div class="tab-pane" id="relMat">
-  <div class="frontdoor">
+  <div class="row">
     
     [% IF relToc.size %]
-      <div class="frontdoor_left">
+      <div class="col-md-2">
         Table of Contents
       </div>
-      <div class="frontdoor_right">
+      <div class="col-md-10">
         [% FOREACH file IN relToc %]
           <a href="[% h.shost %]/download/[% oId %]/[% file.file.fileOId %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF file.file.description %]<i>Description:</i><br />[% file.file.description %]<br /><br />[% END %]<i>Filename:</i><br />[% file.file.fileName %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% file.file.fileTitle ? file.file.fileTitle : file.file.fileName %]</a><br />
           <script>
@@ -19,10 +20,10 @@
     [% END %]
     
     [% IF relFile.size %]
-      <div class="frontdoor_left">
+      <div class="col-md-2">
         File
       </div>
-      <div class="frontdoor_right">
+      <div class="col-md-10">
         [% FOREACH file IN relFile %]
           <a href="[% h.shost %]/download/[% oId %]/[% file.file.fileOId %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF file.file.description %]<i>Description:</i><br />[% file.file.description %]<br /><br />[% END %]<i>Filename:</i><br />[% file.file.fileName %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% file.file.fileTitle ? file.file.fileTitle : file.file.fileName %]</a><br />
           <script>
@@ -34,10 +35,10 @@
     [% END %]
     
     [% IF relLink.size %]
-      <div class="frontdoor_left">
+      <div class="col-md-2">
         Link
       </div>
-      <div class="frontdoor_right">
+      <div class="col-md-10">
         [% FOREACH link IN relLink %]
           <a href="[% link.link.url %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF link.link.description %]<i>Description:</i><br />[% link.link.description %]<br /><br />[% END %]<i>Location:</i><br />[% link.link.url %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% link.link.linkTitle ? link.link.linkTitle : link.link.url %]</a><br />
           <script>
@@ -49,10 +50,10 @@
     [% END %]
     
     [% IF relMat.size %]
-      <div class="frontdoor_left">
+      <div class="col-md-2">
         Rel. Material
       </div>
-      <div class="frontdoor_right">
+      <div class="col-md-10">
         [% FOREACH rel IN relMat %]
           [% IF rel.relatesTo.mainTitle %]
             [% rel_oId = rel.relatesTo.oId %]
@@ -122,9 +123,8 @@
           [% END %]
         [% END %]
       </div>
-      <div>&nbsp;</div>
     [% END %]
   </div><!-- frontdoor -->
 </div><!-- tab-pane relMat -->
 
-<!-- END tab_relmat -->
+<!-- END frontdoor/tab_relmat.tt -->

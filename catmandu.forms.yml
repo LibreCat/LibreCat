@@ -188,7 +188,7 @@ publicationTypes:
           mandatory: 1
           label: "Publishing Year"
           label_short: "Year"
-          placeholder: "2025"
+          placeholder: "2015"
       file_upload: &file_upload
         tab_name: "File Upload"
         dropzone_mainDoc:
@@ -370,7 +370,7 @@ publicationTypes:
         department: *department
         project: *project
         year: *year
-        conference.divider:
+        conference.divider: &conference_divider
           label: "Conference Details"
         conference.name: &conference_name
           label: "Conference Name"
@@ -395,13 +395,17 @@ publicationTypes:
         extern: *extern
         alternative_title: *alternative_title
         publication_status: *publication_status
-        page_range: *page_range
+        volume_issue_page: &volume_issue_page
+          label: "Vol./Issue/Page"
+          placeholder_volume: ""
+          label_volume: "Volume"
+          placeholder_issue: ""
+          label_issue: "Issue"
+          placeholder_page: "12 - 20"
+          label_page: "Page"
         publisher: *publisher
         place: *place
         publication: *publication_series
-        volume: *volume
-        issue: &issue
-          label: "Issue"
         quality_controlled: &quality_controlled
           label: "Quality Controlled"
         message: *message
@@ -445,7 +449,8 @@ publicationTypes:
         publisher: *publisher
         place: *place
         volume: *volume
-        issue: *issue
+        issue: &issue
+          label: "Issue"
         quality_controlled: *quality_controlled
         ubi_funded: *ubi_funded
         message: *message
@@ -485,11 +490,9 @@ publicationTypes:
         extern: *extern
         alternative_title: *alternative_title
         publication_status: *publication_status
-        page_range: *page_range
+        volume_issue_page: *volume_issue_page
         publisher: *publisher
         place: *place
-        volume: *volume
-        issue: *issue
         quality_controlled: *quality_controlled
         popular_science: *popular_science
         ubi_funded: *ubi_funded
@@ -605,14 +608,7 @@ publicationTypes:
         publication: &publication_jtitle
           label: "Journal Title"
           placeholder: "Nature Genetics"
-        volume_issue_page: &volume_issue_page
-          label: "Vol./Issue/Page"
-          placeholder_volume: ""
-          label_volume: "Volume"
-          placeholder_issue: ""
-          label_issue: "Issue"
-          placeholder_page: "12 - 20"
-          label_page: "Page"
+        volume_issue_page: *volume_issue_page
         abstract: *abstract
         ddc: *ddc
         keyword: *keyword
@@ -623,6 +619,10 @@ publicationTypes:
         publication_status: *publication_status
         message: *message
         ubi_funded: *ubi_funded
+        conference.divider: *conference_divider
+        conference.name: *conference_name
+        conference.location: *conference_location
+        conference.date: *conference_date
       related_material: *related_material
   journaleditor:
     label: "Journal (Editor)"
@@ -685,9 +685,7 @@ publicationTypes:
         publication_identifier: *publication_identifier
         extern: *extern
         external_id: *external_id
-        page_range: *page_range
-        volume: *volume
-        issue: *issue
+        volume_issue_page: *volume_issue_page
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -755,11 +753,9 @@ publicationTypes:
         extern: *extern
         alternative_title: *alternative_title
         publication_status: *publication_status
-        page: *page
+        volume_issue_page: *volume_issue_page
         publication: *publication_series
         publication_identifier: *publication_identifier
-        volume: *volume
-        issue: *issue
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -826,12 +822,10 @@ publicationTypes:
         alternative_title: *alternative_title
         language: *language
         publication_status: *publication_status
-        page_range: *page_range
+        volume_issue_page: *volume_issue_page
         place: *place
         publication: *publication_series
         publication_identifier: *publication_identifier
-        volume: *volume
-        issue: *issue
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -1032,9 +1026,7 @@ publicationTypes:
         publication_status: *publication_status
         publication_identifer: *publication_identifier
         external_id: *external_id
-        volume: *volume
-        issue: *issue
-        page: *page
+        volume_issue_page: *volume_issue_page
         place: *place
         series_title: *series_title
         alternative_title: *alternative_title

@@ -1,7 +1,9 @@
 
 <!-- BEGIN person_profile.tt -->
 
+[% IF backend %]
 <h3>[% IF thisPerson.bis.personTitle %]<span itemprop="honorificPrefix">[% thisPerson.bis.personTitle %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span></h3>
+[% END %]
 
 [% IF thisPerson.bis.email %]
 <a href="mailto:[% thisPerson.bis.email %]" itemprop="email">[% thisPerson.bis.email.replace('@|&#64;', ' [at] ') %]</a><br>
@@ -23,10 +25,10 @@
     <div class="col-md-12 row hidden-xs">
     <form action="/myPUB/person/author_id" method="POST">
     <input type="hidden" name="_id" value="[% session.personNumber %]" />
-    [% IF !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire) %]
+    [% IF backend AND !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire OR thisPerson.alias) %]
     <div class="row col-md-12">
-      <span class="text-muted">No Author IDs set.</span>&nbsp;
-      <a href="#" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
+      <span class="text-muted">No Author IDs set.</span>
+      &nbsp;<a href="#" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
     </div>
     [% END %]
 
@@ -37,7 +39,10 @@
       <div class="col-md-6">
       [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]" target="_blank">[% thisPerson.$k %]</a>
       [% ELSE %][% thisPerson.$k %][% END %]
-      &nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a></div>
+      [% IF backend %]
+      &nbsp;&nbsp;&nbsp;<a href="#" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
+      [% END %]
+      </div>
     </div>
     [% END %]<!-- end if -->
     <div class="row authorIds_input form-group" style="display:none;">

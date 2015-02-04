@@ -1,10 +1,13 @@
+
+<!-- BEGIN frontdoor/tab_ebi_ref.tt -->
+
 <div class="tab-pane" id="ebi_references">
-<h5>[% ebiData.references.total %] References</h5>
+<h3>[% ebiData.references.total %] References</h3>
 Data provided by <a href="http://europepmc.org/">Europe PubMed Central</a>.<br /><br />
 [% refArray = ebiData.references.data %]
 [% FOREACH reference IN refArray.nsort('citedOrder') %]
-<div class="frontdoor">
-  <div class="frontdoor_right">
+<div class="row">
+  <div class="col-md-12">
   [% IF reference.id %]
   <span class="fa fa-share-square-o"></span> <a href="http://europepmc.org/abstract/MED/[% reference.id %]">[% reference.title %]</a><br />
   [% ELSE %]
@@ -20,3 +23,5 @@ Data provided by <a href="http://europepmc.org/">Europe PubMed Central</a>.<br /
 [% END %]
 
 </div>
+
+<!-- END frontdoor/tab_ebi_ref.tt -->

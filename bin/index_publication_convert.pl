@@ -89,7 +89,7 @@ my $pre_fixer = Catmandu::Fix->new(
 
         #'add_file_yearlastuploaded()',
         #'add_field_yearcreated()',
-        'add_file_access()',
+        #'add_file_access()',
         'clean_language()',
         #'add_ddc()',
         #'volume_sort()',
@@ -115,6 +115,7 @@ my $file_fixer = Catmandu::Fix->new(
         'remove_array_field("file.*.uploader")',
 
         'add_array_field("file.*.relation","main_file")',
+        'file_json()',
     ]
 );
 

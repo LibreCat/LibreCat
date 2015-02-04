@@ -1,15 +1,18 @@
-<!-- BEGIN tab toolkit -->
+
+<!-- BEGIN websites/tab_toolkit.tt -->
+
 <div class="tab-pane" id="toolkit">
-Data provided by the <a href="http://toolkit.cit-ec.uni-bielefeld.de/">Cognitive Interaction Toolkit</a>.<br /><br />
+Data provided by the <a href="http://toolkit.cit-ec.uni-bielefeld.de/">Cognitive Interaction Toolkit</a>.<br><br>
 [% FOREACH t IN toolkitData.keys %]
   [% IF t != "_id" %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">[% t %]</div> 
-    <div class="frontdoor_right">
-    [% FOREACH d IN toolkitData.$t %]<a href="[% d %]">[% d %]</a><br />[% END %]
+  <div class="row">
+    <div class="col-md-2">[% t %]</div> 
+    <div class="col-md-10">
+    [% FOREACH d IN toolkitData.$t %]<a href="[% d %]">[% d %]</a><br>[% END %]
     </div>
   </div>
   [% END %]
 [% END %]
 </div>
-<!-- END tab toolkit -->
+
+<!-- END websites/tab toolkit.tt -->
