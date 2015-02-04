@@ -1,7 +1,5 @@
-#!/usr/local/bin/perl
+#!/usr/bin/env perl
 
-use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/sbcat/lib/default /home/bup/perl5/lib/perl5);
-use lib qw(/srv/www/app-catalog/lib);
 use Catmandu::Sane;
 use Catmandu -all;
 use Getopt::Std;
@@ -13,9 +11,9 @@ our $opt_u;
 our $opt_m;
 our $opt_i;
 
-my $index_name = "backend";
+my $index_name = "pub";
 if ( $opt_m ) {
-    if ($opt_m eq "backend1" || $opt_m eq "backend2" ) {
+    if ($opt_m eq "pub1" || $opt_m eq "pub2" ) {
     	$index_name = $opt_m;
     } else {
     	die "$opt_m is not an valid option";
