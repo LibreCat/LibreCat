@@ -4,7 +4,7 @@
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
 <div class="row innerrow">
   <div class="col-md-12">
-    <h3 id="totalheading">[% total %] [% lang ? "UniBi Authors" : "UniBi Autorinnen und Autoren" %]</h3>
+    <h2 id="totalheading">[% total %] [% lang ? "UniBi Authors" : "UniBi Autorinnen und Autoren" %]</h2>
   </div>
 </div>
 
