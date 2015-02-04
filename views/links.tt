@@ -3,7 +3,7 @@
 
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
 [% IF !backend %]
-<a href="[% h.host %]/[% bag %]/[% entry._id %]" title="Show complete bibliographic and access information" target="_top">PUB</a>
+<a href="/[% bag %]/[% entry._id %]" title="Show complete bibliographic and access information" target="_top">PUB</a>
 [% END %]
 [% IF backend %]
   [% IF entry.status == "public" %]
