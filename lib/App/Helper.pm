@@ -378,7 +378,12 @@ sub search_publication {
 	my ($self, $p) = @_;
 	my $sort = $self->sort_to_sru($p->{sort});
 	my $cql = "";
-	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
+	if ($p->{q}) {
+		push @{$p->{q}}, "status<>deleted";
+		$cql = join(' AND ', @{$p->{q}});
+	} else {
+		$cql = "status<>deleted";
+	}
 
 	my $hits = publication->search(
 	    cql_query => $cql,
