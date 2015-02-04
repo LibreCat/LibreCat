@@ -64,8 +64,6 @@
 <link rel="search" href="//search.uni-bielefeld.de/" type="text/html" />
 <link href="//www.uni-bielefeld.de/Universitaet/impressum.html" rel="copyright" type="text/html" />
 <link rel="stylesheet" media="screen" href="//www.uni-bielefeld.de/css/unistandard_2009.css" />
-<link rel="stylesheet" media="screen" href="/css/frontend.css" />
-<link rel="stylesheet" media="print" href="/css/print.css" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="search" type="application/opensearchdescription+xml" href="/pub-opensearch.xml" title="PUB" />
 <script src="//www.uni-bielefeld.de/javascript/CrossPlatform.js"></script>

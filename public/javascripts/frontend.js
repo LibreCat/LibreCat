@@ -1,6 +1,5 @@
 $(function () {
 	$('a.mark').click(function(evt) {
-		alert('got here');
 		evt.preventDefault();
 		var a = $(this);
 		var marked = a.data('marked');

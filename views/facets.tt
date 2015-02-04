@@ -58,7 +58,7 @@
     [% departments = h.get_list('department') %]
     [% FOREACH dept IN departments.keys.sort %]
       [% thisdept = departments.$dept %]
-      <a href="[% h.newuri_for("$path", qp, department="$thisdept.oId") %]" class="selectme" data-index="[% loop.index %]" id="[% departments.$dept.oId %]">[% dept %]</a>
+      <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.oId %]">[% dept %]</a>
       [% IF departments.$dept.keys.size > 1 %]
       <a href="#subdepts_[% departments.$dept.oId %][% menu %]" data-toggle="collapse">
         <span class="fa fa-chevron-down"></span>
@@ -70,7 +70,7 @@
         [% NEXT IF subdept == "oId" %]
         [% thissubdept = thisdept.$subdept %]
         <span style="padding-left:20px;">
-          <a href="[% h.newuri_for("$path", qp, department="$thissubdept.oId") %]" class="selectme" data-index="[% loop.index %]" id="[% departments.$dept.$subdept.oId %]">
+          <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.oId %]">
             [% subdept %]
           </a>
         </span>
@@ -83,7 +83,7 @@
           [% NEXT IF subsubdept == "oId" %]
           [% thissubsubdept = thissubdept.$subsubdept %]
           <span style="padding-left:40px;">
-            <a href="[% h.newuri_for("$path", qp, department="$thissubsubdept.oId") %]" class="selectme" data-index="[% loop.index %]" id="[% departments.$dept.$subdept.$subsubdept.oId %]">
+            <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.$subsubdept.oId %]">
               [% subsubdept %]
             </a>
           </span>
