@@ -25,6 +25,9 @@ h3.expert {border-bottom: 1px dashed #b6c828;}
 
 /* to boldy go, where no link has gone before */
 a {font-weight:bold;}
+/* unbold some links */
+a small {font-weight:normal;}
+.normal, .normal a {font-weight:normal!important;}
 
 /*Some margin for row'ed paragraphs*/
 .row>p{margin-top:10px;}
@@ -32,23 +35,38 @@ a {font-weight:bold;}
 /* dont display this */
 .ltIEten {display: none;}
 
-/* some top margins, if needed */
-.margin-top0 { margin-top:0; }
-.margin-top1 { margin-top:20px; }
-.margin-top2 { margin-top:40px; }
-.margin-top3 { margin-top:60px; }
+/* some margins, if needed */
+.margin-top0 {margin-top:0!important;}
+.margin-top1 {margin-top:20px!important;}
+.margin-top2 {margin-top:40px!important;}
+.margin-top3 {margin-top:60px!important;}
+.margin-bottom0 {margin-bottom:0!important;}
+.margin-bottom1 {margin-bottom:20px!important;}
+.margin-bottom2 {margin-bottom:40px!important;}
+.margin-bottom3 {margin-bottom:60px!important;}
 
-/* some top paddings, if needed */
-.padding-top0 { padding-top:0; }
-.padding-top1 { padding-top:20px; }
-.padding-top2 { padding-top:40px; }
-.padding-top3 { padding-top:60px; }
+/* some paddings, if needed */
+.padding-top0 {padding-top:0!important;}
+.padding-top1 {padding-top:20px!important;}
+.padding-top2 {padding-top:40px!important;}
+.padding-top3 {padding-top:60px!important;}
+.padding-bottom0 {padding-bottom:0!important;}
+.padding-bottom1 {padding-bottom:20px!important;}
+.padding-bottom2 {padding-bottom:40px!important;}
+.padding-bottom3 {padding-bottom:60px!important;}
 
-.statalign {
-display: inline-block;
-min-width: 80px;
-text-align: right;
-}
+/* no border */
+.noborder {border:0;}
+
+/* image */
+.img-thumbnail {margin:0 5px 2px 0;}
+
+/* buttons */
+.btn-white {background-image:none;background-color:#fff;border-color:#ccc!important;}
+.btn-link {font-weight:bold;}
+
+/* Anzahl Publikationen auf Startseite */
+.statalign {display: inline-block;min-width: 80px;text-align: right;}
 
 .citation-block-link{
 position:absolute;
@@ -303,18 +321,6 @@ border-bottom: 1px solid lightgray;min-height:200px;padding-bottom:5px;
 padding-left: 18px;padding-right:18px;
 }
 
-div.frontdoor_left {
-min-width: 15%;
-max-width: 15%;
-float: left;
-color: #999;
-}
-div.frontdoor_right {
-min-width: 85%;
-max-width: 85%;
-float: left;
-}
-
 .placeholder{
 color:#aaa !important;
 }
@@ -496,6 +502,11 @@ background-color:#ffcfce;
 .checkbox-inline input[type='checkbox'] {
 margin-top: 0;
 }
+
+/* width */
+
+.fw {width:1.4em;}
+
 
 /**
 End modifications for PUB
