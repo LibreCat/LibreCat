@@ -1,7 +1,5 @@
+
 <!-- BEGIN websites/login_box.tt -->
-<div>
- <!-- <a href="[% h.shost %]/login" class="btn btn-sm btn-block pubbutton" style="font-size:105%;">
- <span class="fa fa-sign-in"></span>&nbsp;&nbsp;&nbsp;[% lang ? "Login to PUB" : "PUB Login" %] -->
 
 <div class="btn-group">
   <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -31,7 +29,4 @@
   </div>
 </div>
 
-</div>
-
-<div>&nbsp;</div>
 <!-- END websites/login_box.tt -->

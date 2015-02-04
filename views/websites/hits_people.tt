@@ -3,64 +3,71 @@
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
 <div class="col-xs-9">
 
-<div class="row" style="padding-left:13px;">
-  <div class="col-md-12">
-    <h5>[% total %] [% lang ? "UniBi Authors" : "UniBi Autorinnen und Autoren" %]</h5>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>[% total %] [% lang ? "UniBi Authors" : "UniBi Autorinnen und Autoren" %]</h3>
+    </div>
   </div>
-</div>
 
-<div class="row" style="padding-left:13px;">
-  <div class="col-xs-7">
-    <form action="/authorlist" method="get" class="form-inline">
-      [% FOREACH key IN qp.keys %]
-        [% NEXT IF key == "q" %]
-        [% IF qp.$key.0 %]
-          [% FOREACH val in qp.$key %]
-            <input type="hidden" name="[% key %]" value="[% val %]" />
-          [% END %]
-        [% ELSE %]
-          <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
-        [% END %]
-      [% END %]
-      <div class="input-group">
-        <input type="text" name="q" id="q_id" value="[% qp.q | replace('"', '&quot;') %]" class="form-control input-sm" placeholder="[% lang ? "Search" : "Suche" %]" />
-        <span class="input-group-btn">
-          <button type="submit" class="btn btn-sm btn-default">[% lang ? "Go!" : "Los!" %]</button>
-        </span>
-      </div>
-      [% IF qp.keys.0 %]
-        [% IF qp.q %]
-          <p class="muted"><a href="[% h.newuri_for("$data", qp, q="") %]" rel="nofollow"><span class="fa fa-times"></span></a> [% lang ? 'Search' : 'Suche' %]: [% qp.q %]</p>
-        [% END %]
-      [% END %]
-    </form>
+  <div class="row">
+    <div class="col-md-12">
+      <form action="/authorlist" method="get" class="form-inline">
+	[% FOREACH key IN qp.keys %]
+	  [% NEXT IF key == "q" %]
+	  [% IF qp.$key.0 %]
+	    [% FOREACH val in qp.$key %]
+	      <input type="hidden" name="[% key %]" value="[% val %]" />
+	    [% END %]
+	  [% ELSE %]
+	    <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
+	  [% END %]
+	[% END %]
+	<div class="input-group input-group-lg">
+	  <input type="text" name="q" id="q_id" value="[% qp.q | replace('"', '&quot;') %]" class="form-control" placeholder="[% lang ? "Search" : "Suche" %]" />
+	  <span class="input-group-btn">
+	    <button type="submit" class="btn btn-default">[% lang ? "Go!" : "Los!" %]</button>
+	  </span>
+	</div>
+	[% IF qp.keys.0 %]
+	  [% IF qp.q %]
+	    <p class="muted"><a href="[% h.newuri_for("$data", qp, q="") %]" rel="nofollow"><span class="fa fa-times"></span></a> [% lang ? 'Search' : 'Suche' %]: [% qp.q %]</p>
+	  [% END %]
+	[% END %]
+      </form>
+    </div>
   </div>
-</div>
 
-<div class="row" style="padding-left:13px;">
-  [% INCLUDE pagination.tt %]
-</div>
-
-[% IF error %]
-<div class="row" style="padding-left:13px;">
-  <div class="col-md-10">
-    <div  class="alert alert-danger"><strong>[% error %]</strong></div>
-  </div>
-</div>
-[% END %]
-
-<div class="row" style="padding-left:13px;">
-  <div class="col-md-12" style="margin-right:20px;">
-  [% FOREACH person IN hits %]
-   <a href="/person/[% person._id %]">[% person.full_name %][% IF person.bis_personTitle %], [% person.bis_personTitle %][% END %] ([% person.publication_hits %] publications[% IF person.research_hits %], [% person.research_hits %] data publications[% END %])</a><br />
-   <div style="margin-left:10px;">
-     [% FOREACH affil IN person.department %]
-       <span class="text-muted">[% affil.name %]</span>[% IF !loop.last %], [% END %]
-     [% END %]
-   </div>
+  [% IF next_page or previous_page %]
+  <div class="row">
+    [% INCLUDE pagination.tt %]
+  [% ELSE %]
+  <div class="row margin-top1">
   [% END %]
   </div>
-</div>
+
+  [% IF error %]
+  <div class="row">
+    <div class="col-md-10">
+      <div  class="alert alert-danger"><strong>[% error %]</strong></div>
+    </div>
+  </div>
+  [% END %]
+
+  <div class="row">
+    <div class="col-md-12">
+    <dl>
+    [% FOREACH person IN hits %]
+    <dt><a href="/person/[% person._id %]">[% person.full_name %][% IF person.bis_personTitle %], [% person.bis_personTitle %][% END %] ([% person.publication_hits %] publications[% IF person.research_hits %], [% person.research_hits %] data publications[% END %])</a></dt>
+    <dd>
+      [% FOREACH affil IN person.department %]
+	<span class="text-muted">[% affil.name %]</span>[% IF !loop.last %], [% END %]
+      [% END %]
+    </dd>
+    </dt>
+    [% END %]
+    </dl>
+    </div>
+  </div>
 
 </div>
 

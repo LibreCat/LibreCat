@@ -1,19 +1,19 @@
 <!-- BEGIN oa_lock.tt -->
 [% SWITCH fi.access_level %]
 [% CASE "openAccess" %]
-<img src="/images/access_open.png" class="description" data-html="true" data-placement="bottom" rel="tooltip" title="Open access file" />
+<img src="/images/access_open.png" class="description" data-html="true" data-placement="bottom" rel="tooltip" title="Open access file" alt="OA">
 <script>
   $('img.description').tooltip();
 </script>
 
 [% CASE "unibi" %]
-<img src="/images/access_restricted.png" class="description" data-html="true" data-placement="bottom" rel="tooltip" title="Accessible from UniBi campus (or via VPN)" />
+<img src="/images/access_restricted.png" class="description" data-html="true" data-placement="bottom" rel="tooltip" title="Accessible from UniBi campus (or via VPN)" alt="Campus/VPN">
 <script>
   $('img.description').tooltip();
 </script>
 
 [% CASE "admin" %]
-<img src="/images/access_restricted.png" class="description" data-html="true" data-placement="bottom" rel="tooltip" title="Restricted access for author/reviewer only." />
+<img src="/images/access_restricted.png" class="description" data-html="true" data-placement="bottom" rel="tooltip" title="Restricted access for author/reviewer only." alt="Restricted">
 <script>
   $('img.description').tooltip();
 </script>

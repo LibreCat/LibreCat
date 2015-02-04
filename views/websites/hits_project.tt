@@ -3,13 +3,11 @@
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
 
 <div class="col-md-9">
-<div class="row" style="padding-left:13px;">
-  <div class="col-md-9">
-    <h5>[% total %] [% lang ? "Projects" : "Projekte" %]</h5>
-  </div>
-</div>
+  <div class="row">
+      <h3>[% total %] [% lang ? "Projects" : "Projekte" %]</h3>
+   </div>
 
-<div class="row" style="padding-left:13px;">
+<div class="row">
   <div class="col-md-7">
     <form action="/project" method="get" class="form-inline">
       [% FOREACH key IN qp.keys %]
@@ -35,11 +33,11 @@
   </div>
 </div>
 
-<div class="row" style="padding-left:13px;">
+<div class="row">
   [% INCLUDE pagination.tt %]
 </div>
 
-<div class="row" style="padding-left:13px;">
+<div class="row">
   <div class="col-md-12" style="margin-right:20px;">
   [% FOREACH project IN hits %]
     <a href="/project/[% project.projectId %]">[% project.name %][% IF project.acronym %] ([% project.acronym %])[% END %]</a><br />
@@ -181,8 +179,6 @@
         </div>
       </li>
   </ul>
-
-  <div>&nbsp;</div>
 
   [% INCLUDE websites/rightBoxTwitter.tt %]
 </div>

@@ -1,13 +1,95 @@
 <!-- BEGIN websites/header_content.tt -->
 
-</head>
+  </head>
+  <body ng-controller="angularSearch" itemscope itemtype="http://schema.org/WebPage">
 
-<body ng-controller="angularSearch" itemscope itemtype="http://schema.org/WebPage">
+[% thisPerson = h.getPerson(session.personNumber) %]
 
-<script type="text/javascript">
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      	  <span class="sr-only">Toggle navigation</span>
+      	  <span class="icon-bar"></span>
+      	  <span class="icon-bar"></span>
+      	  <span class="icon-bar"></span>
+      	</button>
+      	<a class="navbar-brand" href="/"><img src="/images/PUB_UNIBI_logo_gruen.gif" height="30" alt=""></a>
+     </div>
 
-</script>
+     <!-- Collect the nav links, forms, and other content for toggling -->
+     <div class="collapse navbar-collapse navbar-ex1-collapse">
+       <ul class="nav navbar-nav">
+         <li><a href="/"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm"> Home</span></a></li>
+         [% IF session AND session.user %]
+         <li class="hidden-lg hidden-md hidden-sm"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
+         <li><a href="/person/[% session.personNumber %]"><span class="fa fa-list-alt"></span><span class="hidden-sm"> My Public Author Page</span></a></li>
+         [% IF session.role == "super_admin" %]
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="glyphicon glyphicon-chevron-down"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/myPUB/admin/account">Accounts</a></li>
+            <!--<li><a href="/myPUB/admin/import">Import</a></li>-->
+            <li><a href="/myPUB/admin/project">Projects</a></li>
+            <li><a href="/myPUB/admin/journal">Journals</a></li>
+          </ul>
+         </li>
+         [% END %]
+         [% END %]
+       </ul>
+       <ul class="nav navbar-nav navbar-right">
+         [% IF session AND session.user %]
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><span class="hidden-sm"> My Settings </span><span class="glyphicon glyphicon-chevron-down"></span></a>
+            <div class="dropdown-menu" style="width: 550px">
+            [% INCLUDE person_affiliation.tt %]
+            </div>
+         </li>
+         <li><a><span class="glyphicon glyphicon-user"></span> <em>[% session.user %]</em></a></li>
 
-[% INCLUDE websites/header_topnav.tt %]
+         [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% session.role %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/myPUB/change_role/user">User</a></li>
+            [% IF thisPerson.delegate %]
+            <li><a href="/myPUB/change_role/delegate">Delegate</a></li>
+            [% END %]
+            [% IF thisPerson.reviewer %]
+            <li><a href="/myPUB/change_role/reviewer">Reviewer</a></li>
+            [% END %]
+            [% IF thisPerson.data_manager %]
+            <li><a href="/myPUB/change_role/data_manager">Data Manager</a></li>
+            [% END %]
+            [% IF thisPerson.super_admin %]
+            <li><a href="/myPUB/change_role/admin">Admin</a></li>
+            [% END %]
+          </ul>
+         </li>
+         [% END %]
+         <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm"> Logout</span></a></li>
+         [% ELSE %]
+         <li class="hidden-sm"><a href="/login"><span class="glyphicon glyphicon-log-in"></span><span class="hidden-sm"> Login</span></a></li>
+         [% END %]
+       </ul>
+     </div><!-- /.navbar-collapse -->
+   </nav>
+
+  <div class="modal" id="selectAFF">
+    <div class="modal-dialog">
+      <div class="modal-content">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	  <h4 class="modal-title"></h4>
+	  <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
+	</div>
+	<div class="modal-body">
+	</div>
+      </div>
+    </div>
+  </div>
+
+  </header>
+
+  <main>
+
+  <div class="container">
 
 <!-- END websites/header_content.tt -->
