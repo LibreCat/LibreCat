@@ -14,7 +14,7 @@
     [% END %]
     </h3>
     </div>
-    [% IF !backend AND request.path != "/marked" %]
+    [% IF !backend AND request.path != "/marked" AND total > 0 %]
     <div class="pull-right">
       <span class="btn btn-default"><a class="mark-all" href="#">Mark all</a></span>
     </div>
