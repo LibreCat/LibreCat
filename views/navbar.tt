@@ -66,13 +66,13 @@
       	  <span class="icon-bar"></span>
       	  <span class="icon-bar"></span>
       	</button>
-      	<a class="navbar-brand" href="#"><img src="/images/PUB_UNIBI_logo_gruen.gif" height="30" alt="" /></a>
+      	<a class="navbar-brand" href="/"><img src="/images/PUB_UNIBI_logo_gruen.gif" height="30" alt="" /></a>
      </div>
 
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
        <ul class="nav navbar-nav">
-         <li><a href="/myPUB"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm"> Home</span></a></li>
+         <li><a href="/[% IF session.user %]myPUB[% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm"> Home</span></a></li>
          [% IF session AND session.user %]
          <li class="hidden-lg hidden-md hidden-sm"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
          <li><a href="/person/[% session.personNumber %]"><span class="fa fa-list-alt"></span><span class="hidden-sm"> My Public Author Page</span></a></li>
@@ -91,11 +91,11 @@
        <ul class="nav navbar-nav navbar-right">
          [% IF session AND session.user %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><span class="hidden-sm"> My Settings </span><span class="glyphicon glyphicon-chevron-down"></span></a>
-            <div class="dropdown-menu" style="width: 550px">
-            [% INCLUDE person_affiliation.tt %]
+            <div class="dropdown-menu" style="width:550px">
+	      [% INCLUDE person_affiliation.tt %]
             </div>
          </li>
-         <li><a><span class="glyphicon glyphicon-user"></span> <em>[% session.user %]</em></a></li>
+         <li><a href="#"><span class="glyphicon glyphicon-user"></span> <em>[% session.user %]</em></a></li>
 
          [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% session.role %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
@@ -129,7 +129,7 @@
       <div class="modal-content">
 	<div class="modal-header">
 	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	  <h4 class="modal-title"></h4>
+	  <h4 class="modal-title">Title</h4>
 	  <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
 	</div>
 	<div class="modal-body">
