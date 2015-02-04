@@ -1,3 +1,6 @@
+
+      <!-- BEGIN publication_types.tt -->
+
       <div class="col-md-5">
         [% FOREACH heading IN h.config.forms.publicationTypeOrder.left.keys %]
           <strong>[% heading %]</strong><br />
@@ -17,3 +20,6 @@
           <br /><br />
         [% END %]
       </div>
+
+      <!-- END publication_types.tt -->
+

@@ -1,4 +1,5 @@
-<!-- BEGIN websites/hits_people.tt -->
+
+<!-- BEGIN hits_people.tt -->
 
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
 <div class="row innerrow">
@@ -24,4 +25,4 @@
   </div>
 </div>
 
-<!-- END websites/hits_people.tt -->
+<!-- END hits_people.tt -->

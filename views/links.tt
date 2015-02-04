@@ -1,4 +1,6 @@
-<!-- BEGIN links. tt -->
+
+<!-- BEGIN links.tt -->
+
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
 [% IF !backend %]
 <a href="[% h.host %]/[% bag %]/[% entry._id %]" title="Show complete bibliographic and access information" target="_top">PUB</a>
@@ -46,7 +48,7 @@
   [% IF entry.external_id.phillister %] | <a href="http://phillister.ub.uni-bielefeld.de/publication/[% entry.external_id.phillister.id %]" target="_top">PhilLister</a>[% END %]
   [% IF entry.external_id.arxiv %] | <a href="http://arxiv.org/abs/[% entry.external_id.arxiv %]" target="_top">arXiv</a>[% END %]
   [% IF entry.external_id.inspire %] | <a href="http://inspirebeta.net/record/[% entry.external_id.inspire %]" target="_top">Inspire</a>[% END %]
-  [% IF entry.external_id.ahf %] | <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&T=HB&ID=[% entry.external_id.ahf %]" target="_top">AHF</a>[% END %]
+  [% IF entry.external_id.ahf %] | <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% entry.external_id.ahf %]" target="_top">AHF</a>[% END %]
 
   [% IF qp.timescited && entry.metrics.timesCited %]
 	| <a href="[% entry.metrics.citingURL %]" target="_parent">WOS&reg; Times Cited: [% entry.metrics.timesCited %]</a>
@@ -66,4 +68,5 @@
 	[% END %]
   [% END %]
 -->
-<!-- END links. tt -->
+
+<!-- END links.tt -->

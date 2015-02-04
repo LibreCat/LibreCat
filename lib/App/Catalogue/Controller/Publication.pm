@@ -32,8 +32,6 @@ sub update_publication {
     croak "Error: No _id specified" unless $data->{_id};
     #my $validator = Catmandu::Validator::PUB->new();
 
-    my $json = new JSON;
-
     $data = delete_empty_fields($data);
     $data = correct_publid($data);
     $data = correct_hash_array($data);
@@ -79,10 +77,12 @@ sub update_publication {
     
     # citations
     use Citation;
-    my $response = Citation::id2citation($data);
-    my $citbag = Catmandu->store('citation')->bag;
+    my $response = $data->{citation} = Citation::index_citation_update($data,0,'');
+    #my $citbag = Catmandu->store('citation')->bag;
     my $publbag = Catmandu->store->bag('publication');
-    $data->{citation} = $citbag->get($data->{_id}) if $data->{_id};
+    my $backup = Catmandu->store->bag('publication');
+    
+    $data->{citation} = $response if $response;
 
     my $pre_fixer = Catmandu::Fix->new(
     fixes => [

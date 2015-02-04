@@ -3,171 +3,180 @@
 [% qp.delete('splat') %]
 [% backend = path.match('myPUB') ? 1 : 0 %]
 [% thisPerson = backend ? h.getPerson(session.personNumber) : h.getPerson(id) %]
+[% menu = "" %]
 
 [% INCLUDE navbar.tt %]
 <script src="/javascripts/frontend.js"></script>
-<!-- BEGIN admin.tt -->
 
-<div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->
-  <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->
+<!-- BEGIN home.tt -->
+
+<div class="row" itemscope itemtype="http://schema.org/Person"><!-- outer border -->
+
+  <div class="col-md-10 col-sm-12 col-md-offset-1"> <!-- main content (left) -->
+
+    <div class="page-header" id="banner">
+      <h1>
+        [% IF backend AND session.role == 'super_admin' %]Administration[%END %]
+        [% IF session.role == 'user' OR !backend %]Public Author Page[%END %]
+        [% IF backend AND (session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer")) %]Reviewer's Page[%END %]
+        [% IF backend AND session.role == "delegate" %]Delegate's Page[%END %]
+      </h1>
+    </div>
 
     <div class="row">
-      <div class="col-md-2 hidden-xs">
+      <div class="col-md-2 col-sm-3 hidden-xs">
         [% IF thisPerson.bis.photo %]
         <object data="[% thisPerson.bis.photo %]" class="img-thumbnail" style="max-width:140px;" itemprop="image">
-          <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail">
+          <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail" alt="">
         </object>
         [% ELSE %]
-        <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail">
+        <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail" alt="">
         [% END %]
       </div>
 
-      <div class="col-md-5">
+      <div class="col-md-6 col-sm-6 col-xs-12">
         [% INCLUDE person_profile.tt %]
       </div>
 
-      <div class="col-md-3 hidden-xs hidden-sm" style="margin-left:20px;margin-top:10px;">
+      <div class="col-md-3 col-md-offset-1 col-sm-3 col-xs-12">
         [% IF backend %]
           [% INCLUDE add_new_button.tt %]
           <div class="row">
-            <div class="col-md-10">
-              <br />
               <p class="text-center"><strong>OR</strong></p>
-            </div>
           </div>
           [% INCLUDE person_dropzone.tt %]
         [% ELSE %]
           [% INCLUDE rightBoxLogin.tt %]
         [% END %]
       </div>
-      <div class="col-xs-3 hidden-md hidden-lg dropdown">
-        <button class="btn btn-default dropdown-toggle fixed sidebar-expand-button navbar-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"><span class="fa fa-list fa-2x"></span></button>
-        <ul class="dropdown-menu fixed sidebar-expand-button rightMenu" role="menu" aria-labelledby="dropdownMenu1">
-          <li>
-            <ul class="scroll-menu">
-              <li role="presentation">[% INCLUDE person_dropzone.tt %]</li>
-              <li role="presentation">[% INCLUDE facets.tt %]</li>
-            </ul>
-          </li>
-        </ul>
+
+    </div>
+
+    [% IF total != 0 OR researchhits.total != 0 %]
+
+    <div class="row"> <!-- row span11 publications, projects, departments -->
+      <div class="col-md-12">
+	<ul class="nav nav-tabs">
+	[% IF backend AND session.role == 'super_admin' %]
+	  <li[% IF backend AND modus == "admin" %] class="active"[% END %]><a href="/myPUB/search/admin">All Publications</a></li>
+	[% END %]
+	[% IF session.role == 'user' OR !backend %]
+	  <li[% IF modus == "user" %] class="active"[% END %]><a href="[% IF backend %]/myPUB/search[% ELSE %]/person/[% id %][% END %]">Publications</a></li>
+	  [% IF researchhits AND researchhits.total != 0 %]
+	    <li[% IF modus == "data" %] class="active"[% END %]><a href="[% IF backend %]/myPUB/search/data[% ELSE %]/person/[% id %]/data[% END %]">Data Publications</a></li>
+	  [% END %]
+	[% END %]
+	[% IF backend AND (session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer")) %]
+	  <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/search/reviewer">Publications for Review</a></li>
+	[% END %]
+	[% IF backend AND (session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager")) %]
+	  <li[% IF modus == "data_manager" OR session.role == "data_manager" %] class="active"[% END %]><a href="/myPUB/search/data_manager">Data Publications for Review</a></li>
+	[% END %]
+	[% IF backend AND session.role == "delegate" %]
+	  [% FOREACH delegate_id IN thisPerson.delegate %]
+	  <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. [% lang ? "by" : "von" %] [% h.getPerson(delegate_id).last_name %]</a></li>
+	  [% END %]
+	[% END %]
+	</ul>
       </div>
     </div>
 
-    <div class="row"> <!-- empty row span8 -->
-      <div class="col-md-11">&nbsp;</div>
-    </div> <!-- empty row span8 -->
-
-    [% IF total != 0 OR researchhits.total != 0 %]
-    <div class="row"> <!-- row span11 publications, projects, departments -->
-      <div class="col-md-10">
-        <ul class="nav nav-tabs">
-        [% IF backend AND session.role == 'super_admin' %]
-          <li[% IF backend AND modus == "admin" %] class="active"[% END %]><a href="/myPUB/search/admin">All Publications</a></li>
-        [% END %]
-        [% IF session.role == 'user' OR !backend %]
-          <li[% IF modus == "user" %] class="active"[% END %]><a href="[% IF backend %]/myPUB/search[% ELSE %]/person/[% id %][% END %]">Publications</a></li>
-          [% IF researchhits AND researchhits.total != 0 %]
-            <li[% IF modus == "data" %] class="active"[% END %]><a href="[% IF backend %]/myPUB/search/data[% ELSE %]/person/[% id %]/data[% END %]">Data Publications</a></li>
-          [% END %]
-        [% END %]
-        [% IF backend AND (session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer")) %]
-          <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/search/reviewer">Publications for Review</a></li>
-        [% END %]
-        [% IF backend AND (session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager")) %]
-          <li[% IF modus == "data_manager" OR session.role == "data_manager" %] class="active"[% END %]><a href="/myPUB/search/data_manager">Data Publications for Review</a></li>
-        [% END %]
-        [% IF backend AND session.role == "delegate" %]
-          [% FOREACH delegate_id IN thisPerson.delegate %]
-          <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. [% lang ? "by" : "von" %] [% h.getPerson(delegate_id).last_name %]</a></li>
-          [% END %]
-        [% END %]
-        </ul>
+    <div class="row hidden-md hidden-lg hidden-sm">
+      <div class="col-xs-6 pull-right">
+	<button class="btn btn-default dropdown-toggle fixed sidebar-expand-button navbar-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"><span class="fa fa-list fa-2x"></span></button>
+	<ul class="dropdown-menu scrollable-menu fixed sidebar-expand-button" role="menu" aria-labelledby="dropdownMenu1">
+	  [% menu = "_side" %]
+	  <li>[% INCLUDE facets.tt %]</li>
+	  [% menu = "" %]
+	</ul>
       </div>
+    </div>
 
-      <div class="col-md-11">
-        <div class="tab-content">
-          [% IF backend AND session.role == 'super_admin' %]
-          <div class="tab-pane[% IF modus == 'admin' %] active[% END %]" id="adminPubl">
-            <div class="col-md-8">
-              [% tabmodus = 'admin' %]
-              [% INCLUDE hits.tt %]
-            </div>
-            <div class="col-md-3 hidden-xs hidden-sm">
-              [% INCLUDE facets.tt %]
-            </div>
-            <aside class="side col-md-3 left responsive-side hidden-md hidden-lg">test</aside>
-          </div>
-          [% END %]
-          [% IF !backend OR session.role == 'user' %]
-          <div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ">
-            <div class="col-md-8">
-              [% tabmodus = 'user' %]
-              [% INCLUDE hits.tt %]
-            </div>
-            <div class="col-md-3">
-              [% INCLUDE facets.tt %]
-            </div>
-          </div>
-          <div class="tab-pane[% IF modus == 'data' %] active[% END %]" id="publ">
-            <div class="col-md-8">
-              [% tabmodus = 'data' %]
-              [% INCLUDE hits.tt %]
-            </div>
-            <div class="col-md-3">
-              [% INCLUDE facets.tt %]
-            </div>
-          </div>
-          [% END %]
-          [% IF backend AND (session.role == "reviewer" OR (session.role == "super_admin" AND modus == "reviewer")) %]
-          <div class="tab-pane[% IF modus == 'reviewer' %] active[%END %]" id="review">
-            <div class="col-md-8">
-              [% tabmodus = 'reviewer' %]
-              [% INCLUDE hits.tt %]
-            </div>
-            <div class="col-md-3">
-              [% INCLUDE facets.tt %]
-            </div>
-          </div>
-          [% END %]
-          [% IF backend AND (session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager")) %]
-          <div class="tab-pane[% IF session.role == 'data_manager' %] active[%END %]" id="data">
-            <div class="col-md-8">
-              [% tabmodus = 'data_manager' %]
-              [% INCLUDE hits.tt %]
-            </div>
-            <div class="col-md-3">
-              [% INCLUDE facets.tt %]
-            </div>
-          </div>
-          [% END %]
-          [% IF backend AND session.role == "delegate" %]
-          [% FOREACH delegate_id IN thisPerson.delegate %]
-          <div class="tab-pane[% IF modus.match(delegate_id) %] active[%END %]" id="delegate_[% delegate_id %]">
-            <div class="col-md-8">
-              [% USE String; tabmodus = String.new('delegate_'); tabmodus = tabmodus.append(delegate_id).text %]
-              [% delegate_name = h.getPerson(delegate_id).last_name %]
-              [% INCLUDE hits.tt %]
-            </div>
-            <div class="col-md-3">
-              [% INCLUDE facets.tt %]
-            </div>
-          </div>
-          [% END %]
-          [% END %]
-        </div>
-        <script>
-        $('#myTab a').click(function (e) {
-          e.preventDefault();
-          $(this).tab('show');
-        })
-        </script>
-        [% END %]
+    <div class="row">
+      <div class="tab-content">
+	[% IF backend AND session.role == 'super_admin' %]
+	<div class="tab-pane[% IF modus == 'admin' %] active[% END %]" id="publ-admin">
+	  <div class="col-sm-8">
+	    [% tabmodus = 'admin' %]
+	    [% INCLUDE hits.tt %]
+	  </div>
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	    [% INCLUDE facets.tt %]
+	  </div>
+	</div>
+	[% END %]
+	[% IF !backend OR session.role == 'user' %]
+	<div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ-user">
+	  <div class="col-sm-8">
+	    [% tabmodus = 'user' %]
+	    [% INCLUDE hits.tt %]
+	  </div>
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	    [% INCLUDE facets.tt %]
+	  </div>
+	</div>
+	<div class="tab-pane[% IF modus == 'data' %] active[% END %]" id="publ-data">
+	  <div class="col-sm-8">
+	    [% tabmodus = 'data' %]
+	    [% INCLUDE hits.tt %]
+	  </div>
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	    [% INCLUDE facets.tt %]
+	  </div>
+	</div>
+	[% END %]
+	[% IF backend AND (session.role == "reviewer" OR (session.role == "super_admin" AND modus == "reviewer")) %]
+	<div class="tab-pane[% IF modus == 'reviewer' %] active[%END %]" id="publ-reviewer">
+	  <div class="col-sm-8">
+	    [% tabmodus = 'reviewer' %]
+	    [% INCLUDE hits.tt %]
+	  </div>
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	    [% INCLUDE facets.tt %]
+	  </div>
+	</div>
+	[% END %]
+	[% IF backend AND (session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager")) %]
+	<div class="tab-pane[% IF session.role == 'data_manager' %] active[%END %]" id="publ-datamanager">
+	  <div class="col-sm-8">
+	    [% tabmodus = 'data_manager' %]
+	    [% INCLUDE hits.tt %]
+	  </div>
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	    [% INCLUDE facets.tt %]
+	  </div>
+	</div>
+	[% END %]
+	[% IF backend AND session.role == "delegate" %]
+	[% FOREACH delegate_id IN thisPerson.delegate %]
+	<div class="tab-pane[% IF modus.match(delegate_id) %] active[%END %]" id="publ-delegate_[% delegate_id %]">
+	  <div class="col-sm-8">
+	    [% USE String; tabmodus = String.new('delegate_'); tabmodus = tabmodus.append(delegate_id).text %]
+	    [% delegate_name = h.getPerson(delegate_id).last_name %]
+	    [% INCLUDE hits.tt %]
+	  </div>
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	    [% INCLUDE facets.tt %]
+	  </div>
+	</div>
+	[% END %]
+	[% END %]
       </div>
-    </div> <!-- row span8 publications, projects, departments -->
-  </div> <!-- span8 main content -->
+      <script>
+      $('#myTab a').click(function (e) {
+	e.preventDefault();
+	$(this).tab('show');
+      })
+      </script>
+    [% END %]
+    </div>
+
+  </div> <!-- main content (left) -->
 
 </div><!-- row outer border -->
 
-<!-- END admin.tt -->
+<!-- END home.tt -->
+
 [% INCLUDE mark_all_js.tt %]
+
 [% INCLUDE footer.tt %]

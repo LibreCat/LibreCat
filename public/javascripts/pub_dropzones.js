@@ -101,8 +101,8 @@ $(document).ready(function(){
 	                if(!limatch){
 	                  licenses.setAttribute("class", "collapse in");
 	                }
-	                $("#licenses").find('div.alert-info').addClass('alert-danger');
-	                $("#licenses").find('div.alert-info').removeClass('alert-info');
+	                $("#licenses").find('div.alert-info.mandatory').addClass('alert-danger');
+	                $("#licenses").find('div.alert-info.mandatory').removeClass('alert-info');
 	                $("#licenses").find('input[name="accept"]').attr('checked', false);
 	              }
 	              

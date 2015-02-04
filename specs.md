@@ -129,7 +129,7 @@ file:
 		file_name: "hello.pdf"
 		file_id: 123456
 		content_type: "application/pdf"
-		access_level: "openAccess"|"unibi"|"admin"
+		access_level: "openAccess"|"local"|"admin"
 		date_updated: "2014-04-23T12:00:00"
 		date_created: "2014-04-23T12:00:00"
 		checksum: 1423534q566768tz

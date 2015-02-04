@@ -1,0 +1,132 @@
+.reset div,
+.reset dl,
+.reset dt,
+.reset dd,
+.reset ul,
+.reset ol,
+.reset li,
+.reset pre,
+.reset code,
+.reset form,
+.reset fieldset,
+.reset legend,
+.reset input,
+.reset textarea,
+.reset p,
+.reset blockquote,
+.reset th,
+.reset td{
+	margin:0;
+	padding:0;
+}
+.reset table{
+	border-collapse:collapse;
+	border-spacing:0;
+}
+.reset fieldset,
+.reset img{
+	border:0;
+}
+.reset address,
+.reset caption,
+.reset cite,
+.reset code,
+.reset dfn,
+.reset th,
+.reset var{
+	font-style:normal;
+	font-weight:normal;
+}
+.reset em{
+	font-style:italic;
+}
+.reset strong{
+	font-weight:bold;
+}
+.reset ol,
+.reset ul{
+	list-style:none;
+}
+.reset caption,
+.reset th{
+	text-align:left;
+}
+
+.reset q:before,
+.reset q:after{
+	content:'';
+}
+.reset abbr,
+.reset acronym{
+	border:0;
+	font-variant:normal;
+}
+
+.reset legend{
+	color:#000;
+}
+
+.reset sub,
+.reset sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+.reset sup {
+  top: -0.5em;
+}
+
+.reset sub {
+  bottom: -0.25em;
+}
+
+.reset h1,
+.reset h2,
+.reset h3,
+.reset h4,
+.reset h5,
+.reset h6{
+  font-family: Arial,Helvetica, sans-serif;
+  font-weight: 500;
+  line-height: 1.1;
+  border: none;
+}
+
+.reset h1,
+.reset h2,
+.reset h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.reset h4,
+.reset h5,
+.reset h6 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.reset h1 {
+  font-size: 36px;
+}
+
+.reset h2 {
+  font-size: 30px;
+}
+
+.reset h3{
+  font-size: 24px;
+}
+
+.reset h4 {
+  font-size: 18px;
+}
+
+.reset h5 {
+  font-size: 14px;
+}
+
+.reset h6 {
+  font-size: 12px;
+}

@@ -1,7 +1,8 @@
-<!-- BEGIN person/profile.tt -->
-<div class="row" id="add_new_button">
-  <div class="col-md-10">
-    <a href="/myPUB/record/new" class="btn btn-sm btn-block pubbutton" style="font-size:105%;"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;Add new Publication</a>
-  </div>
+
+<!-- BEGIN add_new_button.tt -->
+
+<div id="add_new_button">
+    <a href="/myPUB/record/new" class="btn btn-sm btn-block pubbutton"><span class="glyphicon glyphicon-plus"></span> Add new Publication</a>
 </div>
-<!-- END person/profile.tt -->
+
+<!-- END add_new_button.tt -->

@@ -1,20 +1,24 @@
 {% editmode = "normal" %}
 [% INCLUDE navbar.tt %]
 [% thisPerson = h.getPerson(session.personNumber) %]
-<!-- BEGIN /backend/forms/{% tmpl %} -->
 
-<div class="row">
+<!-- BEGIN /backend/forms/master.tt -->
 
 <div class="col-md-11 col-md-offset-1">
 
+  <div class="page-header" id="banner">
   [% IF title %]
   <div class="dropdown">
-    <h3><input style="float:right;" type="button" class="btn btn-default hidden-xs hidden-sm change_mode" value="Change to long edit form" /> [% title %] [% INCLUDE change_type_menu.tt %]
-    </h3>
+  <input type="button" class="btn btn-default change_mode hidden-xs hidden-sm pull-right" value="Change to single page form" />
+  <h1>[% title %] [% INCLUDE change_type_menu.tt %]</h1>
   </div>
   [% ELSE %]
-  <h3><input style="float:right;" type="button" class="btn btn-default change_mode hidden-xs hidden-sm" value="Change to long edit form" /> Add New {% label %}</h3>
+  <input type="button" class="btn btn-default change_mode hidden-xs hidden-sm pull-right" value="Change to single page form" />
+  <h1>Add New {% label %}</h1>
   [% END %]
+  </div>
+
+  <div class="row"></div>
 
   <ul class="nav nav-tabs" id="tabs-left">
     <li id="li_basic_fields" class="active">
@@ -42,6 +46,8 @@
     </li>
     {% END %}
   </ul>
+
+  <div class="clearfix"></div>
 
   <form action="/myPUB/record/update" method="POST" id="edit_form">
     <input type="hidden" name="type" value="{% tmpl %}" id="id_type"/>
@@ -124,8 +130,7 @@
 {% INCLUDE fields/modal_fileupload.tt %}
 {% END %}
 
-</div><!-- col-md-9 col-md-offset-1 -->
-</div><!-- row -->
+</div><!-- col-md-11 -->
 
 <script>
 {% INCLUDE fields/jquery_tab1.tt %}
@@ -134,5 +139,6 @@
 {% INCLUDE fields/jquery_tab4.tt %}
 </script>
 
-<!-- END /backend/forms/{% tmpl %} -->
+<!-- END /backend/forms/master.tt -->
+
 [% INCLUDE footer.tt %]

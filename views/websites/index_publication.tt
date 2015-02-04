@@ -14,13 +14,13 @@
 <!-- BEGIN websites/index_publication.tt -->
 
 <!--[IF !IE]> -->
-<link rel="stylesheet" href="/css/bootstrap3.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/mypub.css" />
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <!-- <![ENDIF]-->
 
 <!--[if gt IE 9]>
-<link rel="stylesheet" href="/css/bootstrap3.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/mypub.css" />
 <link rel="stylesheet" href="/css/font-awesome.min.css" />
 <![endif]-->
@@ -29,7 +29,7 @@
 <link rel="stylesheet" type="text/css" href="/css/ltIE10.css" />
 <![endif]-->
 
-<script src="/javascripts/bootstrap3.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
 [% INCLUDE websites/mathjax.tt %]
 
 <div class="row" style="padding-top:270px;min-width:970px;"><!-- outer border -->

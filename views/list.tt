@@ -1,6 +1,6 @@
 [% INCLUDE navbar.tt %]
 
-<!- BEGIN list.tt -->
+<!-- BEGIN list.tt -->
 
 <div class="row">
 	<div class="col-md-4">

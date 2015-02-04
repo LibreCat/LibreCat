@@ -1,20 +1,24 @@
 {% editmode = "expert" %}
 [% INCLUDE navbar.tt %]
 [% thisPerson = h.getPerson(session.personNumber) %]
-<!-- BEGIN /backend/forms/{% tmpl %} -->
 
-<div class="row">
+<!-- BEGIN /backend/forms/master_expert.tt -->
 
 <div class="col-md-11 col-md-offset-1">
   
+  <div class="page-header" id="banner">
   [% IF title %]
   <div class="dropdown">
-    <h3><input style="float:right;" type="button" class="btn btn-default hidden-xs hidden-sm change_mode" value="Change to normal edit form" /> [% title %] [% INCLUDE change_type_menu.tt %]
-    </h3>
+  <input type="button" class="btn btn-default hidden-xs hidden-sm change_mode pull-right" value="Change to tabbed form" /> 
+  <h1>[% title %] [% INCLUDE change_type_menu.tt %]</h1>
   </div>
   [% ELSE %]
-  <h3><input style="float:right;" type="button" class="btn btn-default hidden-xs hidden-sm change_mode" value="Change to normal edit form" /> Add New {% label %}</h3>
+  <input type="button" class="btn btn-default change_mode hidden-xs hidden-sm pull-right" value="Change to tabbed form" />
+  <h1>Add New {% label %}</h1>
   [% END %]
+  </div>
+
+  <div class="row"></div>
 
   <form action="/myPUB/record/update" method="POST" id="edit_form">
     <input type="hidden" name="type" value="{% tmpl %}" id="id_type"/>
@@ -29,7 +33,7 @@
       <div id="basic_fields" class="tab_section">
 
 {% IF fields.basic_fields %}
-  <h4 class="expert">{% fields.basic_fields.tab_name %}</h4>
+  <h3>{% fields.basic_fields.tab_name %}</h3>
   {% FOREACH key IN field_order.basic_fields %}
     {% IF fields.basic_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -44,7 +48,7 @@
       <div id="file_upload" class="tab_section">
 
 {% IF fields.file_upload %}
-  <h4 class="expert">{% fields.file_upload.tab_name %}</h4>
+  <h3>{% fields.file_upload.tab_name %}</h3>
   {% FOREACH key IN field_order.file_upload %}
     {% IF fields.file_upload.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -59,7 +63,7 @@
       <div id="supplementary_fields" class="tab_section">
 
 {% IF fields.supplementary_fields %}
-  <h4 class="expert">{% fields.supplementary_fields.tab_name %}</h4>
+  <h3>{% fields.supplementary_fields.tab_name %}</h3>
   {% FOREACH key IN field_order.supplementary_fields %}
     {% IF fields.supplementary_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -74,7 +78,7 @@
       <div id="related_material" class="tab_section">
 
 {% IF fields.related_material %}
-  <h4 class="expert">{% fields.related_material.tab_name %}</h4>
+  <h3>{% fields.related_material.tab_name %}</h3>
   {% FOREACH key IN field_order.related_material %}
     {% IF fields.related_material.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -94,12 +98,12 @@
 {% INCLUDE fields/modal_fileupload.tt %}
 {% END %}
 
-</div><!-- col-md-9 col-md-offset-1 -->
-</div><!-- row -->
+</div><!-- col-md -->
 
 <script>
 {% INCLUDE fields/jquery_tab1.tt %}
 </script>
 
-<!-- END /backend/forms/{% tmpl %} -->
+<!-- END /backend/forms/master_expert.tt -->
+
 [% INCLUDE footer.tt %]
