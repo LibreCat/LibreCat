@@ -32,7 +32,7 @@
 
 <!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->
 [% num = total; n = 0 %]
-[% IF request.path == "/marked" %]<ul style="list-style-type:none;" id="sortable">[% END %]
+[% IF request.path == "/marked" %]<ul class="list-unstyled" id="sortable">[% END %]
 [% FOREACH entry IN hits %]
 [% IF request.path == "/marked" %]<li class="markedme" id="fade_[% n+1 %]">[% END %]
 <div class="row">
