@@ -1,37 +1,38 @@
-<!-- BEGIN tab_details -->
+
+<!-- BEGIN frontdoor/tab_details.tt -->
 
 <div class="tab-pane active" id="details" style="clear:both;">
+
 [% IF reviewedwork  %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Reviewed Work</div>
-    <div class="frontdoor_right">[% reviewedwork %]</div>
-  </div>
+<dl class="dl-horizontal">
+    <dt>Reviewed Work</dt>
+    <dd>[% reviewedwork %]</dd>
+</dl>
 [% END %]
 
 [% first_author = '' %]
 [% FOREACH au IN author %]
   [% IF loop.first %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Authors</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">Authors</div>
+    <div class="col-md-10">
   [% ELSE %];[% END %]
   [% IF au.id %]<a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]</a><sup class="muted">UniBi</sup>[% ELSE %]<span itemprop="author">[% au.full_name %]</span>[% END %]
   [% IF loop.count > 11 %]
     <span id="showAut">
       <br /><a href="#" onclick="ShowAuthors();"><img src="/images/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a>
     </span>
-    </div>
-  </div>
   [% LAST %]
   [% END %]
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
+
 [% FOREACH sup IN supervisor %]
   [% IF loop.first %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Supervisors</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">Supervisors</div>
+    <div class="col-md-10">
   [% ELSE %];[% END %]
   [% IF sup.id %]<a href="/person/[% sup.id %]">[% sup.full_name %]</a><sup class="muted">UniBi</sup>[% ELSE %]<span>[% sup.full_name %]</span>[% END %]
   [% IF loop.last %]</div></div>[% END %]
@@ -39,9 +40,9 @@
 
 [% FOREACH ed IN editor %]
   [% IF loop.first %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Editors</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">Editors</div>
+    <div class="col-md-10">
   [% ELSE %];[% END %]
   [% IF ed.id %]<a itemprop="editor" href="/person/[% ed.id %]">[% ed.full_name %]</a><sup class="muted">UniBi</sup>[% ELSE %]<span itemprop="editor">[% ed.full_name %]</span>[% END %]
   [% IF loop.last %]</div></div>[% END %]
@@ -49,9 +50,9 @@
 
 [% FOREACH ed IN corporate_editor %]
   [% IF loop.first %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Corp. Ed.</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">Corp. Ed.</div>
+    <div class="col-md-10">
   [% ELSE %];[% END %]
   [% ed %]
   [% IF loop.last %]</div></div>[% END %]
@@ -59,9 +60,9 @@
 
 [% FOREACH dep IN department %]
   [% IF loop.first %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Department</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">Department</div>
+    <div class="col-md-10">
   [% ELSE %]<br />[% END %]
   [% dep.name %]
   [% IF loop.last %]</div></div>[% END %]
@@ -69,9 +70,9 @@
 
 [% FOREACH proj IN project %]
   [% IF loop.first %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Project</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">Project</div>
+    <div class="col-md-10">
   [% ELSE %]<br />[% END %]
   <!--<a href="/project/[% proj.projectId %]">-->
   [% proj.name.0.text %]
@@ -81,9 +82,9 @@
 
 [% FOREACH group_entry IN isWithinResearchGroup %]
   [% IF loop.first %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Research Group</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">Research Group</div>
+    <div class="col-md-10">
   [% ELSE %]<br />[% END %]
   [% group_entry.name.0.text %]
   [% IF loop.last %]</div></div>[% END %]
@@ -91,51 +92,53 @@
 
 [% FOREACH corp_entry IN corporate %]
   [% IF loop.first %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Corporate Editor</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">Corporate Editor</div>
+    <div class="col-md-10">
   [% ELSE %]<br />[% END %]
   [% corp_entry %]
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
 [% IF alternative_title %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Alternative Title</div>
-    <div class="frontdoor_right" itemprop="alternativeHeadline">[% alternative_title.0 %]</div>
+  <div class="row">
+    <div class="col-md-2 text-muted">Alternative Title</div>
+    <div class="col-md-10" itemprop="alternativeHeadline">[% alternative_title.0 %]</div>
   </div>
 [% END %]
 
 [% IF edition %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Edition</div>
-    <div class="frontdoor_right" itemprop="bookEdition">[% edition %]</div>
+  <div class="row">
+    <div class="col-md-2 text-muted">Edition</div>
+    <div class="col-md-10" itemprop="bookEdition">[% edition %]</div>
   </div>
 [% END %]
 
 [% IF pages.count %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Pages</div>
-    <div class="frontdoor_right">[% pages.count %]</div>
+  <div class="row">
+    <div class="col-md-2 text-muted">Pages</div>
+    <div class="col-md-10">[% pages.count %]</div>
   </div>
 [% END %]
 
 [% IF abstract %]
-  <div class="frontdoor reset" itemprop="about">
-    <span class="frontdoor_left">Abstract:</span><br />
+  <div class="row">
+    <div class="col-md-2 text-muted">Abstract</div>
+    <div class="col-md-10" itemprop="about">
     [% FOREACH ab IN abstract %]
       [% UNLESS loop.first %]
         <br /><br />
       [% END %]
       [% ab.text %]
     [% END %]
+    </div>
   </div>
 [% END %]
 
 [% IF keyword %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Keywords</div>
-    <div class="frontdoor_right" itemprop="keywords">
+  <div class="row">
+    <div class="col-md-2 text-muted">Keywords</div>
+    <div class="col-md-10" itemprop="keywords">
     [% FOREACH kw IN keyword %]
       [% IF loop.last %]
         [% kw %]
@@ -147,15 +150,15 @@
   </div>
 [% END %]
 
-  <div class="frontdoor">
-    <div class="frontdoor_left">Year</div>
-    <div class="frontdoor_right"><span itemprop="copyrightYear">[% year %]</span></div>
+  <div class="row">
+    <div class="col-md-2 text-muted">Year</div>
+    <div class="col-md-10"><span itemprop="copyrightYear">[% year %]</span></div>
   </div>
 
 [% IF data_reuse_license %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Data Re-Use License</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">Data Re-Use License</div>
+    <div class="col-md-10">
     [% SWITCH data_reuse_license %]
     [% CASE 'PDDL' %] This <em>[% title %]</em> is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: <a href="http://opendatacommons.org/licenses/pddl/1.0">http://opendatacommons.org/licenses/pddl/1.0</a>
     [% CASE 'ODC-By' %] This <em>[% title %]</em> is made available under the Open Data Commons Attribution License: <a href="http://opendatacommons.org/licenses/by/1.0">http://opendatacommons.org/licenses/by/1.0</a>
@@ -166,84 +169,84 @@
 [% END %]
 
 [% IF conference.name %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Conf. Name</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">Conf. Name</div>
+    <div class="col-md-10">
       [% conference.name %]
     </div>
   </div>
 [% END %]
 
 [% IF conference.location %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Location</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">Location</div>
+    <div class="col-md-10">
       [% conference.location %]
     </div>
   </div>
 [% END %]
 
 [% IF conference.start_date %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Date</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">Date</div>
+    <div class="col-md-10">
       [% conference.start_date %][% IF conference.end_date %] to [% conference.end_date %][% END %]
     </div>
   </div>
 [% END %]
 
 [% IF publication_identifier.isbn %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">ISBN</div>
-    <div class="frontdoor_right" itemprop="isbn">[% FOREACH ib IN publication_identifier.isbn %][% ib %][% UNLESS loop.last %], [% END %][% END %]</div>
+  <div class="row">
+    <div class="col-md-2 text-muted">ISBN</div>
+    <div class="col-md-10" itemprop="isbn">[% FOREACH ib IN publication_identifier.isbn %][% ib %][% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
 [% IF publication_identifier.issn %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">ISSN</div>
-    <div class="frontdoor_right">[% FOREACH is IN publication_identifier.issn %][% is %][% UNLESS loop.last %], [% END %][% END %]</div>
+  <div class="row">
+    <div class="col-md-2 text-muted">ISSN</div>
+    <div class="col-md-10">[% FOREACH is IN publication_identifier.issn %][% is %][% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
 [% IF publication_identifier.eissn %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">eISSN</div>
-    <div class="frontdoor_right">[% FOREACH es IN publication_identifier.eissn %][% es %][% UNLESS loop.last %], [% END %][% END %]</div>
+  <div class="row">
+    <div class="col-md-2 text-muted">eISSN</div>
+    <div class="col-md-10">[% FOREACH es IN publication_identifier.eissn %][% es %][% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
 [% IF ipn %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Int. Patent Number</div>
-    <div class="frontdoor_right">[% ipn %]</div>
+  <div class="row">
+    <div class="col-md-2 text-muted">Int. Patent Number</div>
+    <div class="col-md-10">[% ipn %]</div>
   </div>
 [% END %]
 
 [% IF ipc %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Int. Patent Classification</div>
-    <div class="frontdoor_right">[% ipc %]</div>
+  <div class="row">
+    <div class="col-md-2 text-muted">Int. Patent Classification</div>
+    <div class="col-md-10">[% ipc %]</div>
   </div>
 [% END %]
 
 [% IF ubi_funded OR external_id.scoap3 %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Financial disclosure</div>
+  <div class="row">
+    <div class="col-md-2 text-muted">Financial disclosure</div>
     [% IF ubi_funded %]
-    <div class="frontdoor_right">Article Processing Charge funded by the <a href="http://www.dfg.de/">Deutsche Forschungsgemeinschaft</a> and the <a href="http://oa.uni-bielefeld.de/publikationsfonds.html">Open Access Publication Fund</a> of Bielefeld University.</div>
+    <div class="col-md-10">Article Processing Charge funded by the <a href="http://www.dfg.de/">Deutsche Forschungsgemeinschaft</a> and the <a href="http://oa.uni-bielefeld.de/publikationsfonds.html">Open Access Publication Fund</a> of Bielefeld University.</div>
     [% ELSIF external_id.scoap3 %]
-    <div class="frontdoor_right">Open Access publishing charge funded by <a href="http://scoap3.org/">SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University.</div>
+    <div class="col-md-10">Open Access publishing charge funded by <a href="http://scoap3.org/">SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University.</div>
     [% END %]
   </div>
 [% END %]
 
-  <div class="frontdoor">
-    <div class="frontdoor_left">PUB-ID</div>
-    <div class="frontdoor_right">
+  <div class="row">
+    <div class="col-md-2 text-muted">PUB-ID</div>
+    <div class="col-md-10">
     [% _id %] | Link: <a itemprop="url" href="/[% bag %]/[% _id %]">[% request.uri_base %][% request.uri %]</a>
     </div>
   </div>
 </div>
 
-<!-- END tab_details -->
+<!-- END frontdoor/tab_details.tt -->

@@ -1,12 +1,13 @@
-<!-- BEGIN tab_ebi.tt -->
+
+<!-- BEGIN frontdoor/tab_ebi.tt -->
 
 <div class="tab-pane" id="ebi_dblinks">
 Data provided by the <a href="http://www.ebi.ac.uk/">European Bioinformatics Institute (EBI)</a>.<br /><br />
           
 [% FOREACH db IN ebiData.dbLinks.keys %]
-<div class="frontdoor">
-  <div class="frontdoor_left">[% db %]</div>
-  <div class="frontdoor_right">
+<div class="row">
+  <div class="col-md-2">[% db %]</div>
+  <div class="col-md-10">
   [% total = ebiData.dbLinks.$db.total %]
     [% IF db == 'EMBL' %]<a href="http://www.ebi.ac.uk/ena/data/search?query=[% medline %]">[% total %]</a>[% ELSE %][% total %][% END %] item(s) found citing this article[% IF total > 10 %] of which 10 are displayed[% END %].<br /><br />
     [% max = (total - 1 > 9) ? 9 : (total - 1)  %]
@@ -28,4 +29,4 @@ Data provided by the <a href="http://www.ebi.ac.uk/">European Bioinformatics Ins
 [% END %]
 </div>
 
-<!-- END tab_ebi.tt -->
+<!-- END frontdoor/tab_ebi.tt -->
