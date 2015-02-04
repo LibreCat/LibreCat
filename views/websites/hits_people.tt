@@ -1,7 +1,7 @@
 <!-- BEGIN websites/hits_people.tt -->
 
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
-<div class="col-xs-9">
+<div class="col-md-8 col-sm-8">
 
   <div class="row">
     <div class="col-md-12">
@@ -63,7 +63,6 @@
 	<span class="text-muted">[% affil.name %]</span>[% IF !loop.last %], [% END %]
       [% END %]
     </dd>
-    </dt>
     [% END %]
     </dl>
     </div>
@@ -71,10 +70,9 @@
 
 </div>
 
-<div class="col-xs-3">
-  [% INCLUDE websites/logo_contact.tt %]
+<div class="col-md-3 col-md-offset-1 col-sm-4">
 
-  <h5>[% lang ? 'Filter' : 'Filtern' %]</h5>
+  <h3>[% lang ? 'Filter' : 'Filtern' %]</h3>
   [% IF qp.keys.0 %]
     [% IF qp.sorting %]
       <p class="text-muted"><a href="[% h.newuri_for("/authorlist", qp, sorting="") %]" rel="nofollow"><span class="fa fa-times"></span></a> sorting: [% qp.sorting %]</p>
@@ -92,9 +90,8 @@
       <a href="[% h.newuri_for("/authorlist", qp, former="yes") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp;[% lang ? 'Former UniBi Authors' : 'Ehemalige UniBi Autoren' %]</a>
     </li>
   </ul>
-  <br />
 
-  <ul class="nav nav-tabs nav-stacked">
+  <ul class="nav nav-tabs nav-stacked margin-top1">
     <li>
       <button data-toggle="collapse" data-target="#peoplehitsperpage"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% qp.limit %][% ELSE %]: 20[% END %]</a></button>
       <div class="facettecollapse">
@@ -110,9 +107,8 @@
       </div>
     </li>
   </ul>
-  <br />
 
-  <ul class="nav nav-tabs nav-stacked">
+  <ul class="nav nav-tabs nav-stacked margin-top1">
     <li>
       <button data-toggle="collapse" data-target="#peoplesort"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Sorting' : 'Sortierung' %]</a></button>
       <div class="facettecollapse">
@@ -132,7 +128,7 @@
     </li>
   </ul>
 
-  <div>&nbsp;</div>
+  <hr />
 
   [% INCLUDE websites/logo_contact.tt %]
 </div>
