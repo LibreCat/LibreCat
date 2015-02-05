@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="angularController">
 
 <!-- BEGIN header_head.tt -->
 
@@ -83,6 +83,9 @@
     <script src="/javascripts/backend.js"></script>
     <script src="/javascripts/dropzone3.0.js"></script>
     <script src="/javascripts/pub_dropzones.js"></script>
+    
+    <script src="/javascripts/angular-1.2.14.min.js"></script>
+    <script src="/javascripts/angularSearch.js"></script>
 
     <style>
     body.dragging, body.dragging * {
