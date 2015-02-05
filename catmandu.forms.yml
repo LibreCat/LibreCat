@@ -47,6 +47,7 @@ field_order:
     - corporate_editor
     - department
     - project
+    - thematic_area
     - publisher
     - place
     - series_title
@@ -92,6 +93,7 @@ field_order:
     - corporate_editor
     - department
     - project
+    - thematic_area
     - publisher
     - place
     - publication
@@ -177,6 +179,9 @@ publicationTypes:
           label: "Project"
           placeholder: "2nd-Generation Open Access Infrastructure for Research in Europe"
           multiple: 1
+        thematic_area: &thematic_area
+          label: "Thematic Area"
+          label_short: "Them. Area"
         publisher: &publisher
           label: "Publisher"
           placeholder: "Elsevier"
@@ -291,6 +296,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        thematic_area: *thematic_area
         publisher: *publisher
         language: *language
         year: *year
@@ -329,6 +335,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        thematic_area: *thematic_area
         publication:
           label: "Book Title"
           mandatory: 1
@@ -369,6 +376,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        thematic_area: *thematic_area
         year: *year
         conference.divider: &conference_divider
           label: "Conference Details"
@@ -423,6 +431,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        thematic_area: *thematic_area
         year: *year
         conference.divider:
           label: "Conference Details"
@@ -468,6 +477,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        thematic_area: *thematic_area
         publication:
           label: "Proceedings Title"
         series_title: &series_title
@@ -527,6 +537,7 @@ publicationTypes:
         year: *year
         department: *department
         project: *project
+        thematic_area: *thematic_area
         language: *language
         publisher: *publisher
       file_upload: *file_upload
@@ -561,6 +572,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        thematic_area: *thematic_area
         language: *language
         publisher: *publisher
         year: *year
@@ -597,6 +609,7 @@ publicationTypes:
         writer: *author_translator
         department: *department
         project: *project
+        thematic_area: *thematic_area
         publisher: *publisher
         language: *language
         year: *year
@@ -636,6 +649,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        thematic_area: *thematic_area
         publisher: *publisher
         language: *language
         year: *year
@@ -670,6 +684,7 @@ publicationTypes:
         title: *title
         department: *department
         project: *project
+        thematic_area: *thematic_area
         year: *year
         publishing_date: &publishing_date
           label: "Publishing Date"
@@ -704,6 +719,7 @@ publicationTypes:
         writer: *author_translator
         department: *department
         project: *project
+        thematic_area: *thematic_area
         year: *year
         publisher: *publisher
         language: *language
@@ -744,6 +760,7 @@ publicationTypes:
         writer: *author_translator
         department: *department
         project: *project
+        thematic_area: *thematic_area
         year: *year
         language: *language
         publisher: *publisher
@@ -777,6 +794,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        thematic_area: *thematic_area
         language: *language
         publisher: *publisher
         year: *year
@@ -812,6 +830,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        thematic_area: *thematic_area
         publisher: *publisher
         language: *language
         year: *year
@@ -987,6 +1006,7 @@ publicationTypes:
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         department: *department
         project: *project
+        thematic_area: *thematic_area
         language:
         language:
         year: *year
@@ -1017,6 +1037,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        thematic_area: *thematic_area
         language: *language
         publisher: *publisher
         year: *year

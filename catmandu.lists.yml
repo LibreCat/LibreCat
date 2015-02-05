@@ -320,6 +320,9 @@ relations_record:
     relation_text: "In other relation (to PUB record)"
     link_text: "Other Relation"
 
+thematic_area:
+  diversity: Diversity
+
 department:
   "BiSEd Bielefeld School of Education":
     oId: 10057
