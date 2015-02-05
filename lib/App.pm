@@ -69,13 +69,13 @@ post '/login' => sub {
         session user         => $user->{login};
         session personNumber => $user->{_id};
 
-        redirect params->{return_url} if params->{return_url};
-        redirect '/myPUB';
+        forward params->{return_url}, {method => 'GET'} if params->{return_url};
+        forward '/myPUB', {method => 'GET'};
     }
     else {
         forward '/login',
-            { error_message => "Wrong username or password!" },
-            { method        => 'GET' };
+            {error_message => 'Wrong username or password!'},
+            {method => 'GET'};
     }
 };
 
@@ -86,7 +86,7 @@ post '/login' => sub {
 =cut
 any '/logout' => sub {
     session->destroy;
-    redirect '/';
+    forward '/login', {method => 'GET'};
 };
 
 =head2 ANY /access_denied

@@ -61,7 +61,7 @@
       [% FOREACH dept IN departments.keys.sort %]
 	<li>
 	[% thisdept = departments.$dept %]
-	<a href="[% h.newuri_for("$path", qp, department="$thisdept.oId") %]" class="selectme" data-index="[% loop.index %]" id="[% departments.$dept.oId %]">[% dept %]</a>
+	<a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.oId %]">[% dept %]</a>
 	[% IF departments.$dept.keys.size > 1 %]
 	<a href="#subdepts_[% departments.$dept.oId %][% menu %]" data-toggle="collapse">
 	  <span class="glyphicon glyphicon-chevron-down fw"></span>
@@ -73,7 +73,7 @@
 	  <li>
 	  [% NEXT IF subdept == "oId" %]
 	  [% thissubdept = thisdept.$subdept %]
-	    <a href="[% h.newuri_for("$path", qp, department="$thissubdept.oId") %]" class="selectme" data-index="[% loop.index %]" id="[% departments.$dept.$subdept.oId %]">[% subdept %]</a>
+	    <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.oId %]">[% subdept %]</a>
 	  [% IF departments.$dept.$subdept.keys.size >1 %] <a href="#subsubdepts_[% departments.$dept.$subdept.oId %][% menu %]" data-toggle="collapse">
 	    <span class="glyphicon glyphicon-chevron-down fw"></span>
 	  </a>[% END %]
@@ -83,7 +83,7 @@
 	    <li>
 	    [% NEXT IF subsubdept == "oId" %]
 	    [% thissubsubdept = thissubdept.$subsubdept %]
-	      <a href="[% h.newuri_for("$path", qp, department="$thissubsubdept.oId") %]" class="selectme" data-index="[% loop.index %]" id="[% departments.$dept.$subdept.$subsubdept.oId %]">[% subsubdept %]</a>
+	      <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.$subsubdept.oId %]">[% subsubdept %]</a>
 	    </li>
 	    [% END %]
 	  </ul>
@@ -310,12 +310,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal"><span class="fa fa-fw fa-times"></span></button>
-	<h3 id="ModalExport">Export Options</h3>
+	     <button type="button" class="close" data-dismiss="modal"><span class="fa fa-fw fa-times"></span></button>
+	     <h3 id="ModalExport">Export Options</h3>
       </div>
       <div class="modal-body">
-	<p><span class="glyphicon glyphicon-chevron-right fw"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]&amp;explinks=yes" class="rtfmodal" rel="nofollow">Export list with links ("PUB | PDF | arXiv" etc.)</a></p>
-	<p><span class="glyphicon glyphicon-chevron-right fw"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]" class="rtfmodal" rel="nofollow">Export list without links</a></p>
+	     <p><span class="glyphicon glyphicon-chevron-right fw"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]&amp;explinks=yes" class="rtfmodal" rel="nofollow">Export list with links ("PUB | PDF | arXiv" etc.)</a></p>
+	     <p><span class="glyphicon glyphicon-chevron-right fw"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]" class="rtfmodal" rel="nofollow">Export list without links</a></p>
       </div>
     </div>
   </div>
