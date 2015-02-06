@@ -18,7 +18,7 @@ use App::Helper;
 
 =head2 GET /marked
 
-    Returns marked records.
+    Returns list of marked records.
 
 =cut
 get '/marked' => sub {
@@ -44,7 +44,7 @@ get '/marked' => sub {
     $hits->{hits} = \@tmp_hits;
     $hits->{total} = scalar @tmp_hits;
 
-    if($fmt and $hits->{total} ne "0"){
+    if($fmt and $fmt ne 'html' and $hits->{total} ne "0"){
     	h->export_publication( $hits, $fmt );
     }
     else {
@@ -105,15 +105,6 @@ post '/marked' => sub {
 			total => 0,
 		};
 	}
-
-#    if (@$marked > 500) { #should be >500 ??
-#    	content_type 'application/json';
-#        return to_json {
-#            ok => false,
-#            message => "the marked list has a limit of 500 records, remove some records first",
-#            total => scalar @$marked,
-#        };
-#    }
 
     my $hits = h->search_publication($p);
 

@@ -62,7 +62,7 @@
     [% END %]
     </div>
   </div>
-[% ELSIF request.path == "/marked" OR request.path.match("person") %]
+[% ELSIF request.path == "/marked" OR request.path == "/person" %]
   <div class="col-md-1">
     [[% num - n %]] [% n = n +1 %]
   </div>
