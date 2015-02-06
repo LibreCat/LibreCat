@@ -14,14 +14,10 @@ use Hash::Merge::Simple qw/merge/;
 
 Catmandu->load(':up');
 
-# easy config accessor
-######################
 sub config {
 	state $config = Catmandu->config;
 }
 
-# helper functions for stores
-#############################
 sub bag {
 	state $bag = Catmandu->store->bag;
 }
@@ -65,17 +61,6 @@ sub string_array {
 	[];
 }
 
-sub sort_options {
-	state $sort_options = do {
-		my $sorts = $_[0]->config->{publication_sorts} || [];
-		List::Util::reduce {
-			$a->{"$b->{key}.$b->{order}"} = $b; $a;
-		} +{}, @$sorts;
-	};
-}
-
-# helper for params handling
-############################
 sub nested_params {
 	my ($self, $params) = @_;
 
@@ -97,11 +82,11 @@ sub extract_params {
 	return $p if ref $params ne 'HASH';
 	$p->{start} = $params->{start} if is_natural $params->{start};
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
-	
+
 	my $q = '';
 	$q = $params->{cql_query} if $params->{cql_query};
 	my $deletedq;
-	
+
 	if(@$deletedq = ($q =~ /((?=AND |OR |NOT )?[0-9a-zA-Z]+\=\s|(?=AND |OR |NOT )?[0-9a-zA-Z]+\=$)/g)){
 		$q =~ s/((AND |OR |NOT )?[0-9a-zA-Z]+\=\s|(AND |OR |NOT )?[0-9a-zA-Z]+\=$)/ /g;
 	}
@@ -114,7 +99,7 @@ sub extract_params {
 		$q =~ s/((?:(?:(?:[0-9a-zA-Z\=]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*') (?:AND|OR) )+(?:[0-9a-zA-Z\=]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))|[0-9a-zA-Z\=]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*')\s(?!AND )(?!OR )("[^"]*"|'[^']*'|.*?)/$1 AND $2/g;
 	}
 	push @{$params->{q}}, lc $q;
-	
+
 	$p->{q} = $self->string_array($params->{q});
 	$p->{text} = $params->{text} if $params->{text};
 
@@ -163,28 +148,6 @@ sub get_sort_style {
 		}
 	}
 
-	#$return_sort = [$return_sort] if(ref $return_sort ne "ARRAY");
-#	foreach my $s (@{$return_sort}){
-#		if($s =~ /(\w{1,})\.(\w{1,})/){
-#			my $sorting = "$1,,";
-#			$sorting .= $2 eq "asc" ? "1 " : "0 ";
-#			$return->{'sort'} .= $sorting;
-#		}
-#		else{
-#			$return->{'sort'} .= "$s,,0 ";
-#		}
-#	}
-	#$return_sort_backend = [$return_sort_backend] if(ref $return_sort_backend ne "ARRAY");
-#	foreach my $s (@{$return_sort_backend}){
-#		if($s =~ /(\w{1,})\.(\w{1,})/){
-#			my $sorting = "$1,,";
-#			$sorting .= $2 eq "asc" ? "1 " : "0 ";
-#			$return->{sort_backend} .= $sorting;
-#		}
-#		else{
-#			$return->{sort_backend} .= "$s,,0 ";
-#		}
-#	}
 	$return->{'sort'} = $return_sort;
 	$return->{sort_backend} = $return_sort_backend;
 	$return->{user_sort} = $user->{'sort'} if $user->{'sort'};
@@ -217,8 +180,8 @@ sub get_sort_style {
 
 	my $usermongo_eq_currentsort = "";
 	my $currentsort_eq_default = "";
-	$usermongo_eq_currentsort = $self->compare_array($return->{user_sort}, $return->{sort_backend}) if $return->{user_sort};
-	$currentsort_eq_default = $self->compare_array($return->{sort_backend}, $self->config->{store}->{default_sort_backend});
+	$usermongo_eq_currentsort = is_same($return->{user_sort}, $return->{sort_backend}) if $return->{user_sort};
+	$currentsort_eq_default = is_same($return->{sort_backend}, $self->config->{store}->{default_sort_backend});
 
 	if($usermongo_eq_currentsort ne "" or (!$return->{user_sort} and $currentsort_eq_default ne "")){
 		$return->{sort_up_to_date} = 1;
@@ -230,33 +193,9 @@ sub get_sort_style {
 	return $return;
 }
 
-sub compare_array {
-	my ($self, $arr1, $arr2) = @_;
-	
-	my $length1 = scalar @{$arr1};
-	my $length2 = scalar @{$arr2};
-	
-	if($length1 > 0 and $length2 > 0){
-		if($length1 != $length2){
-			return "";
-		}
-		else {
-			for my $i (0 .. $#{$arr1}){
-				if($arr1->[$i] ne $arr2->[$i]){
-					return "";
-				}
-			}
-			return 1;
-		}
-	}
-	else {
-		return "";
-	}
-}
-
 sub now {
-	 my $now = strftime($_[0]->config->{time_format}, gmtime(time));
-	 return $now;
+	my $now = strftime($_[0]->config->{time_format}, gmtime(time));
+	return $now;
 }
 
 sub pretty_byte_size {
@@ -298,11 +237,6 @@ sub getPerson {
 		$user = $_[0]->authority_user->get($_[1]);
 		$admin = $_[0]->authority_admin->get($_[1]);
 		return merge ( $admin, $user );
-		#my @fields = qw(full_name last_name first_name email department super_admin reviewer data_manager delegate);
-		#map {
-		#	$user->{$_} = $admin->{$_};
-		#} @fields;
-		#$user;
 	}
 }
 
