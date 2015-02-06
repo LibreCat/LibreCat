@@ -1,5 +1,7 @@
 
 <!-- BEGIN facets.tt -->
+tabmodus: [% tabmodus %]
+menu: [% menu %]
 
 [%- USE JSON -%]
 [%- USE date(format => '%Y') -%]
@@ -54,45 +56,41 @@
     <div class="facettecollapse normal">
       <ul id="department_new_[% tabmodus %][% menu %]" class="collapse[% IF qp.department %] in[% END %]">
       [% IF qp.department %]
-	[% dept = h.getDepartment(qp.department) %]
-	<li>[% dept.name %]</li>
+	    [% dept = h.getDepartment(qp.department) %]
+	    <li>[% dept.name %]</li>
       [% ELSE %]
       [% departments = h.get_list('department') %]
       [% FOREACH dept IN departments.keys.sort %]
-	<li>
-	[% thisdept = departments.$dept %]
-	<a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.oId %]">[% dept %]</a>
-	[% IF departments.$dept.keys.size > 1 %]
-	<a href="#subdepts_[% departments.$dept.oId %][% menu %]" data-toggle="collapse">
-	  <span class="glyphicon glyphicon-chevron-down fw"></span>
-	</a>
-	[% END %]
-	[% IF subdept %]
-	<ul id="subdepts_[% departments.$dept.oId %][% menu %]" class="panel-collapse collapse">
-	  [% FOREACH subdept IN departments.$dept.keys.sort %]
-	  <li>
-	  [% NEXT IF subdept == "oId" %]
-	  [% thissubdept = thisdept.$subdept %]
-	    <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.oId %]">[% subdept %]</a>
-	  [% IF departments.$dept.$subdept.keys.size >1 %] <a href="#subsubdepts_[% departments.$dept.$subdept.oId %][% menu %]" data-toggle="collapse">
-	    <span class="glyphicon glyphicon-chevron-down fw"></span>
-	  </a>[% END %]
-	  [% IF subsubdept %]
-	  <ul id="subsubdepts_[% departments.$dept.$subdept.oId %][% menu %]" class="panel-collapse collapse">
-	    [% FOREACH subsubdept IN departments.$dept.$subdept.keys.sort %]
 	    <li>
-	    [% NEXT IF subsubdept == "oId" %]
-	    [% thissubsubdept = thissubdept.$subsubdept %]
-	      <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.$subsubdept.oId %]">[% subsubdept %]</a>
+	    [% thisdept = departments.$dept %]
+	      <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.oId %]">[% dept %]</a>
+	      [% IF departments.$dept.keys.size > 1 %]
+	      <a href="#subdepts_[% departments.$dept.oId %][% menu %]" data-toggle="collapse">
+	        <span class="glyphicon glyphicon-chevron-down fw"></span>
+	      </a>
+	      [% END %]
+	      <ul id="subdepts_[% departments.$dept.oId %][% menu %]" class="panel-collapse collapse">
+	        [% FOREACH subdept IN departments.$dept.keys.sort %]
+	        <li>
+	        [% NEXT IF subdept == "oId" %]
+	        [% thissubdept = thisdept.$subdept %]
+	        <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.oId %]">[% subdept %]</a>
+	        [% IF departments.$dept.$subdept.keys.size >1 %] <a href="#subsubdepts_[% departments.$dept.$subdept.oId %][% menu %]" data-toggle="collapse">
+	          <span class="glyphicon glyphicon-chevron-down fw"></span>
+	        </a>[% END %]
+	        <ul id="subsubdepts_[% departments.$dept.$subdept.oId %][% menu %]" class="panel-collapse collapse">
+	          [% FOREACH subsubdept IN departments.$dept.$subdept.keys.sort %]
+	          <li>
+	          [% NEXT IF subsubdept == "oId" %]
+	          [% thissubsubdept = thissubdept.$subsubdept %]
+	            <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.$subsubdept.oId %]">[% subsubdept %]</a>
+	          </li>
+	          [% END %]
+	        </ul>
+	        </li>
+	        [% END %]
+	      </ul>
 	    </li>
-	    [% END %]
-	  </ul>
-	  [% END %]
-	  </li>
-	  [% END %]
-	</ul>
-	[% END %]
-	</li>
       [% END %]
       [% END %]
       </ul>
