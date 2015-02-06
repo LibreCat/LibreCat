@@ -38,7 +38,7 @@ sub update_publication {
 
     $data = correct_writer($data) if $data->{writer} or $data->{editor};
 
-    # html encoding
+    # html encoding??
     foreach (qw/message/) {
         $data->{$_} = encode_entities($data->{$_});
     }
@@ -57,7 +57,7 @@ sub update_publication {
     		}
     	}
     }
-    
+
     if($data->{abstract}){
     	my $i = 0;
     	foreach my $ab (@{$data->{abstract}}){
@@ -67,35 +67,28 @@ sub update_publication {
     		$i++;
     	}
     }
-#return $data;
+
     my $return = update_related_material($data);
 
     $data = delete_empty_fields($data);
     if($data->{finalSubmit} and $data->{finalSubmit} eq "recPublish"){
     	$data->{status} = "public";
     }
-    
+
     # citations
     use Citation;
     my $response = $data->{citation} = Citation::index_citation_update($data,0,'');
-    #my $citbag = Catmandu->store('citation')->bag;
     my $publbag = Catmandu->store->bag('publication');
     my $backup = Catmandu->store->bag('publication');
-    
-    $data->{citation} = $response if $response;
 
-    my $pre_fixer = Catmandu::Fix->new(
-    fixes => [
-        'clean_department_project()',
-    ]);
+    $data->{citation} = $response if $response;
 
     $data->{date_updated} = h->now();
     $data->{date_created} = $data->{date_updated} if !$data->{date_created};
 
     #if ( $validator->is_valid($data) ) {
 
-    	$pre_fixer->fix($data);
-        my $result = h->publication->add($data);
+    	my $result = h->publication->add($data);
         $publbag->add($result);
         h->publication->commit;
         return $result;
@@ -105,19 +98,6 @@ sub update_publication {
     #}
 
 }
-
-# sub update_publication {
-#     my $data = shift;
-#     croak "Error: No _id specified" unless $data->{_id};
-#
-#     #my $old = h->publication->get( $data->{_id} );
-#     #my $merger = Hash::Merge->new();
-#     #left precedence by default!
-#     #my $new = $merger->merge( $data, $old );
-#
-#     my $result = save_publication($data);
-#     return $result;
-# }
 
 sub edit_publication {
     my $id = shift;
@@ -135,7 +115,7 @@ sub delete_publication {
         date_deleted => h->now,
         status => 'deleted',
     };
-    
+
     my $update_rm = update_related_material($del);
 
     # this will do a hard override of
