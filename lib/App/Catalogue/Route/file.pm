@@ -111,7 +111,7 @@ prefix '/requestcopy' => sub {
 				}
 			}
 			else {
-				return h->host . "/requestcopy/download/" . $stored->{_id};
+				return h->host . "/rc/" . $stored->{_id};
 			}
 		}
 	};
@@ -168,21 +168,22 @@ prefix '/requestcopy' => sub {
 		}
 	};
 
-=head2 GET /download/:key
+};
 
-    User received permission for downloading.
-    Now get the document if time has not expired yet.
+
+=head2 GET /rc/:key
+
+	User received permission for downloading.
+	Now get the document if time has not expired yet.
 
 =cut
-	get '/download/:key' => sub {
-		my $check = Catmandu->store->bag('request')->get(params->{key});
-		if ($check and $check->{approved} == 1) {
-			send_it($check->{record_id}, $check->{file_name});
-		} else {
-			template 'error', {message => "The time slot has expired. You can't download the document anymore."};
-		}
-	};
-
+get '/rc/:key' => sub {
+	my $check = Catmandu->store->bag('request')->get(params->{key});
+	if ($check and $check->{approved} == 1) {
+		send_it($check->{record_id}, $check->{file_name});
+	} else {
+		template 'error', {message => "The time slot has expired. You can't download the document anymore."};
+	}
 };
 
 =head2 GET /download/:id/:file_id
