@@ -70,7 +70,7 @@ post '/login' => sub {
         session personNumber => $user->{_id};
 
         forward params->{return_url}, {method => 'GET'} if params->{return_url};
-        forward '/myPUB', {method => 'GET'};
+        redirect '/myPUB';
     }
     else {
         forward '/login',
