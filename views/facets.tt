@@ -1,7 +1,5 @@
 
 <!-- BEGIN facets.tt -->
-tabmodus: [% tabmodus %]
-menu: [% menu %]
 
 [%- USE JSON -%]
 [%- USE date(format => '%Y') -%]
@@ -357,6 +355,7 @@ $('a.search-facet_[% tabmodus %]').click(function() {
         term = object.data('val');
     searchParams.q.push(index+'='+term);
     delete searchParams.start;
+    delete searchParams.fmt;
     var url = path+'?'+ $.param($.extend({}, searchParams), true);
     window.location.replace(url);
 });
