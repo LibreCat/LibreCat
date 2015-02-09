@@ -9,8 +9,15 @@ default:
       session:
         plugins:
           - Datestamps
+
+backup:
+  package: MongoDB
+  options:
+    database_name: PUBBackup
+    bags:
       publication:
         plugins:
+          - Datestamps
           - Versioning
         version_compare_ignore:
           - date_updated
@@ -779,7 +786,7 @@ search:
                 'exact': true
 
 #    transport: httptiny
-    index_name: pub 
+    index_name: pub
     index_settings:
       analysis:
          analyzer:
