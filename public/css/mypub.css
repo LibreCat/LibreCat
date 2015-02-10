@@ -2,16 +2,22 @@
 Modifications for PUB
 */
 
+/* sticky footer */
+
+html,body{height:100%;}
+main{min-height:100%;height:auto!important;height:100%;margin:0 auto -120px;}
+#push,footer {height:120px;}
+
 /* top navbar */
 .navbar-default {border-color: #b6c828;}
 .navbar-default .navbar-brand {text-shadow: #fff 1.5px 1.5px;padding: 7px 0 7px 7px;}
 .navbar-fixed-top .navbar-right {padding-right:5px;}
 
 /* display main content below navbar */
-main {padding:20px 0;}
-@media (min-width: 768px) {main{padding:30px 0;}}
-@media (min-width: 992px) {main{padding:40px 0;}}
-@media (min-width: 1200px) {main{padding:50px 0;}}
+main {padding-top:20px;}
+@media (min-width: 768px) {main{padding-top:30px;}}
+@media (min-width: 992px) {main{padding-top:40px;}}
+@media (min-width: 1200px) {main{padding-top:50px;}}
 
 /* header */
 .page-header {margin-bottom:10px;}
