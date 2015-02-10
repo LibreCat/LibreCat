@@ -3,7 +3,6 @@ Modifications for PUB
 */
 
 /* sticky footer */
-
 html,body{height:100%;}
 main{min-height:100%;height:auto!important;height:100%;margin:0 auto -120px;}
 #push,footer {height:120px;}
@@ -73,6 +72,11 @@ a small {font-weight:normal;}
 
 /* Anzahl Publikationen auf Startseite */
 .statalign {display: inline-block;min-width: 80px;text-align: right;}
+
+/* definition hitlist */
+.hitlist dt:first-child{margin-top:0;}
+.hitlist dt{margin-top:11px;}
+.hitlist dd{margin-left:16px;}
 
 .citation-block-link{
 position:absolute;
@@ -512,6 +516,9 @@ margin-top: 0;
 /* width */
 
 .fw {width:1.4em;}
+.fw1 {width:1.9em;}
+.fw2 {width:2.4em;}
+.fw3 {width:2.9em;}
 
 
 /**
