@@ -8,13 +8,13 @@
   
   <div class="page-header" id="banner">
   [% IF title %]
-  <div class="dropdown">
-  <input type="button" class="btn btn-default hidden-xs hidden-sm change_mode pull-right" value="Change to tabbed form" /> 
-  <h1>[% title %] [% INCLUDE change_type_menu.tt %]</h1>
-  </div>
+    <div class="dropdown">
+      <button type="button" class="btn btn-default hidden-xs hidden-sm change_mode pull-right"><span class="glyphicon glyphicon-option-horizontal"></span> Change to tabbed form</button>
+      <h1>[% title %] [% INCLUDE change_type_menu.tt %]</h1>
+    </div>
   [% ELSE %]
-  <input type="button" class="btn btn-default change_mode hidden-xs hidden-sm pull-right" value="Change to tabbed form" />
-  <h1>Add New {% label %}</h1>
+    <button type="button" class="btn btn-default change_mode hidden-xs hidden-sm pull-right"><span class="glyphicon glyphicon-option-horizontal"></span> Change to tabbed form</button>
+    <h1>Add New {% label %}</h1>
   [% END %]
   </div>
 

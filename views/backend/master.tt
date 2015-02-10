@@ -8,13 +8,13 @@
 
   <div class="page-header" id="banner">
   [% IF title %]
-  <div class="dropdown">
-  <input type="button" class="btn btn-default change_mode hidden-xs hidden-sm pull-right" value="Change to single page form" />
-  <h1>[% title %] [% INCLUDE change_type_menu.tt %]</h1>
-  </div>
+    <div class="dropdown">
+      <button type="button" class="btn btn-default change_mode hidden-xs hidden-sm pull-right"><span class="glyphicon glyphicon-option-vertical"></span> Change to single page form</button>
+      <h1>[% title %] [% INCLUDE change_type_menu.tt %]</h1>
+    </div>
   [% ELSE %]
-  <input type="button" class="btn btn-default change_mode hidden-xs hidden-sm pull-right" value="Change to single page form" />
-  <h1>Add New {% label %}</h1>
+    <button type="button" class="btn btn-default change_mode hidden-xs hidden-sm pull-right"><span class="glyphicon glyphicon-option-vertical"></span> Change to single page form</button>
+    <h1>Add New {% label %}</h1>
   [% END %]
   </div>
 
