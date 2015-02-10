@@ -24,7 +24,7 @@
   <div class="row">
     <div class="col-md-2">File Name</div>
     <div class="col-md-10">
-      <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]">
+      <a href="/download/[% _id %]/[% fi.file_id %]">
         [% fi.file_name %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.size) %]</span>
     </div>
@@ -65,6 +65,14 @@
       <div class="col-md-2">Last Uploaded</div>
       <div class="col-md-10">
         [% fi.date_updated %]
+      </div>
+    </div>
+    [% END %]
+    [% IF fi.checksum %]
+    <div class="row">
+      <div class="col-md-2">MD5 Checksum</div>
+      <div class="col-md-10">
+        [% fi.checksum %]
       </div>
     </div>
     [% END %]
