@@ -3,7 +3,6 @@
 <!-- BEGIN person_affiliation.tt -->
 
 <form action="/myPUB/person/affiliation" method="POST">
-
   <div class="row innerrow">
     <div class="col-md-12">
       <h4>Department Affiliation</h4>
@@ -11,7 +10,7 @@
   </div>
   <div class="row innerrow">
     <div class="col-md-1">
-      <span class="glyphicon glyphicon-plus btn btn-default" id="plusPersonAFF"></span>
+      <span class="btn btn-default glyphicon glyphicon-plus" id="plusPersonAFF"></span>
     </div>
     <div class="col-md-10" id="person_affiliation">
     [% IF !department %]
@@ -26,7 +25,7 @@
           <input type="button" onclick="selectAffiliation(this);" class="btn select_button affiliation" id="affiliation_select_0" value="Select"/>
         </span>
         <span class="col-md-1">
-          <span class="glyphicon glyphicon-minus btn btn-default" onclick="javascript:document.getElementById('person_aff_autocomplete_0').value = '';document.getElementById('person_aff_idautocomplete_0').value='';document.getElementById('person_aff_autocomplete_0').disabled=false;"></span>
+          <span class="btn btn-default glyphicon glyphicon-minus" onclick="javascript:document.getElementById('person_aff_autocomplete_0').value = '';document.getElementById('person_aff_idautocomplete_0').value='';document.getElementById('person_aff_autocomplete_0').disabled=false;"></span>
         </span>
         <script>
         $(function() {
@@ -58,9 +57,9 @@
         </span>
         <span class="col-md-1">
         [% IF loop.index == 0 %]
-          <span class="glyphicon glyphicon-minus btn btn-default" onclick="javascript:document.getElementById('person_aff_autocomplete_0').value = '';document.getElementById('person_aff_idautocomplete_0').value='';document.getElementById('person_aff_autocomplete_0').disabled=false;"></span>
+          <span class="btn btn-default glyphicon glyphicon-minus" onclick="javascript:document.getElementById('person_aff_autocomplete_0').value = '';document.getElementById('person_aff_idautocomplete_0').value='';document.getElementById('person_aff_autocomplete_0').disabled=false;"></span>
         [% ELSE %]
-          <span class="glyphicon glyphicon-minus single btn btn-default"></span>
+          <span class="btn btn-default glyphicon glyphicon-minus single"></span>
         [% END %]
         </span>
         <script>
@@ -88,9 +87,9 @@
 
   <div class="row innerrow"><!-- button -->
     <div class="col-md-12 buttonrow">
-      <div class="form-group col-md-2 col-md-offset-1">
-        <button type="submit" id="id_save_aff" class="btn btn-default"><span class="glyphicon glyphicon-saved"></span> Save</button>
-      </div>
+      <span class="form-group col-md-2 col-md-offset-1">
+        <button type="submit" id="id_save_aff" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save</button>
+      </span>
     </div>
   </div>
 </form>
@@ -98,27 +97,28 @@
 <hr />
 
 <form action="/myPUB/person/edit_mode" method="POST">
-
   <div class="row innerrow">
     <div class="col-md-12">
-      <h4>Edit Mode</h4>
-    </div>
-    <div class="col-md-6 col-md-offset-1">
-      <select name="edit_mode" class="form-control">
-	<option value="normal"[% IF thisPerson.edit_mode == "normal" OR (!thisPerson.edit_mode AND session.role != "super_admin") %] selected="selected"[% END %]>Normal edit mode (with tabs)</option>
-	<option value="expert"[% IF thisPerson.edit_mode == "expert" OR (!thisPerson.edit_mode AND session.role == "super_admin") %] selected="selected"[% END %]>Extended edit mode (same fields but all on one page)</option>
-      </select>
+      <h4>Default Edit Mode</h4>
     </div>
   </div>
-
-  <div class="row innerrow margin-top1">
-    <div class="col-md-2 col-md-offset-1">
-      <div class="form-group">
-        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-saved"></span> Save</button>
+  <div class="row innerrow">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="row innerrow">
+	<div class="col-md-7">
+	  <select name="edit_mode" class="form-control">
+	    <option value="normal"[% IF thisPerson.edit_mode == "normal" %] selected="selected"[% END %]>Tabbed Form</option>
+	    <option value="expert"[% IF thisPerson.edit_mode == "expert" %] selected="selected"[% END %]>Single Page Form</option>
+	  </select>
+	</div>
       </div>
     </div>
+    <div class="col-md-12 buttonrow margin-top1">
+      <span class="form-group col-md-2 col-md-offset-1">
+        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save</button>
+      </span>
+    </div>
   </div>
-
 </form>
 
 <script>
@@ -152,7 +152,7 @@ function selectAffiliation(element){
 $('#plusPersonAFF').click(function(){
   var items = $('#person_affiliation div.innerrow');
   var index = items.index($('#person_affiliation div.innerrow').last()) + 1;
-  $('#person_affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="person_aff_idautocomplete_' + index + '" /><input type="hidden" name="department.' + index + '.iname" id="person_aff_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="person_aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single btn btn-default"></span></span></div>');
+  $('#person_affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="person_aff_idautocomplete_' + index + '" /><input type="hidden" name="department.' + index + '.iname" id="person_aff_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="person_aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectAffiliation(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="btn btn-default glyphicon glyphicon-minus single"></span></span></div>');
   $('#person_affiliation').bind("click", function(){
     $( "#person_aff_autocomplete_" + index ).autocomplete({
       appendTo: "#aff_dropdown",
