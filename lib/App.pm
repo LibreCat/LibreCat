@@ -44,7 +44,7 @@ sub _authenticate {
 
 =cut
 get '/login' => sub {
-    my $data = { return_url => params->{return_url} };
+    my $data;
     $data->{error_message} = params->{error_message} ||= '';
     $data->{login}         = params->{login}         ||= "";
     template 'login', $data;
@@ -69,11 +69,10 @@ post '/login' => sub {
         session user         => $user->{login};
         session personNumber => $user->{_id};
 
-        forward params->{return_url}, {method => 'GET'} if params->{return_url};
         redirect '/myPUB';
     }
     else {
-        forward '/login',
+        redirect '/login',
             {error_message => 'Wrong username or password!'},
             {method => 'GET'};
     }
@@ -86,7 +85,8 @@ post '/login' => sub {
 =cut
 any '/logout' => sub {
     session->destroy;
-    forward '/login', {method => 'GET'};
+    #forward '/login', {method => 'GET'};
+    redirect '/';
 };
 
 =head2 ANY /access_denied
@@ -96,7 +96,7 @@ any '/logout' => sub {
 =cut
 any '/access_denied' => sub {
     # add an really ugly 403 page ;-)
-    return "Access denied.";
+    return status '403';#"Access denied.";
 };
 
 1;
