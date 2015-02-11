@@ -54,7 +54,7 @@ sub can_download {
     my $access;
     my $file_name;
     map {
-        if ($_->{id} == $file_id) {
+        if ($_->{file_id} == $file_id) {
             $access = $_->{access_level};
             $file_name = $_->{file_name};
         }
@@ -65,8 +65,8 @@ sub can_download {
     } elsif ($access eq 'local' && $ip =~ /^h->{config}->{ip_range}/) {
         return (1, $file_name);
     } elsif ($access eq 'closed') {
-        # closed documents can be downloaded by user if user
-        # can edit the record
+        # closed documents can be downloaded by user
+        #if and only if the user can edit the record
         return (can_edit($id, $login, $role), $file_name);
     } else {
         return (0, '');
