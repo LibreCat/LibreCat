@@ -31,7 +31,7 @@ sub handle_file {
 	my $pub = shift;
 	$pub->{file} = [$pub->{file}] if ref $pub->{file} ne "ARRAY";
 	$pub->{file_order} = [$pub->{file_order}] if ref $pub->{file_order} ne "ARRAY";
-	#delete $pub->{file_order} if $pub->{file_order};
+
 	my $previous_pub = h->publication->get($pub->{_id});
 	my $dest_dir = h->get_file_path($pub->{_id});
 
