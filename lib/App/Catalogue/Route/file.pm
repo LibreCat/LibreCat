@@ -197,7 +197,7 @@ get '/download/:id/:file_id' => sub {
 	my ($ok, $file_name) = can_download(
 				params->{id},
 				params->{file_id},
-				session->{login},
+				session->{user},
 				session->{role},
 				request->address); # or maybe request->remote_host?
 	return '403' unless $ok;
