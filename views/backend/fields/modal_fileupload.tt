@@ -51,13 +51,13 @@
           </script>
         
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="openAccess" onclick="oamode(this.form, true);"/> Open Access (File is freely available, effective immediately)
+            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="open_access" onclick="oamode(this.form, true);"/> Open Access (File is freely available, effective immediately)
           </label>
           <label class="radio">
             <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="local" onclick="oamode(this.form,false);" /> Local Access (UniBi only)
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="admin" onclick="oamode(this.form,false);" /> Closed Access (Author/Reviewer only)
+            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="closed" onclick="oamode(this.form,false);" /> Closed Access (Author/Reviewer only)
           </label>
           <label class="radio">
             <input type="radio" name="accessLevel" id="id_accessLevel_request" value="request" onclick="oamode(this.form,false);" /> Request a Copy (Closed Access except upon request)
@@ -117,16 +117,16 @@
     formData.append("relation", $('#id_select_relation').val());
     
     if($('#id_accessLevel_openAccess').is(':checked')){
-      formData.append("access_level", "openAccess");
+      formData.append("access_level", "open_access");
     }
     else if($('#id_accessLevel_unibi').is(':checked')){
       formData.append("access_level", "local");
     }
     else if($('#id_accessLevel_admin').is(':checked')){
-      formData.append("access_level", "admin");
+      formData.append("access_level", "closed");
     }
     else if($('#id_accessLevel_request').is(':checked')){
-      formData.append("access_level", "admin");
+      formData.append("access_level", "closed");
       formData.append("request_a_copy", "1");
     }
     
@@ -151,7 +151,7 @@
       dataType: "json",
       success: function(data){
         var accessLevel;
-        if(data.access_level == "openAccess"){
+        if(data.access_level == "open_access"){
           accessLevel = "Open Access";
         }
         else if(data.access_level == "local"){
@@ -160,7 +160,7 @@
             accessLevel += "<br />(until " + data.embargo + ")";
           }
         }
-        else if(data.access_level == "admin"){
+        else if(data.access_level == "closed"){
           accessLevel = "Author/Reviewer";
           if(data.embargo){
             accessLevel += "<br />(until " + data.embargo + ")";
