@@ -40,11 +40,12 @@ sub can_edit {
 sub can_delete {
     my ($id, $role) = @_;
 
-    ($role eq 'admin') ? return 1 : return 0;
+    ($role eq 'super_admin') ? return 1 : return 0;
 }
 
 sub can_delete_file {
     my ($id, $user) = @_;
+    return 0;
 }
 
 sub can_download {
