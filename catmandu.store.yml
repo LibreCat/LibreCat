@@ -9,8 +9,15 @@ default:
       session:
         plugins:
           - Datestamps
+
+backup:
+  package: MongoDB
+  options:
+    database_name: PUBBackup
+    bags:
       publication:
         plugins:
+          - Datestamps
           - Versioning
         version_compare_ignore:
           - date_updated
@@ -63,7 +70,7 @@ metrics:
     database_name: PUBMetrics
 
 search:
-  package: Elasticsearch
+  package: ElasticSearch
   options:
     bags:
       project:
@@ -621,12 +628,12 @@ search:
                 'exact': true
                 '<>': true
               field: 'file.year_last_uploaded'
-            yearcreated:
-              op:
-                '=': true
-                'exact': true
-                '<>': true
-              field: 'file.yearCreated'
+#            yearcreated:
+#              op:
+#                '=': true
+#                'exact': true
+#                '<>': true
+#              field: 'file.yearCreated'
             publication:
               op:
                 'any': true
@@ -778,8 +785,7 @@ search:
                 '=': true
                 'exact': true
 
-#    transport: httptiny
-    index_name: pub 
+    index_name: pub
     index_settings:
       analysis:
          analyzer:
@@ -1019,7 +1025,7 @@ search:
             properties:
               open_access: {type: byte}
               year_last_uploaded: {type: date, format: "yyyy"}
-              yearCreated: {type: date, format: "yyyy"}
+#              yearCreated: {type: date, format: "yyyy"}
 
       researcher:
         include_in_all: false
