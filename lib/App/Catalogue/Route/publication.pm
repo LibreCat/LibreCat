@@ -126,15 +126,15 @@ prefix '/myPUB/record' => sub {
             forward '/access_denied';
         }
 
-        foreach my $key ( keys %$params ) {
-            if ( ref $params->{$key} eq "ARRAY" ) {
-                my $i = 0;
-                foreach my $entry ( @{ $params->{$key} } ) {
-                    $params->{ $key . "." . $i } = $entry, $i++;
-                }
-                delete $params->{$key};
-            }
-        }
+#        foreach my $key ( keys %$params ) {
+#            if ( ref $params->{$key} eq "ARRAY" ) {
+#                my $i = 0;
+#                foreach my $entry ( @{ $params->{$key} } ) {
+#                    $params->{ $key . "." . $i } = $entry, $i++;
+#                }
+#                delete $params->{$key};
+#            }
+#        }
 
         $params = h->nested_params($params);
 
@@ -167,7 +167,6 @@ prefix '/myPUB/record' => sub {
 #return to_dumper $params;
         my $result = update_publication($params);
 
-        sleep 1;
         redirect '/myPUB';
     };
 

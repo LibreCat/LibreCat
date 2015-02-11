@@ -41,7 +41,7 @@ sub update_publication {
 
     # html encoding??
     foreach (qw/message/) {
-        $data->{$_} = encode_entities($data->{$_});
+        $data->{$_} = encode_entities($data->{$_}) if $data->{$_};
     }
 
     if($data->{file}){
@@ -96,6 +96,7 @@ sub update_publication {
     my $result = $backup->add($data);
     $search_bag->add($result);
     $search_bag->commit;
+    sleep 1;
 }
 
 sub edit_publication {
