@@ -200,7 +200,7 @@ get '/download/:id/:file_id' => sub {
 				session->{user},
 				session->{role},
 				request->address); # or maybe request->remote_host?
-	return '403' unless $ok;
+	return status '403' unless $ok;
 
 	send_it(params->{id}, $file_name);
 };

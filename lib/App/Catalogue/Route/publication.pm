@@ -164,8 +164,8 @@ prefix '/myPUB/record' => sub {
         	$params->{creator}->{login} = session 'user';
         	$params->{creator}->{id} = session 'personNumber';
         }
-#return to_dumper $params;
-        my $result = update_publication($params);
+
+        update_publication($params);
 
         redirect '/myPUB';
     };
@@ -215,7 +215,7 @@ prefix '/myPUB/record' => sub {
 =cut
 
     get '/preview/:id' => needs login => sub {
-        my $id   = params->{id};
+        my $id = params->{id};
         my $hits = h->publication->get($id);
         $hits->{bag}
             = $hits->{type} eq "researchData" ? "data" : "publication";
@@ -225,8 +225,14 @@ prefix '/myPUB/record' => sub {
         template 'frontdoor/record.tt', $hits;
     };
 
+=head2 GET /publish/:id
+
+Publishes private records, returns to the list.
+
+=cut
+
     get '/publish/:id' => needs login => sub {
-        my $id     = params->{id};
+        my $id = params->{id};
 
         unless (can_edit($id, session->{user}, session->{role})) {
             status '403';
@@ -265,16 +271,15 @@ prefix '/myPUB/record' => sub {
         }
 
         $record->{status} = "public" if $field_check;
-        my $result  = h->publication->add($record);
-        my $publbag = Catmandu->store->bag('publication');
-        $publbag->add($result);
-        h->publication->commit;
+        update_publication($record);
+
+        sleep 1;
         redirect '/myPUB';
     };
 
 =head2 GET /change_mode
 
-    Prints the frontdoor for every record.
+    Changes the layout of the edit form.
 
 =cut
 
@@ -284,17 +289,6 @@ prefix '/myPUB/record' => sub {
 
         $params->{file} = [$params->{file}] if ($params->{file} and ref $params->{file} ne "ARRAY");
         $params->{file_order} = [$params->{file_order}] if ($params->{file_order} and ref $params->{file_order} ne "ARRAY");
-
-#        foreach my $key ( keys %$params ) {
-#            if ( ref $params->{$key} eq "ARRAY" ) {
-#            	$params->{$key} = $params->{$key}->[0];
-#                my $i = 0;
-#                foreach my $entry ( @{ $params->{$key} } ) {
-#                    $params->{ $key . "." . $i } = $entry, $i++;
-#                }
-#                delete $params->{$key};
-#            }
-#        }
 
         $params = h->nested_params($params);
         foreach my $fi (@{$params->{file}}){
@@ -308,6 +302,7 @@ prefix '/myPUB/record' => sub {
 
         template $path, $params;
     };
+
 };
 
 1;
