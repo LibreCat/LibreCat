@@ -1,6 +1,5 @@
 <div id="upload_file" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   
-  <form enctype="multipart/form-data" name="upLoad" id="upLoad">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -9,6 +8,7 @@
       </div>
   
       <div class="modal-body">
+	<form enctype="multipart/form-data" name="upLoad" id="upLoad">
         <input type="hidden" name="file_id" id="id_file_id" value="" />
         <input type="hidden" name="tempid" id="id_temp_id" value="" />
         <input type="hidden" name="record_id" id="id_record_id" value="" />
@@ -35,7 +35,7 @@
         </div>
         
         <h4>Access Level</h4>
-        <div class="form-group">
+        <div class="form-group col-md-offset-1">
           <script type="text/javascript">
           <!--
           function oamode(f, flag) {
@@ -80,12 +80,12 @@
         </div>
       </div>
       <div class="modal-footer">
-        <input type="button" class="btn" value="Submit" name="finalSubmit" id="fileSubmit" />
-        <input type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="Cancel" />
+        <input type="button" class="btn btn-success" value="Submit" name="finalSubmit" id="fileSubmit" />
+        <input type="button" class="btn btn-danger" data-dismiss="modal" aria-hidden="true" value="Cancel" />
       </div>
+      </form>
     </div>
   </div>
-  </form>
 </div>
 
 <script>

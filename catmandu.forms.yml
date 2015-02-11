@@ -35,44 +35,44 @@ field_order:
   basic_fields:
     - bi_doctype
     - doi
-    - title
-    - publication
-    - volume
-    - volume_issue_page
-    - translator
     - writer
-    - email
-    - supervisor
-    - editor
-    - corporate_editor
     - department
     - project
     - thematic_area
-    - publisher
-    - place
-    - series_title
-    - issue
+    - title
+    - alternative_title
+    - publication
+    - editor
+    - corporate_editor
     - edition
+    - place
+    - publisher
+    - year
+    - page
+    - page_range
+    - volume_issue_page
+    - series_title
+    - volume
+    - translator
+    - publication_identifier
+    - publication_status
+    - email
+    - supervisor
+    - issue
     - abstract
     - language
-    - year
     - ddc
     - keyword
     - pacs_class
     - msc_class
     - ccs_class
     - extern
-    - alternative_title
-    - publication_status
     - conference.divider
     - conference.name
     - conference.location
     - conference.start_date
     - conference.end_date
     - conference.date
-    - page
-    - page_range
-    - publication_identifier
     - ipc
     - ipn
     - report_number
@@ -145,6 +145,10 @@ publicationTypes:
           mandatory: 1
           label: "Title"
           placeholder: "Handbook of eBook Publishing"
+        alternative_title: &alternative_title
+          label: "Alternative Title"
+          placeholder: "Handbook of eBook Publishing - with a subtitle"
+          multiple: 1
         writer: &author_translator
           first_name:
             placeholder: "John"
@@ -156,20 +160,9 @@ publicationTypes:
             "Author" : "author"
 #            "Translator" : "translator"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
-        editor: &editor_only
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
-          mandatory: 0
-          multiple: 1
-          label: "Editor"
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
-        corporate_editor: &corporate_editor
-          mandatory: 0
-          multiple: 1
-          label: "Corporate Editor"
-          placeholder: "World Health Organization - Regional Office for Europe (WHO-Europe)"
+        edition: &edition
+          label: "Edition"
+          placeholder: "2"
         department: &department
           label: "Department"
           label_short: "Dept."
@@ -182,18 +175,35 @@ publicationTypes:
         thematic_area: &thematic_area
           label: "Thematic Area"
           label_short: "Them. Area"
+        place: &place
+          label: "Place<br />(of publication)"
+          label_short: "Place"
+          placeholder: "Berlin"
         publisher: &publisher
           label: "Publisher"
           placeholder: "Elsevier"
-        language: &language
-          label: "Language"
-          default: "eng"
-          multiple: 1
         year: &year
           mandatory: 1
           label: "Publishing Year"
           label_short: "Year"
           placeholder: "2015"
+        page: &page
+          label: "Number of Pages"
+          placeholder: "12"
+        series_title: &publication_series
+          label: "Series Title"
+          label_short: "Series Title"
+          placeholder: "E.g. Lecture Notes in Computer Science"
+        volume: &volume
+          label: "Volume"
+          placeholder: "3"
+        publication_identifier: &publication_identifier
+          label: "Publication<br />Identifier"
+          label_short: "Publ. Id."
+          multiple: 1
+        publication_status: &publication_status
+          label: "Publication Status"
+          label_short: "Publ. Status"
       file_upload: &file_upload
         tab_name: "File Upload"
         dropzone_mainDoc:
@@ -213,52 +223,30 @@ publicationTypes:
             label: "Creative Commons Lizenzen"
       supplementary_fields:
         tab_name: "Additional Information"
-        series_title: &publication_series
-          label: "Publication/<br />Series Title"
-          label_short: "Series Title"
-          placeholder: "E.g. Lecture Notes in Computer Science"
         abstract: &abstract
           label: "Abstract"
           label2: "Abstract Language"
           placeholder: "Abstract Text"
           multiple: 1
-        edition: &edition
-          label: "Edition"
-          placeholder: "2"
+        language: &language
+          label: "Language"
+          default: "eng"
+          multiple: 1
         keyword: &keyword
           label: "Keywords"
           placeholder: "Keyword"
           multiple: 1
-        volume: &volume
-         label: "Volume"
-        place: &place
-          label: "Place<br />(of publication)"
-          label_short: "Place"
-          placeholder: "Berlin"
         ddc: &ddc
           label: DDC
-        page: &page
-          label: "Total Pages"
         extern: &extern
           label: "External<br />Publication"
           placeholder: "Published while not employed at Bielefeld University"
-        alternative_title: &alternative_title
-          label: "Alternative Title"
-          placeholder: "Handbook of eBook Publishing - with a subtitle"
-          multiple: 1
-        publication_status: &publication_status
-          label: "Publication Status"
-          label_short: "Publ. Status"
         external_id: &external_id
           label: "External Identifier"
           label_short: "Ext. Id."
           multiple: 1
         message: &message
           label: "Admin Comments"
-        publication_identifier: &publication_identifier
-          label: "Publication<br />Identifier"
-          label_short: "Publ. Id."
-          multiple: 1
         popular_science: &popular_science
           label: "Popular Science"
         ubi_funded: &ubi_funded
@@ -293,7 +281,11 @@ publicationTypes:
           multiple: 1
           label: "Editor"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
-        corporate_editor: *corporate_editor
+        corporate_editor: &corporate_editor
+          mandatory: 0
+          multiple: 1
+          label: "Corporate Editor"
+          placeholder: "World Health Organization - Regional Office for Europe (WHO-Europe)"
         department: *department
         project: *project
         thematic_area: *thematic_area
@@ -330,38 +322,46 @@ publicationTypes:
         title:
           label: "Chapter Title"
           mandatory: 1
+        alternative_title: *alternative_title
         writer: *author_translator
-        editor: *editor_only
+        editor: &editor_only
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 0
+          multiple: 1
+          label: "Book Editor"
+          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         corporate_editor: *corporate_editor
         department: *department
         project: *project
         thematic_area: *thematic_area
+        edition: *edition
+        place: *place
+        publisher: *publisher
+        page_range: &page_range
+          label: "Pages"
+        series_title: *publication_series
         publication:
           label: "Book Title"
           mandatory: 1
         year: *year
-        language: *language
+        volume: *volume
+        publication_identifier: *publication_identifier
+        publication_status: *publication_status
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        series_title: *publication_series
-        place: *place
-        edition: *edition
-        publication_status: *publication_status
-        publisher: *publisher
         abstract: *abstract
         ddc: *ddc
         keyword: *keyword
-        alternative_title: *alternative_title
-        page_range: &page_range
-          label: "Pages"
         extern: *extern
         external_id: *external_id
         message: *message
-        publication_identifier: *publication_identifier
         popular_science: *popular_science
         ubi_funded: *ubi_funded
-        volume: *volume
+        language: *language
       related_material: *related_material
   conferenceabstract:
     label: "Conference Abstract"
@@ -606,30 +606,30 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
+        alternative_title: *alternative_title
         writer: *author_translator
         department: *department
         project: *project
         thematic_area: *thematic_area
         publisher: *publisher
-        language: *language
-        year: *year
-      file_upload: *file_upload
-      supplementary_fields:
-        tab_name: "Additional Information"
-        extern: *extern
-        alternative_title: *alternative_title
         publication: &publication_jtitle
           label: "Journal Title"
           placeholder: "Nature Genetics"
         volume_issue_page: *volume_issue_page
+        year: *year
+        publication_identifier: *publication_identifier
+        publication_status: *publication_status
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
+        extern: *extern
         abstract: *abstract
+        language: *language
         ddc: *ddc
         keyword: *keyword
         popular_science: *popular_science
         quality_controlled: *quality_controlled
         external_id: *external_id
-        publication_identifier: *publication_identifier
-        publication_status: *publication_status
         message: *message
         ubi_funded: *ubi_funded
         conference.divider: *conference_divider

@@ -31,6 +31,7 @@ sub handle_file {
 	my $pub = shift;
 	$pub->{file} = [$pub->{file}] if ref $pub->{file} ne "ARRAY";
 	$pub->{file_order} = [$pub->{file_order}] if ref $pub->{file_order} ne "ARRAY";
+	#delete $pub->{file_order} if $pub->{file_order};
 	my $previous_pub = h->publication->get($pub->{_id});
 	my $dest_dir = h->get_file_path($pub->{_id});
 
@@ -38,13 +39,22 @@ sub handle_file {
 		foreach my $fi (@{$pub->{file}}){
 			$fi = from_json($fi);
 			$fi->{file_id} = new_file() if !$fi->{file_id};
-			#my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
-			push @{$pub->{file_order}}, $fi->{file_id};
+			my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
+			if(defined $index){
+				$pub->{file_order}->[$index] = $fi->{file_id};
+			}
+			else {
+				push @{$pub->{file_order}}, $fi->{file_id};
+			}
 
 			my $filepath = path(h->config->{upload_dir}, $fi->{tempid}, $fi->{file_name});
 			system "mkdir -p $dest_dir" unless -d $dest_dir;
 
 			move($filepath,$dest_dir);
+			
+			# remove tmp-folder
+			#my $path = path(h->config->{upload_dir}, $fi->{tempid});
+			#system "rm -r $path" if -d $path;
 
 			delete $fi->{tempid} if $fi->{tempid};
 			delete $fi->{tempname} if $fi->{tempname};
@@ -59,21 +69,29 @@ sub handle_file {
 			if($fi->{file_id}){
 				$fi->{date_updated} = h->now();
 				#get index of $fi in $previous_pub->{file}
+				my $previous_file;
 				my( $index )= grep { $previous_pub->{file}->[$_]->{file_id} eq $fi->{file_id} } 0..$#{$previous_pub->{file}};
-				my $previous_file = $previous_pub->{file}->[$index];
-				#unlink previous file
-
-				my $file = "$dest_dir/$previous_file->{file_name}";
-				unlink($file);
-				#copy new file to previous file's folder
-				my $filepath = path(h->config->{upload_dir}, $fi->{tempid}, $fi->{file_name});
-				#my $newfilepath = path(h->config->{upload_dir}, $pub->{_id}, $fi->{file_name});
-				move($filepath, $dest_dir);
-
-				delete $fi->{tempid} if $fi->{tempid};
-				delete $fi->{tempname} if $fi->{tempname};
-				delete $fi->{old_file_name} if $fi->{old_file_name};
-				$fi->{file_json} = to_json($fi);
+				if(defined $index and $fi->{tempid}){
+					$previous_file = $previous_pub->{file}->[$index];
+					#unlink previous file
+					my $file = "$dest_dir/$previous_file->{file_name}";
+					unlink($file);
+					#copy new file to previous file's folder
+					my $filepath = path(h->config->{upload_dir}, $fi->{tempid}, $fi->{file_name});
+					move($filepath, $dest_dir);
+					
+					#my $path = path(h->config->{upload_dir}, $fi->{tempid});
+					#system "rm -r $path" if -d $path;
+					
+					delete $fi->{tempid} if $fi->{tempid};
+					delete $fi->{tempname} if $fi->{tempname};
+					delete $fi->{old_file_name} if $fi->{old_file_name};
+					$fi->{file_json} = to_json($fi);
+				}
+				else {
+					# looks like it wasn't an existing file after all
+					# can this even happen???
+				}
 			}
 			#new file
 			else {
@@ -83,11 +101,19 @@ sub handle_file {
 				$fi->{date_updated} = $now;
 
 				my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
-				$pub->{file_order}->[$index] = $fi->{file_id};
+				if(defined $index){
+					$pub->{file_order}->[$index] = $fi->{file_id};
+				}
+				else {
+					push @{$pub->{file_order}}, $fi->{file_id};
+				}
 
 				system "mkdir -p $dest_dir" unless -d $dest_dir;
 				my $filepath = path(h->config->{upload_dir}, $fi->{tempid}, $fi->{file_name});
 				move($filepath, $dest_dir);
+				
+				#my $path = path(h->config->{upload_dir}, $fi->{tempid});
+				#system "rm -r $path" if -d $path;
 
 				delete $fi->{tempid} if $fi->{tempid};
 				delete $fi->{tempname} if $fi->{tempname};
@@ -101,9 +127,19 @@ sub handle_file {
 		# (this makes it possible to discard all changes to a record, including changes to files)
 		foreach my $fil (@{$previous_pub->{file}}){
 			my( $index )= grep { $pub->{file}->[$_]->{file_id} eq $fil->{file_id} } 0..$#{$pub->{file}};
-			if(!$index){
+			if(!defined $index){
 				delete_file($pub->{_id}, $fil->{file_name});
 			}
+		}
+	}
+	
+	foreach my $fi (@{$pub->{file}}){
+		my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{file_id} } 0..$#{$pub->{file_order}};
+		if(defined $index){
+			$fi->{file_order} = sprintf("%03d", $index);
+		}
+		else {
+			$fi->{file_order} = sprintf("%03d", $#{$pub->{file_order}});
 		}
 	}
 

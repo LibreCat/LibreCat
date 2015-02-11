@@ -3,6 +3,8 @@
 
 </div><!-- container -->
 
+<div id="push"></div><!-- for sticky footer -->
+
 </main>
 
 <footer class="panel-footer">

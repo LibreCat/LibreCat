@@ -59,8 +59,8 @@
 	</script>
       </div>
       <div class="col-md-6">
-	<button type="submit" id="saveAuthorIds" class="btn btn-success btn-sm">Save</button>
-	<button type="button" onclick="editAuthorIds('cancel');" class="btn btn-danger btn-sm">Cancel</button>
+	<button type="submit" id="saveAuthorIds" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-ok"></span> Save</button>
+	<button type="button" onclick="editAuthorIds('cancel');" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span>  Cancel</button>
       </div>
     </div>
     </form>

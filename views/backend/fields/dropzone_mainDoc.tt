@@ -20,7 +20,7 @@
       <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.file_id %]">
         <div class="row">
           <div class="col-md-12 col-xs-10 padded">
-            <span class="glyphicon glyphicon-file text-muted"></span> <a href="/myPUB/download/[% _id %]/[% fi.file_id %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a>
+            <span class="glyphicon glyphicon-file text-muted"></span> <a href="/download/[% _id %]/[% fi.file_id %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a>
           </div>
         </div>
         <div class="row">

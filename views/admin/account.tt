@@ -4,96 +4,88 @@
 
 <!-- BEGIN admin/account.tt -->
 
-<div class="row">
-<div class="col-md-11 col-md-offset-1">
-<h2>Manage Account Information</h2>
+<div class="row"><!-- outer row -->
 
-<form role="form" action="/myPUB/admin/account/search" method="GET">
-  <div class="row innerrow">
-  <div class="col-md-5">
-    <label for="id_q">SEARCH by name or PEVZ-ID</label>
-    <div class="input-group">
-      <input type="text" class="form-control" name="q" id="id_q" placeholder="Einstein, A" value="[% qp.q %]">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-search"></span> </i>Search</button>
-      </span>
-    </div><!-- /input-group -->
+  <div class="col-md-10 col-sm-12 col-md-offset-1"> <!-- main content (left) -->
 
-  </div>
-  </div>
-</form>
-
-</div>
-</div>
-
-<div class="row">
-<div class="col-md-12">&nbsp;</div>
-</div>
-
-<div class="row">
-<div class="col-md-11 col-md-offset-1">
-
-<form role="form" action="/myPUB/admin/account/import" method="GET">
-  <div class="row innerrow">
-  <div class="col-md-5">
-    <label for="id_id">IMPORT by PEVZ-ID</label>
-    <div class="input-group">
-      <input type="text" class="form-control" name="id" id="id_id" placeholder="12345" value="[% qp.id %]" required>
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-download"></span> </i>Import</button>
-      </span>
-    </div><!-- /input-group -->
-
-  </div>
-  </div>
-</form>
-[% IF error %]
-    <p class="text-danger">[% error %] <i> <span class="glyphicon glyphicon-pencil"></span></i><a href="/myPUB/admin/account/edit/[% qp.id %]">Edit</a></p>
-[% END %]
-</div>
-</div>
-
-<div class="row">
-<div class="col-md-12">&nbsp;</div>
-</div>
-
-<div class="row innerrow">
-<div class="col-md-11 col-md-offset-1">
-<a href="/myPUB/admin/account/new" class="btn pubbutton"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new account</a>
-</div>
-</div>
-
-
-<div class="row">
-<div class="col-md-12">&nbsp;</div>
-</div>
-
-[% IF hits %]
-<div class="row">
-<div class="col-md-11 col-md-offset-1">
-<h3>[% total ? total : "0" %] Results</h3>
-
-[% INCLUDE pagination.tt %]
-
-[% FOREACH p IN hits %]
-<div class="row innerrow">
-  <div class="col-md-6">
-    <i> <span class="glyphicon glyphicon-pencil"></span></i> <a href="/myPUB/admin/account/edit/[% p._id %]">[% p.full_name %]</a>
-    <span [% IF p.account_status == 'active' %]class="label label-success"
-    [% ELSE %]class="label label-danger"[% END %]>
-    [% p.account_status || 'inactive' %]</span><br />
-    <div style="margin-left:10px;"><span class="text-muted">BIS-ID: [% p._id %]</span></div>
-    <div style="margin-left:10px;">
-      <span class="text-muted">| [% FOREACH dep IN p.department %][% dep.name %] | [% END %]</span>
+    <div class="page-header" id="banner">
+      <h1>
+	Manage Account Information
+      </h1>
     </div>
-  </div>
-</div>
-[% END %]
 
-[% INCLUDE pagination.tt %]
+    <form role="form" action="/myPUB/admin/account/search" method="GET">
+      <div class="row">
+	<div class="col-md-5">
+	  <label for="id_q">SEARCH by name or PEVZ-ID</label>
+	  <div class="input-group">
+	    <input type="text" class="form-control" name="q" id="id_q" placeholder="Einstein, A" value="[% qp.q %]">
+	    <span class="input-group-btn">
+	      <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-search"></span> </i>Search</button>
+	    </span>
+	  </div><!-- /input-group -->
+	</div>
+      </div>
+    </form>
 
-</div>
-</div>
-[% END %]
+    <form role="form" action="/myPUB/admin/account/import" method="GET" class="margin-top1">
+      <div class="row">
+      <div class="col-md-5">
+	<label for="id_id">IMPORT by PEVZ-ID</label>
+	<div class="input-group">
+	  <input type="text" class="form-control" name="id" id="id_id" placeholder="12345" value="[% qp.id %]" required>
+	  <span class="input-group-btn">
+	    <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-download"></span> </i>Import</button>
+	  </span>
+	</div><!-- /input-group -->
+      </div>
+      </div>
+    </form>
+    
+    [% IF error %]
+    <p class="text-danger">[% error %] <i> <span class="glyphicon glyphicon-pencil"></span></i><a href="/myPUB/admin/account/edit/[% qp.id %]">Edit</a></p>
+    [% END %]
+
+    <div class="row col-md-12 margin-top1 margin-bottom2">
+      <a href="/myPUB/admin/account/new" class="btn pubbutton"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new account</a>
+    </div>
+
+    [% IF hits %]
+
+    <div class="row">
+      <div class="col-md-12">
+	<h3>[% total ? total : "0" %] Results</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      [% INCLUDE pagination.tt %]
+    </div>
+
+    <dl class="hitlist">
+    [% FOREACH p IN hits %]
+	<dt>
+	<a href="/myPUB/admin/account/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% p.full_name %]</a>
+	<span [% IF p.account_status == 'active' %]class="label label-success"[% ELSE %]class="label label-danger"[% END %]>
+	[% p.account_status || 'inactive' %]</span>
+	</dt>
+	<dd>
+	<span class="text-muted">BIS-ID: [% p._id %]</span>
+	<span class="text-muted">| [% FOREACH dep IN p.department %][% dep.name %] | [% END %]</span>
+	</dd>
+    [% END %]
+    </dl>
+
+    <div class="row">
+      [% INCLUDE pagination.tt %]
+    </div>
+
+    [% END %]
+
+  </div><!-- main content (left) -->
+
+</div><!-- outer row -->
 
 <!-- END admin/account.tt -->
+
+[% INCLUDE footer.tt %]

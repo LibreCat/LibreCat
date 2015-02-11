@@ -82,7 +82,8 @@ sub update_publication {
 
     # citations
     use Citation;
-    $data->{citation} = Citation::index_citation_update($data,0,'') ||= {};
+    my $response = Citation::index_citation_update($data,0,'');
+    $data->{citation} = $response if $response;
 
     my $search_bag = Catmandu->store('search')->bag('publication');
     my $backup = Catmandu->store('backup')->bag('publication');

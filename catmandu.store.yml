@@ -70,7 +70,7 @@ metrics:
     database_name: PUBMetrics
 
 search:
-  package: Elasticsearch
+  package: ElasticSearch
   options:
     bags:
       project:
@@ -628,12 +628,12 @@ search:
                 'exact': true
                 '<>': true
               field: 'file.year_last_uploaded'
-            yearcreated:
-              op:
-                '=': true
-                'exact': true
-                '<>': true
-              field: 'file.yearCreated'
+#            yearcreated:
+#              op:
+#                '=': true
+#                'exact': true
+#                '<>': true
+#              field: 'file.yearCreated'
             publication:
               op:
                 'any': true
@@ -1026,7 +1026,7 @@ search:
             properties:
               open_access: {type: byte}
               year_last_uploaded: {type: date, format: "yyyy"}
-              yearCreated: {type: date, format: "yyyy"}
+#              yearCreated: {type: date, format: "yyyy"}
 
       researcher:
         include_in_all: false

@@ -413,17 +413,17 @@ $(function () {
 	$(".dropzone").sortable({
 		containerSelector: 'div.dz-preview',
 	    itemSelector: 'div.dz-preview',
-	    onDrop: function ($item, container, _super) {
-	    	var id = $item.attr('id');
+	    update: function (event, ui) {
+	    	var id = ui.item.attr('id');
 	    	$('#sortFilesInput input[value="' + id + '"]').remove();
-	    	if($item.index() == 1){
+	    	if(ui.item.index() == 1){
 	    		$('#sortFilesInput').prepend('<input type="hidden" name="file_order" id="file_order_' + id + '" value="' + id + '"/>');
 	    	}
 	    	else {
-	    		var itemindex = $item.index() - 1;
+	    		var itemindex = ui.item.index() - 1;
 	    		$('#sortFilesInput input:nth-child(' + itemindex + ')').after('<input type="hidden" name="file_order" id="file_order_' + id + '" value="' + id + '"/>');
 	    	}
-	    	$item.removeClass("dragged").removeAttr("style");
+	    	ui.item.removeClass("dragged").removeAttr("style");
 	    	$("body").removeClass("dragging");
 	    }
 	});

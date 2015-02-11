@@ -246,16 +246,13 @@ sub index_citation_update {
 	use Sys::Hostname;
 	my $host = hostname;
 	my $hostname;
-	if($host =~ /pub-dev.ub/){
-		$hostname = 'pub-dev.ub';
-	}
-	elsif($host =~ /pub3.ub/){
+	if($host =~ /pub3.ub/){
 		$hostname = 'pub3.ub';
 	}
 	else {
 		$hostname = 'pub';
 	}
-	my $citeproc_url = 'http://' . $hostname . '.uni-bielefeld.de' . $conf->{citation}->{url};
+	my $citeproc_url = 'http://' . $host . '.uni-bielefeld.de' . $conf->{citation}->{url};
 
 	my $citation;
 	my $styleList = $conf->{citation}->{styles};
