@@ -167,6 +167,7 @@ prefix '/myPUB/record' => sub {
 #return to_dumper $params;
         my $result = update_publication($params);
 
+        sleep 1;
         redirect '/myPUB';
     };
 
