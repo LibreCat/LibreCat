@@ -785,6 +785,7 @@ search:
                 '=': true
                 'exact': true
 
+#    transport: httptiny
     index_name: pub
     index_settings:
       analysis:

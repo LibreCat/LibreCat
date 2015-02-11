@@ -91,7 +91,7 @@
               [% INCLUDE hits.tt %]
             </div>
 
-            <div class="col-md-8 col-md-offset-1">
+            <div class="col-md-3 col-md-offset-1">
               [% INCLUDE websites/login_box.tt %]
               [% INCLUDE facets.tt %]
               [% INCLUDE websites/logo_contact.tt %]

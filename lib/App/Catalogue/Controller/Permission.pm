@@ -64,9 +64,9 @@ sub can_download {
         return (1, $file_name);
     } elsif ($access eq 'local' && $ip =~ /^h->{config}->{ip_range}/) {
         return (1, $file_name);
-    } elsif ($access eq 'admin') {
-        # closed documents can be downloaded by user if user
-        # can edit the record
+    } elsif ($access eq 'closed') {
+        # closed documents can be downloaded by user
+        #if and only if the user can edit the record
         return (can_edit($id, $login, $role), $file_name);
     } else {
         return (0, '');

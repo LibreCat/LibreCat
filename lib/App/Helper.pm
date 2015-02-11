@@ -204,7 +204,7 @@ sub pretty_byte_size {
 	return human_byte_size($number);
 }
 
-sub generateURN {
+sub generate_urn {
     my ($self, $prefix, $id) = @_;
     my $nbn = $prefix . $id;
     my $weighting  = ' 012345678 URNBDE:AC FGHIJLMOP QSTVWXYZ- 9K_ / . +#';

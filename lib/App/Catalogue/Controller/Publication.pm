@@ -3,6 +3,7 @@ package App::Catalogue::Controller::Publication;
 #use lib qw(/srv/www/sbcat/lib/extension);
 use Catmandu::Sane;
 use Catmandu;
+use Catmandu::Fix qw/maybe_add_urn/;
 use App::Helper;
 use App::Catalogue::Controller::Corrector qw/delete_empty_fields correct_hash_array correct_writer correct_publid/;
 use App::Catalogue::Controller::File qw/handle_file delete_file/;
@@ -68,35 +69,33 @@ sub update_publication {
     	}
     }
 
-    my $return = update_related_material($data);
+    update_related_material($data);
 
     $data = delete_empty_fields($data);
     if($data->{finalSubmit} and $data->{finalSubmit} eq "recPublish"){
     	$data->{status} = "public";
     }
 
+    my $fixer = Catmandu::Fix->new(fixes => [
+        'maybe_add_urn()',
+        ]);
+
     # citations
     use Citation;
-    my $response = $data->{citation} = Citation::index_citation_update($data,0,'');
+    my $response = Citation::index_citation_update($data,0,'');
+    $data->{citation} = $response if $response;
+
     my $search_bag = Catmandu->store('search')->bag('publication');
     my $backup = Catmandu->store('backup')->bag('publication');
 
-    $data->{citation} = $response if $response;
+#    $data->{date_updated} = h->now();
+#    $data->{date_created} = $data->{date_updated} if !$data->{date_created};
+    $fixer->fix($data);
 
-    #$data->{date_updated} = h->now();
-    #$data->{date_created} = $data->{date_updated} if !$data->{date_created};
-
-    #if ( $validator->is_valid($data) ) {
-
-    	my $result = $backup->add($data);
-        $search_bag->add($result);
-        $search_bag->commit;
-        return $result;
-    #}
-    #else {
-    #    croak join(@{$validator->last_errors}, ' | ');
-    #}
-
+    #compare version!
+    my $result = $backup->add($data);
+    $search_bag->add($result);
+    $search_bag->commit;
 }
 
 sub edit_publication {

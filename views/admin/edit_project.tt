@@ -4,425 +4,432 @@
 
 <div class="row">
 
-<div class="col-md-9 col-md-offset-1">
-  [% IF name %]
-  <h3>[% name %]</h3>
-  [% ELSE %]
-  <h3>Add new project</h3>
-  [% END %]
+  <div class="col-md-10 col-sm-12 col-md-offset-1"> <!-- main content (left) -->
 
-  <form action="/myPUB/admin/project/update" method="POST">
-    <input type="hidden" name="date_created" value="[% date_created %]" />
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_id">ID<span class="starMandatory"></span></label></div>
-      <div class="col-md-2 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control" readonly="readonly" required>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_name">Name<span class="starMandatory"></span></label></div>
-      <div class="col-md-10 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="text" name="name" id="id_name" value="[% name %]" class="form-control" required>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_acronym">Acronym</label></div>
-      <div class="col-md-10 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="text" name="acronym" id="id_acronym" value="[% acronym %]" class="form-control">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_alternative_name">Alternative Name</label></div>
-      <div class="col-md-10 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="text" name="alternative_name" id="id_alternative_name" value="[% alternative_name %]" class="form-control">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_url">URL</label></div>
-      <div class="col-md-10 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="text" name="url" id="id_url" value="[% url %]" class="form-control">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_grant_number">Grant Number</label></div>
-      <div class="col-md-10 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="text" name="grant_number" id="id_grant_number" value="[% grant_number %]" class="form-control">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_psp_element">PSP-Element</label></div>
-      <div class="col-md-10 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="text" name="psp_element" id="id_psp_element" value="[% psp_element %]" class="form-control">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_description">Description</label></div>
-      <div class="col-md-10 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <textarea name="description" id="id_description" class="form-control">[% description %]</textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_active">Active</label></div>
-      <div class="col-md-1 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="checkbox" name="active" id="id_active" value="1" [% IF active %]checked="checked"[% END %]>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_start_date">Start Date</label></div>
-      <div class="col-md-3 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="date" name="start_date" id="id_start_date" value="[% start_date %]" class="form-control" placeholder="YYYY-MM-DD" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_end_date">End Date</label></div>
-      <div class="col-md-3 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="date" name="end_date" id="id_end_date" value="[% end_date %]" class="form-control" placeholder="YYYY-MM-DD" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label>Department <span class="glyphicon glyphicon-plus" onclick="add_field('department');"></span>
-      </label></div>
-      <div class="col-md-10" id="department">
-      [% IF !department %]
-        <div class="form-group row innerrow">
-          <input type="hidden" name="department.0.id" id="dp_idautocomplete_0" />
-          <input type="hidden" name="department.0.name" id="dp_nameautocomplete_0" />
-
-          <span class="col-md-7">
-            <input type="text" class="form-control" onfocus="enable_autocomplete('dp', 0);" id="dp_autocomplete_0" value="" />
-          </span>
-          <span class="col-md-2">
-            <button type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0">Select</button>
-          </span>
-          <span class="col-md-1">
-            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
-          </span>
-        </div>
+    <div class="page-header" id="banner">
+      <h1>
+      [% IF name %]
+      Edit Project "[% name %]"
       [% ELSE %]
-      [% FOREACH dept IN department %]
-        <div class="form-group row innerrow">
-          <input type="hidden" name="department.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
-          <input type="hidden" name="department.[% loop.index %].name" id="dp_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
-          <span class="col-md-7">
-            <input type="text" class="form-control" onfocus="enable_autocomplete('dp', [% loop.index %]);" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
-          </span>
-          <span class="col-md-2">
-            <button type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]">Select</button>
-          </span>
-          <span class="col-md-1">
-            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
-          </span>
-          </div>
+      Add new project
       [% END %]
-      [% END %]
-        <div class="modal" id="select_modal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"></h4>
-                <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
-              </div>
-              <div class="modal-body">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_owner">Coordinator</label></div>
-      <div class="col-md-10">
-        <div class="row innerrow">
-          <div class="col-md-5 form-group">
-            <input type="text" name="owner.0.first_name" id="id_owner_first_name" value="[% owner.0.first_name %]" class="form-control" placeholder="First Name" />
-          </div>
-          <div class="col-md-5 form-group">
-            <input type="text" name="owner.0.last_name" id="id_owner_last_name" value="[% owner.0.last_name %]" class="form-control" placeholder="Last Name" />
-          </div>
-          <span class="col-md-2 form-group">
-            <button type="button" class="btn btn-default btn-xs" id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
-            <button type="button" id="revert_0" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
-            <script>
-              $('#revert_0').tooltip();
-            </script>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_designated_editor">Designated Editor</label></div>
-      <div class="col-md-10">
-        <div class="row innerrow">
-          <div class="col-md-5 form-group">
-            <input type="text" name="designated_editor.0.first_name" id="id_designated_editor_first_name" value="[% designated_editor.0.first_name %]" class="form-control" placeholder="First Name" />
-          </div>
-          <div class="col-md-5 form-group">
-            <input type="text" name="designated_editor.0.last_name" id="id_designated_editor_last_name" value="[% designated_editor.0.last_name %]" class="form-control" placeholder="Last Name" />
-          </div>
-          <span class="col-md-2">
-            <button type="button" class="btn btn-default btn-xs" id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
-            <button type="button" id="revert_0" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
-            <script>
-              $('#revert_0').tooltip();
-            </script>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_principal_investigator">Principal Investigator</label> <span class="glyphicon glyphicon-plus" onclick="add_field('principal_investigator')"></span></div>
-      <div class="col-md-10" id="principal_investigator">
-      [% IF !principal_investigator %]
-        <div class="form-group row innerrow">
-          <input type="hidden" id="principal_investigator_orig_first_name_0" value="" />
-          <input type="hidden" id="principal_investigator_orig_last_name_0" value="" />
-          <div class="col-md-5">
-            <input type="text" name="principal_investigator.0.first_name" id="principal_investigator_first_name_0" value="[% principal_investigator.0.first_name %]" class="form-control" placeholder="First Name" />
-          </div>
-          <div class="col-md-5">
-            <input type="text" name="principal_investigator.0.last_name" id="principal_investigator_last_name_0" value="[% principal_investigator.0.last_name %]" class="form-control" placeholder="Last Name" />
-          </div>
-          <input type="hidden" id="principal_investigator_id_0" name="principal_investigator.0.id" value="" />
-          <input type="hidden" id="principal_investigator_full_name_0" name="principal_investigator.0.full_name" value="">
-          <span class="col-md-2">
-            <button type="button" class="btn btn-default btn-xs" id="principal_investigator_link_pevz_0" onclick="linkPevz(this);" data-type="principal_investigator_"><img id="principal_investigator_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
-            <button type="button" id="principal_investigator_revert_0" data-type="principal_investigator_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
-            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
-            <script>
-              $('#revert_0').tooltip();
-            </script>
-          </span>
-        </div>
-      [% ELSE %]
-        [% FOREACH pi IN principal_investigator %]
-        <div class="form-group row innerrow">
-          <input type="hidden" id="principal_investigator_orig_first_name_[% loop.index %]" value="[% pi.first_name %]" />
-          <input type="hidden" id="principal_investigator_orig_last_name_[% loop.index %]" value="[% pi.last_name %]" />
-          <div class="col-md-5">
-            <input type="text" name="principal_investigator.[% loop.index %].first_name" id="id_principal_investigator_[% loop.index %]_first_name" value="[% pi.first_name %]" class="form-control" placeholder="First Name" />
-          </div>
-          <div class="col-md-5">
-            <input type="text" name="principal_investigator.[% loop.index %].last_name" id="id_principal_investigator_[% loop.index %]_last_name" value="[% pi.last_name %]" class="form-control" placeholder="Last Name" />
-          </div>
-          <input type="hidden" id="principal_investigator_id_0" name="principal_investigator.0.id" value="" />
-          <input type="hidden" id="principal_investigator_full_name_0" name="principal_investigator.0.full_name" value="">
-          <span class="col-md-2">
-            <button type="button" class="btn btn-default btn-xs" id="principal_investigator_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="principal_investigator_"><img id="principal_investigator_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
-            <button type="button" id="principal_investigator_revert_[% loop.index %]" data-type="principal_investigator_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
-            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
-            <script>
-              $('#revert_[% loop.index %]').tooltip();
-            </script>
-          </span>
-        </div>
-        [% END %]
-      [% END %]
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_member">Members</label> <span class="glyphicon glyphicon-plus" onclick="add_field('member');"></span></div>
-      <div class="col-md-10" id="member">
-      [% IF !member %]
-        <div class="form-group row innerrow">
-          <input type="hidden" id="member_orig_first_name_0" value="[% name.first_name %]" />
-          <input type="hidden" id="member_orig_last_name_0" value="[% name.last_name %]" />
-          <div class="col-md-5">
-            <input type="text" name="member.0.first_name" id="member_first_name_0" value="[% member.0.first_name %]" class="form-control" placeholder="First Name" />
-          </div>
-          <div class="col-md-5">
-            <input type="text" name="member.0.last_name" id="member_last_name_0" value="[% member.0.last_name %]" class="form-control" placeholder="Last Name" />
-          </div>
-          <input type="hidden" id="member_id_0" name="member.0.id" value="" />
-          <input type="hidden" id="member_full_name_0" name="member.0.full_name" value="">
-          <span class="col-md-2">
-            <button type="button" class="btn btn-default btn-xs" id="member_link_pevz_0" onclick="linkPevz(this);" data-type="member_"><img id="member_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
-            <button type="button" id="member_revert_0" data-type="member_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
-            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
-            <script>
-              $('#revert_0').tooltip();
-            </script>
-          </span>
-        </div>
-      [% ELSE %]
-        [% FOREACH mem IN member %]
-        <div class="form-group row innerrow">
-          <input type="hidden" id="member_orig_first_name_[% loop.index %]" value="[% mem.first_name %]" />
-          <input type="hidden" id="member_orig_last_name_[% loop.index %]" value="[% mem.last_name %]" />
-          <div class="col-md-5">
-            <input type="text" name="member.[% loop.index %].first_name" id="member_first_name_[% loop.index %]" value="[% mem.first_name %]" class="form-control" placeholder="First Name" />
-          </div>
-          <div class="col-md-5">
-            <input type="text" name="member.[% loop.index %].last_name" id="member_last_name_[% loop.index %]" value="[% mem.last_name %]" class="form-control" placeholder="Last Name" />
-          </div>
-          <span class="col-md-2">
-            <button type="button" class="btn btn-default btn-xs" id="member_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="member_"><img id="member_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
-            <button type="button" id="member_revert_[% loop.index %]" data-type="member_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
-            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
-            <script>
-              $('#revert_[% loop.index %]').tooltip();
-            </script>
-          </span>
-        </div>
-        [% END %]
-      [% END %]
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_cooperator">Cooperators</label> <span class="glyphicon glyphicon-plus" onclick="add_field('cooperator');"></span></div>
-      <div class="col-md-10" id="cooperator">
-      [% IF !cooperator %]
-      <div class="form-group row innerrow">
-        <div class="col-md-11">
-          <input type="text" name="cooperator.0" id="id_cooperator_0" value="" class="form-control" />
-        </div>
-        <div class="col-md-1">
-          <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
-        </div>
-      </div>
-      [% ELSE %]
-        [% FOREACH co IN cooperator %]
-        <div class="form-group row innerrow">
-          <div class="col-md-11">
-            <input type="text" name="cooperator.[% loop.index %]" id="id_cooperator_[% loop.index %]" value="[% co %]" class="form-control" />
-          </div>
-          <div class="col-md-1">
-            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
-          </div>
-        </div>
-        [% END %]
-      [% END %]
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_funder">Ext. Funders</label> <span class="glyphicon glyphicon-plus" onclick="add_field('funder');"></span></div>
-      <div class="col-md-10" id="funder">
-      [% IF !funder %]
-      <div class="form-group row innerrow">
-        <div class="col-md-11">
-          <input type="text" name="funder.0" id="id_funder_0" value="[% funder.0 %]" class="form-control" />
-        </div>
-        <div class="col-md-1">
-          <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
-        </div>
-      </div>
-      [% ELSE %]
-        [% FOREACH fun IN funder %]
-        <div class="form-group row innerrow">
-          <div class="col-md-11">
-            <input type="text" name="funder.[% loop.index %]" id="id_funder_[% loop.index %]" value="[% fun %]" class="form-control" />
-          </div>
-          <div class="col-md-1">
-            <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
-          </div>
-        </div>
-        [% END %]
-      [% END %]
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_funded">Ext. Funded</label></div>
-      <div class="col-md-1 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="checkbox" name="funded" id="id_funded" value="1" [% IF funded %]checked="checked"[% END %]>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_call_identifier">Identifier</label></div>
-      <div class="col-md-10 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="text" name="call_identifier" id="id_call_identifier" value="[% call_identifier %]" class="form-control">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row innerrow">
-      <div class="col-md-2"><label for="id_sc39">SC39</label></div>
-      <div class="col-md-1 form-group">
-        <div class="row innerrow">
-          <div class="col-md-12">
-            <input type="checkbox" name="sc39" id="id_sc39" value="1" [% IF sc39 %]checked="checked"[% END %]>
-          </div>
-        </div>
-      </div>
+      </h1>
     </div>
 
 
-    <div class="row innerrow"><!-- button -->
-      <div class="col-md-12 buttonrow">
-      <span class="form-grou col-md-2">&nbsp;</span>
-      <span class="form-group col-md-2">
-        <button type="button" class="btn btn-default cancel-button">Close <img src="/images/edit-cancel.png"/></button>
-      </span>
-      <span class="form-group col-md-2">
-        <button type="submit" id="id_do_nothing" class="btn btn-default">Save <img src="/images/edit-save.png"/></button>
-      </span>
+    <form action="/myPUB/admin/project/update" method="POST">
+      <input type="hidden" name="date_created" value="[% date_created %]" />
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_id">ID<span class="starMandatory"></span></label></div>
+	<div class="col-md-2 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control" readonly="readonly" required>
+	    </div>
+	  </div>
+	</div>
       </div>
-    </div>
-  </form>
-  
-  <div class="modal" id="linkPevzModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Several PEVZ Accounts found... make a choice</h4>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_name">Name<span class="starMandatory"></span></label></div>
+	<div class="col-md-10 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="text" name="name" id="id_name" value="[% name %]" class="form-control" required>
+	    </div>
+	  </div>
+	</div>
       </div>
-      <div class="modal-body">
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_acronym">Acronym</label></div>
+	<div class="col-md-10 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="text" name="acronym" id="id_acronym" value="[% acronym %]" class="form-control">
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_alternative_name">Alternative Name</label></div>
+	<div class="col-md-10 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="text" name="alternative_name" id="id_alternative_name" value="[% alternative_name %]" class="form-control">
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_url">URL</label></div>
+	<div class="col-md-10 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="text" name="url" id="id_url" value="[% url %]" class="form-control">
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_grant_number">Grant Number</label></div>
+	<div class="col-md-10 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="text" name="grant_number" id="id_grant_number" value="[% grant_number %]" class="form-control">
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_psp_element">PSP-Element</label></div>
+	<div class="col-md-10 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="text" name="psp_element" id="id_psp_element" value="[% psp_element %]" class="form-control">
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_description">Description</label></div>
+	<div class="col-md-10 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <textarea name="description" id="id_description" class="form-control">[% description %]</textarea>
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_active">Active</label></div>
+	<div class="col-md-1 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="checkbox" name="active" id="id_active" value="1" [% IF active %]checked="checked"[% END %]>
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_start_date">Start Date</label></div>
+	<div class="col-md-3 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="date" name="start_date" id="id_start_date" value="[% start_date %]" class="form-control" placeholder="YYYY-MM-DD" />
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_end_date">End Date</label></div>
+	<div class="col-md-3 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="date" name="end_date" id="id_end_date" value="[% end_date %]" class="form-control" placeholder="YYYY-MM-DD" />
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label>Department <span class="glyphicon glyphicon-plus" onclick="add_field('department');"></span>
+	</label></div>
+	<div class="col-md-10" id="department">
+	[% IF !department %]
+	  <div class="form-group row innerrow">
+	    <input type="hidden" name="department.0.id" id="dp_idautocomplete_0" />
+	    <input type="hidden" name="department.0.name" id="dp_nameautocomplete_0" />
+
+	    <span class="col-md-7">
+	      <input type="text" class="form-control" onfocus="enable_autocomplete('dp', 0);" id="dp_autocomplete_0" value="" />
+	    </span>
+	    <span class="col-md-2">
+	      <button type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_0">Select</button>
+	    </span>
+	    <span class="col-md-1">
+	      <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
+	    </span>
+	  </div>
+	[% ELSE %]
+	[% FOREACH dept IN department %]
+	  <div class="form-group row innerrow">
+	    <input type="hidden" name="department.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+	    <input type="hidden" name="department.[% loop.index %].name" id="dp_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
+	    <span class="col-md-7">
+	      <input type="text" class="form-control" onfocus="enable_autocomplete('dp', [% loop.index %]);" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+	    </span>
+	    <span class="col-md-2">
+	      <button type="button" onclick="selectButton(this);" class="btn select_button department" id="department_select_[% loop.index %]">Select</button>
+	    </span>
+	    <span class="col-md-1">
+	      <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
+	    </span>
+	    </div>
+	[% END %]
+	[% END %]
+	  <div class="modal" id="select_modal">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		  <h4 class="modal-title"></h4>
+		  <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
+		</div>
+		<div class="modal-body">
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_owner">Coordinator</label></div>
+	<div class="col-md-10">
+	  <div class="row innerrow">
+	    <div class="col-md-5 form-group">
+	      <input type="text" name="owner.0.first_name" id="id_owner_first_name" value="[% owner.0.first_name %]" class="form-control" placeholder="First Name" />
+	    </div>
+	    <div class="col-md-5 form-group">
+	      <input type="text" name="owner.0.last_name" id="id_owner_last_name" value="[% owner.0.last_name %]" class="form-control" placeholder="Last Name" />
+	    </div>
+	    <span class="col-md-2 form-group">
+	      <button type="button" class="btn btn-default btn-xs" id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+	      <button type="button" id="revert_0" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+	      <script>
+		$('#revert_0').tooltip();
+	      </script>
+	    </span>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_designated_editor">Designated Editor</label></div>
+	<div class="col-md-10">
+	  <div class="row innerrow">
+	    <div class="col-md-5 form-group">
+	      <input type="text" name="designated_editor.0.first_name" id="id_designated_editor_first_name" value="[% designated_editor.0.first_name %]" class="form-control" placeholder="First Name" />
+	    </div>
+	    <div class="col-md-5 form-group">
+	      <input type="text" name="designated_editor.0.last_name" id="id_designated_editor_last_name" value="[% designated_editor.0.last_name %]" class="form-control" placeholder="Last Name" />
+	    </div>
+	    <span class="col-md-2">
+	      <button type="button" class="btn btn-default btn-xs" id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+	      <button type="button" id="revert_0" data-type="" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+	      <script>
+		$('#revert_0').tooltip();
+	      </script>
+	    </span>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_principal_investigator">Principal Investigator</label> <span class="glyphicon glyphicon-plus" onclick="add_field('principal_investigator')"></span></div>
+	<div class="col-md-10" id="principal_investigator">
+	[% IF !principal_investigator %]
+	  <div class="form-group row innerrow">
+	    <input type="hidden" id="principal_investigator_orig_first_name_0" value="" />
+	    <input type="hidden" id="principal_investigator_orig_last_name_0" value="" />
+	    <div class="col-md-5">
+	      <input type="text" name="principal_investigator.0.first_name" id="principal_investigator_first_name_0" value="[% principal_investigator.0.first_name %]" class="form-control" placeholder="First Name" />
+	    </div>
+	    <div class="col-md-5">
+	      <input type="text" name="principal_investigator.0.last_name" id="principal_investigator_last_name_0" value="[% principal_investigator.0.last_name %]" class="form-control" placeholder="Last Name" />
+	    </div>
+	    <input type="hidden" id="principal_investigator_id_0" name="principal_investigator.0.id" value="" />
+	    <input type="hidden" id="principal_investigator_full_name_0" name="principal_investigator.0.full_name" value="">
+	    <span class="col-md-2">
+	      <button type="button" class="btn btn-default btn-xs" id="principal_investigator_link_pevz_0" onclick="linkPevz(this);" data-type="principal_investigator_"><img id="principal_investigator_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+	      <button type="button" id="principal_investigator_revert_0" data-type="principal_investigator_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+	      <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
+	      <script>
+		$('#revert_0').tooltip();
+	      </script>
+	    </span>
+	  </div>
+	[% ELSE %]
+	  [% FOREACH pi IN principal_investigator %]
+	  <div class="form-group row innerrow">
+	    <input type="hidden" id="principal_investigator_orig_first_name_[% loop.index %]" value="[% pi.first_name %]" />
+	    <input type="hidden" id="principal_investigator_orig_last_name_[% loop.index %]" value="[% pi.last_name %]" />
+	    <div class="col-md-5">
+	      <input type="text" name="principal_investigator.[% loop.index %].first_name" id="id_principal_investigator_[% loop.index %]_first_name" value="[% pi.first_name %]" class="form-control" placeholder="First Name" />
+	    </div>
+	    <div class="col-md-5">
+	      <input type="text" name="principal_investigator.[% loop.index %].last_name" id="id_principal_investigator_[% loop.index %]_last_name" value="[% pi.last_name %]" class="form-control" placeholder="Last Name" />
+	    </div>
+	    <input type="hidden" id="principal_investigator_id_0" name="principal_investigator.0.id" value="" />
+	    <input type="hidden" id="principal_investigator_full_name_0" name="principal_investigator.0.full_name" value="">
+	    <span class="col-md-2">
+	      <button type="button" class="btn btn-default btn-xs" id="principal_investigator_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="principal_investigator_"><img id="principal_investigator_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+	      <button type="button" id="principal_investigator_revert_[% loop.index %]" data-type="principal_investigator_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+	      <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
+	      <script>
+		$('#revert_[% loop.index %]').tooltip();
+	      </script>
+	    </span>
+	  </div>
+	  [% END %]
+	[% END %]
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_member">Members</label> <span class="glyphicon glyphicon-plus" onclick="add_field('member');"></span></div>
+	<div class="col-md-10" id="member">
+	[% IF !member %]
+	  <div class="form-group row innerrow">
+	    <input type="hidden" id="member_orig_first_name_0" value="[% name.first_name %]" />
+	    <input type="hidden" id="member_orig_last_name_0" value="[% name.last_name %]" />
+	    <div class="col-md-5">
+	      <input type="text" name="member.0.first_name" id="member_first_name_0" value="[% member.0.first_name %]" class="form-control" placeholder="First Name" />
+	    </div>
+	    <div class="col-md-5">
+	      <input type="text" name="member.0.last_name" id="member_last_name_0" value="[% member.0.last_name %]" class="form-control" placeholder="Last Name" />
+	    </div>
+	    <input type="hidden" id="member_id_0" name="member.0.id" value="" />
+	    <input type="hidden" id="member_full_name_0" name="member.0.full_name" value="">
+	    <span class="col-md-2">
+	      <button type="button" class="btn btn-default btn-xs" id="member_link_pevz_0" onclick="linkPevz(this);" data-type="member_"><img id="member_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+	      <button type="button" id="member_revert_0" data-type="member_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+	      <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
+	      <script>
+		$('#revert_0').tooltip();
+	      </script>
+	    </span>
+	  </div>
+	[% ELSE %]
+	  [% FOREACH mem IN member %]
+	  <div class="form-group row innerrow">
+	    <input type="hidden" id="member_orig_first_name_[% loop.index %]" value="[% mem.first_name %]" />
+	    <input type="hidden" id="member_orig_last_name_[% loop.index %]" value="[% mem.last_name %]" />
+	    <div class="col-md-5">
+	      <input type="text" name="member.[% loop.index %].first_name" id="member_first_name_[% loop.index %]" value="[% mem.first_name %]" class="form-control" placeholder="First Name" />
+	    </div>
+	    <div class="col-md-5">
+	      <input type="text" name="member.[% loop.index %].last_name" id="member_last_name_[% loop.index %]" value="[% mem.last_name %]" class="form-control" placeholder="Last Name" />
+	    </div>
+	    <span class="col-md-2">
+	      <button type="button" class="btn btn-default btn-xs" id="member_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="member_"><img id="member_Authorized0" src="/images/biNotAuthorized.png" border="0" alt="Not Authorized" /></button>
+	      <button type="button" id="member_revert_[% loop.index %]" data-type="member_" class="btn btn-default" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></button>
+	      <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
+	      <script>
+		$('#revert_[% loop.index %]').tooltip();
+	      </script>
+	    </span>
+	  </div>
+	  [% END %]
+	[% END %]
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_cooperator">Cooperators</label> <span class="glyphicon glyphicon-plus" onclick="add_field('cooperator');"></span></div>
+	<div class="col-md-10" id="cooperator">
+	[% IF !cooperator %]
+	<div class="form-group row innerrow">
+	  <div class="col-md-11">
+	    <input type="text" name="cooperator.0" id="id_cooperator_0" value="" class="form-control" />
+	  </div>
+	  <div class="col-md-1">
+	    <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
+	  </div>
+	</div>
+	[% ELSE %]
+	  [% FOREACH co IN cooperator %]
+	  <div class="form-group row innerrow">
+	    <div class="col-md-11">
+	      <input type="text" name="cooperator.[% loop.index %]" id="id_cooperator_[% loop.index %]" value="[% co %]" class="form-control" />
+	    </div>
+	    <div class="col-md-1">
+	      <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
+	    </div>
+	  </div>
+	  [% END %]
+	[% END %]
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_funder">Ext. Funders</label> <span class="glyphicon glyphicon-plus" onclick="add_field('funder');"></span></div>
+	<div class="col-md-10" id="funder">
+	[% IF !funder %]
+	<div class="form-group row innerrow">
+	  <div class="col-md-11">
+	    <input type="text" name="funder.0" id="id_funder_0" value="[% funder.0 %]" class="form-control" />
+	  </div>
+	  <div class="col-md-1">
+	    <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
+	  </div>
+	</div>
+	[% ELSE %]
+	  [% FOREACH fun IN funder %]
+	  <div class="form-group row innerrow">
+	    <div class="col-md-11">
+	      <input type="text" name="funder.[% loop.index %]" id="id_funder_[% loop.index %]" value="[% fun %]" class="form-control" />
+	    </div>
+	    <div class="col-md-1">
+	      <span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span>
+	    </div>
+	  </div>
+	  [% END %]
+	[% END %]
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_funded">Ext. Funded</label></div>
+	<div class="col-md-1 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="checkbox" name="funded" id="id_funded" value="1" [% IF funded %]checked="checked"[% END %]>
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_call_identifier">Identifier</label></div>
+	<div class="col-md-10 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="text" name="call_identifier" id="id_call_identifier" value="[% call_identifier %]" class="form-control">
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-2"><label for="id_sc39">SC39</label></div>
+	<div class="col-md-1 form-group">
+	  <div class="row innerrow">
+	    <div class="col-md-12">
+	      <input type="checkbox" name="sc39" id="id_sc39" value="1" [% IF sc39 %]checked="checked"[% END %]>
+	    </div>
+	  </div>
+	</div>
+      </div>
+
+
+      <div class="row innerrow"><!-- button -->
+	<div class="col-md-12 buttonrow">
+	<span class="form-grou col-md-2">&nbsp;</span>
+	<span class="form-group col-md-2">
+	  <button type="button" class="btn btn-danger cancel-button"><span class="glyphicon glyphicon-remove"></span> Close</button>
+	</span>
+	<span class="form-group col-md-2">
+	  <button type="submit" id="id_do_nothing" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save</button>
+	</span>
+	</div>
+      </div>
+    </form>
+    
+    <div class="modal" id="linkPevzModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	  <h4 class="modal-title">Several PEVZ Accounts found... make a choice</h4>
+	</div>
+	<div class="modal-body">
+	</div>
       </div>
     </div>
   </div>
-</div>
 
-</div><!-- col-md-9 col-md-offset-1 -->
+  </div><!-- col-md -->
+
 </div><!-- row -->
 
 <script>
@@ -570,3 +577,5 @@ $(document).on('click', '.single', function(){
 </script>
 
 <!-- END admin/edit_account.tt -->
+
+[% INCLUDE footer.tt %]
