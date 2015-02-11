@@ -152,7 +152,7 @@ function selectAffiliation(element){
 $('#plusPersonAFF').click(function(){
   var items = $('#person_affiliation div.innerrow');
   var index = items.index($('#person_affiliation div.innerrow').last()) + 1;
-  $('#person_affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="person_aff_idautocomplete_' + index + '" /><input type="hidden" name="department.' + index + '.iname" id="person_aff_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="person_aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectAffiliation(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="btn btn-default glyphicon glyphicon-minus single"></span></span></div>');
+  $('#person_affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="person_aff_idautocomplete_' + index + '" /><input type="hidden" name="department.' + index + '.name" id="person_aff_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="person_aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectAffiliation(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="btn btn-default glyphicon glyphicon-minus single"></span></span></div>');
   $('#person_affiliation').bind("click", function(){
     $( "#person_aff_autocomplete_" + index ).autocomplete({
       appendTo: "#aff_dropdown",
