@@ -51,8 +51,7 @@ field_order:
     - page
     - page_range
     - volume_issue_page
-    - series_title
-    - volume
+    - series_title_volume
     - translator
     - publication_identifier
     - publication_status
@@ -97,7 +96,7 @@ field_order:
     - publisher
     - place
     - publication
-    - series_title
+    - series_title_volume
     - issue
     - edition
     - abstract
@@ -190,13 +189,12 @@ publicationTypes:
         page: &page
           label: "Number of Pages"
           placeholder: "12"
-        series_title: &publication_series
-          label: "Series Title"
-          label_short: "Series Title"
-          placeholder: "E.g. Lecture Notes in Computer Science"
-        volume: &volume
-          label: "Volume"
-          placeholder: "3"
+        series_title_volume: &series_title_volume
+          label: "Series Title/ Vol."
+          placeholder_volume: "3"
+          label_volume: "Volume"
+          placeholder_series_title: "E.g. Lecture Notes in Computer Science"
+          label_series_title: "Series Title"
         publication_identifier: &publication_identifier
           label: "Publication<br />Identifier"
           label_short: "Publ. Id."
@@ -295,11 +293,16 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        series_title: *publication_series
+        series_title: &publication_series
+          label: "Series Title"
+          label_short: "Series Title"
+          placeholder: "E.g. Lecture Notes in Computer Science"
         abstract: *abstract
         edition: *edition
         keyword: *keyword
-        volume: *volume
+        volume: &volume
+          label: "Volume"
+          placeholder: "3"
         place: *place
         ddc: *ddc
         page: *page
