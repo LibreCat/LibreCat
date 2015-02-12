@@ -91,6 +91,7 @@ sub handle_file {
 				else {
 					# looks like it wasn't an existing file after all
 					# can this even happen???
+					$fi->{file_json} = to_json($fi);
 				}
 			}
 			#new file
