@@ -22,20 +22,9 @@
 [% END %]
   [% request = 0 %]
   [% IF entry.file || entry.related_material || entry.externalFiles == "1" %]
-  | <a href="/[% bag %]/[% entry._id %]" class="label label-success">Files available</a>
+  | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/myPUB/record/preview/[% entry._id %][% END %]" class="label label-success">Files available</a>
   [% END %]
-
-  [% FOREACH file IN entry.file %]
-	[% IF file.request_a_copy %][% request = 1 %][% END %]
-	[% IF file AND bag == "publication" %]
-	  [% SWITCH file.content_type %]
-		[% CASE 'application/pdf' %]
-	    | <a href="/download/[% entry._id %]/[% file.id %]" title="[% file.name %]" target="_top">PDF</a>
-		[% CASE 'application/ps' %]
-	 	| <a href="/download/[% entry._id %]/[% file.id %]" title="[% file.name %]" target="_top">PS</a>
-	  [% END %]
-	[% END %]
-  [% END %]
+  
   [% IF request %]
   | <a data-toggle="collapse" href="#[% tabmodus %]_rac_[% entry._id %]"><span class="glyphicon glyphicon-chevron-down"></span> Request a Copy</a>
   [% END %]
