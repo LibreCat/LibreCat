@@ -7,173 +7,197 @@
   <div class="col-md-10 col-sm-12 col-md-offset-1"> <!-- main content (left) -->
 
     <div class="page-header" id="banner">
-      <h1>
-	[% IF full_name %]
-	Edit Account for [% full_name %]
-	[% ELSE %]
-	Add new account
-	[% END %]
-      </h1>
+      <h1>[% IF full_name %]Edit Account for [% full_name %][% ELSE %]Add new account[% END %]</h1>
     </div>
 
     <form action="/myPUB/admin/account/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
       <div class="row innerrow">
-	<div class="col-md-2"><label for="id_id">ID<span class="starMandatory"></span></label></div>
-	<div class="col-md-10">
-	  <div class="form-group col-md-2">
-	    <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control" readonly="readonly" required>
-	  </div>
-	</div>
+	    <div class="col-md-2 hidden-xs hidden-sm">
+	      <label for="id_id">ID<span class="starMandatory"></span></label>
+	    </div>
+	    <div class="col-md-10">
+	      <div class="row innerrow">
+            <div class="form-group col-md-10 col-xs-11">
+              <div class="input-group input-group-sm sticky mandatory">
+                <div class="input-group-addon hidden-lg hidden-md">ID</div>
+	            <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control sticky" readonly="readonly" required>
+	            <div class="input-group-addon"></div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
       </div>
+      
       <div class="row innerrow">
-	<div class="col-md-2"><label for="id_account_type">Account Type<span class="starMandatory"></span></label></div>
-	<div class="col-md-3">
-	  <div class="row checkbox">
-	  <label>
-	    <input type="radio" name="account_type" value="unibi" [% IF account_type == 'unibi' || !account_type %]checked="checked"[% END %] id="id_account_type">
-	    UniBi
-	  </label>
-	  <label>
-	    <input type="radio" name="account_type" value="external" [% IF account_type == 'external' %]checked="checked"[% END %]>
-	    External
-	  </label>
-	  </div>
-	</div>
+	    <div class="col-md-2">
+	      <label for="id_account_type">Account Type<span class="starMandatory"></span></label>
+	    </div>
+	    <div class="col-md-3">
+	      <div class="row checkbox">
+	        <label>
+	          <input type="radio" name="account_type" value="unibi" [% IF account_type == 'unibi' || !account_type %]checked="checked"[% END %] id="id_account_type">
+	          UniBi
+	        </label>
+	        <label>
+	          <input type="radio" name="account_type" value="external" [% IF account_type == 'external' %]checked="checked"[% END %]>
+	          External
+	        </label>
+	      </div>
+	    </div>
       </div>
+      
       <div class="row innerrow" id="ext_institution" [% IF account_type != 'external' %]style="display:none;"[% END %]>
-	<div class="col-md-2"><label for="id_ext_institution">External Institution</label></div>
-	<div class="col-md-10">
-	  <div class="form-group col-md-6">
-	    <input type="text" name="ext_institution" value="[% ext_institution %]" class="form-control" id="id_ext_institution">
-	  </div>
-	</div>
+	    <div class="col-md-2 hidden-xs hidden-sm">
+	      <label for="id_ext_institution">External Institution</label>
+	    </div>
+	    <div class="col-md-10">
+	      <div class="row innerrow">
+	        <div class="form-group col-md-10 col-xs-11">
+	          <div class="input-group input-group-sm sticky">
+	            <div class="input-group-addon hidden-lg hidden-md">Ext. Institution</div>
+	            <input type="text" name="ext_institution" value="[% ext_institution %]" class="form-control sticky" id="id_ext_institution">
+	            <div class="input-group-addon"></div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
       </div>
+      
       <div class="row innerrow" id="password" [% IF account_type != 'external' %]style="display:none;"[% END %]>
-	<div class="col-md-2"><label for="id_password">Password</label></div>
-	<div class="col-md-10">
-	  <div class="form-group col-md-6">
-	    <input type="text" name="password" value="[% password %]" class="form-control" id="id_password">
-	  </div>
-	</div>
+	    <div class="col-md-2 hidden-xs hidden-sm">
+	      <label for="id_password">Password</label>
+	    </div>
+	    <div class="col-md-10">
+	      <div class="row innerrow">
+	        <div class="form-group col-md-10 col-xs-11">
+	          <div class="input-group input-group-sm sticky">
+	            <div class="input-group-addon hidden-lg hidden-md">Password</div>
+	            <input type="text" name="password" value="[% password %]" class="form-control sticky" id="id_password">
+	            <div class="input-group-addon"></div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
       </div>
+      
       <div class="row innerrow">
-	<div class="col-md-2"><label for="id_last_name">Last Name<span class="starMandatory"></span></label></div>
-	<div class="col-md-10">
-	  <div class="form-group col-md-6">
-	    <input type="text" name="last_name" id="id_last_name" value="[% last_name %]" class="form-control" required>
-	  </div>
-	</div>
-      </div>
-      <div class="row innerrow">
-	<div class="col-md-2"><label for="id_first_name">First Name<span class="starMandatory"></span></label></div>
-	<div class="col-md-10">
-	  <div class="form-group col-md-6">
-	    <input type="text" name="first_name" id="id_first_name" value="[% first_name %]" class="form-control" required>
-	  </div>
-	</div>
-      </div>
-
-      <div class="row innerrow">
-	<div class="col-md-2"><label for="id_old_last_name">Last Name used before</label></div>
-	<div class="col-md-8">
-	  <div class="form-group col-md-6">
-	    <input type="text" name="old_last_name" id="id_old_last_name" value="[% old_last_name %]" class="form-control">
-	  </div>
-	</div>
-      </div>
-      <div class="row innerrow">
-	<div class="col-md-2"><label for="id_old_first_name">First Name used before</label></div>
-	<div class="col-md-10">
-	  <div class="form-group col-md-6">
-	    <input type="text" name="old_first_name" id="id_old_first_name" value="[% old_first_name %]" class="form-control">
-	  </div>
-	</div>
+	    <div class="col-md-2 hidden-xs hidden-sm">
+	      <label for="id_last_name">Last Name<span class="starMandatory"></span></label>
+	    </div>
+	    <div class="col-md-10">
+	      <div class="form-group col-md-4 col-xs-11">
+            <div class="input-group input-group-sm sticky mandatory">
+              <div class="input-group-addon">First Name</div>
+              <input type="text" name="first_name" id="id_first_name" value="[% first_name %]" class="form-control sticky" required>
+	          <div class="input-group-addon"></div>
+	        </div>
+	      </div>
+	      <div class="form-group col-md-6 col-xs-11">
+            <div class="input-group input-group-sm sticky mandatory">
+              <div class="input-group-addon">Last Name</div>
+              <input type="text" name="last_name" id="id_last_name" value="[% last_name %]" class="form-control sticky" required>
+              <div class="input-group-addon"></div>
+	        </div>
+	      </div>
+	    </div>
       </div>
 
       <div class="row innerrow">
-	<div class="col-md-2"><label for="id_email">Email</label></div>
-	<div class="col-md-10">
-	  <div class="form-group col-md-6">
-	    <input type="email" name="bis.email" id="id_email" value="[% bis.email %]" class="form-control">
-	  </div>
-	</div>
-      </div>
-      <div class="row innerrow">
-	<div class="col-md-2"><label for="id_login">LDAP Login</label></div>
-	<div class="col-md-10">
-	  <div class="form-group col-md-6">
-	    <input type="text" name="login" id="id_login" value="[% login %]" class="form-control">
-	  </div>
-	</div>
+        <div class="col-md-2 hidden-xs hidden-sm">
+          <label for="id_old_last_name">Names used before</label>
+        </div>
+	    <div class="col-md-10">
+	      <div class="form-group col-md-4 col-xs-11">
+	        <div class="input-group input-group-sm sticky">
+	          <div class="input-group-addon">Old First Name</div>
+	          <input type="text" name="old_first_name" id="id_old_first_name" value="[% old_first_name %]" class="form-control sticky">
+	          <div class="input-group-addon"></div>
+	        </div>
+	      </div>
+	      <div class="form-group col-md-6 col-xs-11">
+	        <div class="input-group input-group-sm sticky">
+	          <div class="input-group-addon">Old Last Name</div>
+  	          <input type="text" name="old_last_name" id="id_old_last_name" value="[% old_last_name %]" class="form-control sticky">
+  	          <div class="input-group-addon"></div>
+	        </div>
+ 	      </div>
+ 	    </div>
       </div>
 
       <div class="row innerrow">
-	<div class="col-md-2"><label>Affiliation <span class="btn btn-default glyphicon glyphicon-plus" id="plusAFF"></span>
-	</label></div>
-	<div class="col-md-10" id="affiliation">
-	[% IF !department %]
-	  <div class="row innerrow">
-	    <input type="hidden" name="department.0.id" id="aff_idautocomplete_0" />
-	    <input type="hidden" name="department.0.name" id="aff_nameautocomplete_0" />
+	    <div class="col-md-2 hidden-xs hidden-sm">
+	      <label for="id_email">Email</label>
+	    </div>
+	    <div class="col-md-10">
+	      <div class="row innerrow">
+	        <div class="form-group col-md-10 col-xs-11">
+	          <div class="input-group input-group-sm sticky">
+                <div class="input-group-addon hidden-lg hidden-md">Email</div>
+	            <input type="email" name="bis.email" id="id_email" value="[% bis.email %]" class="form-control sticky">
+	            <div class="input-group-addon"></div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+      </div>
+      
+      <div class="row innerrow">
+	    <div class="col-md-2 hidden-xs hidden-sm">
+	      <label for="id_login">LDAP Login</label>
+	    </div>
+	    <div class="col-md-10">
+	      <div class="row innerrow">
+  	        <div class="form-group col-md-10 col-xs-11">
+  	          <div class="input-group input-group-sm sticky">
+  	            <div class="input-group-addon hidden-lg hidden-md">LDAP Login</div>
+	            <input type="text" name="login" id="id_login" value="[% login %]" class="form-control sticky">
+	            <div class="input-group-addon"></div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+      </div>
 
-	    <span class="form-group col-md-7">
-	      <input type="text" class="form-control" id="aff_autocomplete_0" value="" />
-	    </span>
-	    <span class="form-group col-md-3">
-	      <button type="button" onclick="selectButton(this);" class="btn btn-default select_button affiliation" id="affiliation_select_0"><span class="glyphicon glyphicon-chevron-down"></span> Select</button>
-	      <span class="btn btn-default glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';document.getElementById('aff_autocomplete_0').disabled = false;"></span>
-	    </span>
-	    <script>
-	    $(function() {
-	      $( "#aff_autocomplete_0" ).autocomplete({
-		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-		minLength: 2,
-		select: function( event, ui ) {
-		  $( "#aff_autocomplete_0" ).val( ui.item.label );
-		  $( "#aff_nameautocomplete_0" ).val( ui.item.label );
-		  $( "#aff_idautocomplete_0" ).val( ui.item.id );
-		  $( "#aff_autocomplete_0" ).attr("disabled", "disabled");
-		}
-	      });
-	    });
-	    </script>
-	  </div>
-	[% ELSE %]
-	[% FOREACH dept IN department %]
-	  <div class="row innerrow">
-	    <input type="hidden" name="department.[% loop.index %].id" id="aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
-	    <input type="hidden" name="department.[% loop.index %].name" id="aff_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
-	    <span class="form-group col-md-7">
-	      <input type="text" class="form-control" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
-	    </span>
-	    <span class="form-group col-md-3">
-	      <button type="button" onclick="selectButton(this);" class="btn btn-default select_button affiliation" id="affiliation_select_[% loop.index %]"><span class="glyphicon glyphicon-chevron-down"></span> Select</button>
-	    [% IF loop.index == 0 %]
-	      <span class="btn btn-default glyphicon glyphicon-minus" onclick="javascript:document.getElementById('aff_autocomplete_0').value = '';document.getElementById('aff_idautocomplete_0').value='';document.getElementById('aff_autocomplete_0').disabled=false;"></span>
-	    [% ELSE %]
-	      <span class="btn btn-default glyphicon glyphicon-minus single"></span>
+      <div class="row innerrow">
+	    <div class="col-md-2 hidden-xs hidden-sm">
+	      <label>Affiliation</label>
+	    </div>
+	    <div class="col-md-10" id="affiliation">
+	    [% IF !department %]
+	      <div class="row innerrow">
+	        <input type="hidden" name="department.0.id" id="aff_idautocomplete_0" />
+	        <input type="hidden" name="department.0.name" id="aff_nameautocomplete_0" />
+
+	        <div class="form-group col-md-10 col-xs-11">
+	          <div class="input-group input-group-sm sticky">
+                <div class="input-group-addon hidden-lg hidden-md">Affiliation</div>
+	            <input type="text" onfocus="enable_autocomplete('aff',0);" class="sticky form-control" id="aff_autocomplete_0" value="" />
+                <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="affiliation_select_0">Select</span></div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
+	          </div>
+	        </div>
+	      </div>
+  	    [% ELSE %]
+	    [% FOREACH dept IN department %]
+	      <div class="row innerrow">
+	        <input type="hidden" name="department.[% loop.index %].id" id="aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+	        <input type="hidden" name="department.[% loop.index %].name" id="aff_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
+	        
+	        <div class="form-group col-md-10 col-xs-11">
+	          <div class="input-group input-group-sm sticky">
+                <div class="input-group-addon hidden-lg hidden-md">Affiliation</div>
+	            <input type="text" onfocus="enable_autocomplete('aff',[% loop.index %]);" class="sticky form-control" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+	            <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="affiliation_select_0">Select</span></div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
+	          </div>
+	        </div>
+	      </div>
 	    [% END %]
-	    </span>
-	    <script>
-	    $(function() {
-	      $( "#aff_autocomplete_[% loop.index %]" ).autocomplete({
-		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-		minLength: 2,
-		select: function( event, ui ) {
-		  $( "#aff_autocomplete_[% loop.index %]" ).val( ui.item.label );
-		  $( "#aff_nameautocomplete_[% loop.index %]" ).val( ui.item.label );
-		  $( "#aff_idautocomplete_[% loop.index %]" ).val( ui.item.id );
-		  $( "#aff_autocomplete_[% loop.index %]" ).attr("disabled", "disabled");
-		}
-	      });
-	    });
-	    </script>
-	  </div>
-	[% END %]
-	[% END %]
-
-	</div>
+	    [% END %]
+	    </div>
       </div>
 
       <div class="row innerrow">
@@ -186,9 +210,9 @@
       </div>
 
       <div class="row innerrow">
-	<div class="col-md-12">
-	  &nbsp;
-	</div>
+	    <div class="col-md-12">
+	      &nbsp;
+	    </div>
       </div>
 
       <div class="row innerrow">
@@ -201,181 +225,141 @@
       </div>
 
       <div class="row innerrow">
-	<div class="col-md-2"><label for="id_delegate">Manage publications for</label></div>
-	<div class="col-md-10">
-	  <div class="row innerrow">
-	    <div class="col-md-7 form-group">
-	      <input type="text" id="id_delegate" value="" class="form-control" placeholder="12345 (PEVZ-ID)"/>
+	    <div class="col-md-2 hidden-xs hidden-sm">
+	      <label for="id_delegate">Manage publications for</label>
 	    </div>
-	    <div class="col-md-2 form-group">
-	      <button type="button" onclick="addDelegate(this);" class="btn btn-default select_button" id="delegate_select"><span class="glyphicon glyphicon-plus"></span> Add</button>
+	    <div class="col-md-10">
+  	      <div class="row innerrow">
+  	        <div class="form-group col-md-10 col-xs-11">
+	          <div class="input-group input-group-sm sticky">
+	            <div class="input-group-addon hidden-lg hidden-md">Manage Publications For</div>
+	            <input type="text" id="id_delegate" value="" class="sticky form-control" placeholder="12345 (PEVZ-ID)"/>
+	            <div class="input-group-addon"><span onclick="addDelegate(this);" class="select_button" id="delegate_select"><span class="glyphicon glyphicon-plus"></span> Add</span></div>
+	          </div>
+	        </div>
+	      </div>
 	    </div>
-	  </div>
-	</div>
       </div>
-
       <div class="row innerrow" id="delegate">
       [% IF delegate %]
-	[% FOREACH del IN delegate %]
-	[% thisPerson = h.getPerson(del) %]
-	<div class="col-md-10 col-md-offset-2" id="delegate_[% thisPerson._id %]">
-	  <div class="row innerrow">
-	    <div class="col-md-7 form-group">
-	      <span class="glyphicon glyphicon-remove del_del" id="delegate_span_[% thisPerson._id %]"></span> [% thisPerson.full_name %] <span class="text-muted">[% thisPerson._id %]</span>
-	      <input type="hidden" name="delegate.[% loop.index %]" value="[% thisPerson._id %]" />
+	  [% FOREACH del IN delegate %]
+	  [% thisPerson = h.getPerson(del) %]
+	    <div class="col-md-10 col-md-offset-2" id="delegate_[% thisPerson._id %]">
+	      <div class="row innerrow">
+	        <div class="col-md-7 form-group">
+	          <span class="glyphicon glyphicon-remove del_del" id="delegate_span_[% thisPerson._id %]"></span> [% thisPerson.full_name %] <span class="text-muted">[% thisPerson._id %]</span>
+	          <input type="hidden" name="delegate.[% loop.index %]" value="[% thisPerson._id %]" />
+	        </div>
+	      </div>
 	    </div>
-	  </div>
-	</div>
-	[% END %]
+	  [% END %]
       [% END %]
       </div>
 
       <div class="row innerrow">
-	<div class="col-md-2"><label>
-	  Data Manager <span class="btn btn-default glyphicon glyphicon-plus" id="plusDM"></span>
-	</label></div>
-	<div class="col-md-10" id="data_manager">
-	[% IF !data_manager %]
-	  <div class="row innerrow">
-	    <input type="hidden" name="data_manager.0.id" id="dp_idautocomplete_0" />
-	    <input type="hidden" name="data_manager.0.name" id="dp_nameautocomplete_0" />
+	    <div class="col-md-2 hidden-xs hidden-sm">
+	      <label>Data Manager</label>
+	    </div>
+	    <div class="col-md-10" id="data_manager">
+	    [% IF !data_manager %]
+	      <div class="row innerrow">
+	        <input type="hidden" name="data_manager.0.id" id="dp_idautocomplete_0" />
+	        <input type="hidden" name="data_manager.0.name" id="dp_nameautocomplete_0" />
 
-	    <span class="form-group col-md-7">
-	      <input type="text" class="form-control" name="data_manager.0.name" id="dp_autocomplete_0" value="" />
-	    </span>
-	    <span class="form-group col-md-3">
-	      <button type="button" onclick="selectButton(this);" class="btn btn-default select_button data_manager" id="data_manager_select_0"><span class="glyphicon glyphicon-chevron-down"></span> Select</button>
-	      <span class="btn btn-default glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';document.getElementById('dp_autocomplete_0').disabled=false;"></span>
-	    </span>
-	    <script>
-	    $(function() {
-	      $( "#dp_autocomplete_0" ).autocomplete({
-		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-		minLength: 2,
-		select: function( event, ui ) {
-		  $( "#dp_autocomplete_0" ).val( ui.item.label );
-		  $( "#dp_nameautocomplete_0" ).val( ui.item.label );
-		  $( "#dp_idautocomplete_0" ).val( ui.item.id );
-		  $( "#dp_autocomplete_0" ).attr("disabled", "disabled");
-		}
-	      });
-	    });
-	    </script>
-	  </div>
-	[% ELSE %]
-	[% FOREACH dept IN data_manager %]
-	  <div class="row innerrow">
-	    <input type="hidden" name="data_manager.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
-	    <input type="hidden" name="data_manager.[% loop.index %].name" id="dp_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
-	    <span class="form-group col-md-7">
-	      <input type="text" class="form-control" name="data_manager.[% loop.index %].name" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
-	    </span>
-	    <span class="form-group col-md-3">
-	      <button type="button" onclick="selectButton(this);" class="btn btn-default select_button data_manager" id="data_manager_select_[% loop.index %]"><span class="glyphicon glyphicon-chevron-down"></span> Select</button>
-	    [% IF loop.index == 0 %]
-	      <span class="btn btn-default glyphicon glyphicon-minus" onclick="javascript:document.getElementById('dp_autocomplete_0').value = '';document.getElementById('dp_idautocomplete_0').value='';document.getElementById('dp_autocomplete_0').disabled=false;"></span>
+	        <div class="form-group col-md-10 col-xs-11">
+	          <div class="input-group input-group-sm sticky">
+                <div class="input-group-addon hidden-lg hidden-md">Data Manager</div>
+	            <input type="text" class="sticky form-control" onfocus="enable_autocomplete('dp',[% loop.index %]);" name="data_manager.0.name" id="dp_autocomplete_0" value="" />
+	            <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="data_manager_select_0">Select</span></div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('data_manager');"></span></div>
+	          </div>
+	        </div>
+	      </div>
 	    [% ELSE %]
-	      <span class="btn btn-default glyphicon glyphicon-minus single"></span>
+	    [% FOREACH dept IN data_manager %]
+	      <div class="row innerrow">
+	        <input type="hidden" name="data_manager.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+	        <input type="hidden" name="data_manager.[% loop.index %].name" id="dp_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
+	        
+	        <div class="form-group col-md-10 col-xs-11">
+	          <div class="input-group input-group-sm sticky">
+                <div class="input-group-addon hidden-lg hidden-md">Data Manager</div>
+	            <input type="text" class="sticky form-control" onfocus="enable_autocomplete('dp',[% loop.index %]);" name="data_manager.[% loop.index %].name" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+	            <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="data_manager_select_0">Select</span></div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('data_manager');"></span></div>
+	          </div>
+	        </div>
+	      </div>
 	    [% END %]
-	    </span>
-	    <script>
-	    $(function() {
-	      $( "#dp_autocomplete_[% loop.index %]" ).autocomplete({
-		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-		minLength: 2,
-		select: function( event, ui ) {
-		  $( "#dp_autocomplete_[% loop.index %]" ).val( ui.item.label );
-		  $( "#dp_nameautocomplete_[% loop.index %]" ).val( ui.item.label );
-		  $( "#dp_idautocomplete_[% loop.index %]" ).val( ui.item.id );
-		  $( "#dp_autocomplete_[% loop.index %]" ).attr("disabled","disabled");
-		}
-	      });
-	    });
-	    </script>
+	    [% END %]
+        </div>
 	  </div>
-	[% END %]
-	[% END %]
-
-	</div>
-      </div>
 
       <div class="row innerrow">
-	<div class="col-md-2"><label>
-	  Reviewer <span class="btn btn-default glyphicon glyphicon-plus" id="plusRV"></span>
-	</label></div>
-	<div class="col-md-10" id="reviewer">
-	  [% IF !reviewer %]
-	  <div class="row innerrow">
-	    <input type="hidden" name="reviewer.0.id" id="rv_idautocomplete_0" />
-	    <input type="hidden" name="reviewer.0.name" id="rv_nameautocomplete_0" />
+	    <div class="col-md-2 hidden-xs hidden-sm">
+	      <label>Reviewer</label>
+	    </div>
+	    <div class="col-md-10" id="reviewer">
+	    [% IF !reviewer %]
+	      <div class="row innerrow">
+	        <input type="hidden" name="reviewer.0.id" id="rv_idautocomplete_0" />
+	        <input type="hidden" name="reviewer.0.name" id="rv_nameautocomplete_0" />
 
-	    <div class="form-group col-md-7">
-	      <input type="text" class="form-control" id="rv_autocomplete_0" value="" />
-	    </span>
-	    <div class="form-group col-md-3">
-	      <button type="button" onclick="selectButton(this);" class="btn btn-default select_button reviewer" id="reviewer_select_0"><span class="glyphicon glyphicon-chevron-down"></span> Select</button>
-	      <span class="btn btn-default glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rv_autocomplete_0').value = '';document.getElementById('rv_idautocomplete_0').value='';document.getElementById('rv_autocomplete_0').disabled=false;"></span>
-	    </span>
-	    <script>
-	    $(function() {
-	      $( "#rv_autocomplete_0" ).autocomplete({
-		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-		minLength: 2,
-		select: function( event, ui ) {
-		  $( "#rv_autocomplete_0" ).val( ui.item.label );
-		  $( "#rv_nameautocomplete_0" ).val( ui.item.label );
-		  $( "#rv_idautocomplete_0" ).val( ui.item.id );
-		  $( "#rv_autocomplete_0" ).attr("disabled","disabled");
-		}
-	      });
-	    });
-	    </script>
-	  </div>
-	[% ELSE %]
-	[% FOREACH dept IN reviewer %]
-	  <div class="row innerrow">
-	    <input type="hidden" name="reviewer.[% loop.index %].id" id="rv_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
-	    <input type="hidden" name="reviewer.[% loop.index %].name" id="rv_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
-	    <span class="form-group col-md-7">
-	      <input type="text" class="form-control" name="reviewer.[% loop.index %].name" id="rv_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
-	    </span>
-	    <span class="form-group col-md-3">
-	      <button type="button" onclick="selectButton(this);" class="btn btn-default select_button reviewer" id="reviewer_select_[% loop.index %]"><span class="glyphicon glyphicon-chevron-down"></span> Select</button>
-	    [% IF loop.index == 0 %]
-	      <span class="btn btn-default glyphicon glyphicon-minus" onclick="javascript:document.getElementById('rv_autocomplete_0').value = '';document.getElementById('rv_idautocomplete_0').value='';document.getElementById('rv_autocomplete_0').disabled=false;"></span>
+	        <div class="form-group col-md-10 col-xs-11">
+	          <div class="input-group input-group-sm sticky">
+                <div class="input-group-addon hidden-lg hidden-md">Reviewer</div>
+	            <input type="text" class="sticky form-control" onfocus="enable_autocomplete('rv',0);" id="rv_autocomplete_0" value="" />
+	            <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="reviewer_select_0">Select</span></div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('reviewer');"></span></div>
+	          </div>
+	        </div>
+	      </div>
 	    [% ELSE %]
-	      <span class="btn btn-default glyphicon glyphicon-minus single"></span>
+	    [% FOREACH dept IN reviewer %]
+	      <div class="row innerrow">
+	        <input type="hidden" name="reviewer.[% loop.index %].id" id="rv_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+	        <input type="hidden" name="reviewer.[% loop.index %].name" id="rv_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
+	    
+	        <div class="form-group col-md-10 col-xs-11">
+	          <div class="input-group input-group-sm sticky">
+                <div class="input-group-addon hidden-lg hidden-md">Reviewer</div>
+	            <input type="text" class="sticky form-control" onfocus="enable_autocomplete('rv',[% loop.index %]);" name="reviewer.[% loop.index %].name" id="rv_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+	            <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="reviewer_select_[% loop.index %]">Select</span></div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('reviewer');"></span></div>
+	          </div>
+	        </div>
+	      </div>
 	    [% END %]
-	    </span>
-	    <script>
-	    $(function() {
-	      $( "#rv_autocomplete_[% loop.index %]" ).autocomplete({
-		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-		minLength: 2,
-		select: function( event, ui ) {
-		  $( "#rv_autocomplete_[% loop.index %]" ).val( ui.item.label );
-		  $( "#rv_nameautocomplete_[% loop.index %]" ).val( ui.item.label );
-		  $( "#rv_idautocomplete_[% loop.index %]" ).val( ui.item.id );
-		  $( "#rv_autocomplete_[% loop.index %]" ).attr("disabled","disabled");
-		}
-	      });
-	    });
-	    </script>
-	  </div>
-	[% END %]
-	[% END %]
-
-	</div>
+	    [% END %]
+	    </div>
+      </div>
+      
+      <div class="row innerrow">
+	    <div class="col-md-12">
+	      &nbsp;
+	    </div>
       </div>
   
       [%  FOREACH k IN h.config.lists.author_id.keys.sort %]
       <div class="row innerrow">
-	<div class="col-md-2"><label for="id_[% k %]">[% h.config.lists.author_id.$k.label %]</label></div>
-	<div class="col-md-10">
-	  <div class="form-group col-md-2">
-	    <input type="text" name="[% k %]" id="id_[% k %]" value="[% $k %]" class="form-control check_[% k %]">
-	  </div>
-	</div>
+	    <div class="col-md-2 hidden-xs hidden-sm">
+	      <label for="id_[% k %]">[% h.config.lists.author_id.$k.label %]</label>
+	    </div>
+	    <div class="col-md-10">
+	      <div class="row innerrow">
+	        <div class="form-group col-md-10 col-xs-11">
+	          <div class="input-group input-group-sm sticky">
+	            <div class="input-group-addon hidden-lg hidden-md">[% h.config.lists.author_id.$k.label %]</div>
+	            <input type="text" name="[% k %]" id="id_[% k %]" value="[% $k %]" class="sticky form-control check_[% k %]">
+	            <div class="input-group-addon"></div>
+	          </div>
+	        </div>
+          </div>
+        </div>
       </div>
       [% END %]
 
