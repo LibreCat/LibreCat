@@ -1,0 +1,31 @@
+
+<!-- BEGIN head_meta.tt -->
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lt IE 10]>
+    <link rel="stylesheet" type="text/css" href="/css/ltIE10.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/mypub.css">
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/jquery-sortable.js"></script>
+    <script src="/javascripts/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script src="/javascripts/bootstrap-select.min.js"></script>
+    <script src="/javascripts/scripts.js"></script>
+    <script src="/javascripts/backend.js"></script>
+    <script src="/javascripts/dropzone3.0.js"></script>
+    <script src="/javascripts/pub_dropzones.js"></script>
+
+<!-- END head_meta.tt -->

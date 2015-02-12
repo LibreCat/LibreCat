@@ -1,0 +1,28 @@
+
+<!-- BEGIN head_styles.tt -->
+
+    <style>
+    body.dragging, body.dragging * {
+      cursor: url(/images/closedhand.cur) 4 4, move !important;
+    }
+
+    .dragged {
+      position: absolute;
+      margin-left:-250px;
+      opacity: 0.5;
+      z-index: 2000;
+    }
+
+    div.dz-preview:hover {
+      cursor: url(/images/openhand.cur) 4 4, move !important;
+    }
+
+    div.dz-preview.placeholder {
+      position: relative;
+    }
+    div.dz-preview.placeholder:before {
+      position: absolute;
+    }
+    </style>
+
+<!-- END head_styles.tt -->
