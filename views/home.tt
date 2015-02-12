@@ -17,11 +17,11 @@
     <div class="page-header" id="banner">
       <h1>
         [% IF backend AND session.role == 'super_admin' %]Administration[%END %]
-        [% IF backend AND session.role == 'user' %]Public Author Page[%END %]
+        [% IF backend AND session.role == 'user' %]Author's Page[%END %]
         [% IF backend AND (session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer")) %]Reviewer's Page[%END %]
         [% IF backend AND session.role == "delegate" %]Delegate's Page[%END %]
         [% IF !backend %][% lang ? "Publications of" : "Publikationen von" %] [% thisPerson.first_name %] [% thisPerson.last_name %][%END %]
-      </h1>
+       (MyPUB)</h1>
     </div>
 
     <div class="row">
