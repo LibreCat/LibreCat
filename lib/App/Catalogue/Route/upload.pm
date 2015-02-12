@@ -220,7 +220,7 @@ prefix '/myPUB' => sub {
       my $mail_body = export_to_string({
           title => $record->{title},
           _id => $id,
-          host => h->config->{host};
+          host => h->config->{host},
           },
           'Template',
           template => 'views/email/new_thesis.tt'
@@ -231,7 +231,7 @@ prefix '/myPUB' => sub {
               to => h->config->{thesis}->{to},
               subject => h->config->{thesis}->{subject},
               body => $mail_body,
-              reply_to => $record->{email};
+              reply_to => $record->{email},
           };
       } catch {
           error "Could not send email: $_";
