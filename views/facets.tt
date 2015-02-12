@@ -327,7 +327,7 @@ $('#[% bag == "data" ? "myRdModal" : "myModal" %]').modal('hide');
 [% IF request.path.match('marked') AND total %]
 <ul class="nav nav-tabs nav-stacked">
   <li>
-    <a class="unmark-all" href="#" class="btn btn-link"><span class="glyphicon glyphicon-chevron-right fw"></span>Unmark all</a>
+    <a href="#" class="unmark-all"><span class="glyphicon glyphicon-chevron-right fw"></span>Unmark all</a>
   </li>
   <li>
     <a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-right fw"></span>Back to previous page</a>
