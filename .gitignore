@@ -14,11 +14,13 @@ META.yml
 MYMETA.yml
 nytprof.out
 pm_to_blib
-.log
-.swp
+*.log
+*.swp
+*.json
 public/images/dummy.jpg
 /sessions
 views/backend/forms/
 logs/
 t/testPetra.pl
+bin/europepmc/*.json
 ~$
