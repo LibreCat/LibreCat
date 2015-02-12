@@ -1,6 +1,7 @@
 {% editmode = "expert" %}
 [% INCLUDE navbar.tt %]
 [% thisPerson = h.getPerson(session.personNumber) %]
+[% edit_mode = "expert" %]
 
 <!-- BEGIN /backend/forms/master_expert.tt -->
 
@@ -28,6 +29,8 @@
     <input type="hidden" name="edit_mode" id="edit_mode" value="expert" />
 
     <div class="tab tab-content edit-form">
+    
+      {% INCLUDE fields/buttonrow_tab1.tt %}
 
       <!-- STEP 1 -->
       <div id="basic_fields" class="tab_section">

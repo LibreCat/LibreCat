@@ -1,0 +1,27 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_series_title">
+      {% fields.basic_fields.series_title_volume.label %}{% fields.supplementary_fields.series_title_volume.label %}
+    </label>
+    {% IF fields.basic_fields.series_title_volume.mandatory OR fields.supplementary_fields.series_title_volume.mandatory %}<span class="starMandatory"></span>{% END %}
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="form-group col-md-6 col-xs-11">
+        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.series_title_volume.mandatory OR fields.supplementary_fields.series_title.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.series_title_volume.label_series_title_short || fields.basic_fields.series_title_volume.label_series_title %}{% fields.supplementary_fields.series_title_volume.label_series_title_short || fields.supplementary_fields.series_title_volume.label_series_title %}</div>
+          <input type="text" name="series_title" id="id_series_title" value="[% series_title %]" placeholder="{% fields.basic_fields.series_title_volume.placeholder_series_title %}{% fields.supplementary_fields.series_title_volume.placeholder_series_title %}" class="sticky input-sm form-control{% IF fields.basic_fields.series_title_volume.mandatory OR fields.supplementary_fields.series_title_volume.mandatory %} required{% END %}"{% IF fields.basic_fields.series_title_volume.readonly OR fields.supplementary_fields.series_title_volume.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+      
+      <div class="form-group col-md-4 col-xs-11">
+        <div class="input-group input-group-sm sticky">
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.series_title_volume.label_volume %}{% fields.supplementary_fields.series_title_volume.label_volume %}</div>
+          <input type="text" name="volume" id="id_volume" value="[% volume %]" placeholder="{% fields.basic_fields.series_title_volume.placeholder_volume %}{% fields.supplementary_fields.series_title_volume.placeholder_volume %}" class="sticky input-sm form-control{% IF fields.basic_fields.series_title_volume.mandatory OR fields.supplementary_fields.series_title_volume.mandatory %} required{% END %}"{% IF fields.basic_fields.series_title_volume.readonly OR fields.supplementary_fields.series_title_volume.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

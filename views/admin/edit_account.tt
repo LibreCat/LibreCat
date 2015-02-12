@@ -19,7 +19,7 @@
     <form action="/myPUB/admin/account/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
       <div class="row innerrow">
-	<div class="col-md-2"><label for="id_id">ID<span class="starMandatory">*</span></label></div>
+	<div class="col-md-2"><label for="id_id">ID<span class="starMandatory"></span></label></div>
 	<div class="col-md-10">
 	  <div class="form-group col-md-2">
 	    <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control" readonly="readonly" required>
@@ -27,7 +27,7 @@
 	</div>
       </div>
       <div class="row innerrow">
-	<div class="col-md-2"><label for="id_account_type">Account Type<span class="starMandatory">*</span></label></div>
+	<div class="col-md-2"><label for="id_account_type">Account Type<span class="starMandatory"></span></label></div>
 	<div class="col-md-3">
 	  <div class="row checkbox">
 	  <label>
@@ -58,7 +58,7 @@
 	</div>
       </div>
       <div class="row innerrow">
-	<div class="col-md-2"><label for="id_last_name">Last Name<span class="starMandatory">*</span></label></div>
+	<div class="col-md-2"><label for="id_last_name">Last Name<span class="starMandatory"></span></label></div>
 	<div class="col-md-10">
 	  <div class="form-group col-md-6">
 	    <input type="text" name="last_name" id="id_last_name" value="[% last_name %]" class="form-control" required>
@@ -66,7 +66,7 @@
 	</div>
       </div>
       <div class="row innerrow">
-	<div class="col-md-2"><label for="id_first_name">First Name<span class="starMandatory">*</span></label></div>
+	<div class="col-md-2"><label for="id_first_name">First Name<span class="starMandatory"></span></label></div>
 	<div class="col-md-10">
 	  <div class="form-group col-md-6">
 	    <input type="text" name="first_name" id="id_first_name" value="[% first_name %]" class="form-control" required>

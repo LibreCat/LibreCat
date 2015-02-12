@@ -1,6 +1,7 @@
 {% editmode = "normal" %}
 [% INCLUDE navbar.tt %]
 [% thisPerson = h.getPerson(session.personNumber) %]
+[% edit_mode = "normal" %]
 
 <!-- BEGIN /backend/forms/master.tt -->
 

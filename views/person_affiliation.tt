@@ -107,8 +107,8 @@
       <div class="row innerrow">
 	<div class="col-md-7">
 	  <select name="edit_mode" class="form-control">
-	    <option value="normal"[% IF thisPerson.edit_mode == "normal" %] selected="selected"[% END %]>Tabbed Form</option>
-	    <option value="expert"[% IF thisPerson.edit_mode == "expert" %] selected="selected"[% END %]>Single Page Form</option>
+	    <option value="normal"[% IF (thisPerson.edit_mode AND thisPerson.edit_mode == "normal") OR (!thisPerson.edit_mode AND session.role != "super_admin") %] selected="selected"[% END %]>Tabbed Form</option>
+	    <option value="expert"[% IF (thisPerson.edit_mode AND thisPerson.edit_mode == "expert") OR (!thisPerson.edit_mode AND session.role == "super_admin") %] selected="selected"[% END %]>Single Page Form</option>
 	  </select>
 	</div>
       </div>

@@ -71,7 +71,8 @@
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
        <ul class="nav navbar-nav">
-         <li><a href="/[% IF session.user %]myPUB[% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm"> Home</span></a></li>
+         [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
+         <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm"> Home</span></a></li>
          [% IF session AND session.user %]
          <li class="hidden-lg hidden-md hidden-sm"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
          <li><a href="/person/[% session.personNumber %]"><span class="fa fa-list-alt"></span><span class="hidden-sm"> My Public Author Page</span></a></li>
