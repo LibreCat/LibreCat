@@ -9,7 +9,7 @@ sub fix {
     my ($self, $pub) = @_;
 
     if ($pub->{type} =~ /^bi/) {
-        $pub->{urn} = h->generate(h->config->{urn}->{thesis_prefix},$pub->{_id});
+        $pub->{urn} = h->generate_urn(h->config->{thesis}->{urn_prefix},$pub->{_id});
     } elsif($pub->{file}) {
         my $oa = 0;
         foreach my $f (@{$pub->{file}}) {
@@ -17,7 +17,7 @@ sub fix {
         }
 
         if ($oa) {
-            $pub->{urn} = h->generate_urn(h->config->{urn}->{prefix},$pub->{_id});
+            $pub->{urn} = h->generate_urn(h->config->{urn_prefix},$pub->{_id});
         }
     }
 
