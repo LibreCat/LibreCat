@@ -72,7 +72,7 @@ post '/login' => sub {
         redirect '/myPUB';
     }
     else {
-        redirect '/login',
+        forward '/login',
             {error_message => 'Wrong username or password!'},
             {method => 'GET'};
     }
