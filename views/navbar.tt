@@ -1,58 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<!-- BEGIN navbar.tt -->
-
-  <head>
-    <title>PUB - Publication at Bielefeld University</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="../../assets/js/html5shiv.js"></script>
-      <script src="../../assets/js/respond.min.js"></script>
-    <![endif]-->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/mypub.css">
-    <script src="/javascripts/jquery.min.js"></script>
-    <script src="/javascripts/jquery-ui-1.10.4.custom.min.js"></script>
-    <script src="/javascripts/bootstrap.min.js"></script>
-    <script src="/javascripts/bootstrap-select.min.js"></script>
-    <script src="/javascripts/scripts.js"></script>
-    <script src="/javascripts/backend.js"></script>
-    <script src="/javascripts/dropzone3.0.js"></script>
-    <script src="/javascripts/pub_dropzones.js"></script>
-
-    <style>
-    body.dragging, body.dragging * {
-      cursor: url(/images/closedhand.cur) 4 4, move !important;
-    }
-
-    .dragged {
-      position: absolute;
-      margin-left:-250px;
-      opacity: 0.5;
-      z-index: 2000;
-    }
-
-    div.dz-preview:hover {
-      cursor: url(/images/openhand.cur) 4 4, move !important;
-    }
-
-    div.dz-preview.placeholder {
-      position: relative;
-    }
-    div.dz-preview.placeholder:before {
-      position: absolute;
-    }
-    </style>
-
-  </head>
-  <body>
+[% INCLUDE head.tt %]
 
 [% thisPerson = h.getPerson(session.personNumber) %]
 
@@ -65,18 +11,25 @@
       	  <span class="icon-bar"></span>
       	  <span class="icon-bar"></span>
       	</button>
+	[% IF backend %]
       	<a class="navbar-brand" href="/"><img src="/images/PUB_UNIBI_logo_gruen.gif" height="30" alt="" /></a>
+	[% ELSE %]
+      	<a class="navbar-brand" href="/"><img src="/images/unilogo.jpg" height="30" alt="" /></a>
+	[% END %]
      </div>
 
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
        <ul class="nav navbar-nav">
          [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
-         <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm"> Home</span></a></li>
          [% IF session AND session.user %]
-         <li class="hidden-lg hidden-md hidden-sm"><a href="/myPUB/record/new"><span class="glyphicon glyphicon-plus"></span> Add New Publication</a></li>
-         <li><a href="/person/[% session.personNumber %]"><span class="fa fa-list-alt"></span><span class="hidden-sm"> My Public Author Page</span></a></li>
-         [% IF session.role == "super_admin" %]
+         [% IF backend %]
+	 <li><a href="/person/[% session.personNumber %]"><span class="fa fa-list-alt"></span><span class="hidden-sm"> My Public Author Page</span></a></li>
+	 <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm"> MyPUB Home</span></a></li>
+	 [% ELSE %] 
+	 <li><a href="/myPUB"><span class="fa fa-list-alt"></span><span class="hidden-sm"> MyPUB (Backend)</span></a></li>
+	 [% END %] 
+         [% IF backend AND session.role == "super_admin" %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="/myPUB/admin/account">Accounts</a></li>
@@ -90,6 +43,7 @@
        </ul>
        <ul class="nav navbar-nav navbar-right">
          [% IF session AND session.user %]
+         [% IF backend %]	
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><span class="hidden-sm"> My Settings </span><span class="glyphicon glyphicon-chevron-down"></span></a>
             <div class="dropdown-menu" style="width:550px">
 	      [% INCLUDE person_affiliation.tt %]
@@ -115,6 +69,7 @@
             [% END %]
           </ul>
          </li>
+         [% END %]
          [% END %]
          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm"> Logout</span></a></li>
          [% ELSE %]
