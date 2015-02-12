@@ -7,8 +7,7 @@ default:
     database_name: PUBSystem
     bags:
       session:
-        plugins:
-          - Datestamps
+        plugins: ['Datestamps']
 
 backup:
   package: MongoDB
@@ -16,9 +15,7 @@ backup:
     database_name: PUBBackup
     bags:
       publication:
-        plugins:
-          - Datestamps
-          - Versioning
+        plugins: ['Datestamps', 'Versioning']
         version_compare_ignore:
           - date_updated
 
@@ -32,32 +29,17 @@ award:
   options:
     database_name: PUBAward
 
-citation:
-  package: MongoDB
-  options:
-    database_name: PUBCitation
-
 authority:
   package: MongoDB
   options:
     database_name: PUBAuthority
     bags:
       admin:
-        plugins:
-          - Datestamps
-          - Versioning
+        plugins: ['Datestamps', 'Versioning']
       user:
-        plugins:
-          - Datestamps
-          - Versioning
+        plugins: ['Datestamps', 'Versioning']
       department:
-        plugins:
-          - Datestamps
-
-europmc:
-  package: MongoDB
-  options:
-    database_name: PUBEbi
+        plugins: ['Datestamps']
 
 toolkit:
   package: MongoDB
@@ -68,6 +50,17 @@ metrics:
   package: MongoDB
   options:
     database_name: PUBMetrics
+    bags:
+      wos:
+        plugins: ['Datestamps', 'Versioning']
+      epmc_citations:
+        plugins: ['Datestamps']
+      epmc_referefences:
+        plugins: ['Datestamps']
+      epmc_dblinks:
+        plugins: ['Datestamps']
+      crossref:
+        plugins: ['Datestamps']
 
 search:
   package: ElasticSearch
