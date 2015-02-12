@@ -97,6 +97,7 @@ sub update_publication {
     $search_bag->add($result);
     $search_bag->commit;
     sleep 1;
+    return $result; # leave this here to make debugging easier (it doesn't hurt to have it here!)
 }
 
 sub edit_publication {

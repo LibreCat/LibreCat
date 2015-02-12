@@ -165,7 +165,8 @@ prefix '/myPUB/record' => sub {
         	$params->{creator}->{id} = session 'personNumber';
         }
 
-        update_publication($params);
+        my $result = update_publication($params);
+        #return to_dumper $result; # leave this here to make debugging easier
 
         redirect '/myPUB';
     };
