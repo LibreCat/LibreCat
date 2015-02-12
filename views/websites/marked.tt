@@ -14,64 +14,40 @@
     });
   });
 </script>
-<style>
-body.dragging, body.dragging * {
-  cursor: url(/images/closedhand.cur) 4 4, move !important;
-}
 
-.markedme {
-  margin-left:-25px;
-  min-height:120px;
-}
+<div class="row"><!-- outer border -->
 
-.dragged {
-  position: absolute;
-  margin-left:-250px;
-  opacity: 0.5;
-  z-index: 2000;
-}
+  <div class="col-md-10 col-sm-12 col-md-offset-1"> <!-- main content (left) -->
 
-#sortable li:hover {
-  cursor: url(/images/openhand.cur) 4 4, move !important;
-}
+    <div class="page-header" id="banner">
+      <h1>Marked Publications      </h1>
+    </div>
 
-#sortable li.placeholder {
-  position: relative;
-}
-#sortable li.placeholder:before {
-  position: absolute;
-}
-</style>
-<div class="row">
-  &nbsp;
-</div>
-<div class="row">
-  &nbsp;
-</div>
-<div class="row">
-  <div class="col-md-11 col-md-offset-1">
     <div class="row">
-      <div class="col-md-10">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#">[% total %] Marked Publications</a></li>
-        </ul>
+      <div class="col-md-12">
+	<ul class="nav nav-tabs">
+	  <li class="active"><a href="#">[% total %] Marked Publications</a></li>
+	</ul>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-md-10">
-        <div class="tab-content">
-          <div class="tab-pane active">
-            <div class="col-md-8">
-              [% INCLUDE hits.tt %]
-            </div>
-            <div class="col-md-3 hidden-xs hidden-sm">
-              [% INCLUDE facets.tt %]
-            </div>
-        </div>
+      <div class="tab-content">
+	<div class="tab-pane active">
+	  <div class="col-sm-8">
+	    [% INCLUDE hits.tt %]
+	  </div>
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	    [% INCLUDE facets.tt %]
+	  </div>
+	</div>
       </div>
     </div>
+
   </div>
+
 </div>
 
 [% INCLUDE mark_all_js.tt %]
+
 [% INCLUDE footer.tt %]
