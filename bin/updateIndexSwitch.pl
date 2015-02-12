@@ -4,7 +4,7 @@ use Catmandu::Sane;
 use Catmandu -all;
 use Search::Elasticsearch;
 
-Catmandu->load;
+Catmandu->load(':up');
 Catmandu->config;
 
 my $backup = Catmandu->store->bag('publication');
