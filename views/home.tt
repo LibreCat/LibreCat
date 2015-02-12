@@ -6,6 +6,7 @@
 [% menu = "" %]
 
 [% INCLUDE navbar.tt %]
+
 <script src="/javascripts/frontend.js"></script>
 
 <!-- BEGIN home.tt -->
