@@ -61,7 +61,7 @@ sub can_download {
         }
     } @{$pub->{file}};
 
-    if ($access eq 'oa') {
+    if ($access eq 'open_access') {
         return (1, $file_name);
     } elsif ($access eq 'local' && $ip =~ /^h->{config}->{ip_range}/) {
         return (1, $file_name);
