@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    <label for="id_issue">
+    <label for="id_volume">
       {% fields.basic_fields.volume_issue_page.label %}{% fields.supplementary_fields.volume_issue_page.label %}
     </label>
     {% IF fields.basic_fields.volume_issue_page.mandatory OR fields.supplementary_fields.volume_issue_page.mandatory %}<span class="starMandatory"></span>{% END %}
