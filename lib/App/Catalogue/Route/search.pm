@@ -41,7 +41,6 @@ prefix '/myPUB/search' => sub {
     get '/admin' => needs role => 'super_admin' => sub {
 
         my $p = h->extract_params();
-        (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -71,8 +70,7 @@ prefix '/myPUB/search' => sub {
         my $p = h->extract_params();
         my $account = h->getAccount(session->{user})->[0];
         map {push @{$p->{q}}, "department=$_->{id}";} @{$account->{reviewer}};
-        (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
-
+        
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -101,8 +99,7 @@ prefix '/myPUB/search' => sub {
         my $account = h->getAccount(session->{user})->[0];
         map {push @{$p->{q}}, "department=$_->{id}";} @{$account->{data_manager}};
         push @{$p->{q}}, "(type=researchData OR type=dara)";
-        (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
-
+        
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -136,8 +133,7 @@ prefix '/myPUB/search' => sub {
         my $p = h->extract_params();
         my $id = params->{delegate_id};
         push @{$p->{q}}, "(person=$id OR creator=$id)";
-        (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
-
+        
         $p->{facets} = h->default_facets;
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -185,8 +181,7 @@ prefix '/myPUB/search' => sub {
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         push @{$p->{q}}, "type<>researchData";
         push @{$p->{q}}, "type<>dara";
-        (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
-
+        
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -213,7 +208,6 @@ prefix '/myPUB/search' => sub {
         @{$p->{q}} = @orig_q;
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         push @{$p->{q}}, "(type=researchData OR type=dara)";
-        (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
         $researchhits = h->search_publication($p);
         $hits->{researchhits} = $researchhits if $researchhits;
 
@@ -236,8 +230,7 @@ prefix '/myPUB/search' => sub {
 
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         push @{$p->{q}}, "(type=researchData OR type=dara)";
-        (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
-
+        
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -264,7 +257,6 @@ prefix '/myPUB/search' => sub {
         @{$p->{q}} = @orig_q;
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         push @{$p->{q}}, "(type=researchData OR type=dara)";
-        (params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
         $researchhits = h->search_publication($p);
         $hits->{researchhits} = $researchhits if $researchhits;
 

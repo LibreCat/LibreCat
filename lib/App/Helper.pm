@@ -104,7 +104,8 @@ sub extract_params {
 		push @{$p->{q}}, lc $cql;
 	}
 
-	push @{$p->{q}}, $params->{text} if $params->{text};
+	#push @{$p->{q}}, $params->{text} if $params->{text};
+	($params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, $params->{text}) : (push @{$p->{q}}, join(" AND ",split(" ",$params->{text}))) if $params->{text};
 
 	my $formats = $self->config->{exporter}->{publication};
 	$p->{fmt} = ($params->{fmt} && $formats->{$params->{fmt}})
