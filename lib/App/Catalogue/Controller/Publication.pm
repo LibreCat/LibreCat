@@ -28,10 +28,9 @@ sub new_publication {
 }
 
 sub update_publication {
-    my $data      = shift;
+    my $data = shift;
 
-    croak "Error: No _id specified" unless $data->{_id};
-    #my $validator = Catmandu::Validator::PUB->new();
+    $data->{_id} = new_publication() unless $data->{_id};
 
     $data = delete_empty_fields($data);
     $data = correct_publid($data);
