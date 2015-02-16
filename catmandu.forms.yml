@@ -210,8 +210,6 @@ publicationTypes:
           label: "Publication<br />Identifier"
           label_short: "Publ. Id."
           multiple: 1
-        urn: &urn
-          label: "URN"
         publication_status: &publication_status
           label: "Publication Status"
           label_short: "Publ. Status"
@@ -249,6 +247,8 @@ publicationTypes:
           multiple: 1
         ddc: &ddc
           label: DDC
+        urn: &urn
+          label: "URN"
         extern: &extern
           label: "External<br />Publication"
           placeholder: "Published while not employed at Bielefeld University"
@@ -307,7 +307,6 @@ publicationTypes:
         series_title_volume: *series_title_volume
         page: *page
         publication_identifier: *publication_identifier
-        urn: *urn
         publication_status: *publication_status
         edition: *edition
       file_upload: *file_upload
@@ -317,6 +316,7 @@ publicationTypes:
         keyword: *keyword
         language: *language
         ddc: *ddc
+        urn: *urn
         extern: *extern
         external_id: *external_id
         message: *message
@@ -369,7 +369,6 @@ publicationTypes:
           label: "Volume"
           placeholder: "3"
         publication_identifier: *publication_identifier
-        urn: *urn
         publication_status: *publication_status
       file_upload: *file_upload
       supplementary_fields:
@@ -382,6 +381,7 @@ publicationTypes:
         message: *message
         popular_science: *popular_science
         ubi_funded: *ubi_funded
+        urn: *urn
         language: *language
       related_material: *related_material
   conferenceabstract:
@@ -393,12 +393,37 @@ publicationTypes:
         doi: *doi
         title: *title
         writer: *author_translator
-        editor: *editor_only
+        editor:
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 0
+          multiple: 1
+          label: "Editor"
+          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         corporate_editor: *corporate_editor
         department: *department
         project: *project
         thematic_area: *thematic_area
+        alternative_title: *alternative_title
+        publication:
+          label: "Proceedings Title"
         year: *year
+        place: *place
+        publisher: *publisher
+        series_title: &series_title
+          label: "Series Title"
+        volume_issue_page: &volume_issue_page
+          label: "Vol./Issue/Page"
+          placeholder_volume: ""
+          label_volume: "Volume"
+          placeholder_issue: ""
+          label_issue: "Issue"
+          placeholder_page: "12 - 20"
+          label_page: "Page"
+        publication_identifier: *publication_identifier
+        publication_status: *publication_status
         conference.divider: &conference_divider
           label: "Conference Details"
         conference.name: &conference_name
@@ -413,29 +438,15 @@ publicationTypes:
           label_end: "End"
           placeholder_start: "2014-11-03"
           placeholder_end: "2014-11-05"
-        language: *language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         keyword: *keyword
         ddc: *ddc
-        publication_identifier: *publication_identifier
+        language: *language
         urn: *urn
         external_id: *external_id
         extern: *extern
-        alternative_title: *alternative_title
-        publication_status: *publication_status
-        volume_issue_page: &volume_issue_page
-          label: "Vol./Issue/Page"
-          placeholder_volume: ""
-          label_volume: "Volume"
-          placeholder_issue: ""
-          label_issue: "Issue"
-          placeholder_page: "12 - 20"
-          label_page: "Page"
-        publisher: *publisher
-        place: *place
-        publication: *publication_series
         quality_controlled: &quality_controlled
           label: "Quality Controlled"
         message: *message
@@ -463,7 +474,6 @@ publicationTypes:
           label: "Issue"
         page: *page
         publication_identifier: *publication_identifier
-        urn: *urn
         publication_status: *publication_status
         conference.divider:
           label: "Conference Details"
@@ -481,6 +491,7 @@ publicationTypes:
         ddc: *ddc
         abstract: *abstract
         language: *language
+        urn: *urn
         external_id: *external_id
         publication: *publication_series
         extern: *extern
@@ -497,38 +508,45 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
+        alternative_title: *alternative_title
         writer: *author_translator
-        editor: *editor_only
+        editor:
+          first_name:
+            placeholder: "First Name"
+          last_name:
+            placeholder: "Last Name"
+          mandatory: 0
+          multiple: 1
+          label: "Editor"
+          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         corporate_editor: *corporate_editor
+        place: *place
+        publisher: *publisher
         department: *department
         project: *project
         thematic_area: *thematic_area
+        volume_issue_page: *volume_issue_page
         publication:
           label: "Proceedings Title"
-        series_title: &series_title
-          label: "Series Title"
+        series_title: *series_title
         year: *year
+        publication_identifier: *publication_identifier
+        publication_status: *publication_status
         conference.divider:
           label: "Conference Details"
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        language: *language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         keyword: *keyword
         ddc: *ddc
+        language: *language
         abstract: *abstract
-        publication_identifier: *publication_identifier
         urn: *urn
         external_id: *external_id
         extern: *extern
-        alternative_title: *alternative_title
-        publication_status: *publication_status
-        volume_issue_page: *volume_issue_page
-        publisher: *publisher
-        place: *place
         quality_controlled: *quality_controlled
         popular_science: *popular_science
         ubi_funded: *ubi_funded
@@ -571,7 +589,6 @@ publicationTypes:
         series_title_volume: *series_title_volume
         publisher: *publisher
         publication_identifier: *publication_identifier
-        urn: *urn
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
@@ -582,6 +599,7 @@ publicationTypes:
         external_id: *external_id
         publication: *publication_series
         volume: *volume
+        urn: *urn
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material
@@ -647,7 +665,6 @@ publicationTypes:
         volume_issue_page: *volume_issue_page
         year: *year
         publication_identifier: *publication_identifier
-        urn: *urn
         publication_status: *publication_status
       file_upload: *file_upload
       supplementary_fields:
@@ -657,6 +674,7 @@ publicationTypes:
         language: *language
         ddc: *ddc
         keyword: *keyword
+        urn: *urn
         popular_science: *popular_science
         quality_controlled: *quality_controlled
         external_id: *external_id
@@ -852,7 +870,6 @@ publicationTypes:
         place: *place
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
-        urn: *urn
         report_number:
           label: "Report Number"
       file_upload: *file_upload
@@ -862,6 +879,7 @@ publicationTypes:
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
+        urn: *urn
         language: *language
         page: *page
         extern: *extern
@@ -892,7 +910,6 @@ publicationTypes:
           label: "Journal Title"
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
-        urn: *urn
         publication_status: *publication_status
       file_upload: *file_upload
       supplementary_fields:
@@ -901,6 +918,7 @@ publicationTypes:
         extern: *extern
         abstract: *abstract
         keyword: *keyword
+        urn: *urn
         ddc: *ddc
         work_references: *message
         external_id: *external_id
@@ -1066,13 +1084,13 @@ publicationTypes:
         series_title_volume: *series_title_volume
         page: *page
         publication_identifier: *publication_identifier
-        urn: *urn
         publication_status: *publication_status
         year: *year
       file_upload: *file_upload
       supplementary_fields:
         extern: *extern
         language: *language
+        urn: *urn
         original_language: &original_language
           label: "Language (Original)"
           label_short: "Lang. (Orig)"
@@ -1133,7 +1151,6 @@ publicationTypes:
           label: "Journal Title"
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
-        urn: *urn
         publication_status: *publication_status
         year: *year
       file_upload: *file_upload
@@ -1145,6 +1162,7 @@ publicationTypes:
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
+        urn: *urn
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material
@@ -1168,13 +1186,13 @@ publicationTypes:
         series_title_volume: *series_title_volume
         page: *page
         publication_identifier: *publication_identifier
-        urn: *urn
         year: *year
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         external_id: *external_id
         abstract: *abstract
+        urn: *urn
         language: *language
         keyword: *keyword
         ddc: *ddc
