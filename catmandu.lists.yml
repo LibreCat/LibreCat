@@ -132,7 +132,6 @@ publication_identifier:
   eissn: "eISSN"
   isbn: "ISBN"
   eisbn: "eISBN"
-  urn: "URN"
   other: "Other Identifier"
 
 publication_status:

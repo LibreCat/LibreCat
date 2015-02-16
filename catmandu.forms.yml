@@ -67,6 +67,7 @@ field_order:
     - volume_issue_page
     - report_number
     - publication_identifier
+    - urn
     - publication_status
     - email
     - abstract
@@ -125,6 +126,7 @@ field_order:
     - page
     - page_range
     - publication_identifier
+    - urn
     - ipc
     - ipn
     - report_number
@@ -208,6 +210,8 @@ publicationTypes:
           label: "Publication<br />Identifier"
           label_short: "Publ. Id."
           multiple: 1
+        urn: &urn
+          label: "URN"
         publication_status: &publication_status
           label: "Publication Status"
           label_short: "Publ. Status"
@@ -303,6 +307,7 @@ publicationTypes:
         series_title_volume: *series_title_volume
         page: *page
         publication_identifier: *publication_identifier
+        urn: *urn
         publication_status: *publication_status
         edition: *edition
       file_upload: *file_upload
@@ -364,6 +369,7 @@ publicationTypes:
           label: "Volume"
           placeholder: "3"
         publication_identifier: *publication_identifier
+        urn: *urn
         publication_status: *publication_status
       file_upload: *file_upload
       supplementary_fields:
@@ -414,6 +420,7 @@ publicationTypes:
         keyword: *keyword
         ddc: *ddc
         publication_identifier: *publication_identifier
+        urn: *urn
         external_id: *external_id
         extern: *extern
         alternative_title: *alternative_title
@@ -456,6 +463,7 @@ publicationTypes:
           label: "Issue"
         page: *page
         publication_identifier: *publication_identifier
+        urn: *urn
         publication_status: *publication_status
         conference.divider:
           label: "Conference Details"
@@ -513,6 +521,7 @@ publicationTypes:
         ddc: *ddc
         abstract: *abstract
         publication_identifier: *publication_identifier
+        urn: *urn
         external_id: *external_id
         extern: *extern
         alternative_title: *alternative_title
@@ -562,6 +571,7 @@ publicationTypes:
         series_title_volume: *series_title_volume
         publisher: *publisher
         publication_identifier: *publication_identifier
+        urn: *urn
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
@@ -614,6 +624,7 @@ publicationTypes:
         message: *message
         volume: *volume
         publication_identifier: *publication_identifier
+        urn: *urn
         ubi_funded: *ubi_funded
       related_material: *related_material
   journalarticle:
@@ -636,6 +647,7 @@ publicationTypes:
         volume_issue_page: *volume_issue_page
         year: *year
         publication_identifier: *publication_identifier
+        urn: *urn
         publication_status: *publication_status
       file_upload: *file_upload
       supplementary_fields:
@@ -687,6 +699,7 @@ publicationTypes:
         external_id: *external_id
         message: *message
         publication_identifier: *publication_identifier
+        urn: *urn
         popular_science: *popular_science
         quality_controlled: *quality_controlled
         ubi_funded: *ubi_funded
@@ -719,6 +732,7 @@ publicationTypes:
         language: *language
         alternative_title: *alternative_title
         publication_identifier: *publication_identifier
+        urn: *urn
         extern: *extern
         external_id: *external_id
         abstract: *abstract
@@ -780,6 +794,7 @@ publicationTypes:
         publication:
           label: "Published Source"
         publication_identifier: *publication_identifier
+        urn: *urn
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -808,6 +823,7 @@ publicationTypes:
         extern: *extern
         publication_status: *publication_status
         publication_identifier: *publication_identifier
+        urn: *urn
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -836,6 +852,7 @@ publicationTypes:
         place: *place
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
+        urn: *urn
         report_number:
           label: "Report Number"
       file_upload: *file_upload
@@ -875,6 +892,7 @@ publicationTypes:
           label: "Journal Title"
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
+        urn: *urn
         publication_status: *publication_status
       file_upload: *file_upload
       supplementary_fields:
@@ -1048,6 +1066,7 @@ publicationTypes:
         series_title_volume: *series_title_volume
         page: *page
         publication_identifier: *publication_identifier
+        urn: *urn
         publication_status: *publication_status
         year: *year
       file_upload: *file_upload
@@ -1114,6 +1133,7 @@ publicationTypes:
           label: "Journal Title"
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
+        urn: *urn
         publication_status: *publication_status
         year: *year
       file_upload: *file_upload
@@ -1148,6 +1168,7 @@ publicationTypes:
         series_title_volume: *series_title_volume
         page: *page
         publication_identifier: *publication_identifier
+        urn: *urn
         year: *year
       file_upload: *file_upload
       supplementary_fields:
@@ -1228,6 +1249,7 @@ publicationTypes:
         page: *page
         publication: *publication_series
         publication_identifier: *publication_identifier
+        urn: *urn
         external_id: *external_id
         volume: *volume
         abstract: *abstract
