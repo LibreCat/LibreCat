@@ -1,7 +1,11 @@
 {% editmode = "normal" %}
-[% INCLUDE navbar.tt %]
+[% path = request.path %]
+[% backend = path.match('myPUB') ? 1 : 0 %]
 [% thisPerson = h.getPerson(session.personNumber) %]
 [% edit_mode = "normal" %]
+
+[% INCLUDE head.tt %]
+[% INCLUDE navbar.tt %]
 
 <!-- BEGIN /backend/forms/master.tt -->
 
