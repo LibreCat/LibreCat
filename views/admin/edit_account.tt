@@ -1,3 +1,7 @@
+[% path = request.path %]
+[% backend = path.match('myPUB') ? 1 : 0 %]
+
+[% INCLUDE head.tt %]
 [% INCLUDE navbar.tt %]
 
 <!-- BEGIN admin/edit_account.tt -->
