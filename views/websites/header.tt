@@ -2,7 +2,7 @@
 
 <!-- BEGIN websites/header.tt -->
 
-<meta name="robots" content="index,follow,noimageindex" />
+  <meta name="robots" content="index,follow,noimageindex" />
 
 <!-- END websites/header.tt -->
 

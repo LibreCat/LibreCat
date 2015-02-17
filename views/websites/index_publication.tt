@@ -25,7 +25,7 @@
 	[% IF lang %]
 	PUB – The Publication Server at Bielefeld University
 	[% ELSE %]
-	<img src="images/PUB_UNIBI_logo_gruen.gif" alt="" width="100" class="img-thumbnail">PUB – Der Publikationenserver der Universit&auml;t Bielefeld
+	[% UNLESS session AND session.user %]<img src="images/PUB_UNIBI_logo_gruen.gif" alt="" width="80" class="img-thumbnail hidden-sm">[% END %]PUB<span class="hidden-xs"> – Der Publikationenserver der Universit&auml;t Bielefeld</span>
 	[% END %]
       </h1>
     </div>
@@ -46,7 +46,7 @@
           -->
           <li[% IF bag == 'authorlist' %] class="active"[% END %]><a href="/authorlist?[% lang ? "lang=en" : "" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? "Authors" : "Autoren" %]</a></li>
           <li[% IF bag == 'pubtheses' %] class="active"[% END %]><a href="[% h.host %][% lang ? "/en" : "" %]/pubtheses">PUB Theses</a></li>
-          <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lang ? "About PUB" : "&Uuml;ber PUB" %] <span class="caret"></span></a>
+          <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lang ? "About PUB" : "&Uuml;ber<span class=\"hidden-xs\"> PUB</span>" %] <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li[% IF bag == 'about' %] class="active"[% END %]><a href="[% h.host %][% lang ? "/en" : "" %]/about">[% lang ? "Features" : "Features" %]</a></li>
               <li><a href="[% h.host %]/doc/api">API [% lang ? "Documentation" : "Dokumentation" %]</a></li>
@@ -55,7 +55,8 @@
             </ul>
           </li>
           <li><a href="[% h.host %][% lang ? "/en" : "" %]/policy" data-toggle="tab" style="display:none;">Policy</a></li>
-          <li class="navbar-right"><a href="[% h.host %]/[% bag %][% lang ? "" : "?lang=en" %]" class="select-language"><img src="http://www.uni-bielefeld.de/icons/[% lang ? "de" : "en" %].gif" alt="[% lang ? "Deutsch" : "English" %]"> [% lang ? "Deutsch" : "English" %]</a></li>
+          <li><a href="[% h.host %]/[% bag %][% lang ? "" : "?lang=en" %]" class="select-language"><img src="http://www.uni-bielefeld.de/icons/[% lang ? "de" : "en" %].gif" alt="[% lang ? "Deutsch" : "English" %]"><span class="hidden-xs hidden-sm"> [% lang ? "Deutsch" : "English" %]</span></a></li>
+          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm"> Logout</span></a>[% ELSE %]<a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>[% END %]</li>
         </ul>
       </div>
     </div>
@@ -72,13 +73,13 @@
         <div class="tab-pane[% bag == 'publication' ? ' active' : '' %]" id="publ">
           [% IF bag == "publication" %]
           <div class="row">
-            <div class="col-xs-9">
+            <div class="col-sm-8 col-md-8">
               [% INCLUDE hits.tt %]
             </div>
 
-            <div class="col-xs-3">
+            <div class="col-sm-4 col-md-3 col-md-offset-1">
+              [% INCLUDE rightBoxLogin.tt %]
               [% INCLUDE facets.tt %]
-              [% INCLUDE websites/logo_contact.tt %]
             </div>
           </div>
           [% END %]
@@ -87,14 +88,13 @@
         <div class="tab-pane[% bag == 'data' ? ' active' : '' %]" id="research">
           [% IF bag == "data" %]
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-sm-8">
               [% INCLUDE hits.tt %]
             </div>
 
-            <div class="col-md-3 col-md-offset-1">
-              [% INCLUDE websites/login_box.tt %]
+            <div class="col-sm-4 col-md-3 col-md-offset-1">
+              [% INCLUDE rightBoxLogin.tt %]
               [% INCLUDE facets.tt %]
-              [% INCLUDE websites/logo_contact.tt %]
             </div>
           </div>
           [% END %]

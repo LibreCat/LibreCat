@@ -4,7 +4,7 @@
 
 <div class="row"><!-- begin outer row -->
 
-  <div class="col-md-8"><!-- begin left col -->
+  <div class="col-md-8 col-sm-9"><!-- begin left col -->
 
     <div class="row">
       <div class="col-md-12">
@@ -13,7 +13,7 @@
 	  [% IF lang %]
 	  <input type="hidden" name="lang" value="[% lang %]">
 	  [% END %]
-	  <div class="col-xs-6">
+	  <div class="col-sm-6">
 	    <div class="input-group input-group-lg">
 	      <input type="text" name="cql_query" id="q_id" ng-model="yourQuery" ng-init="yourQuery='[% qp.cql_query %]'" value="[% qp.q %]" class="form-control input-sm" placeholder="[% lang ? "Search UniBi Publications" : "UniBi Publikationen suchen" %]">
 	      <span class="input-group-btn">
@@ -21,7 +21,7 @@
 	      </span>
 	    </div>
 	  </div>
-	  <div class="col-xs-6">
+	  <div class="col-sm-6 hidden-xs">
 	    <div class="btn-group">
 	      <div class="btn-group btn-group-lg">
 		<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
@@ -59,7 +59,7 @@
   
   </div><!-- end left col -->
 
-  <div class="col-md-3 col-md-offset-1">
+  <div class="col-md-3 col-md-offset-1 col-sm-3">
     [% INCLUDE websites/logo_contact.tt %]
   </div>
 
