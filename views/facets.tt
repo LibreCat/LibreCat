@@ -30,23 +30,24 @@
 [%- END %]
 [%- END %]
 
-<ul class="nav nav-tabs nav-stacked margin-bottom1">
-  [% IF facets.status.terms && facets.status.terms.size > 1 %]
+[% IF facets.status.terms && facets.status.terms.size > 1 %]
   [% IF backend %]
-  <li>
-    <button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>Visibility Status ([% facets.status.terms.size %])</button>
-    <div class="facettecollapse">
-    <ul id="status_[% tabmodus %][% menu %]" class="collapse">
-      [% FOREACH stat IN facets.status.terms %]
-      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="status" data-val="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
-      [% END %]
+    <ul class="nav nav-tabs nav-stacked margin-bottom1">
+      <li>
+	<button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>Visibility Status ([% facets.status.terms.size %])</button>
+	<div class="facettecollapse">
+	<ul id="status_[% tabmodus %][% menu %]" class="collapse">
+	  [% FOREACH stat IN facets.status.terms %]
+	  <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="status" data-val="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
+	  [% END %]
+	</ul>
+	</div>
+      </li>
     </ul>
-    </div>
-  </li>
   [% END %]
-  [% END %]
-</ul>
+[% END %]
 
+[% IF total > 0 %]
 <ul class="nav nav-tabs nav-stacked">
   [% IF backend AND session.role == "super_admin" %]
   <li>
@@ -171,12 +172,11 @@
   <li>
     [% FOREACH term IN facets.open_access.terms %]
       [% NEXT IF term.term == "0" %]
-      <a class="search-facet_[% tabmodus %][% menu %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right fw"></span>[% term.count %]OA Fulltexts</a>
+      <a class="search-facet_[% tabmodus %][% menu %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right fw"></span>[% term.count %] OA Fulltexts</a>
     [% END %]
   </li>
 
 </ul>
-[% END %]
 
 <h3>Display Publications</h3>
 
@@ -298,8 +298,8 @@
   </li>
   [% END %]
 </ul>
-
-<br />
+[% END %]
+[% END %]
 
 <!-- Modal -->
 <div id="modal_[% tabmodus %]" class="modal">
