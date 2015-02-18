@@ -3,40 +3,45 @@
 use Catmandu::Sane;
 use Catmandu -all;
 use Search::Elasticsearch;
+use Data::Dumper;
 
 Catmandu->load(':up');
 Catmandu->config;
 
-my $backup = Catmandu->store->bag('publication');
+my $backup = Catmandu->store('backup')->bag('publication');
 
 my $e = Search::Elasticsearch->new();
 
-my $index_exists = $e->indices->exists(index => 'PUB1');
+my $index_exists = $e->indices->exists(index => 'pub1');
 
 if ($index_exists) {
-	my $bag = Catmandu->store('search', index_name => 'PUB2')->bag('publication');
+	my $bag = Catmandu->store('search', index_name => 'pub2')->bag('publication');
+#	print Dumper $backup;
+#	exit;
 	$bag->add_many($backup);
 	$e->indices->update_aliases(
 		body => {
 			actions => [
-				{ add    => { alias => 'PUB', index => 'PUB2' }},
-				{ remove => { alias => 'PUB', index => 'PUB1' }}
+				{ add    => { alias => 'pub', index => 'pub2' }},
+				{ remove => { alias => 'pub', index => 'pub1' }}
 			]
 		}
 	);
-	$e->indices->delete(index => 'PUB1');
+	$e->indices->delete(index => 'pub1');
 } else {
-	my $bag = Catmandu->store('search', index_name => 'PUB1')->bag('publication');
+	my $bag = Catmandu->store('search', index_name => 'pub1')->bag('publication');
+#	print Dumper $backup;
+#	exit;
 	$bag->add_many($backup);
 	$e->indices->update_aliases(
 		body => {
 			actions => [
-				{ add    => { alias => 'PUB', index => 'PUB1' }},
-				{ remove => { alias => 'PUB', index => 'PUB2' }}
+				{ add    => { alias => 'pub', index => 'pub1' }},
+				{ remove => { alias => 'pub', index => 'pub2' }}
 			]
 		}
 	);
-	$e->indices->delete(index => 'PUB2');
+	$e->indices->delete(index => 'pub2');
 }
 
 __END__
