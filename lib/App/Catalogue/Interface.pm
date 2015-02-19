@@ -156,59 +156,72 @@ prefix '/myPUB' => sub {
 
 	};
 	
-	get '/admin/internal_view/:id' => needs role => 'super_admin' => sub {
-		my $id = params->{id};
+	get qr{/admin/internal_view/(\w{1,})/*(\w{1,})*} => needs role => 'super_admin' => sub {
+		my ($id, $dumper) = splat;
 		my $hits = h->search_publication({q => ["id=$id"]});
 		my $entry = $hits->{hits}->[0];
-		my $html_string = "<html><head><title>Internal View</title></head><body>";
 		
-		foreach my $key (sort keys %$entry){
-			$html_string .= "<b>" . $key . "</b>:<br />\n";
-			if (ref $entry->{$key} eq "ARRAY"){
-				foreach my $arrkey (@{$entry->{$key}}){
-					if(ref $arrkey eq "ARRAY"){
-						foreach my $arrarrkey (@{$arrkey}){
-							$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;$arrarrkey<br />\n";
+		if($dumper and $dumper eq "dumper"){
+			return to_dumper $entry;
+		}
+		else {
+			my $html_string = "<html><head><title>Internal View</title></head><body>";
+			
+			foreach my $key (sort keys %$entry){
+				$html_string .= "<b>" . $key . "</b>:<br />\n";
+				if (ref $entry->{$key} eq "ARRAY"){
+					foreach my $arrkey (@{$entry->{$key}}){
+						if(ref $arrkey eq "ARRAY"){
+							foreach my $arrarrkey (@{$arrkey}){
+								$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;$arrarrkey<br />\n";
+							}
 						}
-					}
-					elsif(ref $arrkey eq "HASH"){
-						foreach my $arrarrkey (keys %{$arrkey}){
-							$html_string .= "&nbsp;&nbsp;<b>$arrarrkey</b>:<br />\n";
-							$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;$arrkey->{$arrarrkey}<br />\n";
+						elsif(ref $arrkey eq "HASH"){
+							foreach my $arrarrkey (keys %{$arrkey}){
+								$html_string .= "&nbsp;&nbsp;<b>$arrarrkey</b>:<br />\n";
+								if(ref $arrkey->{$arrarrkey} eq "ARRAY"){
+									foreach my $lastarrkey (@{$arrkey->{$arrarrkey}}){
+										$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;$lastarrkey<br />\n";
+									}
+								}
+								else {
+									$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;$arrkey->{$arrarrkey}<br />\n";
+								}
+							}
 						}
-					}
-					else {
-						$html_string .= "&nbsp;&nbsp;" . $arrkey . "<br />\n";
+						else {
+							$html_string .= "&nbsp;&nbsp;" . $arrkey . "<br />\n";
+						}
 					}
 				}
-			}
-			elsif (ref $entry->{$key} eq "HASH"){
-				foreach my $subkey (keys %{$entry->{$key}}){
-					$html_string .= "&nbsp;&nbsp;<i>$subkey</i>:<br />\n";
-					if(ref $entry->{$key}->{$subkey} eq "ARRAY"){
-						foreach my $subsubkey (@{$entry->{$key}->{$subkey}}){
-							$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$subsubkey<br />\n";
+				elsif (ref $entry->{$key} eq "HASH"){
+					foreach my $subkey (keys %{$entry->{$key}}){
+						$html_string .= "&nbsp;&nbsp;<i>$subkey</i>:<br />\n";
+						if(ref $entry->{$key}->{$subkey} eq "ARRAY"){
+							foreach my $subsubkey (@{$entry->{$key}->{$subkey}}){
+								$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$subsubkey<br />\n";
+							}
 						}
-					}
-					elsif(ref $entry->{$key}->{$subkey} eq "HASH"){
-						foreach my $subsubkey (keys %{$entry->{$key}->{$subkey}}){
-							$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;$subsubkey: <br />\n";
-							$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$entry->{$key}->{$subkey}->{$subsubkey}<br />\n";
+						elsif(ref $entry->{$key}->{$subkey} eq "HASH"){
+							foreach my $subsubkey (keys %{$entry->{$key}->{$subkey}}){
+								$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;$subsubkey: <br />\n";
+								$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$entry->{$key}->{$subkey}->{$subsubkey}<br />\n";
+							}
 						}
-					}
-					else {
-						$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;" . $entry->{$key}->{$subkey} . "<br />\n";
+						else {
+							$html_string .= "&nbsp;&nbsp;&nbsp;&nbsp;" . $entry->{$key}->{$subkey} . "<br />\n";
+						}
 					}
 				}
+				else {
+					$html_string .= $entry->{$key} . "<br />\n";
+				}
 			}
-			else {
-				$html_string .= $entry->{$key} . "<br />\n";
-			}
+			
+			$html_string .= "</body></html>";
+			return $html_string;
 		}
 		
-		$html_string .= "</body></html>";
-		
-		return $html_string;
 	}
 
 };
