@@ -5,8 +5,7 @@
 [% thisPerson = backend ? h.getPerson(session.personNumber) : h.getPerson(id) %]
 [% menu = "" %]
 
-[% INCLUDE head.tt %]
-[% INCLUDE navbar.tt %]
+[% INCLUDE header.tt %]
 
 <script src="/javascripts/frontend.js"></script>
 
@@ -22,7 +21,7 @@
         [% IF backend AND session.role == 'user' %]Author's Page (MyPUB)[%END %]
         [% IF backend AND (session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer")) %]Reviewer's Page (MyPUB)[%END %]
         [% IF backend AND session.role == "delegate" %]Delegate's Page (MyPUB)[%END %]
-        [% IF !backend %][% lang ? "Publications of" : "Publikationen von" %] [% thisPerson.first_name %] [% thisPerson.last_name %][%END %]
+        [% IF !backend %][% thisPerson.first_name %] [% thisPerson.last_name %][%END %]
        </h1>
     </div>
 

@@ -9,16 +9,20 @@
 
 <footer class="panel-footer">
   <div class="container">
-    <div class="col-md-8">
-      <p>&copy; 2010-2015 <a href="http://www.ub.uni-bielefeld.de/english/">Bielefeld University Library</a></p>
-    </div>
-    <div class="col-md-4">
-      <ul class="list-inline">
-	<li>Built with <a href="http://www.librecat.org/">LibreCat<img src="/images/librecat.png" alt="" style="vertical-align:middle; margin-left:10px;" /></a><br />(Software developed by <a href="http://www.lub.lu.se/en.html" target="_blank">Lund</a>, <a href="http://lib.ugent.be/en">Ghent</a> and Bielefeld Univ. Libraries)</li>
-	<li>PUB is supported by the <a href="http://www.dfg.de/">DFG</a></li>
-	<li><a href="[% h.host %]/policy">Policy</a></li>
-	<li><a href="http://www.ub.uni-bielefeld.de/biblio/kontakt/impressum/" target="Imprint" onclick="window.open(this.href,'Imprint','width=900,height=650,left=1,top=1,directories=yes,toolbar=yes,location=yes,menubar=yes,status=yes,scrollbars=yes,resizable=yes')" class="footer">Imprint</a></li>
-      </ul>
+    <div class="row">
+      <div class="col-md-10 col-sm-12 col-md-offset-1">
+	<div class="col-md-6 col-sm-5">
+	  <p>&copy; 2010-2015 <a href="http://www.ub.uni-bielefeld.de/english/">Bielefeld University Library</a></p>
+	</div>
+	<div class="col-md-6 col-sm-7">
+	  <ul class="list-inline">
+	    <li>Built with <a href="http://www.librecat.org/">LibreCat<img src="/images/librecat.png" alt="" style="vertical-align:middle; margin-left:10px;" /></a><br />(Software developed by <a href="http://www.lub.lu.se/en.html" target="_blank">Lund</a>, <a href="http://lib.ugent.be/en">Ghent</a> and Bielefeld Univ. Libraries)</li>
+	    <li>PUB is supported by the <a href="http://www.dfg.de/">DFG</a></li>
+	    <li><a href="[% h.host %]/policy">Policy</a></li>
+	    <li><a href="http://www.ub.uni-bielefeld.de/biblio/kontakt/impressum/" target="Imprint" onclick="window.open(this.href,'Imprint','width=900,height=650,left=1,top=1,directories=yes,toolbar=yes,location=yes,menubar=yes,status=yes,scrollbars=yes,resizable=yes')" class="footer">Imprint</a></li>
+	  </ul>
+	</div>
+      </div>
     </div>
   </div>
 </footer>

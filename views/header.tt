@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html ng-app="angularController">
+
+<!-- BEGIN header.tt -->
+
+  <head>
+
+    [% IF personPageTitle %]
+    <title>[% personPageTitle %]</title>
+    [% ELSIF title %]
+    <title>[% title %]</title>
+    [% ELSE %]
+    <title>PUB &ndash; Publications at Bielefeld University</title>
+    [% END %]
+
+    <link rel="icon" href="/images/icon_uni.png" type="image/png">
+
+    [% IF preview %]
+    <meta http-equiv="refresh" content="120; URL=[% h.host %]/publication/[% oId %]">
+    [% END %]
+
+    [% IF title %]
+      <meta name="citation_title" content="[% mainTitle %]">
+      [% FOREACH author_entry IN author %]<meta name="citation_author" content="[% author_entry.full_name %]">
+      [% END %]
+      <meta name="citation_date" content="[% year %]">
+      [% FOREACH fi IN file %][% IF fi.file_name %]<meta name="citation_pdf_url" content="[% request.path %]/download/[% _id %]/[% fi.file_id %]">[% END %][% END %]
+      [% IF doi %]<meta name="citation_pdf_url" content="http://doi.org/[% doi %]">
+      [% ELSIF link %]<meta name="citation_pdf_url" content="[% link.0.url %]">[% END %]
+      [% IF issn %]<meta name="citation_issn" content="[% issn.0 %]">[% END %]
+      [% IF isbn %]<meta name="citation_isbn" content="[% isbn.0 %]">[% END %]
+
+      <!-- DC-Tags -->
+
+      <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+      <meta name="DC.title" content="[% IF personPageTitle %][% personPageTitle %][% ELSE %][% title %][% END %]">
+      [% FOREACH author_entry IN author %]<meta name="DC.creator" content="[% author_entry.full_name %]">
+      [% END %]
+      [% IF year %]<meta name="DC.date" content="[% year %]">[% END %]
+      [% IF language %]<meta name="DC.language" scheme="ISO639-1" content="[% language.0.iso %]">[% END %]
+      <meta name="DC.identifier" content="[% request.path %]/[% _id %]">
+      [% IF abstract %][% FOREACH abstract_entry IN abstract %][% UNLESS loop.first %][% END %]<meta name="DC.description" content="[% abstract_entry.text | html %]">[% END %][% END %]
+      [% FOREACH rel_entry IN entry.host %][% IF rel_entry.issn %]<meta name="DC.source.ISSN" content="[% rel_entry.issn.0 %]">[% END %][% IF rel_entry.isbn %]<meta name="DC.source.ISBN" content="[% rel_entry.isbn.0 %]">[% END %][% END %]
+      <meta name="DC.type" content="[% h.display_gs_doctypes(type) %]">
+
+      [% IF doi %]<link rel="DC.relation" href="http://doi.org/[% doi %]">[% END %]
+      [% IF urn %]<link rel="DC.relation" href="[% urn %]">[% END %]
+      [% IF issn %]<link rel="DC.relation" href="urn:ISSN:[% issn.0 %]">[% END %]
+      [% IF isbn %]<link rel="DC.relation" href="urn:ISBN:[% isbn.0 %]">[% END %]
+    [% END %]
+
+    [% reqpath = request.path %]
+    [% personid = reqpath.search('person/(\d{1,})') %]
+    [% query = qp.q | replace('"', '&quot;') %]
+    [% IF personPageTitle %]
+      <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/daily', qp, q="person=$personid") %]" title="[% personPageTitle %] (today)">
+      <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/weekly', qp, q="person=$personid") %]" title="[% personPageTitle %] (last week)">
+      <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/monthly', qp, q="person=$personid") %]" title="[% personPageTitle %] (last month)">
+    [% ELSE %]
+      <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/monthly', qp, q="$query") %]" title="Publications last month">
+    [% END %]
+
+    [% UNLESS backend %]
+    <meta name="robots" content="index,follow,noimageindex" />
+    [% ELSE %]
+    <meta name="robots" content="noindex,nofollow,noimageindex" />
+    [% END %]
+
+    [% INCLUDE head_meta.tt %]
+    [% INCLUDE head_scripts.tt %]
+    [% INCLUDE head_styles.tt %]
+
+  </head>
+
+  <body ng-controller="angularSearch" itemscope itemtype="http://schema.org/WebPage">
+
+  [% INCLUDE navbar.tt %]
+
+<!-- END header.tt -->

@@ -22,7 +22,7 @@
 [% END %]
   [% request = 0 %]
   [% IF entry.file || entry.related_material || entry.externalFiles == "1" %]
-  | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/myPUB/record/preview/[% entry._id %][% END %]" class="label label-success">Files available</a>
+  | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/myPUB/record/preview/[% entry._id %][% END %]" class="label label-primary">Files available</a>
   [% END %]
   
   [% IF request %]
@@ -46,11 +46,11 @@
 <!--  
     [% IF bag == "data" %]
   	[% IF entry.externalFiles == "1" %]
-	  | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-success">Files available</a>
+	  | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">Files available</a>
 	[% ELSE %]
 	  [% FOREACH file IN entry.file %]
 	    [% IF file.open_access == 1 %]
-	      | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-success">Files available</a>
+	      | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">Files available</a>
 	      [% LAST %]
 	    [% END %]
 	  [% END %]
