@@ -1,3 +1,5 @@
+<!-- BEGIN websites/policy.tt -->
+
 <div class="row">
 
   <div class="col-sm-8">
@@ -55,3 +57,5 @@
   </div>
 
 </div><!-- row -->
+
+<!-- END websites/policy.tt -->

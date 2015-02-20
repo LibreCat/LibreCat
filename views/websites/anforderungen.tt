@@ -1,3 +1,5 @@
+<!-- BEGIN websites/anforderungen.tt -->
+
 <h3>Technische Anforderungen an die zu speichernden Dokumente</h3>
 
 <p>PUB Theses schafft die EDV-technischen und organisatorischen Voraussetzungen f&uuml;r ein effizientes Ver&ouml;ffentlichen und Erschlie&szlig;en von elektronischen Pr&uuml;fungsarbeiten im Hochschulbereich. Universit&auml;tsangeh&ouml;rige k&ouml;nnen vom eigenen PC aus ohne gro&szlig;en Aufwand ihre Dokumente, nachdem sie als publikationsf&auml;hige Datei vorliegen, per File-Upload &uuml;ber ein Eingabeformular auf PUB Theses hochladen und mit Hilfe der Universit&auml;tsbibliothek im Internet ver&ouml;ffentlichen.</p>
@@ -11,3 +13,5 @@
 
 <h3>Anforderungen an Dokumente, die aus mehreren Dateien bestehen</h3>
 <p>Wenn Sie ein Dokument einbringen wollen, das aus mehreren Teildokumenten (z.B. Kapitel) in je eigenen Dateien besteht, m&uuml;ssen die Dateien in eine Archivdatei gepackt werden (.zip oder .gz). Diese muss eine Start-Seite enthalten, &uuml;ber die im Mehrdateiendokument navigiert werden kann (HTML-Start-Dokument).</p><br />
+
+<!-- END websites/anforderungen.tt -->

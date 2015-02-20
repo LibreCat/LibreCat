@@ -7,14 +7,14 @@
 
   <div class="row">
     <h4 class="margin-top0">[% lang ? 'Open Acces at<br />Bielefeld University' : 'Open Access an der<br />Universit&auml;t Bielefeld' %]</h4>
-    <a href="http://oa.uni-bielefeld.de" target="_blank" class="btn btn-default"><img src="/images/logo_oa.png" width="50" alt=""></a>
+    <a href="http://oa.uni-bielefeld.de" target="_blank"><img src="/images/logo_oa.png" width="50" alt=""></a>
   </div>
 
   <hr>
 
   <div class="row">
     <h4>[% lang ? 'Research Data Management' : 'Forschungsdatenmanagement' %]</h4>
-    <a href="http://data.uni-bielefeld.de" target="_blank" class="btn btn-info"><span class="fa fa-flask fa-5x"></span></a>
+    <a href="http://data.uni-bielefeld.de" target="_blank"><span class="fa fa-flask fa-5x"></span></a>
   </div>
 
   <hr>

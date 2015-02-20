@@ -1,3 +1,5 @@
+<!-- BEGIN websites/about.tt -->
+
 <div class="row">
 
   <div class="col-sm-8">
@@ -94,3 +96,5 @@
   </div>
 
 </div>
+
+<!-- END websites/about.tt -->
