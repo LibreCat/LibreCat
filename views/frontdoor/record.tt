@@ -10,7 +10,10 @@
 <div style="position: absolute; top: 175px; left: -125px; width: 600px; padding: 10px; font-size: 24px; text-align: center; color: rgb(255, 255, 255); font-family: 'trebuchet ms', verdana, arial, sans-serif; transform: rotate(-45deg); -webkit-transform: rotate(-45deg); transform-origin: 50% 0px 0px; -webkit-transform-origin: 50% 0px; background-color: rgb(0, 0, 0); border: 1px solid rgb(170, 170, 170); z-index: 12; opacity: 0.5;">Preview</div>
 [% END %]
 
+[% IF status == "gibtsnich" %]
 [% INCLUDE websites/mathjax.tt %]
+[% END %]
+
 [% mainFile = [] %]
 [% relMat = [] %]
 [% relPubl = [] %]
@@ -520,11 +523,8 @@
 
 </div><!-- outer border -->
 
-
-[% INCLUDE footer.tt %]
-
-<script src="/javascripts/jquery.min.js"></script>
-<script src="/javascripts/bootstrap.min.js"></script>
+<!-- <script src="/javascripts/jquery.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script> -->
 <script charset="utf-8">
 // mark
 $('a.mark').click(function(evt) {
@@ -554,5 +554,4 @@ $('a.mark').click(function(evt) {
 
 <!-- END frontdoor/record.tt -->
 
-</body>
-</html>
+[% INCLUDE footer.tt %]
