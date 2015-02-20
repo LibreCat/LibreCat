@@ -20,8 +20,10 @@
   [% IF au.id %]<a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]</a><sup class="muted">UniBi</sup>[% ELSE %]<span itemprop="author">[% au.full_name %]</span>[% END %]
   [% IF loop.count > 11 %]
     <span id="showAut">
-      <br /><a href="#" onclick="ShowAuthors();"><img src="/images/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a>
+      <br><a href="#" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>All</a>
     </span>
+    </div>
+  </div>
   [% LAST %]
   [% END %]
   [% IF loop.last %]</div></div>[% END %]
