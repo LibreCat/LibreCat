@@ -1,9 +1,0 @@
-[% INCLUDE websites/header_head.tt %]
-
-<!-- BEGIN websites/header.tt -->
-
-  <meta name="robots" content="index,follow,noimageindex" />
-
-<!-- END websites/header.tt -->
-
-[% INCLUDE websites/header_content.tt %]

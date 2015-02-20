@@ -1,9 +1,0 @@
-
-<!-- BEGIN websites/header_content.tt -->
-
-  </head>
-  <body ng-controller="angularSearch" itemscope itemtype="http://schema.org/WebPage">
-
-  [% INCLUDE navbar.tt %]
-
-<!-- END websites/header_content.tt -->
