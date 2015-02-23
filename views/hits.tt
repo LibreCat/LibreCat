@@ -8,11 +8,11 @@
 <div class="row">
   <div class="col-md-12">
     <div class="pull-left">
-    <h3>[% total %] [% lang ? "Publications" : "Publikationen" %]
+    <h2>[% total %] [% IF bag == 'data' %][% lang ? "Data Publications" : "Datenpublikationen" %][% ELSE %][% lang ? "Publications" : "Publikationen" %][% END %]
     [% IF backend AND session.role == "delegate" %]
     [% lang ? "by" : "von" %] [% delegate_name %]
     [% END %]
-    </h3>
+    </h2>
     </div>
     [% IF !backend AND request.path != "/marked" AND total > 0 %]
     <div class="pull-right">
