@@ -4,7 +4,7 @@
 
 <div class="col-md-9">
   <div class="row">
-      <h3>[% total %] [% lang ? "Projects" : "Projekte" %]</h3>
+      <h2>[% total %] [% lang ? "Projects" : "Projekte" %]</h2>
    </div>
 
 <div class="row">
