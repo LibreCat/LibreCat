@@ -188,7 +188,7 @@ publication_identifier:
 	eissn: ["see issn"]
 	isbn: ["see issn"]
 	eisbn: ["see issn"]
-	urn: "urn:nbn:de...."
+urn: "urn:nbn:de...."
 publisher: "Springer"
 place: "Bielefeld"
 publication: "Journal of genetics"
