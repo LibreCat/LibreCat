@@ -7,7 +7,7 @@
 </script>
 
 [% IF status != "public" %]
-<div style="position: absolute; top: 175px; left: -125px; width: 600px; padding: 10px; font-size: 24px; text-align: center; color: rgb(255, 255, 255); font-family: 'trebuchet ms', verdana, arial, sans-serif; transform: rotate(-45deg); -webkit-transform: rotate(-45deg); transform-origin: 50% 0px 0px; -webkit-transform-origin: 50% 0px; background-color: rgb(0, 0, 0); border: 1px solid rgb(170, 170, 170); z-index: 12; opacity: 0.5;">Preview</div>
+<div id="preview">Preview</div>
 [% END %]
 
 [% IF status == "gibtsnich" %]
@@ -71,6 +71,12 @@
   <div class="col-md-10 col-sm-12 col-md-offset-1">
 
     <div class="page-header" id="banner">
+
+      <ol class="breadcrumb">
+	<li><a href="/">PUB</a></li>
+	<li><a href="/publication[% lang ? "?lang=en" : "" %]">[% lang ? "Publications" : "Publikationen" %]</a></li>
+      </ol>
+
       <h1 itemprop="name">[% title %]</h1>
 
       [% IF !_id %]
@@ -344,7 +350,7 @@
       <div class="col-md-3 col-md-offset-1">
 
 	<!-- Export -->
-	<h2>Export</h2>
+	<h3>Export</h3>
 	<a class="total-marked label label-default" href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]">[% marked %]</a> <a href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]" rel="nofollow">Marked Publication[% IF marked && marked > 1 %]s[% END %]</a>
 
 	<!-- trigger modal -->
@@ -392,7 +398,7 @@
 
 	<!-- Sources -->
 	[% IF isi %]
-	<h2>Web of Science</h2>
+	<h3>Web of Science</h3>
 	[% IF metrics.timesCited %]
 	<a href="[% metrics.citingURL %]" target="_parent">
 	Web of Science&reg; Times Cited: <strong class="wos-times-cited">[% metrics.timesCited %]</strong>
@@ -407,7 +413,7 @@
 	[% END %]
 
 	[% IF medline OR pubmedID OR inspire OR arxiv OR scopa3 OR ahf OR phillister OR opac %]
-	<h2>Sources</h2>
+	<h3>Sources</h3>
 
 	[% IF medline %]
 	<p><img src="[% h.host %]/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% medline %]<br>
@@ -452,7 +458,7 @@
 
 	<!-- Supplements -->
 	[% IF genbankID OR nascseedstockID %]
-	<h2>Supplements</h2>
+	<h3>Supplements</h3>
 
 	<div class="row">
 	  [% FOREACH id_entry IN genbankID %]
@@ -523,8 +529,11 @@
 
 </div><!-- outer border -->
 
-<!-- <script src="/javascripts/jquery.min.js"></script>
-<script src="/javascripts/bootstrap.min.js"></script> -->
+<!-- 
+<script src="/javascripts/jquery.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script> 
+-->
+
 <script charset="utf-8">
 // mark
 $('a.mark').click(function(evt) {
