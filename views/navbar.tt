@@ -65,9 +65,9 @@
        </ul>
       [% ELSE %]
       <div class="row">
-	<div class="col-md-10 col-xs-12">
+	<div class="col-md-9 col-sm-11 col-xs-12">
 	  <div class="hidden-xs"><a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" alt="" /></a>
-	    <span style="font-size:16px;padding-top:50px;padding-left:10px;display:inline-block;"><a href="/">
+	    <span style="font-size:15px;padding-top:52px;padding-left:10px;display:inline-block;"><a href="/">
 	    [% IF lang %]
 	    PUB – The Publication Server at Bielefeld University
 	    [% ELSE %]
@@ -76,10 +76,13 @@
 	    </a></span>
 	  </div>
 	</div>
+	<div class="col-md-1 col-sm-1 col-md-offset-1">
+          <span style="padding-top:57px;display:inline-block;"><a href="[% h.host %]/[% UNLESS bag == 'home' %][% bag %][% END %][% lang ? "" : "?lang=en" %]" class="select-language"><small>[% lang ? "Deutsch" : "English" %]</small></a></span>
+	</div>
       </div>
 
       <div class="row">
-	<div class="col-md-9 col-sm-9">
+	<div class="col-md-9 col-sm-10">
 	  <ul class="nav navbar-nav uninav">
 	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Universität <span class="glyphicon glyphicon-chevron-down"></span></a>
 	      <ul class="dropdown-menu" role="menu">
