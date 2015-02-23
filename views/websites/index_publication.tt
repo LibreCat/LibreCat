@@ -19,9 +19,9 @@
     <div id="banner">
       <h1>
 	[% IF lang %]
-	PUB – The Publication Server at Bielefeld University
+	Welcome at PUB
 	[% ELSE %]
-	PUB – Der Publikationenserver der Universit&auml;t Bielefeld
+	Willkommen bei PUB
 	[% END %]
       </h1>
     </div>
@@ -34,7 +34,7 @@
     <div class="row margin-top1">
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
-          <li[% IF bag == 'home' %] class="active"[% END %]><a href="[% lang ? "/en" : "" %]/">Home</a></li>
+          <li[% IF bag == 'home' %] class="active"[% END %]><a href="/[% lang ? "?lang=en" : "" %]">[% lang ? 'Home' : 'Startseite' %]</a></li>
           <li[% IF bag == 'publication' %] class="active"[% END %]><a href="/publication?[% lang ? "lang=en&" : "" %][% qp.q ? "q=$qp.q" : "" %]">[% lang ? "Publications" : "Publikationen" %]</a></li>
           <li[% IF bag == 'data' %] class="active"[% END %]><a href="/data?[% lang ? "lang=en&" : "" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? 'Data Publications' : 'Datenpublikationen' %]</a></li>
           <!--
@@ -51,7 +51,6 @@
             </ul>
           </li>
           <li><a href="/policy" data-toggle="tab" style="display:none;">Policy</a></li>
-          <li><a href="[% h.host %]/[% bag %][% lang ? "" : "?lang=en" %]" class="select-language"><img src="http://www.uni-bielefeld.de/icons/[% lang ? "de" : "en" %].gif" alt="[% lang ? "Deutsch" : "English" %]"><span class="hidden-xs hidden-sm"> [% lang ? "Deutsch" : "English" %]</span></a></li>
           <li class="navbar-right">[% IF session AND session.user %]<a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm"> Logout</span></a>[% ELSE %]<a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>[% END %]</li>
         </ul>
       </div>
