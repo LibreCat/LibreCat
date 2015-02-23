@@ -85,6 +85,7 @@ $(function () {
 		if(sure){
 			var newtype = $(this).data('val');
 			$('#id_type').val(newtype);
+			$('#id_select_type').remove();
 			$('#edit_form').attr('action','/myPUB/record/change_mode');
 			$('#edit_form').submit();
 		}

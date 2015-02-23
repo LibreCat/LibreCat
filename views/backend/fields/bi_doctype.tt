@@ -6,20 +6,10 @@
   </div>
   <div class="col-md-10">
     <div class="row innerrow">
-      <div class="form-group col-md-10 hidden-xs hidden-sm">
-        <div class="sticky mandatory">
-          <select name="type" class="sticky form-control input-sm">
-            <option value="biDissertation"[% IF type == 'biDissertation' || !type %] selected="selected"[% END %]>biDissertation</option>
-            <option value="biBachelorThesis"[% IF type == 'biBachelorThesis' %] selected="selected"[% END %]>biBachelorThesis</option>
-            <option value="biMasterThesis"[% IF type == 'biMasterThesis' %] selected="selected"[% END %]>biMasterThesis</option>
-            <option value="biPostdocThesis"[% IF type == 'biPostdocThesis' %] selected="selected"[% END %]>biPostdocthesis</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group col-xs-11 hidden-lg hidden-md">
+      <div class="form-group col-md-10 col-xs-11">
         <div class="input-group input-group-sm sticky mandatory">
-          <div class="input-group-addon">{% fields.basic_fields.bi_doctype.label %}</div>
-          <select name="type" class="sticky form-control">
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.bi_doctype.label %}</div>
+          <select id="id_select_type" class="sticky form-control input-sm">
             <option value="biDissertation"[% IF type == 'biDissertation' || !type %] selected="selected"[% END %]>biDissertation</option>
             <option value="biBachelorThesis"[% IF type == 'biBachelorThesis' %] selected="selected"[% END %]>biBachelorThesis</option>
             <option value="biMasterThesis"[% IF type == 'biMasterThesis' %] selected="selected"[% END %]>biMasterThesis</option>
@@ -33,7 +23,7 @@
 </div>
 
 <script>
-$(document).ready(function() {
-    $('#id_type').remove();
+$('#id_select_type').on('change', function() {
+  $('#id_type').val($(this).val());
 });
 </script>
