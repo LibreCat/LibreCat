@@ -1,7 +1,7 @@
 
 <!-- BEGIN frontdoor/tab_details.tt -->
 
-<div class="tab-pane active" id="details" style="clear:both;">
+<div class="tab-pane active" id="details">
 
 [% IF reviewedwork  %]
 <dl class="dl-horizontal">
