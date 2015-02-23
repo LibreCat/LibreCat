@@ -36,8 +36,8 @@ main.front {padding-top:50px;}
 
 /* headlines */
 h1,.h1,h2,.h2,h3,.h3{margin-top:31px;}
+h2:first-child{margin-top:0;}
 @media (max-width: 768px) {h1,.h1{font-size:24px;}h2,.h2{font-size:21px;}h3,.h3{font-size:18px;}}
-h3:first-child,.h3:first-child{margin-top:0;}
 h3 a {font-size:inherit;}
 h3.expert {border-bottom: 1px dashed #b6c828;}
 
@@ -45,7 +45,8 @@ h3.expert {border-bottom: 1px dashed #b6c828;}
 @media (min-width: 768px) {a {font-weight:bold;}}
 /* unbold some links */
 a small {font-weight:normal;}
-.normal, .normal a {font-weight:normal!important;}
+.normal,.normal a {font-weight:normal!important;}
+.select-language {display:inline-block;padding:0 6px;background-color:#666;color:#fff!important;}
 
 /*Some margin for row'ed paragraphs*/
 .row>p{margin-top:10px;}
@@ -485,6 +486,8 @@ margin-top: 0;
 /* additinal styles for xs-displays */
 @media (max-width: 992px) {.margin-xs{margin-top:20px;margin-bottom:20px;}.smaller-xs{font-size:70%;}}
 
+/* frontdor */
+#preview {position: absolute; top: 175px; left: -125px; width: 600px; padding: 10px; font-size: 24px; text-align: center; color: rgb(255, 255, 255); font-family: 'trebuchet ms', verdana, arial, sans-serif; transform: rotate(-45deg); -webkit-transform: rotate(-45deg); transform-origin: 50% 0px 0px; -webkit-transform-origin: 50% 0px; background-color: rgb(0, 0, 0); border: 1px solid rgb(170, 170, 170); z-index: 12; opacity: 0.5;}
 
 /**
 End modifications for PUB

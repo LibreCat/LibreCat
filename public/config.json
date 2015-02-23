@@ -23,9 +23,9 @@
     "@font-size-base": "12px",
     "@font-size-large": "ceil((@font-size-base * 1.25))",
     "@font-size-small": "ceil((@font-size-base * 0.85))",
-    "@font-size-h1": "floor((@font-size-base * 2.25))",
-    "@font-size-h2": "floor((@font-size-base * 1.9))",
-    "@font-size-h3": "ceil((@font-size-base * 1.6))",
+    "@font-size-h1": "floor((@font-size-base * 2.15))",
+    "@font-size-h2": "floor((@font-size-base * 1.85))",
+    "@font-size-h3": "ceil((@font-size-base * 1.5))",
     "@font-size-h4": "ceil((@font-size-base * 1.25))",
     "@font-size-h5": "@font-size-base",
     "@font-size-h6": "ceil((@font-size-base * 0.85))",
@@ -425,5 +425,5 @@
     "scrollspy.js",
     "transition.js"
   ],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=d2af509aecfea48061d1"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=e7765d7a1c6c6728abdb"
 }
