@@ -124,6 +124,7 @@ sub delete_publication {
 	h->publication->commit;
 
 	my $status = delete_file($id);
+	sleep 1;
 
     # delete attached files
 #    my $dir = h->config->{upload_dir} ."/$id";
