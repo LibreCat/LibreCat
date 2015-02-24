@@ -204,6 +204,7 @@ prefix '/myPUB' => sub {
         	last_name => params->{'supervisor.last_name'},
         	full_name => params->{'supervisor.last_name'} . ", " . params->{'supervisor.first_name'},
         }],
+        cc_license => params->{'cc_license'},
       };
       push @{$record->{file}}, to_json({
         file_name => $file_name,
@@ -224,6 +225,7 @@ prefix '/myPUB' => sub {
       # send mail to librarian
       my $mail_body = export_to_string({
           title => $record->{title},
+          author => $record->{writer},
           _id => $id,
           host => h->config->{host},
           },
