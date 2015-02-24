@@ -198,13 +198,14 @@ prefix '/myPUB' => sub {
           last_name => params->{'author.last_name'},
           full_name => params->{'author.last_name'} . ", " . params->{'author.first_name'},
           }],
-        year => substr($now, 0, 4),
+        year => substr(params->{'defense_date'}, 0, 4),
         supervisor => [{
         	first_name => params->{'supervisor.first_name'},
         	last_name => params->{'supervisor.last_name'},
         	full_name => params->{'supervisor.last_name'} . ", " . params->{'supervisor.first_name'},
         }],
         cc_license => params->{'cc_license'},
+        defense_date => params->{'defense_date'},
       };
       push @{$record->{file}}, to_json({
         file_name => $file_name,
@@ -225,7 +226,7 @@ prefix '/myPUB' => sub {
       # send mail to librarian
       my $mail_body = export_to_string({
           title => $record->{title},
-          author => $record->{writer},
+          author => $record->{author}->[0]->{full_name},
           _id => $id,
           host => h->config->{host},
           },

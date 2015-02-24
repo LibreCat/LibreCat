@@ -1,6 +1,6 @@
 A new thesis has been submitted.
 
 Title: [% title %]
-Author: [% author.0.last_name %], [% author.0.first_name %]
+Author: [% author %]
 
 [% host %]/myPUB/search?q=[% _id %]
