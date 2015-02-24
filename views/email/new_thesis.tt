@@ -1,3 +1,6 @@
 A new thesis has been submitted.
+
 Title: [% title %]
-<a href="[% host %]/myPUB/search?q=[% _id %]">[% host %]/myPUB/search?q=[% _id %]</a>
+Author: [% author.0.last_name %], [% author.0.first_name %]
+
+[% host %]/myPUB/search?q=[% _id %]
