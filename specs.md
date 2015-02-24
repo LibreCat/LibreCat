@@ -181,6 +181,7 @@ project:
     -
         name: "project name"
         id: 29383
+thematic_area: diversity|other
 status: public|private|submitted|returned
 publication_status: inPress|unpublished|submitted|published
 publication_identifier:
