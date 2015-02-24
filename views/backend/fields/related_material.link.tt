@@ -35,7 +35,7 @@
 [% NEXT IF u.record %]
 <div class="row innerrow">
   <div class="col-md-2">
-    <select class="relurl input-sm form-control" name="related_material.link.[% index %].relation">
+    <select class="relurl form-control" name="related_material.link.[% index %].relation">
       [% FOREACH key IN h.config.lists.relations_link.keys.nsort %]
       <option value="[% h.config.lists.relations_link.$key.relation %]"[% IF h.config.lists.relations_link.$key.relation == u.relation %] selected="selected"[% END %]>[% h.config.lists.relations_link.$key.link_text %]</option>
       [% END %]

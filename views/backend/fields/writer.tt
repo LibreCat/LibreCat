@@ -10,7 +10,7 @@
   <div class="row authorspan innerrow">
     <div class="col-md-2 form-group hidden-xs hidden-sm">
       <label>
-        <select class="mylabel authedtrans input-sm form-control" name="writer_type" id="authedtrans_0">
+        <select class="mylabel authedtrans form-control" name="writer_type" id="authedtrans_0">
         [% IF confpath.fields.basic_fields.writer_secondary %][% writer_conf = confpath.fields.basic_fields.writer_secondary %][% ELSE %][% writer_conf = confpath.fields.basic_fields.writer %][% END %]
         [% FOREACH creator IN writer_conf.label.keys.sort %]
         <option value="[% writer_conf.label.$creator %]"[% IF (author AND $creator == "author") OR (translator AND $creator == "translator") %]selected="selected"[% END %]>[% creator %]</option>
@@ -26,7 +26,7 @@
         <input type="hidden" id="orig_last_name_0" value="" />
             
         <span class="form-group col-md-4 col-xs-11">
-          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} mandatory{% END %}">
+          <div class="input-group sticky{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">First Name</div>
             <input type="text" id="first_name_0" name="writer.0.first_name" placeholder="{% fields.basic_fields.writer.first_name.placeholder || fields.basic_fields.writer_secondary.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} required{% END %}" value="" />
             <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
@@ -34,7 +34,7 @@
           </div>
         </span>
         <span class="form-group col-md-6 col-xs-11">
-          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} mandatory{% END %}">
+          <div class="input-group sticky{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">Last Name</div>
             <input type="text" id="last_name_0" name="writer.0.last_name" placeholder="{% fields.basic_fields.writer.last_name.placeholder || fields.basic_fields.writer_secondary.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} required{% END %}" value="" />
             <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
@@ -56,7 +56,7 @@
         <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% name.last_name %]" />
             
         <span class="form-group col-md-4 col-xs-11">
-          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} mandatory{% END %}">
+          <div class="input-group sticky{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">First Name</div>
             <input type="text" id="first_name_[% loop.index %]" name="writer.[% loop.index %].first_name" placeholder="{% fields.basic_fields.writer.first_name.placeholder || fields.basic_fields.writer_secondary.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
             <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
@@ -64,7 +64,7 @@
           </div>
         </span>
         <span class="form-group col-md-6 col-xs-11">
-          <div class="input-group input-group-sm sticky{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} mandatory{% END %}">
+          <div class="input-group sticky{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">Last Name</div>
             <input type="text" id="last_name_[% loop.index %]" name="writer.[% loop.index %].last_name" placeholder="{% fields.basic_fields.writer.last_name.placeholder || fields.basic_fields.writer_secondary.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
             <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>

@@ -1,4 +1,4 @@
-<div class="row innerrow" ng-controller="angularSearch">
+<div class="row innerrow">
   [% publication_identifier_list = h.get_list('publication_identifier') %]
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="publId">
@@ -11,7 +11,7 @@
     [% IF !publication_identifier %]
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.publication_identifier.label_short || fields.basic_fields.publication_identifier.label %}{% fields.supplementary_fields.publication_identifier.label_short || fields.supplementary_fields.publication_identifier.label %}</div>
           <span class="input-group-btn">
             <select class="btn btn-default" name="publication_identifier.0.type">
@@ -34,7 +34,7 @@
         [% FOREACH identifier IN publication_identifier.$pub_id %]
         <div class="row innerrow">
           <div class="form-group col-md-10 col-xs-11">
-            <div class="input-group input-group-sm sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
+            <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
               <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.publication_identifier.label_short || fields.basic_fields.publication_identifier.label %}{% fields.supplementary_fields.publication_identifier.label_short || fields.supplementary_fields.publication_identifier.label %}</div>
               <span class="input-group-btn">
                 <select class="btn btn-default" name="publication_identifier.[% index %].type">
@@ -54,7 +54,7 @@
         [% ELSE %]
         <div class="row innerrow">
           <div class="form-group col-md-10 col-xs-11">
-            <div class="input-group input-group-sm sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
+            <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
               <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.publication_identifier.label_short || fields.basic_fields.publication_identifier.label %}{% fields.supplementary_fields.publication_identifier.label_short || fields.supplementary_fields.publication_identifier.label %}</div>
               <span class="input-group-btn">
                 <select class="btn btn-default" name="publication_identifier.[% index %].type">
@@ -76,7 +76,7 @@
     {% ELSE %}
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.publication_identifier.label_short || fields.basic_fields.publication_identifier.label %}{% fields.supplementary_fields.publication_identifier.label_short || fields.supplementary_fields.publication_identifier.label %}</div>
           <span class="input-group-btn">
             <select class="btn btn-default" name="publication_identifer.0.type">

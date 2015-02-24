@@ -9,7 +9,7 @@
   <div class="col-md-10">
     <div class="row innerrow">
       <div class="form-group col-md-3 col-xs-11">
-        <div class="input-group input-group-sm sticky">
+        <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.issue.label %}{% fields.supplementary_fields.issue.label %}</div>
           <input type="text" name="issue" id="id_issue" value="[% issue %]" placeholder="{% fields.basic_fields.issue.placeholder %}{% fields.supplementary_fields.issue.placeholder %}" class="sticky form-control{% IF fields.basic_fields.issue.mandatory OR fields.supplementary_fields.issue.mandatory %} required{% END %}"{% IF fields.basic_fields.issue.readonly OR fields.supplementary_fields.issue.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon"></div>

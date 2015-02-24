@@ -8,9 +8,9 @@
   <div class="col-md-10">
     <div class="row innerrow">
       <div class="form-group col-md-3 col-xs-11">
-        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.edition.mandatory OR fields.supplementary_fields.edition.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.basic_fields.edition.mandatory OR fields.supplementary_fields.edition.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.edition.label %}{% fields.supplementary_fields.edition.label %}</div>
-          <input type="text" name="edition" id="id_edition" value="[% edition %]" placeholder="{% fields.basic_fields.edition.placeholder %}{% fields.supplementary_fields.edition.placeholder %}" class="sticky input-sm form-control{% IF fields.basic_fields.edition.mandatory OR fields.supplementary_fields.edition.mandatory %} required{% END %}"{% IF fields.basic_fields.edition.readonly OR fields.supplementary_fields.edition.readonly %} readonly="readonly"{% END %}>
+          <input type="text" name="edition" id="id_edition" value="[% edition %]" placeholder="{% fields.basic_fields.edition.placeholder %}{% fields.supplementary_fields.edition.placeholder %}" class="sticky form-control{% IF fields.basic_fields.edition.mandatory OR fields.supplementary_fields.edition.mandatory %} required{% END %}"{% IF fields.basic_fields.edition.readonly OR fields.supplementary_fields.edition.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

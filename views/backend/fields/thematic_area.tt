@@ -10,7 +10,7 @@
     [% IF !thematic_area %]
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.thematic_area.label_short || fields.basic_fields.thematic_area.label %}{% fields.supplementary_fields.thematic_area.label_short || fields.supplementary_fields.thematic_area.label %}</div>
           <select name="thematic_area.0" class="sticky form-control{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} required{% END %}">
             <option value=""[% IF !thematic_area %] selected="selected"[% END %]>--- Select Thematic Area ---</option>
@@ -27,7 +27,7 @@
     [% FOREACH ta IN thematic_area %]
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.thematic_area.label_short || fields.basic_fields.thematic_area.label %}{% fields.supplementary_fields.thematic_area.label_short || fields.supplementary_fields.thematic_area.label %}</div>
           <select name="thematic_area.[% loop.index %]" class="sticky form-control{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} required{% END %}">
             <option value=""[% IF !thematic_area %] selected="selected"[% END %]>--- Select Thematic Area ---</option>
@@ -45,7 +45,7 @@
     {% ELSE %}
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.thematic_area.label_short || fields.basic_fields.thematic_area.label %}{% fields.supplementary_fields.thematic_area.label_short || fields.supplementary_fields.thematic_area.label %}</div>
           <select name="thematic_area.0" class="sticky form-control{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} required{% END %}">
             <option value=""[% IF !thematic_area %] selected="selected"[% END %]>--- Select Thematic Area ---</option>
