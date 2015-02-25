@@ -1,15 +1,16 @@
 <!-- BEGIN websites/faq.tt -->
-<div class="row" style="padding-left:13px;">
+<div class="row">
 
-<div class="col-xs-9">
-  <h5>Frequently Asked Questions</h5>
+<div class="col-sm-8">
+
+  <h3>Frequently Asked Questions</h3>
 
   <div class="panel-group" id="accordion_faq">
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#wasistpub">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Was ist PUB - Publikationen an der Universit&auml;t Bielefeld?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Was ist PUB - Publikationen an der Universit&auml;t Bielefeld?
         </a>
       </div>
       <div id="wasistpub" class="panel-collapse collapse">
@@ -31,15 +32,15 @@
             <li>die aktive Betreuung durch das Support-Team der Universit&auml;tsbibliothek.</li>
           </ul>
 	   <p>Die Untercollection &quot;PUB Theses&quot;	ist die Plattform f&uuml;r die elektronische Erstver&ouml;ffentlichung von Bielefelder Pr&uuml;fungsschriften
-	     (s. <b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#Diss">Wo und wie kann ich meine Dissertation online ver&ouml;ffentlichen?</a></b></p>
+	     (s. <b><a href="#" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#Diss">Wo und wie kann ich meine Dissertation online ver&ouml;ffentlichen?</a></b></p>
         </div>
       </div>
     </div>
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#zustaendig">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Wer ist zust&auml;ndig f&uuml;r Fragen zu PUB?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Wer ist zust&auml;ndig f&uuml;r Fragen zu PUB?
         </a>
       </div>
       <div id="zustaendig" class="panel-collapse collapse">
@@ -53,8 +54,8 @@
 
 	<div class="panel panel-default">
 	  <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#publogin">
-       	<a class="accordion-toggle">
-       	   <span class="fa fa-chevron-down"></span> Wie registriere ich mich f&uuml;r PUB? Wie logge ich mich ein?
+       	<a href="#" class="accordion-toggle">
+       	   <span class="fa fa-chevron-down fw"></span>Wie registriere ich mich f&uuml;r PUB? Wie logge ich mich ein?
         </a>
       </div>
 	  <div id="publogin" class="panel-collapse collapse">
@@ -77,8 +78,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#backend">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Was erwartet mich nach der erfolgten Anmeldung?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Was erwartet mich nach der erfolgten Anmeldung?
         </a>
       </div>
       <div id="backend" class="panel-collapse collapse">
@@ -100,15 +101,15 @@
 	      <p>Die &ouml;ffentliche Ansicht Ihrer Publikationsliste ist in der Navigationsleiste &uuml;ber den Punkt &quot;Public View&quot; erreichbar.
  		  Unter dem Men&uuml;punkt &quot;Citation Style Settings&quot; k&ouml;nnen Sie einen Zitationsstil und die Sortierreihenfolge nach Jahren auf- oder absteigend festlegen.
 		  Unter "Add new Publication" finden Sie die Auswahl der in PUB m&ouml;glichen Publikationstypen. Zum Eintragen einer neuen Literaturangabe w&auml;hlen Sie den passenden Publikationstyp aus und tragen die bibliographischen Daten
-		  in das Formular ein. (Mehr dazu s. <b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">Wie kann ich eine Literaturangabe &uuml;berarbeiten?</a></b>) </p>
+		  in das Formular ein. (Mehr dazu s. <b><a href="#" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">Wie kann ich eine Literaturangabe &uuml;berarbeiten?</a></b>) </p>
         </div>
       </div>
     </div>
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#sources">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Was bedeuten die Angaben in der Spalte "Data Source"?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Was bedeuten die Angaben in der Spalte "Data Source"?
         </a>
       </div>
       <div id="sources" class="panel-collapse collapse">
@@ -131,8 +132,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Wie kann ich eine Literaturangabe &uuml;berarbeiten?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Wie kann ich eine Literaturangabe &uuml;berarbeiten?
         </a>
       </div>
       <div id="edit" class="panel-collapse collapse">
@@ -201,8 +202,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#add">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Wie nehme ich eine neue Ver&ouml;ffentlichung in meine Publikationsliste auf?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Wie nehme ich eine neue Ver&ouml;ffentlichung in meine Publikationsliste auf?
         </a>
       </div>
       <div id="add" class="panel-collapse collapse">
@@ -211,7 +212,7 @@
 		&uuml;ber &quot;search similar titles&quot; oder das Suchformular. <br>
 		In Ihrem &quot;Control Panel&quot; in der linken Navigationsleiste finden Sie den Punkt &quot;Add new Publication&quot;. W&auml;hlen Sie den passenden Publikationstyp aus und Sie
 		 bekommen ein leeres Eingabeformular. Bis auf wenige Pflichtfelder sind Sie frei in der Auswahl der zu f&uuml;llenden Felder. Die weiteren Schritte werden unter dem Punkt
-		<b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">Wie kann ich eine Literaturangabe &uuml;berarbeiten?</a></b> erkl&auml;rt.</p>
+		<b><a href="#" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">Wie kann ich eine Literaturangabe &uuml;berarbeiten?</a></b> erkl&auml;rt.</p>
           <p>Nachdem Sie einen Datensatz eingetragen und frei gestellt haben (= auf &quot;publish&quot; geklickt haben), k&ouml;nnen Sie sich &uuml;ber den Link &quot;Preview Page&quot; mit kurzer zeitlicher Verz&ouml;gerung anschauen, wie die Publikation &ouml;ffentlich dargestellt wird.</p>
         </div>
       </div>
@@ -219,8 +220,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#addFoda">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Was muss ich beim Hinzuf&uuml;gen eines neuen Forschungsdatensatzes beachten?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Was muss ich beim Hinzuf&uuml;gen eines neuen Forschungsdatensatzes beachten?
         </a>
       </div>
       <div id="addFoda" class="panel-collapse collapse">
@@ -253,8 +254,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#import">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Wie importiere ich meine Ver&ouml;ffentlichungen aus einem Literaturverwaltungsprogramm?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Wie importiere ich meine Ver&ouml;ffentlichungen aus einem Literaturverwaltungsprogramm?
         </a>
       </div>
       <div id="import" class="panel-collapse collapse">
@@ -272,7 +273,7 @@
             <p><img src="/images/screenshots/import2.png" alt="" /></p>
           </div>
           <p>Bitte ordnen Sie sich und Ihre Bielefelder Co-Autoren zu. Klicken Sie dazu in Ihrer importierten Liste jeweils auf den Titel. Die weiteren Schritte werden unter dem Punkt
-		<b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">Wie kann ich eine Literaturangabe &uuml;berarbeiten?</a></b> erkl&auml;rt.</p>
+		<b><a href="#" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#edit">Wie kann ich eine Literaturangabe &uuml;berarbeiten?</a></b> erkl&auml;rt.</p>
           <p>M&ouml;chten Sie ein anderes Format als BibTeX importieren, schicken Sie die Datei an unser <b>Support-Team &quot;Publikationsdienste&quot;</b> (Kontakt s. rechte Spalte).
 		Wir pflegen Ihre Literaturangaben gerne ein.</p>
          </div>
@@ -281,8 +282,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#export">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Wie kann ich meine Daten aus PUB wieder exportieren?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Wie kann ich meine Daten aus PUB wieder exportieren?
         </a>
       </div>
       <div id="export" class="panel-collapse collapse">
@@ -297,8 +298,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#faq04">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Wie soll ich mit doppelten Datens&auml;tzen umgehen?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Wie soll ich mit doppelten Datens&auml;tzen umgehen?
         </a>
       </div>
       <div id="faq04" class="panel-collapse collapse">
@@ -316,8 +317,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#public">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Wo wird meine pers&ouml;nliche Liste sichtbar sein?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Wo wird meine pers&ouml;nliche Liste sichtbar sein?
         </a>
       </div>
       <div id="public" class="panel-collapse collapse">
@@ -331,7 +332,7 @@
 		Eintr&auml;ge, die mit &quot;Return&quot; zur&uuml;ckgeholt wurden, k&ouml;nnen nur &uuml;ber den Klick auf &quot;Publish&quot; im Bearbeitungsformular wieder &ouml;ffentlich gestellt werden.</p>
 
           <p>In PUB stehen mehrere Zitationsstile zur Auswahl, die in der Publikationsliste im PEVZ und bei Einbettungen Ihrer Liste in eine Website verwendet werden (n&auml;here Informationen
-		zu Einbettungen s. <b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#embed">Wie kann ich meine pers&ouml;nliche Liste
+		zu Einbettungen s. <b><a href="#" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_faq" href="#embed">Wie kann ich meine pers&ouml;nliche Liste
 		auf meiner Homepage sichtbar machen?</a></b>).
 		Die zur Wahl stehenden Stile finden Sie unter &quot;Citation Style Settings&quot;. </p>
 	 </div>
@@ -340,8 +341,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#embed">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Wie kann ich meine pers&ouml;nliche Liste auf meiner Homepage sichtbar machen?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Wie kann ich meine pers&ouml;nliche Liste auf meiner Homepage sichtbar machen?
         </a>
       </div>
       <div id="embed" class="panel-collapse collapse">
@@ -364,8 +365,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#faq05">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Eine systematische Publikationsliste ist bereits durch meine Einrichtung oder meine eigene Initiative vorhanden. Muss ich trotzdem etwas machen?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Eine systematische Publikationsliste ist bereits durch meine Einrichtung oder meine eigene Initiative vorhanden. Muss ich trotzdem etwas machen?
         </a>
       </div>
       <div id="faq05" class="panel-collapse collapse">
@@ -378,8 +379,8 @@
 
  	<div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#Diss">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Wo und wie kann ich meine Dissertation online ver&ouml;ffentlichen?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Wo und wie kann ich meine Dissertation online ver&ouml;ffentlichen?
         </a>
       </div>
       <div id="Diss" class="panel-collapse collapse">
@@ -394,8 +395,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#faq06">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Was geschieht mit Informationen zu Projekten, Dissertationen, Habilitationen und Wissenschaftspreisen?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Was geschieht mit Informationen zu Projekten, Dissertationen, Habilitationen und Wissenschaftspreisen?
         </a>
       </div>
       <div id="faq06" class="panel-collapse collapse">
@@ -409,8 +410,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_faq" href="#support">
-        <a class="accordion-toggle">
-          <span class="fa fa-chevron-down"></span> Bei weiteren Fragen oder Anregungen wende ich mich an...?
+        <a href="#" class="accordion-toggle">
+          <span class="fa fa-chevron-down fw"></span>Bei weiteren Fragen oder Anregungen wende ich mich an...?
         </a>
       </div>
       <div id="support" class="panel-collapse collapse">
@@ -424,9 +425,7 @@
       </div>
     </div>
 
-    <p>&nbsp;</p>
-
-    <div class="panel panel-default">
+    <div class="panel panel-default margin-top2">
       <div class="panel-heading" data-parent="#accordion_faq">
         <a href="[% h.host %]/policy" class="accordion-toggle">
           <span class="fa fa-chevron-right"></span> Leitlinien für PUB
@@ -436,7 +435,7 @@
   </div>
 </div>
 
-<div class="col-xs-3">
+<div class="col-sm-4 col-md-3 col-md-offset-1">
   [% INCLUDE websites/logo_contact.tt %]
 </div>
 

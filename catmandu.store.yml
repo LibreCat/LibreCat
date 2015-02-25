@@ -93,12 +93,13 @@ search:
                 'exact': true
               field: 'name'
               sort: {field: 'name.exact'}
-            active:
+            active: &active
               op:
                 '=': true
                 'exact': true
                 '<>': true
               field: 'active'
+            isactive: *active
             sc39:
               op:
                 '=': true
@@ -341,7 +342,7 @@ search:
                 '=': true
                 '<>': true
               field: 'abstract.text'
-            keyword:
+            keyword: &keyword
               op:
                 'any': true
                 'all': true
@@ -349,14 +350,7 @@ search:
                 '<>': true
                 'exact': {field: 'keyword.exact'}
               field: 'keyword'
-            keywords:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-                'exact': {field: 'keyword.exact'}
-              field: 'keyword'
+            keywords: *keyword
             issn:
               op:
                 'any': true
@@ -401,7 +395,7 @@ search:
                 'exact': {field: 'conference.name.exact'}
               field: 'conferenceName'
               sort: {field: 'conference.name.exact'}
-            extern:
+            extern: &extern
               op:
                 '=': true
                 'exact': true
@@ -409,6 +403,7 @@ search:
               field: 'extern'
               values: '0 or 1'
               description: '1 if not a UniBi publication'
+            nonlu: *extern
             fundedbyubi:
               op:
                 '=': true
@@ -466,6 +461,13 @@ search:
               field: '_id'
               sort: true
               description: "the unique PUB ID"
+            orcid:
+              op:
+                '=': true
+                '<>': true
+                'exact': true
+              field: ['author.orcid','editor.orcid']
+              description: 'Search publications by an author by his/her orcid ID'
             externalidentifier:
               op:
                 '=': true
@@ -490,7 +492,7 @@ search:
                 'exact': {field: 'doi.exact'}
                 '<>': true
               field: 'doi'
-            year:
+            year: &year
               op:
                 '>': true
                 '<': true
@@ -505,6 +507,7 @@ search:
               sort: true
               values: "date in the form yyyy"
               description: "publishing year of the publication"
+            publishingyear: *year
             author:
               op:
                 'any': true
@@ -546,6 +549,14 @@ search:
                 '<>': true
                 'exact': {field: ['author.full_name.exact', 'author.id', 'editor.full_name.exact', 'editor.id', 'translator.full_name.exact', 'translator.id']}
               field: ['author.autoren_ansetzung', 'author.full_name', 'author.id', 'editor.full_name', 'editor.id', 'translator.full_name', 'translator.id']
+            supervisor:
+              op:
+                'any':  true
+                'all': true
+                '=': true
+                '<>': true
+                'exact': {field: ['supervisor.fullName.exact', 'supervisor.personNumber']}
+              field: ['supervisor.fullName.exact', 'supervisor.personNumber']
             department:
               op:
                 '=': true
@@ -565,7 +576,7 @@ search:
               field: ['language.iso', 'language.name']
               values: 'three letter language code (iso639-2b) or the language name, e.g. german'
               description: 'will find both, the iso version and the long version'
-            type:
+            type: &type
               op:
                 '=': true
                 'exact': true
@@ -574,13 +585,14 @@ search:
               field: 'type'
               sort: true
               values: "see the list of publication types"
+            documenttype: *type
             research_data:
               op:
                 '=': true
                 'exact': true
                 '<>': true
               field: 'research_data'
-            date_updated:
+            date_updated: &date_updated
               op:
                 '>': true
                 '<': true
@@ -592,7 +604,8 @@ search:
               field: 'date_updated'
               sort: true
               values: "date in the form yyyy-MM-dd HH:mm:ss or yyyy-MM-dd HH:mm"
-            publication_status:
+            datelastchanged: *date_updated
+            publication_status: &publication_status
               op:
                 '=': true
                 'exact': true
@@ -600,6 +613,7 @@ search:
               field: 'publication_status'
               sort: true
               values: "see the list of publication statuses"
+            publicationstatus: *publication_status
             status: &status
               op:
                 '=': true
@@ -615,12 +629,12 @@ search:
                 '<>': true
               field: 'file.open_access'
               values: '1'
-            yearlastuploaded:
-              op:
-                '=': true
-                'exact': true
-                '<>': true
-              field: 'file.year_last_uploaded'
+#            yearlastuploaded:
+#              op:
+#                '=': true
+#                'exact': true
+#                '<>': true
+#              field: 'file.year_last_uploaded'
 #            yearcreated:
 #              op:
 #                '=': true
@@ -666,6 +680,11 @@ search:
                 '<>': true
               field: intvolume
               sort: true
+            hide:
+              op:
+                '=': true
+                '<>': true
+              field: hide
 
       researcher:
         cql_mapping:
@@ -1019,6 +1038,7 @@ search:
             properties:
               open_access: {type: byte}
               year_last_uploaded: {type: date, format: "yyyy"}
+              date_updated: {type: string}
 #              yearCreated: {type: date, format: "yyyy"}
 
       researcher:

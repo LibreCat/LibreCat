@@ -1,6 +1,10 @@
-[% INCLUDE navbar.tt %]
+[% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
+[% backend = path.match('myPUB') ? 1 : 0 %]
+
+[% INCLUDE head.tt %]
+[% INCLUDE navbar.tt %]
 
 <!-- BEGIN admin/project.tt -->
 

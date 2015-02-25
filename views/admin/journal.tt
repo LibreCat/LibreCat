@@ -1,0 +1,29 @@
+[% path = request.path %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+[% backend = path.match('myPUB') ? 1 : 0 %]
+
+[% INCLUDE head.tt %]
+[% INCLUDE navbar.tt %]
+
+<!-- BEGIN admin/journal.tt -->
+
+<div class="row"><!-- outer row -->
+
+  <div class="col-md-10 col-sm-12 col-md-offset-1"> <!-- main content (left) -->
+
+    <div class="page-header" id="banner">
+      <h1>
+	Manage Journals
+      </h1>
+    </div>
+
+    <p>Content still to come &hellip;</p>
+
+  </div><!-- main content (left) -->
+
+</div><!-- outer row -->
+
+<!-- END admin/journal.tt -->
+
+[% INCLUDE footer.tt %]

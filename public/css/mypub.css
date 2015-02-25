@@ -8,15 +8,27 @@ main{min-height:100%;height:auto!important;height:100%;margin:0 auto -120px;}
 #push,footer {height:120px;}
 
 /* top navbar */
-.navbar-default {border-color: #b6c828;}
-.navbar-default .navbar-brand {text-shadow: #fff 1.5px 1.5px;padding: 7px 0 7px 7px;}
+.navbar-default.backend {border-color: #b6c828;}
+.navbar-default.frontend {background-image:none;background-color:#fff;box-shadow:none;border-color:#d3de73;}
+.navbar-default .navbar-brand {padding: 7px 0 7px 7px;}
 .navbar-fixed-top .navbar-right {padding-right:5px;}
 
+@media (min-width: 768px) {
+   nav.frontend {min-height:100px!important;}
+  .uninav {width:70%;background-color:#b6c828;height:32px;margin-top:79px;background:linear-gradient(top,#b6c828 0%,#b6c828 22px,#d3de73 23px,#d3de73 100%);background:-moz-linear-gradient(top,#b6c828 0,#b6c828 22px,#d3de73 23px,#d3de73 100%);background:-webkit-linear-gradient(top, #e0eb98 0%, #b6c828 100%);}
+  .uninav .dropdown-toggle {padding-top:0;padding-bottom:0;text-align:center;color:#555!important;width:160px;}
+}
+@media (min-width: 992px) {.uninav .dropdown-toggle{width:200px;text-transform:uppercase;}}
+@media (min-width: 1200px) {.uninav .dropdown-toggle{width:250px;text-transform:uppercase;}}
+
 /* display main content below navbar */
-main {padding-top:20px;}
-@media (min-width: 768px) {main{padding-top:30px;}}
+main {padding-top:30px;}
 @media (min-width: 992px) {main{padding-top:40px;}}
 @media (min-width: 1200px) {main{padding-top:50px;}}
+
+/* display main content below navbar */
+main.front {padding-top:50px;}
+@media (min-width: 768px) {main.front{padding-top:110px;}}
 
 /* header */
 .page-header {margin-bottom:10px;}
@@ -29,7 +41,7 @@ h3 a {font-size:inherit;}
 h3.expert {border-bottom: 1px dashed #b6c828;}
 
 /* to boldy go, where no link has gone before */
-a {font-weight:bold;}
+@media (min-width: 768px) {a {font-weight:bold;}}
 /* unbold some links */
 a small {font-weight:normal;}
 .normal, .normal a {font-weight:normal!important;}
@@ -71,7 +83,8 @@ a small {font-weight:normal;}
 .btn-link {font-weight:bold;}
 
 /* Anzahl Publikationen auf Startseite */
-.statalign {display: inline-block;min-width: 80px;text-align: right;}
+.statalign {display:inline-block;min-width:50px;text-align:right;}
+@media (min-width: 992px) {.statalign{min-width:80px;}}
 
 /* definition hitlist */
 .hitlist dt:first-child{margin-top:0;}
@@ -384,9 +397,7 @@ padding-bottom: 20px;
 }
 
 /* mandatory fields */
-.starMandatory {font-weight:bold;color:#f00;}
-.starMandatory select.mylabel {color:#f00;}
-.starMandatory:after {content:" *";font-size:22px;vertical-align:middle;}
+.starMandatory:after {content:" *";font-size:18px;vertical-align:middle;color:#f00;font-weight:bold;}
 
 a .badge {
 color: #fff;
@@ -519,6 +530,9 @@ margin-top: 0;
 .fw1 {width:1.9em;}
 .fw2 {width:2.4em;}
 .fw3 {width:2.9em;}
+
+/* additinal styles for xs-displays */
+@media (max-width: 992px) {.margin-xs{margin-top:20px;margin-bottom:20px;}.smaller-xs{font-size:70%;}}
 
 
 /**

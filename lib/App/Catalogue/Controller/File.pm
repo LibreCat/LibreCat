@@ -47,7 +47,7 @@ sub handle_file {
 				push @{$pub->{file_order}}, $fi->{file_id};
 			}
 
-			my $filepath = path(h->config->{upload_dir}, $fi->{tempid}, $fi->{file_name});
+			my $filepath = path(h->config->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
 			system "mkdir -p $dest_dir" unless -d $dest_dir;
 
 			move($filepath,$dest_dir);
@@ -77,7 +77,7 @@ sub handle_file {
 					my $file = "$dest_dir/$previous_file->{file_name}";
 					unlink($file);
 					#copy new file to previous file's folder
-					my $filepath = path(h->config->{upload_dir}, $fi->{tempid}, $fi->{file_name});
+					my $filepath = path(h->config->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
 					move($filepath, $dest_dir);
 					
 					#my $path = path(h->config->{upload_dir}, $fi->{tempid});
@@ -110,7 +110,7 @@ sub handle_file {
 				}
 
 				system "mkdir -p $dest_dir" unless -d $dest_dir;
-				my $filepath = path(h->config->{upload_dir}, $fi->{tempid}, $fi->{file_name});
+				my $filepath = path(h->config->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
 				move($filepath, $dest_dir);
 				
 				#my $path = path(h->config->{upload_dir}, $fi->{tempid});
@@ -167,12 +167,12 @@ sub check_request_a_copy {
 
 # this sub should be called from the sub 'update_publication',
 # if publication has a file attached
-sub update_file {
-	my $pub = shift;
-	my $dir = $upload_dir ."/$pub->{_id}";
-	mkdir $dir unless -e $dir || croak "Can't create directory";
-
-}
+#sub update_file {
+#	my $pub = shift;
+#	my $dir = $upload_dir ."/$pub->{_id}";
+#	mkdir $dir unless -e $dir || croak "Can't create directory";
+#
+#}
 
 # this sub should be called from the sub 'delete_publication',
 # if publication has a file attached

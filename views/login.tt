@@ -1,3 +1,4 @@
+[% INCLUDE head.tt %]
 [% INCLUDE navbar.tt %]
 
 <!-- BEGIN login.tt -->
@@ -15,21 +16,21 @@
     <form action="/login" method="post" class="form-horizontal">
       <h4><strong>Login to PUB </strong><span style="font-size:10pt;font-weight:normal;">&nbsp;&nbsp;(Not registered yet? <strong><a href="[% luurBase %]/registration?func=getRegistered"><b>Register for PUB</b></a></strong>)</span></h4>
       <div class="form-group[% IF error_message AND !login %] has-error[% END %]">
-        <label class="col-md-3 control-label" for="id_login">Username<span style="color:red"><b>*</b></span></label>
+        <label class="col-md-3 control-label starMandatory" for="id_login">Username</label>
         <div class="col-md-5">
-          <input type="text" class="form-control" name="user" id="id_login" value="[% login %]" placeholder="HRZ Username" required/>
+          <input type="text" class="form-control" name="user" id="id_login" value="[% login %]" placeholder="HRZ Username" required>
         </div>
       </div>
       <div class="form-group[% IF error_message %] has-error[% END %]">
-        <label class="col-md-3 control-label" for="id_password">Password<span style="color:red"><b>*</b></span></label>
+        <label class="col-md-3 control-label starMandatory" for="id_password">Password</label>
         <div class="col-md-5">
-          <input type="password" class="form-control" name="pass" id="id_password" value="" placeholder="HRZ password" required/>
-          <input type="hidden" name="return_url" value="[% return_url %]"/>
+          <input type="password" class="form-control" name="pass" id="id_password" value="" placeholder="HRZ password" required>
+          <input type="hidden" name="return_url" value="[% return_url %]">
         </div>
       </div>
       <div class="form-group">
         <div class="col-md-2 col-md-offset-3">
-          <input type="submit" class="btn btn-default" value="Login" />
+          <input type="submit" class="btn btn-default" value="Login">
         </div>
       </div>
     </form>
@@ -38,15 +39,11 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-2">
-    <span style="color:red"><b>*</b></span> = HRZ Username and password (used e.g. for Webmailer and Stud.IP)
+    <span class="starMandatory"></span> HRZ Username and password (used e.g. for Webmailer and Stud.IP)
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-12">&nbsp;</div>
-</div>
-
-<div class="row">
+<div class="row margin-top1">
   <div class="col-md-6 col-md-offset-2">
     If you have any questions, don't hesitate to <strong><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;">contact us</a></strong> or call 106-4058.
   </div>

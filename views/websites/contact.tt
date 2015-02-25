@@ -1,8 +1,8 @@
 <!-- BEGIN websites/contact.tt -->
-<div class="row" style="padding-left:13px;">
+<div class="row">
 
-  <div class="col-xs-9">
-  <h5>Kontakt</h5>
+  <div class="col-sm-8">
+  <h3>Kontakt</h3>
   <p>Gern beantworten wir Ihre Fragen pers&ouml;nlich und freuen uns auf Ihre Anregungen.</p>
 
   <p>
@@ -22,7 +22,7 @@
   </p>
 </div>
 
-<div class="col-xs-3">
+<div class="col-sm-4 col-md-3 col-md-offset-1">
   [% INCLUDE websites/logo_contact.tt %]
 </div>
 

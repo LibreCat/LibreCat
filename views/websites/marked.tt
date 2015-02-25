@@ -1,6 +1,8 @@
-[% INCLUDE navbar.tt %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
+
+[% INCLUDE head.tt %]
+[% INCLUDE navbar.tt %]
 
 <script src="/javascripts/jquery-sortable.js"></script>
 <script>

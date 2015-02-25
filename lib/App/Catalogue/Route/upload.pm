@@ -18,7 +18,8 @@ use Try::Tiny;
 use File::Copy;
 use Carp;
 use Dancer::Plugin::Auth::Tiny;
-use Digest::MD5 qw/md5_hex/;
+use Crypt::Digest::MD5;
+use Encode qw(encode_utf8);
 
 =head1 PREFIX /myPUB
 
@@ -52,15 +53,10 @@ prefix '/myPUB' => sub {
             tempname => $file->{tempname},
             tempid => $tempid,
           };
-          my $filedir = path(h->config->{upload_dir}, $tempid);
+          my $filedir = path(h->config->{tmp_dir}, $tempid);
           mkdir $filedir || croak "Could not create dir $filedir: $!";
-          my $filepath = path(h->config->{upload_dir}, $tempid, $file->{filename});
+          my $filepath = path(h->config->{tmp_dir}, $tempid, $file->{filename});
       	  copy($file->{tempname}, $filepath);
-
-      	  my $ctx = Digest::MD5->new;
-      	  $ctx->addfile($file->file_handle());
-      	  my $digest = $ctx->md5_hex;
-      	  $file_data->{checksum} = $digest;
 
       	  $file_data->{file_json} = to_json($file_data);
       	  my $status = unlink $file->{tempname};
@@ -94,15 +90,10 @@ prefix '/myPUB' => sub {
             tempname => $file->{tempname},
             tempid => $tempid,
           };
-          my $filedir = path(h->config->{upload_dir}, $tempid);
+          my $filedir = path(h->config->{tmp_dir}, $tempid);
           mkdir $filedir || croak "Could not create dir $filedir: $!";
-          my $filepath = path(h->config->{upload_dir}, $tempid, $file->{filename});
+          my $filepath = path(h->config->{tmp_dir}, $tempid, $file->{filename});
       	  copy($file->{tempname}, $filepath);
-
-      	  my $ctx = Digest::MD5->new;
-      	  $ctx->addfile($file->file_handle());
-      	  my $digest = $ctx->md5_hex;
-      	  $file_data->{checksum} = $digest;
 
       	  $file_data->{file_json} = to_json($file_data);
       	  my $status = unlink $file->{tempname};
@@ -125,6 +116,15 @@ prefix '/myPUB' => sub {
       my $person = h->getPerson(session->{personNumber});
       my $now = h->now();
       $file_data->{saved} = 1;
+
+      my $path = h->get_file_path($id);
+      system "mkdir -p $path" unless -d $path;
+      my $result = move( path(h->config->{tmp_dir}, params->{tempid}, $file_name), $path ) || die $!;
+      
+      my $d = Crypt::Digest::MD5->new;
+      $d->addfile(encode_utf8($path."/".$file_name));
+      my $digest = $d->hexdigest; # hexadecimal form
+      
       my $record = {
         _id => $id,
         status => "new",
@@ -144,23 +144,21 @@ prefix '/myPUB' => sub {
       push @{$record->{file}}, to_json({
         file_name => $file_name,
         file_id => $file_id,
+        tempid => $file_id,
         access_level => "open_access",
         date_updated => $now,
         date_created => $now,
         creator => session->{user},
         open_access => 1,
         relation => "main_file",
+        checksum => $digest,
       });
       push @{$record->{file_order}}, $file_id;
-
-      my $path = h->get_file_path($id);
-      system "mkdir -p $path" unless -d $path;
-      my $result = move( path(h->config->{upload_dir}, params->{tempid}, $file_name), $path ) || die $!;
 
       my $response = update_publication($record);
 
     } else {
-      my $path = path( h->config->{upload_dir}, params->{tempid}, $file_name);
+      my $path = path( h->config->{tmp_dir}, params->{tempid}, $file_name);
       unlink $path;
     }
 
@@ -177,6 +175,15 @@ prefix '/myPUB' => sub {
       my $file_id = new_publication();
       my $now = h->now();
       $file_data->{saved} = 1;
+      
+      my $path = h->get_file_path($id);
+      system "mkdir -p $path" unless -d $path;
+      my $result = move( path(h->config->{tmp_dir}, params->{tempid}, $file_name), $path ) || die $!;
+      
+      my $d = Crypt::Digest::MD5->new;
+      $d->addfile(encode_utf8($path."/".$file_name));
+      my $digest = $d->hexdigest; # hexadecimal form
+      
       my $record = {
         _id => $id,
         status => "new",
@@ -201,18 +208,16 @@ prefix '/myPUB' => sub {
       push @{$record->{file}}, to_json({
         file_name => $file_name,
         file_id => $file_id,
+        tempid => $file_id,
         access_level => "open_access",
         date_updated => $now,
         date_created => $now,
         creator => "pubtheses",
         open_access => 1,
         relation => "main_file",
+        checksum => $digest,
       });
       push @{$record->{file_order}}, $file_id;
-
-      my $path = h->get_file_path($id);
-      system "mkdir -p $path" unless -d $path;
-      my $result = move( path(h->config->{upload_dir}, params->{tempid}, $file_name), $path ) || die $!;
 
       my $response = update_publication($record);
 
@@ -238,7 +243,7 @@ prefix '/myPUB' => sub {
       }
 
     } else {
-      my $path = path( h->config->{upload_dir}, params->{tempid}, $file_name);
+      my $path = path( h->config->{tmp_dir}, params->{tempid}, $file_name);
       unlink $path;
     }
 
@@ -254,7 +259,7 @@ prefix '/myPUB' => sub {
       my $success       = 1;
 
       if ($file) {
-      	  my $filepath = path(h->config->{upload_dir}, $file->{filename});
+      	  my $filepath = path(h->config->{tmp_dir}, $file->{filename});
       	  copy($file->{tempname}, $filepath);
       	  my $status = unlink $file->{tempname};
       }

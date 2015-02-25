@@ -1,0 +1,27 @@
+[% path = request.path %]
+[% backend = path.match('myPUB') ? 1 : 0 %]
+
+[% INCLUDE head.tt %]
+[% INCLUDE navbar.tt %]
+
+<!-- BEGIN admin/edit_journal.tt -->
+
+<div class="row">
+
+  <div class="col-md-10 col-sm-12 col-md-offset-1"> <!-- main content (left) -->
+
+    <div class="page-header" id="banner">
+      <h1>[% IF full_name %]Edit Journal[% full_name %][% ELSE %]Add new journal[% END %]</h1>
+    </div>
+
+    <p>Content still to come</p>
+
+  </div><!-- col-md-9 col-md-offset-1 -->
+
+</div><!-- row -->
+
+
+<!-- END admin/edit_journal.tt -->
+
+[% INCLUDE footer.tt %]
+

@@ -5,9 +5,46 @@
 
   <div class="row">
     <div class="col-md-12">
-      <h3>[% total %] [% lang ? "UniBi Authors" : "UniBi Autorinnen und Autoren" %]</h3>
+      <h3>[% total %] [% lang ? "Authors" : "Autorinnen und Autoren" %]</h3>
     </div>
   </div>
+
+  [% IF next_page or previous_page %]
+  <div class="row">
+    [% INCLUDE pagination.tt %]
+  [% ELSE %]
+  <div class="row margin-top1">
+  [% END %]
+  </div>
+
+  [% IF error %]
+  <div class="row">
+    <div class="col-md-10">
+      <div  class="alert alert-danger"><strong>[% error %]</strong></div>
+    </div>
+  </div>
+  [% END %]
+
+  <div class="row">
+    <div class="col-md-12">
+    <dl class="hitlist">
+    [% FOREACH person IN hits %]
+    <dt><a href="/person/[% person._id %]">[% person.full_name %][% IF person.bis_personTitle %], [% person.bis_personTitle %][% END %] ([% person.publication_hits %] publications[% IF person.research_hits %], [% person.research_hits %] data publications[% END %])</a></dt>
+    <dd>
+      [% FOREACH affil IN person.department %]
+	<span class="text-muted">[% affil.name %]</span>[% IF !loop.last %], [% END %]
+      [% END %]
+    </dd>
+    [% END %]
+    </dl>
+    </div>
+  </div>
+
+</div>
+
+<div class="col-md-3 col-md-offset-1 col-sm-4">
+
+  <h3>[% lang ? 'Search' : 'Suchen' %]</h3>
 
   <div class="row">
     <div class="col-md-12">
@@ -36,41 +73,6 @@
       </form>
     </div>
   </div>
-
-  [% IF next_page or previous_page %]
-  <div class="row">
-    [% INCLUDE pagination.tt %]
-  [% ELSE %]
-  <div class="row margin-top1">
-  [% END %]
-  </div>
-
-  [% IF error %]
-  <div class="row">
-    <div class="col-md-10">
-      <div  class="alert alert-danger"><strong>[% error %]</strong></div>
-    </div>
-  </div>
-  [% END %]
-
-  <div class="row">
-    <div class="col-md-12">
-    <dl>
-    [% FOREACH person IN hits %]
-    <dt><a href="/person/[% person._id %]">[% person.full_name %][% IF person.bis_personTitle %], [% person.bis_personTitle %][% END %] ([% person.publication_hits %] publications[% IF person.research_hits %], [% person.research_hits %] data publications[% END %])</a></dt>
-    <dd>
-      [% FOREACH affil IN person.department %]
-	<span class="text-muted">[% affil.name %]</span>[% IF !loop.last %], [% END %]
-      [% END %]
-    </dd>
-    [% END %]
-    </dl>
-    </div>
-  </div>
-
-</div>
-
-<div class="col-md-3 col-md-offset-1 col-sm-4">
 
   <h3>[% lang ? 'Filter' : 'Filtern' %]</h3>
   [% IF qp.keys.0 %]
@@ -128,9 +130,6 @@
     </li>
   </ul>
 
-  <hr />
-
-  [% INCLUDE websites/logo_contact.tt %]
 </div>
 
 <!-- END websites/hits_people.tt -->

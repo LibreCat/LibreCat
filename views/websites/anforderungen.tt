@@ -1,13 +1,13 @@
-<h5>Technische Anforderungen an die zu speichernden Dokumente</h5>
+<h3>Technische Anforderungen an die zu speichernden Dokumente</h3>
 
 <p>PUB Theses schafft die EDV-technischen und organisatorischen Voraussetzungen f&uuml;r ein effizientes Ver&ouml;ffentlichen und Erschlie&szlig;en von elektronischen Pr&uuml;fungsarbeiten im Hochschulbereich. Universit&auml;tsangeh&ouml;rige k&ouml;nnen vom eigenen PC aus ohne gro&szlig;en Aufwand ihre Dokumente, nachdem sie als publikationsf&auml;hige Datei vorliegen, per File-Upload &uuml;ber ein Eingabeformular auf PUB Theses hochladen und mit Hilfe der Universit&auml;tsbibliothek im Internet ver&ouml;ffentlichen.</p>
 
-<h5>Zul&auml;ssige Dateiformate</h5>
+<h3>Zul&auml;ssige Dateiformate</h3>
 <p>Weit verbreitete, aktuell markt&uuml;bliche Dateiformate wie <i>PDF, DVI, HTML und .ps</i> sowie komprimierte Dateiarchive in den Formaten <i>.gz</i> und <i>.zip</i> werden von PUB Theses unterst&uuml;tzt. <strong>Bevorzugt sollte jedoch PDF benutzt werden!</strong>.</p>
 
 <p><em>HTML</em> sollte nur bei besonders umfangreichen, in mehreren Teildateien vorliegenden Dokumenten f&uuml;r ein ausnahmsweise erforderliches Start-Dokument (&Uuml;bersichtsdokument) verwendet werden, um die gezielte Navigation zwischen den Teildokumenten (Teildateien) der Arbeit zu erm&ouml;glichen. Grafikdateien in Verbindung mit HTML-Dokumenten k&ouml;nnen in den Formaten JPG, JPEG, GIF und PNG vorliegen. Eine eventuell zugeh&ouml;rige Stylesheet-Datei (&nbsp;.css) muss mit &uuml;bergeben werden. Alle Links, insbesondere auch solche auf Abbildungen, sollen nur auf Dateien verweisen, die als Bestandteil des Dokuments an PUB Theses &uuml;bergeben werden (keine externen Links!).<br />Ein HTML-Start-Dokument, d.h. die Einstiegsseite f&uuml;r ein Mehrdateiendokument, muss stets den Dateinamen 'index.html' bzw. 'index.htm' tragen!</p>
 <p>Die Dateien d&uuml;rfen keinen Kennwort- und/oder Kopierschutz haben, damit die Langzeitarchivierung bei der Deutschen Nationalbibliothek gew&auml;hrleistet ist.</p>
 <p>Bei der Entscheidung f&uuml;r ein bestimmtes Dateiformat sollte die Lesbarkeit und die Langzeitverf&uuml;gbarkeit im Vordergrund stehen. Wenn Sie andere Formate als die genannten verwenden m&ouml;chten, wenden Sie sich bitte vorab an uns.</p>
 
-<h5>Anforderungen an Dokumente, die aus mehreren Dateien bestehen</h5>
+<h3>Anforderungen an Dokumente, die aus mehreren Dateien bestehen</h3>
 <p>Wenn Sie ein Dokument einbringen wollen, das aus mehreren Teildokumenten (z.B. Kapitel) in je eigenen Dateien besteht, m&uuml;ssen die Dateien in eine Archivdatei gepackt werden (.zip oder .gz). Diese muss eine Start-Seite enthalten, &uuml;ber die im Mehrdateiendokument navigiert werden kann (HTML-Start-Dokument).</p><br />

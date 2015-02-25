@@ -39,7 +39,7 @@ sub add_to_index {
 	$pre_fixer->fix($rec);
 	#print Dumper $rec;
   	my $response = $bag->add($rec);
-  	print Dumper $response;
+  	#print Dumper $response;
 }
 
 

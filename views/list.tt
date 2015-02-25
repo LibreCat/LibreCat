@@ -1,3 +1,4 @@
+[% INCLUDE head.tt %]
 [% INCLUDE navbar.tt %]
 
 <!-- BEGIN list.tt -->

@@ -5,7 +5,7 @@
 #          application server)
 # file:    log message to a file in log/
 logger: "file"
-log_file: "pub_backend.log"
+log_file: "pub_test.log"
 
 # the log level for this environment
 # core is the lowest, it shows Dancer's core log messages as well as yours
