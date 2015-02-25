@@ -362,15 +362,15 @@ function edit_file(fileId, id){
 		$('#id_select_relation option[value="main_file"]').prop('selected', true);
 	}
 
-	if(json.access_level == "openAccess"){
+	if(json.access_level == "open_access"){
 		$('#id_accessLevel_openAccess').prop('checked',true);
 		$('#id_accessEmbargo').prop('disabled',true);
 	}
-	else if(json.access_level == "unibi"){
+	else if(json.access_level == "local"){
 		$('#id_accessLevel_unibi').prop('checked',true);
 		$('#id_accessEmbargo').prop('disabled',false);
 	}
-	else if(json.access_level == "admin"){
+	else if(json.access_level == "closed"){
 		if(json.request_a_copy == "1"){
 			$('#id_accessLevel_request').prop('checked',true);
 		}
