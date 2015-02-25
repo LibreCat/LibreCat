@@ -1,16 +1,16 @@
 
 <!-- BEGIN rec_details.tt --> 
 
-<div id="[% tabmodus %]_[% entry.item('_id') %]" class="collapse" style="padding-top:5px;">
+<div id="[% tabmodus %]_[% entry.item('_id') %]" class="collapse margin-top1-4">
 [% IF entry.author %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Authors</div>
-    <div class="frontdoor_right">
+  <div class="col-md-12">
+    <div class="col-md-2">Authors</div>
+    <div class="col-md-10">
     [% FOREACH auth IN entry.author %]
       [% IF auth.id %]
-        <a href="#">[% auth.full_name %]</a><sup class="text-muted">UniBi</sup>;<br />
+        <a href="#">[% auth.full_name %]</a><sup class="text-muted">UniBi</sup><br>
       [% ELSE %]
-        <a href="#">[% auth.full_name %]</a>;<br />
+        <a href="#">[% auth.full_name %]</a><br>
       [% END %]
     [% END %]
     </div>
@@ -18,14 +18,14 @@
 [% END %]
 
 [% IF entry.editor %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Editors</div>
-    <div class="frontdoor_right">
+  <div class="col-md-12">
+    <div class="col-md-2">Editors</div>
+    <div class="col-md-10">
     [% FOREACH ed IN entry.editor %]
       [% IF ed.id %]
-        <a href="#">[% ed.full_name %]</a><sup class="text-muted">UniBi</sup>;<br />
+        <a href="#">[% ed.full_name %]</a><sup class="text-muted">UniBi</sup><br>
       [% ELSE %]
-        <a href="#">[% ed.full_name %]</a>;<br />
+        <a href="#">[% ed.full_name %]</a><br>
       [% END %]
     [% END %]
     </div>
@@ -33,9 +33,9 @@
 [% END %]
 
 [% IF entry.department %]
-  <div class="frontdoor">
-    <div class="frontdoor_left">Departments</div>
-    <div class="frontdoor_right">
+  <div class="col-md-12">
+    <div class="col-md-2">Departments</div>
+    <div class="col-md-10">
     [% FOREACH dept IN entry.department %]
       [% department = h.getDepartment(dept.id) %]
       [% IF department.tree.2 %]
@@ -44,7 +44,7 @@
       [% IF department.tree.1 %]
         [% department.tree.1.name %] / 
       [% END %]
-      [% dept.name %],<br />
+      [% dept.name %],<br>
     [% END %]
     </div>
   </div>
@@ -52,14 +52,14 @@
 </div>
 
 [% IF entry.file %]
-  <div id="[% tabmodus %]_rac_[% entry._id %]" class="collapse" style="padding-top:5px;">
+  <div id="[% tabmodus %]_rac_[% entry._id %]" class="collapse">
   [% FOREACH file in entry.file %]
     [% IF file.request_a_copy %]
     <div class="col-md-12 librarian-approved">
-      <button type="button" class="librarian-approved btn btn-default btn-xs[% IF entry.status != "public" %] disabled[% END %]" [% IF entry.status == "public" %]onclick="generate_link([% file.file_id %], [% entry._id %])" [% END %]data-toggle="tooltip" data-placement="right" title="Generates sharable link, valid for 7 days."><span class="fa fa-share-alt"></span> Share[% IF entry.status != "public" %] (public records only)[% END %]</button>&nbsp;&nbsp;
+      <button type="button" class="librarian-approved btn btn-default btn-xs[% IF entry.status != "public" %] disabled[% END %]" [% IF entry.status == "public" %]onclick="generate_link([% file.file_id %], [% entry._id %])" [% END %]data-toggle="tooltip" data-placement="right" title="Generates sharable link, valid for 7 days."><span class="fa fa-share-alt"></span> Share[% IF entry.status != "public" %] (public records only)[% END %]</button>&nbsp&nbsp
       <a href="#">[% file.file_name %]</a>
       <ul id="[% tabmodus %]_rac_dd_[% file.file_id %]" class="dropdown-menu col-md-12" role="menu" aria-labelledby="dLabel">
-        <li><input class="form-control" type="text" val="" /></li>
+        <li><input class="form-control" type="text" val=""></li>
       </ul>
     </div>
     [% END %]

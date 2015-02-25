@@ -350,7 +350,7 @@
       <div class="col-md-3 col-md-offset-1">
 
 	<!-- Export -->
-	<h3>Export</h3>
+	<h3 class="margin-top1">Export</h3>
 	<a class="total-marked label label-default" href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]">[% marked %]</a> <a href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]" rel="nofollow">Marked Publication[% IF marked && marked > 1 %]s[% END %]</a>
 
 	<!-- trigger modal -->

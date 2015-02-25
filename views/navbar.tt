@@ -3,37 +3,48 @@
 <!-- BEGIN navbar.tt -->
 
   <header>
-    <nav class="navbar navbar-default navbar-fixed-top [% IF session AND session.user %] backend[% ELSE %] frontend[% END %]" role="navigation">
-    [% UNLESS session AND session.user %]<div class="container">[% END %]
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      	  <span class="sr-only">Toggle navigation</span>
-      	  <span class="icon-bar"></span>
-      	  <span class="icon-bar"></span>
-      	  <span class="icon-bar"></span>
-      	</button>
-	[% IF session AND session.user %]
-      	<a class="navbar-brand" href="/"><img src="/images/PUB_UNIBI_logo_gruen.gif" height="30" alt="" /></a>
-	[% ELSE %]
-	  <div class="hidden-sm hidden-lg hidden-md"><a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" height="43" alt="" /></a></div>
-	[% END %]
+    <nav class="navbar navbar-default navbar-fixed-top [% IF backend %] backend[% ELSE %] frontend[% END %]" role="navigation">
+    [% UNLESS backend %]<div class="container">[% END %]
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+      [% IF backend %]
+	<a class="navbar-brand" href="/"><img src="/images/PUB_UNIBI_logo_gruen.gif" height="30" alt="" /></a>
+      [% ELSE %]
+	<div class="hidden-sm hidden-lg hidden-md">
+	  <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" height="43" alt="" /></a>
+	  <span class="navbar-title"><a href="/">
+	  [% IF lang %]
+	    PUB – Publications at Bielefeld University
+	  [% ELSE %]
+	    PUB – Publikationen an der Uni Bielefeld
+	  [% END %]
+	  </a></span>
+	</div>
+      [% END %]
      </div>
 
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
-     [% IF session AND session.user %]
+     [% IF backend %]
 	<ul class="nav navbar-nav">
          [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
-	 <li><a href="/person/[% session.personNumber %]"><span class="fa fa-list-alt"></span><span class="hidden-sm"> My Public Author Page</span></a></li>
+	 <li><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-sm"> My Public Author Page</span></a></li>
 	 <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm"> MyPUB Home</span></a></li>
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="glyphicon glyphicon-chevron-down"></span></a>
+	 [% IF session.role == 'super_admin' %]
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-inbox"></span> Admin <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="/myPUB/admin/account">Accounts</a></li>
-            <!--<li><a href="/myPUB/admin/import">Import</a></li>-->
-            <li><a href="/myPUB/admin/project">Projects</a></li>
-            <!-- <li><a href="/myPUB/admin/journal">Journals</a></li> -->
+            <li><a href="/myPUB/admin/account"><span class="glyphicon glyphicon-user"></span> Manage Accounts</a></li>
+            <!-- <li><a href="/myPUB/admin/import"><span class="glyphicon glyphicon-import"></span> Import</a></li> -->
+            <li><a href="/myPUB/admin/project"><span class="glyphicon glyphicon-link"></span> Manage Projects</a></li>
+            <!-- <li><a href="/myPUB/admin/journal"><span class="glyphicon glyphicon-user"></span> Manage Journals</a></li> -->
           </ul>
          </li>
+	 [% END %]
        </ul>
        <ul class="nav navbar-nav navbar-right">
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><span class="hidden-sm"> My Settings </span><span class="glyphicon glyphicon-chevron-down"></span></a>
@@ -67,17 +78,17 @@
       <div class="row">
 	<div class="col-md-9 col-sm-11 col-xs-12">
 	  <div class="hidden-xs"><a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" alt="" /></a>
-	    <span style="font-size:15px;padding-top:52px;padding-left:10px;display:inline-block;"><a href="/">
+	    <span class="navbar-title"><a href="/">
 	    [% IF lang %]
-	    PUB – The Publication Server at Bielefeld University
+	    PUB – Publications at Bielefeld University
 	    [% ELSE %]
-	    PUB – Der Publikationenserver der Universit&auml;t Bielefeld
+	    PUB – Publikationen an der Universität Bielefeld
 	    [% END %]
 	    </a></span>
 	  </div>
 	</div>
 	<div class="col-md-1 col-sm-1 col-md-offset-1">
-          <span style="padding-top:57px;display:inline-block;"><a href="[% h.host %]/[% UNLESS bag == 'home' %][% bag %][% END %][% lang ? "" : "?lang=en" %]" class="select-language"><small>[% lang ? "Deutsch" : "English" %]</small></a></span>
+          <span class="select-language"><a href="[% h.host %]/[% UNLESS bag == 'home' %][% bag %][% END %][% lang ? "" : "?lang=en" %]"><small>[% lang ? "Deutsch" : "English" %]</small></a></span>
 	</div>
       </div>
 
@@ -131,11 +142,18 @@
 	      </ul>
 	    </li>
 	  </ul>
+
+	[% IF !backend AND session AND session.user %]
+	<div class="hidden-sm hidden-lg hidden-md">
+	  <small>[% lang ? 'Logged in as' : 'Eingeloggt als' %]: [% session.user %]</small>
+	</div>
+	[% END %]
+
       </div>
       </div>
      [% END %]
      </div><!-- /.navbar-collapse -->
-    [% UNLESS session AND session.user %]</div>[% END %]
+    [% UNLESS backend %]</div>[% END %]
    </nav>
 
   <div class="modal" id="selectAFF">
@@ -154,7 +172,7 @@
 
   </header>
 
-  <main[% UNLESS session AND session.user %] class="front"[% END %]>
+  <main[% UNLESS backend %] class="front"[% END %]>
 
   <div class="container">
 

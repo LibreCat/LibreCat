@@ -7,8 +7,8 @@
       [% IF !edit_mode OR edit_mode == "normal" %]
         <button type="button" class="btn btn-default threeToTwo" data-toggle="tab" href="#file_upload"><span class="fa fa-angle-double-left"></span><span class="hidden-xs"> Back</span></button>
       [% END %]
-        <button type="button" class="btn btn-warning cancel-button" alt="Cancel"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Cancel</span></button>
         <button type="submit" name="finalSubmit" value="recSave" alt="Save" class="btn btn-success oneToTwo"><span class="glyphicon glyphicon-ok"></span><span class="hidden-xs"> Save</span></button>
+        <button type="button" class="btn btn-warning cancel-button" alt="Cancel"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Cancel</span></button>
         [% IF session.role == "super_admin" %]
         <a class="btn btn-danger" alt="Delete" href="/myPUB/record/delete/[% _id %]" onClick="return confirm('Are you sure you want to delete this record?');" name="delete" value="Delete"><span class="glyphicon glyphicon-trash"></span><span class="hidden-xs"> Delete</span></a>
         [% IF (status != "public" AND status != "submitted") OR (status == "submitted" AND session.role == "super_admin") %]

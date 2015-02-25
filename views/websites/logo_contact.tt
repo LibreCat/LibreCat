@@ -1,19 +1,26 @@
 
 <!-- BEGIN websites/logo_contact.tt -->
 
+
+<div class="hidden-sm hidden-md hidden-lg"><hr></div>
+
+[% IF session AND session.user %]
+<div class="text-right margin-top-1 margin-bottom1 hidden-xs">
+  <small>Eingeloggt als: [% session.user %]</small>
+</div>
+[% END %]
+
 <div class="text-center margin-xs">
 
-  <div class="hidden-sm hidden-md hidden-lg"><hr></div>
-
   <div class="row">
-    <h4 class="margin-top0">[% lang ? 'Open Acces at<br />Bielefeld University' : 'Open Access an der<br />Universit&auml;t Bielefeld' %]</h4>
+    <h4 class="margin-top0">[% lang ? 'Open Acces at<br>Bielefeld University' : 'Open Access an der<br>Universität Bielefeld' %]</h4>
     <a href="http://oa.uni-bielefeld.de" target="_blank"><img src="/images/logo_oa.png" width="50" alt=""></a>
   </div>
 
   <hr>
 
   <div class="row">
-    <h4>[% lang ? 'Research Data Management' : 'Forschungsdatenmanagement' %]</h4>
+    <h4>[% lang ? 'Research Data Management' : 'Forschungsdaten&shy;management' %]</h4>
     <a href="http://data.uni-bielefeld.de" target="_blank"><span class="fa fa-flask fa-5x"></span></a>
   </div>
 

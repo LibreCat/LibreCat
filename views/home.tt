@@ -26,10 +26,10 @@
     </div>
 
     <div class="row">
-      <div class="col-md-2 col-sm-3 hidden-xs">
+      <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1">
         [% IF thisPerson.bis.photo %]
         <object data="[% thisPerson.bis.photo %]" class="img-thumbnail" style="max-width:140px;" itemprop="image">
-          <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail" alt="">
+          <img src="[% thisPerson.bis.photo %]" style="max-width:120px;" alt="">
         </object>
         [% ELSE %]
         <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail" alt="">
@@ -53,10 +53,10 @@
       </div>
 
     </div>
+    
+    [% USE Dumper; Dumper.dump(user_settings) %]
 
-    [% IF total != 0 OR researchhits.total != 0 %]
-
-    <div class="row"> <!-- row span11 publications, projects, departments -->
+    <div class="row margin-xs-top"> <!-- row span11 publications, projects, departments -->
       <div class="col-md-12">
 	<ul class="nav nav-tabs">
 	[% IF backend AND session.role == 'super_admin' %]
@@ -79,17 +79,7 @@
 	  <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. [% lang ? "by" : "von" %] [% h.getPerson(delegate_id).last_name %]</a></li>
 	  [% END %]
 	[% END %]
-	</ul>
-      </div>
-    </div>
-
-    <div class="row hidden-md hidden-lg hidden-sm"><!-- smartphones only -->
-      <div class="col-xs-6 pull-right">
-	<button class="btn btn-default dropdown-toggle fixed sidebar-expand-button navbar-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"><span class="fa fa-list fa-2x"></span></button>
-	<ul class="dropdown-menu scrollable-menu fixed sidebar-expand-button" role="menu" aria-labelledby="dropdownMenu1">
-	  [% menu = "_side" %]
-	  <li>[% INCLUDE facets.tt %]</li>
-	  [% menu = "" %]
+	<li class="hidden-md hidden-lg hidden-sm"><a href="#facets">Search / Filter</a></li>
 	</ul>
       </div>
     </div>
@@ -103,7 +93,7 @@
 	    [% tabmodus = 'admin' %]
 	    [% INCLUDE hits.tt %]
 	  </div>
-	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	  <div class="col-md-3 col-md-offset-1 col-sm-4">
 	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
@@ -116,7 +106,7 @@
 	    [% tabmodus = 'user' %]
 	    [% INCLUDE hits.tt %]
 	  </div>
-	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	  <div class="col-md-3 col-md-offset-1 col-sm-4">
 	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
@@ -126,7 +116,7 @@
 	    [% tabmodus = 'data' %]
 	    [% INCLUDE hits.tt %]
 	  </div>
-	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	  <div class="col-md-3 col-md-offset-1 col-sm-4">
 	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
@@ -138,7 +128,7 @@
 	    [% tabmodus = 'reviewer' %]
 	    [% INCLUDE hits.tt %]
 	  </div>
-	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	  <div class="col-md-3 col-md-offset-1 col-sm-4">
 	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
@@ -150,7 +140,7 @@
 	    [% tabmodus = 'data_manager' %]
 	    [% INCLUDE hits.tt %]
 	  </div>
-	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	  <div class="col-md-3 col-md-offset-1 col-sm-4">
 	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
@@ -164,20 +154,20 @@
 	    [% delegate_name = h.getPerson(delegate_id).last_name %]
 	    [% INCLUDE hits.tt %]
 	  </div>
-	  <div class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs">
+	  <div class="col-md-3 col-md-offset-1 col-sm-4">
 	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
 	[% END %]
 	[% END %]
       </div>
+
       <script>
       $('#myTab a').click(function (e) {
 	e.preventDefault();
 	$(this).tab('show');
       })
       </script>
-    [% END %]
     </div>
 
   </div> <!-- main content (left) -->

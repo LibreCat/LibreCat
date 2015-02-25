@@ -2,7 +2,7 @@
 <!-- BEGIN person_profile.tt -->
 
 [% IF backend %]
-<h3>[% IF thisPerson.bis.personTitle %]<span itemprop="honorificPrefix">[% thisPerson.bis.personTitle %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span></h3>
+<h2>[% IF thisPerson.bis.personTitle %]<span itemprop="honorificPrefix">[% thisPerson.bis.personTitle %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span></h2>
 [% END %]
 
 [% IF thisPerson.bis.email %]

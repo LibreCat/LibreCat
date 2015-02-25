@@ -3,6 +3,8 @@
 
 [% INCLUDE header.tt %]
 
+<!-- BEGIN websites/marked.tt -->
+
 <script src="/javascripts/jquery-sortable.js"></script>
 <script>
   $(function() {
@@ -21,9 +23,10 @@
   <div class="col-md-10 col-sm-12 col-md-offset-1"> <!-- main content (left) -->
 
     <div class="page-header" id="banner">
-      <h1>Marked Publications      </h1>
+      <h1>[% IF total == 0 %]No [% END %]Marked Publications</h1>
     </div>
 
+    [% IF total > 0 %]
     <div class="row">
       <div class="col-md-12">
 	<ul class="nav nav-tabs">
@@ -44,10 +47,33 @@
 	</div>
       </div>
     </div>
+    [% ELSE %]
+    <div class="row">
+      <div class="col-md-12">
+	<p>You don't have any publications "marked" yet. If you want to add a publication to this list, please click on the link "Mark" next to the publication data. You can find these links on personal publication lists or on a publication page. You can export this list in several bibligraphic formats, like BibTex, RIS or RTF.</p>
+	<p><span class="glyphicon glyphicon-chevron-left"></span>
+              [% IF qp.person AND qp.person != "" %]
+              <a href="[% h.newuri_for("/person/$qp.person", qp, person="") %]">Back to person page.</a>
+              [% ELSIF qp.department AND qp.department != "" %]
+              <a href="[% h.newuri_for("/department/$qp.department", qp, department="") %]">Back to previous page.</a>
+              [% ELSIF qp.publication AND qp.publication != "" %]
+              <a href="[% h.newuri_for("/publication/$qp.publication", qp, publication="") %]">Back to previous page.</a>
+              [% ELSIF qp.data AND qp.data != "" %]
+              <a href="[% h.newuri_for("/data/$qp.data", qp, data="") %]">Back to previous page.</a>
+              [% ELSE %]
+              [% qp.delete('fmt') %]
+              <a href="javascript:history.back()">Back to previous page.</a>
+              [% END %]
+	</span></p>
+      </div>
+    </div>
+    [% END %]
 
   </div>
 
 </div>
+
+<!-- END websites/marked.tt -->
 
 [% INCLUDE mark_all_js.tt %]
 

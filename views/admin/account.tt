@@ -20,7 +20,7 @@
     <form role="form" action="/myPUB/admin/account/search" method="GET">
       <div class="row">
 	<div class="col-md-5">
-	  <label for="id_q">SEARCH by name or PEVZ-ID</label>
+	  <label for="id_q"><span class="glyphicon glyphicon-search"></span> Search by name or PEVZ-ID</label>
 	  <div class="input-group">
 	    <input type="text" class="form-control" name="q" id="id_q" placeholder="Einstein, A" value="[% qp.q %]">
 	    <span class="input-group-btn">
@@ -34,7 +34,7 @@
     <form role="form" action="/myPUB/admin/account/import" method="GET" class="margin-top1">
       <div class="row">
       <div class="col-md-5">
-	<label for="id_id">IMPORT by PEVZ-ID</label>
+	<label for="id_id"><span class="glyphicon glyphicon-download"></span> Import by PEVZ-ID</label>
 	<div class="input-group">
 	  <input type="text" class="form-control" name="id" id="id_id" placeholder="12345" value="[% qp.id %]" required>
 	  <span class="input-group-btn">
@@ -50,7 +50,7 @@
     [% END %]
 
     <div class="row col-md-12 margin-top1 margin-bottom2">
-      <a href="/myPUB/admin/account/new" class="btn pubbutton"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new account</a>
+      <a href="/myPUB/admin/account/new" class="btn btn-primary"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new account</a>
     </div>
 
     [% IF hits %]

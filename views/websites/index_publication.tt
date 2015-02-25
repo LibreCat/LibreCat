@@ -17,13 +17,13 @@
   <div class="col-md-10 col-sm-12 col-md-offset-1"><!-- main content -->
 
     <div id="banner">
-      <h1>
-	[% IF lang %]
-	Welcome at PUB
-	[% ELSE %]
-	Willkommen bei PUB
-	[% END %]
-      </h1>
+	<h1>
+	  [% IF lang %]
+	  Welcome at PUB
+	  [% ELSE %]
+	  Willkommen bei PUB
+	  [% END %]
+	</h1>
     </div>
 
     <div class="ltIEten">
@@ -51,7 +51,8 @@
             </ul>
           </li>
           <li><a href="/policy" data-toggle="tab" style="display:none;">Policy</a></li>
-          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm"> Logout</span></a>[% ELSE %]<a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>[% END %]</li>
+          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm">Logout</span></a>[% ELSE %]<a href="/login"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a>[% END %]</li>
+          [% IF session AND session.user %]<li class="navbar-right"><a href="/myPUB"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm">myPUB</span></a></li>[% END %]
         </ul>
       </div>
     </div>
@@ -71,9 +72,7 @@
             <div class="col-sm-8 col-md-8">
               [% INCLUDE hits.tt %]
             </div>
-
             <div class="col-sm-4 col-md-3 col-md-offset-1">
-              [% INCLUDE rightBoxLogin.tt %]
               [% INCLUDE facets.tt %]
             </div>
           </div>
@@ -86,9 +85,7 @@
             <div class="col-sm-8">
               [% INCLUDE hits.tt %]
             </div>
-
             <div class="col-sm-4 col-md-3 col-md-offset-1">
-              [% INCLUDE rightBoxLogin.tt %]
               [% INCLUDE facets.tt %]
             </div>
           </div>
