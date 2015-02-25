@@ -266,11 +266,11 @@ publicationTypes:
       related_material: &related_material
         tab_name: "Related Material"
         related_material.record:
-          label: "Documents within PUB"
+          label: "Link to PUB record"
           label_short: "PUB-Rec."
           placeholder: "Start typing to search your publications."
         related_material.link:
-          label: "Documents outside PUB"
+          label: "Link to other record"
           label_short: "Ext. Link"
           placeholder: "Enter a remote location (URL) of your file here"
         publish_button:
