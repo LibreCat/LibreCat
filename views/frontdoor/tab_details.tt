@@ -64,7 +64,7 @@
     <div class="col-md-2 text-muted">Department</div>
     <div class="col-md-10">
   [% ELSE %]<br />[% END %]
-  [% dep.name %]
+  <a href="/[% bag %]?q=department=[% dep.id %]">[% dep.name %]</a>
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
@@ -140,11 +140,8 @@
     <div class="col-md-2 text-muted">Keywords</div>
     <div class="col-md-10" itemprop="keywords">
     [% FOREACH kw IN keyword %]
-      [% IF loop.last %]
-        [% kw %]
-      [% ELSE %]
-        [% kw %] ;
-      [% END %]
+        <a href="/[% bag %]?q=keyword=[% kw %]">[% kw %]</a>
+      [% UNLESS loop.last %]; [% END %]
     [% END %]
     </div>
   </div>
@@ -152,7 +149,7 @@
 
   <div class="row">
     <div class="col-md-2 text-muted">Year</div>
-    <div class="col-md-10"><span itemprop="copyrightYear">[% year %]</span></div>
+    <div class="col-md-10"><span itemprop="copyrightYear"><a href="/[% bag %]?q=year=[% year %]">[% year %]</a></span></div>
   </div>
 
 [% IF data_reuse_license %]
@@ -205,14 +202,14 @@
 [% IF publication_identifier.issn %]
   <div class="row">
     <div class="col-md-2 text-muted">ISSN</div>
-    <div class="col-md-10">[% FOREACH is IN publication_identifier.issn %][% is %][% UNLESS loop.last %], [% END %][% END %]</div>
+    <div class="col-md-10">[% FOREACH is IN publication_identifier.issn %]<a href="/publication=issn=[% is %]">[% is %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
 [% IF publication_identifier.eissn %]
   <div class="row">
     <div class="col-md-2 text-muted">eISSN</div>
-    <div class="col-md-10">[% FOREACH es IN publication_identifier.eissn %][% es %][% UNLESS loop.last %], [% END %][% END %]</div>
+    <div class="col-md-10">[% FOREACH es IN publication_identifier.eissn %]<a href="/publication=issn=[% es %]">[% es %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
