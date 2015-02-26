@@ -66,7 +66,7 @@
     <div class="col-md-2 text-muted">Department</div>
     <div class="col-md-10">
   [% ELSE %]<br />[% END %]
-  <a href='/publication?q=department=[% dep.id %]'>[% dep.name %]</a>
+  <a href="/[% bag %]?q=department=[% dep.id %]">[% dep.name %]</a>
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
@@ -142,11 +142,8 @@
     <div class="col-md-2 text-muted">Keywords</div>
     <div class="col-md-10" itemprop="keywords">
     [% FOREACH kw IN keyword %]
-      [% IF loop.last %]
-        <a href='/publication?q=keyword="[% kw %]"'>[% kw %]</a>
-      [% ELSE %]
-        <a href='/publication?q=keyword="[% kw %]"'>[% kw %]</a> ;
-      [% END %]
+        <a href="/[% bag %]?q=keyword=[% kw %]">[% kw %]</a>
+      [% UNLESS loop.last %]; [% END %]
     [% END %]
     </div>
   </div>
@@ -154,7 +151,7 @@
 
   <div class="row">
     <div class="col-md-2 text-muted">Year</div>
-    <div class="col-md-10"><a href="/publication?q=year=[% year %]"><span itemprop="copyrightYear">[% year %]</span></a></div>
+    <div class="col-md-10"><span itemprop="copyrightYear"><a href="/[% bag %]?q=year=[% year %]">[% year %]</a></span></div>
   </div>
 
 [% IF data_reuse_license %]
@@ -212,36 +209,14 @@
 [% IF publication_identifier.issn %]
   <div class="row">
     <div class="col-md-2 text-muted">ISSN</div>
-    <div class="col-md-10">
-    [% FOREACH is IN publication_identifier.issn %]
-      <a href='/publication?q=issn=[% is %]'>[% is %]</a>
-      [% UNLESS loop.last %], [% END %]
-    [% END %]
-    </div>
-  </div>
-[% END %]
-
-[% IF publication_identifier.eisbn %]
-  <div class="row">
-    <div class="col-md-2 text-muted">eISBN</div>
-    <div class="col-md-10" itemprop="eisbn">
-    [% FOREACH eb IN publication_identifier.eisbn %]
-      <a href='/publication?q=eisbn=[% eb %]'>[% eb %]</a>
-      [% UNLESS loop.last %], [% END %]
-    [% END %]
-    </div>
+    <div class="col-md-10">[% FOREACH is IN publication_identifier.issn %]<a href="/publication=issn=[% is %]">[% is %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
 [% IF publication_identifier.eissn %]
   <div class="row">
     <div class="col-md-2 text-muted">eISSN</div>
-    <div class="col-md-10">
-    [% FOREACH es IN publication_identifier.eissn %]
-      <a href='/publication?q=eissn=[% es %]'>[% es %]</a>
-      [% UNLESS loop.last %], [% END %]
-    [% END %]
-    </div>
+    <div class="col-md-10">[% FOREACH es IN publication_identifier.eissn %]<a href="/publication=issn=[% es %]">[% es %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
