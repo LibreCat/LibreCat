@@ -112,6 +112,18 @@ sub correct_publid {
 		delete $data->{external_id};
 		$data->{external_id} = $publid_hash;
 	}
+	if($data->{nasc}){
+		my @nasc;
+		@nasc = split(" ; ", $data->{nasc});
+		delete $data->{nasc};
+		$data->{nasc} = \@nasc;
+	}
+	if($data->{genbank}){
+		my @genbank;
+		@genbank = split(" ; ", $data->{genbank});
+		delete $data->{genbank};
+		$data->{genbank} = \@genbank;
+	}
 	
 	return $data;
 }

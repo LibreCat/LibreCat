@@ -235,8 +235,8 @@ external_id:
 	opac: lsdfj
 	fp7: fp7/sdfkls
 	fp6: fp6/sdlfkjsd
-	genbank: []
-	nasc: []
+genbank: []
+nasc: []
 pacs_class: []
 msc_class: []
 ccs_class: []

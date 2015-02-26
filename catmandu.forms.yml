@@ -85,6 +85,8 @@ field_order:
     - conference.date
     - ipc
     - external_id
+    - nasc
+    - genbank
     - popular_science
     - quality_controlled
     - ubi_funded
@@ -134,6 +136,8 @@ field_order:
     - msc_class
     - ccs_class
     - external_id
+    - nasc
+    - genbank
     - popular_science
     - quality_controlled
     - ubi_funded
@@ -256,6 +260,12 @@ publicationTypes:
           label: "External Identifier"
           label_short: "Ext. Id."
           multiple: 1
+        nasc: &nasc
+          label: "NASC Seedstock ID"
+          label_short: "NASC"
+        genbank: &genbank
+          label: "Genbank ID"
+          label_short: "Genbank"
         message: &message
           label: "Admin Comments"
         popular_science: &popular_science
@@ -319,6 +329,8 @@ publicationTypes:
         urn: *urn
         extern: *extern
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         popular_science: *popular_science
         ubi_funded: *ubi_funded
@@ -378,6 +390,8 @@ publicationTypes:
         keyword: *keyword
         extern: *extern
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         popular_science: *popular_science
         ubi_funded: *ubi_funded
@@ -446,6 +460,8 @@ publicationTypes:
         language: *language
         urn: *urn
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         extern: *extern
         quality_controlled: &quality_controlled
           label: "Quality Controlled"
@@ -493,6 +509,8 @@ publicationTypes:
         language: *language
         urn: *urn
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         publication: *publication_series
         extern: *extern
         volume: *volume
@@ -546,6 +564,8 @@ publicationTypes:
         abstract: *abstract
         urn: *urn
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         extern: *extern
         quality_controlled: *quality_controlled
         popular_science: *popular_science
@@ -597,6 +617,8 @@ publicationTypes:
         language: *language
         keyword: *keyword
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         publication: *publication_series
         volume: *volume
         urn: *urn
@@ -639,6 +661,8 @@ publicationTypes:
           mandatory: 1
         extern: *extern
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         volume: *volume
         publication_identifier: *publication_identifier
@@ -678,6 +702,8 @@ publicationTypes:
         popular_science: *popular_science
         quality_controlled: *quality_controlled
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         ubi_funded: *ubi_funded
         conference.divider: *conference_divider
@@ -715,6 +741,8 @@ publicationTypes:
         extern: *extern
         publication_status: *publication_status
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         publication_identifier: *publication_identifier
         urn: *urn
@@ -753,6 +781,8 @@ publicationTypes:
         urn: *urn
         extern: *extern
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -817,6 +847,8 @@ publicationTypes:
         keyword: *keyword
         ddc: *ddc
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material
@@ -847,6 +879,8 @@ publicationTypes:
         ddc: *ddc
         work_references: *message
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material
@@ -876,6 +910,8 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -922,6 +958,8 @@ publicationTypes:
         ddc: *ddc
         work_references: *message
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material
@@ -1096,6 +1134,8 @@ publicationTypes:
           label_short: "Lang. (Orig)"
           multiple: 1
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -1159,6 +1199,8 @@ publicationTypes:
         language: *language
         original_language: *language
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -1191,6 +1233,8 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         abstract: *abstract
         urn: *urn
         language: *language
@@ -1269,6 +1313,8 @@ publicationTypes:
         publication_identifier: *publication_identifier
         urn: *urn
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         volume: *volume
         abstract: *abstract
         keyword: *keyword
