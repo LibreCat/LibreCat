@@ -542,18 +542,18 @@ $(function(){
 		$(this).css("border","none");		
 		var addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon');
 
-		if($(this).parent('div.sticky').hasClass('mandatory')){
-			$(this).parent('div.sticky').css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
-			$(this).parent('div.sticky').css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
-			$(this).parent('div.sticky').css("border", "1px solid #953b39");
-			$(this).css("box-shadow", "inset 0 1px 1px -1px rgba(0, 0, 0, 0.075), 0 0 6px -6px #d59392");
-		}
-		else {
+//		if($(this).parent('div.sticky').hasClass('mandatory')){
+//			$(this).parent('div.sticky').css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
+//			$(this).parent('div.sticky').css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
+//			$(this).parent('div.sticky').css("border", "1px solid #953b39");
+//			$(this).css("box-shadow", "inset 0 1px 1px -1px rgba(0, 0, 0, 0.075), 0 0 6px -6px #d59392");
+//		}
+//		else {
 			$(this).parent('div.sticky').css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
 			$(this).parent('div.sticky').css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
 			$(this).parent('div.sticky').css("border", "1px solid #66afe9");
 			$(this).css("box-shadow", "inset 0 1px 1px -1px rgba(0, 0, 0, 0.075), 0 0 8px -8px rgba(102, 175, 233, 0.6)");
-		}
+//		}
 		
 		if($(this).attr('id')){
 			var mymatch = $(this).attr('id').match(/dp_autocomplete_(\d{1,})/);
@@ -572,12 +572,12 @@ $(function(){
 	$('input.sticky, select.sticky, textarea.sticky').on("blur", function(){
 		var addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon');
 		addon.css("border","none");
-		if($(this).parent('div.sticky').hasClass('mandatory')){
-			$(this).parent('div.sticky').css("border", "1px solid #b94a48");
-		}
-		else{
+//		if($(this).parent('div.sticky').hasClass('mandatory')){
+//			$(this).parent('div.sticky').css("border", "1px solid #b94a48");
+//		}
+//		else{
 			$(this).parent('div.sticky').css("border", "1px solid #cccccc");
-		}
+//		}
 		$(this).parent('div.sticky').css("-webkit-box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
         $(this).parent('div.sticky').css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
         $(this).parent('div.sticky').css("-webkit-box-shadow", "none");

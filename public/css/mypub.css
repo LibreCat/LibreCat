@@ -140,7 +140,7 @@ a .badge{color:#fff;}
 /* fields in upload forms */
 div.input-group.sticky .input-group-addon{background-color:white;color:#555;}
 div.sticky{box-shadow:inset 0 1px 1px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.75);border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;-ms-box-shadow:3px;border:1px solid #cccccc;}
-div.sticky.mandatory{box-shadow:inset 0 1px 1px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.75);border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;-ms-border-radius:3px;border:1px solid #b94a48;}
+/*div.sticky.mandatory{box-shadow:inset 0 1px 1px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.75);border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;-ms-border-radius:3px;border:1px solid #b94a48;}*/
 div.sticky_top{margin-bottom:0;border-bottom-left-radius:0;border-bottom:none;}
 div.sticky_top div.sticky{border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;}
 div.sticky_top div.sticky div.input-group-addon{border-bottom-left-radius:0;border-bottom-right-radius:0;}
@@ -149,6 +149,7 @@ div.input-group.sticky .input-group-addon,div.sticky input,div.sticky select,div
 div.sticky span.label.label-default{background-color:transparent;border:1px solid #cccccc;color:inherit;}
 
 input.has-error{background-color:#ffcfce;}
+div.has-error{box-shadow:inset 0 1px 1px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.75);border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;-ms-border-radius:3px;border:1px solid #b94a48;}
 .checkbox-inline input[type='checkbox']{margin-top:0;}
 .edit-form{border-bottom:1px solid lightgray;min-height:200px;padding-bottom:5px;}
 .reuse-license{padding-left:18px;padding-right:18px;}

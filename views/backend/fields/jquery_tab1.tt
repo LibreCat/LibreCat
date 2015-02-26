@@ -37,16 +37,20 @@ $('.oneToTwo').click(function(e){
   $('.creator').children('div.row').each(function(){
     if($(this).find('input[type!="hidden"]').eq(0).hasClass('required') &&  !$(this).find('input[type!="hidden"]').eq(0).val()){
       $(this).find('input[type!="hidden"]').addClass("has-error");
+      $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').addClass("has-error");
     }
     else if($(this).find('input[type!="hidden"]').eq(0).val() && $(this).find('input[type!="hidden"]').eq(0).hasClass('has-error')){
       $(this).find('input[type!="hidden"]').removeClass("has-error");
+      $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').removeClass("has-error");
     }
     
     if($(this).find('input[type!="hidden"]').eq(1).hasClass('required') &&  !$(this).find('input[type!="hidden"]').eq(1).val()){
       $(this).find('input[type!="hidden"]').addClass("has-error");
+      $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').addClass("has-error");
     }
     else if($(this).find('input[type!="hidden"]').eq(1).val() && $(this).find('input[type!="hidden"]').eq(1).hasClass('has-error')){
       $(this).find('input[type!="hidden"]').removeClass("has-error");
+      $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').removeClass("has-error");
     }
     
     if($(this).find('input[type!="hidden"]').eq(0).val() && $(this).find('input[type!="hidden"]').eq(0).val()){
@@ -60,10 +64,12 @@ $('.oneToTwo').click(function(e){
   $('.required').each(function(){
     if(!$(this).val()){
       $(this).addClass('has-error');
+      $(this).closest('div.input-group.mandatory').addClass("has-error");
       check = 0;
     }
     else if($(this).val() && ($(this).val() == "Publication Title" || $(this).val() == "First Name" || $(this).val() == "Last Name" || $(this).val() == "YYYY")){
       $(this).addClass('has-error');
+      $(this).closest('div.input-group.mandatory').addClass("has-error");
       check = 0;
     }
     else{
