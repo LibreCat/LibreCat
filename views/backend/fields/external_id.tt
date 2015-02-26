@@ -28,7 +28,7 @@
       </div>
     </div>
     [% ELSE %]
-      [% FOREACH ext_id IN external_id.0.keys %]
+      [% FOREACH ext_id IN external_id.keys %]
       <div class="row innerrow">
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
@@ -41,7 +41,7 @@
                 [% END %]
               </select>
             </span>
-            <input type="text" value="[% external_id.0.$ext_id %]" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF loop.first %] required[% END %]{% END %}" name="external_id.[% loop.index %].value" id="external_id_[% loop.index %]"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonyl="readonly"{% END %} />
+            <input type="text" value="[% external_id.$ext_id %]" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF loop.first %] required[% END %]{% END %}" name="external_id.[% loop.index %].value" id="external_id_[% loop.index %]"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonyl="readonly"{% END %} />
             <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
             <div class="input-group-addon"><span onclick="add_field('extId');" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %}></span></div>
           </div>
