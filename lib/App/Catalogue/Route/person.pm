@@ -31,21 +31,32 @@ prefix '/myPUB/person' => sub {
 #return to_dumper $person;
         #my $tmp = h->get_sort_style(params->{sort} || '', params->{style} || '');
         my $sort; my $tmp;
-        if(params->{sort} and ref params->{sort} ne "ARRAY"){
-        	$sort = [params->{sort}];
-        }
-        else{
-        	$sort = params->{sort};
-        }
-        
-        foreach my $s (@$sort){
-        	if($s =~ /(\w{1,})\.(asc|desc)/){
-        		push @{$tmp->{sort}}, $s;
+        if(params->{'sort'}){
+        	if(ref params->{'sort'} ne "ARRAY"){
+        		$sort = [params->{sort}];
         	}
+        	else{
+        		$sort = params->{sort};
+        	}
+        	
+        	foreach my $s (@$sort){
+        		if($s =~ /(\w{1,})\.(asc|desc)/){
+        			push @{$tmp->{'sort'}}, $s;
+        		}
+        	}
+        	$person->{'sort'} = $tmp->{'sort'};
+        }
+        else {
+        	$person->{'sort'} = undef;
         }
         
-        $person->{sort} = $tmp->{sort};
-        $person->{style} = params->{style} if(params->{style} && array_includes(h->config->{lists}->{styles},params->{style}));
+        if(params->{style}){
+        	$person->{style} = params->{style} if array_includes(h->config->{lists}->{styles},params->{style});
+        }
+        else {
+        	$person->{style} = undef;
+        }
+        
 #return to_dumper $person;
         h->authority_user->add($person);
 

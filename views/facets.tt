@@ -205,37 +205,69 @@
 <h3>Display Publications</h3>
 
 [% IF user_settings %]
-  [% IF user_settings.sort_up_to_date %]
-    <span class="text-success">
-  [% ELSE %]
-    <span class="text-warning">
-  [% END %]
-  [% IF user_settings.item('sort') %]
-    [% IF !user_settings.sort_up_to_date %]
-    <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
-    [% END %]
+  [% IF !user_settings.user_sort AND user_settings.sort_eq_default %]
+    <div class="text-muted">
     <strong>Sorted by:</strong>
-    [% FOREACH setting IN user_settings.item('sort') %]
+    [% FOREACH setting IN user_settings.item('sort_backend') %]
       [% setting %][% UNLESS loop.last %], [% END %]
     [% END %]
+    </div>
+  [% ELSIF !user_settings.user_sort AND !user_settings.sort_eq_default %]
+    <div class="text-warning">
+    <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    <strong>Sorted by:</strong>
+    [% FOREACH setting IN user_settings.item('sort_backend') %]
+      [% setting %][% UNLESS loop.last %], [% END %]
+    [% END %]
+    </div>
+  [% ELSIF user_settings.user_sort AND user_settings.sort_eq_default %]
+    <div class="text-muted">
+    <strong>Sorted by:</strong>
+    [% FOREACH setting IN user_settings.item('sort_backend') %]
+      [% setting %][% UNLESS loop.last %], [% END %]
+    [% END %]
+    </div>
+  [% ELSIF user_settings.user_sort AND !user_settings.sort_eq_default %]
+    [% IF user_settings.sort_eq_usersort %]
+    <div class="text-success">
+      <strong>Sorted by:</strong>
+      [% FOREACH setting IN user_settings.item('sort_backend') %]
+        [% setting %][% UNLESS loop.last %], [% END %]
+      [% END %]
+    </div>
+    [% ELSE %]
+    <div class="text-warning">
+      <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+      <strong>Sorted by:</strong>
+      [% FOREACH setting IN user_settings.item('sort_backend') %]
+        [% setting %][% UNLESS loop.last %], [% END %]
+      [% END %]
+    </div>
+    [% END %]
   [% END %]
-  </span>
-    <br />
-  [% IF user_settings.style_up_to_date %]
-    <span class="text-success">
-  [% ELSE %]
-    <span class="text-warning">
+  
+  [% IF user_settings.style_eq_default %]
+    <div class="text-muted">
+      <strong>Citation style:</strong> [% user_settings.style %]
+    </div>
+  [% ELSIF !user_settings.style_eq_default AND user_settings.style_eq_userstyle %]
+    <div class="text-success">
+      <strong>Citation style:</strong> [% user_settings.style %]
+    </div>
+  [% ELSIF !user_settings.style_eq_default AND !user_settings.style_eq_userstyle %]
+    <div class="text-warning">
+      <a href="[% h.newuri_for("$path", qp, style="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+      <strong>Citation style:</strong> [% user_settings.style %]
+    </div>
   [% END %]
-  [% IF user_settings.style AND !user_settings.style_up_to_date %]
-    <a href="[% h.newuri_for("$path", qp, style="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> <strong>Citation style:</strong> [% user_settings.style %]
-  [% ELSE %]
-    <strong>Citation style:</strong> [% user_settings.style %]
+  
+  [% IF (!user_settings.sort_eq_usersort AND !user_settings.sort_eq_default) OR (!user_settings.style_eq_userstyle AND !user_settings.style_eq_default) %]
+    <a type="button" href="/myPUB/person/preference?[% IF qp.item('sort') AND qp.item('sort').0 %][% FOREACH s IN qp.item('sort') %]sort=[% s %]&[% END %][% ELSE %]sort=[% qp.item('sort') %][% END %]&style=[% qp.style %]" name="save_settings" id="id_save_settings" class="btn btn-block btn-warning">Save this as public default</a><br />
   [% END %]
-    </span>
+  [% IF !user_settings.sort_eq_default OR !user_settings.style_eq_default %]
+    <a type="button" href="/myPUB/person/preference?sort=&style=" class="btn btn-block btn-default">Reset to default</a><br />
+  [% END %]
 
-  [% IF (!user_settings.sort_up_to_date AND qp.item('sort')) OR (!user_settings.style_up_to_date AND qp.style) %]
-    <a type="button" href="[% h.uri_for("/myPUB/person/preference", qp) %]" name="save_settings" id="id_save_settings" class="btn btn-block btn-success">Save this as public default</a><br />
-  [% END %]
 [% END %]
 
 <ul class="nav nav-tabs nav-stacked ul3">
