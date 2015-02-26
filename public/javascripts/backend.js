@@ -510,6 +510,10 @@ function enable_autocomplete(field, index){
 	$( "#" + field + "_autocomplete_" + index ).autocomplete({
 		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=" + type,
 		minLength: 2,
+		messages: {
+	        noResults: '',
+	        results: function() {}
+	    },
 		select: function( event, ui ) {
 			$( "#" + field + "_autocomplete_" + index ).val( ui.item.label );
             $( "#" + field + "_nameautocomplete_" + index ).val( ui.item.label );
