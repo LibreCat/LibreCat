@@ -53,8 +53,6 @@
       </div>
 
     </div>
-    
-    [% USE Dumper; Dumper.dump(user_settings) %]
 
     <div class="row margin-xs-top"> <!-- row span11 publications, projects, departments -->
       <div class="col-md-12">
