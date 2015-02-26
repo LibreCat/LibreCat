@@ -457,13 +457,13 @@
 
 
 	<!-- Supplements -->
-	[% IF genbankID OR nascseedstockID %]
+	[% IF genbank OR nasc %]
 	<h3>Supplements</h3>
 
 	<div class="row">
-	  [% FOREACH id_entry IN genbankID %]
+	  [% FOREACH id_entry IN genbank %]
 	  [% IF loop.first %]
-	  <img src="[% h.host %]/images/icon_genbank.gif" class="img-thumbnail" alt="">GenBank:<br>
+	  <img src="/images/icon_genbank.gif" class="img-thumbnail" alt="">GenBank:<br>
 	  [% END %]
 	  <a href="http://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]">[% id_entry %]</a>
 	  [% IF loop.count > 14 %]
@@ -477,9 +477,9 @@
 
 
 	<div class="row">
-	  [% FOREACH id_entry IN nascseedstockID %]
+	  [% FOREACH id_entry IN nasc %]
 	  [% IF loop.first %]
-	  <img src="[% h.host %]/images/icon_nasc.png" alt="" class="img-thumbnail">NASC<br>
+	  <img src="/images/icon_nasc.png" alt="" class="img-thumbnail">NASC<br>
 	  [% END %]
 	  <a href="http://arabidopsis.info/StockInfo?NASC_id=[% id_entry %]">[% id_entry %]</a>
 	  [% END %]
