@@ -7,7 +7,7 @@ move_field('journalTitle','publication')
 move_field('journalVolume','volume')
 move_field('journalIssn','issn.$append')
 move_field('pubYear','year')
-if all_match('isOpenAcce','N')
+if all_match('isOpenAccess','N')
     set_field('oa','1')
 end
 
