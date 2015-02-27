@@ -17,7 +17,7 @@
     <div class="col-md-2 text-muted">Authors</div>
     <div class="col-md-10">
   [% ELSE %];[% END %]
-  [% IF au.id %]<a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]</a><sup class="muted">UniBi</sup>[% ELSE %]<span itemprop="author">[% au.full_name %]</span>[% END %]
+  [% IF au.id %]<a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]</a><sup class="text-muted">UniBi</sup>[% ELSE %]<span itemprop="author">[% au.full_name %]</span>[% END %]
   [% IF loop.count > 11 %]
     <span id="showAut">
       <br><a href="#" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>All</a>
@@ -36,7 +36,7 @@
     <div class="col-md-2 text-muted">Supervisors</div>
     <div class="col-md-10">
   [% ELSE %];[% END %]
-  [% IF sup.id %]<a href="/person/[% sup.id %]">[% sup.full_name %]</a><sup class="muted">UniBi</sup>[% ELSE %]<span>[% sup.full_name %]</span>[% END %]
+  [% IF sup.id %]<a href="/person/[% sup.id %]">[% sup.full_name %]</a><sup class="text-muted">UniBi</sup>[% ELSE %]<span>[% sup.full_name %]</span>[% END %]
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
@@ -46,7 +46,7 @@
     <div class="col-md-2 text-muted">Editors</div>
     <div class="col-md-10">
   [% ELSE %];[% END %]
-  [% IF ed.id %]<a itemprop="editor" href="/person/[% ed.id %]">[% ed.full_name %]</a><sup class="muted">UniBi</sup>[% ELSE %]<span itemprop="editor">[% ed.full_name %]</span>[% END %]
+  [% IF ed.id %]<a itemprop="editor" href="/person/[% ed.id %]">[% ed.full_name %]</a><sup class="text-muted">UniBi</sup>[% ELSE %]<span itemprop="editor">[% ed.full_name %]</span>[% END %]
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
