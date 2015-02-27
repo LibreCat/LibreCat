@@ -1,31 +1,15 @@
 # pmc mapping...
 
-move_field('resultList.result','tmp')
 
-move_field('tmp.pubType','type')
-move_field('tmp.DOI','doi')
-move_field('tmp.pmid','external_id.pmid.id')
-move_field('tmp.journalTitle','publication')
-move_field('tmp.issue','issue')
-move_field('tmp.journalVolume','volume')
-move_field('tmp.journalIssn','issn.$append')
-move_field('tmp.pubYear','year')
-move_field('tmp.title','title')
-split_field('tmp.authorString',', ')
-join_field('tmp.authorString','/')
-move_field('tmp.authorString','author')
-#hash('author')
-#do list (path => 'tmp.authorString')
-#	prepend('t', 'hello')
-#end
+move_field('pubType','type')
+move_field('DOI','doi')
+move_field('pmid','external_id.pmid')
+move_field('journalTitle','publication')
+move_field('journalVolume','volume')
+move_field('journalIssn','issn.$append')
+move_field('pubYear','year')
+move_field('isOpenAccess','oa')
+move_field('authorString','author')
 
-split_field('tmp.pageInfo','-')
-move_field('tmp.pageInfo.0','page.start')
-move_field('tmp.pageInfo.0','page.end')
-
-# cleaning data
-remove_field('tmp')
-remove_field('hitCount')
-remove_field('request')
-remove_field('resultList')
-remove_field('version')
+join_field('pageInfo','-')
+split_author()
