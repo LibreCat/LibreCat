@@ -64,7 +64,7 @@
     [% IF entry.approved %]
     <!-- <button type="button" class="btn btn-default btn-xs disabled"><span class="fa fa-dot-circle-o librarian-approved"></span></button> -->
     [% END %]
-    [% IF entry.status != "public" AND entry.status != "submitted" %]
+    [% IF (entry.status != "public" AND entry.status != "submitted") OR (entry.status == "sumitted" AND session.role == "super_admin") %]
     <button title="Publish" type="button" class="btn btn-success btn-xs" onclick="if(confirm('Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified.')) window.location = '/myPUB/record/publish/[% entry._id %]'"><span class="glyphicon glyphicon-upload"></span></button>
     [% END %]
     </div>
