@@ -142,7 +142,7 @@
     <div class="col-md-2 text-muted">Keywords</div>
     <div class="col-md-10" itemprop="keywords">
     [% FOREACH kw IN keyword %]
-        <a href="/[% bag %]?q=keyword=[% kw %]">[% kw %]</a>
+        <a href="/[% bag %]?q=keyword='[% kw %]'">[% kw %]</a>
       [% UNLESS loop.last %]; [% END %]
     [% END %]
     </div>
@@ -209,7 +209,7 @@
 [% IF publication_identifier.issn %]
   <div class="row">
     <div class="col-md-2 text-muted">ISSN</div>
-    <div class="col-md-10">[% FOREACH is IN publication_identifier.issn %]<a href="/publication=issn=[% is %]">[% is %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
+    <div class="col-md-10">[% FOREACH is IN publication_identifier.issn %]<a href="/publication?q=issn=[% is %]">[% is %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
