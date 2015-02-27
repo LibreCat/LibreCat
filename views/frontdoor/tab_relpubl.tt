@@ -7,7 +7,7 @@
     [% NEXT IF resDat.relatesFrom.submissionStatus != "public" %]
     [% pubCit = h.getCitation(resDat.relatesFrom.oId) %]
     <div class="row">
-      <div class="col-md-2">[% resDat.relatesFrom.oId %]</div>
+      <div class="col-md-2 text-muted">[% resDat.relatesFrom.oId %]</div>
       <div class="col-md-10">
 	<a href="/publication/[% resDat.relatesFrom.oId %]">[% resDat.relatesFrom.mainTitle %]</a><br />
 	[% pubCit.frontShort %]<br />

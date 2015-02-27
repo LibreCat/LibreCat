@@ -6,7 +6,7 @@ Data provided by the <a href="http://toolkit.cit-ec.uni-bielefeld.de/">Cognitive
 [% FOREACH t IN toolkitData.keys %]
   [% IF t != "_id" %]
   <div class="row">
-    <div class="col-md-2">[% t %]</div> 
+    <div class="col-md-2 text-muted">[% t %]</div> 
     <div class="col-md-10">
     [% FOREACH d IN toolkitData.$t %]<a href="[% d %]">[% d %]</a><br>[% END %]
     </div>

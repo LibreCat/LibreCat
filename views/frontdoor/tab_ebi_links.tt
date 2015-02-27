@@ -6,7 +6,7 @@ Data provided by the <a href="http://www.ebi.ac.uk/">European Bioinformatics Ins
           
 [% FOREACH db IN ebiData.dbLinks.keys %]
 <div class="row">
-  <div class="col-md-2">[% db %]</div>
+  <div class="col-md-2 text-muted">[% db %]</div>
   <div class="col-md-10">
   [% total = ebiData.dbLinks.$db.total %]
     [% IF db == 'EMBL' %]<a href="http://www.ebi.ac.uk/ena/data/search?query=[% medline %]">[% total %]</a>[% ELSE %][% total %][% END %] item(s) found citing this article[% IF total > 10 %] of which 10 are displayed[% END %].<br /><br />

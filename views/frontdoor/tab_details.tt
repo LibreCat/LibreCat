@@ -82,26 +82,6 @@
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
-[% FOREACH group_entry IN isWithinResearchGroup %]
-  [% IF loop.first %]
-  <div class="row">
-    <div class="col-md-2 text-muted">Research Group</div>
-    <div class="col-md-10">
-  [% ELSE %]<br />[% END %]
-  [% group_entry.name.0.text %]
-  [% IF loop.last %]</div></div>[% END %]
-[% END %]
-
-[% FOREACH corp_entry IN corporate %]
-  [% IF loop.first %]
-  <div class="row">
-    <div class="col-md-2 text-muted">Corporate Editor</div>
-    <div class="col-md-10">
-  [% ELSE %]<br />[% END %]
-  [% corp_entry %]
-  [% IF loop.last %]</div></div>[% END %]
-[% END %]
-
 [% IF alternative_title %]
   <div class="row">
     <div class="col-md-2 text-muted">Alternative Title</div>
@@ -116,10 +96,10 @@
   </div>
 [% END %]
 
-[% IF pages.count %]
+[% IF page %]
   <div class="row">
-    <div class="col-md-2 text-muted">Pages</div>
-    <div class="col-md-10">[% pages.count %]</div>
+    <div class="col-md-2 text-muted">Page</div>
+    <div class="col-md-10">[% page %]</div>
   </div>
 [% END %]
 

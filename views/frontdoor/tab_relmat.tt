@@ -5,12 +5,12 @@
   <div class="row">
     
     [% IF relToc.size %]
-      <div class="col-md-2">
+      <div class="col-md-2 text-muted">
         Table of Contents
       </div>
       <div class="col-md-10">
-        [% FOREACH file IN relToc %]
-          <a href="[% h.shost %]/download/[% oId %]/[% file.file.fileOId %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF file.file.description %]<i>Description:</i><br />[% file.file.description %]<br /><br />[% END %]<i>Filename:</i><br />[% file.file.fileName %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% file.file.fileTitle ? file.file.fileTitle : file.file.fileName %]</a><br />
+        [% FOREACH toc IN relToc %]
+          <a href="[% h.shost %]/download/[% _id %]/[% toc.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF toc.description %]<i>Description:</i><br />[% toc.description %]<br /><br />[% END %]<i>Filename:</i><br />[% toc.file_name %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% toc.title ? toc.title : toc.file_name %]</a><br />
           <script>
             $('a.description').tooltip();
           </script>
@@ -20,12 +20,12 @@
     [% END %]
     
     [% IF relFile.size %]
-      <div class="col-md-2">
+      <div class="col-md-2 text-muted">
         File
       </div>
       <div class="col-md-10">
-        [% FOREACH file IN relFile %]
-          <a href="[% h.shost %]/download/[% oId %]/[% file.file.fileOId %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF file.file.description %]<i>Description:</i><br />[% file.file.description %]<br /><br />[% END %]<i>Filename:</i><br />[% file.file.fileName %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% file.file.fileTitle ? file.file.fileTitle : file.file.fileName %]</a><br />
+        [% FOREACH rfile IN relFile %]
+          <a href="[% h.shost %]/download/[% _id %]/[% rfile.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF rfile.description %]<i>Description:</i><br />[% rfile.description %]<br /><br />[% END %]<i>Filename:</i><br />[% rfile.file_name %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% rfile.title ? rfile.title : rfile.file_name %]</a><br />
           <script>
             $('a.description').tooltip();
           </script>
@@ -35,12 +35,12 @@
     [% END %]
     
     [% IF relLink.size %]
-      <div class="col-md-2">
+      <div class="col-md-2 text-muted">
         Link
       </div>
       <div class="col-md-10">
         [% FOREACH link IN relLink %]
-          <a href="[% link.link.url %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF link.link.description %]<i>Description:</i><br />[% link.link.description %]<br /><br />[% END %]<i>Location:</i><br />[% link.link.url %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% link.link.linkTitle ? link.link.linkTitle : link.link.url %]</a><br />
+          <a href="[% link.url %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF link.description %]<i>Description:</i><br />[% link.description %]<br /><br />[% END %]<i>Location:</i><br />[% link.url %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% link.title ? link.title : link.url %]</a><br />
           <script>
             $('a.description').tooltip();
           </script>
@@ -50,7 +50,8 @@
     [% END %]
     
     [% IF relMat.size %]
-      <div class="col-md-2">
+    <!-- ToDo -->
+      <div class="col-md-2 text-muted">
         Rel. Material
       </div>
       <div class="col-md-10">

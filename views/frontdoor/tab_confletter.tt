@@ -4,12 +4,12 @@
 <div class="tab-pane" id="confletter">
   <div class="row">
     [% IF confLetter.size %]
-      <div class="col-md-2">
+      <div class="col-md-2 text-muted">
         Confirmation
       </div>
       <div class="col-md-10">
         [% FOREACH conf IN confLetter %]
-          <a href="[% h.shost %]/download/[% oId %]/[% conf.file.fileOId %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF conf.file.description %]<i>Description:</i><br />[% conf.file.description %]<br /><br />[% END %]<i>Filename:</i><br />[% conf.file.fileName %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />Letter of Confirmation</a><br />
+          <a href="[% h.shost %]/download/[% _id %]/[% conf.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF conf.description %]<i>Description:</i><br />[% conf.description %]<br /><br />[% END %]<i>Filename:</i><br />[% conf.file_name %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />Letter of Confirmation</a><br />
           <script>
             $('a.description').tooltip();
           </script>
