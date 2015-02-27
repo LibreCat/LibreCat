@@ -2,6 +2,7 @@
 
 <!-- BEGIN frontdoor/record.tt -->
 
+
 <script type="text/javascript">
 [% INCLUDE frontdoor/javascriptShowHide.tt %]
 </script>
