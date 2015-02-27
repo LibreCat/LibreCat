@@ -181,6 +181,7 @@ project:
     -
         name: "project name"
         id: 29383
+thematic_area: diversity|other
 status: public|private|submitted|returned
 publication_status: inPress|unpublished|submitted|published
 publication_identifier:
@@ -188,7 +189,7 @@ publication_identifier:
 	eissn: ["see issn"]
 	isbn: ["see issn"]
 	eisbn: ["see issn"]
-	urn: "urn:nbn:de...."
+urn: "urn:nbn:de...."
 publisher: "Springer"
 place: "Bielefeld"
 publication: "Journal of genetics"
@@ -234,8 +235,8 @@ external_id:
 	opac: lsdfj
 	fp7: fp7/sdfkls
 	fp6: fp6/sdlfkjsd
-	genbank: []
-	nasc: []
+genbank: []
+nasc: []
 pacs_class: []
 msc_class: []
 ccs_class: []

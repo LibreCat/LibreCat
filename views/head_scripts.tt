@@ -4,5 +4,4 @@
     <script src="/javascripts/angular-1.2.14.min.js"></script>
     <script src="/javascripts/angularSearch.js"></script>
 
-
 <!-- END head_scripts.tt -->

@@ -8,7 +8,7 @@
   <div class="col-md-10">
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.ipn.mandatory OR fields.supplementary_fields.ipn.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.basic_fields.ipn.mandatory OR fields.supplementary_fields.ipn.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.ipn.label_short %}{% fields.supplementary_fields.ipn.label_short %}</div>
           <input type="text" name="ipn" id="id_ipn" value="[% ipn || "{% fields.basic_fields.ipn.defaultvalue ? fields.basic_fields.ipn.defaultvalue : "" %}" || "{% fields.supplementary_fields.ipn.defaultvalue ? fields.supplementary_fields.ipn.defaultvalue : "" %}" %]" placeholder="{% fields.basic_fields.ipn.placeholder %}{% fields.supplementary_fields.ipn.placeholder %}" class="sticky form-control{% IF fields.basic_fields.ipn.mandatory OR fields.supplementary_fields.ipn.mandatory %} required{% END %}"{% IF fields.basic_fields.ipn.readonly OR fields.supplementary_fields.ipn.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon"></div>

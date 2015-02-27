@@ -3,8 +3,7 @@
 [% qp.delete('splat') %]
 [% backend = path.match('myPUB') ? 1 : 0 %]
 
-[% INCLUDE head.tt %]
-[% INCLUDE navbar.tt %]
+[% INCLUDE header.tt %]
 
 <!-- BEGIN admin/project.tt -->
 
@@ -43,19 +42,19 @@
       [% INCLUDE pagination.tt %]
     </div>
 
-      [% FOREACH p IN hits %]
-      <div class="row innerrow">
-	<div class="col-md-1">
-	  <span class="glyphicon glyphicon-pencil"></span>
-	  <span class="label [% IF p.active %]label-success[% ELSE %]label-danger[% END %]"><strong>[% p._id %]</strong></span>
-	</div>
-	<div class="col-md-9">
-	  <a href="/myPUB/admin/project/edit/[% p._id %]">[% p.name %]</a>
-	  <br />
-	  <span class="text-muted">[% FOREACH dep IN p.department %][% dep.name %][% UNLESS loop.last %] | [% END %][% END %]</span>
-	</div>
+    [% FOREACH p IN hits %]
+    <div class="row innerrow">
+      <div class="col-md-1">
+	<span class="glyphicon glyphicon-pencil"></span>
+	<span class="label [% IF p.active %]label-success[% ELSE %]label-danger[% END %]"><strong>[% p._id %]</strong></span>
       </div>
-      [% END %]
+      <div class="col-md-9">
+	<a href="/myPUB/admin/project/edit/[% p._id %]">[% p.name %]</a>
+	<br />
+	<span class="text-muted">[% FOREACH dep IN p.department %][% dep.name %][% UNLESS loop.last %] | [% END %][% END %]</span>
+      </div>
+    </div>
+    [% END %]
 
     <div class="row">
       [% INCLUDE pagination.tt %]

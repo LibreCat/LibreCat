@@ -1,10 +1,59 @@
+<!-- BEGIN websites/policy.tt -->
+
 <div class="row">
 
   <div class="col-sm-8">
 
-    <h3>Leitlinien f&uuml;r PUB</h3>
+    [% IF lang %]
 
-    <h4>Charakter und Zweck des Dienstes</h4>
+    <h2>Guidelines for PUB</h2>
+
+    <h3>Character and purpose of the service</h3>
+
+    <p>PUB is the central data publication service of Bielefeld University. Bielefeld scientists of all disciplines can use this sevice to create their personal publication lists, maintain them and make them visible and searchable on the web. In regular intervals, the publication lists are supplemented by imports from citation databases and enriched with meta-information.<br />
+    PUB also serves as a document server for secondary publications of scientific open access publications, i.e. the service offers rapid, global communication within the scientific community and encourages an open and technically and legally barrier-free access to scientific information and knowledge. <a href="http://oa.uni-bielefeld.de/" target="_blank">(Open Access at Bielefeld University)</a><br />
+    In addition, Bielefeld dissertations, postdoctoral these, master and bachelor theses (it is a prerequisite for the latter that they are recommended for publication by the supervisor) can be first published electronically and made worldwide freely available on the web. Especially with dissertations the publication requirement is hereby satisfied <a href="[% h.host %]/en/pubtheses">(PUB Theses)</a>.</p>
+
+    <p>The bibliographic data is entered by both the users of the service itself as well as by librarians using forms that are designed depending on the requirement for a specific publication type. The standards for electronic publications are complied with (see Dublin Core, MODS). Only members of Bielefeld University are granted write access to this database, they are authorized via an authentication service provided by the University data center (LDAP). Comprehensive instructions for use are found in the <a href="[% h.host %]/en/faq">FAQ list</a> and the notes to the sub-collection <a href="[% h.host %]/en/pubtheses">PUB Theses</a>.</p>
+
+    <h3>Long-term availability and archiving</h3>
+
+    <p>Bielefeld University ensures, within its possibilities, long-term availability of scientific data and publications as part of the overall IKM strategy of the university. Documents that are uploaded for publication to PUB at Bielefeld University are additionally secured on the servers of the <a href="http://safepln.org/" target="_blank">SAFE Private LOCKSS Network</a>.<br />
+    Specifically, this means that the associated bibliographic data and documents are stored long term on reliable and secure servers of the University Library. Added documents will not be changed in retrospect.	The deletion of documents is not intended, is carried out only exceptionally and documented in writing. The long-term archiving of dissertations is also guaranteed by the submission of the documents to the German National Library (DNB) in the context of compulsory deliveries of online publications according to § 15 ff of DNB law. The DNB archives reported publications permanently in its sole discretion and legal mandate.<br />
+    The documents obtain quotable persistent identification codes in the form of URNs (Uniform Resource Names) ensuring ongoing access via the URN resolving service of the German National Library. The publication server is designed to be permanent and sustainable. Although the specific archiving duration of the single document depends on the availability of the format, the viewing software and the conversion, but is guaranteed for at least ten years.</p>
+
+    <h3>File Formats</h3>
+    <p>Widespread, current market standard file formats such as PDF, DVI, HTML, and Postscript as well as compressed file archives .gz and .zip are supported by PUB. To publish the publications as barrier-free and long-term available as possible, the formats PDF or PDF/A should be preferred and, if possible, only one file per document should be uploaded. The University of Potsdam offers a <a href="http://opus.kobv.de/ubp/doku/tutorial.php" target="_blank">tutorial for creating PDF documents</a>. If you need help converting file formats, please contact <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;">&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>.</p>
+
+    <a name="depositpolicy"></a>
+    <h3>Legal framework (Deposit Policy)</h3>
+
+    <p>Many scientific publishers allow authors to make their already published publications freely available as a copy on an institutional publication server. The publication server PUB provides scientific documents in this sense. (The conditions of a large number of publishers are summarized in the so-called <a href="http://www.sherpa.ac.uk/romeo/">SHERPA/RoMEO list</a>.)</p>
+
+    <p>We assume that authors have read up on the conditions of parallel publication (what does my publisher allow and which version can I use when?) and on possible third party rights before the use of PUB. Compliance with copyright and exploitation rights is the responsibility of the authors or the editors of electronic documents.</p>
+
+    <p>The authors transfer to Bielefeld University the non-exclusive right to electronically store their work, especially in databases, and to make it permanently available to the public in data networks for individual requests, for display on the screen and printing out by the user (online use). This also includes the distributed storage of the documents on the rights-protected storage environments of the <a href="http://safepln.org/" target="_blank">SAFE Private LOCKSS Network</a>. The copyrights of the authors are protected. The publication in PUB does not forbid another release of the documents in journals or monographs or on other servers.</p>
+
+    <h3>Open Access</h3>
+    <p>Bielefeld University supports a science-policy requirement for open access to scientific publications, as laid down in the "Berlin Declaration" of October 2003 and specified in the "Berlin 3 Open Access" recommendation of March 2005 in Southampton, UK.<br />
+    In the spirit of this declaration, the Rectorate of Bielefeld University has formally adopted a <a href="http://oa.uni-bielefeld.de/resolution.html">resolution in support of Open Access</a> on 7 June 2005, in which the scientific authors of the University be urged to upload all published, peer-reviewed articles (so-called "post-print versions") to the scientific publication server of the university, as far as concerns of the publishers do not conflict. This publication server is PUB. The stored Open Access documents are directly and collectively accessible via the publication filter <a href="[% h.host %]/publication?fulltext=1&lang=en">OA fulltexts</a>, first published dissertations are collected centrally in the sub-collection <a href="[% h.host %]/publication?lang=en&publicationtype=bidissertation&publicationtype=bibachelorthesis&publicationtype=bimasterthesis&publicationtype=bipostdocthesis">PUB Theses</a>.</p>
+
+    <p>The authors are free to join this resolution. For documents that are not to be made available open access, there are freely selectable access level options that restrict the use of documents to the campus network or specific groups of people.</p>
+
+    <h3>Contact</h3>
+    <p>The service is managed by the Support Team "Publication Services" of Bielefeld University Library. The technical support, administration and hosting are provided by the LibTec department of the University Library. The University Library ensures that the document server is available at all times ("24/7-availability").</p>
+    <p>If you have questions of any kind, relating to the publication server and its associated services, contact us at:<br />
+    <strong>Support Publication Services</strong><br />
+    Susanne Riedel<br />
+    Phone: 0521/106-4058<br />
+    <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;">&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>
+    </p>
+
+    [% ELSE %]
+
+    <h2>Leitlinien f&uuml;r PUB</h2>
+
+    <h3>Charakter und Zweck des Dienstes</h3>
 
     <p>PUB ist der zentrale Publikationsdatenservice der Universit&auml;t Bielefeld. Bielefelder Wissenschaftlerinnen und Wissenschaftler aller Disziplinen k&ouml;nnen hiermit ihre pers&ouml;nlichen Literaturlisten erstellen, pflegen und an zentraler Stelle im Web sichtbar und recherchierbar machen. In regelm&auml;&szlig;igen Abst&auml;nden werden die Publikationslisten durch Importe aus Zitationsdatenbanken erg&auml;nzt und mit Metainformationen angereichert.<br />
 
@@ -14,17 +63,17 @@
 
     <p>Die bibliographischen Daten werden sowohl von den Nutzern des Dienstes selbst als auch von bibliothekarischem Personal &uuml;ber Eingabeformulare, die je nach Anforderung f&uuml;r einen spezifischen Publikationstyp gestaltet sind, eingetragen. Dabei werden die Standards f&uuml;r elektronische Publikationen eingehalten (s. Dublin Core, MODS). Schreibenden Zugriff auf die Datenbank erhalten nur Mitglieder der Universit&auml;t Bielefeld, sie werden &uuml;ber einen vom Universit&auml;tsrechenzentrum angebotenen Authentifizierungsdienst (LDAP) authorisiert. Umfangreiche Hinweise zur Benutzung findet man in der <a href="[% h.host %]/faq">FAQ-Liste</a> und den Erl&auml;uterungen zur Unterkollektion <a href="[% h.host %]/pubtheses">PUB Theses</a>.</p>
 
-    <h4>Langfristige Verf&uuml;gbarkeit und Archivierung</h4>
+    <h3>Langfristige Verf&uuml;gbarkeit und Archivierung</h3>
 
     <p>Die Universit&auml;t Bielefeld leistet im Rahmen ihrer M&ouml;glichkeiten die Langzeitverf&uuml;gbarkeit von wissenschaftlichen Daten und Publikationen als Teil der IKM-Gesamtstrategie der Universit&auml;t. Dokumente, die in PUB &ndash; Publikationen an der Universit&auml;t Bielefeld f&uuml;r die Ver&ouml;ffentlichung hochgeladen werden, werden zus&auml;tzlich auf den Servern des <a href="http://safepln.org/">SAFE Private LOCKSS Network</a> gesichert.<br />
     Konkret hei&szlig;t das, dass die eingetragenen bibliographischen Daten und Dokumente langfristig, verl&auml;sslich und sicher auf dem Server der Universit&auml;tsbibliothek gespeichert werden. Eingebrachte Dokumente werden im Nachhinein nicht mehr ver&auml;ndert. Die L&ouml;schung von Dokumenten ist nicht vorgesehen, wird nur in begr&uuml;ndeten Ausnahmef&auml;llen durchgef&uuml;hrt und schriftlich dokumentiert. Die Langzeitarchivierung der Pr&uuml;fungsschriften wird zudem durch die &Uuml;bermittlung der Dokumente im Rahmen der Ablieferungspflicht von Netzpublikationen nach § 15 ff. DNB Gesetz an die Deutsche Nationalbibliothek gew&auml;hrleistet. Die DNB archiviert die gemeldeten Publikationen nach eigenem Ermessen und gesetzlichem Auftrag dauerhaft.<br />
 
     Die Dokumente erhalten zitierf&auml;hige persistente Identifizierungscodes in Form von URNs (Uniform Resource Names), die &uuml;ber den URN-Resolvingdienst der Deutschen Nationalbibliothek dauerhaften Zugang gew&auml;hrleisten. Der Publikationenserver ist auf Dauer und Nachhaltigkeit angelegt. Die konkrete Archivierungsdauer des einzelnen Dokumentes h&auml;ngt zwar von der Verf&uuml;gbarkeit des Formats, der Betrachtungssoftware und den Konvertierungsm&ouml;glichkeiten ab, wird jedoch f&uuml;r mindestens zehn Jahre garantiert.</p>
 
-    <h4 id="depositpolicy">Dateiformate</h4>
+    <h4 id="depositpolicy">Dateiformate</h3>
     <p>Weit verbreitete, aktuell markt&uuml;bliche Dateiformate wie PDF, DVI, HTML und .ps sowie komprimierte Dateiarchive in den Formaten .gz und .zip werden von PUB unterst&uuml;tzt. Um die Publikationen m&ouml;glichst barrierefrei und langzeitverf&uuml;gbar zu ver&ouml;ffentlichen, sollten jedoch die Formate PDF oder PDF/A bevorzugt werden und m&ouml;glichst eine Datei pro Dokument hochgeladen werden. Die Universit&auml;t Potsdam bietet ein <a href="http://opus.kobv.de/ubp/doku/tutorial.php" target="_blank">Tutorial zur Erstellung von PDF-Dokumenten</a> an. Falls Sie bei der Konvertierung von Dateiformaten Hilfe ben&ouml;tigen, wenden Sie sich bitte an <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;">&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>.</p>
 
-    <h4>Rechtliche Rahmenbedingungen (Deposit Policy)</h4>
+    <h3>Rechtliche Rahmenbedingungen (Deposit Policy)</h3>
 
     <p>Viele wissenschaftliche Verlage erlauben, dass Autorinnen und Autoren ihre bereits ver&ouml;ffentlichten Publikationen als Kopie auf einem institutionellen Publikationenserver frei verf&uuml;gbar machen. Auf dem Publikationenserver PUB werden wissenschaftliche Dokumente von den Autorinnen und Autoren in diesem Sinne zur Verf&uuml;gung gestellt.
     (Die Bedingungen einer gro&szlig;en Zahl von Verlagen sind in der sog. <a href="http://dini.de/dini-zertifikat-old/sherparomeo/" target="_blank">SHERPA/RoMEO-Liste</a> zusammengestellt.)</p>
@@ -33,13 +82,13 @@
 
     <p>Die Autorinnen und Autoren &uuml;bertragen der Universit&auml;t Bielefeld das nicht-ausschlie&szlig;liche Recht, ihr Werk elektronisch zu speichern, insbesondere in Datenbanken, und in Datennetzen zum individuellen Abruf, zur Wiedergabe auf dem Bildschirm und zum Ausdruck beim Nutzer (Online-Nutzung) dauerhaft &ouml;ffentlich zug&auml;nglich zu machen. Dies beinhaltet auch die verteilte Sicherung der Dokumente auf den zugriffsgeschützten Speicherumgebungen des <a href="http://safepln.org/">SAFE Private LOCKSS Network</a>. Die Urheberrechte der Autorinnen und Autoren bleiben gewahrt. Die Ver&ouml;ffentlichung in PUB steht einer weiteren Ver&ouml;ffentlichung der Dokumente in Fachzeitschriften oder Monografien oder auf anderen Servern nicht entgegen.</p>
 
-    <h4>Open Access</h4>
+    <h3>Open Access</h3>
     <p>Die Universit&auml;t Bielefeld unterst&uuml;tzt die wissenschaftspolitische Forderung nach offenem Zugang ("Open Access") zu wissenschaftlichen Publikationen, wie sie in der "Berliner Erkl&auml;rung" vom Oktober 2003 niedergelegt und in der "Berlin 3 Open Access"-Empfehlung vom M&auml;rz 2005 in Southampton, UK konkretisiert wurde.<br />
     Im Geiste dieser Erkl&auml;rung hat das Rektorat der Universit&auml;t Bielefeld am 7. Juni 2005 offiziell eine <a href="http://oa.uni-bielefeld.de/resolution.html">Resolution zur Unterst&uuml;tzung von Open Access</a> verabschiedet, in der die wissenschaftlichen Autoren der Universit&auml;t u.a. nachdr&uuml;cklich aufgefordert werden, alle ver&ouml;ffentlichten, wissenschaftlich referierten Artikel (sog. "Postprint-Versionen") als Kopie auf dem wissenschaftlichen Publikationenserver der Universit&auml;t abzulegen, soweit rechtliche Bedenken der Verlage nicht entgegenstehen. Dieser Publikationenserver ist PUB. Die abgelegten, im Open Access &ouml;ffentlich zug&auml;nglichen Dokumente sind direkt und gesammelt &uuml;ber den Publikationenfilter <a href="[% h.host %]/publication?fulltext=1">OA-Volltexte</a> sichtbar, erstver&ouml;ffentlichte Pr&uuml;fungsschriften sind in der Unterkollektion <a href="[% h.host %]/pubtheses">PUB Theses</a> gesammelt.</p>
 
     <p>Den Autorinnen und Autoren steht es frei, sich dieser Resolution anzuschlie&szlig;en. F&uuml;r Dokumente, die nicht im Open Access zur Verf&uuml;gung gestellt werden sollen, gibt es frei w&auml;hlbare Access Level-Optionen, die die Nutzung der Dokumente auf das Campus-Netz oder spezielle Personengruppen einschr&auml;nken.</p>
 
-    <h4>Ansprechpartner</h4>
+    <h3>Ansprechpartner</h3>
     <p>Der Service wird inhaltlich vom Arbeitsbereich Publikationsdienste der Universit&auml;tsbibliothek Bielefeld betreut. Die technische Betreuung, die Administration und das Hosting werden von der Abteilung LibTec (Bibliothekstechnologie und Wissensmanagement) der UB geleistet. Die Universit&auml;tsbibliothek stellt sicher, dass der Publikationenserver jederzeit verf&uuml;gbar ist ("24/7-Verf&uuml;gbarkeit")</p>
     <p>Bei Fragen aller Art, die den Publikationenserver und die damit verbundenen Dienste betreffen, wenden Sie sich bitte an:<br />
     <strong>Support [% lang ? 'Publication Services' : 'Publikationsdienste' %]</strong><br />
@@ -48,6 +97,8 @@
     <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;">&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>
     </p>
 
+    [% END %]
+
   </div>
 
   <div class="col-sm-4 col-md-3 col-md-offset-1">
@@ -55,3 +106,5 @@
   </div>
 
 </div><!-- row -->
+
+<!-- END websites/policy.tt -->

@@ -37,16 +37,20 @@ $('.oneToTwo').click(function(e){
   $('.creator').children('div.row').each(function(){
     if($(this).find('input[type!="hidden"]').eq(0).hasClass('required') &&  !$(this).find('input[type!="hidden"]').eq(0).val()){
       $(this).find('input[type!="hidden"]').addClass("has-error");
+      $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').addClass("has-error");
     }
     else if($(this).find('input[type!="hidden"]').eq(0).val() && $(this).find('input[type!="hidden"]').eq(0).hasClass('has-error')){
       $(this).find('input[type!="hidden"]').removeClass("has-error");
+      $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').removeClass("has-error");
     }
     
     if($(this).find('input[type!="hidden"]').eq(1).hasClass('required') &&  !$(this).find('input[type!="hidden"]').eq(1).val()){
       $(this).find('input[type!="hidden"]').addClass("has-error");
+      $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').addClass("has-error");
     }
     else if($(this).find('input[type!="hidden"]').eq(1).val() && $(this).find('input[type!="hidden"]').eq(1).hasClass('has-error')){
       $(this).find('input[type!="hidden"]').removeClass("has-error");
+      $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').removeClass("has-error");
     }
     
     if($(this).find('input[type!="hidden"]').eq(0).val() && $(this).find('input[type!="hidden"]').eq(0).val()){
@@ -60,10 +64,12 @@ $('.oneToTwo').click(function(e){
   $('.required').each(function(){
     if(!$(this).val()){
       $(this).addClass('has-error');
+      $(this).closest('div.input-group.mandatory').addClass("has-error");
       check = 0;
     }
     else if($(this).val() && ($(this).val() == "Publication Title" || $(this).val() == "First Name" || $(this).val() == "Last Name" || $(this).val() == "YYYY")){
       $(this).addClass('has-error');
+      $(this).closest('div.input-group.mandatory').addClass("has-error");
       check = 0;
     }
     else{
@@ -351,7 +357,7 @@ $(function() {
       else{
         index = 0;
       }
-      $('#relatesTo').append('<div class="row innerrow"><div class="col-md-2"><select class="relmat input-sm form-control" name="related_material.record.' + index + '.relation">[% FOREACH key IN h.config.lists.relations_record %]<option value="[% key.relation %]"[% IF key.relation == "earlier_version" %] selected="selected"[% END %]>[% key.link_text %]</option>[% END %]</select></div><div class="col-md-10"><span class="form-group col-md-9"><span class="glyphicon glyphicon-file"></span> <a href="/publication/' + ui.item.id + '" target="_blank">' + ui.item.title + '</a><input type="hidden" id="related_material_id_' + index +'" name="related_material.record.' + index + '.id" value="' + ui.item.id + '" /></span><span class="col-md-1"><span class="glyphicon glyphicon-minus connect"></span></span></div></div>');
+      $('#relatesTo').append('<div class="row innerrow"><div class="col-md-2"><select class="relmat form-control" name="related_material.record.' + index + '.relation">[% FOREACH key IN h.config.lists.relations_record %]<option value="[% key.relation %]"[% IF key.relation == "earlier_version" %] selected="selected"[% END %]>[% key.link_text %]</option>[% END %]</select></div><div class="col-md-10"><span class="form-group col-md-9"><span class="glyphicon glyphicon-file"></span> <a href="/publication/' + ui.item.id + '" target="_blank">' + ui.item.title + '</a><input type="hidden" id="related_material_id_' + index +'" name="related_material.record.' + index + '.id" value="' + ui.item.id + '" /></span><span class="col-md-1"><span class="glyphicon glyphicon-minus connect"></span></span></div></div>');
     },
     close: function(){
       $("#connect_autocomplete").val("");
@@ -377,7 +383,7 @@ $('#add_relurl').click(function(){
     
     var index = $('#url div.innerrow').length;
     
-    $('#url').append('<div class="row innerrow"><div class="col-md-2"><select class="relurl input-sm form-control" name="related_material.link.' + index + '.relation">[% FOREACH key IN h.config.lists.relations_link.keys.nsort %]<option value="[% h.config.lists.relations_link.$key.relation %]">[% h.config.lists.relations_link.$key.link_text %]</option>[% END %]</select></div><div class="col-md-10"><span class="form-group col-md-9"><span class="glyphicon glyphicon-link"></span> <a href="' + url + '" target="_blank">' + title + '</a><br /><span class="text-muted">' + description + '</span><input type="hidden" name="related_material.link.' + index + '.url" value="' + $('#relurl_url').val() + '" /><input type="hidden" name="related_material.link.' + index + '.title" value="' + $('#relurl_title').val() + '" /><input type="hidden" name="related_material.link.' + index + '.description" value="' + $('#relurl_description').val() + '" /></span><span class="col-md-1"><span class="glyphicon glyphicon-minus connect"></span></span></div></div>');
+    $('#url').append('<div class="row innerrow"><div class="col-md-2"><select class="relurl form-control" name="related_material.link.' + index + '.relation">[% FOREACH key IN h.config.lists.relations_link.keys.nsort %]<option value="[% h.config.lists.relations_link.$key.relation %]">[% h.config.lists.relations_link.$key.link_text %]</option>[% END %]</select></div><div class="col-md-10"><span class="form-group col-md-9"><span class="glyphicon glyphicon-link"></span> <a href="' + url + '" target="_blank">' + title + '</a><br /><span class="text-muted">' + description + '</span><input type="hidden" name="related_material.link.' + index + '.url" value="' + $('#relurl_url').val() + '" /><input type="hidden" name="related_material.link.' + index + '.title" value="' + $('#relurl_title').val() + '" /><input type="hidden" name="related_material.link.' + index + '.description" value="' + $('#relurl_description').val() + '" /></span><span class="col-md-1"><span class="glyphicon glyphicon-minus connect"></span></span></div></div>');
     $('#relurl_url').val('');
     $('#relurl_title').val('');
     $('#relurl_description').val('');

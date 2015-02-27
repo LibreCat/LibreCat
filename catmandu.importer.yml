@@ -4,28 +4,28 @@ _prefix:
 wos:
   package: Endnote
   options:
-    fix: ['fixes/wos_mapping.fix']
+    fix: ['/srv/www/pub/fixes/wos_mapping.fix']
 inspire:
   package: Inspire
   options:
-    fix: ['fixes/inspire_mapping.fix']
+    fix: ['/srv/www/pub/fixes/inspire_mapping.fix']
 crossref:
   package: getJSON
   options:
-    fix: ['fixes/crossref_mapping.fix']
+    fix: ['/srv/www/pub/fixes/crossref_mapping.fix']
 pmc:
   package: EuropePMC
   options:
-    fix: ['fixes/pmc_mapping.fix']
+    fix: ['/srv/www/pub/fixes/pmc_mapping.fix']
 arxiv:
   package: ArXiv
   options:
-    fix: ['fixes/arxiv_mapping.fix']
+    fix: ['/srv/www/pub/fixes/arxiv_mapping.fix']
 bibtex:
   package: BibTeX
   options:
-    fix: ['fixes/bibtex_mapping.fix']
+    fix: ['/srv/www/pub/fixes/bibtex_mapping.fix']
 pevz:
   package: XML
   options:
-    fix: ['fixes/pevz_mapping.fix']
+    fix: ['/srv/www/pub/fixes/pevz_mapping.fix']

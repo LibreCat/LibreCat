@@ -97,9 +97,9 @@ sub index_citation_update {
 
 	# publication identifier
 	$rec_prep->{'DOI'}              = $rec->{'doi'} if $rec->{'doi'};
-	$rec_prep->{'urn'}              = $rec->{'urn'} if $rec->{'urn'};
-	$rec_prep->{'pubmedId'}         = $rec->{external_id}->{pmid} if $rec->{external_id} and $rec->{external_id}->{pmid};
-	$rec_prep->{'arxivId'}          = $rec->{external_id}->{arxiv} if $rec->{external_id} and $rec->{external_id}->{arxiv};
+	#$rec_prep->{'urn'}              = $rec->{'urn'} if $rec->{'urn'};
+	#$rec_prep->{'pubmedId'}         = $rec->{external_id}->{pmid} if $rec->{external_id} and $rec->{external_id}->{pmid};
+	#$rec_prep->{'arxivId'}          = $rec->{external_id}->{arxiv} if $rec->{external_id} and $rec->{external_id}->{arxiv};
 	$rec_prep->{'patentNumber'}     = $rec->{ipn} if $rec->{ipn};
 	$rec_prep->{'patentClassification'} = $rec->{ipc} if $rec->{ipc};
 

@@ -1,12 +1,18 @@
 <!-- BEGIN websites/hits_people.tt -->
 
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
+
 <div class="col-md-8 col-sm-8">
 
   <div class="row">
-    <div class="col-md-12">
-      <h3>[% total %] [% lang ? "Authors" : "Autorinnen und Autoren" %]</h3>
+    <div class="col-md-12[% UNLESS request.path.match("/person") OR total == 0 %] col-xs-9[% END %]">
+      <h2>[% total %] [% lang ? "Authors" : "Autorinnen und Autoren" %]</h2>
     </div>
+    [% UNLESS request.path.match("/person") OR total == 0 %]
+    <div class="col-xs-3 hidden-md hidden-sm hidden-lg">
+      <a href="#facets"><span class="glyphicon glyphicon-filter fw"></span>Search / Filter</a>
+    </div>
+    [% END %]
   </div>
 
   [% IF next_page or previous_page %]
@@ -44,7 +50,21 @@
 
 <div class="col-md-3 col-md-offset-1 col-sm-4">
 
-  <h3>[% lang ? 'Search' : 'Suchen' %]</h3>
+[% IF !backend AND session AND session.user %]
+<div class="text-right margin-top-1 hidden-xs">
+  <small>[% lang ? 'Logged in as' : 'Eingeloggt als' %]: [% session.user %]</small>
+</div>
+[% END %]
+
+<div class="hidden-sm hidden-md hidden-lg"><hr></div>
+
+<div id="facets" class="row hidden-md hidden-lg hidden-sm"><!-- smartphones only -->
+  <div class="col-xs-12">
+    <h2>Search / Filter</h2>
+  </div>
+</div>
+
+  <h3 class="margin-top0">[% lang ? 'Search' : 'Suchen' %]</h3>
 
   <div class="row">
     <div class="col-md-12">
@@ -59,7 +79,7 @@
 	    <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
 	  [% END %]
 	[% END %]
-	<div class="input-group input-group-lg">
+	<div class="input-group">
 	  <input type="text" name="q" id="q_id" value="[% qp.q | replace('"', '&quot;') %]" class="form-control" placeholder="[% lang ? "Search" : "Suche" %]" />
 	  <span class="input-group-btn">
 	    <button type="submit" class="btn btn-default">[% lang ? "Go!" : "Los!" %]</button>

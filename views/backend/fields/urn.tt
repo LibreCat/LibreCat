@@ -8,9 +8,9 @@
   <div class="col-md-10" id="urn">
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.urn.mandatory OR fields.supplementary_fields.urn.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.basic_fields.urn.mandatory OR fields.supplementary_fields.urn.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.urn.label %}{% fields.supplementary_fields.urn.label %}</div>
-          <input type="text" value="[% publication_identifier.urn %]" class="sticky form-control{% IF fields.basic_fields.urn.mandatory OR fields.supplementary_fields.urn.mandatory %} required{% END %}" name="publication_identifier.urn"{% IF fields.basic_fields.urn.readonly OR fields.supplementary_fields.urn.readonly %} readonly="readonly"{% END %}/>
+          <input type="text" value="[% urn %]" class="sticky form-control{% IF fields.basic_fields.urn.mandatory OR fields.supplementary_fields.urn.mandatory %} required{% END %}" name="urn"{% IF fields.basic_fields.urn.readonly OR fields.supplementary_fields.urn.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon"></div>
         </div>
       </div>

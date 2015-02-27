@@ -1,12 +1,19 @@
-[% INCLUDE websites/header.tt %]
+[% INCLUDE header.tt %]
 
 <!-- BEGIN frontdoor/record.tt -->
 
+<script type="text/javascript">
+[% INCLUDE frontdoor/javascriptShowHide.tt %]
+</script>
+
 [% IF status != "public" %]
-<div style="position: absolute; top: 175px; left: -125px; width: 600px; padding: 10px; font-size: 24px; text-align: center; color: rgb(255, 255, 255); font-family: 'trebuchet ms', verdana, arial, sans-serif; transform: rotate(-45deg); -webkit-transform: rotate(-45deg); transform-origin: 50% 0px 0px; -webkit-transform-origin: 50% 0px; background-color: rgb(0, 0, 0); border: 1px solid rgb(170, 170, 170); z-index: 12; opacity: 0.5;">Preview</div>
+<div id="preview">Preview</div>
 [% END %]
 
+[% IF status == "gibtsnich" %]
 [% INCLUDE websites/mathjax.tt %]
+[% END %]
+
 [% mainFile = [] %]
 [% relMat = [] %]
 [% relPubl = [] %]
@@ -64,7 +71,13 @@
   <div class="col-md-10 col-sm-12 col-md-offset-1">
 
     <div class="page-header" id="banner">
-      <h1 itemprop="name"><span class="fa fa-file-text-o"></span> [% title %]</h1>
+
+      <ol class="breadcrumb">
+	<li><a href="/">PUB</a></li>
+	<li><a href="/publication[% lang ? "?lang=en" : "" %]">[% lang ? "Publications" : "Publikationen" %]</a></li>
+      </ol>
+
+      <h1 itemprop="name">[% title %]</h1>
 
       [% IF !_id %]
       <h1>No record found!</h1>
@@ -72,7 +85,7 @@
       [% END %]
     </div>
 
-    <div class="row">
+    <div class="row margin-bottom1">
 
       <div class="col-md-8"><!-- begin left col -->
 
@@ -125,7 +138,9 @@
 	      <span class="text-muted"> [% h.get_file_size(_id, fi.file_name) %]</span>
 	  [% END %]
 	  [% IF loop.count > 2 && loop.size > 3 %]
-	      <span id="showFiles"><a href="#" onclick="ShowFiles();"><img src="[% h.host %]/images/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;">All</a></span>
+	      <span id="showFiles">
+		<br><a href="#" onclick="ShowFiles();"><span class="glyphicon glyphicon-plus fw"></span>All</a>
+	      </span>
 	  </div>
 	</div>
 	[% LAST %]
@@ -142,7 +157,7 @@
 	[% IF doiInfo %]
 	<div class="row">
 	  <div class="col-md-2">DOI</div>
-	  <div class="col-md-10"><a itemprop="url" href="http://doi.org/[% doi %]" title="[% doi %]">[% doi %]</a>[% IF externalFiles == "1" %] <a href="http://doi.org/[% doi %]" class="label label-success">Files available</a>[% END %]</div>
+	  <div class="col-md-10"><a itemprop="url" href="http://doi.org/[% doi %]" title="[% doi %]">[% doi %]</a>[% IF externalFiles == "1" %] <a href="http://doi.org/[% doi %]" class="label label-default">Files available</a>[% END %]</div>
 	</div>
 	[% ELSIF doi %]
 	<div class="row">
@@ -335,7 +350,7 @@
       <div class="col-md-3 col-md-offset-1">
 
 	<!-- Export -->
-	<h2>Export</h2>
+	<h3 class="margin-top1">Export</h3>
 	<a class="total-marked label label-default" href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]">[% marked %]</a> <a href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]" rel="nofollow">Marked Publication[% IF marked && marked > 1 %]s[% END %]</a>
 
 	<!-- trigger modal -->
@@ -383,7 +398,7 @@
 
 	<!-- Sources -->
 	[% IF isi %]
-	<h2>Web of Science</h2>
+	<h3>Web of Science</h3>
 	[% IF metrics.timesCited %]
 	<a href="[% metrics.citingURL %]" target="_parent">
 	Web of Science&reg; Times Cited: <strong class="wos-times-cited">[% metrics.timesCited %]</strong>
@@ -398,7 +413,7 @@
 	[% END %]
 
 	[% IF medline OR pubmedID OR inspire OR arxiv OR scopa3 OR ahf OR phillister OR opac %]
-	<h2>Sources</h2>
+	<h3>Sources</h3>
 
 	[% IF medline %]
 	<p><img src="[% h.host %]/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% medline %]<br>
@@ -442,18 +457,18 @@
 
 
 	<!-- Supplements -->
-	[% IF genbankID OR nascseedstockID %]
-	<h2>Supplements</h2>
+	[% IF genbank OR nasc %]
+	<h3>Supplements</h3>
 
 	<div class="row">
-	  [% FOREACH id_entry IN genbankID %]
+	  [% FOREACH id_entry IN genbank %]
 	  [% IF loop.first %]
-	  <img src="[% h.host %]/images/icon_genbank.gif" class="img-thumbnail" alt="">GenBank:<br>
+	  <img src="/images/icon_genbank.gif" class="img-thumbnail" alt="">GenBank:<br>
 	  [% END %]
 	  <a href="http://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]">[% id_entry %]</a>
 	  [% IF loop.count > 14 %]
 	  <span id="showGen">
-	    <br><a href="#" onclick="ShowGenBankIDs();"><img src="[% h.host %]/images/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;">All</a>
+	    <br><a href="#" onclick="ShowGenBankIDs();"><span class="glyphicon glyphicon-plus fw"></span>All</a>
 	  </span>
 	  [% LAST %]
 	  [% END %]
@@ -462,9 +477,9 @@
 
 
 	<div class="row">
-	  [% FOREACH id_entry IN nascseedstockID %]
+	  [% FOREACH id_entry IN nasc %]
 	  [% IF loop.first %]
-	  <img src="[% h.host %]/images/icon_nasc.png" alt="" class="img-thumbnail">NASC<br>
+	  <img src="/images/icon_nasc.png" alt="" class="img-thumbnail">NASC<br>
 	  [% END %]
 	  <a href="http://arabidopsis.info/StockInfo?NASC_id=[% id_entry %]">[% id_entry %]</a>
 	  [% END %]
@@ -514,11 +529,11 @@
 
 </div><!-- outer border -->
 
-
-[% INCLUDE websites/footer.tt %]
-
+<!-- 
 <script src="/javascripts/jquery.min.js"></script>
-<script src="/javascripts/bootstrap.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script> 
+-->
+
 <script charset="utf-8">
 // mark
 $('a.mark').click(function(evt) {
@@ -548,5 +563,4 @@ $('a.mark').click(function(evt) {
 
 <!-- END frontdoor/record.tt -->
 
-</body>
-</html>
+[% INCLUDE footer.tt %]

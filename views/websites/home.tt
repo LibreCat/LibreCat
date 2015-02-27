@@ -59,7 +59,7 @@
   
   </div><!-- end left col -->
 
-  <div class="col-sm-3">
+  <div class="col-sm-2 col-sm-offset-1">
     [% INCLUDE websites/logo_contact.tt %]
   </div>
 

@@ -14,9 +14,9 @@ $('a.mark-all').click(function(evt) {
         showAlertMessage(res.ok ? 'info' : 'warning', res.message);
       }
       $('a.mark').data('marked', 1).text('Unmark');
-      $('.unmark_all').html('<a class="unmark-all" href="#" rel="nofollow">Unmark all</a>');
+      $('.unmark_all').html('<a class="unmark-all" href="#" rel="nofollow"><span class="glyphicon glyphicon-remove fw"></span>Unmark all</a>');
       $('a.unmark-all').bind("click", function() {
-	evt.preventDefault();
+	    evt.preventDefault();
         $.post('/marked?x-tunneled-method=DELETE', function(res) {
           $('a.mark').data('marked', 0).text('Mark');
           $('.unmark_all').html('');

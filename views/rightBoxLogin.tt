@@ -3,14 +3,20 @@
 
 <div class="row">
   <div class="col-md-12">
-    <a href="[% h.shost %]/myPUB" class="btn btn-sm btn-block pubbutton">[% IF !session.user %]<span class="fa fa-sign-in"></span>&nbsp;&nbsp;&nbsp;[% lang ? "Login to PUB" : "PUB Login" %][% ELSE %]myPUB[% END %]</a>
+[% IF !backend AND session AND session.user %]
+<div class="text-right margin-bottom1 hidden-xs">
+  <small>[% lang ? 'Logged in as' : 'Eingeloggt als' %]: [% session.user %]</small>
+</div>
+[% END %]
+
+    <a href="[% h.shost %]/myPUB" class="btn btn-primary btn-block">[% IF !session.user %]<span class="glyphicon glyphicon-log-in fw"></span>[% lang ? "Login to PUB" : "PUB Login" %][% ELSE %]<span class="glyphicon glyphicon-user fw"></span>Back to myPUB[% END %]</a>
   </div>
 </div>
 
 <div class="row margin-top1">
   <div class="col-md-12">
     <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow">Your Marked Publications <span class="badge total-marked">[% marked %]</span></a>
-    <div class="unmark_all">[% IF marked %]<span class="btn btn-default"><a class="unmark-all" href="#" rel="nofollow">Unmark all</a></span>[% END %]</div>
+    <div class="unmark_all">[% IF marked %]<a class="unmark-all" href="#" rel="nofollow"><span class="glyphicon glyphicon-remove fw"></span>Unmark all</a>[% END %]</div>
   </div>
 </div>
 

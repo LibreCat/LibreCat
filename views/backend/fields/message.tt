@@ -8,9 +8,9 @@
   <div class="col-md-10">
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group input-group-sm sticky">
+        <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.message.label %}{% fields.supplementary_fields.message.label %}</div>
-          <textarea rows="3" name="message" id="id_message" value="[% FILTER html %][% message %][% END %]" class="sticky input-sm form-control">[% FILTER html %][% message %][% END %]</textarea>
+          <textarea rows="3" name="message" id="id_message" value="[% FILTER html %][% message %][% END %]" class="sticky form-control">[% FILTER html %][% message %][% END %]</textarea>
           <div class="input-group-addon"></div>
         </div>
       </div>

@@ -4,11 +4,7 @@
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
 [% style = qp.style || 'frontShort' %]
 
-[% IF lang == "" %]
-[% INCLUDE websites/header.tt %]
-[% ELSE %]
-[% INCLUDE websites/en/header.tt %]
-[% END %]
+[% INCLUDE header.tt %]
 
 <!-- BEGIN websites/index_publication.tt -->
 
@@ -21,13 +17,13 @@
   <div class="col-md-10 col-sm-12 col-md-offset-1"><!-- main content -->
 
     <div id="banner">
-      <h1>
-	[% IF lang %]
-	PUB – The Publication Server at Bielefeld University
-	[% ELSE %]
-	[% UNLESS session AND session.user %]<img src="images/PUB_UNIBI_logo_gruen.gif" alt="" width="80" class="img-thumbnail hidden-sm">[% END %]PUB<span class="hidden-xs"> – Der Publikationenserver der Universit&auml;t Bielefeld</span>
-	[% END %]
-      </h1>
+	<h1>
+	  [% IF lang %]
+	  Welcome at PUB
+	  [% ELSE %]
+	  Willkommen bei PUB
+	  [% END %]
+	</h1>
     </div>
 
     <div class="ltIEten">
@@ -38,25 +34,25 @@
     <div class="row margin-top1">
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
-          <li[% IF bag == 'home' %] class="active"[% END %]><a href="[% lang ? "/en" : "" %]/">Home</a></li>
+          <li[% IF bag == 'home' %] class="active"[% END %]><a href="/[% lang ? "?lang=en" : "" %]">[% lang ? 'Home' : 'Startseite' %]</a></li>
           <li[% IF bag == 'publication' %] class="active"[% END %]><a href="/publication?[% lang ? "lang=en&" : "" %][% qp.q ? "q=$qp.q" : "" %]">[% lang ? "Publications" : "Publikationen" %]</a></li>
           <li[% IF bag == 'data' %] class="active"[% END %]><a href="/data?[% lang ? "lang=en&" : "" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? 'Data Publications' : 'Datenpublikationen' %]</a></li>
           <!--
           <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project?[% lang ? "lang=en&" : "" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? 'Projects' : 'Projekte' %]</a></li>
           -->
           <li[% IF bag == 'authorlist' %] class="active"[% END %]><a href="/authorlist?[% lang ? "lang=en" : "" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? "Authors" : "Autoren" %]</a></li>
-          <li[% IF bag == 'pubtheses' %] class="active"[% END %]><a href="[% h.host %][% lang ? "/en" : "" %]/pubtheses">PUB Theses</a></li>
+          <li[% IF bag == 'pubtheses' %] class="active"[% END %]><a href="/pubtheses">PUB Theses</a></li>
           <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lang ? "About PUB" : "&Uuml;ber<span class=\"hidden-xs\"> PUB</span>" %] <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li[% IF bag == 'about' %] class="active"[% END %]><a href="[% h.host %][% lang ? "/en" : "" %]/about">[% lang ? "Features" : "Features" %]</a></li>
+              <li[% IF bag == 'about' %] class="active"[% END %]><a href="/about">[% lang ? "Features" : "Features" %]</a></li>
               <li><a href="[% h.host %]/doc/api">API [% lang ? "Documentation" : "Dokumentation" %]</a></li>
-              <li[% IF bag == 'faq' %] class="active"[% END %]><a href="[% h.host %][% lang ? "/en" : "" %]/faq">FAQ</a></li>
-              <li[% IF bag == 'contact' %] class="active"[% END %]><a href="[% h.host %][% lang ? "/en" : "" %]/contact">[% lang ? "Contact" : "Kontakt" %]</a></li>
+              <li[% IF bag == 'faq' %] class="active"[% END %]><a href="/faq">FAQ</a></li>
+              <li[% IF bag == 'contact' %] class="active"[% END %]><a href="/contact">[% lang ? "Contact" : "Kontakt" %]</a></li>
             </ul>
           </li>
-          <li><a href="[% h.host %][% lang ? "/en" : "" %]/policy" data-toggle="tab" style="display:none;">Policy</a></li>
-          <li><a href="[% h.host %]/[% bag %][% lang ? "" : "?lang=en" %]" class="select-language"><img src="http://www.uni-bielefeld.de/icons/[% lang ? "de" : "en" %].gif" alt="[% lang ? "Deutsch" : "English" %]"><span class="hidden-xs hidden-sm"> [% lang ? "Deutsch" : "English" %]</span></a></li>
-          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm"> Logout</span></a>[% ELSE %]<a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>[% END %]</li>
+          <li><a href="/policy" data-toggle="tab" style="display:none;">Policy</a></li>
+          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm">Logout</span></a>[% ELSE %]<a href="/login"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a>[% END %]</li>
+          [% IF session AND session.user %]<li class="navbar-right"><a href="/myPUB"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm">myPUB</span></a></li>[% END %]
         </ul>
       </div>
     </div>
@@ -76,9 +72,7 @@
             <div class="col-sm-8 col-md-8">
               [% INCLUDE hits.tt %]
             </div>
-
             <div class="col-sm-4 col-md-3 col-md-offset-1">
-              [% INCLUDE rightBoxLogin.tt %]
               [% INCLUDE facets.tt %]
             </div>
           </div>
@@ -91,9 +85,7 @@
             <div class="col-sm-8">
               [% INCLUDE hits.tt %]
             </div>
-
             <div class="col-sm-4 col-md-3 col-md-offset-1">
-              [% INCLUDE rightBoxLogin.tt %]
               [% INCLUDE facets.tt %]
             </div>
           </div>
@@ -120,51 +112,31 @@
 
         <div class="tab-pane[% bag == 'pubtheses' ? ' active' : '' %]" id="pubtheses">
           [% IF bag == 'pubtheses' %]
-          [% IF lang %]
-            [% INCLUDE websites/en/pubtheses.tt %]
-          [% ELSE %]
             [% INCLUDE websites/pubtheses.tt %]
-          [% END %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'about' ? ' active' : '' %]" id="about">
           [% IF bag == 'about' %]
-          [% IF lang %]
-            [% INCLUDE websites/en/about.tt %]
-          [% ELSE %]
             [% INCLUDE websites/about.tt %]
-          [% END %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'policy' ? ' active' : '' %]" id="policy">
           [% IF bag == 'policy' %]
-          [% IF lang %]
-            [% INCLUDE websites/en/policy.tt %]
-          [% ELSE %]
             [% INCLUDE websites/policy.tt %]
-          [% END %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'faq' ? ' active ' : '' %]" id="faq">
           [% IF bag == 'faq' %]
-          [% IF lang %]
-            [% INCLUDE websites/en/faq.tt %]
-          [% ELSE %]
             [% INCLUDE websites/faq.tt %]
-          [% END %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'contact' ? ' active' : '' %]" id="contact">
           [% IF bag == 'contact' %]
-          [% IF lang %]
-            [% INCLUDE websites/en/contact.tt %]
-          [% ELSE %]
             [% INCLUDE websites/contact.tt %]
-          [% END %]
           [% END %]
         </div>
 
@@ -177,5 +149,5 @@
 
 <!-- END websites/index_publication.tt -->
 
-[% INCLUDE websites/footer.tt %]
+[% INCLUDE footer.tt %]
 

@@ -3,38 +3,48 @@
 <!-- BEGIN navbar.tt -->
 
   <header>
-    <nav class="navbar navbar-default navbar-fixed-top [% IF session AND session.user %] backend[% ELSE %] frontend[% END %]" role="navigation">
-    [% UNLESS session AND session.user %]<div class="container">[% END %]
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      	  <span class="sr-only">Toggle navigation</span>
-      	  <span class="icon-bar"></span>
-      	  <span class="icon-bar"></span>
-      	  <span class="icon-bar"></span>
-      	</button>
-	[% IF session AND session.user %]
-      	<a class="navbar-brand" href="/"><img src="/images/PUB_UNIBI_logo_gruen.gif" height="30" alt="" /></a>
-	[% ELSE %]
-      	<div class="col-md-offset-3 hidden-xs"><a class="navbar-brand" href="/"><img src="/images/unilogo.jpg" alt="" /></a></div>
-      	<div class="hidden-sm hidden-lg hidden-md"><a class="navbar-brand" href="/"><img src="/images/unilogo.jpg" height="50" alt="" /></a></div>
-	[% END %]
+    <nav class="navbar navbar-default navbar-fixed-top [% IF backend %] backend[% ELSE %] frontend[% END %]" role="navigation">
+    [% UNLESS backend %]<div class="container">[% END %]
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+      [% IF backend %]
+	<a class="navbar-brand" href="/"><img src="/images/PUB_UNIBI_logo_gruen.gif" height="30" alt="" /></a>
+      [% ELSE %]
+	<div class="hidden-sm hidden-lg hidden-md">
+	  <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" height="43" alt="" /></a>
+	  <span class="navbar-title"><a href="/">
+	  [% IF lang %]
+	    PUB – Publications at Bielefeld University
+	  [% ELSE %]
+	    PUB – Publikationen an der Uni Bielefeld
+	  [% END %]
+	  </a></span>
+	</div>
+      [% END %]
      </div>
 
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
-     [% IF session AND session.user %]
+     [% IF backend %]
 	<ul class="nav navbar-nav">
          [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
-	 <li><a href="/person/[% session.personNumber %]"><span class="fa fa-list-alt"></span><span class="hidden-sm"> My Public Author Page</span></a></li>
+	 <li><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-sm"> My Public Author Page</span></a></li>
 	 <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm"> MyPUB Home</span></a></li>
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="glyphicon glyphicon-chevron-down"></span></a>
+	 [% IF session.role == 'super_admin' %]
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-inbox"></span> Admin <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="/myPUB/admin/account">Accounts</a></li>
-            <!--<li><a href="/myPUB/admin/import">Import</a></li>-->
-            <li><a href="/myPUB/admin/project">Projects</a></li>
-            <!-- <li><a href="/myPUB/admin/journal">Journals</a></li> -->
+            <li><a href="/myPUB/admin/account"><span class="glyphicon glyphicon-user"></span> Manage Accounts</a></li>
+            <!-- <li><a href="/myPUB/admin/import"><span class="glyphicon glyphicon-import"></span> Import</a></li> -->
+            <li><a href="/myPUB/admin/project"><span class="glyphicon glyphicon-link"></span> Manage Projects</a></li>
+            <!-- <li><a href="/myPUB/admin/journal"><span class="glyphicon glyphicon-user"></span> Manage Journals</a></li> -->
           </ul>
          </li>
+	 [% END %]
        </ul>
        <ul class="nav navbar-nav navbar-right">
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><span class="hidden-sm"> My Settings </span><span class="glyphicon glyphicon-chevron-down"></span></a>
@@ -65,57 +75,85 @@
          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm"> Logout</span></a></li>
        </ul>
       [% ELSE %]
-      <ul class="nav navbar-nav uninav">
-	<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Universität <span class="glyphicon glyphicon-chevron-down"></span></a>
-	  <ul class="dropdown-menu" role="menu">
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Ueberblick/">Über uns / &Uuml;berblick</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/einrichtungen.html">Einrichtungen</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Serviceangebot/index.html">Organisation / Verwaltung</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/ZIF/">Zentrum für interdisziplinäre Forschung</a></li>
-	    <li><a href="http://www.ub.uni-bielefeld.de/">Universitätsbibliothek</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/hrz/neu/">Hochschulrechenzentrum</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/gender/">Gender</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/kultur/">Kultur</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Ueberblick/Stadt_Region">Bielefeld und Region</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/bau/">Bauprojekte</a></li>
+      <div class="row">
+	<div class="col-md-9 col-sm-11 col-xs-12">
+	  <div class="hidden-xs"><a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" alt="" /></a>
+	    <span class="navbar-title"><a href="/">
+	    [% IF lang %]
+	    PUB – Publications at Bielefeld University
+	    [% ELSE %]
+	    PUB – Publikationen an der Universität Bielefeld
+	    [% END %]
+	    </a></span>
+	  </div>
+	</div>
+	<div class="col-md-1 col-sm-1 col-md-offset-1">
+          <span class="select-language"><a href="[% h.host %]/[% UNLESS bag == 'home' %][% bag %][% END %][% lang ? "" : "?lang=en" %]"><small>[% lang ? "Deutsch" : "English" %]</small></a></span>
+	</div>
+      </div>
+
+      <div class="row">
+	<div class="col-md-9 col-sm-10">
+	  <ul class="nav navbar-nav uninav">
+	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Universität <span class="glyphicon glyphicon-chevron-down"></span></a>
+	      <ul class="dropdown-menu" role="menu">
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Ueberblick/">Über uns / &Uuml;berblick</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/einrichtungen.html">Einrichtungen</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Serviceangebot/index.html">Organisation / Verwaltung</a></li>
+		<li><a href="http://www.uni-bielefeld.de/ZIF/">Zentrum für interdisziplinäre Forschung</a></li>
+		<li><a href="http://www.ub.uni-bielefeld.de/">Universitätsbibliothek</a></li>
+		<li><a href="http://www.uni-bielefeld.de/hrz/neu/">Hochschulrechenzentrum</a></li>
+		<li><a href="http://www.uni-bielefeld.de/gender/">Gender</a></li>
+		<li><a href="http://www.uni-bielefeld.de/kultur/">Kultur</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Ueberblick/Stadt_Region">Bielefeld und Region</a></li>
+		<li><a href="http://www.uni-bielefeld.de/bau/">Bauprojekte</a></li>
+	      </ul>
+	    </li>
+	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Fakultäten <span class="glyphicon glyphicon-chevron-down"></span></a>
+	      <ul class="dropdown-menu" role="menu">
+		<li><a href="http://www.uni-bielefeld.de/biologie/">Fakultät für Biologie</a></li>
+		<li><a href="http://www.uni-bielefeld.de/chemie/index.html">Fakultät für Chemie</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Erziehungswissenschaft/">Fakultät für Erziehungswissenschaft</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Geschichte_Philosophie_Theologie/index.html">Fakultät für Geschichtswissenschaft, <br /> Philosophie und Theologie </a></li> 
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Gesundheitswissenschaften/">Fakultät für Gesundheitswissenschaften </a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Lili/">Fakultät für Linguistik und <br/>Literaturwissenschaft</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Mathematik/">Fakultät für Mathematik</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Physik/">Fakultät für Physik</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Psychologie_Sport/index.html">Fakultät für Psychologie und Sportwissenschaft</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Rechtswissenschaft/">Fakultät für Rechtswissenschaft</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Soziologie/">Fakultät für Soziologie </a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Technische%20Fakultaet/">Technische Fakultät</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Wirtschaftswissenschaften/">Fakultät für Wirtschaftswissenschaften</a></li>
+	      </ul>
+	    </li>
+	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Informationen für &hellip; <span class="glyphicon glyphicon-chevron-down"></span></a>
+	      <ul class="dropdown-menu" role="menu">
+		<li><a href="http://www.uni-bielefeld.de/Benutzer/Studierende/">Studierende</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Benutzer/Lehrende/">Lehrende</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Benutzer/WissenschaftlerInnen/">WissenschaftlerInnen</a></li>
+		<li><a href="http://www.uni-bielefeld.de/nachwuchs/">Wiss. Nachwuchs</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Benutzer/MitarbeiterInnen/">MitarbeiterInnen</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Benutzer/SchuelerInnen/">SchülerInnen</a></li>
+		<li><a href="http://www.uni-bielefeld.de/weiterbildung/">Weiterbildungsinteressierte</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Benutzer/Wirtschaft/">Wirtschaft</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Benutzer/AbsolventInnen/">AbsolventInnen</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Benutzer/Gaeste/">Gäste</a></li>
+		<li><a href="http://www.uni-bielefeld.de/Benutzer/Presse/">Presse</a></li>
+	      </ul>
+	    </li>
 	  </ul>
-	</li>
-	<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Fakultäten <span class="glyphicon glyphicon-chevron-down"></span></a>
-	  <ul class="dropdown-menu" role="menu">
-	    <li><a href="http://www.uni-bielefeld.de/biologie/">Fakultät für Biologie</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/chemie/index.html">Fakultät für Chemie</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Erziehungswissenschaft/">Fakultät für Erziehungswissenschaft</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Geschichte_Philosophie_Theologie/index.html">Fakultät für Geschichtswissenschaft, <br /> Philosophie und Theologie </a></li> 
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Gesundheitswissenschaften/">Fakultät für Gesundheitswissenschaften </a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Lili/">Fakultät für Linguistik und <br/>Literaturwissenschaft</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Mathematik/">Fakultät für Mathematik</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Physik/">Fakultät für Physik</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Psychologie_Sport/index.html">Fakultät für Psychologie und Sportwissenschaft</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Rechtswissenschaft/">Fakultät für Rechtswissenschaft</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Soziologie/">Fakultät für Soziologie </a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Technische%20Fakultaet/">Technische Fakultät</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Wirtschaftswissenschaften/">Fakultät für Wirtschaftswissenschaften</a></li>
-	  </ul>
-	</li>
-	<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Informationen für &hellip; <span class="glyphicon glyphicon-chevron-down"></span></a>
-	  <ul class="dropdown-menu" role="menu">
-	    <li><a href="http://www.uni-bielefeld.de/Benutzer/Studierende/">Studierende</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Benutzer/Lehrende/">Lehrende</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Benutzer/WissenschaftlerInnen/">WissenschaftlerInnen</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/nachwuchs/">Wiss. Nachwuchs</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Benutzer/MitarbeiterInnen/">MitarbeiterInnen</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Benutzer/SchuelerInnen/">SchülerInnen</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/weiterbildung/">Weiterbildungsinteressierte</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Benutzer/Wirtschaft/">Wirtschaft</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Benutzer/AbsolventInnen/">AbsolventInnen</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Benutzer/Gaeste/">Gäste</a></li>
-	    <li><a href="http://www.uni-bielefeld.de/Benutzer/Presse/">Presse</a></li>
-	  </ul>
-	</li>
-      </ul>
+
+	[% IF !backend AND session AND session.user %]
+	<div class="hidden-sm hidden-lg hidden-md">
+	  <small>[% lang ? 'Logged in as' : 'Eingeloggt als' %]: [% session.user %]</small>
+	</div>
+	[% END %]
+
+      </div>
+      </div>
      [% END %]
      </div><!-- /.navbar-collapse -->
-    [% UNLESS session AND session.user %]</div>[% END %]
+    [% UNLESS backend %]</div>[% END %]
    </nav>
 
   <div class="modal" id="selectAFF">
@@ -134,7 +172,7 @@
 
   </header>
 
-  <main[% UNLESS session AND session.user %] class="front"[% END %]>
+  <main[% UNLESS backend %] class="front"[% END %]>
 
   <div class="container">
 

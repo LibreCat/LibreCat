@@ -70,10 +70,17 @@
         If your uploaded data is available under a Creative Commons license, you can select it here:<br />
         <select name="cc_license" id="id_cc_license" class="form-control">
           <option value="">Select a license</option>
+          <option value="cc_0"[% IF cc_license == "cc_0" %] selected="selected"[% END %]>CC0 (1.0)</option>
           <option value="cc_by"[% IF cc_license == "cc_by" %] selected="selected"[% END %]>CC BY (4.0)</option>
           <option value="cc_by_sa"[% IF cc_license == "cc_by_sa" %] selected="selected"[% END %]>CC BY-SA (4.0)</option>
-          <option value="cc_by_nd"[% IF cc_license == "cc_by_nd" %] selected="selected"[% END %]>CC-BY-ND (4.0)</option>
         </select><br />
+        
+        <a data-target="#cc_0" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> Creative Commons Public Domain Dedication (CC0 1.0)</a><br />
+        <div id="cc_0" class="collapse reuse-license">
+          <img src="/images/cc0.png" /><br />
+          License Deed <a href="http://creativecommons.org/publicdomain/zero/1.0/" target="_blank">http://creativecommons.org/publicdomain/zero/1.0/</a><br />
+          <a href="http://creativecommons.org/publicdomain/zero/1.0/legalcode" target="_blank">http://creativecommons.org/publicdomain/zero/1.0/legalcode</a>
+        </div>
       
         <a data-target="#cc_by" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> Creative Commons Attribution 4.0 International Public License (CC-BY 4.0)</a><br />
         <div id="cc_by" class="collapse reuse-license">
@@ -87,13 +94,6 @@
           <img src="/images/cc_by_sa.png" /><br />
           License Deed <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">http://creativecommons.org/licenses/by-sa/4.0/</a><br />
           <a href="http://creativecommons.org/licenses/by-sa/4.0/legalcode" target="_blank">http://creativecommons.org/licenses/by-sa/4.0/legalcode</a>
-        </div>
-        
-        <a data-target="#cc_by_nd" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span> Creative Commons Attribution-NoDerivatives 4.0 International Public License (CC BY-ND 4.0)</a><br />
-        <div id="cc_by_nd" class="collapse reuse-license">
-          <img src="/images/cc_by_nd.png" /><br />
-          License Deed <a href="http://creativecommons.org/licenses/by-nd/4.0/" target="_blank">http://creativecommons.org/licenses/by-nd/4.0/</a><br />
-          <a href="http://creativecommons.org/licenses/by-nd/4.0/legalcode" target="_blank">http://creativecommons.org/licenses/by-nd/4.0/legalcode</a>
         </div>
         {% END %}
         </div>

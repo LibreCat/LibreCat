@@ -4,8 +4,7 @@
 [% thisPerson = h.getPerson(session.personNumber) %]
 [% edit_mode = "expert" %]
 
-[% INCLUDE head.tt %]
-[% INCLUDE navbar.tt %]
+[% INCLUDE header.tt %]
 
 <!-- BEGIN /backend/forms/master_expert.tt -->
 

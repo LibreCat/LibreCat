@@ -119,45 +119,45 @@ sub extract_params {
 }
 
 sub get_sort_style {
-	my ($self, $sort, $style, $id) = @_;
+	my ($self, $param_sort, $param_style, $id) = @_;
 	my $user = $self->getPerson( Dancer::session->{personNumber} || $id );
 	my $return;
-	$sort = undef if ($sort eq "" or (ref $sort eq "ARRAY" and !$sort->[0]));
-	$style = undef if $style eq "";
-	# set default values - to be overriden by more important values
-	my $return_style = $style || $user->{style} || $self->config->{store}->{default_style};
-	my $return_sort;
-	my $return_sort_backend;
-	if($sort){
-		$sort = [$sort] if ref $sort ne "ARRAY";
-		foreach my $s (@{$sort}){
-			push @$return_sort, $s;
-			push @$return_sort_backend, $s;
+	$param_sort = undef if ($param_sort eq "" or (ref $param_sort eq "ARRAY" and !$param_sort->[0]));
+	$param_style = undef if $param_style eq "";
+	# set default values - to be overridden by more important values
+	my $style = $param_style || $user->{style} || $self->config->{store}->{default_style};
+	my $sort;
+	my $sort_backend;
+	if($param_sort){
+		$param_sort = [$param_sort] if ref $param_sort ne "ARRAY";
+		foreach my $s (@{$param_sort}){
+			push @$sort, $s;
+			push @$sort_backend, $s;
 		}
 	}
 	elsif($user->{'sort'}){
 		foreach my $s (@{$user->{'sort'}}){
-			push @$return_sort, $s;
-			push @$return_sort_backend, $s;
+			push @$sort, $s;
+			push @$sort_backend, $s;
 		}
 	}
 	else{
 		foreach my $s (@{$self->config->{store}->{default_sort}}){
-			push @{$return_sort}, $s;
+			push @{$sort}, $s;
 		}
 		foreach my $s (@{$self->config->{store}->{default_sort_backend}}){
-			push @{$return_sort_backend}, $s;
+			push @{$sort_backend}, $s;
 		}
 	}
 
-	$return->{'sort'} = $return_sort;
-	$return->{sort_backend} = $return_sort_backend;
+	$return->{'sort'} = $sort;
+	$return->{sort_backend} = $sort_backend;
 	$return->{user_sort} = $user->{'sort'} if $user->{'sort'};
 	$return->{user_style} = $user->{style} if $user->{style};
 
 	# see if style param is set
-	if(array_includes($self->config->{lists}->{styles},$return_style)){
-		$return->{style} = $return_style;
+	if(array_includes($self->config->{lists}->{styles},$style)){
+		$return->{style} = $style;
 	}
 
 	foreach my $key (keys %$return){
@@ -180,17 +180,20 @@ sub get_sort_style {
     	}
 	}
 
-	my $usermongo_eq_currentsort = "";
-	my $currentsort_eq_default = "";
-	$usermongo_eq_currentsort = is_same($return->{user_sort}, $return->{sort_backend}) if $return->{user_sort};
-	$currentsort_eq_default = is_same($return->{sort_backend}, $self->config->{store}->{default_sort_backend});
-
-	if($usermongo_eq_currentsort ne "" or (!$return->{user_sort} and $currentsort_eq_default ne "")){
-		$return->{sort_up_to_date} = 1;
-	}
-	if(($return->{user_style} and $return->{style} eq $return->{user_style}) or (!$return->{user_style} and $return->{style} eq $self->config->{store}->{default_style})){
-		$return->{style_up_to_date} = 1;
-	}
+	#my $usermongo_eq_currentsort = 0;
+	#my $currentsort_eq_default = 0;
+	$return->{sort_eq_usersort} = 0;
+	$return->{sort_eq_usersort} = is_same($user->{'sort'}, $return->{'sort_backend'}) if $user->{'sort'};
+	$return->{sort_eq_default} = 0;
+	$return->{sort_eq_default} = is_same($return->{'sort_backend'}, $self->config->{store}->{default_sort_backend});
+	
+	$return->{style_eq_userstyle} = 0;
+	$return->{style_eq_userstyle} = ($user->{style} and $user->{style} eq $return->{style}) ? 1 : 0;
+	$return->{style_eq_default} = 0;
+	$return->{style_eq_default} = ($return->{style} eq $self->config->{store}->{default_style}) ? 1 : 0;
+#	if(($return->{user_style} and $return->{style} eq $return->{user_style}) or (!$return->{user_style} and $return->{style} eq $self->config->{store}->{default_style})){
+#		$return->{style_up_to_date} = 1;
+#	}
 
 	return $return;
 }
@@ -426,6 +429,7 @@ sub export_csl_json{
 sub search_researcher {
 	my ($self, $p) = @_;
 	my $cql = "";
+	push @{$p->{q}}, "publcount > 0";
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
 	my $hits = researcher->search(

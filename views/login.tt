@@ -1,18 +1,17 @@
-[% INCLUDE head.tt %]
-[% INCLUDE navbar.tt %]
+[% INCLUDE header.tt %]
 
 <!-- BEGIN login.tt -->
 
 [% IF error_message %]
-<div class="row" style="padding-top:15px;">
-  <div class="col-md-6 col-md-offset-2">
+<div class="row">
+  <div class="col-md-10 col-md-offset-2">
     <p class="text-danger"><strong>[% error_message %]</strong></p>
   </div>
 </div>
 [% END %]
 
-<div class="row" style="padding-top:15px;">
-  <div class="col-md-6 col-md-offset-2 well loginframe" style="background:white;">
+<div class="row margin-top2">
+  <div class="col-md-8 col-md-offset-2 well loginframe">
     <form action="/login" method="post" class="form-horizontal">
       <h4><strong>Login to PUB </strong><span style="font-size:10pt;font-weight:normal;">&nbsp;&nbsp;(Not registered yet? <strong><a href="[% luurBase %]/registration?func=getRegistered"><b>Register for PUB</b></a></strong>)</span></h4>
       <div class="form-group[% IF error_message AND !login %] has-error[% END %]">

@@ -48,6 +48,7 @@ sub correct_hash_array {
 		next if ($key eq "publication_identifier");
 		next if ($key eq "file" or $key eq "file_order");
 		next if ($key eq "author" or $key eq "editor");
+		next if ($key eq "nasc" or $key eq "genbank");
 		my $ref = ref $data->{$key};
 		my $fields_tab = $fields->{basic_fields}->{$key} || $fields->{file_upload}->{$key} || $fields->{supplementary_fields}->{$key} || $fields->{related_material}->{$key};
 
@@ -66,16 +67,22 @@ sub correct_writer {
 	my $data = shift;
 
 	$data->{writer_type} = "author" if !$data->{writer_type};
-
-	foreach my $crea (@{$data->{writer}}){
-		#$crea->{first_name} = $crea->{first_name}->[0];
-		#$crea->{last_name} = $crea->{last_name}->[0];
-    	$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
-    	push @{$data->{$data->{writer_type}}}, $crea;
-    }
+	
+	if($data->{writer}){
+		foreach my $crea (@{$data->{writer}}){
+			#$crea->{first_name} = $crea->{first_name}->[0];
+			#$crea->{last_name} = $crea->{last_name}->[0];
+			$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
+			push @{$data->{$data->{writer_type}}}, $crea;
+		}
+		$data->{"first_$data->{writer_type}"} = $data->{$data->{writer_type}}->[0]->{full_name} if $data->{$data->{writer_type}}->[0];
+	}
     
-    foreach my $crea (@{$data->{editor}}){
-    	$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
+    if($data->{editor}){
+    	foreach my $crea (@{$data->{editor}}){
+    		$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
+    	}
+    	$data->{first_editor} = $data->{editor}->[0]->{full_name} if $data->{editor}->[0];
     }
 
     delete $data->{writer};
@@ -105,6 +112,19 @@ sub correct_publid {
 		delete $data->{external_id};
 		$data->{external_id} = $publid_hash;
 	}
+	if($data->{nasc}){
+		my @nasc;
+		@nasc = split(" ; ", $data->{nasc});
+		delete $data->{nasc};
+		$data->{nasc} = \@nasc;
+	}
+	if($data->{genbank}){
+		my @genbank;
+		@genbank = split(" ; ", $data->{genbank});
+		delete $data->{genbank};
+		$data->{genbank} = \@genbank;
+	}
+	
 	return $data;
 }
 

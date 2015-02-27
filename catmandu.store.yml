@@ -378,6 +378,14 @@ search:
               field: 'publication_identifier.isbn'
               sort: true
               description: "unique publication identifier"
+            eisbn:
+              op:
+                'any': true
+                '=': true
+                'exact': true
+                '<>': true
+              field: 'publication_identifier.eisbn'
+              sort: true
             project:
               op:
                 'any': true
@@ -446,7 +454,7 @@ search:
                 '=': true
                 'exact': true
                 '<>': true
-              field: ['publication_identifier.issn', 'publication_identifier.isbn', 'publication_identifier.eissn']
+              field: ['publication_identifier.issn', 'publication_identifier.isbn', 'publication_identifier.eissn', 'publication_identifier.eisbn']
               description: 'searches fields isbn, issn and eissn'
             id:
               op:
@@ -650,6 +658,15 @@ search:
                 '<>': true
               field: 'publication'
               sort: {field: 'publication.exact'}
+            seriestitle:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                'exact': true
+                '<>': true
+              field: 'series_title'
+              sort: {field: 'series_title.exact'}
             publisher:
               op:
                 'any': true
@@ -672,7 +689,7 @@ search:
                 'exact': true
                 '<>': true
               field: volume
-              sort: true
+              sort: {field: 'intvolume'}
             intvolume:
               op:
                 '=': true
@@ -973,6 +990,7 @@ search:
               isbn: {type: string, analyzer: tag, include_in_all: true}
               issn: {type: string, analyzer: tag, include_in_all: true}
               eissn: {type: string, analyzer: tag, include_in_all: true}
+              eisbn: {type: string, analyzer: tag, include_in_all: true}
           status: {type: string, analyzer: tag}
           publication_status: {type: string, analyzer: tag}
           report_number: {type: string, analyzer: tag}
@@ -1009,6 +1027,11 @@ search:
             type: multi_field
             fields:
               publication: {type: string, include_in_all: true}
+              exact: {type: string, analyzer: tag}
+          series_title:
+            type: multi_field
+            fields:
+              series_title: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
           publisher:
             type: multi_field

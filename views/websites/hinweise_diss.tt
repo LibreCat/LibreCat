@@ -1,24 +1,61 @@
-<h3>Besonderheiten bei Dissertationen</h3>
+<!-- BEGIN websites/hinweise_diss.tt -->
 
-<p>F&uuml;r die Ver&ouml;ffentlichung einer Dissertation werden in den Promotionsordnungen der Fakult&auml;ten verschiedene M&ouml;glichkeiten genannt. Eine davon kann die elektronische Ver&ouml;ffentlichung auf dem Server der Universit&auml;tsbibliothek sein. Bitte erkundigen Sie sich diesbez&uuml;glich bei Ihrer Fakult&auml;tsverwaltung. </p>
+    [% IF lang %]
 
-<p>&Uuml;ber PUB Theses k&ouml;nnen generell nur solche von Fakult&auml;ten der Universit&auml;t Bielefeld angenommene Dissertationen ver&ouml;ffentlicht werden, bei denen <strong><em>nicht</em></strong> die Absicht besteht, sie zus&auml;tzlich in einem Verlag zu publizieren, der vertraglich f&uuml;r sich das ausschlie&szlig;liche Verbreitungsrecht beansprucht.<br />
-Gegebenenfalls ist bei einer sp&auml;teren zus&auml;tzlichen Ver&ouml;ffentlichung in einem Verlag darauf zu achten, dass dieser vertraglich die Erstver&ouml;ffentlichung in elektronischer Form auf einem frei zug&auml;nglichen Publikationenserver akzeptiert und f&uuml;r sich kein ausschlie&szlig;liches Verbreitungsrecht beansprucht.</p>
+    <h3>Specialties in Regard to Doctoral Theses</h3>
 
-<p>Au&szlig;erdem sind folgende Punkte bei der Erstellung und Ablieferung der Arbeiten zu beachten:</p>
+    <p>In their regulations of doctoral studies, the faculties indicate several options for the publication of doctoral theses. One of them is the electronic publication on the server provided by the university library. Please refer to your faculty administration for information.</p>
 
-<ul>
-<li><strong>Elektronisches Exemplar:</strong><br />
-Das elektronische Exemplar kann in einem aktuell markt&uuml;blichen Dateiformat wie z.B. PDF, DVI, HTML und .ps sowie als Dateiarchiv in den Formaten .gz und .zip abgeliefert werden. <strong>Bevorzugt sollte jedoch PDF benutzt werden!</strong>. Bitte beachten Sie, dass es nicht erlaubt ist, das Logo der Universit&auml;t auf der Abschlussarbeit zu ver&ouml;ffentlichen.<br />
-Wenn multimediale Elemente eingebunden worden sind, wenden Sie sich bitte vorab an uns.</li>
+    <p>You can publish your doctoral theses in PUB-Theses only if you <strong><em>don't intend</em></strong> to publish it additionally at a publishing house which claims exclusive exploitation rights for it.<br />
+    If you consider an additional commercial publication later, keep in mind that the publisher needs to accept the primary publication of the paper on the open access server PUB Theses. The primary publication cannot be withdrawn.</p>
 
-<li><strong>Gedruckte Archivexemplare:</strong><br />
-Aus Gr&uuml;nden der Archivierung sind zus&auml;tzlich zur elektronischen Form <strong><em>zwei</em></strong> gedruckte Exemplare abzuliefern. Diese m&uuml;ssen auf alterungsbest&auml;ndigem, holz- und s&auml;urefreiem Papier nach DIN-ISO 9706 (Bezugsquellen:  Kopierl&auml;den, Schreibwarengesch&auml;fte) ausgedruckt und dauerhaft haltbar gebunden (klebegebunden) sein. Der entsprechende Hinweis ist in die Arbeit einzudrucken (&quot;Gedruckt auf alterungsbest&auml;ndigem Papier &#176;&#176; ISO 9706&quot;). <br />
-Bitte beachten Sie, dass es nicht erlaubt ist, das Logo der Universit&auml;t auf der Abschlussarbeit zu ver&ouml;ffentlichen.<br />
-Bitte liefern Sie die gedruckten Exemplare m&ouml;glichst vormittags in der Hochschulschriftenstelle der Universit&auml;tsbibliothek ab (Frau Weingarten, Universit&auml;tshauptgeb&auml;ude, Raum A1-136, Tel.: 0521/106-4021). Die Bearbeitungsdauer betr&auml;gt ca. eine Woche.</li>
+    <p>Moreover, take the following aspects for the creation and submission of the paper into account:</p>
 
-<li><strong>Schriftliche Erkl&auml;rung zur Einr&auml;umung von Nutzungsrechten:</strong><br />
-Bei der Abgabe der Promotionsschrift muss die Autorin/der Autor versichern, dass die &uuml;berlassene elektronische Fassung der Arbeit mit der im Pr&uuml;fungsverfahren vorgelegten Druckfassung vollst&auml;ndig &uuml;bereinstimmt und dass ggf. Abweichungen genehmigt worden sind. Falls die Druckfassung einen Lebenslauf enth&auml;lt, muss dieser also auch in der elektronischen Version vorhanden sein. Weiterhin muss die Autorin/der Autor ihr/sein Einverst&auml;ndnis geben, dass ihre/seine pers&ouml;nlichen Daten (z.B. Lebenslauf) maschinell gespeichert und im Internet ver&ouml;ffentlicht werden.<br />
-F&uuml;r die Ver&ouml;ffentlichung selbst &uuml;bertr&auml;gt die Autorin/der Autor der Universit&auml;t Bielefeld das Recht, die elektronische Fassung in Wissenschaftsnetzen dauerhaft &ouml;ffentlich zug&auml;nglich zu machen. Die Universit&auml;tsbibliothek weist darauf hin, dass sie das Werk im Rahmen der Ablieferungspflicht von Netzpublikationen nach &sect;&sect; 15 ff. DNBG an die Deutsche Nationalbibliothek zur Abholung bereit stellt. Es ist auch zu versichern, dass die Autorin/der Autor die Urheberrechte an dem Dokument besitzt und Rechte Dritter mit der Ver&ouml;ffentlichung nicht verletzt werden.<br />
-<strong>Das Revers zur Einr&auml;umung von Nutzungsrechten wird auf der Startseite von PUB Theses und am Ende des Ver&ouml;ffentlichungsvorganges bereitgestellt.</strong></li>
-</ul>
+    <ul>
+    <li><strong>Electronic Version:</strong><br />
+    The electronic version can be submitted in customary formats like PDF, DVI, HTML and .ps. You may use data archives .gz and .zip as well, although <strong>PDF format is highly preferred!</strong><br />
+    It is not allowed to use the Bielefeld University logo in your paper.<br />
+    If multi-media elements are included in your work, please contact us beforehand.</li>
+
+    <li><strong>Printed Copies:</strong><br />
+    For archival storage reasons you must supply <strong><em>two</em></strong> printed copies. These have to be printed on non-ageing, woodfree and acid-free paper in compliance with DIN-ISO 9706 (available at copy shops etc.) and durable bound (glued). A note indicating this has to be printed in the paper (&quot;Printed on nn-ageing paper &#176;&#176; ISO 9706&quot;).<br />
+    It is not allowed to use the Bielefeld University logo in your paper.<br />
+    Please deliver the printed copies preferably mornings to the University Publications Department (contact: Bettina Weingarten, university main building, room A1-136, phone: 0521/106-4021). Handling will take about one week.</li>
+
+    <li><strong>Statement on the Granting of Exploitation Rights:</strong><br />
+    When submitting the doctoral theses, the author has to declare, that the electronic version of her or his work is absolutely congruent with the approved printed version which has been submitted for the examination process and that changes if any have been approved by the Doctoral Candidate Admissions Board. If the printed version includes a CV, it has to be part of the electronic version as well. Moreover the author has to agree that the personal data (e.g. CV) will be stored and published on the internet.<br />
+    The author confers the right of dissemination and making the electronic version permanently publicly available in science nets to Bielefeld University. The author has declare that the work is original and does not infringe the copyright or other intellectual property rights of any other person or party.<br />
+    The university library is obligated by law to transmit the work for registration purposes to the German National Library. <br />
+    <strong>The Statement on the Granting of Exploitation Rights is provided on the start page of PUB Theses and at the end of the publication process.</strong></li>
+    </ul>
+
+    [% ELSE %]
+
+    <h3>Besonderheiten bei Dissertationen</h3>
+
+    <p>F&uuml;r die Ver&ouml;ffentlichung einer Dissertation werden in den Promotionsordnungen der Fakult&auml;ten verschiedene M&ouml;glichkeiten genannt. Eine davon kann die elektronische Ver&ouml;ffentlichung auf dem Server der Universit&auml;tsbibliothek sein. Bitte erkundigen Sie sich diesbez&uuml;glich bei Ihrer Fakult&auml;tsverwaltung. </p>
+
+    <p>&Uuml;ber PUB Theses k&ouml;nnen generell nur solche von Fakult&auml;ten der Universit&auml;t Bielefeld angenommene Dissertationen ver&ouml;ffentlicht werden, bei denen <strong><em>nicht</em></strong> die Absicht besteht, sie zus&auml;tzlich in einem Verlag zu publizieren, der vertraglich f&uuml;r sich das ausschlie&szlig;liche Verbreitungsrecht beansprucht.<br />
+    Gegebenenfalls ist bei einer sp&auml;teren zus&auml;tzlichen Ver&ouml;ffentlichung in einem Verlag darauf zu achten, dass dieser vertraglich die Erstver&ouml;ffentlichung in elektronischer Form auf einem frei zug&auml;nglichen Publikationenserver akzeptiert und f&uuml;r sich kein ausschlie&szlig;liches Verbreitungsrecht beansprucht.</p>
+
+    <p>Au&szlig;erdem sind folgende Punkte bei der Erstellung und Ablieferung der Arbeiten zu beachten:</p>
+
+    <ul>
+    <li><strong>Elektronisches Exemplar:</strong><br />
+    Das elektronische Exemplar kann in einem aktuell markt&uuml;blichen Dateiformat wie z.B. PDF, DVI, HTML und .ps sowie als Dateiarchiv in den Formaten .gz und .zip abgeliefert werden. <strong>Bevorzugt sollte jedoch PDF benutzt werden!</strong>. Bitte beachten Sie, dass es nicht erlaubt ist, das Logo der Universit&auml;t auf der Abschlussarbeit zu ver&ouml;ffentlichen.<br />
+    Wenn multimediale Elemente eingebunden worden sind, wenden Sie sich bitte vorab an uns.</li>
+
+    <li><strong>Gedruckte Archivexemplare:</strong><br />
+    Aus Gr&uuml;nden der Archivierung sind zus&auml;tzlich zur elektronischen Form <strong><em>zwei</em></strong> gedruckte Exemplare abzuliefern. Diese m&uuml;ssen auf alterungsbest&auml;ndigem, holz- und s&auml;urefreiem Papier nach DIN-ISO 9706 (Bezugsquellen:  Kopierl&auml;den, Schreibwarengesch&auml;fte) ausgedruckt und dauerhaft haltbar gebunden (klebegebunden) sein. Der entsprechende Hinweis ist in die Arbeit einzudrucken (&quot;Gedruckt auf alterungsbest&auml;ndigem Papier &#176;&#176; ISO 9706&quot;). <br />
+    Bitte beachten Sie, dass es nicht erlaubt ist, das Logo der Universit&auml;t auf der Abschlussarbeit zu ver&ouml;ffentlichen.<br />
+    Bitte liefern Sie die gedruckten Exemplare m&ouml;glichst vormittags in der Hochschulschriftenstelle der Universit&auml;tsbibliothek ab (Frau Weingarten, Universit&auml;tshauptgeb&auml;ude, Raum A1-136, Tel.: 0521/106-4021). Die Bearbeitungsdauer betr&auml;gt ca. eine Woche.</li>
+
+    <li><strong>Schriftliche Erkl&auml;rung zur Einr&auml;umung von Nutzungsrechten:</strong><br />
+    Bei der Abgabe der Promotionsschrift muss die Autorin/der Autor versichern, dass die &uuml;berlassene elektronische Fassung der Arbeit mit der im Pr&uuml;fungsverfahren vorgelegten Druckfassung vollst&auml;ndig &uuml;bereinstimmt und dass ggf. Abweichungen genehmigt worden sind. Falls die Druckfassung einen Lebenslauf enth&auml;lt, muss dieser also auch in der elektronischen Version vorhanden sein. Weiterhin muss die Autorin/der Autor ihr/sein Einverst&auml;ndnis geben, dass ihre/seine pers&ouml;nlichen Daten (z.B. Lebenslauf) maschinell gespeichert und im Internet ver&ouml;ffentlicht werden.<br />
+    F&uuml;r die Ver&ouml;ffentlichung selbst &uuml;bertr&auml;gt die Autorin/der Autor der Universit&auml;t Bielefeld das Recht, die elektronische Fassung in Wissenschaftsnetzen dauerhaft &ouml;ffentlich zug&auml;nglich zu machen. Die Universit&auml;tsbibliothek weist darauf hin, dass sie das Werk im Rahmen der Ablieferungspflicht von Netzpublikationen nach &sect;&sect; 15 ff. DNBG an die Deutsche Nationalbibliothek zur Abholung bereit stellt. Es ist auch zu versichern, dass die Autorin/der Autor die Urheberrechte an dem Dokument besitzt und Rechte Dritter mit der Ver&ouml;ffentlichung nicht verletzt werden.<br />
+    <strong>Das Revers zur Einr&auml;umung von Nutzungsrechten wird auf der Startseite von PUB Theses und am Ende des Ver&ouml;ffentlichungsvorganges bereitgestellt.</strong></li>
+    </ul>
+
+    [% END %]
+
+<!-- END websites/hinweise_diss.tt -->

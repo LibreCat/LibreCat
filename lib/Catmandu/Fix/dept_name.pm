@@ -1,12 +1,12 @@
 package Catmandu::Fix::dept_name;
 
-use lib qw(/srv/www/app-catalog);
+use lib qw(/srv/www/pub);
 
 use Catmandu;
 use Catmandu::Sane;
 use Moo;
 
-Catmandu->load('/srv/www/app-catalog');
+Catmandu->load(':up');
 my $mongoBag = Catmandu->store('authority')->bag('department');
 
 sub fix {

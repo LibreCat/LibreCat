@@ -85,6 +85,8 @@ field_order:
     - conference.date
     - ipc
     - external_id
+    - nasc
+    - genbank
     - popular_science
     - quality_controlled
     - ubi_funded
@@ -134,6 +136,8 @@ field_order:
     - msc_class
     - ccs_class
     - external_id
+    - nasc
+    - genbank
     - popular_science
     - quality_controlled
     - ubi_funded
@@ -150,20 +154,20 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: &doi
           label: "DOI"
-          placeholder: "10.4119/unibi/2695161"
+          placeholder: "e.g. 10.4119/unibi/2695161"
         title: &title
           mandatory: 1
           label: "Title"
-          placeholder: "Handbook of eBook Publishing"
+          placeholder: "e.g. Handbook of eBook Publishing"
         alternative_title: &alternative_title
           label: "Alternative Title"
-          placeholder: "Handbook of eBook Publishing - with a subtitle"
+          placeholder: "e.g. Handbook of eBook Publishing - with a subtitle"
           multiple: 1
         writer: &author_translator
           first_name:
-            placeholder: "John"
+            placeholder: "e.g. John"
           last_name:
-            placeholder: "Appleseed"
+            placeholder: "e.g. Appleseed"
           mandatory: 1
           multiple: 1
           label:
@@ -176,11 +180,11 @@ publicationTypes:
         department: &department
           label: "Department"
           label_short: "Dept."
-          placeholder: "Department of Physics"
+          placeholder: "e.g. Fakult&auml;t f&uuml;r Physik"
           multiple: 1
         project: &project
           label: "Project"
-          placeholder: "2nd-Generation Open Access Infrastructure for Research in Europe"
+          placeholder: "e.g. 2nd-Generation Open Access Infrastructure for Research in Europe"
           multiple: 1
         thematic_area: &thematic_area
           label: "Thematic Area"
@@ -188,23 +192,23 @@ publicationTypes:
         place: &place
           label: "Place<br />(of publication)"
           label_short: "Place"
-          placeholder: "Berlin"
+          placeholder: "e.g. Berlin"
         publisher: &publisher
           label: "Publisher"
-          placeholder: "Elsevier"
+          placeholder: "e.g. Elsevier"
         year: &year
           mandatory: 1
           label: "Publishing Year"
           label_short: "Year"
-          placeholder: "2015"
+          placeholder: "e.g. 2015"
         page: &page
           label: "Number of Pages"
-          placeholder: "12"
+          placeholder: "e.g. 12"
         series_title_volume: &series_title_volume
           label: "Series Title/ Vol."
-          placeholder_volume: "3"
+          placeholder_volume: "e.g. 3"
           label_volume: "Volume"
-          placeholder_series_title: "E.g. Lecture Notes in Computer Science"
+          placeholder_series_title: "e.g. Lecture Notes in Computer Science"
           label_series_title: "Series Title"
         publication_identifier: &publication_identifier
           label: "Publication<br />Identifier"
@@ -235,7 +239,7 @@ publicationTypes:
         abstract: &abstract
           label: "Abstract"
           label2: "Abstract Language"
-          placeholder: "Abstract Text"
+          placeholder: "e.g. Abstract Text"
           multiple: 1
         language: &language
           label: "Language"
@@ -243,7 +247,7 @@ publicationTypes:
           multiple: 1
         keyword: &keyword
           label: "Keywords"
-          placeholder: "Keyword"
+          placeholder: "e.g. Keyword"
           multiple: 1
         ddc: &ddc
           label: DDC
@@ -256,6 +260,12 @@ publicationTypes:
           label: "External Identifier"
           label_short: "Ext. Id."
           multiple: 1
+        nasc: &nasc
+          label: "NASC Seedstock ID"
+          label_short: "NASC"
+        genbank: &genbank
+          label: "Genbank ID"
+          label_short: "Genbank"
         message: &message
           label: "Admin Comments"
         popular_science: &popular_science
@@ -266,11 +276,11 @@ publicationTypes:
       related_material: &related_material
         tab_name: "Related Material"
         related_material.record:
-          label: "Documents within PUB"
+          label: "Link to PUB record"
           label_short: "PUB-Rec."
           placeholder: "Start typing to search your publications."
         related_material.link:
-          label: "Documents outside PUB"
+          label: "Link to other record"
           label_short: "Ext. Link"
           placeholder: "Enter a remote location (URL) of your file here"
         publish_button:
@@ -296,7 +306,7 @@ publicationTypes:
           mandatory: 0
           multiple: 1
           label: "Corporate Editor"
-          placeholder: "World Health Organization - Regional Office for Europe (WHO-Europe)"
+          placeholder: "e.g. World Health Organization - Regional Office for Europe (WHO-Europe)"
         department: *department
         project: *project
         thematic_area: *thematic_area
@@ -319,6 +329,8 @@ publicationTypes:
         urn: *urn
         extern: *extern
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         popular_science: *popular_science
         ubi_funded: *ubi_funded
@@ -348,7 +360,7 @@ publicationTypes:
           mandatory: 0
           multiple: 1
           label: "Corporate Editor"
-          placeholder: "World Health Organization - Regional Office for Europe (WHO-Europe)"
+          placeholder: "e.g. World Health Organization - Regional Office for Europe (WHO-Europe)"
         department: *department
         project: *project
         thematic_area: *thematic_area
@@ -360,7 +372,7 @@ publicationTypes:
         series_title: &publication_series
           label: "Series Title"
           label_short: "Series Title"
-          placeholder: "E.g. Lecture Notes in Computer Science"
+          placeholder: "e.g. Lecture Notes in Computer Science"
         publication:
           label: "Book Title"
           mandatory: 1
@@ -378,6 +390,8 @@ publicationTypes:
         keyword: *keyword
         extern: *extern
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         popular_science: *popular_science
         ubi_funded: *ubi_funded
@@ -436,8 +450,8 @@ publicationTypes:
           label: "Date (start and end)"
           label_start: "Start"
           label_end: "End"
-          placeholder_start: "2014-11-03"
-          placeholder_end: "2014-11-05"
+          placeholder_start: "YYYY-MM-DD"
+          placeholder_end: "YYYY-MM-DD"
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
@@ -446,6 +460,8 @@ publicationTypes:
         language: *language
         urn: *urn
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         extern: *extern
         quality_controlled: &quality_controlled
           label: "Quality Controlled"
@@ -482,7 +498,7 @@ publicationTypes:
           placeholder: "e.g. 3rd Conference on Nano-Physics"
         conference.location:
           label: "Location"
-          placeholder: "Berlin"
+          placeholder: "e.g. Berlin"
         conference.date: *conference_date
       file_upload: *file_upload
       supplementary_fields:
@@ -493,6 +509,8 @@ publicationTypes:
         language: *language
         urn: *urn
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         publication: *publication_series
         extern: *extern
         volume: *volume
@@ -546,6 +564,8 @@ publicationTypes:
         abstract: *abstract
         urn: *urn
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         extern: *extern
         quality_controlled: *quality_controlled
         popular_science: *popular_science
@@ -597,6 +617,8 @@ publicationTypes:
         language: *language
         keyword: *keyword
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         publication: *publication_series
         volume: *volume
         urn: *urn
@@ -639,6 +661,8 @@ publicationTypes:
           mandatory: 1
         extern: *extern
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         volume: *volume
         publication_identifier: *publication_identifier
@@ -661,7 +685,7 @@ publicationTypes:
         publisher: *publisher
         publication: &publication_jtitle
           label: "Journal Title"
-          placeholder: "Nature Genetics"
+          placeholder: "e.g. Nature Genetics"
         volume_issue_page: *volume_issue_page
         year: *year
         publication_identifier: *publication_identifier
@@ -678,6 +702,8 @@ publicationTypes:
         popular_science: *popular_science
         quality_controlled: *quality_controlled
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         ubi_funded: *ubi_funded
         conference.divider: *conference_divider
@@ -715,6 +741,8 @@ publicationTypes:
         extern: *extern
         publication_status: *publication_status
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         publication_identifier: *publication_identifier
         urn: *urn
@@ -753,6 +781,8 @@ publicationTypes:
         urn: *urn
         extern: *extern
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -770,9 +800,9 @@ publicationTypes:
         alternative_title: *alternative_title
         writer:
           first_name:
-            placeholder: "John"
+            placeholder: "e.g. John"
           last_name:
-            placeholder: "Appleseed"
+            placeholder: "e.g. Appleseed"
           mandatory: 1
           multiple: 1
           label:
@@ -817,6 +847,8 @@ publicationTypes:
         keyword: *keyword
         ddc: *ddc
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material
@@ -847,6 +879,8 @@ publicationTypes:
         ddc: *ddc
         work_references: *message
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material
@@ -876,6 +910,8 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -922,6 +958,8 @@ publicationTypes:
         ddc: *ddc
         work_references: *message
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material
@@ -1058,9 +1096,9 @@ publicationTypes:
           placeholder: "Handbook of eBook Publishing"
         translator:
           first_name:
-            placeholder: "John"
+            placeholder: "e.g. John"
           last_name:
-            placeholder: "Appleseed"
+            placeholder: "e.g. Appleseed"
           mandatory: 1
           multiple: 1
           label:
@@ -1068,9 +1106,9 @@ publicationTypes:
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         writer_secondary:
           first_name:
-            placeholder: "John"
+            placeholder: "e.g. John"
           last_name:
-            placeholder: "Appleseed"
+            placeholder: "e.g. Appleseed"
           multiple: 1
           label:
             "Author (Original)" : "author"
@@ -1096,6 +1134,8 @@ publicationTypes:
           label_short: "Lang. (Orig)"
           multiple: 1
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -1113,17 +1153,17 @@ publicationTypes:
           mandatory: 1
           label: "Title (Translation)"
           label_short: "Title (Trans.)"
-          placeholder: "Handbuch des eBook Publishings"
+          placeholder: "e.g. Handbuch des eBook Publishings"
         alternative_title:
           mandatory: 1
           label: "Title (Original)"
           label_short: "Title (Orig)"
-          placeholder: "Handbook of eBook Publishing"
+          placeholder: "e.g. Handbook of eBook Publishing"
         translator:
           first_name:
-            placeholder: "John"
+            placeholder: "e.g. John"
           last_name:
-            placeholder: "Appleseed"
+            placeholder: "e.g. Appleseed"
           mandatory: 1
           multiple: 1
           label:
@@ -1131,9 +1171,9 @@ publicationTypes:
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         writer_secondary:
           first_name:
-            placeholder: "John"
+            placeholder: "e.g. John"
           last_name:
-            placeholder: "Appleseed"
+            placeholder: "e.g. Appleseed"
           multiple: 1
           label:
             "Author" : "author"
@@ -1159,6 +1199,8 @@ publicationTypes:
         language: *language
         original_language: *language
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         abstract: *abstract
         keyword: *keyword
         ddc: *ddc
@@ -1191,6 +1233,8 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         abstract: *abstract
         urn: *urn
         language: *language
@@ -1222,7 +1266,7 @@ publicationTypes:
         email: &email
           label: "E-Mail address"
           label_short: "E-Mail"
-          placeholder: "me@example.com"
+          placeholder: "e.g. me@example.com"
           mandatory: 1
         department: &department_diss
           label: "Department"
@@ -1254,7 +1298,7 @@ publicationTypes:
         place: &place_diss
           label: "Place<br />(of publication)"
           label_short: "Place"
-          placeholder: "Berlin"
+          placeholder: "e.g. Berlin"
           mandatory: 1
         ddc: &ddc_diss
           label: DDC
@@ -1269,6 +1313,8 @@ publicationTypes:
         publication_identifier: *publication_identifier
         urn: *urn
         external_id: *external_id
+        nasc: *nasc
+        genbank: *genbank
         volume: *volume
         abstract: *abstract
         keyword: *keyword

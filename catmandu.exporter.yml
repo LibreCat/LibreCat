@@ -18,21 +18,21 @@ publication:
     package: 'JSON'
     content_type: 'application/json'
     options:
-      fix: ["fixes/to_public.fix"]
+      fix: ["/srv/www/pub/fixes/to_public.fix"]
       array: 1
     label: JSON
   jsonl:
     package: 'JSON'
     content_type: 'application/json'
     options:
-      fix: ["fixes/to_public.fix"]
+      fix: ["/srv/www/pub/fixes/to_public.fix"]
     label: JSONLines
     extension: jsonl
   yaml:
     package: 'YAML'
     content_type: 'text/x-yaml'
     options:
-      fix: ["fixes/to_public.fix"]
+      fix: ["/srv/www/pub/fixes/to_public.fix"]
     extension: yml
     label: YAML
   bibtex:

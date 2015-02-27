@@ -7,28 +7,17 @@
 
 <!-- BEGIN person/person.tt -->
 
-[% INCLUDE websites/header.tt %]
+[% INCLUDE header.tt %]
 
-<!--[IF !IE]> -->
-<link rel="stylesheet" href="/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/css/mypub.css" />
-<link rel="stylesheet" href="/css/font-awesome.min.css">
-<!-- <![ENDIF]-->
+<div class="row" itemscope itemtype="http://schema.org/Person"><!-- outer border -->
 
-<!--[if gt IE 9]>
-<link rel="stylesheet" href="/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/css/mypub.css" />
-<link rel="stylesheet" href="/css/font-awesome.min.css" />
-<![endif]-->
+  <div class="col-md-10 col-sm-12 col-md-offset-1"> <!-- main content (left) -->
 
-<!--[if lt IE 10]>
-<link rel="stylesheet" type="text/css" href="/css/ltIE10.css" />
-<![endif]-->
-
-<script src="/javascripts/bootstrap.min.js"></script>
-
-<div class="row" style="padding-top:50px;padding-left:27px;" itemscope itemtype="http://schema.org/Person"><!-- outer border -->
-  <div class="col-md-11 col-md-offset-1"> <!-- main content (left) -->
+    <div class="page-header" id="banner">
+      <h1>
+        [% thisPerson.first_name %] [% thisPerson.last_name %]
+       </h1>
+    </div>
 
     <div class="row">
       <div class="col-md-2">

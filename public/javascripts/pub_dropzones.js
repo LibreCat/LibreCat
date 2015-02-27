@@ -141,7 +141,7 @@ $(document).ready(function(){
 	            var progresselement = progressbar.parentNode.parentNode;
 	            $(progresselement).remove();
 	            var resp = JSON.parse(response);
-	            var well = Dropzone.createElement("<div class='well' id='" + resp.tempid + "' style='background-color:#fff;margin-left:15px;margin-right:15px;'></div>");
+	            var well = Dropzone.createElement("<div class='well' id='" + resp.tempid + "'></div>");
 	            
 	            var form = Dropzone.createElement("<form class='form-horizontal' id='form_" + resp.tempid + "' action='/myPUB/thesesupload/submit' method='post'></form>");
 	            
@@ -163,12 +163,18 @@ $(document).ready(function(){
 	            var supervisor = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Supervisor<span class='starMandatory'></span></label><div class='col-sm-5'><input type='text' name='supervisor.first_name' class='form-control' placeholder='First Name' required /></div><div class='col-sm-5'><input type='text' name='supervisor.last_name' class='form-control' placeholder='Last Name' /></div></div>");
 	            form.appendChild(supervisor);
 	            
+	            var defense_date = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Defense Date<span class='starMandatory'></span></label><div class='col-sm-5'><input type='text' name='defense_date' class='form-control' placeholder='YYYY-MM-DD' required /></div></div>'");
+	            form.appendChild(defense_date);
+	            
+	            var cc_license = Dropzone.createElement("<div class='row innerrow'><div class='col-md-12 alert alert-info'>If your uploaded data is available under a Creative Commons license, you can select it here:<br /><select name='cc_license' id='id_cc_license' class='form-control'><option value=''>Select a license</option><option value='cc_0'>CC0 (1.0)</option><option value='cc_by'>CC BY (4.0)</option><option value='cc_by_sa'>CC BY-SA (4.0)</option></select><br /><a data-target='#cc_0' data-toggle='collapse'><span class='glyphicon glyphicon-chevron-down'></span> Creative Commons Public Domain Dedication (CC0 1.0)</a><br /><div id='cc_0' class='collapse reuse-license'><img src='/images/cc0.png' /><br />License Deed <a href='http://creativecommons.org/publicdomain/zero/1.0/' target='_blank'>http://creativecommons.org/publicdomain/zero/1.0/</a><br /><a href='http://creativecommons.org/publicdomain/zero/1.0/legalcode' target='_blank'>http://creativecommons.org/publicdomain/zero/1.0/legalcode</a></div><a data-target='#cc_by' data-toggle='collapse'><span class='glyphicon glyphicon-chevron-down'></span> Creative Commons Attribution 4.0 International Public License (CC-BY 4.0)</a><br /><div id='cc_by' class='collapse reuse-license'><img src='/images/cc_by.png' /><br />License Deed <a href='http://creativecommons.org/licenses/by/4.0/' target='_blank'>http://creativecommons.org/licenses/by/4.0/</a><br /><a href='http://creativecommons.org/licenses/by/4.0/legalcode' target='_blank'>http://creativecommons.org/licenses/by/4.0/legalcode</a></div><a data-target='#cc_by_sa' data-toggle='collapse'><span class='glyphicon glyphicon-chevron-down'></span> Creative Commons Attribution-ShareAlike 4.0 International Public License (CC BY-SA 4.0)</a><br /><div id='cc_by_sa' class='collapse reuse-license'><img src='/images/cc_by_sa.png' /><br />License Deed <a href='http://creativecommons.org/licenses/by-sa/4.0/' target='_blank'>http://creativecommons.org/licenses/by-sa/4.0/</a><br /><a href='http://creativecommons.org/licenses/by-sa/4.0/legalcode' target='_blank'>http://creativecommons.org/licenses/by-sa/4.0/legalcode</a></div></div></div>");
+	            form.appendChild(cc_license);
+	            
 	            var hidden = Dropzone.createElement("<input type='hidden' name='file_name' value='" + resp.file_name + "' />");
 	            var hidden2 = Dropzone.createElement("<input type='hidden' name='tempid' value='" + resp.tempid + "' />");
 	            form.appendChild(hidden);
 	            form.appendChild(hidden2);
 	            
-	            var buttons = Dropzone.createElement("<div class='form-group'><div class='col-sm-10 col-sm-offset-2'><input type='submit' class='btn btn-default' name='submit_or_cancel' onclick='return confirm(\"I herewith place this document at the disposal of Bielefeld University for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.\");' value='Submit'/><input type='submit' class='btn btn-default' name='submit_or_cancel' value='Cancel' /></div></div>");
+	            var buttons = Dropzone.createElement("<div class='form-group'><div class='col-sm-10 col-sm-offset-2'><input type='submit' class='btn btn-default' name='submit_or_cancel' onclick='return confirm(\"I herewith place this document at the disposal of Bielefeld University for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.\");' value='Submit'/><input type='button' class='btn btn-default' onclick='location.reload();' value='Cancel' /></div></div>");
 	            form.appendChild(buttons);
 	            
 	            well.appendChild(form);

@@ -1,11 +1,11 @@
 
-<!-- BEGIN theses_dropzone.tt -->
+<!-- BEGIN websites/theses_dropzone.tt -->
 
 [% IF submit_response %]
   <div class="alert alert-success" role="alert">[% submit_response %]</div>
 [% END %]
 
-<div id="dropzone_row">
+<div id="dropzone_row" class="row">
 
   
     <div class="dropzone" id="thesesUpload"></div>
@@ -13,7 +13,7 @@
     <p class="margin-top1"><a href="/policy.html#depositpolicy">PUB Deposit Policy</a></p>
   
   
-  <div class="dropzone-previews col-md-10" id="theses_dz_preview"></div>
+  <div class="dropzone-previews col-md-12" id="theses_dz_preview"></div>
   
 </div>
-<!-- END theses_dropzone.tt -->
+<!-- END websites/theses_dropzone.tt -->

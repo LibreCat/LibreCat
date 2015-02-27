@@ -32,11 +32,11 @@ sub update_publication {
 
     $data->{_id} = new_publication() unless $data->{_id};
 
-    $data = delete_empty_fields($data);
     $data = correct_publid($data);
     $data = correct_hash_array($data);
 
     $data = correct_writer($data) if $data->{writer} or $data->{editor};
+    $data = delete_empty_fields($data);
 
     # html encoding??
     foreach (qw/message/) {
@@ -124,6 +124,7 @@ sub delete_publication {
 	h->publication->commit;
 
 	my $status = delete_file($id);
+	sleep 1;
 
     # delete attached files
 #    my $dir = h->config->{upload_dir} ."/$id";

@@ -1,3 +1,28 @@
+<!-- BEGIN websites/berechtigte.tt -->
+
+[% IF lang %]
+
+<h3>Information for Authors</h3>
+
+<p>PUB Theses is a platform for publishing examination papers of Bielefeld University on the internet. These are:</p>
+
+<ul id="listen">
+<li><strong>Postdoctoral theses / habilitations and doctoral theses</strong> (in this case please read our information on <b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#hinweise_diss">Specialties in Regard to Doctoral Theses</a></b>)</li>
+<li><strong>Master and bachelor theses</strong> resp. former diploma and master papers (in this case please read our information on <b><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#hinweise_ba_ma">Specialties in Regard to Bachelor and Master Theses</a></b>)</li>
+</ul>
+
+
+<h4>Procedure</h4>
+<p>The author uploads her or his paper in PUB Theses and enters the necessary bibliographic data into the provided form at the same time. Publishing papers in PUB Theses is free of charge.</p>
+
+<h4>Exploitation Rights / Publication of the Paper by a Commercial Publisher</h4>
+<p>The release of the paper on the internet will follow immediately after the university library (contact: Bettina Weingarten, university main building, room A1-136) has received the duly completed and signed statement. In order to be eligible for the publishing of the paper on the internet, the library needs only the non-exclusive exploitation right for internet dissemination. This means that the author may publish his or her work wherever wanted independantly on the internet or have it re-published as an e-book version by a commercial publisher. Even a printed edition is possible if the publisher does not contradict the deposit of the work in PUB Theses. Most publishers do consent though.</p>
+
+<h4>Notification German National Library</h4>
+<p>All papers which have been submitted to and accepted for the provision in PUB Theses have to be registered by law at the German National Library. The national library provides long-term archiving as well.</p>
+
+[% ELSE %]
+
 <h3>Hinweise f&uuml;r Autorinnen und Autoren</h3>
 <p>Auf PUB Theses werden ausschlie&szlig;lich Pr&uuml;fungsschriften der Universit&auml;t Bielefeld im Internet ver&ouml;ffentlicht. Dazu geh&ouml;ren:</p>
 
@@ -15,3 +40,7 @@ F&uuml;r die Ver&ouml;ffentlichung im Internet ben&ouml;tigen wir lediglich ein 
 
 <h4>Meldung an die Deutsche Nationalbibliothek</h4>
 <p>Die auf PUB Theses eingestellten Arbeiten m&uuml;ssen im Rahmen der Ablieferungspflicht von Netzpublikationen nach &sect; 15 ff. DNB Gesetz an die Deutsche Nationalbibliothek gemeldet werden. Die DNB archiviert die gemeldeten Netzpublikationen nach eigenem Ermessen und gesetzlichem Auftrag ebenfalls dauerhaft.</p>
+
+[% END %]
+
+<!-- END websites/berechtigte.tt -->

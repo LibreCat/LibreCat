@@ -1,0 +1,64 @@
+function ReduceAuthors (){
+  document.getElementById('showAut').innerHTML= '<br><a href="#" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>All</a>' ;
+}
+
+function ShowAuthors (){
+  var str = "" ;
+  [% FOREACH au IN author %]
+    [% IF loop.count > 12 %]
+    str +=  " ; [% IF au.id %]<a itemprop='author' href='/person/[% au.id %]'>[% au.full_name %]</a><sup class='muted'>UniBi</sup>[% ELSE %]<span itemprop='author'>[% au.full_name %]</span>[% END %]" ; 
+    [% END %]
+  [% END %]
+  str += "<br><a href='#' onclick='ReduceAuthors();'><span class='glyphicon glyphicon-minus fw'></span>Less</a>" ;
+  document.getElementById('showAut').innerHTML= str ;
+}
+
+function ReduceGenBankIDs (){
+  document.getElementById('showGen').innerHTML= '<br><a href="#" onclick="ShowGenBankIDs();"><span class="glyphicon glyphicon-plus fw"></span>All</a>' ;
+}
+
+function ShowGenBankIDs (){
+  var str = "" ;
+  [% FOREACH id_entry IN genbankID -%]
+    [% IF loop.count > 15 %]
+    str +=  '<a href="http://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]" class="img-thumbnail">[% id_entry %]</a> ' ;
+    [% END -%]
+  [% END %]
+  str += '<br><a href="#" onclick="ReduceGenBankIDs();"><span class="glyphicon glyphicon-minus fw"></span>Less</a>' ;
+  document.getElementById('showGen').innerHTML= str ;
+}
+
+function ReduceFiles (){
+  document.getElementById('showFiles').innerHTML= '<br><a href="#" onclick="ShowFiles();"><span class="glyphicon glyphicon-plus fw"></span>All</a>' ;
+}
+
+function ShowFiles (){
+  var str = "" ;
+  [% FOREACH fi IN mainFile.nsort('file_order') %]
+    [% IF loop.count > 3 %]
+    str +=  '<br>[% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.file_name %]</a><span class="text-muted"> [% h.get_file_size(_id, fi.file_name) %]</span>' ; 
+    [% END -%]
+  [% END %]
+  str += '<br><a href="#" onclick="ReduceFiles();"><span class="glyphicon glyphicon-minus fw"></span>Less</a>' ;
+  document.getElementById('showFiles').innerHTML= str ;
+}
+
+function ReduceAuthorFacet () {
+  $('#showAuthorFacet').hide();
+  $('#showAuthorFacetLink').show();
+}
+
+function ShowAuthorFacet (){
+  $('#showAuthorFacet').show();
+  $('#showAuthorFacetLink').hide();
+}
+
+function ReduceEditorFacet () {
+  $('#showEditorFacet').hide();
+  $('#showEditorFacetLink').show();
+}
+
+function ShowEditorFacet (){
+  $('#showEditorFacet').show();
+  $('#showEditorFacetLink').hide();
+}

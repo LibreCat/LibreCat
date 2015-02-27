@@ -1,7 +1,7 @@
 #!/usr/local/bin/perl
 
-use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/sbcat/lib/default /home/bup/perl5/lib/perl5);
-use lib qw(/srv/www/app-catalog/lib);
+#use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/sbcat/lib/default /home/bup/perl5/lib/perl5);
+#use lib qw(/srv/www/app-catalog/lib);
 use Catmandu::Sane;
 use Catmandu -all;
 use Getopt::Std;

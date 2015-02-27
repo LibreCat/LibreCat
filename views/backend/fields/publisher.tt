@@ -8,9 +8,9 @@
   <div class="col-md-10">
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group input-group-sm sticky{% IF fields.basic_fields.publisher.mandatory OR fields.supplementary_fields.publisher.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.basic_fields.publisher.mandatory OR fields.supplementary_fields.publisher.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.publisher.label %}{% fields.supplementary_fields.publisher.label %}</div>
-          <input type="text" name="publisher" id="id_publisher" value="[% publisher || "{% fields.basic_fields.publisher.defaultvalue ? fields.basic_fields.publisher.defaultvalue : "" %}" || "{% fields.supplementary_fields.publisher.defaultvalue ? fields.supplementary_fields.publisher.defaultvalue : "" %}" %]" placeholder="{% fields.basic_fields.publisher.placeholder %}{% fields.supplementary_fields.publisher.placeholder %}" class="sticky input-sm form-control{% IF fields.basic_fields.publisher.mandatory OR fields.supplementary_fields.publisher.mandatory %} required{% END %}"{% IF fields.basic_fields.publisher.readonly OR fields.supplementary_fields.publisher.readonly %} readonly="readonly"{% END %} />
+          <input type="text" name="publisher" id="id_publisher" value="[% publisher || "{% fields.basic_fields.publisher.defaultvalue ? fields.basic_fields.publisher.defaultvalue : "" %}" || "{% fields.supplementary_fields.publisher.defaultvalue ? fields.supplementary_fields.publisher.defaultvalue : "" %}" %]" placeholder="{% fields.basic_fields.publisher.placeholder %}{% fields.supplementary_fields.publisher.placeholder %}" class="sticky form-control{% IF fields.basic_fields.publisher.mandatory OR fields.supplementary_fields.publisher.mandatory %} required{% END %}"{% IF fields.basic_fields.publisher.readonly OR fields.supplementary_fields.publisher.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon"></div>
         </div>
       </div>

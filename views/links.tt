@@ -8,25 +8,25 @@
 [% IF backend %]
   [% IF entry.status == "public" %]
 	<a href="/[% bag %]/[% entry._id %]" title="Show complete bibliographic and access information" target="_blank">
-      <span class="glyphicon glyphicon-chevron-right"></span> Public View</a>
+      <span class="glyphicon glyphicon-chevron-right"></span>Public View</a>
   [% ELSE %]
     <a href="/myPUB/record/preview/[% entry._id %]" target="_blank">
-      <span class="glyphicon glyphicon-chevron-right"></span> Preview</a>
+      <span class="glyphicon glyphicon-chevron-right"></span>Preview</a>
   [% END %]
   | <a data-toggle="collapse" href="#[% tabmodus %]_[% entry._id %]">
-    <span class="glyphicon glyphicon-chevron-down"></span> Details</a>
+    <span class="glyphicon glyphicon-chevron-down"></span>Details</a>
   [% IF session.role == "super_admin" %]
   | <a href="/myPUB/admin/internal_view/[% entry._id %]" target="_blank">
-    <span class="glyphicon glyphicon-chevron-right"></span> Internal View</a>
+    <span class="glyphicon glyphicon-chevron-right"></span>Internal View</a>
   [% END %]
 [% END %]
   [% request = 0 %]
   [% IF entry.file || entry.related_material || entry.externalFiles == "1" %]
-  | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/myPUB/record/preview/[% entry._id %][% END %]" class="label label-success">Files available</a>
+  | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/myPUB/record/preview/[% entry._id %][% END %]" class="label label-primary">Files available</a>
   [% END %]
   
   [% IF request %]
-  | <a data-toggle="collapse" href="#[% tabmodus %]_rac_[% entry._id %]"><span class="glyphicon glyphicon-chevron-down"></span> Request a Copy</a>
+  | <a data-toggle="collapse" href="#[% tabmodus %]_rac_[% entry._id %]"><span class="glyphicon glyphicon-chevron-down"></span>Request a Copy</a>
   [% END %]
 
   [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="/download/[% entry._id  %]/[% supp.file.file_id %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
@@ -46,11 +46,11 @@
 <!--  
     [% IF bag == "data" %]
   	[% IF entry.externalFiles == "1" %]
-	  | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-success">Files available</a>
+	  | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">Files available</a>
 	[% ELSE %]
 	  [% FOREACH file IN entry.file %]
 	    [% IF file.open_access == 1 %]
-	      | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-success">Files available</a>
+	      | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">Files available</a>
 	      [% LAST %]
 	    [% END %]
 	  [% END %]

@@ -4,7 +4,7 @@
 
 <div class="col-md-9">
   <div class="row">
-      <h3>[% total %] [% lang ? "Projects" : "Projekte" %]</h3>
+      <h2>[% total %] [% lang ? "Projects" : "Projekte" %]</h2>
    </div>
 
 <div class="row">
@@ -38,10 +38,9 @@
 </div>
 
 <div class="row">
-  <div class="col-md-12" style="margin-right:20px;">
+  <div class="col-md-12">
   [% FOREACH project IN hits %]
     <a href="/project/[% project.projectId %]">[% project.name %][% IF project.acronym %] ([% project.acronym %])[% END %]</a><br />
-    <div style="margin-left:10px;">
       <p class="text-muted">
       [% IF project.startYear AND project.endYear %]
         [% project.startYear %] - [% project.endYear %]<br />
@@ -57,7 +56,6 @@
         [% project.callIdentifier %]
       [% END %]
       </p>
-    </div>
   [% END %]
   </div>
 </div>

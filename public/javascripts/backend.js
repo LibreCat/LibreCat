@@ -85,6 +85,7 @@ $(function () {
 		if(sure){
 			var newtype = $(this).data('val');
 			$('#id_type').val(newtype);
+			$('#id_select_type').remove();
 			$('#edit_form').attr('action','/myPUB/record/change_mode');
 			$('#edit_form').submit();
 		}
@@ -361,15 +362,15 @@ function edit_file(fileId, id){
 		$('#id_select_relation option[value="main_file"]').prop('selected', true);
 	}
 
-	if(json.access_level == "openAccess"){
+	if(json.access_level == "open_access"){
 		$('#id_accessLevel_openAccess').prop('checked',true);
 		$('#id_accessEmbargo').prop('disabled',true);
 	}
-	else if(json.access_level == "unibi"){
+	else if(json.access_level == "local"){
 		$('#id_accessLevel_unibi').prop('checked',true);
 		$('#id_accessEmbargo').prop('disabled',false);
 	}
-	else if(json.access_level == "admin"){
+	else if(json.access_level == "closed"){
 		if(json.request_a_copy == "1"){
 			$('#id_accessLevel_request').prop('checked',true);
 		}
@@ -509,6 +510,10 @@ function enable_autocomplete(field, index){
 	$( "#" + field + "_autocomplete_" + index ).autocomplete({
 		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=" + type,
 		minLength: 2,
+		messages: {
+	        noResults: '',
+	        results: function() {}
+	    },
 		select: function( event, ui ) {
 			$( "#" + field + "_autocomplete_" + index ).val( ui.item.label );
             $( "#" + field + "_nameautocomplete_" + index ).val( ui.item.label );
@@ -541,18 +546,18 @@ $(function(){
 		$(this).css("border","none");		
 		var addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon');
 
-		if($(this).parent('div.sticky').hasClass('mandatory')){
-			$(this).parent('div.sticky').css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
-			$(this).parent('div.sticky').css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
-			$(this).parent('div.sticky').css("border", "1px solid #953b39");
-			$(this).css("box-shadow", "inset 0 1px 1px -1px rgba(0, 0, 0, 0.075), 0 0 6px -6px #d59392");
-		}
-		else {
+//		if($(this).parent('div.sticky').hasClass('mandatory')){
+//			$(this).parent('div.sticky').css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
+//			$(this).parent('div.sticky').css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392");
+//			$(this).parent('div.sticky').css("border", "1px solid #953b39");
+//			$(this).css("box-shadow", "inset 0 1px 1px -1px rgba(0, 0, 0, 0.075), 0 0 6px -6px #d59392");
+//		}
+//		else {
 			$(this).parent('div.sticky').css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
 			$(this).parent('div.sticky').css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6)");
 			$(this).parent('div.sticky').css("border", "1px solid #66afe9");
 			$(this).css("box-shadow", "inset 0 1px 1px -1px rgba(0, 0, 0, 0.075), 0 0 8px -8px rgba(102, 175, 233, 0.6)");
-		}
+//		}
 		
 		if($(this).attr('id')){
 			var mymatch = $(this).attr('id').match(/dp_autocomplete_(\d{1,})/);
@@ -571,12 +576,12 @@ $(function(){
 	$('input.sticky, select.sticky, textarea.sticky').on("blur", function(){
 		var addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon');
 		addon.css("border","none");
-		if($(this).parent('div.sticky').hasClass('mandatory')){
-			$(this).parent('div.sticky').css("border", "1px solid #b94a48");
-		}
-		else{
+//		if($(this).parent('div.sticky').hasClass('mandatory')){
+//			$(this).parent('div.sticky').css("border", "1px solid #b94a48");
+//		}
+//		else{
 			$(this).parent('div.sticky').css("border", "1px solid #cccccc");
-		}
+//		}
 		$(this).parent('div.sticky').css("-webkit-box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
         $(this).parent('div.sticky').css("box-shadow","inset 0 1px 1px rgba(0, 0, 0, 0.075)");
         $(this).parent('div.sticky').css("-webkit-box-shadow", "none");
