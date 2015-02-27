@@ -4,13 +4,13 @@
 <div class="tab-pane" id="relResData">
   This publication cites the following data publications:<br />
   [% FOREACH resDat IN relResData %]
-    [% NEXT IF resDat.relatesTo.submissionStatus != "public" %]
-    [% resCit = h.getCitation(resDat.relatesTo.oId) %]
+    [% rec = h.getPublication(resDat.id) %]
+    [% NEXT IF rec.status != "public" %]
     <div class="row">
-      <div class="col-md-2 text-muted">[% resDat.relatesTo.oId %]</div>
+      <div class="col-md-2 text-muted">[% resDat.id %]</div>
       <div class="col-md-10">
-	<a href="/data/[% resDat.relatesTo.oId %]">[% resDat.relatesTo.mainTitle %]</a><br />
-	[% resCit.frontShort %]<br />
+	<a href="/data/[% resDat.id %]">[% rec.title %]</a><br />
+	[% rec.citation.frontShort %]<br />
       </div>
     </div>
   [% END %]

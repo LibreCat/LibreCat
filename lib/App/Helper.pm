@@ -54,6 +54,10 @@ sub authority_department {
 	state $bag = Catmandu->store('authority')->bag('department');
 }
 
+sub toolkit {
+	state $bag = Catmandu->store('toolkit')->bag;
+}
+
 sub string_array {
 	my ($self, $val) = @_;
 	return [ grep { is_string $_ } @$val ] if is_array_ref $val;
@@ -235,6 +239,10 @@ sub is_marked {
 	return Catmandu::Util::array_includes($marked, $id);
 }
 
+sub getPublication {
+	$_[0]->publication->get($_[1]);
+}
+
 sub getPerson {
 	my $user;
 	my $admin;
@@ -263,11 +271,23 @@ sub getDepartment {
 	}
 }
 
+sub getToolkit {
+	$_[0]->toolkit->get($_[1]);
+}
+
 sub get_list {
 	my $list = $_[1];
 	my $map;
 	$map = config->{lists}{$list};
 	$map;
+}
+
+sub get_relation {
+	my ($self, $list, $relation) = @_;
+	my $map;
+	$map = config->{lists}{$list};
+	my %hash_list = map { $_->{relation} => $_ } @$map;
+	$hash_list{$relation};
 }
 
 sub get_statistics {
