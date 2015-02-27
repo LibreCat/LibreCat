@@ -89,6 +89,7 @@ field_order:
     - genbank
     - popular_science
     - quality_controlled
+    - article_type
     - ubi_funded
     - message
   file_upload:
@@ -140,6 +141,7 @@ field_order:
     - genbank
     - popular_science
     - quality_controlled
+    - article_type
     - ubi_funded
     - message
   related_material:
@@ -266,6 +268,9 @@ publicationTypes:
         genbank: &genbank
           label: "Genbank ID"
           label_short: "Genbank"
+        article_type: &article_type
+          label: "Article Type"
+          label_short: "Article Type"
         message: &message
           label: "Admin Comments"
         popular_science: &popular_science
@@ -323,6 +328,7 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         language: *language
         ddc: *ddc
@@ -386,6 +392,7 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         abstract: *abstract
+        article_type: *article_type
         ddc: *ddc
         keyword: *keyword
         extern: *extern
@@ -460,6 +467,7 @@ publicationTypes:
         language: *language
         urn: *urn
         external_id: *external_id
+        article_type: *article_type
         nasc: *nasc
         genbank: *genbank
         extern: *extern
@@ -506,6 +514,7 @@ publicationTypes:
         keyword: *keyword
         ddc: *ddc
         abstract: *abstract
+        article_type: *article_type
         language: *language
         urn: *urn
         external_id: *external_id
@@ -562,6 +571,7 @@ publicationTypes:
         ddc: *ddc
         language: *language
         abstract: *abstract
+        article_type: *article_type
         urn: *urn
         external_id: *external_id
         nasc: *nasc
@@ -613,6 +623,7 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         abstract: *abstract
+        article_type: *article_type
         ddc: *ddc
         language: *language
         keyword: *keyword
@@ -652,6 +663,7 @@ publicationTypes:
         edition: *edition
         publication_status: *publication_status
         abstract: *abstract
+        article_type: *article_type
         ddc: *ddc
         keyword: *keyword
         alternative_title: *alternative_title
@@ -695,6 +707,7 @@ publicationTypes:
         tab_name: "Additional Information"
         extern: *extern
         abstract: *abstract
+        article_type: *article_type
         language: *language
         ddc: *ddc
         keyword: *keyword
@@ -734,6 +747,7 @@ publicationTypes:
         tab_name: "Additional Information"
         language: *language
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         volume: *volume
         issue: *issue
@@ -784,6 +798,7 @@ publicationTypes:
         nasc: *nasc
         genbank: *genbank
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         ddc: *ddc
         popular_science: *popular_science
@@ -844,6 +859,7 @@ publicationTypes:
         publication_identifier: *publication_identifier
         urn: *urn
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         ddc: *ddc
         external_id: *external_id
@@ -875,6 +891,7 @@ publicationTypes:
         publication_identifier: *publication_identifier
         urn: *urn
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         ddc: *ddc
         work_references: *message
@@ -913,6 +930,7 @@ publicationTypes:
         nasc: *nasc
         genbank: *genbank
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         ddc: *ddc
         urn: *urn
@@ -953,6 +971,7 @@ publicationTypes:
         language: *language
         extern: *extern
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         urn: *urn
         ddc: *ddc
@@ -1137,6 +1156,7 @@ publicationTypes:
         nasc: *nasc
         genbank: *genbank
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         ddc: *ddc
         message: *message
@@ -1202,6 +1222,7 @@ publicationTypes:
         nasc: *nasc
         genbank: *genbank
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         ddc: *ddc
         urn: *urn
@@ -1236,6 +1257,7 @@ publicationTypes:
         nasc: *nasc
         genbank: *genbank
         abstract: *abstract
+        article_type: *article_type
         urn: *urn
         language: *language
         keyword: *keyword
@@ -1317,6 +1339,7 @@ publicationTypes:
         genbank: *genbank
         volume: *volume
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         pacs_class: &pacs
           label: "PACS Code"

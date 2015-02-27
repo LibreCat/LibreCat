@@ -143,6 +143,7 @@ file:
 		title: "some title"
 		description: "some description"
 		relation: "main_file"|"supplementary_material"...
+		fileOrder: 000
 data_reuse_license: "pddl"
 open_data_release: 1|0
 other_data_license: "text"
@@ -203,6 +204,7 @@ abstract:
 extern: 0|1
 popular_science: 0|1
 quality_controlled: 0|1
+article_type: original|review|letter_note
 # problem in template
 page: 45-70
 edition: 2

@@ -141,6 +141,11 @@ publication_status:
   accepted: "Accepted"
   submitted: "Submitted"
 
+article_type:
+  original: "Original Article"
+  review: "Review"
+  letter_note: "Letter / Note"
+
 rd_relation:
   00:
     relation: "cites"
