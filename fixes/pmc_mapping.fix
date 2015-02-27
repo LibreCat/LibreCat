@@ -1,15 +1,19 @@
 # pmc mapping...
 
-
-move_field('pubType','type')
+#move_field('pubType','type')
 move_field('DOI','doi')
 move_field('pmid','external_id.pmid')
 move_field('journalTitle','publication')
 move_field('journalVolume','volume')
 move_field('journalIssn','issn.$append')
 move_field('pubYear','year')
-move_field('isOpenAccess','oa')
-move_field('authorString','author')
+if all_match('isOpenAcce','N')
+    set_field('oa','1')
+end
 
 join_field('pageInfo','-')
-split_author()
+move_field('pageInfo','page')
+
+# authors
+move_field('authorString','author')
+split_author('epmc')
