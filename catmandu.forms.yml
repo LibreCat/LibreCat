@@ -1330,3 +1330,11 @@ publicationTypes:
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material
+  bidissertation:
+    label: "Bielefeld Doctoral Thesis"
+  bimasterthesis:
+    label: "Bielefeld Master Thesis"
+  bipostdocthesis:
+    label: "Bielefeld Post-Doctoral Habilitation"
+  bibachelorthesis:
+    label: "Bielefeld Bachelor Thesis"
