@@ -1,18 +1,18 @@
 <!-- BEGIN websites/oa_lock.tt -->
 [% SWITCH fi.access_level %]
-[% CASE "openAccess" %]
+[% CASE "open_access" %]
 <img src="/images/access_open.png" class="description" data-html="true" data-placement="bottom" rel="tooltip" title="Open access file" alt="OA">
 <script>
   $('img.description').tooltip();
 </script>
 
-[% CASE "unibi" %]
+[% CASE "local" %]
 <img src="/images/access_restricted.png" class="description" data-html="true" data-placement="bottom" rel="tooltip" title="Accessible from UniBi campus (or via VPN)" alt="Campus/VPN">
 <script>
   $('img.description').tooltip();
 </script>
 
-[% CASE "admin" %]
+[% CASE "closed" %]
 <img src="/images/access_restricted.png" class="description" data-html="true" data-placement="bottom" rel="tooltip" title="Restricted access for author/reviewer only." alt="Restricted">
 <script>
   $('img.description').tooltip();
