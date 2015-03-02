@@ -73,15 +73,24 @@ sub index_citation_update {
 	$rec_prep->{'container-title'}  = $rec->{'publication'} if $rec->{'publication'}; #journal title
 	$rec_prep->{'collection-title'} = $rec->{'series_title'} if $rec->{'series_title'};
 	$rec_prep->{'publisher'}        = $rec->{'publisher'} if $rec->{'publisher'};
-	$rec_prep->{'issn'}             = $rec->{publication_identifier}->{issn} if $rec->{publication_identifier} and $rec->{publication_identifier}->{issn};
-	$rec_prep->{'ISBN'}             = $rec->{publication_identifier}->{isbn} if $rec->{publication_identifier} and $rec->{publication_identifier}->{isbn};
-	$rec_prep->{'volume'}           = $rec->{'volume'} if $rec->{'volume'};
+	$rec_prep->{'issn'}             = $rec->{publication_identifier}->{issn}->[0] if $rec->{publication_identifier} and $rec->{publication_identifier}->{issn};
+	$rec_prep->{'ISBN'}             = $rec->{publication_identifier}->{isbn}->[0] if $rec->{publication_identifier} and $rec->{publication_identifier}->{isbn};
+	$rec_prep->{'volume'}           = "$rec->{'volume'}" if $rec->{'volume'};
 	$rec_prep->{'issue'}            = $rec->{'issue'} if $rec->{'issue'};
-	$rec_prep->{'page-first'}       = $rec->{page}->{start} if $rec->{page} and $rec->{page}->{start};
-	$rec_prep->{'page'}             = $rec->{page}->{start} if $rec->{page} and $rec->{page}->{start};
-	$rec_prep->{'page'}            .= '–'.$rec->{page}->{end} if ($rec->{page} and $rec->{page}->{start} and $rec->{page}->{end});
+	if($rec->{'page'}){
+		if($rec->{'page'} =~ /(.*) - (.*)/ or $rec->{'page'} =~ /(.*)-(.*)/){
+			$rec_prep->{'page-first'} = $1;
+			$rec_prep->{'page'} = $1 ."-" .$2;
+		}
+		else {
+			$rec_prep->{'number-of-pages'} = $rec->{'page'};
+		}
+	}
+	#$rec_prep->{'page-first'}       = $rec->{page}->{start} if $rec->{page} and $rec->{page}->{start};
+	#$rec_prep->{'page'}             = $rec->{page}->{start} if $rec->{page} and $rec->{page}->{start};
+	#$rec_prep->{'page'}            .= '–'.$rec->{page}->{end} if ($rec->{page} and $rec->{page}->{start} and $rec->{page}->{end});
 	utf8::decode($rec_prep->{'page'}) if $rec_prep->{'page'};
-	$rec_prep->{'number-of-pages'}  = $rec->{page}->{count} if $rec->{page} and $rec->{page}->{count};
+	#$rec_prep->{'number-of-pages'}  = $rec->{page}->{count} if $rec->{page} and $rec->{page}->{count};
 
 	my $publ_year = ($rec->{'publication_status'} && ($rec->{'publication_status'} =~ /submitted|accepted|inpress|unpublished/)) ? $status_ref->{$rec->{'publication_status'}} : $rec->{'year'};
 	push (@{$rec_prep->{'issued'}->{'date-parts'}}, [$publ_year]);
@@ -159,6 +168,7 @@ sub index_citation_update {
 
 	my $json = new JSON;
 	my $json_citation = $json->encode($rec_array);
+	#return $json_citation;
 
 	use LWP::UserAgent;
 	my $ua = LWP::UserAgent->new;
@@ -224,8 +234,9 @@ sub index_citation_update {
 			push @$data, ("input" => $json_citation);
 
 			my $my_response = $ua->post($citeproc_url, Content => $data);
-			$debug = $my_response;
-			my $citation_ref = $json->decode($my_response->{_content});
+			#$debug = $my_response;
+			#return $my_response;
+			my $citation_ref = $my_response->{_rc} ne "500" ? $json->decode($my_response->{_content}) : [{citation => ""}];
 			#$debug = $citation_ref;
 
 			$citation->{'_id'} = $recId;
