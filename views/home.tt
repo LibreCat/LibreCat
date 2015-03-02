@@ -65,8 +65,6 @@
               <p class="text-center"><strong>OR</strong></p>
           </div>
           [% INCLUDE person_dropzone.tt %]
-        [% ELSE %]
-          [% INCLUDE rightBoxLogin.tt %]
         [% END %]
       </div>
 
