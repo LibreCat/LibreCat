@@ -13,7 +13,7 @@
 <div class="text-center margin-xs">
 
   <div class="row">
-    <h4 class="margin-top0">[% lang ? 'Open Acces at<br>Bielefeld University' : 'Open Access an der<br>Universität Bielefeld' %]</h4>
+    <h4 class="margin-top0">[% lang ? 'Open Access at<br>Bielefeld University' : 'Open Access an der<br>Universität Bielefeld' %]</h4>
     <a href="http://oa.uni-bielefeld.de" target="_blank"><img src="/images/logo_oa.png" width="50" alt=""></a>
   </div>
 
