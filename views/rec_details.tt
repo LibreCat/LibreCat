@@ -4,7 +4,7 @@
 <div id="[% tabmodus %]_[% entry.item('_id') %]" class="collapse margin-top1-4">
 [% IF entry.author %]
   <div class="col-md-12">
-    <div class="col-md-2">Authors</div>
+    <div class="col-md-2 text-muted">Authors</div>
     <div class="col-md-10">
     [% FOREACH auth IN entry.author %]
       [% IF auth.id %]
@@ -19,7 +19,7 @@
 
 [% IF entry.editor %]
   <div class="col-md-12">
-    <div class="col-md-2">Editors</div>
+    <div class="col-md-2 text-muted">Editors</div>
     <div class="col-md-10">
     [% FOREACH ed IN entry.editor %]
       [% IF ed.id %]
@@ -34,7 +34,7 @@
 
 [% IF entry.department %]
   <div class="col-md-12">
-    <div class="col-md-2">Departments</div>
+    <div class="col-md-2 text-muted">Departments</div>
     <div class="col-md-10">
     [% FOREACH dept IN entry.department %]
       [% department = h.getDepartment(dept.id) %]

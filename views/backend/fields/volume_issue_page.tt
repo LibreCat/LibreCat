@@ -24,7 +24,7 @@
       <div class="form-group col-md-4 col-xs-5">
         <div class="input-group sticky">
           <div class="input-group-addon">{% fields.basic_fields.volume_issue_page.label_page %}{% fields.supplementary_fields.volume_issue_page.label_page %}</div>
-          <input type="text" name="page.count" id="id_page" value="[% page.count %]" placeholder="{% fields.basic_fields.volume_issue_page.placeholder_page %}{% fields.supplementary_fields.volume_issue_page.placeholder_page %}" class="sticky form-control{% IF fields.basic_fields.volume_issue_page.mandatory OR fields.supplementary_fields.volume_issue_page.mandatory %} required{% END %}"{% IF fields.basic_fields.volume_issue_page.readonly OR fields.supplementary_fields.volume_issue_page.readonly %} readonly="readonly"{% END %}>
+          <input type="text" name="page" id="id_page" value="[% page %]" placeholder="{% fields.basic_fields.volume_issue_page.placeholder_page %}{% fields.supplementary_fields.volume_issue_page.placeholder_page %}" class="sticky form-control{% IF fields.basic_fields.volume_issue_page.mandatory OR fields.supplementary_fields.volume_issue_page.mandatory %} required{% END %}"{% IF fields.basic_fields.volume_issue_page.readonly OR fields.supplementary_fields.volume_issue_page.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

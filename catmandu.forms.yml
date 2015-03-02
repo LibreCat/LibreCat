@@ -63,7 +63,7 @@ field_order:
     - series_title
     - issue
     - page
-    - page_range
+#    - page_range
     - volume_issue_page
     - report_number
     - publication_identifier
@@ -89,6 +89,7 @@ field_order:
     - genbank
     - popular_science
     - quality_controlled
+    - article_type
     - ubi_funded
     - message
   file_upload:
@@ -126,7 +127,7 @@ field_order:
     - conference.end_date
     - conference.date
     - page
-    - page_range
+#    - page_range
     - publication_identifier
     - urn
     - ipc
@@ -140,6 +141,7 @@ field_order:
     - genbank
     - popular_science
     - quality_controlled
+    - article_type
     - ubi_funded
     - message
   related_material:
@@ -266,6 +268,9 @@ publicationTypes:
         genbank: &genbank
           label: "Genbank ID"
           label_short: "Genbank"
+        article_type: &article_type
+          label: "Article Type"
+          label_short: "Article Type"
         message: &message
           label: "Admin Comments"
         popular_science: &popular_science
@@ -323,6 +328,7 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         language: *language
         ddc: *ddc
@@ -367,8 +373,9 @@ publicationTypes:
         edition: *edition
         place: *place
         publisher: *publisher
-        page_range: &page_range
+        page: &pages
           label: "Pages"
+          placeholder: "e.g. 12-24"
         series_title: &publication_series
           label: "Series Title"
           label_short: "Series Title"
@@ -386,6 +393,7 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         abstract: *abstract
+        article_type: *article_type
         ddc: *ddc
         keyword: *keyword
         extern: *extern
@@ -460,6 +468,7 @@ publicationTypes:
         language: *language
         urn: *urn
         external_id: *external_id
+        article_type: *article_type
         nasc: *nasc
         genbank: *genbank
         extern: *extern
@@ -506,6 +515,7 @@ publicationTypes:
         keyword: *keyword
         ddc: *ddc
         abstract: *abstract
+        article_type: *article_type
         language: *language
         urn: *urn
         external_id: *external_id
@@ -562,6 +572,7 @@ publicationTypes:
         ddc: *ddc
         language: *language
         abstract: *abstract
+        article_type: *article_type
         urn: *urn
         external_id: *external_id
         nasc: *nasc
@@ -613,6 +624,7 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         abstract: *abstract
+        article_type: *article_type
         ddc: *ddc
         language: *language
         keyword: *keyword
@@ -652,10 +664,11 @@ publicationTypes:
         edition: *edition
         publication_status: *publication_status
         abstract: *abstract
+        article_type: *article_type
         ddc: *ddc
         keyword: *keyword
         alternative_title: *alternative_title
-        page_range: *page_range
+        page: *pages
         publication:
           label: "Book Title"
           mandatory: 1
@@ -695,6 +708,7 @@ publicationTypes:
         tab_name: "Additional Information"
         extern: *extern
         abstract: *abstract
+        article_type: *article_type
         language: *language
         ddc: *ddc
         keyword: *keyword
@@ -734,6 +748,7 @@ publicationTypes:
         tab_name: "Additional Information"
         language: *language
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         volume: *volume
         issue: *issue
@@ -767,7 +782,7 @@ publicationTypes:
           label: "Publication Date"
           placeholder: "YYYY-MM-DD"
           mandatory: 1
-        page_range: *page_range
+        page: *pages
         issue: *issue
         publication:
           label: "Newspaper Title"
@@ -784,6 +799,7 @@ publicationTypes:
         nasc: *nasc
         genbank: *genbank
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         ddc: *ddc
         popular_science: *popular_science
@@ -844,6 +860,7 @@ publicationTypes:
         publication_identifier: *publication_identifier
         urn: *urn
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         ddc: *ddc
         external_id: *external_id
@@ -875,6 +892,7 @@ publicationTypes:
         publication_identifier: *publication_identifier
         urn: *urn
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         ddc: *ddc
         work_references: *message
@@ -913,6 +931,7 @@ publicationTypes:
         nasc: *nasc
         genbank: *genbank
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         ddc: *ddc
         urn: *urn
@@ -953,6 +972,7 @@ publicationTypes:
         language: *language
         extern: *extern
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         urn: *urn
         ddc: *ddc
@@ -1137,6 +1157,7 @@ publicationTypes:
         nasc: *nasc
         genbank: *genbank
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         ddc: *ddc
         message: *message
@@ -1202,6 +1223,7 @@ publicationTypes:
         nasc: *nasc
         genbank: *genbank
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         ddc: *ddc
         urn: *urn
@@ -1236,6 +1258,7 @@ publicationTypes:
         nasc: *nasc
         genbank: *genbank
         abstract: *abstract
+        article_type: *article_type
         urn: *urn
         language: *language
         keyword: *keyword
@@ -1272,6 +1295,7 @@ publicationTypes:
           label: "Department"
           placeholder: "Department"
           mandatory: 1
+          multiple: 1
         supervisor: &supervisor
           first_name:
             placeholder: "First Name"
@@ -1317,6 +1341,7 @@ publicationTypes:
         genbank: *genbank
         volume: *volume
         abstract: *abstract
+        article_type: *article_type
         keyword: *keyword
         pacs_class: &pacs
           label: "PACS Code"
@@ -1330,3 +1355,11 @@ publicationTypes:
         message: *message
         ubi_funded: *ubi_funded
       related_material: *related_material
+  bidissertation:
+    label: "Bielefeld Doctoral Thesis"
+  bimasterthesis:
+    label: "Bielefeld Master Thesis"
+  bipostdocthesis:
+    label: "Bielefeld Post-Doctoral Habilitation"
+  bibachelorthesis:
+    label: "Bielefeld Bachelor Thesis"

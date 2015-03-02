@@ -4,7 +4,7 @@
   </div>
 </div>
   
-<div class="row" style="margin-left:15px;">
+<div class="row innerrow">
   <div class="dropzone alert alert-warning col-md-10" id="uploadFiles">
     <div class="fallback">
       <div class="col-md-8">&nbsp;</div>

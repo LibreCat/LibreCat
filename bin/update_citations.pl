@@ -25,13 +25,14 @@ my $backup = Catmandu->store('backup')->bag('publication');
 
 $bag->each(sub {
     my $rec = $_[0];
-    if ($missing && !$rec->{citation}) {
-        print "Adding citation for $rec->{_id}\n" if $verbose;
-        $rec->{citation} = Citation::index_citation_update($rec,0,'');
+    if ($missing && (!$rec->{citation} or !$rec->{citation}->{apa})) {
+    		print "Adding citation for $rec->{_id}\n" if $verbose;
+    		$rec->{citation} = Citation::index_citation_update($rec,0,'');
+    		#print Dumper $rec->{citation};
 
         my $result = $backup->add($rec);
-        $bag->add($result);
-        $bag->commit;
+        #$bag->add($result);
+        #$bag->commit;
     }
 });
 

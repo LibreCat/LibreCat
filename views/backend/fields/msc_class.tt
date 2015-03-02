@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    <label for="msc_class">
+    <label for="msc_class_0">
       {% fields.basic_fields.msc_class.label %}{% fields.supplementary_fields.msc_class.label %}
     </label>
     {% IF fields.basic_fields.msc_class.mandatory OR fields.supplementary_fields.msc_class.mandatory %}<span class="starMandatory"></span>{% END %}

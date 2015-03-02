@@ -2,6 +2,7 @@
 
 <!-- BEGIN frontdoor/record.tt -->
 
+
 <script type="text/javascript">
 [% INCLUDE frontdoor/javascriptShowHide.tt %]
 </script>
@@ -27,7 +28,15 @@
 
 [% FOREACH key IN related_material.keys %]
   [% IF key == "record" %]
-    [% relMat = related_material.$key %]
+    [% FOREACH rel_rec IN related_material.$key %]
+    [% IF rel_rec.relation == "is_cited_by" %]
+      [% relResData.push(rel_rec) %]
+    [% ELSIF rel_rec.relation == "cites" %]
+      [% relPubl.push(rel_rec) %]
+    [% ELSE %]
+      [% relMat.push(rel_rec) %]
+    [% END %]
+    [% END %]
   [% ELSIF key == "link" %]
     [% relLink = related_material.$key %]
   [% END %]
@@ -45,20 +54,6 @@
   [% END %]
 [% END %]
 
-[% FOREACH rel IN related_material %]
-  [% IF rel.materialRelationType.oId == "2632526" %]
-    [% NEXT IF (rel.relatesFrom AND rel.relatesFrom.submissionStatus != "public") %]
-    [% NEXT IF (rel.relatesTo AND rel.relatesTo.submissionStatus != "public") %]
-    [% IF bag == "data" %]
-      [% relPubl.push(rel) %]
-    [% ELSE %]
-      [% relResData.push(rel) %]
-    [% END %]
-  [% ELSE %]
-    [% relMat.push(rel) %]
-  [% END %]
-[% END %]
-
 [% qp = request.params.hash %]
 [% style = qp.style || 'frontShort' %]
 
@@ -73,8 +68,7 @@
     <div class="page-header" id="banner">
 
       <ol class="breadcrumb">
-	<li><a href="/">PUB</a></li>
-	<li><a href="/publication[% lang ? "?lang=en" : "" %]">[% lang ? "Publications" : "Publikationen" %]</a></li>
+	<li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back to previous page</a></li>
       </ol>
 
       <h1 itemprop="name">[% title %]</h1>
@@ -279,7 +273,8 @@
     </div>
 
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-8"><!-- tab-content -->
+
 	<div class="tab tab-content">
 
 	  [% INCLUDE frontdoor/tab_details.tt %]
@@ -309,43 +304,45 @@
 	</div><!-- tab-content -->
 
 	<!-- Citations -->
-	<div class="row">
-	  <div class="col-md-12">
+	<div id="citethis">
+	  <div class="row">
+	    <div class="col-md-12">
 
-	    <a name="cite"></a>
-	    <h3>Cite this</h3>
+	      <h3 id="cite">Cite this</h3>
 
-	    <ul class="nav nav-tabs">
-	      <li class="active"><a href="#ama" data-toggle="tab">AMA</a></li>
-	      <li><a href="#apa" data-toggle="tab">APA</a></li>
-	      <li><a href="#frontiers" data-toggle="tab">Frontiers</a></li>
-	      <li><a href="#harvard1" data-toggle="tab">Harvard</a></li>
-	      <li><a href="#ieee" data-toggle="tab">IEEE</a></li>
-	      <li><a href="#lncs" data-toggle="tab">LNCS</a></li>
-	      <li><a href="#mla" data-toggle="tab">MLA</a></li>
-		  <li><a href="#bibtex" data-toggle="tab">BibTeX</a></li>
-		  <li><a href="#ris" data-toggle="tab">RIS</a></li>
-	    </ul>
+	      <ul class="nav nav-tabs">
+		<li class="active"><a href="#ama" data-toggle="tab">AMA</a></li>
+		<li><a href="#apa" data-toggle="tab">APA</a></li>
+		<li><a href="#frontiers" data-toggle="tab">Frontiers</a></li>
+		<li><a href="#harvard1" data-toggle="tab">Harvard</a></li>
+		<li><a href="#ieee" data-toggle="tab">IEEE</a></li>
+		<li><a href="#lncs" data-toggle="tab">LNCS</a></li>
+		<li><a href="#mla" data-toggle="tab">MLA</a></li>
+		<li><a href="#bibtex" data-toggle="tab">BibTeX</a></li>
+		<li><a href="#ris" data-toggle="tab">RIS</a></li>
+	      </ul>
+	    </div>
 	  </div>
-	</div>
 
-	<div class="row">
-	  <div class="col-md-12">
-	    <div class="tab-content">
-	      <div id="ama" class="tab-pane active">[% citation.ama %]</div>
-	      <div id="apa" class="tab-pane">[% citation.apa %]</div>
-	      <div id="frontiers" class="tab-pane">[% citation.frontiers %]</div>
-	      <div id="harvard1" class="tab-pane">[% citation.harvard1 %]</div>
-	      <div id="ieee" class="tab-pane">[% citation.ieee %]</div>
-	      <div id="lncs" class="tab-pane">[% citation.lncs %]</div>
-	      <div id="mla" class="tab-pane">[% citation.mla %]</div>
-		  <div id="bibtex" class="tab-pane"><pre>[% h.export_in_frontdoor(request.path, _id, "bibtex") %]</pre></div>
-		  <div id="ris" class="tab-pane"><pre>[% h.export_in_frontdoor(request.path, _id, "ris") %]</pre></div>
-	    </div><!-- tab-content --><!-- End of Citations -->
-	  </div><!-- col-md-11 -->
-	</div>
+	  <div class="row">
+	    <div class="col-md-12">
+	      <div class="tab-content">
+		<div id="ama" class="tab-pane active">[% citation.ama %]</div>
+		<div id="apa" class="tab-pane">[% citation.apa %]</div>
+		<div id="frontiers" class="tab-pane">[% citation.frontiers %]</div>
+		<div id="harvard1" class="tab-pane">[% citation.harvard1 %]</div>
+		<div id="ieee" class="tab-pane">[% citation.ieee %]</div>
+		<div id="lncs" class="tab-pane">[% citation.lncs %]</div>
+		<div id="mla" class="tab-pane">[% citation.mla %]</div>
+		<div id="bibtex" class="tab-pane"><pre>[% h.export_in_frontdoor(request.path, _id, "bibtex") %]</pre></div>
+		<div id="ris" class="tab-pane"><pre>[% h.export_in_frontdoor(request.path, _id, "ris") %]</pre></div>
+	      </div>
+	    </div>
+	  </div>
 
-      </div><!-- col-md-7 -->
+	</div><!-- citethis -->
+
+      </div><!-- tab-content -->
 
       <div class="col-md-3 col-md-offset-1">
 

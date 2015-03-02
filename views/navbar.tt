@@ -33,28 +33,28 @@
      [% IF backend %]
 	<ul class="nav navbar-nav">
          [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
-	 <li><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-sm"> My Public Author Page</span></a></li>
-	 <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm"> MyPUB Home</span></a></li>
+	 <li><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-sm">My Public Author Page</span></a></li>
+	 <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">myPUB Home</span></a></li>
 	 [% IF session.role == 'super_admin' %]
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-inbox"></span> Admin <span class="glyphicon glyphicon-chevron-down"></span></a>
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-inbox"></span>Admin <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="/myPUB/admin/account"><span class="glyphicon glyphicon-user"></span> Manage Accounts</a></li>
-            <!-- <li><a href="/myPUB/admin/import"><span class="glyphicon glyphicon-import"></span> Import</a></li> -->
-            <li><a href="/myPUB/admin/project"><span class="glyphicon glyphicon-link"></span> Manage Projects</a></li>
-            <!-- <li><a href="/myPUB/admin/journal"><span class="glyphicon glyphicon-user"></span> Manage Journals</a></li> -->
+            <li><a href="/myPUB/admin/account"><span class="glyphicon glyphicon-user"></span>Manage Accounts</a></li>
+            <!-- <li><a href="/myPUB/admin/import"><span class="glyphicon glyphicon-import"></span>Import</a></li> -->
+            <li><a href="/myPUB/admin/project"><span class="glyphicon glyphicon-link"></span>Manage Projects</a></li>
+            <!-- <li><a href="/myPUB/admin/journal"><span class="glyphicon glyphicon-user"></span>Manage Journals</a></li> -->
           </ul>
          </li>
 	 [% END %]
        </ul>
        <ul class="nav navbar-nav navbar-right">
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><span class="hidden-sm"> My Settings </span><span class="glyphicon glyphicon-chevron-down"></span></a>
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><span class="hidden-sm">My Settings</span><span class="glyphicon glyphicon-chevron-down"></span></a>
             <div class="dropdown-menu" style="width:550px">
 	      [% INCLUDE person_affiliation.tt %]
             </div>
          </li>
-         <li><a href="#"><span class="glyphicon glyphicon-user"></span> <em>[% session.user %]</em></a></li>
+         <li><a href="#"><span class="glyphicon glyphicon-user"></span><em>[% session.user %]</em></a></li>
 	 [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
-	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% session.role %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
+	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% session.role %]</em><span class="glyphicon glyphicon-chevron-down"></span></a>
 	    <ul class="dropdown-menu" role="menu">
 	      <li><a href="/myPUB/change_role/user">User</a></li>
 	      [% IF thisPerson.delegate %]
@@ -72,7 +72,7 @@
 	    </ul>
 	  </li>
 	 [% END %]
-         <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm"> Logout</span></a></li>
+         <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">Logout</span></a></li>
        </ul>
       [% ELSE %]
       <div class="row">
@@ -95,7 +95,7 @@
       <div class="row">
 	<div class="col-md-9 col-sm-10">
 	  <ul class="nav navbar-nav uninav">
-	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Universität <span class="glyphicon glyphicon-chevron-down"></span></a>
+	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Universität<span class="glyphicon glyphicon-chevron-down"></span></a>
 	      <ul class="dropdown-menu" role="menu">
 		<li><a href="http://www.uni-bielefeld.de/Universitaet/Ueberblick/">Über uns / &Uuml;berblick</a></li>
 		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/einrichtungen.html">Einrichtungen</a></li>
@@ -109,7 +109,7 @@
 		<li><a href="http://www.uni-bielefeld.de/bau/">Bauprojekte</a></li>
 	      </ul>
 	    </li>
-	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Fakultäten <span class="glyphicon glyphicon-chevron-down"></span></a>
+	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Fakultäten<span class="glyphicon glyphicon-chevron-down"></span></a>
 	      <ul class="dropdown-menu" role="menu">
 		<li><a href="http://www.uni-bielefeld.de/biologie/">Fakultät für Biologie</a></li>
 		<li><a href="http://www.uni-bielefeld.de/chemie/index.html">Fakultät für Chemie</a></li>
@@ -126,7 +126,7 @@
 		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Wirtschaftswissenschaften/">Fakultät für Wirtschaftswissenschaften</a></li>
 	      </ul>
 	    </li>
-	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Informationen für &hellip; <span class="glyphicon glyphicon-chevron-down"></span></a>
+	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Informationen für &hellip;<span class="glyphicon glyphicon-chevron-down"></span></a>
 	      <ul class="dropdown-menu" role="menu">
 		<li><a href="http://www.uni-bielefeld.de/Benutzer/Studierende/">Studierende</a></li>
 		<li><a href="http://www.uni-bielefeld.de/Benutzer/Lehrende/">Lehrende</a></li>
@@ -174,6 +174,6 @@
 
   <main[% UNLESS backend %] class="front"[% END %]>
 
-  <div class="container">
+  <div class="container[% IF title %] title[%END %]">
 
 <!-- END navbar.tt -->

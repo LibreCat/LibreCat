@@ -1,0 +1,24 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="select_article_type">
+      {% fields.basic_fields.article_type.label %}{% fields.supplementary_fields.article_type.label %}
+    </label>
+    {% IF fields.basic_fields.article_type.mandatory OR fields.supplementary_fields.article_type.mandatory %}<span class="starMandatory"></span>{% END %}
+  </div>
+  <div class="col-md-10 col-xs-12">
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky{% IF fields.basic_fields.article_type.mandatory OR fields.supplementary_fields.article_type.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.article_type.label_short || fields.basic_fields.article_type.label %}{% fields.supplementary_fields.article_type.label_short || fields.supplementary_fields.article_type.label %}</div>
+          <select name="article_type" class="sticky form-control{% IF fields.basic_fields.article_type.mandatory OR fields.supplementary_fields.article_type.mandatory %} required{% END %}" id="select_article_type">
+            <option value=""[% IF !article_type %] selected="selected"[% END %]>--- Select Article Type ---</option>
+            [% FOREACH at IN h.get_list('article_type').keys %]
+              <option value="[% at %]">[% h.get_list('article_type').$at %]</option>
+            [% END %]
+          </select>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

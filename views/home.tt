@@ -16,13 +16,32 @@
   <div class="col-md-10 col-sm-12 col-md-offset-1"> <!-- main content (left) -->
 
     <div class="page-header" id="banner">
+    [% IF backend %]
       <h1>
-        [% IF backend AND session.role == 'super_admin' %]Administration (MyPUB)[%END %]
-        [% IF backend AND session.role == 'user' %]Author's Page (MyPUB)[%END %]
-        [% IF backend AND (session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer")) %]Reviewer's Page (MyPUB)[%END %]
-        [% IF backend AND session.role == "delegate" %]Delegate's Page (MyPUB)[%END %]
-        [% IF !backend %][% thisPerson.first_name %] [% thisPerson.last_name %][%END %]
-       </h1>
+        [% IF session.role == 'super_admin' %]Administration [% END %]
+        [% IF session.role == 'user' %]Author's Page [% END %]
+        [% IF (session.role == 'reviewer' OR session.role == 'super_admin') AND modus == "reviewer" %]Reviewer's Page [% END %]
+        [% IF session.role == "delegate" %]Delegate's Page[% END %]
+      (myPUB)
+      </h1>
+     [% ELSE %]
+      <h1>
+      [% thisPerson.first_name %] [% thisPerson.last_name %]
+      </h1>
+      <div class="pull-right margin-top-1">
+	<ul class="list-inline">
+	  [% IF session AND session.user %]
+	  <li class="hidden-xs"><small>[% lang ? 'Logged in as' : 'Eingeloggt als' %]: [% session.user %]</small></li>
+	  <li><a href="/logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm">Logout</span></a></li>
+	  [% ELSE %]
+	  <li><a href="/login"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a></li>
+	  [% END %]
+	  [% IF session AND session.user %]
+	  <li><a href="/myPUB"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm">myPUB</span></a></li>
+	  [% END %]
+	</ul>
+      </div>
+      [% END %]
     </div>
 
     <div class="row">
@@ -77,6 +96,7 @@
 	  <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. [% lang ? "by" : "von" %] [% h.getPerson(delegate_id).last_name %]</a></li>
 	  [% END %]
 	[% END %]
+	<li class="hidden-md hidden-lg hidden-sm"><a href="#export">Export Marked</a></li>
 	<li class="hidden-md hidden-lg hidden-sm"><a href="#facets">Search / Filter</a></li>
 	</ul>
       </div>

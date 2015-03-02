@@ -19,7 +19,7 @@
     <meta http-equiv="refresh" content="120; URL=[% h.host %]/publication/[% oId %]">
     [% END %]
 
-    [% IF title %]
+    [% IF title AND !backend %]
       <meta name="citation_title" content="[% mainTitle %]">
       [% FOREACH author_entry IN author %]<meta name="citation_author" content="[% author_entry.full_name %]">
       [% END %]

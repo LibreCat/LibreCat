@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-md-2 form-group hidden-xs hidden-sm">
-    <label for="abstract">
+    <label for="id_abstract_0">
       {% fields.basic_fields.abstract.label %}{% fields.supplementary_fields.abstract.label %}
     </label>
     {% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}<span class="starMandatory"></span>&nbsp;{% END %}

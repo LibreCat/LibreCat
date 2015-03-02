@@ -3,26 +3,27 @@
 
 <div class="tab-pane" id="fileDetails">
   <div class="row">
-    [% IF dataReuseLicense OR otherDataLicense %]
+    [% IF data_reuse_license OR other_data_license %]
     <strong>All files available under the following license(s):</strong><br />
     [% END %]
-    [% IF dataReuseLicense %]
+    [% IF data_reuse_license %]
       <div class="alert alert-green">Data Re-Use License
-      [% SWITCH dataReuseLicense %]
+      [% SWITCH data_reuse_license %]
 	  [% CASE 'PDDL' %]<a href="http://opendatacommons.org/licenses/pddl/" target="_blank">The Open Data Commons Public Domain Dedication and License (PDDL) v1.0</a>
 	  [% CASE 'ODC-By' %]<a href="http://opendatacommons.org/licenses/by/" target="_blank">The Open Data Commons Attribution License (ODC-By) v1.0</a>
 	  [% CASE 'ODbL' %]<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">The Open Database License (ODbL) v1.0</a>
       [% END %]
       </div>
     [% END %]
-    [% IF otherDataLicense %]
-      <div class="alert alert-green">[% otherDataLicense %]</div>
+    [% IF other_data_license %]
+      <div class="alert alert-green">[% other_data_license %]</div>
     [% END %]
     </div>
 
-  [% FOREACH fi IN mainFile.nsort('fileOrder') %]
+  [% FOREACH fi IN file.nsort('fileOrder') %]
+  [% NEXT IF fi.relation != "main_file" %]
   <div class="row">
-    <div class="col-md-2">File Name</div>
+    <div class="col-md-2 text-muted">File Name</div>
     <div class="col-md-10">
       <a href="/download/[% _id %]/[% fi.file_id %]">
         [% fi.file_name %]
@@ -31,7 +32,7 @@
   </div>
     [% IF fi.title %]
     <div class="row">
-      <div class="col-md-2">File Title</div>
+      <div class="col-md-2 text-muted">File Title</div>
       <div class="col-md-10">
         [% fi.title %]
       </div>
@@ -39,30 +40,30 @@
     [% END %]
     [% IF fi.description %]
     <div class="row">
-      <div class="col-md-2">Description</div>
+      <div class="col-md-2 text-muted">Description</div>
       <div class="col-md-10">
         [% fi.description %]
       </div>
     </div>
     [% END %]
     <div class="row">
-    <div class="col-md-2">Access Level</div>
+    <div class="col-md-2 text-muted">Access Level</div>
     <div class="col-md-10">
       [% SWITCH fi.access_level %]
-        [% CASE 'openAccess' %]
+        [% CASE 'open_access' %]
         [% INCLUDE websites/oa_lock.tt %] Open Access
 
         [% CASE 'local' %]
         [% INCLUDE websites/oa_lock.tt %] UniBi Only
 
-        [% CASE 'admin' %]
-        [% INCLUDE websites/oa_lock.tt %] Author/Reviewer/Admin Only
+        [% CASE 'closed' %]
+        [% INCLUDE websites/oa_lock.tt %] Closed Access
       [% END %]
     </div>
     </div>
     [% IF fi.date_updated %]
     <div class="row">
-      <div class="col-md-2">Last Uploaded</div>
+      <div class="col-md-2 text-muted">Last Uploaded</div>
       <div class="col-md-10">
         [% fi.date_updated %]
       </div>
@@ -70,7 +71,7 @@
     [% END %]
     [% IF fi.checksum %]
     <div class="row">
-      <div class="col-md-2">MD5 Checksum</div>
+      <div class="col-md-2 text-muted">MD5 Checksum</div>
       <div class="col-md-10">
         [% fi.checksum %]
       </div>

@@ -92,7 +92,7 @@ elsif($pub2_exists and !$pub1_exists) {
 	
 }
 else { # $pub1_exists and $pub2_exists
-	print "Both indexes exist. Find out which one is running and delete the other.\n Then restart!\n";
+	print "Both indexes exist. Find out which one is running (curl -s -XGET 'http://localhost:9200/[alias]/_status') and delete the other (curl -s -XDELETE 'http://localhost:9200/[unused_index]').\n Then restart!\n";
 	exit;
 }
 

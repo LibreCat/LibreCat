@@ -26,6 +26,7 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 	if ($p->{fmt} ne 'html') {
 		h->export_publication($hits, $p->{fmt});
 	} else {
+		$hits->{hits}->[0]->{bag} = $bag;
 		template "frontdoor/record", $hits->{hits}->[0];
 	}
 };

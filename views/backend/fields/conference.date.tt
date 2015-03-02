@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    <label for="id_conference_end_date">
+    <label for="id_conference_start_date">
       {% fields.basic_fields.item('conference.date').label || fields.supplementary_fields.item('conference.date').label %}
     </label>
     {% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %}<span class="starMandatory"></span>{% END %}

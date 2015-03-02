@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    <label for="id_bi_doctype">
+    <label for="id_select_bi_doctype">
       {% fields.basic_fields.bi_doctype.label %}
     </label>
   </div>
@@ -9,7 +9,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky mandatory">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.bi_doctype.label %}</div>
-          <select id="id_select_type" class="sticky form-control">
+          <select id="id_select_bi_doctype" class="sticky form-control">
             <option value="biDissertation"[% IF type == 'biDissertation' || !type %] selected="selected"[% END %]>biDissertation</option>
             <option value="biBachelorThesis"[% IF type == 'biBachelorThesis' %] selected="selected"[% END %]>biBachelorThesis</option>
             <option value="biMasterThesis"[% IF type == 'biMasterThesis' %] selected="selected"[% END %]>biMasterThesis</option>
