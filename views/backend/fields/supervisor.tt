@@ -1,10 +1,10 @@
 [% lowtype = type.lower.match('^bi') ? 'bithesis' : type.lower %]
 [% confpath = h.config.forms.publicationTypes.$lowtype %]
 [% USE JSON %]
-<span id="superv">
+<div id="superv">
   <div class="row authorspan innerrow">
     <div class="col-md-2 form-group hidden-xs hidden-sm">
-      <label>
+      <label id="supervisor_first_name_0">
         {% fields.basic_fields.supervisor.label %}{% fields.supplementary_fields.supervisor.label %}
       </label>
       {% IF fields.basic_fields.supervisor.mandatory OR fields.supplementary_fields.supervisor.mandatory %}<span class="starMandatory"></span>{% END %}
@@ -20,8 +20,8 @@
             <div class="input-group-addon hidden-xs hidden-sm">First Name</div>
             <div class="input-group-addon hidden-lg hidden-md">Superv.- First</div>
             <input type="text" id="supervisor_first_name_0" ng-model="supervisor.0.first_name" name="supervisor.0.first_name" placeholder="{% fields.basic_fields.supervisor.first_name.placeholder %}{% fields.supplementary_fields.supervisor.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);></span></div>
             <div class="input-group-addon"><span class="glyphicon glyphicon-plus hidden-lg hidden-md" onclick="add_field('supervisor');"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %}></span></div>
+            <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
           </div>
         </span>
         <span class="form-group col-md-6 col-xs-11">
@@ -29,8 +29,8 @@
             <div class="input-group-addon hidden-xs hidden-sm">Last Name</div>
             <div class="input-group-addon hidden-lg hidden-md">Superv.- Last</div>
             <input type="text" id="supervisor_last_name_0" ng-model="supervisor.0.last_name" name="supervisor.0.last_name" placeholder="{% fields.basic_fields.supervisor.last_name.placeholder %}{% fields.supplementary_fields.supervisor.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-plus" onclick="add_field('supervisor');"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
             <div class="input-group-addon"><span id="supervisor_link_pevz_0" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.supervisor.pevz_tooltip %}" /></span></div>
             <div class="input-group-addon"><span id="supervisor_revert_0" data-type="supervisor_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
           </div>
@@ -53,8 +53,8 @@
             <div class="input-group-addon hidden-xs hidden-sm">First Name</div>
             <div class="input-group-addon hidden-lg hidden-md">Superv.- First</div>
             <input type="text" id="supervisor_first_name_[% loop.index %]" ng-model="supervisor.[% loop.index %].first_name" ng-init="supervisor.[% loop.index %].first_name='[% name.first_name %]'" placeholder="{% fields.basic_fields.supervisor.first_name.placeholder %}{% fields.supplementary_fields.supervisor.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
             <div class="input-group-addon"><span class="glyphicon glyphicon-plus hidden-lg hidden-md" onclick="add_field('supervisor');"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
           </div>
         </span>
         <span class="form-group col-md-6 col-xs-11">
@@ -62,8 +62,8 @@
             <div class="input-group-addon hidden-xs hidden-sm">Last Name</div>
             <div class="input-group-addon hidden-lg hidden-md">Superv.- Last</div>
             <input type="text" id="supervisor_last_name_[% loop.index %]" ng-model="supervisor.[% loop.index %].last_name" ng-init="supervisor.[% loop.index %].last_name='[% name.last_name %]'" placeholder="{% fields.basic_fields.supervisor.last_name.placeholder %}{% fields.supplementary_fields.supervisor.last_name.placeholder %}" class="sticky form-control[% loop.first ? "{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" : '' %]" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus author"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"><span ng-click="cloneSupervisor($event)" class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus author"></span></div>
             <div class="input-group-addon"><span id="supervisor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" height="20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.supervisor.pevz_tooltip %}" /></span></div>
             <div class="input-group-addon"><span id="supervisor_revert_[% loop.index %]" data-type="supervisor_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
           </div>
@@ -92,4 +92,4 @@
       </div>
     </div>
   </div>
-</span>
+</div>

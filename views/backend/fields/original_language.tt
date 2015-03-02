@@ -2,7 +2,7 @@
 [% language_list = h.get_list('language') %]
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    <label for="original_language">
+    <label for="select_original_language_0">
       {% fields.basic_fields.original_language.label %}{% fields.supplementary_fields.original_language.label %}
     </label>
     {% IF fields.basic_fields.original_language.mandatory OR fields.supplementary_fields.original_language.mandatory %}<span class="starMandatory"></span>{% END %}
@@ -23,8 +23,8 @@
             <option value="[% lang %]"[% IF lang == original_language.name %] selected="selected"[% END %]>[% lang %]</option>
             [% END %]
           </select>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('original_language');"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
         </div>
       </div>
     </div>
@@ -43,8 +43,8 @@
               <option value="[% lang %]"[% IF lang == lan.name %] selected="selected"[% END %]>[% lang %]</option>
               [% END %]
             </select>
-            <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
             <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('original_language');"></span></div>
+            <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
           </div>
         </div>
       </div>

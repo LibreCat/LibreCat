@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    <label for="department">
+    <label for="dp_autocomplete_0">
       {% fields.basic_fields.department.label %}{% fields.supplementary_fields.department.label %}
     </label>
     {% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %}<span class="starMandatory"></span>{% END %}
@@ -17,8 +17,8 @@
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.department.label %}{% fields.supplementary_fields.department.label %}</div>
           <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}" id="dp_autocomplete_0" value=""{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="department_select_0"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} disabled {% END %}>Select</span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('department'{% IF fields.basic_fields.department.placeholder || fields.supplementary_fields.department.placeholder %},'{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}'{% END %});"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
         </div>
       </div>
     </div>
@@ -33,8 +33,8 @@
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.department.label_short || fields.basic_fields.department.label %}{% fields.supplementary_fields.department.label_short || fields.supplementary_fields.department.label %}</div>
           <input type="text" onfocus="enable_autocomplete('dp',[% loop.index %]);" class="sticky form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} disabled="disabled" />
           <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="department_select_[% loop.index %]">Select</span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('department'{% IF fields.basic_fields.department.placeholder || fields.supplementary_fields.department.placeholder %},'{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}'{% END %});"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
         </div>
       </div>
     </div>
@@ -42,13 +42,13 @@
     [% END %]
     {% ELSE %}
     <div class="row innerrow">
-      <input type="hidden" name="department.0.id" id="dp_idautocomplete_0" value="" />
-      <input type="hidden" name="department.0.name" id="dp_nameautocomplete_0" value="" />
+      <input type="hidden" name="department.0.id" id="dp_idautocomplete_0" value="[% department.0.id %]" />
+      <input type="hidden" name="department.0.name" id="dp_nameautocomplete_0" value="[% department.0.name %]" />
     
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.department.label %}{% fields.supplementary_fields.department.label %}</div>
-          <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}" id="dp_autocomplete_0" value=""{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
+          <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.department.placeholder %}{% fields.supplementary_fields.department.placeholder %}" id="dp_autocomplete_0" value="[% department.0.name %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="department_select_0">Select</span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
         </div>

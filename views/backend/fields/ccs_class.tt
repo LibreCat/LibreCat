@@ -1,11 +1,11 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    <label for="ccs_class">
+    <label for="ccs_class_0">
       {% fields.basic_fields.ccs_class.label %}{% fields.supplementary_fields.ccs_class.label %}
     </label>
     {% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
-  <div class="col-md-10" id="ccs_class">
+  <div class="col-md-10">
     {% IF fields.basic_fields.ccs_class.multiple OR fields.supplementary_fields.ccs_class.multiple %}
     [% IF !ccs_class %]
     <div class="row innerrow">

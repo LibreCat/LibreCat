@@ -5,7 +5,7 @@
     </label>
     {% IF fields.basic_fields.pacs_class.mandatory OR fields.supplementary_fields.pacs_class.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
-  <div class="col-md-10" id="pacs_class">
+  <div class="col-md-10" id="pacs_class_0">
     {% IF fields.basic_fields.pacs_class.multiple OR fields.supplementary_fields.pacs_class.multiple %}
     [% IF !pacs_class %]
     <div class="row innerrow">

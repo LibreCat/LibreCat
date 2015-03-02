@@ -1,7 +1,7 @@
 [% publ_status = h.get_list('publication_status') %]
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    <label for="publication_status">
+    <label for="select_publication_status">
       {% fields.basic_fields.publication_status.label %}{% fields.supplementary_fields.publication_status.label %}
     </label>
     {% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %}<span class="starMandatory"></span>{% END %}

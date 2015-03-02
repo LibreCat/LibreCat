@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    <label for="ddc">
+    <label for="select_ddc_0">
       {% fields.basic_fields.ddc.label %}{% fields.supplementary_fields.ddc.label %}
     </label>
     {% IF fields.basic_fields.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}<span class="starMandatory"></span>{% END %}
