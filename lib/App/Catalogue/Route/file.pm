@@ -91,7 +91,7 @@ prefix '/requestcopy' => sub {
 			my $file_creator_email = h->getAccount($file->{creator})->[0]->{email};
 
 			if(params->{user_email}){
-				my $pub = edit_publication(params->{id});
+				my $pub = h->publication->get(params->{id});
 				my $mail_body = export_to_string({
 					title => $pub->{title},
 					user_name => params->{user_name},
