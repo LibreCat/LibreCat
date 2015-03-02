@@ -93,8 +93,10 @@
 	  <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. [% lang ? "by" : "von" %] [% h.getPerson(delegate_id).last_name %]</a></li>
 	  [% END %]
 	[% END %]
-	<li class="hidden-md hidden-lg hidden-sm"><a href="#export">Export Marked</a></li>
+	[% UNLESS backend %]
 	<li class="hidden-md hidden-lg hidden-sm"><a href="#facets">Search / Filter</a></li>
+	<li class="hidden-md hidden-lg hidden-sm"><a href="#export">Export Marked</a></li>
+	[% END %]
 	</ul>
       </div>
     </div>
