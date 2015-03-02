@@ -241,24 +241,17 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 [% END %]
 
 [% FOREACH ln IN link %]
-<relatedItem type="host">
-  <location>
-    <url>[% ln | xml_strict %]</url>
-  </location>
-</relatedItem>
-[% END %]
+<relatedItem type="host"><location><url>[% ln | xml_strict %]</url></location></relatedItem>[% END %]
 
 <relatedItem type="host">
-[% IF publication %]
-  <titleInfo>
-    <title>[% publication | xml_strict %]</title>
-  </titleInfo>
-[% END %]
+[% IF publication %]<titleInfo><title>[% publication | xml_strict %]</title></titleInfo>[% END %]
 
 [% FOREACH i IN publication_identifier.issn %]
   <identifier type="issn">[% i | xml_strict %]</identifier>
 [% END %]
-
+[% FOREACH i IN publication_identifier.eIssn %]
+  <identifier type="eIssn">[% i | xml_strict %]</identifier>
+[% END %]
 [% FOREACH j IN publication_identifier.isbn %]
   <identifier type="isbn">[% j | xml_strict %]</identifier>
 [% END %]
@@ -282,43 +275,14 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 [% IF publication_identifier.urn %]
   <identifier type="urn">[% publication_identifier.urn | xml_strict %]</identifier>
 [% END %]
-
-[% IF doi %]
-  <location>
-    <url>http://doi.org/[% doi | xml_strict %]</url>
-  </location>
-[% END %]
-
-  <part>
+[% IF doi %]<location><url>http://doi.org/[% doi | xml_strict %]</url></location>[% END %]
+<part>
 [% IF volume %]
-    <detail type="volume">
-      <number>[% volume | xml_strict %]</number>
-    </detail>
-[% END %]
-[% IF issue %]
-    <detail type="issue">
-      <number>[% issue | xml_strict %]</number>
-    </detail>
-[% END %]
-[% IF reportNumber %]
-    <detail type="reportNumber">
-      <number>[% reportNumber | xml_strict %]</number>
-    </detail>
-[% END %]
-[% IF pagesCount and !pagesStart and !pagesEnd %]
-    <extent unit="pages">[% pagesCount | xml_strict %]</extent>
-[% ELSIF pagesStart %]
-    <extent unit="pages">
-      <start>[% pagesStart | xml_strict %]</start>
-  [% IF pagesEnd %]
-      <end>[% pagesEnd | xml_strict %]</end>
-  [% END %]
-  [% IF pagesCount %]
-      <total>[% pagesCount | xml_strict %]</total>
-  [% END %]
-    </extent>
-[% END %]
-  </part>
+<detail type="volume"><number>[% volume | xml_strict %]</number></detail>[% END %]
+[% IF issue %]<detail type="issue"><number>[% issue | xml_strict %]</number></detail>[% END %]
+[% IF report_number %]<detail type="reportNumber"><number>[% report_number | xml_strict %]</number></detail>[% END %]
+[% IF page %]<extent unit="pages">[% page | xml_strict %]</extent>[% END %]
+</part>
 </relatedItem>
 
 [% FOREACH rm IN relatedMaterial %]
@@ -383,7 +347,6 @@ We acknowledge support for the Article Processing Charge by the Deutsche Forschu
 [% IF additionalInformation %]
 <note type="additionalInfo">[% additionalInformation | xml_strict %]</note>
 [% END %]
-
 
 <recordInfo>
   <recordIdentifier>[% _id %]</recordIdentifier>
