@@ -63,7 +63,7 @@ field_order:
     - series_title
     - issue
     - page
-    - page_range
+#    - page_range
     - volume_issue_page
     - report_number
     - publication_identifier
@@ -127,7 +127,7 @@ field_order:
     - conference.end_date
     - conference.date
     - page
-    - page_range
+#    - page_range
     - publication_identifier
     - urn
     - ipc
@@ -373,8 +373,9 @@ publicationTypes:
         edition: *edition
         place: *place
         publisher: *publisher
-        page_range: &page_range
+        page: &pages
           label: "Pages"
+          placeholder: "e.g. 12-24"
         series_title: &publication_series
           label: "Series Title"
           label_short: "Series Title"
@@ -667,7 +668,7 @@ publicationTypes:
         ddc: *ddc
         keyword: *keyword
         alternative_title: *alternative_title
-        page_range: *page_range
+        page: *pages
         publication:
           label: "Book Title"
           mandatory: 1
@@ -781,7 +782,7 @@ publicationTypes:
           label: "Publication Date"
           placeholder: "YYYY-MM-DD"
           mandatory: 1
-        page_range: *page_range
+        page: *pages
         issue: *issue
         publication:
           label: "Newspaper Title"
@@ -1294,6 +1295,7 @@ publicationTypes:
           label: "Department"
           placeholder: "Department"
           mandatory: 1
+          multiple: 1
         supervisor: &supervisor
           first_name:
             placeholder: "First Name"
