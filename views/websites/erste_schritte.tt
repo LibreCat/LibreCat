@@ -1,21 +1,34 @@
 <!-- BEGIN websites/erste_schritte.tt -->
 
-[% IF lang %]
+<div class="row">
 
-<h3>PUB in a Nutshell</h3>
-<p><a href="/pub_handreichung.pdf"><span class="glyphicon glyphicon-chevron-right fw"></span>Download Short Guide (author's view)</a> (PDF, in German)</p>
-<p><a href="/pub_handreichung_reviewer.pdf"><span class="glyphicon glyphicon-chevron-right fw"></span>Download Short Guide (reviewer's view)</a> (PDF, in German)</p>
+  <div class="col-sm-8">
 
-<p><span class="glyphicon glyphicon-chevron-right fw"></span>Please also refer to the "FAQ" section on this page.</p>
+    [% IF lang %]
 
-[% ELSE %]
+    <h2>PUB in a Nutshell</h2>
+    <p><a href="/pub_handreichung.pdf"><span class="glyphicon glyphicon-chevron-right fw"></span>Download Short Guide (author's view)</a> (PDF, in German)</p>
+    <p><a href="/pub_handreichung_reviewer.pdf"><span class="glyphicon glyphicon-chevron-right fw"></span>Download Short Guide (reviewer's view)</a> (PDF, in German)</p>
 
-<h3>Erste Schritte zur pers&ouml;nlichen Publikationsliste</h3>
-<p><a href="/pub_handreichung.pdf"><span class="glyphicon glyphicon-chevron-right fw"></span>Handreichung f&uuml;r Autoren herunterladen</a><br />(PDF, Stand: 15.01.2012)</p>
-<p><a href="/pub_handreichung_reviewer.pdf"><span class="glyphicon glyphicon-chevron-right fw"></span>Handreichung f&uuml;r Reviewer herunterladen</a><br />(PDF, Stand: 15.01.2012)</p>
+    <p><span class="glyphicon glyphicon-chevron-right fw"></span>Please also refer to the "FAQ" section on this page.</p>
 
-<p><span class="glyphicon glyphicon-chevron-right fw"></span>Lesen Sie auch die Fragen und Antworten im Bereich "FAQ" auf dieser Seite.</p>
+    [% ELSE %]
 
-[% END %]
+    <h2>Erste Schritte zur pers&ouml;nlichen Publikationsliste</h2>
+    <p><a href="/pub_handreichung.pdf"><span class="glyphicon glyphicon-chevron-right fw"></span>Handreichung f&uuml;r Autoren herunterladen</a><br />(PDF, Stand: 15.01.2012)</p>
+    <p><a href="/pub_handreichung_reviewer.pdf"><span class="glyphicon glyphicon-chevron-right fw"></span>Handreichung f&uuml;r Reviewer herunterladen</a><br />(PDF, Stand: 15.01.2012)</p>
+
+    <p><span class="glyphicon glyphicon-chevron-right fw"></span>Lesen Sie auch die Fragen und Antworten im Bereich "FAQ" auf dieser Seite.</p>
+
+    [% END %]
+
+  </div>
+  
+  <div class="col-md-3 col-sm-4 col-md-offset-1">
+    [% INCLUDE websites/logo_contact.tt %]
+  </div>
+
+</div>
+
 
 <!-- BEGIN END/erste_schritte.tt -->

@@ -6,7 +6,7 @@
 
   [% IF lang %]
 
-  <h3>Frequently Asked Questions</h3>
+  <h2>Frequently Asked Questions</h2>
 
   <div class="panel-group" id="accordion_faq">
 
@@ -411,7 +411,7 @@
 
   [% ELSE %]
 
-  <h3>Frequently Asked Questions</h3>
+  <h2>Frequently Asked Questions</h2>
 
   <div class="panel-group" id="accordion_faq">
 

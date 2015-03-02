@@ -6,7 +6,7 @@
 
   [% IF lang %]
 
-  <h3>Contact</h3>
+  <h2>Contact</h2>
   <p>We are happy to answer your questions personally and look forward to your suggestions.</p>
 
   <p>
@@ -27,7 +27,7 @@
 
   [% ELSE %]
 
-  <h3>Kontakt</h3>
+  <h2>Kontakt</h2>
   <p>Gern beantworten wir Ihre Fragen pers&ouml;nlich und freuen uns auf Ihre Anregungen.</p>
 
   <p>
