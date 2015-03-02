@@ -4,21 +4,23 @@
 [%- USE JSON -%]
 [%- USE date(format => '%Y') -%]
 
-<div class="hidden-sm hidden-md hidden-lg"><hr></div>
+<div id="export" class="hidden-sm hidden-md hidden-lg"><hr></div>
+
+[% IF request.path.match("person") %]
+<h2>Export</h2>
+<div class="row margin-bottom1">
+  <div class="col-md-12">
+    <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow">Your Marked Publications <span class="badge total-marked">[% marked %]</span></a>
+    <div class="unmark_all">[% IF marked %]<a class="unmark-all" href="#" rel="nofollow"><span class="glyphicon glyphicon-remove"></span>Unmark all</a>[% END %]</div>
+  </div>
+</div>
+[% END %]
 
 <div id="facets" class="row hidden-md hidden-lg hidden-sm"><!-- smartphones only -->
   <div class="col-xs-12">
     <h2 class="margin-xs">Search / Filter</h2>
   </div>
 </div>
-
-[% UNLESS request.path.match("/person") %]
-[% IF !backend AND session AND session.user %]
-<div class="text-right margin-top-1 hidden-xs">
-  <small>[% lang ? 'Logged in as' : 'Eingeloggt als' %]: [% session.user %]</small>
-</div>
-[% END %]
-[% END %]
 
 [% UNLESS request.path == "/marked" %]
 <h3 class="margin-top0">Search</h3>
