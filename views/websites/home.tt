@@ -50,7 +50,7 @@
     <div class="row margin-top2">
       <div class="col-md-12">
 	<p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.publications %]</span> <a href="/publication[% lang ? "?lang=en" : "" %]">[% lang ? "Publications" : "Publikationen" %]</a></p>
-	<p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.pubpeople %]</span> <a href="/authorlist[% lang ? "?lang=en" : "" %]">[% lang ? "Individual Author Pages" : "Pers&ouml;nliche Publikationslisten" %]</a></p>
+	<p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.pubpeople %]</span> <a href="/authorlist[% lang ? "?lang=en" : "" %]">[% lang ? "Individual Author Pages" : "Pers<span class='xxs-only'>.</span><span class='hidden-xxs'>önliche</span> Publikationslisten" %]</a></p>
 	<p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researchdata %]</span> <a href="/data[% lang ? "?lang=en" : "" %]">[% lang ? "Data Publications" : "Datenpublikationen" %]</a></p>
 	<p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.oahits %]</span> <a href="/publication?q=fulltext=1[% lang ? "&lang=en" : "" %]">[% lang ? "Open Access Publications" : "Open Access Publikationen" %]</a></p>
 	<p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.theseshits %]</span> <a href="/publication?q=type=bi*[% lang ? "&lang=en" : "" %]">[% lang ? "Theses" : "Hochschulschriften" %]</a></p>

@@ -4,12 +4,6 @@
 
 <div class="hidden-sm hidden-md hidden-lg"><hr></div>
 
-[% IF session AND session.user %]
-<div class="text-right margin-top-1 margin-bottom1 hidden-xs">
-  <small>Eingeloggt als: [% session.user %]</small>
-</div>
-[% END %]
-
 <div class="text-center margin-xs">
 
   <div class="row">

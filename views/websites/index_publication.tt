@@ -51,8 +51,8 @@
             </ul>
           </li>
           <li><a href="/policy" data-toggle="tab" style="display:none;">Policy</a></li>
-          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm">Logout</span></a>[% ELSE %]<a href="/login"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a>[% END %]</li>
-          [% IF session AND session.user %]<li class="navbar-right"><a href="/myPUB"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm">myPUB</span></a></li>[% END %]
+          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">Logout</span></a>[% ELSE %]<a href="/login" title="Login (myPUB)"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a>[% END %]</li>
+          [% IF session AND session.user %]<li class="navbar-right"><a href="/myPUB" title="[% lang ? "Logged in as:" : "Angemeldet als:" %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">(myPUB)</span></span></a></li>[% END %]
         </ul>
       </div>
     </div>

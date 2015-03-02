@@ -13,17 +13,17 @@
 	<span class="icon-bar"></span>
       </button>
       [% IF backend %]
-	<a class="navbar-brand" href="/"><img src="/images/PUB_UNIBI_logo_gruen.gif" height="30" alt="" /></a>
+	<a class="navbar-brand" href="/"><img src="/images/publogo.gif" height="30" alt="" /></a>
       [% ELSE %]
 	<div class="hidden-sm hidden-lg hidden-md">
 	  <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" height="43" alt="" /></a>
-	  <span class="navbar-title"><a href="/">
+	  <span class="navbar-title"><a href="/"><span class="xxs-only"><img src="/images/publogo.gif" height="30" alt="PUB Bielefeld" /></span><span class="hidden-xxs">PUB &ndash;
 	  [% IF lang %]
-	    PUB – Publications at Bielefeld University
+	    Publications at Bielefeld University
 	  [% ELSE %]
-	    PUB – Publikationen an der Uni Bielefeld
+	    Publikationen an der Uni Bielefeld
 	  [% END %]
-	  </a></span>
+	  </a></span></span>
 	</div>
       [% END %]
      </div>
@@ -34,7 +34,7 @@
 	<ul class="nav navbar-nav">
          [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
 	 <li><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-sm">My Public Author Page</span></a></li>
-	 <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">myPUB Home</span></a></li>
+	 <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">my Home</span></a></li>
 	 [% IF session.role == 'super_admin' %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-inbox"></span>Admin <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -47,14 +47,14 @@
 	 [% END %]
        </ul>
        <ul class="nav navbar-nav navbar-right">
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><span class="hidden-sm">My Settings</span><span class="glyphicon glyphicon-chevron-down"></span></a>
+         <li><a href="#" class="nolink"><span class="glyphicon glyphicon-user"></span> <em>[% session.user %]</em></a></li>
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><span class="hidden-sm">My Settings</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
             <div class="dropdown-menu" style="width:550px">
 	      [% INCLUDE person_affiliation.tt %]
             </div>
          </li>
-         <li><a href="#"><span class="glyphicon glyphicon-user"></span><em>[% session.user %]</em></a></li>
 	 [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
-	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% session.role %]</em><span class="glyphicon glyphicon-chevron-down"></span></a>
+	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span><em>[% session.role %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
 	    <ul class="dropdown-menu" role="menu">
 	      <li><a href="/myPUB/change_role/user">User</a></li>
 	      [% IF thisPerson.delegate %]
@@ -88,7 +88,7 @@
 	  </div>
 	</div>
 	<div class="col-md-1 col-sm-1 col-md-offset-1">
-          <span class="select-language"><a href="[% h.host %]/[% UNLESS bag == 'home' %][% bag %][% END %][% lang ? "" : "?lang=en" %]"><small>[% lang ? "Deutsch" : "English" %]</small></a></span>
+          <span class="select-language"><a href="[% h.host %]/[% UNLESS bag == 'home' %][% bag %][% END %][% lang ? "" : "?lang=en" %]">[% lang ? "Deutsch" : "English" %]</a></span>
 	</div>
       </div>
 
@@ -142,12 +142,6 @@
 	      </ul>
 	    </li>
 	  </ul>
-
-	[% IF !backend AND session AND session.user %]
-	<div class="hidden-sm hidden-lg hidden-md">
-	  <small>[% lang ? 'Logged in as' : 'Eingeloggt als' %]: [% session.user %]</small>
-	</div>
-	[% END %]
 
       </div>
       </div>
