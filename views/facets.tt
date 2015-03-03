@@ -58,7 +58,7 @@
   [% IF backend %]
     <ul class="nav nav-tabs nav-stacked margin-bottom1 ul0">
       <li>
-	<button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down"></span>Visibility Status ([% facets.status.terms.size %])</button>
+	<button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down"></span> Visibility Status ([% facets.status.terms.size %])</button>
 	<div class="facettecollapse">
 	  <ul id="status_[% tabmodus %][% menu %]" class="collapse">
 	    [% FOREACH stat IN facets.status.terms %]
@@ -86,7 +86,7 @@
       [% FOREACH dept IN departments.keys.sort %]
 	    <li>
 	    [% thisdept = departments.$dept %]
-	      <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.oId %]">[% dept %]</a>
+	      <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.oId %]"><strong>[% dept %]</strong></a>
 	      [% IF departments.$dept.keys.size > 1 %]
 	      <a href="#subdepts_[% departments.$dept.oId %][% menu %]" data-toggle="collapse">
 	        <span class="glyphicon glyphicon-chevron-down"></span>
@@ -97,7 +97,7 @@
 	        <li>
 	        [% NEXT IF subdept == "oId" %]
 	        [% thissubdept = thisdept.$subdept %]
-	        <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.oId %]">[% subdept %]</a>
+	        <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.oId %]"><strong>[% subdept %]</strong></a>
 	        [% IF departments.$dept.$subdept.keys.size >1 %] <a href="#subsubdepts_[% departments.$dept.$subdept.oId %][% menu %]" data-toggle="collapse">
 	          <span class="glyphicon glyphicon-chevron-down"></span>
 	        </a>[% END %]
@@ -106,7 +106,7 @@
 	          <li>
 	          [% NEXT IF subsubdept == "oId" %]
 	          [% thissubsubdept = thissubdept.$subsubdept %]
-	            <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.$subsubdept.oId %]">[% subsubdept %]</a>
+	            <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.$subsubdept.oId %]"><strong>[% subsubdept %]</strong></a>
 	          </li>
 	          [% END %]
 	        </ul>
