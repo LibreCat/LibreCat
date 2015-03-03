@@ -7,6 +7,7 @@ use Catmandu -all;
 use Getopt::Long;
 use Citation;
 use App::Catalogue::Controller::Publication qw/update_publication/;
+use POSIX qw(strftime);
 use Data::Dumper;
 
 Catmandu->load(':up');
@@ -23,6 +24,8 @@ or die("Error in command line arguments\n");
 my $bag = Catmandu->store('search')->bag('publication');
 my $backup = Catmandu->store('backup')->bag('publication');
 
+print Dumper strftime("%Y-%m-%dT%H:%M:%SZ", gmtime(time));
+
 $bag->each(sub {
     my $rec = $_[0];
     if ($missing && (!$rec->{citation} or !$rec->{citation}->{apa})) {
@@ -37,3 +40,4 @@ $bag->each(sub {
 });
 
 print "Done\n";
+print Dumper strftime("%Y-%m-%dT%H:%M:%SZ", gmtime(time));
