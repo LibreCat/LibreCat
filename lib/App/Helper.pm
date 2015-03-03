@@ -311,7 +311,7 @@ sub get_statistics {
 sub get_epmc {
 	my ($self, $mod, $pmid) = @_;
 	return {} unless $mod and $pmid;
-	
+
 	return Catmandu->store('metrics')->bag($mod)->get($pmid);
 }
 
@@ -438,7 +438,7 @@ sub export_csl_json{
 	my $out;
 	$hits->each(sub {
 		my $id = $_[0]->{_id};
-		my $csl = Citation::id2citation($id,0,'csl_json');
+		my $csl = Citation::index_citation_update($id,0,'csl_json');
 		push @$out, $csl;
 		});
 

@@ -170,7 +170,7 @@
     <ul id="year_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH y IN facets.year.terms %]
       [%- year = (y.term) / 1000; -%]
-      [%- yf = date.format(year); -%]
+      [%- IF year == '0' -%] [%- yf = '1970' -%][%- ELSE -%][%- yf = date.format(year); -%][%- END -%]
       <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="year" data-val="[% yf %]" href="#" rel="nofollow">[% yf %] ([% y.count %])</a></li>
       [% END %]
     </ul>
@@ -250,7 +250,7 @@
     </div>
     [% END %]
   [% END %]
-  
+
   [% IF user_settings.style_eq_default %]
     <div class="text-muted">
       <strong>Citation style:</strong> [% user_settings.style %]
@@ -265,7 +265,7 @@
       <strong>Citation style:</strong> [% user_settings.style %]
     </div>
   [% END %]
-  
+
   [% IF (!user_settings.sort_eq_usersort AND !user_settings.sort_eq_default) OR (!user_settings.style_eq_userstyle AND !user_settings.style_eq_default) %]
     <a type="button" href="/myPUB/person/preference?[% IF qp.item('sort') AND qp.item('sort').0 %][% FOREACH s IN qp.item('sort') %]sort=[% s %]&[% END %][% ELSE %]sort=[% qp.item('sort') %][% END %]&style=[% qp.style %]" name="save_settings" id="id_save_settings" class="btn btn-block btn-warning">Save this as public default</a><br />
   [% END %]
@@ -317,7 +317,7 @@
     <div class="facettecollapse">
     <ul id="sort_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH s IN h.config.store.sort_options %]
-        <li><a href="#" class="sort-facet_[% tabmodus %] asc" data-val="[% s.key %]" rel="nofollow">[% s.label %] <span class="glyphicon glyphicon-arrow-up"></span></a>  
+        <li><a href="#" class="sort-facet_[% tabmodus %] asc" data-val="[% s.key %]" rel="nofollow">[% s.label %] <span class="glyphicon glyphicon-arrow-up"></span></a>
         <a href="#" class="sort-facet_[% tabmodus %] desc" data-val="[% s.key %]" rel="nofollow">
         <span class="glyphicon glyphicon-arrow-down"></span></a></li>
       [% END %]

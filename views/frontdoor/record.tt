@@ -23,9 +23,11 @@
 [% relLink = [] %]
 [% relFile = [] %]
 [% relToc = [] %]
+[% IF external_id.pmid %]
 [% epmc_cit = h.get_epmc('citations',external_id.pmid) %]
 [% epmc_ref = h.get_epmc('references',external_id.pmid) %]
 [% ebi_data = h.get_epmc('db_xrefs',external_id.pmid) %]
+[% END %]
 [% toolkitData = h.getToolkit(id) %]
 
 [% FOREACH key IN related_material.keys %]
@@ -409,41 +411,36 @@
 	</div>
 	[% END %]
 
-	[% IF medline OR pubmedID OR inspire OR arxiv OR scopa3 OR ahf OR phillister OR opac %]
+	[% IF external_id %]
 	<h3>Sources</h3>
 
-	[% IF medline %]
-	<p><img src="[% h.host %]/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% medline %]<br>
-	<a href="http://www.ncbi.nlm.nih.gov/pubmed/[% medline %]">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% medline %]">Europe PMC</a></p>
-	[% ELSE %]
-	[% IF pubmedID %]
-	<p><img src="[% h.host %]/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% pubmedID %]<br>
-	<a href="http://www.ncbi.nlm.nih.gov/pubmed/[% pubmedID %]">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% pubmedID %]">Europe PMC</a></p>
-	[% END %]
+	[% IF external_id.pmid %]
+	<p><img src="/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% external_id.pmid %]<br>
+	<a href="http://www.ncbi.nlm.nih.gov/pubmed/[% external_id.pmid %]">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% external_id.pmid %]">Europe PMC</a></p>
 	[% END %]
 
-	[% IF arxiv %]
-	<p><img src="[% h.host %]/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="http://arxiv.org/abs/[% arxiv %]">[% arxiv %]</a></p>
+	[% IF external_id.arxiv %]
+	<p><img src="/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="http://arxiv.org/abs/[% external_id.arxiv %]">[% external_id.arxiv %]</a></p>
 	[% END %]
 
-	[% IF inspire %]
-	<p><img src="[% h.host %]/images/icon_inspire.png" class="img-thumbnail" alt="">Inspire <a href="http://inspirebeta.net/record/[% inspire %]">[% inspire %]</a></p>
+	[% IF external_id.inspire %]
+	<p><img src="/images/icon_inspire.png" class="img-thumbnail" alt="">Inspire <a href="https://inspirehep.net/record/[% external_id.inspire %]">[% external_id.inspire %]</a></p>
 	[% END %]
 
-	[% IF scoap3 %]
-	<p><img src="[% h.host %]/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="http://repo.scoap3.org/record/[% scoap3 %]">[% scoap3 %]</a></p>
+	[% IF external_id.scoap3 %]
+	<p><img src="/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="http://repo.scoap3.org/record/[% external_id.scoap3 %]">[% external_id.scoap3 %]</a></p>
 	[% END %]
 
-	[% IF ahf %]
-	<p>AHF: <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% ahf %]">[% ahf %]</a></p>
+	[% IF external_id.ahf %]
+	<p>AHF: <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% IF external_id.ahf %]">[% IF external_id.ahf %]</a></p>
 	[% END %]
 
-	[% IF opac %]
-	<p><img src="[% h.host %]/images/icon_uni.png" class="img-thumbnail" alt=""><a href=" http://katalogplus.ub.uni-bielefeld.de/title/[% opac %]">Library Catalogue</a></p>
+	[% IF external_id.opac %]
+	<p><img src="/images/icon_uni.png" class="img-thumbnail" alt=""><a href=" http://katalogplus.ub.uni-bielefeld.de/title/[% external_id.opac %]">Library Catalogue</a></p>
 	[% END %]
 
-	[% IF phillister %]
-	<p><img src="[% h.host %]/images/icon_uni.png" class="img-thumbnail" alt="">PhilLister: <a href="http://phillister.ub.uni-bielefeld.de/publication/[% phillister %]">[% phillister %]</a></p>
+	[% IF external_id.phillister %]
+	<p><img src="/images/icon_uni.png" class="img-thumbnail" alt="">PhilLister: <a href="http://phillister.ub.uni-bielefeld.de/publication/[% external_id.phillister %]">[% external_id.phillister %]</a></p>
 	[% END %]
 	<div class="row">
 	  <div class="span3">
@@ -456,7 +453,6 @@
 	<!-- Supplements -->
 	[% IF genbank OR nasc %]
 	<h3>Supplements</h3>
-
 	<div class="row">
 	  [% FOREACH id_entry IN genbank %]
 	  [% IF loop.first %]
@@ -471,8 +467,6 @@
 	  [% END %]
 	  [% END %]
 	</div>
-
-
 	<div class="row">
 	  [% FOREACH id_entry IN nasc %]
 	  [% IF loop.first %]
@@ -481,7 +475,6 @@
 	  <a href="http://arabidopsis.info/StockInfo?NASC_id=[% id_entry %]">[% id_entry %]</a>
 	  [% END %]
 	</div>
-
 	[% END %]
 
 
