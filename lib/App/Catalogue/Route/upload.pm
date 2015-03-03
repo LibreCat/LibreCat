@@ -139,8 +139,10 @@ prefix '/myPUB' => sub {
           id => session->{personNumber},
           }],
         year => substr($now, 0, 4),
+        department => $person->{department},
 
       };
+      
       push @{$record->{file}}, to_json({
         file_name => $file_name,
         file_id => $file_id,
@@ -228,7 +230,7 @@ prefix '/myPUB' => sub {
           title => $record->{title},
           author => $record->{author}->[0]->{full_name},
           _id => $id,
-          host => h->config->{host},
+          host => "http://pub3.ub.uni-bielefeld.de",#h->config->{host},
           },
           'Template',
           template => 'views/email/new_thesis.tt'

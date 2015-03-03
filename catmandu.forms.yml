@@ -1327,6 +1327,7 @@ publicationTypes:
         ddc: &ddc_diss
           label: DDC
           mandatory: 1
+          multiple: 1
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
@@ -1357,9 +1358,13 @@ publicationTypes:
       related_material: *related_material
   bidissertation:
     label: "Bielefeld Doctoral Thesis"
+    tmpl: biDissertation
   bimasterthesis:
     label: "Bielefeld Master Thesis"
+    tmpl: biDissertation
   bipostdocthesis:
     label: "Bielefeld Post-Doctoral Habilitation"
+    tmpl: biDissertation
   bibachelorthesis:
     label: "Bielefeld Bachelor Thesis"
+    tmpl: biDissertation

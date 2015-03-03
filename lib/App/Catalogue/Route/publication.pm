@@ -97,13 +97,15 @@ prefix '/myPUB/record' => sub {
         };
 
         my $templatepath = "backend/forms";
+        my $template = h->config->{forms}->{publicationTypes}->{lc $rec->{type}}->{tmpl} . ".tt";
         if(($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
         	$templatepath .= "/expert";
         	$edit_mode = "expert";
         }
         if ($rec) {
         	$rec->{edit_mode} = $edit_mode if $edit_mode;
-            template $templatepath . "/$rec->{type}", $rec;
+            #template $templatepath . "/$rec->{type}", $rec;
+            template $templatepath . "/$template", $rec;
         }
         else {
             template 'error', { error => "No publication with ID $id." };
