@@ -24,8 +24,6 @@
   [% END %]
 </form>
     
-<div class="col-md-12">&nbsp;</div>
-
 <h3>[% lang ? 'Filter' : 'Filtern' %]</h3>
   [% IF qp.keys.0 %]
     [% IF qp.sorting %]
@@ -45,9 +43,7 @@
     </li>
   </ul>
   
-  <p>&nbsp;</p>
-  
-  <ul class="nav nav-tabs nav-stacked">
+  <ul class="nav nav-tabs nav-stacked margin-top1">
     <li>
       <button data-toggle="collapse" data-target="#peoplehitsperpage"><a href="#"><i class="icon-chevron-down"></i>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% qp.limit %][% ELSE %]: 20[% END %]</a></button>
       <div class="facettecollapse">
