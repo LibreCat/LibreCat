@@ -10,8 +10,8 @@
 <div class="hidden-sm hidden-md hidden-lg"><hr></div>
 
 [% IF request.path.match("person") %]
-<div class="row margin-bottom1">
-  <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>Marked Publication[% IF marked && marked > 1 %]s[% END %]</a>
+<div class="margin-bottom1">
+  <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>Marked Publication[% UNLESS marked == 1 %]s[% END %]</a>
   <div class="unmark_all">[% IF marked %]<a class="unmark-all" href="#" rel="nofollow"><span class="glyphicon glyphicon-remove"></span>Unmark all</a>[% END %]</div>
 </div>
 [% END %]
