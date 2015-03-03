@@ -87,6 +87,7 @@ sub update_publication {
 
     my $fixer = Catmandu::Fix->new(fixes => [
         'maybe_add_urn()',
+	'if all_match("status","new") set_field("status","private") end',
         ]);
 
     # citations
