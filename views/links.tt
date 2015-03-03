@@ -3,7 +3,6 @@
 
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
 <a href="/[% bag %]/[% entry._id %]" title="Show complete bibliographic and access information" target="_top">PUB</a>
-  [% request = 0 %]
   [% IF entry.file || entry.related_material || entry.externalFiles == "1" %]
   | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/myPUB/record/preview/[% entry._id %][% END %]" class="label label-primary">Files available</a>
   [% END %]
@@ -50,8 +49,11 @@
   [% IF session.role == "super_admin" %]
   | <a href="/myPUB/record/internal_view/[% entry._id %]" target="_blank">Internal View</a>
   [% END %]
-  [% IF request %]
-  | <a data-toggle="collapse" href="#[% tabmodus %]_rac_[% entry._id %]">Request a Copy</a>
+  [% FOREACH fi IN entry.file %]
+    [% IF fi.request_a_copy %]
+    | <a data-toggle="collapse" href="#[% tabmodus %]_rac_[% entry._id %]">Request a Copy</a>
+    [% LAST %]
+    [% END %]
   [% END %]
   [% IF (entry.status != "public" AND entry.status != "submitted") OR (entry.status == "submitted" AND session.role == "super_admin") %]
   | <a href="#" onclick="if(confirm('Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified.')) window.location = '/myPUB/record/publish/[% entry._id %]'">Publish</a>
