@@ -11,7 +11,7 @@
   [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="/download/[% entry._id  %]/[% supp.file.file_id %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
 
   [% IF entry.link AND bag != "data" %] | <a href="[% entry.link.url %]">URL</a>[% END %]
-  [% IF entry.doi %]| <a href="http://dx.doi.org/[% entry.doi %]" target="_top">DOI</a>[% END %]
+  [% IF entry.doi %]| <a href="http://doi.org/[% entry.doi %]" target="_top">DOI</a>[% END %]
   [% IF entry.external_id.pmid %] | <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% entry.external_id.pmid %]" target="_top">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% entry.external_id.pmid %]">Europe PMC</a>[% END %]
   [% IF entry.external_id.phillister %] | <a href="http://phillister.ub.uni-bielefeld.de/publication/[% entry.external_id.phillister.id %]" target="_top">PhilLister</a>[% END %]
   [% IF entry.external_id.arxiv %] | <a href="http://arxiv.org/abs/[% entry.external_id.arxiv %]" target="_top">arXiv</a>[% END %]
@@ -22,7 +22,7 @@
 	| <a href="[% entry.metrics.citingURL %]" target="_parent">WOS&reg; Times Cited: [% entry.metrics.timesCited %]</a>
   [% END %]
 
-<!--  
+<!--
     [% IF bag == "data" %]
   	[% IF entry.externalFiles == "1" %]
 	  | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">Files available</a>
@@ -43,7 +43,7 @@
   [% IF entry.status != "public" %]
   | <a href="/myPUB/record/preview/[% entry._id %]" target="_blank">Preview</a>
   [% END %]
-  
+
   [% IF session.role == "super_admin" %]
   | <a href="/myPUB/record/internal_view/[% entry._id %]" target="_blank">Internal View</a>
   [% END %]
