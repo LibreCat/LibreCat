@@ -325,7 +325,7 @@
   [% END %]
 </ul>
 
-<h3>Export[% UNLESS request.path.match('marked') %] /  Embed[% END %]</h3>
+<h3>Export[% UNLESS backend OR request.path.match('marked') %] /  Embed[% END %]</h3>
 
 <ul class="nav nav-tabs nav-stacked ul4">
   <li>
