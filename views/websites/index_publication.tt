@@ -10,7 +10,7 @@
 
 <span id="language_id" style="display:none;">[% lang %]</span>
 
-[% INCLUDE websites/mathjax.tt %]
+[% INCLUDE mathjax.tt %]
 
 <div class="row"><!-- outer border -->
 
@@ -150,4 +150,3 @@
 <!-- END websites/index_publication.tt -->
 
 [% INCLUDE footer.tt %]
-
