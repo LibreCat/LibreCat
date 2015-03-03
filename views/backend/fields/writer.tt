@@ -20,6 +20,7 @@
       {% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %}<span class="starMandatory"></span>{% END %}
     </div>
     <div class="col-md-10 creator" id="creator">
+      {% IF fields.basic_fields.writer.multiple OR fields.basic_fields.writer_secondary.multiple %}
       [% IF !writer %]
       <div class="row innerrow">
         <input type="hidden" id="orig_first_name_0" value="" />
@@ -77,6 +78,36 @@
       </div>
       [% END %]
       [% END %]
+      {% ELSE %}
+      <div class="row innerrow">
+        <input type="hidden" id="orig_first_name_0" value="" />
+        <input type="hidden" id="orig_last_name_0" value="" />
+            
+        <span class="form-group col-md-4 col-xs-11">
+          <div class="input-group sticky{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} mandatory{% END %}">
+            <div class="input-group-addon">First Name</div>
+            <input type="text" id="first_name_0" name="writer.0.first_name" placeholder="{% fields.basic_fields.writer.first_name.placeholder || fields.basic_fields.writer_secondary.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} required{% END %}" value="[% writer.0.first_name %]" />
+            <div class="input-group-addon"><span class="glyphicon glyphicon-plus hidden-lg hidden-md" onclick="add_field('creator');"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          </div>
+        </span>
+        <span class="form-group col-md-6 col-xs-11">
+          <div class="input-group sticky{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} mandatory{% END %}">
+            <div class="input-group-addon">Last Name</div>
+            <input type="text" id="last_name_0" name="writer.0.last_name" placeholder="{% fields.basic_fields.writer.last_name.placeholder || fields.basic_fields.writer_secondary.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.writer.mandatory OR fields.basic_fields.writer_secondary.mandatory %} required{% END %}" value="[% writer.0.last_name %]" />
+            <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('creator');" class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+            <div class="input-group-addon"><span id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.writer.pevz_tooltip || fields.basic_fields.writer_secondary.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="revert_0" data-type="" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
+          </div>
+          <script>
+              $('#Authorized0').tooltip();
+              $('#revert_0').tooltip();
+            </script>
+        </span>
+        <input type="hidden" id="id_0" name="writer.0.id" value="[% writer.0.id %]" />
+      </div>
+      {% END %}
     </div>
   </div>
 
