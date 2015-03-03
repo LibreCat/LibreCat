@@ -39,7 +39,10 @@
 
 [% IF backend %]
   <br />
-  <a data-toggle="collapse" href="#[% tabmodus %]_[% entry._id %]">Details</a>
+  <a href="/myPUB/record/edit/[% entry._id %]">Edit</a>
+  [% IF session.role == "super_admin" %]
+  | <a data-toggle="collapse" href="#[% tabmodus %]_[% entry._id %]">Details</a>
+  [% END %]
   [% IF entry.status != "public" %]
   | <a href="/myPUB/record/preview/[% entry._id %]" target="_blank">Preview</a>
   [% END %]
@@ -50,7 +53,6 @@
   [% IF request %]
   | <a data-toggle="collapse" href="#[% tabmodus %]_rac_[% entry._id %]">Request a Copy</a>
   [% END %]
-  | <a href="/myPUB/record/edit/[% entry._id %]">Edit</a>
   [% IF (entry.status != "public" AND entry.status != "submitted") OR (entry.status == "submitted" AND session.role == "super_admin") %]
   | <a href="#" onclick="if(confirm('Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified.')) window.location = '/myPUB/record/publish/[% entry._id %]'">Publish</a>
   [% END %]
