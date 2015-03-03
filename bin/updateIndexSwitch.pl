@@ -21,6 +21,7 @@ if ($pub1_exists and !$pub2_exists) {
 	$bag->add_many($backup);
 	my $researcher_result = `/usr/local/bin/perl /home/bup/pub/bin/index_researcher.pl -m pub2`;
 	my $department_result = `/usr/local/bin/perl /home/bup/pub/bin/index_department.pl -m pub2`;
+	my $project_result = `/usr/local/bin/perl /home/bup/pub/bin/index_project.pl -m pub2`;
 	
 	print "New index is pub2. Testing...\n";
 	my $checkForIndex = $e->indices->exists(index => 'pub2');
@@ -59,6 +60,7 @@ elsif($pub2_exists and !$pub1_exists) {
 	$bag->add_many($backup);
 	my $researcher_result = `/usr/local/bin/perl /home/bup/pub/bin/index_researcher.pl -m pub1`;
 	my $department_result = `/usr/local/bin/perl /home/bup/pub/bin/index_department.pl -m pub1`;
+	my $project_result = `/usr/local/bin/perl /home/bup/pub/bin/index_project.pl -m pub1`;
 	
 	print "New index is pub1. Testing...\n";
 	my $checkForIndex = $e->indices->exists(index => 'pub1');
