@@ -64,6 +64,9 @@ sub handle_file {
 	}
 	else{
 		foreach my $fi (@{$pub->{file}}){
+			if(ref $fi eq "HASH" and $fi->{file_json}){
+				$fi = $fi->{file_json};
+			}
 			$fi = from_json($fi);
 			#update of existing file
 			if($fi->{file_id}){
