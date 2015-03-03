@@ -16,11 +16,11 @@
     <link rel="icon" href="/images/icon_uni.png" type="image/png">
 
     [% IF preview %]
-    <meta http-equiv="refresh" content="120; URL=[% h.host %]/publication/[% oId %]">
+    <meta http-equiv="refresh" content="120; URL=[% h.host %]/publication/[% _id %]">
     [% END %]
 
     [% IF title AND !backend %]
-      <meta name="citation_title" content="[% mainTitle %]">
+      <meta name="citation_title" content="[% title %]">
       [% FOREACH author_entry IN author %]<meta name="citation_author" content="[% author_entry.full_name %]">
       [% END %]
       <meta name="citation_date" content="[% year %]">
