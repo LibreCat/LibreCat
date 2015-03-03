@@ -53,7 +53,7 @@
         <div class="checkbox">
           <label>
           {% IF fields.file_upload.license.open_data_release %}
-            <input type="checkbox" value="1" id="id_open_data_release" name="open_data_release"[% IF open_rata_release == "1" %] checked="checked"[% END %] /> <strong>{% fields.file_upload.license.open_data_release.accept_text %}</strong>
+            <input type="checkbox" value="1" id="id_open_data_release" name="open_data_release"[% IF open_data_release == "1" %] checked="checked"[% END %] /> <strong>{% fields.file_upload.license.open_data_release.accept_text %}</strong>
           {% ELSIF fields.file_upload.license.pub_license %}
             <input type="checkbox" value="1" id="id_pub_license" name="accept"[% IF accept == "1" %] checked="checked"[% END %] /> <strong>{% fields.file_upload.license.pub_license.accept_text %}</strong>
           {% END %}
