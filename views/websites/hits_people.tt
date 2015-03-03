@@ -50,12 +50,6 @@
 
 <div class="col-md-3 col-md-offset-1 col-sm-4">
 
-[% IF !backend AND session AND session.user %]
-<div class="text-right margin-top-1 hidden-xs">
-  <small>[% lang ? 'Logged in as' : 'Eingeloggt als' %]: [% session.user %]</small>
-</div>
-[% END %]
-
 <div class="hidden-sm hidden-md hidden-lg"><hr></div>
 
 <div id="facets" class="row hidden-md hidden-lg hidden-sm"><!-- smartphones only -->
@@ -106,16 +100,16 @@
 
   <ul class="nav nav-tabs nav-stacked">
     <li>
-      <a href="[% h.newuri_for("/authorlist", qp, former="no") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp;[% lang ? 'Current UniBi Authors' : 'UniBi Autoren' %]</a>
+      <a href="[% h.newuri_for("/authorlist", qp, former="no") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>[% lang ? 'Current UniBi Authors' : 'UniBi Autoren' %]</a>
     </li>
     <li>
-      <a href="[% h.newuri_for("/authorlist", qp, former="yes") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp;[% lang ? 'Former UniBi Authors' : 'Ehemalige UniBi Autoren' %]</a>
+      <a href="[% h.newuri_for("/authorlist", qp, former="yes") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>[% lang ? 'Former UniBi Authors' : 'Ehemalige UniBi Autoren' %]</a>
     </li>
   </ul>
 
   <ul class="nav nav-tabs nav-stacked margin-top1">
     <li>
-      <button data-toggle="collapse" data-target="#peoplehitsperpage"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% qp.limit %][% ELSE %]: 20[% END %]</a></button>
+      <button data-toggle="collapse" data-target="#peoplehitsperpage"><a href="#"><span class="fa fa-chevron-down"></span>[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% qp.limit %][% ELSE %]: 20[% END %]</a></button>
       <div class="facettecollapse">
         <ul id="peoplehitsperpage" class="collapse">
           [% FOREACH limiting IN h.config.store.pagination_options %]
@@ -132,18 +126,18 @@
 
   <ul class="nav nav-tabs nav-stacked margin-top1">
     <li>
-      <button data-toggle="collapse" data-target="#peoplesort"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Sorting' : 'Sortierung' %]</a></button>
+      <button data-toggle="collapse" data-target="#peoplesort"><a href="#"><span class="fa fa-chevron-down"></span>[% lang ? 'Sorting' : 'Sortierung' %]</a></button>
       <div class="facettecollapse">
         <ul id="peoplesort" class="collapse[% IF qp.sorting %] in[% END %]">
           [% IF qp.sorting == "fullname.asc" OR qp.sorting == "fullname.desc" %]
             <li>[% lang ? 'Alphabetically' : 'Alphabetisch' %]</li>
           [% ELSE %]
-            <li><a href="[% h.newuri_for("/authorlist", qp, sorting="fullname.asc") %]" rel="nofollow">[% lang ? 'Alphabetically' : 'Alphabetisch' %]&nbsp;<span class="fa fa-arrow-up"></span></a>&nbsp;&nbsp;<a href="[% h.newuri_for("/authorlist", qp, sorting="fullname.desc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
+            <li><a href="[% h.newuri_for("/authorlist", qp, sorting="fullname.asc") %]" rel="nofollow">[% lang ? 'Alphabetically' : 'Alphabetisch' %]<span class="fa fa-arrow-up"></span></a><a href="[% h.newuri_for("/authorlist", qp, sorting="fullname.desc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
           [% END %]
           [% IF qp.sorting == "publcount.asc" OR qp.sorting == "publcount.desc" %]
             <li>[% lang ? 'Number of publications' : 'Anzahl der Publikationen' %]</li>
           [% ELSE %]
-            <li><a href="[% h.newuri_for("/authorlist", qp, sorting="publcount.asc") %]" rel="nofollow">[% lang ? 'Number of publications' : 'Anzahl der Publikationen' %]&nbsp;<span class="fa fa-arrow-up"></span></a>&nbsp;&nbsp;<a href="[% h.newuri_for("/authorlist", qp, sorting="publcount.desc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
+            <li><a href="[% h.newuri_for("/authorlist", qp, sorting="publcount.asc") %]" rel="nofollow">[% lang ? 'Number of publications' : 'Anzahl der Publikationen' %]<span class="fa fa-arrow-up"></span></a><a href="[% h.newuri_for("/authorlist", qp, sorting="publcount.desc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
           [% END %]
         </ul>
       </div>
