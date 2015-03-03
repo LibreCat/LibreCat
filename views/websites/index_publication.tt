@@ -10,8 +10,6 @@
 
 <span id="language_id" style="display:none;">[% lang %]</span>
 
-[% INCLUDE mathjax.tt %]
-
 <div class="row"><!-- outer border -->
 
   <div class="col-md-10 col-sm-12 col-md-offset-1"><!-- main content -->
