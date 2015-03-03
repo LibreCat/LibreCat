@@ -87,7 +87,7 @@ $(document).ready(function(){
 	              });
 	              file.previewElement.appendChild(removeLink);
 	              
-	              var editLink = Dropzone.createElement("<div class=\"corner_down\" id=\"cordown_" + resp.tempid + "\"><a href=\"#\"><span class=\"glyphicon glyphicon-pencil\"></span></a></div>");
+	              var editLink = Dropzone.createElement("<div class=\"corner_down\" id=\"cordown_" + resp.tempid + "\"><a href=\"#\" onclick=\"return false;\"><span class=\"glyphicon glyphicon-pencil\"></span></a></div>");
 	              editLink.addEventListener("click", function(e) {
 	                window.edit_file(resp.tempid, "[% _id %]");
 	              });

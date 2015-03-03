@@ -171,7 +171,7 @@
         }
         
         var use_file_id;
-        use_file_id = file_id ? file_id : tempid;
+        use_file_id = data.file_id ? data.file_id : data.tempid;
         
         var a = $('#' + use_file_id + ' div.padded a');
         a.attr('title','');
@@ -187,6 +187,7 @@
         $('#file_' + use_file_id).val(data.file_json);
         
         $('#upLoad')[0].reset();
+        $('#upLoad').find('input[type="hidden"]').val('');
         $('#upload_file').modal('hide');
       }
     });
