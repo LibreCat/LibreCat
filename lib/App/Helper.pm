@@ -386,7 +386,7 @@ sub search_publication {
 	my $hits = publication->search(
 	    cql_query => $cql,
 		sru_sortkeys => $sort,
-		limit => $p->{limit} ||= config->{default_page_size},
+		limit => $p->{limit} ||= $self->config->{store}->{default_page_size},
 		start => $p->{start} ||= 0,
 		facets => $p->{facets} ||= {},
 	);
