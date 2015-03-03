@@ -353,7 +353,7 @@
 	<a class="label label-default total-marked" href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]">[% marked %]</a> <a href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]" rel="nofollow">Marked Publications</a>
 
 	<!-- trigger modal -->
-	<p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o"></span> Open Data PUB</a></p>
+	<p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o"></span>Open Data PUB</a></p>
 
 	<!-- modal -->
 	<div id="contentnegotiation" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
