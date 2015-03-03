@@ -64,7 +64,8 @@
     <div class="col-md-12">
       <form action="/authorlist" method="get" class="form-inline">
 	[% FOREACH key IN qp.keys %]
-	  [% NEXT IF key == "q" %]
+	  [% NEXT IF key == "text" %]
+	  [% NEXT IF key == "cql_query" %]
 	  [% IF qp.$key.0 %]
 	    [% FOREACH val in qp.$key %]
 	      <input type="hidden" name="[% key %]" value="[% val %]" />
@@ -74,7 +75,7 @@
 	  [% END %]
 	[% END %]
 	<div class="input-group">
-	  <input type="text" name="q" id="q_id" value="[% qp.q | replace('"', '&quot;') %]" class="form-control" placeholder="[% lang ? "Search" : "Suche" %]" />
+	  <input type="text" name="text" id="q_id" value="[% qp.text | replace('"', '&quot;') %]" class="form-control" placeholder="[% lang ? "Search" : "Suche" %]" />
 	  <span class="input-group-btn">
 	    <button type="submit" class="btn btn-default">[% lang ? "Go!" : "Los!" %]</button>
 	  </span>
