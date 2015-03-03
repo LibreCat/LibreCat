@@ -23,4 +23,6 @@ views/backend/forms/
 logs/
 t/testPetra.pl
 bin/europepmc/*.json
+bin/citec_authors.csv
+public/citec_authors.json
 ~$

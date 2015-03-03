@@ -1,23 +1,21 @@
-
 <!-- BEGIN frontdoor/tab_ebi_cit.tt -->
 
 <div class="tab-pane" id="ebi_citations">
-<h3>[% ebiData.citations.total %] Citations in Europe PMC<br />
+<h3>[% epmc_cit.total %] Citations in Europe PMC<br />
 Web of Science&reg; times cited: [% metrics.timesCited %] <span class="muted">subscription required<span>
 </h3>
 Data provided by <a href="http://europepmc.org/">Europe PubMed Central</a>.<br /><br />
-[% citeArray = ebiData.citations.data %]
-[% FOREACH cite IN citeArray.nsort('pubYear').reverse %]
+[% FOREACH cite IN epmc_cit.entries.nsort('pubYear').reverse %]
 <div class="row">
   <div class="col-md-12">
-  [% IF cite.id %]<span class="fa fa-share-square-o"></span> <a href="http://europepmc.org/abstract/MED/[% cite.id %]">[% cite.title %]</a><br />
+  [% IF cite._id %]<span class="fa fa-share-square-o"></span> <a href="http://europepmc.org/abstract/MED/[% cite._id %]">[% cite.title %]</a><br />
   [% ELSE %]
   [% cite.title %]<br />
   [% END %]
-  [% cite.authorString %], [% IF cite.journalAbbreviation %] <i>[% cite.journalAbbreviation %]</i> [% cite.volume%]([% cite.issue%]),[% END %] [% cite.pubYear %]
+  [% cite.authorString %], [% IF cite.journalAbbreviation %] <i>[% cite.journalAbbreviation %]</i> [% cite.volume %]([% cite.issue %]),[% END %] [% cite.pubYear %]
   [% IF cite.id %]
   <br />
-  PMID: <a href="http://europepmc.org/abstract/MED/[% cite.id %]">[% cite.id %]</a>
+  PMID: <a href="http://europepmc.org/abstract/MED/[% cite._id %]">[% cite._id %]</a>
   [% END %]
   </div>
 </div>

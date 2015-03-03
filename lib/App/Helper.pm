@@ -190,7 +190,7 @@ sub get_sort_style {
 	$return->{sort_eq_usersort} = is_same($user->{'sort'}, $return->{'sort_backend'}) if $user->{'sort'};
 	$return->{sort_eq_default} = 0;
 	$return->{sort_eq_default} = is_same($return->{'sort_backend'}, $self->config->{store}->{default_sort_backend});
-	
+
 	$return->{style_eq_userstyle} = 0;
 	$return->{style_eq_userstyle} = ($user->{style} and $user->{style} eq $return->{style}) ? 1 : 0;
 	$return->{style_eq_default} = 0;
@@ -306,6 +306,13 @@ sub get_statistics {
 	$stats->{pubpeople} = $people->{total} if $people and $people->{total};
 
 	return $stats;
+}
+
+sub get_epmc {
+	my ($self, $mod, $pmid) = @_;
+	return {} unless $mod and $pmid;
+	
+	return Catmandu->store('metrics')->bag($mod)->get($pmid);
 }
 
 sub default_facets {
