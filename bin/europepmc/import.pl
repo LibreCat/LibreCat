@@ -51,7 +51,7 @@ sub _db_xrefs {
 
     $rec->{$pmid}->{_id} = $pmid;
     $rec->{$pmid}->{db}->{$db_name}->{total} = $db_item->{dbCount};
-    $rec->{$pmid}->{db}->{$db_name}->{entires} = $fixed_db;
+    $rec->{$pmid}->{db}->{$db_name}->{entries} = $fixed_db;
 
 }
 

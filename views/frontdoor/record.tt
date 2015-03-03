@@ -23,7 +23,9 @@
 [% relLink = [] %]
 [% relFile = [] %]
 [% relToc = [] %]
-[% ebiData = h.getEbiData(id) %]
+[% epmc_cit = h.get_epmc('citations',external_id.pmid) %]
+[% epmc_ref = h.get_epmc('references',external_id.pmid) %]
+[% ebi_data = h.get_epmc('db_xrefs',external_id.pmid) %]
 [% toolkitData = h.getToolkit(id) %]
 
 [% FOREACH key IN related_material.keys %]
@@ -50,7 +52,7 @@
     [% CASE "main_file" %]
     [% mainFile.push(fi) %]
     [% CASE %]
-    [% relFile.push(fi) %]    
+    [% relFile.push(fi) %]
   [% END %]
 [% END %]
 
@@ -104,7 +106,7 @@
 	    [% IF fi.request_a_copy %]
 	    <a href="#myModal_[% fi.file_id %]" data-toggle="modal" class="btn btn-default"><span class="fa fa-copy"></span> Request a copy</a>
 	    [% END %]
-	  
+
 	    <!-- Modal -->
 	    <div class="modal" id="myModal_[% fi.file_id %]" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	      <div class="modal-dialog">
@@ -226,7 +228,7 @@
 	[% END %]
       [% END %]
       </div>
-  
+
     </div><!-- row -->
 
     <div class="row">
@@ -249,15 +251,15 @@
 	  <li><a href="#toolkit" data-toggle="tab">Cognitive Interaction Toolkit</a></li>
 	  [% END %]
 
-	  [% IF ebiData.dbLinks %]
+	  [% IF ebi_data %]
 	  <li><a href="#ebi_dblinks" data-toggle="tab">EBI BioEntities</a></li>
 	  [% END %]
 
-	  [% IF ebiData.citations %]
+	  [% IF epmc_cit %]
 	  <li><a href="#ebi_citations" data-toggle="tab">Citations</a></li>
 	  [% END %]
 
-	  [% IF ebiData.references %]
+	  [% IF epmc_ref %]
 	  <li><a href="#ebi_references" data-toggle="tab">References</a></li>
 	  [% END %]
 
@@ -287,11 +289,11 @@
 
 	  [% IF toolkitData %] [% INCLUDE frontdoor/tab_toolkit.tt %] [% END %]
 
-	  [% IF ebiData.dbLinks %] [% INCLUDE frontdoor/tab_ebi_links.tt %] [% END %]
+	  [% IF ebi_data %] [% INCLUDE frontdoor/tab_ebi_links.tt %] [% END %]
 
-	  [% IF ebiData.citations %] [% INCLUDE frontdoor/tab_ebi_cit.tt %] [% END %]
+	  [% IF epmc_cit %] [% INCLUDE frontdoor/tab_ebi_cit.tt %] [% END %]
 
-	  [% IF ebiData.references %] [% INCLUDE frontdoor/tab_ebi_ref.tt %] [% END %]
+	  [% IF epmc_ref %] [% INCLUDE frontdoor/tab_ebi_ref.tt %] [% END %]
 
 	  [% IF relMat.size OR relLink.size OR relFile.size OR relToc.size %]
 	    [% INCLUDE frontdoor/tab_relmat.tt %]
@@ -526,9 +528,9 @@
 
 </div><!-- outer border -->
 
-<!-- 
+<!--
 <script src="/javascripts/jquery.min.js"></script>
-<script src="/javascripts/bootstrap.min.js"></script> 
+<script src="/javascripts/bootstrap.min.js"></script>
 -->
 
 <script charset="utf-8">

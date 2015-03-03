@@ -1,18 +1,17 @@
-
 <!-- BEGIN frontdoor/tab_ebi.tt -->
 
 <div class="tab-pane" id="ebi_dblinks">
 Data provided by the <a href="http://www.ebi.ac.uk/">European Bioinformatics Institute (EBI)</a>.<br /><br />
-          
-[% FOREACH db IN ebiData.dbLinks.keys %]
+
+[% FOREACH db IN ebi_data.db.keys %]
 <div class="row">
   <div class="col-md-2 text-muted">[% db %]</div>
   <div class="col-md-10">
-  [% total = ebiData.dbLinks.$db.total %]
-    [% IF db == 'EMBL' %]<a href="http://www.ebi.ac.uk/ena/data/search?query=[% medline %]">[% total %]</a>[% ELSE %][% total %][% END %] item(s) found citing this article[% IF total > 10 %] of which 10 are displayed[% END %].<br /><br />
+  [% total = ebi_data.db.$db.total %]
+    [% IF db == 'EMBL' %]<a href="http://www.ebi.ac.uk/ena/data/search?query=[% external_id.pmid %]">[% total %]</a>[% ELSE %][% total %][% END %] item(s) found citing this article[% IF total > 10 %] of which 10 are displayed[% END %].<br /><br />
     [% max = (total - 1 > 9) ? 9 : (total - 1)  %]
     [% FOREACH i IN [0..max] %]
-      [% item = ebiData.dbLinks.$db.data.$i %]
+      [% item = ebi_data.db.$db.entries.$i %]
       <a href="[% item.info5.content %]">[% item.info2.content %] ([% db %]: [% item.info1.content %])</a><br />
       [% item.info3.label %]: [% item.info3.content %]<br />
       [% IF db == 'EMBL' %]
