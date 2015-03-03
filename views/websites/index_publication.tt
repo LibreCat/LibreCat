@@ -10,7 +10,7 @@
 
 <span id="language_id" style="display:none;">[% lang %]</span>
 
-[% INCLUDE websites/mathjax.tt %]
+[% INCLUDE mathjax.tt %]
 
 <div class="row"><!-- outer border -->
 
@@ -40,7 +40,7 @@
           <!--
           <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project?[% lang ? "lang=en&" : "" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? 'Projects' : 'Projekte' %]</a></li>
           -->
-          <li[% IF bag == 'authorlist' %] class="active"[% END %]><a href="/authorlist?[% lang ? "lang=en" : "" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? "Authors" : "Autoren" %]</a></li>
+          <li[% IF bag == 'authorlist' %] class="active"[% END %]><a href="/authorlist?[% lang ? "lang=en" : "" %]">[% lang ? "Authors" : "Autoren" %]</a></li>
           <li[% IF bag == 'pubtheses' %] class="active"[% END %]><a href="/pubtheses">PUB Theses</a></li>
           <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lang ? "About PUB" : "&Uuml;ber<span class=\"hidden-xs\"> PUB</span>" %] <span class="caret"></span></a>
             <ul class="dropdown-menu">
