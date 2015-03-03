@@ -38,11 +38,17 @@ get qr{/(data|publication)/*} => sub {
 	my ($bag) = splat;
 	my $p = h->extract_params();
 	$p->{facets} = h->default_facets();
+	my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+    $p->{sort} = $sort_style->{default_sort};
 
 	($bag eq 'data') ? push @{$p->{q}}, ("status=public","(type=researchData OR type=dara)")
 		: push @{$p->{q}}, ("status=public","type<>researchData","type<>dara");
 
 	my $hits = h->search_publication($p);
+	
+	$hits->{style} = $sort_style->{style};
+    $hits->{sort} = $p->{sort};
+    $hits->{user_settings} = $sort_style;
 	$hits->{bag} = $bag;
 
 	if ($p->{fmt} ne 'html') {

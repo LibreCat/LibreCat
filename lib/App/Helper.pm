@@ -124,7 +124,7 @@ sub extract_params {
 
 sub get_sort_style {
 	my ($self, $param_sort, $param_style, $id) = @_;
-	my $user = $self->getPerson( Dancer::session->{personNumber} || $id );
+	my $user = $self->getPerson( $id || Dancer::session->{personNumber} );
 	my $return;
 	$param_sort = undef if ($param_sort eq "" or (ref $param_sort eq "ARRAY" and !$param_sort->[0]));
 	$param_style = undef if $param_style eq "";
@@ -158,6 +158,8 @@ sub get_sort_style {
 	$return->{sort_backend} = $sort_backend;
 	$return->{user_sort} = $user->{'sort'} if $user->{'sort'};
 	$return->{user_style} = $user->{style} if $user->{style};
+	$return->{default_sort} = $self->config->{store}->{default_sort};
+	$return->{default_sort_backend} = $self->config->{store}->{default_sort_backend};
 
 	# see if style param is set
 	if(array_includes($self->config->{lists}->{styles},$style)){
