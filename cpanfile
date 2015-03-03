@@ -10,6 +10,7 @@ on 'test', sub {
 requires 'Catmandu';
 requires 'Catmandu::Store::Elasticsearch';
 requires 'Catmandu::Store::MongoDB';
+requires 'Catmandu::BibTeX';
 requires 'Catmandu::Importer::XML';
 requires 'Catmandu::Importer::ArXiv';
 requires 'Catmandu::Importer::Inspire';
@@ -26,6 +27,7 @@ requires 'Dancer::Plugin::Email';
 requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Session::Catmandu';
 requires 'Template';
+requies 'Template::Plugin::Date';
 requires 'Template::Plugin::JSON';
 requires 'Furl';
 requires 'HTML::Entities';
