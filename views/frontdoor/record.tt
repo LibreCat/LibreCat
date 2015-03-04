@@ -398,7 +398,7 @@
 	Web of Science&reg; Times Cited: <strong class="wos-times-cited">[% metrics.timesCited %]</strong>
 	</a></li><br>
 	[% END %]
-	<a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% isi %]">View record in Web of Science&reg;</a>
+	<a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">View record in Web of Science&reg;</a>
 	<div class="row">
 	  <div class="span3">
 	    &nbsp;
