@@ -74,7 +74,7 @@
       [% IF department.tree.1 %]
         [% department.tree.1.name %] / 
       [% END %]
-      [% dept.name %],<br>
+      [% dept.name %]<br>
     [% END %]
     </div>
   </div>

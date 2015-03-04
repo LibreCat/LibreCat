@@ -34,7 +34,8 @@ h3.expert{border-bottom:1px dashed #b6c828;}
 a small{font-weight:normal;}
 .normal,.normal a{font-weight:normal!important;}
 nav a,.nav a{font-weight:bold;}
-a .badge{color:#fff;}
+a .badge{color:#fff;margin-left:5px;}
+a .total-marked{margin-right:5px;}
 .nolink{cursor:default;}
 .select-language a{color:#777!important;font-weight:bold!important;}
 
@@ -95,6 +96,7 @@ a .badge{color:#fff;}
 .fw1{width:1.9em;}
 .fw2{width:2.4em;}
 .fw3{width:2.9em;}
+a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 
 /* frontdor */
 #preview{position:absolute; top:175px; left:-125px; width:600px; padding:10px; font-size:24px; text-align:center; color:rgb(255,255,255); font-family:'trebuchet ms',verdana,arial,sans-serif; transform:rotate(-45deg); -webkit-transform:rotate(-45deg); transform-origin:50% 0px 0px; -webkit-transform-origin:50% 0px; background-color:rgb(0,0,0); border:1px solid rgb(170,170,170); z-index:12; opacity:0.5;}

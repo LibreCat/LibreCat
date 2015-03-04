@@ -10,12 +10,9 @@
 <div class="hidden-sm hidden-md hidden-lg"><hr></div>
 
 [% IF request.path.match("person") %]
-<h3 class="margin-top0">Export</h3>
-<div class="row margin-bottom1">
-  <div class="col-md-12">
-    <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow">Your Marked Publications <span class="badge total-marked">[% marked %]</span></a>
-    <div class="unmark_all">[% IF marked %]<a class="unmark-all" href="#" rel="nofollow"><span class="glyphicon glyphicon-remove"></span>Unmark all</a>[% END %]</div>
-  </div>
+<div class="margin-bottom1">
+  <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>Marked Publication[% UNLESS marked == 1 %]s[% END %]</a>
+  <div class="unmark_all">[% IF marked %]<a class="unmark-all" href="#" rel="nofollow"><span class="glyphicon glyphicon-remove"></span>Unmark all</a>[% END %]</div>
 </div>
 [% END %]
 
@@ -207,9 +204,10 @@
 
 [% IF total > 0 %]
 
-<h3[% IF request.path.match('marked') %] class="margin-top0"[% END %]>Display / Sort</h3>
+<h3[% IF request.path.match('marked') %] class="margin-top0"[% END %]>Display[% UNLESS request.path.match('marked') %] / Sort[% END %]</h3>
 
-[% IF user_settings %]
+[% IF user_settings AND backend %]
+
   [% IF !user_settings.user_sort AND user_settings.sort_eq_default %]
     <div class="text-muted">
     <strong>Sorted by:</strong>
@@ -327,9 +325,9 @@
   [% END %]
 </ul>
 
-<h3>Export / Embed</h3>
+<h3>Export[% UNLESS backend OR request.path.match('marked') %] /  Embed[% END %]</h3>
 
-<ul class="nav nav-tabs nav-stacked[% UNLESS request.path.match('/marked') %] margin-top1[% END %] ul4">
+<ul class="nav nav-tabs nav-stacked ul4">
   <li>
     <button data-toggle="collapse" data-target="#export_[% tabmodus %][% menu %]" class="btn btn-link">
       <span class="glyphicon glyphicon-chevron-down fw"></span>[% lang != 'de' ? "Export as" : "Exportieren als" %]

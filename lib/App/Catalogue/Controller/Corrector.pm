@@ -2,6 +2,7 @@ package App::Catalogue::Controller::Corrector;
 
 use Catmandu::Sane;
 use Catmandu;
+use Catmandu::Util qw(:is :array :human trim);
 use App::Helper;
 use Exporter qw/import/;
 our @EXPORT = qw/delete_empty_fields correct_hash_array correct_writer correct_publid/;
@@ -44,19 +45,13 @@ sub correct_hash_array {
 	my $fields = $conf->{forms}->{publicationTypes}->{$tmp_type}->{fields};
 
 	foreach my $key (keys %$data){
-		next if ($key eq "related_material");
-		next if ($key eq "publication_identifier");
-		next if ($key eq "file" or $key eq "file_order");
-		next if ($key eq "author" or $key eq "editor");
-		next if ($key eq "nasc" or $key eq "genbank");
-		next if ($key eq "language");
 		my $ref = ref $data->{$key};
-		my $fields_tab = $fields->{basic_fields}->{$key} || $fields->{file_upload}->{$key} || $fields->{supplementary_fields}->{$key} || $fields->{related_material}->{$key};
+		my $array_field = $conf->{forms}->{array_field};
 
-		if($ref ne "ARRAY" and $fields_tab->{multiple}){
+		if($ref ne "ARRAY" and array_includes($array_field,$key)){
 			$data->{$key} = [$data->{$key}];
 		}
-		if($ref eq "ARRAY" and !$fields_tab->{multiple}){
+		if($ref eq "ARRAY" and !array_includes($array_field,$key)){
 			$data->{$key} = $data->{$key}->[0];
 		}
 	}

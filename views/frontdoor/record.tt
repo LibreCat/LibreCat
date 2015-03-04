@@ -205,7 +205,7 @@
 	    [% END %]
 	  </div>
 	  <div class="col-xs-2">
-	    <em><a class="mark" href="#" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]Unmark[% ELSE %]Mark[% END %]</a></em>
+	    <em><a class="mark" href="#" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="glyphicon glyphicon-remove"></span>Unmark[% ELSE %]<span class="glyphicon glyphicon-ok"></span>Mark[% END %]</a></em>
 	  </div>
 	</div>
 
@@ -345,10 +345,10 @@
 
 	<!-- Export -->
 	<h3 id="export">Export</h3>
-	<a class="total-marked label label-default" href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]">[% marked %]</a> <a href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]" rel="nofollow">Marked Publication[% IF marked && marked > 1 %]s[% END %]</a>
+	<a class="label label-default total-marked" href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]">[% marked %]</a> <a href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]" rel="nofollow">Marked Publications</a>
 
 	<!-- trigger modal -->
-	<p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o"></span> Open Data PUB</a></p>
+	<p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o"></span>Open Data PUB</a></p>
 
 	<!-- modal -->
 	<div id="contentnegotiation" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -399,11 +399,6 @@
 	</a></li><br>
 	[% END %]
 	<a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">View record in Web of Science&reg;</a>
-	<div class="row">
-	  <div class="span3">
-	    &nbsp;
-	  </div>
-	</div>
 	[% END %]
 
 	[% IF external_id %]
@@ -427,7 +422,7 @@
 	[% END %]
 
 	[% IF external_id.ahf %]
-	<p>AHF: <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% IF external_id.ahf %]">[% IF external_id.ahf %]</a></p>
+	<p>AHF: <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% external_id.ahf %]">[% external_id.ahf %]</a></p>
 	[% END %]
 
 	[% IF external_id.opac %]
@@ -437,11 +432,6 @@
 	[% IF external_id.phillister %]
 	<p><img src="/images/icon_uni.png" class="img-thumbnail" alt="">PhilLister: <a href="http://phillister.ub.uni-bielefeld.de/publication/[% external_id.phillister %]">[% external_id.phillister %]</a></p>
 	[% END %]
-	<div class="row">
-	  <div class="span3">
-	    &nbsp;
-	  </div>
-	</div>
 	[% END %]
 
 
@@ -506,7 +496,7 @@
 	  [% END %]
 	</p>
 
-      </div><!-- span3 -->
+      </div>
 
     </div><!-- row tabs and right info menu -->
 
@@ -526,7 +516,7 @@ $('a.mark').click(function(evt) {
   var a = $(this);
   var marked = a.data('marked');
   if (marked == 0) {
-    $('div.unmark_all').empty().append('<a class="unmark-all" href="#">Unmark all</a>');
+    $('div.unmark_all').empty().append('<a class="unmark-all" href="#"><span class="glyphicon glyphicon-remove"></span>Unmark all</a>');
     $.post('[% h.unhost %]/mark/'+a.data('id'), function(res) {
       $('.total-marked').text(res.total);
       a.data('marked', 1).text('Unmark');
@@ -537,7 +527,7 @@ $('a.mark').click(function(evt) {
       a.data('marked', 0).text('Mark');
     }, 'json');
     if(res.total != "0"){
-      $('div.unmark_all').empty().append('<a class="unmark-all" href="#">Unmark all</a>');
+      $('div.unmark_all').empty().append('<a class="unmark-all" href="#"><span class="glyphicon glyphicon-remove"></span>Unmark all</a>');
     }
     if(res.total == "0") {
       $('div.unmark_all').empty();

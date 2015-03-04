@@ -303,25 +303,25 @@ function linkPevz(element){
 function revert_name(element){
 	var type = "";
 	type = $(element).attr('data-type');
-	var viewport = "";
-	viewport = $(element).attr('data-viewport');
-	var lineId = $(element).attr('id').replace(viewport + type + 'revert_','');
+	//var viewport = "";
+	//viewport = $(element).attr('data-viewport');
+	var lineId = $(element).attr('id').replace(type + 'revert_','');
 	var orig_first_name = "";
 	orig_first_name = $('#' + type + 'orig_first_name_' + lineId).val();
 	var orig_last_name = "";
 	orig_last_name = $('#' + type + 'orig_last_name_' + lineId).val();
 
-	if($('#' + viewport + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
+	if($('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
 		// Uncheck, release input fields and change img back to gray
-		$('#' + viewport + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
-		$('#' + viewport + type + 'Authorized' + lineId).attr('alt','Not Authorized');
+		$('#' + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
+		$('#' + type + 'Authorized' + lineId).attr('alt','Not Authorized');
 		$('#' + type + 'id_' + lineId).val("");
-		$('#' + viewport + type + 'first_name_' + lineId + ', #' + viewport + type + 'last_name_' + lineId).removeAttr("readonly");
+		$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
 	}
 
-	$('#' + viewport + type + 'first_name_' + lineId).val(orig_first_name);
+	$('#' + type + 'first_name_' + lineId).val(orig_first_name);
 	$('#' + type + 'orig_first_name_' + lineId).val("");
-	$('#' + viewport + type + 'last_name_' + lineId).val(orig_last_name);
+	$('#' + type + 'last_name_' + lineId).val(orig_last_name);
 	$('#' + type + 'orig_last_name_' + lineId).val("");
 }
 

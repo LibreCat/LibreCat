@@ -1368,3 +1368,25 @@ publicationTypes:
   bibachelorthesis:
     label: "Bielefeld Bachelor Thesis"
     tmpl: biDissertation
+array_field:
+  - abstract
+  - alternative_title
+  - applicant
+  - ccs_class
+  - corporate_editor
+  - corporate_editor_solo
+  - ddc
+  - department
+  - editor
+  - external_id
+  - keyword
+  - language
+  - msc_class
+  - original_language
+  - pacs_class
+  - project
+  - publication_identifier
+  - supervisor
+  - thematic_area
+  - translator
+  - writer

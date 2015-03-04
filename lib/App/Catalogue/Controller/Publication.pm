@@ -57,6 +57,16 @@ sub update_publication {
     		}
     	}
     }
+    if($data->{original_language}){
+    	foreach my $lang (@{$data->{original_language}}){
+    		if($lang->{name} eq "English" or $lang->{name} eq "German"){
+    			$lang->{iso} = h->config->{lists}->{language_preselect}->{$lang->{name}};
+    		}
+    		else {
+    			$lang->{iso} = h->config->{lists}->{language}->{$lang->{name}};
+    		}
+    	}
+    }
 
     if($data->{abstract}){
     	my $i = 0;
@@ -77,6 +87,7 @@ sub update_publication {
 
     my $fixer = Catmandu::Fix->new(fixes => [
         'maybe_add_urn()',
+	'if all_match("status","new") set_field("status","private") end',
         ]);
 
     # citations
