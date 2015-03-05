@@ -6,6 +6,7 @@ use Dancer ':syntax';
 use Dancer::Request;
 use App::Helper;
 use Dancer::Plugin::Auth::Tiny;
+use Citation;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -70,7 +71,7 @@ prefix '/myPUB' => sub {
 		my $hits = h->search_publication($p);
 
 		my $jsonhash = [];
-		
+
 		if($hits->{total}){
         	$hits->each( sub{
         		my $hit = $_[0];
@@ -156,6 +157,17 @@ prefix '/myPUB' => sub {
 
 	};
 
+};
+
+get '/livecitation' => sub {
+    my $params = params;
+    unless ($params->{id} and $params->{style}) {
+        return "'id' and 'style' needed.";
+    }
+
+    my $pub = h->publication->get($params->{id});
+
+    return to_dumper Citation::index_citation_update($pub, 1, $params->{debug} || '', [$params->{style}]);
 };
 
 1;
