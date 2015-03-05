@@ -481,7 +481,7 @@ search:
                 '=': true
                 '<>': true
                 'exact': true
-              field: ['external_id.isi.prefix_id', 'external_id.isi.prefix_id.exact', 'external_id.arxiv.prefix_id', 'external_id.arxiv.prefix_id.exact', 'external_id.pubmed.prefix_id', 'external_id.pubmed.prefix_id.exact', 'external_id.inspire.prefix_id', 'external_id.inspire.prefix_id.exact', 'external_id.ahf.prefix_id', 'external_id.ahf.prefix_id.exact', 'external_id.scoap3.prefix_id', 'external_id.scoap3.prefix_id.exact', 'external_id.phillister.prefix_id', 'external_id.phillister.prefix_id.exact', 'external_id.opac.prefix_id', 'external_id.opac.prefix_id.exact', 'external_id.fp7.prefix_id', 'external_id.fp7.prefix_id.exact', 'external_id.fp6.prefix_id', 'external_id.fp6.prefix_id.exact']
+              field: ['external_id.isi', 'external_id.arxiv', 'external_id.pmid', 'external_id.inspire', 'external_id.ahf', 'external_id.scoap3', 'external_id.phillister', 'external_id.opac']
             reportnumber:
               op:
                 '=': true

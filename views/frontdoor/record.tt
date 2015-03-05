@@ -19,9 +19,9 @@
 [% relFile = [] %]
 [% relToc = [] %]
 [% IF external_id.pmid %]
-[% epmc_cit = h.get_epmc('citations',external_id.pmid) %]
-[% epmc_ref = h.get_epmc('references',external_id.pmid) %]
-[% ebi_data = h.get_epmc('db_xrefs',external_id.pmid) %]
+[% epmc_cit = h.get_epmc('epmc_citations',external_id.pmid) %]
+[% epmc_ref = h.get_epmc('epmc_references',external_id.pmid) %]
+[% ebi_data = h.get_epmc('epmc_dblinks',external_id.pmid) %]
 [% END %]
 [% toolkitData = h.getToolkit(id) %]
 
@@ -398,7 +398,7 @@
 	Web of Science&reg; Times Cited: <strong class="wos-times-cited">[% metrics.timesCited %]</strong>
 	</a></li><br>
 	[% END %]
-	<a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% isi %]">View record in Web of Science&reg;</a>
+	<a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">View record in Web of Science&reg;</a>
 	[% END %]
 
 	[% IF external_id %]
