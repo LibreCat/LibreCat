@@ -6,9 +6,36 @@ use Catmandu::Exporter::JSON;
 use Catmandu::Importer::getJSON;
 use POSIX qw/ceil/;
 
-my $source = $ARGV[0];
+my ($source, $initial, $verbose);
+GetOptions(
+    "source=s" => \$mod,
+    "initial" => \$initial,
+    "verbose"  => \$verbose,
+    )
+    or die("Error in command line arguments\n");
 
-exit unless $source;
+my $initial_exp = Catmandu::Exporter::JSON->new(file => "epmc_pub.json");
+
+if ($initial) {
+    Catmandu::Importer::JSON->new(file => 'pub.json')->each(sub {
+
+      my $input = $_[0]->{export};
+      next unless $input->{pmid};
+
+      print STDERR "fetching: $input->{pmid}\n";
+      Catmandu::Importer::getJSON->new(
+        from  => "http://www.ebi.ac.uk/europepmc/webservices/rest/search/query=$input->{pmid}&format=json"
+        )->each(sub {
+
+          my ($record) = @_;
+          $initial_exp->add($record);
+
+        });
+
+    });
+} elsif (!$source) {
+    die "No source provided.";
+}
 
 my $exporter = Catmandu::Exporter::JSON->new(file => "$source.json");
 
@@ -22,7 +49,7 @@ sub {
         $go = $input->{citedByCount} || 0;
     } elsif ($source eq 'references') {
         $go = (lc $input->{hasReferences} eq 'y') ? 1 : 0;
-    } elsif ($source eq 'db_xrefs') {
+    } elsif ($source eq 'dblinks') {
         $go = (lc $input->{hasDbCrossReferences} eq 'y') ? 1 : 0;
     }
     next unless $go;
@@ -30,9 +57,8 @@ sub {
 
     print STDERR "fetching $source: $input->{id}\n";
 
-    if ($source eq 'db_xrefs') {
+    if ($source eq 'dblinks') {
         my $dbs = $input->{dbCrossReferenceList}->{dbName};
-        #$dbs = (ref $dbs eq 'ARRAY') ? $dbs : [$dbs];
         foreach my $db (@{$dbs}) {
             Catmandu::Importer::getJSON->new(
                 from => "http://www.ebi.ac.uk/europepmc/webservices/rest/MED/$input->{id}/databaseLinks/$db/1/json"

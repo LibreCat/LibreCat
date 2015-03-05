@@ -4,7 +4,6 @@ use Catmandu::Sane;
 use Catmandu -load;
 use Catmandu::Importer::JSON;
 use Catmandu::Fix qw/epmc_dblinks/;
-use YAML;
 use Getopt::Long;
 
 my ($mod,$verbose);
@@ -14,9 +13,9 @@ or die("Error in command line arguments\n");
 
 Catmandu->load(':up');
 
-my $bag = Catmandu->store('metrics')->bag('$mod');
-
+my $bag = Catmandu->store('metrics')->bag("epmc_$mod");
 my $imp = Catmandu::Importer::JSON->new(file => "$mod.json");
+
 my $rec;
 
 sub _cit_ref {
@@ -39,7 +38,7 @@ sub _cit_ref {
 
 }
 
-sub _db_xrefs {
+sub _dblinks {
     my $item = shift;
 
     my $pmid = $item->{request}->{id};
@@ -62,13 +61,11 @@ $imp->each(sub{
 
     if ($mod eq 'citations' or $mod eq 'references') {
         _cit_ref($item);
-    } elsif ($mod eq 'db_xref') {
-        _db_xref($item);
+    } elsif ($mod eq 'dblinks') {
+        _dblinks($item);
     }
 });
 
 foreach my $k (keys %$rec) {
     $bag->add($rec->{$k});
 }
-
-print "Done\n";
