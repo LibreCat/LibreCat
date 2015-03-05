@@ -76,9 +76,7 @@
     <div class="col-md-2 text-muted">Project</div>
     <div class="col-md-10">
   [% ELSE %]<br />[% END %]
-  <!--<a href="/project/[% proj.projectId %]">-->
-  [% proj.name.0.text %]
-  <!--</a>-->
+  [% proj.name %]
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
