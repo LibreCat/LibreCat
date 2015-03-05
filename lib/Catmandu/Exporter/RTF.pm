@@ -46,13 +46,9 @@ sub _add_cite {
     	$links = "\\line PUB: {\\field{\\*\\fldinst HYPERLINK http://pub.uni-bielefeld.de/$bag/$pub->{_id}}{\\fldrslt http://pub.uni-bielefeld.de/$bag/$pub->{_id}}}";
 
     	foreach my $file (@{$pub->{file}}){
-    		if($file->{openAccess} and $file->{openAccess} eq "1"){
-    			if($file->{contentType} and $file->{contentType} eq "application/pdf"){
-    				$links .= "\\line PDF: {\\field{\\*\\fldinst HYPERLINK http://pub.uni-bielefeld.de/download/$pub->{_id}/$file->{fileOId}}{\\fldrslt http://pub.uni-bielefeld.de/download/$pub->{_id}/$file->{fileOId}}}";
-    			}
-    			elsif($file->{contentType} and $file->{contentType} eq "application/ps"){
-    				$links .= "\\line PS: {\\field{\\*\\fldinst HYPERLINK http://pub.uni-bielefeld.de/download/$pub->{_id}/$file->{fileOId}}{\\fldrslt http://pub.uni-bielefeld.de/download/$pub->{_id}/$file->{fileOId}}}";
-    			}
+    		if($file->{open_access} and $file->{open_access} eq "1"){
+    		    $links .= "\\line Files available: {\\field{\\*\\fldinst HYPERLINK http://pub.uni-bielefeld.de/$bag/$pub->{_id}}{\\fldrslt http://pub.uni-bielefeld.de/$bag/$pub->{_id}}}";
+                last;
     		}
     	}
 
@@ -65,8 +61,8 @@ sub _add_cite {
     		}
     	}
 
-    	if($pub->{link} and $pub->{link}->[0]->{url}){
-    		$links .= "\\line URL: {\\field{\\*\\fldinst HYPERLINK $pub->{link}->[0]->{url}}{\\fldrslt $pub->{link}->[0]->{url}}}";
+    	if($pub->{link} and $pub->{link}->[0]){
+    		$links .= "\\line URL: {\\field{\\*\\fldinst HYPERLINK $pub->{link}->[0]}{\\fldrslt $pub->{link}->[0]}}";
     	}
 
     	if($pub->{doi}){
@@ -76,28 +72,27 @@ sub _add_cite {
     	#	$links .= "\\line DOI: {\\field{\\*\\fldinst HYPERLINK http://dx.doi.org/$pub->{doiInfo}->{doi}}{\\fldrslt $pub->{doiInfo}->{doi}}}";
     	#}
 
-    	if($pub->{pubmedID}){
-    		$links .= "\\line PMID: $pub->{pubmedID}";
-    	}
-    	elsif($pub->{medline}){
-    		$links .= "\\line PMID: $pub->{medline}";
-    	}
+        if (my $ext = $pub->{external_id}) {
+        	if($ext->{pmid}){
+        		$links .= "\\line PMID: $ext->{pmid}";
+        	}
 
-    	if($pub->{phillister}){
-    		$links .= "\\line PhilLister: {\\field{\\*\\fldinst HYPERLINK http://phillister.ub.uni-bielefeld.de/$bag/$pub->{phillister}}{\\fldrslt $pub->{phillister}}}";
-    	}
+        	if($ext->{phillister}){
+        		$links .= "\\line PhilLister: {\\field{\\*\\fldinst HYPERLINK http://phillister.ub.uni-bielefeld.de/$bag/$ext->{phillister}}{\\fldrslt $ext->{phillister}}}";
+        	}
 
-    	if($pub->{arxiv}){
-    		$links .= "\\line arXiv: {\\field{\\*\\fldinst HYPERLINK http://arxiv.org/abs/$pub->{arxiv}}{\\fldrslt $pub->{arxiv}}}";
-    	}
+        	if($ext->{arxiv}){
+        		$links .= "\\line arXiv: {\\field{\\*\\fldinst HYPERLINK http://arxiv.org/abs/$ext->{arxiv}}{\\fldrslt $ext->{arxiv}}}";
+        	}
 
-    	if($pub->{inspire}){
-    		$links .= "\\line Inspire: {\\field{\\*\\fldinst HYPERLINK http://inspirebeta.net/record/$pub->{inspire}}{\\fldrslt $pub->{inspire}}}";
-    	}
+        	if($ext->{inspire}){
+        		$links .= "\\line Inspire: {\\field{\\*\\fldinst HYPERLINK http://inspirehep.net/record/$ext->{inspire}}{\\fldrslt $ext->{inspire}}}";
+        	}
 
-    	if($pub->{ahf}){
-    		$links .= "\\line AHF: {\\field{\\*\\fldinst HYPERLINK http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&T=HB&ID=$pub->{ahf}}{\\fldrslt $pub->{ahf}}}";
-    	}
+        	if($ext->{ahf}){
+        		$links .= "\\line AHF: {\\field{\\*\\fldinst HYPERLINK http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&T=HB&ID=$ext->{ahf}}{\\fldrslt $ext->{ahf}}}";
+        	}
+        }
     }
     elsif($self->explinks and $self->explinks eq "pub"){
     	$links = "\\line PUB: {\\field{\\*\\fldinst HYPERLINK http://pub.uni-bielefeld.de/$bag/$pub->{_id}}{\\fldrslt http://pub.uni-bielefeld.de/$bag/$pub->{_id}}}";
