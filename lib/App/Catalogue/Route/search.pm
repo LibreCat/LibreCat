@@ -78,6 +78,7 @@ prefix '/myPUB/search' => sub {
         my $hits = h->search_publication($p);
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
+        $hits->{user_settings} = $sort_style;
         $hits->{modus} = "reviewer";
 
         if ($p->{fmt} ne 'html') {
@@ -107,6 +108,7 @@ prefix '/myPUB/search' => sub {
         my $hits = h->search_publication($p);
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
+        $hits->{user_settings} = $sort_style;
         $hits->{modus} = "data_manager";
 
         if ($p->{fmt} ne 'html') {
@@ -157,6 +159,7 @@ prefix '/myPUB/search' => sub {
         my $hits = h->search_publication($p);
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
+        $hits->{user_settings} = $sort_style;
         $hits->{modus} = "delegate_".$id;
 
         if ($p->{fmt} ne 'html') {
@@ -213,6 +216,7 @@ prefix '/myPUB/search' => sub {
 
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
+        $hits->{user_settings} = $sort_style;
         $hits->{modus} = "user";
 
         if ($p->{fmt} ne 'html') {
@@ -262,6 +266,7 @@ prefix '/myPUB/search' => sub {
 
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
+        $hits->{user_settings} = $sort_style;
         $hits->{modus} = "data";
 
         if ($p->{fmt} ne 'html') {

@@ -146,6 +146,7 @@ field_order:
     - message
   related_material:
     - related_material.record
+    - related_material.rd
     - related_material.link
 publicationTypes:
   book:
@@ -1039,7 +1040,16 @@ publicationTypes:
         abstract: *abstract
         ddc: *ddc
         keyword: *keyword
-      related_material: *related_material
+      related_material: &related_material_rd
+        tab_name: "Related Material"
+        related_material.rd:
+          label: "Link to PUB record"
+          label_short: "PUB-Rec."
+          placeholder: "Start typing to search your publications."
+        related_material.link:
+          label: "Link to other record"
+          label_short: "Ext. Link"
+          placeholder: "Enter a remote location (URL) of your file here"
   dara:
     label: "Da|Ra Research Data"
     tmpl: dara

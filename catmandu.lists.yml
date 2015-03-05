@@ -146,12 +146,16 @@ article_type:
   review: "Review"
   letter_note: "Letter / Note"
 
-rd_relation:
-  00:
+relations_rd:
+  -
     relation: "cites"
+    relation_text: "This publication cites the following data publications:"
+    link_text: "Cites"
     opposite: "is_cited_by"
-  01:
+  -
     relation: "is_cited_by"
+    relation_text: "This data publication is cited in the following publications:"
+    link_text: "Is cited by"
     opposite: "cites"
 
 relations_file:

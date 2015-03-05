@@ -348,6 +348,10 @@ $(function() {
   $( "#connect_autocomplete" ).autocomplete({
     source: puburl,
     minLength: 2,
+    messages: {
+	    noResults: '',
+	    results: function() {}
+	},
     select: function( event, ui ) {
       var items = $('#relatesTo div.innerrow');
       var index = items.index($('#relatesTo div.innerrow').last());
