@@ -5,10 +5,11 @@ use Catmandu::Importer::JSON;
 use Catmandu::Exporter::JSON;
 use Catmandu::Importer::getJSON;
 use POSIX qw/ceil/;
+use Getopt::Long;
 
 my ($source, $initial, $verbose);
 GetOptions(
-    "source=s" => \$mod,
+    "source=s" => \$source,
     "initial" => \$initial,
     "verbose"  => \$verbose,
     )
