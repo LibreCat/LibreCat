@@ -68,9 +68,10 @@ prefix '/myPUB/search' => sub {
     get '/reviewer' => needs role => 'reviewer' => sub {
 
         my $p = h->extract_params();
+        my $id = session 'personNumber';
         my $account = h->getAccount(session->{user})->[0];
         my $dep_query = join( ' OR ', map{"department=$_->{id}";} @{$account->{reviewer}});
-        push @{$p->{q}}, "($dep_query)";
+        push @{$p->{q}}, "($dep_query) OR (person=$id OR creator=$id)";
 
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
@@ -98,9 +99,10 @@ prefix '/myPUB/search' => sub {
     get '/data_manager' => needs role => 'data_manager' => sub {
 
         my $p = h->extract_params();
+        my $id = session 'personNumber';
         my $account = h->getAccount(session->{user})->[0];
         my $dep_query = join( ' OR ', map{"department=$_->{id}";} @{$account->{data_manager}});
-        push @{$p->{q}}, "($dep_query)";
+        push @{$p->{q}}, "($dep_query) OR (person=$id OR creator=$id)";
         push @{$p->{q}}, "(type=researchData OR type=dara)";
 
         $p->{facets} = h->default_facets();
