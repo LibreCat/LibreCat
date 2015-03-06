@@ -68,7 +68,9 @@
 <div class="row">
     <div class="col-md-2 text-muted">Department(s)</div>
     <div class="col-md-10">[% FOREACH d IN department %]
-    [% d.name %][% UNLESS loop.last %]<br />[% END %]</div>
+    [% d.name %][% UNLESS loop.last %]<br />[% END %]
+    [% END %]
+    </div>
 </div>
 [% END %]
 
