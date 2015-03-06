@@ -123,7 +123,7 @@ prefix '/myPUB/record' => sub {
     post '/update' => needs login => sub {
         my $params = params;
 
-        unless (can_edit($params->{_id}, session->{user}, session->{role})) {
+        unless ($params->{new_record} or can_edit($params->{_id}, session->{user}, session->{role})) {
             status '403';
             forward '/access_denied';
         }
