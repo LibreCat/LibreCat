@@ -57,6 +57,7 @@
        [% INCLUDE project/project_details.tt %]
        <div class="tab-pane" id="project_publications" style="margin-left:-12px;">
          [% IF project_publication %]
+           [% style = 'frontShort' %]
            [% limit = project_publication.limit %]
            [% hits = project_publication.hits %]
            [% total = project_publication.total %]
