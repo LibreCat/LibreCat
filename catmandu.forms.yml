@@ -1396,14 +1396,17 @@ array_field:
   - department
   - editor
   - editor_solo
-  - external_id
+  - file
   - keyword
   - language
   - msc_class
   - original_language
   - pacs_class
   - project
-  - publication_identifier
+  - publication_identifier.issn
+  - publication_identifier.eissn
+  - publication_identifier.isbn
+  - publication_identifier.eisbn
   - supervisor
   - thematic_area
   - translator
