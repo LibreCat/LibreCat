@@ -128,16 +128,6 @@ prefix '/myPUB/record' => sub {
             forward '/access_denied';
         }
 
-#        foreach my $key ( keys %$params ) {
-#            if ( ref $params->{$key} eq "ARRAY" ) {
-#                my $i = 0;
-#                foreach my $entry ( @{ $params->{$key} } ) {
-#                    $params->{ $key . "." . $i } = $entry, $i++;
-#                }
-#                delete $params->{$key};
-#            }
-#        }
-
         $params = h->nested_params($params);
 
         if ( ( $params->{department} and $params->{department} eq "" )
@@ -189,7 +179,7 @@ prefix '/myPUB/record' => sub {
         }
 
         my $rec = h->publication->get($id);
-        $rec->{status} = "private";
+        $rec->{status} = "returned";
         try {
             update_publication($rec);
         }
@@ -237,13 +227,15 @@ prefix '/myPUB/record' => sub {
 		my ($id, $dumper) = splat;
 		my $hits = h->search_publication({q => ["id=$id"]});
 		my $entry = $hits->{hits}->[0];
-		
+
 		if($dumper and $dumper eq "dumper"){
 			return to_dumper $entry;
-		}
+		} elsif ($dumper and $dumper eq 'yaml') {
+            return to_yaml $entry;
+        }
 		else {
 			my $html_string = "<html><head><title>Internal View</title></head><body>";
-			
+
 			foreach my $key (sort keys %$entry){
 				$html_string .= "<b>" . $key . "</b>:<br />\n";
 				if (ref $entry->{$key} eq "ARRAY"){
@@ -294,11 +286,11 @@ prefix '/myPUB/record' => sub {
 					$html_string .= $entry->{$key} . "<br />\n";
 				}
 			}
-			
+
 			$html_string .= "</body></html>";
 			return $html_string;
 		}
-		
+
 	};
 
 =head2 GET /publish/:id

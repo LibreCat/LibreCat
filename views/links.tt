@@ -57,7 +57,9 @@
     [% END %]
   [% END %]
   [% IF (entry.status != "public" AND entry.status != "submitted") OR (entry.status == "submitted" AND session.role == "super_admin") %]
-  | <a href="#" onclick="if(confirm('Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified.')) window.location = '/myPUB/record/publish/[% entry._id %]'">Publish</a>
+  | <a href="/myPUB/record/publish/[% entry._id %]">Make public</a>
+  [% ELSIF entry.status == "public" %]
+  | <a href="/myPUB/record/return/[% entry._id %]">Return</a>
   [% END %]
 [% END %]
 
