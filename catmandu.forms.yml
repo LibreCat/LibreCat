@@ -174,6 +174,7 @@ publicationTypes:
           mandatory: 1
           multiple: 1
           label: "Author"
+          pevz: 1
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         edition: &edition
           label: "Edition"
@@ -305,6 +306,7 @@ publicationTypes:
           mandatory: 1
           multiple: 1
           label: "Editor"
+          pevz: 1
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         corporate_editor_solo: &corporate_editor_solo
           mandatory: 0
@@ -360,6 +362,7 @@ publicationTypes:
           mandatory: 0
           multiple: 1
           label: "Book Editor"
+          pevz: 0
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         corporate_editor: &corporate_editor
           mandatory: 0
@@ -422,6 +425,7 @@ publicationTypes:
           mandatory: 0
           multiple: 1
           label: "Editor"
+          pevz: 0
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         corporate_editor: *corporate_editor
         department: *department
@@ -545,6 +549,7 @@ publicationTypes:
           mandatory: 0
           multiple: 1
           label: "Editor"
+          pevz: 0
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         corporate_editor: *corporate_editor
         place: *place
@@ -598,6 +603,7 @@ publicationTypes:
           mandatory: 1
           multiple: 1
           label: "Author"
+          pevz: 1
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         supervisor:
           first_name:
@@ -606,6 +612,7 @@ publicationTypes:
             placeholder: "Last Name"
           mandatory: 0
           multiple: 1
+          pevz: 1
           label: "Supervisor"
         year: *year
         alternative_title: *alternative_title
@@ -820,6 +827,7 @@ publicationTypes:
           mandatory: 1
           multiple: 1
           label: "Inventor"
+          pevz: 1
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         applicant:
           label: "Applicant"
@@ -999,6 +1007,7 @@ publicationTypes:
           mandatory: 1
           multiple: 1
           label: "Creator"
+          pevz: 1
         department: *department
         project: *project
         publisher:
@@ -1064,6 +1073,7 @@ publicationTypes:
           mandatory: 1
           multiple: 1
           label: "Creator"
+          pevz: 1
         department: *department
         project: *project
         publisher:
@@ -1125,8 +1135,8 @@ publicationTypes:
             placeholder: "e.g. Appleseed"
           mandatory: 1
           multiple: 1
-          label:
-            "Translator" : "translator"
+          label: "Translator"
+          pevz: 1
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         author_secondary:
           first_name:
@@ -1135,6 +1145,7 @@ publicationTypes:
             placeholder: "e.g. Appleseed"
           multiple: 1
           label: "Author (Original)"
+          pevz: 0
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         department: *department
         project: *project
@@ -1190,8 +1201,8 @@ publicationTypes:
             placeholder: "e.g. Appleseed"
           mandatory: 1
           multiple: 1
-          label:
-            "Translator" : "translator"
+          label: "Translator"
+          pevz: 1
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         author_secondary:
           first_name:
@@ -1200,6 +1211,7 @@ publicationTypes:
             placeholder: "e.g. Appleseed"
           multiple: 1
           label: "Author"
+          pevz: 0
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         department: *department
         project: *project
@@ -1286,6 +1298,7 @@ publicationTypes:
           mandatory: 1
           multiple: 1
           label: "Author"
+          pevz: 1
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         email: &email
           label: "E-Mail address"
@@ -1305,6 +1318,7 @@ publicationTypes:
           mandatory: 1
           multiple: 1
           label: "Supervisor"
+          pevz: 1
           pevz_tooltip: "Link this publication<br />to your supervisor's PEVZ account.<br />Keeping this checked<br />will make it visible on<br />their publication list."
         title: *title
         language: &language_diss
