@@ -176,13 +176,13 @@ sub index_citation_update {
 	use Sys::Hostname;
 	my $host = hostname;
 	my $hostname;
-	if($host =~ /pub3.ub/){
+	if($host =~ /pub3/){
 		$hostname = 'pub3.ub';
 	}
 	else {
 		$hostname = 'pub';
 	}
-	my $citeproc_url = 'http://' . $host . '.uni-bielefeld.de' . $conf->{citation}->{url};
+	my $citeproc_url = 'http://' . $hostname . '.uni-bielefeld.de' . $conf->{citation}->{url};
 
 	my $citation;
 	my $styleList = $conf->{citation}->{styles};
@@ -234,7 +234,7 @@ sub index_citation_update {
 			push @$data, ("input" => $json_citation);
 
 			my $my_response = $ua->post($citeproc_url, Content => $data);
-			#$debug = $my_response;
+			$debug = $my_response;
 			#return $my_response;
 			my $citation_ref = $my_response->{_rc} ne "500" ? $json->decode($my_response->{_content}) : [{citation => ""}];
 			#$debug = $citation_ref;

@@ -161,13 +161,16 @@ prefix '/myPUB' => sub {
 
 get '/livecitation' => sub {
     my $params = params;
+    my $debug = $params->{debug} ? "debug" : "no_debug";
     unless ($params->{id} and $params->{style}) {
         return "'id' and 'style' needed.";
     }
 
     my $pub = h->publication->get($params->{id});
 
-    return to_dumper Citation::index_citation_update($pub, 1, $params->{debug} || '', [$params->{style}]);
+    my $response = Citation::index_citation_update($pub, 1, $debug, [$params->{style}]);
+    
+    ($debug eq "debug") ? (return to_dumper $response) : (return $response);
 };
 
 1;
