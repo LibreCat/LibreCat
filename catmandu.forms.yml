@@ -36,7 +36,7 @@ field_order:
     - bi_doctype
     - doi
     - translator
-    - writer
+    - author
     - editor_solo
     - corporate_editor_solo
     - department
@@ -44,7 +44,7 @@ field_order:
     - thematic_area
     - supervisor
     - applicant
-    - writer_secondary
+    - author_secondary
     - extern
     - title
     - alternative_title
@@ -166,16 +166,14 @@ publicationTypes:
           label: "Alternative Title"
           placeholder: "e.g. Handbook of eBook Publishing - with a subtitle"
           multiple: 1
-        writer: &author_translator
+        author: &author_translator
           first_name:
             placeholder: "e.g. John"
           last_name:
             placeholder: "e.g. Appleseed"
           mandatory: 1
           multiple: 1
-          label:
-            "Author" : "author"
-#            "Translator" : "translator"
+          label: "Author"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         edition: &edition
           label: "Edition"
@@ -353,7 +351,7 @@ publicationTypes:
           label: "Chapter Title"
           mandatory: 1
         alternative_title: *alternative_title
-        writer: *author_translator
+        author: *author_translator
         editor: &editor_only
           first_name:
             placeholder: "First Name"
@@ -415,7 +413,7 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        writer: *author_translator
+        author: *author_translator
         editor:
           first_name:
             placeholder: "First Name"
@@ -538,7 +536,7 @@ publicationTypes:
         doi: *doi
         title: *title
         alternative_title: *alternative_title
-        writer: *author_translator
+        author: *author_translator
         editor:
           first_name:
             placeholder: "First Name"
@@ -592,15 +590,14 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        writer:
+        author:
           first_name:
             placeholder: "First Name"
           last_name:
             placeholder: "Last Name"
           mandatory: 1
           multiple: 1
-          label:
-            "Author" : "author"
+          label: "Author"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         supervisor:
           first_name:
@@ -648,7 +645,7 @@ publicationTypes:
         title:
           label: "Article Title"
           mandatory: 1
-        writer: *author_translator
+        author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
         department: *department
@@ -692,7 +689,7 @@ publicationTypes:
         doi: *doi
         title: *title
         alternative_title: *alternative_title
-        writer: *author_translator
+        author: *author_translator
         department: *department
         project: *project
         thematic_area: *thematic_area
@@ -773,7 +770,7 @@ publicationTypes:
     fields:
       basic_fields:
         tab_name: "Basic Fields"
-        writer: *author_translator
+        author: *author_translator
         title: *title
         department: *department
         project: *project
@@ -815,15 +812,14 @@ publicationTypes:
         tab_name: "Basic Fields"
         title: *title
         alternative_title: *alternative_title
-        writer:
+        author:
           first_name:
             placeholder: "e.g. John"
           last_name:
             placeholder: "e.g. Appleseed"
           mandatory: 1
           multiple: 1
-          label:
-            "Inventor" : "author"
+          label: "Inventor"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         applicant:
           label: "Applicant"
@@ -877,7 +873,7 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         title: *title
-        writer: *author_translator
+        author: *author_translator
         department: *department
         project: *project
         thematic_area: *thematic_area
@@ -911,7 +907,7 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        writer: *author_translator
+        author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
         department: *department
@@ -950,7 +946,7 @@ publicationTypes:
         tab_name: "Basic Fields"
         doi: *doi
         title: *title
-        writer: *author_translator
+        author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
         department: *department
@@ -995,15 +991,14 @@ publicationTypes:
           label: "DOI"
           readonly: 1
         title: *title
-        writer:
+        author:
           first_name:
             placeholder: "First Name"
           last_name:
             placeholder: "Last Name"
           mandatory: 1
           multiple: 1
-          label:
-            "Creator" : "author"
+          label: "Creator"
         department: *department
         project: *project
         publisher:
@@ -1061,15 +1056,14 @@ publicationTypes:
           label: "DOI"
           readonly: 1
         title: *title
-        writer:
+        author:
           first_name:
             placeholder: "First Name"
           last_name:
             placeholder: "Last Name"
           mandatory: 1
           multiple: 1
-          label:
-            "Creator" : "author"
+          label: "Creator"
         department: *department
         project: *project
         publisher:
@@ -1134,14 +1128,13 @@ publicationTypes:
           label:
             "Translator" : "translator"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
-        writer_secondary:
+        author_secondary:
           first_name:
             placeholder: "e.g. John"
           last_name:
             placeholder: "e.g. Appleseed"
           multiple: 1
-          label:
-            "Author (Original)" : "author"
+          label: "Author (Original)"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         department: *department
         project: *project
@@ -1200,14 +1193,13 @@ publicationTypes:
           label:
             "Translator" : "translator"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
-        writer_secondary:
+        author_secondary:
           first_name:
             placeholder: "e.g. John"
           last_name:
             placeholder: "e.g. Appleseed"
           multiple: 1
-          label:
-            "Author" : "author"
+          label: "Author"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         department: *department
         project: *project
@@ -1249,7 +1241,7 @@ publicationTypes:
         doi: *doi
         title: *title
         alternative_title: *alternative_title
-        writer: *author_translator
+        author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
         department: *department
@@ -1286,15 +1278,14 @@ publicationTypes:
         bi_doctype:
           label: "Documenttype"
           mandatory: 1
-        writer: &author
+        author: &author
           first_name:
             placeholder: "First Name"
           last_name:
             placeholder: "Last Name"
           mandatory: 1
           multiple: 1
-          label:
-            "Author" : "author"
+          label: "Author"
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         email: &email
           label: "E-Mail address"
@@ -1382,12 +1373,15 @@ array_field:
   - abstract
   - alternative_title
   - applicant
+  - author
+  - author_secondary
   - ccs_class
   - corporate_editor
   - corporate_editor_solo
   - ddc
   - department
   - editor
+  - editor_solo
   - external_id
   - keyword
   - language
@@ -1399,4 +1393,3 @@ array_field:
   - supervisor
   - thematic_area
   - translator
-  - writer
