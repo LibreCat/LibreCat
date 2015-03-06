@@ -28,6 +28,7 @@
     <input type="hidden" name="type" value="{% tmpl %}" id="id_type"/>
     <input type="hidden" name="_id" value="[% _id %]"/>
     <input type="hidden" name="status" value="[% status || 'private' %]"/>
+    <input type="hidden" name="new_record" value="[% title ? "0" : "1" %]"/>
     <input type="hidden" name="date_created" value="[% date_created %]" />
     <input type="hidden" name="edit_mode" id="edit_mode" value="expert" />
 
