@@ -132,7 +132,6 @@ publication_identifier:
   eissn: "eISSN"
   isbn: "ISBN"
   eisbn: "eISBN"
-  other: "Other Identifier"
 
 publication_status:
   published: "Published"
@@ -181,7 +180,7 @@ relations_file:
     link_text: "Other Relation"
 
 relations_link:
-  - 
+  -
     relation: "confirmation"
     relation_text: "Confirmation Letter (for PUB record)"
     link_text: "Conf. Letter"
