@@ -127,7 +127,8 @@ prefix '/myPUB/record' => sub {
             status '403';
             forward '/access_denied';
         }
-
+        delete $params->{new_record};
+        
         $params = h->nested_params($params);
 
         if ( ( $params->{department} and $params->{department} eq "" )
