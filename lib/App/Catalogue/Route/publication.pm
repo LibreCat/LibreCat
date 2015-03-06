@@ -231,7 +231,7 @@ prefix '/myPUB/record' => sub {
 		if($dumper and $dumper eq "dumper"){
 			return to_dumper $entry;
 		} elsif ($dumper and $dumper eq 'yaml') {
-            return to_yaml $entry;
+            return template 'internal_view', {data => to_yaml($entry)};
         }
 		else {
 			my $html_string = "<html><head><title>Internal View</title></head><body>";

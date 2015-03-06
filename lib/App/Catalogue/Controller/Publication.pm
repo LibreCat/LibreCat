@@ -87,7 +87,7 @@ sub update_publication {
 
     my $fixer = Catmandu::Fix->new(fixes => [
         'maybe_add_urn()',
-	'if all_match("status","new") set_field("status","private") end',
+	    'if all_match("status","new") set_field("status","private") end',
         ]);
 
     # citations
@@ -98,8 +98,6 @@ sub update_publication {
     my $search_bag = Catmandu->store('search')->bag('publication');
     my $backup = Catmandu->store('backup')->bag('publication');
 
-#    $data->{date_updated} = h->now();
-#    $data->{date_created} = $data->{date_updated} if !$data->{date_created};
     $fixer->fix($data);
 
     #compare version!

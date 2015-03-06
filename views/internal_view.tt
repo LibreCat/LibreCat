@@ -1,0 +1,8 @@
+<html>
+<head><title>Internal View</title></head>
+<body>
+<pre>
+[% data %]
+<pre>
+</body>
+</html>
