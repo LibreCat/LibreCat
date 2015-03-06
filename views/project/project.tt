@@ -1,0 +1,246 @@
+[% INCLUDE header.tt %]
+
+<!-- BEGIN project/project.tt -->
+<div class="row" style="padding-top:270px;padding-left:27px;" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/publication/[% oId %]"><!-- outer border -->
+[% USE Dumper; dumper.dump(data) %]
+<div class="span11 offset1" id="contenthauptspaltelang"> <!-- main content -->
+  <div class="row">
+    <div class="span8">
+      [% IF !name %]
+        <p><strong>Project number not found</strong></p>
+        <p><a href="/search">Search projects</a> - <a href="/project">List of all projects</a></p>
+      [% ELSE %]
+
+      <h1 class="underline">[% name %]</h1>
+
+      [% IF startYear %]
+      Project Period: [% startYear %][% IF endYear %] - [% endYear %][% END %]<br />
+      [% END %]
+      [% IF callIdentifier %][% callIdentifier %]<br />[% END %]
+
+      <div class="span7" style="margin:0px;">
+        <!-- Pubtyp, -status und -quali -->
+        <em>Project</em>
+        [% IF isActive %]
+          <em>| Active</em>
+        [% END %]
+        [% IF sc39 %]
+          <em>| SC39</em>
+        [% END %]
+        [% IF isFunded %]
+          <em>| Externally Funded</em>
+        [% END %]
+        [% IF isGlobal %]
+          <em>| Global Project</em>
+        [% END %]
+      </div>
+
+      [% END %]
+
+    </div>
+
+    <div class="span3">&nbsp;</div>
+  </div>
+
+  <div class="row">
+    <div class="span11">
+      &nbsp;
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span11">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+        [% IF publhits %]<li><a href="#publications" data-toggle="tab">Publications</a></li>[% END %]
+      </ul>
+    </div>
+
+
+    <div class="span8">
+      <div class="tab tab-content" style="padding-left:12px;">
+        <div class="tab-pane active" id="details">
+
+          [% IF alternativeName %]
+          <div class="frontdoor">
+            <div class="frontdoor_left">
+              Alternative Name
+            </div>
+            <div class="frontdoor_right">
+              [% alternativeName %]
+            </div>
+          </div>
+          [% END %]
+
+          [% IF acronym %]
+          <div class="frontdoor">
+            <div class="frontdoor_left">
+              Acronym
+            </div>
+            <div class="frontdoor_right">
+              [% acronym %]
+            </div>
+          </div>
+          [% END %]
+
+          [% IF isOwnedBy %]
+          <div class="frontdoor">
+            <div class="frontdoor_left">
+              Coordinator
+            </div>
+            <div class="frontdoor_right">
+              [% FOREACH coord IN isOwnedBy %]
+                [% IF coord.name.personTitle != "" %]
+                  [% coord.name.personTitle %]
+                [% END %]
+                [% coord.name.givenName %] [% coord.name.surname %][% UNLESS loop.last %], [% END %]
+              [% END %]
+            </div>
+          </div>
+          [% END %]
+
+          [% IF principalInvestigators %]
+          <div class="frontdoor">
+            <div class="frontdoor_left">
+              Principal Investigators
+            </div>
+            <div class="frontdoor_right">
+              [% FOREACH pi IN principalInvestigators %]
+                [% IF pi.name.personTitle != "" %]
+                  [% pi.name.personTitle %]
+                [% END %]
+                [% pi.name.givenName %] [% pi.name.surname %][% UNLESS loop.last %], [% END %]
+              [% END %]
+            </div>
+          </div>
+          [% END %]
+
+          [% IF projectMembers %]
+          <div class="frontdoor">
+            <div class="frontdoor_left">
+              Members
+            </div>
+            <div class="frontdoor_right">
+              [% FOREACH pm IN projectMembers %]
+                [% IF pm.name.personTitle != "" %]
+                  [% pm.name.personTitle %]
+                [% END %]
+                [% pm.name.givenName %] [% pm.name.surname %][% UNLESS loop.last %], [% END %]
+              [% END %]
+            </div>
+          </div>
+          [% END %]
+
+          [% IF isOwnedByDepartment %]
+          <div class="frontdoor">
+            <div class="frontdoor_left">
+              Department(s)
+            </div>
+            <div class="frontdoor_right">
+              [% FOREACH aff_entry IN isOwnedByDepartment %]
+                [% aff_entry.name %]<br />
+              [% END %]
+            </div>
+          </div>
+          [% END %]
+
+          [% IF description %]
+            <div class="frontdoor">
+              <span class="frontdoor_left">Description</span><br />
+              [% FOREACH description_entry IN description %]
+                [% UNLESS loop.first %]
+                  <br /><br />
+                [% END %]
+                [% description_entry %]
+              [% END %]
+            </div>
+          [% END %]
+
+          [% IF grantNumber %]
+          <div class="frontdoor">
+            <div class="frontdoor_left">
+              Grant Number
+            </div>
+            <div class="frontdoor_right">
+              <a href="http://cordis.europa.eu/projects/[% grantNumber %]" target="_blank">[% grantNumber %]</a>
+            </div>
+          </div>
+          [% END %]
+
+          [% IF projectFunders %]
+          <div class="frontdoor">
+            <div class="frontdoor_left">
+              Funders
+            </div>
+            <div class="frontdoor_right">
+              [% FOREACH funder IN projectFunders %]
+                [% funder %]
+                [% UNLESS loop.last %]
+                  <br />
+                [% END %]
+              [% END %]
+            </div>
+          </div>
+          [% END %]
+
+          [% IF projectCooperators %]
+          <div class="frontdoor">
+            <div class="frontdoor_left">
+              Cooperators
+            </div>
+            <div class="frontdoor_right">
+              [% FOREACH coop IN projectCooperators %]
+                [% coop %]
+                [% UNLESS loop.last %]
+                  <br />
+                [% END %]
+              [% END %]
+            </div>
+          </div>
+          [% END %]
+
+          [% IF projecttype %]
+          <div class="frontdoor">
+            <div class="frontdoor_left">
+              Type
+            </div>
+            <div class="frontdoor_right">
+              [% projecttype %]
+            </div>
+          </div>
+          [% END %]
+
+          [% IF url %]
+          <div class="frontdoor">
+            <div class="frontdoor_left">
+              URL
+            </div>
+            <div class="frontdoor_right">
+              <a href="[% url %]" target="_blank">[% url %]</a>
+            </div>
+          </div>
+          [% END %]
+
+        </div>
+
+        <div class="tab-pane" id="publications" style="margin-left:-12px;">
+          [% IF publhits %]
+            [% limit = publhits.limit %]
+            [% hits = publhits.hits %]
+            [% total = publhits.total %]
+            [% INCLUDE websites/hits.tt %]
+          [% END %]
+        </div>
+      </div>
+    </div><!-- span8 -->
+
+    <div class="span3">
+      <!--
+      -->
+    </div>
+  </div>
+</div>
+</div>
+<!-- END project/project.tt -->
+
+[% INCLUDE footer.tt %]
