@@ -5,7 +5,7 @@
     <div class="form-group col-md-8">
       <div class="btn-group">
         [% IF !edit_mode OR edit_mode == "normal" %]
-        <button type="button" class="btn btn-default"><span class="fa fa-angle-double-left twoToOne" data-toggle="tab" href="#basic_fields"></span><span class="hidden-xs"> Back</span></button>
+        <button type="button" class="btn btn-default twoToOne" data-toggle="tab" href="#basic_fields"><span class="fa fa-angle-double-left"></span><span class="hidden-xs"> Back</span></button>
         [% END %]
         <button type="submit" name="finalSubmit" value="recSave" class="btn btn-success oneToTwo"><span class="glyphicon glyphicon-ok"></span><span class="hidden-xs"> Save</span></button>
         <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Cancel</span></button>
