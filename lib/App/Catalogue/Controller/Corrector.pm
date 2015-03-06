@@ -62,27 +62,20 @@ sub correct_hash_array {
 sub correct_writer {
 	my $data = shift;
 
-	$data->{writer_type} = "author" if !$data->{writer_type};
+	#$data->{writer_type} = "author" if !$data->{writer_type};
+	my @writers = qw(author editor translator supervisor);
 	
-	if($data->{writer}){
-		foreach my $crea (@{$data->{writer}}){
-			#$crea->{first_name} = $crea->{first_name}->[0];
-			#$crea->{last_name} = $crea->{last_name}->[0];
-			$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
-			push @{$data->{$data->{writer_type}}}, $crea;
+	foreach my $writer (@writers){
+		if($data->{$writer}){
+			foreach my $crea (@{$data->{$writer}}){
+				$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
+			}
+			$data->{"first_$writer"} = $data->{$writer}->[0]->{full_name} if $data->{$writer}->[0];
 		}
-		$data->{"first_$data->{writer_type}"} = $data->{$data->{writer_type}}->[0]->{full_name} if $data->{$data->{writer_type}}->[0];
 	}
-    
-    if($data->{editor}){
-    	foreach my $crea (@{$data->{editor}}){
-    		$crea->{full_name} = $crea->{last_name} . ", " . $crea->{first_name};
-    	}
-    	$data->{first_editor} = $data->{editor}->[0]->{full_name} if $data->{editor}->[0];
-    }
 
-    delete $data->{writer};
-    delete $data->{writer_type};
+    #delete $data->{writer};
+    #delete $data->{writer_type};
 
     return $data;
 }
