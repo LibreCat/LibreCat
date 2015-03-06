@@ -20,10 +20,10 @@ sub can_edit {
         return 1;
     } elsif ($user_role eq 'reviewer') {
         my @deps = map {"department=$_->{id}"} @{$user->{reviewer}};
-        $cql = "(" . join(@deps, ' OR ') . ")" . " AND id=$id";
+        $cql = "(" . join(' OR ', @deps) . ")" . " AND id=$id";
     } elsif ($user_role eq 'dataManager') {
         my @deps = map {"department=$_->{id}"} @{$user->{dataManager}};
-        $cql = "(" . join(@deps, ' OR ') . ")" . " AND id=$id";
+        $cql = "(" . join(' OR ', @deps) . ")" . " AND id=$id";
     } elsif ($user_role eq 'user') {
         $cql = "(person=$user->{_id} OR creator=$user->{_id}) AND id=$id";
         #if ($user->{delegate}) {

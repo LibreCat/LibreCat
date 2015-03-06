@@ -69,8 +69,9 @@ prefix '/myPUB/search' => sub {
 
         my $p = h->extract_params();
         my $account = h->getAccount(session->{user})->[0];
-        map {push @{$p->{q}}, "department=$_->{id}";} @{$account->{reviewer}};
-        
+        my $dep_query = join( ' OR ', map{"department=$_->{id}";} @{$account->{reviewer}});
+        push @{$p->{q}}, "($dep_query)";
+
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -98,9 +99,10 @@ prefix '/myPUB/search' => sub {
 
         my $p = h->extract_params();
         my $account = h->getAccount(session->{user})->[0];
-        map {push @{$p->{q}}, "department=$_->{id}";} @{$account->{data_manager}};
+        my $dep_query = join( ' OR ', map{"department=$_->{id}";} @{$account->{data_manager}});
+        push @{$p->{q}}, "($dep_query)";
         push @{$p->{q}}, "(type=researchData OR type=dara)";
-        
+
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -120,7 +122,6 @@ prefix '/myPUB/search' => sub {
     };
 
 	get '/delegate' => needs role => "delegate" => sub {
-		#my $p = h->extract_params();
 		my $account = h->getAccount(session->{user})->[0];
 		forward "/myPUB/search/delegate/$account->{delegate}->[0]", params;
 	};
@@ -135,7 +136,7 @@ prefix '/myPUB/search' => sub {
         my $p = h->extract_params();
         my $id = params->{delegate_id};
         push @{$p->{q}}, "(person=$id OR creator=$id)";
-        
+
         $p->{facets} = h->default_facets;
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -184,7 +185,7 @@ prefix '/myPUB/search' => sub {
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         push @{$p->{q}}, "type<>researchData";
         push @{$p->{q}}, "type<>dara";
-        
+
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -234,7 +235,7 @@ prefix '/myPUB/search' => sub {
 
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         push @{$p->{q}}, "(type=researchData OR type=dara)";
-        
+
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
