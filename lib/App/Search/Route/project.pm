@@ -20,8 +20,9 @@ get qr{/project/(P\d+)/*} => sub {
     my $proj = h->project->get($id);
 
     my $pub = h->publication->search(cql_query => "project=$id", limit => 100);
+    $proj->{project_publication} = $pub;
 
-    template 'project', {data => $proj, publhits => $pub};
+    template 'project/project', $proj;
 };
 
 1;
