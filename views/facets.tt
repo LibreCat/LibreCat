@@ -271,6 +271,14 @@
     <a type="button" href="/myPUB/person/preference?sort=&style=" class="btn btn-block btn-default">Reset to default</a><br />
   [% END %]
 
+[% ELSIF qp.item('sort') %]
+  <div class="text-muted">
+    <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    <strong>Sorted by:</strong>
+    [% FOREACH setting IN qp.item('sort') %]
+      [% setting %][% UNLESS loop.last %], [% END %]
+    [% END %]
+  </div>
 [% END %]
 
 <ul class="nav nav-tabs nav-stacked ul3">

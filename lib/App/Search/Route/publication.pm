@@ -39,7 +39,7 @@ get qr{/(data|publication)/*} => sub {
 	my $p = h->extract_params();
 	$p->{facets} = h->default_facets();
 	my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
-    $p->{sort} = $sort_style->{default_sort};
+    $p->{sort} = $sort_style->{sort};
 
 	($bag eq 'data') ? push @{$p->{q}}, ("status=public","(type=researchData OR type=dara)")
 		: push @{$p->{q}}, ("status=public","type<>researchData","type<>dara");
