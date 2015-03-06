@@ -38,9 +38,9 @@
             <div class="input-group-addon"><span id="translator_revert_0" data-type="translator_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
           </div>
           <script>
-              $('#translator_Authorized0').tooltip();
-              $('#translator_revert_0').tooltip();
-            </script>
+            $('#translator_Authorized0').tooltip();
+            $('#translator_revert_0').tooltip();
+          </script>
         </span>
         <input type="hidden" id="translator_id_0" name="translator.0.id" value="" />
       </div>
@@ -68,6 +68,10 @@
             <div class="input-group-addon"><span id="translator_revert_[% loop.index %]" data-type="translator_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
           </div>
         </span>
+        <script>
+          $('#translator_Authorized[% loop.index %]').tooltip();
+          $('#translator_revert_[% loop.index %]').tooltip();
+        </script>
         <input type="hidden" id="translator_id_[% loop.index %]" name="translator.[% loop.index %].id" value="[% name.id %]" />
       </div>
       [% END %]

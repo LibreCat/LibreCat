@@ -74,6 +74,10 @@
             <div class="input-group-addon"><span id="revert_[% loop.index %]" data-type="" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
           </div>
         </span>
+        <script>
+          $('#Authorized[% loop.index %]').tooltip();
+          $('#revert_[% loop.index %]').tooltip();
+        </script>
         <input type="hidden" id="id_[% loop.index %]" name="writer.[% loop.index %].id" value="[% name.id %]" />
       </div>
       [% END %]
