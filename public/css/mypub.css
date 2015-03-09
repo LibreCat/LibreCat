@@ -148,8 +148,7 @@ div.sticky_bottom textarea{margin-top:0;border-top-left-radius:0;border-top-righ
 div.input-group.sticky .input-group-addon,div.sticky input,div.sticky select,div.sticky textarea{border:none;outline:0;}
 div.sticky span.label.label-default{background-color:transparent;border:1px solid #ccc;color:inherit;}
 
-input.has-error{background-color:#ffcfce;}
-div.has-error{box-shadow:inset 0 1px 1px rgba(0,0,0,0.75);-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.75);border-radius:3px;border:1px solid #b94a48;}
+input.has-error,.has-error input{background-color:#ffcfce;}
 .checkbox-inline input[type='checkbox']{margin-top:0;}
 .edit-form{border-bottom:1px solid lightgray;min-height:200px;padding-bottom:5px;}
 .reuse-license{padding-left:18px;padding-right:18px;}
