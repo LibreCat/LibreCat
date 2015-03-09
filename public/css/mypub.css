@@ -129,13 +129,16 @@ a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 /* login page */
 .loginframe{border-color:#b6c828;background:#fff!important;}
 
-/* Dropzone */
+/* dropzone */
 #theses_dz_preview .well{background:#fff!important;}
 .dropzone{padding-left:0;padding-right:0;margin-left:0;}
 .dz-preview,.dz-file-preview{position:relative;margin-left:15px;padding-left:40px;}
 .dz-default.dz-message{min-height:40px;}
 .dz-default.dz-message.qae{background-color:#fff;padding:5px;margin-bottom:5px;text-align:center;}
 .dz-clickable,.input-group-addon{cursor:pointer;}
+
+/* share-a-copy */
+input.unstyled{border:0;border-radius:0;box-shadow:0 0 0 rgba(#fff) inset;}
 
 /* fields in upload forms */
 div.input-group.sticky .input-group-addon{background-color:#fff;color:#555;}
