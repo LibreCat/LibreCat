@@ -34,7 +34,7 @@
 	<ul class="nav navbar-nav">
          [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
 	 <li><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-sm">My Public Author Page</span></a></li>
-	 <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">my Home</span></a></li>
+	 <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">myPUB</span></a></li>
 	 [% IF session.role == 'super_admin' %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-inbox"></span>Admin <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -47,8 +47,7 @@
 	 [% END %]
        </ul>
        <ul class="nav navbar-nav navbar-right">
-         <li><a href="#" class="nolink"><span class="glyphicon glyphicon-user"></span> <em>[% session.user %]</em></a></li>
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><span class="hidden-sm">My Settings</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><span class="hidden-sm">[% session.user %]</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
             <div class="dropdown-menu" style="width:550px">
 	      [% INCLUDE person_affiliation.tt %]
             </div>
