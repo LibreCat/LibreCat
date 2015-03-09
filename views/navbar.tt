@@ -23,7 +23,7 @@
 	  [% ELSE %]
 	    Publikationen an der Uni Bielefeld
 	  [% END %]
-	  </a></span></span>
+	  </span></a></span>
 	</div>
       [% END %]
      </div>
