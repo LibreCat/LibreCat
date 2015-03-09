@@ -93,57 +93,57 @@
 
 	<!-- fulltext -->
 	[% FOREACH fi IN mainFile.nsort('file_order') %]
-	[% IF fi.file_name %]
-	[% IF loop.first %]
-	<div class="row">
-	  <div class="col-xs-2">Download</div>
-	  <div class="col-xs-10">
-	    [% INCLUDE websites/oa_lock.tt %] <a itemprop="url" href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.file_name %]</a>
-	    <span class="text-muted"> [% h.pretty_byte_size(fi.size) %]</span>
-	    [% IF fi.request_a_copy %]
-	    <a href="#myModal_[% fi.file_id %]" data-toggle="modal" class="btn btn-default"><span class="fa fa-copy"></span> Request a copy</a>
-	    [% END %]
+	  [% IF fi.file_name %]
+	    [% IF loop.first %]
+	    <div class="row">
+	      <div class="col-xs-2">Download</div>
+	      <div class="col-xs-10">
+		[% INCLUDE websites/oa_lock.tt %] <a itemprop="url" href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.file_name %]</a>
+		<span class="text-muted"> [% h.pretty_byte_size(fi.size) %]</span>
+		[% IF fi.request_a_copy %]
+		<a href="#myModal_[% fi.file_id %]" data-toggle="modal" class="btn btn-default"><span class="fa fa-copy"></span> Request a copy</a>
+		[% END %]
 
-	    <!-- Modal -->
-	    <div class="modal" id="myModal_[% fi.file_id %]" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	      <div class="modal-dialog">
-		<div class="modal-content">
-		  <div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		    <h4 class="modal-title" id="myModalLabel">Request a copy</h4>
-		  </div>
-		  <div class="modal-body">
-		    <form action="/requestcopy/[% _id %]/[% fi.file_id %]" method="POST">
-		      <div class="form-group">
-		      <input type="email" name="user_email" placeholder="Your Email" required/><br/>
-		      <textarea name="" placeholder="Message to the author"></textarea>
+		<!-- Modal -->
+		<div class="modal" id="myModal_[% fi.file_id %]" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">Request a copy</h4>
 		      </div>
-		      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		      <button type="submit" class="btn btn-primary">Request</button>
-		    </form>
+		      <div class="modal-body">
+			<form action="/requestcopy/[% _id %]/[% fi.file_id %]" method="POST">
+			  <div class="form-group">
+			  <input type="email" name="user_email" placeholder="Your Email" required/><br/>
+			  <textarea name="" placeholder="Message to the author"></textarea>
+			  </div>
+			  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			  <button type="submit" class="btn btn-primary">Request</button>
+			</form>
+		      </div>
+		    </div>
 		  </div>
+		</div><!-- Modal -->
+	      [% END %]
+	      [% IF loop.count > 1 %]
+		<br>[% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.file_name %]</a>
+		<span class="text-muted"> [% h.get_file_size(_id, fi.file_name) %]</span>
+	      [% END %]
+	      [% IF loop.count > 2 && loop.size > 3 %]
+		<span id="showFiles">
+		  <br><a href="#" onclick="ShowFiles();"><span class="glyphicon glyphicon-plus fw"></span>All</a>
+		</span>
 		</div>
 	      </div>
-	    </div><!-- Modal -->
+	      [% LAST %]
+	      [% END %]
+	      [% IF confirmationLetter %](<a href="[% h.shost %]/download/[% _id %]/[% confirmationLetter._id %]" target="_blank">Letter of Confirmation</a>)[% END %]
+	      [% IF loop.last %]
+	      </div>
+	    </div>
+	    [% END %]
 	  [% END %]
-	  [% IF loop.count > 1 %]
-	      <br>[% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.file_name %]</a>
-	      <span class="text-muted"> [% h.get_file_size(_id, fi.file_name) %]</span>
-	  [% END %]
-	  [% IF loop.count > 2 && loop.size > 3 %]
-	      <span id="showFiles">
-		<br><a href="#" onclick="ShowFiles();"><span class="glyphicon glyphicon-plus fw"></span>All</a>
-	      </span>
-	  </div>
-	</div>
-	[% LAST %]
-	[% END %]
-	  [% IF confirmationLetter %](<a href="[% h.shost %]/download/[% _id %]/[% confirmationLetter._id %]" target="_blank">Letter of Confirmation</a>)[% END %]
-	  [% IF loop.last %]
-	  </div>
-	</div>
-	[% END %]
-	[% END %]
 	[% END %]
 
 	<!-- DOI -->
@@ -391,75 +391,83 @@
 	</div><!-- end modal -->
 
 	<!-- Sources -->
-	[% IF external_id.isi %]
-	<h3>Web of Science</h3>
-	[% IF metrics.timesCited %]
-	<a href="[% metrics.citingURL %]" target="_parent">
-	Web of Science&reg; Times Cited: <strong class="wos-times-cited">[% metrics.timesCited %]</strong>
-	</a></li><br>
-	[% END %]
-	<a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">View record in Web of Science&reg;</a>
-	[% END %]
-
 	[% IF external_id %]
-	<h3>Sources</h3>
 
-	[% IF external_id.pmid %]
-	<p><img src="/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% external_id.pmid %]<br>
-	<a href="http://www.ncbi.nlm.nih.gov/pubmed/[% external_id.pmid %]">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% external_id.pmid %]">Europe PMC</a></p>
-	[% END %]
+	  [% IF external_id.isi %]
+	  <h3>Web of Science</h3>
+	  [% IF metrics.timesCited %]
+	  <a href="[% metrics.citingURL %]" target="_parent">
+	  Web of Science&reg; Times Cited: <strong class="wos-times-cited">[% metrics.timesCited %]</strong>
+	  </a></li><br>
+	  [% END %]
+	  <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">View record in Web of Science&reg;</a>
 
-	[% IF external_id.arxiv %]
-	<p><img src="/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="http://arxiv.org/abs/[% external_id.arxiv %]">[% external_id.arxiv %]</a></p>
-	[% END %]
+	  [% ELSE %]
+	  <h3>Sources</h3>
 
-	[% IF external_id.inspire %]
-	<p><img src="/images/icon_inspire.png" class="img-thumbnail" alt="">Inspire <a href="https://inspirehep.net/record/[% external_id.inspire %]">[% external_id.inspire %]</a></p>
-	[% END %]
+	  [% IF external_id.pmid %]
+	  <p><img src="/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% external_id.pmid %]<br>
+	  <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% external_id.pmid %]">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% external_id.pmid %]">Europe PMC</a></p>
+	  [% END %]
 
-	[% IF external_id.scoap3 %]
-	<p><img src="/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="http://repo.scoap3.org/record/[% external_id.scoap3 %]">[% external_id.scoap3 %]</a></p>
-	[% END %]
+	  [% IF external_id.arxiv %]
+	  <p><img src="/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="http://arxiv.org/abs/[% external_id.arxiv %]">[% external_id.arxiv %]</a></p>
+	  [% END %]
 
-	[% IF external_id.ahf %]
-	<p>AHF: <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% external_id.ahf %]">[% external_id.ahf %]</a></p>
-	[% END %]
+	  [% IF external_id.inspire %]
+	  <p><img src="/images/icon_inspire.png" class="img-thumbnail" alt="">Inspire <a href="https://inspirehep.net/record/[% external_id.inspire %]">[% external_id.inspire %]</a></p>
+	  [% END %]
 
-	[% IF external_id.opac %]
-	<p><img src="/images/icon_uni.png" class="img-thumbnail" alt=""><a href=" http://katalogplus.ub.uni-bielefeld.de/title/[% external_id.opac %]">Library Catalogue</a></p>
-	[% END %]
+	  [% IF external_id.scoap3 %]
+	  <p><img src="/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="http://repo.scoap3.org/record/[% external_id.scoap3 %]">[% external_id.scoap3 %]</a></p>
+	  [% END %]
 
-	[% IF external_id.phillister %]
-	<p><img src="/images/icon_uni.png" class="img-thumbnail" alt="">PhilLister: <a href="http://phillister.ub.uni-bielefeld.de/publication/[% external_id.phillister %]">[% external_id.phillister %]</a></p>
-	[% END %]
+	  [% IF external_id.ahf %]
+	  <p>AHF: <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% external_id.ahf %]">[% external_id.ahf %]</a></p>
+	  [% END %]
+
+	  [% IF external_id.opac %]
+	  <p><img src="/images/icon_uni.png" class="img-thumbnail" alt=""><a href=" http://katalogplus.ub.uni-bielefeld.de/title/[% external_id.opac %]">Library Catalogue</a></p>
+	  [% END %]
+
+	  [% IF external_id.phillister %]
+	  <p><img src="/images/icon_uni.png" class="img-thumbnail" alt="">PhilLister: <a href="http://phillister.ub.uni-bielefeld.de/publication/[% external_id.phillister %]">[% external_id.phillister %]</a></p>
+	  [% END %]
+
+	  [% END %]
+
 	[% END %]
 
 
 	<!-- Supplements -->
 	[% IF genbank OR nasc %]
-	<h3>Supplements</h3>
-	<div class="row">
+	<h3 id="supplements">Supplements</h3>
+	  [% IF genbank %]
+	  <p>
 	  [% FOREACH id_entry IN genbank %]
-	  [% IF loop.first %]
-	  <img src="/images/icon_genbank.gif" class="img-thumbnail" alt="">GenBank:<br>
+	    [% IF loop.first %]
+	    <img src="/images/icon_genbank.gif" class="img-thumbnail" alt=""><strong>GenBank</strong><br>
+	    [% END %]
+	    <a href="http://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]">[% id_entry %]</a>
+	    [% IF loop.count > 14 %]
+	    <span id="showGen">
+	      <br><a href="#supplements" onclick="ShowGenBankIDs();"><span class="glyphicon glyphicon-plus fw"></span>All</a>
+	    </span>
+	    [% LAST %]
+	    [% END %]
 	  [% END %]
-	  <a href="http://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]">[% id_entry %]</a>
-	  [% IF loop.count > 14 %]
-	  <span id="showGen">
-	    <br><a href="#" onclick="ShowGenBankIDs();"><span class="glyphicon glyphicon-plus fw"></span>All</a>
-	  </span>
-	  [% LAST %]
+	  </p>
 	  [% END %]
-	  [% END %]
-	</div>
-	<div class="row">
+	  [% IF nasc %]
+	  <p>
 	  [% FOREACH id_entry IN nasc %]
-	  [% IF loop.first %]
-	  <img src="/images/icon_nasc.png" alt="" class="img-thumbnail">NASC<br>
+	    [% IF loop.first %]
+	    <img src="/images/icon_nasc.png" alt="" class="img-thumbnail"><strong>NASC</strong><br>
+	    [% END %]
+	    <a href="http://arabidopsis.info/StockInfo?NASC_id=[% id_entry %]">[% id_entry %]</a>
+	    [% END %]
+	  </p>
 	  [% END %]
-	  <a href="http://arabidopsis.info/StockInfo?NASC_id=[% id_entry %]">[% id_entry %]</a>
-	  [% END %]
-	</div>
 	[% END %]
 
 
