@@ -5,7 +5,8 @@
 /* sticky footer */
 html,body{height:100%;}
 main{min-height:100%;height:auto!important;height:100%;margin:0 auto -100px;}
-#push,footer{height:140px;}
+#push{height:160px;}
+footer{height:100px;}
 
 /* top navbar */
 .navbar-default.backend{border-color:#b6c828;}

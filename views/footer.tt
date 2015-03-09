@@ -14,20 +14,20 @@
 	<div class="col-sm-7">
 	  <p>&copy; 2010-2015 <a href="http://www.ub.uni-bielefeld.de/[% lang ? "english/" : "" %]">[% lang ? "Bielefeld University Library" : "Universitätsbibliothek Bielefeld" %]</a></p>
 	  <ul class="list-inline">
-	    <li><a href="http://www.dini.de/dini-zertifikat/" target="_blank"><img src="/images/logo_dini_2010.png" alt="DINI-Zertifikat 2010" title="PUB ist mit dem DINI-Zertifikat 2010 ausgezeichnet" style="height:60px;"/></a></li>
+	    <li><a href="http://www.dini.de/dini-zertifikat/" target="_blank"><img src="/images/logo_dini_2010.png" alt="DINI-Zertifikat 2010" title="PUB ist mit dem DINI-Zertifikat 2010 ausgezeichnet" style="height:40px;"/></a></li>
 	    <li><a href="http://www.openaire.eu/" target="_blank"><img src="/images/logo_openaire_val.png" alt="OpenAIRE valid" title="PUB ist 100% OpenAire-valide" /></a></li>
 	    <li><a href="http://www.openarchives.org/Register/BrowseSites" target="_blank"><img src="/images/logo_oai.gif" alt="Open Archives Data Provider " title="PUB ist registrierter Daten-Provider der Open Archives Initiative" style="height:40px;"/></a></li>
-	    <li><a href="http://www.datacite.org/" target="_blank"><img src="/images/logo_datacite.png" alt="DataCite" title="PUB registriert Forschungsdaten bei DataCite" style="height:60px;"/></a></li>
+	    <li><a href="http://www.datacite.org/" target="_blank"><img src="/images/logo_datacite.png" alt="DataCite" title="PUB registriert Forschungsdaten bei DataCite" style="height:40px;"/></a></li>
 	  </ul>
 	</div>
 	<div class="col-sm-5">
 	  <ul class="list-inline">
-	    <li>[% lang ? "Built with" : "Entwickelt mit" %] <a href="http://www.librecat.org/">LibreCat<img src="/images/librecat.png" alt=""></a></li>
-	    <li>[% lang ? "and" : "und" %] <a href="https://github.com/">GitHub<span class="fa fa-github fa-2x pull-right"></span></a></li>
-	  </ul>
-	  <ul class="list-inline">
 	    <li><a href="[% h.host %]/policy?lang=[% lang %]">[% lang ? "PUB Policy" : "PUB-Leitlinien" %]</a></li>
 	    <li><a href="http://www.ub.uni-bielefeld.de/[% lang ? "english/" : "" %]biblio/kontakt/impressum/">[% lang ? "Imprint" : "Impressum" %]</a></li>
+	  </ul>
+	  <ul class="list-inline">
+	    <li>[% lang ? "Built with" : "Entwickelt mit" %] <a href="http://www.librecat.org/">LibreCat<img src="/images/librecat.png" alt=""></a></li>
+	    <li>[% lang ? "and" : "und" %] <a href="https://github.com/">GitHub<span class="fa fa-github fa-2x pull-right"></span></a></li>
 	  </ul>
 	</div>
       </div>
