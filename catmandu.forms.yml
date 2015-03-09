@@ -1159,6 +1159,7 @@ publicationTypes:
         year: *year
       file_upload: *file_upload
       supplementary_fields:
+        tab_name: "Additional Information"
         extern: *extern
         language: *language
         urn: *urn
@@ -1228,6 +1229,7 @@ publicationTypes:
         year: *year
       file_upload: *file_upload
       supplementary_fields:
+        tab_name: "Additional Information"
         extern: *extern
         language: *language
         original_language: *language
