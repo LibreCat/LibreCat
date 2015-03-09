@@ -11,6 +11,10 @@ get '/' => sub {
 	template 'websites/index_publication.tt', {bag => "home"};
 };
 
+# redurect for old /luur login
+get qr{/luur/*} => sub {
+	redirect '/login';
+};
 
 # redirect for /index.html
 get qr{(.*/index.html)} => sub {
