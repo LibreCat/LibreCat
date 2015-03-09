@@ -1124,7 +1124,6 @@ publicationTypes:
           label_short: "Title (Trans.)"
           placeholder: "Handbuch des eBook Publishings"
         alternative_title:
-          mandatory: 1
           label: "Title (Original)"
           label_short: "Title (Orig)"
           placeholder: "Handbook of eBook Publishing"
@@ -1190,7 +1189,6 @@ publicationTypes:
           label_short: "Title (Trans.)"
           placeholder: "e.g. Handbuch des eBook Publishings"
         alternative_title:
-          mandatory: 1
           label: "Title (Original)"
           label_short: "Title (Orig)"
           placeholder: "e.g. Handbook of eBook Publishing"
