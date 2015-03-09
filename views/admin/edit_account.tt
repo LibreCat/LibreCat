@@ -22,7 +22,7 @@
 	    <div class="col-md-10">
 	      <div class="row innerrow">
             <div class="form-group col-md-10 col-xs-11">
-              <div class="input-group input-group-sm sticky mandatory">
+              <div class="input-group sticky mandatory">
                 <div class="input-group-addon hidden-lg hidden-md">ID</div>
 	            <input type="text" name="_id" id="id_id" value="[% _id %]" class="form-control sticky" readonly="readonly" required>
 	            <div class="input-group-addon"></div>
@@ -57,7 +57,7 @@
 	    <div class="col-md-10">
 	      <div class="row innerrow">
 	        <div class="form-group col-md-10 col-xs-11">
-	          <div class="input-group input-group-sm sticky">
+	          <div class="input-group sticky">
 	            <div class="input-group-addon hidden-lg hidden-md">Ext. Institution</div>
 	            <input type="text" name="ext_institution" value="[% ext_institution %]" class="form-control sticky" id="id_ext_institution">
 	            <div class="input-group-addon"></div>
@@ -74,7 +74,7 @@
 	    <div class="col-md-10">
 	      <div class="row innerrow">
 	        <div class="form-group col-md-10 col-xs-11">
-	          <div class="input-group input-group-sm sticky">
+	          <div class="input-group sticky">
 	            <div class="input-group-addon hidden-lg hidden-md">Password</div>
 	            <input type="text" name="password" value="[% password %]" class="form-control sticky" id="id_password">
 	            <div class="input-group-addon"></div>
@@ -90,14 +90,14 @@
 	    </div>
 	    <div class="col-md-10">
 	      <div class="form-group col-md-4 col-xs-11">
-            <div class="input-group input-group-sm sticky mandatory">
+            <div class="input-group sticky mandatory">
               <div class="input-group-addon">First Name</div>
               <input type="text" name="first_name" id="id_first_name" value="[% first_name %]" class="form-control sticky" required>
 	          <div class="input-group-addon"></div>
 	        </div>
 	      </div>
 	      <div class="form-group col-md-6 col-xs-11">
-            <div class="input-group input-group-sm sticky mandatory">
+            <div class="input-group sticky mandatory">
               <div class="input-group-addon">Last Name</div>
               <input type="text" name="last_name" id="id_last_name" value="[% last_name %]" class="form-control sticky" required>
               <div class="input-group-addon"></div>
@@ -112,14 +112,14 @@
         </div>
 	    <div class="col-md-10">
 	      <div class="form-group col-md-4 col-xs-11">
-	        <div class="input-group input-group-sm sticky">
+	        <div class="input-group sticky">
 	          <div class="input-group-addon">Old First Name</div>
 	          <input type="text" name="old_first_name" id="id_old_first_name" value="[% old_first_name %]" class="form-control sticky">
 	          <div class="input-group-addon"></div>
 	        </div>
 	      </div>
 	      <div class="form-group col-md-6 col-xs-11">
-	        <div class="input-group input-group-sm sticky">
+	        <div class="input-group sticky">
 	          <div class="input-group-addon">Old Last Name</div>
   	          <input type="text" name="old_last_name" id="id_old_last_name" value="[% old_last_name %]" class="form-control sticky">
   	          <div class="input-group-addon"></div>
@@ -135,7 +135,7 @@
 	    <div class="col-md-10">
 	      <div class="row innerrow">
 	        <div class="form-group col-md-10 col-xs-11">
-	          <div class="input-group input-group-sm sticky">
+	          <div class="input-group sticky">
                 <div class="input-group-addon hidden-lg hidden-md">Email</div>
 	            <input type="email" name="bis.email" id="id_email" value="[% bis.email %]" class="form-control sticky">
 	            <div class="input-group-addon"></div>
@@ -152,7 +152,7 @@
 	    <div class="col-md-10">
 	      <div class="row innerrow">
   	        <div class="form-group col-md-10 col-xs-11">
-  	          <div class="input-group input-group-sm sticky">
+  	          <div class="input-group sticky">
   	            <div class="input-group-addon hidden-lg hidden-md">LDAP Login</div>
 	            <input type="text" name="login" id="id_login" value="[% login %]" class="form-control sticky">
 	            <div class="input-group-addon"></div>
@@ -173,13 +173,13 @@
 	        <input type="hidden" name="department.0.name" id="aff_nameautocomplete_0" />
 
 	        <div class="form-group col-md-10 col-xs-11">
-	          <div class="input-group input-group-sm sticky">
+	          <div class="input-group sticky">
                 <div class="input-group-addon hidden-lg hidden-md">Affiliation</div>
 	            <input type="text" onfocus="enable_autocomplete('aff',0);" class="sticky form-control" id="aff_autocomplete_0" value="" />
                 <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="affiliation_select_0">Select</span></div>
-                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
                 <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
-	          </div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+		</div>
 	        </div>
 	      </div>
   	    [% ELSE %]
@@ -189,13 +189,13 @@
 	        <input type="hidden" name="department.[% loop.index %].name" id="aff_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
 	        
 	        <div class="form-group col-md-10 col-xs-11">
-	          <div class="input-group input-group-sm sticky">
+	          <div class="input-group sticky">
                 <div class="input-group-addon hidden-lg hidden-md">Affiliation</div>
 	            <input type="text" onfocus="enable_autocomplete('aff',[% loop.index %]);" class="sticky form-control" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
 	            <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="affiliation_select_0">Select</span></div>
-                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
                 <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
-	          </div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+		</div>
 	        </div>
 	      </div>
 	    [% END %]
@@ -212,11 +212,7 @@
 	</div>
       </div>
 
-      <div class="row innerrow">
-	    <div class="col-md-12">
-	      &nbsp;
-	    </div>
-      </div>
+      <hr>
 
       <div class="row innerrow">
 	<div class="col-md-2"><label for="id_super_admin">Library Admin</label></div>
@@ -234,7 +230,7 @@
 	    <div class="col-md-10">
   	      <div class="row innerrow">
   	        <div class="form-group col-md-10 col-xs-11">
-	          <div class="input-group input-group-sm sticky">
+	          <div class="input-group sticky">
 	            <div class="input-group-addon hidden-lg hidden-md">Manage Publications For</div>
 	            <input type="text" id="id_delegate" value="" class="sticky form-control" placeholder="12345 (PEVZ-ID)"/>
 	            <div class="input-group-addon"><span onclick="addDelegate(this);" class="select_button" id="delegate_select"><span class="glyphicon glyphicon-plus"></span> Add</span></div>
@@ -270,13 +266,13 @@
 	        <input type="hidden" name="data_manager.0.name" id="dp_nameautocomplete_0" />
 
 	        <div class="form-group col-md-10 col-xs-11">
-	          <div class="input-group input-group-sm sticky">
+	          <div class="input-group sticky">
                 <div class="input-group-addon hidden-lg hidden-md">Data Manager</div>
 	            <input type="text" class="sticky form-control" onfocus="enable_autocomplete('dp',[% loop.index %]);" name="data_manager.0.name" id="dp_autocomplete_0" value="" />
 	            <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="data_manager_select_0">Select</span></div>
-                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
                 <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('data_manager');"></span></div>
-	          </div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+		</div>
 	        </div>
 	      </div>
 	    [% ELSE %]
@@ -286,13 +282,13 @@
 	        <input type="hidden" name="data_manager.[% loop.index %].name" id="dp_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
 	        
 	        <div class="form-group col-md-10 col-xs-11">
-	          <div class="input-group input-group-sm sticky">
+	          <div class="input-group sticky">
                 <div class="input-group-addon hidden-lg hidden-md">Data Manager</div>
 	            <input type="text" class="sticky form-control" onfocus="enable_autocomplete('dp',[% loop.index %]);" name="data_manager.[% loop.index %].name" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
 	            <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="data_manager_select_0">Select</span></div>
-                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
                 <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('data_manager');"></span></div>
-	          </div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+		</div>
 	        </div>
 	      </div>
 	    [% END %]
@@ -311,13 +307,13 @@
 	        <input type="hidden" name="reviewer.0.name" id="rv_nameautocomplete_0" />
 
 	        <div class="form-group col-md-10 col-xs-11">
-	          <div class="input-group input-group-sm sticky">
+	          <div class="input-group sticky">
                 <div class="input-group-addon hidden-lg hidden-md">Reviewer</div>
 	            <input type="text" class="sticky form-control" onfocus="enable_autocomplete('rv',0);" id="rv_autocomplete_0" value="" />
 	            <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="reviewer_select_0">Select</span></div>
-                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
                 <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('reviewer');"></span></div>
-	          </div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+		</div>
 	        </div>
 	      </div>
 	    [% ELSE %]
@@ -327,13 +323,13 @@
 	        <input type="hidden" name="reviewer.[% loop.index %].name" id="rv_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
 	    
 	        <div class="form-group col-md-10 col-xs-11">
-	          <div class="input-group input-group-sm sticky">
+	          <div class="input-group sticky">
                 <div class="input-group-addon hidden-lg hidden-md">Reviewer</div>
 	            <input type="text" class="sticky form-control" onfocus="enable_autocomplete('rv',[% loop.index %]);" name="reviewer.[% loop.index %].name" id="rv_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
 	            <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="reviewer_select_[% loop.index %]">Select</span></div>
-                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
                 <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('reviewer');"></span></div>
-	          </div>
+                <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+		</div>
 	        </div>
 	      </div>
 	    [% END %]
@@ -341,11 +337,7 @@
 	    </div>
       </div>
       
-      <div class="row innerrow">
-	    <div class="col-md-12">
-	      &nbsp;
-	    </div>
-      </div>
+      <hr>
   
       [%  FOREACH k IN h.config.lists.author_id.keys.sort %]
       <div class="row innerrow">
@@ -355,7 +347,7 @@
 	    <div class="col-md-10">
 	      <div class="row innerrow">
 	        <div class="form-group col-md-10 col-xs-11">
-	          <div class="input-group input-group-sm sticky">
+	          <div class="input-group sticky">
 	            <div class="input-group-addon hidden-lg hidden-md">[% h.config.lists.author_id.$k.label %]</div>
 	            <input type="text" name="[% k %]" id="id_[% k %]" value="[% $k %]" class="sticky form-control check_[% k %]">
 	            <div class="input-group-addon"></div>
@@ -369,8 +361,8 @@
       <div class="row innerrow"><!-- button -->
 	<div class="col-md-12 buttonrow">
 	<span class="form-group col-md-10 col-md-offset-2">
-	  <button type="button" class="btn btn-danger cancel-button"><span class="glyphicon glyphicon-remove"></span> Close</button>
 	  <button type="submit" id="id_do_nothing" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save</button>
+	  <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
 	</span>
 	</div>
       </div>
