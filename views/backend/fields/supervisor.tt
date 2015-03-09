@@ -36,6 +36,7 @@
             <div class="input-group-addon"><span id="supervisor_link_pevz_0" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.supervisor.pevz_tooltip %}" /></span></div>
             <div class="input-group-addon"><span id="supervisor_revert_0" data-type="supervisor_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
+            <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </span>
         {% IF fields.basic_fields.supervisor.pevz OR fields.supplementary_fields.supervisor.pevz %}
@@ -72,6 +73,7 @@
             <div class="input-group-addon"><span id="supervisor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" height="20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.supervisor.pevz_tooltip %}" /></span></div>
             <div class="input-group-addon"><span id="supervisor_revert_[% loop.index %]" data-type="supervisor_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
+            <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </span>
         {% IF fields.basic_fields.supervisor.pevz OR fields.supplementary_fields.supervisor.pevz %}

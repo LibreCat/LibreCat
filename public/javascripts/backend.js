@@ -428,6 +428,24 @@ $(function () {
 	    	$("body").removeClass("dragging");
 	    }
 	});
+
+	$(".creator").sortable({
+		containerSelector: 'div.row.innerrow',
+	    itemSelector: 'div.sortitem',
+	    update: function (event, ui) {
+		    $('.creator').find('div.row.innerrow').each(function(index){
+		    	var myitem = $(this);
+		    	myitem.find('input[name]').each(function(){
+		    		var myRegexp = /(.*\.)\d{1,}(\..*)/g;
+		    		var myString = $(this).attr('name');
+		    		var match = myRegexp.exec(myString);
+		    		$(this).attr('name', match[1] + index + match[2]);
+		    	});
+		    });
+	    	ui.item.removeClass("dragged").removeAttr("style");
+	    	$("body").removeClass("dragging");
+	    }
+	});
 });
 
 function add_field(name, placeholder){

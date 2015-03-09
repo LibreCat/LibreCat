@@ -31,6 +31,7 @@
             <div class="input-group-addon"><span id="editor_link_pevz_0" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip || fields.basic_fields.editor_solo.pevz_tooltip || fields.supplementary_fields.editor.pevz_tooltip || fields.supplementary_fields.editor_solo.pevz_tooltip %}" /></span></div>
             <div class="input-group-addon"><span id="editor_revert_0" data-type="editor_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
+            <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </span>
         {% IF fields.basic_fields.editor.pevz OR fields.basic_fields.editor_solo.pevz OR fields.supplementary_fields.editor.pevz OR fields.supplementary_fields.editor_solo.pevz %}
@@ -65,6 +66,7 @@
             <div class="input-group-addon"><span id="editor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] border="0" height="20px" [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip || fields.basic_fields.editor_solo.pevz_tooltip || fields.supplementary_fields.editor.pevz_tooltip || fields.supplementary_fields.editor_solo.pevz_tooltip %}" /></span></div>
             <div class="input-group-addon"><span id="editor_revert_[% loop.index %]" data-type="editor_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
+            <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </span>
         {% IF fields.basic_fields.editor.pevz OR fields.basic_fields.editor_solo.pevz OR fields.supplementary_fields.editor.pevz OR fields.supplementary_fields.editor_solo.pevz %}

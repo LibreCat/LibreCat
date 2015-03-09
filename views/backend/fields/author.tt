@@ -34,6 +34,7 @@
             <div class="input-group-addon"><span id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip || fields.basic_fields.author_secondary.pevz_tooltip %}" /></span></div>
             <div class="input-group-addon"><span id="revert_0" data-type="" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
+            <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </span>
         {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
@@ -68,6 +69,7 @@
             <div class="input-group-addon"><span id="link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type=""><img id="Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] border="0" height="20" [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip || fields.basic_fields.author_secondary.pevz_tooltip %}" /></span></div>
             <div class="input-group-addon"><span id="revert_[% loop.index %]" data-type="" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
+            <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </span>
         {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
