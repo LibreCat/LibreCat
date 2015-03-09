@@ -299,7 +299,7 @@
   </li>
   [% END %]
   <li>
-    <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>Citation Style[% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</button>
+    <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Citation Style' : 'Zitationsstil' %][% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</button>
     <div class="facettecollapse">
     <ul id="style_[% tabmodus %][% menu %]" class="collapse">
       [% IF qp.style AND qp.style == "frontShort" %]
@@ -319,7 +319,7 @@
   </li>
   [% IF !request.path.match('marked') %]
   <li>
-    <button data-toggle="collapse" data-target="#sort_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>Sorting</button>
+    <button data-toggle="collapse" data-target="#sort_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Sorting' : 'Sortierung' %]</button>
     <div class="facettecollapse">
     <ul id="sort_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH s IN h.config.store.sort_options %]
