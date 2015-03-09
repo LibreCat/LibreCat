@@ -326,25 +326,19 @@ $("#id_place").autocomplete("option", "delay", 100);
 
 // connect publications
 $(function() {
-  var puburl = '/myPUB/autocomplete_connect?q=';
-  [% IF modus == "reviewer" OR session.role == "reviewer" %]
-    [% FOREACH dept IN thisPerson.reviewer %]
-      puburl += 'department=[% dept.id %] OR ';
-    [% END %]
+  var puburl = '';
+  [% IF modus == "super_admin" OR session.role == "super_admin" %]
+    puburl = '/myPUB/search/admin?fmt=autocomplete';
+  [% ELSIF modus == "reviewer" OR session.role == "reviewer" %]
+    puburl = '/myPUB/search/reviewer?fmt=autocomplete';
   [% ELSIF modus == "dataManager" OR session.role == "dataManager" %]
-    [% FOREACH dept IN thisPerson.dataManager %]
-      puburl += 'department=[% dept.id %] OR ';
-    [% END %]
-  [% ELSIF modus == "user" OR session.role == "user" %]
-    puburl += 'person=[% session.personNumber %] OR ';
+    puburl = '/myPUB/search/data_manager?fmt=autocomplete';
+  [% ELSIF modus == "delegate" OR session.role == "delegate" %]
+    puburl = '/myPUB/search/delegate?fmt=autocomplete';
+  [% ELSE %]
+    puburl = '/myPUB/search?fmt=autocomplete';
   [% END %]
-  [% IF thisPerson.delegate AND session.role != "super_admin" %]
-    [% FOREACH prof IN thisPerson.delegate %]
-      puburl += 'person=[% prof %] OR ';
-    [% END %]
-  [% END %]
-  var regex = / OR $/;
-  puburl = puburl.replace(regex, "");
+  
   $( "#connect_autocomplete" ).autocomplete({
     source: puburl,
     minLength: 2,

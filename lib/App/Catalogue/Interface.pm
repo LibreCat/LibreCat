@@ -49,49 +49,6 @@ prefix '/myPUB' => sub {
 		}
 	};
 
-	get '/autocomplete_connect' => sub {
-		my $term = params->{'term'} || "";
-		my $q = params->{'q'} || "";
-
-		if($term ne "" and $q eq ""){
-			if(session->{role} ne "user"){
-				$q = "title=" . $term . "* OR person=" . $term . "*";
-			}
-			else {
-				$q = "title=" . $term . "*";
-			}
-		}
-		elsif($term ne "" and $q ne "") {
-			$q = $q . " AND " . $term . "*";
-		}
-
-		my $p = {limit => 1000, sort => "title,,0"};
-		push @{$p->{q}}, $q;
-
-		my $hits = h->search_publication($p);
-
-		my $jsonhash = [];
-
-		if($hits->{total}){
-        	$hits->each( sub{
-        		my $hit = $_[0];
-        		if($hit->{title} && $hit->{year}){
-        			my $label = "$hit->{title} ($hit->{year}";
-        			my $author = $hit->{author} || $hit->{editor} || [];
-        			if($author && $author->[0]->{first_name} && $author->[0]->{last_name}){
-        				$label .= ", " .$author->[0]->{first_name} . " " . $author->[0]->{last_name} .")";
-        			}
-        			else{
-        				$label .= ")";
-        			}
-        			push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
-        		}
-        	});
-        	my $json = to_json($jsonhash);
-        	return $json;
-        }
-	};
-
 	get '/autocomplete_hierarchy' => sub {
 		return unless params->{'term'};
 

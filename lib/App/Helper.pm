@@ -11,6 +11,7 @@ use Moo;
 use POSIX qw(strftime);
 use List::Util;
 use Hash::Merge::Simple qw/merge/;
+use JSON;
 
 Catmandu->load(':up');
 
@@ -110,10 +111,18 @@ sub extract_params {
 
 	#push @{$p->{q}}, $params->{text} if $params->{text};
 	($params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, $params->{text}) : (push @{$p->{q}}, join(" AND ",split(" ",$params->{text}))) if $params->{text};
-
-	my $formats = $self->config->{exporter}->{publication};
-	$p->{fmt} = ($params->{fmt} && $formats->{$params->{fmt}})
+	
+	# autocomplete functionality
+	if($params->{term}){
+		my $search_terms = join(" AND ", split(" ",$params->{term}));
+		push @{$p->{q}}, "title=(" . $search_terms . ") OR person=(" . $search_terms . ") OR id=(" . $search_terms . ")";
+		$p->{fmt} = $params->{fmt};
+	}
+	else {
+		my $formats = $self->config->{exporter}->{publication};
+		$p->{fmt} = ($params->{fmt} && $formats->{$params->{fmt}})
 		? $params->{fmt} : 'html';
+	}
 
 	$p->{style} = $params->{style} if $params->{style};
 	$p->{sort} = $self->string_array($params->{sort});
@@ -413,6 +422,9 @@ sub export_publication {
 	if ($fmt eq 'csl_json') {
 		$self->export_csl_json($hits);
 	}
+	elsif($fmt eq 'autocomplete'){
+		return $self->export_autocomplete_json($hits);
+	}
 
 	if ( my $spec = config->{exporter}->{publication}->{$fmt} ) {
 		my $package = $spec->{package};
@@ -431,6 +443,27 @@ sub export_publication {
 	      	filename     => "publications.$extension"
 	   	);
 	}
+}
+
+sub export_autocomplete_json {
+	my ($self, $hits) = @_;
+	my $jsonhash = [];
+	$hits->each( sub{
+		my $hit = $_[0];
+		if($hit->{title} && $hit->{year}){
+			my $label = "$hit->{title} ($hit->{year}";
+			my $author = $hit->{author} || $hit->{editor} || [];
+			if($author && $author->[0]->{first_name} && $author->[0]->{last_name}){
+				$label .= ", " .$author->[0]->{first_name} . " " . $author->[0]->{last_name} .")";
+			}
+			else{
+				$label .= ")";
+			}
+			push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
+		}
+	});
+	my $json = to_json($jsonhash);
+	return $json;
 }
 
 sub export_csl_json{
