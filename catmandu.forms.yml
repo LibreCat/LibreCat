@@ -995,7 +995,6 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi:
-          mandatory: 1
           label: "DOI"
           readonly: 1
         title: *title
@@ -1061,7 +1060,6 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi:
-          mandatory: 1
           label: "DOI"
           readonly: 1
         title: *title
