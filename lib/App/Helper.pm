@@ -114,7 +114,7 @@ sub extract_params {
 	
 	# autocomplete functionality
 	if($params->{term}){
-		my $search_terms = join(" AND ", split(" ",$params->{term}));
+		my $search_terms = join("* AND ", split(" ",$params->{term})) . "*";
 		push @{$p->{q}}, "title=(" . $search_terms . ") OR person=(" . $search_terms . ") OR id=(" . $search_terms . ")";
 		$p->{fmt} = $params->{fmt};
 	}
