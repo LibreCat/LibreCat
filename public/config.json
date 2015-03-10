@@ -20,7 +20,7 @@
     "@font-family-serif": "Georgia, \"Times New Roman\", Times, serif",
     "@font-family-monospace": "Menlo, Monaco, Consolas, \"Courier New\", monospace",
     "@font-family-base": "@font-family-sans-serif",
-    "@font-size-base": "12px",
+    "@font-size-base": "12.2px",
     "@font-size-large": "ceil((@font-size-base * 1.25))",
     "@font-size-small": "ceil((@font-size-base * 0.85))",
     "@font-size-h1": "floor((@font-size-base * 2.15))",
@@ -425,5 +425,5 @@
     "scrollspy.js",
     "transition.js"
   ],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=a259400c4fdd4d50854f"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=7770bc6564d41601f82c"
 }

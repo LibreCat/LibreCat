@@ -5,8 +5,8 @@
  */
 
 /*!
- * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=a259400c4fdd4d50854f)
- * Config saved to config.json and https://gist.github.com/a259400c4fdd4d50854f
+ * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=7770bc6564d41601f82c)
+ * Config saved to config.json and https://gist.github.com/7770bc6564d41601f82c
  */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
@@ -1075,7 +1075,7 @@ html {
 }
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 12px;
+  font-size: 12.2px;
   line-height: 1.75;
   color: #333333;
   background-color: #ffffff;
@@ -1254,7 +1254,7 @@ h6 .small,
 }
 h1,
 .h1 {
-  font-size: 25px;
+  font-size: 26px;
 }
 h2,
 .h2 {
@@ -1262,15 +1262,15 @@ h2,
 }
 h3,
 .h3 {
-  font-size: 18px;
+  font-size: 19px;
 }
 h4,
 .h4 {
-  font-size: 15px;
+  font-size: 16px;
 }
 h5,
 .h5 {
-  font-size: 12px;
+  font-size: 12.2px;
 }
 h6,
 .h6 {
@@ -1281,18 +1281,18 @@ p {
 }
 .lead {
   margin-bottom: 21px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 300;
   line-height: 1.4;
 }
 @media (min-width: 768px) {
   .lead {
-    font-size: 18px;
+    font-size: 18.3px;
   }
 }
 small,
 .small {
-  font-size: 91%;
+  font-size: 90%;
 }
 mark,
 .mark {
@@ -1457,7 +1457,7 @@ abbr[data-original-title] {
 blockquote {
   padding: 10.5px 21px;
   margin: 0 0 21px;
-  font-size: 15px;
+  font-size: 15.25px;
   border-left: 5px solid #eeeeee;
 }
 blockquote p:last-child,
@@ -1540,7 +1540,7 @@ pre {
   display: block;
   padding: 10px;
   margin: 0 0 10.5px;
-  font-size: 11px;
+  font-size: 11.2px;
   line-height: 1.75;
   word-break: break-all;
   word-wrap: break-word;
@@ -2479,7 +2479,7 @@ legend {
   width: 100%;
   padding: 0;
   margin-bottom: 21px;
-  font-size: 18px;
+  font-size: 18.3px;
   line-height: inherit;
   color: #333333;
   border: 0;
@@ -2523,7 +2523,7 @@ input[type="checkbox"]:focus {
 output {
   display: block;
   padding-top: 7px;
-  font-size: 12px;
+  font-size: 12.2px;
   line-height: 1.75;
   color: #555555;
 }
@@ -2532,7 +2532,7 @@ output {
   width: 100%;
   height: 35px;
   padding: 6px 11px;
-  font-size: 12px;
+  font-size: 12.2px;
   line-height: 1.75;
   color: #555555;
   background-color: #ffffff;
@@ -2599,7 +2599,7 @@ input[type="search"] {
   .input-group-lg input[type="time"],
   .input-group-lg input[type="datetime-local"],
   .input-group-lg input[type="month"] {
-    line-height: 47px;
+    line-height: 49px;
   }
 }
 .form-group {
@@ -2713,39 +2713,39 @@ select[multiple].form-group-sm .form-control {
   line-height: 1.838;
 }
 .input-lg {
-  height: 47px;
+  height: 49px;
   padding: 10px 16px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.634;
   border-radius: 6px;
 }
 select.input-lg {
-  height: 47px;
-  line-height: 47px;
+  height: 49px;
+  line-height: 49px;
 }
 textarea.input-lg,
 select[multiple].input-lg {
   height: auto;
 }
 .form-group-lg .form-control {
-  height: 47px;
+  height: 49px;
   padding: 10px 16px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.634;
   border-radius: 6px;
 }
 select.form-group-lg .form-control {
-  height: 47px;
-  line-height: 47px;
+  height: 49px;
+  line-height: 49px;
 }
 textarea.form-group-lg .form-control,
 select[multiple].form-group-lg .form-control {
   height: auto;
 }
 .form-group-lg .form-control-static {
-  height: 47px;
+  height: 49px;
   padding: 10px 16px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.634;
 }
 .has-feedback {
@@ -2767,9 +2767,9 @@ select[multiple].form-group-lg .form-control {
   pointer-events: none;
 }
 .input-lg + .form-control-feedback {
-  width: 47px;
-  height: 47px;
-  line-height: 47px;
+  width: 49px;
+  height: 49px;
+  line-height: 49px;
 }
 .input-sm + .form-control-feedback {
   width: 32px;
@@ -2977,7 +2977,7 @@ select[multiple].form-group-lg .form-control {
   border: 1px solid transparent;
   white-space: nowrap;
   padding: 6px 11px;
-  font-size: 12px;
+  font-size: 12.2px;
   line-height: 1.75;
   border-radius: 4px;
   -webkit-user-select: none;
@@ -3324,7 +3324,7 @@ fieldset[disabled] .btn-link:focus {
 .btn-lg,
 .btn-group-lg > .btn {
   padding: 10px 16px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.634;
   border-radius: 6px;
 }
@@ -3419,7 +3419,7 @@ tbody.collapse.in {
   padding: 5px 0;
   margin: 2px 0 0;
   list-style: none;
-  font-size: 12px;
+  font-size: 12.2px;
   text-align: left;
   background-color: #ffffff;
   border: 1px solid #cccccc;
@@ -3720,17 +3720,17 @@ tbody.collapse.in {
 .input-group-lg > .form-control,
 .input-group-lg > .input-group-addon,
 .input-group-lg > .input-group-btn > .btn {
-  height: 47px;
+  height: 49px;
   padding: 10px 16px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.634;
   border-radius: 6px;
 }
 select.input-group-lg > .form-control,
 select.input-group-lg > .input-group-addon,
 select.input-group-lg > .input-group-btn > .btn {
-  height: 47px;
-  line-height: 47px;
+  height: 49px;
+  line-height: 49px;
 }
 textarea.input-group-lg > .form-control,
 textarea.input-group-lg > .input-group-addon,
@@ -3781,7 +3781,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .input-group-addon {
   padding: 6px 11px;
-  font-size: 12px;
+  font-size: 12.2px;
   font-weight: normal;
   line-height: 1;
   color: #555555;
@@ -3797,7 +3797,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .input-group-addon.input-lg {
   padding: 10px 16px;
-  font-size: 15px;
+  font-size: 16px;
   border-radius: 6px;
 }
 .input-group-addon input[type="radio"],
@@ -4160,7 +4160,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-brand {
   float: left;
   padding: 14.5px 10px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 21px;
   height: 50px;
 }
@@ -4660,7 +4660,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination-lg > li > a,
 .pagination-lg > li > span {
   padding: 10px 16px;
-  font-size: 15px;
+  font-size: 16px;
 }
 .pagination-lg > li:first-child > a,
 .pagination-lg > li:first-child > span {
@@ -4849,7 +4849,7 @@ a.badge:focus {
 }
 .jumbotron p {
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 200;
 }
 .jumbotron > hr {
@@ -4873,7 +4873,7 @@ a.badge:focus {
   }
   .jumbotron h1,
   .jumbotron .h1 {
-    font-size: 54px;
+    font-size: 54.9px;
   }
 }
 .thumbnail {
@@ -5675,7 +5675,7 @@ a.list-group-item-danger.active:focus {
 }
 .close {
   float: right;
-  font-size: 18px;
+  font-size: 18.3px;
   font-weight: bold;
   line-height: 1;
   color: #000000;
@@ -5933,7 +5933,7 @@ button.close {
   max-width: 276px;
   padding: 1px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 12px;
+  font-size: 12.2px;
   font-weight: normal;
   line-height: 1.75;
   text-align: left;
@@ -5962,7 +5962,7 @@ button.close {
 .popover-title {
   margin: 0;
   padding: 8px 14px;
-  font-size: 12px;
+  font-size: 12.2px;
   background-color: #f7f7f7;
   border-bottom: 1px solid #ebebeb;
   border-radius: 5px 5px 0 0;
