@@ -86,11 +86,15 @@
   [% FOREACH file in entry.file %]
     [% IF file.request_a_copy %]
     <div class="row col-md-12">
+      [% IF entry.status == "public" %]
       [% file.file_name %]
-      <button type="button" class="librarian-approved btn btn-default btn-xs[% IF entry.status != "public" %] disabled[% END %]" [% IF entry.status == "public" %]onclick="generate_link([% file.file_id %], [% entry._id %])" [% END %]data-toggle="tooltip" data-placement="right" title="Generates sharable link, valid for 7 days."><span class="fa fa-share-alt"></span> Share[% IF entry.status != "public" %] (public records only)[% END %]</button> 
+      <button type="button" class="librarian-approved btn btn-default btn-xs" onclick="generate_link([% file.file_id %], [% entry._id %])" data-toggle="tooltip" data-placement="right" title="Generates sharable link, valid for 7 days."><span class="fa fa-share-alt"></span> Share</button> 
       <ul id="[% tabmodus %]_rac_dd_[% file.file_id %]" class="dropdown-menu col-md-12" role="menu" aria-labelledby="dLabel">
         <li><input class="unstyled form-control" type="text" val=""></li>
       </ul>
+      [% ELSE %]
+      <span class="text-danger"><span class="glyphicon glyphicon-remove"></span> Only pulic records can be shared! Click on "Make public" and try again</span>
+      [% END %]
     </div>
     [% END %]
   [% END %]
