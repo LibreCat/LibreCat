@@ -2,7 +2,7 @@ package App::Search::Route::publication;
 
 =head1 NAME
 
-  App::Search::Route::publication - handling public record routes.
+App::Search::Route::publication - handling public record routes.
 
 =cut
 
@@ -33,8 +33,11 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 
 =head2 GET /{data|publication}
 
+Search API to (data) publications.
+
 =cut
 get qr{/(data|publication)/*} => sub {
+
 	my ($bag) = splat;
 	my $p = h->extract_params();
 	$p->{facets} = h->default_facets();
@@ -45,7 +48,7 @@ get qr{/(data|publication)/*} => sub {
 		: push @{$p->{q}}, ("status=public","type<>researchData","type<>dara");
 
 	my $hits = h->search_publication($p);
-	
+
 	$hits->{style} = $sort_style->{style};
     $hits->{sort} = $p->{sort};
     $hits->{user_settings} = $sort_style;
@@ -58,6 +61,7 @@ get qr{/(data|publication)/*} => sub {
 	} else {
 		template "websites/index_publication", $hits;
 	}
+
 };
 
 1;

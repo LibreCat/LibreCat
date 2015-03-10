@@ -1,8 +1,5 @@
 package App::Search::Route::directoryindex;
 
-use lib
-  qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/sbcat/lib/default);
-
 use Catmandu::Sane;
 use Dancer qw(:syntax);
 use App::Helper;
@@ -11,7 +8,7 @@ get '/' => sub {
 	template 'websites/index_publication.tt', {bag => "home"};
 };
 
-# redurect for old /luur login
+# redirect for old /luur login
 get qr{/luur/*} => sub {
 	redirect '/login';
 };
