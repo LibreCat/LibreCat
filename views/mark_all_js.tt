@@ -36,7 +36,7 @@ $('a.unmark-all').on("click", function(evt) {
       window.location.replace(prev);
     }
     else {
-      $('a.mark').data('marked', 0).text('Mark');
+      $('a.mark').data('marked', 0).html('<span class="glyphicon glyphicon-ok"></span>Mark');
       $('.unmark_all').html('');
       $('.total-marked').text(res.total);
     }
