@@ -1,0 +1,16 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_acronym">{% acronym.label %}{% IF acronym.mandatory %}<span class="starMandatory"></span>{% END %}</label>
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon hidden-lg hidden-md">{% acronym.label %}</div>
+          <input type="text" name="acronym" id="id_acronym" value="[% acronym %]" class="form-control">
+	      <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="row innerrow">
+   <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_grant_number">
+      {% grant_number.label %}{% IF grant_number.mandatory %}<span class="starMandatory"></span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon hidden-lg hidden-md">{% grant_number.label %}</div>
+          <input type="text" name="grant_number" id="id_grant_number" value="[% grant_number %]" class="form-control">
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

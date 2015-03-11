@@ -1,0 +1,40 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label>{% data_manager.label %}</label>
+  </div>
+  <div class="col-md-10" id="data_manager">
+    [% IF !data_manager %]
+    <div class="row innerrow">
+      <input type="hidden" name="data_manager.0.id" id="dp_idautocomplete_0" />
+      <input type="hidden" name="data_manager.0.name" id="dp_nameautocomplete_0" />
+      
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon hidden-lg hidden-md">{% data_manager.label %}</div>
+          <input type="text" class="sticky form-control" onfocus="enable_autocomplete('dp',[% loop.index %]);" id="dp_autocomplete_0" value="" />
+          <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="data_manager_select_0">Select</span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('data_manager');"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+        </div>
+      </div>
+    </div>
+    [% ELSE %]
+    [% FOREACH dept IN data_manager %]
+    <div class="row innerrow">
+      <input type="hidden" name="data_manager.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+      <input type="hidden" name="data_manager.[% loop.index %].name" id="dp_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
+      
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon hidden-lg hidden-md">{% data_manager.label %}</div>
+          <input type="text" class="sticky form-control" onfocus="enable_autocomplete('dp',[% loop.index %]);" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+          <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="data_manager_select_0">Select</span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('data_manager');"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+        </div>
+      </div>
+    </div>
+    [% END %]
+    [% END %]
+  </div>
+</div>

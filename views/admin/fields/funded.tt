@@ -1,0 +1,17 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_funded">{% funded.label %}{% IF funded.mandatory %}<span class="starMandatory"></span>{% END %}</label>
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="col-md-10 col-xs-11">
+        <div class="checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="funded" id="id_funded" value="1" [% IF funded %]checked="checked"[% END %]>
+            <span class="hidden-lg hidden-md">{% funded.label %}</span>
+	      </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

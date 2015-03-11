@@ -1408,3 +1408,170 @@ array_field:
   - supervisor
   - thematic_area
   - translator
+
+otherItems:
+  user_account:
+    account_field_order:
+      - id
+      - account_type
+      - ext_institution
+      - password
+      - names
+      - old_name
+      - email
+      - login
+      - department
+      - account_status
+      - super_admin
+      - delegate
+      - data_manager
+      - reviewer
+      - author_ids
+    id:
+      label: "ID"
+      readonly: 1
+      mandatory: 1
+    account_type:
+      label: "Account Type"
+      mandatory: 1
+      values:
+        unibi:
+          label: "UniBi"
+          default: 1
+        external:
+          label: "External"
+    ext_institution:
+      label: "External Institution"
+      label_short: "Ext. Institution"
+    password:
+      label: "Password"
+    names:
+      label: "Name"
+      first_name:
+        label: "First Name"
+        mandatory: 1
+      last_name:
+        label: "Last Name"
+        mandatory: 1
+    old_name:
+      label: "Names used before"
+      old_first_name:
+        label: "Old First Name"
+      old_last_name:
+        label: "Old Last Name"
+    email:
+      label: "Email"
+    login:
+      label: "LDAP Login"
+    department:
+      label: "Affiliation"
+      multiple: 1
+    account_status:
+      label: "Active"
+    super_admin:
+      label: "Library Admin"
+    delegate:
+      label: "Manage publications for"
+      multiple: 1
+    data_manager:
+      label: "Data Manager"
+      multiple: 1
+    reviewer:
+      label: "Reviewer"
+      multiple: 1
+    author_ids:
+      label: "Author IDs"
+
+  project:
+    project_field_order:
+      - id
+      - name
+      - acronym
+      - alternative_name
+      - url
+      - grant_number
+      - psp_element
+      - description
+      - active
+      - start_date
+      - end_date
+      - department
+      - coordinator
+      - designated_editor
+      - principal_investigator
+      - member
+      - cooperator
+      - funder
+      - funded
+      - call_identifier
+      - sc39
+    id:
+      label: "ID"
+      readonly: 1
+      mandatory: 1
+    name:
+      label: "Name"
+    acronym:
+      label: "Acronym"
+    alternative_name:
+      label: "Alternative Name"
+    url:
+      label: "URL"
+    grant_number:
+      label: "Grant Number"
+    psp_element:
+      label: "PSP Element"
+    description:
+      label: "Description"
+    active:
+      label: "Active"
+    start_date:
+      label: "Start Date"
+      placeholder: "YYYY-MM-DD"
+    end_date:
+      label: "End Date"
+      placeholder: "YYYY-MM-DD"
+    department:
+      label: "Affiliation"
+    coordinator:
+      label: "Coordinator"
+      first_name:
+        label: "First Name"
+        label_short: "Coord. First"
+      last_name:
+        label: "Last Name"
+        label_short: "Coord. Last"
+    designated_editor:
+      label: "Designated Editor"
+      first_name:
+        label: "First Name"
+        label_short: "Des.Ed. First"
+      last_name:
+        label: "Last Name"
+        label_short: "Des.Ed. Last"
+    principal_investigator:
+      label: "Principal Investigator"
+      first_name:
+        label: "First Name"
+        label_short: "PI First"
+      last_name:
+        label: "Last Name"
+        label_short: "PI Last"
+    member:
+      label: "Members"
+      first_name:
+        label: "First Name"
+        label_short: "Member First"
+      last_name:
+        label: "Last Name"
+        label_short: "Member Last"
+    cooperator:
+      label: "Cooperators"
+    funder:
+      label: "Funder"
+    funded:
+      label: "Funded"
+    call_identifier:
+      label: "Call Identifier"
+    sc39:
+      label: "SC39"
