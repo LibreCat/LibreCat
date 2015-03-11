@@ -22,6 +22,10 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 
 	my $hits = h->search_publication($p);
 	$hits->{bag} = $bag;
+	
+	my $marked = session 'marked';
+    $marked ||= [];
+    $hits->{hits}->[0]->{marked} = @$marked;
 
 	if ($p->{fmt} ne 'html') {
 		h->export_publication($hits, $p->{fmt});
