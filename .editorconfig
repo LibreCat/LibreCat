@@ -12,8 +12,11 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-# for yml only
 [*.yml]
+indent_style = space
+indent_size = 2
+
+[*.html]
 indent_style = space
 indent_size = 2
 
