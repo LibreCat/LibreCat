@@ -96,14 +96,7 @@
 
 <div class="row">&nbsp;</div>
 
-[% IF request.path == "/marked" %]</li>
-<script type="text/javascript" charset="utf-8">
-$('#clickme_[% n %]').click(function() {
-  $('#fade_[% n %]').fadeOut('slow', function() {
-  });
-});
-</script>
-[% END %]
+[% IF request.path == "/marked" %]</li>[% END %]
 [% END %]
 [% IF request.path == "/marked" %]</ul>[% END %]
 

@@ -131,6 +131,15 @@ post '/marked' => sub {
 
 };
 
+post '/marked_total' => sub {
+	my $marked = session 'marked';
+	content_type 'application/json';
+    return to_json {
+        ok => true,
+        total => scalar @$marked,
+    };
+};
+
 post '/reorder/:id/:newpos' => sub {
 
     forward '/reorder', {id => params->{id}, newpos => params->{newpos}};
