@@ -26,6 +26,17 @@ $(function () {
 			if($('.total-marked').text() == "1") {
 				$('div.unmark_all').empty();
 			}
+			if(a.attr('id') && /clickme_(\d{1,})/i.test(a.attr('id'))){
+				var indexes = a.attr('id').match(/clickme_\d{1,}/i);
+				indexes[0] = indexes[0].replace(/clickme_/,"");
+				$('#fade_' + indexes[0]).fadeOut('slow', function() {});
+			}
 		}
 	});
+});
+
+$( document ).ready(function() {
+    $.post('/marked_total', function(res) {
+    	$('.total-marked').text(res.total);
+    });
 });
