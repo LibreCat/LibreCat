@@ -22,7 +22,7 @@
 
   [% FOREACH fi IN file.nsort('fileOrder') %]
   [% NEXT IF fi.relation != "main_file" %]
-  <div class="row">
+  <div class="row[% UNLESS loop.first %] margin-top1[% END %]">
     <div class="col-md-2 text-muted">File Name</div>
     <div class="col-md-10">
       <a href="/download/[% _id %]/[% fi.file_id %]">

@@ -1,0 +1,16 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_alternative_name">{% alternative_name.label %}{% IF alternative_name.mandatory %}<span class="starMandatory"></span>{% END %}</label>
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon hidden-lg hidden-md">{% alternative_name.label %}</div>
+          <input type="text" name="alternative_name" id="id_alternative_name" value="[% alternative_name %]" class="form-control">
+	      <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

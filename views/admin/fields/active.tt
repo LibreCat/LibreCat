@@ -1,0 +1,17 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_active">{% active.label %}{% IF active.mandatory %}<span class="starMandatory"></span>{% END %}</label>
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="col-md-10 col-xs-11">
+        <div class="checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="active" id="id_active" value="1" [% IF active %]checked="checked"[% END %]>
+            <span class="hidden-lg hidden-md">{% active.label %}</span>
+	      </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

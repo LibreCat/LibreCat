@@ -1,0 +1,35 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_funder">
+      {% funder.label %}
+      {% IF funder.mandatory %}<span class="starMandatory"></span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10" id="funder">
+    [% IF !funder %]
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky{% IF funder.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">{% funder.label %}</div>
+          <input type="text" name="funder.0" id="id_funder_0" value="[% funder.0 %]" class="form-control sticky"{% IF funder.mandatory %} required{% END %}>
+	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('funder');" class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+	    </div>
+	  </div>
+	</div>
+	[% ELSE %]
+	[% FOREACH pi IN funder %]
+	<div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+	    <div class="input-group sticky{% IF funder.mandatory %} mandatory{% END %}">
+	      <div class="input-group-addon">{% funder.label %}</div>
+	      <input type="text" name="funder.[% loop.index %]" id="id_funder_[% loop.index %]" value="[% pi %]" class="form-control sticky"{% IF funder.mandatory %} required{% END %}>
+	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('funder');" class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+	    </div>
+	  </div>
+	</div>
+	[% END %]
+	[% END %]
+  </div>
+</div>

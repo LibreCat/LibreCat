@@ -9,6 +9,7 @@ Catmandu->load(':up');
 my $conf = Catmandu->config;
 
 my $forms = $conf->{forms}->{publicationTypes};
+my $otherItems = $conf->{forms}->{otherItems};
 
 #my $path = $conf->{'path_to_forms'};
 
@@ -32,3 +33,17 @@ foreach my $type ( keys %$forms ) {
     }
 
 }
+
+my $tta = Template->new(
+    START_TAG  => '{%',
+    END_TAG    => '%}',
+    ENCODING     => 'utf8',
+    INCLUDE_PATH => "$Bin/../views/admin",
+    OUTPUT_PATH  => "$Bin/../views/admin/forms",
+);
+
+print "Generating edit_account page\n";
+$tta->process( "master_account.tt", $otherItems->{user_account}, "edit_account.tt" ) || die $tta->error(), "\n";
+
+print "Generating edit_project page\n";
+$tta->process( "master_project.tt", $otherItems->{project}, "edit_project.tt" ) || die $tta->error(), "\n";

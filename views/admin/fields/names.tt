@@ -1,0 +1,24 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_last_name">
+      {% names.label %}
+      {% IF names.mandatory %}<span class="starMandatory"></span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10">
+    <div class="form-group col-md-4 col-xs-11">
+      <div class="input-group sticky{% IF names.mandatory %} mandatory{% END %}">
+        <div class="input-group-addon">{% names.first_name.label %}</div>
+        <input type="text" name="first_name" id="id_first_name" value="[% first_name %]" class="form-control sticky"{% IF names.mandatory %} required{% END %}>
+	    <div class="input-group-addon"></div>
+	  </div>
+	</div>
+	<div class="form-group col-md-6 col-xs-11">
+	  <div class="input-group sticky{% IF names.mandatory %} mandatory{% END %}">
+	    <div class="input-group-addon">{% names.last_name.label %}</div>
+	    <input type="text" name="last_name" id="id_last_name" value="[% last_name %]" class="form-control sticky"{% IF names.mandatory %} required{% END %}>
+	    <div class="input-group-addon"></div>
+	  </div>
+	</div>
+  </div>
+</div>

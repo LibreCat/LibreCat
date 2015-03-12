@@ -1,0 +1,31 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_owner">
+      {% coordinator.label %}
+    </label>
+    {% IF coordinator.mandatory %}<span class="starMandatory"></span>{% END %}
+  </div>
+  <div class="col-md-10 creator">
+    <div class="row innerrow">
+      <input type="hidden" id="owner_orig_first_name_0" value="" />
+      <input type="hidden" id="owner_orig_last_name_0" value="" />
+      <div class="form-group col-md-4 col-xs-11">
+        <div class="input-group sticky{% IF coordinator.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-xs hidden-sm">{% coordinator.first_name.label %}</div>
+          <div class="input-group-addon hidden-lg hidden-md">{% coordinator.first_name.label_short %}</div>
+          <input type="text" name="owner.0.first_name" id="owner_first_name_0" value="[% owner.0.first_name %]" class="form-control sticky"{% IF coordinator.mandatory %} required{% END %}>
+	      <div class="input-group-addon"></div>
+	    </div>
+	  </div>
+	  <div class="form-group col-md-6 col-xs-11">
+	    <div class="input-group sticky{% IF coordinator.mandatory %} mandatory{% END %}">
+	      <div class="input-group-addon hidden-xs hidden-sm">{% coordinator.last_name.label %}</div>
+	      <div class="input-group-addon hidden-lg hidden-md">{% coordinator.last_name.label_short %}</div>
+	      <input type="text" name="owner.0.last_name" id="owner_last_name_0" value="[% owner.0.last_name %]" class="form-control sticky"{% IF coordinator.mandatory %} required{% END %}>
+	      <div class="input-group-addon"><span id="owner_link_pevz_0" onclick="linkPevz(this);" data-type="owner_"><img id="owner_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" /></span></div>
+          <div class="input-group-addon"><span id="owner_revert_0" data-type="owner_" onclick="revert_name(this);"><span class="fa fa-undo"></span></span></div>
+        </div>
+	  </div>
+	</div>
+  </div>
+</div>

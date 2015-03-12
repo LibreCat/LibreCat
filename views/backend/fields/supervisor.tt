@@ -57,7 +57,7 @@
           <div class="input-group sticky{% IF fields.basic_fields.supervisor.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-xs hidden-sm">First Name</div>
             <div class="input-group-addon hidden-lg hidden-md">Superv.- First</div>
-            <input type="text" id="supervisor_first_name_[% loop.index %]" name="supervisor.[% loop.index %].first_name" placeholder="{% fields.basic_fields.supervisor.first_name.placeholder %}{% fields.supplementary_fields.supervisor.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="" />
+            <input type="text" id="supervisor_first_name_[% loop.index %]" name="supervisor.[% loop.index %].first_name" placeholder="{% fields.basic_fields.supervisor.first_name.placeholder %}{% fields.supplementary_fields.supervisor.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% name.first_name %]" />
             <div class="input-group-addon"><span class="glyphicon glyphicon-plus hidden-lg hidden-md" onclick="add_field('supervisor');"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %}></span></div>
             <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
           </div>
@@ -66,7 +66,7 @@
           <div class="input-group sticky{% IF fields.basic_fields.supervisor.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-xs hidden-sm">Last Name</div>
             <div class="input-group-addon hidden-lg hidden-md">Superv.- Last</div>
-            <input type="text" id="supervisor_last_name_[% loop.index %]" name="supervisor.[% loop.index %].last_name" placeholder="{% fields.basic_fields.supervisor.last_name.placeholder %}{% fields.supplementary_fields.supervisor.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="" />
+            <input type="text" id="supervisor_last_name_[% loop.index %]" name="supervisor.[% loop.index %].last_name" placeholder="{% fields.basic_fields.supervisor.last_name.placeholder %}{% fields.supplementary_fields.supervisor.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% name.last_name %]" />
             <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-plus" onclick="add_field('supervisor');"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
             {% IF fields.basic_fields.supervisor.pevz OR fields.supplementary_fields.supervisor.pevz %}

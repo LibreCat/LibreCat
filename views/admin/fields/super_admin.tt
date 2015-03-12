@@ -1,0 +1,10 @@
+<div class="row innerrow">
+  <div class="col-md-2">
+    <label for="id_super_admin">{% super_admin.label %}</label>
+  </div>
+  <div class="col-md-10">
+    <div class="form-group col-md-1">
+      <input type="checkbox" name="super_admin" id="id_super_admin" value="1" [% IF super_admin  %]checked="checked"[% END %]>
+    </div>
+  </div>
+</div>

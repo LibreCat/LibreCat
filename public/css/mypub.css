@@ -138,7 +138,7 @@ a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 .dz-clickable,.input-group-addon{cursor:pointer;}
 
 /* share-a-copy */
-input.unstyled{border:0;border-radius:0;box-shadow:0 0 0 rgba(#fff) inset;}
+input.unstyled{border:0;border-radius:0;box-shadow:none;margin:0;padding:0;display:inline;}
 
 /* fields in upload forms */
 div.input-group.sticky .input-group-addon{background-color:#fff;color:#555;}

@@ -50,7 +50,7 @@ prefix '/myPUB/admin' => sub {
 =cut
     get '/account/new' => needs role => 'super_admin' => sub {
         my $id = new_person();
-        template 'admin/edit_account', { _id => $id };
+        template 'admin/forms/edit_account', { _id => $id };
     };
 
 =head2 GET /account/search
@@ -73,7 +73,7 @@ prefix '/myPUB/admin' => sub {
     get '/account/edit/:id' => needs role => 'super_admin' => sub {
         my $id     = param 'id';
         my $person = edit_person($id);
-        template 'admin/edit_account', $person;
+        template 'admin/forms/edit_account', $person;
     };
 
 =head2 POST /account/update
@@ -104,7 +104,7 @@ prefix '/myPUB/admin' => sub {
         }
         else {
             my $p = import_person($id);
-            template 'admin/edit_account', $p;
+            template 'admin/forms/edit_account', $p;
         }
     };
 
@@ -132,7 +132,7 @@ prefix '/myPUB/admin' => sub {
     get '/project/edit/:id' => needs role => 'super_admin' => sub {
         my $id     = param 'id';
         my $project = edit_project($id);
-        template 'admin/edit_project', $project;
+        template 'admin/forms/edit_project', $project;
     };
 
     post '/project/update' => needs role => 'super_admin' => sub {

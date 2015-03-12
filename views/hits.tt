@@ -64,11 +64,6 @@
     [% IF entry.approved %]
     <!-- <button type="button" class="btn btn-default btn-xs disabled"><span class="fa fa-dot-circle-o librarian-approved"></span></button> -->
     [% END %]
-    [% IF (entry.status != "public" AND entry.status != "submitted") OR (entry.status == "sumitted" AND session.role == "super_admin") %]
-    <a title="Make public" role="button" class="btn btn-success btn-xs" href="/myPUB/record/publish/[% entry._id %]"><span class="glyphicon glyphicon-upload"></span></a>
-    [% ELSIF entry.status == "public" %]
-    <a title="Return" role="button" class="btn btn-danger btn-xs" href="/myPUB/record/return/[% entry._id %]"><span class="glyphicon glyphicon-download"></span></a>
-    [% END %]
     </div>
   </div>
 [% ELSIF request.path == "/marked" OR request.path.match("/person") %]

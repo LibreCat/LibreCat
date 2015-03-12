@@ -1,0 +1,31 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_designated_editor">
+      {% designated_editor.label %}
+    </label>
+    {% IF designated_editor.mandatory %}<span class="starMandatory"></span>{% END %}
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <input type="hidden" id="designated_editor_orig_first_name_0" value="" />
+      <input type="hidden" id="designated_editor_orig_last_name_0" value="" />
+      <div class="form-group col-md-4 col-xs-11">
+        <div class="input-group sticky{% IF designated_editor.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-xs hidden-sm">{% designated_editor.first_name.label %}</div>
+          <div class="input-group-addon hidden-lg hidden-md">{% designated_editor.first_name.label_short %}</div>
+          <input type="text" name="designated_editor.0.first_name" id="designated_editor_first_name_0" value="[% designated_editor.0.first_name %]" class="form-control sticky"{% IF designated_editor.mandatory %} required{% END %}>
+	      <div class="input-group-addon"></div>
+	    </div>
+	  </div>
+	  <div class="form-group col-md-6 col-xs-11">
+	    <div class="input-group sticky{% IF designated_editor.mandatory %} mandatory{% END %}">
+	      <div class="input-group-addon hidden-xs hidden-sm">{% designated_editor.last_name.label %}</div>
+	      <div class="input-group-addon hidden-lg hidden-md">{% designated_editor.last_name.label_short %}</div>
+	      <input type="text" name="designated_editor.0.last_name" id="designated_editor_last_name_0" value="[% designated_editor.0.last_name %]" class="form-control sticky"{% IF designated_editor.mandatory %} required{% END %}>
+	      <div class="input-group-addon"><span id="designated_editor_link_pevz_0" onclick="linkPevz(this);" data-type="designated_editor_"><img id="designated_editor_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" /></span></div>
+          <div class="input-group-addon"><span id="designated_editor_revert_0" data-type="designated_editor_" onclick="revert_name(this);"><span class="fa fa-undo"></span></span></div>
+	    </div>
+	  </div>
+	</div>
+  </div>
+</div>
