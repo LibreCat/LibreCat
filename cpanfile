@@ -10,12 +10,14 @@ on 'test', sub {
 requires 'Catmandu';
 requires 'Catmandu::Store::Elasticsearch';
 requires 'Catmandu::Store::MongoDB';
+requires 'Catmandu::Store::DBI';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::Importer::XML';
 requires 'Catmandu::Importer::ArXiv';
 requires 'Catmandu::Importer::Inspire';
 requires 'Catmandu::Importer::EuropePMC';
 requires 'Catmandu::Importer::CrossRef';
+requires 'Catmandu::Importer::getJSON';
 
 #Dancer
 requires 'Dancer';

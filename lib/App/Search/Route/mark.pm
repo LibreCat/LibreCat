@@ -2,8 +2,8 @@ package App::Search::Route::mark;
 
 =head1 NAME
 
-    App::Search::Route::mark - handles mark and ordering of records.
-    This is stored in the session store.
+App::Search::Route::mark - handles mark and ordering of marked records.
+This is stored in the session.
 
 =cut
 
@@ -18,7 +18,7 @@ use App::Helper;
 
 =head2 GET /marked
 
-    Returns list of marked records.
+Returns list of marked records.
 
 =cut
 get '/marked' => sub {
@@ -27,7 +27,6 @@ get '/marked' => sub {
     my $fmt = $p->{fmt};
     my $explinks = $p->{explinks};
     my $marked = session 'marked';
-    #$p->{sort} = h->config->{store}->{default_sort};
     my ($hits, @tmp_hits);
 
     if($marked and ref $marked eq "ARRAY"){
@@ -55,7 +54,7 @@ get '/marked' => sub {
 
 =head2 POST /mark/:id
 
-    Mark the record with ID :id.
+Mark the record with ID :id.
 
 =cut
 post '/mark/:id' => sub {

@@ -172,10 +172,6 @@ sub update_project {
     my $data = shift;
     return "Error: No _id specified" unless $data->{_id};
 
-#    my $old = h->project->get( $data->{_id} );
-#    my $merger = Hash::Merge->new();           #left precedence by default!
-#    my $new = $merger->merge( $data, $old );
-
     my $new = h->nested_params($data);
     return $new;
     my $bag = Catmandu->store('project')->bag;

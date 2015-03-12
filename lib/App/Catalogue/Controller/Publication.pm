@@ -1,6 +1,5 @@
 package App::Catalogue::Controller::Publication;
 
-#use lib qw(/srv/www/sbcat/lib/extension);
 use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Fix qw/maybe_add_urn/;
@@ -8,7 +7,6 @@ use App::Helper;
 use App::Catalogue::Controller::Corrector qw/delete_empty_fields correct_hash_array correct_writer correct_publid/;
 use App::Catalogue::Controller::File qw/handle_file delete_file/;
 use App::Catalogue::Controller::Material qw/update_related_material/;
-#use Catmandu::Validator::PUB;
 use Hash::Merge qw/merge/;
 use Carp;
 use JSON;

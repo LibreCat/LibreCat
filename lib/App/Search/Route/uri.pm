@@ -2,7 +2,7 @@ package App::Search::Route::uri;
 
 =head1 NAME
 
-  App::Search::Route::uri - sugar for nice URIs
+App::Search::Route::uri - sugar for nice URIs
 
 =cut
 
@@ -25,12 +25,6 @@ use Dancer qw/:syntax/;
 get '/record/:id' => sub {
     forward '/publication/'.params->{id};
 };
-
-# get qr{/download/(\d{1,})/(\d{1,}).pdf} => sub {
-# 	my ($recId, $fileId) = splat;
-# 	my $path = h->host . '/luur/download?func=downloadFile&recordOId=' . $recId . '&fileOId=' . $fileId;
-# 	redirect $path;
-# };
 
 get '/download/:id/:file_id' => sub {
 	my $path = h->host . 'myPUB/download/' . params->{'id'} . '/' . params->{'file_id'};
@@ -87,19 +81,16 @@ get '/person/rss/:id' => sub {
     forward '/feed/daily', {q => "person exact $id"};
 };
 
-# publications by document type
 get '/type/:type' => sub {
 	my $t = param 'type';
 	forward '/publication', {q => "documenttype=$t"};
 };
 
-# publications by year
 get '/year/:year' => sub {
 	my $y = param 'year';
 	forward '/publication', {q => "publishingYear exact $y"};
 };
 
-# oa: all open access fulltexts
 get '/oa' => sub {
 	forward '/publication', {q => "fulltext exact 1"};
 };

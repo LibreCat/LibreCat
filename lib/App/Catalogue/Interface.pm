@@ -1,12 +1,12 @@
 package App::Catalogue::Interface;
 
 use Catmandu::Sane;
-use Catmandu::Util qw(:array);
-use Dancer ':syntax';
+use Catmandu::Util qw/:array/;
+use Dancer qw/:syntax/;
 use Dancer::Request;
 use App::Helper;
-use Dancer::Plugin::Auth::Tiny;
 use Citation;
+use Dancer::Plugin::Auth::Tiny;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -41,7 +41,7 @@ prefix '/myPUB' => sub {
 	get '/autocomplete_alias/:alias' => sub {
 		my $term = params->{'alias'} || "";
 		my $alias = h->authority_user->select("alias", $term)->to_array;
-		#return to_dumper $alias;
+
 		if ($alias->[0]) {
 			return to_json({ok => 0});
 		} else {
@@ -126,7 +126,7 @@ get '/livecitation' => sub {
     my $pub = h->publication->get($params->{id});
 
     my $response = Citation::index_citation_update($pub, 1, $debug, [$params->{style}]);
-    
+
     ($debug eq "debug") ? (return to_dumper $response) : (return $response);
 };
 

@@ -2,8 +2,9 @@ package App::Catalogue;
 
 =head1 NAME
 
-    App::Catalogue - The central top level backend module.
-    Integrates all routes needed for catalogueing records.
+App::Catalogue - The central top level backend module.
+
+Integrates all routes needed for catalogueing records.
 
 =cut
 
@@ -25,13 +26,13 @@ use App::Catalogue::Route::upload;
 
 =head2 GET /myPUB
 
-    The default route after logging in. Will be forwarded
-    to default search page for current role.
+The default route after logging in. Will be forwarded
+to default search page for current role.
 
 =cut
 get '/myPUB' => needs login => sub {
     my $params = params;
-    
+
     if ( session->{role} eq "super_admin" ) {
         forward '/myPUB/search/admin', $params;
     }
@@ -51,14 +52,14 @@ get '/myPUB' => needs login => sub {
 
 =head2 GET /myPUB/change_role/:change_role
 
-    Let's the user change his role.
+Let the user change his role.
 
 =cut
 get '/myPUB/change_role/:role' => needs login => sub {
     my $user = h->getAccount( session->{user} )->[0];
 
     # is user allowed to take this role?
-	
+
 	if ( params->{role} eq "delegate" and $user->{delegate} ) {
 		session role => "delegate";
 	}

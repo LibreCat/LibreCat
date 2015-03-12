@@ -2,7 +2,7 @@ package App::Search::Route::project;
 
 =head1 NAME
 
-  App::Search::Route::project - handling routes for project pages.
+App::Search::Route::project - handling routes for project pages.
 
 =cut
 
