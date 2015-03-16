@@ -5,13 +5,13 @@ Data provided by <a href="http://europepmc.org/">Europe PubMed Central</a>.<br /
 [% FOREACH reference IN epmc_ref.entries.nsort('citedOrder') %]
 <div class="row">
   <div class="col-md-12">
-  [% IF reference._id %]
-  <span class="fa fa-share-square-o"></span> <a href="http://europepmc.org/abstract/MED/[% reference._id %]">[% reference.title %]</a><br />
+  [% IF reference.id %]
+  <span class="fa fa-share-square-o"></span> <a href="http://europepmc.org/abstract/MED/[% reference.id %]">[% reference.title %]</a><br />
   [% ELSE %]
   [% reference.title %]<br />
   [% END %]
   [% reference.authorString %], [% IF reference.journalAbbreviation %] <i>[% reference.journalAbbreviation %]</i> [% reference.volume %]([% reference.issue %]),[% END %] [% reference.pubYear %]
-  [% IF reference._id %]<br />PMID: <a href="http://europepmc.org/abstract/MED/[% reference._id %]">[% reference._id %]</a>[% END %]
+  [% IF reference.id %]<br />PMID: <a href="http://europepmc.org/abstract/MED/[% reference.id %]">[% reference.id %]</a>[% END %]
   </div>
 </div>
 [% END %]
