@@ -49,7 +49,6 @@
         {% ELSIF fields.file_upload.license.pub_license %}
           {% fields.file_upload.license.pub_license.disclaimer_text %}
         {% END %}
-        </div>
         <div class="checkbox">
           <label>
           {% IF fields.file_upload.license.open_data_release %}
@@ -58,6 +57,7 @@
             <input type="checkbox" value="1" id="id_pub_license" name="accept"[% IF accept == "1" %] checked="checked"[% END %] /> <strong>{% fields.file_upload.license.pub_license.accept_text %}</strong>
           {% END %}
           </label>
+        </div>
         </div>
       </div>
       {% END %}
