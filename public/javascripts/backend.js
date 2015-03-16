@@ -195,7 +195,10 @@ function linkPevz(element){
 
 			// If more than one hit... show modal with choices
 			else if(objJSON.length > 1 || (objJSON.length == 1 && objJSON[0].old_full_name && objJSON[0].full_name)){
-				var container = $('#linkPevzModal').find('.modal-body').first();
+				var container_title = $('#' + type + 'linkPevzModal').find('.modal-title').first();
+				container_title.html('');
+				var title = 'Several PEVZ Accounts found... make a choice';
+				var container = $('#' + type + 'linkPevzModal').find('.modal-body').first();
 				container.html('');
 				var table = '<p><strong>Exact hits:</strong></p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>PEVZ-ID</th><th>Name</th></tr>';
 				var rows = "";
@@ -257,6 +260,7 @@ function linkPevz(element){
 					table2 += rows2 + "</table>";
 				}
 
+				container_title.append(title);
 				container.append(table);
 				container.append(table2);
 
@@ -278,19 +282,23 @@ function linkPevz(element){
 					
 					$('#' + type + 'id_' + lineId).val(pevzId);
 					
-					$('#linkPevzModal').modal("hide");
-					$('#linkPevzModal').find('.modal-body').first().html('');
+					$('#' + type + 'linkPevzModal').modal("hide");
+					$('#' + type + 'linkPevzModal').find('.modal-body').first().html('');
 				});
 
-				$('#linkPevzModal').modal("show");
+				$('#' + type + 'linkPevzModal').modal("show");
 			}
 
 			// No results found
 			else {
-				var container = $('#linkPevzModal').find('.modal-body').first();
+				var container_title = $('#' + type + 'linkPevzModal').find('.modal-title').first();
+				var title = 'Sorry...';
+				var container = $('#' + type + 'linkPevzModal').find('.modal-body').first();
 				container.html('');
+				container_title.html('');
 				container.append('<p class="has-error">No results found.</p>');
-				$('#linkPevzModal').modal("show");
+				container_title.append(title);
+				$('#' + type + 'linkPevzModal').modal("show");
 			}
 		});
 	}
