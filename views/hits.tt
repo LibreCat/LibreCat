@@ -50,11 +50,11 @@
     [% CASE "public" %]
       <span class="text-success"><strong>Public</strong></span>
     [% CASE "returned" %]
-      <span class="text-warning">Re-<br>turned</span>
+      <span class="text-warning"><strong>Re-<br>turned</strong></span>
     [% CASE "submitted" %]
       <span class="text-info"><strong>Sub-<br>mitted</strong></span>
     [% CASE "invalid" %]
-      <span class="text-danger">Invalid</span>
+      <span class="text-danger"><strong>Invalid</strong></span>
     [% CASE "new" %]
       <span class="text-info"><strong>New QaE</strong></span>
     [% CASE %]
