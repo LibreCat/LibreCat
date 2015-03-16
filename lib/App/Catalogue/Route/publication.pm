@@ -2,7 +2,7 @@ package App::Catalogue::Route::publication;
 
 =head1 NAME App::Catalogue::Route::publication
 
-    Route handler for publications.
+Route handler for publications.
 
 =cut
 
@@ -30,8 +30,7 @@ Dancer::Plugin::Auth::Tiny->extend(
 
 =head1 PREFIX /record
 
-    All actions related to a publication record are handled under
-    this prefix.
+All actions related to a publication record are handled under this prefix.
 
 =cut
 
@@ -39,8 +38,9 @@ prefix '/myPUB/record' => sub {
 
 =head2 GET /new
 
-    Prints a list of available publication types + import form.
-    Some fields are pre-filled.
+Prints a list of available publication types + import form.
+
+Some fields are pre-filled.
 
 =cut
 
@@ -72,8 +72,9 @@ prefix '/myPUB/record' => sub {
 
 =head2 GET /edit/:id
 
-    Display record for id.
-    Checks if the user has permission the see/edit this record.
+Displays record for id.
+
+Checks if the user has permission the see/edit this record.
 
 =cut
 
@@ -114,9 +115,9 @@ prefix '/myPUB/record' => sub {
 
 =head2 POST /update
 
-    Saves the record in the database.
-    Checks if the user has the rights to update this record.
-    Validation of the record is performed.
+Saves the record in the database.
+
+Checks if the user has the rights to update this record.
 
 =cut
 
@@ -128,7 +129,7 @@ prefix '/myPUB/record' => sub {
             forward '/access_denied';
         }
         delete $params->{new_record};
-        
+
         $params = h->nested_params($params);
 
         if ( ( $params->{department} and $params->{department} eq "" )
@@ -166,8 +167,9 @@ prefix '/myPUB/record' => sub {
 
 =head2 GET /return/:id
 
-    Set status to 'returned'.
-    Checks if the user has the rights to return this record.
+Set status to 'returned'.
+
+Checks if the user has the rights to edit this record.
 
 =cut
 
@@ -193,7 +195,7 @@ prefix '/myPUB/record' => sub {
 
 =head2 GET /delete/:id
 
-    Deletes record with id. For admins only.
+Deletes record with id. For admins only.
 
 =cut
 
@@ -204,7 +206,7 @@ prefix '/myPUB/record' => sub {
 
 =head2 GET /preview/id
 
-    Prints the frontdoor for every record.
+Prints the frontdoor for every record.
 
 =cut
 
@@ -220,8 +222,11 @@ prefix '/myPUB/record' => sub {
     };
 
 =head2 GET /internal_view/:id/:dumper
-	Prints internal view, optionally as data dumper
-	Admin only!
+
+Prints internal view, optionally as data dumper.
+
+For admins only!
+
 =cut
 
     get qr{/internal_view/(\w{1,})/*(\w{1,})*} => needs role => 'super_admin' => sub {
@@ -284,13 +289,12 @@ Publishes private records, returns to the list.
         $record->{status} = "public" if $field_check;
         update_publication($record);
 
-        sleep 1;
         redirect '/myPUB';
     };
 
 =head2 GET /change_mode
 
-    Changes the layout of the edit form.
+Changes the layout of the edit form.
 
 =cut
 
