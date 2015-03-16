@@ -132,7 +132,8 @@ post '/marked' => sub {
 };
 
 post '/marked_total' => sub {
-	my $marked = session 'marked';
+	my $marked = [];
+	$marked = session 'marked' if session 'marked';
 	content_type 'application/json';
     return to_json {
         ok => true,
