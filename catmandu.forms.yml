@@ -231,11 +231,11 @@ publicationTypes:
             accept_text: "I accept"
             alert: "You need to accept the Copyright Disclaimer because you have attached files to this record."
           info:
-            text: "<em>If you have any questions</em>, please contact:<br />"
+            text: "If you have any questions, please contact:<br />"
             contact: "<strong>Support Publication Services<br />Susanne Riedel<br />Phone: 0521/106-4058<br />E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a><br /></strong>"
           cc_license:
             mandatory: 0
-            label: "Creative Commons Lizenzen"
+            label: "Creative Commons Licenses"
       supplementary_fields:
         tab_name: "Additional Information"
         abstract: &abstract
@@ -1033,7 +1033,7 @@ publicationTypes:
             warning: "Visible/Editable for Library Admins only"
             label: "Other license"
           info:
-            text: "<em>If your data does not fit any of the licenses above or if you have any other questions</em>, please contact:<br />"
+            text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br />"
             contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br />0521 106-2694<br /><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br /></strong>"
       supplementary_fields:
         tab_name: "Supplementary fields"
@@ -1098,7 +1098,7 @@ publicationTypes:
             warning: "Visible/Editable for Library Admins only"
             label: "Other license"
           info:
-            text: "<em>If your data does not fit any of the licenses above or if you have any other questions</em>, please contact:<br />"
+            text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br />"
             contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br />0521 106-2694<br /><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br /></strong>"
       supplementary_fields:
         tab_name: "Supplementary fields"

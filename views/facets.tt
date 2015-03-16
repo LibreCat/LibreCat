@@ -177,7 +177,7 @@
 </ul>
 [% END %]
 
-[% IF facets.popular_science.terms.size > 1 OR facets.extern.terms.size > 1 OR facets.open_access.terms.size > 1 %]
+[% IF facets.popular_science.terms.size > 0 OR facets.extern.terms.size > 0 OR facets.open_access.terms.size > 0 %]
 <ul class="nav nav-tabs nav-stacked margin-top1 ul2">
   [% IF facets.popular_science.total %]
   <li>

@@ -2,7 +2,7 @@ package App::Search::Route::unapi;
 
 use Catmandu::Sane;
 use Catmandu;
-use Dancer qw/:syntax)/;
+use Dancer qw(:syntax);
 use App::Helper;
 
 =head2 GET /unapi

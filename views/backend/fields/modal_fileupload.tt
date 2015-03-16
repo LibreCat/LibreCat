@@ -1,12 +1,12 @@
 <div id="upload_file" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  
+
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>Edit Uploaded File</h3>
       </div>
-  
+
       <div class="modal-body">
 	<form enctype="multipart/form-data" name="upLoad" id="upLoad">
         <input type="hidden" name="file_id" id="id_file_id" value="" />
@@ -14,7 +14,7 @@
         <input type="hidden" name="record_id" id="id_record_id" value="" />
         <input type="hidden" name="creator" id="id_creator" value="" />
         <input type="hidden" name="cancel" value="" />
-      
+
         <h4>File</h4>
         <div class="form-group">
           <label class="text" id="fileNameTag" style="display:none">
@@ -23,7 +23,7 @@
           </label>
           <input type="file" name="file" id="id_file" size="40" />
         </div>
-        
+
         <div class="form-group">
           <strong>Relation ("Uploaded document is...")</strong><br />
           <select name="relation" class="form-control" id="id_select_relation">
@@ -33,7 +33,7 @@
             [% END %]
           </select>
         </div>
-        
+
         <h4>Access Level</h4>
         <div class="form-group col-md-offset-1">
           <script type="text/javascript">
@@ -49,7 +49,7 @@
           }
           //-->
           </script>
-        
+
           <label class="radio">
             <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="open_access" onclick="oamode(this.form, true);"/> Open Access (File is freely available, effective immediately)
           </label>
@@ -67,20 +67,20 @@
           </label>
           <input type="text" class="form-control" name="embargo" id="id_embargo" placeholder="YYYY-MM-DD" value="">
         </div>
-        
+
         <h4>Additional Information</h4>
         <div class="form-group">
           <strong>Title</strong><br />
           <input type="text" name="title" id="id_fileTitle" value="" class="form-control" />
         </div>
-        
+
         <div class="form-group">
           <strong>Description</strong><br />
           <textarea name="description" id="id_fileDescription" class="form-control" rows="6">[% description %]</textarea>
         </div>
       </div>
       <div class="modal-footer">
-        <input type="button" class="btn btn-success" value="Submit" name="finalSubmit" id="fileSubmit" />
+        <input type="button" class="btn btn-success" value="Save" name="finalSubmit" id="fileSubmit" />
         <input type="button" class="btn btn-danger" data-dismiss="modal" aria-hidden="true" value="Cancel" />
       </div>
       </form>
@@ -95,8 +95,8 @@
     var fileName = $(this).val().replace(/C:\\fakepath\\/,"");
     $("#id_fileName").val(fileName);
   });
-  
-  $('#fileSubmit').click( function() {    
+
+  $('#fileSubmit').click( function() {
     var inputs = $(":file");
     var file_id = $('#id_file_id').val();
     var tempid = $('#id_temp_id').val();
@@ -115,7 +115,7 @@
     formData.append("file_name", $('#id_fileName').val());
     formData.append("creator", $('#id_creator').val());
     formData.append("relation", $('#id_select_relation').val());
-    
+
     if($('#id_accessLevel_openAccess').is(':checked')){
       formData.append("access_level", "open_access");
     }
@@ -129,15 +129,15 @@
       formData.append("access_level", "closed");
       formData.append("request_a_copy", "1");
     }
-    
+
     if($('#id_embargo').val() && $('#id_accessEmbargo').is(':checked')){
       formData.append("embargo", $('#id_embargo').val());
     }
-    
+
     if($('#id_fileTitle').val()){
       formData.append("title", $('#id_fileTitle').val());
     }
-    
+
     if($('#id_fileDescription').val()){
       formData.append("description", $('#id_fileDescription').val());
     }
@@ -169,10 +169,10 @@
             accessLevel += "<br />(Request a Copy)";
           }
         }
-        
+
         var use_file_id;
         use_file_id = data.file_id ? data.file_id : data.tempid;
-        
+
         var a = $('#' + use_file_id + ' div.padded a');
         a.attr('title','');
         a.attr('title',data.file_name);
@@ -185,14 +185,14 @@
         $('#creator_' + use_file_id).html(data.creator);
         $('#relation_' + use_file_id).html(data.relation);
         $('#file_' + use_file_id).val(data.file_json);
-        
+
         $('#upLoad')[0].reset();
         $('#upLoad').find('input[type="hidden"]').val('');
         $('#upload_file').modal('hide');
       }
     });
   });
-  
+
 //}
 //else {
   // Add IE8 fallback??? ... or not???

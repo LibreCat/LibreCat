@@ -79,14 +79,12 @@ sub update_publication {
     update_related_material($data);
 
     $data = delete_empty_fields($data);
-    if($data->{finalSubmit} and $data->{finalSubmit} eq "recPublish"){
-    	$data->{status} = "public";
-    }
 
     my $fixer = Catmandu::Fix->new(fixes => [
         'maybe_add_urn()',
 	    'if all_match("status","new") set_field("status","private") end',
-        'if all_match("status","returned") set_field("status","private") end',
+        'if all_match("finalSubmit","recPublish") set_field("status","public") end',
+        'remove_field("finalSubmit")',
         ]);
 
     # citations

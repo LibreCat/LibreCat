@@ -96,7 +96,7 @@
 	  [% IF fi.file_name %]
 	    [% IF loop.first %]
 	    <div class="row">
-	      <div class="col-xs-2">Download</div>
+	      <div class="col-xs-2 text-muted">Download</div>
 	      <div class="col-xs-10">
 		[% INCLUDE websites/oa_lock.tt %] <a itemprop="url" href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.file_name %]</a>
 		<span class="text-muted"> [% h.pretty_byte_size(fi.size) %]</span>
@@ -123,22 +123,16 @@
 	  [% END %]
 	[% END %]
 
-	<!-- DOI -->
-	[% IF doiInfo %]
+	[% IF doi %]
 	<div class="row">
-	  <div class="col-xs-2">DOI</div>
-	  <div class="col-xs-10"><a itemprop="url" href="http://doi.org/[% doi %]" title="[% doi %]">[% doi %]</a>[% IF externalFiles == "1" %] <a href="http://doi.org/[% doi %]" class="label label-default">Files available</a>[% END %]</div>
-	</div>
-	[% ELSIF doi %]
-	<div class="row">
-	  <div class="col-xs-2">DOI</div>
+	  <div class="col-xs-2 text-muted">DOI</div>
 	  <div class="col-xs-10"><a itemprop="url" href="http://doi.org/[% doi %]" title="[% doi %]">[% doi %]</a></div>
 	</div>
 	[% END %]
 	[% FOREACH ln IN link %]
 	[% IF loop.first %]
 	<div class="row">
-	  <div class="col-xs-2">URL</div>
+	  <div class="col-xs-2 text-muted">URL</div>
 	  <div class="col-xs-10">
 	[% ELSE %]
 	    <br>
@@ -152,7 +146,7 @@
 
 	[% IF urn %]
 	<div class="row">
-	  <div class="col-xs-2">URN</div>
+	  <div class="col-xs-2 text-muted">URN</div>
 	  <div class="col-xs-10"><a href="http://nbn-resolving.de/[% urn %]">[% urn %]</a></div>
 	</div>
 	[% END %]
