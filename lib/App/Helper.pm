@@ -488,7 +488,10 @@ sub export_csl_json{
 sub search_researcher {
 	my ($self, $p) = @_;
 	my $cql = "";
-	push @{$p->{q}}, "publcount > 0";
+	if($p->{researcher_list}){
+		push @{$p->{q}}, "publcount > 0";
+	}
+	
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
 	my $hits = researcher->search(

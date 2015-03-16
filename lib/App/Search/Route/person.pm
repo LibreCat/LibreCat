@@ -32,6 +32,9 @@ get '/authorlist' => sub {
 		$cqlsort .= $2 eq "asc" ? "1" : "0";
 	}
 	$p->{sorting} = $cqlsort;
+	
+	#to tell h->search_researcher to return people with one or more publications only
+	$p->{researcher_list} = 1;
 
 	my $hits = h->search_researcher($p);
 
