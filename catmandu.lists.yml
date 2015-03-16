@@ -134,16 +134,32 @@ publication_identifier:
   eisbn: "eISBN"
 
 publication_status:
-  published: "Published"
-  epub_ahead: "Epub ahead of print"
-  inpress: "In Press"
-  accepted: "Accepted"
-  submitted: "Submitted"
+  -
+    value: submitted
+    name: "Submitted"
+  -
+    value: accepted
+    name: "Accepted"
+  -
+    value: inpress
+    name: "In Press"
+  -
+    value: epub_ahead
+    name: "Epub ahead of print"
+  -
+    value: published
+    name: "Published"
 
 article_type:
-  original: "Original Article"
-  review: "Review"
-  letter_note: "Letter / Note"
+  -
+    value: original
+    name: "Original Article"
+  -
+    value: review
+    name: "Review"
+  -
+    value: letter_note
+    name: "Letter / Note"
 
 relations_rd:
   -

@@ -376,6 +376,18 @@ sub display_doctypes {
 	$doctype;
 }
 
+sub display_name_from_value {
+	my ($self, $list, $value) = @_;
+	my $map = $self->config->{lists}{$list};
+	my $name;
+	foreach my $m (@$map){
+		if($m->{value} eq $value){
+			$name = $m->{name};
+		}
+	}
+	$name;
+}
+
 sub display_gs_doctypes {
 	my $map = config->{forms}{display_gs_docs};
 	my $doctype = $map->{lc $_[1]};

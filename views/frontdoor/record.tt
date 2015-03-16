@@ -165,7 +165,7 @@
 	    [% END %]
 
 	    [% IF publication_status %]
-	    | <em>[% h.get_list('publication_status').$publication_status %]</em>
+	    | <em>[% h.display_name_from_value("publication_status", publication_status) %]</em>
 	    [% END %]
 
 	    [% IF quality_controlled %]
