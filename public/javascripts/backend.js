@@ -408,7 +408,7 @@ function edit_file(fileId, id){
  * @param fileName = file name
  */
 function delete_file(fileId){
-	if (confirm("Are you sure you want to delete this uploaded document? Any external links will be broken! If you need to update an existing file to a new version you should edit the corresponding entry in the list and re-upload the file")) {
+	if (confirm("Are you sure you want to delete this uploaded document? Any external links will be broken!\nIf you need to update an existing file to a new version you should edit the corresponding entry in the list and re-upload the file.\n\nDelete this file?")) {
 		$('#' + fileId).remove();
 	    $('#file_order_' + fileId).remove();
 	    //$.post( "/upload/delete", { id: id, file_name: fileName });
