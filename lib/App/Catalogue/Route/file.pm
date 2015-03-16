@@ -98,7 +98,7 @@ prefix '/requestcopy' => sub {
 					key => $stored->{_id},
 					},
 					'Template',
-					template => 'email/req_copy.tt',
+					template => 'views/email/req_copy.tt',
 				);
 				try {
 					email {
@@ -132,7 +132,7 @@ prefix '/requestcopy' => sub {
 		my $mail_body = export_to_string(
 			{ key => params->{key} },
 			'Template',
-			template => 'email/req_copy_approve.tt');
+			template => 'views/email/req_copy_approve.tt');
 		try {
 			email {
 				to => $data->{user_email},
@@ -156,7 +156,7 @@ prefix '/requestcopy' => sub {
 		return unless $data;
 
 		$bag->delete(params->{key});
-		my $mail_body = export_to_string({}, 'Template', template => 'email/req_copy_refuse.tt');
+		my $mail_body = export_to_string({}, 'Template', template => 'views/email/req_copy_refuse.tt');
 		try {
 			email {
 				to => $data->{user_email},
