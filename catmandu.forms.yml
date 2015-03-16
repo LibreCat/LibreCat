@@ -378,17 +378,11 @@ publicationTypes:
         page: &pages
           label: "Pages"
           placeholder: "e.g. 12-24"
-        series_title: &publication_series
-          label: "Series Title"
-          label_short: "Series Title"
-          placeholder: "e.g. Lecture Notes in Computer Science"
+        series_title_volume: *series_title_volume
         publication:
           label: "Book Title"
           mandatory: 1
         year: *year
-        volume: &volume
-          label: "Volume"
-          placeholder: "3"
         publication_identifier: *publication_identifier
         publication_status: *publication_status
       file_upload: *file_upload
@@ -524,9 +518,11 @@ publicationTypes:
         external_id: *external_id
         nasc: *nasc
         genbank: *genbank
-        publication: *publication_series
+        series_title: &publication_series
+          label: "Series Title"
+          label_short: "Series Title"
+          placeholder: "e.g. Lecture Notes in Computer Science"
         extern: *extern
-        volume: *volume
         quality_controlled: *quality_controlled
         ubi_funded: *ubi_funded
         message: *message
@@ -637,7 +633,6 @@ publicationTypes:
         nasc: *nasc
         genbank: *genbank
         publication: *publication_series
-        volume: *volume
         urn: *urn
         message: *message
         ubi_funded: *ubi_funded
@@ -682,7 +677,9 @@ publicationTypes:
         nasc: *nasc
         genbank: *genbank
         message: *message
-        volume: *volume
+        volume: &volume
+          label: "Volume"
+          placeholder: "3"
         publication_identifier: *publication_identifier
         urn: *urn
         ubi_funded: *ubi_funded
