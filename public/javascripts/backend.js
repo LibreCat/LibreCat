@@ -451,7 +451,7 @@ $(function () {
 function add_field(name, placeholder){
 	var items = $('#' + name + ' div.row.innerrow');
 	var index = items.index($('#' + name + ' div.row.innerrow').last()) + 1;
-	var blueprint = $(items[0]).clone(true,true);
+	var blueprint = $(items[0]).clone();
 
 	$(blueprint).find('input, textarea, img, button, select, span').each(function(){
 		if($(this).attr('id')){
@@ -521,7 +521,7 @@ function enable_autocomplete(field, index){
 	switch(field) {
 	case "pj":
 		type = "project"
-			break;
+		break;
 	default:
 		type = "department"
 	}
