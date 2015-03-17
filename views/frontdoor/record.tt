@@ -162,11 +162,8 @@
 	    | <em>[% h.display_name_from_value("publication_status", publication_status) %]</em>
 	    [% END %]
 
-	    [% IF quality_controlled %]
-	    [% SWITCH quality_controlled %]
-	    [% CASE '1' %]
+	    [% IF quality_controlled == '1' %]
 	    | <em>Quality Controlled</em>
-	    [% END %]
 	    [% END %]
 
 	    [% FOREACH lang IN language %]
