@@ -207,4 +207,10 @@ $('#id_accessEmbargo').bind('change', function(){
   }
 });
 
+$('*[data-dismiss="modal"]').click(function(){
+    $('#upLoad')[0].reset();
+    $('#upLoad').find('input[type="hidden"]').val('');
+    $('#upload_file').modal('hide');
+});
+
 </script>
