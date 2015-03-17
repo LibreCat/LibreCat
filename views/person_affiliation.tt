@@ -10,78 +10,38 @@
   </div>
   <div class="row innerrow">
     <div class="col-md-1">
-      <span class="btn btn-default glyphicon glyphicon-plus" id="plusPersonAFF"></span>
+      <span class="btn btn-default glyphicon glyphicon-plus" onclick="add_field('person_affiliation');"></span>
     </div>
     <div class="col-md-10" id="person_affiliation">
     [% IF !department %]
-      <div class="row innerrow">
-        <input type="hidden" name="department.0.id" id="person_aff_idautocomplete_0" />
-        <input type="hidden" name="department.0.name" id="person_aff_nameautocomplete_0" />
-
-        <span class="form-group col-md-7">
-          <input type="text" class="form-control eventInsForm" id="person_aff_autocomplete_0" value="" />
-        </span>
-        <span class="form-group col-md-2">
-          <input type="button" onclick="selectAffiliation(this);" class="btn select_button affiliation" id="affiliation_select_0" value="Select"/>
-        </span>
-        <span class="col-md-1">
-          <span class="btn btn-default glyphicon glyphicon-minus" onclick="javascript:document.getElementById('person_aff_autocomplete_0').value = '';document.getElementById('person_aff_idautocomplete_0').value='';document.getElementById('person_aff_autocomplete_0').disabled=false;"></span>
-        </span>
-        <script>
-        $(function() {
-          $( "#person_aff_autocomplete_0" ).autocomplete({
-            appendTo: "aff_dropdown",
-            source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-            minLength: 2,
-            select: function( event, ui ) {
-              $( "#person_aff_autocomplete_0" ).val( ui.item.label );
-              $( "#person_aff_nameautocomplete_0" ).val( ui.item.label );
-              $( "#person_aff_idautocomplete_0" ).val( ui.item.id );
-              $( "#person_aff_autocomplete_0" ).attr("disabled","disabled");
-              event.stopPropagation();
-            }
-          });
-        });
-        </script>
+    <div class="row innerrow">
+      <input type="hidden" name="department.0.id" id="person_aff_idautocomplete_0" value="" />
+      <input type="hidden" name="department.0.name" id="person_aff_nameautocomplete_0" value="" />
+    
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky">
+          <input type="text" onfocus="enable_autocomplete('person_aff',0);" class="sticky form-control" id="person_aff_autocomplete_0" value="" />
+          <div class="input-group-addon"><span onclick="selectAffiliation(this);" class="department" id="person_aff_select_0">Select</span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+        </div>
       </div>
+    </div>
     [% ELSE %]
       [% FOREACH dept IN department %]
       <div class="row innerrow">
         <input type="hidden" name="department.[% loop.index %].id" id="person_aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
         <input type="hidden" name="department.[% loop.index %].name" id="person_aff_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
-        <span class="form-group col-md-7">
-          <input type="text" class="form-control eventInsForm" id="person_aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
-        </span>
-        <span class="form-group col-md-2">
-          <input type="button" onclick="selectAffiliation(this);" class="btn select_button affiliation" id="affiliation_select_[% loop.index %]" value="Select"/>
-        </span>
-        <span class="col-md-1">
-        [% IF loop.index == 0 %]
-          <span class="btn btn-default glyphicon glyphicon-minus" onclick="javascript:document.getElementById('person_aff_autocomplete_0').value = '';document.getElementById('person_aff_idautocomplete_0').value='';document.getElementById('person_aff_autocomplete_0').disabled=false;"></span>
-        [% ELSE %]
-          <span class="btn btn-default glyphicon glyphicon-minus single"></span>
-        [% END %]
-        </span>
-        <script>
-        $(function() {
-          $( "#person_aff_autocomplete_[% loop.index %]" ).autocomplete({
-            appendTo: "#aff_dropdown",
-            source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-            minLength: 2,
-            select: function( event, ui ) {
-              $( "#person_aff_autocomplete_[% loop.index %]" ).val( ui.item.label );
-              $( "#person_aff_nameautocomplete_[% loop.index %]" ).val( ui.item.label );
-              $( "#person_aff_idautocomplete_[% loop.index %]" ).val( ui.item.id );
-              $( "#person_aff_autocomplete_[% loop.index %]" ).attr("disabled","disabled");
-              event.stopPropagation();
-            }
-          });
-        });
-        </script>
+          
+        <div class="form-group col-md-10 col-xs-11">
+          <div class="input-group sticky">
+            <input type="text" onfocus="enable_autocomplete('person_aff',[% loop.index %]);" class="sticky form-control" id="person_aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+            <div class="input-group-addon"><span onclick="selectAffiliation(this);" class="department" id="person_aff_select_[% loop.index %]">Select</span></div>
+            <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          </div>
+        </div>
       </div>
       [% END %]
     [% END %]
-
     </div>
   </div>
 
@@ -124,18 +84,17 @@
 <script>
 // Select button (dept, proj, rg)
 function selectAffiliation(element){
-    var type = $(element).attr('class').replace('btn select_button', '').trim();
     var type_short;
     var type_name;
 
-    var index = $(element).attr('id').replace(type + '_select_','').trim();
+    var index = $(element).attr('id').replace('person_aff_select_','').trim();
     var modal = $('#selectAFF');
     var container = $('#selectAFF').find('.modal-body').first();
     container.html("");
     container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
     var heading = modal.find('h4').first();
     heading.html("");
-    heading.append('Choose a ' + type_name);
+    heading.append('Choose a Department');
     $('.selectme').bind("click", function(e){
         var id = $(this).attr('id');
         var name = $(this).html();

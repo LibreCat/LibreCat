@@ -493,8 +493,8 @@ function add_field(name, placeholder){
 	case "department":
 		enable_autocomplete("dp", index)
 			break;
-	case "affiliation":
-		enable_autocomplete("aff", index)
+	case "person_affiliation":
+		enable_autocomplete("person_aff", index)
 			break;
 	case "project":
 		enable_autocomplete("pj", index)
@@ -529,6 +529,9 @@ function enable_autocomplete(field, index){
 	switch(field) {
 	case "pj":
 		type = "project"
+		break;
+	case "person_aff":
+		type = "department"
 		break;
 	default:
 		type = "department"
