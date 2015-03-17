@@ -18,7 +18,7 @@
       </div>
       <div id="wasistpub" class="panel-collapse collapse">
         <div class="panel-body">
-          <p>The publication server of Bielefeld University &quot;PUB&quot; is the central register for all publications of the Bielefeld University academics.
+          <p>The publication server of Bielefeld University &quot;PUB&quot; is the central repository for all publications of the Bielefeld University academics.
 		PUB allows a well-arranged presentation of publications in individual publication lists which are easy to maintain and easy made visible on the web.
 		Besides the descriptive bibliographic data of an publication, the records can include abstracts, keywords and classification as well as a link to the original publication via DOI.
 		Optionally, the records can be enriched by the fulltexts or supplementary material. Research data can be either linked (e.g. from GenBank, NASC or EBI) or can be uploaded in PUB,
