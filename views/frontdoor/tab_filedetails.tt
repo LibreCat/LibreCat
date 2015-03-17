@@ -57,7 +57,7 @@
         [% INCLUDE websites/oa_lock.tt %] UniBi Only
 
         [% CASE 'closed' %]
-        [% INCLUDE websites/oa_lock.tt %] Closed Access
+        [% INCLUDE websites/oa_lock.tt %][% IF fi.request_a_copy %] Request a Copy[% ELSE %] Closed Access[% END %]
       [% END %]
     </div>
     </div>
