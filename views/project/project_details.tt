@@ -2,121 +2,121 @@
 
 <div class="tab-pane active" id="project_details">
 
-[% IF alternative_name %]
-<div class="row">
-    <div class="col-md-2 text-muted">Alternative Name</div>
-    <div class="col-md-10">[% alternative_name %]</div>
-</div>
-[% END %]
+  [% IF alternative_name %]
+  <div class="row">
+      <div class="col-md-2 text-muted">Alternative Name</div>
+      <div class="col-md-10">[% alternative_name %]</div>
+  </div>
+  [% END %]
 
-[% IF acronym %]
-<div class="row">
-    <div class="col-md-2 text-muted">Acronym</div>
-    <div class="col-md-10">[% acronym %]</div>
-</div>
-[% END %]
+  [% IF acronym %]
+  <div class="row">
+      <div class="col-md-2 text-muted">Acronym</div>
+      <div class="col-md-10">[% acronym %]</div>
+  </div>
+  [% END %]
 
-          [% IF isOwnedBy %]
-          <div class="frontdoor">
-            <div class="frontdoor_left">
-              Coordinator
-            </div>
-            <div class="frontdoor_right">
-              [% FOREACH coord IN isOwnedBy %]
-                [% IF coord.name.personTitle != "" %]
-                  [% coord.name.personTitle %]
-                [% END %]
-                [% coord.name.givenName %] [% coord.name.surname %][% UNLESS loop.last %], [% END %]
-              [% END %]
-            </div>
-          </div>
-          [% END %]
-
-          [% IF principalInvestigators %]
-          <div class="frontdoor">
-            <div class="frontdoor_left">
-              Principal Investigators
-            </div>
-            <div class="frontdoor_right">
-              [% FOREACH pi IN principalInvestigators %]
-                [% IF pi.name.personTitle != "" %]
-                  [% pi.name.personTitle %]
-                [% END %]
-                [% pi.name.givenName %] [% pi.name.surname %][% UNLESS loop.last %], [% END %]
-              [% END %]
-            </div>
-          </div>
-          [% END %]
-
-          [% IF projectMembers %]
-          <div class="frontdoor">
-            <div class="frontdoor_left">
-              Members
-            </div>
-            <div class="frontdoor_right">
-              [% FOREACH pm IN projectMembers %]
-                [% IF pm.name.personTitle != "" %]
-                  [% pm.name.personTitle %]
-                [% END %]
-                [% pm.name.givenName %] [% pm.name.surname %][% UNLESS loop.last %], [% END %]
-              [% END %]
-            </div>
-          </div>
-          [% END %]
-
-[% IF department %]
-<div class="row">
-    <div class="col-md-2 text-muted">Department(s)</div>
-    <div class="col-md-10">[% FOREACH d IN department %]
-    [% d.name %][% UNLESS loop.last %]<br />[% END %]
-    [% END %]
+  [% IF isOwnedBy %]
+  <div class="row">
+    <div class="col-md-2 text-muted">
+      Coordinator
     </div>
-</div>
-[% END %]
-
-[% IF description %]
-<div class="row">
-    <div class="col-md-2 text-muted">Description</div>
-    <div class="col-md-10">[% description %]</div>
-</div>
-[% END %]
-
-[% IF grant_number %]
-<div class="row">
-    <div class="col-md-2 text-muted">Grant Number</div>
     <div class="col-md-10">
-      <a href="http://cordis.europa.eu/projects/[% grant_number %]" target="_blank">[% grant_number %]</a>
+      [% FOREACH coord IN isOwnedBy %]
+	[% IF coord.name.personTitle != "" %]
+	  [% coord.name.personTitle %]
+	[% END %]
+	[% coord.name.givenName %] [% coord.name.surname %][% UNLESS loop.last %], [% END %]
+      [% END %]
     </div>
-</div>
-[% END %]
+  </div>
+  [% END %]
 
-[% IF funder %]
-<div class="row">
-    <div class="col-md-2 text-muted">Funders</div>
-    <div class="col-md-10">[% FOREACH fund IN funder %]
-    [% fund %][% UNLESS loop.last %]<br />[% END %]
-    [% END %]
+  [% IF principalInvestigators %]
+  <div class="row">
+    <div class="col-md-2 text-muted">
+      Principal Investigators
     </div>
-</div>
-[% END %]
-
-[% IF cooperator %]
-<div class="row">
-    <div class="col-md-2 text-muted">Cooperators</div>
-    <div class="col-md-10">[% FOREACH coop IN cooperator %]
-    [% coop %][% UNLESS loop.last %]<br />[% END %]
-    [% END %]
-    </div>
-</div>
-[% END %]
-
-[% IF url %]
-<div class="row">
-    <div class="col-md-2 text-muted">URL</div>
     <div class="col-md-10">
-        <a href="[% url %]" target="_blank">[% url %]</a>
+      [% FOREACH pi IN principalInvestigators %]
+	[% IF pi.name.personTitle != "" %]
+	  [% pi.name.personTitle %]
+	[% END %]
+	[% pi.name.givenName %] [% pi.name.surname %][% UNLESS loop.last %], [% END %]
+      [% END %]
     </div>
-</div>
-[% END %]
+  </div>
+  [% END %]
+
+  [% IF projectMembers %]
+  <div class="row">
+    <div class="col-md-2 text-muted">
+      Members
+    </div>
+    <div class="col-md-10">
+      [% FOREACH pm IN projectMembers %]
+	[% IF pm.name.personTitle != "" %]
+	  [% pm.name.personTitle %]
+	[% END %]
+	[% pm.name.givenName %] [% pm.name.surname %][% UNLESS loop.last %], [% END %]
+      [% END %]
+    </div>
+  </div>
+  [% END %]
+
+  [% IF department %]
+  <div class="row">
+      <div class="col-md-2 text-muted">Department(s)</div>
+      <div class="col-md-10">[% FOREACH d IN department %]
+      [% d.name %][% UNLESS loop.last %]<br />[% END %]
+      [% END %]
+      </div>
+  </div>
+  [% END %]
+
+  [% IF description %]
+  <div class="row">
+      <div class="col-md-2 text-muted">Description</div>
+      <div class="col-md-10">[% description %]</div>
+  </div>
+  [% END %]
+
+  [% IF grant_number %]
+  <div class="row">
+      <div class="col-md-2 text-muted">Grant Number</div>
+      <div class="col-md-10">
+	<a href="http://cordis.europa.eu/projects/[% grant_number %]" target="_blank">[% grant_number %]</a>
+      </div>
+  </div>
+  [% END %]
+
+  [% IF funder %]
+  <div class="row">
+      <div class="col-md-2 text-muted">Funders</div>
+      <div class="col-md-10">[% FOREACH fund IN funder %]
+      [% fund %][% UNLESS loop.last %]<br />[% END %]
+      [% END %]
+      </div>
+  </div>
+  [% END %]
+
+  [% IF cooperator %]
+  <div class="row">
+      <div class="col-md-2 text-muted">Cooperators</div>
+      <div class="col-md-10">[% FOREACH coop IN cooperator %]
+      [% coop %][% UNLESS loop.last %]<br />[% END %]
+      [% END %]
+      </div>
+  </div>
+  [% END %]
+
+  [% IF url %]
+  <div class="row">
+      <div class="col-md-2 text-muted">URL</div>
+      <div class="col-md-10">
+	  <a href="[% url %]" target="_blank">[% url %]</a>
+      </div>
+  </div>
+  [% END %]
 
 </div>

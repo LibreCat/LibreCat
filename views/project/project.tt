@@ -20,24 +20,27 @@
 
     <div class="row margin-bottom1">
 
-    <div class="col-md-8"><!-- begin left col -->
-
+      <div class="col-md-8"><!-- begin left col -->
 	<div class="row">
 	  <div class="col-md-12">
-      Project Period: [% start_date %][% IF end_date %] - [% end_date %][% END %]
+	    Project Period: [% start_date %][% IF end_date %] - [% end_date %][% END %]
 	  </div>
 	</div>
-    <div class="row">
+	<div class="row">
 	  <div class="col-xs-10">
-      [% IF active %]
-        <em>| Active</em>
-      [% END %]
-      [% IF sc39 %]
-        <em>| SC39</em>
-      [% END %]
-      [% IF funded %]
-        <em>| Externally Funded</em>
-      [% END %]
+	  [% IF active %]
+	    <em>Active</em>
+	    [% IF sc39 OR funded %]|[% END %]
+	  [% END %]
+	  [% IF sc39 %]
+	    <em>SC39</em>
+	    [% IF funded %]|[% END %]
+	  [% END %]
+	  [% IF funded %]
+	    <em>Externally Funded</em>
+	  [% END %]
+	  </div>
+	</div>
       </div>
     </div>
 
@@ -52,10 +55,9 @@
 
     <div class="row">
       <div class="col-md-8"><!-- tab-content -->
-
-	   <div class="tab tab-content">
-       [% INCLUDE project/project_details.tt %]
-       <div class="tab-pane" id="project_publications" style="margin-left:-12px;">
+	<div class="tab tab-content">
+	[% INCLUDE project/project_details.tt %]
+	<div class="tab-pane" id="project_publications">
          [% IF project_publication %]
            [% style = 'frontShort' %]
            [% limit = project_publication.limit %]
@@ -63,9 +65,8 @@
            [% total = project_publication.total %]
            [% INCLUDE hits.tt %]
          [% END %]
-       </div>
-       </div>
-     </div>
+	</div>
+      </div>
     </div>
 
     </div><!-- end left col -->
