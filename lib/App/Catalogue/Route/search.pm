@@ -2,7 +2,7 @@ package App::Catalogue::Route::search;
 
 =head1 NAME
 
-    App::Catalog::Route::search
+App::Catalog::Route::search
 
 =cut
 
@@ -27,15 +27,14 @@ Dancer::Plugin::Auth::Tiny->extend(
 
 =head2 PREFIX /myPUB/search
 
-    All publication searches are handled within the
-    prefix search.
+All publication searches are handled within the prefix search.
 
 =cut
 prefix '/myPUB/search' => sub {
 
 =head2 GET /admin
 
-    Performs search for admin.
+Performs search for admin.
 
 =cut
     get '/admin' => needs role => 'super_admin' => sub {
@@ -62,7 +61,7 @@ prefix '/myPUB/search' => sub {
 
 =head2 GET /reviewer
 
-    Performs search for reviewer.
+Performs search for reviewer.
 
 =cut
     get '/reviewer' => needs role => 'reviewer' => sub {
@@ -71,7 +70,7 @@ prefix '/myPUB/search' => sub {
         my $id = session 'personNumber';
         my $account = h->getAccount(session->{user})->[0];
         my $dep_query = join( ' OR ', map{"department=$_->{id}";} @{$account->{reviewer}});
-        push @{$p->{q}}, "($dep_query) OR (person=$id OR creator=$id)";
+        push @{$p->{q}}, "(($dep_query) OR person=$id OR creator=$id)";
 
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
@@ -93,7 +92,7 @@ prefix '/myPUB/search' => sub {
 
 =head2 GET /datamanager
 
-    Performs search for data manager.
+Performs search for data manager.
 
 =cut
     get '/data_manager' => needs role => 'data_manager' => sub {
@@ -102,7 +101,7 @@ prefix '/myPUB/search' => sub {
         my $id = session 'personNumber';
         my $account = h->getAccount(session->{user})->[0];
         my $dep_query = join( ' OR ', map{"department=$_->{id}";} @{$account->{data_manager}});
-        push @{$p->{q}}, "($dep_query) OR (person=$id OR creator=$id)";
+        push @{$p->{q}}, "(($dep_query) OR person=$id OR creator=$id)";
         push @{$p->{q}}, "(type=researchData OR type=dara)";
 
         $p->{facets} = h->default_facets();
