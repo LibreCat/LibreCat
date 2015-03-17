@@ -1,4 +1,3 @@
-
 <!-- BEGIN links.tt -->
 
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
