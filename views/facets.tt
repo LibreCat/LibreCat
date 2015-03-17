@@ -16,6 +16,17 @@
 </div>
 [% END %]
 
+[%- IF h.extract_params.q.size > 0 %]
+<h3 class="margin-top0">Filters and Search Terms</h3>
+[%- FOREACH val IN h.extract_params.q %]
+[%- removed = [] -%]
+
+[%- CALL removed.import(h.extract_params.q) -%]
+[%- CALL removed.splice(loop.index, 1) -%]
+<p class="text-muted"><a href="[% path %]?q=[% removed.join('&q=') %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
+[%- END %]
+[%- END %]
+
 [% UNLESS request.path == "/marked" %]
 <div class="row hidden-md hidden-lg hidden-sm"><!-- smartphones only -->
   <div class="col-xs-12">
@@ -23,10 +34,10 @@
   </div>
 </div>
 
-<h3 class="margin-top0">Search</h3>
+<h3[%- IF h.extract_params.q.size == 0 %] class="margin-top0"[% END %]>Search</h3>
 <form action="#" method="get" class="form-inline" role="form">
     <span class="input-group">
-      <input type="text" value='[% qp.text %]' class="form-control" name="text" placeholder="Search" />
+      <input type="text" value='' class="form-control" name="text" placeholder="Search" />
       <span class="input-group-btn">
         <button type="submit" class="btn btn-default">Go!</button>
       </span>
@@ -41,15 +52,6 @@
 
 [% UNLESS request.path == "/marked" %]
 <h3>Filter Publications</h3>
-[%- IF h.extract_params.q.size > 0 %]
-[%- FOREACH val IN h.extract_params.q %]
-[%- removed = [] -%]
-
-[%- CALL removed.import(h.extract_params.q) -%]
-[%- CALL removed.splice(loop.index, 1) -%]
-<p class="text-muted"><a href="[% path %]?q=[% removed.join('&q=') %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
-[%- END %]
-[%- END %]
 
 [% IF facets.status.terms && facets.status.terms.size > 1 %]
   [% IF backend %]
