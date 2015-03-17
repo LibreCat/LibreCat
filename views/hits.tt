@@ -77,7 +77,7 @@
 [% ELSE %]
     <div class="col-md-12">
 [% END %]
-    <em>[% entry.year %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry._id %]</span> [% IF !backend AND (request.path.match("/person") OR request.path.match("/marked")) %]<span class="pull-right"><a [% IF request.path == "/marked" %]id="clickme_[% n %]" [% END %]class="mark" href="#" data-marked="[% h.is_marked(entry._id) %]" data-id="[% entry._id %]">[% IF h.is_marked(entry._id) %]<span class="glyphicon glyphicon-remove"></span>Unmark[% ELSE %]<span class="glyphicon glyphicon-ok"></span>Mark[% END %]</a></span>[% END %]</em>
+    <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry._id %]</span> [% IF !backend AND (request.path.match("/person") OR request.path.match("/marked")) %]<span class="pull-right"><a [% IF request.path == "/marked" %]id="clickme_[% n %]" [% END %]class="mark" href="#" data-marked="[% h.is_marked(entry._id) %]" data-id="[% entry._id %]">[% IF h.is_marked(entry._id) %]<span class="glyphicon glyphicon-remove"></span>Unmark[% ELSE %]<span class="glyphicon glyphicon-ok"></span>Mark[% END %]</a></span>[% END %]</em>
     <div class="citation-block-div">
     [% IF style == 'frontShort' %]
 	<a href="/myPUB/record/edit/[% entry._id %]"><strong>[% entry.title %]</strong></a><br>
@@ -89,8 +89,10 @@
     [% END %]
     </div>
     [% INCLUDE links.tt %]
-
-    [% IF backend %][% INCLUDE rec_details.tt %][% END %]
+    [% IF backend %]
+    [% INCLUDE rec_details.tt %]
+    [% IF session.role == 'super_admin' %][% IF entry.message %]<br /><em>Admin Comment: [% entry.message %]</em>[% END %][% END %]
+    [% END %]
   </div>
 </div>
 
