@@ -222,7 +222,7 @@ publicationTypes:
       file_upload: &file_upload
         tab_name: "File Upload"
         dropzone_mainDoc:
-          label: "Upload Main File(s) and Supplementary Material (max. 1000MB per file)"
+          label: "<strong>Upload Main File(s) and Supplementary Material</strong> (max. 1000MB per file)"
         license:
           pub_license:
             mandatory: 1

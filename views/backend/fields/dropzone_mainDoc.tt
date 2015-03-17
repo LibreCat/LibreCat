@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-xs-10">
-    <strong>{% fields.file_upload.dropzone_mainDoc.label %}</strong>
+    {% fields.file_upload.dropzone_mainDoc.label %}
   </div>
 </div>
   
