@@ -26,6 +26,7 @@ h1,.h1,h2,.h2,h3,.h3{margin-top:31px;}
 [class^='col']>h2,.panel-body h3{margin-top:0;}
 .title h1{font-size:22px;}
 h3 a{font-size:inherit;}
+.h3 a{font-weight:normal;}
 h3.expert{border-bottom:1px dashed #b6c828;}
 
 /* fonts */
