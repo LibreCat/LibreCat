@@ -1,19 +1,21 @@
 <!-- BEGIN frontdoor/tab_ebi_ref.tt -->
 <div class="tab-pane" id="ebi_references">
-<h3>[% epmc_ref.total %] References</h3>
-Data provided by <a href="http://europepmc.org/">Europe PubMed Central</a>.<br /><br />
-[% FOREACH reference IN epmc_ref.entries.nsort('citedOrder') %]
-<div class="row">
-  <div class="col-md-12">
-  [% IF reference.id %]
-  <span class="fa fa-share-square-o"></span> <a href="http://europepmc.org/abstract/MED/[% reference.id %]">[% reference.title %]</a><br />
-  [% ELSE %]
-  [% reference.title %]<br />
-  [% END %]
-  [% reference.authorString %], [% IF reference.journalAbbreviation %] <i>[% reference.journalAbbreviation %]</i> [% reference.volume %]([% reference.issue %]),[% END %] [% reference.pubYear %]
-  [% IF reference.id %]<br />PMID: <a href="http://europepmc.org/abstract/MED/[% reference.id %]">[% reference.id %]</a>[% END %]
+
+  <h3 class="margin-top0">[% epmc_ref.total %] Reference[% IF epmc_ref.total != "1" %]s[% END %]</h3>
+  <p>Data provided by <a href="http://europepmc.org/">Europe PubMed Central</a>.</p>
+  [% FOREACH reference IN epmc_ref.entries.nsort('citedOrder') %]
+  <div class="row[% UNLESS loop.first %] margin-top1[% END %]">
+    <div class="col-md-12">
+    [% IF reference.id %]
+    <a href="http://europepmc.org/abstract/MED/[% reference.id %]"><span class="fa fa-share-square-o"></span>[% reference.title %]</a><br />
+    [% ELSE %]
+    [% reference.title %]<br />
+    [% END %]
+    [% reference.authorString %], [% IF reference.journalAbbreviation %] <em>[% reference.journalAbbreviation %]</em> [% reference.volume %]([% reference.issue %]),[% END %] [% reference.pubYear %]
+    [% IF reference.id %]<br />PMID: <a href="http://europepmc.org/abstract/MED/[% reference.id %]">[% reference.id %]</a>[% END %]
+    </div>
   </div>
-</div>
-[% END %]
+  [% END %]
+
 </div>
 <!-- END frontdoor/tab_ebi_ref.tt -->

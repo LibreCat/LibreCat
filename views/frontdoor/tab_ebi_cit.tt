@@ -1,13 +1,12 @@
 <!-- BEGIN frontdoor/tab_ebi_cit.tt -->
 
 <div class="tab-pane" id="ebi_citations">
-<h3>[% epmc_cit.total %] Citations in Europe PMC<br />
-Web of Science&reg; times cited: [% metrics.timesCited %] <span class="muted">subscription required<span>
-</h3>
-Data provided by <a href="http://europepmc.org/">Europe PubMed Central</a>.<br /><br />
+
+<h3 class="margin-top0">[% epmc_cit.total %] Citation[% IF epmc_cit.total != "1" %]s[% END %] in Europe PMC</h3>
+<p>Data provided by <a href="http://europepmc.org/">Europe PubMed Central</a></p>
 [% FOREACH cite IN epmc_cit.entries.nsort('pubYear').reverse %]
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-12[% UNLESS loop.first %] margin-top1[% END %]">
   [% IF cite.id %]<span class="fa fa-share-square-o"></span> <a href="http://europepmc.org/abstract/MED/[% cite.id %]">[% cite.title %]</a><br />
   [% ELSE %]
   [% cite.title %]<br />
@@ -21,5 +20,7 @@ Data provided by <a href="http://europepmc.org/">Europe PubMed Central</a>.<br /
 </div>
 [% END %]
 </div>
+
+<!-- <p class="margin-top1">Web of Science&reg; times cited: [% metrics.timesCited %] <span class="text-muted">subscription required</span></p> -->
 
 <!-- END frontdoor/tab_ebi_cit.tt -->
