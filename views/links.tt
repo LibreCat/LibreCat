@@ -2,7 +2,7 @@
 <!-- BEGIN links.tt -->
 
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
-<a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/myPUB/record/preview/[% entry._id %][% END %]" title="Show complete bibliographic and access information" target="_top">PUB</a>
+<a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/myPUB/record/preview/[% entry._id %][% END %]" title="Show complete bibliographic and access information" target="[% IF backend %]_blank[% ELSE %]_top[% END %]">PUB</a>
   [% IF entry.file || entry.related_material || entry.externalFiles == "1" %]
   | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/myPUB/record/preview/[% entry._id %][% END %]" class="label label-primary">Files available</a>
   [% END %]
