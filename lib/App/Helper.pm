@@ -110,7 +110,7 @@ sub extract_params {
 	}
 
 	#push @{$p->{q}}, $params->{text} if $params->{text};
-	($params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, $params->{text}) : (push @{$p->{q}}, join(" AND ",split(" ",$params->{text}))) if $params->{text};
+	($params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, $params->{text}) : (push @{$p->{q}}, join(" AND ",split(/ |-/,$params->{text}))) if $params->{text};
 	
 	# autocomplete functionality
 	if($params->{term}){
