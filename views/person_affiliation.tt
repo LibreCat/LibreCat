@@ -9,19 +9,17 @@
     </div>
   </div>
   <div class="row innerrow">
-    <div class="col-md-1">
-      <span class="btn btn-default glyphicon glyphicon-plus" onclick="add_field('person_affiliation');"></span>
-    </div>
-    <div class="col-md-10" id="person_affiliation">
+    <div class="col-md-12" id="person_affiliation">
     [% IF !department %]
-    <div class="row innerrow">
+    <div class="row  innerrow">
       <input type="hidden" name="department.0.id" id="person_aff_idautocomplete_0" value="" />
       <input type="hidden" name="department.0.name" id="person_aff_nameautocomplete_0" value="" />
     
-      <div class="form-group col-md-10 col-xs-11">
+      <div class="form-group col-md-11">
         <div class="input-group sticky">
           <input type="text" onfocus="enable_autocomplete('person_aff',0);" class="sticky form-control" id="person_aff_autocomplete_0" value="" />
           <div class="input-group-addon"><span onclick="selectAffiliation(this);" class="department" id="person_aff_select_0">Select</span></div>
+	  <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('person_affiliation');"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
         </div>
       </div>
@@ -32,10 +30,11 @@
         <input type="hidden" name="department.[% loop.index %].id" id="person_aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
         <input type="hidden" name="department.[% loop.index %].name" id="person_aff_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
           
-        <div class="form-group col-md-10 col-xs-11">
+        <div class="form-group col-md-11">
           <div class="input-group sticky">
             <input type="text" onfocus="enable_autocomplete('person_aff',[% loop.index %]);" class="sticky form-control" id="person_aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
             <div class="input-group-addon"><span onclick="selectAffiliation(this);" class="department" id="person_aff_select_[% loop.index %]">Select</span></div>
+	    <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('person_affiliation');"></span></div>
             <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
           </div>
         </div>
@@ -46,8 +45,8 @@
   </div>
 
   <div class="row innerrow"><!-- button -->
-    <div class="col-md-12 buttonrow">
-      <span class="form-group col-md-2 col-md-offset-1">
+    <div class="col-md-2">
+      <span class="form-group">
         <button type="submit" id="id_save_aff" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save</button>
       </span>
     </div>
@@ -63,18 +62,16 @@
     </div>
   </div>
   <div class="row innerrow">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="row innerrow">
-	<div class="col-md-7">
+    <div class="col-md-7">
 	  <select name="edit_mode" class="form-control">
 	    <option value="normal"[% IF (thisPerson.edit_mode AND thisPerson.edit_mode == "normal") OR (!thisPerson.edit_mode AND session.role != "super_admin") %] selected="selected"[% END %]>Tabbed Form</option>
 	    <option value="expert"[% IF (thisPerson.edit_mode AND thisPerson.edit_mode == "expert") OR (!thisPerson.edit_mode AND session.role == "super_admin") %] selected="selected"[% END %]>Single Page Form</option>
 	  </select>
-	</div>
-      </div>
     </div>
-    <div class="col-md-12 buttonrow margin-top1">
-      <span class="form-group col-md-2 col-md-offset-1">
+  </div>
+  <div class="row innerrow">
+    <div class="col-md-2 margin-top1-2">
+      <span class="form-group">
         <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save</button>
       </span>
     </div>
