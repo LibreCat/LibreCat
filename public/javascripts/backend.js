@@ -493,6 +493,15 @@ function add_field(name, placeholder){
 	case "department":
 		enable_autocomplete("dp", index)
 			break;
+	case "affiliation":
+		enable_autocomplete("aff", index)
+		break;
+	case "data_manager":
+		enable_autocomplete("dm", index)
+		break;
+	case "reviewer":
+		enable_autocomplete("rv", index)
+		break;
 	case "person_affiliation":
 		enable_autocomplete("person_aff", index)
 			break;
