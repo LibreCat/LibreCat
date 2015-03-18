@@ -201,7 +201,7 @@ nav.frontend{min-height:100px!important;}
 .uninav .dropdown-toggle{padding-top:0;padding-bottom:0;text-align:center;color:#555!important;width:170px;}
 .navbar-title{font-size:15px;padding-top:52px;}
 span.select-language{padding-top:57px;display:inline-block;}
-.select-language a{display:inline-block;padding:0 6px;background-color:#666;color:#fff!important;font-weight:normal!important;font-size:11px;}
+.select-language a{display:inline-block;padding:0 6px 1px;background-color:#666;color:#fff!important;font-weight:normal!important;font-size:11px;}
 main.front{padding-top:110px;}
 a{font-weight:bold;}
 }
