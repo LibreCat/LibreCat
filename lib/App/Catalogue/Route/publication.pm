@@ -12,6 +12,7 @@ use App::Catalogue::Controller::Publication;
 use App::Catalogue::Controller::Permission qw/:can/;
 use Dancer ':syntax';
 use Try::Tiny;
+use Encode qw(encode);
 use Dancer::Plugin::Auth::Tiny;
 
 Dancer::Plugin::Auth::Tiny->extend(
@@ -307,6 +308,7 @@ Changes the layout of the edit form.
 
         $params = h->nested_params($params);
         foreach my $fi (@{$params->{file}}){
+        	$fi = encode('UTF-8', $fi);
         	$fi = from_json($fi);
         	$fi->{file_json} = to_json($fi);
         }
