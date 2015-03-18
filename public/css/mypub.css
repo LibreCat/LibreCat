@@ -101,7 +101,7 @@ a .total-marked{margin-right:5px;}
 a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 
 /* frontdor */
-#preview{position:absolute; top:175px; left:-125px; width:600px; padding:10px; font-size:24px; text-align:center; color:rgb(255,255,255); font-family:'trebuchet ms',verdana,arial,sans-serif; transform:rotate(-45deg); -webkit-transform:rotate(-45deg); transform-origin:50% 0px 0px; -webkit-transform-origin:50% 0px; background-color:rgb(0,0,0); border:1px solid rgb(170,170,170); z-index:12; opacity:0.5;}
+#preview{position:absolute;top:175px;left:-125px;width:600px;padding:10px;font-size:24px;text-align:center;color:rgb(255,255,255);font-family:'trebuchet ms',verdana,arial,sans-serif;transform:rotate(-45deg);-webkit-transform:rotate(-45deg);transform-origin:50% 0px 0px;-webkit-transform-origin:50% 0px;background-color:rgb(0,0,0);border:1px solid rgb(170,170,170);z-index:12;opacity:0.5;}
 .text-muted{line-height:1.5;}
 #details .row{margin-top:6px;}
 #citethis .tab-content{border:1px solid #ddd;border-top:0;border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-top-right-radius:4px;}
@@ -160,11 +160,11 @@ input.has-error,.has-error input{background-color:#ffcfce;}
 .starMandatory:after{content:" *";font-size:18px;vertical-align:middle;color:#f00;font-weight:bold;}
 .tab_section{padding-bottom:20px;}
 
-.ui-autocomplete {position: absolute;cursor: default;max-height: 100px;overflow-y: auto;overflow-x: hidden;padding-right: 20px;}
-* html .ui-autocomplete {height: 100px;}
-.ui-menu {list-style:none;padding: 2px;margin: 0;display:block;float: left;z-index:1000;}
-.ui-menu .ui-menu-item a.ui-state-hover,.ui-menu .ui-menu-item a.ui-state-active {background: lightgray;}
-.ui-widget-content {border: 1px solid black;background: white;color: #222222;}
+.ui-autocomplete{position:absolute;cursor:pointer;max-height:100px;overflow-y:auto;overflow-x:hidden;z-index:9999;}
+* html .ui-autocomplete{height:100px;}
+.ui-menu{list-style:none;padding:2px;margin:0;display:block;float:left;}
+.ui-menu .ui-menu-item a.ui-state-hover,.ui-menu .ui-menu-item a.ui-state-active{background:lightgray;}
+.ui-widget-content{border:1px solid black;background:white;color:#222;}
 
 /* special styles for screens */
 
