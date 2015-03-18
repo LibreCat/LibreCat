@@ -276,6 +276,10 @@ $('button.cancel-button').click(function() {
 
 
 $("#id_conference_location").autocomplete({
+  messages: {
+	noResults: '',
+	results: function() {}
+  },
   source: function (request, response) {
     jQuery.getJSON(
       "http://gd.geobytes.com/AutoCompleteCity?callback=?&q="+request.term,
@@ -300,6 +304,10 @@ $("#id_conference_location").autocomplete({
 $("#id_conference_location").autocomplete("option", "delay", 100);
 
 $("#id_place").autocomplete({
+  messages: {
+	noResults: '',
+	results: function() {}
+  },
   source: function (request, response) {
     jQuery.getJSON(
       "http://gd.geobytes.com/AutoCompleteCity?callback=?&q="+request.term,
