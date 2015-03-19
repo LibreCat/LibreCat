@@ -15,21 +15,21 @@ sub can_edit {
     my ($id, $login, $user_role) = @_;
 
     my $user = h->getAccount($login)->[0];
-    my $cql;
+    my $cql = "id=$id AND (person=$user->{_id} OR creator=$user->{_id}";
+
     if ($user_role eq 'super_admin') {
         return 1;
+    } elsif ($user_role eq 'user') {
+        $cql .= ")";
     } elsif ($user_role eq 'reviewer') {
         my @deps = map {"department=$_->{id}"} @{$user->{reviewer}};
-        $cql = "(" . join(' OR ', @deps) . ")" . " OR (person=$user->{_id} OR creator=$user->{_id}) AND id=$id";
+        $cql .= " OR " .join(' OR ', @deps) .")";
     } elsif ($user_role eq 'dataManager') {
         my @deps = map {"department=$_->{id}"} @{$user->{dataManager}};
-        $cql = "(" . join(' OR ', @deps) . ")" . " OR (person=$user->{_id} OR creator=$user->{_id}) AND id=$id";
-    } elsif ($user_role eq 'user') {
-        $cql = "(person=$user->{_id} OR creator=$user->{_id}) AND id=$id";
-        #if ($user->{delegate}) {
-        #    my @delegate = map {"person=$_->{id}"} @{$user->{delegate}};
-        #    $hits = h->quick_search(cql_query => "(" . join(@delegate, ' OR ') . ")" . "AND id=$id")
-        #}
+        $cql .= " OR " .join(' OR ', @deps) .")";
+    } elsif ($user_role eq 'delegate') {
+        my @delegate = map {"person=$_->{id}"} @{$user->{delegate}};
+        $cql .= " OR " .join(' OR ', @delegate) .")";
     }
 
     my $hits = h->publication->search(cql_query => $cql, limit => 1);
