@@ -290,7 +290,7 @@ $("#id_conference_location").autocomplete({
   },
   minLength: 3,
   select: function (event, ui) {
-    var selectedObj = ui.item.value.replace(/, .*/,'');
+    var selectedObj = ui.item.value.replace(/, \w{1,},/,',');
     $("#id_conference_location").val(selectedObj);
     return false;
   },
