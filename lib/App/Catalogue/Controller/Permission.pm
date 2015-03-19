@@ -28,7 +28,7 @@ sub can_edit {
         my @deps = map {"department=$_->{id}"} @{$user->{dataManager}};
         $cql .= " OR " .join(' OR ', @deps) .")";
     } elsif ($user_role eq 'delegate') {
-        my @delegate = map {"person=$_->{id}"} @{$user->{delegate}};
+        my @delegate = map {"person=$_"} @{$user->{delegate}};
         $cql .= " OR " .join(' OR ', @delegate) .")";
     }
 
