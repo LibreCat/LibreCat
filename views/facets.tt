@@ -56,21 +56,19 @@
 
 <h3>Filter Publications</h3>
 
-[% IF facets.status.terms && facets.status.terms.size > 1 %]
-  [% IF backend %]
-    <ul class="nav nav-tabs nav-stacked margin-bottom1 ul0">
-      <li>
-	<button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down"></span> Visibility Status ([% facets.status.terms.size %])</button>
-	<div class="facettecollapse">
-	  <ul id="status_[% tabmodus %][% menu %]" class="collapse">
-	    [% FOREACH stat IN facets.status.terms %]
-	    <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="status" data-val="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
-	    [% END %]
-	  </ul>
-	</div>
-      </li>
-    </ul>
-  [% END %]
+[% IF facets.status.terms.size > 1 && backend %]
+  <ul class="nav nav-tabs nav-stacked margin-bottom1 ul0">
+    <li>
+      <button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down"></span> Visibility Status ([% facets.status.terms.size %])</button>
+      <div class="facettecollapse">
+	<ul id="status_[% tabmodus %][% menu %]" class="collapse">
+	  [% FOREACH stat IN facets.status.terms %]
+	  <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="status" data-val="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
+	  [% END %]
+	</ul>
+      </div>
+    </li>
+  </ul>
 [% END %]
 
 <ul class="nav nav-tabs nav-stacked ul1">
@@ -122,7 +120,7 @@
   </li>
   [% END %]
 
-  [% IF facets.type.terms && facets.type.terms.size > 1 %]
+  [% IF facets.type.terms.size > 1 %]
   <li>
     <button data-toggle="collapse" data-target="#type_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>Publication Type ([% facets.type.terms.size %])</button>
     <div class="facettecollapse">
@@ -136,7 +134,7 @@
   </li>
  [% END %]
 
- [% IF facets.author.terms && facets.author.terms.size > 1 %]
+ [% IF facets.author.terms.size > 1 %]
   <li>
     <button data-toggle="collapse" data-target="#authors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>Uni-Bi Authors ([% facets.author.terms.size %])</button>
     <div class="facettecollapse">
@@ -150,7 +148,7 @@
   </li>
   [% END %]
 
-  [% IF facets.editor.terms && facets.editor.terms.size > 1 %]
+  [% IF facets.editor.terms.size > 1 %]
   <li>
     <button data-toggle="collapse" data-target="#editors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>Uni-Bi Editors ([% facets.editor.terms.size %])</button>
     <div class="facettecollapse">
@@ -164,7 +162,7 @@
   </li>
   [% END %]
 
-  [% IF facets.year.terms && facets.year.terms.size > 1 %]
+  [% IF facets.year.terms.size > 1 %]
   <li>
     <button data-target="#year_[% tabmodus %][% menu %]" data-toggle="collapse" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>Publishing Year ([% facets.year.terms.size %])</button>
     <div class="facettecollapse">
@@ -183,15 +181,22 @@
 
 [% IF facets.popular_science.terms.size > 0 OR facets.extern.terms.size > 0 OR facets.open_access.terms.size > 0 %]
 <ul class="nav nav-tabs nav-stacked margin-top1 ul2">
-  [% IF facets.popular_science.terms.ize > 0 %]
+  [% IF facets.popular_science.terms.size > 0 %]
   <li>
-    <a class="search-facet_[% tabmodus %][% menu %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.popularScience.total %] Popular Science</a>
+    <a class="search-facet_[% tabmodus %][% menu %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.popular_science.total %] Popular Science</a>
   </li>
   [% END %]
 
   [% IF facets.extern.terms.size > 0 %]
   <li>
-    <a class="search-facet_[% tabmodus %][% menu %]" data-index="extern" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.extern.total %] External Publication[% IF term.count > 1 %]s[% END %]</a>
+    [% FOREACH term IN facets.extern.terms %]
+      [% NEXT IF term.term == "0" %]
+      [% IF term.count < total %]
+      <a class="search-facet_[% tabmodus %][% menu %]" data-index="extern" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% term.count %] External Publication[% IF term.count > 1 %]s[% END %]</a>
+      [% ELSE %]
+      <div class="text-success"><strong>All publications are External Publications</strong></div>
+      [% END %]
+    [% END %]
   </li>
   [% END %]
 
@@ -199,7 +204,11 @@
   <li>
     [% FOREACH term IN facets.open_access.terms %]
       [% NEXT IF term.term == "0" %]
+      [% IF term.count < total %]
       <a class="search-facet_[% tabmodus %][% menu %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% term.count %] OA Fulltext[% IF term.count > 1 %]s[% END %]</a>
+      [% ELSE %]
+      <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications are OA Fulltexts</strong></div>
+      [% END %]
     [% END %]
   </li>
   [% END %]
