@@ -630,13 +630,17 @@ search:
               field: 'status'
               sort: true
             submissionstatus: *status
+            accesslevel:
+              op:
+                '=': true
+                '<>': true
+                'exact': true
+              field: 'file.access_level'
             fulltext:
               op:
                 '=': true
-                'exact': true
                 '<>': true
               field: 'file.open_access'
-              values: '1'
 #            yearlastuploaded:
 #              op:
 #                '=': true
@@ -945,6 +949,7 @@ search:
 
       publication:
         include_in_all: false
+#        ignore_malformed: true
         properties:
           _id: {type: string, include_in_all: true}
           title: &titleField
@@ -1059,7 +1064,7 @@ search:
           date_updated: {type: date, format: date_time_no_millis}
           file:
             properties:
-              open_access: {type: byte}
+              access_level: {type: string, analyzer: tag}
               year_last_uploaded: {type: date, format: "yyyy"}
               date_updated: {type: string}
 #              yearCreated: {type: date, format: "yyyy"}

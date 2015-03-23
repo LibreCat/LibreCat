@@ -55,6 +55,8 @@ sub handle_file {
 			# remove tmp-folder
 			#my $path = path(h->config->{upload_dir}, $fi->{tempid});
 			#system "rm -r $path" if -d $path;
+			
+			$fi->{open_access} = $fi->{access_level} eq "open_access" ? 1 : 0;
 
 			delete $fi->{tempid} if $fi->{tempid};
 			delete $fi->{tempname} if $fi->{tempname};
@@ -85,6 +87,8 @@ sub handle_file {
 					
 					#my $path = path(h->config->{upload_dir}, $fi->{tempid});
 					#system "rm -r $path" if -d $path;
+					
+					$fi->{open_access} = $fi->{access_level} eq "open_access" ? 1 : 0;
 					
 					delete $fi->{tempid} if $fi->{tempid};
 					delete $fi->{tempname} if $fi->{tempname};
@@ -118,6 +122,8 @@ sub handle_file {
 				
 				#my $path = path(h->config->{upload_dir}, $fi->{tempid});
 				#system "rm -r $path" if -d $path;
+				
+				$fi->{open_access} = $fi->{access_level} eq "open_access" ? 1 : 0;
 
 				delete $fi->{tempid} if $fi->{tempid};
 				delete $fi->{tempname} if $fi->{tempname};
