@@ -135,13 +135,4 @@ get '/pln_data/:year' => sub {
         };
 };
 
-get '/m' => sub {
-    forward '/';
-};
-
-get '/m/*/*' => sub {
-    my ($path, $term) = splat;
-    forward "/$path/$term";
-};
-
 1;

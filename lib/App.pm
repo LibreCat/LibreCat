@@ -2,7 +2,7 @@ package App;
 
 =head1 NAME
 
-    App - a webapp that runs an awesome institutional repository.
+App - a webapp that runs an awesome institutional repository.
 
 =cut
 
@@ -18,7 +18,8 @@ use App::Helper;
 use Authentication::Authenticate;
 use Dancer::Plugin::Auth::Tiny;
 
-# make variables with leading '_' visible in TT
+# make variables with leading '_' visible in TT,
+# otherwise they are considered private
 $Template::Stash::PRIVATE = 0;
 
 # custom authenticate routine
@@ -40,7 +41,7 @@ sub _authenticate {
 
 =head2 GET /login
 
-    Route the user will be sent to if login is required.
+Route the user will be sent to if login is required.
 
 =cut
 get '/login' => sub {
@@ -52,8 +53,8 @@ get '/login' => sub {
 
 =head2 POST /login
 
-    Route where login data is sent to. On sucess redirects to
-    '/' or to the path requested before
+Route where login data is sent to. On sucess redirects to
+'/' or to the path requested before
 
 =cut
 post '/login' => sub {
@@ -80,7 +81,7 @@ post '/login' => sub {
 
 =head2 ANY /logout
 
-    The logout route. Destroys session.
+The logout route. Destroys session.
 
 =cut
 any '/logout' => sub {
@@ -91,12 +92,22 @@ any '/logout' => sub {
 
 =head2 ANY /access_denied
 
-    User sees this one if access is denied.
+User sees this one if access is denied.
 
 =cut
 any '/access_denied' => sub {
-    # add an really ugly 403 page ;-)
-    return status '403';#"Access denied.";
+    status 'access_denied';
+    template 'websites/403', {path => request->path};
+};
+
+=head1 ANY ...
+
+Throws 'page not found'.
+
+=cut
+any qr{.*} => sub {
+    status 'not_found';
+    template 'websites/404', {path => request->path};
 };
 
 1;
