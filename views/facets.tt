@@ -183,20 +183,26 @@
 <ul class="nav nav-tabs nav-stacked margin-top1 ul2">
   [% IF facets.popular_science.total %]
   <li>
-    <a class="search-facet_[% tabmodus %][% menu %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.popularScience.total %] Popular Science</a>
-  </li>
+    [% FOREACH t IN facets.popular_science.terms %]
+      [% NEXT IF t.term == "0" %]
+    <a class="search-facet_[% tabmodus %][% menu %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] Popular Science</a>
+    [% END %]
+    </li>
   [% END %]
 
   [% IF facets.extern.total %]
   <li>
-    <a class="search-facet_[% tabmodus %][% menu %]" data-index="extern" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.nonlu.total %] External Publications</a>
-  </li>
+    [% FOREACH t IN facets.extern.terms %]
+      [% NEXT IF t.term == "0" %]
+    <a class="search-facet_[% tabmodus %][% menu %]" data-index="extern" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] External Publications</a>
+    [% END %]
+    </li>
   [% END %]
 
   <li>
-    [% FOREACH term IN facets.open_access.terms %]
-      [% NEXT IF term.term == "0" %]
-      <a class="search-facet_[% tabmodus %][% menu %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% term.count %] OA Fulltexts</a>
+    [% FOREACH t IN facets.open_access.terms %]
+      [% NEXT IF t.term == "0" %]
+      <a class="search-facet_[% tabmodus %][% menu %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] OA Fulltexts</a>
     [% END %]
   </li>
 </ul>
