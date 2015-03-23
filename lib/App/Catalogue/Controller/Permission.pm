@@ -63,7 +63,7 @@ sub can_download {
 
     if ($access eq 'open_access') {
         return (1, $file_name);
-    } elsif ($access eq 'local' && $ip =~ /^h->{config}->{ip_range}/) {
+    } elsif ($access eq 'local' && $ip =~ /^h->config->{ip_range}/) {
         return (1, $file_name);
     } elsif ($access eq 'closed') {
         # closed documents can be downloaded by user
