@@ -111,7 +111,7 @@ sub extract_params {
 
 	#push @{$p->{q}}, $params->{text} if $params->{text};
 	($params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, $params->{text}) : (push @{$p->{q}}, join(" AND ",split(/ |-/,$params->{text}))) if $params->{text};
-	
+
 	# autocomplete functionality
 	if($params->{term}){
 		my $search_terms = join("* AND ", split(" ",$params->{term})) . "*";
@@ -341,9 +341,9 @@ sub default_facets {
 			}
 		},
 		open_access => { terms => { field => 'file.open_access', size => 1 } },
-		quality_controlled => { terms => { field => 'quality_controlled', size => 1 } },
-		popular_science => { terms => { field => 'popular_science', size => 1 } },
-		extern => { terms => { field => 'extern', size => 1 } },
+		quality_controlled => { terms => { field => 'quality_controlled', size => 2 } },
+		popular_science => { terms => { field => 'popular_science', size => 2 } },
+		extern => { terms => { field => 'extern', size => 2 } },
 		status => { terms => { field => 'status', size => 8 } },
 		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
 		type => { terms => { field => 'type', size => 25 } },
@@ -503,7 +503,7 @@ sub search_researcher {
 	if($p->{researcher_list}){
 		push @{$p->{q}}, "publcount > 0";
 	}
-	
+
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
 	my $hits = researcher->search(

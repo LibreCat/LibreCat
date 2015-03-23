@@ -183,32 +183,27 @@
 <ul class="nav nav-tabs nav-stacked margin-top1 ul2">
   [% IF facets.popular_science.terms.size > 0 %]
   <li>
-    <a class="search-facet_[% tabmodus %][% menu %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.popular_science.total %] Popular Science</a>
-  </li>
+    [% FOREACH t IN facets.popular_science.terms %]
+      [% NEXT IF t.term == "0" %]
+    <a class="search-facet_[% tabmodus %][% menu %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] Popular Science</a>
+    [% END %]
+    </li>
   [% END %]
 
   [% IF facets.extern.terms.size > 0 %]
   <li>
-    [% FOREACH term IN facets.extern.terms %]
-      [% NEXT IF term.term == "0" %]
-      [% IF term.count < total %]
-      <a class="search-facet_[% tabmodus %][% menu %]" data-index="extern" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% term.count %] External Publication[% IF term.count > 1 %]s[% END %]</a>
-      [% ELSE %]
-      <div class="text-success"><strong>All publications are External Publications</strong></div>
-      [% END %]
+    [% FOREACH t IN facets.extern.terms %]
+      [% NEXT IF t.term == "0" %]
+    <a class="search-facet_[% tabmodus %][% menu %]" data-index="extern" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] External Publications</a>
     [% END %]
-  </li>
+    </li>
   [% END %]
 
   [% IF facets.open_access.terms.size > 0 %]
   <li>
-    [% FOREACH term IN facets.open_access.terms %]
-      [% NEXT IF term.term == "0" %]
-      [% IF term.count < total %]
-      <a class="search-facet_[% tabmodus %][% menu %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% term.count %] OA Fulltext[% IF term.count > 1 %]s[% END %]</a>
-      [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications are OA Fulltexts</strong></div>
-      [% END %]
+    [% FOREACH t IN facets.open_access.terms %]
+      [% NEXT IF t.term == "0" %]
+      <a class="search-facet_[% tabmodus %][% menu %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] OA Fulltexts</a>
     [% END %]
   </li>
   [% END %]
