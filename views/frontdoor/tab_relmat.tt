@@ -1,4 +1,4 @@
-
+	  
 <!-- BEGIN frontdoor/tab_relmat.tt -->
 	
 <div class="tab-pane" id="relMat">
@@ -10,7 +10,7 @@
       </div>
       <div class="col-md-10">
         [% FOREACH toc IN relToc %]
-          <a href="[% h.shost %]/download/[% _id %]/[% toc.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF toc.description %]<i>Description:</i><br />[% toc.description %]<br /><br />[% END %]<i>Filename:</i><br />[% toc.file_name %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% toc.title ? toc.title : toc.file_name %]</a><br />
+          [% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% toc.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF toc.description %]<em>Description:</em><br>[% toc.description %]<br><br>[% END %]<em>Filename:</em><br>[% toc.file_name %]">[% toc.title ? toc.title : toc.file_name %]</a><br>
           <script>
             $('a.description').tooltip();
           </script>
@@ -25,7 +25,7 @@
       </div>
       <div class="col-md-10">
         [% FOREACH rfile IN relFile %]
-          <a href="[% h.shost %]/download/[% _id %]/[% rfile.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF rfile.description %]<i>Description:</i><br />[% rfile.description %]<br /><br />[% END %]<i>Filename:</i><br />[% rfile.file_name %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% rfile.title ? rfile.title : rfile.file_name %]</a><br />
+          [% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% rfile.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF rfile.description %]<em>Description:</em><br>[% rfile.description %]<br><br>[% END %]<em>Filename:</em><br>[% rfile.file_name %]">[% rfile.title ? rfile.title : rfile.file_name %]</a><br>
           <script>
             $('a.description').tooltip();
           </script>
@@ -40,7 +40,7 @@
       </div>
       <div class="col-md-10">
         [% FOREACH link IN relLink %]
-          <a href="[% link.url %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF link.description %]<i>Description:</i><br />[% link.description %]<br /><br />[% END %]<i>Location:</i><br />[% link.url %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% link.title ? link.title : link.url %]</a><br />
+          [% INCLUDE websites/oa_lock.tt %] <a href="[% link.url %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF link.description %]<em>Description:</em><br>[% link.description %]<br><br>[% END %]<em>Location:</em><br>[% link.url %]">[% link.title ? link.title : link.url %]</a><br>
           <script>
             $('a.description').tooltip();
           </script>
@@ -57,7 +57,7 @@
         [% FOREACH rel IN relMat %]
           [% relation = h.get_relation('relations_record', rel.relation) %]
           [% rel_rec = h.getPublication(rel.id) %]
-          <a href="[% h.host %]/[% bag %]/[% rel.id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="<i>Title:</i><br />[% rel_rec.title | replace('"','&quot;') %]<br /><br /><i>Location:</i><br />[% h.host %]/[% bag %]/[% rel_rec.id %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />[% relation.link_text %]</a><br />
+          <a href="[% h.host %]/[% bag %]/[% rel.id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="<em>Title:</em><br>[% rel_rec.title | replace('"','&quot;') %]<br><br><em>Location:</em><br>[% h.host %]/[% bag %]/[% rel_rec.id %]">[% relation.link_text %]</a><br>
           <script>
             $('a.description').tooltip();
           </script>
