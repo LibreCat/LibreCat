@@ -1,0 +1,33 @@
+[% INCLUDE header.tt %]
+
+<div class="row"><!-- outer border -->
+
+  <div class="col-md-10 col-sm-12 col-md-offset-1"><!-- main content -->
+
+    <div id="banner">
+	<h1>
+	  [% IF lang %]
+	  Access denied (403)
+	  [% ELSE %]
+	  Kein Zugriff (403)
+	  [% END %]
+	</h1>
+    </div>
+
+    <div class="row margin-top1">
+      <div class="col-md-12">
+	  [% IF lang %]
+	  <p>You don't have access to this file / folder.</p>
+	  <p><a href="/">Back to PUB homepage</a></p>
+	  [% ELSE %]
+	  <p>Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis.</p>
+	  <p><a href="/">Zurück zur PUB-Startseite</a></p>
+	  [% END %]
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+[% INCLUDE footer.tt %]
