@@ -100,6 +100,14 @@ sub correct_publid {
 		}
 		delete $data->{external_id};
 		$data->{external_id} = $publid_hash;
+		foreach my $key (keys %{h->get_list('external_identifier')}){
+			if(defined $data->{external_id}->{$key}){
+				$data->{$key} = 1;
+			}
+			else {
+				delete $data->{$key} if $data->{$key};
+			}
+		}
 	}
 	if($data->{nasc}){
 		my @nasc;
