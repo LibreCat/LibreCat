@@ -184,7 +184,7 @@
   [% IF facets.popular_science.terms.size > 0 %]
   <li>
     [% FOREACH t IN facets.popular_science.terms %]
-      [NEXT IF t.term == 0]
+      [% NEXT IF t.term == 0 %]
       [% IF t.count < total %]
     <a class="search-facet_[% tabmodus %][% menu %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] Popular Science</a>
       [% ELSE %]
