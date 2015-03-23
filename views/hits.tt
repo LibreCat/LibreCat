@@ -91,7 +91,7 @@
     [% INCLUDE links.tt %]
     [% IF backend %]
     [% INCLUDE rec_details.tt %]
-    [% IF session.role == 'super_admin' %][% IF entry.message %]<br /><em>Admin Comment: [% entry.message %]</em>[% END %][% END %]
+    [% IF session.role == 'super_admin' %][% IF entry.message %]<p class="bg-success"><em>[% entry.message %]</em></p>[% END %][% END %]
     [% END %]
   </div>
 </div>

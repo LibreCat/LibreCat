@@ -55,12 +55,19 @@ prefix '/myPUB' => sub {
 		my $fmt = params->{fmt} || "autocomplete";
 		my $type = params->{type} || "department";
 		my $q;
-		if(params->{'term'} =~ /[äöüß]/){
-			$q = "name=" . lc params->{'term'};
+		my @query;
+		my @terms = split(' ', params->{term});
+		foreach my $term (@terms){
+			push @query, "name=" . lc $term if $term =~ /[äöüß]/;
+			push @query, "name=" . lc $term . "*" if $term !~ /[äöüß]/;
 		}
-		else {
-			$q = "name=" . lc params->{'term'} . "*";
-		}
+#		if(params->{'term'} =~ /[äöüß]/){
+#			$q = "name=" . lc params->{'term'};
+#		}
+#		else {
+#			$q = "name=" . lc params->{'term'} . "*";
+#		}
+		$q = join(" AND ", @query);
 		my $hits;
 
 		if($type eq "department"){
