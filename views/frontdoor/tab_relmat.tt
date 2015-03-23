@@ -9,8 +9,8 @@
         Table of Contents
       </div>
       <div class="col-md-10">
-        [% FOREACH toc IN relToc %]
-          [% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% toc.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF toc.description %]<em>Description:</em><br>[% toc.description %]<br><br>[% END %]<em>Filename:</em><br>[% toc.file_name %]">[% toc.title ? toc.title : toc.file_name %]</a><br>
+        [% FOREACH fi IN relToc %]
+          [% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF fi.description %]<em>Description:</em><br>[% fi.description %]<br><br>[% END %]<em>Filename:</em><br>[% fi.file_name %]">[% fi.title ? fi.title : fi.file_name %]</a><br>
           <script>
             $('a.description').tooltip();
           </script>
@@ -24,8 +24,8 @@
         File
       </div>
       <div class="col-md-10">
-        [% FOREACH rfile IN relFile %]
-          [% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% rfile.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF rfile.description %]<em>Description:</em><br>[% rfile.description %]<br><br>[% END %]<em>Filename:</em><br>[% rfile.file_name %]">[% rfile.title ? rfile.title : rfile.file_name %]</a><br>
+        [% FOREACH fi IN relFile %]
+          [% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF fi.description %]<em>Description:</em><br>[% fi.description %]<br><br>[% END %]<em>Filename:</em><br>[% fi.file_name %]">[% fi.title ? fi.title : fi.file_name %]</a><br>
           <script>
             $('a.description').tooltip();
           </script>
@@ -39,8 +39,8 @@
         Link
       </div>
       <div class="col-md-10">
-        [% FOREACH link IN relLink %]
-          [% INCLUDE websites/oa_lock.tt %] <a href="[% link.url %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF link.description %]<em>Description:</em><br>[% link.description %]<br><br>[% END %]<em>Location:</em><br>[% link.url %]">[% link.title ? link.title : link.url %]</a><br>
+        [% FOREACH fi IN relLink %]
+          [% INCLUDE websites/oa_lock.tt %] <a href="[% fi.url %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF fi.description %]<em>Description:</em><br>[% fi.description %]<br><br>[% END %]<em>Location:</em><br>[% fi.url %]">[% fi.title ? fi.title : fi.url %]</a><br>
           <script>
             $('a.description').tooltip();
           </script>
@@ -54,10 +54,10 @@
         Rel. Material
       </div>
       <div class="col-md-10">
-        [% FOREACH rel IN relMat %]
-          [% relation = h.get_relation('relations_record', rel.relation) %]
-          [% rel_rec = h.getPublication(rel.id) %]
-          <a href="[% h.host %]/[% bag %]/[% rel.id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="<em>Title:</em><br>[% rel_rec.title | replace('"','&quot;') %]<br><br><em>Location:</em><br>[% h.host %]/[% bag %]/[% rel_rec.id %]">[% relation.link_text %]</a><br>
+        [% FOREACH fi IN relMat %]
+          [% relation = h.get_relation('relations_record', fi.relation) %]
+          [% rel_rec = h.getPublication(fi.id) %]
+          <a href="[% h.host %]/[% bag %]/[% fi.id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="<em>Title:</em><br>[% rel_rec.title | replace('"','&quot;') %]<br><br><em>Location:</em><br>[% h.host %]/[% bag %]/[% rel_rec.id %]">[% relation.link_text %]</a><br>
           <script>
             $('a.description').tooltip();
           </script>
