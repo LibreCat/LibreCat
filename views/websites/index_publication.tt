@@ -1,6 +1,7 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
+[% thisq = h.extract_params.q %]
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
 [% style = qp.style || 'frontShort' %]
 
@@ -33,10 +34,10 @@
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
           <li[% IF bag == 'home' %] class="active"[% END %]><a href="/[% lang ? "?lang=en" : "" %]">[% lang ? 'Home' : 'Startseite' %]</a></li>
-          <li[% IF bag == 'publication' %] class="active"[% END %]><a href="/publication?[% lang ? "lang=en&" : "" %][% IF qp.q %][% qp.q ? "q=$qp.q" : "" %][% END %]">[% lang ? "Publications" : "Publikationen" %]</a></li>
-          <li[% IF bag == 'data' %] class="active"[% END %]><a href="/data?[% lang ? "lang=en&" : "" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? 'Data Publications' : 'Datenpublikationen' %]</a></li>
+          <li[% IF bag == 'publication' %] class="active"[% END %]><a href="/publication?[% lang ? "lang=en&" : "" %][% IF thisq %]q=[% thisq.join('&q=') %][% END %]">[% lang ? "Publications" : "Publikationen" %]</a></li>
+          <li[% IF bag == 'data' %] class="active"[% END %]><a href="/data?[% lang ? "lang=en&" : "" %][% IF thisq %]q=[% thisq.join('&q=') %][% END %]">[% lang ? 'Data Publications' : 'Datenpublikationen' %]</a></li>
           <!--
-          <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project?[% lang ? "lang=en&" : "" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? 'Projects' : 'Projekte' %]</a></li>
+          <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project?[% lang ? "lang=en&" : "" %][% IF thisq %]q=[% thisq.join('&q=') %][% END %]">[% lang ? 'Projects' : 'Projekte' %]</a></li>
           -->
           <li[% IF bag == 'authorlist' %] class="active"[% END %]><a href="/authorlist[% lang ? "?lang=en" : "" %]">[% lang ? "Authors" : "Autoren" %]</a></li>
           <li[% IF bag == 'pubtheses' %] class="active"[% END %]><a href="/pubtheses[% lang ? "?lang=en" : "" %]">PUB Theses</a></li>
