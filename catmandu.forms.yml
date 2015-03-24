@@ -452,7 +452,7 @@ publicationTypes:
           label: "Conference Location"
           placeholder: "Berlin"
         conference.date: &conference_date
-          label: "Date (start and end)"
+          label: "Conference Date (start/end)"
           label_start: "Start"
           label_end: "End"
           placeholder_start: "YYYY-MM-DD"
@@ -722,7 +722,6 @@ publicationTypes:
         genbank: *genbank
         message: *message
         ubi_funded: *ubi_funded
-        conference.divider: *conference_divider
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
