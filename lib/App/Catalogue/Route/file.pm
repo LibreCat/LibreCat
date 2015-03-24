@@ -199,8 +199,11 @@ get '/download/:id/:file_id' => sub {
 				params->{file_id},
 				session->{user},
 				session->{role},
-				request->address); # or maybe request->remote_host?
-	return status '403' unless $ok;
+				request->address);
+	unless ($ok) {
+		status 'access_denied';
+		return template 'websites/403',{path =>request->path};
+	}
 
 	send_it(params->{id}, $file_name);
 };

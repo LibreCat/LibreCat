@@ -51,6 +51,7 @@ sub can_delete_file {
 sub can_download {
     my ($id, $file_id, $login, $role, $ip) = @_;
 
+    my $ip_range = h->config->{ip_range};
     my $pub = h->publication->get($id);
     my $access;
     my $file_name;
@@ -63,11 +64,12 @@ sub can_download {
 
     if ($access eq 'open_access') {
         return (1, $file_name);
-    } elsif ($access eq 'local' && $ip =~ /^h->config->{ip_range}/) {
+    } elsif ($access eq 'local' && $ip =~ /$ip_range/) {
         return (1, $file_name);
     } elsif ($access eq 'closed') {
         # closed documents can be downloaded by user
         #if and only if the user can edit the record
+        return (0, '') unless $login;
         return (can_edit($id, $login, $role), $file_name);
     } else {
         return (0, '');
