@@ -5,12 +5,12 @@
     <div class="form-group col-md-8">
       <div class="btn-group">
         [% IF !edit_mode OR edit_mode == "normal" %]
-        <button type="button" class="btn btn-default fourToThree" data-toggle="tab" href="#supplementary_fields"><span class="fa fa-angle-double-left"></span><span class="hidden-xs"> Back</span></button>
+        <button type="button" class="btn btn-default change_tab" href="#supplementary_fields"><span class="fa fa-angle-double-left"></span><span class="hidden-xs"> Back</span></button>
         [% END %]
-        <button type="submit" name="finalSubmit" value="recSave" class="btn btn-success oneToTwo"><span class="glyphicon glyphicon-ok"></span><span class="hidden-xs"> Save</span></button>
+        <button type="submit" name="finalSubmit" value="recSave" class="btn btn-success change_tab"><span class="glyphicon glyphicon-ok"></span><span class="hidden-xs"> Save</span></button>
         <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Cancel</span></button>
         [% IF (status != "public" AND status != "submitted") OR (status == "submitted" AND session.role == "super_admin") %]
-        <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-success oneToTwo"><span class="glyphicon glyphicon-upload"></span> Publish</button>
+        <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-success change_tab"><span class="glyphicon glyphicon-upload"></span> Publish</button>
         [% END %]
         [% IF status == "public" %]
         <a class="btn btn-danger" href="/myPUB/record/return/[% _id %]" onClick="return confirm('Are you sure you want to return this record from public view?');" name="return"><span class="glyphicon glyphicon-download"></span><span class="hidden-xs"> Return</span></a>

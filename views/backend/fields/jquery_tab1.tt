@@ -30,8 +30,10 @@ $(document).keypress(function(e){
 });
 
 // Tab forward one to two
-$('.oneToTwo').click(function(e){
+$('.change_tab').click(function(e){
+  var this_button = $(this);
   var check = 1;
+  var check_license = 1;
   var oneauthor = 0;
 
   $('.creator').children('div.row').each(function(){
@@ -53,7 +55,7 @@ $('.oneToTwo').click(function(e){
       $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').removeClass("has-error");
     }
     
-    if($(this).find('input[type!="hidden"]').eq(0).val() && $(this).find('input[type!="hidden"]').eq(0).val()){
+    if($(this).find('input[type!="hidden"]').eq(0).val() && $(this).find('input[type!="hidden"]').eq(1).val()){
       oneauthor=1;
     }
   });
@@ -74,6 +76,7 @@ $('.oneToTwo').click(function(e){
     }
     else{
       $(this).removeClass('has-error');
+      $(this).closest('div.input-group.mandatory').removeClass("has-error");
     }
   });
   
@@ -87,7 +90,7 @@ $('.oneToTwo').click(function(e){
     $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
   }
   
-  [% IF edit_mode == "expert" %]
+  if((this_button.attr('href') && (this_button.attr('href') == "#supplementary_fields" || this_button.attr('href') == "#related_material")) || ($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish"))){
   if($('#id_data_reuse_license').length || $('#id_open_data_release').length){
     if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
       if($('#id_data_reuse_license').val() == ''){
@@ -100,9 +103,7 @@ $('.oneToTwo').click(function(e){
         $('#odralert').removeClass('alert-info');
         $('#odralert').addClass('alert-danger');
         alert('{% fields.file_upload.license.open_data_release.alert %}');
-        {% IF editmode == "normal" %}
-        document.location.href = "#stepTwo";
-        {% END %}
+        check_license = 0;
         e.stopImmediatePropagation();
       }
     }
@@ -117,9 +118,7 @@ $('.oneToTwo').click(function(e){
         $('#odralert').removeClass('alert-info');
         $('#odralert').addClass('alert-danger');
         alert('{% fields.file_upload.license.open_data_release.alert %}');
-        {% IF editmode == "normal" %}
-        document.location.href = "#stepTwo";
-        {% END %}
+        check_license = 0;
         e.stopImmediatePropagation();
       }
     }
@@ -136,28 +135,18 @@ $('.oneToTwo').click(function(e){
   }
   else if($('#id_pub_license').length){
     if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && !$('#id_pub_license').is(':checked')){
-      if(!$('#id_pub_license').is(':checked')) {
-        $('#pub_license_alert').removeClass('alert-info');
-        $('#pub_license_alert').addClass('alert-danger');
-        alert('{% fields.file_upload.license.pub_license.alert %}');
-        {% IF editmode == "normal" %}
-        document.location.href = "#stepTwo";
-        {% END %}
-        check = 0;
-        e.preventDefault();
-      }
+      $('#pub_license_alert').removeClass('alert-info');
+      $('#pub_license_alert').addClass('alert-danger');
+      alert('{% fields.file_upload.license.pub_license.alert %}');
+      check_license = 0;
+      e.preventDefault();
     }
     else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && !$('#id_pub_license').is(':checked')){
-      if(!$('#id_pub_license').is(':checked')) {
-        $('#pub_license_alert').removeClass('alert-info');
-        $('#pub_license_alert').addClass('alert-danger');
-        alert('{% fields.file_upload.license.pub_license.alert %}');
-        {% IF editmode == "normal" %}
-        document.location.href = "#stepTwo";
-        {% END %}
-        check = 0;
-        e.preventDefault();
-      }
+      $('#pub_license_alert').removeClass('alert-info');
+      $('#pub_license_alert').addClass('alert-danger');
+      alert('{% fields.file_upload.license.pub_license.alert %}');
+      check_license = 0;
+      e.preventDefault();
     }
     else {
       if($('.dropzone').first().children().length == 1){
@@ -167,22 +156,41 @@ $('.oneToTwo').click(function(e){
       }
     }
   }
-  [% END %]
+  }
   
-  if(check){
-    $('.creator.has-error').removeClass('has-error');
-    if($(this).attr('name') != "finalSubmit"){
-      $('#basic_fields, #li_basic_fields').removeClass('active');
+  if(!check || !check_license){
+    $('#basic_fields, #li_basic_fields').removeClass('active');
+    $('#file_upload, #li_file_upload').removeClass('active');
+    $('#supplementary_fields, #li_supplementary_fields').removeClass('active');
+    $('#related_material, #li_related_material').removeClass('active');
+    
+    if(!check){
+      $('#basic_fields, #li_basic_fields').addClass('active');
+    }
+    else if(!check_license){
       $('#file_upload, #li_file_upload').addClass('active');
-      $('#li_file_upload').children('a').attr('href','#file_upload');
-      $('#li_file_upload').children('a').attr('data-toggle','tab');
-      $('button[href=#file_upload]').attr('data-toggle','tab');
-      $('#li_file_upload').removeClass('disabled');
     }
   }
-  else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish")){
-    window.scrollTo(0, 0);
-    e.preventDefault();
+  //else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish")){
+  //  window.scrollTo(0, 0);
+  //  e.preventDefault();
+  //}
+  else {
+    $('.creator.has-error').removeClass('has-error');
+    if($(this).attr('name') != "finalSubmit"){
+      if(this_button.attr('href')){
+        var next_tab = this_button.attr('href').replace('#','');
+        $('#basic_fields, #li_basic_fields').removeClass('active');
+        $('#file_upload, #li_file_upload').removeClass('active');
+        $('#supplementary_fields, #li_supplementary_fields').removeClass('active');
+        $('#related_material, #li_related_material').removeClass('active');
+        
+        $('#' + next_tab).addClass('active');
+        $('#li_' + next_tab).addClass('active');
+        
+        e.preventDefault();
+      }
+    }
   }
 });
 

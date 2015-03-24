@@ -26,27 +26,21 @@
 
   <ul class="nav nav-tabs" id="tabs-left">
     <li id="li_basic_fields" class="active">
-      <a href="#basic_fields" data-toggle="tab">{% fields.basic_fields.tab_name %}</a>
+      <a class="change_tab" href="#basic_fields">{% fields.basic_fields.tab_name %}</a>
     </li>
     {% IF fields.file_upload %}
-    <li id="li_file_upload" class="[% IF !allActive %]disabled[% END %]">
-      [% !allActive ? '<a href="#">' : '<a href="#file_upload" data-toggle="tab">' %]
-      {% fields.file_upload.tab_name %}
-      </a>
+    <li id="li_file_upload">
+      <a class="change_tab" href="#file_upload">{% fields.file_upload.tab_name %}</a>
     </li>
     {% END %}
     {% IF fields.supplementary_fields %}
-    <li id="li_supplementary_fields" class="[% IF !allActive %]disabled[% END %]">
-      [% !allActive ? '<a href="#">' : '<a href="#supplementary_fields" data-toggle="tab">' %]
-      {% fields.supplementary_fields.tab_name %}
-      </a>
+    <li id="li_supplementary_fields">
+      <a class="change_tab" href="#supplementary_fields">{% fields.supplementary_fields.tab_name %}</a>
     </li>
     {% END %}
     {% IF fields.related_material %}
-    <li id="li_related_material" class="[% IF !allActive %]disabled[% END %]">
-      [% !allActive ? '<a href="#">' : '<a href="#related_material" data-toggle="tab">' %]
-      {% fields.related_material.tab_name %}
-      </a>
+    <li id="li_related_material">
+      <a class="change_tab" href="#related_material">{% fields.related_material.tab_name %}</a>
     </li>
     {% END %}
   </ul>
@@ -139,9 +133,6 @@
 
 <script>
 {% INCLUDE fields/jquery_tab1.tt %}
-{% INCLUDE fields/jquery_tab2.tt %}
-{% INCLUDE fields/jquery_tab3.tt %}
-{% INCLUDE fields/jquery_tab4.tt %}
 </script>
 
 <!-- END /backend/forms/master.tt -->
