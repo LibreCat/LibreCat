@@ -25,7 +25,7 @@
       </div>
       <div class="col-md-10">
         [% FOREACH fi IN relFile %]
-          [% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF fi.description %]<em>Description:</em><br>[% fi.description %]<br><br>[% END %]<em>Filename:</em><br>[% fi.file_name %]">[% fi.title ? fi.title : fi.file_name %]</a><br>
+          [% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF fi.description %]<em>Description:</em><br>[% fi.description %]<br><br>[% END %]<em>Filename:</em><br>[% fi.file_name %]">[% fi.title ? fi.title : fi.file_name %]</a> [% INCLUDE frontdoor/modal_requestcopy.tt %]<br>
           <script>
             $('a.description').tooltip();
           </script>
