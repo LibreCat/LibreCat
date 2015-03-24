@@ -1,4 +1,4 @@
-[% thisPerson = h.getPerson(session.personNumber) %]
+d[% thisPerson = h.getPerson(session.personNumber) %]
 
 <!-- BEGIN navbar.tt -->
 
@@ -87,7 +87,7 @@
 	  </div>
 	</div>
 	<div class="col-md-1 col-sm-1 col-md-offset-1">
-          <span class="select-language"><a href="[% h.host %]/[% UNLESS bag == 'home' %][% bag %][% END %][% lang ? "" : "?lang=en" %]">[% lang ? "Deutsch" : "English" %]</a></span>
+          <span class="select-language"><a href="[% h.host %]/[% UNLESS bag == 'home' %][% bag %][% END %]?[% lang ? "" : "lang=en&" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? "Deutsch" : "English" %]</a></span>
 	</div>
       </div>
 

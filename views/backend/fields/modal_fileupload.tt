@@ -76,12 +76,12 @@
 
         <div class="form-group">
           <strong>Description</strong><br />
-          <textarea name="description" id="id_fileDescription" class="form-control" rows="6">[% description %]</textarea>
+          <textarea name="description" id="id_fileDescription" class="form-control" rows="3">[% description %]</textarea>
         </div>
       </div>
       <div class="modal-footer">
-        <input type="button" class="btn btn-success" value="Save" name="finalSubmit" id="fileSubmit" />
-        <input type="button" class="btn btn-danger" data-dismiss="modal" aria-hidden="true" value="Cancel" />
+        <button type="button" class="btn btn-success"name="finalSubmit" id="fileSubmit"><span class="glyphicon glyphicon-ok"></span> Save</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
       </div>
       </form>
     </div>

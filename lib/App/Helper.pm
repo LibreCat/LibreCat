@@ -347,6 +347,14 @@ sub default_facets {
 		status => { terms => { field => 'status', size => 8 } },
 		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
 		type => { terms => { field => 'type', size => 25 } },
+		isi => { terms => { field => 'isi', size => 1 } },
+		arxiv => { terms => { field => 'arxiv', size => 1 } },
+		pmid => { terms => { field => 'pmid', size => 1 } },
+		inspire => { terms => { field => 'inspire', size => 1 } },
+		ahf => { terms => { field => 'ahf', size => 1 } },
+		scoap3 => { terms => { field => 'scoap3', size => 1 } },
+		phillister => { terms => { field => 'phillister', size => 1 } },
+		opac => { terms => { field => 'opac', size => 1 } },
 	};
 }
 

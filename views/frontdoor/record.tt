@@ -6,7 +6,7 @@
 [% INCLUDE frontdoor/javascriptShowHide.tt %]
 </script>
 
-[% IF status != "public" %]
+[% IF status != "public" AND _id %]
 <div id="preview">Preview</div>
 [% END %]
 
@@ -64,16 +64,16 @@
 
   <div class="col-md-10 col-sm-12 col-md-offset-1">
 
-    <div class="page-header" id="banner">
+    <div[% IF _id %] class="page-header"[% END %] id="banner">
 
       <ol class="breadcrumb">
-	<li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back to previous page</a></li>
+	<li>[% IF status != "public" AND _id %]This is a preview of your record, because it's not public yet[% ELSE %]<a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back to previous page</a>[% END %]</li>
       </ol>
 
       <h1 itemprop="name">[% title %]</h1>
 
       [% IF !_id %]
-      <h1>No record found!</h1>
+      <h1>This record does not exist or was deleted</h1>
       [% STOP %]
       [% END %]
     </div>

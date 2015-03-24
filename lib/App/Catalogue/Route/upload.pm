@@ -47,6 +47,7 @@ prefix '/myPUB' => sub {
             date_updated => $now,
             date_created => $now,
             access_level => "open_access",
+            open_access => 1,
             content_type => $file->{headers}->{"Content-Type"},
             relation => "main_file",
             year_last_uploaded => substr($now,0,4),
@@ -84,6 +85,7 @@ prefix '/myPUB' => sub {
             date_updated => $now,
             date_created => $now,
             access_level => "open_access",
+            open_access => 1,
             content_type => $file->{headers}->{"Content-Type"},
             relation => "main_file",
             year_last_uploaded => substr($now,0,4),
@@ -148,6 +150,7 @@ prefix '/myPUB' => sub {
         file_id => $file_id,
         tempid => $file_id,
         access_level => "open_access",
+        open_access => 1,
         date_updated => $now,
         date_created => $now,
         creator => session->{user},
@@ -214,6 +217,7 @@ prefix '/myPUB' => sub {
         file_id => $file_id,
         tempid => $file_id,
         access_level => "open_access",
+        open_access => 1,
         date_updated => $now,
         date_created => $now,
         creator => "pubtheses",
@@ -268,6 +272,7 @@ prefix '/myPUB' => sub {
       	  copy($file->{tempname}, $filepath);
       	  my $status = unlink $file->{tempname};
       }
+      my $open_access = params->{access_level} && params->{access_level} eq "open_access" ? 1 : 0;
 
       # then return data of updated file
       my $file_data;
@@ -281,6 +286,7 @@ prefix '/myPUB' => sub {
             date_updated => $now,
             date_created => $now,
             access_level => params->{access_level} || "open_access",
+            open_access => $open_access,
             content_type => $file ? $file->{headers}->{"Content-Type"} : '',
             title => params->{title} || '',
             description => params->{description} || '',

@@ -482,6 +482,46 @@ search:
                 '<>': true
                 'exact': true
               field: ['external_id.isi', 'external_id.arxiv', 'external_id.pmid', 'external_id.inspire', 'external_id.ahf', 'external_id.scoap3', 'external_id.phillister', 'external_id.opac']
+            isi:
+              op:
+                '=': true
+                '<>': true
+              field: 'isi'
+            arxiv:
+              op:
+                '=': true
+                '<>': true
+              field: 'arxiv'
+            pmid:
+              op:
+                '=': true
+                '<>': true
+              field: 'pmid'
+            inspire:
+              op:
+                '=': true
+                '<>': true
+              field: 'inspire'
+            ahf:
+              op:
+                '=': true
+                '<>': true
+              field: 'ahf'
+            scoap3:
+              op:
+                '=': true
+                '<>': true
+              field: 'scoap3'
+            phillister:
+              op:
+                '=': true
+                '<>': true
+              field: 'phillister'
+            opac:
+              op:
+                '=': true
+                '<>': true
+              field: 'opac'  
             reportnumber:
               op:
                 '=': true
@@ -630,13 +670,17 @@ search:
               field: 'status'
               sort: true
             submissionstatus: *status
+            accesslevel:
+              op:
+                '=': true
+                '<>': true
+                'exact': true
+              field: 'file.access_level'
             fulltext:
               op:
                 '=': true
-                'exact': true
                 '<>': true
               field: 'file.open_access'
-              values: '1'
 #            yearlastuploaded:
 #              op:
 #                '=': true
@@ -945,6 +989,7 @@ search:
 
       publication:
         include_in_all: false
+#        ignore_malformed: true
         properties:
           _id: {type: string, include_in_all: true}
           title: &titleField
@@ -1056,10 +1101,18 @@ search:
               opac: {type: string}
               fp7: {type: string}
               fp6: {type: string}
+          isi: {type: byte}
+          arxiv: {type: byte}
+          pubmed: {type: byte}
+          inspire: {type: byte}
+          ahf: {type: byte}
+          scoap3: {type: byte}
+          phillister: {type: byte}
+          opac: {type: byte}
           date_updated: {type: date, format: date_time_no_millis}
           file:
             properties:
-              open_access: {type: byte}
+              access_level: {type: string, analyzer: tag}
               year_last_uploaded: {type: date, format: "yyyy"}
               date_updated: {type: string}
 #              yearCreated: {type: date, format: "yyyy"}
