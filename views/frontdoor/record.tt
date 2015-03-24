@@ -1,4 +1,7 @@
 [% INCLUDE header.tt %]
+<!-- get IP of user  and set localUser -->
+[% ip = request.env.HTTP_X_FORWARDED_FOR %]
+[% localUser = ip.match('^129.70').0 %]
 
 <!-- BEGIN frontdoor/record.tt -->
 
@@ -55,10 +58,6 @@
 
 [% qp = request.params.hash %]
 [% style = qp.style || 'frontShort' %]
-
-<!-- get IP of user  and set localUser -->
-[% ip = request.env.HTTP_X_FORWARDED_FOR %]
-[% localUser = ip.match('^129.70').0 %]
 
 <div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/publication/[% _id %]"><!-- outer border -->
 
