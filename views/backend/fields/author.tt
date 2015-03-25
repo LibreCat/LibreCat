@@ -20,21 +20,21 @@
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">First Name</div>
             <input type="text" id="first_name_0" name="author.0.first_name" placeholder="{% fields.basic_fields.author.first_name.placeholder || fields.basic_fields.author_secondary.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon"><span class="glyphicon glyphicon-plus hidden-lg hidden-md" onclick="add_field('creator');"></span></div>
-            <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+            <div class="input-group-addon" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus hidden-lg hidden-md"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </span>
         <span class="form-group col-md-6 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">Last Name</div>
             <input type="text" id="last_name_0" name="author.0.last_name" placeholder="{% fields.basic_fields.author.last_name.placeholder || fields.basic_fields.author_secondary.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('creator');" class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
-            <div class="input-group-addon"><span id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip || fields.basic_fields.author_secondary.pevz_tooltip %}" /></span></div>
-            <div class="input-group-addon"><span id="revert_0" data-type="" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
+            <div class="input-group-addon" onclick="linkPevz(this);"><span id="link_pevz_0" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip || fields.basic_fields.author_secondary.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon" onclick="revert_name(this);"><span id="revert_0" data-type="" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
-            <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
+            <div class="input-group-addon sortitem" data-toggle="tooltip" title="Drag & drop to change position of author in author list"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </span>
         {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
@@ -55,21 +55,21 @@
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">First Name</div>
             <input type="text" id="first_name_[% loop.index %]" name="author.[% loop.index %].first_name" placeholder="{% fields.basic_fields.author.first_name.placeholder || fields.basic_fields.author_secondary.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon"><span class="hidden-lg hidden-md glyphicon glyphicon-plus" onclick="add_field('creator');"></span></div>
-            <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+            <div class="input-group-addon" onclick="add_field('creator');"><span class="hidden-lg hidden-md glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </span>
         <span class="form-group col-md-6 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">Last Name</div>
             <input type="text" id="last_name_[% loop.index %]" name="author.[% loop.index %].last_name" placeholder="{% fields.basic_fields.author.last_name.placeholder || fields.basic_fields.author_secondary.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('creator');" class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
             <div class="input-group-addon"><span id="link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type=""><img id="Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] border="0" height="20" [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip || fields.basic_fields.author_secondary.pevz_tooltip %}" /></span></div>
             <div class="input-group-addon"><span id="revert_[% loop.index %]" data-type="" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
-            <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
+            <div class="input-group-addon sortitem" data-toggle="tooltip" title="Drag & drop to change position of author in author list"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </span>
         {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
@@ -91,8 +91,8 @@
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">First Name</div>
             <input type="text" id="first_name_0" name="author.0.first_name" placeholder="{% fields.basic_fields.author.first_name.placeholder || fields.basic_fields.author_secondary.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="[% author.0.first_name %]" />
-            <div class="input-group-addon"><span class="glyphicon glyphicon-plus hidden-lg hidden-md" onclick="add_field('creator');"></span></div>
-            <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+            <div class="input-group-addon" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus hidden-lg hidden-md"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </span>
         <span class="form-group col-md-6 col-xs-11">
