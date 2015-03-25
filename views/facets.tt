@@ -52,7 +52,7 @@
 
 [% UNLESS request.path == "/marked" %]
 
-[% IF facets.status.terms.size > 1 OR facets.type.deparments.size > 1 OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR  facets.year.terms.size > 1 %]
+[% IF facets.status.terms.size > 1 OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR facets.year.terms.size > 1 %]
 
 <h3>Filter Publications</h3>
 
