@@ -307,10 +307,12 @@ Changes the layout of the edit form.
         $params->{file_order} = [$params->{file_order}] if ($params->{file_order} and ref $params->{file_order} ne "ARRAY");
 
         $params = h->nested_params($params);
-        foreach my $fi (@{$params->{file}}){
-        	$fi = encode('UTF-8', $fi);
-        	$fi = from_json($fi);
-        	$fi->{file_json} = to_json($fi);
+        if($params->{file}){
+        	foreach my $fi (@{$params->{file}}){
+        		$fi = encode('UTF-8', $fi);
+        		$fi = from_json($fi);
+        		$fi->{file_json} = to_json($fi);
+        	}
         }
 
         my $path = "backend/forms/";
