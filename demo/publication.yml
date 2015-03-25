@@ -1,0 +1,15 @@
+---
+_id: 1000
+year: 2015
+author:
+  - first_name: Albert
+  - last_name: Einstein
+  - full_name: Einstein, Albert
+  - personNumber: 1234
+title: 'Some new Aspects of Relativity Rheory'
+publication: 'Journal of Physics'
+volume: 20
+issue: 5
+pages: 5-24
+publication_status: published
+...
