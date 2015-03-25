@@ -66,10 +66,10 @@
     <div[% IF _id %] class="page-header"[% END %] id="banner">
 
       <ol class="breadcrumb">
-	<li>[% IF status != "public" AND _id %]This is a preview of your record, because it's not public yet[% ELSE %]<a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back to previous page</a>[% END %]</li>
+	    <li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back to previous page</a></li>
       </ol>
 
-      <h1 itemprop="name">[% title %]</h1>
+      <h1 itemprop="name">[% title %][% IF status != "public" AND _id %] <a class="btn btn-sm btn-success" href="/myPUB/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> Make public</a> [% END %]</h1>
 
       [% IF !_id %]
       <h1>This record does not exist or was deleted</h1>
@@ -172,7 +172,9 @@
 	    [% END %]
 	  </div>
 	  <div class="col-xs-2">
+	    [% IF status == "public" %]
 	    <em><a class="mark" href="#" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="glyphicon glyphicon-remove"></span>Unmark[% ELSE %]<span class="glyphicon glyphicon-ok"></span>Mark[% END %]</a></em>
+	    [% END %]
 	  </div>
 	</div>
 
