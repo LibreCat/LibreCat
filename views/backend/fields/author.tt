@@ -31,8 +31,8 @@
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
-            <div class="input-group-addon" onclick="linkPevz(this);"><span id="link_pevz_0" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip || fields.basic_fields.author_secondary.pevz_tooltip %}" /></span></div>
-            <div class="input-group-addon" onclick="revert_name(this);"><span id="revert_0" data-type="" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
+            <div class="input-group-addon"><span id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.author.pevz_tooltip || fields.basic_fields.author_secondary.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="revert_0" onclick="revert_name(this);" data-type="" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
             <div class="input-group-addon sortitem" data-toggle="tooltip" title="Drag & drop to change position of author in author list"><span class="glyphicon glyphicon-move"></span></div>
           </div>
