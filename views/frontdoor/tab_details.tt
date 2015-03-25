@@ -226,7 +226,7 @@
   <div class="row">
     <div class="col-md-2 text-muted">PUB-ID</div>
     <div class="col-md-10">
-    [% _id %] | Link: <a itemprop="url" href="/[% bag %]/[% _id %]" class="normal">[% request.uri_base %][% request.uri %]</a>
+    [% _id %] | Link: <a itemprop="url" href="[% request.uri_base %][% request.uri %]">[% request.uri_base %][% request.uri %]</a>
     </div>
   </div>
 </div>
