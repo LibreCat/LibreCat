@@ -1,0 +1,14 @@
+---
+_id: '1234'
+account_status: active
+account_type: external
+password: test
+login: einstein
+department:
+- id: 9996
+  name: 'Relativistic Theory Group'
+email: einstein@physics.com
+first_name: Albert
+full_name: Einstein, Albert
+last_name: Einstein
+...

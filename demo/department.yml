@@ -1,0 +1,36 @@
+---
+_id: 9999
+name: 'Department of Mathematics'
+name_lc: 'department of mathematics'
+tree:
+- id: 9999
+  name: 'Department of Mathematics'
+...
+---
+_id: 9998
+name: 'Analysis Group'
+name_lc: 'analysis group'
+tree:
+  - id: 9999
+    name: 'Department of Mathematics'
+  - id: 9998
+    name: 'Analysis Group'
+...
+---
+_id: 9997
+name: 'Department of Physics'
+name_lc: 'department of physics'
+tree:
+  - id: 9997
+    name: 'Department of Physics'
+...
+---
+_id: 9996
+name: 'Relativity Theory Group'
+name_lc: 'relativity theory group'
+tree:
+  - id: 9997
+    name: 'Department of Physics'
+  - id: 9996
+    name: 'Relativity Theory Group'
+...
