@@ -84,6 +84,7 @@ $(document).ready(function(){
 	              var removeLink = Dropzone.createElement("<div class=\"corner_up\" id=\"corup_" + resp.tempid + "\"><a href=\"#\"><span class=\"glyphicon glyphicon-remove\"></span></a></div>");
 	              removeLink.addEventListener("click", function(e) {
 	                window.delete_file(resp.tempid);
+	                e.preventDefault();
 	              });
 	              file.previewElement.appendChild(removeLink);
 	              
