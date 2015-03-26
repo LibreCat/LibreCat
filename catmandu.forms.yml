@@ -452,9 +452,11 @@ publicationTypes:
           label: "Conference Location"
           placeholder: "Berlin"
         conference.date: &conference_date
-          label: "Conference Date (start/end)"
+          label: "Conference Date"
           label_start: "Start"
+          label_start_short: "Conference Start"
           label_end: "End"
+          label_end_short: "Conference End"
           placeholder_start: "YYYY-MM-DD"
           placeholder_end: "YYYY-MM-DD"
       file_upload: *file_upload
