@@ -48,6 +48,7 @@ a .total-marked{margin-right:5px;}
 .ltIEten{display:none;}
 
 /* some margins,if needed */
+.margin0{margin:0!important;}
 .margin-top0{margin-top:0!important;}
 .margin-top1-4{margin-top:5px!important;}
 .margin-top1-2,.margin-top1,.margin-top2,.margin-top3{margin-top:10px!important;}
@@ -62,6 +63,7 @@ a .total-marked{margin-right:5px;}
 .innerrow{margin-left:0;}
 
 /* some paddings,if needed */
+.padding0{padding:0!important;}
 .padding-top0{padding-top:0!important;}
 .padding-top1-4{padding-top:5px!important;}
 .padding-top1-2,.padding-top1,.padding-top2,.padding-top3{padding-top:10px!important;}
@@ -96,7 +98,7 @@ a .total-marked{margin-right:5px;}
 .citation-block-div:hover,.citation-block-div:focus{background-color:#efefef;}
 
 /* width */
-.fw,a span[class^='glyphicon'],a span[class^='fa fa']{width:1.4em;}
+.fw,a span[class^='glyphicon']{width:1.4em;}
 .fw1{width:1.9em;}
 .fw2{width:2.4em;}
 .fw3{width:2.9em;}
