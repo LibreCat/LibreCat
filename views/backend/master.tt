@@ -16,9 +16,6 @@
       [% IF title %]
 	<h1>[% title %]</h1>
       [% ELSE %]
-	<ol class="breadcrumb">
-	      <li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back to selection</a></li>
-	</ol>
 	<h1 class="margin-top0">Add New {% label %}</h1>
       [% END%]
       </div>

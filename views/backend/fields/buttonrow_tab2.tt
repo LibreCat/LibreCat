@@ -8,7 +8,11 @@
         <button type="button" class="btn btn-default change_tab" href="#basic_fields"><span class="fa fa-angle-double-left"></span><span class="hidden-xs"> Back</span></button>
         [% END %]
         <button type="submit" name="finalSubmit" value="recSave" class="btn btn-success change_tab"><span class="glyphicon glyphicon-ok"></span><span class="hidden-xs"> Save</span></button>
+	[% IF title %]
         <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Cancel</span></button>
+	[% ELSE %]
+	<a href="/myPUB/record/new" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> Cancel</span></a>
+	[% END %]
         [% IF (status != "public" AND status != "submitted") OR (status == "submitted" AND session.role == "super_admin") %]
         <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-success change_tab"><span class="glyphicon glyphicon-upload"></span> Make Public</button>
         [% END %]
