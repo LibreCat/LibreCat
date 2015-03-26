@@ -47,7 +47,7 @@ sub fix {
 
     if (my $au = $pub->{author}) {
         $bib->{author} = [ map {
-		($_{fist_name} && $_{last_name}) ? "$_->{first_name} $_->{last_name}"
+		($_->{fist_name} && $_->{last_name}) ? "$_->{first_name} $_->{last_name}"
 			: "$_->{full_name}";
 		} @$au ];
     }

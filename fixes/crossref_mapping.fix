@@ -22,8 +22,10 @@ replace_all('isbn.*','^http://id.crossref.org/isbn/(.*)',$1)
 
 # authors
 do list (path => author)
+  do identity ()
     move_field('given', 'first_name')
     move_field('family','last_name')
+  end
 end
 
 # type mapping

@@ -100,7 +100,7 @@ any '/access_denied' => sub {
     template 'websites/403', {path => request->path};
 };
 
-=head1 ANY ...
+=head1 ANY {other route....}
 
 Throws 'page not found'.
 
