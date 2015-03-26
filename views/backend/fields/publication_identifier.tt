@@ -22,8 +22,8 @@
             </select>
           </span>
           <input type="text" value="" class="sticky form-control{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} required{% END %}" name="publication_identifier.0.value" id="publication_id_0" {% IF fields.basic_fields.publication_identifier.readonly OR fields.supplementary_fields.publication_identifier.readonly %} readonly="readonly"{% END %}/>
-          <div class="input-group-addon" onclick="add_field('publId');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} data-mandatory="yes"{% END %}></span></div>
-          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+          <div class="input-group-addon" onclick="add_field('publId');"><divn class="glyphicon glyphicon-plus"{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} data-mandatory="yes"{% END %}></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><divn class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
     </div>
@@ -88,7 +88,7 @@
           </span>
           <input type="text" value="" class="sticky form-control{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} required{% END %}" name="publication_identifier.0.value" id="publication_id_0" {% IF fields.basic_fields.publication_identifier.readonly OR fields.supplementary_fields.publication_identifier.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon" onclick="add_field('publId');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} data-mandatory="yes"{% END %}></span></div>
-          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></div></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
     </div>
