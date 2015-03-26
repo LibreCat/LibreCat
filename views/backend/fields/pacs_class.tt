@@ -1,11 +1,11 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    <label for="pacs_class">
+    <label for="pacs_class_0">
       {% fields.basic_fields.pacs_class.label %}{% fields.supplementary_fields.pacs_class.label %}
     </label>
     {% IF fields.basic_fields.pacs_class.mandatory OR fields.supplementary_fields.pacs_class.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
-  <div class="col-md-10" id="pacs_class_0">
+  <div class="col-md-10" id="pacs_class">
     {% IF fields.basic_fields.pacs_class.multiple OR fields.supplementary_fields.pacs_class.multiple %}
     [% IF !pacs_class %]
     <div class="row innerrow">
