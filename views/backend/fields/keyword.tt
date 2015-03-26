@@ -24,7 +24,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.keyword.label %}{% fields.supplementary_fields.keyword.label %}</div>
-          <input type="text" name="keyword.[% loop.index %]" id="keyword_[% loop.index %]" value="[% keyw %]" class="sticky form-control{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.keyword.readonly OR fields.supplementary_fields.keyword.readonly %} readonly="readonly"{% END %}/>
+          <input type="text" name="keyword.[% loop.index %]" id="keyword_[% loop.index %]" value="[% keyw | html %]" class="sticky form-control{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.keyword.readonly OR fields.supplementary_fields.keyword.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('keyword');"></span></div>
           <div class="input-group-addon"><div class="glyphicon glyphicon-minus" onclick="remove_field(this);"></div></div>
         </div>

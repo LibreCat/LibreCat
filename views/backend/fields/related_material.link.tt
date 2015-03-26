@@ -45,8 +45,8 @@
     <span class="form-group col-md-9">
       <span class="glyphicon glyphicon-link"></span> <a href="[% u.url %]" target="_blank">[% u.title %]</a><br /><span class="text-muted">[% u.description %]</span>
       <input type="hidden" name="related_material.link.[% index %].url" value="[% u.url %]" />
-      <input type="hidden" name="related_material.link.[% index %].title" value="[% u.title %]" />
-      <input type="hidden" name="related_material.link.[% index %].description" value="[% u.description %]" />
+      <input type="hidden" name="related_material.link.[% index %].title" value="[% u.title | html %]" />
+      <input type="hidden" name="related_material.link.[% index %].description" value="[% u.description | html %]" />
     </span>
     <span class="col-md-1">
       <span class="glyphicon glyphicon-minus connect"></span>
