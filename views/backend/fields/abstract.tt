@@ -21,8 +21,8 @@
           <option value="[% h.get_list('language').$lang %]" [% IF abLanguageOId == h.get_list('language').$lang %]selected="selected"[% END %]>[% lang %]</option>
           [% END %]
           </select>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('abstract');"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          <div class="input-group-addon" onclick="add_field('abstract');"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
       <div class="form-group sticky_bottom col-md-10 col-xs-11">
@@ -46,8 +46,8 @@
             <option value="[% h.get_list('language').$lang %]" [% IF abLanguageOId == h.get_list('language').$lang %]selected="selected"[% END %]>[% lang %]</option>
             [% END %]
             </select>
-            <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('abstract');"></span></div>
-            <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+            <div class="input-group-addon" onclick="add_field('abstract');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </div>
         <div class="form-group sticky_bottom col-md-10 col-xs-11">
@@ -72,8 +72,8 @@
           <option value="[% h.get_list('language').$lang %]" [% IF abLanguageOId == h.get_list('language').$lang %]selected="selected"[% END %]>[% lang %]</option>
           [% END %]
           </select>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('abstract');"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          <div class="input-group-addon" onclick="add_field('abstract');"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
       <div class="form-group sticky_bottom col-md-10 col-xs-11">

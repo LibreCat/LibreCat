@@ -13,8 +13,8 @@
         <div class="input-group sticky{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.alternative_title.label %}{% fields.supplementary_fields.alternative_title.label %}</div>
           <input type="text" name="alternative_title.0" id="id_alternative_title_0" value="" placeholder="{% fields.basic_fields.alternative_title.placeholder %}{% fields.supplementary_fields.alternative_title.placeholder %}" class="sticky form-control{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_title.readonly OR fields.supplementary_fields.alternative_title.readonly %} readonly="readonly"{% END %} />
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('alternative_title');"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></div>
+          <div class="input-group-addon" onclick="add_field('alternative_title');"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
     </div>
@@ -25,8 +25,8 @@
         <div class="input-group sticky{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %}[% IF loop.first %] mandatory[% END %]{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.alternative_title.label %}{% fields.supplementary_fields.alternative_title.label %}</div>
           <input type="text" name="alternative_title.[% loop.index %]" id="id_alternative_title_[% loop.index %]" value="[% alttitle | html %]" placeholder="{% fields.basic_fields.alternative_title.placeholder %}{% fields.supplementary_fields.alternative_title.placeholder %}" class="form-control{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_title.readonly OR fields.supplementary_fields.alternative_title.readonly %} readonly="readonly"{% END %}>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('alternative_title');"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></div>
+          <div class="input-group-addon" onclick="add_field('alternative_title');"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
     </div>

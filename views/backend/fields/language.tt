@@ -23,8 +23,8 @@
             <option value="[% lang %]"[% IF lang == language.name %] selected="selected"[% END %]>[% lang %]</option>
             [% END %]
           </select>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('language');"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          <div class="input-group-addon" onclick="add_field('language');"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
     </div>
@@ -43,8 +43,8 @@
               <option value="[% lang %]"[% IF lang == lan.name %] selected="selected"[% END %]>[% lang %]</option>
               [% END %]
             </select>
-            <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('language');"></span></div>
-            <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+            <div class="input-group-addon" onclick="add_field('language');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </div>
       </div>
