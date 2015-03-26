@@ -50,7 +50,7 @@
     <div class="row">
       <div class="col-md-12">
 	<ul class="nav nav-tabs">
-	  <li class="active"><a href="#">[% total %] Marked Publications</a></li>
+	  <li class="active"><a href="#"><span class="total-marked">[% total %]</span> Marked Publications</a></li>
 	  <li class="hidden-md hidden-lg hidden-sm"><a href="#export">Display / Export</a></li>
 	</ul>
       </div>

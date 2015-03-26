@@ -6,41 +6,36 @@ searchParams.q.push('person=[% id %]');
 [% END %]
 var url = '/marked?'+ $.param($.extend({}, searchParams), true);
 
-$('a.mark-all').click(function(evt) {
-  evt.preventDefault();
-  //alert("mark all");
-  $.post(url, function(res) {
-      if (res.message) {
-        showAlertMessage(res.ok ? 'info' : 'warning', res.message);
-      }
-      $('a.mark').data('marked', 1).text('Unmark');
-      $('.unmark_all').html('<a class="unmark-all" href="#" rel="nofollow"><span class="glyphicon glyphicon-remove fw"></span>Unmark all</a>');
-      $('a.unmark-all').bind("click", function() {
-	    evt.preventDefault();
-        $.post('/marked?x-tunneled-method=DELETE', function(res) {
-          $('a.mark').data('marked', 0).text('Mark');
-          $('.unmark_all').html('');
-          $('.total-marked').text(res.total);
-        }, 'json');
-      });
-      $('.total-marked').text(res.total);
-    }, 'json');
-});
-
-
-$('a.unmark-all').on("click", function(evt) {
-  evt.preventDefault();
-  prev = "[% IF qp.person AND qp.person != "" %][% h.newuri_for("/person/$qp.person", qp, person="") %][% ELSIF qp.department AND qp.department != "" %][% h.newuri_for("/department/$qp.department", qp, department="") %][% ELSIF qp.publication AND qp.publication != "" %][% h.newuri_for("/publication/$qp.publication", qp, publication="") %][% END %]";
-  $.post('/marked?x-tunneled-method=DELETE', function(res) {
-    if(prev){
-      window.location.replace(prev);
-    }
-    else {
-      $('a.mark').data('marked', 0).html('<span class="glyphicon glyphicon-ok"></span>Mark');
-      $('.unmark_all').html('');
-      $('.total-marked').text(res.total);
-    }
-  }, 'json');
+$(function () {
+	$('.mark_all').click(function(evt){
+		evt.preventDefault();
+		var a = $(this);
+		var marked_all = a.data('marked');
+		if(marked_all == 0){
+			$.post(url, function(res) {
+				$('.total-marked').text(res.total);
+				$('.mark').html('<span class="fa fa-check-square-o fa-lg"></span>');
+				$('.mark').data('marked', 1);
+				a.html('<span class="fa fa-check-square-o fa-lg"></span> Unmark all');
+				a.data('marked', 1);
+			}, 'json');
+		}
+		else {
+		    prev = "[% IF qp.person AND qp.person != "" %][% h.newuri_for("/person/$qp.person", qp, person="") %][% ELSIF qp.department AND qp.department != "" %][% h.newuri_for("/department/$qp.department", qp, department="") %][% ELSIF qp.publication AND qp.publication != "" %][% h.newuri_for("/publication/$qp.publication", qp, publication="") %][% END %]";
+			$.post('/marked?x-tunneled-method=DELETE', function(res) {
+			    if(prev){
+			        window.location.replace(prev);
+			    }
+			    else {
+			        $('.total-marked').text(res.total);
+				    $('.mark').html('<span class="fa fa-square-o fa-lg"></span>');
+				    $('.mark').data('marked', 0);
+				    a.html('<span class="fa fa-square-o fa-lg"></span> Mark all');
+				    a.data('marked', 0);
+				}
+			}, 'json');
+		}
+	});
 });
 
 </script>
