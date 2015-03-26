@@ -270,9 +270,12 @@ function selectButton(element){
 		var id = $(this).attr('id');
 	    var name = $(this).html();
 	    var index = $(this).attr('data-index');
+	    $('#' + type_short + '_nameautocomplete_' + index ).val(name);
 	    $('#' + type_short + '_idautocomplete_' + index).val(id);
 	    $('#' + type_short + '_autocomplete_' + index).val(name);
+	    $('#' + type_short + '_autocomplete_' + index ).attr('disabled', 'disabled');
 	    $('#selectModal').modal('hide');
+	    $('input.sticky').blur();
 	});
 	modal.modal('show');
 }
