@@ -23,7 +23,7 @@
           </span>
           <input type="text" value="" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} required{% END %}" name="external_id.0.value" id="external_id_0"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon" onclick="add_field('extId');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %}></span></div>
-          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></div></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
     </div>
