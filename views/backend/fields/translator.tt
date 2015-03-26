@@ -15,7 +15,7 @@
       <div class="row innerrow">
         <input type="hidden" id="translator_orig_first_name_0" value="" />
         <input type="hidden" id="translator_orig_last_name_0" value="" />
-            
+
         <span class="form-group col-md-4 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">First Name</div>
@@ -48,13 +48,13 @@
       [% ELSE %]
       [% FOREACH name IN translator %]
       <div class="row innerrow">
-        <input type="hidden" id="translator_orig_first_name_[% loop.index %]" value="[% name.first_name %]" />
-        <input type="hidden" id="translator_orig_last_name_[% loop.index %]" value="[% name.last_name %]" />
-            
+        <input type="hidden" id="translator_orig_first_name_[% loop.index %]" value="[% name.first_name | html %]" />
+        <input type="hidden" id="translator_orig_last_name_[% loop.index %]" value="[% name.last_name | html %]" />
+
         <span class="form-group col-md-4 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">First Name</div>
-            <input type="text" id="translator_first_name_[% loop.index %]" name="translator.[% loop.index %].first_name" placeholder="{% fields.basic_fields.translator.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+            <input type="text" id="translator_first_name_[% loop.index %]" name="translator.[% loop.index %].first_name" placeholder="{% fields.basic_fields.translator.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name | html %]" [% IF name.id %]readonly="readonly"[% END %] />
             <div class="input-group-addon"><span class="hidden-lg hidden-md glyphicon glyphicon-plus" onclick="add_field('translator');"></span></div>
             <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
           </div>
@@ -62,7 +62,7 @@
         <span class="form-group col-md-6 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">Last Name</div>
-            <input type="text" id="translator_last_name_[% loop.index %]" name="translator.[% loop.index %].last_name" placeholder="{% fields.basic_fields.translator.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
+            <input type="text" id="translator_last_name_[% loop.index %]" name="translator.[% loop.index %].last_name" placeholder="{% fields.basic_fields.translator.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.last_name | html %]" [% IF name.id %]readonly="readonly"[% END %] />
             <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('creator');" class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
             {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
@@ -86,18 +86,18 @@
       <div class="row innerrow">
         <input type="hidden" id="translator_orig_first_name_0" value="" />
         <input type="hidden" id="translator_orig_last_name_0" value="" />
-            
+
         <span class="form-group col-md-4 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">First Name</div>
-            <input type="text" id="translator_first_name_0" name="translator.0.first_name" placeholder="{% fields.basic_fields.translator.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="[% translator.0.first_name %]" />
+            <input type="text" id="translator_first_name_0" name="translator.0.first_name" placeholder="{% fields.basic_fields.translator.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="[% translator.0.first_name | html%]" />
             <div class="input-group-addon"></div>
           </div>
         </span>
         <span class="form-group col-md-6 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">Last Name</div>
-            <input type="text" id="translator_last_name_0" name="translator.0.last_name" placeholder="{% fields.basic_fields.translator.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="[% translator.0.last_name %]" />
+            <input type="text" id="translator_last_name_0" name="translator.0.last_name" placeholder="{% fields.basic_fields.translator.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="[% translator.0.last_name | html %]" />
             {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
             <div class="input-group-addon"><span id="translator_link_pevz_0" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.translator.pevz_tooltip %}" /></span></div>
             <div class="input-group-addon"><span id="translator_revert_0" data-type="translator_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>

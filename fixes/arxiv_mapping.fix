@@ -20,12 +20,14 @@ move_field('published','year')
 
 # multiple authors
 do list (path => author)
+  do identity ()
 	remove_field('arxiv:affiliation')
 	copy_field('name','last_name')
 	replace_all('last_name','.*\s(\S+)$','$1')
 	copy_field('name', 'first_name')
 	replace_all('first_name', '(.*)\s(\S+)$','$1')
 	remove_field('name');
+  end
 end
 
 # maybe journal article with doi
