@@ -11,15 +11,21 @@
 <div class="col-md-11 col-md-offset-1">
 
   <div class="page-header" id="banner">
-  [% IF title %]
-    <div class="dropdown">
-      <button type="button" class="btn btn-default change_mode hidden-xs hidden-sm pull-right"><span class="glyphicon glyphicon-option-vertical"></span> Change to single page form</button>
-      <h1>[% title %] [% INCLUDE change_type_menu.tt %]</h1>
+    <div class="row">
+      <div class="col-sm-9">
+      [% IF title %]
+	  <h1>[% title %]</h1>
+      [% ELSE %]
+	  <h1>Add New {% label %}</h1>
+      [% END%]
+      </div>
+      <div class="col-sm-3 text-right">
+	<button type="button" class="btn btn-xs change_mode hidden-xs margin-bottom1-2 fw7"><span class="glyphicon glyphicon-option-vertical"></span> Change to single page form</button>
+	[% IF title %]
+	  [% INCLUDE change_type_menu.tt %]
+	[% END %]
+      </div>
     </div>
-  [% ELSE %]
-    <button type="button" class="btn btn-default change_mode hidden-xs hidden-sm pull-right"><span class="glyphicon glyphicon-option-vertical"></span> Change to single page form</button>
-    <h1>Add New {% label %}</h1>
-  [% END %]
   </div>
 
   <div class="row"></div>

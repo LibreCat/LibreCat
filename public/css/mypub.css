@@ -24,7 +24,7 @@ main{padding-top:30px;}
 /* headlines */
 h1,.h1,h2,.h2,h3,.h3{margin-top:31px;}
 [class^='col']>h2,.panel-body h3{margin-top:0;}
-.title h1{font-size:22px;}
+.title h1{font-size:22px;margin-top:0;}
 h3 a{font-size:inherit;}
 .h3 a{font-weight:normal;}
 h3.expert{border-bottom:1px dashed #b6c828;}
@@ -100,6 +100,10 @@ a .total-marked{margin-right:5px;}
 .fw1{width:1.9em;}
 .fw2{width:2.4em;}
 .fw3{width:2.9em;}
+.fw4{width:5em;}
+.fw5{width:10em;}
+.fw6{width:11.5em;}
+.fw7{width:14em;}
 a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 
 /* frontdor */
@@ -167,6 +171,12 @@ input.has-error,.has-error input{background-color:#ffcfce;}
 .ui-menu{list-style:none;padding:2px;margin:0;display:block;float:left;}
 .ui-menu .ui-menu-item a.ui-state-hover,.ui-menu .ui-menu-item a.ui-state-active{background:lightgray;}
 .ui-widget-content{border:1px solid black;background:white;color:#222;}
+
+/* overwrite bootstrap */
+.mark{background-color:inherit;}
+
+/* sort */
+.sortitem{cursor:move;}
 
 /* special styles for screens */
 

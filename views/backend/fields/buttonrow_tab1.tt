@@ -1,5 +1,5 @@
 <div class="row innerrow">
-  <div class="col-md-12 buttonrow"[% IF edit_mode == "expert" %] style="padding-top:20px;padding-bottom:20px;"[% END %]>
+  <div class="col-md-12 buttonrow padding-top1[% UNLESS edit_mode == "expert" %] padding-bottom1[% END %]">
     <div class="col-md-2">
     </div>
     <div class="form-group col-md-8">
