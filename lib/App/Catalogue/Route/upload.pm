@@ -43,7 +43,7 @@ prefix '/myPUB' => sub {
             success => 1,
             file_name => $file->{filename},
             creator => session->{user},
-            file_size => $file->{size},
+            file_size => $file->size,
             date_updated => $now,
             date_created => $now,
             access_level => "open_access",
@@ -81,7 +81,7 @@ prefix '/myPUB' => sub {
             success => 1,
             file_name => $file->{filename},
             creator => session->{user},
-            file_size => $file->{size},
+            file_size => $file->size,
             date_updated => $now,
             date_created => $now,
             access_level => "open_access",
@@ -122,11 +122,11 @@ prefix '/myPUB' => sub {
       my $path = h->get_file_path($id);
       system "mkdir -p $path" unless -d $path;
       my $result = move( path(h->config->{tmp_dir}, params->{tempid}, $file_name), $path ) || die $!;
-      
+
       my $d = Crypt::Digest::MD5->new;
       $d->addfile(encode_utf8($path."/".$file_name));
       my $digest = $d->hexdigest; # hexadecimal form
-      
+
       my $record = {
         _id => $id,
         status => "new",
@@ -144,7 +144,7 @@ prefix '/myPUB' => sub {
         department => $person->{department},
 
       };
-      
+
       push @{$record->{file}}, to_json({
         file_name => $file_name,
         file_id => $file_id,
@@ -180,15 +180,15 @@ prefix '/myPUB' => sub {
       my $file_id = new_publication();
       my $now = h->now();
       $file_data->{saved} = 1;
-      
+
       my $path = h->get_file_path($id);
       system "mkdir -p $path" unless -d $path;
       my $result = move( path(h->config->{tmp_dir}, params->{tempid}, $file_name), $path ) || die $!;
-      
+
       my $d = Crypt::Digest::MD5->new;
       $d->addfile(encode_utf8($path."/".$file_name));
       my $digest = $d->hexdigest; # hexadecimal form
-      
+
       my $record = {
         _id => $id,
         status => "new",
@@ -282,7 +282,7 @@ prefix '/myPUB' => sub {
             success => 1,
             file_name => $file ? $file->{filename} : $old_file_name,
             creator => params->{creator} || session->{user},
-            file_size => $file ? $file->{size} : '',
+            file_size => $file ? $file->size : '',
             date_updated => $now,
             date_created => $now,
             access_level => params->{access_level} || "open_access",
