@@ -153,7 +153,7 @@ post '/reorder' => sub {
 
     $marked = [ grep { $_ ne params->{id} } @$marked ];
 
-	my @rest = splice (@$marked,param->{newpos});
+	my @rest = splice (@$marked,params->{newpos});
 	push @$marked, params->{id};
 	push @$marked, @rest;
 

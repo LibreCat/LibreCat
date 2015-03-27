@@ -12,7 +12,6 @@
 [% IF request.path.match("person") %]
 <div class="margin-bottom1">
   <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>Marked Publication[% UNLESS marked == 1 %]s[% END %]</a>
-  <div class="unmark_all">[% IF marked %]<a class="unmark-all" href="#" rel="nofollow"><span class="glyphicon glyphicon-remove"></span>Unmark all</a>[% END %]</div>
 </div>
 [% END %]
 
@@ -482,20 +481,8 @@
 
 <script>
 $('.rtfmodal').click(function(){
-$('#[% bag == "data" ? "myRdModal" : "myModal" %]').modal('hide');
+  $('#[% bag == "data" ? "myRdModal" : "myModal" %]').modal('hide');
 });
-</script>
-
-
-[% IF request.path.match('marked') AND total %]
-<ul class="nav nav-tabs nav-stacked margin-top1 ul5">
-  <li>
-    <a href="#" class="unmark-all"><span class="glyphicon glyphicon-remove"></span>Unmark all</a>
-  </li>
-</ul>
-[% END %]
-
-<script>
 var path = '[% request.path %]',
 searchParams = [% h.extract_params.json %];
 

@@ -250,6 +250,24 @@ sub is_marked {
 	return Catmandu::Util::array_includes($marked, $id);
 }
 
+sub all_marked {
+	my ($self) = @_;
+	my $p = $self->extract_params();
+	push @{$p->{q}}, "status=public";
+    my $sort_style = $self->get_sort_style( $p->{sort} || '', $p->{style} || '');
+    $p->{sort} = $sort_style->{'sort'};
+	my $hits = $self->search_publication($p);
+	my $marked = Dancer::session 'marked';
+	my $all_marked = 1;
+	
+	foreach my $hit (@{$hits->{hits}}){
+		unless (Catmandu::Util::array_includes($marked, $hit->{_id})){
+			$all_marked = 0;
+		}
+	}
+	return $all_marked;
+}
+
 sub getPublication {
 	$_[0]->publication->get($_[1]);
 }
