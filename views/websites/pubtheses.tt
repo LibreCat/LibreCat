@@ -74,7 +74,7 @@
       <div class="panel panel-default">
 	<div class="panel-heading">
 	  <a class="accordion-toggle" href="/pdf/revers_hochschulschriften.pdf">
-	    <span class="fa fa-file-pdf-o"></span>Statement on the Granting of Exploitation Rights (PDF, only in German)
+	    <span class="fa fa-file-pdf-o fw"></span>Statement on the Granting of Exploitation Rights (PDF, only in German)
 	  </a>
 	</div>
       </div>
@@ -95,7 +95,7 @@
     <a href="/publication?q=type%3Dbi*"><span class="glyphicon glyphicon-chevron-right"></span>PUB Theses Gesamtliste</a>
     </div>
     <p>Die Autoren laden ihre Arbeiten inklusive der Beschreibungsdaten selbst&auml;ndig hoch, die Universit&auml;tsbibliothek archiviert sie dauerhaft und sorgt f&uuml;r den weltweiten Nachweis in Suchmaschinen und Datenbanken</p>
-    <p><a href="/pdf/pubtheses_kurzgefasst.pdf"><span class="fa fa-file-pdf-o"></span>PUB Theses kurzgefasst</a></p>
+    <p><a href="/pdf/pubtheses_kurzgefasst.pdf"><span class="fa fa-file-pdf-o fw"></span>PUB Theses kurzgefasst</a></p>
 
     <h3>Pr&uuml;fungsarbeit ver&ouml;ffentlichen</h3>
 
@@ -158,7 +158,7 @@
       <div class="panel panel-default">
 	<div class="panel-heading">
 	  <a href="/pdf/revers_hochschulschriften.pdf" class="accordion-toggle">
-	    <span class="fa fa-file-pdf-o"></span>Schriftliche Erkl&auml;rung zur Einr&auml;umung von Nutzungsrechten (PDF-Formular)
+	    <span class="fa fa-file-pdf-o fw"></span>Schriftliche Erkl&auml;rung zur Einr&auml;umung von Nutzungsrechten (PDF-Formular)
 	  </a>
 	</div>
       </div>
