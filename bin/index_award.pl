@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl
+#!/usr/bin/env perl
 
 use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/sbcat/lib/default /home/bup/perl5/lib/perl5);
 use Catmandu::Sane;
@@ -46,11 +46,11 @@ elsif ($opt_u) { # update process
 	else {
 		$preisBag->delete($opt_u);
 	}
-	
+
 } else { # initial indexing
 
 	my $allAward = $mongoBag->to_array;
-	
+
 	foreach (@$allAward){
 		my $aw = $_;
 		$aw->{id} = $aw->{_id};
