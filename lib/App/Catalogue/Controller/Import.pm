@@ -2,18 +2,21 @@ package App::Catalogue::Controller::Import;
 
 use Catmandu::Sane;
 use Catmandu;
+use App::Helper;
 use Carp;
 use Exporter qw/import/;
 
 our @EXPORT    = qw/import_publication/;
-our @EXPORT_OK = qw/arxiv inspire crossref pmc wos/;
+our @EXPORT_OK = qw/arxiv inspire crossref pmc/;
 
 my %dispatch = (
     arxiv    => \&arxiv,
     inspire  => \&inspire,
     crossref => \&crossref,
-    pmc   => \&pmc,
+    epmc   => \&epmc,
 );
+
+my $appdir = h->config->{appdir};
 
 sub import_publication {
     my ($pkg, $id) = @_;
@@ -25,39 +28,40 @@ sub import_publication {
     }
 }
 
-sub wos {
-    my $fh = shift;
-    my $pub = Catmandu->importer('wos')->to_array;
-
-    return $pub;
-}
-
 sub arxiv {
     my $id = shift;
-    my $pub = Catmandu->importer( 'arxiv', query => $id, )->first;
-
-    return $pub;
+    Catmandu->importer(
+        'ArXiv',
+        query => $id,
+        fix => ["$appdir/fixes/arxiv_mapping.fix"],
+        )->first;
 }
 
 sub inspire {
     my $id = shift;
-    my $pub = Catmandu->importer( 'inspire', id => $id, )->first;
-
-    return $pub;
+    Catmandu->importer(
+        'Inspire',
+        id => $id,
+        fix => ["$appdir/fixes/inspire_mapping.fix"],
+        )->first;
 }
 
 sub crossref {
     my $id = shift;
-    my $pub = Catmandu->importer( 'crossref', from => "http://api.crossref.org/works/$id", )->first;
-
-    return $pub;
+    Catmandu->importer(
+        'getJSON',
+        from => "http://api.crossref.org/works/$id",
+        fix => ["$appdir/fixes/crossref_mapping.fix"],
+        )->first;
 }
 
-sub pmc {
+sub epmc {
     my $id = shift;
-    my $pub = Catmandu->importer( 'pmc', query => $id, )->first;
-
-    return $pub;
+    Catmandu->importer(
+        'EuropePMC',
+        query => $id,
+        fix => ["$appdir/fixes/pmc_mapping.fix"],
+        )->first;
 }
 
 1;
