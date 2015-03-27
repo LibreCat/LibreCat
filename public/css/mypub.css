@@ -33,13 +33,13 @@ h3.expert{border-bottom:1px dashed #b6c828;}
 .smaller-xs{font-size:70%;}
 
 /* links */
-a small,small a{font-weight:normal;}
-.normal,.normal a{font-weight:normal!important;}
+.normal,.normal a,a small,small a{font-weight:normal!important;}
 nav a,.nav a{font-weight:bold;}
 a .badge{color:#fff;margin-left:5px;}
 a .total-marked{margin-right:5px;}
 .nolink{cursor:default;}
 .select-language a{color:#777!important;font-weight:bold!important;}
+.dropdown.active a{cursor:pointer!important;}
 
 /*Some margin for row'ed paragraphs*/
 .row>p{margin-top:10px;}
@@ -57,7 +57,7 @@ a .total-marked{margin-right:5px;}
 .margin-bottom1-4{margin-bottom:5px!important;}
 .margin-bottom1-2,.margin-bottom1,.margin-bottom2,.margin-bottom3{margin-bottom:10px!important;}
 .margin-xs{margin-top:20px;margin-bottom:20px;}
-.margin-xs-top{margin-top:20px;}
+.panel-group,.margin-xs-top{margin-top:20px;}
 .margin-xs-bottom{margin-top:20px;}
 .buttonrow{margin-left:5px;}
 .innerrow{margin-left:0;}
