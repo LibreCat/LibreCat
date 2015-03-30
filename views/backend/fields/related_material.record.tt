@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-md-2">
-    <label for="related_material_id_0">
+    <label for="connect_autocomplete">
       {% fields.related_material.item('related_material.record').label %}{% IF fields.related_material.item('related_material.record').mandatory == "1" %}<span class="starMandatory"></span>{% END %}
     </label>
   </div>

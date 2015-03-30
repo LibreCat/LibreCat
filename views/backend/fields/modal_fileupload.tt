@@ -7,8 +7,9 @@
         <h3>Edit Uploaded File</h3>
       </div>
 
+      <form enctype="multipart/form-data" name="upLoad" id="upLoad">
+
       <div class="modal-body">
-	<form enctype="multipart/form-data" name="upLoad" id="upLoad">
         <input type="hidden" name="file_id" id="id_file_id" value="" />
         <input type="hidden" name="tempid" id="id_temp_id" value="" />
         <input type="hidden" name="record_id" id="id_record_id" value="" />
@@ -80,7 +81,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success"name="finalSubmit" id="fileSubmit"><span class="glyphicon glyphicon-ok"></span> Save</button>
+        <button type="button" class="btn btn-success" name="finalSubmit" id="fileSubmit"><span class="glyphicon glyphicon-ok"></span> Save</button>
         <button type="button" class="btn btn-warning" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
       </div>
       </form>

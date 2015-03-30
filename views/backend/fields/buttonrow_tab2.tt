@@ -17,10 +17,10 @@
         <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-success change_tab"><span class="glyphicon glyphicon-upload"></span> Make Public</button>
         [% END %]
         [% IF status == "public" %]
-        <a class="btn btn-danger" href="/myPUB/record/return/[% _id %]" onClick="return confirm('Are you sure you want to return this record from public view?');" name="return"><span class="glyphicon glyphicon-download"></span><span class="hidden-xs"> Return</span></a>
+        <a class="btn btn-danger" href="/myPUB/record/return/[% _id %]" onclick="return confirm('Are you sure you want to return this record from public view?');" name="return"><span class="glyphicon glyphicon-download"></span><span class="hidden-xs"> Return</span></a>
         [% END %]
         [% IF session.role == "super_admin" %]
-        <a class="btn btn-danger" href="/myPUB/record/delete/[% _id %]" onClick="return confirm('Are you sure you want to delete this record?');" name="delete"><span class="glyphicon glyphicon-trash"></span><span class="hidden-xs"> Delete</span></a>
+        <a class="btn btn-danger" href="/myPUB/record/delete/[% _id %]" onclick="return confirm('Are you sure you want to delete this record?');" name="delete"><span class="glyphicon glyphicon-trash"></span><span class="hidden-xs"> Delete</span></a>
         [% END %]
         [% IF !edit_mode OR edit_mode == "normal" %]
         <button type="button" class="btn btn-default change_tab" href="#supplementary_fields"><span class="hidden-xs">Next </span><span class="fa fa-angle-double-right"></span></button>

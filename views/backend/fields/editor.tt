@@ -1,6 +1,6 @@
 [% lowtype = type.lower.match('^bi') ? 'bithesis' : type.lower %]
 [% confpath = h.config.forms.publicationTypes.$lowtype %]
-<span id="editorOnly">
+<div id="editorOnly">
   <div class="row authorspan innerrow">
     <div class="col-md-2 form-group hidden-xs hidden-sm">
       <label for="editor.0.first_name">{% fields.basic_fields.editor.label || fields.basic_fields.editor_solo.label %}{% fields.supplementary_fields.editor.label || fields.supplementary_fields.editor_solo.label %}</label>
@@ -13,27 +13,27 @@
         <input type="hidden" id="editor_orig_first_name_0" value="" />
         <input type="hidden" id="editor_orig_last_name_0" value="" />
 
-        <span class="form-group col-md-4 col-xs-11">
+        <div class="form-group col-md-4 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">First Name</div>
             <input type="text" id="editor_first_name_0" name="editor.0.first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder || fields.basic_fields.editor_solo.first_name.placeholder %}{% fields.supplementary_fields.editor.first_name.placeholder || fields.supplementary_fields.editor_solo.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} required{% END %}" value="" />
             <div class="input-group-addon" onclick="add_field('editor');"><span class="hidden-lg hidden-md glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} data-mandatory="yes"{% END %}></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
-        </span>
-        <span class="form-group col-md-6 col-xs-11">
+        </div>
+        <div class="form-group col-md-6 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.editor.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">Last Name</div>
             <input type="text" id="editor_last_name_0" name="editor.0.last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder || fields.basic_fields.editor_solo.last_name.placeholder || fields.supplementary_fields.editor.last_name.placeholder || fields.supplementary_fields.editor_solo.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} required{% END %}" value="" />
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('editor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} data-mandatory="yes"{% END %}></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.editor.pevz OR fields.basic_fields.editor_solo.pevz OR fields.supplementary_fields.editor.pevz OR fields.supplementary_fields.editor_solo.pevz %}
-            <div class="input-group-addon"><span id="editor_link_pevz_0" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip || fields.basic_fields.editor_solo.pevz_tooltip || fields.supplementary_fields.editor.pevz_tooltip || fields.supplementary_fields.editor_solo.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="editor_link_pevz_0" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized0" src="/images/biNotAuthorized.png" style="height:20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip || fields.basic_fields.editor_solo.pevz_tooltip || fields.supplementary_fields.editor.pevz_tooltip || fields.supplementary_fields.editor_solo.pevz_tooltip %}" /></span></div>
             <div class="input-group-addon"><span id="editor_revert_0" data-type="editor_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
-        </span>
+        </div>
         {% IF fields.basic_fields.editor.pevz OR fields.basic_fields.editor_solo.pevz OR fields.supplementary_fields.editor.pevz OR fields.supplementary_fields.editor_solo.pevz %}
         <script>
           $('#editor_Authorized0').tooltip();
@@ -48,27 +48,27 @@
         <input type="hidden" id="editor_orig_first_name_[% loop.index %]" value="[% name.first_name | html %]" />
         <input type="hidden" id="editor_orig_last_name_[% loop.index %]" value="[% name.last_name | html %]" />
 
-        <span class="form-group col-md-4 col-xs-11">
+        <div class="form-group col-md-4 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">First Name</div>
             <input type="text" id="editor_first_name_[% loop.index %]" name="editor.[% loop.index %].first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder || fields.basic_fields.editor_solo.first_name.placeholder || fields.supplementary_fields.editor.first_name.placeholder || fields.supplementary_fields.editor_solo.first_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name | html %]" [% IF name.id %]readonly="readonly"[% END %] />
             <div class="input-group-addon" onclick="add_field('editor');"><span class="hidden-lg hidden-md glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} data-mandatory="yes"{% END %}></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
-        </span>
-        <span class="form-group col-md-6 col-xs-11">
+        </div>
+        <div class="form-group col-md-6 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">Last Name</div>
             <input type="text" id="editor_last_name_[% loop.index %]" name="editor.[% loop.index %].last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder || fields.basic_fields.editor_solo.last_name.placeholder || fields.supplementary_fields.editor.last_name.placeholder || fields.supplementary_fields.editor_solo.last_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.last_name | html %]" [% IF name.id %]readonly="readonly"[% END %] />
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('editor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} data-mandatory="yes"{% END %}></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.editor.pevz OR fields.basic_fields.editor_solo.pevz OR fields.supplementary_fields.editor.pevz OR fields.supplementary_fields.editor_solo.pevz %}
-            <div class="input-group-addon"><span id="editor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] border="0" height="20px" [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip || fields.basic_fields.editor_solo.pevz_tooltip || fields.supplementary_fields.editor.pevz_tooltip || fields.supplementary_fields.editor_solo.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="editor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] style="height:20px" [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip || fields.basic_fields.editor_solo.pevz_tooltip || fields.supplementary_fields.editor.pevz_tooltip || fields.supplementary_fields.editor_solo.pevz_tooltip %}" /></span></div>
             <div class="input-group-addon"><span id="editor_revert_[% loop.index %]" data-type="editor_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
-        </span>
+        </div>
         {% IF fields.basic_fields.editor.pevz OR fields.basic_fields.editor_solo.pevz OR fields.supplementary_fields.editor.pevz OR fields.supplementary_fields.editor_solo.pevz %}
         <script>
             $('#editor_Authorized[% loop.index %]').tooltip();
@@ -84,25 +84,25 @@
       <input type="hidden" id="editor_orig_first_name_0" value="" />
       <input type="hidden" id="editor_orig_last_name_0" value="" />
 
-      <span class="form-group col-md-4 col-xs-11">
+      <div class="form-group col-md-4 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} mandatory{% END %}">
           <div class="input-group-addon">First Name</div>
           <input type="text" id="editor_first_name_0" name="editor.0.first_name" placeholder="{% fields.basic_fields.editor.first_name.placeholder || fields.basic_fields.editor_solo.first_name.placeholder %}{% fields.supplementary_fields.editor.first_name.placeholder || fields.supplementary_fields.editor_solo.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} required{% END %}" value="[% editor.0.first_name | html %]" />
           <div class="input-group-addon"></div>
         </div>
-      </span>
-      <span class="form-group col-md-6 col-xs-11">
+      </div>
+      <div class="form-group col-md-6 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.editor.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} mandatory{% END %}">
           <div class="input-group-addon">Last Name</div>
           <input type="text" id="editor_last_name_0" name="editor.0.last_name" placeholder="{% fields.basic_fields.editor.last_name.placeholder || fields.basic_fields.editor_solo.last_name.placeholder || fields.supplementary_fields.editor.last_name.placeholder || fields.supplementary_fields.editor_solo.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} required{% END %}" value="[% editor.0.last_name | html %]" />
           {% IF fields.basic_fields.editor.pevz OR fields.basic_fields.editor_solo.pevz OR fields.supplementary_fields.editor.pevz OR fields.supplementary_fields.editor_solo.pevz %}
-          <div class="input-group-addon"><span id="editor_link_pevz_0" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip || fields.basic_fields.editor_solo.pevz_tooltip || fields.supplementary_fields.editor.pevz_tooltip || fields.supplementary_fields.editor_solo.pevz_tooltip %}" /></span></div>
+          <div class="input-group-addon"><span id="editor_link_pevz_0" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized0" src="/images/biNotAuthorized.png" style="height:20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.editor.pevz_tooltip || fields.basic_fields.editor_solo.pevz_tooltip || fields.supplementary_fields.editor.pevz_tooltip || fields.supplementary_fields.editor_solo.pevz_tooltip %}" /></span></div>
           <div class="input-group-addon"><span id="editor_revert_0" data-type="editor_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
           {% ELSE %}
           <div class="input-group-addon"></div>
           {% END %}
         </div>
-      </span>
+      </div>
       {% IF fields.basic_fields.editor.pevz OR fields.basic_fields.editor_solo.pevz OR fields.supplementary_fields.editor.pevz OR fields.supplementary_fields.editor_solo.pevz %}
       <script>
         $('#editor_Authorized0').tooltip();
@@ -115,17 +115,17 @@
     </div>
   </div>
 
-<div class="modal" id="editor_linkPevzModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"></h4>
-      </div>
-      <div class="modal-body">
+  <div class="modal" id="editor_linkPevzModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	  <h4 class="modal-title">&hellip;</h4>
+	</div>
+	<div class="modal-body">
+	</div>
       </div>
     </div>
   </div>
-</div>
 
-</span>
+</div>
