@@ -27,7 +27,7 @@
     <div class="col-md-10">
       <a href="/download/[% _id %]/[% fi.file_id %]">
         [% fi.file_name %]
-      </a><span class="text-muted"> [% h.pretty_byte_size(fi.size) %]</span>
+      </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
     </div>
   </div>
     [% IF fi.title %]

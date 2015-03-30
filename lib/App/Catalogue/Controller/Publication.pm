@@ -4,7 +4,7 @@ use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Fix qw/maybe_add_urn/;
 use App::Helper;
-use App::Catalogue::Controller::Corrector qw/delete_empty_fields correct_hash_array correct_writer correct_publid/;
+#use App::Catalogue::Controller::Corrector qw/delete_empty_fields correct_hash_array correct_writer correct_publid/;
 use App::Catalogue::Controller::File qw/handle_file delete_file/;
 use App::Catalogue::Controller::Material qw/update_related_material/;
 use Hash::Merge qw/merge/;
@@ -30,16 +30,10 @@ sub update_publication {
 
     $data->{_id} = new_publication() unless $data->{_id};
 
-    $data = correct_publid($data);
-    $data = correct_hash_array($data);
-
-    $data = correct_writer($data);
-    $data = delete_empty_fields($data);
-
     # html encoding??
-    foreach (qw/message/) {
-        $data->{$_} = encode_entities($data->{$_}) if $data->{$_};
-    }
+#    foreach (qw/message/) {
+#        $data->{$_} = encode_entities($data->{$_}) if $data->{$_};
+#    }
 
     if($data->{file}){
     	$data->{file} = handle_file($data);
@@ -78,13 +72,15 @@ sub update_publication {
 
     update_related_material($data);
 
-    $data = delete_empty_fields($data);
-
     my $fixer = Catmandu::Fix->new(fixes => [
+        'delete_empty()',
+        'publication_identifier()',
+        'hash_array()',
         'maybe_add_urn()',
 	    'if all_match("status","new") set_field("status","private") end',
         'if all_match("finalSubmit","recPublish") set_field("status","public") end',
         'remove_field("finalSubmit")',
+        'delete_empty()',
         ]);
 
     # citations

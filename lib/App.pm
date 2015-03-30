@@ -86,7 +86,6 @@ The logout route. Destroys session.
 =cut
 any '/logout' => sub {
     session->destroy;
-    #forward '/login', {method => 'GET'};
     redirect '/';
 };
 
@@ -96,7 +95,7 @@ User sees this one if access is denied.
 
 =cut
 any '/access_denied' => sub {
-    status 'access_denied';
+    status '403';
     template 'websites/403', {path => request->path};
 };
 

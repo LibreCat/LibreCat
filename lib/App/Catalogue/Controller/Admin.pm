@@ -96,6 +96,7 @@ sub delete_person {
 sub import_person {
     my $id = shift;
 
+    my $appdir = h->config->{appdir};
     my $furl = Furl->new( agent => "Chrome 35.1", timeout => 10 );
 
     my $base_url = 'http://ekvv.uni-bielefeld.de/ws/pevz';
@@ -104,14 +105,22 @@ sub import_person {
 
     my $res = $furl->get($url);
     croak "Error: $res->status_line" unless $res->is_success;
-    my $p1 = Catmandu->importer( 'pevz', file => $res->content )->first;
+    my $p1 = Catmandu->importer(
+        'XML',
+        file => $res->content,
+        fix => ["$appdir/fixes/pevz_mapping.fix"],
+        )->first;
 
     $res = $furl->get($url2);
     croak "Error: $res->status_line" unless $res->is_success;
-    my $p2 = Catmandu->importer( 'pevz', file => $res->content )->first;
+    my $p2 = Catmandu->importer(
+        'XML',
+        file => $res->content,
+        fix => ["$appdir/fixes/pevz_mapping.fix"],
+        )->first;
+
     my $merger = Hash::Merge->new();
 
-    # decode_entities($email) if $email; # do we need this?
     return $merger->merge( $p1, $p2 );
 }
 
@@ -133,7 +142,7 @@ sub update_department {
     return "Error: No _id specified" unless $data->{_id};
 
     my $old = h->authority('department')->get( $data->{_id} );
-    my $merger = Hash::Merge->new();           #left precedence by default!
+    my $merger = Hash::Merge->new();
     my $new = $merger->merge( $data, $old );
 
     h->authority('department')->add($new);

@@ -18,7 +18,7 @@ pm_to_blib
 *.swp
 *.json
 public/images/dummy.jpg
-/sessions
+sessions/
 views/backend/forms/
 views/admin/forms/
 logs/
@@ -28,4 +28,5 @@ bin/citec_authors.csv
 public/citec_authors.json
 local/
 data/
+.vagrant/
 ~$

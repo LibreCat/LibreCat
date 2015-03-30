@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl
+#!/usr/bin/env perl
 
 use lib qw(/home/bup/perl5/lib/perl5);
 use Catmandu::Sane;
@@ -38,7 +38,7 @@ if ($opt_u) { # update process
 	#print Dumper $project;
 	$pre_fixer->fix($project);
 	($project) ? ($projBag->add($project)) : ($projBag->delete($opt_u));
-	
+
 } else { # initial indexing
 
 	my $allProj = $mongoBag->to_array;

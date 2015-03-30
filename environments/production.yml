@@ -14,3 +14,30 @@ show_errors: 0
 
 # cache route resolution for maximum performance
 route_cache: 1
+
+# session handling; use default store
+session: "Catmandu"
+session_expires: 1 hr
+
+plack_middlewares:
+  - ["ReverseProxy"]
+# or better use 'behind_proxy: 1'?
+
+# Bielefeld specific
+####################
+
+# workflow for thesis submission
+thesis:
+  to: "vitali.peil@uni-bielefeld.de,bettina.weingarten@uni-bielefeld.de,petra.kohorst@uni-bielefeld.de"
+  from: publikationsdienste.ub@uni-bielefeld.de
+  subject: "[PUB] New thesis submitted"
+  urn_prefix: 'urn:nbn:de:hbz:361'
+
+institution:
+  name_eng: 'Bielefeld University'
+  name: 'Universität Bielefeld'
+  nameLib: 'Universitätsbibliothek Bielefeld'
+  place: 'Bielefeld'
+  address: 'Universitätsstr. 25, 33615 Bielefeld'
+  dnbContactID: 'L6000-0538'
+  gndLib: '24060-6'

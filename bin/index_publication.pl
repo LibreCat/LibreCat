@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl
+#!/usr/bin/env perl
 
 use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension);
 

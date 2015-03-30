@@ -16,7 +16,7 @@ use JSON;
 Catmandu->load(':up');
 
 sub config {
-	state $config = Catmandu->config;
+	state $config = merge(Catmandu->config, Dancer::config); 
 }
 
 sub bag {
