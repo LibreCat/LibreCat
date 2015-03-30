@@ -1,4 +1,4 @@
-d[% thisPerson = h.getPerson(session.personNumber) %]
+[% thisPerson = h.getPerson(session.personNumber) %]
 
 <!-- BEGIN navbar.tt -->
 
