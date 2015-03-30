@@ -6,7 +6,7 @@
 
     [% IF lang %]
 
-    <h2>Guidelines for PUB</h2>
+    <h2>PUB Policy</h2>
 
     <h3>Character and purpose of the service</h3>
 
@@ -51,7 +51,7 @@
 
     [% ELSE %]
 
-    <h2>Leitlinien f&uuml;r PUB</h2>
+    <h2>PUB-Leitlinien</h2>
 
     <h3>Charakter und Zweck des Dienstes</h3>
 

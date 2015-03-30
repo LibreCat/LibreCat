@@ -18,8 +18,8 @@
               <option value="[% ta %]">[% h.get_list('thematic_area').$ta %]</option>
             [% END %]
           </select>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('thematic_area'{% IF fields.basic_fields.thematic_area.placeholder || fields.supplementary_fields.thematic_area.placeholder %},'{% fields.basic_fields.thematic_area.placeholder %}{% fields.supplementary_fields.thematic_area.placeholder %}'{% END %});"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          <div class="input-group-addon" onclick="add_field('thematic_area'{% IF fields.basic_fields.thematic_area.placeholder || fields.supplementary_fields.thematic_area.placeholder %},'{% fields.basic_fields.thematic_area.placeholder %}{% fields.supplementary_fields.thematic_area.placeholder %}'{% END %});"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
     </div>
@@ -35,8 +35,8 @@
               <option value="[% ta %]">[% h.get_list('thematic_area').$ta %]</option>
             [% END %]
           </select>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('thematic_area'{% IF fields.basic_fields.thematic_area.placeholder || fields.supplementary_fields.thematic_area.placeholder %},'{% fields.basic_fields.thematic_area.placeholder %}{% fields.supplementary_fields.thematic_area.placeholder %}'{% END %});"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          <div class="input-group-addon" onclick="add_field('thematic_area'{% IF fields.basic_fields.thematic_area.placeholder || fields.supplementary_fields.thematic_area.placeholder %},'{% fields.basic_fields.thematic_area.placeholder %}{% fields.supplementary_fields.thematic_area.placeholder %}'{% END %});"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
     </div>

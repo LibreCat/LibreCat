@@ -5,40 +5,40 @@
 
 <!-- BEGIN add_new.tt -->
 
-  <div class="col-md-9 col-md-offset-1"> <!-- main content (left) -->
+<div class="col-md-9 col-md-offset-1"> <!-- main content (left) -->
 
-    <div class="page-header" id="banner">
-      <h1>Add New Publication</h1>
-    </div>
+  <div class="page-header" id="banner">
+    <h1>Add New Publication</h1>
+  </div>
 
-    <div class="col-md-12">
+  <div class="col-md-12">
 
     <div class="row">
       <h2>Enter a publication ID to import:</h2>
       <div class="row">
-	<form role="form" class="form-inline" action="/myPUB/record/import" method="POST">
-	  <div class="col-xs-3 col-md-2">
-	  <select class="selectpicker form-control" id="select_source">
-	    <option value="crossref" selected="selected">DOI</option>
-	    <option value="epmc">PMID</option>
-	    <option value="arxiv">ArXiv ID</option>
-	    <option value="inspire">Inspire ID</option>
-	  </select>
-	  </div>
-	  <input type="hidden" id="input_source" name="source">
-	  <div class="input-group col-md-5 col-xs-8">
-	  <input type="text" value="" class="form-control" id="input_id" name="id" placeholder="10.324/JHEP287432" required/>
-	  <span class="input-group-btn">
-	    <button type="submit" class="btn btn-default">Go!</button>
-	  </span>
-	</div>
-	</form>
-      [% IF error %]<p class="text-danger">[% error %]</p>[% END %]
+        <form role="form" class="form-inline" action="/myPUB/record/import" method="POST">
+	      <div class="col-xs-3 col-md-2">
+	        <select class="selectpicker form-control" id="select_source">
+	          <option value="crossref" selected="selected">DOI</option>
+	          <option value="pmc">PMID</option>
+	          <option value="arxiv">ArXiv ID</option>
+	          <option value="inspire">Inspire ID</option>
+	        </select>
+	      </div>
+	      <input type="hidden" id="input_source" name="source">
+	      <div class="input-group col-md-5 col-xs-8">
+	        <input type="text" value="" class="form-control" id="input_id" name="id" placeholder="10.324/JHEP287432" required/>
+	        <span class="input-group-btn">
+	          <button type="submit" class="btn btn-default">Go!</button>
+	        </span>
+	      </div>
+	    </form>
+        [% IF error %]<p class="text-danger">[% error %]</p>[% END %]
       </div>
     </div>
 
     <div class="row">
-        <h2>Or choose a document type and fill out the empty form yourself:</h2>
+      <h2>Or choose a document type and fill out the empty form yourself:</h2>
     </div>
     <div class="row">
       <!-- % INCLUDE publication_types.tt % -->
@@ -97,6 +97,12 @@
         [% END %]
       </div>
     </div>
+  
+    <div class="row">
+      <h2>Or drop your Open Access fulltext here:</h2>
+      <div class="col-md-4">
+        [% INCLUDE person_dropzone.tt %]
+      </div>
     </div>
   </div>
 </div>

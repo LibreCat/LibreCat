@@ -13,8 +13,8 @@
           <div class="input-group sticky{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.applicant.label %}{% fields.supplementary_fields.applicant.label %}</div>
             <input type="text" name="applicant.0" id="id_applicant_0" value="" class="sticky form-control{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.applicant.placeholder %}{% fields.supplementary_fields.applicant.placeholder %}"{% IF fields.basic_fields.applicant.readonly OR fields.supplementary_fields.applicant.readonly %} readonly="readonly"{% END %} />
-            <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('applicant');"></span></div>
-            <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+            <div class="input-group-addon" onclick="add_field('applicant');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </div>
       </div>
@@ -25,8 +25,8 @@
           <div class="input-group sticky{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.applicant.label %}{% fields.supplementary_fields.applicant.label %}</div>
             <input type="text" name="applicant.[% loop.index %]" id="applicant_[% loop.index %]" value="[% cored | html %]" class="sticky form-control{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.applicant.readonly OR fields.supplementary_fields.applicant.readonly %} readonly="readonly"{% END %} />
-            <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('applicant');"></span></div>
-            <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+            <div class="input-group-addon" onclick="add_field('applicant');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </div>
       </div>
@@ -38,8 +38,8 @@
           <div class="input-group sticky{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.applicant.label %}{% fields.supplementary_fields.applicant.label %}</div>
             <input type="text" name="applicant.0" id="id_applicant_0" value="" class="sticky form-control{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.applicant.placeholder %}{% fields.supplementary_fields.applicant.placeholder %}"{% IF fields.basic_fields.applicant.readonly OR fields.supplementary_fields.applicant.readonly %} readonly="readonly"{% END %} />
-            <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('applicant');"></span></div>
-            <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+            <div class="input-group-addon" onclick="add_field('applicant');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </div>
       </div>
