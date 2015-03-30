@@ -25,6 +25,10 @@ $Template::Stash::PRIVATE = 0;
 # custom authenticate routine
 sub _authenticate {
     my ( $login, $pass ) = @_;
+    if (h->config->{environment} eq 'development') {
+        return {login => 'einstein', _id => 1234, role => 'user'};
+    }
+
     my $user = h->getAccount( $login )->[0];
     return 0 unless $user;
 
@@ -45,10 +49,11 @@ Route the user will be sent to if login is required.
 
 =cut
 get '/login' => sub {
-    my $data;
-    $data->{error_message} = params->{error_message} ||= '';
-    $data->{login}         = params->{login}         ||= "";
-    template 'login', $data;
+    # what are you doing? you're already in.
+    redirect '/myPUB' if session('user');
+
+    # not logged in yet
+    template 'login', {error_message => params->{error_messages} || '', login => params->{login} || ''};
 };
 
 =head2 POST /login

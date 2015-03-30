@@ -1,0 +1,16 @@
+# fix before updating record
+delete_empty()
+publication_identifier()
+hash_array()
+maybe_add_urn()
+person()
+if all_match('status','new')
+    set_field('status','private')
+end
+
+if all_match('finalSubmit','recPublish')
+    set_field('status','public')
+end
+
+remove_field('finalSubmit')
+delete_empty()

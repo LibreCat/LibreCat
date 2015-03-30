@@ -16,7 +16,7 @@ use JSON;
 Catmandu->load(':up');
 
 sub config {
-	state $config = merge(Catmandu->config, Dancer::config); 
+	state $config = merge(Catmandu->config, Dancer::config);
 }
 
 sub bag {
@@ -220,7 +220,7 @@ sub now {
 
 sub pretty_byte_size {
 	my ($self, $number) = @_;
-	return human_byte_size($number);
+	return $number ? human_byte_size($number) : '';
 }
 
 sub generate_urn {
@@ -259,7 +259,7 @@ sub all_marked {
 	my $hits = $self->search_publication($p);
 	my $marked = Dancer::session 'marked';
 	my $all_marked = 1;
-	
+
 	foreach my $hit (@{$hits->{hits}}){
 		unless (Catmandu::Util::array_includes($marked, $hit->{_id})){
 			$all_marked = 0;

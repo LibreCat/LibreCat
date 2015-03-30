@@ -2,15 +2,13 @@ package App::Catalogue::Controller::Publication;
 
 use Catmandu::Sane;
 use Catmandu;
-use Catmandu::Fix qw/maybe_add_urn/;
 use App::Helper;
-#use App::Catalogue::Controller::Corrector qw/delete_empty_fields correct_hash_array correct_writer correct_publid/;
 use App::Catalogue::Controller::File qw/handle_file delete_file/;
 use App::Catalogue::Controller::Material qw/update_related_material/;
 use Hash::Merge qw/merge/;
 use Carp;
 use JSON;
-use HTML::Entities;
+use Citation;
 use Exporter qw/import/;
 our @EXPORT = qw/new_publication save_publication delete_publication update_publication edit_publication/;
 
@@ -30,25 +28,18 @@ sub update_publication {
 
     $data->{_id} = new_publication() unless $data->{_id};
 
-    # html encoding??
-#    foreach (qw/message/) {
-#        $data->{$_} = encode_entities($data->{$_}) if $data->{$_};
-#    }
-
     if($data->{file}){
     	$data->{file} = handle_file($data);
     }
 
-    if($data->{language}){
-    	foreach my $lang (@{$data->{language}}){
-    		if($lang->{name} eq "English" or $lang->{name} eq "German"){
-    			$lang->{iso} = h->config->{lists}->{language_preselect}->{$lang->{name}};
-    		}
-    		else {
-    			$lang->{iso} = h->config->{lists}->{language}->{$lang->{name}};
-    		}
+    map {
+        if($_->{name} eq "English" or $_->{name} eq "German"){
+            $_->{iso} = h->config->{lists}->{language_preselect}->{$_->{name}};
+    	} else {
+            $_->{iso} = h->config->{lists}->{language}->{$_->{name}};
     	}
-    }
+    } @{$data->{language}};
+
     if($data->{original_language}){
     	foreach my $lang (@{$data->{original_language}}){
     		if($lang->{name} eq "English" or $lang->{name} eq "German"){
@@ -72,21 +63,12 @@ sub update_publication {
 
     update_related_material($data);
 
-    my $fixer = Catmandu::Fix->new(fixes => [
-        'delete_empty()',
-        'publication_identifier()',
-        'hash_array()',
-        'maybe_add_urn()',
-	    'if all_match("status","new") set_field("status","private") end',
-        'if all_match("finalSubmit","recPublish") set_field("status","public") end',
-        'remove_field("finalSubmit")',
-        'delete_empty()',
-        ]);
+    my $fixer = Catmandu::Fix->new(
+        fixes => [h->config->{appdir}."/fixes/update_publication.fix"]
+    );
 
     # citations
-    use Citation;
-    my $response = Citation::index_citation_update($data,0,'');
-    $data->{citation} = $response if $response;
+    $data->{citation} = Citation::index_citation_update($data,0,'') || '';
 
     my $search_bag = Catmandu->store('search')->bag('publication');
     my $backup = Catmandu->store('backup')->bag('publication');
@@ -120,22 +102,11 @@ sub delete_publication {
 
     my $update_rm = update_related_material($del);
 
-    # this will do a hard override of
-    # the existing publication
 	h->publication->add($del);
 	h->publication->commit;
 
 	my $status = delete_file($id);
 	sleep 1;
-
-    # delete attached files
-#    my $dir = h->config->{upload_dir} ."/$id";
-#    my $status = rmdir $dir if -e $dir || 0;
-#    croak "Error: could not delete files" if $status;
-
-    # delete citations
-#    my $citbag = Catmandu->store('citation')->bag;
-#    $citbag->delete($id);
 }
 
 1;
