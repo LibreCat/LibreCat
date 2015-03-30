@@ -26,6 +26,9 @@ plack_middlewares:
 # Bielefeld specific
 ####################
 
+upload_dir: '/tmp'
+tmp_dir: '/tmp/pub'
+
 # workflow for thesis submission
 thesis:
   to: "vitali.peil@uni-bielefeld.de,bettina.weingarten@uni-bielefeld.de,petra.kohorst@uni-bielefeld.de"
