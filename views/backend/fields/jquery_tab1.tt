@@ -37,20 +37,12 @@ $('.change_tab').click(function(e){
   var oneauthor = 0;
 
   $('.creator').children('div.row').each(function(){
-    if($(this).find('input[type!="hidden"]').eq(0).hasClass('required') &&  !$(this).find('input[type!="hidden"]').eq(0).val()){
-      $(this).find('input[type!="hidden"]').addClass("has-error");
-      $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').addClass("has-error");
-    }
-    else if($(this).find('input[type!="hidden"]').eq(0).val() && $(this).find('input[type!="hidden"]').eq(0).hasClass('has-error')){
+    if($(this).find('input[type!="hidden"]').eq(0).val() && $(this).find('input[type!="hidden"]').eq(0).hasClass('has-error')){
       $(this).find('input[type!="hidden"]').removeClass("has-error");
       $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').removeClass("has-error");
     }
-    
-    if($(this).find('input[type!="hidden"]').eq(1).hasClass('required') &&  !$(this).find('input[type!="hidden"]').eq(1).val()){
-      $(this).find('input[type!="hidden"]').addClass("has-error");
-      $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').addClass("has-error");
-    }
-    else if($(this).find('input[type!="hidden"]').eq(1).val() && $(this).find('input[type!="hidden"]').eq(1).hasClass('has-error')){
+
+    if($(this).find('input[type!="hidden"]').eq(1).val() && $(this).find('input[type!="hidden"]').eq(1).hasClass('has-error')){
       $(this).find('input[type!="hidden"]').removeClass("has-error");
       $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').removeClass("has-error");
     }
@@ -61,9 +53,22 @@ $('.change_tab').click(function(e){
   });
   if(!oneauthor){
     check = 0;
+    var $first_person = $('.creator').children('div.row:first').find('input[type!="hidden"]');
+    if($first_person.eq(0).hasClass('required') && !$first_person.eq(0).val()){
+      $first_person.eq(0).addClass("has-error");
+      $first_person.closest('div.input-group.mandatory').addClass("has-error");
+    }
+    if($first_person.eq(1).hasClass('required') && !$first_person.eq(1).val()){
+      $first_person.eq(0).addClass("has-error");
+      $first_person.closest('div.input-group.mandatory').addClass("has-error");
+    }
   }
+  
+  var $inputs = $('.required').filter(function() {
+    return !$(this).closest('div.creator');
+  });
 
-  $('.required').each(function(){
+  $inputs.each(function(){
     if(!$(this).val()){
       $(this).addClass('has-error');
       $(this).closest('div.input-group.mandatory').addClass("has-error");
@@ -170,11 +175,12 @@ $('.change_tab').click(function(e){
     else if(!check_license){
       $('#file_upload, #li_file_upload').addClass('active');
     }
+    e.preventDefault();
   }
-  //else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish")){
-  //  window.scrollTo(0, 0);
-  //  e.preventDefault();
-  //}
+  else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish")){
+    window.scrollTo(0, 0);
+    //e.preventDefault();
+  }
   else {
     $('.creator.has-error').removeClass('has-error');
     if($(this).attr('name') != "finalSubmit"){
