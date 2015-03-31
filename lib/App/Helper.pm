@@ -578,6 +578,21 @@ sub search_project {
     return $hits;
 }
 
+sub search_award {
+	my ($self, $p) = @_;
+	
+	my $hits;
+	
+	$hits = award->search (
+	  cql_query => $p->{q},
+	  limit => $p->{limit} ||= config->{default_page_size},
+	  facets => $p->{facets} ||= {},
+	  start => $p->{start} ||= 0,
+	);
+	
+	return $hits;
+}
+
 sub get_file_path {
 	my ($self, $pub_id) = @_;
 	my $dest_dir = sprintf("%09d", $pub_id);

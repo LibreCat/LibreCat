@@ -141,6 +141,16 @@ prefix '/myPUB/admin' => sub {
     	return to_dumper $return;
     	redirect '/myPUB/admin/project/';
     };
+    
+    get '/award' => needs role => 'super_admin' => sub {
+    	my $hits = h->search_award({q => "", limit => 1000});
+    	my $academyBag = Catmandu->store('award')->bag('academy');
+    	map {push @{$hits->{academy}}, $_ } @{$academyBag->to_array};
+    	my $awardBag = Catmandu->store('award')->bag('awards');
+    	map {push @{$hits->{preis}}, $_ } @{$awardBag->select("type", "preis")->to_array};
+    	map {push @{$hits->{auszeichnung}}, $_ } @{$awardBag->select("type", "auszeichnung")->to_array};
+    	template 'admin/award', $hits;
+    };
 
     # manage departments
     get '/department' => sub { };

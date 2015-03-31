@@ -42,6 +42,7 @@
             <!-- <li><a href="/myPUB/admin/import"><span class="glyphicon glyphicon-import"></span>Import</a></li> -->
             <li><a href="/myPUB/admin/project"><span class="glyphicon glyphicon-link"></span>Manage Projects</a></li>
             <!-- <li><a href="/myPUB/admin/journal"><span class="glyphicon glyphicon-user"></span>Manage Journals</a></li> -->
+            <li><a href="/myPUB/admin/award"><span class="glyphicon glyphicon-link"></span>Manage Awards</a></li>
           </ul>
          </li>
 	 [% END %]
