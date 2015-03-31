@@ -655,6 +655,9 @@ publicationTypes:
         department: *department
         project: *project
         thematic_area: *thematic_area
+        publication:
+          label: "Book Title"
+          mandatory: 1
         language: *language
         publisher: *publisher
         year: *year
@@ -671,9 +674,6 @@ publicationTypes:
         keyword: *keyword
         alternative_title: *alternative_title
         page: *pages
-        publication:
-          label: "Book Title"
-          mandatory: 1
         extern: *extern
         external_id: *external_id
         nasc: *nasc
@@ -703,6 +703,7 @@ publicationTypes:
         publication: &publication_jtitle
           label: "Journal Title"
           placeholder: "e.g. Nature Genetics"
+          mandatory: 1
         volume_issue_page: *volume_issue_page
         year: *year
         publication_identifier: *publication_identifier
