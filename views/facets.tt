@@ -301,12 +301,13 @@
 <h3[% IF request.path.match('marked') %] class="margin-top0"[% END %]>Display[% UNLESS request.path.match('marked') %] / Sort[% END %]</h3>
 
 [% IF user_settings AND backend %]
+[% sort_text = h.get_list('sort_text') %]
 
   [% IF !user_settings.user_sort AND user_settings.sort_eq_default %]
     <div class="text-muted">
     <strong>Sorted by:</strong>
     [% FOREACH setting IN user_settings.item('sort_backend') %]
-      [% setting %][% UNLESS loop.last %], [% END %]
+      [% sort_text.$setting %][% UNLESS loop.last %], [% END %]
     [% END %]
     </div>
   [% ELSIF !user_settings.user_sort AND !user_settings.sort_eq_default %]
@@ -314,14 +315,14 @@
     <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
     <strong>Sorted by:</strong>
     [% FOREACH setting IN user_settings.item('sort_backend') %]
-      [% setting %][% UNLESS loop.last %], [% END %]
+      [% sort_text.$setting %][% UNLESS loop.last %], [% END %]
     [% END %]
     </div>
   [% ELSIF user_settings.user_sort AND user_settings.sort_eq_default %]
     <div class="text-muted">
     <strong>Sorted by:</strong>
     [% FOREACH setting IN user_settings.item('sort_backend') %]
-      [% setting %][% UNLESS loop.last %], [% END %]
+      [% sort_text.$setting %][% UNLESS loop.last %], [% END %]
     [% END %]
     </div>
   [% ELSIF user_settings.user_sort AND !user_settings.sort_eq_default %]
@@ -329,7 +330,7 @@
     <div class="text-success">
       <strong>Sorted by:</strong>
       [% FOREACH setting IN user_settings.item('sort_backend') %]
-        [% setting %][% UNLESS loop.last %], [% END %]
+        [% sort_text.$setting %][% UNLESS loop.last %], [% END %]
       [% END %]
     </div>
     [% ELSE %]
@@ -337,7 +338,7 @@
       <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
       <strong>Sorted by:</strong>
       [% FOREACH setting IN user_settings.item('sort_backend') %]
-        [% setting %][% UNLESS loop.last %], [% END %]
+        [% sort_text.$setting %][% UNLESS loop.last %], [% END %]
       [% END %]
     </div>
     [% END %]
@@ -437,7 +438,7 @@
     <div class="facettecollapse">
     <ul id="export_[% tabmodus %][% menu %]" class="collapse">
       <li><a href="#modal_[% tabmodus %]" data-fmt="rtf" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>RTF (e.g. Word, Office)</a></li>
-      <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="bibtex" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>BibTeX</a></li>
+      <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="bibtex" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>BibTeX (e.g. Citavi)</a></li>
       <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="ris" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>RIS</a></li>
       <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="json" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>JSON</a></li>
       <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="yaml" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>YAML</a></li>

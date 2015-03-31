@@ -346,6 +346,20 @@ relations_record:
 thematic_area:
   diversity: Diversity
 
+sort_text:
+  "year.asc": "Publishing Year ascending"
+  "year.desc": "Publishing Year descending"
+  "date_updated.asc": "Date Updated ascending"
+  "date_updated.desc": "Date Updated descending"
+  "title.asc": "Title ascending"
+  "title.desc": "Title descending"
+  "author.asc": "First Author ascending"
+  "author.desc": "First Author descending"
+  "type.asc": "Publication Type ascending"
+  "type.desc": "Publication Type descending"
+  "publication.asc": "Publ./ Series/ Journal ascending"
+  "publication.desc": "Publ./ Series/ Journal descending"
+
 department:
   "BiSEd Bielefeld School of Education":
     oId: 10057
