@@ -66,6 +66,6 @@
 
 </div>
 
-<!-- END admin/account.tt -->
+<!-- END admin/project.tt -->
 
 [% INCLUDE footer.tt %]
