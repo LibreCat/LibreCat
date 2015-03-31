@@ -20,8 +20,9 @@
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">First Name</div>
             <input type="text" id="translator_first_name_0" name="translator.0.first_name" placeholder="{% fields.basic_fields.translator.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus hidden-lg hidden-md"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
         <div class="form-group col-md-6 col-xs-11">
@@ -55,8 +56,9 @@
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">First Name</div>
             <input type="text" id="translator_first_name_[% loop.index %]" name="translator.[% loop.index %].first_name" placeholder="{% fields.basic_fields.translator.first_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name | html %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon" onclick="add_field('translator');"><span class="hidden-lg hidden-md glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
         <div class="form-group col-md-6 col-xs-11">
