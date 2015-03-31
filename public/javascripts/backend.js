@@ -476,6 +476,7 @@ function add_field(name, placeholder){
 		$(this).removeClass('has-error');
 		$(this).removeAttr('autocomplete');
 		$(this).removeAttr('onfocus');
+
 		if(placeholder){
 			$(this).attr('placeholder', placeholder);
 		}
@@ -485,8 +486,11 @@ function add_field(name, placeholder){
 		if($(this).prop('tagName') == "IMG"){
 			$(this).attr('src','/images/biNotAuthorized.png');
 			$(this).attr('alt', 'Not Authorized');
+			$(this).tooltip();
 		}
 	});
+	$(blueprint).find('#revert_' + index).tooltip();
+		
 	$('#' + name).append(blueprint);
 	var abbrev;
 	switch(name) {
