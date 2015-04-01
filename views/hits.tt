@@ -96,7 +96,7 @@
 [% END %]
     <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry._id %]</span> </em>
     <div class="citation-block-div">
-    [% IF style == 'frontShort' %]
+    [% IF style == 'default' %]
 	<a href="/myPUB/record/edit/[% entry._id %]"><strong>[% entry.title %]</strong></a><br>
     [% END %]
     <a href="javascript:void(0);" onclick="window.location='[% IF backend %]/myPUB/record/edit[% ELSE %]/[% bag %][% END %]/[% entry._id %]'"

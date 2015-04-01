@@ -28,6 +28,9 @@ print Dumper strftime("%Y-%m-%dT%H:%M:%SZ", gmtime(time));
 
 $bag->each(sub {
     my $rec = $_[0];
+#    my $citation = Citation::index_citation_update($rec,0,'','default');
+#    $rec->{citation}->{'default'} = $citation->{'default'};
+#    my $result = $backup->add($rec);
     if ($missing && (!$rec->{citation} or !$rec->{citation}->{apa})) {
     		print "Adding citation for $rec->{_id}\n" if $verbose;
     		$rec->{citation} = Citation::index_citation_update($rec,0,'');

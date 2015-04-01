@@ -10,7 +10,7 @@
       <div class="col-md-2 text-muted">[% resDat.id %]</div>
       <div class="col-md-10">
 	<a href="/publication/[% resDat.id %]">[% rec.title %]</a><br />
-	[% rec.citation.frontShort %]<br />
+	[% rec.citation.default %]<br />
       </div>
     </div>
   [% END %]

@@ -32,8 +32,8 @@ sub _add_cite {
     my $title;
     my $links;
 
-    if ($self->style eq "frontShortTitle"){
-    	$cite = $pub->{citation}{'frontShort'};
+    if ($self->style eq "default"){
+    	$cite = $pub->{citation}{'default'};
     	$title = $pub->{title};
     }
     else {

@@ -51,8 +51,7 @@ styles:
   - bio1
   - ewi
   - frontiers
-  - frontShort
-  - frontShortTitle
+  - default
   - harvard1
   - ieee
   - lncs

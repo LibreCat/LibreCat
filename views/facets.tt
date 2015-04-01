@@ -395,13 +395,13 @@
   </li>
   [% END %]
   <li>
-    <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Citation Style' : 'Zitationsstil' %][% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</button>
+    <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Citation Style' : 'Zitationsstil' %][% IF style != "default" AND style != "" %]: [% style %][% ELSIF style == "default" %]: default[% END %]</button>
     <div class="facettecollapse">
     <ul id="style_[% tabmodus %][% menu %]" class="collapse">
-      [% IF qp.style AND qp.style == "frontShort" %]
+      [% IF qp.style AND qp.style == "default" %]
       <li>default</li>
       [% ELSE %]
-      <li><a href="[% h.newuri_for("$path", qp, style="frontShort") %]" rel="nofollow">default</a></li>
+      <li><a href="[% h.newuri_for("$path", qp, style="default") %]" rel="nofollow">default</a></li>
       [% END %]
       [% FOREACH dstyle IN h.get_list('styles_public') %]
         [% IF dstyle == style %]

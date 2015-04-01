@@ -17,7 +17,7 @@ document.write ('[[% n %]]');
 document.write ('</div>');
 document.write ('<div style="padding-left:4em;">');
 document.write ('<i>[% entry.publishingYear %] | [% h.display_doctypes(entry.documentType) %] | PUB-ID: [% entry.oId %]</i><br />');
-[% IF style == 'frontShort' %]
+[% IF style == 'default' %]
 [% title = entry.mainTitle.replace("'", "&apos;") %]
 document.write ('<a href="[% h.host %]/[% bag %]/[% entry.oId %]">[% title | md_simple %]</a><br />');
 [% END %]
