@@ -3,7 +3,7 @@ package App::Helper::Helpers;
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
 use Catmandu::Util qw(:is :array :human trim);
-use Catmandu::Fix qw /expand/;
+use Catmandu::Fix qw(expand);
 use Dancer qw(:syntax vars params request);
 use Sys::Hostname::Long;
 use Template;
@@ -88,7 +88,7 @@ sub extract_params {
 	$p->{start} = $params->{start} if is_natural $params->{start};
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 
-	$p->{q} = $self->string_array($params->{q});
+	$p->{q} = array_uniq( $self->string_array($params->{q}) );
 
 	my $cql = $params->{cql_query} ||= '';
 
@@ -109,7 +109,6 @@ sub extract_params {
 		push @{$p->{q}}, lc $cql;
 	}
 
-	#push @{$p->{q}}, $params->{text} if $params->{text};
 	($params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, $params->{text}) : (push @{$p->{q}}, join(" AND ",split(/ |-/,$params->{text}))) if $params->{text};
 
 	# autocomplete functionality
@@ -580,16 +579,16 @@ sub search_project {
 
 sub search_award {
 	my ($self, $p) = @_;
-	
+
 	my $hits;
-	
+
 	$hits = award->search (
 	  cql_query => $p->{q},
 	  limit => $p->{limit} ||= config->{default_page_size},
 	  facets => $p->{facets} ||= {},
 	  start => $p->{start} ||= 0,
 	);
-	
+
 	return $hits;
 }
 
