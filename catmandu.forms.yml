@@ -4,33 +4,32 @@ _prefix:
 input_path: "views/backend"
 output_path: "views/backend/forms"
 
-publicationTypeOrder:
-  left:
-    "Research Data":
-      - researchdata
-      - dara
-    Article:
-      - journalarticle
-      - bookchapter
-      - conferenceabstract
-      - conference
-      - workingpaper
-      - newspaperarticle
-      - encyclopediaarticle
-    Theses:
-      - dissertation
-      - bithesis
-  right:
-    "Independent Publication":
-      - book
-      - patent
-      - preprint
-      - report
-      - review
-    Editorialships:
-      - bookeditor
-      - journaleditor
-      - conferenceeditor
+publication_type_order:
+  tabelle_l:
+    - book
+    - bookeditor
+    - bookchapter
+    - review
+    - conferenceabstract
+    - conferenceeditor
+    - conference
+    - dissertation
+    - encyclopediaarticle
+  tabelle_r:
+    - journalarticle
+    - journaleditor
+    - newspaperarticle
+    - patent
+    - preprint
+    - report
+    - translation
+    - translationchapter
+    - workingpaper
+  tabelle_admin:
+    - bithesis
+  tabelle_rd:
+    - researchdata
+    - dara
 field_order:
   basic_fields:
     - bi_doctype
