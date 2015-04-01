@@ -160,6 +160,32 @@ article_type:
     value: letter_note
     name: "Letter / Note"
 
+gs_doc_type:
+  book: 'book'
+  bookeditor: 'book'
+  bookchapter: 'book chapter'
+  review: 'review'
+  casestudy: 'case study'
+  conferenceabstract: 'conference abstract'
+  conferenceeditor: 'conference publication'
+  conference: 'conference paper'
+  dissertation: 'thesis'
+  encyclopediaarticle: 'encyclopedia article'
+  journalarticle: 'article'
+  journaleditor: 'journal editor'
+  newspaperarticle: 'newspaper article'
+  patent: 'patent'
+  preprint: 'preprint'
+  report: 'report'
+  translation: 'translation'
+  workingpaper: 'working Paper'
+  bidissertation: 'Bi Dissertation'
+  bibachelorthesis: 'Bi BachelorThesis'
+  bimasterthesis: 'Bi MasterThesis'
+  bipostdocthesis: 'Bi PostdocThesis'
+  researchdata: 'Research Data'
+  dara: 'Da|Ra'
+
 relations_rd:
   -
     relation: "cites"

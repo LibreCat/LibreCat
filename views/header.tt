@@ -45,7 +45,8 @@
       <meta name="DC.identifier" content="[% h.shost %][% request.path %]/[% _id %]">
       [% IF abstract %][% FOREACH abstract_entry IN abstract %][% UNLESS loop.first %][% END %]<meta name="DC.description" content="[% abstract_entry.text | html %]">[% END %][% END %]
       [% FOREACH rel_entry IN entry.host %][% IF rel_entry.issn %]<meta name="DC.source.ISSN" content="[% rel_entry.issn.0 %]">[% END %][% IF rel_entry.isbn %]<meta name="DC.source.ISBN" content="[% rel_entry.isbn.0 %]">[% END %][% END %]
-      <meta name="DC.type" content="[% h.display_gs_doctypes(type) %]">
+      [% lowtype = type.lower %]
+      <meta name="DC.type" content="[% h.get_list('gs_doc_type').$lowtype %]">
       [% IF doi %]<link rel="DC.relation" href="http://doi.org/[% doi %]">[% END %]
       [% IF urn %]<link rel="DC.relation" href="http://nbn-resolving.de/[% urn %]">[% END %]
       [% IF issn %]<link rel="DC.relation" href="urn:ISSN:[% issn.0 %]">[% END %]
