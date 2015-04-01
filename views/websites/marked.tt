@@ -26,8 +26,8 @@
 
     <div class="page-header" id="banner">
 
-      <div class="breadcrumb">
-	<span class="glyphicon glyphicon-chevron-left"></span>
+      <ul class="breadcrumb">
+	<li><span class="glyphicon glyphicon-chevron-left"></span>
 	  [% IF qp.person AND qp.person != "" %]
 	  <a href="[% h.newuri_for("/person/$qp.person", qp, person="") %]">Back to person page</a>
 	  [% ELSIF qp.department AND qp.department != "" %]
@@ -40,7 +40,10 @@
 	  [% qp.delete('fmt') %]
 	  <a href="javascript:history.back()">Back to previous page</a>
 	  [% END %]
-      </div>
+	</li>
+          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">Logout</span></a>[% ELSE %]<a href="/login" title="Login (myPUB)"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a>[% END %]</li>
+          [% IF session AND session.user %]<li class="navbar-right"><a href="/myPUB" title="[% lang ? "Logged in as:" : "Angemeldet als:" %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">(myPUB)</span></span></a></li>[% END %]
+      </ul>
 
       <h1>[% IF total == 0 %]No [% END %]Marked Publications</h1>
 
