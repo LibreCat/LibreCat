@@ -134,7 +134,13 @@ get '/livecitation' => sub {
 
     my $response = Citation::index_citation_update($pub, 1, $debug, [$params->{style}]);
 
-    ($debug eq "debug") ? (return to_dumper $response) : (return $response);
+    if($debug eq "debug"){
+    	return to_dumper $response;
+    }
+    else {
+    	utf8::decode($response);
+    	template "websites/livecitation", {citation => $response};
+    }
 };
 
 1;

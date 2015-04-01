@@ -78,9 +78,9 @@ sub index_citation_update {
 	$rec_prep->{'volume'}           = "$rec->{'volume'}" if $rec->{'volume'};
 	$rec_prep->{'issue'}            = $rec->{'issue'} if $rec->{'issue'};
 	if($rec->{'page'}){
-		if($rec->{'page'} =~ /(.*) - (.*)/ or $rec->{'page'} =~ /(.*)-(.*)/){
+		if($rec->{'page'} =~ /([^- ]+) - ([^- ]+)/ or $rec->{'page'} =~ /([^- ]+)-([^- ]+)/){
 			$rec_prep->{'page-first'} = $1;
-			$rec_prep->{'page'} = $1 ."-" .$2;
+			$rec_prep->{'page'} = $1 ."–" .$2;
 		}
 		else {
 			$rec_prep->{'number-of-pages'} = $rec->{'page'};
