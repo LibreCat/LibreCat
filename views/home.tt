@@ -4,7 +4,7 @@
 [% backend = path.match('myPUB') ? 1 : 0 %]
 [% thisPerson = backend ? h.getPerson(session.personNumber) : h.getPerson(id) %]
 [% menu = "" %]
-[% IF backend AND !lang %]
+[% IF (backend AND !lang) OR path.match('person') %]
 [% lang = "en" %]
 [% END %]
 
