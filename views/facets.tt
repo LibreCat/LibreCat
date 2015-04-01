@@ -362,6 +362,20 @@
     </div>
   </li>
   [% END %]
+  [% IF !request.path.match('marked') AND total > 1 %]
+  <li>
+    <button data-toggle="collapse" data-target="#sort_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Sorting' : 'Sortierung' %]</button>
+    <div class="facettecollapse">
+    <ul id="sort_[% tabmodus %][% menu %]" class="collapse">
+      [% FOREACH s IN h.config.store.sort_options %]
+        <li><a href="#" class="sort-facet_[% tabmodus %] asc" data-val="[% s.key %]" rel="nofollow">[% s.label %] <span class="glyphicon glyphicon-arrow-up"></span></a>
+        <a href="#" class="sort-facet_[% tabmodus %] desc" data-val="[% s.key %]" rel="nofollow">
+        <span class="glyphicon glyphicon-arrow-down"></span></a></li>
+      [% END %]
+    </ul>
+    </div>
+  </li>
+  [% END %]
   <li>
     <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Citation Style' : 'Zitationsstil' %][% IF style != "default" AND style != "" %]: [% style %][% ELSIF style == "default" %]: default[% END %]</button>
     <div class="facettecollapse">
@@ -381,20 +395,6 @@
     </ul>
     </div>
   </li>
-  [% IF !request.path.match('marked') AND total > 1 %]
-  <li>
-    <button data-toggle="collapse" data-target="#sort_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Sorting' : 'Sortierung' %]</button>
-    <div class="facettecollapse">
-    <ul id="sort_[% tabmodus %][% menu %]" class="collapse">
-      [% FOREACH s IN h.config.store.sort_options %]
-        <li><a href="#" class="sort-facet_[% tabmodus %] asc" data-val="[% s.key %]" rel="nofollow">[% s.label %] <span class="glyphicon glyphicon-arrow-up"></span></a>
-        <a href="#" class="sort-facet_[% tabmodus %] desc" data-val="[% s.key %]" rel="nofollow">
-        <span class="glyphicon glyphicon-arrow-down"></span></a></li>
-      [% END %]
-    </ul>
-    </div>
-  </li>
-  [% END %]
 </ul>
 
 <h3>Export[% UNLESS backend OR request.path.match('marked') %] / [% lang ? 'Embed' : 'Einbettung' %][% END %]</h3>
