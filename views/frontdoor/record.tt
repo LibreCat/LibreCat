@@ -65,9 +65,11 @@
 
     <div[% IF _id %] class="page-header"[% END %] id="banner">
 
-      <ol class="breadcrumb">
+      <ul class="breadcrumb">
 	    <li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back to previous page</a></li>
-      </ol>
+	    <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">Logout</span></a>[% ELSE %]<a href="/login" title="Login (myPUB)"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a>[% END %]</li>
+          [% IF session AND session.user %]<li class="navbar-right"><a href="/myPUB" title="[% lang ? "Logged in as:" : "Angemeldet als:" %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">(myPUB)</span></span></a></li>[% END %]
+      </ul>
 
       <h1 itemprop="name">[% title %][% IF status != "public" AND _id %] <a class="btn btn-sm btn-success" href="/myPUB/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> Make public</a> [% END %]</h1>
 
@@ -317,7 +319,7 @@
 	<a class="label label-default total-marked" href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]">[% marked %]</a> <a href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]" rel="nofollow">Marked Publications</a>
 
 	<!-- trigger modal -->
-	<p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o"></span>Open Data PUB</a></p>
+	<p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o fw1"></span>Open Data PUB</a></p>
 
 	<!-- modal -->
 	<div id="contentnegotiation" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
