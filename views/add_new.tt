@@ -42,57 +42,25 @@
     </div>
     <div class="row">
       <!-- % INCLUDE publication_types.tt % -->
-      [% tabelle_r = [
-        'book',
-        'bookeditor',
-        'bookchapter',
-        'review',
-        'conferenceabstract',
-        'conferenceeditor',
-        'conference',
-        'dissertation',
-        'encyclopediaarticle',
-        ]
-      %]
-      [% tabelle_l = [
-        'journalarticle',
-        'journaleditor',
-        'newspaperarticle',
-        'patent',
-        'preprint',
-        'report',
-        'translation',
-        'translationchapter',
-        'workingpaper',
-        ]
-      %]
-      [% tabelle_admin = [
-        'bithesis',
-        ]
-      %]
-      [% tabelle_rd = [
-        'researchdata',
-        'dara',
-        ]
-      %]
+      
       <div class="col-sm-4">
-        [% FOREACH doctype IN tabelle_r %]
+        [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_l %]
           <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
         [% END %]
       </div>
       <div class="col-sm-4">
-        [% FOREACH doctype IN tabelle_l %]
+        [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_r %]
           <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
         [% END %]
         <br />
       </div>
       <div class="col-sm-4">
         [% IF session.role == "super_admin" %]
-          [% FOREACH doctype IN tabelle_admin %]
+          [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_admin %]
           <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
           [% END %]
         [% END %]
-        [% FOREACH doctype IN tabelle_rd %]
+        [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_rd %]
           <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
         [% END %]
       </div>

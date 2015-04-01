@@ -11,9 +11,23 @@
     <ul class="dropdown-menu" role="menu">
       <li class="disabled"><a href="#">Change Type</a></li>
       <li class="divider"></li>
-      [% FOREACH ptype IN h.config.forms.publicationTypes.keys.sort %]
+      [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_l %]
       [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
-      [% NEXT IF pubtype == "biThesis" AND session.role != "super_admin" OR pubtype == type %]
+      [% NEXT IF pubtype == type %]
+      <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
+      [% END %]
+      [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_r %]
+      [% NEXT IF pubtype == type %]
+      <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
+      [% END %]
+      [% IF session.role == "super_admin" %]
+      [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_admin %]
+      [% NEXT IF pubtype == type %]
+      <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
+      [% END %]
+      [% END %]
+      [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_rd %]
+      [% NEXT IF pubtype == type %]
       <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
       [% END %]
     </ul>

@@ -4,33 +4,32 @@ _prefix:
 input_path: "views/backend"
 output_path: "views/backend/forms"
 
-publicationTypeOrder:
-  left:
-    "Research Data":
-      - researchdata
-      - dara
-    Article:
-      - journalarticle
-      - bookchapter
-      - conferenceabstract
-      - conference
-      - workingpaper
-      - newspaperarticle
-      - encyclopediaarticle
-    Theses:
-      - dissertation
-      - bithesis
-  right:
-    "Independent Publication":
-      - book
-      - patent
-      - preprint
-      - report
-      - review
-    Editorialships:
-      - bookeditor
-      - journaleditor
-      - conferenceeditor
+publication_type_order:
+  tabelle_l:
+    - book
+    - bookeditor
+    - bookchapter
+    - review
+    - conferenceabstract
+    - conferenceeditor
+    - conference
+    - dissertation
+    - encyclopediaarticle
+  tabelle_r:
+    - journalarticle
+    - journaleditor
+    - newspaperarticle
+    - patent
+    - preprint
+    - report
+    - translation
+    - translationchapter
+    - workingpaper
+  tabelle_admin:
+    - bithesis
+  tabelle_rd:
+    - researchdata
+    - dara
 field_order:
   basic_fields:
     - bi_doctype
@@ -158,9 +157,9 @@ publicationTypes:
         doi: &doi
           label: "DOI"
           placeholder: "e.g. 10.4119/unibi/2695161"
-        title: &title
+        title:
           mandatory: 1
-          label: "Title"
+          label: "Book Title"
           placeholder: "e.g. Handbook of eBook Publishing"
         alternative_title: &alternative_title
           label: "Alternative Title"
@@ -297,7 +296,10 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi: *doi
-        title: *title
+        title:
+          mandatory: 1
+          label: "Book Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         editor_solo: &editor_solo
           first_name:
             placeholder: "First Name"
@@ -409,7 +411,10 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi: *doi
-        title: *title
+        title:
+          mandatory: 1
+          label: "Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         author: *author_translator
         editor:
           first_name:
@@ -483,7 +488,10 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi: *doi
-        title: *title
+        title:
+          mandatory: 1
+          label: "Book Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         editor_solo: *editor_solo
         corporate_editor_solo: *corporate_editor_solo
         department: *department
@@ -536,7 +544,10 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi: *doi
-        title: *title
+        title:
+          mandatory: 1
+          label: "Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         alternative_title: *alternative_title
         author: *author_translator
         editor:
@@ -592,7 +603,10 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi: *doi
-        title: *title
+        title:
+          mandatory: 1
+          label: "Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         author:
           first_name:
             placeholder: "First Name"
@@ -655,6 +669,9 @@ publicationTypes:
         department: *department
         project: *project
         thematic_area: *thematic_area
+        publication:
+          label: "Book Title"
+          mandatory: 1
         language: *language
         publisher: *publisher
         year: *year
@@ -671,9 +688,6 @@ publicationTypes:
         keyword: *keyword
         alternative_title: *alternative_title
         page: *pages
-        publication:
-          label: "Book Title"
-          mandatory: 1
         extern: *extern
         external_id: *external_id
         nasc: *nasc
@@ -693,7 +707,10 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi: *doi
-        title: *title
+        title:
+          mandatory: 1
+          label: "Article Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         alternative_title: *alternative_title
         author: *author_translator
         department: *department
@@ -703,6 +720,7 @@ publicationTypes:
         publication: &publication_jtitle
           label: "Journal Title"
           placeholder: "e.g. Nature Genetics"
+          mandatory: 1
         volume_issue_page: *volume_issue_page
         year: *year
         publication_identifier: *publication_identifier
@@ -735,7 +753,10 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi: *doi
-        title: *title
+        title:
+          mandatory: 1
+          label: "??? Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         editor_solo: *editor_solo
         corporate_editor_solo: *corporate_editor_solo
         department: *department
@@ -776,7 +797,10 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         author: *author_translator
-        title: *title
+        title:
+          mandatory: 1
+          label: "Article Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         department: *department
         project: *project
         thematic_area: *thematic_area
@@ -815,7 +839,10 @@ publicationTypes:
     fields:
       basic_fields:
         tab_name: "Basic Fields"
-        title: *title
+        title:
+          mandatory: 1
+          label: "Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         alternative_title: *alternative_title
         author:
           first_name:
@@ -878,7 +905,10 @@ publicationTypes:
     fields:
       basic_fields:
         tab_name: "Basic Fields"
-        title: *title
+        title:
+          mandatory: 1
+          label: "??? Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         author: *author_translator
         department: *department
         project: *project
@@ -912,7 +942,10 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi: *doi
-        title: *title
+        title:
+          mandatory: 1
+          label: "??? Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
@@ -951,7 +984,10 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi: *doi
-        title: *title
+        title:
+          mandatory: 1
+          label: "Article Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
@@ -995,7 +1031,10 @@ publicationTypes:
         doi:
           label: "DOI"
           readonly: 1
-        title: *title
+        title:
+          mandatory: 1
+          label: "Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         author:
           first_name:
             placeholder: "First Name"
@@ -1060,7 +1099,10 @@ publicationTypes:
         doi:
           label: "DOI"
           readonly: 1
-        title: *title
+        title:
+          mandatory: 1
+          label: "Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         author:
           first_name:
             placeholder: "First Name"
@@ -1116,11 +1158,11 @@ publicationTypes:
         doi: *doi
         title:
           mandatory: 1
-          label: "Title (Translation)"
+          label: "Book Title (Translation)"
           label_short: "Title (Trans.)"
           placeholder: "Handbuch des eBook Publishings"
         alternative_title:
-          label: "Title (Original)"
+          label: "Book Title (Original)"
           label_short: "Title (Orig)"
           placeholder: "Handbook of eBook Publishing"
         translator:
@@ -1182,11 +1224,11 @@ publicationTypes:
         doi: *doi
         title:
           mandatory: 1
-          label: "Title (Translation)"
+          label: "Chapter Title (Translation)"
           label_short: "Title (Trans.)"
           placeholder: "e.g. Handbuch des eBook Publishings"
         alternative_title:
-          label: "Title (Original)"
+          label: "Chapter Title (Original)"
           label_short: "Title (Orig)"
           placeholder: "e.g. Handbook of eBook Publishing"
         translator:
@@ -1247,7 +1289,10 @@ publicationTypes:
       basic_fields:
         tab_name: "Basic Fields"
         doi: *doi
-        title: *title
+        title:
+          mandatory: 1
+          label: "Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         alternative_title: *alternative_title
         author: *author_translator
         editor: *editor_only
@@ -1316,7 +1361,10 @@ publicationTypes:
           label: "Supervisor"
           pevz: 1
           pevz_tooltip: "Link this publication<br />to your supervisor's PEVZ account.<br />Keeping this checked<br />will make it visible on<br />their publication list."
-        title: *title
+        title:
+          mandatory: 1
+          label: "Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         language: &language_diss
           label: "Language"
           default: "eng"

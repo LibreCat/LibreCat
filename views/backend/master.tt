@@ -21,10 +21,8 @@
       </div>
       <div class="col-sm-3 text-right">
 	<button type="button" class="btn btn-xs change_mode hidden-xs margin-bottom1-2 fw7"><span class="glyphicon glyphicon-option-vertical"></span> Change to single page form</button>
-	[% IF title %]
-	  [% INCLUDE change_type_menu.tt %]
-	[% END %]
-      </div>
+	[% INCLUDE change_type_menu.tt %]
+	  </div>
     </div>
   </div>
 
