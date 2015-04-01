@@ -6,13 +6,17 @@ $(function () {
 		if (marked == 0) {
 			$.post('/mark/'+a.data('id'), function(res) {
 				$('.total-marked').text(res.total);
-				a.data('marked', 1).html('<span class="fa fa-check-square-o fa-lg"></span>');
+				a.data('marked', 1);
+				a.children('span').removeClass('fa-square-o');
+				a.children('span').addClass('fa-check-square-o');
 			}, 'json');
 		}
 		else {
 			$.post('/mark/'+a.data('id')+'?x-tunneled-method=DELETE', function(res) {
 				$('.total-marked').text(res.total);
-				a.data('marked', 0).html('<span class="fa fa-square-o fa-lg"></span>');
+				a.data('marked', 0);
+				a.children('span').removeClass('fa-check-square-o');
+				a.children('span').addClass('fa-square-o');
 			}, 'json');
 			if(a.attr('id') && /clickme_(\d{1,})/i.test(a.attr('id'))){
 				var indexes = a.attr('id').match(/clickme_\d{1,}/i);

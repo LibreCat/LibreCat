@@ -5,6 +5,7 @@
 
 <!-- BEGIN frontdoor/record.tt -->
 
+<script src="/javascripts/frontend.js"></script>
 <script type="text/javascript">
 [% INCLUDE frontdoor/javascriptShowHide.tt %]
 </script>
@@ -153,7 +154,7 @@
 	[% END %]
 
 	<div class="row">
-	  <div class="col-xs-10">
+	  <div class="col-xs-12">
 	    <!-- Pubtyp, -status und -quali -->
 	    [% IF type %]
 	    <em>[% h.display_doctypes(type) %]</em>
@@ -171,11 +172,6 @@
 	      [% IF lang.name AND bag != "data" %]
 	      |<!-- <meta itemprop="inLanguage" content="[% schema.langCode %]"> --> <em>[% lang.name %]</em>
 	      [% END %]
-	    [% END %]
-	  </div>
-	  <div class="col-xs-2">
-	    [% IF status == "public" %]
-	    <em><a class="mark" href="#" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="glyphicon glyphicon-remove"></span>Unmark[% ELSE %]<span class="glyphicon glyphicon-ok"></span>Mark[% END %]</a></em>
 	    [% END %]
 	  </div>
 	</div>
@@ -241,6 +237,10 @@
 
 	  <li class="hidden-md hidden-lg hidden-sm"><a href="#citethis">Cite This</a></li>
 	  <li class="hidden-md hidden-lg hidden-sm"><a href="#export">Export / Search</a></li>
+	  
+	  [% IF status == "public" %]
+	    <div style="text-align:right;padding-top:10px;"><a class="mark btn btn-xs padding0" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="fa fa-check-square-o fa-lg"></span> Mark/Unmark this publication[% ELSE %]<span class="fa fa-square-o fa-lg"></span> Mark/Unmark this publication[% END %]</a></div>
+	  [% END %]
 
 	</ul>
       </div>
@@ -487,33 +487,6 @@
 <script src="/javascripts/jquery.min.js"></script>
 <script src="/javascripts/bootstrap.min.js"></script>
 -->
-
-<script charset="utf-8">
-// mark
-$('a.mark').click(function(evt) {
-  evt.preventDefault();
-  var a = $(this);
-  var marked = a.data('marked');
-  if (marked == 0) {
-    $('div.unmark_all').empty().append('<a class="unmark-all" href="#"><span class="glyphicon glyphicon-remove"></span>Unmark all</a>');
-    $.post('[% h.unhost %]/mark/'+a.data('id'), function(res) {
-      $('.total-marked').text(res.total);
-      a.data('marked', 1).text('Unmark');
-    }, 'json');
-  } else {
-    $.post('[% h.unhost %]/mark/'+a.data('id')+'?x-tunneled-method=DELETE', function(res) {
-      $('.total-marked').text(res.total);
-      a.data('marked', 0).text('Mark');
-    }, 'json');
-    if(res.total != "0"){
-      $('div.unmark_all').empty().append('<a class="unmark-all" href="#"><span class="glyphicon glyphicon-remove"></span>Unmark all</a>');
-    }
-    if(res.total == "0") {
-      $('div.unmark_all').empty();
-    }
-  }
-});
-</script>
 
 <!-- END frontdoor/record.tt -->
 
