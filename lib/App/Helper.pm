@@ -368,10 +368,6 @@ sub default_facets {
 		arxiv => { terms => { field => 'arxiv', size => 1 } },
 		pmid => { terms => { field => 'pmid', size => 1 } },
 		inspire => { terms => { field => 'inspire', size => 1 } },
-		ahf => { terms => { field => 'ahf', size => 1 } },
-		scoap3 => { terms => { field => 'scoap3', size => 1 } },
-		phillister => { terms => { field => 'phillister', size => 1 } },
-		opac => { terms => { field => 'opac', size => 1 } },
 	};
 }
 
@@ -411,12 +407,6 @@ sub display_name_from_value {
 		}
 	}
 	$name;
-}
-
-sub display_gs_doctypes {
-	my $map = config->{forms}{display_gs_docs};
-	my $doctype = $map->{lc $_[1]};
-	$doctype;
 }
 
 sub host {
@@ -503,7 +493,7 @@ sub export_autocomplete_json {
 	return $json;
 }
 
-sub export_csl_json{
+sub export_csl_json {
 	my ($self, $hits) = @_;
 
 	my $spec = config->{export}->{publication}->{csl_json};
