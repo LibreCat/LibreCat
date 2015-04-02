@@ -3,7 +3,7 @@
 [% qp.delete('splat') %]
 [% thisq = h.extract_params.q %]
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
-[% style = qp.style || 'frontShort' %]
+[% style = qp.style || 'default' %]
 
 [% INCLUDE header.tt %]
 

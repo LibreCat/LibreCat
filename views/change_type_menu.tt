@@ -1,9 +1,9 @@
-
+[% l_type = type.lower %]
 <!-- BEGIN change_type_menu.tt -->
 
 <div class="dropdown">
   <div class="btn-group">
-    <button type="button" class="btn btn-xs fw6">[% type %]</button>
+    <button type="button" class="btn btn-xs fw6">[% h.config.forms.publicationTypes.$l_type.label %]</button>
     <button type="button" class="btn btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Change publication type">
       <span class="caret"></span>
       <span class="sr-only">Toggle Dropdown</span>
@@ -17,16 +17,19 @@
       <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
       [% END %]
       [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_r %]
+      [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
       [% NEXT IF pubtype == type %]
       <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
       [% END %]
       [% IF session.role == "super_admin" %]
       [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_admin %]
+      [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
       [% NEXT IF pubtype == type %]
       <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
       [% END %]
       [% END %]
       [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_rd %]
+      [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
       [% NEXT IF pubtype == type %]
       <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
       [% END %]

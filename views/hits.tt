@@ -25,21 +25,15 @@
 [% IF !backend AND total > 1 %]
 [% IF request.path.match("/person") %]
 [% all_marked = h.all_marked(request.params) %]
-  <div class="row">
-    <div class="col-md-1">
+    <p>
       [% IF all_marked %]
       <a class="btn btn-xs mark_all padding0" data-marked="1"><span class="fa fa-check-square-o fa-lg"></span> Unmark all</a>
       [% ELSE %]
       <a class="btn btn-xs mark_all padding0" data-marked="0"><span class="fa fa-square-o fa-lg"></span> Mark all</a>
       [% END %]
-    </div>
-  </div>
+    </p>
 [% ELSIF request.path.match("/marked") %]
-  <div class="row">
-    <div class="col-md-1">
-      <a class="btn btn-xs mark_all padding0" data-marked="1"><span class="fa fa-check-square-o fa-lg"></span> Unmark all</a>
-    </div>
-  </div>
+  <p><a class="btn btn-xs mark_all padding0" data-marked="1"><span class="fa fa-square-o fa-lg"></span> Unmark all</a></p>
 [% END %]
 [% END %]
 
@@ -84,8 +78,8 @@
   </div>
 [% ELSIF request.path == "/marked" OR request.path.match("/person") %]
   <div class="col-md-1">
-    [[% num - n %]] [% n = n +1 %]<br />
-    [% IF !backend AND (request.path.match("/person") OR request.path.match("/marked")) %]<a [% IF request.path == "/marked" %]id="clickme_[% n %]" [% END %]class="mark btn btn-xs padding0" data-marked="[% h.is_marked(entry._id) %]" data-id="[% entry._id %]">[% IF h.is_marked(entry._id) %]<span class="fa fa-check-square-o fa-lg"></span>[% ELSE %]<span class="fa fa-square-o fa-lg"></span>[% END %]</a>[% END %]
+    [% UNLESS request.path == "/marked" %][[% num - n %]] [% n = n +1 %]<br />[% END %]
+    [% IF !backend %]<a [% IF request.path == "/marked" %]id="clickme_[% n %]" [% END %]class="mark btn btn-xs padding0" data-marked="[% h.is_marked(entry._id) %]" data-id="[% entry._id %]">[% IF h.is_marked(entry._id) %]<span class="fa fa-check-square-o fa-lg"></span>[% ELSE %]<span class="fa fa-square-o fa-lg"></span>[% END %]</a>[% END %]
   </div>
 [% ELSE %]
 [% END %]
@@ -96,7 +90,7 @@
 [% END %]
     <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry._id %]</span> </em>
     <div class="citation-block-div">
-    [% IF style == 'frontShort' %]
+    [% IF style == 'default' %]
 	<a href="/myPUB/record/edit/[% entry._id %]"><strong>[% entry.title %]</strong></a><br>
     [% END %]
     <a href="javascript:void(0);" onclick="window.location='[% IF backend %]/myPUB/record/edit[% ELSE %]/[% bag %][% END %]/[% entry._id %]'"

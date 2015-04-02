@@ -179,19 +179,25 @@
 </ul>
 [% END %]
 
-[% IF facets.popular_science.terms.size > 0 OR facets.extern.terms.size > 0 OR facets.open_access.terms.size > 0 %]
+[% IF facets.popular_science.terms.size > 0
+   OR facets.extern.terms.size > 0 
+   OR facets.open_access.terms.size > 0 
+   OR facets.isi.terms.size > 0
+   OR facets.arxiv.terms.size > 0
+   OR facets.pmid.terms.size > 0
+   OR facets.inspire.terms.size > 0 %]
 <ul class="nav nav-tabs nav-stacked margin-top1 ul2">
   [% IF facets.popular_science.terms.size > 0 %]
   <li>
     [% FOREACH t IN facets.popular_science.terms %]
       [% NEXT IF t.term == 0 %]
       [% IF t.count < total %]
-    <a class="search-facet_[% tabmodus %][% menu %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] Popular Science</a>
+      <a class="search-facet_[% tabmodus %][% menu %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] Popular Science</a>
       [% ELSE %]
       <div class="text-success"><strong>All publications are Popular Science Publications</strong></div>
       [% END %]
     [% END %]
-    </li>
+  </li>
   [% END %]
 
   [% IF facets.extern.terms.size > 0 %]
@@ -223,7 +229,7 @@
   [% IF facets.isi.terms.size > 0
      OR facets.arxiv.terms.size > 0
      OR facets.pmid.terms.size > 0
-     OR facets.inspire.terms.size > 0%]
+     OR facets.inspire.terms.size > 0 %]
   <li>
   <button data-toggle="collapse" data-target="#extid_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'External IDs' : 'Externe IDs' %]</button>
   <div class="facettecollapse">
@@ -362,25 +368,6 @@
     </div>
   </li>
   [% END %]
-  <li>
-    <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Citation Style' : 'Zitationsstil' %][% IF style != "pub" AND style != "frontShort" AND style != "" %]: [% style %][% ELSIF style == "frontShort" %]: default[% END %]</button>
-    <div class="facettecollapse">
-    <ul id="style_[% tabmodus %][% menu %]" class="collapse">
-      [% IF qp.style AND qp.style == "frontShort" %]
-      <li>default</li>
-      [% ELSE %]
-      <li><a href="[% h.newuri_for("$path", qp, style="frontShort") %]" rel="nofollow">default</a></li>
-      [% END %]
-      [% FOREACH dstyle IN h.get_list('styles_public') %]
-        [% IF dstyle == style %]
-        <li>[% dstyle %]</li>
-        [% ELSE %]
-        <li><a href="[% h.newuri_for("$path", qp, style="$dstyle") %]" rel="nofollow">[% dstyle %]</a></li>
-        [% END %]
-      [% END %]
-    </ul>
-    </div>
-  </li>
   [% IF !request.path.match('marked') AND total > 1 %]
   <li>
     <button data-toggle="collapse" data-target="#sort_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Sorting' : 'Sortierung' %]</button>
@@ -395,6 +382,25 @@
     </div>
   </li>
   [% END %]
+  <li>
+    <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Citation Style' : 'Zitationsstil' %][% IF style != "default" AND style != "" %]: [% style %][% ELSIF style == "default" %]: default[% END %]</button>
+    <div class="facettecollapse">
+    <ul id="style_[% tabmodus %][% menu %]" class="collapse">
+      [% IF qp.style AND qp.style == "default" %]
+      <li>default</li>
+      [% ELSE %]
+      <li><a href="[% h.newuri_for("$path", qp, style="default") %]" rel="nofollow">default</a></li>
+      [% END %]
+      [% FOREACH dstyle IN h.get_list('styles_public') %]
+        [% IF dstyle == style %]
+        <li>[% dstyle %]</li>
+        [% ELSE %]
+        <li><a href="[% h.newuri_for("$path", qp, style="$dstyle") %]" rel="nofollow">[% dstyle %]</a></li>
+        [% END %]
+      [% END %]
+    </ul>
+    </div>
+  </li>
 </ul>
 
 <h3>Export[% UNLESS backend OR request.path.match('marked') %] / [% lang ? 'Embed' : 'Einbettung' %][% END %]</h3>

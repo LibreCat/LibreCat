@@ -546,7 +546,7 @@ publicationTypes:
         doi: *doi
         title:
           mandatory: 1
-          label: "Title"
+          label: "Paper Title"
           placeholder: "e.g. Handbook of eBook Publishing"
         alternative_title: *alternative_title
         author: *author_translator
@@ -755,7 +755,7 @@ publicationTypes:
         doi: *doi
         title:
           mandatory: 1
-          label: "??? Title"
+          label: "Issue Title"
           placeholder: "e.g. Handbook of eBook Publishing"
         editor_solo: *editor_solo
         corporate_editor_solo: *corporate_editor_solo
@@ -814,6 +814,7 @@ publicationTypes:
         publication:
           label: "Newspaper Title"
           placeholder: "Frankfurter Allgemeine Zeitung"
+          mandatory: 1
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
@@ -907,8 +908,12 @@ publicationTypes:
         tab_name: "Basic Fields"
         title:
           mandatory: 1
-          label: "??? Title"
+          label: "Article Title"
           placeholder: "e.g. Handbook of eBook Publishing"
+        publication: &publication_jtitle
+          label: "Journal Title"
+          placeholder: "e.g. Nature Genetics"
+          mandatory: 1
         author: *author_translator
         department: *department
         project: *project
@@ -944,7 +949,7 @@ publicationTypes:
         doi: *doi
         title:
           mandatory: 1
-          label: "??? Title"
+          label: "Title"
           placeholder: "e.g. Handbook of eBook Publishing"
         author: *author_translator
         editor: *editor_only
@@ -986,7 +991,7 @@ publicationTypes:
         doi: *doi
         title:
           mandatory: 1
-          label: "Article Title"
+          label: "Title"
           placeholder: "e.g. Handbook of eBook Publishing"
         author: *author_translator
         editor: *editor_only

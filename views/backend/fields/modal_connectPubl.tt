@@ -37,7 +37,7 @@
         <div class="col-md-12">
           <a href="#" onclick="javascript:connect([% pub.id %],"[% pub.title | replace('"', '\"') %]",[% id %])"><span class="glyphicon glyphicon-plus"></span>
           <strong>[% pub.title %]</strong></a><br />
-          [% pub.citation.frontShort %]
+          [% pub.citation.default %]
         </div>
         </div>
         <div class="row">

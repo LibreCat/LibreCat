@@ -457,7 +457,7 @@ sub export_publication {
 		my $package = $spec->{package};
 	   	my $options = $spec->{options} || {};
 
-		$options->{style} = $hits->{style} || 'frontShortTitle';
+		$options->{style} = $hits->{style} || 'default';
 	   	$options->{explinks} = params->{explinks};
 	   	my $content_type = $spec->{content_type} || mime->for_name($fmt);
 	   	my $extension = $spec->{extension} || $fmt;

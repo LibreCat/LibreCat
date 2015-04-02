@@ -87,9 +87,11 @@
 	    </a></span>
 	  </div>
 	</div>
+	[% UNLESS request.path.match("/publication") OR request.path.match("/person") OR request.path.match("/marked") %]
 	<div class="col-md-1 col-sm-1 col-md-offset-1">
           <span class="select-language"><a href="[% h.host %]/[% UNLESS bag == 'home' %][% bag %][% END %]?[% lang ? "" : "lang=en&" %][% IF qp.q %]q=[% qp.q | replace('"', '&quot;') %][% END %]">[% lang ? "Deutsch" : "English" %]</a></span>
 	</div>
+	[% END %]
       </div>
 
       <div class="row">

@@ -39,7 +39,7 @@ margin:0 0 10px 0;
 </div>
 <div style="padding-left:4em;">
   <i>[% entry.publishingYear %] | [% h.display_doctypes(entry.documentType) %] | PUB-ID: [% entry.oId %]</i><br />
-   [% IF style == 'frontShort' %]
+   [% IF style == 'default' %]
 	<a href="/[% bag %]/[% entry.oId %]" target="_top">[% entry.mainTitle | md_simple %]</a><br />
    [% END %]
    [% entry.citation.$style | md_simple %][% IF style != "apa_indent" AND style != "dgps" %]<br />[% END %]

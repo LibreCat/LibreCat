@@ -862,22 +862,22 @@ search:
     index_name: pub
     index_settings:
       analysis:
-         analyzer:
-           default:
-             type: custom
-             tokenizer: standard
-             filter: [standard, lowercase, asciifolding, stop]
-           name:
-             type: custom
-             tokenizer: keyword
-             filter: [lowercase, asciifolding]
-           tag:
-             type: custom
-             tokenizer: keyword
-             filter: [lowercase]
-           datestring:
-             type: custom
-             tokenizer: keyword
+        analyzer:
+          default:
+            type: custom
+            tokenizer: standard
+            filter: [standard, lowercase, asciifolding, stop]
+          name:
+            type: custom
+            tokenizer: keyword
+            filter: [lowercase, asciifolding]
+          tag:
+            type: custom
+            tokenizer: keyword
+            filter: [lowercase]
+          datestring:
+            type: custom
+            tokenizer: keyword
     index_mappings:
       project:
         include_in_all: false
@@ -1162,27 +1162,27 @@ default_page_size: 100
 default_searchpage_size: 10
 maximum_page_size: 1000
 pagination_options:
-    - 10
-    - 20
-    - 50
-    - 100
+  - 10
+  - 20
+  - 50
+  - 100
 sort_options:
-    - {key: year, label: "Publishing year"}
-    - {key: date_updated, label: "Date updated"}
-    - {key: title, label: "Title" }
-    - {key: author, label: "First author"}
-    - {key: type, label: "Publication type"}
-    - {key: publication, label: "Publ./ Series/ Journal"}
+  - {key: year, label: "Publishing year"}
+  - {key: date_updated, label: "Date updated"}
+  - {key: title, label: "Title" }
+  - {key: author, label: "First author"}
+  - {key: type, label: "Publication type"}
+  - {key: publication, label: "Publ./ Series/ Journal"}
 project_sort_options:
-    - {key: name, label: "Name"}
-    - {key: acronym, label: "Acronym"}
-    - {key: startyear, label: "Start Year"}
+  - {key: name, label: "Name"}
+  - {key: acronym, label: "Acronym"}
+  - {key: startyear, label: "Start Year"}
 default_sort:
   - year.desc
   - date_updated.desc
 default_sort_backend:
   - date_updated.desc
   - year.desc
-default_style: frontShort
-default_fd_style: frontShort
+default_style: 'default'
+default_fd_style: 'default'
 default_format: html

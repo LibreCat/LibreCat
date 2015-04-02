@@ -2,8 +2,8 @@ _prefix:
   citation:
 
 url: '/CiteprocPhp/CiteProc.php'
-default_style: 'frontShort'
-fd_style: 'frontShort'
+default_style: 'default'
+fd_style: 'default'
 styles:
   - ama
   - apa
@@ -11,8 +11,7 @@ styles:
   - bio1
   - ewi
   - frontiers
-  - frontShort
-  - frontShortTitle
+  - default
   - harvard1
   - ieee
   - lncs
