@@ -565,6 +565,9 @@ function enable_autocomplete(field, index){
         },
 	    close: function(){
 	    	$('input.sticky').blur();
+	    	if(field == "person_aff"){
+	    		$('#id_save_aff').submit();
+	    	}
 	    },
 	});
 }
