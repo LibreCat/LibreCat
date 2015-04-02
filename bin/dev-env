@@ -9,19 +9,23 @@ test "$(whoami)" != 'root' && (echo you are using a non-privileged account; exit
 case "$1" in
     init)
       docker run -d -p 9200:9200 -p 9300:9300 -v $PWD/data/es:/data --name elastic elasticsearch
-      docker run -d -p 27017:27017 -v $PWD/data/mongo:/data/db --name mongodb mongo
+      #docker run -d -p 27017:27017 -v $PWD/data/mongo:/data/db --name mongodb mongo
+      docker run -d -p 3306:3306 -v $PWD/data/mysql:/var/lib/mysql --name mysql-pub -e MYSQL_ROOT_PASSWORD=secret mysql:5.6
       ;;
     start)
       docker start elastic
-      docker start mongodb
+      #docker start mongodb
+      docker start mysql-pub
       ;;
     stop)
       docker stop elastic
-      docker stop mongodb
+      #docker stop mongodb
+      docker stop mysql-pub
       ;;
     destroy)
       docker rm elastic
-      docker rm mongodb
+      #docker rm mongodb
+      docker rm mysql-pub
       ;;
     *)
       echo $"Usage: $0 {init|start|stop|destroy}"
