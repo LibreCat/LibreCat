@@ -1,7 +1,7 @@
 
 # publication type
 
-split_field('AU','_;_')
+#split_field('AU','_;_')
 split_field('AF','_;_')
 split_field('BE','_;_')
 
@@ -18,8 +18,6 @@ end
 move_field('TI','title')
 replace_all('title','_;_',' ')
 
-move_field('SO','publication')
-
 #abstract
 move_field('AB','abstract.0.text')
 add_field('abstract.0.lang','eng')
@@ -30,6 +28,7 @@ split_field('DE','; ')
 move_field('DE','keyword')
 
 move_field('DI','doi')
+ove_field('SO','publication')
 move_field('LA','language.iso')
 move_field('SN','publication_identifier.issn.0')
 move_field('EI','publication_identifier.eissn.0')
