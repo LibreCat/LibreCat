@@ -19,6 +19,13 @@
   </div>
 
   <hr>
+  
+  <div class="row">
+    <h4 class="margin-top0">PUBTheses</h4>
+    <a href="/pubtheses" target="_top"><span class="fa fa-graduation-cap fa-5x"></span></a>
+  </div>
+  
+  <hr>
 
   <div class="row">
     <h4 class="margin-top0">Support [% lang ? 'Publication Services' : 'Publikationsdienste' %]</h4>

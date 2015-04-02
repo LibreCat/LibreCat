@@ -18,9 +18,9 @@
     <div id="banner">
 	<h1>
 	  [% IF lang %]
-	  Welcome at PUB
+	  Welcome at PUB[% IF bag == "pubtheses" %]Theses[% END %]
 	  [% ELSE %]
-	  Willkommen bei PUB
+	  Willkommen bei PUB[% IF bag == "pubtheses" %]Theses[% END %]
 	  [% END %]
 	</h1>
     </div>
@@ -30,6 +30,7 @@
       <p>We recommend upgrading to the latest <a href="http://windows.microsoft.com/ie" target="_blank">Internet Explorer</a>, <a href="https://chrome.google.com" target="_blank">Google Chrome</a>, or <a href="https=//mozilla.org/firefox/" target="_blank">Firefox</a>.</p>
     </div>
 
+    [% UNLESS bag == "pubtheses" %]
     <div class="row margin-top1">
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
@@ -40,7 +41,9 @@
           <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project?[% lang ? "lang=en&" : "" %][% IF thisq %]q=[% thisq.join('&q=') %][% END %]">[% lang ? 'Projects' : 'Projekte' %]</a></li>
           -->
           <li[% IF bag == 'authorlist' %] class="active"[% END %]><a href="/authorlist[% lang ? "?lang=en" : "" %]">[% lang ? "Authors" : "Autoren" %]</a></li>
+          <!--
           <li[% IF bag == 'pubtheses' %] class="active"[% END %]><a href="/pubtheses[% lang ? "?lang=en" : "" %]">PUB Theses</a></li>
+          -->
           <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' || bag == 'policy' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lang ? "About PUB" : "&Uuml;ber<span class=\"hidden-xs\"> PUB</span>" %] <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li[% IF bag == 'about' %] class="active"[% END %]><a href="/about[% lang ? "?lang=en" : "" %]">[% lang ? "Features" : "Features" %]</a></li>
@@ -56,6 +59,7 @@
         </ul>
       </div>
     </div>
+    [% END %]
 
     <div class="row">
       <div class="col-md-12 tab-content">
