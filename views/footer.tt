@@ -10,8 +10,8 @@
 <footer class="panel-footer">
   <div class="container">
     <div class="row">
-      <div class="col-md-10 col-sm-12 col-md-offset-1">
-	<div class="col-sm-7">
+      <div class="col-sm-12">
+	<div class="col-md-4 col-sm-5">
 	  <p>&copy; 2010-[% USE date %][% date.format(date.now, '%Y') %] <a href="http://www.ub.uni-bielefeld.de/[% lang ? "english/" : "" %]">[% lang ? "Bielefeld University Library" : "Universitätsbibliothek Bielefeld" %]</a></p>
 	  <ul class="list-inline">
 	    <li><a href="http://www.dini.de/dini-zertifikat/" target="_blank"><img src="/images/logo_dini_2010.png" alt="DINI-Zertifikat 2010" title="PUB ist mit dem DINI-Zertifikat 2010 ausgezeichnet" style="height:40px;"/></a></li>
@@ -20,8 +20,8 @@
 	    <li><a href="http://www.datacite.org/" target="_blank"><img src="/images/logo_datacite.png" alt="DataCite" title="PUB registriert Forschungsdaten bei DataCite" style="height:40px;"/></a></li>
 	  </ul>
 	</div>
-	<div class="col-sm-5">
-	  <ul class="list-inline">
+	<div class="col-sm-4">
+	  <ul class="list-inline margin0-sm">
 	    <li><a href="[% h.host %]/faq?lang=[% lang %]">FAQ</a></li>
 	    <li><a href="[% h.host %]/contact?lang=[% lang %]">[% lang ? "Contact" : "Kontakt" %]</a></li>
 	    <li><a href="[% h.host %]/policy?lang=[% lang %]">[% lang ? "PUB Policy" : "PUB-Leitlinien" %]</a></li>
@@ -31,6 +31,12 @@
 	    <li>[% lang ? "Built with" : "Entwickelt mit" %] <a href="http://www.librecat.org/">LibreCat<img src="/images/librecat.png" alt=""></a></li>
 	    <li>[% lang ? "and" : "und" %] <a href="https://github.com/">GitHub<span class="fa fa-github fa-2x pull-right"></span></a></li>
 	  </ul>
+	</div>
+	<div class="col-md-4 col-sm-3 text-tight">
+	  <strong>Support [% lang ? 'Publication Services' : 'Publikationsdienste' %]</strong><br>
+	  Susanne Riedel<br />
+	  [% lang ? 'Phone:' : 'Tel.:' %] 0521/106-4058<br />
+	  <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;">&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>
 	</div>
       </div>
     </div>
