@@ -2,9 +2,7 @@
 <!-- BEGIN person_dropzone.tt -->
 
 <div id="dropzone_row">
-  <div class="well">
-      <div class="dropzone" id="qaeUpload"></div>
-  </div>
+   <div class="dropzone" id="qaeUpload"></div>
 </div>
 
 <!-- END person_dropzone.tt -->
