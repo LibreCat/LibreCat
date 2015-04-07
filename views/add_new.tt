@@ -14,7 +14,7 @@
   <div class="col-md-12">
 
     <div class="row">
-      <h2>Enter a publication ID to import:</h2>
+      <h3>Enter a publication ID to import</h3>
       <div class="row">
         <form role="form" class="form-inline" action="/myPUB/record/import" method="POST">
 	      <div class="col-xs-3 col-md-2">
@@ -38,7 +38,13 @@
     </div>
 
     <div class="row">
-      <h2>Or choose a document type and fill out the empty form yourself:</h2>
+      <div class="col-md-6">
+	<h4 class="text-uppercase text-center"><strong>- or -</strong></h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3 class="margin-top0">Choose a document type and fill out the empty form yourself</h3>
     </div>
     <div class="row">
       <!-- % INCLUDE publication_types.tt % -->
@@ -52,7 +58,6 @@
         [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_r %]
           <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
         [% END %]
-        <br />
       </div>
       <div class="col-sm-4">
         [% IF session.role == "super_admin" %]
@@ -67,7 +72,13 @@
     </div>
   
     <div class="row">
-      <h2>Or drop your Open Access fulltext here:</h2>
+      <div class="col-md-6">
+	<h4 class="text-uppercase text-center"><strong>- or -</strong></h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3 class="margin-top0">Drop your Open Access fulltext here</h3>
       <div class="col-md-4">
         [% INCLUDE person_dropzone.tt %]
       </div>
