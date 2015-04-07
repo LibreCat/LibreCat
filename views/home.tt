@@ -63,12 +63,14 @@
 
       <div class="col-md-3 col-md-offset-1 col-sm-3 col-xs-12">
         [% IF backend %]
-          [% INCLUDE add_new_button.tt %]
+	<div class="well">
+	[% INCLUDE add_new_button.tt %]
           <div class="row">
-              <p class="text-center"><strong>OR</strong></p>
+              <p class="text-center text-uppercase"><strong>or</strong></p>
           </div>
           [% INCLUDE person_dropzone.tt %]
         [% END %]
+	 </div>
       </div>
 
     </div>
