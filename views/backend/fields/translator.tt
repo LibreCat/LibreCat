@@ -4,7 +4,7 @@
 <div id="authorEditorTranslator">
   <div class="row authorspan innerrow">
     <div class="col-md-2 form-group hidden-xs hidden-sm">
-      <label id="translator_first_name_0">
+      <label for="translator_first_name_0">
         {% fields.basic_fields.translator.label || fields.supplementary_fields.translator.label %}
       </label>
       {% IF fields.basic_fields.translator.mandatory %}<span class="starMandatory"></span>{% END %}
@@ -33,7 +33,6 @@
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
             <div class="input-group-addon"><span id="translator_link_pevz_0" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" style="height:20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.translator.pevz_tooltip %}" /></span></div>
-            <div class="input-group-addon"><span id="translator_revert_0" data-type="translator_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
@@ -41,7 +40,6 @@
         {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
         <script>
           $('#translator_Authorized0').tooltip();
-          $('#translator_revert_0').tooltip();
         </script>
         <input type="hidden" id="translator_id_0" name="translator.0.id" value="" />
         {% END %}
@@ -69,7 +67,6 @@
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
             <div class="input-group-addon"><span id="translator_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] style="height:20px" [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.translator.pevz_tooltip %}" /></span></div>
-            <div class="input-group-addon"><span id="translator_revert_[% loop.index %]" data-type="translator_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
@@ -77,7 +74,6 @@
         {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
         <script>
           $('#translator_Authorized[% loop.index %]').tooltip();
-          $('#translator_revert_[% loop.index %]').tooltip();
         </script>
         <input type="hidden" id="translator_id_[% loop.index %]" name="translator.[% loop.index %].id" value="[% name.id %]" />
         {% END %}
@@ -102,7 +98,6 @@
             <input type="text" id="translator_last_name_0" name="translator.0.last_name" placeholder="{% fields.basic_fields.translator.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="[% translator.0.last_name | html %]" />
             {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
             <div class="input-group-addon"><span id="translator_link_pevz_0" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" style="height:20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.translator.pevz_tooltip %}" /></span></div>
-            <div class="input-group-addon"><span id="translator_revert_0" data-type="translator_" onclick="revert_name(this);" data-toggle="tooltip" data-placement="left" title="Revert to original value"><span class="fa fa-undo"></span></span></div>
             {% ELSE %}
             <div class="input-group-addon"></div>
             {% END %}
@@ -111,7 +106,6 @@
         {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
         <script>
           $('#translator_Authorized0').tooltip();
-          $('#translator_revert_0').tooltip();
         </script>
         <input type="hidden" id="translator_id_0" name="translator.0.id" value="[% translator.0.id %]" />
         {% END %}

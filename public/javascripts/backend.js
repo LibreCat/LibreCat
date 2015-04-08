@@ -302,35 +302,25 @@ function linkPevz(element){
 			}
 		});
 	}
-}
+	else {
+		var orig_first_name = "";
+		orig_first_name = $('#' + type + 'orig_first_name_' + lineId).val();
+		var orig_last_name = "";
+		orig_last_name = $('#' + type + 'orig_last_name_' + lineId).val();
 
+		if($('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
+			// Uncheck, release input fields and change img back to gray
+			$('#' + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
+			$('#' + type + 'Authorized' + lineId).attr('alt','Not Authorized');
+			$('#' + type + 'id_' + lineId).val("");
+			$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
+		}
 
-/**
- * Revert to original input after un-checking Link to PEVZ Account
- */
-function revert_name(element){
-	var type = "";
-	type = $(element).attr('data-type');
-	//var viewport = "";
-	//viewport = $(element).attr('data-viewport');
-	var lineId = $(element).attr('id').replace(type + 'revert_','');
-	var orig_first_name = "";
-	orig_first_name = $('#' + type + 'orig_first_name_' + lineId).val();
-	var orig_last_name = "";
-	orig_last_name = $('#' + type + 'orig_last_name_' + lineId).val();
-
-	if($('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
-		// Uncheck, release input fields and change img back to gray
-		$('#' + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
-		$('#' + type + 'Authorized' + lineId).attr('alt','Not Authorized');
-		$('#' + type + 'id_' + lineId).val("");
-		$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
+		$('#' + type + 'first_name_' + lineId).val(orig_first_name);
+		$('#' + type + 'orig_first_name_' + lineId).val("");
+		$('#' + type + 'last_name_' + lineId).val(orig_last_name);
+		$('#' + type + 'orig_last_name_' + lineId).val("");
 	}
-
-	$('#' + type + 'first_name_' + lineId).val(orig_first_name);
-	$('#' + type + 'orig_first_name_' + lineId).val("");
-	$('#' + type + 'last_name_' + lineId).val(orig_last_name);
-	$('#' + type + 'orig_last_name_' + lineId).val("");
 }
 
 
