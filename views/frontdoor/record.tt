@@ -178,7 +178,7 @@
 	[% END %]
 	[% IF !fi %]
 	    <div class="img-thumbnail">
-		<p><span class="glyphicon glyphicon-ban-circle fw"></span>No full text uploaded in PUB yet</p>
+		<p class="padding-top1 padding-bottom1-2"><span class="glyphicon glyphicon-ban-circle fw"></span>No full text uploaded in PUB yet</p>
 	    </div>
 	[% END %]
       [% END %]
