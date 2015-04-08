@@ -18,9 +18,9 @@
     <div id="banner">
 	<h1>
 	  [% IF lang %]
-	  Welcome at PUB[% IF bag == "pubtheses" %]Theses[% END %]
+	  Welcome at PUB[% IF bag == "pubtheses" %] Theses[% END %]
 	  [% ELSE %]
-	  Willkommen bei PUB[% IF bag == "pubtheses" %]Theses[% END %]
+	  Willkommen bei PUB[% IF bag == "pubtheses" %] Theses[% END %]
 	  [% END %]
 	</h1>
     </div>

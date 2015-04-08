@@ -7,7 +7,7 @@
     [% IF lang %]
 
     <!-- <h2>PUB Theses</h2> -->
-    <p>PUB-Theses represents the platform at Bielefeld University where you can submit your doctoral theses or postdoctoral theses or other types of examination papers for free-of-charge publication on the internet.</p>
+    <p>PUB Theses represents the platform at Bielefeld University where you can submit your doctoral theses or postdoctoral theses or other types of examination papers for free-of-charge publication on the internet.</p>
     <div class="well">
     <a href="/publication?q=type%3Dbi*&amp;lang=en"><span class="glyphicon glyphicon-chevron-right"></span>Full List of PUB Theses Publications</a></div>
     <p>Authors upload their papers and respective descriptive meta data. The university library will store them permanently and care for worldwide visibility in search engines and databases.</p>
