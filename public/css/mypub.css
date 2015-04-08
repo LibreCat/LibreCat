@@ -5,7 +5,7 @@
 /* sticky footer */
 html,body,main{height:100%;}
 main{min-height:100%;height:auto!important;margin:0 auto -120px;}
-#push{height:140px;}
+#push{height:160px;}
 footer{height:120px;}
 
 /* top navbar */
@@ -117,6 +117,7 @@ a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 .text-muted,.text-tight{line-height:1.5;}
 .text-xtight{line-height:1.25;}
 #details .row{margin-top:6px;}
+#citethis{margin-bottom:21px;}
 #citethis .tab-content{border:1px solid #ddd;border-top:0;border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-top-right-radius:4px;}
 #citethis .tab-pane.active{padding:8px;}
 
@@ -134,7 +135,7 @@ a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 .nav-tabs.nav-stacked{border-bottom-left-radius:4px;border-bottom-right-radius:4px;}
 
 /* nav links sub menus */
-.facettecollapse{border-left:1px solid #ddd;border-right:1px solid #ddd;border-radius:4px;}
+.facettecollapse{border-left:1px solid #ddd;border-right:1px solid #ddd;border-bottom-left-radius:4px;border-bottom-right-radius:4px;margin-top:-2px;padding-top:2px;}
 .facettecollapse ul{list-style:none;padding-left:28px;}
 
 /* delete and edit icons in file upload */
