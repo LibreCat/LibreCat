@@ -20,7 +20,7 @@
   [% IF au.id %]<a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]</a><sup class="text-muted">UniBi</sup>[% ELSE %]<span itemprop="author">[% au.full_name %]</span>[% END %]
   [% IF loop.count > 11 %]
     <span id="showAut">
-      <br><a href="#" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>All</a>
+      <br><a href="#details" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>All</a>
     </span>
     </div>
   </div>
