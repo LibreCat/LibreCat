@@ -16,12 +16,18 @@
       [% NEXT IF pubtype == type %]
       <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
       [% END %]
+      [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_m %]
+      [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
+      [% NEXT IF pubtype == type %]
+      <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
+      [% END %]
       [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_r %]
       [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
       [% NEXT IF pubtype == type %]
       <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.forms.publicationTypes.$ptype.label %]</a></li>
       [% END %]
       [% IF session.role == "super_admin" %]
+      <li class="divider"></li>
       [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_admin %]
       [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
       [% NEXT IF pubtype == type %]

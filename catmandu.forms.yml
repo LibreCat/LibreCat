@@ -13,14 +13,15 @@ publication_type_order:
     - conferenceabstract
     - conferenceeditor
     - conference
+  tabelle_m:
     - dissertation
     - encyclopediaarticle
-  tabelle_r:
     - journalarticle
     - journaleditor
     - newspaperarticle
     - patent
     - preprint
+  tabelle_r:
     - report
     - translation
     - translationchapter
