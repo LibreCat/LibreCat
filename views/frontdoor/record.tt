@@ -190,6 +190,11 @@
 	    <img src="/images/bookDummy.png" style="height:120px;" class="img-thumbnail" alt="Open/Download Document">
 	  [% END %]
 	[% END %]
+	[% IF !fi %]
+	    <div class="img-thumbnail">
+		<p><span class="glyphicon glyphicon-ban-circle fw"></span>No full text uploaded in PUB yet</p>
+	    </div>
+	[% END %]
       [% END %]
       </div>
 
