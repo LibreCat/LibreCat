@@ -131,9 +131,10 @@ a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 .nav-tabs.nav-stacked>li:first-child>a,.nav-tabs.nav-stacked>li:first-child>button{border-top-right-radius:4px;border-top-left-radius:4px;}
 .nav-tabs.nav-stacked>li:last-child>a,.nav-tabs.nav-stacked>li:last-child>button{border-bottom-right-radius:4px;border-bottom-left-radius:4px;}
 .nav-tabs.nav-stacked>li>a:hover,.nav-tabs.nav-stacked>li>button:hover{z-index:2;border-color:#ddd;}
+.nav-tabs.nav-stacked{border-bottom-left-radius:4px;border-bottom-right-radius:4px;}
 
 /* nav links sub menus */
-.facettecollapse{border-left:1px solid #ddd;border-right:1px solid #ddd;}
+.facettecollapse{border-left:1px solid #ddd;border-right:1px solid #ddd;border-radius:4px;}
 .facettecollapse ul{list-style:none;padding-left:28px;}
 
 /* delete and edit icons in file upload */
