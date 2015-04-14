@@ -209,6 +209,7 @@ footer{height:240px;/*footer height x 2*/}
 }
 
 @media (min-width:768px){
+.text-sm-right{text-align:right;}
 .margin-top1{margin-top:20px!important;}
 .margin-top2{margin-top:40px!important;}
 .margin-top3{margin-top:60px!important;}
@@ -233,6 +234,7 @@ a{font-weight:bold;}
 }
 
 @media (min-width:992px){
+.text-md-right{text-align:right;}
 h1,.h1,h2,.h2,h3,.h3{margin-top:31px;}
 .uninav .dropdown-toggle{width:200px;text-transform:uppercase;}
 main{padding-top:40px;}
@@ -242,6 +244,7 @@ main{padding-top:40px;}
 }
 
 @media (min-width:1200px){
+.text-lg-right{text-align:right;}
 .uninav .dropdown-toggle{width:250px;}
 main{padding-top:50px;}
 }
