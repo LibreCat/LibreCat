@@ -7,25 +7,24 @@
 <div class="text-center margin-xs">
 
   <div class="row">
-    <h4 class="margin-top0">[% lang ? 'Open Access at<br>Bielefeld University' : 'Open Access an der<br>Universität Bielefeld' %]</h4>
-    <a href="http://oa.uni-bielefeld.de" target="_blank"><img src="/images/logo_oa.png" width="50" alt=""></a>
+    <h4 class="margin-top0"><a href="http://oa.uni-bielefeld.de">[% lang ? 'Open Access at<br>Bielefeld University' : 'Open Access an der<br>Universität Bielefeld' %]</a></h4>
+    <a href="http://oa.uni-bielefeld.de"><img src="/images/logo_oa.png" width="50" alt=""></a>
   </div>
 
   <hr>
 
   <div class="row">
-    <h4 class="margin-top0">[% lang ? 'Research Data Management' : 'Forschungsdaten&shy;management' %]</h4>
-    <a href="http://data.uni-bielefeld.de" target="_blank"><span class="fa fa-flask fa-5x"></span></a>
+    <h4 class="margin-top0"><a href="http://data.uni-bielefeld.de">[% lang ? 'Research Data Management' : 'Forschungsdaten&shy;management' %]</a></h4>
+    <a href="http://data.uni-bielefeld.de"><span class="fa fa-flask fa-5x"></span></a>
   </div>
 
   <hr>
-
+  
   <div class="row">
-    <h4 class="margin-top0">Support [% lang ? 'Publication Services' : 'Publikationsdienste' %]</h4>
-    Susanne Riedel<br />
-    [% lang ? 'Phone:' : 'Tel.:' %] 0521/106-4058<br />
-    <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;">&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;<br/>&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>
+    <h4 class="margin-top0"><a href="/pubtheses">PUBTheses</a></h4>
+    <a href="/pubtheses"><span class="fa fa-graduation-cap fa-5x"></span></a>
   </div>
+  
 </div>
 
 <!-- END websites/logo_contact.tt -->

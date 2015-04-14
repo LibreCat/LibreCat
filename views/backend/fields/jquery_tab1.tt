@@ -63,12 +63,8 @@ $('.change_tab').click(function(e){
       $first_person.closest('div.input-group.mandatory').addClass("has-error");
     }
   }
-  
-  var $inputs = $('.required').filter(function() {
-    return !$(this).closest('div.creator');
-  });
 
-  $inputs.each(function(){
+  $('.required').each(function(){
     if(!$(this).val()){
       $(this).addClass('has-error');
       $(this).closest('div.input-group.mandatory').addClass("has-error");

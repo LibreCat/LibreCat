@@ -9,7 +9,7 @@ get '/' => sub {
 };
 
 # redirect for old /luur login
-get qr{/luur/*} => sub {
+get qr{/luur/*|/luur/session} => sub {
 	redirect '/login';
 };
 

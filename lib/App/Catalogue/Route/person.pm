@@ -111,9 +111,14 @@ prefix '/myPUB/person' => sub {
 
 =cut
     post '/affiliation' => needs login => sub {
+    	
+    	my $fix = Catmandu::Fix->new(
+    	  fixes => [ 'compact_array("department")']
+    	);
 
         my $p = params;
         $p = h->nested_params($p);
+        $fix->fix($p);
         my $person = edit_person( session('personNumber') );
         $person->{department} = $p->{department};
         update_person($person);
