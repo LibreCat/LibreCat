@@ -87,20 +87,6 @@
   </div>
 [% END %]
 
-[% IF edition %]
-  <div class="row">
-    <div class="col-md-2 text-muted">Edition</div>
-    <div class="col-md-10" itemprop="bookEdition">[% edition %]</div>
-  </div>
-[% END %]
-
-[% IF page %]
-  <div class="row">
-    <div class="col-md-2 text-muted">Page</div>
-    <div class="col-md-10">[% page %]</div>
-  </div>
-[% END %]
-
 [% IF abstract %]
   <div class="row">
     <div class="col-md-2 text-muted">Abstract</div>
