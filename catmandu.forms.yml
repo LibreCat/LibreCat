@@ -265,9 +265,11 @@ publicationTypes:
         nasc: &nasc
           label: "NASC Seedstock ID"
           label_short: "NASC"
+          placeholder: "NASC IDs (multiple entries separated by semicolon, e.g. N406423 ; N412826 ; N420684)"
         genbank: &genbank
           label: "Genbank ID"
           label_short: "Genbank"
+          placeholder: "Genbank IDs (multiple entries separated by semicolon, e.g. AY323492 ; AY333421 ; AY323491)"
         article_type: &article_type
           label: "Article Type"
           label_short: "Article Type"
@@ -1563,6 +1565,7 @@ otherItems:
       mandatory: 1
     name:
       label: "Name"
+      mandatory: 1
     acronym:
       label: "Acronym"
     alternative_name:
@@ -1627,3 +1630,79 @@ otherItems:
       label: "Call Identifier"
     sc39:
       label: "SC39"
+  award:
+    award_field_order:
+      - award_type
+      - title
+      - title_en
+      - norm_title
+      - description
+      - description_en
+    preis_field_order:
+      - honoree
+      - award_id
+      - url
+      - proof
+      - year
+      - description
+      - description_en
+      - organization
+      - department
+      - einrichtung
+      - former_member
+      - uni_member
+      - other_university
+      - extern
+      - comment
+    honoree:
+      label: "Name"
+      first_name:
+        label: "First Name"
+        mandatory: 1
+      last_name:
+        label: "Last Name"
+        mandatory: 1
+      title:
+        label: "Title"
+    title:
+      label: "Title"
+      mandatory: 1
+    title_en:
+      label: "Title english"
+    norm_title:
+      label: "Normtitle"
+    description:
+      label: "Description"
+    description_en:
+      label: "Description english"
+    organization:
+      label: "Organization"
+    award_id:
+      label: "Academy or Award"
+      label_short: "Academy/Award"
+    award_type:
+      label: "Type"
+      mandatory: 1
+    proof:
+      label: "Proof"
+    url:
+      label: "URL"
+    year:
+      label: "Year"
+      placeholder: "YYYY"
+    former_member:
+      label: "Former Member"
+      placeholder: "ja | nein | emeritiert | in Rente"
+    uni_member:
+      label: "UniBi Member"
+      placeholder: "ja | nein"
+    department:
+      label: "Department"
+    einrichtung:
+      label: "wiss. Einrichtung"
+    other_university:
+      label: "Other University"
+    extern:
+      label: "Awarded while not at UniBi"
+    comment:
+      label: "Comment"
