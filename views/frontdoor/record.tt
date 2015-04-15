@@ -237,7 +237,7 @@
 
 	  <li class="hidden-md hidden-lg hidden-sm"><a href="#citethis">Cite This</a></li>
 	  <li class="hidden-md hidden-lg hidden-sm"><a href="#export">Export / Search</a></li>
-	  
+
 	  [% IF status == "public" %]
 	    <div style="text-align:right;padding-top:10px;"><a class="mark btn btn-xs padding0" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="fa fa-check-square-o fa-lg"></span> Mark/Unmark this publication[% ELSE %]<span class="fa fa-square-o fa-lg"></span> Mark/Unmark this publication[% END %]</a></div>
 	  [% END %]
@@ -361,16 +361,11 @@
 	  </div>
 	</div><!-- end modal -->
 
-	<!-- Sources -->
+    <!-- Sources -->
 	[% IF external_id %]
 
 	  [% IF external_id.isi %]
-	  <h3>Web of Science</h3>
-	  [% IF metrics.timesCited %]
-	  <a href="[% metrics.citingURL %]" target="_parent">
-	  Web of Science&reg; Times Cited: <strong class="wos-times-cited">[% metrics.timesCited %]</strong>
-	  </a></li><br>
-	  [% END %]
+	  <h3 id="wos">Web of Science</h3>
 	  <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">View record in Web of Science&reg;</a>
 
 	  [% ELSE %]
@@ -483,10 +478,14 @@
 
 </div><!-- outer border -->
 
-<!--
-<script src="/javascripts/jquery.min.js"></script>
-<script src="/javascripts/bootstrap.min.js"></script>
--->
+<script>
+$.getJSON( "/metrics/[% _id %]").done(function( data ) {
+    //console.log(data);
+    //alert("Hi, there! -- " + data.times_cited);
+    $('#wos').after('<a href="'+ data.citing_url +'" target="_parent">Web of Science&reg; Times Cited: <strong class="wos-times-cited">'+ data.times_cited +'</strong></a></li><br>');
+});
+
+</script>
 
 <!-- END frontdoor/record.tt -->
 
