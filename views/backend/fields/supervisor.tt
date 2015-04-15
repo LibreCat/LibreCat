@@ -44,6 +44,7 @@
           $('#supervisor_Authorized0').tooltip();
         </script>
         <input type="hidden" id="supervisor_id_0" name="supervisor.0.id" value="" />
+        <input type="hidden" id="supervisor_orcid_0" name="supervisor.0.orcid" value="" />
         {% END %}
       </div>
       [% ELSE %]
@@ -80,6 +81,7 @@
           $('#supervisor_Authorized[% loop.index %]').tooltip();
         </script>
         <input type="hidden" id="supervisor_id_[% loop.index %]" name="supervisor.[% loop.index %].id" value="" />
+        <input type="hidden" id="supervisor_orcid_[% loop.index %]" name="supervisor.[% loop.index %].orcid" value="" />
         {% END %}
       </div>
       [% END %]
@@ -114,6 +116,7 @@
           $('#supervisor_Authorized0').tooltip();
         </script>
         <input type="hidden" id="supervisor_id_0" name="supervisor.0.id" value="[% supervisor.0.id %]" />
+        <input type="hidden" id="supervisor_orcid_0" name="supervisor.0.orcid" value="[% supervisor.0.orcid %]" />
         {% END %}
       </div>
       {% END %}
