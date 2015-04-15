@@ -41,13 +41,13 @@ field_order:
     - corporate_editor_solo
     - department
     - project
-    - thematic_area
     - supervisor
     - applicant
     - author_secondary
     - extern
     - title
     - alternative_title
+    - article_type
     - publication
     - editor
     - corporate_editor
@@ -55,6 +55,7 @@ field_order:
     - place
     - publisher
     - year
+    - year_extern
     - publication_date
     - application_date_number
     - publication_date_number
@@ -69,9 +70,11 @@ field_order:
     - publication_identifier
     - urn
     - publication_status
+    - publication_status_language
     - email
     - abstract
     - language
+    - original_language
     - ddc
     - keyword
     - pacs_class
@@ -89,61 +92,27 @@ field_order:
     - genbank
     - popular_science
     - quality_controlled
-    - article_type
     - ubi_funded
     - message
   file_upload:
     - external_file
     - dropzone_mainDoc
+    - ddc
+    - urn
     - license
   supplementary_fields:
-    - doi
-    - title
-    - volume
-    - volume_issue_page
-    - corporate_editor
-    - department
-    - project
-    - thematic_area
-    - publisher
-    - place
-    - publication
-    - series_title_volume
-    - issue
-    - edition
     - abstract
-    - language
-    - original_language
-    - year
-    - ddc
     - keyword
-    - extern
-    - alternative_title
-    - publication_status
-    - conference.divider
-    - conference.name
-    - conference.location
-    - conference.start_date
-    - conference.end_date
-    - conference.date
-    - page
-#    - page_range
-    - publication_identifier
-    - urn
-    - ipc
-    - ipn
-    - report_number
     - pacs_class
     - msc_class
     - ccs_class
-    - external_id
-    - nasc
     - genbank
+    - nasc
+    - thematic_area
     - popular_science
-    - quality_controlled
-    - article_type
-    - ubi_funded
+    - external_id
     - message
+    - ubi_funded
   related_material:
     - related_material.record
     - related_material.rd
@@ -188,9 +157,6 @@ publicationTypes:
           label: "Project"
           placeholder: "e.g. 2nd-Generation Open Access Infrastructure for Research in Europe"
           multiple: 1
-        thematic_area: &thematic_area
-          label: "Thematic Area"
-          label_short: "Them. Area"
         place: &place
           label: "Place<br />(of publication)"
           label_short: "Place"
@@ -198,11 +164,15 @@ publicationTypes:
         publisher: &publisher
           label: "Publisher"
           placeholder: "e.g. Elsevier"
-        year: &year
-          mandatory: 1
+        year_extern: &year_extern
           label: "Publishing Year"
-          label_short: "Year"
-          placeholder: "e.g. 2015"
+          year:
+            mandatory: 1
+            label_short: "Year"
+            placeholder: "e.g. 2015"
+          extern:
+            label_short: "Extern"
+            placeholder: "Published while not employed at UniBi"
         page: &page
           label: "Number of Pages"
           placeholder: "e.g. 12"
@@ -214,15 +184,26 @@ publicationTypes:
           label_series_title: "Series Title"
         publication_identifier: &publication_identifier
           label: "Publication<br />Identifier"
-          label_short: "Publ. Id."
+          label_short: "Publication Identifier"
           multiple: 1
-        publication_status: &publication_status
-          label: "Publication Status"
-          label_short: "Publ. Status"
+        publication_status_language: &publication_status_language
+          label: "Status / Language"
+          language:
+            label: "Language"
+            label_short: "Lang"
+            mandatory: 0
+            multiple: 1
+          publication_status:
+            label: "Publication Status"
+            label_short: "Publ. Status"
       file_upload: &file_upload
         tab_name: "File Upload"
         dropzone_mainDoc:
           label: "<strong>Upload Main File(s) and Supplementary Material</strong> (max. 1000MB per file)"
+        urn:
+          label: "URN"
+        ddc:
+          label: DDC
         license:
           pub_license:
             mandatory: 1
@@ -243,43 +224,21 @@ publicationTypes:
           label2: "Abstract Language"
           placeholder: "e.g. Abstract Text"
           multiple: 1
-        language: &language
-          label: "Language"
-          default: "eng"
-          multiple: 1
         keyword: &keyword
           label: "Keywords"
           placeholder: "e.g. Keyword"
           multiple: 1
-        ddc: &ddc
-          label: DDC
-        urn: &urn
-          label: "URN"
-        extern: &extern
-          label: "External<br />Publication"
-          placeholder: "Published while not employed at Bielefeld University"
         external_id: &external_id
           label: "External Identifier"
           label_short: "Ext. Id."
           multiple: 1
-        nasc: &nasc
-          label: "NASC Seedstock ID"
-          label_short: "NASC"
-          placeholder: "NASC IDs (multiple entries separated by semicolon, e.g. N406423 ; N412826 ; N420684)"
-        genbank: &genbank
-          label: "Genbank ID"
-          label_short: "Genbank"
-          placeholder: "Genbank IDs (multiple entries separated by semicolon, e.g. AY323492 ; AY333421 ; AY323491)"
-        article_type: &article_type
-          label: "Article Type"
-          label_short: "Article Type"
         message: &message
-          label: "Admin Comments"
+          label: "Comments"
         popular_science: &popular_science
           label: "Popular Science"
-        ubi_funded: &ubi_funded
-          label: "Funding"
-          placeholder: "Funded by the 'Publikationsfonds' at Bielefeld University"
+        thematic_area: &thematic_area
+          label: "Thematic Area"
+          label_short: "Them. Area"
       related_material: &related_material
         tab_name: "Related Material"
         related_material.record:
@@ -320,32 +279,24 @@ publicationTypes:
           placeholder: "e.g. World Health Organization - Regional Office for Europe (WHO-Europe)"
         department: *department
         project: *project
-        thematic_area: *thematic_area
         publisher: *publisher
-        year: *year
+        year_extern: *year_extern
         alternative_title: *alternative_title
         place: *place
         series_title_volume: *series_title_volume
         page: *page
         publication_identifier: *publication_identifier
-        publication_status: *publication_status
+        publication_status_language: *publication_status_language
         edition: *edition
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         abstract: *abstract
-        article_type: *article_type
         keyword: *keyword
-        language: *language
-        ddc: *ddc
-        urn: *urn
-        extern: *extern
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
         message: *message
         popular_science: *popular_science
-        ubi_funded: *ubi_funded
+        thematic_area: *thematic_area
       related_material: *related_material
   bookchapter:
     label: "Book Chapter"
@@ -376,7 +327,6 @@ publicationTypes:
           placeholder: "e.g. World Health Organization - Regional Office for Europe (WHO-Europe)"
         department: *department
         project: *project
-        thematic_area: *thematic_area
         edition: *edition
         place: *place
         publisher: *publisher
@@ -387,25 +337,18 @@ publicationTypes:
         publication:
           label: "Book Title"
           mandatory: 1
-        year: *year
+        year_extern: *year_extern
         publication_identifier: *publication_identifier
-        publication_status: *publication_status
+        publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         abstract: *abstract
-        article_type: *article_type
-        ddc: *ddc
         keyword: *keyword
-        extern: *extern
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
         message: *message
         popular_science: *popular_science
-        ubi_funded: *ubi_funded
-        urn: *urn
-        language: *language
+        thematic_area: *thematic_area
       related_material: *related_material
   conferenceabstract:
     label: "Conference Abstract"
@@ -432,17 +375,16 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
-        thematic_area: *thematic_area
         alternative_title: *alternative_title
         publication:
           label: "Proceedings Title"
-        year: *year
+        year_extern: *year_extern
         place: *place
         publisher: *publisher
         series_title: &series_title
           label: "Series Title"
         volume_issue_page: &volume_issue_page
-          label: "Vol./Issue/Page"
+          label: "Vol. / Issue / Page"
           placeholder_volume: ""
           label_volume: "Volume"
           placeholder_issue: ""
@@ -450,7 +392,7 @@ publicationTypes:
           placeholder_page: "12 - 20"
           label_page: "Page"
         publication_identifier: *publication_identifier
-        publication_status: *publication_status
+        publication_status_language: *publication_status_language
         conference.divider: &conference_divider
           label: "Conference Details"
         conference.name: &conference_name
@@ -471,18 +413,10 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         keyword: *keyword
-        ddc: *ddc
-        language: *language
-        urn: *urn
         external_id: *external_id
-        article_type: *article_type
-        nasc: *nasc
-        genbank: *genbank
-        extern: *extern
-        quality_controlled: &quality_controlled
-          label: "Quality Controlled"
         message: *message
-        ubi_funded: *ubi_funded
+        thematic_area: *thematic_area
+        popular_science: *popular_science
       related_material: *related_material
   conferenceeditor:
     label: "Conference (Editor)"
@@ -499,8 +433,7 @@ publicationTypes:
         corporate_editor_solo: *corporate_editor_solo
         department: *department
         project: *project
-        thematic_area: *thematic_area
-        year: *year
+        year_extern: *year_extern
         alternative_title: *alternative_title
         place: *place
         publisher: *publisher
@@ -509,7 +442,7 @@ publicationTypes:
           label: "Issue"
         page: *page
         publication_identifier: *publication_identifier
-        publication_status: *publication_status
+        publication_status_language: *publication_status_language
         conference.divider:
           label: "Conference Details"
         conference.name:
@@ -523,22 +456,11 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         keyword: *keyword
-        ddc: *ddc
         abstract: *abstract
-        article_type: *article_type
-        language: *language
-        urn: *urn
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
-        series_title: &publication_series
-          label: "Series Title"
-          label_short: "Series Title"
-          placeholder: "e.g. Lecture Notes in Computer Science"
-        extern: *extern
-        quality_controlled: *quality_controlled
-        ubi_funded: *ubi_funded
+        popular_science: *popular_science
         message: *message
+        thematic_area: *thematic_area
       related_material: *related_material
   conference:
     label: "Conference Paper"
@@ -568,15 +490,14 @@ publicationTypes:
         publisher: *publisher
         department: *department
         project: *project
-        thematic_area: *thematic_area
         volume_issue_page: *volume_issue_page
         publication:
           label: "Proceedings Title"
         series_title: *series_title
-        year: *year
+        year_extern: *year_extern
         publication_identifier: *publication_identifier
-        publication_status: *publication_status
-        conference.divider:
+        publication_status_language: *publication_status_language
+        conference.divider: &conference_divider
           label: "Conference Details"
         conference.name: *conference_name
         conference.location: *conference_location
@@ -585,19 +506,11 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Additional Information"
         keyword: *keyword
-        ddc: *ddc
-        language: *language
         abstract: *abstract
-        article_type: *article_type
-        urn: *urn
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
-        extern: *extern
-        quality_controlled: *quality_controlled
         popular_science: *popular_science
-        ubi_funded: *ubi_funded
         message: *message
+        thematic_area: *thematic_area
       related_material: *related_material
   dissertation:
     label: "Dissertation"
@@ -629,32 +542,28 @@ publicationTypes:
           multiple: 1
           pevz: 1
           label: "Supervisor"
-        year: *year
+        year_extern: *year_extern
         alternative_title: *alternative_title
-        extern: *extern
         department: *department
         project: *project
         place: *place
-        thematic_area: *thematic_area
         page: *page
         series_title_volume: *series_title_volume
         publisher: *publisher
         publication_identifier: *publication_identifier
+        publication: &publication_series
+          label: "Series Title"
+          label_short: "Series Title"
+          placeholder: "e.g. Lecture Notes in Computer Science"
+        publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         abstract: *abstract
-        article_type: *article_type
-        ddc: *ddc
-        language: *language
         keyword: *keyword
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
-        publication: *publication_series
-        urn: *urn
         message: *message
-        ubi_funded: *ubi_funded
+        thematic_area: *thematic_area
       related_material: *related_material
   encyclopediaarticle:
     label: "Encyclopedia Article"
@@ -671,37 +580,26 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
-        thematic_area: *thematic_area
         publication:
           label: "Book Title"
           mandatory: 1
-        language: *language
         publisher: *publisher
-        year: *year
+        series_title_volume: *series_title_volume
+        place: *place
+        edition: *edition
+        year_extern: *year_extern
+        alternative_title: *alternative_title
+        page: *pages
+        publication_identifier: *publication_identifier
+        publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        series_title: *publication_series
-        place: *place
-        edition: *edition
-        publication_status: *publication_status
-        abstract: *abstract
-        article_type: *article_type
-        ddc: *ddc
         keyword: *keyword
-        alternative_title: *alternative_title
-        page: *pages
-        extern: *extern
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
         message: *message
-        volume: &volume
-          label: "Volume"
-          placeholder: "3"
-        publication_identifier: *publication_identifier
-        urn: *urn
-        ubi_funded: *ubi_funded
+        thematic_area: *thematic_area
+        popular_science: *popular_science
       related_material: *related_material
   journalarticle:
     label: "Journal Article"
@@ -718,36 +616,42 @@ publicationTypes:
         author: *author_translator
         department: *department
         project: *project
-        thematic_area: *thematic_area
         publisher: *publisher
         publication: &publication_jtitle
           label: "Journal Title"
           placeholder: "e.g. Nature Genetics"
           mandatory: 1
         volume_issue_page: *volume_issue_page
-        year: *year
+        year_extern: *year_extern
         publication_identifier: *publication_identifier
-        publication_status: *publication_status
-      file_upload: *file_upload
-      supplementary_fields:
-        tab_name: "Additional Information"
-        extern: *extern
-        abstract: *abstract
-        article_type: *article_type
-        language: *language
-        ddc: *ddc
-        keyword: *keyword
-        urn: *urn
-        popular_science: *popular_science
-        quality_controlled: *quality_controlled
-        external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
-        message: *message
-        ubi_funded: *ubi_funded
+        publication_status_language: *publication_status_language
+        article_type:
+          label: "Article Type"
+          label_short: "Article Type"
+        conference.divider: *conference_divider
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
+        abstract: *abstract
+        keyword: *keyword
+        popular_science: *popular_science
+        external_id: *external_id
+        nasc: &nasc
+          label: "NASC Seedstock ID"
+          label_short: "NASC"
+          placeholder: "NASC IDs (multiple entries separated by semicolon, e.g. N406423 ; N412826 ; N420684)"
+        genbank: &genbank
+          label: "Genbank ID"
+          label_short: "Genbank"
+          placeholder: "Genbank IDs (multiple entries separated by semicolon, e.g. AY323492 ; AY333421 ; AY323491)"
+        message: *message
+        ubi_funded:
+          label: "Funding"
+          placeholder: "APC co-financed by DFG"
+        thematic_area: *thematic_area
       related_material: *related_material
   journaleditor:
     label: "Journal (Editor)"
@@ -764,34 +668,23 @@ publicationTypes:
         corporate_editor_solo: *corporate_editor_solo
         department: *department
         project: *project
-        thematic_area: *thematic_area
         publisher: *publisher
-        year: *year
+        year_extern: *year_extern
         alternative_title: *alternative_title
         publication: *publication_jtitle
         volume_issue_page: *volume_issue_page
+        publication_status_language: *publication_status_language
+        publication_identifier: *publication_identifier
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        language: *language
         abstract: *abstract
-        article_type: *article_type
         keyword: *keyword
-        volume: *volume
-        issue: *issue
-        ddc: *ddc
-        extern: *extern
-        publication_status: *publication_status
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
         message: *message
-        publication_identifier: *publication_identifier
-        urn: *urn
         popular_science: *popular_science
-        quality_controlled: *quality_controlled
-        ubi_funded: *ubi_funded
         message: *message
+        thematic_area: *thematic_area
       related_material: *related_material
   newspaperarticle:
     label: "Newspaper Article"
@@ -806,8 +699,7 @@ publicationTypes:
           placeholder: "e.g. Handbook of eBook Publishing"
         department: *department
         project: *project
-        thematic_area: *thematic_area
-        year: *year
+        year_extern: *year_extern
         publication_date: &publication_date
           label: "Publication Date"
           placeholder: "YYYY-MM-DD"
@@ -818,24 +710,17 @@ publicationTypes:
           label: "Newspaper Title"
           placeholder: "Frankfurter Allgemeine Zeitung"
           mandatory: 1
+        alternative_title: *alternative_title
+        publication_identifier: *publication_identifier
+        publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        language: *language
-        alternative_title: *alternative_title
-        publication_identifier: *publication_identifier
-        urn: *urn
-        extern: *extern
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
-        abstract: *abstract
-        article_type: *article_type
         keyword: *keyword
-        ddc: *ddc
         popular_science: *popular_science
         message: *message
-        ubi_funded: *ubi_funded
+        thematic_area: *thematic_area
       related_material: *related_material
   patent:
     label: "Patent"
@@ -862,8 +747,7 @@ publicationTypes:
           label: "Applicant"
         department: *department
         project: *project
-        thematic_area: *thematic_area
-        year: *year
+        year_extern: *year_extern
         publisher: *publisher
         publication_date_number:
           label: "Publication Date/Number"
@@ -882,26 +766,19 @@ publicationTypes:
           label: "International Patent<br />Classification"
           label_short: "IPC"
           mandatory: 1
+        language:
+          label: "Language"
+        publication_identifier: *publication_identifier
+        page: *page
+        publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        extern: *extern
-        language: *language
-        publication_status: *publication_status
-        page: *page
-        publication:
-          label: "Published Source"
-        publication_identifier: *publication_identifier
-        urn: *urn
         abstract: *abstract
-        article_type: *article_type
         keyword: *keyword
-        ddc: *ddc
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
         message: *message
-        ubi_funded: *ubi_funded
+        thematic_area: *thematic_area
       related_material: *related_material
   preprint:
     label: "Preprint"
@@ -920,28 +797,20 @@ publicationTypes:
         author: *author_translator
         department: *department
         project: *project
-        thematic_area: *thematic_area
-        year: *year
+        year_extern: *year_extern
         publisher: *publisher
         page: *page
+        publication_status_language: *publication_status_language
+        publication_identifier: *publication_identifier
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        language: *language
-        extern: *extern
-        publication_status: *publication_status
-        publication_identifier: *publication_identifier
-        urn: *urn
         abstract: *abstract
-        article_type: *article_type
         keyword: *keyword
-        ddc: *ddc
-        work_references: *message
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
         message: *message
-        ubi_funded: *ubi_funded
+        thematic_area: *thematic_area
+        popular_science: *popular_science
       related_material: *related_material
   report:
     label: "Report"
@@ -959,31 +828,25 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
-        thematic_area: *thematic_area
         publisher: *publisher
-        year: *year
+        year_extern: *year_extern
         alternative_title: *alternative_title
         place: *place
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         report_number:
           label: "Report Number"
+        page: *page
+        publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
         abstract: *abstract
-        article_type: *article_type
         keyword: *keyword
-        ddc: *ddc
-        urn: *urn
-        language: *language
-        page: *page
-        extern: *extern
+        popular_science: *popular_science
         message: *message
-        ubi_funded: *ubi_funded
+        thematic_area: *thematic_area
       related_material: *related_material
   review:
     label: "Book Review"
@@ -1001,9 +864,8 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
-        thematic_area: *thematic_area
         publisher: *publisher
-        year: *year
+        year_extern: *year_extern
         alternative_title: *alternative_title
         place: *place
         publication:
@@ -1012,23 +874,15 @@ publicationTypes:
           label: "Journal Title"
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
-        publication_status: *publication_status
+        publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        language: *language
-        extern: *extern
-        abstract: *abstract
-        article_type: *article_type
+        popular_science: *popular_science
         keyword: *keyword
-        urn: *urn
-        ddc: *ddc
-        work_references: *message
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
         message: *message
-        ubi_funded: *ubi_funded
+        thematic_area: *thematic_area
       related_material: *related_material
   researchdata:
     label: "Research Data"
@@ -1059,7 +913,7 @@ publicationTypes:
           label: "Publisher"
           placeholder: "Publisher"
           defaultvalue: "Bielefeld University"
-        year: *year
+        year_extern: *year_extern
       file_upload:
         tab_name: "Research data upload"
         externalFiles:
@@ -1086,7 +940,6 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Supplementary fields"
         abstract: *abstract
-        ddc: *ddc
         keyword: *keyword
       related_material: &related_material_rd
         tab_name: "Related Material"
@@ -1127,7 +980,7 @@ publicationTypes:
           label: "Publisher"
           placeholder: "Publisher"
           defaultvalue: "Bielefeld University"
-        year: *year
+        year_extern: *year_extern
       file_upload:
         tab_name: "Research data upload"
         externalFiles:
@@ -1154,7 +1007,6 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Supplementary fields"
         abstract: *abstract
-        ddc: *ddc
         keyword: *keyword
       related_material: *related_material
   translation:
@@ -1194,34 +1046,30 @@ publicationTypes:
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         department: *department
         project: *project
-        thematic_area: *thematic_area
         edition: *edition
         place: *place
         publisher: *publisher
         series_title_volume: *series_title_volume
         page: *page
         publication_identifier: *publication_identifier
-        publication_status: *publication_status
-        year: *year
-      file_upload: *file_upload
-      supplementary_fields:
-        tab_name: "Additional Information"
-        extern: *extern
-        language: *language
-        urn: *urn
+        publication_status: &publication_status
+          label: "Publication Status"
+        year_extern: *year_extern
+        language: &language
+          label: "Language"
         original_language: &original_language
           label: "Language (Original)"
           label_short: "Lang. (Orig)"
           multiple: 1
+      file_upload: *file_upload
+      supplementary_fields:
+        tab_name: "Additional Information"
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
         abstract: *abstract
-        article_type: *article_type
         keyword: *keyword
-        ddc: *ddc
         message: *message
-        ubi_funded: *ubi_funded
+        thematic_area: *thematic_area
+        popular_science: *popular_science
       related_material: *related_material
   translationchapter:
     label: "Translation (Chapter)"
@@ -1260,7 +1108,6 @@ publicationTypes:
           pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
         department: *department
         project: *project
-        thematic_area: *thematic_area
         edition: *edition
         editor: *editor_only
         place: *place
@@ -1272,23 +1119,17 @@ publicationTypes:
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status: *publication_status
-        year: *year
+        year_extern: *year_extern
+        original_language: *original_language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        extern: *extern
-        language: *language
-        original_language: *language
+        popular_science: *popular_science
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
         abstract: *abstract
-        article_type: *article_type
         keyword: *keyword
-        ddc: *ddc
-        urn: *urn
         message: *message
-        ubi_funded: *ubi_funded
+        thematic_area: *thematic_area
       related_material: *related_material
   workingpaper:
     label: "Working Paper"
@@ -1307,28 +1148,21 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
-        thematic_area: *thematic_area
         place: *place
         publisher: *publisher
         series_title_volume: *series_title_volume
         page: *page
         publication_identifier: *publication_identifier
-        year: *year
+        year_extern: *year_extern
+        publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
         external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
         abstract: *abstract
-        article_type: *article_type
-        urn: *urn
-        language: *language
         keyword: *keyword
-        ddc: *ddc
-        extern: *extern
         message: *message
-        ubi_funded: *ubi_funded
+        thematic_area: *thematic_area
       related_material: *related_material
   bithesis:
     label: "Bielefeld Thesis"
@@ -1377,7 +1211,10 @@ publicationTypes:
           label: "Language"
           default: "eng"
           mandatory: 1
-        year: *year
+        year:
+         label: "Year"
+         placeholder: "YYYY"
+         mandatory: 1
         defense_date: &defense_date
           label: "Date of Defense"
           placeholder: "YYYY-MM-DD"
@@ -1391,25 +1228,12 @@ publicationTypes:
           label_short: "Place"
           placeholder: "e.g. Berlin"
           mandatory: 1
-        ddc: &ddc_diss
-          label: DDC
-          mandatory: 1
-          multiple: 1
+        alternative_title: *alternative_title
+        page: *page
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        doi: *doi
-        alternative_title: *alternative_title
-        page: *page
-        publication: *publication_series
-        publication_identifier: *publication_identifier
-        urn: *urn
-        external_id: *external_id
-        nasc: *nasc
-        genbank: *genbank
-        volume: *volume
         abstract: *abstract
-        article_type: *article_type
         keyword: *keyword
         pacs_class: &pacs
           label: "PACS Code"
@@ -1421,7 +1245,6 @@ publicationTypes:
           label: "CCS Code"
           multiple: 1
         message: *message
-        ubi_funded: *ubi_funded
       related_material: *related_material
   bidissertation:
     label: "Bielefeld Doctoral Thesis"
