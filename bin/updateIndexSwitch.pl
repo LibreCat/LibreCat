@@ -97,11 +97,3 @@ else { # $pub1_exists and $pub2_exists
 	print "Both indexes exist. Find out which one is running (curl -s -XGET 'http://localhost:9200/[alias]/_status') and delete the other (curl -s -XDELETE 'http://localhost:9200/[unused_index]').\n Then restart!\n";
 	exit;
 }
-
-
-__END__
-#my $command_1 = "$perl_version $sb_home/bin/index_publication_convert.pl";#$sb_home/bin/index_publication.pl";
-#my $command_2 = "$perl_version $sb_home/bin/index_project.pl";
-#my $command_3 = "$perl_version $sb_home/bin/index_researcher.pl";
-#my $command_4 = "$perl_version $sb_home/bin/index_award.pl";
-#my $command_5 = "$perl_version $sb_home/bin/index_department.pl";

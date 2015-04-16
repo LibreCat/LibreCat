@@ -178,7 +178,7 @@
 
       </div><!-- end left col -->
 
-      <div class="col-md-3 col-md-offset-1">
+      <div class="col-md-3 col-md-offset-1" id="thumbanail-div">
       [% IF bag != "data" %]
 	[% FOREACH fi IN mainFile %]
 	  [% thurl = h.thumbnail_url("$_id", "$fi.file_name") %]
@@ -479,12 +479,11 @@
 </div><!-- outer border -->
 
 <script>
-$.getJSON( "/metrics/[% _id %]").done(function( data ) {
-    //console.log(data);
-    //alert("Hi, there! -- " + data.times_cited);
+$.getJSON("/metrics/[% _id %]").done(function( data ) {
     $('#wos').after('<a href="'+ data.citing_url +'" target="_parent">Web of Science&reg; Times Cited: <strong class="wos-times-cited">'+ data.times_cited +'</strong></a></li><br>');
 });
 
+$.ajax()
 </script>
 
 <!-- END frontdoor/record.tt -->

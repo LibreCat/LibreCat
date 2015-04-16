@@ -13,6 +13,7 @@ use Exporter qw/import/;
 our @EXPORT = qw/new_file update_file delete_file handle_file/;
 
 my $upload_dir = h->config->{upload_dir};
+my $thumb_dir = h->config->{thumb_dir};
 
 sub _create_id {
     my $bag = h->bag->get('1');
@@ -22,10 +23,16 @@ sub _create_id {
     return $id;
 }
 
-sub _bagit {
-	my $path = shift;
-	system "./bagit.py $path";
-}
+# sub _make_thumbnail {
+#     my $path = shift;
+#
+#     my $dir = $thumb_dir ."/".$pub_id;
+#
+#     system "/bin/mkdir $dir" unless -e $dir;
+#     my $upload_path = $cfg->{uploadDir}. "/$pub_id/" . $filename;
+#
+#     system "convert -density 96 ${path}[0] $dest_file";
+# }
 
 sub handle_file {
 	my $pub = shift;
@@ -51,11 +58,11 @@ sub handle_file {
 			system "mkdir -p $dest_dir" unless -d $dest_dir;
 
 			move($filepath,$dest_dir);
-			
+
 			# remove tmp-folder
 			#my $path = path(h->config->{upload_dir}, $fi->{tempid});
 			#system "rm -r $path" if -d $path;
-			
+
 			$fi->{open_access} = $fi->{access_level} eq "open_access" ? 1 : 0;
 
 			delete $fi->{tempid} if $fi->{tempid};
@@ -84,12 +91,12 @@ sub handle_file {
 					#copy new file to previous file's folder
 					my $filepath = path(h->config->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
 					move($filepath, $dest_dir);
-					
+
 					#my $path = path(h->config->{upload_dir}, $fi->{tempid});
 					#system "rm -r $path" if -d $path;
-					
+
 					$fi->{open_access} = $fi->{access_level} eq "open_access" ? 1 : 0;
-					
+
 					delete $fi->{tempid} if $fi->{tempid};
 					delete $fi->{tempname} if $fi->{tempname};
 					delete $fi->{old_file_name} if $fi->{old_file_name};
@@ -119,10 +126,10 @@ sub handle_file {
 				system "mkdir -p $dest_dir" unless -d $dest_dir;
 				my $filepath = path(h->config->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
 				move($filepath, $dest_dir);
-				
+
 				#my $path = path(h->config->{upload_dir}, $fi->{tempid});
 				#system "rm -r $path" if -d $path;
-				
+
 				$fi->{open_access} = $fi->{access_level} eq "open_access" ? 1 : 0;
 
 				delete $fi->{tempid} if $fi->{tempid};
@@ -142,7 +149,7 @@ sub handle_file {
 			}
 		}
 	}
-	
+
 	foreach my $fi (@{$pub->{file}}){
 		my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{file_id} } 0..$#{$pub->{file_order}};
 		if(defined $index){
