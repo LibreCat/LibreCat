@@ -244,13 +244,13 @@ search:
                 '=': true
                 'exact': true
               field: '_id'
-            awardid:
+            rectype:
               op:
                 'any': true
                 'all': true
                 '=': true
                 'exact': true
-              field: 'award_id'
+              field: rec_type
             organization:
               op:
                 'any': true
