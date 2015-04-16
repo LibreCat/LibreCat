@@ -30,6 +30,12 @@ sub update_publication {
 
     if($data->{file}){
     	$data->{file} = handle_file($data);
+        map {
+            my $f = $_;
+            if ($f->{oa} == 1 && $f->{file_name} =~ /\.pdf$|\.ps$/) {
+                make_thumbnail($data->{_id}, $f->{file_name});
+            }
+        } @{$data->{file}}
     }
 
     map {

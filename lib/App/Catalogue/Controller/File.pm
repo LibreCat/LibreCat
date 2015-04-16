@@ -8,6 +8,7 @@ use Carp;
 use JSON;
 use File::Copy;
 use File::Path qw/rmtree/;
+use File::Basename;
 use Exporter qw/import/;
 
 our @EXPORT = qw/new_file update_file delete_file handle_file/;
@@ -23,16 +24,14 @@ sub _create_id {
     return $id;
 }
 
-# sub _make_thumbnail {
-#     my $path = shift;
-#
-#     my $dir = $thumb_dir ."/".$pub_id;
-#
-#     system "/bin/mkdir $dir" unless -e $dir;
-#     my $upload_path = $cfg->{uploadDir}. "/$pub_id/" . $filename;
-#
-#     system "convert -density 96 ${path}[0] $dest_file";
-# }
+sub make_thumbnail {
+    my ($id, $file_name) = @_;
+    my $file_path = join_path(h->get_file_path($id), $file_name);
+    my $thumbnail = join_path(dirname($file_path), "thumbnail.png");
+    unless (-e $thumbnail) {
+        system "convert -density 96 ${file_path}[0] $thumbnail";
+    }
+}
 
 sub handle_file {
 	my $pub = shift;
@@ -181,14 +180,6 @@ sub check_request_a_copy {
 	}
 }
 
-# this sub should be called from the sub 'update_publication',
-# if publication has a file attached
-#sub update_file {
-#	my $pub = shift;
-#	my $dir = $upload_dir ."/$pub->{_id}";
-#	mkdir $dir unless -e $dir || croak "Can't create directory";
-#
-#}
 
 # this sub should be called from the sub 'delete_publication',
 # if publication has a file attached
