@@ -6,48 +6,26 @@ use Dancer qw/:syntax/;
 use Dancer::Request;
 use App::Helper;
 use Citation;
-use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::Ajax;
-
-Dancer::Plugin::Auth::Tiny->extend(
-    role => sub {
-        my ($role, $coderef) = @_;
-          return sub {
-            if ( session->{role} && $role eq session->{role} ) {
-                goto $coderef;
-            }
-            else {
-                redirect '/access_denied';
-            }
-          }
-        }
-);
 
 prefix '/myPUB' => sub {
 
 	get '/search_researcher' => sub {
-
 		my $q;
 		push @$q, params->{'ftext'};
-		my $hits = h->search_researcher({q => $q});
 
-		to_json($hits->{hits});
-	};
+		to_json h->search_researcher({q => $q})->{hits};
+    };
 
 	get '/authority_user/:id' => sub {
-		my $person = h->getPerson(params->{id});
-		to_json $person;
+		to_json h->getPerson(params->{id});
 	};
 
 	get '/autocomplete_alias/:alias' => sub {
 		my $term = params->{'alias'} || "";
 		my $alias = h->authority_user->select("alias", $term)->to_array;
 
-		if ($alias->[0]) {
-			return to_json({ok => 0});
-		} else {
-			return to_json({ok => 1});
-		}
+        return to_json {ok => $alias->[0] ? 0 : 1};
 	};
 
 	get '/autocomplete_hierarchy' => sub {
@@ -149,5 +127,17 @@ ajax '/metrics/:id' => sub {
         citing_url => $metrics->{citing_url},
     };
 };
+
+ajax '/thumbnail/:id' => sub {
+    my $path = h->get_file_path($id);
+    my $thumb = join_path($path, 'thumbnail.png');
+    if ( -e $thumb ) {
+        send_file $thumb,
+            system_path  => 1,
+            content_type => 'image/png';
+    } else {
+        status 'not_found';
+    }
+}
 
 1;

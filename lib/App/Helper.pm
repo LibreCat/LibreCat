@@ -2,7 +2,7 @@ package App::Helper::Helpers;
 
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
-use Catmandu::Util qw(:is :array :human trim);
+use Catmandu::Util qw(:is :array :human :io trim);
 use Catmandu::Fix qw(expand);
 use Dancer qw(:syntax vars params request);
 use Sys::Hostname::Long;
@@ -582,18 +582,15 @@ sub search_award {
 }
 
 sub get_file_path {
-	my ($self, $pub_id) = @_;
-	my $dest_dir = sprintf("%09d", $pub_id);
-	my @dest_dir_parts = unpack 'A3' x 3, $dest_dir;
-	$dest_dir = join '/', config->{upload_dir}, @dest_dir_parts;
-	return $dest_dir;
+	my ($self, $id) = @_;
+
+	$id = sprintf("%09d", $id);
+	segmented_path($id, segment_size => 3, base_path => $self->config->{upload_dir});
 }
 
 sub uri_for {
     my ($self, $path, $uri_params) = @_;
     $uri_params ||= {};
-    #$uri_params = {%{$self->embed_params}, %$uri_params};
-    #my $uri = $self->host . $path . "?";
     my $uri = $path . "?";
     foreach (keys %{ $uri_params }) {
 		$uri .= "$_=$uri_params->{$_}&";
@@ -669,19 +666,6 @@ sub newuri_for {
 	$uri;
 }
 
-sub embed_params {
-	my ($self) = @_;
-    vars->{embed_params} ||= do {
-    	my $p = {};
-        for my $key (qw(embed hide_pagination hide_info hide_options)) {
-            $p->{$key} = 1 if params->{$key};
-        }
-        for my $key (qw(style)) {
-            $p->{$key} = params->{$key} if is_string(params->{$key});
-        }
-        $p;
-    };
-}
 
 package App::Helper;
 
