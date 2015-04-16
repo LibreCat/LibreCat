@@ -82,7 +82,7 @@
 
     <div class="row margin-bottom1">
 
-      <div class="col-md-8"><!-- begin left col -->
+      <div class="col-sm-8"><!-- begin left col -->
 
 	[% IF citation %]
 	<div class="row">
@@ -131,20 +131,6 @@
 	  <div class="col-xs-10"><a itemprop="url" href="http://doi.org/[% doi %]" title="[% doi %]">[% doi %]</a></div>
 	</div>
 	[% END %]
-	[% FOREACH ln IN link %]
-	[% IF loop.first %]
-	<div class="row">
-	  <div class="col-xs-2 text-muted">URL</div>
-	  <div class="col-xs-10">
-	[% ELSE %]
-	    <br>
-	[% END %]
-	    <a itemprop="url" href="[% ln.url %]" title="[% ln.url %]">[% ln.url %]</a>
-	[% IF loop.last %]
-	  </div>
-	</div>
-	[% END %]
-	[% END %]
 
 	[% IF urn %]
 	<div class="row">
@@ -164,10 +150,6 @@
 	    | <em>[% h.display_name_from_value("publication_status", publication_status) %]</em>
 	    [% END %]
 
-	    [% IF quality_controlled == '1' %]
-	    | <em>Quality Controlled</em>
-	    [% END %]
-
 	    [% FOREACH lang IN language %]
 	      [% IF lang.name AND bag != "data" %]
 	      |<!-- <meta itemprop="inLanguage" content="[% schema.langCode %]"> --> <em>[% lang.name %]</em>
@@ -178,7 +160,7 @@
 
       </div><!-- end left col -->
 
-      <div class="col-md-3 col-md-offset-1" id="thumbanail-div">
+      <div class="col-sm-3 col-sm-offset-1 text-sm-right">
       [% IF bag != "data" %]
 	[% FOREACH fi IN mainFile %]
 	  [% thurl = h.thumbnail_url("$_id", "$fi.file_name") %]
@@ -189,6 +171,12 @@
 	  [% IF loop.last AND thurl == "no_thumb" %]
 	    <img src="/images/bookDummy.png" style="height:120px;" class="img-thumbnail" alt="Open/Download Document">
 	  [% END %]
+	[% END %]
+	[% IF !fi %]
+	    <div class="img-thumbnail text-center">
+		<p><span class="fa fa-ban fa-3x fw"></span></p>
+		<p>No full text uploaded in PUB yet</p>
+	    </div>
 	[% END %]
       [% END %]
       </div>
@@ -239,7 +227,7 @@
 	  <li class="hidden-md hidden-lg hidden-sm"><a href="#export">Export / Search</a></li>
 
 	  [% IF status == "public" %]
-	    <div style="text-align:right;padding-top:10px;"><a class="mark btn btn-xs padding0" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="fa fa-check-square-o fa-lg"></span> Mark/Unmark this publication[% ELSE %]<span class="fa fa-square-o fa-lg"></span> Mark/Unmark this publication[% END %]</a></div>
+	  <li class="navbar-right"><a class="mark btn btn-xs" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="fa fa-check-square-o fa-lg"></span> Unmark publication[% ELSE %]<span class="fa fa-square-o fa-lg"></span> Mark/Unmark publication for export[% END %]</a></li>
 	  [% END %]
 
 	</ul>
@@ -482,8 +470,6 @@
 $.getJSON("/metrics/[% _id %]").done(function( data ) {
     $('#wos').after('<a href="'+ data.citing_url +'" target="_parent">Web of Science&reg; Times Cited: <strong class="wos-times-cited">'+ data.times_cited +'</strong></a></li><br>');
 });
-
-$.ajax()
 </script>
 
 <!-- END frontdoor/record.tt -->

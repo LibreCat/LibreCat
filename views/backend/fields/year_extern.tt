@@ -1,0 +1,32 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_year">
+      {% fields.basic_fields.year_extern.label %}{% fields.supplementary_fields.year_extern.label %}
+    </label>
+    {% IF fields.basic_fields.year_extern.mandatory OR fields.supplementary_fields.year_extern.mandatory %}<span class="starMandatory"></span>{% END %}
+  </div>
+  <div class="col-md-3">
+    <div class="row innerrow">
+      <div class="col-md-10 col-xs-11 form-group">
+        <div class="input-group sticky{% IF fields.basic_fields.year_extern.year.mandatory OR fields.supplementary_fields.year_extern.year.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.year_extern.year.label_short || fields.basic_fields.year_extern.year.label %}{% fields.supplementary_fields.year_extern.year.label_short || fields.supplementary_fields.year_extern.year.label %}</div>
+          <input type="text" name="year" id="id_year" value="[% year | html %]" maxlength="4" placeholder="{% fields.basic_fields.year_extern.year.placeholder %}{% fields.supplementary_fields.year_extern.year.placeholder %}" class="sticky form-control{% IF fields.basic_fields.year_extern.year.mandatory OR fields.supplementary_fields.year_extern.year.mandatory %} required{% END %}"{% IF fields.basic_fields.year_extern.year.readonly OR fields.supplementary_fields.year_extern.year.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-7">
+    <div class="row innerrow">
+      <div class="col-md-10 col-xs-11">
+        <div class="checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="extern" id="id_extern" value="extern"[% IF extern %] checked="checked"[% END %]>
+            {% fields.basic_fields.year_extern.extern.placeholder %}{% fields.supplementary_fields.year_extern.extern.placeholder %}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

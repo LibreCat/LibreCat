@@ -47,3 +47,6 @@ $tta->process( "master_account.tt", $otherItems->{user_account}, "edit_account.t
 
 print "Generating edit_project page\n";
 $tta->process( "master_project.tt", $otherItems->{project}, "edit_project.tt" ) || die $tta->error(), "\n";
+
+print "Generating edit_award page\n";
+$tta->process( "master_award.tt", $otherItems->{award}, "edit_award.tt" ) || die $tta->error(), "\n";

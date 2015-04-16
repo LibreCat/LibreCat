@@ -18,9 +18,9 @@
       <div class="form-group col-md-11">
         <div class="input-group sticky">
           <input type="text" onfocus="enable_autocomplete('person_aff',0);" class="sticky form-control" id="person_aff_autocomplete_0" value="" />
-          <div class="input-group-addon"><span onclick="selectAffiliation(this);" class="department" id="person_aff_select_0">Select</span></div>
-	      <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('person_affiliation');"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          <div class="input-group-addon" class="department"><span id="person_aff_select_0" onclick="selectAffiliation(this);">Select</span></div>
+	  <div class="input-group-addon" onclick="add_field('person_affiliation');"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
     </div>
@@ -33,9 +33,9 @@
         <div class="form-group col-md-11">
           <div class="input-group sticky">
             <input type="text" onfocus="enable_autocomplete('person_aff',[% loop.index %]);" class="sticky form-control" id="person_aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
-            <div class="input-group-addon"><span onclick="selectAffiliation(this);" class="department" id="person_aff_select_[% loop.index %]">Select</span></div>
-	        <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('person_affiliation');"></span></div>
-            <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);submit_form('id_save_aff');"></span></div>
+            <div class="input-group-addon"><span class="department" id="person_aff_select_[% loop.index %]" onclick="selectAffiliation(this);">Select</span></div>
+	    <div class="input-group-addon" onclick="add_field('person_affiliation');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon" onclick="remove_field(this);submit_form('id_save_aff');"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </div>
       </div>

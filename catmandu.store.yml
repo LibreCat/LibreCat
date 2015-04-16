@@ -246,7 +246,7 @@ search:
                 'all': true
                 '=': true
                 'exact': true
-              field: ['awardId', 'academyId']
+              field: 'award_id'
             organization:
               op:
                 'any': true
@@ -254,7 +254,7 @@ search:
                 '=': true
                 '<>': true
               field: 'organization'
-            publishingyear:
+            year:
               op:
                 'any': true
                 'all': true
@@ -265,7 +265,7 @@ search:
                 '>=': true
                 '<=': true
                 'exact': true
-              field: 'publishingYear'
+              field: 'year'
               sort: 'true'
             honoree:
               op:
@@ -274,28 +274,28 @@ search:
                 '=': true
                 '<>': true
                 'exact': true
-              field: 'honoree.name.fullName'
+              field: 'honoree.full_name'
             department:
               op:
                 'any': true
                 'all': true
                 '=': true
                 '<>': true
-              field: ['department.name', 'department.organizationNumber']
+              field: ['department.name', 'department.id']
             einrichtung:
               op:
                 'any': true
                 'all': true
                 '=': true
                 '<>': true
-              field: ['einrichtung.name', 'einrichtung.organizationNumber']
-            otherUniversity:
+              field: ['einrichtung.name', 'einrichtung.id']
+            otheruniversity:
               op:
                 'any': true
                 'all': true
                 '=': true
                 '<>': true
-              field: 'otherUniv'
+              field: 'other_university'
             comment:
               op:
                 'any': true
@@ -941,31 +941,23 @@ search:
             properties:
               title: {type: string, include_in_all: true}
               _id: {type: string}
-          awardId: {type: string, analyzer: tag}
-          academyData:
-            properties:
-              title: {type: string, include_in_all: true}
-              _id: {type: string}
-          academyId: {type: string, analyzer: tag}
+          award_id: {type: string, analyzer: tag}
           organization: {type: string, include_in_all: true}
           year: {type: string, analyzer: tag, include_in_all: true}
           honoree:
             properties:
-              name:
-                properties:
-                  fullName:
-                    type: multi_field
-                    fields:
-                      fullName: {type: string, include_in_all: true}
-                      exact: {type: string, analyzer: tag}
-                  givenName: {type: string}
-                  surname: {type: string, include_in_all: true}
-                  personTitle: {type: string, index: not_analyzed}
-              personNumber: {type: integer, analyzer: tag}
+              full_name:
+                type: multi_field
+                fields:
+                  full_name: {type: string, include_in_all: true}
+                  exact: {type: string, analyzer: tag}
+              first_name: {type: string}
+              last_name: {type: string, include_in_all: true}
+              title: {type: string, index: not_analyzed}
+              id: {type: integer, analyzer: tag}
           department:
             properties:
-              organizationNumber: {type: string, analyzer: tag}
-              sbcatId: {type: integer, analyzer: tag}
+              id: {type: string, analyzer: tag}
               name:
                 type: multi_field
                 fields:
@@ -973,17 +965,16 @@ search:
                   exact: {type: string, analyzer: tag}
           einrichtung:
             properties:
-              organizationNumber: {type: string, analyzer: tag}
-              sbcatId: {type: integer, analyzer: tag}
+              id: {type: string, analyzer: tag}
               name:
                 type: multi_field
                 fields:
                   name: {type: string, include_in_all: true}
                   exact: {type: string, analyzer: tag}
-          uniBiMember: {type: string, analyzer: tag}
-          otherUniv: {type: string}
+          uni_member: {type: integer, analyzer: tag}
+          other_university: {type: string}
           proof: {type: string, index: not_analyzed}
-          awardedWhileNotUnibi: {type: string, analyzer: tag}
+          extern: {type: integer, analyzer: tag}
           url: {type: string, index: not_analyzed}
           comment: {type: string}
 

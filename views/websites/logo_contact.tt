@@ -7,22 +7,27 @@
 <div class="text-center margin-xs">
 
   <div class="row">
-    <h4 class="margin-top0"><a href="http://oa.uni-bielefeld.de">[% lang ? 'Open Access at<br>Bielefeld University' : 'Open Access an der<br>Universität Bielefeld' %]</a></h4>
-    <a href="http://oa.uni-bielefeld.de"><img src="/images/logo_oa.png" width="50" alt=""></a>
+    <h4 class="margin-top0"><a href="http://oa.uni-bielefeld.de/[% lang ? "en" : "" %]">[% lang ? 'Open Access at<br>Bielefeld University' : 'Open Access an der<br>Universität Bielefeld' %]</a></h4>
+    <a href="http://oa.uni-bielefeld.de/[% lang ? "en" : "" %]"><img src="/images/logo_oa.png" width="50" alt=""></a>
   </div>
 
   <hr>
 
   <div class="row">
-    <h4 class="margin-top0"><a href="http://data.uni-bielefeld.de">[% lang ? 'Research Data Management' : 'Forschungsdaten&shy;management' %]</a></h4>
-    <a href="http://data.uni-bielefeld.de"><span class="fa fa-flask fa-5x"></span></a>
+    <h4 class="margin-top0"><a href="http://data.uni-bielefeld.de/[% lang ? "en" : "" %]">[% lang ? 'Research Data Management' : 'Forschungsdaten&shy;management' %]</a></h4>
+    <a href="http://data.uni-bielefeld.de/[% lang ? "en" : "" %]"><span class="fa fa-flask fa-5x"></span></a>
   </div>
 
   <hr>
   
   <div class="row">
-    <h4 class="margin-top0"><a href="/pubtheses">PUBTheses</a></h4>
-    <a href="/pubtheses"><span class="fa fa-graduation-cap fa-5x"></span></a>
+    [% IF bag == 'pubtheses' %]
+    <h4 class="margin-top0"><a href="/pub[% lang ? "?lang=en" : "" %]">PUB</a></h4>
+    <a href="/[% lang ? "?lang=en" : "" %]"><img src="/images/publogo.gif" class="img-thumbnail" style="width:200px;"></a>
+    [% ELSE %]
+    <h4 class="margin-top0"><a href="/pubtheses[% lang ? "?lang=en" : "" %]">PUB Theses</a></h4>
+    <a href="/pubtheses[% lang ? "?lang=en" : "" %]"><span class="fa fa-graduation-cap fa-5x"></span></a>
+    [% END %]
   </div>
   
 </div>

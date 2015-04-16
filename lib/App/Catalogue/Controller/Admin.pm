@@ -182,7 +182,7 @@ sub update_project {
     return "Error: No _id specified" unless $data->{_id};
 
     my $new = h->nested_params($data);
-    return $new;
+    #return $new;
     my $bag = Catmandu->store('project')->bag;
     $bag->add($new);
 

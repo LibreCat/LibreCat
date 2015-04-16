@@ -39,6 +39,7 @@
           $('#editor_Authorized0').tooltip();
         </script>
         <input type="hidden" id="editor_id_0" name="editor.0.id" value="" />
+        <input type="hidden" id="editor_orcid_0" name="editor.0.orcid" value="" />
         {% END %}
       </div>
     [% ELSE %]
@@ -72,7 +73,8 @@
         <script>
             $('#editor_Authorized[% loop.index %]').tooltip();
           </script>
-        <input type="hidden" id="editor_id_[% loop.index %]" value="[% name.id %]" />
+        <input type="hidden" id="editor_id_[% loop.index %]" name="editor.[% loop.index %].id" value="[% name.id %]" />
+        <input type="hidden" id="editor_orcid_[% loop.index %]" name="editor.[% loop.index %].orcid" value="[% name.orcid %]" />
         {% END %}
       </div>
     [% END %]
@@ -105,6 +107,7 @@
         $('#editor_Authorized0').tooltip();
       </script>
       <input type="hidden" id="editor_id_0" name="editor.0.id" value="[% editor.0.id %]" />
+      <input type="hidden" id="editor_orcid_0" name="editor.0.orcid" value="[% editor.0.orcid %]" />
       {% END %}
     </div>
     {% END %}

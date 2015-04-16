@@ -1,5 +1,5 @@
 function ReduceAuthors (){
-  document.getElementById('showAut').innerHTML= '<br><a href="#" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>All</a>' ;
+  document.getElementById('showAut').innerHTML= '<br><a href="#details" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>All</a>' ;
 }
 
 function ShowAuthors (){
@@ -9,7 +9,7 @@ function ShowAuthors (){
     str +=  " ; [% IF au.id %]<a itemprop='author' href='/person/[% au.id %]'>[% au.full_name %]</a><sup class='muted'>UniBi</sup>[% ELSE %]<span itemprop='author'>[% au.full_name %]</span>[% END %]" ; 
     [% END %]
   [% END %]
-  str += "<br><a href='#' onclick='ReduceAuthors();'><span class='glyphicon glyphicon-minus fw'></span>Less</a>" ;
+  str += "<br><a href='#details' onclick='ReduceAuthors();'><span class='glyphicon glyphicon-minus fw'></span>Less</a>" ;
   document.getElementById('showAut').innerHTML= str ;
 }
 

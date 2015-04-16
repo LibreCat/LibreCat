@@ -1,0 +1,18 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_other_university">
+      {% other_university.label %}{% IF other_university.mandatory %}<span class="starMandatory"></span>{% END %}
+    </label>
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon hidden-lg hidden-md">{% other_university.label %}</div>
+          <input type="text" name="other_university" id="id_other_university" value="[% other_university %]" class="form-control">
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

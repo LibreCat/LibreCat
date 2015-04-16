@@ -42,6 +42,7 @@
           $('#Authorized0').tooltip();
         </script>
         <input type="hidden" id="id_0" name="author.0.id" value="" />
+        <input type="hidden" id="orcid_0" name="author.0.orcid" value="" />
         {% END %}
       </div>
       [% ELSE %]
@@ -76,6 +77,7 @@
           $('#Authorized[% loop.index %]').tooltip();
         </script>
         <input type="hidden" id="id_[% loop.index %]" name="author.[% loop.index %].id" value="[% name.id %]" />
+        <input type="hidden" id="orcid_[% loop.index %]" name="author.[% loop.index %].orcid" value="[% name.orcid %]" />
         {% END %}
       </div>
       [% END %]
@@ -110,6 +112,7 @@
           $('#Authorized0').tooltip();
         </script>
         <input type="hidden" id="id_0" name="author.0.id" value="[% author.0.id %]" />
+        <input type="hidden" id="orcid_0" name="author.0.orcid" value="[% author.0.orcid %]" />
         {% END %}
       </div>
       {% END %}

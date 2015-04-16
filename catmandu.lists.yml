@@ -102,7 +102,7 @@ external_identifier:
     name: "ArXiv"
     prefix: "arXiv:"
   pmid:
-    name: "Europe PMC"
+    name: "PMID"
     prefix: "MEDLINE:"
   inspire:
     name: "Inspire"

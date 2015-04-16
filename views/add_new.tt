@@ -55,11 +55,14 @@
         [% END %]
       </div>
       <div class="col-sm-4">
-        [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_r %]
+        [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_m %]
           <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
         [% END %]
       </div>
       <div class="col-sm-4">
+        [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_r %]
+          <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+        [% END %]
         [% IF session.role == "super_admin" %]
           [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_admin %]
           <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
@@ -80,7 +83,9 @@
     <div class="row">
       <h3 class="margin-top0">Drop your Open Access fulltext here</h3>
       <div class="col-md-4">
-        [% INCLUDE person_dropzone.tt %]
+	<div class="well">
+	  [% INCLUDE person_dropzone.tt %]
+	</div>
       </div>
     </div>
   </div>
@@ -100,3 +105,5 @@ $('#input_id').keydown(function () {
 </script>
 
 <!-- END add_new.tt -->
+
+[% INCLUDE footer.tt %]

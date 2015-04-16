@@ -1,0 +1,16 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_title_en">{% title_en.label %}{% IF title_en.mandatory %}<span class="starMandatory"></span>{% END %}</label>
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky{% IF title_en.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">{% title_en.label %}</div>
+          <input type="text" name="title_en" id="id_title_en" value="[% title_en %]" class="form-control"{% IF title_en.mandatory %} required{% END %}>
+	      <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

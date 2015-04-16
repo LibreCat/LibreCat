@@ -42,6 +42,7 @@
           $('#translator_Authorized0').tooltip();
         </script>
         <input type="hidden" id="translator_id_0" name="translator.0.id" value="" />
+        <input type="hidden" id="translator_orcid_0" name="translator.0.orcid" value="" />
         {% END %}
       </div>
       [% ELSE %]
@@ -76,6 +77,7 @@
           $('#translator_Authorized[% loop.index %]').tooltip();
         </script>
         <input type="hidden" id="translator_id_[% loop.index %]" name="translator.[% loop.index %].id" value="[% name.id %]" />
+        <input type="hidden" id="translator_orcid_[% loop.index %]" name="translator.[% loop.index %].orcid" value="[% name.orcid %]" />
         {% END %}
       </div>
       [% END %]
@@ -108,6 +110,7 @@
           $('#translator_Authorized0').tooltip();
         </script>
         <input type="hidden" id="translator_id_0" name="translator.0.id" value="[% translator.0.id %]" />
+        <input type="hidden" id="translator_orcid_0" name="translator.0.orcid" value="[% translator.0.orcid %]" />
         {% END %}
       </div>
       {% END %}

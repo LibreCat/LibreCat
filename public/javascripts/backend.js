@@ -164,6 +164,7 @@ function linkPevz(element){
 			if(objJSON.length == 1 && (!objJSON[0].old_full_name || !objJSON[0].full_name)){
 				var data = objJSON[0];
 				var pevzId = "";
+				var orcid = "";
 				var first_name = "";
 				var last_name = "";
 
@@ -177,6 +178,9 @@ function linkPevz(element){
 					if(key == "last_name"){
 						last_name = value;
 					}
+					if(key == "orcid"){
+						orcid = value;
+					}
 				});
 				
 				$('#' + type + 'first_name_' + lineId).val(first_name);
@@ -187,8 +191,10 @@ function linkPevz(element){
 				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 
 				$('#' + type + 'id_' + lineId).val(pevzId);
+				$('#' + type + 'orcid_' + lineId).val(orcid);
 				
 				pevzId = "";
+				orcid = "";
 				first_name = "";
 				last_name = "";
 			}
@@ -208,6 +214,7 @@ function linkPevz(element){
 				for(var i=0;i<objJSON.length;i++){
 					var data = objJSON[i];
 					var pevzId = "";
+					var orcid = "";
 					var first_name = "";
 					var old_first_name = "";
 					var last_name = "";
@@ -215,6 +222,9 @@ function linkPevz(element){
 					$.each(data, function(key, value){
 						if(key == "_id"){
 							pevzId = value;
+						}
+						if(key == "orcid"){
+							orcid = value;
 						}
 						if(key == "first_name"){
 							first_name = value;
@@ -235,7 +245,7 @@ function linkPevz(element){
 					});
 
 					if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase()) || (firstname == old_first_name.toLowerCase() && lastname == "") || (lastname == old_last_name.toLowerCase() && firstname == "") || (lastname == old_last_name.toLowerCase() && firstname == old_first_name.toLowerCase())){
-						rows += '<tr data-id="' + pevzId + '"><td><a href="#" class="pevzLink">' + pevzId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="pevzLink">' + first_name + " " + last_name + '</a></td></tr>';
+						rows += '<tr data-id="' + pevzId + '" data-orcid="' + orcid + '"><td><a href="#" class="pevzLink">' + pevzId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="pevzLink">' + first_name + " " + last_name + '</a></td></tr>';
 						if(old_first_name || old_last_name){
 							rows += '<tr data-id="' + pevzId + '"><td><a href="#" class="pevzLink">' + pevzId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="pevzLink">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
 						}
@@ -266,6 +276,7 @@ function linkPevz(element){
 
 				$('.pevzLink').bind("click", function() {
 					var pevzId = $(this).parent().parent().attr('data-id');
+					var orcid = $(this).parent().parent().attr('data-orcid');
 					var first_name = $(this).parent().parent().find('.name').attr('data-firstname');
 					var last_name = $(this).parent().parent().find('.name').attr('data-lastname');
 
@@ -281,6 +292,7 @@ function linkPevz(element){
 					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 					
 					$('#' + type + 'id_' + lineId).val(pevzId);
+					$('#' + type + 'orcid_' + lineId).val(orcid);
 					
 					$('#' + type + 'linkPevzModal').modal("hide");
 					$('#' + type + 'linkPevzModal').find('.modal-body').first().html('');
