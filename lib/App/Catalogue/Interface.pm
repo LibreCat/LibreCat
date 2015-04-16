@@ -6,7 +6,6 @@ use Dancer qw/:syntax/;
 use Dancer::Request;
 use App::Helper;
 use Citation;
-use Dancer::Plugin::Ajax;
 
 prefix '/myPUB' => sub {
 
@@ -119,25 +118,5 @@ get '/livecitation' => sub {
     	template "websites/livecitation", {citation => $response};
     }
 };
-
-ajax '/metrics/:id' => sub {
-    my $metrics = h->get_epmc('wos', params->{id});
-    return to_json {
-        times_cited => $metrics->{times_cited},
-        citing_url => $metrics->{citing_url},
-    };
-};
-
-ajax '/thumbnail/:id' => sub {
-    my $path = h->get_file_path($id);
-    my $thumb = join_path($path, 'thumbnail.png');
-    if ( -e $thumb ) {
-        send_file $thumb,
-            system_path  => 1,
-            content_type => 'image/png';
-    } else {
-        status 'not_found';
-    }
-}
 
 1;
