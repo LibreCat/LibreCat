@@ -358,7 +358,6 @@ sub default_facets {
 			}
 		},
 		open_access => { terms => { field => 'file.open_access', size => 1 } },
-		quality_controlled => { terms => { field => 'quality_controlled', size => 2 } },
 		popular_science => { terms => { field => 'popular_science', size => 2 } },
 		extern => { terms => { field => 'extern', size => 2 } },
 		status => { terms => { field => 'status', size => 8 } },

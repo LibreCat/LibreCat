@@ -7,6 +7,7 @@ use Dancer::Request;
 use App::Helper;
 use Citation;
 use Dancer::Plugin::Auth::Tiny;
+use Dancer::Plugin::Ajax;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -116,9 +117,7 @@ prefix '/myPUB' => sub {
 			}
 		}
 
-		my $json = to_json($jsonhash);
-		return $json;
-
+		return to_json($jsonhash);
 	};
 
 };
@@ -141,6 +140,14 @@ get '/livecitation' => sub {
     	utf8::decode($response);
     	template "websites/livecitation", {citation => $response};
     }
+};
+
+ajax '/metrics/:id' => sub {
+    my $metrics = h->get_epmc('wos', params->{id});
+    return to_json {
+        times_cited => $metrics->{times_cited},
+        citing_url => $metrics->{citing_url},
+    };
 };
 
 1;

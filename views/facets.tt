@@ -180,8 +180,8 @@
 [% END %]
 
 [% IF facets.popular_science.terms.size > 0
-   OR facets.extern.terms.size > 0 
-   OR facets.open_access.terms.size > 0 
+   OR facets.extern.terms.size > 0
+   OR facets.open_access.terms.size > 0
    OR facets.isi.terms.size > 0
    OR facets.arxiv.terms.size > 0
    OR facets.pmid.terms.size > 0
@@ -231,33 +231,33 @@
      OR facets.pmid.terms.size > 0
      OR facets.inspire.terms.size > 0 %]
   <li>
-  <button data-toggle="collapse" data-target="#extid_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'External IDs' : 'Externe IDs' %]</button>
+  <button data-toggle="collapse" data-target="#extid_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Indexed in' : 'Indexiert in' %]</button>
   <div class="facettecollapse">
     <ul id="extid_[% tabmodus %][% menu %]" class="collapse">
     [% IF facets.isi.terms.0.count %]
       [% IF facets.isi.terms.0.count < total %]
-      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="isi" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.isi.terms.0.count %] ISI Record[% IF facets.isi.terms.0.count > 1 %]s[% END %]</a></li>
+      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="isi" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.isi.terms.0.count %] Web of Science</a></li>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications have an ISI identifier</strong></div>
       [% END %]
     [% END %]
     [% IF facets.arxiv.terms.0.count %]
       [% IF facets.arxiv.terms.0.count < total %]
-      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="arxiv" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.arxiv.terms.0.count %] arXiv Record[% IF facets.arxiv.terms.0.count > 1 %]s[% END %]</a></li>
+      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="arxiv" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.arxiv.terms.0.count %] arXiv.org</a></li>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications have an arXiv identifier</strong></div>
       [% END %]
     [% END %]
     [% IF facets.pmid.terms.0.count %]
       [% IF facets.pmid.terms.0.count < total %]
-      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="pmid" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.pmid.terms.0.count %] PMID Record[% IF facets.pmid.terms.0.count > 1 %]s[% END %]</a></li>
+      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="pmid" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.pmid.terms.0.count %] Pubmed</a></li>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications have an PMID identifier</strong></div>
       [% END %]
     [% END %]
     [% IF facets.inspire.terms.0.count %]
       [% IF facets.inspire.terms.0.count < total %]
-      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="inspire" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.inspire.terms.0.count %] INSPIRE Record[% IF facets.inspire.terms.0.count > 1 %]s[% END %]</a></li>
+      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="inspire" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.inspire.terms.0.count %] INSPIRE HEP</a></li>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications have an INSPIRE identifier</strong></div>
       [% END %]

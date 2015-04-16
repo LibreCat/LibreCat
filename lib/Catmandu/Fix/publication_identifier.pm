@@ -2,6 +2,7 @@ package Catmandu::Fix::publication_identifier;
 
 use Catmandu::Sane;
 use Moo;
+use App::Helper;
 
 sub fix {
     my ($self, $data) = @_;

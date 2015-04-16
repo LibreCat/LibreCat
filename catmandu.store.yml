@@ -474,7 +474,7 @@ search:
                 '=': true
                 '<>': true
                 'exact': true
-              field: ['author.orcid','editor.orcid']
+              field: ['author.orcid','editor.orcid', 'translator.orcid']
               description: 'Search publications by an author by his/her orcid ID'
             externalidentifier:
               op:
@@ -521,7 +521,7 @@ search:
               op:
                 '=': true
                 '<>': true
-              field: 'opac'  
+              field: 'opac'
             reportnumber:
               op:
                 '=': true
