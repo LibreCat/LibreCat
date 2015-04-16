@@ -1,0 +1,17 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_extern">{% extern.label %}{% IF extern.mandatory %}<span class="starMandatory"></span>{% END %}</label>
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="col-md-10 col-xs-11">
+        <div class="checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="extern" id="id_extern" value="1" [% IF extern %]checked="checked"[% END %]>
+            <span class="hidden-lg hidden-md">{% extern.label %}</span>
+	      </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

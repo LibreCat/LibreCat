@@ -1,0 +1,24 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="select_award_id">
+      {% award_id.label %}
+    </label>
+    {% IF award_id.mandatory %}<span class="starMandatory"></span>{% END %}
+  </div>
+  <div class="col-md-10" id="award_id">
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky{% IF award_id.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">{% award_id.label_short %}</div>
+          <select name="award_id" class="sticky form-control{% IF award_id.mandatory %} required{% END %}" id="select_award_id">
+            <option value=""[% IF !award_id %] selected="selected"[% END %]>--- Select ---</option>
+            [% FOREACH pi IN award %]
+              <option value="[% pi._id %]"[% IF award_id AND award_id == pi._id %] selected="selected"[% END %]>[% pi._id %] - [% pi.title %]</option>
+            [% END %]
+          </select>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

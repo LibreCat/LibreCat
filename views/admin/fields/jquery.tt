@@ -1,0 +1,103 @@
+// Placeholder for MSIE
+if(navigator.userAgent.indexOf('MSIE') != -1){
+  $('[placeholder]').focus(function() {
+    var input = $(this);
+    if (input.val() == input.attr('placeholder')) {
+      input.val('');
+      input.removeClass('placeholder');
+    }
+  }).blur(function() {
+    var input = $(this);
+    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+      input.addClass('placeholder');
+      input.val(input.attr('placeholder'));
+    }
+  }).blur();
+  $('[placeholder]').parents('form').submit(function() {
+    $(this).find('[placeholder]').each(function() {
+      var input = $(this);
+      if (input.val() == input.attr('placeholder')) {
+        input.val('');
+      }
+    })
+  });
+}
+
+
+
+// Select button (dept, proj, rg)
+function selectButton(element){
+	var type = $(element).attr('class').replace('btn select_button', '').trim();
+	var type_short;
+	var type_name;
+	
+	var index = $(element).attr('id').replace(type + '_select_','').trim();
+	var modal = $('#selectModal');
+	var container = $('#selectModal').find('.modal-body').first();
+	container.html("");
+	if(type == "department"){
+	    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+	    type_short = "dp";
+	    type_name = "Department";
+	}
+	else if(type == "project"){
+	    container.append('[% INCLUDE backend/fields/subfields/project_select.tt %]');
+	    type_short = "pj";
+	    type_name = "Project";
+	}
+	var heading = modal.find('h4').first();
+	heading.html("");
+	heading.append('Choose a ' + type_name);
+	$('.selectme').bind("click", function(){
+		var id = $(this).attr('id');
+	    var name = $(this).html();
+	    var index = $(this).attr('data-index');
+	    $('#' + type_short + '_nameautocomplete_' + index ).val(name);
+	    $('#' + type_short + '_idautocomplete_' + index).val(id);
+	    $('#' + type_short + '_autocomplete_' + index).val(name);
+	    $('#' + type_short + '_autocomplete_' + index ).attr('disabled', 'disabled');
+	    $('#selectModal').modal('hide');
+	    $('input.sticky').blur();
+	});
+	modal.modal('show');
+}
+
+$('.change_tab').click(function(e){
+  var this_button = $(this);
+  var check = 1;
+
+  $('.required').each(function(){
+    if(!$(this).val()){
+      $(this).addClass('has-error');
+      $(this).closest('div.input-group.mandatory').addClass("has-error");
+      check = 0;
+    }
+    else if($(this).val() && ($(this).val() == "Publication Title" || $(this).val() == "First Name" || $(this).val() == "Last Name" || $(this).val() == "YYYY")){
+      $(this).addClass('has-error');
+      $(this).closest('div.input-group.mandatory').addClass("has-error");
+      check = 0;
+    }
+    else{
+      $(this).removeClass('has-error');
+      $(this).closest('div.input-group.mandatory').removeClass("has-error");
+    }
+  });
+  
+  var year = $('#id_year').val();
+  var currentYear = (new Date).getFullYear();
+  var maxYear = currentYear + 5;
+  if(year.length < 4 || !year.match(/^\d+$/) || year < 1930 || year > maxYear){
+    check = 0;
+    $('#id_year').addClass('has-error');
+    $('#id_year').val("");
+    $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
+  }
+  
+  if(!check){
+    e.preventDefault();
+  }
+});
+
+$('button.cancel-button').click(function() {
+  window.location.href = '/myPUB';
+});

@@ -312,3 +312,47 @@ funder:
 funded: 1|0
 call_identifier:asdfas
 sc39: 1|0
+
+## award fields
+## db.award
+date_updated: 2014-01-01T01:00
+_id: AW1
+title: "Award Title"
+type: preis|auszeichnung|akademie
+
+## db.data
+date_updated: 2014-01-01T01:00
+_id: WP1
+award_id: "AW1"
+description: "dies ist eine beschreibung"
+description_en: "this is a description"
+proof: "http://www.leopoldina.org/de/mitglieder/mitgliederverzeichnis/member/707/"
+title: "titel"
+organization: "Uni Konstanz"
+year: "2014"
+honoree:
+  first_name: "Alfred"
+  last_name: "Pühler"
+  full_name: "Pühler, Alfred"
+  title: "Prof. Dr."
+  id: "21937"
+department:
+  -
+    name: "Faculty of Physics"
+    id: 123456
+    tree:
+      - 98765
+      - 54321
+einrichtung:
+  -
+    name: "Faculty of Physics"
+    id: "12345"
+    tree:
+      - 122345
+      - 148234
+uni_member: 1|0
+former_member: ja | nein | emeritiert | in Rente
+other_university: "Ludwig-Maximilians-Universität München"
+url: "http://www.mpib-berlin.mpg.de/de/mitarbeiter/ute-frevert"
+extern: 1|0 #"awardedWhileNotUnibi"
+comment: "some message or comment"

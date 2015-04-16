@@ -3,7 +3,7 @@
 
 [% INCLUDE header.tt %]
 
-<!-- BEGIN admin/edit_project.tt -->
+<!-- BEGIN admin/edit_award.tt -->
 
 <div class="row">
 
@@ -11,23 +11,32 @@
 
     <div class="page-header" id="banner">
       <h1>
-      [% IF name %]
-      Edit Project "[% name %]"
+      [% IF !new %]
+      Edit [% SWITCH mode %] [% CASE 'award' %]Award [% CASE 'preis' %] Preis [% END %][% _id %]
       [% ELSE %]
-      Add new project
+      Add new [% SWITCH mode %] [% CASE 'award' %]Award [% CASE 'preis' %] Preis [% END %][% _id %]
       [% END %]
       </h1>
     </div>
 
 
-    <form action="/myPUB/admin/project/update" method="POST">
+    <form action="/myPUB/admin/award/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
+      <input type="hidden" name="_id" value="[% _id %]" />
       
-      {% FOREACH key IN project_field_order %}
+      [% IF mode == "award" %]
+      {% FOREACH key IN award_field_order %}
 {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
       {% END %}
+      [% END %]
       
+      [% IF mode == "preis" %]
+      {% FOREACH key IN preis_field_order %}
+{% template = "fields/" _ key _ ".tt" %}
+{% INCLUDE $template %}
+      {% END %}
+      [% END %]
 
       <div class="row innerrow"><!-- button -->
 	<div class="col-md-12 buttonrow">
@@ -36,7 +45,7 @@
 	  <button type="button" class="btn btn-danger cancel-button"><span class="glyphicon glyphicon-remove"></span> Close</button>
 	</span>
 	<span class="form-group col-md-2">
-	  <button type="submit" id="id_do_nothing" class="btn btn-success change_tab"><span class="glyphicon glyphicon-ok"></span> Save</button>
+	  <button type="submit" id="id_do_nothing" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save</button>
 	</span>
 	</div>
       </div>
@@ -66,7 +75,50 @@ $('button.cancel-button').click(function() {
 </script>
 
 <script>
-{% INCLUDE fields/jquery.tt %}
+// Select button (dept, proj, rg)
+function selectButton(element){
+	var type = $(element).attr('class').replace('btn select_button', '').trim();
+	var type_short;
+	var type_name;
+
+	var index = $(element).attr('id').replace(type + '_select_','').trim();
+	var modal = $('#select_modal');
+	var container = $('#select_modal').find('.modal-body').first();
+	container.html("");
+	if(type == "data_manager"){
+	    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+	    type_short = "dp";
+	    type_name = "Department";
+	}
+	else if(type == "reviewer"){
+	    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+	    type_short = "rv";
+	    type_name = "Department";
+	}
+    else if (type == "affiliation") {
+        container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+        type_short = "aff";
+        type_name = "Department";
+    }
+    else if (type == "department") {
+        container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+        type_short = "dp";
+        type_name = "Department";
+    }
+	var heading = modal.find('h4').first();
+	heading.html("");
+	heading.append('Choose a ' + type_name);
+	$('.selectme').bind("click", function(){
+		var id = $(this).attr('id');
+	    var name = $(this).html();
+	    $('#' + type_short + '_idautocomplete_' + index).val(id);
+	    $('#' + type_short + '_nameautocomplete_' + index).val(name);
+	    $('#' + type_short + '_autocomplete_' + index).val(name);
+	    $('#' + type_short + '_autocomplete_' + index).attr('disabled','disabled');
+	    $('#select_modal').modal('hide');
+	});
+	modal.modal('show');
+}
 
 function addDelegate(element){
   var index = $('#delegate').children('input').length;
@@ -95,6 +147,24 @@ $("input[name='account_type']").change(function(){
     $('#id_ext_institution').hide();
     $('#id_password').hide();
   }
+});
+
+$('#plusAFF').click(function(){
+  var items = $('#affiliation div.innerrow');
+  var index = items.index($('#affiliation div.innerrow').last()) + 1;
+  $('#affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="aff_idautocomplete_' + index + '" /><input type="hidden" name="department.' + index + '.name" id="aff_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
+  $('#affiliation').bind("click", function(){
+    $( "#aff_autocomplete_" + index ).autocomplete({
+      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+      minLength: 2,
+      select: function( event, ui ) {
+        $( "#aff_autocomplete_" + index ).val( ui.item.label );
+        $( "#aff_nameautocomplete_" + index ).val( ui.item.label );
+        $( "#aff_idautocomplete_" + index ).val( ui.item.id );
+        $( "#aff_autocomplete_" + index ).attr("disabled","disabled");
+      }
+    });
+  });
 });
 
 $('#plusRV').click(function(){
