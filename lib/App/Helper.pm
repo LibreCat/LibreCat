@@ -23,6 +23,11 @@ sub bag {
 	state $bag = Catmandu->store->bag;
 }
 
+sub backup {
+	my ($self, $bag_name) = @_;
+	state $bag = Catmandu->store('backup')->bag($bag_name);
+}
+
 sub publication {
 	state $bag = Catmandu->store('search')->bag('publication');
 }

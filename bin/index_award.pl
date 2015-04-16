@@ -24,7 +24,7 @@ Catmandu->load(':up');
 my $conf = Catmandu->config;
 
 my $mongoBag = Catmandu->store('award');
-my $awardBag = Catmandu->store('award')->bag('award');
+#my $awardBag = Catmandu->store('award')->bag('award');
 my $preisBag = Catmandu->store('search', index_name => $index_name)->bag('award');
 
 if ($opt_d){
@@ -35,11 +35,11 @@ elsif ($opt_u) { # update process
 	my $award = $mongoBag->get($opt_u);
 	#print Dumper $award;
 	if($award){
-		$award->{id} = $award->{_id};
+		#$award->{id} = $award->{_id};
 		#$award->{academyData} = $academyBag->get($award->{academyId}) if $award->{academyId};
 		#$award->{academyData}->{id} = $award->{academyData}->{_id} if $award->{academyData};
-		$award->{awardData} = $awardBag->get($award->{award_id}) if $award->{award_id};
-		$award->{awardData}->{id} = $award->{awardData}->{_id} if $award->{awardData};
+		#$award->{awardData} = $awardBag->get($award->{award_id}) if $award->{award_id};
+		#$award->{awardData}->{id} = $award->{awardData}->{_id} if $award->{awardData};
 		$preisBag->add($award);
 	}
 	else {
@@ -52,13 +52,13 @@ elsif ($opt_u) { # update process
 
 	foreach (@$allAward){
 		my $aw = $_;
-		$aw->{id} = $aw->{_id};
+		#$aw->{id} = $aw->{_id};
 		# get academy data
 		#$aw->{academyData} = $academyBag->get($aw->{academyId}) if $aw->{academyId};
 		#$aw->{academyData}->{id} = $aw->{academyData}->{_id} if $aw->{academyData};
 		# get award data
-		$aw->{awardData} = $awardBag->get($aw->{award_id}) if $aw->{award_id};
-		$aw->{awardData}->{id} = $aw->{awardData}->{_id} if $aw->{awardData};
+		#$aw->{awardData} = $awardBag->get($aw->{award_id}) if $aw->{award_id};
+		#$aw->{awardData}->{id} = $aw->{awardData}->{_id} if $aw->{awardData};
 		$preisBag->add($aw);
 	}
 

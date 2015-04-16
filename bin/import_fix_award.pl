@@ -7,8 +7,8 @@ use Data::Dumper;
 Catmandu->load(':up');
 my $conf = Catmandu->config;
 
-my $mongoBag = Catmandu->store('award');
-my $awardBag = Catmandu->store('award')->bag('award');
+my $mongoBag = Catmandu->store('award')->bag;
+#my $awardBag = Catmandu->store('award')->bag('award');
 #my $preisBag = Catmandu->store('search', index_name => $index_name)->bag('award');
 
 use Catmandu::Importer::JSON;
@@ -20,11 +20,12 @@ my $n = $importer->each(sub {
 	my $pre_fixer = Catmandu::Fix->new(
     fixes => [
         'move_field("dateLastChanged","date_updated")',
+        'move_field("type","rec_type")',
         ]
     );
     $pre_fixer->fix($hashref);
     #print Dumper $hashref;
-    $awardBag->add($hashref);
+    $mongoBag->add($hashref);
 });
 
 my $importer2 = Catmandu::Importer::JSON->new(file => "award_academy.json");
@@ -32,7 +33,7 @@ my $importer2 = Catmandu::Importer::JSON->new(file => "award_academy.json");
 my $n2 = $importer2->each(sub {
 	my $hashref = $_[0];
 	$hashref->{oldid} = $hashref->{_id};
-	my $ids = $awardBag->pluck("_id")->to_array;
+	my $ids = $mongoBag->pluck("_id")->to_array;
 	my @newIds;
     foreach (@$ids){
         $_ =~ s/^AW//g;
@@ -47,11 +48,11 @@ my $n2 = $importer2->each(sub {
     my $pre_fixer = Catmandu::Fix->new(
     fixes => [
         'move_field("dateLastChanged","date_updated")',
-        'add_field("type","akademie")',
+        'add_field("rec_type","akademie")',
         ]
     );
     $pre_fixer->fix($hashref);
-    $awardBag->add($hashref);
+    $mongoBag->add($hashref);
     #print Dumper $hashref;
 });
 
@@ -61,8 +62,22 @@ my $importer3 = Catmandu::Importer::JSON->new(file => "award_preise.json");
 my $n3 = $importer3->each(sub {
 	my $hashref = $_[0];
 	
+	$hashref->{oldid} = $hashref->{_id};
+	my $ids = $mongoBag->pluck("_id")->to_array;
+	my @newIds;
+    foreach (@$ids){
+        $_ =~ s/^AW//g;
+        push @newIds, $_;
+    }
+    @newIds = sort {$a <=> $b} @newIds;
+    my $idsLength = @newIds;
+    my $createdid = $newIds[$idsLength-1];
+    $createdid++;
+    
+    $hashref->{_id} = "AW" . $createdid;
+	
 	if($hashref->{academyId}){
-		my $correct_id = $awardBag->select("oldid", $hashref->{academyId})->to_array;
+		my $correct_id = $mongoBag->select("oldid", $hashref->{academyId})->to_array;
 		$hashref->{award_id} = $correct_id->[0]->{_id};
 		delete $hashref->{academyId};
 	}
@@ -78,6 +93,7 @@ my $n3 = $importer3->each(sub {
         'move_field("formerMember", "former_member")',
         'move_field("otherUniv", "other_university")',
         'move_field("awardedWhileNotUnibi", "extern")',
+        'add_field("rec_type", "record")',
         
         ]
     );
