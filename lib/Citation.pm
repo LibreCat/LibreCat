@@ -73,8 +73,6 @@ sub index_citation_update {
 	$rec_prep->{'container-title'}  = $rec->{'publication'} if $rec->{'publication'}; #journal title
 	$rec_prep->{'collection-title'} = $rec->{'series_title'} if $rec->{'series_title'};
 	$rec_prep->{'publisher'}        = $rec->{'publisher'} if $rec->{'publisher'};
-	$rec_prep->{'issn'}             = $rec->{publication_identifier}->{issn}->[0] if $rec->{publication_identifier} and $rec->{publication_identifier}->{issn};
-	$rec_prep->{'ISBN'}             = $rec->{publication_identifier}->{isbn}->[0] if $rec->{publication_identifier} and $rec->{publication_identifier}->{isbn};
 	$rec_prep->{'volume'}           = "$rec->{'volume'}" if $rec->{'volume'};
 	$rec_prep->{'issue'}            = $rec->{'issue'} if $rec->{'issue'};
 	if($rec->{'page'}){
