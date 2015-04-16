@@ -150,10 +150,6 @@
 	    | <em>[% h.display_name_from_value("publication_status", publication_status) %]</em>
 	    [% END %]
 
-	    [% IF quality_controlled == '1' %]
-	    | <em>Quality Controlled</em>
-	    [% END %]
-
 	    [% FOREACH lang IN language %]
 	      [% IF lang.name AND bag != "data" %]
 	      |<!-- <meta itemprop="inLanguage" content="[% schema.langCode %]"> --> <em>[% lang.name %]</em>
