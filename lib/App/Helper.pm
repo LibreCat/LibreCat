@@ -292,6 +292,12 @@ sub getAccount {
 	}
 }
 
+sub get_award {
+	if($_[1] =~ /\d{1,}/){
+		$_[0]->award->get($_[1]);
+	}
+}
+
 sub getDepartment {
 	if($_[1] =~ /\d{1,}/){
 		$_[0]->authority_department->get($_[1]);
