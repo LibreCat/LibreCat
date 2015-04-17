@@ -11,10 +11,10 @@
         <div class="input-group sticky{% IF award_type.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% award_type.label %}</div>
           <select name="type" class="sticky form-control{% IF award_type.mandatory %} required{% END %}" id="select_award_id">
-            <option value=""[% IF !type %] selected="selected"[% END %]>--- Select ---</option>
-            <option value="akademie"[% IF type == "akademie" %] selected="selected"[% END %]>Akademie</option>
-            <option value="preis"[% IF type == "preis" %] selected="selected"[% END %]>Preis</option>
-            <option value="auszeichnung"[% IF type == "auszeichnung" %] selected="selected"[% END %]>Auszeichnung</option>
+            <option value=""[% IF !rec_type %] selected="selected"[% END %]>--- Select ---</option>
+            <option value="akademie"[% IF rec_type == "akademie" %] selected="selected"[% END %]>Akademie</option>
+            <option value="preis"[% IF rec_type == "preis" %] selected="selected"[% END %]>Preis</option>
+            <option value="auszeichnung"[% IF rec_type == "auszeichnung" %] selected="selected"[% END %]>Auszeichnung</option>
           </select>
           <div class="input-group-addon"></div>
         </div>
