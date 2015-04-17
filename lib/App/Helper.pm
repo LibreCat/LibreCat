@@ -60,10 +60,6 @@ sub authority_department {
 	state $bag = Catmandu->store('authority')->bag('department');
 }
 
-sub toolkit {
-	state $bag = Catmandu->store('toolkit')->bag;
-}
-
 sub string_array {
 	my ($self, $val) = @_;
 	return [ grep { is_string $_ } @$val ] if is_array_ref $val;
@@ -304,10 +300,6 @@ sub getDepartment {
 	}
 }
 
-sub getToolkit {
-	$_[0]->toolkit->get($_[1]);
-}
-
 sub get_list {
 	my $list = $_[1];
 	my $map;
@@ -341,11 +333,11 @@ sub get_statistics {
 	return $stats;
 }
 
-sub get_epmc {
-	my ($self, $mod, $pmid) = @_;
-	return {} unless $mod and $pmid;
+sub get_metrics {
+	my ($self, $bag, $id) = @_;
+	return {} unless $bag and $id;
 
-	return Catmandu->store('metrics')->bag($mod)->get($pmid);
+	return Catmandu->store('metrics')->bag($bag)->get($id);
 }
 
 sub default_facets {
