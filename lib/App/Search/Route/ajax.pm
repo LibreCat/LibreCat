@@ -41,4 +41,9 @@ ajax '/thumbnail/:id' => sub {
     }
 };
 
+ajax '/citiaton/:id/:fmt' => sub {
+    my $pub = h->publication->get(params->{id});
+    to_json {cit => export_to_string(....)};
+};
+
 1;

@@ -23,11 +23,11 @@
 [% relFile = [] %]
 [% relToc = [] %]
 [% IF external_id.pmid %]
-[% epmc_cit = h.get_epmc('epmc_citations',external_id.pmid) %]
-[% epmc_ref = h.get_epmc('epmc_references',external_id.pmid) %]
-[% ebi_data = h.get_epmc('epmc_dblinks',external_id.pmid) %]
+  [% epmc_cit = h.get_metrics('epmc_citations',external_id.pmid) %]
+  [% epmc_ref = h.get_metrics('epmc_references',external_id.pmid) %]
+  [% ebi_data = h.get_metrics('epmc_dblinks',external_id.pmid) %]
 [% END %]
-[% toolkitData = h.getToolkit(id) %]
+[% toolkit = h.get_metrics('toolkit', _id) %]
 
 [% FOREACH key IN related_material.keys %]
   [% IF key == "record" %]
@@ -199,7 +199,7 @@
 	  <li><a href="#relResData" data-toggle="tab">Data Publications</a></li>
 	  [% END %]
 
-	  [% IF toolkitData %]
+	  [% IF toolkit %]
 	  <li><a href="#toolkit" data-toggle="tab">Cognitive Interaction Toolkit</a></li>
 	  [% END %]
 
@@ -247,7 +247,7 @@
 
 	  [% IF relResData %] [% INCLUDE frontdoor/tab_relresdata.tt %] [% END %]
 
-	  [% IF toolkitData %] [% INCLUDE frontdoor/tab_toolkit.tt %] [% END %]
+	  [% IF toolkit %] [% INCLUDE frontdoor/tab_toolkit.tt %] [% END %]
 
 	  [% IF ebi_data %] [% INCLUDE frontdoor/tab_ebi_links.tt %] [% END %]
 

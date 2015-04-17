@@ -45,11 +45,6 @@ authority:
       department:
         plugins: ['Datestamps']
 
-toolkit:
-  package: MongoDB
-  options:
-    database_name: PUBToolkit
-
 metrics:
   package: MongoDB
   options:
@@ -64,6 +59,8 @@ metrics:
       epmc_dblinks:
         plugins: ['Datestamps']
       crossref:
+        plugins: ['Datestamps']
+      toolkit:
         plugins: ['Datestamps']
 
 search:

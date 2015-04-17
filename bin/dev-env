@@ -14,13 +14,13 @@ case "$1" in
       ;;
     start)
       docker start elastic
-      #docker start mongodb
-      docker start mysql-pub
+      docker start mongodb
+      #docker start mysql-pub
       ;;
     stop)
       docker stop elastic
-      #docker stop mongodb
-      docker stop mysql-pub
+      docker stop mongodb
+      #docker stop mysql-pub
       ;;
     destroy)
       docker rm elastic
