@@ -1,6 +1,6 @@
 [submodule "public/javascripts/MathJax"]
 	path = public/javascripts/MathJax
-	url = git@github.com:mathjax/MathJax.git
+	url = https://github.com/mathjax/MathJax.git
 [submodule "public/javascripts/commonmark.js"]
 	path = public/javascripts/commonmark.js
-	url = git@github.com:jgm/commonmark.js.git
+	url = https://github.com/jgm/commonmark.js.git
