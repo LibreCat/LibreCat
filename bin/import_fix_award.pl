@@ -1,5 +1,4 @@
 #!/usr/bin/env perl
-
 use Catmandu::Sane;
 use Catmandu -all;
 use Data::Dumper;
@@ -17,6 +16,7 @@ my $importer = Catmandu::Importer::JSON->new(file => "award_awards.json");
 
 my $n = $importer->each(sub {
 	my $hashref = $_[0];
+	
 	my $pre_fixer = Catmandu::Fix->new(
     fixes => [
         'move_field("dateLastChanged","date_updated")',
@@ -24,6 +24,10 @@ my $n = $importer->each(sub {
         ]
     );
     $pre_fixer->fix($hashref);
+    if($hashref->{_id} =~ /^AW(\d{1,})/){
+    	$hashref->{sort_id} = $1;
+    }
+    
     #print Dumper $hashref;
     $mongoBag->add($hashref);
 });
@@ -32,6 +36,7 @@ my $importer2 = Catmandu::Importer::JSON->new(file => "award_academy.json");
 
 my $n2 = $importer2->each(sub {
 	my $hashref = $_[0];
+	
 	$hashref->{oldid} = $hashref->{_id};
 	my $ids = $mongoBag->pluck("_id")->to_array;
 	my @newIds;
@@ -52,6 +57,9 @@ my $n2 = $importer2->each(sub {
         ]
     );
     $pre_fixer->fix($hashref);
+    if($hashref->{_id} =~ /^AW(\d{1,})/){
+    	$hashref->{sort_id} = $1;
+    }
     $mongoBag->add($hashref);
     #print Dumper $hashref;
 });
@@ -103,7 +111,7 @@ my $n3 = $importer3->each(sub {
 	$honoree->{last_name} = $hashref->{honoree}->{name}->{surname};
 	$honoree->{full_name} = $hashref->{honoree}->{name}->{fullName};
 	$honoree->{title} = $hashref->{honoree}->{name}->{personTitle} if $hashref->{honoree}->{name}->{personTitle};
-	$honoree->{id} = $hashref->{honoree}->{name}->{personNumber} if $hashref->{honoree}->{name}->{personNumber};
+	$honoree->{id} = $hashref->{honoree}->{personNumber} if $hashref->{honoree}->{personNumber};
 	delete $hashref->{honoree};
 	push @{$hashref->{honoree}}, $honoree;
 	
@@ -128,6 +136,9 @@ my $n3 = $importer3->each(sub {
 	$hashref->{awardedWhileNotUnibi} = $hashref->{awardedWhileNotUnibi} ne "nein" ? 1 : 0;
     
     $pre_fixer->fix($hashref);
+    if($hashref->{_id} =~ /^AW(\d{1,})/){
+    	$hashref->{sort_id} = $1;
+    }
     $mongoBag->add($hashref);
     #print Dumper $hashref;
     #print "\n";

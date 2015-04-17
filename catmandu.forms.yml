@@ -1487,6 +1487,7 @@ otherItems:
         mandatory: 1
       title:
         label: "Title"
+      pevz: 1
     title:
       label: "Title"
       mandatory: 1

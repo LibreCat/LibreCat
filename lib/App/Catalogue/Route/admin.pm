@@ -147,62 +147,30 @@ prefix '/myPUB/admin' => sub {
 #    };
     
     get '/award' => needs role => 'super_admin' => sub {
-    	my $hits = h->search_award({q => "", limit => 1000});
-    	my $awardBag = Catmandu->store('award')->bag('award');
-    	map {push @{$hits->{preis}}, $_ } @{$awardBag->select("type", "preis")->to_array};
-    	map {push @{$hits->{auszeichnung}}, $_ } @{$awardBag->select("type", "auszeichnung")->to_array};
-    	map {push @{$hits->{akademie}}, $_ } @{$awardBag->select("type", "akademie")->to_array};
+    	my $hits = h->search_award({q => "rectype=record", limit => 1000});
+    	my $preis = h->search_award({q => "rectype=preis", limit => 1000});
+    	my $auszeichnung = h->search_award({q => "rectype=auszeichnung", limit => 1000});
+    	my $akademie = h->search_award({q => "rectype=akademie", limit => 1000});
+    	map {push @{$hits->{preis}}, $_ } @{$preis->{hits}};
+    	map {push @{$hits->{auszeichnung}}, $_ } @{$auszeichnung->{hits}};
+    	map {push @{$hits->{akademie}}, $_ } @{$akademie->{hits}};
     	template 'admin/award', $hits;
     };
     
     get '/award/edit/:id' => needs role => 'super_admin' => sub {
     	my $id = param 'id';
-    	my $awardBag = Catmandu->store('award')->bag('award');
-    	my $hits;
-    	if ($id =~ /AW/){
-    		$hits = $awardBag->get($id);
-    		$hits->{mode} = "award";
-    	}
-    	elsif($id =~ /WP/){
-    		my $award = $awardBag->to_array();
-    		$hits = h->search_award({q => "id=$id", limit => 1});
-    		if($hits->{hits}){
-    			$hits = $hits->{hits}->[0] if $hits->{hits};
-    			$hits->{award} = $award;
-    		}
-    		
-    		$hits->{mode} = "preis";
-    	}
+    	my $hits = h->get_award($id);
+    	my $award = h->search_award({q => "rectype<>record", limit => 1000});
+    	$hits->{award} = $award->{hits};
+    	
     	template 'admin/forms/edit_award', $hits;
     };
     
-    get '/award/new/preis' => needs role => 'super_admin' => sub {
+    get '/award/new/record' => needs role => 'super_admin' => sub {
     	my $hits;
     	my $mongoBag = Catmandu->store('award');
-    	my $award = Catmandu->store('award')->bag('award')->to_array;
+    	my $award = h->search_award({q => "rectype<>record", limit => 1000});
        	my $ids = $mongoBag->pluck("_id")->to_array;
-    	my @newIds;
-    	foreach (@$ids){
-    		$_ =~ s/^WP//g;
-    		push @newIds, $_;
-    	}
-    	@newIds = sort {$a <=> $b} @newIds;
-    	my $idsLength = @newIds;
-    	my $createdid = $newIds[$idsLength-1];
-    	$createdid++;
-    	
-    	$hits->{_id} = "WP" . $createdid;
-    	$hits->{mode} = "preis";
-    	$hits->{award} = $award;
-    	$hits->{"new"} = 1;
-    	
-    	template 'admin/forms/edit_award', $hits;
-    };
-    
-    get '/award/new/award' => needs role => 'super_admin' => sub {
-    	my $hits;
-    	my $awardBag = Catmandu->store('award')->bag('award');
-       	my $ids = $awardBag->pluck("_id")->to_array;
     	my @newIds;
     	foreach (@$ids){
     		$_ =~ s/^AW//g;
@@ -214,7 +182,29 @@ prefix '/myPUB/admin' => sub {
     	$createdid++;
     	
     	$hits->{_id} = "AW" . $createdid;
-    	$hits->{mode} = "award";
+    	$hits->{rec_type} = "record";
+    	$hits->{award} = $award->{hits};
+    	$hits->{"new"} = 1;
+    	
+    	template 'admin/forms/edit_award', $hits;
+    };
+    
+    get '/award/new/award' => needs role => 'super_admin' => sub {
+    	my $hits;
+    	my $mongoBag = Catmandu->store('award');
+       	my $ids = $mongoBag->pluck("_id")->to_array;
+    	my @newIds;
+    	foreach (@$ids){
+    		$_ =~ s/^AW//g;
+    		push @newIds, $_;
+    	}
+    	@newIds = sort {$a <=> $b} @newIds;
+    	my $idsLength = @newIds;
+    	my $createdid = $newIds[$idsLength-1];
+    	$createdid++;
+    	
+    	$hits->{_id} = "AW" . $createdid;
+    	$hits->{rec_type} = "preis";
     	$hits->{"new"} = 1;
     	
     	template 'admin/forms/edit_award', $hits;

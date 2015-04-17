@@ -24,14 +24,14 @@
       <input type="hidden" name="date_created" value="[% date_created %]" />
       <input type="hidden" name="_id" value="[% _id %]" />
       
-      [% IF mode == "award" %]
+      [% IF rec_type == "preis" OR rec_type == "akademie" OR rec_type == "auszeichnung" %]
       {% FOREACH key IN award_field_order %}
 {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
       {% END %}
       [% END %]
       
-      [% IF mode == "preis" %]
+      [% IF rec_type == "record" %]
       {% FOREACH key IN preis_field_order %}
 {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}

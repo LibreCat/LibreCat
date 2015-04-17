@@ -241,13 +241,15 @@ search:
                 '=': true
                 'exact': true
               field: '_id'
-            awardid:
+              sort: {field: 'sort_id'}
+            rectype:
               op:
                 'any': true
                 'all': true
                 '=': true
                 'exact': true
-              field: 'award_id'
+                '<>': true
+              field: rec_type
             organization:
               op:
                 'any': true
@@ -940,6 +942,7 @@ search:
           rec_type: {type: string, analyzer: tag}
           date_updated: {type: date}
           _id: {type: string, include_in_all: true}
+          sort_id: {type: integer}
           award_id: {type: string}
           description: {type: string}
           description_en: {type: string}
