@@ -34,7 +34,7 @@
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('supervisor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.supervisor.pevz OR fields.supplementary_fields.supervisor.pevz %}
-            <div class="input-group-addon"><span id="supervisor_link_pevz_0" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" style="height:20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.supervisor.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="supervisor_link_pevz_0" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.supervisor.pevz_tooltip %}" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
@@ -71,7 +71,7 @@
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('supervisor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.supervisor.pevz OR fields.supplementary_fields.supervisor.pevz %}
-            <div class="input-group-addon"><span id="supervisor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized[% loop.index %]" src="/images/biNotAuthorized.png" style="height:20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.supervisor.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="supervisor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized[% loop.index %]" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.supervisor.pevz_tooltip %}" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
@@ -105,7 +105,7 @@
             <div class="input-group-addon hidden-lg hidden-md">Superv.- Last</div>
             <input type="text" id="supervisor_last_name_0" name="supervisor.0.last_name" placeholder="{% fields.basic_fields.supervisor.last_name.placeholder %}{% fields.supplementary_fields.supervisor.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% supervisor.0.last_name | html %]" />
             {% IF fields.basic_fields.supervisor.pevz OR fields.supplementary_fields.supervisor.pevz %}
-            <div class="input-group-addon"><span id="supervisor_link_pevz_0" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" style="height:20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.supervisor.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="supervisor_link_pevz_0" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.supervisor.pevz_tooltip %}" /></span></div>
             {% ELSE %}
             <div class="input-group-addon"></div>
             {% END %}

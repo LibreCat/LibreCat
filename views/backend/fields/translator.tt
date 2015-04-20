@@ -32,7 +32,7 @@
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
-            <div class="input-group-addon"><span id="translator_link_pevz_0" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" style="height:20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.translator.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="translator_link_pevz_0" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.translator.pevz_tooltip %}" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
@@ -67,7 +67,7 @@
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
-            <div class="input-group-addon"><span id="translator_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] style="height:20px" [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.translator.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="translator_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.translator.pevz_tooltip %}" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
@@ -99,7 +99,7 @@
             <div class="input-group-addon">Last Name</div>
             <input type="text" id="translator_last_name_0" name="translator.0.last_name" placeholder="{% fields.basic_fields.translator.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="[% translator.0.last_name | html %]" />
             {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
-            <div class="input-group-addon"><span id="translator_link_pevz_0" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" style="height:20px" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.translator.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="translator_link_pevz_0" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% fields.basic_fields.translator.pevz_tooltip %}" /></span></div>
             {% ELSE %}
             <div class="input-group-addon"></div>
             {% END %}
