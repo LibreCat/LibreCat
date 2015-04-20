@@ -90,12 +90,9 @@
 [% IF abstract %]
   <div class="row">
     <div class="col-md-2 text-muted">Abstract</div>
-    <div class="col-md-10" itemprop="about">
-    [% FOREACH ab IN abstract %]
-      [% UNLESS loop.first %]
-        <br /><br />
-      [% END %]
-      [% ab.text %]
+    <div class="col-md-10 cmark" itemprop="about">
+    [% FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><br />[% END %]
+[% ab.text %]
     [% END %]
     </div>
   </div>

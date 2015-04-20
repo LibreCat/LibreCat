@@ -72,7 +72,7 @@
           [% IF session AND session.user %]<li class="navbar-right"><a href="/myPUB" title="[% lang ? "Logged in as:" : "Angemeldet als:" %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">(myPUB)</span></span></a></li>[% END %]
       </ul>
 
-      <h1 itemprop="name">[% title %][% IF status != "public" AND _id %] <a class="btn btn-sm btn-success" href="/myPUB/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> Make public</a> [% END %]</h1>
+      <h1 class="cmark" itemprop="name">[% title %][% IF status != "public" AND _id %] <a class="btn btn-sm btn-success" href="/myPUB/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> Make public</a> [% END %]</h1>
 
       [% IF !_id %]
       <h1>This record does not exist or was deleted</h1>

@@ -226,8 +226,7 @@ publicationTypes:
           multiple: 1
         keyword: &keyword
           label: "Keywords"
-          placeholder: "e.g. Keyword"
-          multiple: 1
+          placeholder: "Keywords (multiple entries separated by semicolon, e.g. Keyword1 ; Keyword2 ; Keyword3)"
         external_id: &external_id
           label: "External Identifier"
           label_short: "Ext. Id."

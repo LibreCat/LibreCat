@@ -4,4 +4,25 @@
     <script src="/javascripts/angular-1.2.14.min.js"></script>
     <script src="/javascripts/angularSearch.js"></script>
 
+    <script src="/javascripts/commonmark.js/dist/commonmark.js"></script>
+    <script>
+    var reader = new commonmark.Parser();
+    var writer = new commonmark.HtmlRenderer();
+    $(document).ready(function () {
+	$('.cmark').each(function () {
+	var text = $(this).html();
+	parsed = reader.parse(text);
+	var result = writer.render(parsed); // result is a String
+	$(this).html("");
+	$(this).html(result);
+      });
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+	tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+      });
+    </script>
+    <script src="/javascripts/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 <!-- END head_scripts.tt -->

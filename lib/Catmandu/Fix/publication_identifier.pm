@@ -45,6 +45,12 @@ sub fix {
 		delete $data->{genbank};
 		$data->{genbank} = \@genbank;
 	}
+	if($data->{keyword}){
+		my @keyword;
+		@keyword = split(" ; ", $data->{keyword});
+		delete $data->{keyword};
+		$data->{keyword} = \@keyword;
+	}
 
 	return $data;
 }

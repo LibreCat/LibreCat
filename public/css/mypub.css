@@ -153,6 +153,13 @@ a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 .dz-default.dz-message.qae{background-color:#fff;padding:5px;margin-bottom:5px;text-align:center;}
 .dz-clickable,.input-group-addon{cursor:pointer;}
 
+/* mighty grapschhand for file dragging */
+.dragging,.dragging *{cursor:url(/images/closedhand.cur) 4 4, move!important;}
+.dragged{position:absolute;margin-left:-250px;opacity:.5;z-index: 2000;}
+.dz-preview:hover{cursor:url(/images/openhand.cur) 4 4, move!important;}
+.dz-preview.placeholder{position:relative;}
+.dz-preview.placeholder:before{position:absolute;}
+
 /* share-a-copy */
 input.unstyled{border:0;border-radius:0;box-shadow:none;margin:0;padding:0;display:inline;}
 
@@ -191,7 +198,6 @@ input.has-error,.has-error input{background-color:#ffcfce;}
 .sortitem{cursor:move;}
 
 /* special styles for screens */
-
 @media (max-width:479px){
 .hidden-xxs{display:none!important;}
 .navbar-title{padding:3px;margin:8px 0 0 10px;border:1px solid #ccc;border-radius:4px;}

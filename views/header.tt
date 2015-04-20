@@ -72,7 +72,6 @@
 
     [% INCLUDE head_meta.tt %]
     [% INCLUDE head_scripts.tt %]
-    [% INCLUDE head_styles.tt %]
 
   </head>
 

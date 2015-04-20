@@ -9,12 +9,12 @@ $(document).ready(function(){
 		previewTemplate: "<span></span>",
 	    params: {access_level: "open_access", accept: 1, quickandeasy: 1},
 	    createImageThumbnails: false,
-	    dictDefaultMessage: "<span class=\"fa fa-file-pdf-o\" style=\"font-size:32pt;\"></span><br />Drop Open Access fulltext (pdf) here and we'll do the rest.",
+	    dictDefaultMessage: "<span class=\"fa fa-file-pdf-o fa-3x\"></span><br />Drop Open Access fulltext (pdf) here and we'll do the rest.",
 	    dictMaxFilesExceeded: "Please submit or cancel your upload first before uploading more files.",
 	    init: function(){
 	    	$('.dz-default.dz-message').addClass('qae');
 	    	this.on("addedfile", function(file) {
-	        	var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width: 0%;text-align:left;\"><span style=\"padding-left:10px;\">" + file.name + "</span></div></div></div>");
+	        	var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + file.name + "</span></div></div></div>");
 		        file.previewElement.appendChild(fileName);
 	        });
 	        this.on("uploadprogress", function(file,progress,bytesSent){
@@ -26,11 +26,11 @@ $(document).ready(function(){
 	            var progresselement = progressbar.parentNode.parentNode;
 	            $(progresselement).remove();
 	            var resp = JSON.parse(response);
-	            var modal = Dropzone.createElement("<div class='well' id='" + resp.tempname + "' style='background-color:#fff;margin-left:15px;margin-right:15px;'><form id='form_" + resp.tempname + "' action='/myPUB/upload/qae/submit' method='post'><strong>" + file.name + "</strong><textarea class='form-control' placeholder='Type details about your publication here' name='description'></textarea><input type='hidden' name='file_name' value='" + resp.file_name + "' /><div class='checkbox'><label><input type='checkbox' required> I have read and accept the <a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy</a></label></div><input type='hidden' name='tempid' value='" + resp.tempid + "' /><input type='submit' class='btn btn-default' name='submit_or_cancel' value='Submit'/><input type='reset' class='btn btn-default' onclick='location.reload()' name='submit_or_cancel' value='Cancel' /></form></div>");
+	            var modal = Dropzone.createElement("<div class='well' id='" + resp.tempname + "'><form id='form_" + resp.tempname + "' action='/myPUB/upload/qae/submit' method='post'><strong>" + file.name + "</strong><textarea class='form-control' placeholder='Type details about your publication here' name='description'></textarea><input type='hidden' name='file_name' value='" + resp.file_name + "' /><div class='checkbox'><label><input type='checkbox' required> I have read and accept the <a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy</a></label></div><input type='hidden' name='tempid' value='" + resp.tempid + "' /><input type='submit' class='btn btn-success' name='submit_or_cancel' value='Submit'/> <input type='reset' class='btn btn-warning' onclick='location.reload()' name='submit_or_cancel' value='Cancel' /></form></div>");
 	            file.previewElement.appendChild(modal);
 		    });
 	    	this.on("error", function(file, errorMessage){
-			    var modal = Dropzone.createElement("<div class='alert alert-danger' style='margin-left:15px;margin-right:15px;'>" + errorMessage + "</div>");
+			    var modal = Dropzone.createElement("<div class='alert alert-danger'>" + errorMessage + "</div>");
 			    file.previewElement.appendChild(modal);
 		    });
 	    },
@@ -46,7 +46,7 @@ $(document).ready(function(){
 	    init: function() {
 	    	$('.dz-default.dz-message').addClass('col-md-11');
 	        this.on("addedfile", function(file) {
-	        	var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width: 0%;text-align:left;\"><span style=\"padding-left:10px;\">" + file.name + "</span></div></div></div>");
+	        	var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + file.name + "</span></div></div></div>");
 		        file.previewElement.appendChild(fileName);
 	        });
 	        this.on("uploadprogress", function(file,progress,bytesSent){
@@ -125,12 +125,12 @@ $(document).ready(function(){
 		previewsContainer: '#theses_dz_preview',
 		params: {access_level: "open_access", accept: 1, quickandeasy: 1},
 		createImageThumbnails: false,
-		dictDefaultMessage: "<span class=\"fa fa-file-pdf-o\" style=\"font-size:32pt;\"></span><br />Drop your thesis here.",
+		dictDefaultMessage: "<span class=\"fa fa-file-pdf-o fa-3x\"></span><br />Drop your thesis here.",
 		dictMaxFilesExceeded: "Please submit or cancel your upload first before uploading more files.",
 		init: function(){
 		 	$('.dz-default.dz-message').addClass('qae');
 		 	this.on("addedfile", function(file) {
-	        	var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width: 0%;text-align:left;\"><span style=\"padding-left:10px;\">" + file.name + "</span></div></div></div>");
+	        	var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + file.name + "</span></div></div></div>");
 		        file.previewElement.appendChild(fileName);
 	        });
 	        this.on("uploadprogress", function(file,progress,bytesSent){
@@ -182,7 +182,7 @@ $(document).ready(function(){
 	            file.previewElement.appendChild(well);
 		    });
 		   	this.on("error", function(file, errorMessage){
-			    var modal = Dropzone.createElement("<div class='alert alert-danger' style='margin-left:15px;margin-right:15px;'>" + errorMessage + "</div>");
+			    var modal = Dropzone.createElement("<div class='alert alert-danger'>" + errorMessage + "</div>");
 			    file.previewElement.appendChild(modal);
 		    });
 		},

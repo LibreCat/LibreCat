@@ -1133,6 +1133,7 @@ search:
               id: {type: string, analyzer: tag}
               name: {type: string, include_in_all: true}
           date_updated: {type: string, analyzer: datestring}
+          orcid: {type: string}
 
       department:
         include_in_all: false
