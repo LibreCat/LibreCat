@@ -4,7 +4,7 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use App::Helper;
 
-#use App::Search::Route::ajax;
+use App::Search::Route::ajax;
 use App::Search::Route::api;
 use App::Search::Route::directoryindex;
 #use App::Search::Route::feed;

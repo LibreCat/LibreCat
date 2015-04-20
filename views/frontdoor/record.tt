@@ -162,23 +162,14 @@
 
       <div class="col-sm-3 col-sm-offset-1 text-sm-right">
       [% IF bag != "data" %]
-	[% FOREACH fi IN mainFile %]
-	  [% thurl = h.thumbnail_url("$_id", "$fi.file_name") %]
-	  [% IF thurl != "no_thumb" %]
-	    <a itemprop="thumbnailUrl" href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"><img src="[% thurl %]" style="height:200px;" class="img-thumbnail" alt="Open/Download Document"></a>
-	    [% LAST %]
-	  [% END %]
-	  [% IF loop.last AND thurl == "no_thumb" %]
-	    <img src="/images/bookDummy.png" style="height:120px;" class="img-thumbnail" alt="Open/Download Document">
-	  [% END %]
-	[% END %]
-	[% IF !fi %]
+	    <a itemprop="thumbnailUrl" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"><img id="thumbnail" style="height:200px;" class="img-thumbnail" alt="Open/Download Document"></a>
+<!--	    <img src="/images/bookDummy.png" style="height:120px;" class="img-thumbnail" alt="Open/Download Document"> -->
+	  	[% IF !fi %]
 	    <div class="img-thumbnail text-center">
 		<p><span class="fa fa-ban fa-3x fw"></span></p>
 		<p>No full text uploaded in PUB yet</p>
-	    </div>
-	[% END %]
-      [% END %]
+	    </div>[% END %]
+	  [% END %]
       </div>
 
     </div><!-- row -->
@@ -469,6 +460,9 @@
 <script>
 $.getJSON("/metrics/[% _id %]").done(function( data ) {
     $('#wos').after('<a href="'+ data.citing_url +'" target="_parent">Web of Science&reg; Times Cited: <strong class="wos-times-cited">'+ data.times_cited +'</strong></a></li><br>');
+});
+$("#thumbnail").attr("src","/thumbnail/[% _id %]").load(function(){
+    console.log("boom shaka laka: thumbnail loaded");
 });
 </script>
 
