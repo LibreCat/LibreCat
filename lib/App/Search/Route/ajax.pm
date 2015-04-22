@@ -39,7 +39,7 @@ ajax '/thumbnail/:id' => sub {
             content_type => 'image/png';
     } else {
         #status 'not_found';
-        send_file "public/images/bookDummy.png",
+        send_file join_path(h->config->{appdir},"public/images/bookDummy.png"),
             system_path => 1,
             content_type => 'image/png';
     }
