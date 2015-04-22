@@ -3,11 +3,12 @@ package App::Catalogue::Controller::Publication;
 use Catmandu::Sane;
 use Catmandu;
 use App::Helper;
-use App::Catalogue::Controller::File qw/handle_file delete_file/;
+use App::Catalogue::Controller::File qw/handle_file delete_file make_thumbnail/;
 use App::Catalogue::Controller::Material qw/update_related_material/;
 use Hash::Merge qw/merge/;
 use Carp;
 use JSON;
+use YAML;
 use Citation;
 use Exporter qw/import/;
 our @EXPORT = qw/new_publication save_publication delete_publication update_publication edit_publication/;
@@ -32,39 +33,10 @@ sub update_publication {
     	$data->{file} = handle_file($data);
         map {
             my $f = $_;
-            if ($f->{oa} == 1 && $f->{file_name} =~ /\.pdf$|\.ps$/) {
+            if ($f->{access_level} eq 'open_access' && $f->{file_name} =~ /\.pdf$|\.ps$/) {
                 make_thumbnail($data->{_id}, $f->{file_name});
             }
-        } @{$data->{file}}
-    }
-
-    map {
-        if($_->{name} eq "English" or $_->{name} eq "German"){
-            $_->{iso} = h->config->{lists}->{language_preselect}->{$_->{name}};
-    	} else {
-            $_->{iso} = h->config->{lists}->{language}->{$_->{name}};
-    	}
-    } @{$data->{language}};
-
-    if($data->{original_language}){
-    	foreach my $lang (@{$data->{original_language}}){
-    		if($lang->{name} eq "English" or $lang->{name} eq "German"){
-    			$lang->{iso} = h->config->{lists}->{language_preselect}->{$lang->{name}};
-    		}
-    		else {
-    			$lang->{iso} = h->config->{lists}->{language}->{$lang->{name}};
-    		}
-    	}
-    }
-
-    if($data->{abstract}){
-    	my $i = 0;
-    	foreach my $ab (@{$data->{abstract}}){
-    		if($ab->{lang} and !$ab->{text}){
-    			splice @{$data->{abstract}}, $i, 1;
-    		}
-    		$i++;
-    	}
+        } @{$data->{file}};
     }
 
     update_related_material($data);

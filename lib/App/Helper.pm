@@ -459,6 +459,7 @@ sub export_publication {
 
 		$options->{style} = $hits->{style} || 'default';
 	   	$options->{explinks} = params->{explinks};
+		@{$options->{fix}} = map {my $f = $_; join_path($self->config->{appdir},$f);} @{$options->{fix}};
 	   	my $content_type = $spec->{content_type} || mime->for_name($fmt);
 	   	my $extension = $spec->{extension} || $fmt;
 

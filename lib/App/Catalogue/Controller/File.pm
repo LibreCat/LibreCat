@@ -11,7 +11,7 @@ use File::Path qw/rmtree/;
 use File::Basename;
 use Exporter qw/import/;
 
-our @EXPORT = qw/new_file update_file delete_file handle_file/;
+our @EXPORT = qw/new_file update_file delete_file handle_file make_thumbnail/;
 
 my $upload_dir = h->config->{upload_dir};
 my $thumb_dir = h->config->{thumb_dir};

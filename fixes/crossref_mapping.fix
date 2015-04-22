@@ -16,8 +16,8 @@ trim('year')
 
 # identifier
 move_field('DOI','doi')
-move_field('ISSN','issn')
-move_field('ISBN','isbn')
+move_field('ISSN','publication_identifier.issn')
+move_field('ISBN','publication_identifier.isbn')
 replace_all('isbn.*','^http://id.crossref.org/isbn/(.*)',$1)
 
 # authors

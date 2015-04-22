@@ -7,6 +7,7 @@ App::Search::Route::ajax - handles routes for  asynchronous requests
 =cut
 
 use Catmandu::Sane;
+use Catmandu::Util qw(join_path);
 use Dancer qw/:syntax/;
 use Dancer::Plugin::Ajax;
 use App::Helper;
@@ -17,7 +18,7 @@ Web of Science 'Times Cited' information
 
 =cut
 ajax '/metrics/:id' => sub {
-    my $metrics = h->get_epmc('wos', params->{id});
+    my $metrics = h->get_metrics('wos', params->{id});
     return to_json {
         times_cited => $metrics->{times_cited},
         citing_url => $metrics->{citing_url},
@@ -37,13 +38,16 @@ ajax '/thumbnail/:id' => sub {
             system_path  => 1,
             content_type => 'image/png';
     } else {
-        status 'not_found';
+        #status 'not_found';
+        send_file join_path(h->config->{appdir},"public/images/bookDummy.png"),
+            system_path => 1,
+            content_type => 'image/png';
     }
 };
 
-ajax '/citiaton/:id/:fmt' => sub {
-    my $pub = h->publication->get(params->{id});
-    to_json {cit => export_to_string(....)};
-};
+#ajax '/citiaton/:id/:fmt' => sub {
+#    my $pub = h->publication->get(params->{id});
+#    to_json {cit => export_to_string($pub, '')};
+#};
 
 1;

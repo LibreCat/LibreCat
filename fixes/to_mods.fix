@@ -1,6 +1,3 @@
 # mods mapping
 
-# set default genre
-add_field('genre','article')
-
-add_field('host','http://pub.uni-bielefeld.de')
+publication_to_mods()

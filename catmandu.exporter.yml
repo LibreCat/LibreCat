@@ -39,18 +39,16 @@ publication:
     package: 'BibTeX'
     content_type: 'text/x-bibtex'
     options:
-      fix:
-        - publication_to_bibtex()
+      fix: ["fixes/to_bibtex.fix"]
     extension: bib
     label: BibTeX
   ris:
     package: 'RIS'
     content_type: 'application/x-research-info-systems'
     options:
-      fix:
-        - publication_to_ris()
+      fix: ["fixes/to_ris.fix"]
     label: 'RIS (reference software)'
-    extension: txt
+    extension: ris
   rtf:
     package: RTF
     content_type: 'application/rtf'
@@ -61,8 +59,7 @@ publication:
     content_type: 'application/rdf+xml'
     options:
       template: views/export/rdf.tt
-      fix:
-        - nothing()
+      fix: ["nothing()"]
       xml: true
     extension: xml
     label: RDF
@@ -70,8 +67,7 @@ publication:
     package: 'Template'
     content_type: application/xml
     options:
-      fix:
-        - publication_to_mods()
+      fix: ["fixes/to_mods.fix"]
       template: views/export/mods.tt
       xml: true
     extension: xml
@@ -90,16 +86,14 @@ publication:
     options:
       template: views/export/oai_dc.tt
       xml: true
-      fix:
-        - publication_to_dc()
+      fix: ["fixes/to_dc.fix"]
     extension: xml
     label: Dublin Core
   dc_json:
     package: 'JSON'
     content_type: 'application/oaidc+json'
     options:
-      fix:
-        - publication_to_dc()
+      fix: ["fixes/to_dc.fix"]
     extension: json
     label: 'DC JSON'
   csl_json:

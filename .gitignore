@@ -30,4 +30,5 @@ local/
 data/
 .vagrant/
 uploads/
+tmp/
 ~$
