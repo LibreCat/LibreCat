@@ -27,7 +27,7 @@ prefix '/myPUB/person' => sub {
 
 =cut
     get '/preference' => needs login => sub {
-        my $person = h->getPerson( session('personNumber') );
+        my $person = h->authority->get( session('personNumber') );
 #return to_dumper $person;
         #my $tmp = h->get_sort_style(params->{sort} || '', params->{style} || '');
         my $sort; my $tmp;
@@ -58,7 +58,7 @@ prefix '/myPUB/person' => sub {
         }
         
 #return to_dumper $person;
-        h->authority_user->add($person);
+        h->authority->add($person);
 
         redirect '/myPUB';
     };
@@ -72,13 +72,13 @@ prefix '/myPUB/person' => sub {
     post '/author_id' => needs login => sub {
 
         my $id = params->{_id};
-        my $person = h->authority_user->get( $id ) || {_id => $id};
+        my $person = h->authority->get( $id ) || {_id => $id};
         my @identifier = keys %{h->config->{lists}->{author_id}};
 
         map { $person->{$_} = params->{$_} ? params->{$_} : "" } @identifier;
         redirect '/myPUB' if keys %{$person} > 1;
 
-        my $bag = h->authority_user->add($person);
+        my $result = update_person($person);
 
         redirect '/myPUB';
 
@@ -93,11 +93,11 @@ prefix '/myPUB/person' => sub {
 =cut
     post '/edit_mode' => sub {
 
-        my $person     = h->authority_user->get( session('personNumber') );
+        my $person     = h->authority->get( session('personNumber') );
         my $type = params->{edit_mode};
         if($type eq "normal" or $type eq "expert"){
         	$person->{edit_mode} = $type;
-        	my $bag = h->authority_user->add($person);
+        	my $bag = h->authority->add($person);
         }
 
         redirect '/myPUB';

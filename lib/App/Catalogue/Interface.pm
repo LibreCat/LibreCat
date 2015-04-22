@@ -22,7 +22,7 @@ prefix '/myPUB' => sub {
 
 	get '/autocomplete_alias/:alias' => sub {
 		my $term = params->{'alias'} || "";
-		my $alias = h->authority_user->select("alias", $term)->to_array;
+		my $alias = h->authority->select("alias", $term)->to_array;
 
         return to_json {ok => $alias->[0] ? 0 : 1};
 	};

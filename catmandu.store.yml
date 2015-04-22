@@ -33,7 +33,7 @@ award:
   options:
     database_name: PUBAward
 
-authority:
+authority_old:
   package: MongoDB
   options:
     database_name: PUBAuthority
@@ -43,7 +43,23 @@ authority:
       user:
         plugins: ['Datestamps', 'Versioning']
       department:
-        plugins: ['Datestamps']
+        plugins: ['Datestamps', 'Versioning']
+
+authority:
+  package: MongoDB
+  options:
+    database_name: authority_new
+    bags:
+      data:
+        plugins: ['Datestamps', 'Versioning']
+
+department:
+  package: MongoDB
+  options:
+    database_name: PUBDepartment
+    bags:
+      data:
+        plugins: ['Datestamps','Versioning']
 
 metrics:
   package: MongoDB
@@ -949,7 +965,7 @@ search:
           proof: {type: string, index: not_analyzed}
           title: {type: string}
           organization: {type: string}
-          year: {type: date, format: year, include_in_all: true}
+          year: {type: string, include_in_all: true}
           honoree:
             properties:
               first_name: {type: string}

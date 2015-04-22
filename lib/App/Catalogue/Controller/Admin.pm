@@ -45,7 +45,7 @@ sub search_person {
         $query = { '$or' => [{"full_name" => qr/$p->{q}/i}, {"old_full_name" => qr/$p->{q}/i}] };
     }
 
-    my $hits = h->authority_admin->search(
+    my $hits = h->authority->search(
         query => $query,
         start => $p->{start} ||= 0,
         limit => $p->{limit}
@@ -71,22 +71,47 @@ sub update_person {
     $data->{old_full_name} = $data->{old_last_name} . ", " . $data->{old_first_name}
         if $data->{old_last_name} && $data->{old_first_name};
     $fixer->fix($data);
-    my @ids = keys %{h->config->{lists}->{author_id}};
+    #my @ids = keys %{h->config->{lists}->{author_id}};
 
-    my $user_data = {
-        _id => $data->{_id},
-    };
-    map { $user_data->{$_} = $data->{$_} } @ids;
-    h->authority_user->add($user_data);
-
-    delete $data->{$_} for @ids;
-    h->authority_admin->add($data);
+#    my $user_data = {
+#        _id => $data->{_id},
+#    };
+#    map { $user_data->{$_} = $data->{$_} } @ids;
+    
+    #my $old_rec = h->getPerson($data->{_id});
+    if($data->{orcid} and $data->{orcid} ne ""){
+    	my $hits = h->search_publication({q => ["person=$data->{_id}"], limit => 1000});
+    	foreach my $hit (@{$hits->{hits}}){
+    		if($hit->{author}){
+    			foreach my $author (@{$hit->{author}}){
+    				if($author->{id} and $author->{id} eq $data->{_id}){
+    					$author->{orcid} = $data->{orcid};
+    					h->publication->add($hit);
+    					h->publication->commit;
+    				}
+    			}
+    		}
+    		if($hit->{editor}){
+    			foreach my $editor (@{$hit->{editor}}){
+    				if($editor->{id} and $editor->{id} eq $data->{_id}){
+    					$editor->{orcid} = $data->{orcid};
+    					h->publication->add($hit);
+    					h->publication->commit;
+    				}
+    			}
+    		}
+    	}
+    }
+    
+    #h->authority_user->add($user_data);
+    #delete $data->{$_} for @ids;
+    h->authority->add($data);
 }
 
 sub edit_person {
     my $id = shift;
-    #return h->authority_admin->get($id);
-    return h->getPerson($id);
+    return h->authority->get($id);
+    #return h->getPerson($id);
 }
 
 sub delete_person {

@@ -97,7 +97,7 @@ prefix '/myPUB/admin' => sub {
     get '/account/import' => needs role => 'super_admin' => sub {
         my $id = trim params->{id};
 
-        my $person_in_db = h->authority_admin->get($id);
+        my $person_in_db = h->authority->get($id);
         if ($person_in_db) {
             template 'admin/account',
                 { error => "There is already an account with ID $id." };

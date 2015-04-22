@@ -24,8 +24,9 @@ if ( $opt_m ) {
 
 Catmandu->load(':up');
 my $conf = Catmandu->config;
-my $mongoBag = Catmandu->store('authority')->bag('admin');
-my $userBag = Catmandu->store('authority')->bag('user');
+#my $mongoBag = Catmandu->store('authority')->bag('admin');
+my $mongoBag = Catmandu->store('authority')->bag;
+#my $userBag = Catmandu->store('authority')->bag('user');
 my $bag = Catmandu->store('search', index_name => $index_name)->bag('researcher');
 
 my $pre_fixer = Catmandu::Fix->new(fixes => [
@@ -44,26 +45,35 @@ sub add_to_index {
 
 
 if ($opt_i){
-	my $researcher_admin = $mongoBag->get($opt_i);
-	my $researcher_user = $userBag->get($opt_i);
-
-	my @fields = qw(full_name old_full_name last_name old_last_name first_name old_first_name email department super_admin reviewer dataManager);
-	map {
-		$researcher_user->{$_} = $researcher_admin->{$_} if $researcher_admin->{$_};
-	} @fields;
-	add_to_index($researcher_user) if $researcher_user;
+#	my $researcher_admin = $mongoBag->get($opt_i);
+#	my $researcher_user = $userBag->get($opt_i);
+#
+#	my @fields = qw(full_name old_full_name last_name old_last_name first_name old_first_name email department super_admin reviewer dataManager);
+#	map {
+#		$researcher_user->{$_} = $researcher_admin->{$_} if $researcher_admin->{$_};
+#	} @fields;
+    my $researcher = $mongoBag->get($opt_i);
+    foreach (qw/email login/){
+    	delete $researcher->{$_};
+    }
+	#add_to_index($researcher_user) if $researcher_user;
+	add_to_index($researcher) if $researcher;
 	#print Dumper $researcher_user;
 }
 else { # initial indexing
 
 	my $allResearchers = $mongoBag->to_array;
-	foreach my $researcher_admin (@$allResearchers){
-		my $researcher_user = $userBag->get($researcher_admin->{_id});
-		my @fields = qw(full_name old_full_name last_name old_last_name first_name old_first_name email department super_admin reviewer dataManager);
-		map {
-			$researcher_user->{$_} = $researcher_admin->{$_} if $researcher_admin->{$_};
-		} @fields;
-		add_to_index($researcher_user) if $researcher_user;
+	foreach my $researcher (@$allResearchers){
+#		my $researcher_user = $userBag->get($researcher_admin->{_id});
+#		my @fields = qw(full_name old_full_name last_name old_last_name first_name old_first_name email department super_admin reviewer dataManager);
+#		map {
+#			$researcher_user->{$_} = $researcher_admin->{$_} if $researcher_admin->{$_};
+#		} @fields;
+        foreach (qw/email login/){
+        	delete $researcher->{$_};
+        }
+		#add_to_index($researcher_user) if $researcher_user;
+		add_to_index($researcher) if $researcher;
 		#print Dumper $researcher_user;
 	}
 }

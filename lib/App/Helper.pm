@@ -48,16 +48,12 @@ sub department {
 	state $bag = Catmandu->store('search')->bag('department');
 }
 
-sub authority_user {
-    state $bag = Catmandu->store('authority')->bag('user');
-}
-
-sub authority_admin {
-	state $bag = Catmandu->store('authority')->bag('admin');
+sub authority {
+	state $bag = Catmandu->store('authority')->bag;
 }
 
 sub authority_department {
-	state $bag = Catmandu->store('authority')->bag('department');
+	state $bag = Catmandu->store('department')->bag;
 }
 
 sub string_array {
@@ -276,15 +272,17 @@ sub getPerson {
 	my $user;
 	my $admin;
 	if($_[1] and $_[1] =~ /\d{1,}/){
-		$user = $_[0]->authority_user->get($_[1]);
-		$admin = $_[0]->authority_admin->get($_[1]);
-		return merge ( $admin, $user );
+		$user = $_[0]->authority->get($_[1]);
+		foreach (qw/email login/){
+			delete $user->{$_};
+		}
+		return $user;
 	}
 }
 
 sub getAccount {
 	if ($_[1]) {
-		$_[0]->authority_admin->select("login", $_[1])->to_array;
+		$_[0]->authority->select("login", $_[1])->to_array;
 	}
 }
 

@@ -104,7 +104,7 @@ Forwards to /person/:ID
 get qr{/person/(\w+)/*} => sub {
 	my ($alias) = splat;
 
-	my $person = h->authority_user->select("alias", $alias)->first;
+	my $person = h->authority->select("alias", $alias)->first;
 	if(!$person){
 		status '404';
 		template 'special_404', { path => request->path };
