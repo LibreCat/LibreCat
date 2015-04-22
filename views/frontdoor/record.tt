@@ -227,7 +227,7 @@
 	  <li class="hidden-md hidden-lg hidden-sm"><a href="#export">Export / Search</a></li>
 
 	  [% IF status == "public" %]
-	  <li class="navbar-right"><a class="mark btn btn-xs" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="fa fa-check-square-o fa-lg"></span> Unmark publication[% ELSE %]<span class="fa fa-square-o fa-lg"></span> Mark/Unmark publication for export[% END %]</a></li>
+	  <li class="navbar-right"><a class="mark btn btn-xs" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="fa fa-check-square-o fa-lg"></span> Mark/Unmark publication[% ELSE %]<span class="fa fa-square-o fa-lg"></span> Mark/Unmark publication for export[% END %]</a></li>
 	  [% END %]
 
 	</ul>
