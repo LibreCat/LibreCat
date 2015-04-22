@@ -30,7 +30,7 @@ ajax '/metrics/:id' => sub {
 Thumbnail for frontdoor
 
 =cut
-get '/thumbnail/:id' => sub {
+ajax '/thumbnail/:id' => sub {
     my $path = h->get_file_path(params->{id});
     my $thumb = join_path($path, 'thumbnail.png');
     if ( -e $thumb ) {
@@ -45,9 +45,9 @@ get '/thumbnail/:id' => sub {
     }
 };
 
-# ajax '/citiaton/:id/:fmt' => sub {
-#     my $pub = h->publication->get(params->{id});
-#     to_json {cit => export_to_string(....)};
-# };
+#ajax '/citiaton/:id/:fmt' => sub {
+#    my $pub = h->publication->get(params->{id});
+#    to_json {cit => export_to_string($pub, '')};
+#};
 
 1;

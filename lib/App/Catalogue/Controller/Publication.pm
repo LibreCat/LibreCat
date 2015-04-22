@@ -39,35 +39,6 @@ sub update_publication {
         } @{$data->{file}};
     }
 
-    map {
-        if($_->{name} eq "English" or $_->{name} eq "German"){
-            $_->{iso} = h->config->{lists}->{language_preselect}->{$_->{name}};
-    	} else {
-            $_->{iso} = h->config->{lists}->{language}->{$_->{name}};
-    	}
-    } @{$data->{language}};
-
-    if($data->{original_language}){
-    	foreach my $lang (@{$data->{original_language}}){
-    		if($lang->{name} eq "English" or $lang->{name} eq "German"){
-    			$lang->{iso} = h->config->{lists}->{language_preselect}->{$lang->{name}};
-    		}
-    		else {
-    			$lang->{iso} = h->config->{lists}->{language}->{$lang->{name}};
-    		}
-    	}
-    }
-
-    if($data->{abstract}){
-    	my $i = 0;
-    	foreach my $ab (@{$data->{abstract}}){
-    		if($ab->{lang} and !$ab->{text}){
-    			splice @{$data->{abstract}}, $i, 1;
-    		}
-    		$i++;
-    	}
-    }
-
     update_related_material($data);
 
     my $fixer = Catmandu::Fix->new(
