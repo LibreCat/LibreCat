@@ -3,10 +3,12 @@
 *****/
 
 /* sticky footer */
+@media screen {
 html,body,main{height:100%;}
 main{min-height:100%;height:auto!important;margin:0 auto -120px;}
 #push{height:160px;}
 footer{height:120px;}
+}
 
 /* top navbar */
 .navbar-default.backend{border-color:#b6c828;}
@@ -258,6 +260,13 @@ main{padding-top:40px;}
 .text-lg-right{text-align:right;}
 .uninav .dropdown-toggle{width:250px;}
 main{padding-top:50px;}
+}
+
+@media print {
+main{padding:0!important;}
+.breadcrumb,.col-sm-2.col-sm-offset-1,.col-md-3.col-md-offset-1,footer,.mark{display:none!important;}
+a[href^="/"]:after{content:" <http://pub.uni-bielefeld.de" attr(href) "> ";}
+a[href].label.label-primary:after,.citation-block-div a[href]:after,.nav-tabs a[href]:after,.pagination a[href]:after{content:"";}  
 }
 
 /*****
