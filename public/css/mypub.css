@@ -183,7 +183,6 @@ div.sticky span.label.label-default{background-color:transparent;border:1px soli
 
 input.has-error,.has-error input{background-color:#ffcfce;}
 .checkbox-inline input[type='checkbox']{margin-top:0;}
-.edit-form{border-bottom:1px solid lightgray;min-height:200px;padding-bottom:5px;}
 .reuse-license{padding-left:18px;padding-right:18px;}
 :-moz-placeholder,:-webkit-placeholder,:-ms-input-placeholder,[placeholder],.placeholder{color:#f00 !important;}
 .starMandatory:after{content:" *";font-size:18px;vertical-align:middle;color:#f00;font-weight:bold;}
@@ -264,7 +263,8 @@ main{padding-top:50px;}
 
 @media print {
 main{padding:0!important;}
-.breadcrumb,.col-sm-2.col-sm-offset-1,.col-md-3.col-md-offset-1,footer,.mark{display:none!important;}
+.tab-pane .col-sm-8{width:100%!important;}
+.breadcrumb,.col-sm-2.col-sm-offset-1,.col-md-3.col-md-offset-1,footer,.list-inline,.mark{display:none!important;}
 a[href^="/"]:after{content:" <http://pub.uni-bielefeld.de" attr(href) "> ";}
 a[href].label.label-primary:after,.citation-block-div a[href]:after,.nav-tabs a[href]:after,.pagination a[href]:after{content:"";}  
 }
