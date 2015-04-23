@@ -390,11 +390,11 @@ publicationTypes:
           label: "Series Title"
         volume_issue_page: &volume_issue_page
           label: "Vol. / Issue / Page"
-          placeholder_volume: "2"
+          placeholder_volume: "e.g. 3"
           label_volume: "Volume"
-          placeholder_issue: "5"
+          placeholder_issue: "e.g. 5"
           label_issue: "Issue"
-          placeholder_page: "12 - 20"
+          placeholder_page: "e.g. 12 - 20"
           label_page: "Page"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
@@ -445,6 +445,7 @@ publicationTypes:
         series_title_volume: *series_title_volume
         issue: &issue
           label: "Issue"
+          placeholder: "e.g. 5"
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
