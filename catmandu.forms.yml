@@ -185,6 +185,7 @@ publicationTypes:
         publication_identifier: &publication_identifier
           label: "Publication<br>Identifier"
           label_short: "Publication Identifier"
+          placeholder: "Select (e)ISBN or (e)ISSN and enter it here"
           multiple: 1
         publication_status_language: &publication_status_language
           label: "Status / Language"
@@ -202,6 +203,7 @@ publicationTypes:
           label: "<strong>Upload Main File(s) and Supplementary Material</strong> (max. 1000MB per file)"
         urn:
           label: "URN"
+          placeholder: "Enter an URN. A URN will be generated automatically if you upload a file!"
         ddc:
           label: DDC
         license:
@@ -222,7 +224,7 @@ publicationTypes:
         abstract: &abstract
           label: "Abstract"
           label2: "Abstract Language"
-          placeholder: "e.g. Abstract Text"
+          placeholder: "Abstract Text (you can use Markdown or MathJax for styling)"
           multiple: 1
         keyword: &keyword
           label: "Keywords"
@@ -230,9 +232,11 @@ publicationTypes:
         external_id: &external_id
           label: "External Identifier"
           label_short: "Ext. Id."
+          placeholder: "Select an Identifier (e.g. a PMID) and enter it here"
           multiple: 1
         message: &message
           label: "Comments"
+          placeholder: "Enter some comments for reviewer / admin"
         popular_science: &popular_science
           label: "Popular Science"
         thematic_area: &thematic_area
@@ -306,6 +310,7 @@ publicationTypes:
         doi: *doi
         title:
           label: "Chapter Title"
+          placeholder: "e.g. Soylent Green"
           mandatory: 1
         alternative_title: *alternative_title
         author: *author_translator
@@ -335,6 +340,7 @@ publicationTypes:
         series_title_volume: *series_title_volume
         publication:
           label: "Book Title"
+          placeholder: "e.g. Science Fiction Movies of the 20th Century"
           mandatory: 1
         year_extern: *year_extern
         publication_identifier: *publication_identifier
@@ -384,9 +390,9 @@ publicationTypes:
           label: "Series Title"
         volume_issue_page: &volume_issue_page
           label: "Vol. / Issue / Page"
-          placeholder_volume: ""
+          placeholder_volume: "2"
           label_volume: "Volume"
-          placeholder_issue: ""
+          placeholder_issue: "5"
           label_issue: "Issue"
           placeholder_page: "12 - 20"
           label_page: "Page"
@@ -869,8 +875,10 @@ publicationTypes:
         place: *place
         publication:
           label: "Book Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         series_title:
           label: "Journal Title"
+          placeholder: "e.g. Nature Genetics"
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
@@ -1113,8 +1121,10 @@ publicationTypes:
         publisher: *publisher
         publication:
           label: "Book Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         series_title:
           label: "Journal Title"
+          placeholder: "e.g. Lecture Notes of eBook Publishing"
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status: *publication_status
