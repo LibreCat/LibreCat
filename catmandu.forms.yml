@@ -147,7 +147,7 @@ publicationTypes:
           pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         edition: &edition
           label: "Edition"
-          placeholder: "2"
+          placeholder: "e.g. 2"
         department: &department
           label: "Department"
           label_short: "Dept."
@@ -175,7 +175,7 @@ publicationTypes:
             placeholder: "Published while not employed at UniBi"
         page: &page
           label: "Number of Pages"
-          placeholder: "e.g. 12"
+          placeholder: "e.g. 345"
         series_title_volume: &series_title_volume
           label: "Series Title/ Vol."
           placeholder_volume: "e.g. 3"
@@ -203,7 +203,7 @@ publicationTypes:
           label: "<strong>Upload Main File(s) and Supplementary Material</strong> (max. 1000MB per file)"
         urn:
           label: "URN"
-          placeholder: "Enter an URN. A URN will be generated automatically if you upload a file!"
+          placeholder: "e.g. urn:nbn:de:0070-pub-12345678 (a URN will be generated automatically if you upload a file!)"
         ddc:
           label: DDC
         license:
@@ -310,7 +310,7 @@ publicationTypes:
         doi: *doi
         title:
           label: "Chapter Title"
-          placeholder: "e.g. Soylent Green"
+          placeholder: "e.g. How to publish an ebook"
           mandatory: 1
         alternative_title: *alternative_title
         author: *author_translator
@@ -336,11 +336,11 @@ publicationTypes:
         publisher: *publisher
         page: &pages
           label: "Pages"
-          placeholder: "e.g. 12-24"
+          placeholder: "e.g. 12 - 20"
         series_title_volume: *series_title_volume
         publication:
           label: "Book Title"
-          placeholder: "e.g. Science Fiction Movies of the 20th Century"
+          placeholder: "e.g. Handbook of eBook Publishing"
           mandatory: 1
         year_extern: *year_extern
         publication_identifier: *publication_identifier
@@ -383,11 +383,13 @@ publicationTypes:
         alternative_title: *alternative_title
         publication:
           label: "Proceedings Title"
+          placeholder: "e.g. Proceedings of the 3rd Conference on Nano-Physics"
         year_extern: *year_extern
         place: *place
         publisher: *publisher
         series_title: &series_title
           label: "Series Title"
+          placeholder: "e.g. Lecture Notes of eBook Publishing"
         volume_issue_page: &volume_issue_page
           label: "Vol. / Issue / Page"
           placeholder_volume: "e.g. 3"
@@ -405,7 +407,7 @@ publicationTypes:
           placeholder: "e.g. 3rd Conference on Nano-Physics"
         conference.location: &conference_location
           label: "Conference Location"
-          placeholder: "Berlin"
+          placeholder: "e.g. Berlin"
         conference.date: &conference_date
           label: "Conference Date"
           label_start: "Start"
@@ -452,10 +454,10 @@ publicationTypes:
         conference.divider:
           label: "Conference Details"
         conference.name:
-          label: "Name"
+          label: "Conference Name"
           placeholder: "e.g. 3rd Conference on Nano-Physics"
         conference.location:
-          label: "Location"
+          label: "Conference Location"
           placeholder: "e.g. Berlin"
         conference.date: *conference_date
       file_upload: *file_upload
@@ -499,6 +501,7 @@ publicationTypes:
         volume_issue_page: *volume_issue_page
         publication:
           label: "Proceedings Title"
+          placeholder: "e.g. Proceedings of the 3rd Conference on Nano-Physics"
         series_title: *series_title
         year_extern: *year_extern
         publication_identifier: *publication_identifier
@@ -581,6 +584,7 @@ publicationTypes:
         title:
           label: "Article Title"
           mandatory: 1
+          placeholder: "e.g. Online-Publishing"
         author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
@@ -589,6 +593,7 @@ publicationTypes:
         publication:
           label: "Book Title"
           mandatory: 1
+          placeholder: "e.g. Encyclopedia on Publishing"
         publisher: *publisher
         series_title_volume: *series_title_volume
         place: *place
@@ -617,7 +622,7 @@ publicationTypes:
         title:
           mandatory: 1
           label: "Article Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          placeholder: "e.g. The implications of eBook Publishing"
         alternative_title: *alternative_title
         author: *author_translator
         department: *department
@@ -702,7 +707,7 @@ publicationTypes:
         title:
           mandatory: 1
           label: "Article Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          placeholder: "e.g. The implications of eBook Publishing"
         department: *department
         project: *project
         year_extern: *year_extern
@@ -714,7 +719,7 @@ publicationTypes:
         issue: *issue
         publication:
           label: "Newspaper Title"
-          placeholder: "Frankfurter Allgemeine Zeitung"
+          placeholder: "e.g. The New York Times"
           mandatory: 1
         alternative_title: *alternative_title
         publication_identifier: *publication_identifier
@@ -751,6 +756,7 @@ publicationTypes:
           pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         applicant:
           label: "Applicant"
+          placeholder: "e.g. John Appleseed"
         department: *department
         project: *project
         year_extern: *year_extern
@@ -771,6 +777,7 @@ publicationTypes:
         ipc:
           label: "International Patent<br>Classification"
           label_short: "IPC"
+          placeholder: "e.g. B25J 7/00"
           mandatory: 1
         language:
           label: "Language"
@@ -795,7 +802,7 @@ publicationTypes:
         title:
           mandatory: 1
           label: "Article Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          placeholder: "e.g. The implications of eBook Publishing"
         publication: &publication_jtitle
           label: "Journal Title"
           placeholder: "e.g. Nature Genetics"
@@ -828,7 +835,7 @@ publicationTypes:
         title:
           mandatory: 1
           label: "Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          placeholder: "e.g. Technical report employer survey Project B3"
         author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
@@ -842,6 +849,7 @@ publicationTypes:
         publication_identifier: *publication_identifier
         report_number:
           label: "Report Number"
+          placeholder: "e.g. NASA/TM-2015-123456"
         page: *page
         publication_status_language: *publication_status_language
       file_upload: *file_upload
@@ -1028,11 +1036,11 @@ publicationTypes:
           mandatory: 1
           label: "Book Title (Translation)"
           label_short: "Title (Trans.)"
-          placeholder: "Handbuch des eBook Publishings"
+          placeholder: "e.g. Handbuch des eBook Publishings"
         alternative_title:
           label: "Book Title (Original)"
           label_short: "Title (Orig)"
-          placeholder: "Handbook of eBook Publishing"
+          placeholder: "e.g. Handbook of eBook Publishing"
         translator:
           first_name:
             placeholder: "e.g. John"
@@ -1151,7 +1159,7 @@ publicationTypes:
         title:
           mandatory: 1
           label: "Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          placeholder: "e.g. Working Paper on eBook Publishing"
         alternative_title: *alternative_title
         author: *author_translator
         editor: *editor_only
@@ -1216,7 +1224,7 @@ publicationTypes:
         title:
           mandatory: 1
           label: "Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          placeholder: "e.g. Strategic aspects of eBook Publishing in the Life Sciences"
         language: &language_diss
           label: "Language"
           default: "eng"
@@ -1247,12 +1255,15 @@ publicationTypes:
         keyword: *keyword
         pacs_class: &pacs
           label: "PACS Code"
+          placeholder: "Physics and Astronomy Classification Scheme, e.g. 97.82.Fs"
           multiple: 1
         msc_class: &msc
           label: "MSC Code"
+          placeholder: "Mathematics Subject Classification, e.g. 85A20"
           multiple: 1
         ccs_class: &ccs
           label: "CCS Code"
+          placeholder: "Computing Classification System, e.g. Data Mining"
           multiple: 1
         message: *message
       related_material: *related_material

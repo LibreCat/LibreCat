@@ -36,7 +36,7 @@
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.pacs_class.mandatory OR fields.supplementary_fields.pacs_class.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon">{% fields.basic_fields.pacs_class.label %}{% fields.supplementary_fields.pacs_class.label %}</div>
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.pacs_class.label %}{% fields.supplementary_fields.pacs_class.label %}</div>
           <input type="text" name="pacs_class" id="pacs_class_0" value="" class="sticky form-control{% IF fields.basic_fields.pacs_class.mandatory OR fields.supplementary_fields.pacs_class.mandatory %} required{% END %}" placeholder="{% fields.basic_fields.pacs_class.placeholder %}{% fields.supplementary_fields.pacs_class.placeholder %}"{% IF fields.basic_fields.pacs_class.readonly OR fields.supplementary_fields.pacs_class.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon"></div>
         </div>

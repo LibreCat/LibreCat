@@ -10,7 +10,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.file_upload.urn.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% fields.file_upload.urn.label %}</div>
-          <input type="text" name="urn" id="id_urn" value="[% urn | html %]" placeholder="{% fields.basic_fields.urn.placeholder %}{% fields.supplementary_fields.urn.placeholder %}" class="sticky form-control{% IF fields.file_upload.urn.mandatory %} required{% END %}"{% IF fields.file_upload.urn.readonly %} readonly="readonly"{% END %}/>
+          <input type="text" name="urn" id="id_urn" value="[% urn | html %]" placeholder="{% fields.basic_fields.urn.placeholder %}{% fields.supplementary_fields.urn.placeholder %}" class="sticky form-control{% IF fields.file_upload.urn.mandatory %} required{% END %}"{% IF fields.file_upload.urn.readonly %} readonly="readonly" title="The URN was generated automatically and cannot be changed"{% END %}/>
           <div class="input-group-addon"></div>
         </div>
       </div>
