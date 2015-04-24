@@ -177,11 +177,11 @@ publicationTypes:
           label: "Number of Pages"
           placeholder: "e.g. 345"
         series_title_volume: &series_title_volume
-          label: "Series Title/ Vol."
-          placeholder_volume: "e.g. 3"
-          label_volume: "Volume"
-          placeholder_series_title: "e.g. Lecture Notes in Computer Science"
+          label: "Series Title / Volume"
           label_series_title: "Series Title"
+          placeholder_series_title: "Series Title, e.g. Lecture Notes in Computer Science"
+          label_volume: "Volume"
+          placeholder_volume: "Volume, e.g. 3"
         publication_identifier: &publication_identifier
           label: "Publication<br>Identifier"
           label_short: "Publication Identifier"
@@ -560,10 +560,6 @@ publicationTypes:
         series_title_volume: *series_title_volume
         publisher: *publisher
         publication_identifier: *publication_identifier
-        publication: &publication_series
-          label: "Series Title"
-          label_short: "Series Title"
-          placeholder: "e.g. Lecture Notes in Computer Science"
         publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
