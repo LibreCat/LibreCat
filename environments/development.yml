@@ -1,9 +1,8 @@
 # configuration for development environment
-plack_middlewares:
-  -
-    - ConsoleLogger
-
 log: "debug"
+logger: file
+log_path: logs/development.log
+logger_format: %T [%{method}h] %h -- [%{accept_type}h]
 show_errors: 1
 warnings: 1
 traces: 1
