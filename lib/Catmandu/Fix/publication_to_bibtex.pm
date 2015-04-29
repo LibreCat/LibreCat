@@ -3,7 +3,8 @@ package Catmandu::Fix::publication_to_bibtex;
 use Catmandu::Sane;
 use Moo;
 use Catmandu::Util qw(:array trim);
-use Dancer qw(:syntax config);
+#use Dancer qw(:syntax config);
+use App::Helper;
 
 my $TYPES = {
     book             => 'book',
@@ -23,6 +24,7 @@ sub fix {
     my $bib;
     $bib->{_citekey} = "PUB_" . $pub->{_id};
     $bib->{_type} = $type;
+    $bib->{url} = h->host . "/".$pub->{_id};
     $bib->{title} = $pub->{title} if $pub->{title};
     $bib->{language} = $pub->{language}->[0]->{name} if $pub->{language}->[0]->{name};
     $bib->{keyword} = join (', ', @{$pub->{keyword}}) if $pub->{keyword};
@@ -65,10 +67,6 @@ sub fix {
 
     if ($val = $pub->{issn} and @$val) {
         $bib->{issn} = $val->[0];
-    }
-
-    if ($val = $pub->{link}) {
-   	    $bib->{url} = $val->[0]->{url};
     }
 
     if ($val = $pub->{abstract} and @$val) {
