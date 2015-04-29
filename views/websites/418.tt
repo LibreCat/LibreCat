@@ -1,4 +1,8 @@
 [% INCLUDE header.tt %]
+[% path = request.path %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
 
 <div class="row"><!-- outer border -->
 

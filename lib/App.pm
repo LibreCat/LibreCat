@@ -104,7 +104,7 @@ any '/access_denied' => sub {
     template 'websites/403', {path => request->path};
 };
 
-any '/coffee' => sub {
+any qr{(/en)*/coffee} => sub {
 	status '418';
 	template 'websites/418';
 };
