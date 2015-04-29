@@ -168,7 +168,7 @@
 	    [% ELSE %]
 	    <div class="img-thumbnail text-center">
 		<p><span class="fa fa-ban fa-3x fw"></span></p>
-		<p>No full text uploaded in PUB yet</p>
+		<p>No file uploaded in PUB yet</p>
 	    </div>[% END %]
 	  [% END %]
       </div>
