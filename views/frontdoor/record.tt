@@ -60,25 +60,26 @@
 [% qp = request.params.hash %]
 [% style = qp.style || 'default' %]
 
-<div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/publication/[% _id %]"><!-- outer border -->
+<div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/publication/[% _id %]"><!-- outer row-->
 
-  <div class="col-md-10 col-sm-12 col-md-offset-1">
+  <div class="col-md-10 col-sm-12 col-md-offset-1"><!-- outer col -->
 
-    <div[% IF _id %] class="page-header"[% END %] id="banner">
+    <div class="page-header" id="banner">
 
       <ul class="breadcrumb">
-	    <li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back to previous page</a></li>
-	    <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">Logout</span></a>[% ELSE %]<a href="/login" title="Login (myPUB)"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a>[% END %]</li>
-          [% IF session AND session.user %]<li class="navbar-right"><a href="/myPUB" title="[% lang ? "Logged in as:" : "Angemeldet als:" %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">(myPUB)</span></span></a></li>[% END %]
+	<li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back to previous page</a></li>
+	<li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">Logout</span></a>[% ELSE %]<a href="/login" title="Login (myPUB)"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a>[% END %]</li>
+	[% IF session AND session.user %]<li class="navbar-right"><a href="/myPUB" title="[% lang ? "Logged in as:" : "Angemeldet als:" %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">(myPUB)</span></span></a></li>[% END %]
       </ul>
 
+      [% IF _id %]
       <h1 class="cmark" itemprop="name">[% title %][% IF status != "public" AND _id %] <a class="btn btn-sm btn-success" href="/myPUB/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> Make public</a> [% END %]</h1>
-
-      [% IF !_id %]
+      [% ELSE %]
       <h1>This record does not exist or was deleted</h1>
-      [% STOP %]
       [% END %]
     </div>
+
+    [% IF _id %]
 
     <div class="row margin-bottom1">
 
@@ -169,8 +170,9 @@
 	    <div class="img-thumbnail text-center">
 		<p><span class="fa fa-ban fa-3x fw"></span></p>
 		<p>No file uploaded in PUB yet</p>
-	    </div>[% END %]
+	    </div>
 	  [% END %]
+      [% END %]
       </div>
 
     </div><!-- row -->
@@ -454,10 +456,13 @@
 
     </div><!-- row tabs and right info menu -->
 
-  </div><!-- span11 offset1 main content -->
+    [% END %]<!-- _id -->
 
-</div><!-- outer border -->
+  </div><!-- outer col -->
 
+</div><!-- outer row-->
+
+[% IF _id %]
 <script>
 $.getJSON("/metrics/[% _id %]").done(function( data ) {
     $('#wos').after('<a href="'+ data.citing_url +'" target="_parent">Web of Science&reg; Times Cited: <strong class="wos-times-cited">'+ data.times_cited +'</strong></a></li><br>');
@@ -466,6 +471,7 @@ $("#thumbnail").attr("src","/thumbnail/[% _id %]").load(function(){
     console.log("boom shaka laka: thumbnail loaded");
 });
 </script>
+[% END %]
 
 <!-- END frontdoor/record.tt -->
 
