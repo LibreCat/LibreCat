@@ -162,9 +162,10 @@
 
       <div class="col-sm-3 col-sm-offset-1 text-sm-right">
       [% IF bag != "data" %]
+	    [% IF fi %]
 	    <a itemprop="thumbnailUrl" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"><img id="thumbnail" style="height:200px;" class="img-thumbnail" alt="Open/Download Document"></a>
 <!--	    <img src="/images/bookDummy.png" style="height:120px;" class="img-thumbnail" alt="Open/Download Document"> -->
-	  	[% IF !fi %]
+	    [% ELSE %]
 	    <div class="img-thumbnail text-center">
 		<p><span class="fa fa-ban fa-3x fw"></span></p>
 		<p>No full text uploaded in PUB yet</p>
