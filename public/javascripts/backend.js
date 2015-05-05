@@ -157,8 +157,7 @@ function linkPevz(element){
 			narrowurl = puburl + longurl;
 		}
 
-		$.get(narrowurl, function(response) {
-			var objJSON = eval("(function(){return " + response + ";})()");
+		$.get(narrowurl, function(objJSON) {
 
 			// If only one hit... fill out fields and change img to green
 			if(objJSON.length == 1 && (!objJSON[0].old_full_name || !objJSON[0].full_name)){
@@ -312,7 +311,7 @@ function linkPevz(element){
 				container_title.append(title);
 				$('#' + type + 'linkPevzModal').modal("show");
 			}
-		});
+		}, "json");
 	}
 	else {
 		var orig_first_name = "";
