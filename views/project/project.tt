@@ -3,7 +3,7 @@
 <!-- BEGIN project/project.tt -->
 
 <div class="row" itemscope itemtype="http://schema.org/webpage" itemid="project/[% _id %]"><!-- outer border -->
-  <div class="col-md-10 col-sm-12 col-md-offset-1">
+  <div class="col-md-11 col-sm-12">
     <div class="page-header" id="banner">
 
       <ol class="breadcrumb">

@@ -62,7 +62,7 @@
 
 <div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/publication/[% _id %]"><!-- outer row-->
 
-  <div class="col-md-10 col-sm-12 col-md-offset-1"><!-- outer col -->
+  <div class="col-md-11 col-sm-12"><!-- outer col -->
 
     <div class="page-header" id="banner">
 
