@@ -32,6 +32,7 @@
       [% END %]
       
       [% IF rec_type == "record" %]
+      <input type="hidden" name="rec_type" value="record" />
       {% FOREACH key IN preis_field_order %}
 {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
