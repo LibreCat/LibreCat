@@ -92,6 +92,7 @@ field_order:
     - genbank
     - popular_science
     - quality_controlled
+    - popular_science_quality_controlled
     - ubi_funded
     - message
   file_upload:
@@ -110,6 +111,8 @@ field_order:
     - nasc
     - thematic_area
     - popular_science
+    - quality_controlled
+    - popular_science_quality_controlled
     - external_id
     - message
     - ubi_funded
@@ -237,8 +240,11 @@ publicationTypes:
         message: &message
           label: "Comments"
           placeholder: "Enter some comments for reviewer / admin"
-        popular_science: &popular_science
-          label: "Popular Science"
+        popular_science_quality_controlled: &popular_science_quality_controlled
+          popular_science:
+            label: "Popular Science"
+          quality_controlled:
+            label: "Quality Controlled"
         thematic_area: &thematic_area
           label: "Thematic Area"
           label_short: "Them. Area"
@@ -298,7 +304,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
       related_material: *related_material
   bookchapter:
@@ -352,7 +358,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
       related_material: *related_material
   conferenceabstract:
@@ -423,7 +429,7 @@ publicationTypes:
         external_id: *external_id
         message: *message
         thematic_area: *thematic_area
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
       related_material: *related_material
   conferenceeditor:
     label: "Conference (Editor)"
@@ -466,7 +472,7 @@ publicationTypes:
         keyword: *keyword
         abstract: *abstract
         external_id: *external_id
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
       related_material: *related_material
@@ -517,7 +523,7 @@ publicationTypes:
         keyword: *keyword
         abstract: *abstract
         external_id: *external_id
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
       related_material: *related_material
@@ -606,7 +612,7 @@ publicationTypes:
         external_id: *external_id
         message: *message
         thematic_area: *thematic_area
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
       related_material: *related_material
   journalarticle:
     label: "Journal Article"
@@ -644,7 +650,7 @@ publicationTypes:
         tab_name: "Additional Information"
         abstract: *abstract
         keyword: *keyword
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         external_id: *external_id
         nasc: &nasc
           label: "NASC Seedstock ID"
@@ -689,7 +695,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
       related_material: *related_material
@@ -725,7 +731,8 @@ publicationTypes:
         tab_name: "Additional Information"
         external_id: *external_id
         keyword: *keyword
-        popular_science: *popular_science
+        popular_science: &popular_science
+          label: "Popular Science"
         message: *message
         thematic_area: *thematic_area
       related_material: *related_material
@@ -788,6 +795,8 @@ publicationTypes:
         external_id: *external_id
         message: *message
         thematic_area: *thematic_area
+        quality_controlled:
+          label: "Quality Controlled"
       related_material: *related_material
   preprint:
     label: "Preprint"
@@ -854,7 +863,7 @@ publicationTypes:
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
       related_material: *related_material
@@ -890,7 +899,7 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         keyword: *keyword
         external_id: *external_id
         message: *message
@@ -1081,7 +1090,7 @@ publicationTypes:
         keyword: *keyword
         message: *message
         thematic_area: *thematic_area
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
       related_material: *related_material
   translationchapter:
     label: "Translation (Chapter)"
@@ -1138,7 +1147,7 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
