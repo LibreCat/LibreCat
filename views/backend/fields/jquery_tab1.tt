@@ -157,6 +157,28 @@ $('.change_tab').click(function(e){
       }
     }
   }
+  
+  if($('#id_ddc').length){
+    if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#select_ddc_0').val() || $('#select_ddc_0').val() == "")){
+      $('#select_ddc_0').addClass('has-error');
+      $('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
+      check_license = 0;
+      e.preventDefault();
+    }
+    else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && (!$('#select_ddc_0').val() || $('#select_ddc_0').val() == "")){
+      $('#select_ddc_0').addClass('has-error');
+      $('#select_ddc_0').closest('div.input-group').addClass("has-error");
+      check_license = 0;
+      e.preventDefault();
+    }
+    else {
+      if($('.dropzone').first().children().length == 1){
+        if($('#select_ddc_0').val() && $('#select_ddc_0').val() != ""){
+          $('#select_ddc_0').val("");
+        }
+      }
+    }
+  }
   }
   
   if(!check || !check_license){

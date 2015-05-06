@@ -105,6 +105,10 @@ $(document).ready(function(){
 	                $("#licenses").find('div.alert-info.mandatory').addClass('alert-danger');
 	                $("#licenses").find('div.alert-info.mandatory').removeClass('alert-info');
 	                $("#licenses").find('input[name="accept"]').attr('checked', false);
+	                $('#select_ddc_0').addClass('mandatory');
+	                $('#select_ddc_0').closest('div.input-group').addClass('mandatory');
+	                $('#select_ddc_0').addClass('has-error');
+	                $('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
 	              }
 	              
 	              file.previewElement.setAttribute("id", resp.tempid);

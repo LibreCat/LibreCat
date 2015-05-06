@@ -204,11 +204,6 @@ publicationTypes:
         tab_name: "File Upload"
         dropzone_mainDoc:
           label: "<strong>Upload Main File(s) and Supplementary Material</strong> (max. 1000MB per file)"
-        urn:
-          label: "URN"
-          placeholder: "e.g. urn:nbn:de:0070-pub-12345678 (a URN will be generated automatically if you upload a file!)"
-        ddc:
-          label: DDC
         license:
           pub_license:
             mandatory: 1
@@ -222,6 +217,11 @@ publicationTypes:
           cc_license:
             mandatory: 0
             label: "Creative Commons Licenses"
+          urn:
+            label: "URN"
+            placeholder: "e.g. urn:nbn:de:0070-pub-12345678 (a URN will be generated automatically if you upload a file!)"
+          ddc:
+            label: DDC
       supplementary_fields:
         tab_name: "Additional Information"
         abstract: &abstract

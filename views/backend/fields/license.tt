@@ -3,6 +3,14 @@
     <a href="#file_upload" data-target="#licenses" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span><strong>Copyright and Licenses</strong></a><br />
 
     <div id="licenses" class="collapse[% IF file %] in[% END %]">
+    
+      {% IF fields.file_upload.license.ddc %}
+      {% INCLUDE fields/ddc.tt %}
+      {% END %}
+      
+      {% IF fields.file_upload.license.urn %}
+      {% INCLUDE fields/urn.tt %}
+      {% END %}
 
       {% IF fields.file_upload.license.data_reuse_license %}
       <strong>{% fields.file_upload.license.data_reuse_license.label %}</strong>[% IF file %]<span class="starMandatory"></span>[% END %]
