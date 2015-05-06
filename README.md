@@ -21,7 +21,7 @@ $ sudo apt-get install elasticsearch mongodb
 ### Get the sources
 
 ```
-# you need the resursive flag to get the git submodules
+# you need the recursive flag to get the git submodules
 $ git clone --recursive git@gitlab.ub.uni-bielefeld.de:vpeil/app-repository.git
 
 $ cd app-repository
