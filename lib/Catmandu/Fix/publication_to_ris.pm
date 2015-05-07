@@ -3,6 +3,7 @@ package Catmandu::Fix::publication_to_ris;
 use Catmandu::Sane;
 use Moo;
 use Catmandu::Util qw/trim/;
+use App::Helper;
 
 my $TYPES = {
     book => 'BOOK',
@@ -29,7 +30,7 @@ sub fix {
     $ris->{IS} = $pub->{issue} if $pub->{issue};
     $ris->{KW} = $pub->{keyword} if $pub->{keyword};
     $ris->{PY} = $pub->{year} if $pub->{year};
-    $ris->{U3} = "PUB:ID $pub->{_id}";
+    $ris->{UR} = h->host . "/". $pub->{_id};
     $ris->{PB} = $pub->{publisher} if $pub->{publisher};
 
     my $val;
@@ -66,18 +67,6 @@ sub fix {
         $ris->{SN} = $val->[0];
     } elsif ($val = $pub->{issn} and @$val) {
         $ris->{SN} = $val->[0];
-    }
-
-    if ($val = $pub->{isi}) {
-        $ris->{U1} = "wos:id $val";
-    }
-
-    if ($pub->{doi}) {
-        push @{ $ris->{UR} },"http://dx.doi.org/$pub->{doi}";
-    }
-
-    if ( $pub->{urn} ) {
-        push @{ $ris->{UR} }, "http://nbn-resolving.de/" . $pub->{urn};
     }
 
     $ris;

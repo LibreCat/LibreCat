@@ -1,42 +1,39 @@
-# App::Catalog - the new amazing repository backend
-
-## Features
-
-### Template Generator
-
-### Interfaces
-
-- SRU
-- OAI
-- REST
-- (Content negotiation)
-
-### Catalogueing module
-
-backend
-
-### Search module
-
-frontend
+# LibreCat - the new amazing repository
 
 ## Installation
 
-1) You need
+### Prereqs
 
-    - a running instance of [Elasticsearch](http://elasticsearch.org)
-    - a running instance of [MongoDB](http://mongodb.org)
-    - citation style engine?
-    - some system packages, see [here for more information](_wiki_)
-    - cpanm, the cpan client for perl
+install OS packages as described here: https://github.com/LibreCat/Catmandu/wiki/Installation, e.g. on debian
 
-2) Now do the following:
+```
+$ sudo apt-get install build-essential libexpat1-dev \
+libssl-dev libxml2-dev libxslt1-dev libgdbm-dev imagemagick cpanminus
+```
 
-    $ git clone *this*
-    $ cd *this*
-    $ cpanm --notest --installdeps .
+install [Elasticsearch](http://elasticsearch.org) and [MongoDB](http://mongodb.org)
 
-3) Congrats, you're done! Now, start the webserver:
-
-    $ perl bin/app.pl
+```
+$ sudo apt-get install elasticsearch mongodb
+```
 
 
+### Get the sources
+
+```
+# you need the resursive flag to get the git submodules
+$ git clone --recursive git@gitlab.ub.uni-bielefeld.de:vpeil/app-repository.git
+
+$ cd app-repository
+
+# --notest is just for a quick install
+$ cpanm --notest --installdeps .
+```
+
+### Congrats, you're done! Now, start the webserver
+
+```
+$ plackup -E development bin/app.pl
+```
+
+and point your browser to http://localhost:5000/.

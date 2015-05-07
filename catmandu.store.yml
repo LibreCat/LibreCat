@@ -14,26 +14,14 @@ backup:
   options:
     database_name: PUBBackup
     bags:
-      publication:
+      publication: &backup_settings
         plugins: ['Datestamps', 'Versioning']
         version_compare_ignore:
           - date_updated
-      award:
-        plugins: ['Datestamps', 'Versioning']
-        version_compare_ignore:
-          - date_updated
-
-authority_old:
-  package: MongoDB
-  options:
-    database_name: PUBAuthority
-    bags:
-      admin:
-        plugins: ['Datestamps', 'Versioning']
-      user:
-        plugins: ['Datestamps', 'Versioning']
-      department:
-        plugins: ['Datestamps', 'Versioning']
+      award: *backup_settings
+      project: *backup_settings
+      authority: *backup_settings
+      department: *backup_settings
 
 authority:
   package: MongoDB
