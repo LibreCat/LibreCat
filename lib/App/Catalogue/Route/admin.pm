@@ -168,13 +168,13 @@ prefix '/myPUB/admin' => sub {
     
     get '/award/new/record' => needs role => 'super_admin' => sub {
     	my $hits;
-    	my $mongoBag = Catmandu->store('award');
+    	#my $mongoBag = Catmandu->store('award');
     	my $award = h->search_award({q => "rectype<>record", limit => 1000});
-       	my $ids = $mongoBag->pluck("_id")->to_array;
+       	my $ids = h->award->to_array;
     	my @newIds;
     	foreach (@$ids){
-    		$_ =~ s/^AW//g;
-    		push @newIds, $_;
+    		$_->{_id} =~ s/^AW//g;
+    		push @newIds, $_->{_id};
     	}
     	@newIds = sort {$a <=> $b} @newIds;
     	my $idsLength = @newIds;
@@ -191,12 +191,12 @@ prefix '/myPUB/admin' => sub {
     
     get '/award/new/award' => needs role => 'super_admin' => sub {
     	my $hits;
-    	my $mongoBag = Catmandu->store('award');
-       	my $ids = $mongoBag->pluck("_id")->to_array;
+    	#my $mongoBag = Catmandu->store('award');
+       	my $ids = h->award->to_array;
     	my @newIds;
     	foreach (@$ids){
-    		$_ =~ s/^AW//g;
-    		push @newIds, $_;
+    		$_->{_id} =~ s/^AW//g;
+    		push @newIds, $_->{_id};
     	}
     	@newIds = sort {$a <=> $b} @newIds;
     	my $idsLength = @newIds;
@@ -208,6 +208,12 @@ prefix '/myPUB/admin' => sub {
     	$hits->{"new"} = 1;
     	
     	template 'admin/forms/edit_award', $hits;
+    };
+    
+    post '/award/update' => needs role => 'super_admin' => sub {
+    	my $params = params;
+    	my $return = update_award($params);
+    	return to_dumper $return;
     };
     
     # manage departments

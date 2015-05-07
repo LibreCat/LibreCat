@@ -23,16 +23,6 @@ backup:
         version_compare_ignore:
           - date_updated
 
-project:
-  package: MongoDB
-  options:
-    database_name: PUBProject
-
-award:
-  package: MongoDB
-  options:
-    database_name: PUBAward
-
 authority_old:
   package: MongoDB
   options:
@@ -1140,27 +1130,68 @@ search:
           old_first_name: {type: string}
           bis:
             properties:
-              personTitle: {type: string}
+              title: {type: string}
               former: {type: byte}
-              nonExist: {type: byte}
+              nonexist: {type: byte}
               forschend: {type: byte}
+              email: {type: string, index: not_analyzed}
+              photo: {type: string, index: not_analyzed}
           department:
             properties:
               id: {type: string, analyzer: tag}
               name: {type: string, include_in_all: true}
+          reviewer:
+            properties:
+              id: {type: string, analyzer: tag}
+              name: {type: string}
+          access:
+            properties:
+              id: {type: string, anylzer: tag}
+              name: {type: string}
+          delegate: {type: string, analyzer: tag}
+          data_manager:
+            properties:
+              id: {type: string, anylzer: tag}
+              name: {type: string}
           date_updated: {type: string, analyzer: datestring}
-          orcid: {type: string}
+          account_status: {type: string, analyzer: tag}
+          super_admin: {type: byte}
+          login: {type: string, analyzer: tag}
+          account_type: {type: string}
+          ext_institution: {type: string}
+          password: {type: string}
+#          email: {type: string, analyzer: tag}
+#          sort: {type: string}
+          orcid: {type: string, analyzer: tag}
+          inspire: {type: string, analyzer: tag}
+          arxiv: {type: string, analyzer: tag}
+          googleScholar: {type: string, analyzer: tag}
+          github: {type: string, analyzer: tag}
+          researcherId: {type: string, analyzer: tag}
+          authorClaim: {type: string, analyzer: tag}
+          scopusId: {type: string, analyzer: tag}
+          alias: {type: string, analyzer: tag}
 
       department:
         include_in_all: false
         properties:
           _id: {type: string, include_in_all: true}
+          date_created: {type: date, format: date_time_no_millis}
+          date_updated: {type: date, format: date_time_no_millis}
           name:
             type: multi_field
             fields:
               name: {type: string}
               exact: {type: string, analyzer: tag}
-          parent: {type: string, analyzer: tag}
+          name_lc:
+            type: multi_field
+            fields:
+              name_lc: {type: string}
+              exact:  {type: string, analyzer: tag}
+          tree:
+            properties:
+              id: {type: string, analyzer: tag}
+              name: {type: string}
 
 default_page_size: 100
 default_searchpage_size: 10
