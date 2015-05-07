@@ -107,7 +107,7 @@ get qr{/person/(\w+)/*} => sub {
 	my $person = h->authority->select("alias", $alias)->first;
 	if(!$person){
 		status '404';
-		template 'special_404', { path => request->path };
+		template 'websites/404', { path => request->path };
 	}
 	else {
 		forward "/person/$person->{_id}";
