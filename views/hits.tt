@@ -77,7 +77,7 @@
     </div>
   </div>
 [% ELSIF request.path == "/marked" OR request.path.match("/person") %]
-  <div class="col-md-1 text-center">
+  <div class="col-md-1">
     [% UNLESS request.path == "/marked" %][[% num - n %]] [% n = n +1 %]<br />[% END %]
     [% IF !backend %]<a [% IF request.path == "/marked" %]id="clickme_[% n %]" [% END %]class="mark btn btn-xs padding0" data-marked="[% h.is_marked(entry._id) %]" data-id="[% entry._id %]">[% IF h.is_marked(entry._id) %]<span class="fa fa-check-square-o fa-lg"></span>[% ELSE %]<span class="fa fa-square-o fa-lg"></span>[% END %]</a>[% END %]
   </div>
