@@ -8,9 +8,9 @@
     <div class="col-md-10">
     [% FOREACH auth IN entry.author %]
       [% IF auth.id %]
-        <a href="/myPUB/search/admin?q=author=[% auth.id %]">[% auth.full_name %]</a><sup class="text-muted">UniBi</sup><br>
+        <a href="/myPUB?q=author=[% auth.id %]">[% auth.full_name %]</a><sup class="text-muted">UniBi</sup><br>
       [% ELSE %]
-        <a href='/myPUB/search/admin?q=person="[% auth.full_name %]"'>[% auth.full_name %]</a><br>
+        <a href='/myPUB?q=person="[% auth.full_name %]"'>[% auth.full_name %]</a><br>
       [% END %]
     [% END %]
     </div>
@@ -23,9 +23,9 @@
     <div class="col-md-10">
     [% FOREACH ed IN entry.editor %]
       [% IF ed.id %]
-        <a href="/myPUB/search/admin?q=editor=[% ed.id %]">[% ed.full_name %]</a><sup class="text-muted">UniBi</sup><br>
+        <a href="/myPUB?q=editor=[% ed.id %]">[% ed.full_name %]</a><sup class="text-muted">UniBi</sup><br>
       [% ELSE %]
-        <a href='/myPUB/search/admin?q=person="[% ed.full_name %]"'>[% ed.full_name %]</a><br>
+        <a href='/myPUB?q=person="[% ed.full_name %]"'>[% ed.full_name %]</a><br>
       [% END %]
     [% END %]
     </div>
@@ -38,9 +38,9 @@
     <div class="col-md-10">
     [% FOREACH tr IN entry.translator %]
       [% IF ed.id %]
-        <a href="/myPUB/search/admin?q=translator=[% tr.id %]">[% tr.full_name %]</a><sup class="text-muted">UniBi</sup><br>
+        <a href="/myPUB?q=translator=[% tr.id %]">[% tr.full_name %]</a><sup class="text-muted">UniBi</sup><br>
       [% ELSE %]
-        <a href='/myPUB/search/admin?q=person="[% tr.full_name %]"'>[% tr.full_name %]</a><br>
+        <a href='/myPUB?q=person="[% tr.full_name %]"'>[% tr.full_name %]</a><br>
       [% END %]
     [% END %]
     </div>
@@ -53,9 +53,9 @@
     <div class="col-md-10">
     [% FOREACH sv IN entry.supervisor %]
       [% IF ed.id %]
-        <a href="/myPUB/search/admin?q=supervisor=[% sv.id %]">[% sv.full_name %]</a><sup class="text-muted">UniBi</sup><br>
+        <a href="/myPUB?q=supervisor=[% sv.id %]">[% sv.full_name %]</a><sup class="text-muted">UniBi</sup><br>
       [% ELSE %]
-        <a href='/myPUB/search/admin?q=person="[% sv.full_name %]"'>[% sv.full_name %]</a><br>
+        <a href='/myPUB?q=person="[% sv.full_name %]"'>[% sv.full_name %]</a><br>
       [% END %]
     [% END %]
     </div>
