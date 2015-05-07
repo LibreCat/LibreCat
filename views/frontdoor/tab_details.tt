@@ -209,7 +209,7 @@
   <div class="row">
     <div class="col-md-2 text-muted">PUB-ID</div>
     <div class="col-md-10">
-    <a itemprop="url" href="[% request.uri_base %][% request.uri %]" class="normal" title="Link to this page, e.g. for bookmarking">[% _id %]</a>
+    <a itemprop="url" href="[% request.uri_base %][% request.uri %]" title="Link to this page, e.g. for bookmarking">[% _id %]</a>
     </div>
   </div>
 </div>
