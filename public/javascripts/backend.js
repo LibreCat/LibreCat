@@ -50,11 +50,11 @@ function editAuthorIds(direction){
  */
 function generate_link(file_id, pub_id){
 	var url = '/requestcopy/' + pub_id + '/' + file_id;
-	$.post(url, {approved:1}, function(response) {
-		var request_url = response;
+	$.post(url, {approved:1}, function(data){
+		var request_url = data.url;
 		$("ul[id$='_rac_dd_" + file_id + "'] li input").val(request_url);
 		$('ul[id$="_rac_dd_' + file_id + '"]').dropdown('toggle');
-	});
+	}, 'json');
 }
 
 
