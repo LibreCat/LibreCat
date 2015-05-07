@@ -206,19 +206,23 @@ input.has-error,.has-error input{background-color:#ffcfce;}
 .hidden-xxs{display:none!important;}
 .navbar-title{padding:3px;margin:8px 0 0 10px;border:1px solid #ccc;border-radius:4px;}
 h2,.h2,h3,.h3{margin-top:11px;}
+a{font-weight:bold;}
 }
 
 @media (max-width:767px){
 footer{height:240px;/*footer height x 2*/}
+a{font-weight:bold;}
 }
   
 @media (max-width:992px){
 .page-header{padding-bottom:0;}
 .margin0-sm{margin-bottom:0!important;}
+a{font-weight:bold;}
 }
 
 @media (min-width:480px){
 .xxs-only{display:none!important;}
+a{font-weight:bold;}
 }
 
 @media (min-width:768px){
