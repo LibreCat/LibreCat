@@ -132,6 +132,7 @@ prefix '/myPUB' => sub {
         status => "new",
         accept => 1,
         title => "New Quick And Easy Publication - Will be edited by PUB-Team",
+        publication => "Quick And Easy Journal Title",
         type => "journalArticle",
         message => params->{description},
         author => [{
