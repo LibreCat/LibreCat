@@ -25,7 +25,7 @@ $(document).ready(function(){
 	    		var progressbar = document.getElementById(file.name + "_progress");
 	            var progresselement = progressbar.parentNode.parentNode;
 	            $(progresselement).remove();
-	            var resp = JSON.parse(response);
+	            var resp = response;//JSON.parse(response);
 	            var modal = Dropzone.createElement("<div class='well' id='" + resp.tempname + "'><form id='form_" + resp.tempname + "' action='/myPUB/upload/qae/submit' method='post'><strong>" + file.name + "</strong><textarea class='form-control' placeholder='Type details about your publication here' name='description'></textarea><input type='hidden' name='file_name' value='" + resp.file_name + "' /><div class='checkbox'><label><input type='checkbox' required> I have read and accept the <a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy</a></label></div><input type='hidden' name='tempid' value='" + resp.tempid + "' /><input type='submit' class='btn btn-success' name='submit_or_cancel' value='Submit'/> <input type='reset' class='btn btn-warning' onclick='location.reload()' name='submit_or_cancel' value='Cancel' /></form></div>");
 	            file.previewElement.appendChild(modal);
 		    });
@@ -57,7 +57,7 @@ $(document).ready(function(){
 	        	var progressbar = document.getElementById(file.name + "_progress");
 	            var progresselement = progressbar.parentNode.parentNode;
 	            $(progresselement).remove();
-	            var resp = JSON.parse(response);
+	            var resp = response;//JSON.parse(response);
 	            if(resp.success){
 	              $(file.previewElement).addClass("alert alert-success");
 	            	
@@ -105,6 +105,10 @@ $(document).ready(function(){
 	                $("#licenses").find('div.alert-info.mandatory').addClass('alert-danger');
 	                $("#licenses").find('div.alert-info.mandatory').removeClass('alert-info');
 	                $("#licenses").find('input[name="accept"]').attr('checked', false);
+	                $('#select_ddc_0').addClass('mandatory');
+	                $('#select_ddc_0').closest('div.input-group').addClass('mandatory');
+	                $('#select_ddc_0').addClass('has-error');
+	                $('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
 	              }
 	              
 	              file.previewElement.setAttribute("id", resp.tempid);
@@ -141,7 +145,7 @@ $(document).ready(function(){
 		   		var progressbar = document.getElementById(file.name + "_progress");
 	            var progresselement = progressbar.parentNode.parentNode;
 	            $(progresselement).remove();
-	            var resp = JSON.parse(response);
+	            var resp = response;//JSON.parse(response);
 	            var well = Dropzone.createElement("<div class='well' id='" + resp.tempid + "'></div>");
 	            
 	            var form = Dropzone.createElement("<form class='form-horizontal' id='form_" + resp.tempid + "' action='/myPUB/thesesupload/submit' method='post'></form>");

@@ -168,13 +168,13 @@ Input is person id. Returns warning if person is already in the database.
 
     get '/award/new/record' => needs role => 'super_admin' => sub {
     	my $hits;
-    	my $mongoBag = Catmandu->store('award');
+    	#my $mongoBag = Catmandu->store('award');
     	my $award = h->search_award({q => "rectype<>record", limit => 1000});
-       	my $ids = $mongoBag->pluck("_id")->to_array;
+       	my $ids = h->award->to_array;
     	my @newIds;
     	foreach (@$ids){
-    		$_ =~ s/^AW//g;
-    		push @newIds, $_;
+    		$_->{_id} =~ s/^AW//g;
+    		push @newIds, $_->{_id};
     	}
     	@newIds = sort {$a <=> $b} @newIds;
     	my $idsLength = @newIds;
@@ -191,12 +191,12 @@ Input is person id. Returns warning if person is already in the database.
 
     get '/award/new/award' => needs role => 'super_admin' => sub {
     	my $hits;
-    	my $mongoBag = Catmandu->store('award');
-       	my $ids = $mongoBag->pluck("_id")->to_array;
+    	#my $mongoBag = Catmandu->store('award');
+       	my $ids = h->award->to_array;
     	my @newIds;
     	foreach (@$ids){
-    		$_ =~ s/^AW//g;
-    		push @newIds, $_;
+    		$_->{_id} =~ s/^AW//g;
+    		push @newIds, $_->{_id};
     	}
     	@newIds = sort {$a <=> $b} @newIds;
     	my $idsLength = @newIds;
@@ -210,8 +210,12 @@ Input is person id. Returns warning if person is already in the database.
     	template 'admin/forms/edit_award', $hits;
     };
 
-    # manage departments
-    get '/department' => sub { };
+    post '/award/update' => needs role => 'super_admin' => sub {
+    	my $params = params;
+    	my $return = update_award($params);
+    	return to_dumper $return;
+    };
+
 };
 
 1;

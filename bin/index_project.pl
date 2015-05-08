@@ -30,7 +30,8 @@ my $pre_fixer = Catmandu::Fix->new(fixes => [
 			'start_end_year_from_date()',
 		]);
 
-my $mongoBag = Catmandu->store('project')->bag;
+#my $mongoBag = Catmandu->store('project')->bag;
+my $mongoBag = Catmandu::Store::MongoDB->new(database_name => 'PUBProject');
 my $projBag = Catmandu->store('search', index_name => $index_name)->bag('project');
 
 if ($opt_u) { # update process

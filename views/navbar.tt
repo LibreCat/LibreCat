@@ -48,13 +48,13 @@
 	 [% END %]
        </ul>
        <ul class="nav navbar-nav navbar-right">
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><span class="hidden-sm">[% session.user %]</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <span class="hidden-sm">[% session.user %]</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
             <div class="dropdown-menu" style="width:550px">
 	      [% INCLUDE person_affiliation.tt %]
             </div>
          </li>
 	 [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
-	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span><em>[% session.role %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
+	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% session.role %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
 	    <ul class="dropdown-menu" role="menu">
 	      <li><a href="/myPUB/change_role/user">User</a></li>
 	      [% IF thisPerson.delegate %]

@@ -8,9 +8,6 @@ compact_array('project')
 #language()
 maybe_add_urn()
 person()
-if all_match('status','new')
-    set_field('status','private')
-end
 
 if all_match('finalSubmit','recPublish')
     set_field('status','public')

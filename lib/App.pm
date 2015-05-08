@@ -104,6 +104,11 @@ any '/access_denied' => sub {
     template 'websites/403', {path => request->path};
 };
 
+any qr{(/en)*/coffee} => sub {
+	status '418';
+	template 'websites/418';
+};
+
 =head1 ANY {other route....}
 
 Throws 'page not found'.

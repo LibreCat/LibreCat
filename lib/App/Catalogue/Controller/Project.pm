@@ -6,19 +6,19 @@ use App::Helper;
 use Hash::Merge qw/merge/;
 use Exporter qw/import/;
 
-our @EXPORT = qw/new_project update_project edit_project delete_project/;
+our @EXPORT = qw/update_project edit_project delete_project/;
 
-sub _create_id_proj {
-    my $bag = h->project->get('1');
-    my $id  = $bag->{"latest"};
-    $id++;
-    $bag = h->bag->add( { _id => "1", latest => $id } );
-    return $id;
-}
+#sub _create_id_proj {
+#    my $bag = h->project->get('1');
+#    my $id  = $bag->{"latest"};
+#    $id++;
+#    $bag = h->bag->add( { _id => "1", latest => $id } );
+#    return $id;
+#}
 
-sub new_project {
-    return _create_id_proj;
-}
+#sub new_project {
+#    return _create_id_proj;
+#}
 
 sub update_project {
     my $data = shift;

@@ -9,7 +9,7 @@
 
 <div class="row"><!-- outer row -->
 
-  <div class="col-md-10 col-sm-12 col-md-offset-1"> <!-- main content (left) -->
+  <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
 
     <div class="page-header" id="banner">
       <h1>

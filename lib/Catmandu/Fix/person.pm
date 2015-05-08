@@ -5,7 +5,7 @@ use Moo;
 
 sub fix{
     my ($self, $data) = @_;
-    my @p = qw(author editor translator supervisor);
+    my @p = qw(author editor translator supervisor honoree);
 
     foreach my $pers (@p) {
         next unless $data->{$pers};

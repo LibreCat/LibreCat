@@ -75,7 +75,10 @@ Request a copy of the publication. Email will be sent to the author.
 
 		if($hits->{hits}->[0]){
 			my $obj = $hits->{hits}->[0];
-			return h->host . "/rc/" . $obj->{_id};
+			return to_json {
+				ok => true,
+				url => h->host . "/rc/" . $obj->{_id},
+			};
 		}
 		else{
 			my $stored = $bag->add({

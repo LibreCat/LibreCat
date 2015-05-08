@@ -1,0 +1,31 @@
+[% INCLUDE header.tt %]
+[% path = request.path %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
+
+<div class="row"><!-- outer border -->
+
+  <div class="col-md-11 col-sm-12"><!-- main content -->
+
+    <div id="banner">
+	<h1>I'm a teapot (418)</h1>
+    </div>
+
+    <div class="row margin-top1">
+      <div class="col-md-12">
+	  [% IF lang %]
+	  <p>You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br />
+	  The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</p>
+	  [% ELSE %]
+	  <p>Sie haben Kaffee von diesem Server angefordert. Die Antwort des Servers war: <strong>I'm a teapot</strong><br />
+	  The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</p>
+	  [% END %]
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+[% INCLUDE footer.tt %]

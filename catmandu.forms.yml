@@ -92,6 +92,7 @@ field_order:
     - genbank
     - popular_science
     - quality_controlled
+    - popular_science_quality_controlled
     - ubi_funded
     - message
   file_upload:
@@ -110,6 +111,8 @@ field_order:
     - nasc
     - thematic_area
     - popular_science
+    - quality_controlled
+    - popular_science_quality_controlled
     - external_id
     - message
     - ubi_funded
@@ -144,10 +147,10 @@ publicationTypes:
           multiple: 1
           label: "Author"
           pevz: 1
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         edition: &edition
           label: "Edition"
-          placeholder: "2"
+          placeholder: "e.g. 2"
         department: &department
           label: "Department"
           label_short: "Dept."
@@ -158,7 +161,7 @@ publicationTypes:
           placeholder: "e.g. 2nd-Generation Open Access Infrastructure for Research in Europe"
           multiple: 1
         place: &place
-          label: "Place<br />(of publication)"
+          label: "Place<br>(of publication)"
           label_short: "Place"
           placeholder: "e.g. Berlin"
         publisher: &publisher
@@ -175,16 +178,17 @@ publicationTypes:
             placeholder: "Published while not employed at UniBi"
         page: &page
           label: "Number of Pages"
-          placeholder: "e.g. 12"
+          placeholder: "e.g. 345"
         series_title_volume: &series_title_volume
-          label: "Series Title/ Vol."
-          placeholder_volume: "e.g. 3"
-          label_volume: "Volume"
-          placeholder_series_title: "e.g. Lecture Notes in Computer Science"
+          label: "Series Title / Volume"
           label_series_title: "Series Title"
+          placeholder_series_title: "Series Title, e.g. Lecture Notes in Computer Science"
+          label_volume: "Volume"
+          placeholder_volume: "Volume, e.g. 3"
         publication_identifier: &publication_identifier
-          label: "Publication<br />Identifier"
-          label_short: "Publication Identifier"
+          label: "Publication<br>Identifier"
+          label_short: "Publ. Id."
+          placeholder: "Select (e)ISBN or (e)ISSN and enter it here"
           multiple: 1
         publication_status_language: &publication_status_language
           label: "Status / Language"
@@ -200,29 +204,30 @@ publicationTypes:
         tab_name: "File Upload"
         dropzone_mainDoc:
           label: "<strong>Upload Main File(s) and Supplementary Material</strong> (max. 1000MB per file)"
-        urn:
-          label: "URN"
-        ddc:
-          label: DDC
         license:
           pub_license:
             mandatory: 1
             label: "Copyright Disclaimer"
-            disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br /><br />Hiermit stelle ich der Universit&auml;t Bielefeld dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf PUB, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r PUB dargestellt sind, zur Verf&uuml;gung.<br /><a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy / Rechtliche Rahmenbedingungen</a>"
+            disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><br>Hiermit stelle ich der Universit&auml;t Bielefeld dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf PUB, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r PUB dargestellt sind, zur Verf&uuml;gung.<br><a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy / Rechtliche Rahmenbedingungen</a>"
             accept_text: "I accept"
             alert: "You need to accept the Copyright Disclaimer because you have attached files to this record."
           info:
-            text: "If you have any questions, please contact:<br />"
-            contact: "<strong>Support Publication Services<br />Susanne Riedel<br />Phone: 0521/106-4058<br />E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a><br /><br /></strong>"
+            text: "If you have any questions, please contact:<br>"
+            contact: "<strong>Support Publication Services<br>Susanne Riedel<br>Phone: 0521/106-4058<br>E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a><br><br></strong>"
           cc_license:
             mandatory: 0
             label: "Creative Commons Licenses"
+          urn:
+            label: "URN"
+            placeholder: "e.g. urn:nbn:de:0070-pub-12345678 (a URN will be generated automatically if you upload a file!)"
+          ddc:
+            label: DDC
       supplementary_fields:
         tab_name: "Additional Information"
         abstract: &abstract
           label: "Abstract"
           label2: "Abstract Language"
-          placeholder: "e.g. Abstract Text"
+          placeholder: "Abstract Text (you can use Markdown or MathJax for styling)"
           multiple: 1
         keyword: &keyword
           label: "Keywords"
@@ -230,11 +235,16 @@ publicationTypes:
         external_id: &external_id
           label: "External Identifier"
           label_short: "Ext. Id."
+          placeholder: "Select an Identifier (e.g. a PMID) and enter it here"
           multiple: 1
         message: &message
           label: "Comments"
-        popular_science: &popular_science
-          label: "Popular Science"
+          placeholder: "Enter some comments for reviewer / admin"
+        popular_science_quality_controlled: &popular_science_quality_controlled
+          popular_science:
+            label: "Popular Science"
+          quality_controlled:
+            label: "Quality Controlled"
         thematic_area: &thematic_area
           label: "Thematic Area"
           label_short: "Them. Area"
@@ -270,7 +280,7 @@ publicationTypes:
           multiple: 1
           label: "Editor"
           pevz: 1
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         corporate_editor_solo: &corporate_editor_solo
           mandatory: 0
           multiple: 1
@@ -294,7 +304,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
       related_material: *related_material
   bookchapter:
@@ -306,6 +316,7 @@ publicationTypes:
         doi: *doi
         title:
           label: "Chapter Title"
+          placeholder: "e.g. How to publish an ebook"
           mandatory: 1
         alternative_title: *alternative_title
         author: *author_translator
@@ -318,7 +329,7 @@ publicationTypes:
           multiple: 1
           label: "Book Editor"
           pevz: 0
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         corporate_editor: &corporate_editor
           mandatory: 0
           multiple: 1
@@ -331,10 +342,11 @@ publicationTypes:
         publisher: *publisher
         page: &pages
           label: "Pages"
-          placeholder: "e.g. 12-24"
+          placeholder: "e.g. 12 - 20"
         series_title_volume: *series_title_volume
         publication:
           label: "Book Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
           mandatory: 1
         year_extern: *year_extern
         publication_identifier: *publication_identifier
@@ -346,7 +358,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
       related_material: *related_material
   conferenceabstract:
@@ -370,25 +382,27 @@ publicationTypes:
           multiple: 1
           label: "Editor"
           pevz: 0
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         corporate_editor: *corporate_editor
         department: *department
         project: *project
         alternative_title: *alternative_title
         publication:
           label: "Proceedings Title"
+          placeholder: "e.g. Proceedings of the 3rd Conference on Nano-Physics"
         year_extern: *year_extern
         place: *place
         publisher: *publisher
         series_title: &series_title
           label: "Series Title"
+          placeholder: "e.g. Lecture Notes of eBook Publishing"
         volume_issue_page: &volume_issue_page
           label: "Vol. / Issue / Page"
-          placeholder_volume: ""
+          placeholder_volume: "e.g. 3"
           label_volume: "Volume"
-          placeholder_issue: ""
+          placeholder_issue: "e.g. 5"
           label_issue: "Issue"
-          placeholder_page: "12 - 20"
+          placeholder_page: "e.g. 12 - 20"
           label_page: "Page"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
@@ -399,7 +413,7 @@ publicationTypes:
           placeholder: "e.g. 3rd Conference on Nano-Physics"
         conference.location: &conference_location
           label: "Conference Location"
-          placeholder: "Berlin"
+          placeholder: "e.g. Berlin"
         conference.date: &conference_date
           label: "Conference Date"
           label_start: "Start"
@@ -415,7 +429,7 @@ publicationTypes:
         external_id: *external_id
         message: *message
         thematic_area: *thematic_area
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
       related_material: *related_material
   conferenceeditor:
     label: "Conference (Editor)"
@@ -439,16 +453,17 @@ publicationTypes:
         series_title_volume: *series_title_volume
         issue: &issue
           label: "Issue"
+          placeholder: "e.g. 5"
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         conference.divider:
           label: "Conference Details"
         conference.name:
-          label: "Name"
+          label: "Conference Name"
           placeholder: "e.g. 3rd Conference on Nano-Physics"
         conference.location:
-          label: "Location"
+          label: "Conference Location"
           placeholder: "e.g. Berlin"
         conference.date: *conference_date
       file_upload: *file_upload
@@ -457,7 +472,7 @@ publicationTypes:
         keyword: *keyword
         abstract: *abstract
         external_id: *external_id
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
       related_material: *related_material
@@ -483,7 +498,7 @@ publicationTypes:
           multiple: 1
           label: "Editor"
           pevz: 0
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         corporate_editor: *corporate_editor
         place: *place
         publisher: *publisher
@@ -492,6 +507,7 @@ publicationTypes:
         volume_issue_page: *volume_issue_page
         publication:
           label: "Proceedings Title"
+          placeholder: "e.g. Proceedings of the 3rd Conference on Nano-Physics"
         series_title: *series_title
         year_extern: *year_extern
         publication_identifier: *publication_identifier
@@ -507,7 +523,7 @@ publicationTypes:
         keyword: *keyword
         abstract: *abstract
         external_id: *external_id
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
       related_material: *related_material
@@ -531,7 +547,7 @@ publicationTypes:
           multiple: 1
           label: "Author"
           pevz: 1
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         supervisor:
           first_name:
             placeholder: "First Name"
@@ -550,10 +566,6 @@ publicationTypes:
         series_title_volume: *series_title_volume
         publisher: *publisher
         publication_identifier: *publication_identifier
-        publication: &publication_series
-          label: "Series Title"
-          label_short: "Series Title"
-          placeholder: "e.g. Lecture Notes in Computer Science"
         publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
@@ -574,6 +586,7 @@ publicationTypes:
         title:
           label: "Article Title"
           mandatory: 1
+          placeholder: "e.g. Online-Publishing"
         author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
@@ -582,6 +595,7 @@ publicationTypes:
         publication:
           label: "Book Title"
           mandatory: 1
+          placeholder: "e.g. Encyclopedia on Publishing"
         publisher: *publisher
         series_title_volume: *series_title_volume
         place: *place
@@ -598,7 +612,7 @@ publicationTypes:
         external_id: *external_id
         message: *message
         thematic_area: *thematic_area
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
       related_material: *related_material
   journalarticle:
     label: "Journal Article"
@@ -610,7 +624,7 @@ publicationTypes:
         title:
           mandatory: 1
           label: "Article Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          placeholder: "e.g. The implications of eBook Publishing"
         alternative_title: *alternative_title
         author: *author_translator
         department: *department
@@ -636,7 +650,7 @@ publicationTypes:
         tab_name: "Additional Information"
         abstract: *abstract
         keyword: *keyword
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         external_id: *external_id
         nasc: &nasc
           label: "NASC Seedstock ID"
@@ -681,7 +695,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
       related_material: *related_material
@@ -695,7 +709,7 @@ publicationTypes:
         title:
           mandatory: 1
           label: "Article Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          placeholder: "e.g. The implications of eBook Publishing"
         department: *department
         project: *project
         year_extern: *year_extern
@@ -707,7 +721,7 @@ publicationTypes:
         issue: *issue
         publication:
           label: "Newspaper Title"
-          placeholder: "Frankfurter Allgemeine Zeitung"
+          placeholder: "e.g. The New York Times"
           mandatory: 1
         alternative_title: *alternative_title
         publication_identifier: *publication_identifier
@@ -717,7 +731,8 @@ publicationTypes:
         tab_name: "Additional Information"
         external_id: *external_id
         keyword: *keyword
-        popular_science: *popular_science
+        popular_science: &popular_science
+          label: "Popular Science"
         message: *message
         thematic_area: *thematic_area
       related_material: *related_material
@@ -741,9 +756,10 @@ publicationTypes:
           multiple: 1
           label: "Inventor"
           pevz: 1
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         applicant:
           label: "Applicant"
+          placeholder: "e.g. John Appleseed"
         department: *department
         project: *project
         year_extern: *year_extern
@@ -762,8 +778,9 @@ publicationTypes:
           label_an: "AN"
           placeholder_an: "Application Number"
         ipc:
-          label: "International Patent<br />Classification"
+          label: "International Patent<br>Classification"
           label_short: "IPC"
+          placeholder: "e.g. B25J 7/00"
           mandatory: 1
         language:
           label: "Language"
@@ -778,6 +795,8 @@ publicationTypes:
         external_id: *external_id
         message: *message
         thematic_area: *thematic_area
+        quality_controlled:
+          label: "Quality Controlled"
       related_material: *related_material
   preprint:
     label: "Preprint"
@@ -788,7 +807,7 @@ publicationTypes:
         title:
           mandatory: 1
           label: "Article Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          placeholder: "e.g. The implications of eBook Publishing"
         publication: &publication_jtitle
           label: "Journal Title"
           placeholder: "e.g. Nature Genetics"
@@ -821,7 +840,7 @@ publicationTypes:
         title:
           mandatory: 1
           label: "Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          placeholder: "e.g. Technical report employer survey Project B3"
         author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
@@ -835,6 +854,7 @@ publicationTypes:
         publication_identifier: *publication_identifier
         report_number:
           label: "Report Number"
+          placeholder: "e.g. NASA/TM-2015-123456"
         page: *page
         publication_status_language: *publication_status_language
       file_upload: *file_upload
@@ -843,7 +863,7 @@ publicationTypes:
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
       related_material: *related_material
@@ -869,15 +889,17 @@ publicationTypes:
         place: *place
         publication:
           label: "Book Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         series_title:
           label: "Journal Title"
+          placeholder: "e.g. Nature Genetics"
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         keyword: *keyword
         external_id: *external_id
         message: *message
@@ -927,15 +949,15 @@ publicationTypes:
           open_data_release:
             mandatory: 1
             label: "Open Data Release - Declaration"
-            disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br /><br />Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br /><br />I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br />I declare that I do not violate these rules.<br />I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br />"
+            disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
             accept_text: "I have read and agree with the information above about releasing data under the selected license."
             alert: "You need to accept the Open Data Release Statement because you have attached files to this record."
           other_data_license:
             warning: "Visible/Editable for Library Admins only"
             label: "Other license"
           info:
-            text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br />"
-            contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br />0521 106-2694<br /><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br /></strong>"
+            text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br>"
+            contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
       supplementary_fields:
         tab_name: "Supplementary fields"
         abstract: *abstract
@@ -994,15 +1016,15 @@ publicationTypes:
           open_data_release:
             mandatory: 1
             label: "Open Data Release - Declaration"
-            disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br /><br />Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br /><br />I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br />I declare that I do not violate these rules.<br />I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br />"
+            disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
             accept_text: "I have read and agree with the information above about releasing data under the selected license."
             alert: "You need to accept the Open Data Release Statement because you have attached files to this record."
           other_data_license:
             warning: "Visible/Editable for Library Admins only"
             label: "Other license"
           info:
-            text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br />"
-            contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br />0521 106-2694<br /><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br /></strong>"
+            text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br>"
+            contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
       supplementary_fields:
         tab_name: "Supplementary fields"
         abstract: *abstract
@@ -1019,11 +1041,11 @@ publicationTypes:
           mandatory: 1
           label: "Book Title (Translation)"
           label_short: "Title (Trans.)"
-          placeholder: "Handbuch des eBook Publishings"
+          placeholder: "e.g. Handbuch des eBook Publishings"
         alternative_title:
           label: "Book Title (Original)"
           label_short: "Title (Orig)"
-          placeholder: "Handbook of eBook Publishing"
+          placeholder: "e.g. Handbook of eBook Publishing"
         translator:
           first_name:
             placeholder: "e.g. John"
@@ -1033,7 +1055,7 @@ publicationTypes:
           multiple: 1
           label: "Translator"
           pevz: 1
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         author_secondary:
           first_name:
             placeholder: "e.g. John"
@@ -1042,7 +1064,7 @@ publicationTypes:
           multiple: 1
           label: "Author (Original)"
           pevz: 0
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         department: *department
         project: *project
         edition: *edition
@@ -1068,7 +1090,7 @@ publicationTypes:
         keyword: *keyword
         message: *message
         thematic_area: *thematic_area
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
       related_material: *related_material
   translationchapter:
     label: "Translation (Chapter)"
@@ -1095,7 +1117,7 @@ publicationTypes:
           multiple: 1
           label: "Translator"
           pevz: 1
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         author_secondary:
           first_name:
             placeholder: "e.g. John"
@@ -1104,7 +1126,7 @@ publicationTypes:
           multiple: 1
           label: "Author"
           pevz: 0
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         department: *department
         project: *project
         edition: *edition
@@ -1113,8 +1135,10 @@ publicationTypes:
         publisher: *publisher
         publication:
           label: "Book Title"
+          placeholder: "e.g. Handbook of eBook Publishing"
         series_title:
           label: "Journal Title"
+          placeholder: "e.g. Lecture Notes of eBook Publishing"
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status: *publication_status
@@ -1123,7 +1147,7 @@ publicationTypes:
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
-        popular_science: *popular_science
+        popular_science_quality_controlled: *popular_science_quality_controlled
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
@@ -1140,7 +1164,7 @@ publicationTypes:
         title:
           mandatory: 1
           label: "Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          placeholder: "e.g. Working Paper on eBook Publishing"
         alternative_title: *alternative_title
         author: *author_translator
         editor: *editor_only
@@ -1181,7 +1205,7 @@ publicationTypes:
           multiple: 1
           label: "Author"
           pevz: 1
-          pevz_tooltip: "Link this publication<br />to your PEVZ account.<br />Keeping this checked<br />will make it visible on<br />your publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         email: &email
           label: "E-Mail address"
           label_short: "E-Mail"
@@ -1201,11 +1225,11 @@ publicationTypes:
           multiple: 1
           label: "Supervisor"
           pevz: 1
-          pevz_tooltip: "Link this publication<br />to your supervisor's PEVZ account.<br />Keeping this checked<br />will make it visible on<br />their publication list."
+          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         title:
           mandatory: 1
           label: "Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          placeholder: "e.g. Strategic aspects of eBook Publishing in the Life Sciences"
         language: &language_diss
           label: "Language"
           default: "eng"
@@ -1223,7 +1247,7 @@ publicationTypes:
           placeholder: "Publisher"
           mandatory: 1
         place: &place_diss
-          label: "Place<br />(of publication)"
+          label: "Place<br>(of publication)"
           label_short: "Place"
           placeholder: "e.g. Berlin"
           mandatory: 1
@@ -1236,12 +1260,15 @@ publicationTypes:
         keyword: *keyword
         pacs_class: &pacs
           label: "PACS Code"
+          placeholder: "Physics and Astronomy Classification Scheme, e.g. 97.82.Fs"
           multiple: 1
         msc_class: &msc
           label: "MSC Code"
+          placeholder: "Mathematics Subject Classification, e.g. 85A20"
           multiple: 1
         ccs_class: &ccs
           label: "CCS Code"
+          placeholder: "Computing Classification System, e.g. Data Mining"
           multiple: 1
         message: *message
       related_material: *related_material

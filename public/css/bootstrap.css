@@ -5,8 +5,8 @@
  */
 
 /*!
- * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=954c8f7ac6e4de6a7cf4)
- * Config saved to config.json and https://gist.github.com/954c8f7ac6e4de6a7cf4
+ * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=5b5d6b5e6a34d1e284a7)
+ * Config saved to config.json and https://gist.github.com/5b5d6b5e6a34d1e284a7
  */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
@@ -2567,14 +2567,14 @@ output {
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 .form-control::-moz-placeholder {
-  color: #cccccc;
+  color: #aaaaaa;
   opacity: 1;
 }
 .form-control:-ms-input-placeholder {
-  color: #cccccc;
+  color: #aaaaaa;
 }
 .form-control::-webkit-input-placeholder {
-  color: #cccccc;
+  color: #aaaaaa;
 }
 .form-control[disabled],
 .form-control[readonly],

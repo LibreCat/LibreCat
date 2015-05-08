@@ -12,7 +12,7 @@ use App::Helper;
 use Data::Dumper;
 
 our @EXPORT
-    = qw/new_person search_person update_person edit_person delete_person import_person new_project update_project edit_project delete_project/;
+    = qw/new_person search_person update_person edit_person delete_person import_person update_project edit_project delete_project update_award/;
 our @EXPORT_OK
     = qw/new_department update_department edit_department delete_department/;
 
@@ -190,17 +190,17 @@ sub delete_department {
 }
 
 # manage projects
-sub _create_id_proj {
-    my $bag = h->authority('project')->get('1');
-    my $id  = $bag->{"latest"};
-    $id++;
-    $bag = h->bag->add( { _id => "1", latest => $id } );
-    return $id;    # correct?
-}
+#sub _create_id_proj {
+#    my $bag = h->authority('project')->get('1');
+#    my $id  = $bag->{"latest"};
+#    $id++;
+#    $bag = h->bag->add( { _id => "1", latest => $id } );
+#    return $id;    # correct?
+#}
 
-sub new_project {
-	return _create_id_proj;
-}
+#sub new_project {
+#	return _create_id_proj;
+#}
 
 sub update_project {
     my $data = shift;
@@ -208,11 +208,25 @@ sub update_project {
 
     my $new = h->nested_params($data);
     #return $new;
-    my $bag = Catmandu->store('project')->bag;
-    $bag->add($new);
+    #my $bag = Catmandu->store('project')->bag;
+    #$bag->add($new);
 
     h->project->add($new);
     h->project->commit;
+}
+
+sub update_award {
+    my $data = shift;
+    return "Error: No _id specified" unless $data->{_id};
+
+    my $new = h->nested_params($data);
+    
+    my $fixer = Catmandu::Fix->new(fixes => ['person()',]);
+    $fixer->fix($new);
+
+    #h->award->add($new);
+    #h->award->commit;
+    return $new;
 }
 
 sub edit_project {

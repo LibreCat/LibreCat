@@ -7,7 +7,7 @@
 
 <div class="row">
 
-  <div class="col-md-10 col-sm-12 col-md-offset-1"> <!-- main content (left) -->
+  <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
 
     <div class="page-header" id="banner">
       <h1>
@@ -32,6 +32,7 @@
       [% END %]
       
       [% IF rec_type == "record" %]
+      <input type="hidden" name="rec_type" value="record" />
       {% FOREACH key IN preis_field_order %}
 {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}

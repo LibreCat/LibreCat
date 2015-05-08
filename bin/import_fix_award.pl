@@ -6,7 +6,8 @@ use Data::Dumper;
 Catmandu->load(':up');
 my $conf = Catmandu->config;
 
-my $mongoBag = Catmandu->store('award')->bag;
+#my $mongoBag = Catmandu->store('award')->bag;
+my $mongoBag = Catmandu::Store::MongoDB->new(database_name => 'PUBAward');
 #my $awardBag = Catmandu->store('award')->bag('award');
 #my $preisBag = Catmandu->store('search', index_name => $index_name)->bag('award');
 
