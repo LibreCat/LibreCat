@@ -1,35 +1,24 @@
-package App::Catalogue::Controller::Import;
+package App::Catalogue::Controller::Importer;
 
 use Catmandu::Sane;
 use Catmandu;
+use Moo;
 use App::Helper;
-use Carp;
-use Exporter qw/import/;
 
-our @EXPORT    = qw/import_publication/;
-our @EXPORT_OK = qw/arxiv inspire crossref pmc/;
+has id => (is => 'ro', required => 1);
+has source => (is => 'ro', default => sub {'crossref'});
 
-my %dispatch = (
-    arxiv    => \&arxiv,
-    inspire  => \&inspire,
-    crossref => \&crossref,
-    epmc   => \&epmc,
-);
+my $appdir = h->config->{appdir} // $ENV{PWD};
 
-my $appdir = h->config->{appdir};
-
-sub import_publication {
-    my ($pkg, $id) = @_;
-    if ($pkg) {
-        $dispatch{$pkg}->($id);
-    }
-    else {
-        croak "No source provided";
-    }
+sub fetch {
+    my ($self) = @_;
+    my $s = $self->source;
+    my $id = $self->id;
+    $self->$s($id);
 }
 
 sub arxiv {
-    my $id = shift;
+    my ($self, $id) = @_;
     Catmandu->importer(
         'ArXiv',
         query => $id,
@@ -38,7 +27,7 @@ sub arxiv {
 }
 
 sub inspire {
-    my $id = shift;
+    my ($self, $id) = @_;
     Catmandu->importer(
         'Inspire',
         id => $id,
@@ -47,7 +36,7 @@ sub inspire {
 }
 
 sub crossref {
-    my $id = shift;
+    my ($self, $id) = @_;
     Catmandu->importer(
         'getJSON',
         from => "http://api.crossref.org/works/$id",
@@ -56,7 +45,7 @@ sub crossref {
 }
 
 sub epmc {
-    my $id = shift;
+    my ($self, $id) = @_;
     Catmandu->importer(
         'EuropePMC',
         query => $id,
