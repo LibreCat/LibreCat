@@ -8,8 +8,10 @@ use App::Helper;
 
 get '/feed/:format' => sub {
     my $feed;
+    my $p = h->extract_params();
+    push @{$p->{q}}, "status=public";
     try {
-        my $hits = h->search_publication();
+        my $hits = h->search_publication($p);
         $feed = create_feed(
             format  => params->{format},
             title   => h->config->{app},
@@ -18,8 +20,7 @@ get '/feed/:format' => sub {
                 {title => $_->{title}}
             } @{$hits->{hits}}],
         );
-    }
-    catch {
+    } catch {
         my ( $exception ) = @_;
 
         if ( $exception->does('FeedInvalidFormat') ) {

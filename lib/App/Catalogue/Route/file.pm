@@ -44,15 +44,14 @@ sub get_file_info {
 
 =head1 PREFIX /requestcopy
 
-    Prefix for the feature 'request-a-copy'
+Prefix for the feature 'request-a-copy'
 
 =cut
 prefix '/requestcopy' => sub {
 
 =head2 GET requestcopy/:id/:file_id
 
-    Request a copy of the publication. Email will be sent
-    to the author.
+Request a copy of the publication. Email will be sent to the author.
 
 =cut
 	post '/:id/:file_id' => sub {
@@ -118,8 +117,7 @@ prefix '/requestcopy' => sub {
 
 =head2 GET /approve/:key
 
-    Author approves the request. Email will be sent
-    to user.
+Author approves the request. Email will be sent to user.
 
 =cut
 	get '/approve/:key' => sub {
@@ -129,15 +127,14 @@ prefix '/requestcopy' => sub {
 
 		$data->{approved} = 1;
 		$bag->add($data);
-		my $mail_body = export_to_string(
-			{ key => params->{key} },
-			'Template',
-			template => 'views/email/req_copy_approve.tt');
 		try {
 			email {
 				to => $data->{user_email},
 				subject => h->config->{request_copy}->{subject},
-				body => $mail_body;
+				body => export_to_string(
+					{ key => params->{key} },
+					'Template',
+					template => 'views/email/req_copy_approve.tt'),
 			};
 		} catch {
 			error "Could not send email: $_";
@@ -146,8 +143,8 @@ prefix '/requestcopy' => sub {
 
 =head2 GET /refuse/:key
 
-    Author refuses the request for a copy. Email will be sent
-    to user. Delete request key from database.
+Author refuses the request for a copy. Email will be sent
+to user. Delete request key from database.
 
 =cut
 	get '/deny/:key' => sub {
@@ -173,8 +170,8 @@ prefix '/requestcopy' => sub {
 
 =head2 GET /rc/:key
 
-	User received permission for downloading.
-	Now get the document if time has not expired yet.
+User received permission for downloading.
+Now get the document if time has not expired yet.
 
 =cut
 get '/rc/:key' => sub {
@@ -188,8 +185,8 @@ get '/rc/:key' => sub {
 
 =head2 GET /download/:id/:file_id
 
-    Download a document. Access level of the document
-    and user rights will be checked before.
+Download a document. Access level of the document
+and user rights will be checked before.
 
 =cut
 get '/download/:id/:file_id' => sub {
