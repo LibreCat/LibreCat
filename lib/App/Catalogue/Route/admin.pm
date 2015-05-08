@@ -2,7 +2,7 @@ package App::Catalogue::Route::admin;
 
 =head1 NAME
 
-    App::Catalogue::Route::admin - Route handler for admin actions
+App::Catalogue::Route::admin - Route handler for admin actions
 
 =cut
 
@@ -29,14 +29,14 @@ Dancer::Plugin::Auth::Tiny->extend(
 
 =head1 PREFIX /myPUB/admin
 
-    Permission: for admins only. Every other user will get a 403.
+Permission: for admins only. Every other user will get a 403.
 
 =cut
 prefix '/myPUB/admin' => sub {
 
 =head2 GET /account
 
-    Prints a search form for the authority database.
+Prints a search form for the authority database.
 
 =cut
     get '/account' => needs role => 'super_admin' => sub {
@@ -45,7 +45,7 @@ prefix '/myPUB/admin' => sub {
 
 =head2 GET /account/new
 
-    Opens an empty form. The ID is automatically generated.
+Opens an empty form. The ID is automatically generated.
 
 =cut
     get '/account/new' => needs role => 'super_admin' => sub {
@@ -55,7 +55,7 @@ prefix '/myPUB/admin' => sub {
 
 =head2 GET /account/search
 
-    Searches the authority database. Prints the search form + result list.
+Searches the authority database. Prints the search form + result list.
 
 =cut
     get '/account/search' => needs role => 'super_admin' => sub {
@@ -66,8 +66,8 @@ prefix '/myPUB/admin' => sub {
 
 =head2 GET /account/edit/:id
 
-    Opens the record with ID id. Cancel returns to /account.
-    Save does a POST on /account/update.
+Opens the record with ID id. Cancel returns to /account.
+Save does a POST on /account/update.
 
 =cut
     get '/account/edit/:id' => needs role => 'super_admin' => sub {
@@ -78,7 +78,7 @@ prefix '/myPUB/admin' => sub {
 
 =head2 POST /account/update
 
-    Saves the data in the authority database.
+Saves the data in the authority database.
 
 =cut
     post '/account/update' => needs role => 'super_admin' => sub {
@@ -91,7 +91,7 @@ prefix '/myPUB/admin' => sub {
 
 =head2 GET /account/import
 
-    Input is person id. Returns warning if person is already in the database.
+Input is person id. Returns warning if person is already in the database.
 
 =cut
     get '/account/import' => needs role => 'super_admin' => sub {
@@ -141,11 +141,11 @@ prefix '/myPUB/admin' => sub {
     	#return to_dumper $return;
     	redirect '/myPUB/admin/project';
     };
-    
+
 #    get '/project/new' => needs role => 'super_admin' => sub {
-#    	
+#
 #    };
-    
+
     get '/award' => needs role => 'super_admin' => sub {
     	my $hits = h->search_award({q => "rectype=record", limit => 1000});
     	my $preis = h->search_award({q => "rectype=preis", limit => 1000});
@@ -156,16 +156,16 @@ prefix '/myPUB/admin' => sub {
     	map {push @{$hits->{akademie}}, $_ } @{$akademie->{hits}};
     	template 'admin/award', $hits;
     };
-    
+
     get '/award/edit/:id' => needs role => 'super_admin' => sub {
     	my $id = param 'id';
     	my $hits = h->get_award($id);
     	my $award = h->search_award({q => "rectype<>record", limit => 1000});
     	$hits->{award} = $award->{hits};
-    	
+
     	template 'admin/forms/edit_award', $hits;
     };
-    
+
     get '/award/new/record' => needs role => 'super_admin' => sub {
     	my $hits;
     	my $mongoBag = Catmandu->store('award');
@@ -180,15 +180,15 @@ prefix '/myPUB/admin' => sub {
     	my $idsLength = @newIds;
     	my $createdid = $newIds[$idsLength-1];
     	$createdid++;
-    	
+
     	$hits->{_id} = "AW" . $createdid;
     	$hits->{rec_type} = "record";
     	$hits->{award} = $award->{hits};
     	$hits->{"new"} = 1;
-    	
+
     	template 'admin/forms/edit_award', $hits;
     };
-    
+
     get '/award/new/award' => needs role => 'super_admin' => sub {
     	my $hits;
     	my $mongoBag = Catmandu->store('award');
@@ -202,19 +202,16 @@ prefix '/myPUB/admin' => sub {
     	my $idsLength = @newIds;
     	my $createdid = $newIds[$idsLength-1];
     	$createdid++;
-    	
+
     	$hits->{_id} = "AW" . $createdid;
     	$hits->{rec_type} = "preis";
     	$hits->{"new"} = 1;
-    	
+
     	template 'admin/forms/edit_award', $hits;
     };
-    
+
     # manage departments
     get '/department' => sub { };
-
-    # monitoring external sources
-    get '/inspire-monitor' => sub { };
 };
 
 1;
