@@ -1,0 +1,32 @@
+[% INCLUDE header_search.tt %]
+
+<!-- BEGIN award/search.tt -->
+
+<ul class="tabs-content">
+
+<li id="search" class="active">
+
+<form action="[% h.uri_for('/award') %]" accept-charset="utf-8" class="Form">
+<input name="q" size="35" class="Input2" id="id_ftext" value="[% q %]" />
+<input type="submit" name="submit" value="Search" class="Submit1" />
+</form>
+
+</li>
+</ul>
+<br />
+
+[% IF submit %]
+<ul class="tabs">
+<li class="active"><a href="#search">[% hits.total %] Awards</a></li>
+</ul>
+
+<ul class="tabs-content">
+<li id="search" class="active">
+[% INCLUDE award/hits.tt %]
+</li>
+</ul>
+[% END %]
+
+<!-- END award/search.tt -->
+
+[% INCLUDE footer_search.tt %]

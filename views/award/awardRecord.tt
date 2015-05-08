@@ -1,0 +1,70 @@
+[% IF lang %]
+  [% INCLUDE award/header_en.tt %]
+[% ELSE %]
+  [% INCLUDE award/header.tt %]
+[% END %]
+
+<!-- BEGIN awardRecord.tt -->
+
+<link rel="stylesheet" type="text/css" href="/css/bootstrapAwards.css" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+
+<div class="row"><!-- outer border -->
+  <div class="span6 mainawardcontent"> <!-- main content (left) -->
+    
+    <h1><img src="/images/preise_headline_[% lang ? "en" : "de" %].gif" /></h1>
+    <div class="span6" style="text-align:right;margin-top:-50px;margin-left:-25px;">
+    <img src="/images/beta_unibi_right.png" width="50">
+    </div>
+    
+    [% IF title %]
+
+    <h3>[% IF normTitle %][% normTitle %][% ELSE %][% title %][% END %]</h3>
+
+    <p>[% IF description %][% description %][% END %]</p>
+
+    <p>[% IF url %]<a href="[% url %]" target="_blank">[% url %]</a>[% END %]</p>
+
+    [% IF people %]
+    
+    [% otherpeople = people.hits %]
+    [% total = people.total %]
+    <h4>[% lang ? "Individuals" : "Personen, die" %]
+    [% IF id.match('AC\d+') %]
+    [% lang ? "belonging to this academy" : "dieser Akademie angeh&ouml;ren" %]
+    [% ELSIF id.match('AW\d+') %]
+      [% IF type == "preis" %]
+        [% lang ? "honored with this prize" : "mit diesem Preis ausgezeichnet wurden" %]
+      [% ELSE %]
+        [% lang ? "honored with this award" : "diese Auszeichnung erhalten haben" %]
+      [% END %]
+    [% END %]
+    </h4>
+    [% INCLUDE award/hits.tt %]
+    
+    [% END %]
+    
+    [% ELSE %]
+    <p><strong>ID not found</strong></p>
+    <p><a href="[% h.host %][% lang ? "/en" : "" %]/award">[% lang ? "Search awards or view list of all awards" : "Preise durchsuchen oder Liste aller Preise anzeigen" %]</a></p>
+    [% END %]
+  
+  </div><!-- span6 -->
+
+  <div class="span3">
+    [% IF title %]
+    <h3 class="underline"><br />[% lang ? "Options" : "Optionen" %]</h3>
+    <p><a href="[% h.host %][% lang ? "/en" : "" %]/award">[% lang ? "Full list" : "Zur Gesamtliste" %] &raquo;</a></p>
+    [% END %]
+  </div><!-- span3 -->
+  
+</div><!-- row -->
+
+<!-- END awardRecord.tt -->
+
+[% IF lang %]
+  [% INCLUDE award/footer_en.tt %]
+[% ELSE %]
+  [% INCLUDE award/footer.tt %]
+[% END %]

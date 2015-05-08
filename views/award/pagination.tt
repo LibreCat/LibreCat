@@ -1,0 +1,35 @@
+<!-- BEGIN award/pagination.tt -->
+
+[% IF next_page or previous_page %]
+<ul class="pub_pagination">
+  [%- IF previous_page %]
+    [% s = start-limit < 0 ? 0 : start-limit %]
+  <li class="prev"><a href="[% h.uri_for('/award', submit="search", q="$params.q", start="$s", limit="$limit") %]" 
+       class="underline-part">&laquo;</a></li>
+  [%- ELSE %]
+  <!-- <li class="prev">&laquo;</li> -->
+  [%- END %]
+  [%- FOREACH p IN pages_in_spread %]
+  [%- IF p == page %]
+    [% s = limit * (p - 1) %]
+  <li class="current"><a href="[% h.uri_for('/award', submit="search", q="$params.q", start="$s", limit="$limit") %]">
+     [% p %]</a></li>
+  [%- ELSIF p.defined %]
+    [% s = limit * (p - 1) %]
+  <li><a href="[% h.uri_for('/award', q="$params.q", submit="search", start="$s", limit="$limit") %]">
+     [% p %]</a></li>
+  [%- ELSE %]
+  <li>&hellip;</li>
+  [%- END %]
+  [%- END %]
+  [%- IF next_page %]
+    [% s = start+limit %]
+  <li class="next"><a href="[% h.uri_for('/award', submit="search", q="$params.q", start="$s", limit="$limit") %]" 
+    class="underline-part">&raquo;</a></li>
+  [%- ELSE %]
+  <!-- <li class="next">&raquo;</li> -->
+  [%- END %]
+</ul>
+[% END %]
+
+<!-- END award/pagination.tt -->

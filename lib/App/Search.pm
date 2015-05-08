@@ -11,6 +11,7 @@ use App::Search::Route::directoryindex;
 use App::Search::Route::mark;
 use App::Search::Route::person;
 use App::Search::Route::project;
+use App::Search::Route::award;
 use App::Search::Route::publication;
 use App::Search::Route::uri;
 use App::Search::Route::unapi;

@@ -1,0 +1,41 @@
+[% INCLUDE award/header.tt %]
+
+[% path = request.path %]
+[% qp = request._query_params %]
+
+<link rel="stylesheet" type="text/css" href="/css/bootstrapAwards.css" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+
+<div class="row"><!-- outer border -->
+
+  <div class="span6"> <!-- main content (left) -->
+  
+    <h1><img src="/images/preise_headline_de.gif" /></h1>
+    <div class="span6" style="text-align:right;margin-top:-50px;margin-left:-25px;">
+    <img src="/images/beta_unibi_right.png" width="50">
+    </div>
+    
+    <p>
+    Vielen Dank! Ihr Vorschlag wurde an das Referat für Kommunikation übermittelt.
+    </p>
+
+  </div> <!-- span6 main content (left) -->
+  
+  <div class="span3">
+  
+    <p><a href="[% lasturl %]">Zurück zur vorherigen Seite &raquo;</a></p>    
+    
+    <h5>Unterstützt von<h5>
+    <a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Kommunikation/index.html"><img src="/images/icon_refkomm.png" width="210px" class="img-polaroid"/></a>
+    <br />
+    <br />
+	<a href="[% h.host %]"><img src="/images/pub.jpeg" width="210px" class="img-polaroid"/></a>
+	<br />
+	<br />
+	<a href="http://www.uni-bielefeld.de/bis/"><img src="/images/logo_bis_gruen.png" width="210px" class="img-polaroid"/></a>
+  </div> <!-- span3 main content (right) -->
+
+</div><!-- row outer border -->
+
+[% INCLUDE award/footer.tt %]
