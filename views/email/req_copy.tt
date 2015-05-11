@@ -4,6 +4,6 @@ To approve this request click on the link below:
 [% host %]/rc/approve/[% key %]
 
 If you want to deny this request click on the following link:
-[% host %]/rc/refuse/[% key %]
+[% host %]/rc/deny/[% key %]
 
 Your PUB system
