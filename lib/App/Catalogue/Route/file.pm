@@ -2,38 +2,37 @@ package App::Catalogue::Route::file;
 
 =head1 NAME
 
-    App::Catalogue::Route::file - routes for file handling:
-    upload & download files, request-a-copy.
-		All these must be public.
+App::Catalogue::Route::file - routes for file handling:
+upload & download files, request-a-copy.
+All these must be public.
 
 =cut
 
 use Catmandu::Sane;
-use Catmandu qw/export_to_string/;
+use Catmandu qw(export_to_string);
 use Dancer ':syntax';
 use Dancer::Request;
+use Dancer::Plugin::Email;
+use Dancer::Plugin::Auth::Tiny;
 use App::Helper;
 use App::Catalogue::Controller::Permission qw/can_download/;
 use DateTime;
 use Try::Tiny;
-use Dancer::Plugin::Auth::Tiny;
 
-# some helpers
-##############
-sub send_it {
+sub _send_it {
 	my ($id, $file_name) = @_;
 	my $dest_dir = h->get_file_path($id);
 	my $path_to_file = path($dest_dir, $file_name);
 	return Dancer::send_file($path_to_file, system_path => 1);
 }
 
-sub calc_date {
+sub _calc_date {
 	my $dt = DateTime->now();
 	my $date_expires = $dt->add(days => h->config->{request_copy}->{period})->ymd;
 	return $date_expires;
 }
 
-sub get_file_info {
+sub _get_file_info {
 	my ($pub_id, $file_id) = @_;
 	my $rec = h->publication->get($pub_id);
 	if($rec->{file} and ref $rec->{file} eq "ARRAY"){
@@ -42,45 +41,44 @@ sub get_file_info {
 	}
 }
 
-=head1 PREFIX /requestcopy
+=head1 PREFIX /rc
 
 Prefix for the feature 'request-a-copy'
 
 =cut
-prefix '/requestcopy' => sub {
+prefix '/rc' => sub {
 
-=head2 GET requestcopy/:id/:file_id
+=head2 GET /rc/:id/:file_id
 
 Request a copy of the publication. Email will be sent to the author.
 
 =cut
 	post '/:id/:file_id' => sub {
 		my $bag = Catmandu->store->bag('request');
-		my $file = get_file_info(params->{id}, params->{file_id});
-		return unless $file->{request_a_copy} == 1;
-
-		my $date_expires = calc_date();
+		my $file = _get_file_info(params->{id}, params->{file_id});
+		#return unless $file->{request_a_copy} == 1;
+		my $date_expires = _calc_date();
 
 		my $query = {
-			"approved"     => "1",
-			"file_id"      => params->{file_id},
-			"file_name"    => $file->{file_name},
-			"date_expires" => $date_expires,
-			"record_id"    => params->{id}
-		};
+			approved => 1,
+			file_id => params->{file_id},
+			file_name => $file->{file_name},
+			date_expires => $date_expires,
+			record_id => params->{id},
+			};
+
 		my $hits = $bag->search(
 		    query => $query,
 		    limit => 1
 		);
 
-		if($hits->{hits}->[0]){
+		if ($hits->{hits}->[0]){
 			my $obj = $hits->{hits}->[0];
 			return to_json {
 				ok => true,
 				url => h->host . "/rc/" . $obj->{_id},
 			};
-		}
-		else{
+		} else {
 			my $stored = $bag->add({
 				record_id => params->{id},
 				file_id => params->{file_id},
@@ -96,8 +94,9 @@ Request a copy of the publication. Email will be sent to the author.
 				my $pub = h->publication->get(params->{id});
 				my $mail_body = export_to_string({
 					title => $pub->{title},
-					user_name => params->{user_name},
+					user_email => params->{user_email},
 					key => $stored->{_id},
+					host => h->host,
 					},
 					'Template',
 					template => 'views/email/req_copy.tt',
@@ -108,17 +107,17 @@ Request a copy of the publication. Email will be sent to the author.
 						subject => h->config->{request_copy}->{subject},
 						body => $mail_body,
 					};
+					redirect '/publication/'.params->{id};
 				} catch {
 					error "Could not send email: $_";
 				}
-			}
-			else {
+			} else {
 				return h->host . "/rc/" . $stored->{_id};
 			}
 		}
 	};
 
-=head2 GET /approve/:key
+=head2 GET /rc/approve/:key
 
 Author approves the request. Email will be sent to user.
 
@@ -144,7 +143,7 @@ Author approves the request. Email will be sent to user.
 		}
 	};
 
-=head2 GET /refuse/:key
+=head2 GET /rc/deny/:key
 
 Author refuses the request for a copy. Email will be sent
 to user. Delete request key from database.
@@ -156,20 +155,19 @@ to user. Delete request key from database.
 		return unless $data;
 
 		$bag->delete(params->{key});
-		my $mail_body = export_to_string({}, 'Template', template => 'views/email/req_copy_refuse.tt');
 		try {
 			email {
 				to => $data->{user_email},
 				subject => h->config->{request_copy}->{subject},
-				body => $mail_body,
+				body => export_to_string(
+					{},
+					'Template',
+					template => 'views/email/req_copy_deny.tt'),
 			};
 		} catch {
 			error "Could not send email: $_";
 		}
 	};
-
-};
-
 
 =head2 GET /rc/:key
 
@@ -177,13 +175,16 @@ User received permission for downloading.
 Now get the document if time has not expired yet.
 
 =cut
-get '/rc/:key' => sub {
-	my $check = Catmandu->store->bag('request')->get(params->{key});
-	if ($check and $check->{approved} == 1) {
-		send_it($check->{record_id}, $check->{file_name});
-	} else {
-		template 'error', {message => "The time slot has expired. You can't download the document anymore."};
-	}
+	get '/:key' => sub {
+		my $check = Catmandu->store->bag('request')->get(params->{key});
+		if ($check and $check->{approved} == 1) {
+			_send_it($check->{record_id}, $check->{file_name});
+		} else {
+			template 'error',
+				{message => "The time slot has expired. You can't download the document anymore."};
+		}
+	};
+
 };
 
 =head2 GET /download/:id/:file_id
@@ -205,7 +206,7 @@ get '/download/:id/:file_id' => sub {
 		return template 'websites/403',{path =>request->path};
 	}
 
-	send_it(params->{id}, $file_name);
+	_send_it(params->{id}, $file_name);
 };
 
 1;
