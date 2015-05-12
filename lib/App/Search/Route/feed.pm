@@ -1,40 +1,52 @@
 package App::Search::Route::feed;
 
 use Catmandu::Sane;
-use Try::Tiny;
+use Catmandu::Fix qw(publication_to_dc);
 use Dancer qw(:syntax);
-use Dancer::Plugin::Feed;
+use DateTime;
+use XML::RSS;
+use Encode;
 use App::Helper;
 
-get '/feed/:format' => sub {
-    my $feed;
+get '/feed' => sub {
+    state $fix = Catmandu::Fix->new(fixes => ['publication_to_dc()']);
+
+    my ($period) = splat;
+
+    my $now = DateTime->now->truncate(to => 'week');
+
     my $p = h->extract_params();
-    push @{$p->{q}}, "status=public";
-    try {
-        my $hits = h->search_publication($p);
-        $feed = create_feed(
-            format  => params->{format},
-            title   => h->config->{app},
-            entries => [map {
-                my $rec = $_;
-                {title => $_->{title}}
-            } @{$hits->{hits}}],
-        );
-    } catch {
-        my ( $exception ) = @_;
+	push @{$p->{q}},
+        ( "status exact public",
+        "date_updated>". $now->strftime('"%F %H:%M:00"') );
 
-        if ( $exception->does('FeedInvalidFormat') ) {
-            return $exception->message;
-        }
-        elsif ( $exception->does('FeedNoFormat') ) {
-            return $exception->message;
-        }
-        else {
-            $exception->rethrow;
-        }
-    };
+    my $rss = XML::RSS->new;
 
-    return $feed;
+    $rss->channel(
+        link => h->host,
+        title => h->config->{app},
+        syn => {
+            updatePeriod => 'weekly',
+            updateFrequency => "1",
+            updateBase => "2000-01-01T00:00+00:00",
+        }
+    );
+
+    my $hits = h->search_publication($p);
+    $hits->each( sub {
+        my $hit = $_[0];
+
+	    if ($hit->{_id} && $hit->{citation}->{apa}) {
+            $rss->add_item(
+                link => h->host . "/publication/$hit->{_id}",
+                title => $hit->{citation}->{apa},
+                dc => $fix->fix($hit),
+            );
+	    }
+    });
+
+    content_type 'xhtml';
+    return $rss->as_string;
 };
 
 1;

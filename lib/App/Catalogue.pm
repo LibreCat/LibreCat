@@ -3,26 +3,18 @@ package App::Catalogue;
 =head1 NAME
 
 App::Catalogue - The central top level backend module.
-
 Integrates all routes needed for catalogueing records.
 
 =cut
 
 use Catmandu::Sane;
 use Catmandu;
-use Dancer ':syntax';
 use Catmandu::Util qw(:array);
-
+use Dancer ':syntax';
+use Dancer::Plugin::Auth::Tiny;
 use App::Helper;
 use App::Catalogue::Interface;
-use Dancer::Plugin::Auth::Tiny;
-use App::Catalogue::Route::admin;
-use App::Catalogue::Route::importer;
-use App::Catalogue::Route::person;
-use App::Catalogue::Route::publication;
-use App::Catalogue::Route::search;
-use App::Catalogue::Route::file;
-use App::Catalogue::Route::upload;
+use all qw(App::Catalogue::Route::*);
 
 =head2 GET /myPUB
 
