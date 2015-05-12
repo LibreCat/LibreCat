@@ -11,7 +11,8 @@ requires 'Catmandu::Importer::ArXiv';
 requires 'Catmandu::Importer::Inspire';
 requires 'Catmandu::Importer::EuropePMC';
 requires 'Catmandu::Importer::CrossRef';
-#requires 'Catmandu::Importer::getJSON';
+requires 'Catmandu::Importer::getJSON';
+
 
 #Dancer
 requires 'Dancer';
@@ -37,6 +38,7 @@ requires 'Dancer::Middleware::Rebase';
 requires 'Starman';
 
 # others
+requires 'all';
 requires 'DateTime';
 requires 'Hash::Merge';
 requires 'Try::Tiny';

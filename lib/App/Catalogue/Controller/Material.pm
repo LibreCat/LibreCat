@@ -3,8 +3,6 @@ package App::Catalogue::Controller::Material;
 use Catmandu::Sane;
 use Catmandu;
 use App::Helper;
-use Furl;
-use Carp;
 use Exporter qw/import/;
 
 our @EXPORT = qw/update_related_material/;
