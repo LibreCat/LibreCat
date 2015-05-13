@@ -934,7 +934,16 @@ publicationTypes:
           label: "Publisher"
           placeholder: "Publisher"
           defaultvalue: "Bielefeld University"
-        year_extern: *year_extern
+        year_extern:
+          label: "Year"
+          year:
+            mandatory: 1
+            label_short: "Year"
+            placeholder: "e.g. 2015"
+          extern:
+            label_short: "Extern"
+            placeholder: "Published while not employed at UniBi"
+          
       file_upload:
         tab_name: "Research data upload"
         externalFiles:
@@ -1001,7 +1010,15 @@ publicationTypes:
           label: "Publisher"
           placeholder: "Publisher"
           defaultvalue: "Bielefeld University"
-        year_extern: *year_extern
+        year_extern:
+          label: "Year"
+          year:
+            mandatory: 1
+            label_short: "Year"
+            placeholder: "e.g. 2015"
+          extern:
+            label_short: "Extern"
+            placeholder: "Published while not employed at UniBi"
       file_upload:
         tab_name: "Research data upload"
         externalFiles:
