@@ -15,11 +15,11 @@ my $e = Search::Elasticsearch->new();
 my $pub1_exists = $e->indices->exists(index => 'pub1');
 my $pub2_exists = $e->indices->exists(index => 'pub2');
 
-if ($pub1_exists and !$pub2_exists) {
+if (($pub1_exists and !$pub2_exists) or (!$pub1_exists and !$pub2_exists)) {
 	print "Index pub1 exists, new index will be pub2.\n";
 	my $bag = Catmandu->store('search', index_name => 'pub2')->bag('publication');
 	$bag->add_many($backup);
-	my $researcher_result = `/usr/local/bin/perl /home/bup/pub/bin/index_researcher.pl -m pub2`;
+	#my $researcher_result = `/usr/local/bin/perl /home/bup/pub/bin/index_researcher.pl -m pub2`;
 	my $department_result = `/usr/local/bin/perl /home/bup/pub/bin/index_department.pl -m pub2`;
 	my $project_result = `/usr/local/bin/perl /home/bup/pub/bin/index_project.pl -m pub2`;
 	my $award_result = `/usr/local/bin/perl /home/bup/pub/bin/index_award.pl -m pub2`;
@@ -59,7 +59,7 @@ elsif($pub2_exists and !$pub1_exists) {
 	print "Index pub2 exists, new index will be pub1.\n";
 	my $bag = Catmandu->store('search', index_name => 'pub1')->bag('publication');
 	$bag->add_many($backup);
-	my $researcher_result = `/usr/local/bin/perl /home/bup/pub/bin/index_researcher.pl -m pub1`;
+	#my $researcher_result = `/usr/local/bin/perl /home/bup/pub/bin/index_researcher.pl -m pub1`;
 	my $department_result = `/usr/local/bin/perl /home/bup/pub/bin/index_department.pl -m pub1`;
 	my $project_result = `/usr/local/bin/perl /home/bup/pub/bin/index_project.pl -m pub1`;
 	my $award_result = `/usr/local/bin/perl /home/bup/pub/bin/index_award.pl -m pub1`;
