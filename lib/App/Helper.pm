@@ -96,12 +96,13 @@ sub extract_params {
 			$cql =~ s/((AND |OR |NOT )?[0-9a-zA-Z]+\=\s|(AND |OR |NOT )?[0-9a-zA-Z]+\=$)/ /g;
 		}
 		$cql =~ s/^\s*(AND|OR)//g;
+		$cql =~ s/,//g;
 		$cql =~ s/(NOT )(.*?)=/$2<>/g;
 		$cql =~ s/(NOT )([^=]*?)/basic<>$2/g;
 		$cql =~ s/(?<!")\b([^\s]+)\b, \b([^\s]+)\b(?!")/"$1, $2"/g;
 		$cql =~ s/^\s+//; $cql =~ s/\s+$//; $cql =~ s/\s{2,}/ /;
 		if ($cql !~ /^("[^"]*"|'[^']*'|[0-9a-zA-Z]+(=| ANY | ALL | EXACT )"[^"]*")$/ and $cql !~ /^(([0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)(?<!ANY)(?<!ALL)(?<!EXACT)|"[^"]*"|'[^']*') (AND|OR) ([0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))$/ and $cql !~ /^(([0-9a-zA-Z]+( ANY | ALL | EXACT )"[^"]*"|"[^"]*"|'[^']*'|[0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR))( (AND|OR) (([0-9a-zA-Z]+( ANY | ALL | EXACT )"[^"]*")|"[^"]*"|'[^']*'|[0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**))*)$/) {
-			$cql =~ s/((?:(?:(?:[0-9a-zA-Z\=]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*') (?:AND|OR) )+(?:[0-9a-zA-Z\=]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))|[0-9a-zA-Z\=]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*')\s(?!AND )(?!OR )("[^"]*"|'[^']*'|.*?)/$1 AND $2/g;
+			$cql =~ s/((?:(?:(?:[0-9a-zA-Z\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*') (?:AND|OR) )+(?:[0-9a-zA-Z\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))|[0-9a-zA-Z\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*')\s(?!AND )(?!OR )("[^"]*"|'[^']*'|.*?)/$1 AND $2/g;
 		}
 		push @{$p->{q}}, lc $cql;
 	}
@@ -326,7 +327,7 @@ sub get_statistics {
 	my $reshits = $self->search_publication({q => ["status=public","(type=researchData OR type=dara)"]});
 	my $oahits = $self->search_publication({q => ["status=public","fulltext=1","type<>researchData","type<>dara"]});
 	my $disshits = $self->search_publication({q => ["status=public","type=bi*"]});
-	my $people = $self->search_researcher();
+	my $people = $self->search_researcher({researcher_list=> 1});
 
 	$stats->{publications} = $hits->{total} if $hits and $hits->{total};
 	$stats->{researchdata} = $reshits->{total} if $reshits and $reshits->{total};
