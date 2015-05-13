@@ -2,16 +2,15 @@ package App::Catalogue::Route::importer;
 
 =head1 NAME
 
-    App::Catalogue::Route::importer - central handler for import routes
+App::Catalogue::Route::importer - central handler for import routes
 
 =cut
 
 use Dancer ':syntax';
 use Try::Tiny;
 use Dancer::Plugin::Auth::Tiny;
-
 use App::Helper;
-use App::Catalogue::Controller::Import;
+use App::Catalogue::Controller::Importer;
 
 =head2 POST /myPUB/record/import
 
@@ -26,7 +25,10 @@ post '/myPUB/record/import' => needs login => sub {
 	my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
     try {
-        $pub = import_publication($p->{source}, $p->{id});
+        $pub = App::Catalogue::Controller::Importer->new(
+			id => $p->{id},
+			source => $p->{source},
+			)->fetch;
 
         if ($pub) {
 			my $type = $pub->{type} || 'journalArticle';

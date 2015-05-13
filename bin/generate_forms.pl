@@ -11,8 +11,6 @@ my $conf = Catmandu->config;
 my $forms = $conf->{forms}->{publicationTypes};
 my $otherItems = $conf->{forms}->{otherItems};
 
-#my $path = $conf->{'path_to_forms'};
-
 my $tt = Template->new(
     START_TAG  => '{%',
     END_TAG    => '%}',
