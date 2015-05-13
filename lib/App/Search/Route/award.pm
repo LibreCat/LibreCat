@@ -155,9 +155,9 @@ get qr{/award/*} => sub {
 		    limit => h->config->{store}->{maximum_page_size},
 		    facets => {
 		    	year => {terms => {field => 'year', size => 100, order => 'reverse_term'}},
-		    	department => {terms => {field => 'department.name.exact', size => 100, order => 'term'}},
-		    	einrichtung => {terms => {field => 'einrichtung.name.exact', size => 100, order => 'term'}},
-		    	person => {terms => {field => 'honoree.name.fullName.exact', size => 100, order => 'term'}},
+		    	department => {terms => {field => 'department.name', size => 100, order => 'term'}},
+		    	einrichtung => {terms => {field => 'einrichtung.name', size => 100, order => 'term'}},
+		    	person => {terms => {field => 'honoree.full_name.exact', size => 100, order => 'term'}},
 		    },
 		    sru_sortkeys => "year,,0",
 		);
@@ -225,33 +225,30 @@ get qr{/award/*} => sub {
 	else {
 		
 		my $hits;
-		$hits->{hits}->[0] = $store->get($id);
+		$hits = $store->get($id);
 		$id = uc $id;
 		
-		if($hits->{hits}->[0]->{rec_type} ne "record"){
+		if($hits->{rec_type} ne "record"){
 			
-			$hits->{hits}->[0]->{people} = h->award->search(
+			my $awardhits = h->award->search(
 			    cql_query => "awardid exact $id",
 			    limit => params->{limit} ||= h->config->{store}->{default_searchpage_size},
 			    start => params->{start} ||= 0,
 			    sru_sortkeys => "year,,0",
 			);
+			$hits->{people} = $awardhits if $awardhits->{total};
 			
 			$tmpl = "award/awardRecord";
 			#$tmpl .= "_$lang" if $lang;
-			$hits->{hits}->[0]->{lang} = "en" if $lang;
+			$hits->{lang} = "en" if $lang;
 			
-			$hits->{hits}->[0]->{id} = $id;
-			return template $tmpl, $hits->{hits}->[0];
+			$hits->{id} = $id;
+			return template $tmpl, $hits;
 		}
-		elsif($hits->{hits}->[0]->{rec_type} eq "record"){
-			$hits = h->award->search(
-			    cql_query => "id=$id",
-			    limit => params->{limit} ||= h->config->{store}->{default_searchpage_size},
-			    start => params->{start} ||= 0,
-			);
+		elsif($hits->{rec_type} eq "record"){
+			$hits->{award_data} = h->award->get($hits->{award_id});
 			
-			my $name = $hits->{hits}->[0]->{honoree}->[0]->{full_name};
+			my $name = $hits->{honoree}->[0]->{full_name};
 			
 			my $otherHits = h->award->search(
 		        cql_query => "honoree exact \"$name\"",
@@ -260,14 +257,14 @@ get qr{/award/*} => sub {
 		        sru_sortkeys => "year,,0",
 		    );
 		    
-		    $hits->{hits}->[0]->{otheraward} = $otherHits if $otherHits->{total} != 0;
+		    $hits->{otheraward} = $otherHits->{hits} if $otherHits->{total} != 0;
 		}
 		
 		$tmpl = "award/preisRecord";
 		#$tmpl .= "_$lang" if $lang;
-		$hits->{hits}->[0]->{lang} = "en" if $lang;
-		
-		template $tmpl, $hits->{hits}->[0];
+		$hits->{lang} = "en" if $lang;
+		#return to_dumper $hits;
+		template $tmpl, $hits;
 	}
     	
 };

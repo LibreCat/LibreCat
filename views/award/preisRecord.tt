@@ -10,7 +10,7 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="/javascripts/bootstrap.min.js"></script>
 
-[% persId = honoree.personNumber %]
+[% persId = honoree.id %]
 [% IF persId %]
   [% person = h.getPerson(persId) %]
 [% END %]
@@ -23,11 +23,11 @@
     <img src="/images/beta_unibi_right.png" width="50">
     </div>
     
-    <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% awardData.id %][% academyData.id %]"><h2><img src="/images/preis_gross.png" /> [% awardData.title %][% academyData.title %]</h2></a>
+    <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% award_id %]"><h2><img src="/images/preis_gross.png" /> [% award_data.title %]</h2></a>
     
     <div class="span2" style="padding-bottom:10px;">
     [% IF person.bis_photo %]
-      <object data="[% person.bis_photo %]" class="img-polaroid" style="max-width:120px;" itemprop="image">
+      <object data="[% person.bis.photo %]" class="img-polaroid" style="max-width:120px;" itemprop="image">
         <img src="/images/dummy.png" style="width:10px;" class="img-polaroid">
       </object>
 	[% ELSE %]
@@ -37,22 +37,22 @@
 	
 	<div class="span3">
       <div style="font-weight:bold;padding-bottom:10px;">
-      [% IF formerMember != "ja" && persId %]<a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% persId %]&lang=de">
+      [% IF former_member != "ja" && persId %]<a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% persId %]&lang=de">
       [% END %]
-      [% honoree.name.personTitle %] [% honoree.name.givenName %] [% honoree.name.surname %][% IF formerMember == "verstorben" %] &dagger; [% END %]
-      [% IF formerMember != "ja" && persId %]
+      [% honoree.0.title %] [% honoree.0.first_name %] [% honoree.0.last_name %][% IF former_member == "verstorben" %] &dagger; [% END %]
+      [% IF former_member != "ja" && persId %]
       </a>
       [% END %]
       </div>
       <p>
       
       [% IF department %]
-        [% IF uniBiMember == "nein" && formerMember != "verstorben" %]
+        [% IF !uni_member && former_member != "verstorben" %]
         ehemals 
         [% END %]
         [% FOREACH dep IN department %]
-          [% IF dep.organizationNumber != "" %]
-            <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/EinrichtungDetail.jsp?orgId=[% dep.organizationNumber %]">[% dep.name %]</a><br />
+          [% IF dep.id != "" %]
+            <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/EinrichtungDetail.jsp?orgId=[% dep.id %]">[% dep.name %]</a><br />
           [% ELSE %]
             [% dep.name %]<br />
           [% END %]
@@ -65,7 +65,7 @@
     
       [% IF organization %][% lang ? "Honored by" : "Verliehen von" %]: [% organization %]<br />[% END %]
       [% IF year %][% lang ? "Year of Honour" : "Jahr der Ehrung" %]: [% year %]<br />[% END %]
-      [% IF awardedWhileNotUnibi == "" OR awardedWhileNotUnibi == "ja" %]([% lang ? "Honored before coming to Bielefeld University" : "Ehrung erhalten vor T&auml;tigkeit an der Universit&auml;t Bielefeld" %])<br /><br />[% END %]
+      [% IF extern %]([% lang ? "Honored before coming to Bielefeld University" : "Ehrung erhalten vor T&auml;tigkeit an der Universit&auml;t Bielefeld" %])<br /><br />[% END %]
       [% IF description %][% description %]<br />[% END %]
       [% IF proof %]<a href="[% proof %]" title="[% proof %]" target="_blank">[% lang ? "Documentation" : "Nachweis" %]</a><br />[% END %]
       
