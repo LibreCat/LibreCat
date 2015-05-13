@@ -1,10 +1,11 @@
 #!/usr/bin/env perl
 
-use lib qw(/home/bup/perl5/lib/perl5);
+use lib qw(/home/bup/perl5/lib/perl5 /home/bup/pub);
 use Catmandu::Sane;
 use Catmandu -all;
 use Getopt::Std;
 use Data::Dumper;
+use Catmandu::Store::MongoDB;
 
 getopts('u:m:');
 our $opt_u;

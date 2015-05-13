@@ -4,6 +4,7 @@ use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/sbcat/lib/de
 use Catmandu::Sane;
 use Catmandu -all;
 use Getopt::Std;
+use Catmandu::Store::MongoDB;
 
 getopts('u:m:d');
 our $opt_u;
