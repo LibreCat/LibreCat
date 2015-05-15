@@ -16,7 +16,7 @@ get '/feed' => sub {
     my $p = h->extract_params();
 	push @{$p->{q}},
         ( "status exact public",
-        "date_updated>". $now->strftime('"%F %H:%M:00"') );
+        "date_updated>". $now->strftime('"%FT%H:%M:00Z"') );
 
     my $rss = XML::RSS->new;
 
