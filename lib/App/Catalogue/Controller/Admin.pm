@@ -77,7 +77,7 @@ sub update_person {
 #        _id => $data->{_id},
 #    };
 #    map { $user_data->{$_} = $data->{$_} } @ids;
-    
+
     #my $old_rec = h->getPerson($data->{_id});
     if($data->{orcid} and $data->{orcid} ne ""){
     	my $hits = h->search_publication({q => ["person=$data->{_id}"], limit => 1000});
@@ -102,7 +102,7 @@ sub update_person {
     		}
     	}
     }
-    
+
     #h->authority_user->add($user_data);
     #delete $data->{$_} for @ids;
     h->authority->add($data);
@@ -220,7 +220,7 @@ sub update_award {
     return "Error: No _id specified" unless $data->{_id};
 
     my $new = h->nested_params($data);
-    
+
     my $fixer = Catmandu::Fix->new(fixes => ['person()',]);
     $fixer->fix($new);
 

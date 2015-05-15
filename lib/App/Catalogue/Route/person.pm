@@ -2,7 +2,7 @@ package App::Catalogue::Route::person;
 
 =head1 NAME
 
-    App::Catalogue::Route::person - handles person settings
+App::Catalogue::Route::person - handles person settings
 
 =cut
 
@@ -10,25 +10,24 @@ use Catmandu::Sane;
 use Catmandu::Util qw(:array);
 use Dancer ':syntax';
 use App::Helper;
-use App::Catalogue::Controller::Admin qw/:person/;
+use App::Catalogue::Controller::Admin qw(:person);
 use Dancer::Plugin::Auth::Tiny;
 
 =head1 PREFIX /myPUB/person
 
-    All person settings are handled within the prefix '/person'.
+All person settings are handled within the prefix '/person'.
 
 =cut
 prefix '/myPUB/person' => sub {
 
 =head2 GET /preference
 
-    User edits the preferred citation style and sorting
-    for his own publication list.
+User edits the preferred citation style and sorting
+for his own publication list.
 
 =cut
     get '/preference' => needs login => sub {
         my $person = h->authority->get( session('personNumber') );
-#return to_dumper $person;
         #my $tmp = h->get_sort_style(params->{sort} || '', params->{style} || '');
         my $sort; my $tmp;
         if(params->{'sort'}){
@@ -38,7 +37,7 @@ prefix '/myPUB/person' => sub {
         	else{
         		$sort = params->{sort};
         	}
-        	
+
         	foreach my $s (@$sort){
         		if($s =~ /(\w{1,})\.(asc|desc)/){
         			push @{$tmp->{'sort'}}, $s;
@@ -49,14 +48,14 @@ prefix '/myPUB/person' => sub {
         else {
         	$person->{'sort'} = undef;
         }
-        
+
         if(params->{style}){
         	$person->{style} = params->{style} if array_includes(h->config->{lists}->{styles},params->{style});
         }
         else {
         	$person->{style} = undef;
         }
-        
+
 #return to_dumper $person;
         h->authority->add($person);
 
@@ -65,8 +64,8 @@ prefix '/myPUB/person' => sub {
 
 =head2 POST /author_id
 
-    User adds author identifiers to db (e.g. ORCID). These will
-    be displayed on author's profile page.
+User adds author identifiers to db (e.g. ORCID). These will
+be displayed on author's profile page.
 
 =cut
     post '/author_id' => needs login => sub {
@@ -86,9 +85,9 @@ prefix '/myPUB/person' => sub {
 
 =head2 POST /edit_mode
 
-    User can choose default edit mode for editing publications.
-    "normal" -> edit form with tabs
-    "expert" -> one long edit form
+User can choose default edit mode for editing publications.
+"normal" -> edit form with tabs
+"expert" -> one long edit form
 
 =cut
     post '/edit_mode' => sub {
@@ -106,12 +105,12 @@ prefix '/myPUB/person' => sub {
 
 =head1 POST /affiliation
 
-    User edits his affiliation. Will be displayed if you opens
-    new publication form.
+User edits his affiliation. Will be displayed if you opens
+new publication form.
 
 =cut
     post '/affiliation' => needs login => sub {
-    	
+
     	my $fix = Catmandu::Fix->new(
     	  fixes => [ 'compact_array("department")']
     	);

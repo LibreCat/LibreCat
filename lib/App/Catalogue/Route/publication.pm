@@ -162,7 +162,7 @@ Checks if the user has the rights to update this record.
         }
 
         my $result = update_publication($params);
-        return to_dumper $result; # leave this here to make debugging easier
+        #return to_dumper $result; # leave this here to make debugging easier
 
         redirect '/myPUB';
     };

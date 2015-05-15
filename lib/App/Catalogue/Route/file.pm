@@ -56,7 +56,8 @@ Request a copy of the publication. Email will be sent to the author.
 	post '/:id/:file_id' => sub {
 		my $bag = Catmandu->store->bag('request');
 		my $file = _get_file_info(params->{id}, params->{file_id});
-		#return unless $file->{request_a_copy} == 1;
+		redirect '/publication/'.params->{id} unless $file->{request_a_copy};
+
 		my $date_expires = _calc_date();
 
 		my $query = {

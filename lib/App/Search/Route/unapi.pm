@@ -16,7 +16,7 @@ get '/unapi' => sub {
     my $format = params->{format};
 
     if ($id && $format) {
-        return forward "/publication/$id", {fmt => $format};
+        return forward "/publication/$format/$id";
     }
 
     content_type 'xml';

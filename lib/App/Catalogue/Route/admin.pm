@@ -10,6 +10,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(trim);
 use Dancer ':syntax';
 use App::Helper;
+use App::Catalogue::Controller::Importer;
 use App::Catalogue::Controller::Admin qw/:all/;
 use Dancer::Plugin::Auth::Tiny;
 
@@ -103,13 +104,12 @@ Input is person id. Returns warning if person is already in the database.
                 { error => "There is already an account with ID $id." };
         }
         else {
-            my $p = import_person($id);
+            my $p = App::Catalogue::Controller::Importer->new(
+    			id => $id,
+    			source => 'bis',
+    			)->fetch;
             template 'admin/forms/edit_account', $p;
         }
-    };
-
-    get '/import' => sub {
-        return "Not implemented.";
     };
 
     get '/project' => needs role => 'super_admin' => sub {

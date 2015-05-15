@@ -11,8 +11,6 @@ use App::Helper;
 get '/feed' => sub {
     state $fix = Catmandu::Fix->new(fixes => ['publication_to_dc()']);
 
-    my ($period) = splat;
-
     my $now = DateTime->now->truncate(to => 'week');
 
     my $p = h->extract_params();
