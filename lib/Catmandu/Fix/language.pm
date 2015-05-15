@@ -13,10 +13,10 @@ sub fix {
         } else {
             $_->{iso} = h->config->{lists}->{language}->{$_->{name}};
         }
-    } @{$data->{language}};
+    } @{$pub->{language}};
 
-    if($data->{original_language}){
-        foreach my $lang (@{$data->{original_language}}){
+    if($pub->{original_language}){
+        foreach my $lang (@{$pub->{original_language}}){
             if($lang->{name} eq "English" or $lang->{name} eq "German"){
                 $lang->{iso} = h->config->{lists}->{language_preselect}->{$lang->{name}};
             }
