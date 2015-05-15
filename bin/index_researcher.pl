@@ -1,11 +1,15 @@
 #!/usr/bin/env perl
 
+use lib qw(/home/bup/pub);
+
 #use lib qw(/srv/www/sbcat/lib /srv/www/sbcat/lib/extension /srv/www/sbcat/lib/default /home/bup/perl5/lib/perl5);
 #use lib qw(/srv/www/app-catalog/lib);
+
 use Catmandu::Sane;
 use Catmandu -all;
 use Getopt::Std;
 use Data::Dumper;
+use Catmandu::Store::MongoDB;
 
 getopts('u:m:i:');
 our $opt_u;
@@ -24,57 +28,54 @@ if ( $opt_m ) {
 
 Catmandu->load(':up');
 my $conf = Catmandu->config;
-#my $mongoBag = Catmandu->store('authority')->bag('admin');
-my $mongoBag = Catmandu->store('authority')->bag;
-#my $userBag = Catmandu->store('authority')->bag('user');
+
+my $mongoBag = Catmandu::Store::MongoDB->new(database_name => 'authority_new');
 my $bag = Catmandu->store('search', index_name => $index_name)->bag('researcher');
 
 my $pre_fixer = Catmandu::Fix->new(fixes => [
 			'add_num_of_publs()',
+			#'remove_field("type")',
+			#'remove_field("personTitle")',
+			#'remove_field("_version")',
 			#'copy_field("_id","oId")',
 		]);
 
-sub add_to_index {
-	my $rec = shift;
-
-	$pre_fixer->fix($rec);
-	#print Dumper $rec;
-  	my $response = $bag->add($rec);
-  	#print Dumper $response;
-}
+#sub add_to_index {
+#	my $rec = shift;
+#	$pre_fixer->fix($rec);
+#  	my $response = $bag->add($rec);
+#}
 
 
 if ($opt_i){
-#	my $researcher_admin = $mongoBag->get($opt_i);
-#	my $researcher_user = $userBag->get($opt_i);
-#
-#	my @fields = qw(full_name old_full_name last_name old_last_name first_name old_first_name email department super_admin reviewer dataManager);
-#	map {
-#		$researcher_user->{$_} = $researcher_admin->{$_} if $researcher_admin->{$_};
-#	} @fields;
     my $researcher = $mongoBag->get($opt_i);
-    foreach (qw/email login/){
-    	delete $researcher->{$_};
-    }
-	#add_to_index($researcher_user) if $researcher_user;
-	add_to_index($researcher) if $researcher;
-	#print Dumper $researcher_user;
+	#add_to_index($researcher) if $researcher;
+	$pre_fixer->fix($researcher);
+  	$bag->add($researcher);
 }
 else { # initial indexing
 
 	my $allResearchers = $mongoBag->to_array;
+	my $researchers;
+	my $i = 1;
 	foreach my $researcher (@$allResearchers){
-#		my $researcher_user = $userBag->get($researcher_admin->{_id});
-#		my @fields = qw(full_name old_full_name last_name old_last_name first_name old_first_name email department super_admin reviewer dataManager);
-#		map {
-#			$researcher_user->{$_} = $researcher_admin->{$_} if $researcher_admin->{$_};
-#		} @fields;
-        foreach (qw/email login/){
-        	delete $researcher->{$_};
-        }
-		#add_to_index($researcher_user) if $researcher_user;
-		add_to_index($researcher) if $researcher;
-		#print Dumper $researcher_user;
+
+#		next if ($researcher->{type} and $researcher->{type} eq "organization");
+#		next if $researcher->{name_lc};
+#		next if !$researcher->{first_name};
+		if((!$researcher->{type} or $researcher->{type} and $researcher->{type} ne "organization") and !$researcher->{name_lc} and $researcher->{first_name}){
+			$pre_fixer->fix($researcher);
+			$bag->add($researcher);
+			
+			my $result = `curl -I -s pub3.ub.uni-bielefeld.de/publication`;
+			if($result !~ /HTTP\/1.1 200 OK/){
+				print Dumper $researcher;
+				print Dumper $i;
+				exit;
+			}
+			$i++;
+		}
+
 	}
 }
 

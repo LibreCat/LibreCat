@@ -7,7 +7,7 @@ use Catmandu::Sane;
 use Moo;
 
 Catmandu->load(':up');
-my $mongoBag = Catmandu->store('authority')->bag('department');
+my $mongoBag = Catmandu->store('department')->bag;
 
 sub fix {
     my ( $self, $rec ) = @_;

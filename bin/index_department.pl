@@ -23,7 +23,7 @@ if ( $opt_m ) {
 Catmandu->load(':up');
 my $conf = Catmandu->config;
 
-my $mongoBag = Catmandu->store('authority')->bag('department');
+my $mongoBag = Catmandu->store('department');
 my $bag = Catmandu->store('search', index_name => $index_name)->bag('department');
 
 my $pre_fixer = Catmandu::Fix->new(fixes => [
