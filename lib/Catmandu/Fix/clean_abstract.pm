@@ -8,9 +8,9 @@ sub fix {
 
     if($pub->{abstract}){
     	my $i = 0;
-    	foreach my $ab (@{$data->{abstract}}){
+    	foreach my $ab (@{$pub->{abstract}}){
     		if($ab->{lang} and !$ab->{text}){
-    			splice @{$data->{abstract}}, $i, 1;
+    			splice @{$pub->{abstract}}, $i, 1;
     		}
     		$i++;
     	}
