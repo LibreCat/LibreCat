@@ -16,7 +16,7 @@
 [% END %]
 
 [%- IF h.extract_params.q.size > 0 %]
-<h3 class="margin-top0">Filters and Search Terms</h3>
+<h3 class="margin-top0">[% lang ? 'Filters and Search Terms' : 'Filter und Suchbegriffe' %]</h3>
 [%- FOREACH val IN h.extract_params.q %]
 [%- removed = [] -%]
 
