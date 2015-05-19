@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="angularController">
+
+  <head>
+
+    <title>PUB &ndash; Publications at Bielefeld University</title>
+
+    <link rel="icon" href="/images/icon_uni.png" type="image/png">
+
+    [% INCLUDE head_meta.tt %]
+    [% INCLUDE head_scripts.tt %]
+
+  </head>
+
+  <body>
+
+    [% INCLUDE hits.tt %]
+    [% INCLUDE facets.tt %]
+
+  </body>
+
+</html>
