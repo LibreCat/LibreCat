@@ -27,11 +27,13 @@
 [%- END %]
 
 [% UNLESS request.path == "/marked" %]
+[% IF h.extract_params.q.size == 0 %]
 <div class="row hidden-md hidden-lg hidden-sm"><!-- smartphones only -->
   <div class="col-xs-12">
-    <h2 class="margin-xs">Search / Filter</h2>
+    <h2 class="margin-xs">[% lang ? 'Search' : 'Suche' %] / Filter[% lang ? '' : 'n' %]</h2>
   </div>
 </div>
+[% END %]
 
 <h3[%- IF h.extract_params.q.size == 0 %] class="margin-top0"[% END %]>[% lang ? 'Search' : 'Suche' %]</h3>
 <form action="#" method="get" class="form-inline" role="form">
