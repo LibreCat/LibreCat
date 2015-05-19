@@ -84,6 +84,7 @@ sub extract_params {
 	return $p if ref $params ne 'HASH';
 	$p->{start} = $params->{start} if is_natural $params->{start};
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
+	$p->{type} = $params->{type} if is_string $params->{embed};
 
 	$p->{q} = array_uniq( $self->string_array($params->{q}) );
 
@@ -322,20 +323,21 @@ sub get_relation {
 
 sub get_statistics {
 	my ($self) = @_;
-	my $stats;
+
 	my $hits = $self->search_publication({q => ["status=public"]});
 	my $reshits = $self->search_publication({q => ["status=public","(type=researchData OR type=dara)"]});
 	my $oahits = $self->search_publication({q => ["status=public","fulltext=1","type<>researchData","type<>dara"]});
 	my $disshits = $self->search_publication({q => ["status=public","type=bi*"]});
 	my $people = $self->search_researcher({researcher_list=> 1});
 
-	$stats->{publications} = $hits->{total} if $hits and $hits->{total};
-	$stats->{researchdata} = $reshits->{total} if $reshits and $reshits->{total};
-	$stats->{oahits} = $oahits->{total} if $oahits and $oahits->{total};
-	$stats->{theseshits} = $disshits->{total} if $disshits and $disshits->{total};
-	$stats->{pubpeople} = $people->{total} if $people and $people->{total};
+	return {
+		publications => $hits->{total} || 0,
+		researchdata => $reshits->{total} || 0,
+		oahits => $oahits->{total} || 0,
+		theseshits => $disshits->{total} || 0,
+		pubpeople => $people->{total} || 0,
+	};
 
-	return $stats;
 }
 
 sub get_metrics {

@@ -22,7 +22,7 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 
 	my $hits = h->search_publication($p);
 	$hits->{bag} = $bag;
-	
+
 	my $marked = session 'marked';
     $marked ||= [];
     $hits->{hits}->[0]->{marked} = @$marked;
@@ -33,6 +33,17 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 		$hits->{hits}->[0]->{bag} = $bag;
 		template "frontdoor/record", $hits->{hits}->[0];
 	}
+};
+
+=head2 GET /{data|publication}/embed
+
+Embed API to (data) publications
+
+=cut
+
+get qr{/(data|publication)/embed} => sub {
+	my ($bag) = splat;
+	forward "/$bag?type=embed", params;
 };
 
 =head2 GET /{data|publication}
@@ -60,8 +71,8 @@ get qr{/(data|publication)/*} => sub {
 
 	if ($p->{fmt} ne 'html') {
 		h->export_publication($hits, $p->{fmt});
-	} elsif ($p->{ttype}) {
-		template "websites/index_publication_$p->{ttype}", $hits;
+	} elsif ($p->{type} eq 'embed') {
+		template "websites/embed", $hits;
 	} else {
 		template "websites/index_publication", $hits;
 	}

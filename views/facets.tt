@@ -464,7 +464,6 @@ searchParams = [% h.extract_params.json %];
 
 $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ window.location.href +'&ftyp=js"><\/script><noscript><a href="'+ window.location.href +'" target="_blank">Pers&ouml;nliche Publikationsliste &gt;&gt; / My Publication List &gt;&gt;</a></noscript></div>';
-    console.log(path);
     var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="'+ window.location.href +'&ftyp=iframe"></iframe>';
     var emb_link = '<a href="'+ window.location.href +'">My Publication List</a>';
     $('#id_jstext_[% tabmodus %][% menu %]').val(emb_js);
