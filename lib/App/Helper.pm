@@ -10,7 +10,7 @@ use Template;
 use Moo;
 use POSIX qw(strftime);
 use List::Util;
-use Hash::Merge::Simple qw/merge/;
+use Hash::Merge::Simple qw(merge);
 use JSON;
 
 Catmandu->load(':up');
@@ -447,7 +447,7 @@ sub search_publication {
 }
 
 sub export_publication {
-	my ($self, $hits, $fmt) = @_;
+	my ($self, $hits, $fmt,$to_string) = @_;
 
 	if ($fmt eq 'csl_json') {
 		$self->export_csl_json($hits);
@@ -468,6 +468,8 @@ sub export_publication {
 
 	   	my $f = export_to_string( $hits, $package, $options );
 	   	($fmt eq 'bibtex') && ($f =~ s/(\\"\w)\s/{$1}/g);
+		return $f if $to_string;
+		
 	   	return Dancer::send_file (
    	    	\$f,
 	      	content_type => $content_type,

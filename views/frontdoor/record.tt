@@ -470,8 +470,14 @@ $.getJSON("/metrics/[% _id %]").done(function( data ) {
   }
 });
 $("#thumbnail").attr("src","/thumbnail/[% _id %]").load(function(){
-    console.log("boom shaka laka: thumbnail loaded");
 });
+$.getJSON("citation/[% _id %]/bibtex").done(function(data) {
+  $("#bibtex").html(data.citation);
+});
+$.getJSON("citation/[% _id %]/ris").done(function(data) {
+  $("#ris").html(data.citation);
+});
+
 </script>
 [% END %]
 

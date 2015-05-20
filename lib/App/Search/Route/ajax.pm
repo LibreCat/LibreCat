@@ -45,10 +45,13 @@ ajax '/thumbnail/:id' => sub {
     }
 };
 
-#ajax '/citiaton/:id/:fmt' => sub {
-#    my $pub = h->publication->get(params->{id});
-#    to_json {cit => export_to_string($pub, '')};
-#};
+ajax '/citation/:id/:fmt' => sub {
+    my $pub = h->publication->get(params->{id});
+
+    to_json {
+        cit => h->publication_export($pub, params->{fmt},1),
+    };
+};
 
 1;
 
