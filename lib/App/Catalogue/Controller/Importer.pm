@@ -14,6 +14,7 @@ my $appdir = h->config->{appdir} // $ENV{PWD};
 
 sub fetch {
     my ($self) = @_;
+
     my $s = $self->source;
     my $id = $self->id;
     $self->$s($id);
@@ -21,6 +22,7 @@ sub fetch {
 
 sub arxiv {
     my ($self, $id) = @_;
+
     Catmandu->importer(
         'ArXiv',
         query => $id,
@@ -30,6 +32,7 @@ sub arxiv {
 
 sub inspire {
     my ($self, $id) = @_;
+
     Catmandu->importer(
         'Inspire',
         id => $id,
@@ -39,15 +42,41 @@ sub inspire {
 
 sub crossref {
     my ($self, $id) = @_;
-    Catmandu->importer(
+
+    my $data = Catmandu->importer(
         'getJSON',
         from => "http://api.crossref.org/works/$id",
         fix => ["$appdir/fixes/crossref_mapping.fix"],
+        )->first;
+
+    # try @datacite if crossref has no data
+    if(!$data) {
+        $data = $self->datacite($id);
+    }
+
+    return $data;
+}
+
+sub datacite {
+    my ($self, $id) = @_;
+
+    my $furl = Furl->new(
+        agent => "Chrome 35.1",
+        timeout => 10,
+        headers => [Accept => 'application/x-datacite+xml'],
+        );
+
+    my $res = $furl->get('http://data.datacite.org/'. $id);
+    Catmandu->importer(
+        'XML',
+        file => $res->content,
+        fix => ["$appdir/fixes/from_datacite.fix"],
         )->first;
 }
 
 sub epmc {
     my ($self, $id) = @_;
+
     Catmandu->importer(
         'EuropePMC',
         query => $id,
