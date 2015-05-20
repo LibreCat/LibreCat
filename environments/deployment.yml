@@ -21,6 +21,7 @@ session_expires: 1 hr
 
 plack_middlewares:
   - ["ReverseProxy"]
+  - ["Deflater"]
 # or better use 'behind_proxy: 1'?
 
 # Bielefeld specific

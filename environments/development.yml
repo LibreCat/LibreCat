@@ -13,3 +13,7 @@ thesis:
   from: publikationsdienste.ub@uni-bielefeld.de
   subject: "[PUB TEST] New thesis submitted"
   urn_prefix: 'urn:nbn:de:hbz:361'
+
+plack_middlewares:
+  - ["ReverseProxy"]
+  - ["Deflater"]
