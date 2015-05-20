@@ -465,11 +465,19 @@
 [% IF _id %]
 <script>
 $.getJSON("/metrics/[% _id %]").done(function( data ) {
+  if (data.times_cited > 0) {
     $('#wos').after('<a href="'+ data.citing_url +'" target="_parent">Web of Science&reg; Times Cited: <strong class="wos-times-cited">'+ data.times_cited +'</strong></a></li><br>');
+  }
 });
 $("#thumbnail").attr("src","/thumbnail/[% _id %]").load(function(){
-    console.log("boom shaka laka: thumbnail loaded");
 });
+$.getJSON("citation/[% _id %]/bibtex").done(function(data) {
+  $("#bibtex").html(data.citation);
+});
+$.getJSON("citation/[% _id %]/ris").done(function(data) {
+  $("#ris").html(data.citation);
+});
+
 </script>
 [% END %]
 
