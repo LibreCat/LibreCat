@@ -471,11 +471,11 @@ $.getJSON("/metrics/[% _id %]").done(function( data ) {
 });
 $("#thumbnail").attr("src","/thumbnail/[% _id %]").load(function(){
 });
-$.getJSON("citation/[% _id %]/bibtex").done(function(data) {
-  $("#bibtex").html(data.citation);
+$.getJSON("/citation/[% _id %]/bibtex").done(function(data) {
+  $("#bibtex").html('<pre>'+data.cit+'</pre>');
 });
-$.getJSON("citation/[% _id %]/ris").done(function(data) {
-  $("#ris").html(data.citation);
+$.getJSON("/citation/[% _id %]/ris").done(function(data) {
+  $("#ris").html('<pre>'+data.cit+'</pre>');
 });
 
 </script>

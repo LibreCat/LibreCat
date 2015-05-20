@@ -48,8 +48,11 @@ ajax '/thumbnail/:id' => sub {
 ajax '/citation/:id/:fmt' => sub {
     my $pub = h->publication->get(params->{id});
 
+    my $out = h->export_publication($pub, params->{fmt},1);
+    utf8::decode($out);
+ 
     to_json {
-        cit => h->publication_export($pub, params->{fmt},1),
+        cit => $out,
     };
 };
 
