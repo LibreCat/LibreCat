@@ -35,17 +35,6 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 	}
 };
 
-=head2 GET /{data|publication}/embed
-
-Embed API to (data) publications
-
-=cut
-
-get qr{/(data|publication)/embed} => sub {
-	my ($bag) = splat;
-	forward "/$bag?type=embed", params;
-};
-
 =head2 GET /{data|publication}
 
 Search API to (data) publications.
@@ -72,11 +61,26 @@ get qr{/(data|publication)/*} => sub {
 	if ($p->{fmt} ne 'html') {
 		h->export_publication($hits, $p->{fmt});
 	} elsif ($p->{type} eq 'embed') {
-		template "websites/embed", $hits;
+		template "iframe", $hits;
 	} else {
 		template "websites/index_publication", $hits;
 	}
 
 };
+
+=head2 GET /{data|publication}/embed
+
+Embed API to (data) publications
+
+=cut
+
+get qr{/(data|publication)/embed/*} => sub {
+        my ($bag) = splat;
+#return to_dumper $bag;
+        my $p = params;
+        $p->{type} = 'embed';
+        forward "/$bag", $p;
+};
+
 
 1;

@@ -84,7 +84,7 @@ sub extract_params {
 	return $p if ref $params ne 'HASH';
 	$p->{start} = $params->{start} if is_natural $params->{start};
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
-	$p->{type} = $params->{type} if is_string $params->{embed};
+	$p->{type} = $params->{type} if is_string $params->{type};
 
 	$p->{q} = array_uniq( $self->string_array($params->{q}) );
 
