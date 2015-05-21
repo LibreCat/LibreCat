@@ -12,10 +12,10 @@
 
   </head>
 
-  <body>
+  <body class="embed">
 
-  <div class="row">
-    <div class="col-sm-12">
+  <div class="row" style="margin-right:0;">
+    <div class="col-sm-11">
       <div class="row">
 	<div class="col-sm-8 col-md-8">
 	  [% INCLUDE hits.tt %]
