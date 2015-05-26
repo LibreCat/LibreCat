@@ -93,8 +93,7 @@
     [% IF style == 'default' %]
 	<a href="/myPUB/record/edit/[% entry._id %]"><strong>[% entry.title %]</strong></a><br>
     [% END %]
-    <a href="javascript:void(0);" onclick="window.location='[% IF backend %]/myPUB/record/edit[% ELSE %]/[% bag %][% END %]/[% entry._id %]'"
-    class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="[% IF backend %]Edit[% ELSE %]View details[% END %]"></a>
+    <a href="javascript:void(0);" onclick="window.top.location='[% IF backend %]/myPUB/record/edit[% ELSE %]/[% bag %][% END %]/[% entry._id %]'" class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="[% IF backend %]Edit[% ELSE %]View details[% END %]"></a>
     [% IF entry.citation.$style %]
       [% entry.citation.$style %][% IF style != "apa_indent" %]<br>[% END %]
     [% END %]
