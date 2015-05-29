@@ -80,7 +80,7 @@
     <div class="facettecollapse normal">
       <ul id="department_new_[% tabmodus %][% menu %]" class="collapse[% IF qp.department %] in[% END %]">
       [% IF qp.department %]
-	    [% dept = h.getDepartment(qp.department) %]
+	    [% dept = h.get_department(qp.department) %]
 	    <li>[% dept.name %]</li>
       [% ELSE %]
       [% departments = h.get_list('department') %]

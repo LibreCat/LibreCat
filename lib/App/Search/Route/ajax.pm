@@ -113,7 +113,7 @@ ajax '/getalias/:alias' => sub {
 					if($_->{tree}){
 						foreach my $dep (@{$_->{tree}}){
 							next if $dep eq $_->{_id};
-							my $info = h->getDepartment($dep);
+							my $info = h->get_department($dep);
 							my $name = $info->{name};
 							$label .= $name . " | ";
 						}

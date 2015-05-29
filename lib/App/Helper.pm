@@ -48,14 +48,6 @@ sub department {
 	state $bag = Catmandu->store('search')->bag('department');
 }
 
-sub authority {
-	state $bag = Catmandu->store('authority')->bag;
-}
-
-sub authority_department {
-	state $bag = Catmandu->store('department')->bag;
-}
-
 sub string_array {
 	my ($self, $val) = @_;
 	return [ grep { is_string $_ } @$val ] if is_array_ref $val;
@@ -279,20 +271,16 @@ sub get_person {
 }
 
 sub get_award {
-	if($_[1] =~ /\d{1,}/){
+	if ( is_integer $_[1] ){
 		$_[0]->award->get($_[1]);
 	}
 }
 
-sub getDepartment {
-	if($_[1] =~ /^\d{1,}/){
-		$_[0]->authority_department->get($_[1]);
-	}
-	elsif($_[1] ne "") {
-		$_[0]->authority_department->select("name_lc", lc $_[1])->to_array;
-	}
-	else{
-		$_[0]->authority_department->to_array;
+sub get_department {
+	if ( is_integer $_[1] ){
+		$_[0]->department->get($_[1]);
+	} elsif ( is_string $_[1] ) {
+		$_[0]->department->select("name_lc", lc $_[1])->first;
 	}
 }
 
