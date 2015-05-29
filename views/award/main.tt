@@ -15,7 +15,7 @@
 <div class="row"><!-- outer border -->
 
   <div class="span6"> <!-- main content (left) -->
-  
+
     <h1><img src="/images/preise_headline_[% lang ? "en" : "de" %].gif" /></h1>
     <div class="span6" style="text-align:right;margin-top:-50px;margin-left:-25px;">
     <img src="/images/beta_unibi_right.png" width="50">
@@ -26,10 +26,10 @@
       <li [% IF !submit && lists.auszeichnungentotal == 0 && lists.awardstotal != 0 %]class="active"[% END %]><a href="#award">[% lang ? "Prizes" : "Preise" %]</a></li>
       <li [% IF !submit && lists.auszeichnungentotal == 0 && lists.awardstotal == 0 && lists.academystotal != 0 %]class="active"[% END %]><a href="#academy">[% lang ? "Academies" : "Akademien" %]</a></li>
     </ul>
-    
+
     <!-- the tab content -->
     <div class="tab-content">
-      
+
       <!-- auszeichnungen -->
       <div class="tab-pane[% IF !submit && lists.auszeichnungentotal != 0 %] active[% END %]" id="awardemy">
         <ul class="unstyled">
@@ -48,7 +48,7 @@
           [% END %]
         </ul>
       </div>
-      
+
       <!-- awards -->
       <div class="tab-pane[% IF !submit && lists.auszeichnungentotal == 0 && lists.awardstotal != 0 %] active[% END %]" id="award">
         <ul class="unstyled">
@@ -67,7 +67,7 @@
           [% END %]
         </ul>
       </div>
-      
+
       <!-- academies -->
       <div class="tab-pane[% IF !submit && lists.auszeichnungentotal == 0 && lists.awardstotal == 0 && lists.academystotal != 0 %] active[% END %]" id="academy">
         <ul class="unstyled">
@@ -86,7 +86,7 @@
           [% END %]
         </ul>
       </div>
-      
+
     </div>
     <script>
       $('#myTab a').click(function (e) {
@@ -96,9 +96,9 @@
     </script>
 
   </div> <!-- span6 main content (left) -->
-  
+
   <div class="span3">
-  
+
     <h5>[% lang ? "Search" : "Suche" %]</h5>
     <form action="award" method="get" class="form">
       <div class="controls controls-row">
@@ -114,16 +114,16 @@
       <p class="muted"><a href="[% h.newuri_for("$path", qp, q="") %]"><i class="icon-remove"></i></a> [% lang ? "Search" : "Suche" %]: [% qp.q %]</p>
       [% END %]
     </form>
-    
-    
+
+
     <h5>Filter</h5>
     [% IF qp.year OR qp.department OR qp.einrichtung OR qp.honoree %]
     <p class="muted"><a href="[% h.host %][% lang ? "/en" : "" %]/award"><i class="icon-remove"></i></a> [% lang ? "Remove filter" : "Filter entfernen" %]</p>
     [% END %]
-    
+
     <ul class="nav nav-tabs nav-stacked">
       <li>
-        <button data-toggle="collapse" data-target="#person"><a href="#"><i class="icon-chevron-down"></i>&nbsp;[% lang ? "Honorands" : "Person" %]</a></button>           
+        <button data-toggle="collapse" data-target="#person"><a href="#"><i class="icon-chevron-down"></i>&nbsp;[% lang ? "Honorands" : "Person" %]</a></button>
         <div class="facettecollapse">
         <ul id="person" class="collapse[% IF qp.honoree %] in[% END %]">
           [% FOREACH per IN facets.person.terms %]
@@ -160,7 +160,7 @@
         <div class="facettecollapse">
         <ul id="department" class="collapse[% IF qp.department %] in[% END %]">
           [% FOREACH dep IN facets.department.terms %]
-          [% department = h.getDepartment(dep.term) %]
+          [% department = h.get_department(dep.term) %]
           <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, department="$department.0.oId") %]">[% department.0.name %]</a></li>
           [% END %]
         </ul>
@@ -171,22 +171,22 @@
         <div class="facettecollapse">
         <ul id="einrichtung" class="collapse[% IF qp.einrichtung %] in[% END %]">
           [% FOREACH einr IN facets.einrichtung.terms %]
-          [% einrichtung = h.getDepartment(einr.term) %]
+          [% einrichtung = h.get_department(einr.term) %]
           <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, einrichtung="$einrichtung.0.oId") %]">[% einrichtung.0.name %]</a></li>
           [% END %]
         </ul>
         </div>
       </li>
     </ul>
-    
+
     <ul class="nav nav-tabs nav-stacked">
       <li>
         <a data-toggle="modal" href="#emailform"><i class="icon-chevron-right"></i>&nbsp;[% lang ? "Proposals for new entries" : "Neue Eintr&auml;ge vorschlagen" %]</a>
       </li>
     </ul>
-    
+
     <h5>[% lang ? "Supported by" : "Unterst&uuml;tzt von" %]<h5>
-    
+
     <div style="border:1px solid #ddd;-webkit-border-radius:4px 4px 4px 4px;-moz-border-radius:4px 4px 4px 4px;border-radius:4px 4px 4px 4px;margin-top:-20px;padding-top:10px;">
     <a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Kommunikation/index.html"><img src="/images/logo_refkom.jpg" width="210px" /></a>
     <br />
@@ -214,12 +214,12 @@
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3 class="emailformheading">[% lang ? "Suggest a new entry for the database" : "Neuen Eintrag f&uuml;r die Datenbank vorschlagen" %]</h3>
     </div>
-    
+
     <div class="modal-body">
       [% IF formreturn %]
       <div class="control-group error"><span class="help-inline"><strong>[% formreturn.returnmessage %]</strong></span></div>
       [% END %]
-    
+
       <input type="hidden" name="mailform" id="mailform" value="sent" />
       <input type="hidden" name="lasturl" id="lasturl" value="[% IF formreturn %][% formreturn.lasturl %][% ELSE %][% h.uri_for("$path", qp) %][% END %]" />
       <div class="control-group">

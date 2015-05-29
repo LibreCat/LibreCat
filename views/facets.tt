@@ -80,7 +80,7 @@
     <div class="facettecollapse normal">
       <ul id="department_new_[% tabmodus %][% menu %]" class="collapse[% IF qp.department %] in[% END %]">
       [% IF qp.department %]
-	    [% dept = h.getDepartment(qp.department) %]
+	    [% dept = h.get_department(qp.department) %]
 	    <li>[% dept.name %]</li>
       [% ELSE %]
       [% departments = h.get_list('department') %]
@@ -142,7 +142,7 @@
     <div class="facettecollapse">
       <ul id="authors_[% tabmodus %][% menu %]" class="collapse">
 	[% FOREACH au IN facets.author.terms %]
-	[% name = h.getPerson(au.term) %]
+	[% name = h.get_person(au.term) %]
 	<li><a class="search-facet_[% tabmodus %][% menu %]" data-index="author" data-val="[% au.term %]" href="#" rel="nofollow">[% name.full_name %] ([% au.count %])</a></li>
 	[% END %]
       </ul>
@@ -156,7 +156,7 @@
     <div class="facettecollapse">
     <ul id="editors_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH ed IN facets.editor.terms %]
-      [% name = h.getPerson(ed.term) %]
+      [% name = h.get_person(ed.term) %]
       <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="editor" data-val="[% ed.term %]" href="#" rel="nofollow">[% name.full_name %] ([% ed.count %])</a></li>
       [% END %]
     </ul>

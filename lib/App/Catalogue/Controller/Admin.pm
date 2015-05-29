@@ -37,16 +37,8 @@ sub new_person {
 sub search_person {
     my $p = shift;
 
-    my $query;
-    if ( is_integer( $p->{q} ) ) {
-        $query = { "_id" => $p->{q} };
-    }
-    elsif ( is_string( $p->{q} ) ) {
-        $query = { '$or' => [{"full_name" => qr/$p->{q}/i}, {"old_full_name" => qr/$p->{q}/i}] };
-    }
-
-    my $hits = h->authority->search(
-        query => $query,
+    my $hits = h->researcher->search(
+        query => $p->{q},
         start => $p->{start} ||= 0,
         limit => $p->{limit}
             ||= h->config->{store}->{default_searchpage_size},
@@ -71,17 +63,12 @@ sub update_person {
     $data->{old_full_name} = $data->{old_last_name} . ", " . $data->{old_first_name}
         if $data->{old_last_name} && $data->{old_first_name};
     $fixer->fix($data);
-    #my @ids = keys %{h->config->{lists}->{author_id}};
 
-#    my $user_data = {
-#        _id => $data->{_id},
-#    };
-#    map { $user_data->{$_} = $data->{$_} } @ids;
-
-    #my $old_rec = h->getPerson($data->{_id});
     if($data->{orcid} and $data->{orcid} ne ""){
     	my $hits = h->search_publication({q => ["person=$data->{_id}"], limit => 1000});
-    	foreach my $hit (@{$hits->{hits}}){
+
+        $hits->each(sub {
+            my $hit = $_[0];
     		if($hit->{author}){
     			foreach my $author (@{$hit->{author}}){
     				if($author->{id} and $author->{id} eq $data->{_id}){
@@ -100,18 +87,17 @@ sub update_person {
     				}
     			}
     		}
-    	}
+        });
+
     }
 
-    #h->authority_user->add($user_data);
-    #delete $data->{$_} for @ids;
-    h->authority->add($data);
+    h->researcher->add($data);
+    h->researcher->commit;
 }
 
 sub edit_person {
     my $id = shift;
-    return h->authority->get($id);
-    #return h->getPerson($id);
+    return h->researcher->get($id);
 }
 
 sub delete_person {

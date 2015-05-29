@@ -2,7 +2,7 @@
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
 [% backend = path.match('myPUB') ? 1 : 0 %]
-[% thisPerson = backend ? h.getPerson(session.personNumber) : h.getPerson(id) %]
+[% thisPerson = backend ? h.get_person(session.personNumber) : h.get_person(id) %]
 [% menu = "" %]
 [% IF (backend AND !lang) OR path.match('person') %]
 [% lang = "en" %]
@@ -95,7 +95,7 @@
 	[% END %]
 	[% IF backend AND session.role == "delegate" %]
 	  [% FOREACH delegate_id IN thisPerson.delegate %]
-	  <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. [% lang ? "by" : "von" %] [% h.getPerson(delegate_id).last_name %]</a></li>
+	  <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. [% lang ? "by" : "von" %] [% h.get_person(delegate_id).last_name %]</a></li>
 	  [% END %]
 	[% END %]
 	[% UNLESS backend %]
@@ -173,7 +173,7 @@
 	<div class="tab-pane[% IF modus.match(delegate_id) %] active[%END %]" id="publ-delegate_[% delegate_id %]">
 	  <div class="col-sm-8">
 	    [% USE String; tabmodus = String.new('delegate_'); tabmodus = tabmodus.append(delegate_id).text %]
-	    [% delegate_name = h.getPerson(delegate_id).last_name %]
+	    [% delegate_name = h.get_person(delegate_id).last_name %]
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4">

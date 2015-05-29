@@ -12,7 +12,7 @@
 
 [% persId = honoree.id %]
 [% IF persId %]
-  [% person = h.getPerson(persId) %]
+  [% person = h.get_person(persId) %]
 [% END %]
 
 <div class="row"><!-- outer border -->

@@ -89,7 +89,7 @@ Request a copy of the publication. Email will be sent to the author.
 				approved => params->{approved} || 0,
 			});
 
-			my $file_creator_email = h->getAccount($file->{creator})->[0]->{email};
+			my $file_creator_email = h->get_person($file->{creator})->{email};
 
 			if(params->{user_email}){
 				my $pub = h->publication->get(params->{id});

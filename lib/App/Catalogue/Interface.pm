@@ -17,7 +17,7 @@ prefix '/myPUB' => sub {
     };
 
 	get '/authority_user/:id' => sub {
-		to_json h->getPerson(params->{id});
+		to_json h->get_person(params->{id});
 	};
 
 	get '/autocomplete_alias/:alias' => sub {
@@ -69,7 +69,7 @@ prefix '/myPUB' => sub {
 					if($_->{tree}){
 						foreach my $dep (@{$_->{tree}}){
 							next if $dep eq $_->{_id};
-							my $info = h->getDepartment($dep);
+							my $info = h->get_department($dep);
 							my $name = $info->{name};
 							$label .= $name . " | ";
 						}

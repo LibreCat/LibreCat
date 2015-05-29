@@ -3,7 +3,7 @@
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
 [% person_id = path.match('') %]
-[% thisPerson = h.getPerson('86212') %]
+[% thisPerson = h.get_person('86212') %]
 
 <!-- BEGIN person/person.tt -->
 
@@ -55,7 +55,7 @@
           <li[% IF modus == "data_manager" %] class="active"[% END %]><a href="/myPUB/search/data_manager">Data Publications for Review</a></li>
         [% END %]
         [% FOREACH delegate_id IN thisPerson.delegate %]
-          <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. of [% h.getPerson(delegate_id).last_name %]</a></li>
+          <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. of [% h.get_person(delegate_id).last_name %]</a></li>
         [% END %]
         </ul>
       </div>

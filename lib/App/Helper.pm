@@ -48,14 +48,6 @@ sub department {
 	state $bag = Catmandu->store('search')->bag('department');
 }
 
-sub authority {
-	state $bag = Catmandu->store('authority')->bag;
-}
-
-sub authority_department {
-	state $bag = Catmandu->store('department')->bag;
-}
-
 sub string_array {
 	my ($self, $val) = @_;
 	return [ grep { is_string $_ } @$val ] if is_array_ref $val;
@@ -131,7 +123,7 @@ sub extract_params {
 
 sub get_sort_style {
 	my ($self, $param_sort, $param_style, $id) = @_;
-	my $user = $self->getPerson( $id || Dancer::session->{personNumber} );
+	my $user = $self->get_person( $id || Dancer::session->{personNumber} );
 	my $return;
 	$param_sort = undef if ($param_sort eq "" or (ref $param_sort eq "ARRAY" and !$param_sort->[0]));
 	$param_style = undef if $param_style eq "";
@@ -266,51 +258,34 @@ sub all_marked {
 	return $all_marked;
 }
 
-sub getPublication {
+sub get_publication {
 	$_[0]->publication->get($_[1]);
 }
 
-sub getPerson {
-	my $user;
-	my $admin;
-	if($_[1] and $_[1] =~ /\d{1,}/){
-		$user = $_[0]->authority->get($_[1]);
-		foreach (qw/email login/){
-			delete $user->{$_};
-		}
-		return $user;
-	}
-}
-
-sub getAccount {
-	if ($_[1]) {
-		$_[0]->authority->select("login", $_[1])->to_array;
+sub get_person {
+	if ( is_integer $_[1] ) {
+		$_[0]->researcher->get($_[1]);
+	} elsif ( is_string $_[1] ) {
+		$_[0]->researcher->select("login", $_[1])->first;
 	}
 }
 
 sub get_award {
-	if($_[1] =~ /\d{1,}/){
+	if ( is_integer $_[1] ){
 		$_[0]->award->get($_[1]);
 	}
 }
 
-sub getDepartment {
-	if($_[1] =~ /\d{1,}/){
-		$_[0]->authority_department->get($_[1]);
-	}
-	elsif($_[1] ne "") {
-		$_[0]->authority_department->select("name_lc", lc $_[1])->to_array;
-	}
-	else{
-		$_[0]->authority_department->to_array;
+sub get_department {
+	if ( is_integer $_[1] ){
+		$_[0]->department->get($_[1]);
+	} elsif ( is_string $_[1] ) {
+		$_[0]->department->select("name_lc", lc $_[1])->first;
 	}
 }
 
 sub get_list {
-	my $list = $_[1];
-	my $map;
-	$map = config->{lists}{$list};
-	$map;
+	return $_[0]->config->{lists}->{$_[1};
 }
 
 sub get_relation {
@@ -447,7 +422,7 @@ sub search_publication {
 }
 
 sub export_publication {
-	my ($self, $hits, $fmt,$to_string) = @_;
+	my ($self, $hits, $fmt, $to_string) = @_;
 
 	if ($fmt eq 'csl_json') {
 		$self->export_csl_json($hits);
@@ -469,7 +444,7 @@ sub export_publication {
 	   	my $f = export_to_string( $hits, $package, $options );
 	   	($fmt eq 'bibtex') && ($f =~ s/(\\"\w)\s/{$1}/g);
 		return $f if $to_string;
-		
+
 	   	return Dancer::send_file (
    	    	\$f,
 	      	content_type => $content_type,

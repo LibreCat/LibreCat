@@ -1,5 +1,5 @@
 
-<!-- BEGIN rec_details.tt --> 
+<!-- BEGIN rec_details.tt -->
 
 <div id="[% tabmodus %]_[% entry.item('_id') %]" class="collapse margin-top1-4">
 [% IF entry.author %]
@@ -67,12 +67,12 @@
     <div class="col-md-2 text-muted">Departments</div>
     <div class="col-md-10">
     [% FOREACH dept IN entry.department %]
-      [% department = h.getDepartment(dept.id) %]
+      [% department = h.get_department(dept.id) %]
       [% IF department.tree.2 %]
-        [% department.tree.2.name %] / 
+        [% department.tree.2.name %] /
       [% END %]
       [% IF department.tree.1 %]
-        [% department.tree.1.name %] / 
+        [% department.tree.1.name %] /
       [% END %]
       [% dept.name %]<br>
     [% END %]
@@ -88,7 +88,7 @@
     <div class="row col-md-12">
       [% IF entry.status == "public" %]
       [% file.file_name %]
-      <button type="button" class="librarian-approved btn btn-default btn-xs" onclick="generate_link([% file.file_id %], [% entry._id %])" data-toggle="tooltip" data-placement="right" title="Generates sharable link, valid for 7 days."><span class="fa fa-share-alt"></span> Share</button> 
+      <button type="button" class="librarian-approved btn btn-default btn-xs" onclick="generate_link([% file.file_id %], [% entry._id %])" data-toggle="tooltip" data-placement="right" title="Generates sharable link, valid for 7 days."><span class="fa fa-share-alt"></span> Share</button>
       <ul id="[% tabmodus %]_rac_dd_[% file.file_id %]" class="dropdown-menu col-md-12" role="menu" aria-labelledby="dLabel" style="border:0;border-radius:0;box-shadow:none;position:relative;">
         <li><input type="text" val="" onclick="this.focus();this.select()" style="width:100%;"></li>
       </ul>
@@ -101,4 +101,4 @@
   </div>
 [% END %]
 
-<!-- END rec_details.tt --> 
+<!-- END rec_details.tt -->
