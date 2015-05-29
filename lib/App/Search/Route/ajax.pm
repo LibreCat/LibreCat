@@ -50,7 +50,7 @@ ajax '/citation/:id/:fmt' => sub {
 
     my $out = h->export_publication($pub, params->{fmt},1);
     utf8::decode($out);
- 
+
     to_json {
         cit => $out,
     };
@@ -68,7 +68,7 @@ ajax '/search_researcher' => sub {
 };
 
 ajax '/authority_user/:id' => sub {
-	to_json h->getPerson(params->{id});
+	to_json h->get_person(params->{id});
 };
 
 ajax '/getalias/:alias' => sub {

@@ -47,7 +47,7 @@ Some fields are pre-filled.
 
     get '/new' => needs login => sub {
         my $type = params->{type};
-        my $user = h->getPerson(session->{personNumber});
+        my $user = h->get_person(session->{personNumber});
         my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
         return template 'add_new' unless $type;
@@ -86,7 +86,7 @@ Checks if the user has permission the see/edit this record.
             status '403';
             forward '/access_denied';
         }
-        my $person = h->getPerson(session->{personNumber});
+        my $person = h->get_person(session->{personNumber});
         my $edit_mode = params->{edit_mode} || $person->{edit_mode};
 
         forward '/' unless $id;
@@ -139,7 +139,7 @@ Checks if the user has the rights to update this record.
         {
             $params->{department} = ();
             if ( session->{role} ne "super_admin" ) {
-                my $person = h->getPerson( session->{personNumber} );
+                my $person = h->get_person( session->{personNumber} );
                 foreach my $dep ( @{ $person->{department} } ) {
                     push @{ $params->{department} }, $dep->{id};
                 }

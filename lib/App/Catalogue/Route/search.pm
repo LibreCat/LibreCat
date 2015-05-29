@@ -68,7 +68,7 @@ Performs search for reviewer.
 
         my $p = h->extract_params();
         my $id = session 'personNumber';
-        my $account = h->getAccount(session->{user})->[0];
+        my $account = h->get_person(session->{user});
         my $dep_query = join( ' OR ', map{"department=$_->{id}";} @{$account->{reviewer}});
         push @{$p->{q}}, "(($dep_query) OR person=$id OR creator=$id)";
 
@@ -99,7 +99,7 @@ Performs search for data manager.
 
         my $p = h->extract_params();
         my $id = session 'personNumber';
-        my $account = h->getAccount(session->{user})->[0];
+        my $account = h->get_person(session->{user});
         my $dep_query = join( ' OR ', map{"department=$_->{id}";} @{$account->{data_manager}});
         push @{$p->{q}}, "(($dep_query) OR person=$id OR creator=$id)";
         push @{$p->{q}}, "(type=researchData OR type=dara)";
@@ -123,7 +123,7 @@ Performs search for data manager.
     };
 
 	get '/delegate' => needs role => "delegate" => sub {
-		my $account = h->getAccount(session->{user})->[0];
+		my $account = h->get_person(session->{user});
 		forward "/myPUB/search/delegate/$account->{delegate}->[0]", params;
 	};
 

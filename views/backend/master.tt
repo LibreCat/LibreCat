@@ -1,7 +1,7 @@
 {% editmode = "normal" %}
 [% path = request.path %]
 [% backend = path.match('myPUB') ? 1 : 0 %]
-[% thisPerson = h.getPerson(session.personNumber) %]
+[% thisPerson = h.get_person(session.personNumber) %]
 [% edit_mode = "normal" %]
 
 [% INCLUDE header.tt %]

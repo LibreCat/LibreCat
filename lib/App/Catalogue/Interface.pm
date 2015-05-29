@@ -17,7 +17,7 @@ prefix '/myPUB' => sub {
     };
 
 	get '/authority_user/:id' => sub {
-		to_json h->getPerson(params->{id});
+		to_json h->get_person(params->{id});
 	};
 
 	get '/autocomplete_alias/:alias' => sub {

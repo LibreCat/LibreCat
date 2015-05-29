@@ -115,7 +115,7 @@ prefix '/myPUB' => sub {
     if($submit_or_cancel eq "Submit"){
       my $id = new_publication();
       my $file_id = new_publication();
-      my $person = h->getPerson(session->{personNumber});
+      my $person = h->get_person(session->{personNumber});
       my $now = h->now();
       $file_data->{saved} = 1;
 

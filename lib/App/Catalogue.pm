@@ -48,7 +48,7 @@ Let the user change his role.
 
 =cut
 get '/myPUB/change_role/:role' => needs login => sub {
-    my $user = h->getAccount( session->{user} )->[0];
+    my $user = h->get_person( session->{user} );
 
     # is user allowed to take this role?
 

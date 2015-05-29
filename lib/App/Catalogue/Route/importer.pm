@@ -21,7 +21,7 @@ post '/myPUB/record/import' => needs login => sub {
 	my $p = params;
 
     my $pub;
-	my $user = h->getPerson( session->{personNumber} );
+	my $user = h->get_person( session->{personNumber} );
 	my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
     try {

@@ -1,10 +1,10 @@
 
 <!-- BEGIN frontdoor/tab_relresdata.tt -->
-	
+
 <div class="tab-pane" id="relResData">
   This publication cites the following data publications:<br />
   [% FOREACH resDat IN relResData %]
-    [% rec = h.getPublication(resDat.id) %]
+    [% rec = h.get_publication(resDat.id) %]
     [% NEXT IF rec.status != "public" %]
     <div class="row">
       <div class="col-md-2 text-muted">[% resDat.id %]</div>

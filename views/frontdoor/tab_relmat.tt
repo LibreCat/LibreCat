@@ -1,9 +1,9 @@
-	  
+
 <!-- BEGIN frontdoor/tab_relmat.tt -->
-	
+
 <div class="tab-pane" id="relMat">
   <div class="row">
-    
+
     [% IF relToc.size %]
       <div class="col-md-2 text-muted">
         Table of Contents
@@ -18,7 +18,7 @@
       </div>
       <div>&nbsp;</div>
     [% END %]
-    
+
     [% IF relFile.size %]
       <div class="col-md-2 text-muted">
         File
@@ -33,7 +33,7 @@
       </div>
       <div>&nbsp;</div>
     [% END %]
-    
+
     [% IF relLink.size %]
       <div class="col-md-2 text-muted">
         Link
@@ -48,7 +48,7 @@
       </div>
       <div>&nbsp;</div>
     [% END %]
-    
+
     [% IF relMat.size %]
       <div class="col-md-2 text-muted">
         Rel. Material
@@ -56,7 +56,7 @@
       <div class="col-md-10">
         [% FOREACH fi IN relMat %]
           [% relation = h.get_relation('relations_record', fi.relation) %]
-          [% rel_rec = h.getPublication(fi.id) %]
+          [% rel_rec = h.get_publication(fi.id) %]
           <a href="[% h.host %]/[% bag %]/[% fi.id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="<em>Title:</em><br>[% rel_rec.title | replace('"','&quot;') %]<br><br><em>Location:</em><br>[% h.host %]/[% bag %]/[% rel_rec.id %]">[% relation.link_text %]</a><br>
           <script>
             $('a.description').tooltip();

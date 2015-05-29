@@ -18,7 +18,7 @@
 <div class="row innerrow" id="delegate">
   [% IF delegate %]
   [% FOREACH del IN delegate %]
-  [% thisPerson = h.getPerson(del) %]
+  [% thisPerson = h.get_person(del) %]
   <div class="col-md-10 col-md-offset-2" id="delegate_[% thisPerson._id %]">
     <div class="row innerrow">
       <div class="col-md-7 form-group">

@@ -14,7 +14,7 @@ our %EXPORT_TAGS = (
 sub can_edit {
     my ($id, $login, $user_role) = @_;
 
-    my $user = h->getAccount($login)->[0];
+    my $user = h->get_person($login);
     my $cql = "id=$id AND (person=$user->{_id} OR creator=$user->{_id}";
 
     if ($user_role eq 'super_admin') {
