@@ -123,6 +123,7 @@ sub extract_params {
 
 sub get_sort_style {
 	my ($self, $param_sort, $param_style, $id) = @_;
+
 	my $user = $self->get_person( $id || Dancer::session->{personNumber} );
 	my $return;
 	$param_sort = undef if ($param_sort eq "" or (ref $param_sort eq "ARRAY" and !$param_sort->[0]));
@@ -133,24 +134,12 @@ sub get_sort_style {
 	my $sort_backend;
 	if($param_sort){
 		$param_sort = [$param_sort] if ref $param_sort ne "ARRAY";
-		foreach my $s (@{$param_sort}){
-			push @$sort, $s;
-			push @$sort_backend, $s;
-		}
-	}
-	elsif($user->{'sort'}){
-		foreach my $s (@{$user->{'sort'}}){
-			push @$sort, $s;
-			push @$sort_backend, $s;
-		}
-	}
-	else{
-		foreach my $s (@{$self->config->{store}->{default_sort}}){
-			push @{$sort}, $s;
-		}
-		foreach my $s (@{$self->config->{store}->{default_sort_backend}}){
-			push @{$sort_backend}, $s;
-		}
+		$sort = $backend_sort = $param_sort;
+	} elsif ($user && $user->{'sort'}) {
+		$sort = $backend_sort = $user->{sort};
+	} else {
+		$sort = $self->config->{store}->{default_sort};
+		$backend_sort = $self->config->{store}->{default_sort_backend};
 	}
 
 	$return->{'sort'} = $sort;
@@ -165,28 +154,8 @@ sub get_sort_style {
 		$return->{style} = $style;
 	}
 
-	foreach my $key (keys %$return){
-		my $ref = ref $return->{$key};
-
-    	if($ref eq "ARRAY"){
-    		if(!$return->{$key}->[0]){
-    			delete $return->{$key};
-    		}
-    	}
-    	elsif($ref eq "HASH"){
-    		if(!%{$return->{$key}}){
-    			delete $return->{$key};
-    		}
-    	}
-    	else{
-    		if($return->{$key} and $return->{$key} eq ""){
-    			delete $return->{$key};
-    		}
-    	}
-	}
-
-	#my $usermongo_eq_currentsort = 0;
-	#my $currentsort_eq_default = 0;
+	Catmandu::Fix->new(fixes => ["delete_empty()"])->fix($return);
+	
 	$return->{sort_eq_usersort} = 0;
 	$return->{sort_eq_usersort} = is_same($user->{'sort'}, $return->{'sort_backend'}) if $user->{'sort'};
 	$return->{sort_eq_default} = 0;
@@ -196,9 +165,6 @@ sub get_sort_style {
 	$return->{style_eq_userstyle} = ($user->{style} and $user->{style} eq $return->{style}) ? 1 : 0;
 	$return->{style_eq_default} = 0;
 	$return->{style_eq_default} = ($return->{style} eq $self->config->{store}->{default_style}) ? 1 : 0;
-#	if(($return->{user_style} and $return->{style} eq $return->{user_style}) or (!$return->{user_style} and $return->{style} eq $self->config->{store}->{default_style})){
-#		$return->{style_up_to_date} = 1;
-#	}
 
 	return $return;
 }
@@ -250,11 +216,12 @@ sub all_marked {
 	my $marked = Dancer::session 'marked';
 	my $all_marked = 1;
 
-	foreach my $hit (@{$hits->{hits}}){
-		unless (Catmandu::Util::array_includes($marked, $hit->{_id})){
+	$hits->each(sub {
+		unless (Catmandu::Util::array_includes($marked, $_[0]->{_id})){
 			$all_marked = 0;
 		}
-	}
+	});
+
 	return $all_marked;
 }
 
@@ -290,8 +257,8 @@ sub get_list {
 
 sub get_relation {
 	my ($self, $list, $relation) = @_;
-	my $map;
-	$map = config->{lists}{$list};
+
+	my $map = $self->get_list($list);
 	my %hash_list = map { $_->{relation} => $_ } @$map;
 	$hash_list{$relation};
 }
@@ -299,7 +266,7 @@ sub get_relation {
 sub get_statistics {
 	my ($self) = @_;
 
-	my $hits = $self->search_publication({q => ["status=public"]});
+	my $hits = $self->search_publication({q => ["status=public","type<>researchData","type<>dara"]});
 	my $reshits = $self->search_publication({q => ["status=public","(type=researchData OR type=dara)"]});
 	my $oahits = $self->search_publication({q => ["status=public","fulltext=1","type<>researchData","type<>dara"]});
 	my $disshits = $self->search_publication({q => ["status=public","type=bi*"]});
@@ -369,10 +336,7 @@ sub sort_to_sru {
 }
 
 sub display_doctypes {
-	my $map = config->{forms}{publicationTypes};
-	my $doctype;
-	$doctype = $map->{lc $_[1]}->{label};
-	$doctype;
+	$_[0]->config->{forms}->{publicationTypes}->{lc $_[1]}->label;
 }
 
 sub display_name_from_value {
@@ -397,6 +361,7 @@ sub shost {
 
 sub search_publication {
 	my ($self, $p) = @_;
+
 	my $sort = $self->sort_to_sru($p->{sort});
 	my $cql = "";
 	if ($p->{q}) {
@@ -455,6 +420,7 @@ sub export_publication {
 
 sub export_autocomplete_json {
 	my ($self, $hits) = @_;
+
 	my $jsonhash = [];
 	$hits->each( sub{
 		my $hit = $_[0];
@@ -495,6 +461,7 @@ sub export_csl_json {
 
 sub search_researcher {
 	my ($self, $p) = @_;
+
 	my $cql = "";
 	if($p->{researcher_list}){
 		push @{$p->{q}}, "publcount > 0";
@@ -518,12 +485,9 @@ sub search_researcher {
 
 sub search_department {
 	my ($self, $p) = @_;
-	my $q;
-
-	$q = $p->{q};
 
 	my $hits = department->search(
-	  cql_query => $q,
+	  cql_query => $p->{q},
 	  limit => $p->{limit} ||= 20,
 	  start => $p->{start} ||= 0,
 	);
@@ -534,12 +498,10 @@ sub search_department {
 sub search_project {
 	my ($self, $p) = @_;
 
-	my $hits;
-	$hits = project->search (
+	my $hits = project->search (
 		cql_query => $p->{q},
 		limit => $p->{limit} ||= config->{default_page_size},
-	#	facets => $p->{facets} ||= {},
-      	start => $p->{start} ||= 0,
+	  	start => $p->{start} ||= 0,
        	sru_sortkeys => $p->{sorting} ||= "name,,1",
 	);
 	#foreach (qw(next_page last_page page previous_page pages_in_spread)) {
@@ -551,9 +513,7 @@ sub search_project {
 sub search_award {
 	my ($self, $p) = @_;
 
-	my $hits;
-
-	$hits = award->search (
+	my $hits = award->search(
 	  cql_query => $p->{q},
 	  limit => $p->{limit} ||= config->{default_page_size},
 	  facets => $p->{facets} ||= {},
