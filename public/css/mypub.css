@@ -201,6 +201,14 @@ input.has-error,.has-error input{background-color:#ffcfce;}
 /* sort */
 .sortitem{cursor:move;}
 
+/* iframe styles */
+
+body.embed {padding:0;margin:0;width:100%;}
+.embed h2,.embed h3{font-weight:bold;}
+.embed h2 {font-size:16px;}
+.embed h3 {font-size:14px;}
+.embed .pagination{margin:11px 0;}
+
 /* special styles for screens */
 @media (max-width:479px){
 .hidden-xxs{display:none!important;}
