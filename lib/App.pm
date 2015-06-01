@@ -29,7 +29,7 @@ sub _authenticate {
         return {login => 'einstein', _id => 1234, role => 'user'};
     }
 
-    my $user = h->get_person( $login )->[0];
+    my $user = h->get_person( $login );
     return 0 unless $user;
 
     if (!$user->{account_type} or ($user->{account_type} and $user->{account_type} ne 'external')) {

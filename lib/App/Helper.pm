@@ -285,7 +285,7 @@ sub get_department {
 }
 
 sub get_list {
-	return $_[0]->config->{lists}->{$_[1};
+	return $_[0]->config->{lists}->{$_[1]};
 }
 
 sub get_relation {
