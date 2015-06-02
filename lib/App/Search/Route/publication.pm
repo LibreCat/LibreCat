@@ -60,7 +60,7 @@ get qr{/(data|publication)/*} => sub {
 
 	if ($p->{fmt} ne 'html') {
 		h->export_publication($hits, $p->{fmt});
-	} elsif ($p->{type} eq 'embed') {
+	} elsif ($p->{embed}) {
 		template "iframe", $hits;
 	} else {
 		template "websites/index_publication", $hits;
@@ -76,11 +76,10 @@ Embed API to (data) publications
 
 get qr{/(data|publication)/embed/*} => sub {
         my ($bag) = splat;
-#return to_dumper $bag;
+
         my $p = params;
-        $p->{type} = 'embed';
+        $p->{embed} = 1;
         forward "/$bag", $p;
 };
-
 
 1;

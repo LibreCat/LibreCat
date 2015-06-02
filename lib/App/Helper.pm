@@ -71,12 +71,13 @@ sub nested_params {
 
 sub extract_params {
 	my ($self, $params) = @_;
+
 	$params ||= params;
 	my $p = {};
 	return $p if ref $params ne 'HASH';
 	$p->{start} = $params->{start} if is_natural $params->{start};
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
-	$p->{type} = $params->{type} if is_string $params->{type};
+	$p->{embed} = $params->{embed} if is_natural $params->{embed};
 
 	$p->{q} = array_uniq( $self->string_array($params->{q}) );
 
@@ -116,7 +117,6 @@ sub extract_params {
 
 	$p->{style} = $params->{style} if $params->{style};
 	$p->{sort} = $self->string_array($params->{sort});
-	$p->{ttype} = $params->{ttype} if $params->{ttype};
 
 	$p;
 }
@@ -124,28 +124,34 @@ sub extract_params {
 sub get_sort_style {
 	my ($self, $param_sort, $param_style, $id) = @_;
 
-	my $user = $self->get_person( $id || Dancer::session->{personNumber} );
+	my $user = {};
+	$user = $self->get_person( $id || Dancer::session->{personNumber} );
 	my $return;
 	$param_sort = undef if ($param_sort eq "" or (ref $param_sort eq "ARRAY" and !$param_sort->[0]));
 	$param_style = undef if $param_style eq "";
+	my $user_sort = "";
+	$user_sort = $user->{sort} if ($user && $user->{sort});
+	my $user_style = "";
+	$user_style = $user->{style} if ($user && $user->{style});
+
 	# set default values - to be overridden by more important values
-	my $style = $param_style || $user->{style} || $self->config->{store}->{default_style};
+	my $style = $param_style || $user_style || $self->config->{store}->{default_style};
 	my $sort;
 	my $sort_backend;
 	if($param_sort){
 		$param_sort = [$param_sort] if ref $param_sort ne "ARRAY";
-		$sort = $backend_sort = $param_sort;
-	} elsif ($user && $user->{'sort'}) {
-		$sort = $backend_sort = $user->{sort};
+		$sort = $sort_backend = $param_sort;
+	} elsif ($user_sort) {
+		$sort = $sort_backend = $user_sort;
 	} else {
 		$sort = $self->config->{store}->{default_sort};
-		$backend_sort = $self->config->{store}->{default_sort_backend};
+		$sort_backend = $self->config->{store}->{default_sort_backend};
 	}
 
-	$return->{'sort'} = $sort;
+	$return->{sort} = $sort;
 	$return->{sort_backend} = $sort_backend;
-	$return->{user_sort} = $user->{'sort'} if $user->{'sort'};
-	$return->{user_style} = $user->{style} if $user->{style};
+	$return->{user_sort} = $user_sort if $user_sort;
+	$return->{user_style} = $user_style if ($user_style);
 	$return->{default_sort} = $self->config->{store}->{default_sort};
 	$return->{default_sort_backend} = $self->config->{store}->{default_sort_backend};
 
@@ -155,14 +161,14 @@ sub get_sort_style {
 	}
 
 	Catmandu::Fix->new(fixes => ["delete_empty()"])->fix($return);
-	
+
 	$return->{sort_eq_usersort} = 0;
-	$return->{sort_eq_usersort} = is_same($user->{'sort'}, $return->{'sort_backend'}) if $user->{'sort'};
+	$return->{sort_eq_usersort} = is_same($user_sort, $return->{sort_backend}) if $user_sort;
 	$return->{sort_eq_default} = 0;
-	$return->{sort_eq_default} = is_same($return->{'sort_backend'}, $self->config->{store}->{default_sort_backend});
+	$return->{sort_eq_default} = is_same($return->{sort_backend}, $self->config->{store}->{default_sort_backend});
 
 	$return->{style_eq_userstyle} = 0;
-	$return->{style_eq_userstyle} = ($user->{style} and $user->{style} eq $return->{style}) ? 1 : 0;
+	$return->{style_eq_userstyle} = ($user_style eq $return->{style}) ? 1 : 0;
 	$return->{style_eq_default} = 0;
 	$return->{style_eq_default} = ($return->{style} eq $self->config->{store}->{default_style}) ? 1 : 0;
 
@@ -233,7 +239,7 @@ sub get_person {
 	if ( is_integer $_[1] ) {
 		$_[0]->researcher->get($_[1]);
 	} elsif ( is_string $_[1] ) {
-		$_[0]->researcher->select("login", $_[1])->first;
+		$_[0]->search_researcher(q => ["login=$_[1]"])->first;
 	}
 }
 
@@ -247,7 +253,7 @@ sub get_department {
 	if ( is_integer $_[1] ){
 		$_[0]->department->get($_[1]);
 	} elsif ( is_string $_[1] ) {
-		$_[0]->department->select("name_lc", lc $_[1])->first;
+		$_[0]->search_department(q => {"name=$_[1]")->first;
 	}
 }
 
@@ -270,14 +276,14 @@ sub get_statistics {
 	my $reshits = $self->search_publication({q => ["status=public","(type=researchData OR type=dara)"]});
 	my $oahits = $self->search_publication({q => ["status=public","fulltext=1","type<>researchData","type<>dara"]});
 	my $disshits = $self->search_publication({q => ["status=public","type=bi*"]});
-	my $people = $self->search_researcher({researcher_list=> 1});
+	my $people = $self->search_researcher({q => ["publcount>0"]});
 
 	return {
-		publications => $hits->{total} || 0,
-		researchdata => $reshits->{total} || 0,
-		oahits => $oahits->{total} || 0,
-		theseshits => $disshits->{total} || 0,
-		pubpeople => $people->{total} || 0,
+		publications => $hits->{total},
+		researchdata => $reshits->{total},
+		oahits => $oahits->{total},
+		theseshits => $disshits->{total},
+		pubpeople => $people->{total},
 	};
 
 }
@@ -309,15 +315,16 @@ sub default_facets {
 		status => { terms => { field => 'status', size => 8 } },
 		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
 		type => { terms => { field => 'type', size => 25 } },
-		isi => { terms => { field => 'isi', size => 1 } },
-		arxiv => { terms => { field => 'arxiv', size => 1 } },
-		pmid => { terms => { field => 'pmid', size => 1 } },
-		inspire => { terms => { field => 'inspire', size => 1 } },
+#		isi => { terms => { field => 'isi', size => 1 } },
+#		arxiv => { terms => { field => 'arxiv', size => 1 } },
+#		pmid => { terms => { field => 'pmid', size => 1 } },
+#		inspire => { terms => { field => 'inspire', size => 1 } },
 	};
 }
 
 sub sort_to_sru {
 	my ($self, $sort) = @_;
+
 	my $cql_sort;
 	if($sort and ref $sort ne "ARRAY"){
 		$sort = [$sort];
@@ -336,11 +343,12 @@ sub sort_to_sru {
 }
 
 sub display_doctypes {
-	$_[0]->config->{forms}->{publicationTypes}->{lc $_[1]}->label;
+	$_[0]->config->{forms}->{publicationTypes}->{lc $_[1]}->{label};
 }
 
 sub display_name_from_value {
 	my ($self, $list, $value) = @_;
+
 	my $map = $self->config->{lists}{$list};
 	my $name;
 	foreach my $m (@$map){
