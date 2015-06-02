@@ -62,7 +62,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <form action="/authorlist" method="get" class="form-inline">
+      <form action="/person" method="get" class="form-inline">
 	[% FOREACH key IN qp.keys %]
 	  [% NEXT IF key == "text" %]
 	  [% NEXT IF key == "cql_query" %]
@@ -92,19 +92,19 @@
   <h3>[% lang ? 'Filter' : 'Filtern' %]</h3>
   [% IF qp.keys.0 %]
     [% IF qp.sorting %]
-      <p class="text-muted"><a href="[% h.newuri_for("/authorlist", qp, sorting="") %]" rel="nofollow"><span class="fa fa-times"></span></a> sorting: [% qp.sorting %]</p>
+      <p class="text-muted"><a href="[% h.newuri_for("/person", qp, sorting="") %]" rel="nofollow"><span class="fa fa-times"></span></a> sorting: [% qp.sorting %]</p>
     [% END %]
     [% IF qp.former %]
-      <p class="text-muted"><a href="[% h.newuri_for("/authorlist", qp, former="") %]" rel="nofollow"><span class="fa fa-times"></span></a> former: [% qp.former %]</p>
+      <p class="text-muted"><a href="[% h.newuri_for("/person", qp, former="") %]" rel="nofollow"><span class="fa fa-times"></span></a> former: [% qp.former %]</p>
     [% END %]
   [% END %]
 
   <ul class="nav nav-tabs nav-stacked">
     <li>
-      <a href="[% h.newuri_for("/authorlist", qp, former="no") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>[% lang ? 'Current UniBi Authors' : 'UniBi Autoren' %]</a>
+      <a href="[% h.newuri_for("/person", qp, former="no") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>[% lang ? 'Current UniBi Authors' : 'UniBi Autoren' %]</a>
     </li>
     <li>
-      <a href="[% h.newuri_for("/authorlist", qp, former="yes") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>[% lang ? 'Former UniBi Authors' : 'Ehemalige UniBi Autoren' %]</a>
+      <a href="[% h.newuri_for("/person", qp, former="yes") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>[% lang ? 'Former UniBi Authors' : 'Ehemalige UniBi Autoren' %]</a>
     </li>
   </ul>
 
@@ -117,7 +117,7 @@
             [% IF limiting == qp.limit %]
               <li>[% limiting %]</li>
             [% ELSE %]
-              <li><a href="[% h.newuri_for("/authorlist", qp, limit="$limiting") %]" rel="nofollow">[% limiting %]</a></li>
+              <li><a href="[% h.newuri_for("/person", qp, limit="$limiting") %]" rel="nofollow">[% limiting %]</a></li>
             [% END %]
           [% END %]
         </ul>
@@ -133,12 +133,12 @@
           [% IF qp.sorting == "fullname.asc" OR qp.sorting == "fullname.desc" %]
             <li>[% lang ? 'Alphabetically' : 'Alphabetisch' %]</li>
           [% ELSE %]
-            <li><a href="[% h.newuri_for("/authorlist", qp, sorting="fullname.asc") %]" rel="nofollow">[% lang ? 'Alphabetically' : 'Alphabetisch' %]<span class="fa fa-arrow-up"></span></a><a href="[% h.newuri_for("/authorlist", qp, sorting="fullname.desc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
+            <li><a href="[% h.newuri_for("/person", qp, sorting="fullname.asc") %]" rel="nofollow">[% lang ? 'Alphabetically' : 'Alphabetisch' %]<span class="fa fa-arrow-up"></span></a><a href="[% h.newuri_for("/person", qp, sorting="fullname.desc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
           [% END %]
           [% IF qp.sorting == "publcount.asc" OR qp.sorting == "publcount.desc" %]
             <li>[% lang ? 'Number of publications' : 'Anzahl der Publikationen' %]</li>
           [% ELSE %]
-            <li><a href="[% h.newuri_for("/authorlist", qp, sorting="publcount.asc") %]" rel="nofollow">[% lang ? 'Number of publications' : 'Anzahl der Publikationen' %]<span class="fa fa-arrow-up"></span></a><a href="[% h.newuri_for("/authorlist", qp, sorting="publcount.desc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
+            <li><a href="[% h.newuri_for("/person", qp, sorting="publcount.asc") %]" rel="nofollow">[% lang ? 'Number of publications' : 'Anzahl der Publikationen' %]<span class="fa fa-arrow-up"></span></a><a href="[% h.newuri_for("/person", qp, sorting="publcount.desc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
           [% END %]
         </ul>
       </div>

@@ -40,7 +40,7 @@
           <!--
           <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project?[% lang ? "lang=en&" : "" %][% IF thisq %]q=[% thisq.join('&q=') %][% END %]">[% lang ? 'Projects' : 'Projekte' %]</a></li>
           -->
-          <li[% IF bag == 'authorlist' %] class="active"[% END %]><a href="/authorlist[% lang ? "?lang=en" : "" %]">[% lang ? "Authors" : "Autoren" %]</a></li>
+          <li[% IF bag == 'authorlist' %] class="active"[% END %]><a href="/person[% lang ? "?lang=en" : "" %]">[% lang ? "Authors" : "Autoren" %]</a></li>
           <!--
           <li[% IF bag == 'pubtheses' %] class="active"[% END %]><a href="/pubtheses[% lang ? "?lang=en" : "" %]">PUB Theses</a></li>
           -->

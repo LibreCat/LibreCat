@@ -91,7 +91,7 @@ angularController.controller('angularSearch', function ($scope) {
 					},
 					stats_pubpeople:{
 						text:"Individual Author Pages",
-						link:"/authorlist?lang=en",
+						link:"/person?lang=en",
 					},
 					stats_researchdata:{
 						text:"Data Publications",
@@ -132,7 +132,7 @@ angularController.controller('angularSearch', function ($scope) {
 					},
 					stats_pubpeople:{
 						text:"Persönliche Publikationslisten",
-						link:"/authorlist",
+						link:"/person",
 					},
 					stats_researchdata:{
 						text:"Datenpublikationen",

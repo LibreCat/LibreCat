@@ -9,8 +9,8 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use App::Helper;
 
-# /authorlist
-get '/authorlist' => sub {
+# /person
+get qr{/person[/|?]*} => sub {
 	my $tmpl = 'websites/index_publication.tt';
 	my $p = h->extract_params();
 	(params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
@@ -118,7 +118,7 @@ get qr{/person/(\w+)/*} => sub {
 
 =cut
 get qr{/person/*} => sub {
-    my $path = h->host . '/authorlist';
+    my $path = h->host . '/person';
     redirect $path;
 };
 
