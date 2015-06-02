@@ -469,15 +469,6 @@ $.getJSON("/metrics/[% _id %]").done(function( data ) {
     $('#wos').after('<a href="'+ data.citing_url +'" target="_parent">Web of Science&reg; Times Cited: <strong class="wos-times-cited">'+ data.times_cited +'</strong></a></li><br>');
   }
 });
-$("#thumbnail").attr("src","/thumbnail/[% _id %]").load(function(){
-});
-$.getJSON("/citation/[% _id %]/bibtex").done(function(data) {
-  $("#bibtex").html('<pre>'+data.cit+'</pre>');
-});
-$.getJSON("/citation/[% _id %]/ris").done(function(data) {
-  $("#ris").html('<pre>'+data.cit+'</pre>');
-});
-
 </script>
 [% END %]
 
