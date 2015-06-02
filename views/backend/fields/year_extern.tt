@@ -3,7 +3,7 @@
     <label for="id_year">
       {% fields.basic_fields.year_extern.label %}{% fields.supplementary_fields.year_extern.label %}
     </label>
-    {% IF fields.basic_fields.year_extern.mandatory OR fields.supplementary_fields.year_extern.mandatory %}<span class="starMandatory"></span>{% END %}
+    {% IF fields.basic_fields.year_extern.year.mandatory OR fields.supplementary_fields.year_extern.year.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-3">
     <div class="row innerrow">
