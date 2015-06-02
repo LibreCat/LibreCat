@@ -17,12 +17,15 @@
 
 [%- IF h.extract_params.q.size > 0 %]
 <h3 class="margin-top0">[% lang ? 'Filters and Search Terms' : 'Filter und Suchbegriffe' %]</h3>
+[% other = {} %]
+[% CALL other.import(h.extract_params) %]
+[% CALL other.delete('q') %]
 [%- FOREACH val IN h.extract_params.q %]
 [%- removed = [] -%]
 
 [%- CALL removed.import(h.extract_params.q) -%]
 [%- CALL removed.splice(loop.index, 1) -%]
-<p class="text-muted"><a href="[% path %]?q=[% removed.join('&q=') %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
+<p class="text-muted"><a href="[% path %]?q=[% removed.join('&q=') %][% h.hash_to_url(other) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
 [%- END %]
 [%- END %]
 

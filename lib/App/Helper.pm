@@ -121,6 +121,25 @@ sub extract_params {
 	$p;
 }
 
+sub hash_to_url {
+	my ($self, $params) = @_;
+	
+	my $p = "";
+	return $p if ref $params ne 'HASH';
+	
+	foreach my $key (keys %$params){
+		if (ref $params->{$key} eq "ARRAY"){
+			foreach my $item (@{$params->{$key}}){
+				$p .= "&$key=$item";
+			}
+		}
+		else {
+			$p .= "&$key=$params->{$key}";
+		}
+	}
+	return $p;
+}
+
 sub get_sort_style {
 	my ($self, $param_sort, $param_style, $id) = @_;
 
@@ -239,7 +258,7 @@ sub get_person {
 	if ( is_integer $_[1] ) {
 		$_[0]->researcher->get($_[1]);
 	} elsif ( is_string $_[1] ) {
-		$_[0]->search_researcher(q => ["login=$_[1]"])->first;
+		$_[0]->search_researcher({q => ["login=$_[1]"]})->first;
 	}
 }
 
@@ -253,7 +272,7 @@ sub get_department {
 	if ( is_integer $_[1] ){
 		$_[0]->department->get($_[1]);
 	} elsif ( is_string $_[1] ) {
-		$_[0]->search_department(q => {"name=$_[1]")->first;
+		$_[0]->search_department(q => {"name=$_[1]"})->first;
 	}
 }
 
@@ -471,9 +490,9 @@ sub search_researcher {
 	my ($self, $p) = @_;
 
 	my $cql = "";
-	if($p->{researcher_list}){
-		push @{$p->{q}}, "publcount > 0";
-	}
+#	if($p->{researcher_list}){
+#		push @{$p->{q}}, "publcount > 0";
+#	}
 
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
