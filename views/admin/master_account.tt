@@ -101,11 +101,16 @@ function addDelegate(element){
   var id = $('#id_delegate').val();
   var person = "";
   $.getJSON("/myPUB/authority_user/" + id, function(data,status){
-    $('#delegate').append('<div class="col-md-10 col-md-offset-2" id="delegate_' + id + '"><div class="row innerrow"><div class="col-md-7 form-group"><span class="glyphicon glyphicon-remove del_del" id="delegate_span_' + id + '"></span> ' + data.full_name + ' <span class="text-muted">' + id + '</span><input type="hidden" name="delegate.' + index + '" value="' + id + '" /></div></div></div>');
-    $('#delegate_' + id).find('span.del_del').bind("click", function(){
-      $('#delegate_' + id).remove();
-    });
-    $('#id_delegate').val("");
+    if(data.error){
+      alert(data.error);
+    }
+    else {
+      $('#delegate').append('<div class="col-md-10 col-md-offset-2" id="delegate_' + id + '"><div class="row innerrow"><div class="col-md-7 form-group"><span class="glyphicon glyphicon-remove del_del" id="delegate_span_' + id + '"></span> ' + data.full_name + ' <span class="text-muted">' + id + '</span><input type="hidden" name="delegate.' + index + '" value="' + id + '" /></div></div></div>');
+      $('#delegate_' + id).find('span.del_del').bind("click", function(){
+        $('#delegate_' + id).remove();
+      });
+      $('#id_delegate').val("");
+    }
   });
 }
 
