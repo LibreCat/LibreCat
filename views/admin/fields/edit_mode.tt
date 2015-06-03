@@ -1,0 +1,19 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_edit_mode">{% edit_mode.label %}</label>
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon hidden-lg hidden-md">{% edit_mode.label %}</div>
+          <select id="edit_mode_select" name="edit_mode" class="form-control">
+	        <option value="normal"[% IF (edit_mode AND edit_mode == "normal") OR (!edit_mode AND !super_admin) %] selected="selected"[% END %]>Tabbed Form</option>
+	        <option value="expert"[% IF (edit_mode AND edit_mode == "expert") OR (!edit_mode AND super_admin) %] selected="selected"[% END %]>Single Page Form</option>
+	      </select>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

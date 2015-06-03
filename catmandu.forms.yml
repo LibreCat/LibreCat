@@ -1346,6 +1346,7 @@ otherItems:
       - delegate
       - data_manager
       - reviewer
+      - edit_mode
       - author_ids
     id:
       label: "ID"
@@ -1401,6 +1402,8 @@ otherItems:
       multiple: 1
     author_ids:
       label: "Author IDs"
+    edit_mode:
+      label: "Edit Mode"
 
   project:
     project_field_order:
