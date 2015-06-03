@@ -263,9 +263,7 @@ sub get_person {
 }
 
 sub get_award {
-	if ( is_integer $_[1] ){
-		$_[0]->award->get($_[1]);
-	}
+	$_[0]->award->get($_[1]);
 }
 
 sub get_department {
