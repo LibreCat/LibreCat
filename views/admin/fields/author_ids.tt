@@ -1,3 +1,5 @@
+<hr>
+
 [%  FOREACH k IN h.config.lists.author_id.keys.sort %]
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
