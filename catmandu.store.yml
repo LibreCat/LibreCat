@@ -835,6 +835,10 @@ search:
                 '<': true
               field: combined_hits
               sort: true
+            login:
+              op:
+                '=': true
+              field: login
 
       department:
         cql_mapping:
@@ -1121,6 +1125,9 @@ search:
         include_in_all: false
         properties:
           _id: {type: string, include_in_all: true}
+          publication_hits: {type: integer}
+          research_hits: {type: integer}
+          combined_hits: {type: integer}
           full_name:
             type: multi_field
             fields:
