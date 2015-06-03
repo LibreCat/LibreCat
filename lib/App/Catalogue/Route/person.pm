@@ -27,7 +27,7 @@ for his own publication list.
 
 =cut
     get '/preference' => needs login => sub {
-        my $person = h->authority->get( session('personNumber') );
+        my $person = h->researcher->get( session('personNumber') );
         #my $tmp = h->get_sort_style(params->{sort} || '', params->{style} || '');
         my $sort; my $tmp;
         if(params->{'sort'}){
@@ -57,7 +57,8 @@ for his own publication list.
         }
 
 #return to_dumper $person;
-        h->authority->add($person);
+        h->researcher->add($person);
+        h->researcher->commit;
 
         redirect '/myPUB';
     };
@@ -71,7 +72,7 @@ be displayed on author's profile page.
     post '/author_id' => needs login => sub {
 
         my $id = params->{_id};
-        my $person = h->authority->get( $id ) || {_id => $id};
+        my $person = h->researcher->get( $id ) || {_id => $id};
         my @identifier = keys %{h->config->{lists}->{author_id}};
 
         map { $person->{$_} = params->{$_} ? params->{$_} : "" } @identifier;
@@ -92,11 +93,12 @@ User can choose default edit mode for editing publications.
 =cut
     post '/edit_mode' => sub {
 
-        my $person     = h->authority->get( session('personNumber') );
+        my $person     = h->researcher->get( session('personNumber') );
         my $type = params->{edit_mode};
         if($type eq "normal" or $type eq "expert"){
         	$person->{edit_mode} = $type;
-        	my $bag = h->authority->add($person);
+        	h->researcher->add($person);
+        	h->researcher->commit;
         }
 
         redirect '/myPUB';
