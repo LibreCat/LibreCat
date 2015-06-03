@@ -9,7 +9,7 @@
 
 <div class="hidden-sm hidden-md hidden-lg"><hr></div>
 
-[% IF request.path.match("person") %]
+[% IF request.path.match("person") AND bag != 'authorlist' %]
 <div class="margin-bottom1">
   <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>Marked Publication[% UNLESS marked == 1 %]s[% END %]</a>
 </div>
@@ -56,10 +56,25 @@
 
 [% UNLESS request.path == "/marked" %]
 
-[% IF facets.status.terms.size > 1 OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR facets.year.terms.size > 1 %]
+[% IF facets.status.terms.size > 1 OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR facets.year.terms.size > 1 OR bag == 'authorlist' %]
 
 <h3>[% IF bag == "data" %][% lang ? "Filter Data Publications" : "Datenpublikationen Filtern" %]
+    [% ELSIF bag == "authorlist" %][% lang ? "Filter Authorlist" : "Autorenliste Filtern" %]
     [% ELSE %][% lang ? "Filter Publications" : "Publikationen Filtern" %][% END %]</h3>
+
+[% IF bag == "authorlist" %]
+[% other = {} %]
+[% CALL other.import(h.extract_params) %]
+  <ul class="nav nav-tabs nav-stacked margin-bottom1">
+    <li>
+      <a href="[% path %]?[% h.hash_to_url(other) %]&q=former<>1" rel="nofollow"><span class="fa fa-chevron-right"></span>[% lang ? 'Current UniBi Authors' : 'UniBi Autoren' %]</a>
+    </li>
+    <li>
+      <a href="[% path %]?[% h.hash_to_url(other) %]&q=former=1" rel="nofollow"><span class="fa fa-chevron-right"></span>[% lang ? 'Former UniBi Authors' : 'Ehemalige UniBi Autoren' %]</a>
+    </li>
+  </ul>
+[% END %]
+
 
 [% IF facets.status.terms.size > 1 && backend %]
   <ul class="nav nav-tabs nav-stacked margin-bottom1 ul0">
@@ -357,7 +372,7 @@
 [% END %]
 
 <ul class="nav nav-tabs nav-stacked ul3">
-  [% IF !request.path.match('person') AND !request.path.match('marked') AND total > 9 %]
+  [% IF (!request.path.match('person') OR bag == "authorlist") AND !request.path.match('marked') AND total > 9 %]
   <li>
     <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.store.default_page_size %][% END %]</button>
     <div class="facettecollapse">
@@ -379,8 +394,8 @@
     <div class="facettecollapse">
     <ul id="sort_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH s IN h.config.store.sort_options %]
-        <li><a href="#" class="sort-facet_[% tabmodus %] asc" data-val="[% s.key %]" rel="nofollow">[% s.label %] <span class="glyphicon glyphicon-arrow-up"></span></a>
-        <a href="#" class="sort-facet_[% tabmodus %] desc" data-val="[% s.key %]" rel="nofollow">
+        <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s.key %].asc" rel="nofollow">[% s.label %] <span class="glyphicon glyphicon-arrow-up"></span></a>
+        <a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s.key %].desc" rel="nofollow">
         <span class="glyphicon glyphicon-arrow-down"></span></a></li>
       [% END %]
     </ul>
@@ -417,11 +432,11 @@
     </button>
     <div class="facettecollapse">
     <ul id="export_[% tabmodus %][% menu %]" class="collapse">
-      <li><a href="#modal_[% tabmodus %]" data-fmt="rtf" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>RTF (e.g. Word, Office)</a></li>
-      <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="bibtex" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>BibTeX (e.g. Citavi)</a></li>
-      <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="ris" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>RIS</a></li>
-      <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="json" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>JSON</a></li>
-      <li><a href="#" class="export-facet_[% tabmodus %]" data-fmt="yaml" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>YAML</a></li>
+      <li><a href="#modal_[% tabmodus %]" data-key="fmt" data-value="rtf" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>RTF (e.g. Word, Office)</a></li>
+      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="bibtex" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>BibTeX (e.g. Citavi)</a></li>
+      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="ris" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>RIS</a></li>
+      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="json" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>JSON</a></li>
+      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="yaml" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>YAML</a></li>
     </ul>
     </div>
   </li>
@@ -487,20 +502,14 @@ $('a.search-facet_[% tabmodus %]').click(function() {
     window.location.replace(url);
 });
 
-$('a.sort-facet_[% tabmodus %]').click(function() {
-    var object = $(this),
-        key = object.data('val');
-    if (object.hasClass("asc")) {
-        searchParams.sort.push(key+'.asc');
-    } else {
-        searchParams.sort.push(key+'.desc');
-    }
-    var url = path+'?'+ $.param($.extend({}, searchParams), true);
-    window.location.replace(url);
-});
-
-$('a.export-facet_[% tabmodus %]').click(function() {
-  searchParams.fmt = $(this).data('fmt')
+$('a.facet_[% tabmodus %]').click(function() {
+  var par_key = $(this).data('key');
+  if(par_key == "sort"){
+    searchParams[par_key].push($(this).data('value'));
+  }
+  else {
+    searchParams[par_key] = $(this).data('value');
+  }
   var url = path+'?'+ $.param($.extend({}, searchParams), true);
   window.location.replace(url);
 });

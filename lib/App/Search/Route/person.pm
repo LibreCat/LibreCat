@@ -16,13 +16,13 @@ get qr{/person[/|?]*} => sub {
 	(params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
 
     $p->{start} = params->{start} if params->{start};
-	$p->{limit} = params->{limit} if params->{limit};
+	$p->{limit} = params->{limit} || h->config->{store}->{default_page_size};
 
-	if(params->{former}){
-		my $former;
-		(params->{former} eq "yes") ? ($former = "former=1") : ($former = "former=0");
-		push @{$p->{q}}, $former;
-	}
+#	if(params->{former}){
+#		my $former;
+#		(params->{former} eq "yes") ? ($former = "former=1") : ($former = "former=0");
+#		push @{$p->{q}}, $former;
+#	}
 
 	push @{$p->{q}}, "publcount>0";
 

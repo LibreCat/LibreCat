@@ -50,6 +50,8 @@
 
 <div class="col-md-3 col-md-offset-1 col-sm-4">
 
+[% INCLUDE facets.tt %]
+
 <div class="hidden-sm hidden-md hidden-lg"><hr></div>
 
 <div id="facets" class="row hidden-md hidden-lg hidden-sm"><!-- smartphones only -->
@@ -58,72 +60,12 @@
   </div>
 </div>
 
-  <h3 class="margin-top0">[% lang ? 'Search' : 'Suchen' %]</h3>
-
-  <div class="row">
-    <div class="col-md-12">
-      <form action="/person" method="get" class="form-inline">
-	[% FOREACH key IN qp.keys %]
-	  [% NEXT IF key == "text" %]
-	  [% NEXT IF key == "cql_query" %]
-	  [% IF qp.$key.0 %]
-	    [% FOREACH val in qp.$key %]
-	      <input type="hidden" name="[% key %]" value="[% val %]" />
-	    [% END %]
-	  [% ELSE %]
-	    <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
-	  [% END %]
-	[% END %]
-	<div class="input-group">
-	  <input type="text" name="text" id="q_id" value="[% qp.text | replace('"', '&quot;') %]" class="form-control" placeholder="[% lang ? "Search" : "Suche" %]" />
-	  <span class="input-group-btn">
-	    <button type="submit" class="btn btn-default">[% lang ? "Go!" : "Los!" %]</button>
-	  </span>
-	</div>
-	[% IF qp.keys.0 %]
-	  [% IF qp.q %]
-	    <p class="muted"><a href="[% h.newuri_for("$data", qp, q="") %]" rel="nofollow"><span class="fa fa-times"></span></a> [% lang ? 'Search' : 'Suche' %]: [% qp.q %]</p>
-	  [% END %]
-	[% END %]
-      </form>
-    </div>
-  </div>
-
   <h3>[% lang ? 'Filter' : 'Filtern' %]</h3>
   [% IF qp.keys.0 %]
     [% IF qp.sorting %]
       <p class="text-muted"><a href="[% h.newuri_for("/person", qp, sorting="") %]" rel="nofollow"><span class="fa fa-times"></span></a> sorting: [% qp.sorting %]</p>
     [% END %]
-    [% IF qp.former %]
-      <p class="text-muted"><a href="[% h.newuri_for("/person", qp, former="") %]" rel="nofollow"><span class="fa fa-times"></span></a> former: [% qp.former %]</p>
-    [% END %]
   [% END %]
-
-  <ul class="nav nav-tabs nav-stacked">
-    <li>
-      <a href="[% h.newuri_for("/person", qp, former="no") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>[% lang ? 'Current UniBi Authors' : 'UniBi Autoren' %]</a>
-    </li>
-    <li>
-      <a href="[% h.newuri_for("/person", qp, former="yes") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>[% lang ? 'Former UniBi Authors' : 'Ehemalige UniBi Autoren' %]</a>
-    </li>
-  </ul>
-
-  <ul class="nav nav-tabs nav-stacked margin-top1">
-    <li>
-      <button data-toggle="collapse" data-target="#peoplehitsperpage"><a href="#"><span class="fa fa-chevron-down"></span>[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% qp.limit %][% ELSE %]: 20[% END %]</a></button>
-      <div class="facettecollapse">
-        <ul id="peoplehitsperpage" class="collapse">
-          [% FOREACH limiting IN h.config.store.pagination_options %]
-            [% IF limiting == qp.limit %]
-              <li>[% limiting %]</li>
-            [% ELSE %]
-              <li><a href="[% h.newuri_for("/person", qp, limit="$limiting") %]" rel="nofollow">[% limiting %]</a></li>
-            [% END %]
-          [% END %]
-        </ul>
-      </div>
-    </li>
-  </ul>
 
   <ul class="nav nav-tabs nav-stacked margin-top1">
     <li>
