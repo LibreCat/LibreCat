@@ -32,7 +32,7 @@ get '/authorlist' => sub {
 		$cqlsort .= $2 eq "asc" ? "1" : "0";
 	}
 	$p->{sorting} = $cqlsort;
-	
+
 	#to tell h->search_researcher to return people with one or more publications only
 	$p->{researcher_list} = 1;
 
@@ -58,7 +58,7 @@ get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
 
 	push @{$p->{q}}, "person=$id";
 	push @{$p->{q}}, "status=public";
-	
+
 	if($modus and $modus eq "data"){
 		push @{$p->{q}}, "(type=researchData OR type=dara)";
 	}
@@ -72,7 +72,7 @@ get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
 	$p->{limit} = h->config->{store}->{maximum_page_size};
 
 	my $hits = h->search_publication($p);
-	
+
 	# search for research hits (only to see if present and to display tab)
 	my $researchhits;
 	@{$p->{q}} = @orig_q;
@@ -104,7 +104,7 @@ Forwards to /person/:ID
 get qr{/person/(\w+)/*} => sub {
 	my ($alias) = splat;
 
-	my $person = h->authority->select("alias", $alias)->first;
+	my $person = h->search_researcher({q => {alias => $alias}})->first;
 	if(!$person){
 		status '404';
 		template 'websites/404', { path => request->path };

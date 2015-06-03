@@ -184,35 +184,18 @@ sub delete_department {
 #    return $id;    # correct?
 #}
 
-#sub new_project {
-#	return _create_id_proj;
-#}
+sub new_project {
+	return _create_id_proj;
+}
 
 sub update_project {
     my $data = shift;
     return "Error: No _id specified" unless $data->{_id};
 
     my $new = h->nested_params($data);
-    #return $new;
-    #my $bag = Catmandu->store('project')->bag;
-    #$bag->add($new);
 
     h->project->add($new);
     h->project->commit;
-}
-
-sub update_award {
-    my $data = shift;
-    return "Error: No _id specified" unless $data->{_id};
-
-    my $new = h->nested_params($data);
-
-    my $fixer = Catmandu::Fix->new(fixes => ['person()',]);
-    $fixer->fix($new);
-
-    #h->award->add($new);
-    #h->award->commit;
-    return $new;
 }
 
 sub edit_project {
@@ -228,6 +211,20 @@ sub delete_project {
 
     h->project->delete($id);
     h->project->commit;
+}
+
+sub update_award {
+    my $data = shift;
+    return "Error: No _id specified" unless $data->{_id};
+
+    my $new = h->nested_params($data);
+
+    my $fixer = Catmandu::Fix->new(fixes => ['person()',]);
+    $fixer->fix($new);
+
+    #h->award->add($new);
+    #h->award->commit;
+    return $new;
 }
 
 1;

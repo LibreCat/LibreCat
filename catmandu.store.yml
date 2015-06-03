@@ -23,22 +23,6 @@ backup:
       authority: *backup_settings
       department: *backup_settings
 
-authority:
-  package: MongoDB
-  options:
-    database_name: authority_new
-    bags:
-      data:
-        plugins: ['Datestamps', 'Versioning']
-
-department:
-  package: MongoDB
-  options:
-    database_name: PUBDepartment
-    bags:
-      data:
-        plugins: ['Datestamps','Versioning']
-
 metrics:
   package: MongoDB
   options:
@@ -862,7 +846,6 @@ search:
                 '=': true
                 'exact': true
 
-#    transport: httptiny
     index_name: pub
     index_settings:
       analysis:
@@ -955,7 +938,7 @@ search:
             properties:
               first_name: {type: string}
               last_name: {type: string}
-              full_name: 
+              full_name:
                 type: multi_field
                 fields:
                   full_name: {type: string}

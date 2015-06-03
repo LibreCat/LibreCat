@@ -22,9 +22,9 @@ prefix '/myPUB' => sub {
 
 	get '/autocomplete_alias/:alias' => sub {
 		my $term = params->{'alias'} || "";
-		my $alias = h->authority->select("alias", $term)->to_array;
+		my $alias = h->search_researcher({q => {alias => $term}})->first;
 
-        return to_json {ok => $alias->[0] ? 0 : 1};
+        return to_json {ok => $alias ? 0 : 1};
 	};
 
 	get '/autocomplete_hierarchy' => sub {
@@ -54,9 +54,6 @@ prefix '/myPUB' => sub {
 		elsif($type eq "project"){
 			$hits = h->search_project({q => $q, limit => 1000});
 		}
-#		elsif($type eq "researchgroup"){
-#			$hits = h->search_researchgroup({q => $q});
-#		}
 		my $jsonhash = ();
 		my $sorted;
 		my $fullsort;
