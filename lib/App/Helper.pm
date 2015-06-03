@@ -529,10 +529,12 @@ sub search_project {
 	  	start => $p->{start} ||= 0,
        	sru_sortkeys => $p->{sorting} ||= "name,,1",
 	);
-	#foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-    #    $hits->{$_} = $hits->$_;
-    #}
-    return $hits;
+
+	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+        $hits->{$_} = $hits->$_;
+    }
+
+	return $hits;
 }
 
 sub search_award {

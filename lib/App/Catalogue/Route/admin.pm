@@ -122,7 +122,7 @@ Input is person id. Returns warning if person is already in the database.
         my $p;
 
         $p->{q} = $params->{q} || "";
-        $p->{limit} = $params->{limit} || h->config->{default_searchpage_size};
+        $p->{limit} = $params->{limit};
         $p->{start} = $params->{start} || 0;
         my $hits = h->search_project($p);
 
