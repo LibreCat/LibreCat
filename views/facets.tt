@@ -67,10 +67,10 @@
 [% CALL other.import(h.extract_params) %]
   <ul class="nav nav-tabs nav-stacked margin-bottom1">
     <li>
-      <a href="[% path %]?[% h.hash_to_url(other) %]&q=former<>1" rel="nofollow"><span class="fa fa-chevron-right"></span>[% lang ? 'Current UniBi Authors' : 'UniBi Autoren' %]</a>
+      <a href="[% path %]?[% h.hash_to_url(other) %]&q=former<>1" rel="nofollow"><span class="fa fa-chevron-right"></span> [% lang ? 'Current UniBi Authors' : 'UniBi Autoren' %]</a>
     </li>
     <li>
-      <a href="[% path %]?[% h.hash_to_url(other) %]&q=former=1" rel="nofollow"><span class="fa fa-chevron-right"></span>[% lang ? 'Former UniBi Authors' : 'Ehemalige UniBi Autoren' %]</a>
+      <a href="[% path %]?[% h.hash_to_url(other) %]&q=former=1" rel="nofollow"><span class="fa fa-chevron-right"></span> [% lang ? 'Former UniBi Authors' : 'Ehemalige UniBi Autoren' %]</a>
     </li>
   </ul>
 [% END %]
