@@ -1197,12 +1197,15 @@ pagination_options:
   - 50
   - 100
 sort_options:
-  - {key: year, label: "Publishing year"}
-  - {key: date_updated, label: "Date updated"}
-  - {key: title, label: "Title" }
-  - {key: author, label: "First author"}
-  - {key: type, label: "Publication type"}
-  - {key: publication, label: "Publ./ Series/ Journal"}
+  - {key: year, label: "Publikationsjahr", label_en: "Publishing year"}
+  - {key: date_updated, label: "Update-Datum", label_en: "Date updated"}
+  - {key: title, label: "Titel", label_en: "Title" }
+  - {key: author, label: "Erstautor", label_en: "First author"}
+  - {key: type, label: "Publikationstyp", label_en: "Publication type"}
+  - {key: publication, label: "Reihe/ Journal", label_en: "Publ./ Series/ Journal"}
+sort_options_person:
+  - {key: fullname, label_en: "Alphabetically", label: "Alphabetisch"}
+  - {key: publcount, label_en: "Number of publications", label: "Anzahl der Publikationen"}
 project_sort_options:
   - {key: name, label: "Name"}
   - {key: acronym, label: "Acronym"}

@@ -393,8 +393,13 @@
     <button data-toggle="collapse" data-target="#sort_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Sorting' : 'Sortierung' %]</button>
     <div class="facettecollapse">
     <ul id="sort_[% tabmodus %][% menu %]" class="collapse">
-      [% FOREACH s IN h.config.store.sort_options %]
-        <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s.key %].asc" rel="nofollow">[% s.label %] <span class="glyphicon glyphicon-arrow-up"></span></a>
+      [% IF bag == "authorlist" %]
+        [% sort_options = h.config.store.sort_options_person %]
+      [% ELSE %]
+        [% sort_options = h.config.store.sort_options %]
+      [% END %]
+      [% FOREACH s IN sort_options %]
+        <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s.key %].asc" rel="nofollow">[% lang ? s.label_en : s.label %] <span class="glyphicon glyphicon-arrow-up"></span></a>
         <a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s.key %].desc" rel="nofollow">
         <span class="glyphicon glyphicon-arrow-down"></span></a></li>
       [% END %]

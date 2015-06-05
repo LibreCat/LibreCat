@@ -52,41 +52,4 @@
 
 [% INCLUDE facets.tt %]
 
-<div class="hidden-sm hidden-md hidden-lg"><hr></div>
-
-<div id="facets" class="row hidden-md hidden-lg hidden-sm"><!-- smartphones only -->
-  <div class="col-xs-12">
-    <h2>Search / Filter</h2>
-  </div>
-</div>
-
-  <h3>[% lang ? 'Filter' : 'Filtern' %]</h3>
-  [% IF qp.keys.0 %]
-    [% IF qp.sorting %]
-      <p class="text-muted"><a href="[% h.newuri_for("/person", qp, sorting="") %]" rel="nofollow"><span class="fa fa-times"></span></a> sorting: [% qp.sorting %]</p>
-    [% END %]
-  [% END %]
-
-  <ul class="nav nav-tabs nav-stacked margin-top1">
-    <li>
-      <button data-toggle="collapse" data-target="#peoplesort"><a href="#"><span class="fa fa-chevron-down"></span>[% lang ? 'Sorting' : 'Sortierung' %]</a></button>
-      <div class="facettecollapse">
-        <ul id="peoplesort" class="collapse[% IF qp.sorting %] in[% END %]">
-          [% IF qp.sorting == "fullname.asc" OR qp.sorting == "fullname.desc" %]
-            <li>[% lang ? 'Alphabetically' : 'Alphabetisch' %]</li>
-          [% ELSE %]
-            <li><a href="[% h.newuri_for("/person", qp, sorting="fullname.asc") %]" rel="nofollow">[% lang ? 'Alphabetically' : 'Alphabetisch' %]<span class="fa fa-arrow-up"></span></a><a href="[% h.newuri_for("/person", qp, sorting="fullname.desc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
-          [% END %]
-          [% IF qp.sorting == "publcount.asc" OR qp.sorting == "publcount.desc" %]
-            <li>[% lang ? 'Number of publications' : 'Anzahl der Publikationen' %]</li>
-          [% ELSE %]
-            <li><a href="[% h.newuri_for("/person", qp, sorting="publcount.asc") %]" rel="nofollow">[% lang ? 'Number of publications' : 'Anzahl der Publikationen' %]<span class="fa fa-arrow-up"></span></a><a href="[% h.newuri_for("/person", qp, sorting="publcount.desc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
-          [% END %]
-        </ul>
-      </div>
-    </li>
-  </ul>
-
-</div>
-
 <!-- END websites/hits_people.tt -->
