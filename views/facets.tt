@@ -83,7 +83,7 @@
       <div class="facettecollapse">
 	<ul id="status_[% tabmodus %][% menu %]" class="collapse">
 	  [% FOREACH stat IN facets.status.terms %]
-	  <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="status" data-val="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
+	  <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="status" data-value="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
 	  [% END %]
 	</ul>
       </div>
@@ -105,7 +105,7 @@
       [% FOREACH dept IN departments.keys.sort %]
 	    <li>
 	    [% thisdept = departments.$dept %]
-	      <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.oId %]"><strong>[% dept %]</strong></a>
+	      <a href="#" class="facet_[% tabmodus %]" data-key="q" data-param="department" data-value="[% departments.$dept.oId %]"><strong>[% dept %]</strong></a>
 	      [% IF departments.$dept.keys.size > 1 %]
 	      <a href="#subdepts_[% departments.$dept.oId %][% menu %]" data-toggle="collapse">
 	        <span class="glyphicon glyphicon-chevron-down"></span>
@@ -116,7 +116,7 @@
 	        <li>
 	        [% NEXT IF subdept == "oId" %]
 	        [% thissubdept = thisdept.$subdept %]
-	        <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.oId %]"><strong>[% subdept %]</strong></a>
+	        <a href="#" class="facet_[% tabmodus %]" data-key="q" data-param="department" data-value="[% departments.$dept.$subdept.oId %]"><strong>[% subdept %]</strong></a>
 	        [% IF departments.$dept.$subdept.keys.size >1 %] <a href="#subsubdepts_[% departments.$dept.$subdept.oId %][% menu %]" data-toggle="collapse">
 	          <span class="glyphicon glyphicon-chevron-down"></span>
 	        </a>[% END %]
@@ -125,7 +125,7 @@
 	          <li>
 	          [% NEXT IF subsubdept == "oId" %]
 	          [% thissubsubdept = thissubdept.$subsubdept %]
-	            <a href="#" class="search-facet_[% tabmodus %]" data-index="department" data-val="[% departments.$dept.$subdept.$subsubdept.oId %]"><strong>[% subsubdept %]</strong></a>
+	            <a href="#" class="facet_[% tabmodus %]" data-key="q" data-param="department" data-value="[% departments.$dept.$subdept.$subsubdept.oId %]"><strong>[% subsubdept %]</strong></a>
 	          </li>
 	          [% END %]
 	        </ul>
@@ -147,7 +147,7 @@
       <ul id="type_[% tabmodus %][% menu %]" class="collapse">
 	[% FOREACH type IN facets.type.terms %]
 	[% typeName = h.display_doctypes(type.term) %]
-	<li><a class="search-facet_[%tabmodus %][% menu %]" data-index="type" data-val="[% type.term %]" href="#" rel="nofollow">[% typeName %] ([% type.count %])</a></li>
+	<li><a class="facet_[%tabmodus %][% menu %]" data-key="q" data-param="type" data-value="[% type.term %]" href="#" rel="nofollow">[% typeName %] ([% type.count %])</a></li>
 	[% END %]
       </ul>
     </div>
@@ -161,7 +161,7 @@
       <ul id="authors_[% tabmodus %][% menu %]" class="collapse">
 	[% FOREACH au IN facets.author.terms %]
 	[% name = h.get_person(au.term) %]
-	<li><a class="search-facet_[% tabmodus %][% menu %]" data-index="author" data-val="[% au.term %]" href="#" rel="nofollow">[% name.full_name %] ([% au.count %])</a></li>
+	<li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="author" data-value="[% au.term %]" href="#" rel="nofollow">[% name.full_name %] ([% au.count %])</a></li>
 	[% END %]
       </ul>
     </div>
@@ -175,7 +175,7 @@
     <ul id="editors_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH ed IN facets.editor.terms %]
       [% name = h.get_person(ed.term) %]
-      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="editor" data-val="[% ed.term %]" href="#" rel="nofollow">[% name.full_name %] ([% ed.count %])</a></li>
+      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="editor" data-value="[% ed.term %]" href="#" rel="nofollow">[% name.full_name %] ([% ed.count %])</a></li>
       [% END %]
     </ul>
     </div>
@@ -190,7 +190,7 @@
       [% FOREACH y IN facets.year.terms %]
       [%- year = (y.term) / 1000; -%]
       [%- IF year == '0' -%] [%- yf = '1970' -%][%- ELSE -%][%- yf = date.format(year); -%][%- END -%]
-      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="year" data-val="[% yf %]" href="#" rel="nofollow">[% yf %] ([% y.count %])</a></li>
+      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="year" data-value="[% yf %]" href="#" rel="nofollow">[% yf %] ([% y.count %])</a></li>
       [% END %]
     </ul>
     </div>
@@ -212,7 +212,7 @@
     [% FOREACH t IN facets.popular_science.terms %]
       [% NEXT IF t.term == 0 %]
       [% IF t.count < total %]
-      <a class="search-facet_[% tabmodus %][% menu %]" data-index="popularscience" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] Popular Science</a>
+      <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="popularscience" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] Popular Science</a>
       [% ELSE %]
       <div class="text-success"><strong>All publications are Popular Science Publications</strong></div>
       [% END %]
@@ -225,7 +225,7 @@
     [% FOREACH t IN facets.extern.terms %]
       [% NEXT IF t.term == 0 %]
       [% IF t.count < total %]
-      <a class="search-facet_[% tabmodus %][% menu %]" data-index="extern" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% lang ? 'External Publication' : 'Externe Publikation' %][% IF t.count > 1 %][% lang ? "s" : "en" %][% END %]</a>
+      <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="extern" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% lang ? 'External Publication' : 'Externe Publikation' %][% IF t.count > 1 %][% lang ? "s" : "en" %][% END %]</a>
       [% ELSE %]
       <div class="text-success"><strong>All publications are External Publications</strong></div>
       [% END %]
@@ -238,7 +238,7 @@
     [% FOREACH t IN facets.open_access.terms %]
       [% NEXT IF t.term == 0 %]
       [% IF t.count < total %]
-      <a class="search-facet_[% tabmodus %][% menu %]" data-index="fulltext" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] OA [% lang ? 'Fulltext' : 'Volltext' %][% IF t.count > 1 %][% lang ? "s" : "e" %][% END %]</a>
+      <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="fulltext" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] OA [% lang ? 'Fulltext' : 'Volltext' %][% IF t.count > 1 %][% lang ? "s" : "e" %][% END %]</a>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications are OA Fulltexts</strong></div>
       [% END %]
@@ -256,28 +256,28 @@
     <ul id="extid_[% tabmodus %][% menu %]" class="collapse">
     [% IF facets.isi.terms.0.count %]
       [% IF facets.isi.terms.0.count < total %]
-      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="isi" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.isi.terms.0.count %] Web of Science</a></li>
+      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="isi" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.isi.terms.0.count %] Web of Science</a></li>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications have an ISI identifier</strong></div>
       [% END %]
     [% END %]
     [% IF facets.arxiv.terms.0.count %]
       [% IF facets.arxiv.terms.0.count < total %]
-      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="arxiv" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.arxiv.terms.0.count %] arXiv.org</a></li>
+      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="arxiv" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.arxiv.terms.0.count %] arXiv.org</a></li>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications have an arXiv identifier</strong></div>
       [% END %]
     [% END %]
     [% IF facets.pmid.terms.0.count %]
       [% IF facets.pmid.terms.0.count < total %]
-      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="pmid" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.pmid.terms.0.count %] Pubmed</a></li>
+      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="pmid" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.pmid.terms.0.count %] Pubmed</a></li>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications have an PMID identifier</strong></div>
       [% END %]
     [% END %]
     [% IF facets.inspire.terms.0.count %]
       [% IF facets.inspire.terms.0.count < total %]
-      <li><a class="search-facet_[% tabmodus %][% menu %]" data-index="inspire" data-val="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.inspire.terms.0.count %] INSPIRE HEP</a></li>
+      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="inspire" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.inspire.terms.0.count %] INSPIRE HEP</a></li>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications have an INSPIRE identifier</strong></div>
       [% END %]
@@ -496,24 +496,20 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     $('#id_linktext_[% tabmodus %][% menu %]').val(emb_link);
 });
 
-$('a.search-facet_[% tabmodus %]').click(function() {
-    var object = $(this),
-        index = object.data('index'),
-        term = object.data('val');
-    searchParams.q.push(index+'='+term);
-    delete searchParams.start;
-    delete searchParams.fmt;
-    var url = path+'?'+ $.param($.extend({}, searchParams), true);
-    window.location.replace(url);
-});
-
 $('a.facet_[% tabmodus %]').click(function() {
   var par_key = $(this).data('key');
   if(par_key == "sort"){
     searchParams[par_key].push($(this).data('value'));
   }
+  else if(par_key == "q"){
+    searchParams[par_key].push($(this).data('param') + "=" + $(this).data('value'));
+  }
   else {
     searchParams[par_key] = $(this).data('value');
+  }
+  if(par_key == "q"){
+    delete searchParams.start;
+    delete searchParams.fmt;
   }
   var url = path+'?'+ $.param($.extend({}, searchParams), true);
   window.location.replace(url);
