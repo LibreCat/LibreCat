@@ -1384,6 +1384,7 @@ otherItems:
       label: "Email"
     login:
       label: "LDAP Login"
+      mandatory: 1
     department:
       label: "Affiliation"
       multiple: 1
