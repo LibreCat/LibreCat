@@ -17,16 +17,16 @@ use Dancer::Plugin::Auth::Tiny;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
-        my ($role, $coderef) = @_;
-          return sub {
-            if ( session->{role} && $role eq session->{role} ) {
-                goto $coderef;
-            }
-            else {
-                redirect '/access_denied';
-            }
-          }
-        }
+    	my ($role, $coderef) = @_;
+    	return sub {
+    		if ( session->{role} && $role eq session->{role} ) {
+    			goto $coderef;
+    		}
+    		else {
+    			redirect '/access_denied';
+    		}
+    	}
+    }
 );
 
 =head1 PREFIX /record

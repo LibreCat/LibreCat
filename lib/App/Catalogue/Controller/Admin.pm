@@ -34,22 +34,22 @@ sub new_person {
     return "AU_" . _create_id;
 }
 
-sub search_person {
-    my $p = shift;
-
-    my $hits = h->researcher->search(
-        query => $p->{q},
-        start => $p->{start} ||= 0,
-        limit => $p->{limit}
-            ||= h->config->{store}->{default_searchpage_size},
-    );
-
-    my @page_func
-        = qw(next_page last_page page previous_page pages_in_spread);
-    map { $hits->{$_} = $hits->$_ } @page_func;
-
-    return $hits;
-}
+#sub search_person {
+#    my $p = shift;
+#
+#    my $hits = h->researcher->search(
+#        query => $p->{q},
+#        start => $p->{start} ||= 0,
+#        limit => $p->{limit}
+#            ||= h->config->{store}->{default_searchpage_size},
+#    );
+#
+#    my @page_func
+#        = qw(next_page last_page page previous_page pages_in_spread);
+#    map { $hits->{$_} = $hits->$_ } @page_func;
+#
+#    return $hits;
+#}
 
 sub update_person {
     my $data = shift;
@@ -97,7 +97,7 @@ sub update_person {
 
 sub edit_person {
     my $id = shift;
-    return h->researcher->get($id);
+    return h->get_person($id);
 }
 
 sub delete_person {
@@ -136,44 +136,44 @@ sub import_person {
 }
 
 # manage departments
-sub _create_id_dep {
-    my $bag = h->authority('department')->get('1');
-    my $id  = $bag->{"latest"};
-    $id++;
-    $bag = h->bag->add( { _id => "1", latest => $id } );
-    return $id;    # correct?
-}
+#sub _create_id_dep {
+#    my $bag = h->authority('department')->get('1');
+#    my $id  = $bag->{"latest"};
+#    $id++;
+#    $bag = h->bag->add( { _id => "1", latest => $id } );
+#    return $id;    # correct?
+#}
+#
+#sub new_department {
+#    return _create_id_dep;
+#}
 
-sub new_department {
-    return _create_id_dep;
-}
-
-sub update_department {
-    my $data = shift;
-    return "Error: No _id specified" unless $data->{_id};
-
-    my $old = h->authority('department')->get( $data->{_id} );
-    my $merger = Hash::Merge->new();
-    my $new = $merger->merge( $data, $old );
-
-    h->authority('department')->add($new);
-    h->authority('department')->commit;
-}
-
-sub edit_department {
-    my $id = shift;
-    return 0 unless $id;
-
-    return h->authority('department')->get($id);
-}
-
-sub delete_department {
-    my $id = shift;
-    return "Error" unless $id;
-
-    h->authority('department')->delete($id);
-    h->authority('department')->commit;
-}
+#sub update_department {
+#    my $data = shift;
+#    return "Error: No _id specified" unless $data->{_id};
+#
+#    my $old = h->authority('department')->get( $data->{_id} );
+#    my $merger = Hash::Merge->new();
+#    my $new = $merger->merge( $data, $old );
+#
+#    h->authority('department')->add($new);
+#    h->authority('department')->commit;
+#}
+#
+#sub edit_department {
+#    my $id = shift;
+#    return 0 unless $id;
+#
+#    return h->authority('department')->get($id);
+#}
+#
+#sub delete_department {
+#    my $id = shift;
+#    return "Error" unless $id;
+#
+#    h->authority('department')->delete($id);
+#    h->authority('department')->commit;
+#}
 
 # manage projects
 #sub _create_id_proj {
@@ -184,9 +184,9 @@ sub delete_department {
 #    return $id;    # correct?
 #}
 
-sub new_project {
-	return _create_id_proj;
-}
+#sub new_project {
+#	return _create_id_proj;
+#}
 
 sub update_project {
     my $data = shift;

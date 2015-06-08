@@ -16,16 +16,16 @@ use Dancer::Plugin::Auth::Tiny;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
-        my ($role, $coderef) = @_;
-          return sub {
-            if ( session->{role} && $role eq session->{role} ) {
-                goto $coderef;
-            }
-            else {
-                redirect '/access_denied';
-            }
-          }
+    	my ($role, $coderef) = @_;
+        return sub {
+        	if ( session->{role} && $role eq session->{role} ) {
+        		goto $coderef;
+        	}
+        	else {
+        		redirect '/access_denied';
+        	}
         }
+    }
 );
 
 =head1 PREFIX /myPUB/admin
@@ -61,7 +61,10 @@ Searches the authority database. Prints the search form + result list.
 =cut
     get '/account/search' => needs role => 'super_admin' => sub {
         my $p    = params;
-        my $hits = search_person($p);
+        if($p->{q} and ref $p->{q} ne "ARRAY"){
+        	$p->{q} = [$p->{q}];
+        }
+        my $hits = h->search_researcher($p);
         template 'admin/account', $hits;
     };
 
@@ -98,7 +101,7 @@ Input is person id. Returns warning if person is already in the database.
     get '/account/import' => needs role => 'super_admin' => sub {
         my $id = trim params->{id};
 
-        my $person_in_db = h->authority->get($id);
+        my $person_in_db = h->researcher->get($id);
         if ($person_in_db) {
             template 'admin/account',
                 { error => "There is already an account with ID $id." };
