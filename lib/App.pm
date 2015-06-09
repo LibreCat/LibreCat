@@ -53,7 +53,7 @@ get '/login' => sub {
     redirect '/myPUB' if session('user');
 
     # not logged in yet
-    template 'login', {error_message => params->{error_messages} || '', login => params->{login} || ''};
+    template 'login', {error_message => params->{error_message} || '', login => params->{login} || ''};
 };
 
 =head2 POST /login
@@ -78,9 +78,7 @@ post '/login' => sub {
         redirect '/myPUB';
     }
     else {
-        forward '/login',
-            {error_message => 'Wrong username or password!'},
-            {method => 'GET'};
+        forward '/login', {error_message => 'Wrong username or password!'}, {method => 'GET'};
     }
 };
 
