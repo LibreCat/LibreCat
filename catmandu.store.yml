@@ -823,6 +823,13 @@ search:
               op:
                 '=': true
               field: login
+            alias:
+              op:
+                '=': true
+                'any': true
+                'all': true
+                'exact': true
+              field: alias
 
       department:
         cql_mapping:
