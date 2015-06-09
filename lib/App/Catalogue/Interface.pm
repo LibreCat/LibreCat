@@ -21,9 +21,10 @@ prefix '/myPUB' => sub {
 		to_json $person;
 	};
 
-	get '/autocomplete_alias/:alias' => sub {
+	get '/autocomplete_alias/:id/:alias' => sub {
 		my $term = params->{'alias'} || "";
-		my $hits = h->search_researcher( {q => ["alias=$term"]});
+		my $id = params->{'id'};
+		my $hits = h->search_researcher( {q => ["alias=$term", "id<>$id"]});
 		my $alias = $hits->{hits}->[0] if $hits->{hits};
 
         return to_json {ok => $alias ? 0 : 1};

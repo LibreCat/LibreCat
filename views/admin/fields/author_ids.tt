@@ -10,7 +10,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">[% h.config.lists.author_id.$k.label %]</div>
-          <input type="text" name="[% k %]" id="id_[% k %]" value="[% $k %]" class="sticky form-control check_[% k %]">
+          <input type="text" name="[% k %]" id="id_[% k %]" value="[% $k %]" data-id="[% _id %]" class="sticky form-control check_[% k %]">
           <div class="input-group-addon"></div>
         </div>
       </div>

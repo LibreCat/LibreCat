@@ -47,7 +47,7 @@
     [% END %]<!-- end if -->
     <div class="row authorIds_input form-group" style="display:none;">
       <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
-      <div class="col-md-6"><input type="text" class="form-control input-sm check_[% k %]" name="[% k %]" id="[% k %]" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
+      <div class="col-md-6"><input type="text" class="form-control input-sm check_[% k %]" data-id="[% id %]" name="[% k %]" id="[% k %]" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
     </div>
     [% END %]<!-- END foreach -->
 

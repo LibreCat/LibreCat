@@ -9,10 +9,11 @@
  */
 $(function () {
 $('.check_alias').keyup(function() {
-	var object =$(this),
-		val = object.val();
+	var object = $(this);
+	var val = object.val();
+	var id = $(object).data('id');
 	$.ajax({
-		url: '/myPUB/autocomplete_alias/'+val,
+		url: '/myPUB/autocomplete_alias/' + id + '/' + val,
 		dataType: 'json',
 		success: function(data,textStatus){
 			if (data.ok == 0) {
