@@ -23,7 +23,7 @@
     <div class="row">&nbsp;</div>
 
     <div class="col-md-12 row hidden-xs">
-    <form action="/myPUB/person/author_id" method="POST">
+    <form action="/myPUB/person/author_id" id="author_id_form" method="POST">
     <input type="hidden" name="_id" value="[% session.personNumber %]" />
     [% IF backend AND !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire OR thisPerson.alias) %]
     <div class="row col-md-12">
@@ -47,7 +47,7 @@
     [% END %]<!-- end if -->
     <div class="row authorIds_input form-group" style="display:none;">
       <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
-      <div class="col-md-6"><input type="text" class="form-control input-sm check_[% k %]" data-id="[% id %]" name="[% k %]" id="[% k %]" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
+      <div class="col-md-6"><input type="text" class="form-control input-sm check_[% k %]" data-id="[% thisPerson._id %]" name="[% k %]" id="[% k %]" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
     </div>
     [% END %]<!-- END foreach -->
 
@@ -59,7 +59,7 @@
 	</script>
       </div>
       <div class="col-md-6">
-	<button type="submit" id="saveAuthorIds" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-ok"></span> Save</button>
+	<button type="button" id="saveAuthorIds" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-ok"></span> Save</button>
 	<button type="button" onclick="editAuthorIds('cancel');" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span>  Cancel</button>
       </div>
     </div>
@@ -68,4 +68,14 @@
   [% END %]
 [% END %]
 
+<script>
+$('#saveAuthorIds').click(function(e){
+  if($('.check_alias').val() && $('.check_alias').closest('.form-group').hasClass('has-error')){
+    e.preventDefault();
+  }
+  else {
+    $('#author_id_form').submit();
+  }
+});
+</script>
 <!-- END person_profile.tt -->

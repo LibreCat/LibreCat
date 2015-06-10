@@ -13,7 +13,7 @@
       <h1>[% IF full_name %]Edit Account for [% full_name %][% ELSE %]Add new account[% END %]</h1>
     </div>
 
-    <form action="/myPUB/admin/account/update" method="POST">
+    <form id="id_account_form" action="/myPUB/admin/account/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
       
       {% FOREACH key IN account_field_order %}
@@ -24,7 +24,7 @@
       <div class="row innerrow"><!-- button -->
         <div class="col-md-12 buttonrow">
           <span class="form-group col-md-10 col-md-offset-2">
-            <button type="submit" id="id_do_nothing" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save</button>
+            <button type="button" id="id_check_submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save</button>
             <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
           </span>
         </div>
@@ -57,6 +57,33 @@ $('button.cancel-button').click(function() {
 </script>
 
 <script>
+$('#id_check_submit').click(function(e) {
+  var check = 1;
+  if($('.check_alias').val() && $('.check_alias').closest('.form-group').hasClass('has-error')){
+    check = 0;
+    alert('checked');
+  }
+  $('.required').each(function() {
+    if(!$(this).val()){
+      $(this).addClass('has-error');
+      $(this).closest('div.input-group.mandatory').addClass("has-error");
+      check = 0;
+    }
+    else{
+      $(this).removeClass('has-error');
+      $(this).closest('div.input-group.mandatory').removeClass("has-error");
+    }
+  });
+  
+  if(!check){
+    window.scrollTo(0, 0);
+    e.preventDefault();
+  }
+  else {
+    $('#id_account_form').submit();
+  }
+});
+
 // Select button (dept, proj, rg)
 function selectButton(element){
 	var type = $(element).attr('class').replace('btn btn-default select_button', '').trim();
@@ -127,67 +154,6 @@ $("input[name='account_type']").change(function(){
   else {
     $('#ext_institution').hide();
     $('#password').hide();
-  }
-});
-
-$('#plusAFF').click(function(){
-  var items = $('#affiliation div.innerrow');
-  var index = items.index($('#affiliation div.innerrow').last()) + 1;
-  $('#affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="aff_idautocomplete_' + index + '" /><input type="hidden" name="department.' + index + '.name" id="aff_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-3"><button type="button" onclick="selectButton(this);" class="btn btn-default select_button affiliation" id="affiliation_select_' + index + '"><span class="glyphicon glyphicon-chevron-down"></span> Select</button> <span class="btn btn-default glyphicon glyphicon-minus single"></span></span></div>');
-  $('#affiliation').bind("click", function(){
-    $( "#aff_autocomplete_" + index ).autocomplete({
-      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-      minLength: 2,
-      select: function( event, ui ) {
-        $( "#aff_autocomplete_" + index ).val( ui.item.label );
-        $( "#aff_nameautocomplete_" + index ).val( ui.item.label );
-        $( "#aff_idautocomplete_" + index ).val( ui.item.id );
-        $( "#aff_autocomplete_" + index ).attr("disabled","disabled");
-      }
-    });
-  });
-});
-
-$('#plusRV').click(function(){
-  var items = $('#reviewer div.innerrow');
-  var index = items.index($('#reviewer div.innerrow').last()) + 1;
-  $('#reviewer').append('<div class="row innerrow"><input type="hidden" name="reviewer.' + index + '.id" id="rv_idautocomplete_' + index + '" /><input type="hidden" name="reviewer.' + index + '.name" id="rv_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="rv_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-3"><button type="button" onclick="selectButton(this);" class="btn btn-default select_button reviewer" id="reviewer_select_' + index + '"><span class="glyphicon glyphicon-chevron-down"></span> Select</button> <span class="btn btn-default glyphicon glyphicon-minus single"></span></span></div>');
-  $('#reviewer').bind("click", function(){
-    $( "#rv_autocomplete_" + index ).autocomplete({
-      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-      minLength: 2,
-      select: function( event, ui ) {
-        $( "#rv_autocomplete_" + index ).val( ui.item.label );
-        $( "#rv_nameautocomplete_" + index ).val( ui.item.label );
-        $( "#rv_idautocomplete_" + index ).val( ui.item.id );
-        $( "#rv_autocomplete_" + index ).attr("disabled","disabled");
-      }
-    });
-  });
-});
-
-$('#plusDM').click(function(){
-  var items = $('#data_manager div.innerrow');
-  var index = items.index($('#data_manager div.innerrow').last()) + 1;
-  $('#data_manager').append('<div class="row innerrow"><input type="hidden" name="data_manager.' + index + '.id" id="dp_idautocomplete_' + index + '" /><input type="hidden" name="data_manager.' + index + '.name" id="dp_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" name="data_manager.' + index + '.name" id="dp_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-3"><button type="button" onclick="selectButton(this);" class="btn btn-default select_button data_manager" id="data_manager_select_' + index + '"><span class="glyphicon glyphicon-chevron-down"></span> Select</button> <span class="btn btn-default glyphicon glyphicon-minus single"></span></span></div>');
-  $('#data_manager').bind("click", function(){
-    $( "#dp_autocomplete_" + index ).autocomplete({
-      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
-      minLength: 2,
-      select: function( event, ui ) {
-        $( "#dp_autocomplete_" + index ).val( ui.item.label );
-        $( "#dp_nameautocomplete_" + index ).val( ui.item.label );
-        $( "#dp_idautocomplete_" + index ).val( ui.item.id );
-        $( "#dp_autocomplete_" + index ).attr("disabled","disabled");
-      }
-    });
-  });
-});
-
-$(document).on('click', '.single', function(){
-  var index = $(this).parent().parent().index();
-  if(parseInt(index) != 0){
-    $(this).parent().parent().remove();
   }
 });
 
