@@ -22,7 +22,7 @@
 	<div class="col-md-5">
 	  <label for="id_q">Search Projects</label>
 	  <div class="input-group">
-	    <input type="text" class="form-control" name="q" id="id_q" value="[% qp.q %]">
+	    <input type="text" class="form-control" name="cql_query" id="id_q" value="[% qp.cql_query || qp.q %]">
 	    <span class="input-group-btn">
 	      <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-search"></span> </i>Search</button>
 	    </span>
@@ -46,7 +46,7 @@
     <div class="row innerrow">
       <div class="col-md-1">
 	<span class="glyphicon glyphicon-pencil"></span>
-	<span class="label label-success"><strong>[% p._id %]</strong></span>
+	<a href="[% h.host %]/project/[% p._id %]" target="_blank"><span class="label label-success"><strong>[% p._id %]</strong></span></a>
       </div>
       <div class="col-md-9">
 	<a href="/myPUB/admin/project/edit/[% p._id %]">[% p.name %]</a>

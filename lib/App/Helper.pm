@@ -530,9 +530,12 @@ sub search_department {
 
 sub search_project {
 	my ($self, $p) = @_;
+	
+	my $cql = "";
+	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
-	my $hits = project->search (
-		cql_query => $p->{q},
+	my $hits = project->search(
+		cql_query => $cql,
 		limit => $p->{limit} ||= config->{default_page_size},
 	  	start => $p->{start} ||= 0,
        	sru_sortkeys => $p->{sorting} ||= "name,,1",

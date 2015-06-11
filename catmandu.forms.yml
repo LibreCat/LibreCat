@@ -1416,7 +1416,7 @@ otherItems:
       - grant_number
       - psp_element
       - description
-      - active
+#      - active
       - start_date
       - end_date
       - department
@@ -1448,8 +1448,8 @@ otherItems:
       label: "PSP Element"
     description:
       label: "Description"
-    active:
-      label: "Active"
+#    active:
+#      label: "Active"
     start_date:
       label: "Start Date"
       placeholder: "YYYY-MM-DD"

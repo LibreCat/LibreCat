@@ -116,17 +116,17 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/project' => needs role => 'super_admin' => sub {
-    	my $hits = h->search_project({q => "", limit => 100});
+    	my $start = params->{start} || 0;
+    	my $hits = h->search_project({q => "", limit => 100, start => $start});
         template 'admin/project', $hits;
     };
 
     get '/project/search' => sub {
         my $params = params;
-        my $p;
-
-        $p->{q} = $params->{q} || "";
-        $p->{limit} = $params->{limit};
+        my $p = h->extract_params();
+        $p->{limit} = $params->{limit} || 100;
         $p->{start} = $params->{start} || 0;
+
         my $hits = h->search_project($p);
 
         template 'admin/project', $hits;
