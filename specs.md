@@ -273,7 +273,7 @@ url: "http://www.bla.de"
 grant_number: "1234"
 psp_element: "1234"
 description: "this is a description"
-active: 1|0
+#active: 1|0
 department:
 	-
 		name: "Faculty of Physics"
@@ -359,3 +359,29 @@ other_university: "Ludwig-Maximilians-Universität München"
 url: "http://www.mpib-berlin.mpg.de/de/mitarbeiter/ute-frevert"
 extern: 1|0 #"awardedWhileNotUnibi"
 comment: "some message or comment"
+
+# department
+
+-
+  id: 10018
+  name: "Fakultät für Chemie"
+  display: "Fakultät für Chemie"
+  tree:
+    -
+      id: 10018
+      name: "Fakultät für Chemie"
+
+-
+  id: 16813171
+  name: "ENTRY"
+  display: "Fakultät für Geschichtswissenschaft, Philosophie und Theologie > Abteilung Geschichte > ENTRY"
+  tree:
+    - 
+      id: 10022
+      name: "Fakultät für Geschichtswissenschaft, Philosophie und Theologie"
+    -
+      id: 10023
+      name: "Abteilung Geschichte"
+    -
+      id: 16813171
+      name: "ENTRY"
