@@ -46,7 +46,7 @@
     <div class="row innerrow">
       <div class="col-md-1">
 	<span class="glyphicon glyphicon-pencil"></span>
-	<span class="label [% IF p.active %]label-success[% ELSE %]label-danger[% END %]"><strong>[% p._id %]</strong></span>
+	<span class="label label-success"><strong>[% p._id %]</strong></span>
       </div>
       <div class="col-md-9">
 	<a href="/myPUB/admin/project/edit/[% p._id %]">[% p.name %]</a>

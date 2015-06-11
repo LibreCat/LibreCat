@@ -21,11 +21,13 @@
     <div class="row margin-bottom1">
 
       <div class="col-md-8"><!-- begin left col -->
+    [% IF start_date %]
 	<div class="row">
 	  <div class="col-md-12">
 	    Project Period: [% start_date %][% IF end_date %] - [% end_date %][% END %]
 	  </div>
 	</div>
+	[% END %]
 	<div class="row">
 	  <div class="col-xs-10">
 	  [% IF active %]

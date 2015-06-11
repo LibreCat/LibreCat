@@ -16,49 +16,49 @@
   </div>
   [% END %]
 
-  [% IF isOwnedBy %]
+  [% IF owner %]
   <div class="row">
     <div class="col-md-2 text-muted">
       Coordinator
     </div>
     <div class="col-md-10">
-      [% FOREACH coord IN isOwnedBy %]
-	[% IF coord.name.personTitle != "" %]
-	  [% coord.name.personTitle %]
+      [% FOREACH coord IN owner %]
+	[% IF coord.title != "" %]
+	  [% coord.title %]
 	[% END %]
-	[% coord.name.givenName %] [% coord.name.surname %][% UNLESS loop.last %], [% END %]
+	[% coord.first_name %] [% coord.last_name %][% IF coord.addition %] [% coord.addition %][% END %][% UNLESS loop.last %], [% END %]
       [% END %]
     </div>
   </div>
   [% END %]
 
-  [% IF principalInvestigators %]
+  [% IF principal_investigator %]
   <div class="row">
     <div class="col-md-2 text-muted">
       Principal Investigators
     </div>
     <div class="col-md-10">
-      [% FOREACH pi IN principalInvestigators %]
-	[% IF pi.name.personTitle != "" %]
-	  [% pi.name.personTitle %]
+      [% FOREACH pi IN principal_investigator %]
+	[% IF pi.title != "" %]
+	  [% pi.title %]
 	[% END %]
-	[% pi.name.givenName %] [% pi.name.surname %][% UNLESS loop.last %], [% END %]
+	[% pi.first_name %] [% pi.last_name %][% IF pi.addition %] [% pi.addition %][% END %][% UNLESS loop.last %], [% END %]
       [% END %]
     </div>
   </div>
   [% END %]
 
-  [% IF projectMembers %]
+  [% IF member %]
   <div class="row">
     <div class="col-md-2 text-muted">
       Members
     </div>
     <div class="col-md-10">
-      [% FOREACH pm IN projectMembers %]
-	[% IF pm.name.personTitle != "" %]
-	  [% pm.name.personTitle %]
+      [% FOREACH pm IN member %]
+	[% IF pm.title != "" %]
+	  [% pm.title %]
 	[% END %]
-	[% pm.name.givenName %] [% pm.name.surname %][% UNLESS loop.last %], [% END %]
+	[% pm.first_name %] [% pm.last_name %][% IF pm.addition %] [% pm.addition %][% END %][% UNLESS loop.last %], [% END %]
       [% END %]
     </div>
   </div>
