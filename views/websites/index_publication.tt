@@ -17,10 +17,9 @@
 
     <div id="banner">
 	<h1>
-	  [% IF lang %]
-	  Welcome at PUB[% IF bag == "pubtheses" %] Theses[% END %]
+	  [% IF bag == "pubtheses" %]PUB Theses
 	  [% ELSE %]
-	  Willkommen bei PUB[% IF bag == "pubtheses" %] Theses[% END %]
+	    PUB – [% IF lang %]Publications at Bielefeld University[% ELSE %]Publikationen an der Universität Bielefeld[% END %]
 	  [% END %]
 	</h1>
     </div>
