@@ -8,12 +8,13 @@ Catmandu->load(':up');
 my $conf = Catmandu->config;
 
 my $mongoBag = Catmandu->store('authority_too')->bag;
-my $deptBag = Catmandu->store('department')->bag;
+my $deptBag = Catmandu->store('search')->bag('department');
+my $authBag = Catmandu->store('search')->bag('researcher');
 
 use Catmandu::Importer::JSON;
 
 my $importer_new = Catmandu::Importer::JSON->new(file => "authority_new.json");
-my $importer = Catmandu::Importer::JSON->new(file => "authority.json");
+my $importer = Catmandu::Importer::JSON->new(file => "authority_mongo.json");
 
 my $m = $importer_new->each(sub {
 	my $record = $_[0];
@@ -106,13 +107,15 @@ my $n = $importer->each(sub {
     	foreach my $key (keys %$hashref){
 			$sbcat_rec->{$key} = $hashref->{$key};
 		}
-    	$mongoBag->add($sbcat_rec);
+    	#$mongoBag->add($sbcat_rec);
+    	$authBag->add($sbcat_rec);
     	#print Dumper $sbcat_rec;
     }
     elsif($hashref->{type} eq "organization") {
     	delete $hashref->{type};
     	#print Dumper $hashref;
     	my $sbcat_rec = $mongoBag->get($hashref->{_id});
+    	my $dept_rec;
     	#print Dumper $sbcat_rec;
     	foreach my $key (keys %$hashref){
 			$sbcat_rec->{$key} = $hashref->{$key};
@@ -122,5 +125,8 @@ my $n = $importer->each(sub {
     }
     
 });
+
+$authBag->commit;
+$deptBag->commit;
 
 1;
