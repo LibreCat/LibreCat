@@ -56,7 +56,9 @@ Request a copy of the publication. Email will be sent to the author.
 	post '/:id/:file_id' => sub {
 		my $bag = Catmandu->store->bag('request');
 		my $file = _get_file_info(params->{id}, params->{file_id});
-		redirect '/publication/'.params->{id} unless $file->{request_a_copy};
+		unless ($file->{request_a_copy}) {
+			forward '/publication/'.params->{id}, {method => 'GET'};
+		}
 
 		my $date_expires = _calc_date();
 
@@ -73,11 +75,10 @@ Request a copy of the publication. Email will be sent to the author.
 		    limit => 1
 		);
 
-		if ($hits->{hits}->[0]){
-			my $obj = $hits->{hits}->[0];
+		if ($hits->first){
 			return to_json {
 				ok => true,
-				url => h->host . "/rc/" . $obj->{_id},
+				url => h->host . "/rc/" . $hits->first->{_id},
 			};
 		} else {
 			my $stored = $bag->add({
@@ -85,17 +86,17 @@ Request a copy of the publication. Email will be sent to the author.
 				file_id => params->{file_id},
 				file_name => $file->{file_name},
 				date_expires => $date_expires,
-				email => params->{user_email},
+				user_email => params->{user_email},
 				approved => params->{approved} || 0,
 			});
 
-			my $file_creator_email = h->get_person($file->{creator})->{email};
-
+			my $file_creator_email = h->get_person($file->{creator})->{bis}->{email};
 			if(params->{user_email}){
 				my $pub = h->publication->get(params->{id});
 				my $mail_body = export_to_string({
 					title => $pub->{title},
 					user_email => params->{user_email},
+					mesg => params->{mesg} || '',
 					key => $stored->{_id},
 					host => h->host,
 					},
@@ -108,7 +109,7 @@ Request a copy of the publication. Email will be sent to the author.
 						subject => h->config->{request_copy}->{subject},
 						body => $mail_body,
 					};
-					redirect '/publication/'.params->{id};
+					forward '/publication/'.params->{id}, {method => 'GET'};
 				} catch {
 					error "Could not send email: $_";
 				}
@@ -126,7 +127,7 @@ Author approves the request. Email will be sent to user.
 	get '/approve/:key' => sub {
 		my $bag = Catmandu->store->bag('request');
 		my $data = $bag->get(params->{key});
-		return unless $data;
+		return "Nothing to approve." unless $data;
 
 		$data->{approved} = 1;
 		$bag->add($data);
@@ -142,6 +143,7 @@ Author approves the request. Email will be sent to user.
 		} catch {
 			error "Could not send email: $_";
 		}
+		return "Thank you for your approval. The user will be notified to download the file.";
 	};
 
 =head2 GET /rc/deny/:key
@@ -153,7 +155,7 @@ to user. Delete request key from database.
 	get '/deny/:key' => sub {
 		my $bag = Catmandu->store->bag('request');
 		my $data = $bag->get(params->{key});
-		return unless $data;
+		return "Nothing to deny." unless $data;
 
 		$bag->delete(params->{key});
 		try {
@@ -168,6 +170,7 @@ to user. Delete request key from database.
 		} catch {
 			error "Could not send email: $_";
 		}
+		return "The user will be notified that the request has been denied.";
 	};
 
 =head2 GET /rc/:key
