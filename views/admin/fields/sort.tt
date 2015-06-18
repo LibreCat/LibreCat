@@ -1,0 +1,40 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_sort">{% sort.label %}</label>
+  </div>
+  <div class="col-md-10" id="sorting">
+    [% IF !sort %]
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon hidden-lg hidden-md">{% sort.label %}</div>
+          <select name="sort.0" class="sticky form-control" id="select_sort_0">
+            [% FOREACH s IN h.config.lists.sort_text.keys %]
+            <option value="[% s %]"[% IF s == "year.desc" %] selected="selected"[% END %]>[% h.config.lists.sort_text.$s %]</option>
+            [% END %]
+          </select>
+          <div class="input-group-addon" onclick="add_field('sorting');"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+        </div>
+      </div>
+    </div>
+    [% ELSE %]
+      [% FOREACH sor IN sort %]
+      <div class="row innerrow">
+        <div class="form-group col-md-10 col-xs-11">
+          <div class="input-group sticky">
+            <div class="input-group-addon hidden-lg hidden-md">{% sort.label %}</div>
+            <select name="sort.[% loop.index %]" class="sticky form-control" id="select_sort_[% loop.index %]">
+              [% FOREACH s IN h.config.lists.sort_text.keys %]
+              <option value="[% s %]"[% IF s == sor %] selected="selected"[% END %]>[% h.config.lists.sort_text.$s %]</option>
+              [% END %]
+            </select>
+            <div class="input-group-addon" onclick="add_field('sorting');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+          </div>
+        </div>
+      </div>
+      [% END %]
+    [% END %]
+  </div>
+</div>
