@@ -10,6 +10,7 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use Dancer::Plugin::Catmandu::OAI;
 use Dancer::Plugin::Catmandu::SRU;
+use Citation;
 
 =head2 GET /sru
 
@@ -44,5 +45,25 @@ oai_provider '/oai',
         }
         $specs;
     };
+
+get '/livecitation' => sub {
+    my $params = params;
+    my $debug = $params->{debug} ? "debug" : "no_debug";
+    unless ($params->{id} and $params->{style}) {
+        return "'id' and 'style' needed.";
+    }
+
+    my $pub = h->publication->get($params->{id});
+
+    my $response = Citation::index_citation_update($pub, 1, $debug, [$params->{style}]);
+
+    if($debug eq "debug"){
+    	return to_dumper $response;
+    }
+    else {
+    	utf8::decode($response);
+    	template "websites/livecitation", {citation => $response};
+    }
+};
 
 1;

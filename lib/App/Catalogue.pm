@@ -13,7 +13,6 @@ use Catmandu::Util qw(:array);
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
 use App::Helper;
-use App::Catalogue::Interface;
 use all qw(App::Catalogue::Route::*);
 
 =head2 GET /myPUB

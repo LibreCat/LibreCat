@@ -25,4 +25,65 @@ ajax '/metrics/:id' => sub {
     };
 };
 
+=head2 AJAX /search_researcher
+
+=cut
+ajax '/search_researcher' => sub {
+    my $q;
+    push @$q, params->{'term'};
+
+    to_json h->search_researcher({q => $q})->{hits};
+};
+
+=head2 AJAX /get_person
+=cut
+ajax '/authority_user/:id' => sub {
+    my $person = h->get_person(params->{id}) || {error => "No user found."};
+    to_json $person;
+};
+
+=head2 AJAX /get_alias/:id/:alias
+
+=cut
+ajax '/get_alias/:id/:alias' => sub {
+    my $term = params->{'alias'} || "";
+    my $id = params->{'id'};
+    my $hits = h->search_researcher( {q => ["alias=$term", "id<>$id"]});
+    my $alias = $hits->first || {};
+
+    return to_json {ok => $alias ? 0 : 1};
+};
+
+=head2 AJAX /get_project
+
+=cut
+ajax '/get_project' => sub {
+    my $q;
+    @$q = map {
+        lc $_;
+        $_ .= '*' if $_ !~ /[äöüß]/; #sorry for this bad hack ;-)
+    } split(' ', params->{term});
+
+    my $hits = h->search_project({q => $q, limit => 10);
+    return to_json map{
+        {id => $_->{_id}, label => $_->{name};
+    } @{$hits->{hits}};
+};
+
+=head2 AJAX /get_department
+
+=cut
+ajax '/get_department' => sub {
+    my $q;
+    @$q = map {
+        lc $_;
+        $_ .= '*' if $_ !~ /[äöüß]/; #sorry for this bad hack ;-)
+    } split(' ', params->{term});
+
+    my $hits = h->search_department({q => $q, limit => 10});
+    return to_json map {
+        {id => $_->{_id}, label => $_->{display};
+    } @{$hits->{hits}};
+};
+
 1;

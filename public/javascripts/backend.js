@@ -13,7 +13,7 @@ $('.check_alias').keyup(function() {
 	var val = object.val();
 	var id = $(object).data('id');
 	$.ajax({
-		url: '/myPUB/autocomplete_alias/' + id + '/' + val,
+		url: '/get_alias/' + id + '/' + val,
 		dataType: 'json',
 		success: function(data,textStatus){
 			if (data.ok == 0) {
@@ -103,7 +103,7 @@ function linkPevz(element){
 	var lineId = $(element).attr('id').replace(type + 'link_pevz_','');
 
 	if($('#' + type + 'Authorized' + lineId).attr('alt') == "Not Authorized"){
-		var puburl = '/myPUB/search_researcher?ftext=';
+		var puburl = '/search_researcher?term=';
 		var narrowurl = "";
 		var longurl = "";
 		var first_name = $('#' + type + 'first_name_' + lineId).val();
@@ -182,7 +182,7 @@ function linkPevz(element){
 						orcid = value;
 					}
 				});
-				
+
 				$('#' + type + 'first_name_' + lineId).val(first_name);
 				$('#' + type + 'last_name_' + lineId).val(last_name);
 				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly", "readonly");
@@ -192,7 +192,7 @@ function linkPevz(element){
 
 				$('#' + type + 'id_' + lineId).val(pevzId);
 				$('#' + type + 'orcid_' + lineId).val(orcid);
-				
+
 				pevzId = "";
 				orcid = "";
 				first_name = "";
@@ -281,7 +281,7 @@ function linkPevz(element){
 					var last_name = $(this).parent().parent().find('.name').attr('data-lastname');
 
 					var lineId = $(this).parents('.table').attr('id').replace('lineId','');
-					
+
 					$('#' + type + 'first_name_' + lineId).val("");
 					$('#' + type + 'first_name_' + lineId).val(first_name);
 					$('#' + type + 'last_name_' + lineId).val("");
@@ -290,10 +290,10 @@ function linkPevz(element){
 					$('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
 					$('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
 					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
-					
+
 					$('#' + type + 'id_' + lineId).val(pevzId);
 					$('#' + type + 'orcid_' + lineId).val(orcid);
-					
+
 					$('#' + type + 'linkPevzModal').modal("hide");
 					$('#' + type + 'linkPevzModal').find('.modal-body').first().html('');
 				});
@@ -468,7 +468,7 @@ function add_field(name, placeholder){
 			var newid = $(this).attr('id').replace(/0/g,index);
 			$(this).attr('id', newid);
 		}
-		
+
 		if($(this).attr('name')){
 			var newname = $(this).attr('name').replace(/0/g,index);
 			$(this).attr('name', newname);
@@ -492,7 +492,7 @@ function add_field(name, placeholder){
 		}
 	});
 	$(blueprint).find('#revert_' + index).tooltip();
-		
+
 	$('#' + name).append(blueprint);
 	var abbrev;
 	switch(name) {
@@ -552,7 +552,7 @@ function enable_autocomplete(field, index){
 		type = "department"
 	}
 	$( "#" + field + "_autocomplete_" + index ).autocomplete({
-		source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=" + type,
+		source: "/get_" + type,
 		minLength: 2,
 		messages: {
 	        noResults: '',
@@ -589,8 +589,8 @@ $(function(){
 				$(this).css("border-top-left-radius","3px");
 			}
 		}
-		
-		$(this).css("border","none");		
+
+		$(this).css("border","none");
 		var addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon');
 
 		if($(this).parent('div.sticky').hasClass('mandatory')){
@@ -605,7 +605,7 @@ $(function(){
 			$(this).parent('div.sticky').css("border", "1px solid #66afe9");
 			$(this).css("box-shadow", "inset 0 1px 1px -1px rgba(0, 0, 0, 0.075), 0 0 8px -8px rgba(102, 175, 233, 0.6)");
 		}
-		
+
 		if($(this).attr('id')){
 			var mymatch = $(this).attr('id').match(/dp_autocomplete_(\d{1,})/);
 			if(mymatch && mymatch[1]){
@@ -619,7 +619,7 @@ $(function(){
 			}
 		}
 	});
-	
+
 	$('input.sticky, select.sticky, textarea.sticky').on("blur", function(){
 		var addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon');
 		addon.css("border","none");
@@ -634,7 +634,7 @@ $(function(){
         $(this).parent('div.sticky').css("-webkit-box-shadow", "none");
         $(this).parent('div.sticky').css("box-shadow","none");
         $(this).parent('div.sticky').css("border-radius","3px");
-        
+
 		var first_addon = $(this).parent('div.input-group.sticky').children('div.input-group-addon:first-child');
 		first_addon.css("display", "table-cell");
 	});
