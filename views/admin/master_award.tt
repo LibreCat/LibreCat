@@ -121,35 +121,6 @@ function selectButton(element){
 	modal.modal('show');
 }
 
-function addDelegate(element){
-  var index = $('#delegate').children('input').length;
-  var id = $('#id_delegate').val();
-  var person = "";
-  $.getJSON("/myPUB/authority_user/" + id, function(data,status){
-    $('#delegate').append('<div class="col-md-10 col-md-offset-2" id="delegate_' + id + '"><div class="row innerrow"><div class="col-md-7 form-group"><span class="glyphicon glyphicon-remove del_del" id="delegate_span_' + id + '"></span> ' + data.full_name + ' <span class="text-muted">' + id + '</span><input type="hidden" name="delegate.' + index + '" value="' + id + '" /></div></div></div>');
-    $('#delegate_' + id).find('span.del_del').bind("click", function(){
-      $('#delegate_' + id).remove();
-    });
-    $('#id_delegate').val("");
-  });
-}
-
-$('.del_del').click(function(){
-  var id = $(this).attr('id').replace('delegate_span_','');
-  $('#delegate_' + id).remove();
-});
-
-$("input[name='account_type']").change(function(){
-  if($("input[name='account_type']:checked").val() == "external"){
-    $('#id_ext_institution').show();
-    $('#id_password').show();
-  }
-  else {
-    $('#id_ext_institution').hide();
-    $('#id_password').hide();
-  }
-});
-
 $('#plusAFF').click(function(){
   var items = $('#affiliation div.innerrow');
   var index = items.index($('#affiliation div.innerrow').last()) + 1;
