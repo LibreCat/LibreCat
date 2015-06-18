@@ -60,13 +60,12 @@ ajax '/get_alias/:id/:alias' => sub {
 ajax '/get_project' => sub {
     my $q;
     @$q = map {
-        lc $_;
         $_ .= '*' if $_ !~ /[äöüß]/; #sorry for this bad hack ;-)
-    } split(' ', params->{term});
+    } split(' ', lc params->{term});
 
-    my $hits = h->search_project({q => $q, limit => 10);
-    return to_json map{
-        {id => $_->{_id}, label => $_->{name};
+    my $hits = h->search_project({q => $q, limit => 10});
+    return to_json map {
+        { id => $_->{_id}, label => $_->{name} };
     } @{$hits->{hits}};
 };
 
@@ -76,13 +75,12 @@ ajax '/get_project' => sub {
 ajax '/get_department' => sub {
     my $q;
     @$q = map {
-        lc $_;
         $_ .= '*' if $_ !~ /[äöüß]/; #sorry for this bad hack ;-)
-    } split(' ', params->{term});
+    } split(' ', lc params->{term});
 
     my $hits = h->search_department({q => $q, limit => 10});
     return to_json map {
-        {id => $_->{_id}, label => $_->{display};
+        { id => $_->{_id}, label => $_->{display} };
     } @{$hits->{hits}};
 };
 
