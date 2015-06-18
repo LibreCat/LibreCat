@@ -154,7 +154,9 @@ sub get_sort_style {
 	$user_style = $user->{style} if ($user && $user->{style});
 
 	# set default values - to be overridden by more important values
-	my $style = $param_style || $user_style || $self->config->{store}->{default_style};
+	my $style = ($param_style && array_includes($self->config->{lists}->{styles},$param_style))
+	        || ($user_style && array_includes($self->config->{lists}->{styles},$user_style))
+	        || $self->config->{store}->{default_style};
 	my $sort;
 	my $sort_backend;
 	if($param_sort){
@@ -174,10 +176,7 @@ sub get_sort_style {
 	$return->{default_sort} = $self->config->{store}->{default_sort};
 	$return->{default_sort_backend} = $self->config->{store}->{default_sort_backend};
 
-	# see if style param is set
-	if(array_includes($self->config->{lists}->{styles},$style)){
-		$return->{style} = $style;
-	}
+	$return->{style} = $style;
 
 	Catmandu::Fix->new(fixes => ["delete_empty()"])->fix($return);
 
