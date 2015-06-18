@@ -109,7 +109,7 @@ Request a copy of the publication. Email will be sent to the author.
 						subject => h->config->{request_copy}->{subject},
 						body => $mail_body,
 					};
-					forward '/publication/'.params->{id}, {method => 'GET'};
+					#forward '/publication/'.params->{id}, {method => 'GET'};
 				} catch {
 					error "Could not send email: $_";
 				}
@@ -125,6 +125,10 @@ Author approves the request. Email will be sent to user.
 
 =cut
 	get '/approve/:key' => sub {
+		forward '/rc/approve', {key => params->{key}}, {method => 'POST'};
+	};
+
+	post '/approve' => sub {
 		my $bag = Catmandu->store->bag('request');
 		my $data = $bag->get(params->{key});
 		return "Nothing to approve." unless $data;
@@ -152,7 +156,11 @@ Author refuses the request for a copy. Email will be sent
 to user. Delete request key from database.
 
 =cut
-	get '/deny/:key' => sub {
+	get 'deny/:key' => sub {
+		forward '/rc/deny', {key => params->{key}}, {method => 'POST'};
+	};
+
+	post '/deny' => sub {
 		my $bag = Catmandu->store->bag('request');
 		my $data = $bag->get(params->{key});
 		return "Nothing to deny." unless $data;
