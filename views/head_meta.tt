@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/mypub.css">
     <script src="/javascripts/jquery.min.js"></script>
-    <script src="/javascripts/jquery-sortable.js"></script>
+    <script src="/javascripts/jquery-sortable-min.js"></script>
     <script src="/javascripts/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="/javascripts/bootstrap.min.js"></script>
     <script src="/javascripts/bootstrap-select.min.js"></script>
