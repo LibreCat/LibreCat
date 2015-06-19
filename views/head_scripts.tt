@@ -2,9 +2,9 @@
 <!-- BEGIN head_scripts.tt -->
 
     <script src="/javascripts/angular-1.2.14.min.js"></script>
-    <script src="/javascripts/angularSearch.js"></script>
+    <script src="/javascripts/angularSearch.min.js"></script>
 
-    <script src="/javascripts/commonmark.js/dist/commonmark.js"></script>
+    <script src="/javascripts/commonmark.js/dist/commonmark.min.js"></script>
     <script>
     var reader = new commonmark.Parser();
     var writer = new commonmark.HtmlRenderer();
