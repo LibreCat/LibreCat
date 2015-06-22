@@ -312,8 +312,10 @@ funder:
 funded: 1|0
 call_identifier:asdfas
 sc39: 1|0
+```
 
 ## award fields
+```yaml
 rec_type: preis|auszeichnung|akademie
 date_updated: 2014-01-01T01:00
 _id: AW1
@@ -322,7 +324,7 @@ title_en: "English title"
 description: "Dies ist eine Beschreibung"
 description_en: "this is a description"
 
-## 
+
 rec_type: record
 date_updated: 2014-01-01T01:00
 _id: AW2
@@ -359,9 +361,11 @@ other_university: "Ludwig-Maximilians-Universität München"
 url: "http://www.mpib-berlin.mpg.de/de/mitarbeiter/ute-frevert"
 extern: 1|0 #"awardedWhileNotUnibi"
 comment: "some message or comment"
+```
 
-# department
 
+## department
+```yaml
 -
   id: 10018
   name: "Fakultät für Chemie"
@@ -376,7 +380,7 @@ comment: "some message or comment"
   name: "ENTRY"
   display: "Fakultät für Geschichtswissenschaft, Philosophie und Theologie > Abteilung Geschichte > ENTRY"
   tree:
-    - 
+    -
       id: 10022
       name: "Fakultät für Geschichtswissenschaft, Philosophie und Theologie"
     -
@@ -385,3 +389,4 @@ comment: "some message or comment"
     -
       id: 16813171
       name: "ENTRY"
+```

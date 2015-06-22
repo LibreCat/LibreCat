@@ -15,7 +15,7 @@
 
     <form id="id_account_form" action="/myPUB/admin/account/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
-      
+
       {% FOREACH key IN account_field_order %}
 {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
@@ -74,7 +74,7 @@ $('#id_check_submit').click(function(e) {
       $(this).closest('div.input-group.mandatory').removeClass("has-error");
     }
   });
-  
+
   if(!check){
     window.scrollTo(0, 0);
     e.preventDefault();
@@ -127,7 +127,7 @@ function addDelegate(element){
   var index = $('#delegate').find('input').length;
   var id = $('#id_delegate').val();
   var person = "";
-  $.getJSON("/myPUB/authority_user/" + id, function(data,status){
+  $.getJSON("/authority_user/" + id, function(data,status){
     if(data.error){
       alert(data.error);
     }
@@ -162,4 +162,3 @@ $("input[name='account_type']").change(function(){
 <!-- END admin/edit_account.tt -->
 
 [% INCLUDE footer.tt %]
-

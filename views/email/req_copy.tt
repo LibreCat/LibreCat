@@ -1,7 +1,7 @@
 The publication <<[% title %]>> has been requested by [% user_email %].
-
-[% IF mesg %]Message: [% mesg %][% END %]
-
+[% IF mesg %]
+Message: [% mesg %]
+[% END %]
 To approve this request click on the link below:
 [% host %]/rc/approve/[% key %]
 

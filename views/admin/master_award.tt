@@ -23,14 +23,14 @@
     <form action="/myPUB/admin/award/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
       <input type="hidden" name="_id" value="[% _id %]" />
-      
+
       [% IF rec_type == "preis" OR rec_type == "akademie" OR rec_type == "auszeichnung" %]
       {% FOREACH key IN award_field_order %}
 {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
       {% END %}
       [% END %]
-      
+
       [% IF rec_type == "record" %]
       <input type="hidden" name="rec_type" value="record" />
       {% FOREACH key IN preis_field_order %}
@@ -51,7 +51,7 @@
 	</div>
       </div>
     </form>
-    
+
     <div class="modal" id="linkPevzModal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -121,42 +121,13 @@ function selectButton(element){
 	modal.modal('show');
 }
 
-function addDelegate(element){
-  var index = $('#delegate').children('input').length;
-  var id = $('#id_delegate').val();
-  var person = "";
-  $.getJSON("/myPUB/authority_user/" + id, function(data,status){
-    $('#delegate').append('<div class="col-md-10 col-md-offset-2" id="delegate_' + id + '"><div class="row innerrow"><div class="col-md-7 form-group"><span class="glyphicon glyphicon-remove del_del" id="delegate_span_' + id + '"></span> ' + data.full_name + ' <span class="text-muted">' + id + '</span><input type="hidden" name="delegate.' + index + '" value="' + id + '" /></div></div></div>');
-    $('#delegate_' + id).find('span.del_del').bind("click", function(){
-      $('#delegate_' + id).remove();
-    });
-    $('#id_delegate').val("");
-  });
-}
-
-$('.del_del').click(function(){
-  var id = $(this).attr('id').replace('delegate_span_','');
-  $('#delegate_' + id).remove();
-});
-
-$("input[name='account_type']").change(function(){
-  if($("input[name='account_type']:checked").val() == "external"){
-    $('#id_ext_institution').show();
-    $('#id_password').show();
-  }
-  else {
-    $('#id_ext_institution').hide();
-    $('#id_password').hide();
-  }
-});
-
 $('#plusAFF').click(function(){
   var items = $('#affiliation div.innerrow');
   var index = items.index($('#affiliation div.innerrow').last()) + 1;
   $('#affiliation').append('<div class="row innerrow"><input type="hidden" name="department.' + index + '.id" id="aff_idautocomplete_' + index + '" /><input type="hidden" name="department.' + index + '.name" id="aff_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="aff_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button affiliation" id="affiliation_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
   $('#affiliation').bind("click", function(){
     $( "#aff_autocomplete_" + index ).autocomplete({
-      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+      source: "/myPUB/get_department",
       minLength: 2,
       select: function( event, ui ) {
         $( "#aff_autocomplete_" + index ).val( ui.item.label );
@@ -174,7 +145,7 @@ $('#plusRV').click(function(){
   $('#reviewer').append('<div class="row innerrow"><input type="hidden" name="reviewer.' + index + '.id" id="rv_idautocomplete_' + index + '" /><input type="hidden" name="reviewer.' + index + '.name" id="rv_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="rv_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button reviewer" id="reviewer_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
   $('#reviewer').bind("click", function(){
     $( "#rv_autocomplete_" + index ).autocomplete({
-      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+      source: "/myPUB/get_department",
       minLength: 2,
       select: function( event, ui ) {
         $( "#rv_autocomplete_" + index ).val( ui.item.label );
@@ -192,7 +163,7 @@ $('#plusDM').click(function(){
   $('#data_manager').append('<div class="row innerrow"><input type="hidden" name="data_manager.' + index + '.id" id="dp_idautocomplete_' + index + '" /><input type="hidden" name="data_manager.' + index + '.name" id="dp_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" name="data_manager.' + index + '.name" id="dp_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button data_manager" id="data_manager_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
   $('#data_manager').bind("click", function(){
     $( "#dp_autocomplete_" + index ).autocomplete({
-      source: "/myPUB/autocomplete_hierarchy?fmt=autocomplete&type=department",
+      source: "/myPUB/get_department",
       minLength: 2,
       select: function( event, ui ) {
         $( "#dp_autocomplete_" + index ).val( ui.item.label );
