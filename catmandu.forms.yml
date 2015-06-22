@@ -1349,7 +1349,6 @@ otherItems:
       - edit_mode
       - author_ids
       - style
-      - sort
     id:
       label: "ID"
       readonly: 1
