@@ -11,7 +11,6 @@ use Catmandu::Util qw(trim);
 use Dancer ':syntax';
 use App::Helper;
 use App::Catalogue::Controller::Importer;
-use App::Catalogue::Controller::Admin qw/:all/;
 use Dancer::Plugin::Auth::Tiny;
 
 Dancer::Plugin::Auth::Tiny->extend(
@@ -50,8 +49,8 @@ Opens an empty form. The ID is automatically generated.
 
 =cut
     get '/account/new' => needs role => 'super_admin' => sub {
-        my $id = new_person();
-        template 'admin/forms/edit_account', { _id => $id };
+        template 'admin/forms/edit_account',
+            { _id => h->new_record('researcher') };
     };
 
 =head2 GET /account/search
@@ -60,10 +59,9 @@ Searches the authority database. Prints the search form + result list.
 
 =cut
     get '/account/search' => needs role => 'super_admin' => sub {
-        my $p    = params;
-        if($p->{q} and ref $p->{q} ne "ARRAY"){
-        	$p->{q} = [$p->{q}];
-        }
+        my $p = params;
+
+        $p->{q} = h->string_array($p->{q});
         my $hits = h->search_researcher($p);
         template 'admin/account', $hits;
     };
@@ -75,8 +73,7 @@ Save does a POST on /account/update.
 
 =cut
     get '/account/edit/:id' => needs role => 'super_admin' => sub {
-        my $id     = param 'id';
-        my $person = edit_person($id);
+        my $person = h->researcher->get(params->{id});
         template 'admin/forms/edit_account', $person;
     };
 
@@ -87,9 +84,10 @@ Saves the data in the authority database.
 =cut
     post '/account/update' => needs role => 'super_admin' => sub {
         my $p = params;
+
         $p = h->nested_params($p);
 
-        update_person($p);
+        h->update_record('researcher', $p);
         template 'admin/account';
     };
 
@@ -116,16 +114,17 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/project' => needs role => 'super_admin' => sub {
-    	my $start = params->{start} || 0;
-    	my $hits = h->search_project({q => "", limit => 100, start => $start});
+    	my $hits = h->search_project({q => "", limit => 100, start => params->{start} || 0});
         template 'admin/project', $hits;
     };
 
+    get '/project/new' => needs role => 'super_admin' => sub {
+        template 'admin/project/edit_project',
+            { _id => h->new_record('project') };
+    };
+
     get '/project/search' => sub {
-        my $params = params;
         my $p = h->extract_params();
-        $p->{limit} = $params->{limit} || 100;
-        $p->{start} = $params->{start} || 0;
 
         my $hits = h->search_project($p);
 
@@ -133,21 +132,15 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/project/edit/:id' => needs role => 'super_admin' => sub {
-        my $id     = param 'id';
-        my $project = edit_project($id);
+        my $project = h->project->get(params->{id});
         template 'admin/forms/edit_project', $project;
     };
 
     post '/project/update' => needs role => 'super_admin' => sub {
-    	my $params = params;
-    	my $return = update_project($params);
-    	#return to_dumper $return;
+        my $p = h->nested_params();
+    	my $return = h->update_record('project', $p);
     	redirect '/myPUB/admin/project';
     };
-
-#    get '/project/new' => needs role => 'super_admin' => sub {
-#
-#    };
 
     get '/award' => needs role => 'super_admin' => sub {
     	my $hits = h->search_award({q => "rectype=record", limit => 1000});
@@ -171,7 +164,6 @@ Input is person id. Returns warning if person is already in the database.
 
     get '/award/new/record' => needs role => 'super_admin' => sub {
     	my $hits;
-    	#my $mongoBag = Catmandu->store('award');
     	my $award = h->search_award({q => "rectype<>record", limit => 1000});
        	my $ids = h->award->to_array;
     	my @newIds;
@@ -194,7 +186,6 @@ Input is person id. Returns warning if person is already in the database.
 
     get '/award/new/award' => needs role => 'super_admin' => sub {
     	my $hits;
-    	#my $mongoBag = Catmandu->store('award');
        	my $ids = h->award->to_array;
     	my @newIds;
     	foreach (@$ids){
@@ -214,8 +205,8 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     post '/award/update' => needs role => 'super_admin' => sub {
-    	my $params = params;
-    	my $return = update_award($params);
+    	my $p = h->nested_params();
+    	my $return = h->update_record('award', $p);
     	return to_dumper $return;
     };
 

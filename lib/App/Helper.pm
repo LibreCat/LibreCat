@@ -48,6 +48,13 @@ sub department {
 	state $bag = Catmandu->store('search')->bag('department');
 }
 
+sub fixer {
+	my ($self, $fix_file) = @_;
+
+	my $appdir = $self->config->{appdir};
+	state $fixer = Catmandu->fixer("$appdir/fixes/$fix_file");
+}
+
 sub string_array {
 	my ($self, $val) = @_;
 	return [ grep { is_string $_ } @$val ] if is_array_ref $val;
@@ -58,6 +65,7 @@ sub string_array {
 sub nested_params {
 	my ($self, $params) = @_;
 
+	$params ||= params;
     foreach my $k (keys %$params) {
         unless (defined $params->{$k}) {
             delete $params->{$k};
@@ -123,10 +131,10 @@ sub extract_params {
 
 sub hash_to_url {
 	my ($self, $params) = @_;
-	
+
 	my $p = "";
 	return $p if ref $params ne 'HASH';
-	
+
 	foreach my $key (keys %$params){
 		if (ref $params->{$key} eq "ARRAY"){
 			foreach my $item (@{$params->{$key}}){
@@ -320,6 +328,48 @@ sub get_metrics {
 	return Catmandu->store('metrics')->bag($bag)->get($id);
 }
 
+sub new_record {
+	my ($self, $bag) = @_;
+
+	return $self->update_record($bag,{new => 1})->{_id};
+
+	# my $id = h->bag->get('1')->{"latest"};
+	# $id++;
+	# h->bag->add( { _id => "1", latest => $id } );
+	# return $id;
+
+}
+
+sub update_record {
+	my ($self, $bag, $rec) = @_;
+
+	$self->fixer("update_$bag.fix")->fix($rec);
+	my $saved = $self->backup($bag)->add($rec);
+
+	#compare version! through _version or through date_updated
+	h->$bag->add($saved);
+    h->$bag->commit;
+
+	return $saved;
+}
+
+sub delete_record {
+	my ($self, $id) = @_;
+
+	my $del = {
+        _id => $id,
+        date_deleted => h->now,
+        status => 'deleted',
+    };
+
+    # should be fix
+    #my $update_rm = update_related_material($del);
+    # delete files!
+
+	my $saved = $self->backup->add($del);
+	return $self->bag->add($saved);
+}
+
 sub default_facets {
 	return {
 		author => {
@@ -340,10 +390,10 @@ sub default_facets {
 		status => { terms => { field => 'status', size => 8 } },
 		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
 		type => { terms => { field => 'type', size => 25 } },
-#		isi => { terms => { field => 'isi', size => 1 } },
-#		arxiv => { terms => { field => 'arxiv', size => 1 } },
-#		pmid => { terms => { field => 'pmid', size => 1 } },
-#		inspire => { terms => { field => 'inspire', size => 1 } },
+		isi => { terms => { field => 'isi', size => 1 } },
+		arxiv => { terms => { field => 'arxiv', size => 1 } },
+		pmid => { terms => { field => 'pmid', size => 1 } },
+		inspire => { terms => { field => 'inspire', size => 1 } },
 	};
 }
 
@@ -503,10 +553,10 @@ sub search_researcher {
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
 	my $hits = researcher->search(
-	  cql_query => $cql,
-	  limit => $p->{limit} ||= config->{store}->{maximum_page_size},
-	  start => $p->{start} ||= 0,
-	  sru_sortkeys => $p->{sorting} || "fullname,,1",
+		cql_query => $cql,
+	 	limit => $p->{limit} ||= config->{store}->{maximum_page_size},
+		start => $p->{start} ||= 0,
+		sru_sortkeys => $p->{sorting} || "fullname,,1",
 	);
 
 	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
@@ -530,7 +580,7 @@ sub search_department {
 
 sub search_project {
 	my ($self, $p) = @_;
-	
+
 	my $cql = "";
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 

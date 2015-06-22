@@ -23,7 +23,7 @@ use Encode qw(encode_utf8);
 
 =head1 PREFIX /myPUB
 
-    Section, where all uploads are handled.
+Section, where all uploads are handled.
 
 =cut
 prefix '/myPUB' => sub {
