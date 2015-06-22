@@ -90,9 +90,9 @@ User can choose default edit mode for editing publications.
     post '/edit_mode' => sub {
 
         my $person = h->get_person( session('personNumber') );
-        my $type = params->{edit_mode};
-        if($type eq "normal" or $type eq "expert"){
-        	$person->{edit_mode} = $type;
+        my $mode = params->{edit_mode};
+        if($mode eq "normal" or $mode eq "expert"){
+        	$person->{edit_mode} = $mode;
         	h->update_record('researcher', $person);
         }
 

@@ -12,9 +12,7 @@ use POSIX qw(strftime);
 use List::Util;
 use Hash::Merge::Simple qw(merge);
 use JSON;
-use Coro;
-use App::Catalogue::Controller::File;
-use App::Catalogue::Controller::Material;
+#use Coro;
 use Citation;
 
 Catmandu->load(':up');
@@ -335,7 +333,7 @@ sub get_metrics {
 sub new_record {
 	my ($self, $bag) = @_;
 
-	return $self->update_record($bag,{new => 1})->{_id};
+	return 3000000; #$self->update_record($bag,{new => 1})->{_id};
 
 	# my $id = h->bag->get('1')->{"latest"};
 	# $id++;
@@ -350,22 +348,31 @@ sub update_record {
 	# don't know where to put it, sould find better place to handle this
 	# especially the async stuff
 	if ($bag eq 'publication') {
+
+		require App::Catalogue::Controller::File;
+		require App::Catalogue::Controller::Material;
 		($rec->{file}) && ($rec->{file} = App::Catalogue::Controller::File::handle_file($rec));
-		my $wait = async {
-			cede;
-			App::Catalogue::Controller::File::make_thumbnail();
+		#my $wait = async {
+		#	cede;
+			foreach my $f (@{$rec->{file}}) {
+				if ($f->{access_level} eq 'open_access' && $f->{file_name} =~ /\.pdf$|\.ps$/) {
+					App::Catalogue::Controller::File::make_thumbnail($rec->{_id}, $f->{file_name});
+					last;
+				}
+			}
+
 			App::Catalogue::Controller::Material::update_related_material($rec);
-		};
-		cede;
-		$rec->{citation} = Citation::index_citation_update($data,0,'') || '';
+		#};
+		#cede;
+		$rec->{citation} = Citation::index_citation_update($rec,0,'') || '';
 	}
 
 	$self->fixer("update_$bag.fix")->fix($rec);
 	my $saved = $self->backup($bag)->add($rec);
 
 	#compare version! through _version or through date_updated
-	h->$bag->add($saved);
-    h->$bag->commit;
+	$self->$bag->add($saved);
+    $self->$bag->commit;
 
 	return $saved;
 }
@@ -380,11 +387,13 @@ sub delete_record {
     };
 
 	if ($bag eq 'publication') {
-		my $wait = async {
+		require App::Catalogue::Controller::File;
+		require App::Catalogue::Controller::Material;
+	#	my $wait = async {
 			App::Catalogue::Controller::Material::update_related_material($del);
 			App::Catalogue::Controller::File::delete_file();
-		};
-		cede;
+	#	};
+	#	cede;
 	}
 
 	my $saved = $self->backup->add($del);

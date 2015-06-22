@@ -1,4 +1,4 @@
-package Catmandu::Fix::add_orcid_to_pub.pmid
+package Catmandu::Fix::add_orcid_to_pub;
 
 use Catmandu::Sane;
 use Catmandu -load;

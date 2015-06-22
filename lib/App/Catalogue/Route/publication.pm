@@ -49,8 +49,9 @@ Some fields are pre-filled.
 
         return template 'add_new' unless $type;
 
+        my $id = h->new_record('publication');
         my $data = {
-            _id => h->new_record('publication'),
+            _id => $id,
             type => $type,
             department => $user->{department},
             creator => {

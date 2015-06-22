@@ -2,14 +2,13 @@ package App::Catalogue::Route::upload;
 
 =head1 NAME App::Catalogue::Route::upload
 
-    Route handler for uploading files.
+Route handler for uploading files.
 
 =cut
 
 use Catmandu::Sane;
 use Catmandu qw/export_to_string/;
 use App::Helper;
-use App::Catalogue::Controller::Publication qw/update_publication new_publication/;
 use App::Catalogue::Controller::File qw/delete_file/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;
@@ -113,8 +112,8 @@ prefix '/myPUB' => sub {
     my $file_data;
 
     if($submit_or_cancel eq "Submit"){
-      my $id = new_publication();
-      my $file_id = new_publication();
+      my $id = h->new_record('publication');
+      my $file_id = h->new_record('publication');
       my $person = h->get_person(session->{personNumber});
       my $now = h->now();
       $file_data->{saved} = 1;
@@ -161,7 +160,7 @@ prefix '/myPUB' => sub {
       });
       push @{$record->{file_order}}, $file_id;
 
-      my $response = update_publication($record);
+      my $response = h->update_record('publication', $record);
 
     } else {
       my $path = path( h->config->{tmp_dir}, params->{tempid}, $file_name);
@@ -177,8 +176,8 @@ prefix '/myPUB' => sub {
     my $file_data;
 
     if($submit_or_cancel eq "Submit"){
-      my $id = new_publication();
-      my $file_id = new_publication();
+      my $id = h->new_record('publication');
+      my $file_id = h->new_record('publication');
       my $now = h->now();
       $file_data->{saved} = 1;
 
@@ -228,7 +227,7 @@ prefix '/myPUB' => sub {
       });
       push @{$record->{file_order}}, $file_id;
 
-      my $response = update_publication($record);
+      my $response = h->update_record('publication', $record);
 
       # send mail to librarian
       my $mail_body = export_to_string({
