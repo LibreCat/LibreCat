@@ -12,6 +12,10 @@ use POSIX qw(strftime);
 use List::Util;
 use Hash::Merge::Simple qw(merge);
 use JSON;
+use Coro;
+use App::Catalogue::Controller::File;
+use App::Catalogue::Controller::Material;
+use Citation;
 
 Catmandu->load(':up');
 
@@ -343,6 +347,19 @@ sub new_record {
 sub update_record {
 	my ($self, $bag, $rec) = @_;
 
+	# don't know where to put it, sould find better place to handle this
+	# especially the async stuff
+	if ($bag eq 'publication') {
+		($rec->{file}) && ($rec->{file} = App::Catalogue::Controller::File::handle_file($rec));
+		my $wait = async {
+			cede;
+			App::Catalogue::Controller::File::make_thumbnail();
+			App::Catalogue::Controller::Material::update_related_material($rec);
+		};
+		cede;
+		$rec->{citation} = Citation::index_citation_update($data,0,'') || '';
+	}
+
 	$self->fixer("update_$bag.fix")->fix($rec);
 	my $saved = $self->backup($bag)->add($rec);
 
@@ -354,7 +371,7 @@ sub update_record {
 }
 
 sub delete_record {
-	my ($self, $id) = @_;
+	my ($self, $bag, $id) = @_;
 
 	my $del = {
         _id => $id,
@@ -362,9 +379,13 @@ sub delete_record {
         status => 'deleted',
     };
 
-    # should be fix
-    #my $update_rm = update_related_material($del);
-    # delete files!
+	if ($bag eq 'publication') {
+		my $wait = async {
+			App::Catalogue::Controller::Material::update_related_material($del);
+			App::Catalogue::Controller::File::delete_file();
+		};
+		cede;
+	}
 
 	my $saved = $self->backup->add($del);
 	return $self->bag->add($saved);

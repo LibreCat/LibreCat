@@ -1,4 +1,4 @@
-# fix before updating record
+# fix publication data at update
 delete_empty()
 publication_identifier()
 hash_array()
@@ -8,6 +8,7 @@ clean_abstract()
 language()
 maybe_add_urn()
 person()
+add_department()
 
 if all_match('finalSubmit','recPublish')
     set_field('status','public')

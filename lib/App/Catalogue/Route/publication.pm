@@ -8,10 +8,8 @@ Route handler for publications.
 
 use Catmandu::Sane;
 use App::Helper;
-use App::Catalogue::Controller::Publication;
 use App::Catalogue::Controller::Permission qw/:can/;
-use Dancer ':syntax';
-use Try::Tiny;
+use Dancer qw(:syntax);
 use Encode qw(encode);
 use Dancer::Plugin::Auth::Tiny;
 
@@ -44,7 +42,6 @@ Prints a list of available publication types + import form.
 Some fields are pre-filled.
 
 =cut
-
     get '/new' => needs login => sub {
         my $type = params->{type};
         my $user = h->get_person(session->{personNumber});
@@ -52,11 +49,15 @@ Some fields are pre-filled.
 
         return template 'add_new' unless $type;
 
-        my $data;
-        my $id = new_publication();
-        $data->{_id} = $id;
-        $data->{type} = $type;
-        $data->{department} = $user->{department};
+        my $data = {
+            _id => h->new_record('publication'),
+            type => $type,
+            department => $user->{department},
+            creator => {
+                id => session->{personNumber},
+                login => session->{user},
+            }
+        };
 
         if ( $type eq "researchData" ) {
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
@@ -78,7 +79,6 @@ Displays record for id.
 Checks if the user has permission the see/edit this record.
 
 =cut
-
     get '/edit/:id' => needs login => sub {
         my $id = param 'id';
 
@@ -90,13 +90,7 @@ Checks if the user has permission the see/edit this record.
         my $edit_mode = params->{edit_mode} || $person->{edit_mode};
 
         forward '/' unless $id;
-        my $rec;
-        try {
-            $rec = edit_publication($id);
-        }
-        catch {
-            template 'error', { error => "Something went wrong: $_" };
-        };
+        my $rec = h->publication->get($id);
 
         my $templatepath = "backend/forms";
         my $template = h->config->{forms}->{publicationTypes}->{lc $rec->{type}}->{tmpl} . ".tt";
@@ -104,9 +98,9 @@ Checks if the user has permission the see/edit this record.
         	$templatepath .= "/expert";
         	$edit_mode = "expert";
         }
+
         if ($rec) {
         	$rec->{edit_mode} = $edit_mode if $edit_mode;
-            #template $templatepath . "/$rec->{type}", $rec;
             template $templatepath . "/$template", $rec;
         }
         else {
@@ -121,47 +115,18 @@ Saves the record in the database.
 Checks if the user has the rights to update this record.
 
 =cut
-
     post '/update' => needs login => sub {
-        my $params = params;
+        my $p = params;
 
-        unless ($params->{new_record} or can_edit($params->{_id}, session->{user}, session->{role})) {
+        unless ($p->{new_record} or can_edit($p->{_id}, session->{user}, session->{role})) {
             status '403';
             forward '/access_denied';
         }
-        delete $params->{new_record};
+        delete $p->{new_record};
 
-        $params = h->nested_params($params);
+        $p = h->nested_params($p);
 
-        # department stuff should be a fix....
-        if ( ( $params->{department} and $params->{department} eq "" )
-            or !$params->{department} )
-        {
-            $params->{department} = ();
-            if ( session->{role} ne "super_admin" ) {
-                my $person = h->get_person( session->{personNumber} );
-                foreach my $dep ( @{ $person->{department} } ) {
-                    push @{ $params->{department} }, $dep->{id};
-                }
-            }
-        }
-        elsif ( $params->{department}
-            and $params->{department} ne ""
-            and ref $params->{department} ne "ARRAY" )
-        {
-            $params->{department} = [ $params->{department} ];
-        }
-
-        ( session->{role} eq "super_admin" )
-            ? ( $params->{approved} = 1 )
-            : ( $params->{approved} = 0 );
-
-        unless($params->{creator}){
-        	$params->{creator}->{login} = session 'user';
-        	$params->{creator}->{id} = session 'personNumber';
-        }
-
-        my $result = update_publication($params);
+        my $result = h->update_record('publication', $p);
         #return to_dumper $result; # leave this here to make debugging easier
 
         redirect '/myPUB';
@@ -174,7 +139,6 @@ Set status to 'returned'.
 Checks if the user has the rights to edit this record.
 
 =cut
-
     get '/return/:id' => needs login => sub {
         my $id  = params->{id};
 
@@ -185,12 +149,7 @@ Checks if the user has the rights to edit this record.
 
         my $rec = h->publication->get($id);
         $rec->{status} = "returned";
-        try {
-            update_publication($rec);
-        }
-        catch {
-            template "error", { error => "something went wrong" };
-        };
+        h->update_record('publication', $rec);
 
         redirect '/myPUB';
     };
@@ -200,9 +159,8 @@ Checks if the user has the rights to edit this record.
 Deletes record with id. For admins only.
 
 =cut
-
     get '/delete/:id' => needs role => 'super_admin' => sub {
-        delete_publication( params->{id} );
+        h->delete_record('publication', params->{id} );
         redirect '/myPUB';
     };
 
@@ -211,15 +169,14 @@ Deletes record with id. For admins only.
 Prints the frontdoor for every record.
 
 =cut
-
     get '/preview/:id' => needs login => sub {
         my $id = params->{id};
+
         my $hits = h->publication->get($id);
-        $hits->{bag}
-            = $hits->{type} eq "researchData" ? "data" : "publication";
-        $hits->{style}
-            = h->config->{store}->{default_fd_style} || "default";
+        $hits->{bag} = $hits->{type} eq "researchData" ? "data" : "publication";
+        $hits->{style} = h->config->{store}->{default_fd_style} || "default";
         $hits->{marked}  = 0;
+
         template 'frontdoor/record.tt', $hits;
     };
 
@@ -230,7 +187,6 @@ Prints internal view, optionally as data dumper.
 For admins only!
 
 =cut
-
     get qr{/internal_view/(\w{1,})/*(\w{1,})*} => needs role => 'super_admin' => sub {
 		my ($id, $dumper) = splat;
 		my $pub = h->publication->get($id);
@@ -248,7 +204,6 @@ For admins only!
 Publishes private records, returns to the list.
 
 =cut
-
     get '/publish/:id' => needs login => sub {
         my $id = params->{id};
 
@@ -289,7 +244,7 @@ Publishes private records, returns to the list.
         }
 
         $record->{status} = "public" if $field_check;
-        update_publication($record);
+        h->update_record('publication', $record);
 
         redirect '/myPUB';
     };
@@ -299,7 +254,6 @@ Publishes private records, returns to the list.
 Changes the layout of the edit form.
 
 =cut
-
     post '/change_mode' => sub {
     	my $mode = params->{edit_mode};
         my $params = params;

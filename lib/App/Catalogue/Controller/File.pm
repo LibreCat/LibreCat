@@ -16,14 +16,6 @@ our @EXPORT = qw/new_file update_file delete_file handle_file make_thumbnail/;
 my $upload_dir = h->config->{upload_dir};
 my $thumb_dir = h->config->{thumb_dir};
 
-sub _create_id {
-    my $bag = h->bag->get('1');
-    my $id  = $bag->{"latest"};
-    $id++;
-    $bag = h->bag->add( { _id => "1", latest => $id } );
-    return $id;
-}
-
 sub make_thumbnail {
     my ($id, $file_name) = @_;
     my $file_path = join_path(h->get_file_path($id), $file_name);
@@ -44,7 +36,7 @@ sub handle_file {
 	if(!$previous_pub){
 		foreach my $fi (@{$pub->{file}}){
 			$fi = from_json($fi);
-			$fi->{file_id} = new_file() if !$fi->{file_id};
+			$fi->{file_id} = h->new_record('publication') if !$fi->{file_id};
 			my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
 			if(defined $index){
 				$pub->{file_order}->[$index] = $fi->{file_id};
@@ -109,7 +101,7 @@ sub handle_file {
 			}
 			#new file
 			else {
-				$fi->{file_id} = new_file();
+				$fi->{file_id} = h->new_record('publication');
 				my $now = h->now();
 				$fi->{date_created} = $now;
 				$fi->{date_updated} = $now;
@@ -162,27 +154,6 @@ sub handle_file {
 	return $pub->{file};
 }
 
-sub new_file {
-    return _create_id;
-}
-
-sub check_request_a_copy {
-	my $pub = shift;
-	if($pub->{file}){
-		my $raq = 0;
-		foreach my $fi (@{$pub->{file}}){
-			$raq = 1 if $fi->{request_a_copy};
-		}
-		$pub->{request_a_copy} = $raq;
-	}
-	elsif(!$pub->{file} and $pub->{request_a_copy}){
-		delete $pub->{request_a_copy};
-	}
-}
-
-
-# this sub should be called from the sub 'delete_publication',
-# if publication has a file attached
 sub delete_file {
 	my $pub_id = shift;
     my $file_name = shift;
