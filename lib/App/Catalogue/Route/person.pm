@@ -8,9 +8,8 @@ App::Catalogue::Route::person - handles person settings
 
 use Catmandu::Sane;
 use Catmandu::Util qw(:array);
-use Dancer ':syntax';
+use Dancer qw(:syntax);
 use App::Helper;
-use App::Catalogue::Controller::Admin qw(:person);
 use Dancer::Plugin::Auth::Tiny;
 
 =head1 PREFIX /myPUB/person
@@ -55,7 +54,7 @@ for his own publication list.
         	$person->{style} = undef;
         }
 
-        update_person($person);
+        h->update_record('researcher', $person);
 
         redirect '/myPUB';
     };
@@ -75,7 +74,7 @@ be displayed on author's profile page.
         map { $person->{$_} = params->{$_} ? params->{$_} : "" } @identifier;
         redirect '/myPUB' if keys %{$person} > 1;
 
-        my $result = update_person($person);
+        my $result = h->update_record('researcher', $person);
 
         redirect '/myPUB';
 
@@ -94,7 +93,7 @@ User can choose default edit mode for editing publications.
         my $type = params->{edit_mode};
         if($type eq "normal" or $type eq "expert"){
         	$person->{edit_mode} = $type;
-        	update_person($person);
+        	h->update_record('researcher', $person);
         }
 
         redirect '/myPUB';
@@ -118,7 +117,7 @@ new publication form.
         $fix->fix($p);
         my $person = edit_person( session('personNumber') );
         $person->{department} = $p->{department};
-        update_person($person);
+        h->update_record('researcher', $person);
 
         redirect '/myPUB';
 
