@@ -8,7 +8,7 @@ install OS packages as described here: https://github.com/LibreCat/Catmandu/wiki
 
 ```
 $ sudo apt-get install build-essential libexpat1-dev \
-libssl-dev libxml2-dev libxslt1-dev libgdbm-dev imagemagick cpanminus
+libssl-dev libxml2-dev libxslt1-dev libgdbm-dev cpanminus
 ```
 
 install [Elasticsearch](http://elasticsearch.org) and [MongoDB](http://mongodb.org)

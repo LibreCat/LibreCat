@@ -39,6 +39,7 @@ requires 'Starman';
 
 # others
 requires 'all';
+requires 'Coro';
 requires 'DateTime';
 requires 'Hash::Merge';
 requires 'Try::Tiny';
