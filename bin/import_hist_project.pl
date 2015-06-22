@@ -6,7 +6,7 @@ use Catmandu -all;
 use Catmandu::Fix qw(start_end_year_from_date);
 use Getopt::Std;
 use Data::Dumper;
-
+use Catmandu::Exporter::JSON;
 getopts('u:m:');
 our $opt_u;
 
@@ -176,8 +176,8 @@ my $pre_fixer = Catmandu::Fix->new(fixes => [
                 ]);
 
 #my $mongoBag = Catmandu->store('project')->bag;
-my $projBag = Catmandu->store('search', index_name => $index_name)->bag('project');
-
+#my $projBag = Catmandu->store('search', index_name => $index_name)->bag('project');
+my $exporter = Catmandu::Exporter::JSON->new(file => "hist_project.json");
 if ($opt_u) { # update process
 #       my $project = $mongoBag->get($opt_u);
 #       $pre_fixer->fix($project);
@@ -218,14 +218,11 @@ if ($opt_u) { # update process
                 $hashref = _do_stuff($hashref);
                 $hist_fixer->fix($hashref);
                 $pre_fixer->fix($hashref);
-                #print Dumper $hashref;
-                $projBag->add($hashref);
+                $exporter->add($hashref);
         }); 
 
 }
 
-
-$projBag->commit;
 
 =head1 SYNOPSIS
 
