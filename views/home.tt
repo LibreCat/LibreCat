@@ -10,8 +10,6 @@
 
 [% INCLUDE header.tt %]
 
-<script src="/javascripts/frontend.js"></script>
-
 <!-- BEGIN home.tt -->
 
 <div class="row" itemscope itemtype="http://schema.org/Person"><!-- outer border -->
