@@ -147,9 +147,11 @@ Input is person id. Returns warning if person is already in the database.
     	my $preis = h->search_award({q => "rectype=preis", limit => 1000});
     	my $auszeichnung = h->search_award({q => "rectype=auszeichnung", limit => 1000});
     	my $akademie = h->search_award({q => "rectype=akademie", limit => 1000});
-    	map {push @{$hits->{preis}}, $_ } @{$preis->{hits}};
-    	map {push @{$hits->{auszeichnung}}, $_ } @{$auszeichnung->{hits}};
-    	map {push @{$hits->{akademie}}, $_ } @{$akademie->{hits}};
+
+    	$hits->{preis} = $preis->{hits};
+        $hits->{auszeichnung} = $auszeichnung->{hits};
+        $hits->{akademie} = $akademie->{hits};
+        
     	template 'admin/award', $hits;
     };
 

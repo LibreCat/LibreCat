@@ -1,0 +1,21 @@
+# aref serialization format
+
+move_field(title, res.dct_title)
+append(dct_title, '@')
+move_field(year, res.dct_date)
+append(res.dct_date, '^xs_gYear')
+move_field(publisher, res.dct_publisher)
+append(res.dct_publisher, '@')
+move_field(volume, res.bibo_volume)
+move_field(issue, res.bibo_issue)
+move_field(keyword, res.dct_subject)
+
+if exists(issn.0)
+  add_field(res.dct_isPartOf,issn.0)
+  prepend(res.dct_isPartOf, 'http://id.crossref.org/issn/')
+end
+move_field(publication_identifier.urn, res.dct_identifier.$append)
+#move_field(publication_identifier.pmid, res.fabio_hasPubmedId)
+
+move_field(res, 'http://pub.uni-bielefeld.de')
+# append id...

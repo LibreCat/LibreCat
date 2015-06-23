@@ -576,10 +576,6 @@ sub search_researcher {
 	my ($self, $p) = @_;
 
 	my $cql = "";
-#	if($p->{researcher_list}){
-#		push @{$p->{q}}, "publcount > 0";
-#	}
-
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
 	my $hits = researcher->search(

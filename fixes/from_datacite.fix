@@ -1,0 +1,36 @@
+# fix file
+# import data (datacite xml) from http://data.datacite.org
+
+# map mandatory fields
+move_field('identifier.content','doi')
+remove_field('identifier')
+move_field('publicationYear','year')
+move_field('titles.title','title')
+remove_field('titles')
+
+#todo author....
+move_field('creators.creator.*.creatorName','author.')
+remove_field('creators')
+#split_author('inspire')
+
+# other fields
+#move_field('descriptions.description.*.content','abstract.$append.text')
+#do_identity()
+#    do_list(path => abstract)
+#        add_field('lang','eng')
+#    end
+#end
+
+# remove fields not used yet
+remove_field('formats')
+remove_field('resourceType')
+remove_field('alternateIdentifiers')
+remove_field('dates')
+remove_field('relatedIdentifiers')
+remove_field('rightsList')
+remove_field('version')
+
+# remove xml stuff
+remove_field('xmlns')
+remove_field('xmlns:xsi')
+remove_field('xsi:schemaLocation')

@@ -20,7 +20,7 @@ backup:
           - date_updated
       award: *backup_settings
       project: *backup_settings
-      authority: *backup_settings
+      researcher: *backup_settings
       department: *backup_settings
 
 metrics:

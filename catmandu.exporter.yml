@@ -54,15 +54,13 @@ publication:
     content_type: 'application/rtf'
     extension: rtf
     label: RTF
-  rdf:
-    package: Template
-    content_type: 'application/rdf+xml'
+  aref:
+    package: YAML
+    content_type: 'text/x-yaml'
     options:
-      template: views/export/rdf.tt
-      fix: ["nothing()"]
-      xml: true
-    extension: xml
-    label: RDF
+      fix: ["fixes/to_aref.fix"]
+    label: 'aREF (another RDF Encoding Form)'
+    extension: yml
   mods:
     package: 'Template'
     content_type: application/xml

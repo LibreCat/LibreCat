@@ -1,4 +1,5 @@
 # fix publication data at update
+
 delete_empty()
 publication_identifier()
 hash_array()
@@ -15,4 +16,3 @@ if all_match('finalSubmit','recPublish')
 end
 
 remove_field('finalSubmit')
-delete_empty()
