@@ -24,31 +24,13 @@
     <script src="/javascripts/bootstrap.min.js"></script>
     <script src="/javascripts/bootstrap-select.min.js"></script>
     <script src="/javascripts/scripts.js"></script>
-    <script src="/javascripts/backend.min.js"></script>
+    <script src="/javascripts/[% IF backend %]backend[% ELSE %]frontend[% END %].js"></script>
     <script src="/javascripts/dropzone.min.js"></script>
     <script src="/javascripts/pub_dropzones.min.js"></script>
-    <script src="/javascripts/angular-1.2.14.min.js"></script>
-    <script src="/javascripts/angularSearch.js"></script>
+    [% IF bag == 'home' %]
+	<script src="/javascripts/angular-1.2.14.min.js"></script>
+	<script src="/javascripts/angularSearch.js"></script>
+    [% END %]
 
-    <script src="/javascripts/commonmark.js/dist/commonmark.min.js"></script>
-    <script>
-    var reader = new commonmark.Parser();
-    var writer = new commonmark.HtmlRenderer();
-    $(document).ready(function () {
-	$('.cmark').each(function () {
-	var text = $(this).html();
-	parsed = reader.parse(text);
-	var result = writer.render(parsed); // result is a String
-	$(this).html("");
-	$(this).html(result);
-      });
-    });
-    </script>
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-	tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
-      });
-    </script>
-    <script src="/javascripts/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <!-- END head_meta.tt -->
