@@ -653,6 +653,54 @@ sub newuri_for {
 	$uri;
 }
 
+sub portal_link {
+	my ($self, $portal_name) = @_;
+	my $portal = $self->config->{portal}->{$portal_name};
+	
+	my $url = $self->host . "/publication";
+	
+	if($portal->{q}){
+		$url .= "?q=";
+		my $q;
+		foreach my $entry (@{$portal->{q}}){
+			my $part = "";
+			if(ref $entry->{values} eq "ARRAY"){
+				$part .= $entry->{param} . $entry->{operator} . "(";
+				foreach my $val (@{$entry->{values}}){
+					$part .= $val . " OR ";
+				}
+				$part =~ s/ OR $//g;
+				$part .= ")";
+				push @$q, $part;
+				$part = "";
+			}
+			else{
+				$part .= $entry->{param} . $entry->{operator} . $entry->{'values'};
+				push @$q, $part;
+				$part = "";
+			}
+		}
+		my $cql;
+		$cql = join(' AND ', @$q);
+		$url .= $cql;
+	}
+	
+	
+	foreach my $key (keys %$portal){
+		next if $key eq "q";
+		$url .= "&$key=$portal->{$key}";
+	}
+	
+	$url;
+}
+
+sub is_portal_default {
+	my ($self, $portal_name, $search_param) = @_;
+	my $portal = $self->config->{portal}->{$portal_name};
+	
+	# department=(10017 OR 10018 OR 10028 OR 10036 OR 89815)
+#	if($portal->{q}->{})
+}
 
 
 package App::Helper;

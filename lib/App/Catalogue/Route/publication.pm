@@ -36,6 +36,9 @@ All actions related to a publication record are handled under this prefix.
 =cut
 
 prefix '/myPUB/record' => sub {
+	get '/testme' => sub {
+		return to_dumper h->portal_link('pubbccpt');
+	};
 
 =head2 GET /new
 
