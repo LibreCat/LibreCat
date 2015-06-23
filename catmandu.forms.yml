@@ -1348,6 +1348,7 @@ otherItems:
       - reviewer
       - edit_mode
       - author_ids
+      - style
     id:
       label: "ID"
       readonly: 1
@@ -1405,6 +1406,10 @@ otherItems:
       label: "Author IDs"
     edit_mode:
       label: "Edit Mode"
+    style:
+      label: "Citation-Style"
+    sort:
+      label: "Sorting"
 
   project:
     project_field_order:

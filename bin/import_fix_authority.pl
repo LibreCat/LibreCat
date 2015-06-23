@@ -3,21 +3,24 @@ use Catmandu::Sane;
 use Catmandu -all;
 use Data::Dumper;
 use Catmandu::Fix qw(datetime_format move_field remove_field);
+use Catmandu::Store::MongoDB;
 
 Catmandu->load(':up');
 my $conf = Catmandu->config;
 
-my $mongoBag = Catmandu->store('authority_too')->bag;
-my $deptBag = Catmandu->store('department')->bag;
+my $deptBag = Catmandu::Store::MongoDB->new(database_name => 'PUBDepartment')->bag;
+my $mongoBag = Catmandu::Store::MongoDB->new(database_name => 'authority_too')->bag;
+#my $deptBag = Catmandu->store('search')->bag('department');
+#my $authBag = Catmandu->store('search')->bag('researcher');
 
 use Catmandu::Importer::JSON;
 
 my $importer_new = Catmandu::Importer::JSON->new(file => "authority_new.json");
-my $importer = Catmandu::Importer::JSON->new(file => "authority.json");
+my $importer = Catmandu::Importer::JSON->new(file => "authority_mongo.json");
 
 my $m = $importer_new->each(sub {
 	my $record = $_[0];
-	
+	if ($record->{type}) {	
 	if($record->{type} eq "person"){
 		$record->{title} = $record->{personTitle} if $record->{personTitle};
 		$record->{bis}->{former} = $record->{bis_former} ? 1 : 0;
@@ -26,23 +29,30 @@ my $m = $importer_new->each(sub {
 		$record->{bis}->{email} = $record->{bis_email} if $record->{bis_email};
 		$record->{bis}->{nonexist} = $record->{bis_nonExist} ? 1 : 0;
 		$record->{bis}->{title} = $record->{bis_personTitle} if $record->{bis_personTitle};
-		delete $record->{bis_former};
-		delete $record->{bis_photo};
-		delete $record->{bis_forschend};
-		delete $record->{bis_email};
-		delete $record->{bis_nonExist};
-		delete $record->{bis_personTitle};
+		delete $record->{bis_former} if $record->{bis_former};
+		delete $record->{bis_photo} if $record->{bis_photo};
+		delete $record->{bis_forschend} if $record->{bis_forschend};
+		delete $record->{bis_email} if $record->{bis_email};
+		delete $record->{bis_nonExist} if $record->{bis_nonExist};
+		delete $record->{bis_personTitle} if $record->{bis_personTitle};
+		delete $record->{access} if $record->{access};
+		$record->{style} = "default" if ($record->{style} && $record->{style} eq "frontShort");
+		$mongoBag->add($record);
 	}
-    
-    if($record->{access}){
-    	foreach my $ac (@{$record->{access}}){
-    		if (ref $ac->{name} eq "ARRAY"){
-    			$ac->{name} = $ac->{name}->[0];
-    		}
+	elsif($record->{type} eq "organization") {
+        	delete $record->{type};
+		my $sbcat_rec;
+		$sbcat_rec->{_id} = $record->{_id};
+		$sbcat_rec->{name} = $record->{name};
+		@{$sbcat_rec->{tree}} = map {
+			$_->{id};
+		} @{$record->{tree}};
+		$sbcat_rec->{display} = join(' > ', map {
+				$_->{name};
+			} @{$record->{tree}});
+        	$deptBag->add($sbcat_rec);
     	}
     }
-    $mongoBag->add($record);
-    
 });
 
 my $n = $importer->each(sub {
@@ -68,6 +78,13 @@ my $n = $importer->each(sub {
         'remove_field("email")',
         'remove_field("stylePreference")',
         'remove_field("personTitle")',
+	'remove_field("bis_forschend")',
+	'remove_field("bis_former")',
+	'remove_field("bis_photo")',
+	'remove_field("bis_email")',
+	'remove_field("bis_nonExist")',
+	'remove_field("bis_personTitle")',
+	'remove_field("access")',
         ]
     );
     
@@ -81,7 +98,7 @@ my $n = $importer->each(sub {
 #    }
     
     #print Dumper $hashref;
-    if($hashref->{type} eq "person"){
+  #  if($hashref->{type} eq "person"){
     	#foreach my $dept (@{$hashref->{department}}){
     	#	delete $dept->{departmentOId};
     	#	$dept->{id} = $dept->{organizationNumber};
@@ -107,20 +124,21 @@ my $n = $importer->each(sub {
 			$sbcat_rec->{$key} = $hashref->{$key};
 		}
     	$mongoBag->add($sbcat_rec);
+    	#$authBag->add($sbcat_rec);
     	#print Dumper $sbcat_rec;
-    }
-    elsif($hashref->{type} eq "organization") {
-    	delete $hashref->{type};
-    	#print Dumper $hashref;
-    	my $sbcat_rec = $mongoBag->get($hashref->{_id});
+   # }
+   # elsif($hashref->{type} eq "organization") {
+    #	delete $hashref->{type};
+    	#my $sbcat_rec = $mongoBag->get($hashref->{_id});
+    	#my $dept_rec;
     	#print Dumper $sbcat_rec;
-    	foreach my $key (keys %$hashref){
-			$sbcat_rec->{$key} = $hashref->{$key};
-		}
-    	$deptBag->add($sbcat_rec);
-    	#print Dumper $sbcat_rec;
-    }
+    	#foreach my $key (keys %$hashref){
+	#		$sbcat_rec->{$key} = $hashref->{$key};
+	#	}
+    #	$deptBag->add($sbcat_rec);
+   # }
     
 });
+
 
 1;

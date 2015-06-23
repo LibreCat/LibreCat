@@ -159,19 +159,29 @@ sub get_sort_style {
 	$param_sort = undef if ($param_sort eq "" or (ref $param_sort eq "ARRAY" and !$param_sort->[0]));
 	$param_style = undef if $param_style eq "";
 	my $user_sort = "";
-	$user_sort = $user->{sort} if ($user && $user->{sort});
+	#$user_sort = $user->{sort} if ($user && $user->{sort});
 	my $user_style = "";
 	$user_style = $user->{style} if ($user && $user->{style});
 
 	# set default values - to be overridden by more important values
-	my $style = $param_style || $user_style || $self->config->{store}->{default_style};
+	my $style;
+	if($param_style && array_includes($self->config->{lists}->{styles},$param_style)){
+		$style = $param_style;
+	}
+	elsif($user_style && array_includes($self->config->{lists}->{styles},$user_style)){
+		$style = $user_style;
+	}
+	else {
+		$style = $self->config->{store}->{default_style}
+	}
+
 	my $sort;
 	my $sort_backend;
 	if($param_sort){
 		$param_sort = [$param_sort] if ref $param_sort ne "ARRAY";
 		$sort = $sort_backend = $param_sort;
-	} elsif ($user_sort) {
-		$sort = $sort_backend = $user_sort;
+#	} elsif ($user_sort) {
+#		$sort = $sort_backend = $user_sort;
 	} else {
 		$sort = $self->config->{store}->{default_sort};
 		$sort_backend = $self->config->{store}->{default_sort_backend};
@@ -179,20 +189,17 @@ sub get_sort_style {
 
 	$return->{sort} = $sort;
 	$return->{sort_backend} = $sort_backend;
-	$return->{user_sort} = $user_sort if $user_sort;
+	#$return->{user_sort} = $user_sort if $user_sort;
 	$return->{user_style} = $user_style if ($user_style);
 	$return->{default_sort} = $self->config->{store}->{default_sort};
 	$return->{default_sort_backend} = $self->config->{store}->{default_sort_backend};
 
-	# see if style param is set
-	if(array_includes($self->config->{lists}->{styles},$style)){
-		$return->{style} = $style;
-	}
+	$return->{style} = $style;
 
 	Catmandu::Fix->new(fixes => ["delete_empty()"])->fix($return);
 
-	$return->{sort_eq_usersort} = 0;
-	$return->{sort_eq_usersort} = is_same($user_sort, $return->{sort_backend}) if $user_sort;
+	#$return->{sort_eq_usersort} = 0;
+	#$return->{sort_eq_usersort} = is_same($user_sort, $return->{sort_backend}) if $user_sort;
 	$return->{sort_eq_default} = 0;
 	$return->{sort_eq_default} = is_same($return->{sort_backend}, $self->config->{store}->{default_sort_backend});
 
@@ -720,6 +727,55 @@ sub newuri_for {
 
 	$uri =~ s/&$//;
 	$uri;
+}
+
+sub portal_link {
+	my ($self, $portal_name) = @_;
+	my $portal = $self->config->{portal}->{$portal_name};
+	
+	my $url = $self->host . "/publication";
+	
+	if($portal->{q}){
+		$url .= "?q=";
+		my $q;
+		foreach my $entry (@{$portal->{q}}){
+			my $part = "";
+			if(ref $entry->{values} eq "ARRAY"){
+				$part .= $entry->{param} . $entry->{operator} . "(";
+				foreach my $val (@{$entry->{values}}){
+					$part .= $val . " OR ";
+				}
+				$part =~ s/ OR $//g;
+				$part .= ")";
+				push @$q, $part;
+				$part = "";
+			}
+			else{
+				$part .= $entry->{param} . $entry->{operator} . $entry->{'values'};
+				push @$q, $part;
+				$part = "";
+			}
+		}
+		my $cql;
+		$cql = join(' AND ', @$q);
+		$url .= $cql;
+	}
+	
+	
+	foreach my $key (keys %$portal){
+		next if $key eq "q";
+		$url .= "&$key=$portal->{$key}";
+	}
+	
+	$url;
+}
+
+sub is_portal_default {
+	my ($self, $portal_name, $search_param) = @_;
+	my $portal = $self->config->{portal}->{$portal_name};
+	
+	# department=(10017 OR 10018 OR 10028 OR 10036 OR 89815)
+#	if($portal->{q}->{})
 }
 
 

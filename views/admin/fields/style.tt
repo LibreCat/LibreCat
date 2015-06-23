@@ -1,0 +1,20 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_style">{% style.label %}</label>
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon hidden-lg hidden-md">{% style.label %}</div>
+          <select id="style_select" name="style" class="form-control">
+            [% FOREACH sty IN h.config.lists.styles %]
+	        <option value="[% sty %]"[% IF (style AND style == sty) OR (!style AND sty == "default") %] selected="selected"[% END %]>[% sty %]</option>
+	        [% END %]
+	      </select>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

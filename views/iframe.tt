@@ -19,10 +19,10 @@
   <div class="row" style="margin-right:0;">
     <div class="col-sm-11">
       <div class="row">
-	<div class="col-sm-8 col-md-8">
+	<div class="col-xs-8">
 	  [% INCLUDE hits.tt %]
 	</div>
-	<div class="col-sm-4 col-md-3 col-md-offset-1">
+	<div class="col-xs-4 col-md-3 col-md-offset-1">
 	  [% INCLUDE facets.tt %]
 	</div>
       </div>

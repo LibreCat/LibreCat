@@ -3,12 +3,13 @@
 use Catmandu::Sane;
 use Catmandu -load;
 use Search::Elasticsearch;
+use Catmandu::Importer::JSON;
 use Data::Dumper;
 
 Catmandu->load(':up');
 Catmandu->config;
 
-my $backup = Catmandu->store('backup')->bag('publication');
+my $backup_store = Catmandu->store('backup');
 
 my $e = Search::Elasticsearch->new();
 
@@ -21,13 +22,12 @@ sub _do_switch {
 	print "Index $old exists, new index will be $new.\n";
 
 	my $store = Catmandu->store('search', index_name => $new);
-	my $bag = $store->bag('publication');
-	$bag->add_many($backup);
-	$store->bag('researcher')->add_many(Catmandu::Importer::JSON->new(file => 'authority.json'));
-
-	my $department_result = `/usr/local/bin/perl /home/bup/pub/bin/index_department.pl -m $new`;
-	my $project_result = `/usr/local/bin/perl /home/bup/pub/bin/index_project.pl -m $new`;
-	my $award_result = `/usr/local/bin/perl /home/bup/pub/bin/index_award.pl -m $new`;
+	my @bags = qw(publication project award researcher department);
+	foreach my $b (@bags) {
+		my $bag = $store->bag($b);
+		$bag->add_many($backup_store->bag($b));
+		$bag->commit;
+	}
 
 	print "New index is $new. Testing...\n";
 	my $checkForIndex = $e->indices->exists(index => $new);
