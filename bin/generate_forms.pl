@@ -15,7 +15,7 @@ my $tt = Template->new(
     START_TAG  => '{%',
     END_TAG    => '%}',
     ENCODING     => 'utf8',
-    INCLUDE_PATH => "$Bin/../views/backend",
+    INCLUDE_PATH => "$Bin/../views/backend/generator",
     OUTPUT_PATH  => "$Bin/../views/backend/forms",
 );
 
@@ -36,7 +36,7 @@ my $tta = Template->new(
     START_TAG  => '{%',
     END_TAG    => '%}',
     ENCODING     => 'utf8',
-    INCLUDE_PATH => "$Bin/../views/admin",
+    INCLUDE_PATH => "$Bin/../views/admin/generator",
     OUTPUT_PATH  => "$Bin/../views/admin/forms",
 );
 
