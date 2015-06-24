@@ -50,7 +50,7 @@ Some fields are pre-filled.
         my $user = h->get_person(session->{personNumber});
         my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
-        return template 'add_new' unless $type;
+        return template 'backend/add_new' unless $type;
 
         my $id = h->new_record('publication');
         my $data = {
@@ -196,9 +196,9 @@ For admins only!
 		my $pub = h->publication->get($id);
 
 		if($dumper and $dumper eq "dumper"){
-			return template 'internal_view', {data => to_dumper($pub)};
+			return template 'backend/internal_view', {data => to_dumper($pub)};
 		} else {
-            return template 'internal_view', {data => to_yaml($pub)};
+            return template 'backend/internal_view', {data => to_yaml($pub)};
         }
 
 	};

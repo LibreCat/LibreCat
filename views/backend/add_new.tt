@@ -47,7 +47,6 @@
       <h3 class="margin-top0">Choose a document type and fill out the empty form yourself</h3>
     </div>
     <div class="row">
-      <!-- % INCLUDE publication_types.tt % -->
       
       <div class="col-sm-4">
         [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_l %]
@@ -84,7 +83,7 @@
       <h3 class="margin-top0">Drop your Open Access fulltext here</h3>
       <div class="col-md-4">
 	<div class="well">
-	  [% INCLUDE person_dropzone.tt %]
+	  [% INCLUDE backend/qae.tt %]
 	</div>
       </div>
     </div>

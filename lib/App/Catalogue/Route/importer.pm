@@ -41,11 +41,11 @@ post '/myPUB/record/import' => needs login => sub {
 
 			return template $templatepath . "/$type", $pub;
         } else {
-            return template "add_new",
+            return template "backend/add_new",
                 {error => "No record found with ID $p->{id} in $p->{source}."};
         }
     } catch {
-        return template "add_new", {error => "Could not import ID $p->{id} from source $p->{source}."};
+        return template "backend/add_new", {error => "Could not import ID $p->{id} from source $p->{source}."};
     };
 
 };
