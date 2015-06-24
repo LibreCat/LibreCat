@@ -334,6 +334,11 @@ sub get_metrics {
 	my ($self, $bag, $id) = @_;
 	return {} unless $bag and $id;
 
+	if ($bag eq 'oa_stats') {
+		return Catmandu->store('metrics')->bag($bag)
+			->select("identifier","oai:pub.uni-bielefeld.de:$id")->to_array;
+	}
+
 	return Catmandu->store('metrics')->bag($bag)->get($id);
 }
 
@@ -732,9 +737,9 @@ sub newuri_for {
 sub portal_link {
 	my ($self, $portal_name) = @_;
 	my $portal = $self->config->{portal}->{$portal_name};
-	
+
 	my $url = $self->host . "/publication";
-	
+
 	if($portal->{q}){
 		$url .= "?q=";
 		my $q;
@@ -760,20 +765,20 @@ sub portal_link {
 		$cql = join(' AND ', @$q);
 		$url .= $cql;
 	}
-	
-	
+
+
 	foreach my $key (keys %$portal){
 		next if $key eq "q";
 		$url .= "&$key=$portal->{$key}";
 	}
-	
+
 	$url;
 }
 
 sub is_portal_default {
 	my ($self, $portal_name, $search_param) = @_;
 	my $portal = $self->config->{portal}->{$portal_name};
-	
+
 	# department=(10017 OR 10018 OR 10028 OR 10036 OR 89815)
 #	if($portal->{q}->{})
 }
