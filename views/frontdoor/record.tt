@@ -101,12 +101,12 @@
 	    <div class="row">
 	      <div class="col-xs-2 text-muted">Download</div>
 	      <div class="col-xs-10">
-		[% INCLUDE websites/oa_lock.tt %] <a itemprop="url" href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a>
+		[% INCLUDE frontdoor/oa_lock.tt %] <a itemprop="url" href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a>
 		<span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
 		[% INCLUDE frontdoor/modal_requestcopy.tt %]
 	      [% END %]
 	      [% IF loop.count > 1 %]
-		<br>[% INCLUDE websites/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a>
+		<br>[% INCLUDE frontdoor/oa_lock.tt %] <a href="[% h.shost %]/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a>
 		<span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
 		[% INCLUDE frontdoor/modal_requestcopy.tt %]
 	      [% END %]

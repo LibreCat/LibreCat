@@ -51,13 +51,13 @@
     <div class="col-md-10">
       [% SWITCH fi.access_level %]
         [% CASE 'open_access' %]
-        [% INCLUDE websites/oa_lock.tt %] Open Access
+        [% INCLUDE frontdoor/oa_lock.tt %] Open Access
 
         [% CASE 'local' %]
-        [% INCLUDE websites/oa_lock.tt %] UniBi Only
+        [% INCLUDE frontdoor/oa_lock.tt %] UniBi Only
 
         [% CASE 'closed' %]
-        [% INCLUDE websites/oa_lock.tt %][% IF fi.request_a_copy %] Request a Copy[% ELSE %] Closed Access[% END %]
+        [% INCLUDE frontdoor/oa_lock.tt %][% IF fi.request_a_copy %] Request a Copy[% ELSE %] Closed Access[% END %]
       [% END %]
     </div>
     </div>

@@ -91,7 +91,7 @@
         <div class="tab-pane[% bag == 'project' ? ' active' : '' %]" id="project">
           [% IF bag == "project" %]
           <div class="row">
-            INCLUDE websites/hits_project.tt
+            INCLUDE project/hits.tt
           </div>
           [% END %]
         </div>
@@ -100,7 +100,7 @@
         <div class="tab-pane[% bag == 'authorlist' ? ' active' : '' %]" id="people">
           [% IF bag == 'authorlist' %]
           <div class="row">
-            [% INCLUDE websites/hits_people.tt %]
+            [% INCLUDE person/hits.tt %]
           </div>
           [% END %]
         </div>
