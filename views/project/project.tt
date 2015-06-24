@@ -58,7 +58,7 @@
     <div class="row">
       <div class="col-md-8"><!-- tab-content -->
 	<div class="tab tab-content">
-	[% INCLUDE project/project_details.tt %]
+	[% INCLUDE project/tab_details.tt %]
 	<div class="tab-pane" id="project_publications">
          [% IF project_publication %]
            [% style = 'default' %]

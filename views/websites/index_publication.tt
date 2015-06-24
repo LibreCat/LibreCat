@@ -17,10 +17,7 @@
 
     <div id="banner">
 	<h1>
-	  [% IF bag == "pubtheses" %]PUB Theses
-	  [% ELSE %]
 	    PUB – [% IF lang %]Publications at Bielefeld University[% ELSE %]Publikationen an der Universität Bielefeld[% END %]
-	  [% END %]
 	</h1>
     </div>
 
@@ -29,7 +26,6 @@
       <p>We recommend upgrading to the latest <a href="http://windows.microsoft.com/ie" target="_blank">Internet Explorer</a>, <a href="https://chrome.google.com" target="_blank">Google Chrome</a>, or <a href="https=//mozilla.org/firefox/" target="_blank">Firefox</a>.</p>
     </div>
 
-    [% UNLESS bag == "pubtheses" %]
     <div class="row margin-top1">
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
@@ -40,9 +36,6 @@
           <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project?[% lang ? "lang=en&" : "" %][% IF thisq %]q=[% thisq.join('&q=') %][% END %]">[% lang ? 'Projects' : 'Projekte' %]</a></li>
           -->
           <li[% IF bag == 'authorlist' %] class="active"[% END %]><a href="/person[% lang ? "?lang=en" : "" %]">[% lang ? "Authors" : "Autoren" %]</a></li>
-          <!--
-          <li[% IF bag == 'pubtheses' %] class="active"[% END %]><a href="/pubtheses[% lang ? "?lang=en" : "" %]">PUB Theses</a></li>
-          -->
           <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' || bag == 'policy' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lang ? "About PUB" : "&Uuml;ber<span class=\"hidden-xs\"> PUB</span>" %] <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li[% IF bag == 'about' %] class="active"[% END %]><a href="/about[% lang ? "?lang=en" : "" %]">[% lang ? "Features" : "Features" %]</a></li>
@@ -58,14 +51,13 @@
         </ul>
       </div>
     </div>
-    [% END %]
 
     <div class="row">
       <div class="col-md-12 tab-content">
 
         <div class="tab-pane[% IF !bag || bag == 'home' %] active[% END %]" id="home">
           [% IF bag == 'home' || !bag %]
-            [% INCLUDE websites/home.tt %]
+            [% INCLUDE websites/tab_home.tt %]
           [% END %]
         </div>
 
@@ -113,33 +105,27 @@
           [% END %]
         </div>
 
-        <div class="tab-pane[% bag == 'pubtheses' ? ' active' : '' %]" id="pubtheses">
-          [% IF bag == 'pubtheses' %]
-            [% INCLUDE websites/pubtheses.tt %]
-          [% END %]
-        </div>
-
         <div class="tab-pane[% bag == 'about' ? ' active' : '' %]" id="about">
           [% IF bag == 'about' %]
-            [% INCLUDE websites/about.tt %]
+            [% INCLUDE websites/tab_about.tt %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'policy' ? ' active' : '' %]" id="policy">
           [% IF bag == 'policy' %]
-            [% INCLUDE websites/policy.tt %]
+            [% INCLUDE websites/tab_policy.tt %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'faq' ? ' active ' : '' %]" id="faq">
           [% IF bag == 'faq' %]
-            [% INCLUDE websites/faq.tt %]
+            [% INCLUDE websites/tab_faq.tt %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'contact' ? ' active' : '' %]" id="contact">
           [% IF bag == 'contact' %]
-            [% INCLUDE websites/contact.tt %]
+            [% INCLUDE websites/tab_contact.tt %]
           [% END %]
         </div>
 
