@@ -47,7 +47,7 @@ get '/marked' => sub {
     	h->export_publication( $hits, $fmt );
     }
     else {
-    	template 'websites/marked', $hits;
+    	template 'marked/marked.tt', $hits;
     }
 
 };
