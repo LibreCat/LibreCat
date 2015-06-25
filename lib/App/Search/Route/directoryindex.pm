@@ -78,11 +78,11 @@ get qr{/en/contact/*|/en/contact\.html} => sub {
 };
 
 get qr{/pubtheses/*} => sub {
-    template 'pubtheses/pubtheses.tt';
+    template 'pubtheses/pubtheses.tt', {bag => 'pubtheses'};
 };
 
 get qr{/en/pubtheses/*} => sub {
-    template 'pubtheses/pubtheses.tt', {lang => 'en'};
+    template 'pubtheses/pubtheses.tt', {bag => 'pubtheses', lang => 'en'};
 };
 
 get qr{/about/*} => sub {
