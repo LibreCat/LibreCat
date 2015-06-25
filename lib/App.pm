@@ -11,12 +11,13 @@ our $VERSION = '0.01';
 use Catmandu::Sane;
 use Dancer ':syntax';
 
-use App::Catalogue; # the backend
 use App::Search; # the frontend
+use App::Catalogue; # the backend
 
 use App::Helper;
 use Authentication::Authenticate;
 use Dancer::Plugin::Auth::Tiny;
+use Dancer::Plugin::NYTProf;
 
 # make variables with leading '_' visible in TT,
 # otherwise they are considered private
