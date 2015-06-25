@@ -43,6 +43,27 @@
   </div>
 </footer>
 
+<script src="/javascripts/commonmark.js/dist/commonmark.min.js"></script>
+<script>
+var reader = new commonmark.Parser();
+var writer = new commonmark.HtmlRenderer();
+$(document).ready(function () {
+    $('.cmark').each(function () {
+    var text = $(this).html();
+    parsed = reader.parse(text);
+    var result = writer.render(parsed); // result is a String
+    $(this).html("");
+    $(this).html(result);
+  });
+});
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+</script>
+<script src="/javascripts/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 </body>
 
 <!-- END footer.tt -->

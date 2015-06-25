@@ -15,7 +15,7 @@
     <h3>Submit your Thesis</h3>
 
     <div class="well">
-      [% INCLUDE websites/theses_dropzone.tt %]
+      [% INCLUDE pubtheses/dropzone.tt %]
     </div>
 
 
@@ -28,7 +28,7 @@
 	</div>
 	<div id="berechtigte" class="panel-collapse collapse">
 	  <div class="panel-body">
-	    [% INCLUDE websites/berechtigte.tt %]
+	    [% INCLUDE pubtheses/berechtigte.tt %]
 	  </div>
 	</div>
       </div>
@@ -40,7 +40,7 @@
 	</div>
 	<div id="hinweise_diss" class="panel-collapse collapse">
 	  <div class="panel-body">
-	    [% INCLUDE websites/hinweise_diss.tt %]
+	    [% INCLUDE pubtheses/hinweise_diss.tt %]
 	  </div>
 	</div>
       </div>
@@ -52,7 +52,7 @@
 	</div>
 	<div id="hinweise_ba_ma" class="panel-collapse collapse">
 	  <div class="panel-body">
-	    [% INCLUDE websites/hinweise_ba_ma.tt %]
+	    [% INCLUDE pubtheses/hinweise_ba_ma.tt %]
 	  </div>
 	</div>
       </div>
@@ -64,7 +64,7 @@
 	</div>
 	<div id="anforderungen" class="panel-collapse collapse">
 	  <div class="panel-body">
-	    [% INCLUDE websites/anforderungen.tt %]
+	    [% INCLUDE pubtheses/anforderungen.tt %]
 	  </div>
 	</div>
       </div>
@@ -100,7 +100,7 @@
     <h3>Pr&uuml;fungsarbeit ver&ouml;ffentlichen</h3>
 
     <div class="well">
-      [% INCLUDE websites/theses_dropzone.tt %]
+      [% INCLUDE pubtheses/dropzone.tt %]
     </div>
 
     <div class="panel-group" id="accordion2">
@@ -112,7 +112,7 @@
 	</div>
 	<div id="berechtigte" class="panel-collapse collapse">
 	  <div class="panel-body">
-	    [% INCLUDE websites/berechtigte.tt %]
+	    [% INCLUDE pubtheses/berechtigte.tt %]
 	  </div>
 	</div>
       </div>
@@ -124,7 +124,7 @@
 	</div>
 	<div id="hinweise_diss" class="panel-collapse collapse">
 	  <div class="panel-body">
-	    [% INCLUDE websites/hinweise_diss.tt %]
+	    [% INCLUDE pubtheses/hinweise_diss.tt %]
 	  </div>
 	</div>
       </div>
@@ -136,7 +136,7 @@
 	</div>
 	<div id="hinweise_ba_ma" class="panel-collapse collapse">
 	  <div class="panel-body">
-	    [% INCLUDE websites/hinweise_ba_ma.tt %]
+	    [% INCLUDE pubtheses/hinweise_ba_ma.tt %]
 	  </div>
 	</div>
       </div>
@@ -148,7 +148,7 @@
 	</div>
 	<div id="anforderungen" class="panel-collapse collapse">
 	  <div class="panel-body">
-	    [% INCLUDE websites/anforderungen.tt %]
+	    [% INCLUDE pubtheses/anforderungen.tt %]
 	  </div>
 	</div>
       </div>

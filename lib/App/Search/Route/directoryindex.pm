@@ -4,22 +4,18 @@ use Catmandu::Sane;
 use Dancer qw(:syntax);
 use App::Helper;
 
-get '/' => sub {
-	template 'websites/index_publication.tt', {bag => "home"};
-};
-
 # redirect for old /luur login
 get qr{/luur/*|/luur/session} => sub {
 	redirect '/login';
 };
 
 # redirect for /index.html
-get qr{(.*/index.html)} => sub {
-	my ($path) = splat;
-	$path =~ s/index.html//g;
-	$path = h->host . $path;
-	redirect $path, 301;
-};
+#get qr{(.*/index.html)} => sub {
+#	my ($path) = splat;
+#	$path =~ s/index.html//g;
+#	$path = h->host . $path;
+#	redirect $path, 301;
+#};
 
 
 #redirect for old websites
@@ -82,11 +78,11 @@ get qr{/en/contact/*|/en/contact\.html} => sub {
 };
 
 get qr{/pubtheses/*} => sub {
-    template 'websites/index_publication.tt', {bag => 'pubtheses'};
+    template 'pubtheses/pubtheses.tt';
 };
 
 get qr{/en/pubtheses/*} => sub {
-    template 'websites/index_publication.tt', {bag => 'pubtheses', lang => 'en'};
+    template 'pubtheses/pubtheses.tt', {lang => 'en'};
 };
 
 get qr{/about/*} => sub {

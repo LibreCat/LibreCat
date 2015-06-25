@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="angularController">
+<html[% IF bag == 'home' %]ng-app="angularController"[% END %]>
 
 <!-- BEGIN header.tt -->
 
@@ -71,11 +71,10 @@
     [% END %]
 
     [% INCLUDE head_meta.tt %]
-    [% INCLUDE head_scripts.tt %]
 
   </head>
 
-  <body ng-controller="angularSearch" itemscope itemtype="http://schema.org/WebPage">
+  <body[% IF bag == 'home' %] ng-controller="angularSearch"[% END %] itemscope itemtype="http://schema.org/WebPage">
 
   [% INCLUDE navbar.tt %]
 
