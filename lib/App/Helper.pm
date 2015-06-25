@@ -432,10 +432,10 @@ sub default_facets {
 		status => { terms => { field => 'status', size => 8 } },
 		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
 		type => { terms => { field => 'type', size => 25 } },
-		isi => { terms => { field => 'isi', size => 1 } },
-		arxiv => { terms => { field => 'arxiv', size => 1 } },
-		pmid => { terms => { field => 'pmid', size => 1 } },
-		inspire => { terms => { field => 'inspire', size => 1 } },
+#		isi => { terms => { field => 'isi', size => 1 } },
+#		arxiv => { terms => { field => 'arxiv', size => 1 } },
+#		pmid => { terms => { field => 'pmid', size => 1 } },
+#		inspire => { terms => { field => 'inspire', size => 1 } },
 	};
 }
 
@@ -599,6 +599,14 @@ sub search_researcher {
 
 	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
     	$hits->{$_} = $hits->$_;
+    }
+    
+    if($p->{get_person}){
+    	my $personlist;
+    	foreach my $hit (@{$hits->{hits}}){
+    		$personlist->{$hit->{_id}} = $hit->{full_name};
+    	}
+    	return $personlist;
     }
 
     return $hits;

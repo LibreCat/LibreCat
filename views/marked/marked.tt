@@ -6,7 +6,6 @@
 <!-- BEGIN websites/marked.tt -->
 
 <script src="/javascripts/jquery-sortable.js"></script>
-<script src="/javascripts/frontend.js"></script>
 <script>
   $(function() {
     $( "#sortable" ).sortable({

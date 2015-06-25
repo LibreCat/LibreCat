@@ -87,22 +87,22 @@ function selectButton(element){
 	var container = $('#select_modal').find('.modal-body').first();
 	container.html("");
 	if(type == "data_manager"){
-	    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+	    container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
 	    type_short = "dp";
 	    type_name = "Department";
 	}
 	else if(type == "reviewer"){
-	    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+	    container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
 	    type_short = "rv";
 	    type_name = "Department";
 	}
     else if (type == "affiliation") {
-        container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+        container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
         type_short = "aff";
         type_name = "Department";
     }
     else if (type == "department") {
-        container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+        container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
         type_short = "dp";
         type_name = "Department";
     }

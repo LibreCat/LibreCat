@@ -1,5 +1,5 @@
 # configuration for development environment
-log: "debug"
+log: "error"
 logger: file
 logger_format: %T [%{method}h] %h -- [%{accept_type}h]
 show_errors: 1
