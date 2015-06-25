@@ -155,13 +155,24 @@
  [% END %]
 
  [% IF facets.author.terms.size > 1 %]
+ 
+ [% query = "id=(" %]
+ [% FOREACH au IN facets.author.terms %]
+   [% query = query _ au.term %]
+   [% UNLESS loop.last %]
+     [% query = query _  " OR " %]
+   [% END %]
+ [% END %]
+ [% query = query _ ")" %]
+ [% p.q = []; p.q.push(query); p.get_person = 1 %]
+ [% authors = h.search_researcher(p) %]
   <li>
     <button data-toggle="collapse" data-target="#authors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Uni-Bi Authors' : 'Uni-Bi Autoren' %] ([% facets.author.terms.size %])</button>
     <div class="facettecollapse">
       <ul id="authors_[% tabmodus %][% menu %]" class="collapse">
 	[% FOREACH au IN facets.author.terms %]
-	[% name = h.get_person(au.term) %]
-	<li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="author" data-value="[% au.term %]" href="#" rel="nofollow">[% name.full_name %] ([% au.count %])</a></li>
+	[% name = authors.item(au.term) %]
+	<li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="author" data-value="[% au.term %]" href="#" rel="nofollow">[% name %] ([% au.count %])</a></li>
 	[% END %]
       </ul>
     </div>
@@ -169,13 +180,24 @@
   [% END %]
 
   [% IF facets.editor.terms.size > 1 %]
+  
+  [% query = "id=(" %]
+  [% FOREACH ed IN facets.editor.terms %]
+   [% query = query _ ed.term %]
+   [% UNLESS loop.last %]
+     [% query = query _  " OR " %]
+   [% END %]
+  [% END %]
+  [% query = query _ ")" %]
+  [% p.q = []; p.q.push(query); p.get_person = 1 %]
+  [% editors = h.search_researcher(p) %]
   <li>
     <button data-toggle="collapse" data-target="#editors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Uni-Bi Editors' : 'Uni-Bi Editoren' %] ([% facets.editor.terms.size %])</button>
     <div class="facettecollapse">
     <ul id="editors_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH ed IN facets.editor.terms %]
-      [% name = h.get_person(ed.term) %]
-      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="editor" data-value="[% ed.term %]" href="#" rel="nofollow">[% name.full_name %] ([% ed.count %])</a></li>
+      [% name = editors.item(ed.term) %]
+      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="editor" data-value="[% ed.term %]" href="#" rel="nofollow">[% name %] ([% ed.count %])</a></li>
       [% END %]
     </ul>
     </div>
