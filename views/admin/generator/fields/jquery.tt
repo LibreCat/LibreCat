@@ -36,12 +36,12 @@ function selectButton(element){
 	var container = $('#selectModal').find('.modal-body').first();
 	container.html("");
 	if(type == "department"){
-	    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+	    container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
 	    type_short = "dp";
 	    type_name = "Department";
 	}
 	else if(type == "project"){
-	    container.append('[% INCLUDE backend/fields/subfields/project_select.tt %]');
+	    container.append('[% INCLUDE backend/generator/fields/subfields/project_select.tt %]');
 	    type_short = "pj";
 	    type_name = "Project";
 	}

@@ -73,7 +73,7 @@ function selectAffiliation(element){
     var modal = $('#selectAFF');
     var container = $('#selectAFF').find('.modal-body').first();
     container.html("");
-    container.append('[% INCLUDE backend/fields/subfields/department_select.tt %]');
+    container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
     var heading = modal.find('h4').first();
     heading.html("");
     heading.append('Choose a Department');
