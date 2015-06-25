@@ -2,7 +2,7 @@ package Catmandu::Fix::add_department;
 
 use Catmandu::Sane;
 use App::Helper;
-use Dancer qw(session);
+use Dancer qw(:syntax);
 use Moo;
 
 sub fix {
@@ -15,6 +15,5 @@ sub fix {
         } @{$person->{department}};
     }
 }
-
 
 1;
