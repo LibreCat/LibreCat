@@ -413,6 +413,10 @@ function delete_file(fileId){
 	if (confirm("Are you sure you want to delete this uploaded document? Any external links will be broken!\nIf you need to update an existing file to a new version you should edit the corresponding entry in the list and re-upload the file.\n\nDelete this file?")) {
 		$('#' + fileId).remove();
 	    $('#file_order_' + fileId).remove();
+	    if($('#uploadFiles').children('.dz-file-preview').length == 0){
+	    	$('#ddc').find('div.mandatory').removeClass('mandatory');
+	    	$('#ddc').find('select.required').removeClass('required');
+	    }
 	}
 	return false;
 }
