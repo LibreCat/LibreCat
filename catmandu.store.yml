@@ -867,7 +867,7 @@ search:
           default:
             type: custom
             tokenizer: standard
-            filter: [standard, lowercase, asciifolding, stop]
+            filter: [standard, lowercase, asciifolding]
           name:
             type: custom
             tokenizer: keyword
