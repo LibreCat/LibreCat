@@ -346,12 +346,12 @@ sub get_metrics {
 sub new_record {
 	my ($self, $bag) = @_;
 
-	return 3000000; #$self->update_record($bag,{new => 1})->{_id};
+	#return 3000000; #$self->update_record($bag,{new => 1})->{_id};
 
-	# my $id = h->bag->get('1')->{"latest"};
-	# $id++;
-	# h->bag->add( { _id => "1", latest => $id } );
-	# return $id;
+	my $id = $self->bag->get('1')->{"latest"};
+	$id++;
+	$self->bag->add( { _id => "1", latest => $id } );
+	return $id;
 
 }
 

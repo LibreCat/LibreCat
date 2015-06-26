@@ -65,6 +65,9 @@ $('.change_tab').click(function(e){
   }
 
   $('.required').each(function(){
+    if($(this).attr('name').indexOf('ddc') == 0){
+      return true;
+    } 
     if(!$(this).val()){
       $(this).addClass('has-error');
       $(this).closest('div.input-group.mandatory').addClass("has-error");
@@ -92,93 +95,93 @@ $('.change_tab').click(function(e){
   }
   
   if((this_button.attr('href') && (this_button.attr('href') == "#supplementary_fields" || this_button.attr('href') == "#related_material")) || ($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish"))){
-  if($('#id_data_reuse_license').length || $('#id_open_data_release').length){
-    if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
-      if($('#id_data_reuse_license').val() == ''){
-        $('#id_data_reuse_license').parent().removeClass('alert-info');
-        $('#id_data_reuse_license').parent().addClass('alert-danger');
-        alert('{% fields.file_upload.license.data_reuse_license.alert %}');
-        e.stopImmediatePropagation();
+    if($('#id_data_reuse_license').length || $('#id_open_data_release').length){
+      if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
+        if($('#id_data_reuse_license').val() == ''){
+          $('#id_data_reuse_license').parent().removeClass('alert-info');
+          $('#id_data_reuse_license').parent().addClass('alert-danger');
+          alert('{% fields.file_upload.license.data_reuse_license.alert %}');
+          e.stopImmediatePropagation();
+        }
+        if(!$('#id_open_data_release').is(':checked')) {
+          $('#odralert').removeClass('alert-info');
+          $('#odralert').addClass('alert-danger');
+          alert('{% fields.file_upload.license.open_data_release.alert %}');
+          check_license = 0;
+          e.stopImmediatePropagation();
+        }
       }
-      if(!$('#id_open_data_release').is(':checked')) {
-        $('#odralert').removeClass('alert-info');
-        $('#odralert').addClass('alert-danger');
-        alert('{% fields.file_upload.license.open_data_release.alert %}');
+      else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
+        if($('#id_data_reuse_license').val() == ''){
+          $('#id_data_reuse_license').parent().removeClass('alert-info');
+          $('#id_data_reuse_license').parent().addClass('alert-danger');
+          alert('{% fields.file_upload.license.data_reuse_license.alert %}');
+          e.stopImmediatePropagation();
+        }
+        if(!$('#id_open_data_release').is(':checked')) {
+          $('#odralert').removeClass('alert-info');
+          $('#odralert').addClass('alert-danger');
+          alert('{% fields.file_upload.license.open_data_release.alert %}');
+          check_license = 0;
+          e.stopImmediatePropagation();
+        }
+      }
+      else {
+        if($('.dropzone').first().children().length == 1){
+          if($('#id_data_reuse_license').val() != ''){
+            $('#id_data_reuse_license').val('');
+          }
+          if($('#id_open_data_release').is(':checked')){
+            $('#id_open_data_release').prop("checked", false);
+          }
+        }
+      }
+    }
+    else if($('#id_pub_license').length){
+      if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && !$('#id_pub_license').is(':checked')){
+        $('#pub_license_alert').removeClass('alert-info');
+        $('#pub_license_alert').addClass('alert-danger');
+        alert('{% fields.file_upload.license.pub_license.alert %}');
         check_license = 0;
-        e.stopImmediatePropagation();
+        e.preventDefault();
       }
-    }
-    else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
-      if($('#id_data_reuse_license').val() == ''){
-        $('#id_data_reuse_license').parent().removeClass('alert-info');
-        $('#id_data_reuse_license').parent().addClass('alert-danger');
-        alert('{% fields.file_upload.license.data_reuse_license.alert %}');
-        e.stopImmediatePropagation();
-      }
-      if(!$('#id_open_data_release').is(':checked')) {
-        $('#odralert').removeClass('alert-info');
-        $('#odralert').addClass('alert-danger');
-        alert('{% fields.file_upload.license.open_data_release.alert %}');
+      else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && !$('#id_pub_license').is(':checked')){
+        $('#pub_license_alert').removeClass('alert-info');
+        $('#pub_license_alert').addClass('alert-danger');
+        alert('{% fields.file_upload.license.pub_license.alert %}');
         check_license = 0;
-        e.stopImmediatePropagation();
+        e.preventDefault();
       }
-    }
-    else {
-      if($('.dropzone').first().children().length == 1){
-        if($('#id_data_reuse_license').val() != ''){
-          $('#id_data_reuse_license').val('');
-        }
-        if($('#id_open_data_release').is(':checked')){
-          $('#id_open_data_release').prop("checked", false);
+      else {
+        if($('.dropzone').first().children().length == 1){
+          if($('#id_pub_license').is(':checked')){
+            $('#id_pub_license').prop("checked", false);
+          }
         }
       }
     }
-  }
-  else if($('#id_pub_license').length){
-    if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && !$('#id_pub_license').is(':checked')){
-      $('#pub_license_alert').removeClass('alert-info');
-      $('#pub_license_alert').addClass('alert-danger');
-      alert('{% fields.file_upload.license.pub_license.alert %}');
-      check_license = 0;
-      e.preventDefault();
-    }
-    else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && !$('#id_pub_license').is(':checked')){
-      $('#pub_license_alert').removeClass('alert-info');
-      $('#pub_license_alert').addClass('alert-danger');
-      alert('{% fields.file_upload.license.pub_license.alert %}');
-      check_license = 0;
-      e.preventDefault();
-    }
-    else {
-      if($('.dropzone').first().children().length == 1){
-        if($('#id_pub_license').is(':checked')){
-          $('#id_pub_license').prop("checked", false);
-        }
-      }
-    }
-  }
   
-  if($('#id_ddc').length){
-    if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#select_ddc_0').val() || $('#select_ddc_0').val() == "")){
-      $('#select_ddc_0').addClass('has-error');
-      $('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
-      check_license = 0;
-      e.preventDefault();
-    }
-    else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && (!$('#select_ddc_0').val() || $('#select_ddc_0').val() == "")){
-      $('#select_ddc_0').addClass('has-error');
-      $('#select_ddc_0').closest('div.input-group').addClass("has-error");
-      check_license = 0;
-      e.preventDefault();
-    }
-    else {
-      if($('.dropzone').first().children().length == 1){
-        if($('#select_ddc_0').val() && $('#select_ddc_0').val() != ""){
-          $('#select_ddc_0').val("");
+    if($('#ddc').length){
+      if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#select_ddc_0').val() || $('#select_ddc_0').val() == "")){
+        $('#select_ddc_0').addClass('has-error');
+        $('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
+        check_license = 0;
+        e.preventDefault();
+      }
+      else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && (!$('#select_ddc_0').val() || $('#select_ddc_0').val() == "")){
+        $('#select_ddc_0').addClass('has-error');
+        $('#select_ddc_0').closest('div.input-group').addClass("has-error");
+        check_license = 0;
+        e.preventDefault();
+      }
+      else {
+        if($('.dropzone').first().children().length == 1){
+          if($('#select_ddc_0').val() && $('#select_ddc_0').val() != ""){
+            $('#select_ddc_0').val("");
+          }
         }
       }
     }
-  }
   }
   
   if(!check || !check_license){
