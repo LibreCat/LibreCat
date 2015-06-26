@@ -45,40 +45,17 @@ sub _add_cite {
     if($self->explinks and $self->explinks eq "yes"){
     	$links = "\\line PUB: {\\field{\\*\\fldinst HYPERLINK http://pub.uni-bielefeld.de/$bag/$pub->{_id}}{\\fldrslt http://pub.uni-bielefeld.de/$bag/$pub->{_id}}}";
 
-    	foreach my $file (@{$pub->{file}}){
-    		if($file->{open_access} and $file->{open_access} eq "1"){
-    		    $links .= "\\line Files available: {\\field{\\*\\fldinst HYPERLINK http://pub.uni-bielefeld.de/$bag/$pub->{_id}}{\\fldrslt http://pub.uni-bielefeld.de/$bag/$pub->{_id}}}";
-                last;
-    		}
-    	}
-
-    	foreach my $supp (@{$pub->{relatedMaterial}}){
-    		if($supp->{link}){
-    			$links .= "\\line Suppl. Material: {\\field{\\*\\fldinst HYPERLINK $supp->{link}->{url}}{\\fldrslt $supp->{link}->{url}}}";
-    		}
-    		elsif($supp->{file}){
-    			$links .= "\\line Suppl. Material: {\\field{\\*\\fldinst HYPERLINK http://pub.uni-bielefeld.de/download/$pub->{_id}/$supp->{file}->{fileOId}}{\\fldrslt http://pub.uni-bielefeld.de/download/$pub->{_id}/$supp->{file}->{fileOId}}}";
-    		}
-    	}
-
-    	if($pub->{link} and $pub->{link}->[0]){
-    		$links .= "\\line URL: {\\field{\\*\\fldinst HYPERLINK $pub->{link}->[0]}{\\fldrslt $pub->{link}->[0]}}";
-    	}
-
     	if($pub->{doi}){
     		$links .= "\\line DOI: {\\field{\\*\\fldinst HYPERLINK http://dx.doi.org/$pub->{doi}}{\\fldrslt $pub->{doi}}}";
     	}
-    	#elsif($pub->{doiInfo}){
-    	#	$links .= "\\line DOI: {\\field{\\*\\fldinst HYPERLINK http://dx.doi.org/$pub->{doiInfo}->{doi}}{\\fldrslt $pub->{doiInfo}->{doi}}}";
-    	#}
 
         if (my $ext = $pub->{external_id}) {
+            if ($ext->{isi}) {
+                $links .= "\\line WoS: {\\field{\\*\\fldinst HYPERLINK http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/$ext->{isi}}{\\fldrslt $ext->{isi}}}";
+            }
+
         	if($ext->{pmid}){
         		$links .= "\\line PMID: $ext->{pmid}";
-        	}
-
-        	if($ext->{phillister}){
-        		$links .= "\\line PhilLister: {\\field{\\*\\fldinst HYPERLINK http://phillister.ub.uni-bielefeld.de/$bag/$ext->{phillister}}{\\fldrslt $ext->{phillister}}}";
         	}
 
         	if($ext->{arxiv}){
@@ -87,6 +64,10 @@ sub _add_cite {
 
         	if($ext->{inspire}){
         		$links .= "\\line Inspire: {\\field{\\*\\fldinst HYPERLINK http://inspirehep.net/record/$ext->{inspire}}{\\fldrslt $ext->{inspire}}}";
+        	}
+
+            if($ext->{phillister}){
+        		$links .= "\\line PhilLister: {\\field{\\*\\fldinst HYPERLINK http://phillister.ub.uni-bielefeld.de/$bag/$ext->{phillister}}{\\fldrslt $ext->{phillister}}}";
         	}
 
         	if($ext->{ahf}){

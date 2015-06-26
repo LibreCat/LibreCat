@@ -332,7 +332,7 @@
     <a href="[% h.newuri_for("$path", qp, style="") %] rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
     <strong>Style:</strong>
     [% qp.style %]
-    
+
     [% IF backend %]
     <a type="button" href="/myPUB/person/preference?style=[% qp.style %]" name="save_settings" id="id_save_settings" class="btn btn-block btn-warning">Save this as public default</a><br />
     [% END %]
@@ -441,7 +441,7 @@
 	     <h3 id="ModalExport">Export Options</h3>
       </div>
       <div class="modal-body">
-	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]&amp;explinks=yes" class="rtfmodal" rel="nofollow">Export list with links ("PUB | PDF | arXiv" etc.)</a></p>
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]&amp;explinks=yes" class="rtfmodal" rel="nofollow">Export list with links ("PUB | DOI | WoS" etc.)</a></p>
 	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]" class="rtfmodal" rel="nofollow">Export list without links</a></p>
       </div>
     </div>
