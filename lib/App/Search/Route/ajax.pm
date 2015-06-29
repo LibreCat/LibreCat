@@ -76,9 +76,18 @@ ajax '/get_project' => sub {
     } split(' ', lc params->{term});
 
     my $hits = h->search_project({q => $q, limit => 10});
-    return to_json map {
-        { id => $_->{_id}, label => $_->{name} };
-    } @{$hits->{hits}};
+    
+    if($hits->{total}){
+    	my $map;
+    	@$map = map {
+    		{ id => $_->{_id}, label => $_->{name} };
+    	} @{$hits->{hits}};
+    	return to_json $map;
+    }
+    else {
+    	return to_json [];
+    }
+    
 };
 
 =head2 AJAX /get_department
@@ -91,9 +100,17 @@ ajax '/get_department' => sub {
     } split(' ', lc params->{term});
 
     my $hits = h->search_department({q => $q, limit => 10});
-    return to_json map {
-        { id => $_->{_id}, label => $_->{display} };
-    } @{$hits->{hits}};
+    
+    if($hits->{total}){
+    	my $map;
+    	@$map = map {
+    		{ id => $_->{_id}, label => $_->{display} };
+    	} @{$hits->{hits}};
+    	return to_json $map;
+    }
+    else {
+    	return to_json [];
+    }
 };
 
 1;

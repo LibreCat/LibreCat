@@ -615,9 +615,12 @@ sub search_researcher {
 
 sub search_department {
 	my ($self, $p) = @_;
+	
+	my $cql = "";
+	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
 	my $hits = department->search(
-	  cql_query => $p->{q},
+	  cql_query => $cql,
 	  limit => $p->{limit} ||= 20,
 	  start => $p->{start} ||= 0,
 	);
