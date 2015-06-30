@@ -1,0 +1,40 @@
+_prefix:
+  portal:
+
+pubbccpt:
+  q:
+    -
+      param: department
+      op: '='
+      or:
+        - 10017
+        - 10018
+        - 10028
+        - 10036
+        - 89815
+    - 
+      param: publishingyear
+      op: '>='
+      or: 2007
+    - 
+      param: publishingyear
+      op: '<='
+      or: 2011
+    - 
+      param: extern
+      op: '<>'
+      or: 1
+    - 
+      param: publicationstatus
+      op: '<>'
+      or:
+        - submitted
+        - unpublished
+    - 
+      param: documenttype
+      op: '<>'
+      or: 'bi*'
+  style: ama
+  limit: 10
+  fmt: html
+  ttyp: bccpt

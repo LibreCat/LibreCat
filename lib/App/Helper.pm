@@ -788,8 +788,34 @@ sub portal_link {
 }
 
 sub is_portal_default {
-	my ($self, $portal_name, $search_param) = @_;
+	my ($self, $portal_name, $p) = @_;
 	my $portal = $self->config->{portal}->{$portal_name};
+	
+	my $return_hash;
+	
+	if(!$p){
+		$return_hash->{'default'} = 1;
+	}
+	else {
+	
+	foreach my $key (keys %$p){
+		if($key eq "q"){
+			$return_hash->{q} = $p->{$key};
+#			my $q;
+#			@$q = sort { $a->{param} cmp $b->{param} } @$q;
+#			foreach my $param (@$q){
+#				
+#			}
+		}
+		else {
+			if(!$portal->{$key}){
+				$return_hash->{$key} = $p->{$key};
+			}
+		}
+	}
+	}
+	
+	return $return_hash;
 
 	# department=(10017 OR 10018 OR 10028 OR 10036 OR 89815)
 #	if($portal->{q}->{})
