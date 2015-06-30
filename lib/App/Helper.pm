@@ -395,7 +395,7 @@ sub delete_record {
 
 	my $del = {
         _id => $id,
-        date_deleted => h->now,
+        date_deleted => $self->now,
         status => 'deleted',
     };
 
@@ -404,7 +404,7 @@ sub delete_record {
 		require App::Catalogue::Controller::Material;
 	#	my $wait = async {
 			App::Catalogue::Controller::Material::update_related_material($del);
-			App::Catalogue::Controller::File::delete_file();
+			App::Catalogue::Controller::File::delete_file($id);
 	#	};
 	#	cede;
 	}
