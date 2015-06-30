@@ -49,7 +49,7 @@
 	<a href="[% h.host %]/project/[% p._id %]" target="_blank"><span class="label label-success"><strong>[% p._id %]</strong></span></a>
       </div>
       <div class="col-md-9">
-	<a href="/myPUB/admin/project/edit/[% p._id %]">[% p.name %]</a>
+	<a href="/myPUB/admin/project/edit/[% p._id %]">[% IF p.acronym %][% p.acronym %] | [% END %][% p.name %]</a>
 	<br />
 	<span class="text-muted">[% FOREACH dep IN p.department %][% dep.name %][% UNLESS loop.last %] | [% END %][% END %]</span>
       </div>
