@@ -18,9 +18,18 @@ Splash page for :id.
 get qr{/(data|publication)/(\d{1,})/*} => sub {
 	my ($bag, $id) = splat;
 	my $p = h->extract_params();
+	my $altid;
 	push @{$p->{q}}, ("status=public","id=$id");
 
 	my $hits = h->search_publication($p);
+	
+	if(!$hits->{total}){
+		$p->{q} = [];
+		push @{$p->{q}}, ("status=public", "altid=$id");
+		$hits = h->search_publication($p);
+		$altid = 1;
+	}
+	
 	$hits->{bag} = $bag;
 
 	my $marked = session 'marked';
@@ -30,6 +39,7 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 	if ($p->{fmt} ne 'html') {
 		h->export_publication($hits, $p->{fmt});
 	} else {
+		redirect "$bag/$hits->{hits}->[0]->{_id}", 301 if $altid;
 		$hits->{hits}->[0]->{bag} = $bag;
 		template "frontdoor/record", $hits->{hits}->[0];
 	}

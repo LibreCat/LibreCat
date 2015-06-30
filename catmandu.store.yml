@@ -737,6 +737,10 @@ search:
                 '=': true
                 '<>': true
               field: hide
+            altid:
+              op:
+                '=': true
+              field: alternative_id
 
       researcher:
         cql_mapping:
@@ -883,6 +887,7 @@ search:
       project:
         include_in_all: false
         properties:
+          _id: {type: string, include_in_all: true}
           name:
             type: multi_field
             fields:
@@ -1113,6 +1118,7 @@ search:
               year_last_uploaded: {type: date, format: "yyyy"}
               date_updated: {type: string}
 #              yearCreated: {type: date, format: "yyyy"}
+          alternative_id: {type: string, analyzer: tag}
 
       researcher:
         include_in_all: false

@@ -116,6 +116,7 @@ field_order:
     - external_id
     - message
     - ubi_funded
+    - alternative_id
   related_material:
     - related_material.record
     - related_material.rd
@@ -248,6 +249,10 @@ publicationTypes:
         thematic_area: &thematic_area
           label: "Thematic Area"
           label_short: "Them. Area"
+        alternative_id: &alternative_id
+          label: "Returned Record Ids"
+          label_short: "Ret. Rec. Ids"
+          multiple: 1
       related_material: &related_material
         tab_name: "Related Material"
         related_material.record:
@@ -306,6 +311,7 @@ publicationTypes:
         message: *message
         popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
+        alternative_id: *alternative_id
       related_material: *related_material
   bookchapter:
     label: "Book Chapter"
@@ -360,6 +366,7 @@ publicationTypes:
         message: *message
         popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
+        alternative_id: *alternative_id
       related_material: *related_material
   conferenceabstract:
     label: "Conference Abstract"
@@ -430,6 +437,7 @@ publicationTypes:
         message: *message
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
+        alternative_id: *alternative_id
       related_material: *related_material
   conferenceeditor:
     label: "Conference (Editor)"
@@ -475,6 +483,7 @@ publicationTypes:
         popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
+        alternative_id: *alternative_id
       related_material: *related_material
   conference:
     label: "Conference Paper"
@@ -526,6 +535,7 @@ publicationTypes:
         popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
+        alternative_id: *alternative_id
       related_material: *related_material
   dissertation:
     label: "Dissertation"
@@ -575,6 +585,7 @@ publicationTypes:
         external_id: *external_id
         message: *message
         thematic_area: *thematic_area
+        alternative_id: *alternative_id
       related_material: *related_material
   encyclopediaarticle:
     label: "Encyclopedia Article"
@@ -613,6 +624,7 @@ publicationTypes:
         message: *message
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
+        alternative_id: *alternative_id
       related_material: *related_material
   journalarticle:
     label: "Journal Article"
@@ -665,6 +677,7 @@ publicationTypes:
           label: "Funding"
           placeholder: "APC co-financed by DFG"
         thematic_area: *thematic_area
+        alternative_id: *alternative_id
       related_material: *related_material
   journaleditor:
     label: "Journal (Editor)"
@@ -698,6 +711,7 @@ publicationTypes:
         popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
+        alternative_id: *alternative_id
       related_material: *related_material
   newspaperarticle:
     label: "Newspaper Article"
@@ -735,6 +749,7 @@ publicationTypes:
           label: "Popular Science"
         message: *message
         thematic_area: *thematic_area
+        alternative_id: *alternative_id
       related_material: *related_material
   patent:
     label: "Patent"
@@ -797,6 +812,7 @@ publicationTypes:
         thematic_area: *thematic_area
         quality_controlled:
           label: "Quality Controlled"
+        alternative_id: *alternative_id
       related_material: *related_material
   preprint:
     label: "Preprint"
@@ -829,6 +845,7 @@ publicationTypes:
         message: *message
         thematic_area: *thematic_area
         popular_science: *popular_science
+        alternative_id: *alternative_id
       related_material: *related_material
   report:
     label: "Report"
@@ -866,6 +883,7 @@ publicationTypes:
         popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
+        alternative_id: *alternative_id
       related_material: *related_material
   review:
     label: "Book Review"
@@ -904,6 +922,7 @@ publicationTypes:
         external_id: *external_id
         message: *message
         thematic_area: *thematic_area
+        alternative_id: *alternative_id
       related_material: *related_material
   researchdata:
     label: "Research Data"
@@ -943,7 +962,6 @@ publicationTypes:
           extern:
             label_short: "Extern"
             placeholder: "Published while not employed at UniBi"
-          
       file_upload:
         tab_name: "Research data upload"
         externalFiles:
@@ -971,6 +989,7 @@ publicationTypes:
         tab_name: "Supplementary fields"
         abstract: *abstract
         keyword: *keyword
+        alternative_id: *alternative_id
       related_material: &related_material_rd
         tab_name: "Related Material"
         related_material.rd:
@@ -1108,6 +1127,7 @@ publicationTypes:
         message: *message
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
+        alternative_id: *alternative_id
       related_material: *related_material
   translationchapter:
     label: "Translation (Chapter)"
@@ -1170,6 +1190,7 @@ publicationTypes:
         keyword: *keyword
         message: *message
         thematic_area: *thematic_area
+        alternative_id: *alternative_id
       related_material: *related_material
   workingpaper:
     label: "Working Paper"
@@ -1203,6 +1224,7 @@ publicationTypes:
         keyword: *keyword
         message: *message
         thematic_area: *thematic_area
+        alternative_id: *alternative_id
       related_material: *related_material
   bithesis:
     label: "Bielefeld Thesis"
@@ -1288,6 +1310,7 @@ publicationTypes:
           placeholder: "Computing Classification System, e.g. Data Mining"
           multiple: 1
         message: *message
+        alternative_id: *alternative_id
       related_material: *related_material
   bidissertation:
     label: "Bielefeld Doctoral Thesis"
@@ -1328,6 +1351,7 @@ array_field:
   - supervisor
   - thematic_area
   - translator
+  - alternative_id
 
 otherItems:
   user_account:
