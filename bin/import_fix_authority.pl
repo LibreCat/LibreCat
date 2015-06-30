@@ -20,7 +20,7 @@ my $importer = Catmandu::Importer::JSON->new(file => "authority_mongo.json");
 
 my $m = $importer_new->each(sub {
 	my $record = $_[0];
-	if ($record->{type}) {	
+	if ($record->{type}) {
 	if($record->{type} eq "person"){
 		$record->{title} = $record->{personTitle} if $record->{personTitle};
 		$record->{bis}->{former} = $record->{bis_former} ? 1 : 0;
@@ -59,7 +59,7 @@ my $n = $importer->each(sub {
 	my $hashref = $_[0];
 	my $sbcat_rec = $mongoBag->get($hashref->{_id});
 	next if !$sbcat_rec;
-	
+
 	my $pre_fixer = Catmandu::Fix->new(
     fixes => [
         'remove_field("dateLastChanged")',
@@ -78,25 +78,26 @@ my $n = $importer->each(sub {
         'remove_field("email")',
         'remove_field("stylePreference")',
         'remove_field("personTitle")',
-	'remove_field("bis_forschend")',
-	'remove_field("bis_former")',
-	'remove_field("bis_photo")',
-	'remove_field("bis_email")',
-	'remove_field("bis_nonExist")',
-	'remove_field("bis_personTitle")',
-	'remove_field("access")',
+		'remove_field("bis_forschend")',
+		'remove_field("bis_former")',
+		'remove_field("bis_photo")',
+		'remove_field("bis_email")',
+		'remove_field("bis_nonExist")',
+		'remove_field("bis_personTitle")',
+		'remove_field("access")',
+		'add_num_of_publs()',
         ]
     );
-    
+
     $pre_fixer->fix($hashref);
-    
+
     #$hashref->{date_updated} =~ s/(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})/$1T$2/g if $hashref->{date_updated};
-    
+
 #    if($hashref->{stylePreference} and $hashref->{stylePreference} =~ /(.*?)\.(.*?)/){
 #    	$hashref->{style} = $1;
 #    	delete $hashref->{stylePreference};
 #    }
-    
+
     #print Dumper $hashref;
   #  if($hashref->{type} eq "person"){
     	#foreach my $dept (@{$hashref->{department}}){
@@ -118,7 +119,7 @@ my $n = $importer->each(sub {
     	delete $hashref->{bis_personTitle};
     	delete $hashref->{type};
     	#print Dumper $hashref;
-    	
+
     	#print Dumper $sbcat_rec;
     	foreach my $key (keys %$hashref){
 			$sbcat_rec->{$key} = $hashref->{$key};
@@ -137,7 +138,7 @@ my $n = $importer->each(sub {
 	#	}
     #	$deptBag->add($sbcat_rec);
    # }
-    
+
 });
 
 
