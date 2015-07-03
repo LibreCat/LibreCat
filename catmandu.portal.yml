@@ -38,3 +38,655 @@ pubbccpt:
   limit: 10
   fmt: html
   ttyp: bccpt
+
+pubbiotech:
+  q:
+    -
+      param: department
+      op: '='
+      or:
+        - 10042
+        - 10045
+        - 3855915
+    -
+      param: publishingyear
+      op: '>='
+      or: 2006
+    -
+      param: documenttype
+      op: '<>'
+      or: 'bi*'
+    -
+      param: publicationstatus
+      op: '<>'
+      or:
+        - 'submitted'
+        - 'unpublished'
+    -
+      param: extern
+      op: '<>'
+      or: 1
+  style: ama
+  limit: 10
+  ttyp: bccpt
+  fmt: html
+    
+bghs:
+  q:
+    -
+      param: department
+      op: '='
+      or: 6747229
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  style: mla
+  limit: 10
+  ttyp: bghs
+  fmt: html
+
+bio:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10017
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  style: bio1
+  limit: 10
+  ttyp: bio
+  fmt: html
+
+bio3:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10017
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  style: bio1
+  limit: 10
+  ttyp: bio3
+  fmt: html
+
+bioplants:
+  q:
+    - 
+      param: department
+      op: '='
+      or: 2685177
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  style: bio1
+  limit: 10
+  ttyp: bioplants
+  fmt: html
+
+biobcb:
+  q:
+    -
+      param: department
+      op: '='
+      or: '2685608'
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  style: bio1
+  limit: 10
+  ttyp: biobcb
+  fmt: html
+
+cns:
+  q:
+    -
+      param: department
+      op: '='
+      or: 2685448
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  style: bio1
+  limit: 10
+  ttyp: cns
+  fmt: html
+
+neurobio:
+  q:
+    -
+      param: department
+      op: '='
+      or: 2684834
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  style: bio1
+  limit: 10
+  ttyp: neurobio
+  fmt: html
+
+citec:
+  q:
+    -
+      param: department
+      op: '='
+      or: 8014655
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+    -
+      param: publishingyear
+      op: '>='
+      or: 2007
+  style: bio1
+  limit: 10
+  ttyp: citec
+  fmt: html
+
+citectcs:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10037
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  style: bio1
+  limit: 10
+  ttyp: citectcs
+  fmt: html
+
+ipaed:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10021
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: ipaed
+  fmt: html
+
+hist:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10023
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: hist
+  fmt: html
+
+histde:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10023
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: histde
+  fmt: html
+
+hist1:
+  q:
+    -
+      param: department
+      op: '='
+      or: 3791078
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: hist1
+  fmt: html
+
+hist2:
+  q:
+    -
+      param: department
+      op: '='
+      or: 3791117
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: hist2
+  fmt: html
+
+hist3:
+  q:
+    -
+      param: department
+      op: '='
+      or: 3791099
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: hist3
+  fmt: html
+
+hist4:
+  q:
+    -
+      param: department
+      op: '='
+      or: 3791069
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: hist4
+  fmt: html
+
+hist5:
+  q:
+    -
+      param: department
+      op: '='
+      or: 3791087
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: hist5
+  fmt: html
+
+hist6:
+  q:
+    -
+      param: department
+      op: '='
+      or: 3791096
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: hist6
+  fmt: html
+
+hist7:
+  q:
+    -
+      param: department
+      op: '='
+      or: 3791114
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: hist7
+  fmt: html
+
+hist8:
+  q:
+    -
+      param: department
+      op: '='
+      or: 32742431
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: hist8
+  fmt: html
+
+gwiph:
+  q:
+    -
+      param: department
+      op: '='
+      or: 21333
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: gwiph
+  fmt: html
+
+iffde:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10068
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: iffde
+  fmt: html
+
+ikg:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10058
+    -
+      param: language
+      op: '='
+      or: eng
+  limit: 10
+  ttyp: ikg
+  fmt: html
+
+ikgde:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10058
+  limit: 10
+  ttyp: ikgde
+  fmt: html
+
+imw:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10053
+    -
+      param: documenttype
+      op: '='
+      or:
+        - 'book*'
+        - 'journal*'
+  limit: 10
+  style: pub
+  ttyp: imw
+  fmt: html
+
+iwt:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10061
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: iwt
+  fmt: html
+
+physlat:
+  q:
+    -
+      param: department
+      op: '='
+      or: 23470456
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  style: aps
+  limit: 10
+  ttyp: physlat
+  fmt: html
+
+physhe:
+  q:
+    -
+      param: department
+      op: '='
+      or:
+        - 23381619
+        - 23470443
+        - 23470456
+        - 23470601
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  style: aps
+  limit: 10
+  ttyp: physhe
+  fmt: html
+
+sport:
+  q:
+    -
+      param: department
+      op: '='
+      or: 28978161
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: sport
+  fmt: html
+
+soz:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10030
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: soz
+  fmt: html
+
+vwl:
+  q:
+    -
+      param: department
+      op: '='
+      or: 42173282
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: vwl
+  fmt: html
+
+wiwi:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10031
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 5
+  ttyp: wiwi
+  fmt: html
+
+wiwide:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10031
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 5
+  ttyp: wiwide
+  fmt: html
+
+bwl:
+  q:
+    -
+      param: department
+      op: '='
+      or: 29895914
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: bwl
+  fmt: html
+
+bwlde:
+  q:
+    -
+      param: department
+      op: '='
+      or: 29895914
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: bwlde
+  fmt: html
+
+bwl2:
+  q:
+    -
+      param: department
+      op: '='
+      or: 29895914
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: bwl2
+  fmt: html
+
+bwl2de:
+  q:
+    -
+      param: department
+      op: '='
+      or: 29895914
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: bwl2de
+  fmt: html
+
+zif:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10048
+    -
+      param: documenttype
+      op: '<>'
+      or:
+        - 'biba*'
+        - 'bima*'
+  limit: 10
+  ttyp: zif
+  fmt: html
