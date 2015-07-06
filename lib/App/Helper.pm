@@ -2,14 +2,14 @@ package App::Helper::Helpers;
 
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
-use Catmandu::Util qw(:is :array :human :io trim);
+use Catmandu::Util qw(:is :array :human trim);
 use Catmandu::Fix qw(expand);
 use Dancer qw(:syntax vars params request);
+use Dancer::FileUtils qw(path)
 use Sys::Hostname::Long;
 use Template;
 use Moo;
 use POSIX qw(strftime);
-use List::Util;
 use Hash::Merge::Simple qw(merge);
 use JSON;
 #use Coro;
@@ -358,7 +358,7 @@ sub new_record {
 sub update_record {
 	my ($self, $bag, $rec) = @_;
 
-	# don't know where to put it, sould find better place to handle this
+	# don't know where to put it, should find better place to handle this
 	# especially the async stuff
 	if ($bag eq 'publication') {
 
@@ -528,7 +528,10 @@ sub export_publication {
 
 		$options->{style} = $hits->{style} || 'default';
 	   	$options->{explinks} = params->{explinks};
-		@{$options->{fix}} = map {my $f = $_; join_path($self->config->{appdir},$f);} @{$options->{fix}};
+		@{$options->{fix}} = map {
+			my $f = $_;
+			path($self->config->{appdir},$f);
+		} @{$options->{fix}};
 	   	my $content_type = $spec->{content_type} || mime->for_name($fmt);
 	   	my $extension = $spec->{extension} || $fmt;
 
@@ -601,7 +604,7 @@ sub search_researcher {
 	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
     	$hits->{$_} = $hits->$_;
     }
-    
+
     if($p->{get_person}){
     	my $personlist;
     	foreach my $hit (@{$hits->{hits}}){
@@ -615,7 +618,7 @@ sub search_researcher {
 
 sub search_department {
 	my ($self, $p) = @_;
-	
+
 	my $cql = "";
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
@@ -790,21 +793,21 @@ sub portal_link {
 sub is_portal_default {
 	my ($self, $portal_name, $p) = @_;
 	my $portal = $self->config->{portal}->{$portal_name};
-	
+
 	my $return_hash;
-	
+
 	if(!$p){
 		$return_hash->{'default'} = 1;
 	}
 	else {
-	
+
 	foreach my $key (keys %$p){
 		if($key eq "q"){
 			$return_hash->{q} = $p->{$key};
 #			my $q;
 #			@$q = sort { $a->{param} cmp $b->{param} } @$q;
 #			foreach my $param (@$q){
-#				
+#
 #			}
 		}
 		else {
@@ -814,7 +817,7 @@ sub is_portal_default {
 		}
 	}
 	}
-	
+
 	return $return_hash;
 
 	# department=(10017 OR 10018 OR 10028 OR 10036 OR 89815)
