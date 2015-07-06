@@ -30,7 +30,6 @@ publication_type_order:
     - bithesis
   tabelle_rd:
     - researchdata
-    - dara
 field_order:
   basic_fields:
     - bi_doctype
@@ -1000,72 +999,6 @@ publicationTypes:
           label: "Link to other record"
           label_short: "Ext. Link"
           placeholder: "Enter a remote location (URL) of your file here"
-  dara:
-    label: "Da|Ra Research Data"
-    tmpl: dara
-    fields:
-      basic_fields:
-        tab_name: "Basic Fields"
-        doi:
-          label: "DOI"
-          readonly: 1
-        title:
-          mandatory: 1
-          label: "Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
-        author:
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
-          mandatory: 1
-          multiple: 1
-          label: "Creator"
-          pevz: 1
-        department: *department
-        project: *project
-        publisher:
-          mandatory: 1
-          label: "Publisher"
-          placeholder: "Publisher"
-          defaultvalue: "Bielefeld University"
-        year_extern:
-          label: "Year"
-          year:
-            mandatory: 1
-            label_short: "Year"
-            placeholder: "e.g. 2015"
-          extern:
-            label_short: "Extern"
-            placeholder: "Published while not employed at UniBi"
-      file_upload:
-        tab_name: "Research data upload"
-        externalFiles:
-          label: "Files available at"
-        dropzone_mainDoc:
-          label: "Upload files"
-        license:
-          data_reuse_license:
-            mandatory: 1
-            label: "Data Re-Use License"
-            alert: "You need to choose a Data Re-Use License because you have attached files to this record."
-          open_data_release:
-            mandatory: 1
-            label: "Open Data Release - Declaration"
-            disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
-            accept_text: "I have read and agree with the information above about releasing data under the selected license."
-            alert: "You need to accept the Open Data Release Statement because you have attached files to this record."
-          other_data_license:
-            warning: "Visible/Editable for Library Admins only"
-            label: "Other license"
-          info:
-            text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br>"
-            contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
-      supplementary_fields:
-        tab_name: "Supplementary fields"
-        abstract: *abstract
-        keyword: *keyword
-      related_material: *related_material
   translation:
     label: "Translation"
     tmpl: translation
