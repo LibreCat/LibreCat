@@ -22,7 +22,7 @@ sub _do_switch {
 	print "Index $old exists, new index will be $new.\n";
 
 	my $store = Catmandu->store('search', index_name => $new);
-	my @bags = qw(publication project award researcher department);
+	my @bags = qw(publication project award researcher department research_group);
 	foreach my $b (@bags) {
 		my $bag = $store->bag($b);
 		$bag->add_many($backup_store->bag($b));

@@ -8,7 +8,6 @@
     <link rel="icon" href="/images/icon_uni.png" type="image/png">
 
     [% INCLUDE head_meta.tt %]
-    [% INCLUDE head_scripts.tt %]
     [% qp = request.params.hash %]
     [% qp.delete('splat') %]
 

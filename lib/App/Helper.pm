@@ -50,6 +50,10 @@ sub department {
 	state $bag = Catmandu->store('search')->bag('department');
 }
 
+sub research_group {
+	state $bag = Catmandu->store('search')->bag('research_group');
+}
+
 sub fixer {
 	my ($self, $fix_file) = @_;
 
@@ -88,6 +92,7 @@ sub extract_params {
 	$p->{start} = $params->{start} if is_natural $params->{start};
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 	$p->{embed} = $params->{embed} if is_natural $params->{embed};
+	$p->{ttyp} = $params->{ttyp} if $params->{ttyp};
 
 	$p->{q} = array_uniq( $self->string_array($params->{q}) );
 
@@ -127,7 +132,7 @@ sub extract_params {
 	}
 
 	$p->{style} = $params->{style} if $params->{style};
-	$p->{sort} = $self->string_array($params->{sort});
+	$p->{sort} = $self->string_array($params->{'sort'}) if $params->{'sort'};
 
 	$p;
 }
@@ -298,6 +303,10 @@ sub get_department {
 	} elsif ( is_string $_[1] ) {
 		$_[0]->search_department(q => {"name=$_[1]"})->first;
 	}
+}
+
+sub get_research_group {
+	$_[0]->research_group->get($_[1]);
 }
 
 sub get_list {
@@ -651,6 +660,26 @@ sub search_project {
 	return $hits;
 }
 
+sub search_research_group {
+	my ($self, $p) = @_;
+
+	my $cql = "";
+	$cql = join(' AND ',@{$p->{q}} if $p->{q});
+
+	my $hits = research_group->search(
+	    cql_query => $cql,
+	    limit => $p->{limit} ||= config->{default_page_size},
+	    start => $p->{start} ||= 0,
+	    sru_sortkeys => $p->{sort} ||= "name,,1",
+	);
+
+	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+		$hits->{$_} = $hits->$_;
+	}
+
+	return $hits;
+}
+
 sub search_award {
 	my ($self, $p) = @_;
 
@@ -749,79 +778,99 @@ sub newuri_for {
 	$uri;
 }
 
-sub portal_link {
-	my ($self, $portal_name) = @_;
-	my $portal = $self->config->{portal}->{$portal_name};
-
-	my $url = $self->host . "/publication";
-
-	if($portal->{q}){
-		$url .= "?q=";
-		my $q;
-		foreach my $entry (@{$portal->{q}}){
-			my $part = "";
-			if(ref $entry->{values} eq "ARRAY"){
-				$part .= $entry->{param} . $entry->{operator} . "(";
-				foreach my $val (@{$entry->{values}}){
-					$part .= $val . " OR ";
-				}
-				$part =~ s/ OR $//g;
-				$part .= ")";
-				push @$q, $part;
-				$part = "";
-			}
-			else{
-				$part .= $entry->{param} . $entry->{operator} . $entry->{'values'};
-				push @$q, $part;
-				$part = "";
-			}
-		}
-		my $cql;
-		$cql = join(' AND ', @$q);
-		$url .= $cql;
-	}
-
-
-	foreach my $key (keys %$portal){
-		next if $key eq "q";
-		$url .= "&$key=$portal->{$key}";
-	}
-
-	$url;
-}
-
 sub is_portal_default {
-	my ($self, $portal_name, $p) = @_;
+	my ($self, $portal_name) = @_;
+	# get portal default from config
 	my $portal = $self->config->{portal}->{$portal_name};
+
+	# get params from web
+	my $p = $self->extract_params();
 
 	my $return_hash;
 
-	if(!$p){
-		$return_hash->{'default'} = 1;
-	}
-	else {
-
-	foreach my $key (keys %$p){
-		if($key eq "q"){
-			$return_hash->{q} = $p->{$key};
-#			my $q;
-#			@$q = sort { $a->{param} cmp $b->{param} } @$q;
-#			foreach my $param (@$q){
-#
-#			}
+	# Create default portal query hash
+	foreach my $key (keys %$portal){
+		if ($key ne "q"){
+			$return_hash->{default_query}->{$key} = $portal->{$key};
 		}
 		else {
-			if(!$portal->{$key}){
-				$return_hash->{$key} = $p->{$key};
+			foreach my $entry (@{$portal->{q}}){
+				my $q;
+				#$q = $entry->{param} . $entry->{op};
+				if(ref $entry->{or} eq "ARRAY"){
+					$q = "(" . join(" OR ", @{$entry->{or}}) . ")";
+				}
+				else {
+					$q = $entry->{or};
+				}
+				push @{$return_hash->{default_query}->{q}}, $entry->{param} . $entry->{op} . $q;
 			}
 		}
 	}
+
+	if(!$p){
+		# if no params, it must be the default portal query root
+		$return_hash->{'default'} = 1;
+	}
+	else {
+		foreach my $key (keys %$p){
+			# look at each key in the query, q is the hardest to handle
+			if($key eq "q"){
+				foreach my $query (@{$p->{q}}){
+					# in case the query comes as one q, split it
+					# so we can check the parts separately
+					my @parts = split(' AND ', $query);
+
+					# usually this will only be one $part
+					foreach my $part (@parts){
+						# get the three different parts of the query
+						# parameter (e.g. "department"), operator (e.g. "=") and value(s)
+						if(lc $part =~ /^(\w{1,})(<=|>=|=|<|>|<>| exact | all | any | within )(.*)$/){
+							# check if each of the three parts is in the portal default
+							# First the parameter
+							my $param = grep {$1 eq $_->{param}} @{$portal->{q}};
+							# Second the operator
+							my $op = grep {$2 eq $_->{op}} @{$portal->{q}};
+							# Third all values (be careful: several values will be joined by OR and
+							# enclosed in parentheses, a single value won't be in array form in the config
+							# and won't be enclosed in parentheses)
+							my $val = grep {
+								my $or = ref $_->{or} eq "ARRAY" ? join(' OR ', @{$_->{or}}) : $_->{or};
+								$or = "(" . $or . ")" if ref $_->{or} eq "ARRAY";
+								$3 eq $or
+							} @{$portal->{q}};
+
+							# e.g. if there is no parameter "department", this is not part of the
+							# default query, so add it to the return params that may be deletable
+							if (!$param ){
+								push @{$return_hash->{delete_them}}, $part;
+							}
+							# e.g. if there IS a parameter "department" but the operator is not "="
+							# but "<>", this is not part of the default query
+							elsif (!$op){
+								push @{$return_hash->{delete_them}}, $part;
+							}
+							# e.g. if there IS a parameter "department" AND the operator IS "="
+							# but the values don't match, this is not part of the default query
+							elsif (!$val){
+								push @{$return_hash->{delete_them}}, $part;
+							}
+						}
+					}
+				}
+			}
+			# all other keys are easy
+			else {
+				# if the key doesn't exist in the portal config, it's not default query
+				# if the key DOES exist but the value does not match, it's not default query either
+				if(!$portal->{$key} or ($portal->{$key} and $portal->{$key} ne $p->{$key})){
+					$return_hash->{$key} = $p->{$key};
+				}
+			}
+		}
 	}
 
 	return $return_hash;
-
-	# department=(10017 OR 10018 OR 10028 OR 10036 OR 89815)
-#	if($portal->{q}->{})
 }
 
 

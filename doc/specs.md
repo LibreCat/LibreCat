@@ -390,3 +390,23 @@ comment: "some message or comment"
       id: 16813171
       name: "ENTRY"
 ```
+
+## research_group
+```yaml
+-
+  id: RG10000
+  name: "Learning to attend in sensorimotor task"
+  acronym: "SP-01"
+  research_area:
+    - B
+    - A
+  start_date: "2013-10-01"
+  end_date: "2015-10-31"
+  department:
+    -
+	  name: "Faculty of Physics"
+	    id: 123456
+	    tree:
+	      - 98765
+	      - 54321
+``

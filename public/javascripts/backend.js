@@ -549,6 +549,9 @@ function enable_autocomplete(field, index){
 	case "pj":
 		type = "project"
 		break;
+	case "rg":
+		type = "research_group"
+		break;
 	case "person_aff":
 		type = "department"
 		break;

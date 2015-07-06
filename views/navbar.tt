@@ -41,6 +41,7 @@
             <li><a href="/myPUB/admin/account"><span class="glyphicon glyphicon-user"></span>Manage Accounts</a></li>
             <!-- <li><a href="/myPUB/admin/import"><span class="glyphicon glyphicon-import"></span>Import</a></li> -->
             <li><a href="/myPUB/admin/project"><span class="glyphicon glyphicon-tasks"></span>Manage Projects</a></li>
+            <li><a href="/myPUB/admin/research_group"><span class="glyphicon glyphicon-tasks"></span>Manage Research Groups</a></li>
             <!-- <li><a href="/myPUB/admin/journal"><span class="glyphicon glyphicon-user"></span>Manage Journals</a></li> -->
             <li><a href="/myPUB/admin/award"><span class="glyphicon glyphicon-star"></span>Manage Awards</a></li>
           </ul>
