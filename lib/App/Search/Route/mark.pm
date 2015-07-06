@@ -82,18 +82,11 @@ post '/marked' => sub {
 
 	my $p = h->extract_params();
 	my $del = params->{'x-tunneled-method'};
-	my $tab = params->{'tab'};
 	my $marked = [];
 	$marked = session 'marked';
-    	$p->{limit} = h->config->{store}->{maximum_page_size};
-    	$p->{start} = 0;
+    $p->{limit} = h->config->{store}->{maximum_page_size};
+    $p->{start} = 0;
 	push @{$p->{q}}, "status exact public";
-
-	if ($tab) {
-		push @{$p->{q}}, "research_data=1";
-	} else {
-		push @{$p->{q}}, "research_data<>1";
-	}
 
 	if($del){
 		if (session 'marked') {
