@@ -661,7 +661,7 @@ sub search_research_group {
 	my ($self, $p) = @_;
 	
 	my $cql = "";
-	$cql = join(' AND ',@{$p->{q}} if $p->{q});
+	$cql = join(' AND ',@{$p->{q}}) if $p->{q};
 	
 	my $hits = research_group->search(
 	    cql_query => $cql,
