@@ -2,14 +2,14 @@ package App::Helper::Helpers;
 
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
-use Catmandu::Util qw(:is :array :human :io trim);
+use Catmandu::Util qw(:is :array :human trim);
 use Catmandu::Fix qw(expand);
 use Dancer qw(:syntax vars params request);
+use Dancer::FileUtils qw(path)
 use Sys::Hostname::Long;
 use Template;
 use Moo;
 use POSIX qw(strftime);
-use List::Util;
 use Hash::Merge::Simple qw(merge);
 use JSON;
 #use Coro;
@@ -367,7 +367,7 @@ sub new_record {
 sub update_record {
 	my ($self, $bag, $rec) = @_;
 
-	# don't know where to put it, sould find better place to handle this
+	# don't know where to put it, should find better place to handle this
 	# especially the async stuff
 	if ($bag eq 'publication') {
 
@@ -537,7 +537,10 @@ sub export_publication {
 
 		$options->{style} = $hits->{style} || 'default';
 	   	$options->{explinks} = params->{explinks};
-		@{$options->{fix}} = map {my $f = $_; join_path($self->config->{appdir},$f);} @{$options->{fix}};
+		@{$options->{fix}} = map {
+			my $f = $_;
+			path($self->config->{appdir},$f);
+		} @{$options->{fix}};
 	   	my $content_type = $spec->{content_type} || mime->for_name($fmt);
 	   	my $extension = $spec->{extension} || $fmt;
 
@@ -610,7 +613,7 @@ sub search_researcher {
 	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
     	$hits->{$_} = $hits->$_;
     }
-    
+
     if($p->{get_person}){
     	my $personlist;
     	foreach my $hit (@{$hits->{hits}}){
@@ -624,7 +627,7 @@ sub search_researcher {
 
 sub search_department {
 	my ($self, $p) = @_;
-	
+
 	my $cql = "";
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
@@ -659,7 +662,7 @@ sub search_project {
 
 sub search_research_group {
 	my ($self, $p) = @_;
-	
+
 	my $cql = "";
 	$cql = join(' AND ',@{$p->{q}}) if $p->{q};
 	
@@ -669,11 +672,11 @@ sub search_research_group {
 	    start => $p->{start} ||= 0,
 	    sru_sortkeys => $p->{sort} ||= "name,,1",
 	);
-	
+
 	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
 		$hits->{$_} = $hits->$_;
 	}
-	
+
 	return $hits;
 }
 
@@ -775,56 +778,16 @@ sub newuri_for {
 	$uri;
 }
 
-sub portal_link {
-	my ($self, $portal_name) = @_;
-	my $portal = $self->config->{portal}->{$portal_name};
-
-	my $url = $self->host . "/publication";
-
-	if($portal->{q}){
-		$url .= "?q=";
-		my $q;
-		foreach my $entry (@{$portal->{q}}){
-			my $part = "";
-			if(ref $entry->{values} eq "ARRAY"){
-				$part .= $entry->{param} . $entry->{operator} . "(";
-				foreach my $val (@{$entry->{values}}){
-					$part .= $val . " OR ";
-				}
-				$part =~ s/ OR $//g;
-				$part .= ")";
-				push @$q, $part;
-				$part = "";
-			}
-			else{
-				$part .= $entry->{param} . $entry->{operator} . $entry->{'values'};
-				push @$q, $part;
-				$part = "";
-			}
-		}
-		my $cql;
-		$cql = join(' AND ', @$q);
-		$url .= $cql;
-	}
-
-
-	foreach my $key (keys %$portal){
-		next if $key eq "q";
-		$url .= "&$key=$portal->{$key}";
-	}
-
-	$url;
-}
-
 sub is_portal_default {
 	my ($self, $portal_name) = @_;
 	# get portal default from config
 	my $portal = $self->config->{portal}->{$portal_name};
+
 	# get params from web
 	my $p = $self->extract_params();
-	
+
 	my $return_hash;
-	
+
 	# Create default portal query hash
 	foreach my $key (keys %$portal){
 		if ($key ne "q"){
@@ -844,8 +807,7 @@ sub is_portal_default {
 			}
 		}
 	}
-	
-	
+
 	if(!$p){
 		# if no params, it must be the default portal query root
 		$return_hash->{'default'} = 1;
@@ -858,7 +820,7 @@ sub is_portal_default {
 					# in case the query comes as one q, split it
 					# so we can check the parts separately
 					my @parts = split(' AND ', $query);
-					
+
 					# usually this will only be one $part
 					foreach my $part (@parts){
 						# get the three different parts of the query
@@ -869,7 +831,7 @@ sub is_portal_default {
 							my $param = grep {$1 eq $_->{param}} @{$portal->{q}};
 							# Second the operator
 							my $op = grep {$2 eq $_->{op}} @{$portal->{q}};
-							# Third all values (be careful: several values will be joined by OR and 
+							# Third all values (be careful: several values will be joined by OR and
 							# enclosed in parentheses, a single value won't be in array form in the config
 							# and won't be enclosed in parentheses)
 							my $val = grep {
@@ -877,7 +839,7 @@ sub is_portal_default {
 								$or = "(" . $or . ")" if ref $_->{or} eq "ARRAY";
 								$3 eq $or
 							} @{$portal->{q}};
-							
+
 							# e.g. if there is no parameter "department", this is not part of the
 							# default query, so add it to the return params that may be deletable
 							if (!$param ){
@@ -907,7 +869,7 @@ sub is_portal_default {
 			}
 		}
 	}
-	
+
 	return $return_hash;
 }
 
