@@ -1,7 +1,6 @@
 [% qp = {} %]
 [% qp = h.extract_params %]
 [% pd = {} %]
-[% USE Dumper; Dumper.dump(qp) %]
 [% IF embed AND qp.ttyp %]
 [% pd = h.is_portal_default(qp.ttyp) %]
 [% END %]
@@ -9,8 +8,6 @@
 
 [%- USE JSON -%]
 [%- USE date(format => '%Y') -%]
-
-[% USE Dumper; Dumper.dump(pd) %]
 
 <div id="facets"></div>
 <div id="export"></div>
