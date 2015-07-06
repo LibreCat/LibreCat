@@ -25,6 +25,7 @@ backup:
       project: *backup_settings
       researcher: *backup_settings
       department: *backup_settings
+      research_group: *backup_settings
 
 metrics:
   package: MongoDB
@@ -864,6 +865,50 @@ search:
                 '=': true
                 'exact': true
 
+      research_group:
+        cql_mapping:
+          default_index: basic
+          indexes:
+            basic:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+              field: '_all'
+            name:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+                'exact': {field: 'name.exact'}
+              field: name
+              sort: {field: 'name.exact'}
+            acronym:
+              op:
+                'any': true
+                'all': true
+                '=': true
+              field: acronym
+            research_area:
+              op:
+                'any': true
+                'all': true
+                '=': true
+              field: research_area
+            start_date: &start_date
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '>': true
+                '<': true
+                '>=': true
+                '<=': true
+              field: start_date
+            end_date: *start_date
+
     index_name: pub
     index_settings:
       analysis:
@@ -1203,6 +1248,35 @@ search:
               name_lc: {type: string}
               exact:  {type: string, analyzer: tag}
           tree: {type: string, analyzer: tag}
+
+      research_group:
+        include_in_all: false
+        properties:
+          _id: {type: string, include_in_all: true}
+          name:
+            type: multi_field
+            fields:
+              name: {type: string}
+              exact: {type: string, analyzer: tag}
+          acronym: {type: string, analyzer: tag}
+          start_date:
+            type: multi_field
+            fields:
+              start_date: {type: string, anlyzer: datestring}
+              exact: {type: string, analyzer: tag}
+          end_date:
+            type: multi_field
+            fields:
+              start_date: {type: string, anlyzer: datestring}
+              exact: {type: string, analyzer: tag}
+          department:
+            properties:
+              id: {type: string, analyzer: tag}
+              name:
+                type: multi_field
+                fields:
+                  name: {type: string, include_in_all: true}
+                  exact: {type: string, analyzer: tag}
 
 default_page_size: 100
 default_searchpage_size: 10

@@ -50,6 +50,10 @@ sub department {
 	state $bag = Catmandu->store('search')->bag('department');
 }
 
+sub research_group {
+	state $bag = Catmandu->store('search')->bag('research_group');
+}
+
 sub fixer {
 	my ($self, $fix_file) = @_;
 
@@ -299,6 +303,10 @@ sub get_department {
 	} elsif ( is_string $_[1] ) {
 		$_[0]->search_department(q => {"name=$_[1]"})->first;
 	}
+}
+
+sub get_research_group {
+	$_[0]->research_group->get($_[1]);
 }
 
 sub get_list {
@@ -646,6 +654,26 @@ sub search_project {
         $hits->{$_} = $hits->$_;
     }
 
+	return $hits;
+}
+
+sub search_research_group {
+	my ($self, $p) = @_;
+	
+	my $cql = "";
+	$cql = join(' AND ',@{$p->{q}} if $p->{q});
+	
+	my $hits = research_group->search(
+	    cql_query => $cql,
+	    limit => $p->{limit} ||= config->{default_page_size},
+	    start => $p->{start} ||= 0,
+	    sru_sortkeys => $p->{sort} ||= "name,,1",
+	);
+	
+	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+		$hits->{$_} = $hits->$_;
+	}
+	
 	return $hits;
 }
 

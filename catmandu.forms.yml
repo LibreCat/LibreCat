@@ -40,6 +40,7 @@ field_order:
     - corporate_editor_solo
     - department
     - project
+    - research_group
     - supervisor
     - applicant
     - author_secondary
@@ -159,6 +160,10 @@ publicationTypes:
         project: &project
           label: "Project"
           placeholder: "e.g. 2nd-Generation Open Access Infrastructure for Research in Europe"
+          multiple: 1
+        research_group: &research_group
+          label: "Research Group"
+          placeholder: "e.g. Social Motorics"
           multiple: 1
         place: &place
           label: "Place<br>(of publication)"
@@ -292,6 +297,7 @@ publicationTypes:
           placeholder: "e.g. World Health Organization - Regional Office for Europe (WHO-Europe)"
         department: *department
         project: *project
+        research_group: *research_group
         publisher: *publisher
         year_extern: *year_extern
         alternative_title: *alternative_title
@@ -342,6 +348,7 @@ publicationTypes:
           placeholder: "e.g. World Health Organization - Regional Office for Europe (WHO-Europe)"
         department: *department
         project: *project
+        research_group: *research_group
         edition: *edition
         place: *place
         publisher: *publisher
@@ -392,6 +399,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        research_group: *research_group
         alternative_title: *alternative_title
         publication:
           label: "Proceedings Title"
@@ -453,6 +461,7 @@ publicationTypes:
         corporate_editor_solo: *corporate_editor_solo
         department: *department
         project: *project
+        research_group: *research_group
         year_extern: *year_extern
         alternative_title: *alternative_title
         place: *place
@@ -512,6 +521,7 @@ publicationTypes:
         publisher: *publisher
         department: *department
         project: *project
+        research_group: *research_group
         volume_issue_page: *volume_issue_page
         publication:
           label: "Proceedings Title"
@@ -570,6 +580,7 @@ publicationTypes:
         alternative_title: *alternative_title
         department: *department
         project: *project
+        research_group: *research_group
         place: *place
         page: *page
         series_title_volume: *series_title_volume
@@ -602,6 +613,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        research_group: *research_group
         publication:
           label: "Book Title"
           mandatory: 1
@@ -640,6 +652,7 @@ publicationTypes:
         author: *author_translator
         department: *department
         project: *project
+        research_group: *research_group
         publisher: *publisher
         publication: &publication_jtitle
           label: "Journal Title"
@@ -693,6 +706,7 @@ publicationTypes:
         corporate_editor_solo: *corporate_editor_solo
         department: *department
         project: *project
+        research_group: *research_group
         publisher: *publisher
         year_extern: *year_extern
         alternative_title: *alternative_title
@@ -725,6 +739,7 @@ publicationTypes:
           placeholder: "e.g. The implications of eBook Publishing"
         department: *department
         project: *project
+        research_group: *research_group
         year_extern: *year_extern
         publication_date: &publication_date
           label: "Publication Date"
@@ -776,6 +791,7 @@ publicationTypes:
           placeholder: "e.g. John Appleseed"
         department: *department
         project: *project
+        research_group: *research_group
         year_extern: *year_extern
         publisher: *publisher
         publication_date_number:
@@ -830,6 +846,7 @@ publicationTypes:
         author: *author_translator
         department: *department
         project: *project
+        research_group: *research_group
         year_extern: *year_extern
         publisher: *publisher
         page: *page
@@ -862,6 +879,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        research_group: *research_group
         publisher: *publisher
         year_extern: *year_extern
         alternative_title: *alternative_title
@@ -900,6 +918,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        research_group: *research_group
         publisher: *publisher
         year_extern: *year_extern
         alternative_title: *alternative_title
@@ -947,6 +966,7 @@ publicationTypes:
           pevz: 1
         department: *department
         project: *project
+        research_group: *research_group
         publisher:
           mandatory: 1
           label: "Publisher"
@@ -1036,6 +1056,7 @@ publicationTypes:
           pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         department: *department
         project: *project
+        research_group: *research_group
         edition: *edition
         place: *place
         publisher: *publisher
@@ -1099,6 +1120,7 @@ publicationTypes:
           pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         department: *department
         project: *project
+        research_group: *research_group
         edition: *edition
         editor: *editor_only
         place: *place
@@ -1142,6 +1164,7 @@ publicationTypes:
         corporate_editor: *corporate_editor
         department: *department
         project: *project
+        research_group: *research_group
         place: *place
         publisher: *publisher
         series_title_volume: *series_title_volume
@@ -1277,6 +1300,7 @@ array_field:
   - original_language
   - pacs_class
   - project
+  - research_group
   - publication_identifier.issn
   - publication_identifier.eissn
   - publication_identifier.isbn
@@ -1462,6 +1486,31 @@ otherItems:
       label: "Call Identifier"
     sc39:
       label: "SC39"
+  research_group:
+    research_group_field_order:
+      - id
+      - name
+      - acronym
+      - start_date
+      - end_date
+      - department
+    id:
+      label: "ID"
+      readonly: 1
+      mandatory: 1
+    name:
+      label: "Name"
+      mandatory: 1
+    acronym:
+      label: "Acronym"
+    start_date:
+      label: "Start Date"
+      placeholder: "YYYY-MM-DD"
+    end_date:
+      label: "End Date"
+      placeholder: "YYYY-MM-DD"
+    department:
+      label: "Affiliation"
   award:
     award_field_order:
       - award_type
