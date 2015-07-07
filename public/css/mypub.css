@@ -182,7 +182,7 @@ div.input-group.sticky .input-group-addon,div.sticky input,div.sticky select,div
 div.sticky span.label.label-default{background-color:transparent;border:1px solid #ccc;color:inherit;}
 .form-control[readonly]{cursor:not-allowed;}
 
-input.has-error,.has-error input{background-color:#ffcfce;}
+input.has-error,.has-error input,select.has-error,.has-error select{background-color:#ffcfce;}
 .checkbox-inline input[type='checkbox']{margin-top:0;}
 .reuse-license{padding-left:18px;padding-right:18px;}
 :-moz-placeholder,:-webkit-placeholder,:-ms-input-placeholder,[placeholder],.placeholder{color:#f00 !important;}
