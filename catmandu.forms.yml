@@ -76,6 +76,7 @@ field_order:
     - language
     - original_language
     - ddc
+    - jel
     - keyword
     - pacs_class
     - msc_class
@@ -109,6 +110,7 @@ field_order:
     - ccs_class
     - genbank
     - nasc
+    - jel
     - thematic_area
     - popular_science
     - quality_controlled
@@ -250,6 +252,10 @@ publicationTypes:
             label: "Popular Science"
           quality_controlled:
             label: "Quality Controlled"
+        jel: &jel
+          label: "JEL Classification"
+          label_short: "JEL"
+          multiple: 1
         thematic_area: &thematic_area
           label: "Thematic Area"
           label_short: "Them. Area"
@@ -314,6 +320,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
+        jel: *jel
         popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
         alternative_id: *alternative_id
@@ -368,6 +375,7 @@ publicationTypes:
         tab_name: "Additional Information"
         abstract: *abstract
         keyword: *keyword
+        jel: *jel
         external_id: *external_id
         message: *message
         popular_science_quality_controlled: *popular_science_quality_controlled
@@ -441,6 +449,7 @@ publicationTypes:
         tab_name: "Additional Information"
         keyword: *keyword
         external_id: *external_id
+        jel: *jel
         message: *message
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
@@ -490,6 +499,7 @@ publicationTypes:
         external_id: *external_id
         popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
+        jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
       related_material: *related_material
@@ -543,6 +553,7 @@ publicationTypes:
         external_id: *external_id
         popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
+        jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
       related_material: *related_material
@@ -594,6 +605,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
+        jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
       related_material: *related_material
@@ -633,6 +645,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
+        jel: *jel
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
         alternative_id: *alternative_id
@@ -685,6 +698,7 @@ publicationTypes:
           label_short: "Genbank"
           placeholder: "Genbank IDs (multiple entries separated by semicolon, e.g. AY323492 ; AY333421 ; AY323491)"
         message: *message
+        jel: *jel
         ubi_funded:
           label: "Funding"
           placeholder: "APC co-financed by DFG"
@@ -721,6 +735,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
+        jel: *jel
         popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         thematic_area: *thematic_area
@@ -762,6 +777,7 @@ publicationTypes:
         popular_science: &popular_science
           label: "Popular Science"
         message: *message
+        jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
       related_material: *related_material
@@ -824,6 +840,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
+        jel: *jel
         thematic_area: *thematic_area
         quality_controlled:
           label: "Quality Controlled"
@@ -859,6 +876,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
+        jel: *jel
         thematic_area: *thematic_area
         popular_science: *popular_science
         alternative_id: *alternative_id
@@ -899,6 +917,7 @@ publicationTypes:
         keyword: *keyword
         popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
+        jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
       related_material: *related_material
@@ -939,6 +958,7 @@ publicationTypes:
         keyword: *keyword
         external_id: *external_id
         message: *message
+        jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
       related_material: *related_material
@@ -1007,6 +1027,7 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Supplementary fields"
         abstract: *abstract
+        jel: *jel
         keyword: *keyword
         alternative_id: *alternative_id
       related_material: &related_material_rd
@@ -1079,6 +1100,7 @@ publicationTypes:
         abstract: *abstract
         keyword: *keyword
         message: *message
+        jel: *jel
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
         alternative_id: *alternative_id
@@ -1144,6 +1166,7 @@ publicationTypes:
         abstract: *abstract
         keyword: *keyword
         message: *message
+        jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
       related_material: *related_material
@@ -1179,6 +1202,7 @@ publicationTypes:
         abstract: *abstract
         keyword: *keyword
         message: *message
+        jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
       related_material: *related_material
@@ -1266,6 +1290,7 @@ publicationTypes:
           placeholder: "Computing Classification System, e.g. Data Mining"
           multiple: 1
         message: *message
+        jel: *jel
         alternative_id: *alternative_id
       related_material: *related_material
   bidissertation:
@@ -1309,6 +1334,7 @@ array_field:
   - thematic_area
   - translator
   - alternative_id
+  - jel
 
 otherItems:
   user_account:

@@ -1,0 +1,98 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="select_jel_0">
+      {% fields.basic_fields.jel.label %}{% fields.supplementary_fields.jel.label %}
+    </label>
+    {% IF fields.basic_fields.jel.mandatory || fields.supplementary_fields.jel.mandatory %}<span class="starMandatory"></span>{% END %}
+  </div>
+  <div class="col-md-10" id="jel">
+    {% IF fields.basic_fields.jel.multiple || fields.supplementary_fields.jel.multiple %}
+    [% IF !jel %]
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky{% IF fields.basic_fields.jel.mandatory || fields.supplementary_fields.jel.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.jel.label_short || fields.basic_fields.jel.label %}{% fields.supplementary_fields.jel.label_short || fields.supplementary_fields.jel.label %}</div>
+          <select name="jel.0" class="sticky form-control{% IF fields.basic_fields.jel.mandatory || fields.supplementary_fields.jel.mandatory %} required{% END %}" id="select_jel_0">
+            <option value=""[% IF !jel %] selected="selected"[% END %]>--- Select JEL ---</option>
+            [% FOREACH group IN h.get_list('jel').keys.sort %]
+              <optgroup label="[% h.get_list('jel').$group.optgroup %]">
+              <option id="[% group %]" value="[% group %]">[% h.get_list('jel').$group.optgroup %]</option>
+              [% FOREACH xjel IN h.get_list('jel').$group.keys.sort %]
+                [% NEXT IF xjel == "optgroup" %]
+                <optgroup label="[% h.get_list('jel').$group.$xjel.optgroup %]">
+                <option id="[% xjel %]" value="[% xjel %]">[% h.get_list('jel').$group.$xjel.optgroup %]</option>
+                [% FOREACH xj IN h.get_list('jel').$group.$xjel.keys.sort %]
+                  [% NEXT IF xj == "optgroup" %]
+                  <option id="[% xj %]" value="[% xj %]">[% h.get_list('jel').$group.$xjel.$xj %]</option>
+                [% END %]
+                </optgroup>
+              [% END %]
+              </optgroup>
+            [% END %]
+          </select>
+          <div class="input-group-addon" onclick="add_field('jel');"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+        </div>
+      </div>
+    </div>
+    [% ELSE %]
+      [% FOREACH j IN jel %]
+      <div class="row innerrow">
+        <div class="form-group col-md-10 col-xs-11">
+          <div class="input-group sticky{% IF fields.basic_fields.jel.mandatory || fields.supplementary_fields.jel.mandatory %} mandatory{% END %}">
+            <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.jel.label_short || fields.basic_fields.jel.label %}{% fields.supplementary_fields.jel.label_short || fields.supplementary_fields.jel.label %}</div>
+            <select name="jel.[% loop.index %]" class="sticky form-control{% IF fields.basic_fields.jel.mandatory || fields.supplementary_fields.jel.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_jel_[% loop.index %]">
+              <option value="">--- Select JEL ---</option>
+              [% FOREACH group IN h.get_list('jel').keys.sort %]
+                <optgroup label="[% h.get_list('jel').$group.optgroup %]">
+                <option id="[% group %]" value="[% group %]"[% IF group == j %] selected="selected"[% END %]>[% h.get_list('jel').$group.optgroup %]</option>
+                [% FOREACH xjel IN h.get_list('jel').$group.keys.sort %]
+                  [% NEXT IF xjel == "optgroup" %]
+                  <optgroup label="[% h.get_list('jel').$group.$xjel.optgroup %]">
+                  <option id="[% xjel %]" value="[% xjel %]"[% IF xjel == j %] selected="selected"[% END %]>[% h.get_list('jel').$group.$xjel.optgroup %]</option>
+                  [% FOREACH xj IN h.get_list('jel').$group.$xjel.keys.sort %]
+                    [% NEXT IF xj == "optgroup" %]
+                    <option id="[% xj %]" value="[% xj %]"[% IF xj == j %] selected="selected"[% END %]>[% h.get_list('jel').$group.$xjel.$xj %]</option>
+                  [% END %]
+                  </optgroup>
+                [% END %]
+                </optgroup>
+              [% END %]
+            </select>
+            <div class="input-group-addon" onclick="add_field('jel');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+          </div>
+        </div>
+      </div>
+      [% END %]
+    [% END %]
+    {% ELSE %}
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky{% IF fields.basic_fields.jel.mandatory || fields.supplementary_fields.jel.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.jel.label_short || fields.basic_fields.jel.label %}{% fields.supplementary_fields.jel.label_short || fields.supplementary_fields.jel.label %}</div>
+          <select name="jel.0" class="sticky form-control{% IF fields.basic_fields.jel.mandatory || fields.supplementary_fields.jel.mandatory %} required{% END %}" id="select_jel_0">
+            <option value=""[% IF !jel %] selected="selected"[% END %]>--- Select JEL ---</option>
+            [% FOREACH group IN h.get_list('jel').keys.sort %]
+              <optgroup label="[% h.get_list('jel').$group.optgroup %]">
+              <option id="[% group %]" value="[% group %]"[% IF group == jel.0 %] selected="selected"[% END %]>[% h.get_list('jel').$group.optgroup %]</option>
+              [% FOREACH xjel IN h.get_list('jel').$group.keys.sort %]
+                [% NEXT IF xjel == "optgroup" %]
+                <optgroup label="[% h.get_list('jel').$group.$xjel.optgroup %]">
+                <option id="[% xjel %]" value="[% xjel %]"[% IF xjel == jel.0 %] selected="selected"[% END %]>[% h.get_list('jel').$group.$xjel.optgroup %]</option>
+                [% FOREACH xj IN h.get_list('jel').$group.$xjel.keys.sort %]
+                  [% NEXT IF xj == "optgroup" %]
+                  <option id="[% xj %]" value="[% xj %]"[% IF xj == jel.0 %] selected="selected"[% END %]>[% h.get_list('jel').$group.$xjel.$xj %]</option>
+                [% END %]
+                </optgroup>
+              [% END %]
+              </optgroup>
+            [% END %]
+          </select>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+    {% END %}
+  </div>
+</div>
