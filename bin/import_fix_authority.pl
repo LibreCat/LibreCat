@@ -8,10 +8,8 @@ use Catmandu::Store::MongoDB;
 Catmandu->load(':up');
 my $conf = Catmandu->config;
 
-my $deptBag = Catmandu::Store::MongoDB->new(database_name => 'PUBDepartment')->bag;
-my $mongoBag = Catmandu::Store::MongoDB->new(database_name => 'authority_too')->bag;
-#my $deptBag = Catmandu->store('search')->bag('department');
-#my $authBag = Catmandu->store('search')->bag('researcher');
+my $deptBag = Catmandu->store('backup')->bag('department');
+my $mongoBag = Catmandu->store('backup')->bag('researcher');
 
 use Catmandu::Importer::JSON;
 
@@ -20,8 +18,7 @@ my $importer = Catmandu::Importer::JSON->new(file => "authority_mongo.json");
 
 my $m = $importer_new->each(sub {
 	my $record = $_[0];
-	if ($record->{type}) {
-	if($record->{type} eq "person"){
+	if($record->{type} and $record->{type} eq "person"){
 		$record->{title} = $record->{personTitle} if $record->{personTitle};
 		$record->{bis}->{former} = $record->{bis_former} ? 1 : 0;
 		$record->{bis}->{photo} = $record->{bis_photo} if $record->{bis_photo};
@@ -39,19 +36,15 @@ my $m = $importer_new->each(sub {
 		$record->{style} = "default" if ($record->{style} && $record->{style} eq "frontShort");
 		$mongoBag->add($record);
 	}
-	elsif($record->{type} eq "organization") {
-        	delete $record->{type};
+	elsif($record->{type} and $record->{type} eq "organization") {
+        delete $record->{type};
 		my $sbcat_rec;
 		$sbcat_rec->{_id} = $record->{_id};
 		$sbcat_rec->{name} = $record->{name};
-		@{$sbcat_rec->{tree}} = map {
-			$_->{id};
-		} @{$record->{tree}};
-		$sbcat_rec->{display} = join(' > ', map {
-				$_->{name};
-			} @{$record->{tree}});
-        	$deptBag->add($sbcat_rec);
-    	}
+		$sbcat_rec->{layer} = $record->{layer};
+		$sbcat_rec->{tree} = $record->{tree};
+		$sbcat_rec->{display} = join(' > ', map { $_->{name}; } @{$record->{tree}});
+        $deptBag->add($sbcat_rec);
     }
 });
 
