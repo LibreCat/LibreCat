@@ -1239,125 +1239,160 @@ project:
   "Zuwanderung, Figuration, Konflikt: Eine vergleichende sozialraumbezogene Analyse in Bradford und Duisburg":
     oId: P437
 
-xresearchgroups:
-  "ZiF-Forschungsgruppe Biological Foundations of Human Culture":
-    oId: RG27
-  "ZiF-Forschungsgruppe Bürger, Bürgerlichkeit und bürgerliche Gesellschaft. Das 19. Jahrhundert im europäischen Vergleich":
-    oId: RG22
-  "ZiF-Forschungsgruppe Challenges to the Image of Humanity and Human Dignity by New Devlopments in Medical Technology":
-    oId: RG48
-  "ZiF-Forschungsgruppe Combinatorics and its Applications":
-    oId: RG26
-  "ZiF-Forschungsgruppe Communicating Disaster":
-    oId: RG49
-  "ZiF-Forschungsgruppe Complex Liquids":
-    oId: RG21
-  "ZiF-Forschungsgruppe Constituents and Confinement":
-    oId: RG17
-  "ZiF-Forschungsgruppe Control of Violence":
-    oId: RG46
-  "ZiF-Forschungsgruppe Die Probabilistische Revolution 1800 - 1930: Dynamik wissenschaftlicher Entwicklung":
-    oId: RG16
-  "ZiF-Forschungsgruppe Dynamische Modelle und statistische Methoden":
-    oId: RG6
-  "ZiF-Forschungsgruppe E Pluribus Unum? - Ethnic Identities in Processes of Transnational Integration in the Americas":
-    oId: RG47
-  "ZiF-Forschungsgruppe Eigenschaften und Reaktionen isolierter Moleküle und Atome":
-    oId: RG12
-  "ZiF-Forschungsgruppe Embodied Communications in Humans and Machines":
-    oId: RG44
-  "ZiF-Forschungsgruppe Emotions as Bio-Cultural Processes":
-    oId: RG42
-  "ZiF-Forschungsgruppe Funktionsgeschichte literarischer Utopien in der frühen Neuzeit":
-    oId: RG13
-  "ZiF-Forschungsgruppe Game Theory in the Behavioral Sciences":
-    oId: RG23
-  "ZiF-Forschungsgruppe General Theory of Information Transfer and Combinatorics":
-    oId: RG41
-  "ZiF-Forschungsgruppe Historische Bestimmungsfaktoren für die Organisationsformen der modernen Wirtschaftsunternehmen":
-    oId: RG7
-  "ZiF-Forschungsgruppe Historische Sinnbildung":
-    oId: RG32
-  "ZiF-Forschungsgruppe Infinitely Many Degrees of Freedom - Physics and Mathematics":
-    oId: RG19
-  "ZiF-Forschungsgruppe Interactions of Oriented Molecules":
-    oId: RG34
-  "ZiF-Forschungsgruppe Interdisziplinäres Forschungsjahr 1978/79":
-    oId: RG11
-  "ZiF-Forschungsgruppe Journalismus und Wissenschaft":
-    oId: RG3
-  "ZiF-Forschungsgruppe Jugendhilfeplanung":
-    oId: RG9
-  "ZiF-Forschungsgruppe Linguistik und Geschichte":
-    oId: RG8
-  "ZiF-Forschungsgruppe Making Choices":
-    oId: RG38
-  "ZiF-Forschungsgruppe Mathematische Probleme der Quantendynamik":
-    oId: RG5
-  "ZiF-Forschungsgruppe Mengenlehre - Logik - Linguistik":
-    oId: RG1
-  "ZiF-Forschungsgruppe Mental Models in Discourse Processing":
-    oId: RG29
-  "ZiF-Forschungsgruppe Mind and Brain - Perspectives in Theoretical Psychology and the Philosophy of Mind":
-    oId: RG25
-  "ZiF-Forschungsgruppe Multi-Scale Phenomena: The Simulation of Complex Systems on Massively Parallel Computers":
-    oId: RG35
-  "ZiF-Forschungsgruppe Nationale Selbst- und Fremdbilder in osteuropäischen Staaten - Manifestationen im Diskurs":
-    oId: RG30
-  "ZiF-Forschungsgruppe Perception and Action":
-    oId: RG20
-  "ZiF-Forschungsgruppe Perception and the Role of Evolutionary Internalized Regularities of the Physical World":
-    oId: RG33
-  "ZiF-Forschungsgruppe Prerational Intelligence":
-    oId: RG31
-  "ZiF-Forschungsgruppe Procedural Approaches to Conflict Resolution. Designing Analytical Support for Interactive Group Decision Making":
-    oId: RG40
-  "ZiF-Forschungsgruppe Rationale Umweltpolitik - Rationales Umweltrecht":
-    oId: RG37
-  "ZiF-Forschungsgruppe Recht und Sozialwissenschaften":
-    oId: RG4
-  "ZiF-Forschungsgruppe Science in the Context of Application: Methodological Change, Conceptual Transformation, Cultural Reorientation":
-    oId: RG45
-  "ZiF-Forschungsgruppe Semantical Aspects of Spacetime Theories":
-    oId: RG28
-  "ZiF-Forschungsgruppe Sozialplanung":
-    oId: RG2
-  "ZiF-Forschungsgruppe Sozialtherapeutische Anstalten im Justizvollzug":
-    oId: RG14
-  "ZiF-Forschungsgruppe Staatsaufgaben":
-    oId: RG24
-  "ZiF-Forschungsgruppe Steuerung und Erfolgskontrolle im öffentlichen Sektor":
-    oId: RG15
-  "ZiF-Forschungsgruppe Stochastic Dynamics: Mathematical Theory and Applications":
-    oId: RG60
-  "ZiF-Forschungsgruppe Stochastic Modeling in the Sciences":
-    oId: RG43
-  "ZiF-Forschungsgruppe The Cultural Constitution of Causal Cognition: Re-Integrating Anthropology into the Cognitive Sciences":
-    oId: RG50
-  "ZiF-Forschungsgruppe The Message of Quantum Science - Attempts Towards a Synthesis":
-    oId: RG59
-  "ZiF-Forschungsgruppe The Sciences of Complexity. From Mathematics to Technology to a Sustainable World":
-    oId: RG39
-  "ZiF-Forschungsgruppe Theorie des sozialen Wandels":
-    oId: RG36
-  "ZiF-Forschungsgruppe Vergleichende Verhaltensontogenese bei Mensch und Tier":
-    oId: RG10
-  "ZiF-Kooperationsgruppe Der Fall als Fokus professionellen Handelns":
-    oId: RG55
-  "ZiF-Kooperationsgruppe Der Weg zu globaler sozialer citizenship: Die Menschenrechtsperspektive in der globalen Sozialpolitik":
-    oId: RG58
-  "ZiF-Kooperationsgruppe Endliche projektive Ringgeometrien: Eine Brücke zwischen Quanteninformationstheorie, der Physik Schwarzer Löcher und Quantenchemie":
-    oId: RG56
-  "ZiF-Kooperationsgruppe Kommunikative Darstellung und klinische Repräsentation von Angst":
-    oId: RG52
-  "ZiF-Kooperationsgruppe Public Health Genetics":
-    oId: RG51
-  "ZiF-Kooperationsgruppe Sozioökonomische Modellierung":
-    oId: RG53
-  "ZiF-Kooperationsgruppe Suchmethodologien":
-    oId: RG57
-  "ZiF-Kooperationsgruppe Transnationalisation and Development(s): Concepts and Venues for Research":
-    oId: RG54
+research_group:
+  "SP-01 - Learning to attend in sensorimotor task":
+    oId: RG10000
+  "SP-03 - Visual attention and decision making in insects":
+    oId: RG10001
+  "SP-05 - Social Motorics":
+    oId: RG10002
+  "SP-07 - Cognitive control and neurophysiological bases of planning and executing manual actions":
+    oId: RG10003
+  "SP-10 - Monitoring real-time real-world interaction in an identified neuron":
+    oId: RG10004
+  "IP-07 - Computational pragmatics - multimodal intention processing system":
+    oId: RG10005
+  "IP-08 - Active pre-touch sensing: from biology to neuromorphic biomimetic artifacts":
+    oId: RG10006
+  "IP-10 - Bio-inspired lightweight omni-directional visual system with local gain control":
+    oId: RG10007
+  "IP-13 - Towards a model for the incremental co-development of linguistic and conceptual representation of action":
+    oId: RG10008
+  "IP-15 - GoToGoal - Experimental Investigation of Goal Babbling":
+    oId: RG10009
+  "IP-18 - Interactional Coordination and Incrementality in HRI":
+    oId: RG10010
+  "IP-19 - Brain-machine interfaces to improve human-machine interaction using resource efficiency and adaptivity":
+    oId: RG10011
+  "IP-24 - Single and Dyadic Visuo-Haptic Task Learning":
+    oId: RG10012
+  "LSP-01 - The Cognitive Service Robotics Apartment as Ambient Host":
+    oId: RG10013
+  "LSP-02 - Deep Familiarization and Learning Grounded in Cooperative Manual Action and Language":
+    oId: RG10014
+  "LSP-03 - Intelligent Coaching Space":
+    oId: RG10015
+  "LSP-04 - Embodied Interaction as a Core of Cognitive Interaction: A holistic approach towards autonomous walking system":
+    oId: RG10016
+
+#  "ZiF-Forschungsgruppe Biological Foundations of Human Culture":
+#    oId: RG27
+#  "ZiF-Forschungsgruppe Bürger, Bürgerlichkeit und bürgerliche Gesellschaft. Das 19. Jahrhundert im europäischen Vergleich":
+#    oId: RG22
+#  "ZiF-Forschungsgruppe Challenges to the Image of Humanity and Human Dignity by New Devlopments in Medical Technology":
+#    oId: RG48
+#  "ZiF-Forschungsgruppe Combinatorics and its Applications":
+#    oId: RG26
+#  "ZiF-Forschungsgruppe Communicating Disaster":
+#    oId: RG49
+#  "ZiF-Forschungsgruppe Complex Liquids":
+#    oId: RG21
+#  "ZiF-Forschungsgruppe Constituents and Confinement":
+#    oId: RG17
+#  "ZiF-Forschungsgruppe Control of Violence":
+#    oId: RG46
+#  "ZiF-Forschungsgruppe Die Probabilistische Revolution 1800 - 1930: Dynamik wissenschaftlicher Entwicklung":
+#    oId: RG16
+#  "ZiF-Forschungsgruppe Dynamische Modelle und statistische Methoden":
+#    oId: RG6
+#  "ZiF-Forschungsgruppe E Pluribus Unum? - Ethnic Identities in Processes of Transnational Integration in the Americas":
+#    oId: RG47
+#  "ZiF-Forschungsgruppe Eigenschaften und Reaktionen isolierter Moleküle und Atome":
+#    oId: RG12
+#  "ZiF-Forschungsgruppe Embodied Communications in Humans and Machines":
+#    oId: RG44
+#  "ZiF-Forschungsgruppe Emotions as Bio-Cultural Processes":
+#    oId: RG42
+#  "ZiF-Forschungsgruppe Funktionsgeschichte literarischer Utopien in der frühen Neuzeit":
+#    oId: RG13
+#  "ZiF-Forschungsgruppe Game Theory in the Behavioral Sciences":
+#    oId: RG23
+#  "ZiF-Forschungsgruppe General Theory of Information Transfer and Combinatorics":
+#    oId: RG41
+#  "ZiF-Forschungsgruppe Historische Bestimmungsfaktoren für die Organisationsformen der modernen Wirtschaftsunternehmen":
+#    oId: RG7
+#  "ZiF-Forschungsgruppe Historische Sinnbildung":
+#    oId: RG32
+#  "ZiF-Forschungsgruppe Infinitely Many Degrees of Freedom - Physics and Mathematics":
+#    oId: RG19
+#  "ZiF-Forschungsgruppe Interactions of Oriented Molecules":
+#    oId: RG34
+#  "ZiF-Forschungsgruppe Interdisziplinäres Forschungsjahr 1978/79":
+#    oId: RG11
+#  "ZiF-Forschungsgruppe Journalismus und Wissenschaft":
+#    oId: RG3
+#  "ZiF-Forschungsgruppe Jugendhilfeplanung":
+#    oId: RG9
+#  "ZiF-Forschungsgruppe Linguistik und Geschichte":
+#    oId: RG8
+#  "ZiF-Forschungsgruppe Making Choices":
+#    oId: RG38
+#  "ZiF-Forschungsgruppe Mathematische Probleme der Quantendynamik":
+#    oId: RG5
+#  "ZiF-Forschungsgruppe Mengenlehre - Logik - Linguistik":
+#    oId: RG1
+#  "ZiF-Forschungsgruppe Mental Models in Discourse Processing":
+#    oId: RG29
+#  "ZiF-Forschungsgruppe Mind and Brain - Perspectives in Theoretical Psychology and the Philosophy of Mind":
+#    oId: RG25
+#  "ZiF-Forschungsgruppe Multi-Scale Phenomena: The Simulation of Complex Systems on Massively Parallel Computers":
+#    oId: RG35
+#  "ZiF-Forschungsgruppe Nationale Selbst- und Fremdbilder in osteuropäischen Staaten - Manifestationen im Diskurs":
+#    oId: RG30
+#  "ZiF-Forschungsgruppe Perception and Action":
+#    oId: RG20
+#  "ZiF-Forschungsgruppe Perception and the Role of Evolutionary Internalized Regularities of the Physical World":
+#    oId: RG33
+#  "ZiF-Forschungsgruppe Prerational Intelligence":
+#    oId: RG31
+#  "ZiF-Forschungsgruppe Procedural Approaches to Conflict Resolution. Designing Analytical Support for Interactive Group Decision Making":
+#    oId: RG40
+#  "ZiF-Forschungsgruppe Rationale Umweltpolitik - Rationales Umweltrecht":
+#    oId: RG37
+#  "ZiF-Forschungsgruppe Recht und Sozialwissenschaften":
+#    oId: RG4
+#  "ZiF-Forschungsgruppe Science in the Context of Application: Methodological Change, Conceptual Transformation, Cultural Reorientation":
+#    oId: RG45
+#  "ZiF-Forschungsgruppe Semantical Aspects of Spacetime Theories":
+#    oId: RG28
+#  "ZiF-Forschungsgruppe Sozialplanung":
+#    oId: RG2
+#  "ZiF-Forschungsgruppe Sozialtherapeutische Anstalten im Justizvollzug":
+#    oId: RG14
+#  "ZiF-Forschungsgruppe Staatsaufgaben":
+#    oId: RG24
+#  "ZiF-Forschungsgruppe Steuerung und Erfolgskontrolle im öffentlichen Sektor":
+#    oId: RG15
+#  "ZiF-Forschungsgruppe Stochastic Dynamics: Mathematical Theory and Applications":
+#    oId: RG60
+#  "ZiF-Forschungsgruppe Stochastic Modeling in the Sciences":
+#    oId: RG43
+#  "ZiF-Forschungsgruppe The Cultural Constitution of Causal Cognition: Re-Integrating Anthropology into the Cognitive Sciences":
+#    oId: RG50
+#  "ZiF-Forschungsgruppe The Message of Quantum Science - Attempts Towards a Synthesis":
+#    oId: RG59
+#  "ZiF-Forschungsgruppe The Sciences of Complexity. From Mathematics to Technology to a Sustainable World":
+#    oId: RG39
+#  "ZiF-Forschungsgruppe Theorie des sozialen Wandels":
+#    oId: RG36
+#  "ZiF-Forschungsgruppe Vergleichende Verhaltensontogenese bei Mensch und Tier":
+#    oId: RG10
+#  "ZiF-Kooperationsgruppe Der Fall als Fokus professionellen Handelns":
+#    oId: RG55
+#  "ZiF-Kooperationsgruppe Der Weg zu globaler sozialer citizenship: Die Menschenrechtsperspektive in der globalen Sozialpolitik":
+#    oId: RG58
+#  "ZiF-Kooperationsgruppe Endliche projektive Ringgeometrien: Eine Brücke zwischen Quanteninformationstheorie, der Physik Schwarzer Löcher und Quantenchemie":
+#    oId: RG56
+#  "ZiF-Kooperationsgruppe Kommunikative Darstellung und klinische Repräsentation von Angst":
+#    oId: RG52
+#  "ZiF-Kooperationsgruppe Public Health Genetics":
+#    oId: RG51
+#  "ZiF-Kooperationsgruppe Sozioökonomische Modellierung":
+#    oId: RG53
+#  "ZiF-Kooperationsgruppe Suchmethodologien":
+#    oId: RG57
+#  "ZiF-Kooperationsgruppe Transnationalisation and Development(s): Concepts and Venues for Research":
+#    oId: RG54
 
 ddc:
   000:
@@ -1486,3 +1521,1138 @@ ddc:
     970: "-- 970 History of North America"
     980: "-- 980 History of South America"
     990: "-- 990 History of other areas"
+
+jel:
+  "A":
+    optgroup: "A - General Economics and Teaching"
+    "A1":
+      optgroup: "- A1 General Economics"
+      "A10": "-- A10 General"
+      "A11": "-- A11 Role of Economics &bull; Role of Economists &bull; Market for Economists"
+      "A12": "-- A12 Relation of Economics to Other Disciplines"
+      "A13": "-- A13 Relation of Economics to Social Values"
+      "A14": "-- A14 Sociology of Economics"
+      "A19": "-- A19 Other"
+    "A2":
+      optgroup: "- A2 Economic Education and Teaching of Economics"
+      "A20": "-- A20 General"
+      "A21": "-- A21 Pre-college"
+      "A22": "-- A22 Undergraduate"
+      "A23": "-- A23 Graduate"
+      "A29": "-- A29 Other"
+    "A3":
+      optgroup: "- A3 Collective Works"
+      "A30": "-- A30 General"
+      "A31": "-- A31 Collected Writings of Individuals"
+      "A32": "-- A32 Collective Volumes"
+      "A33": "-- A33 Handbooks"
+      "A39": "-- A39 Other"
+  "B":
+    optgroup: "B - History of Economic Thought, Methodology, and Heterodox Approaches"
+    "B0":
+      optgroup: "- B0 General"
+      "B00": "-- B00 General"
+    "B1":
+      optgroup: "- B1 History of Economic Thought through 1925"
+      "B10": "-- B10 General"
+      "B11": "-- B11 Preclassical (Ancient, Medieval, Mercantilist, Physiocratic)"
+      "B12": "-- B12 Classical (includes Adam Smith)"
+      "B13": "-- B13 Neoclassical through 1925 (Austrian, Marshallian, Walrasian, Stockholm School)"
+      "B14": "-- B14 Socialist &bull; Marxist"
+      "B15": "-- B15 Historical &bull; Institutional &bull; Evolutionary"
+      "B16": "-- B16 Quantitative and Mathematical"
+      "B19": "-- B19 Other"
+    "B2":
+      optgroup: "- B2 History of Economic Thought since 1925"
+      "B20": "-- B20 General"
+      "B21": "-- B21 Microeconomics"
+      "B22": "-- B22 Macroeconomics"
+      "B23": "-- B23 Econometrics &bull; Quantitative and Mathematical Studies"
+      "B24": "-- B24 Socialist &bull; Marxist &bull; Sraffian"
+      "B25": "-- B25 Historical &bull; Institutional &bull; Evolutionary &bull; Austrian"
+      "B26": "-- B26 Financial Economics"
+      "B29": "-- B29 Other"
+    "B3":
+      optgroup: "- B3 History of Economic Thought: Individuals"
+      "B30": "-- B30 General"
+      "B31": "-- B31 Individuals"
+      "B32": "-- B32 Obituaries"
+    "B4":
+      optgroup: "- B4 Economic Methodology"
+      "B40": "-- B40 General"
+      "B41": "-- B41 Economic Methodology"
+      "B49": "-- B49 Other"
+    "B5":
+      optgroup: "- B5 Current Heterodox Approaches"
+      "B50": "-- B50 General"
+      "B51": "-- B51 Socialist &bull; Marxian &bull; Sraffian"
+      "B52": "-- B52 Institutional &bull; Evolutionary"
+      "B53": "-- B53 Austrian"
+      "B54": "-- B54 Feminist Economics"
+      "B59": "-- B59 Other"
+  "C":
+    optgroup: "C - Mathematical and Quantitative Methods"
+    "C0":
+      optgroup: "- C0 General"
+      "C00": "-- C00 General"
+      "C01": "-- C01 Econometrics"
+      "C02": "-- C02 Mathematical Methods"
+    "C1":
+      optgroup: "- C1 Econometric and Statistical Methods and Methodology: General"
+      "C10": "-- C10 General"
+      "C11": "-- C11 Bayesian Analysis: General"
+      "C12": "-- C12 Hypothesis Testing: General"
+      "C13": "-- C13 Estimation: General"
+      "C14": "-- C14 Semiparametric and Nonparametric Methods: General"
+      "C15": "-- C15 Statistical Simulation Methods: General"
+      "C18": "-- C18 Methodological Issues: General"
+      "C19": "-- C19 Other"
+    "C2":
+      optgroup: "- C2 Single Equation Models &bull; Single Variables"
+      "C20": "-- C20 General"
+      "C21": "-- C21 Cross-Sectional Models &bull; Spatial Models &bull; Treatment Effect Models &bull; Quantile Regressions"
+      "C22": "-- C22 Time-Series Models &bull; Dynamic Quantile Regressions &bull; Dynamic Treatment Effect Models &bull; Diffusion Processes"
+      "C23": "-- C23 Panel Data Models &bull; Spatio-temporal Models"
+      "C24": "-- C24 Truncated and Censored Models &bull; Switching Regression Models &bull; Threshold Regression Models"
+      "C25": "-- C25 Discrete Regression and Qualitative Choice Models &bull; Discrete Regressors &bull; Proportions &bull; Probabilities"
+      "C26": "-- C26 Instrumental Variables (IV) Estimation"
+      "C29": "-- C29 Other"
+    "C3":
+      optgroup: "- C3 Multiple or Simultaneous Equation Models &bull; Multiple Variables"
+      "C30": "-- C30 General"
+      "C31": "-- C31 Cross-Sectional Models &bull; Spatial Models &bull; Treatment Effect Models &bull; Quantile Regressions &bull; Social Interaction Models"
+      "C32": "-- C32 Time-Series Models &bull; Dynamic Quantile Regressions &bull; Dynamic Treatment Effect Models &bull; Diffusion Processes &bull; State Space Models"
+      "C33": "-- C33 Panel Data Models &bull; Spatio-temporal Models"
+      "C34": "-- C34 Truncated and Censored Models &bull; Switching Regression Models"
+      "C35": "-- C35 Discrete Regression and Qualitative Choice Models &bull; Discrete Regressors &bull; Proportions"
+      "C36": "-- C36 Instrumental Variables (IV) Estimation"
+      "C38": "-- C38 Classification Methods &bull; Cluster Analysis &bull; Principal Components &bull; Factor Models"
+      "C39": "-- C39 Other"
+    "C4":
+      optgroup: "- C4 Econometric and Statistical Methods: Special Topics"
+      "C40": "-- C40 General"
+      "C41": "-- C41 Duration Analysis &bull; Optimal Timing Strategies"
+      "C43": "-- C43 Index Numbers and Aggregation"
+      "C44": "-- C44 Operations Research &bull; Statistical Decision Theory"
+      "C45": "-- C45 Neural Networks and Related Topics"
+      "C46": "-- C46 Specific Distributions &bull; Specific Statistics"
+      "C49": "-- C49 Other"
+    "C5":
+      optgroup: "- C5 Econometric Modeling"
+      "C50": "-- C50 General"
+      "C51": "-- C51 Model Construction and Estimation"
+      "C52": "-- C52 Model Evaluation, Validation, and Selection"
+      "C53": "-- C53 Forecasting and Prediction Methods &bull; Simulation Methods"
+      "C54": "-- C54 Quantitative Policy Modeling"
+      "C55": "-- C55 Large Data Sets: Modeling and Analysis"
+      "C57": "-- C57 Econometrics of Games and Auctions"
+      "C58": "-- C58 Financial Econometrics"
+      "C59": "-- C59 Other"
+    "C6":
+      optgroup: "- C6 Mathematical Methods &bull; Programming Models &bull; Mathematical and Simulation Modeling"
+      "C60": "-- C60 General"
+      "C61": "-- C61 Optimization Techniques &bull; Programming Models &bull; Dynamic Analysis"
+      "C62": "-- C62 Existence and Stability Conditions of Equilibrium"
+      "C63": "-- C63 Computational Techniques &bull; Simulation Modeling"
+      "C65": "-- C65 Miscellaneous Mathematical Tools"
+      "C67": "-- C67 Input&ndash;Output Models"
+      "C68": "-- C68 Computable General Equilibrium Models"
+      "C69": "-- C69 Other"
+    "C7":
+      optgroup: "- C7 Game Theory and Bargaining Theory"
+      "C70": "-- C70 General"
+      "C71": "-- C71Cooperative Games"
+      "C72": "-- C72 Noncooperative Games"
+      "C73": "-- C73 Stochastic and Dynamic Games &bull; Evolutionary Games &bull; Repeated Games"
+      "C78": "-- C78 Bargaining Theory &bull; Matching Theory"
+      "C79": "-- C79 Other"
+    "C8":
+      optgroup: "- C8 Data Collection and Data Estimation Methodology &bull; Computer Programs"
+      "C80": "-- C80 General"
+      "C81": "-- C81 Methodology for Collecting, Estimating, and Organizing Microeconomic Data &bull; Data Access"
+      "C82": "-- C82 Methodology for Collecting, Estimating, and Organizing Macroeconomic Data &bull; Data Access"
+      "C83": "-- C83 Survey Methods &bull; Sampling Methods"
+      "C87": "-- C87 Econometric Software"
+      "C88": "-- C88 Other Computer Software"
+      "C89": "-- C89 Other"
+    "C9":
+      optgroup: "- C9 Design of Experiments"
+      "C90": "-- C90 General"
+      "C91": "-- C91 Laboratory, Individual Behavior"
+      "C92": "-- C92 Laboratory, Group Behavior"
+      "C93": "-- C93 Field Experiments"
+      "C99": "-- C99 Other"
+  "D":
+    optgroup: "D - Microeconomics"
+    "D0":
+      optgroup: "- D0 General"
+      "D00": "-- D00 General"
+      "D01": "-- D01 Microeconomic Behavior: Underlying Principles"
+      "D02": "-- D02 Institutions: Design, Formation, Operations, and Impact"
+      "D03": "-- D03 Behavioral Microeconomics: Underlying Principles"
+      "D04": "-- D04 Microeconomic Policy: Formulation, Implementation, and Evaluation"
+    "D1":
+      optgroup: "- D1 Household Behavior and Family Economics"
+      "D10": "-- D10 General"
+      "D11": "-- D11 Consumer Economics: Theory"
+      "D12": "-- D12 Consumer Economics: Empirical Analysis"
+      "D13": "-- D13 Household Production and Intrahousehold Allocation"
+      "D14": "-- D14 Household Saving; Personal Finance"
+      "D18": "-- D18 Consumer Protection"
+      "D19": "-- D19 Other"
+    "D2":
+      optgroup: "- D2 Production and Organizations"
+      "D20": "-- D20 General"
+      "D21": "-- D21 Firm Behavior: Theory"
+      "D22": "-- D22 Firm Behavior: Empirical Analysis"
+      "D23": "-- D23 Organizational Behavior &bull; Transaction Costs &bull; Property Rights"
+      "D24": "-- D24 Production &bull; Cost &bull; Capital &bull; Capital, Total Factor, and Multifactor Productivity &bull; Capacity"
+      "D29": "-- D29 Other"
+    "D3":
+      optgroup: "- D3 Distribution"
+      "D30": "-- D30 General"
+      "D31": "-- D31 Personal Income, Wealth, and Their Distributions"
+      "D33": "-- D33 Factor Income Distribution"
+      "D39": "-- D39 Other"
+    "D4":
+      optgroup: "- D4 Market Structure, Pricing, and Design"
+      "D40": "-- D40 General"
+      "D41": "-- D41 Perfect Competition"
+      "D42": "-- D42 Monopoly"
+      "D43": "-- D43 Oligopoly and Other Forms of Market Imperfection"
+      "D44": "-- D44 Auctions"
+      "D45": "-- D45 Rationing &bull; Licensing"
+      "D46": "-- D46 Value Theory"
+      "D47": "-- D47 Market Design"
+      "D49": "-- D49 Other"
+    "D5":
+      optgroup: "- D5 General Equilibrium and Disequilibrium"
+      "D50": "-- D50 General"
+      "D51": "-- D51 Exchange and Production Economies"
+      "D52": "-- D52 Incomplete Markets"
+      "D53": "-- D53 Financial Markets"
+      "D57": "-- D57 Input&ndash;Output Tables and Analysis"
+      "D58": "-- D58 Computable and Other Applied General Equilibrium Models"
+      "D59": "-- D59 Other"
+    "D6":
+      optgroup: "- D6 Welfare Economics"
+      "D60": "-- D60 General"
+      "D61": "-- D61 Allocative Efficiency &bull; Cost&ndash;Benefit Analysis"
+      "D62": "-- D62 Externalities"
+      "D63": "-- D63 Equity, Justice, Inequality, and Other Normative Criteria and Measurement"
+      "D64": "-- D64 Altruism &bull; Philanthropy"
+      "D69": "-- D69 Other"
+    "D7":
+      optgroup: "- D7 Analysis of Collective Decision-Making"
+      "D70": "-- D70 General"
+      "D71": "-- D71 Social Choice &bull; Clubs &bull; Committees &bull; Associations"
+      "D72": "-- D72 Political Processes: Rent-Seeking, Lobbying, Elections, Legislatures, and Voting Behavior"
+      "D73": "-- D73 Bureaucracy &bull; Administrative Processes in Public Organizations &bull; Corruption"
+      "D74": "-- D74 Conflict &bull; Conflict Resolution &bull; Alliances &bull; Revolutions"
+      "D78": "-- D78 Positive Analysis of Policy Formulation and Implementation"
+      "D79": "-- D79 Other"
+    "D8":
+      optgroup: "- D8 Information, Knowledge, and Uncertainty"
+      "D80": "-- D80 General"
+      "D81": "-- D81 Criteria for Decision-Making under Risk and Uncertainty"
+      "D82": "-- D82 Asymmetric and Private Information &bull; Mechanism Design"
+      "D83": "-- D83 Search &bull; Learning &bull; Information and Knowledge &bull; Communication &bull; Belief &bull; Unawareness"
+      "D84": "-- D84 Expectations &bull; Speculations"
+      "D85": "-- D85 Network Formation and Analysis: Theory"
+      "D86": "-- D86 Economics of Contract: Theory"
+      "D87": "-- D87 Neuroeconomics"
+      "D89": "-- D89 Other"
+    "D9":
+      optgroup: "- D9 Intertemporal Choice"
+      "D90": "-- D90 General"
+      "D91": "-- D91 Intertemporal Household Choice &bull; Life Cycle Models and Saving"
+      "D92": "-- D92 Intertemporal Firm Choice, Investment, Capacity, and Financing"
+      "D99": "-- D99 Other"
+  "E":
+    optgroup: "E - Macroeconomics and Monetary Economics"
+    "E0":
+      optgroup: "- E0 General"
+      "E00": "-- E00 General"
+      "E01": "-- E01 Measurement and Data on National Income and Product Accounts and Wealth &bull; Environmental Accounts"
+      "E02": "-- E02 Institutions and the Macroeconomy"
+      "E03": "-- E03 Behavioral Macroeconomics"
+    "E1":
+      optgroup: "- E1 General Aggregative Models"
+      "E10": "-- E10 General"
+      "E11": "-- E11 Marxian &bull; Sraffian &bull; Kaleckian"
+      "E12": "-- E12 Keynes &bull; Keynesian &bull; Post-Keynesian"
+      "E14": "-- E14 Austrian &bull; Evolutionary &bull; Institutional"
+      "E13": "-- E13 Neoclassical"
+      "E16": "-- E16 Social Accounting Matrix"
+      "E17": "-- E17 Forecasting and Simulation: Models and Applications"
+      "E19": "-- E19 Other"
+    "E2":
+      optgroup: "- E2 Consumption, Saving, Production, Investment, Labor Markets, and Informal Economy"
+      "E20": "-- E20 General"
+      "E21": "-- E21 Consumption &bull; Saving &bull; Wealth"
+      "E22": "-- E22 Investment &bull; Capital &bull; Intangible Capital &bull; Capacity"
+      "E23": "-- E23 Production"
+      "E24": "-- E24 Employment &bull; Unemployment &bull; Wages &bull; Intergenerational Income Distribution &bull; Aggregate Human Capital &bull; Aggregate Labor Productivity"
+      "E25": "-- E25 Aggregate Factor Income Distribution"
+      "E26": "-- E26 Informal Economy &bull; Underground Economy"
+      "E27": "-- E27 Forecasting and Simulation: Models and Applications"
+      "E29": "-- E29 Other"
+    "E3":
+      optgroup: "- E3 Prices, Business Fluctuations, and Cycles"
+      "E30": "-- E30 General"
+      "E31": "-- E31 Price Level &bull; Inflation &bull; Deflation"
+      "E32": "-- E32 Business Fluctuations &bull; Cycles"
+      "E37": "-- E37 Forecasting and Simulation: Models and Applications"
+      "E39": "-- E39 Other"
+    "E4":
+      optgroup: "- E4 Money and Interest Rates"
+      "E40": "-- E40 General"
+      "E41": "-- E41 Demand for Money"
+      "E42": "-- E42 Monetary Systems &bull; Standards &bull; Regimes &bull; Government and the Monetary System &bull; Payment Systems"
+      "E43": "-- E43 Interest Rates: Determination, Term Structure, and Effects"
+      "E44": "-- E44 Financial Markets and the Macroeconomy"
+      "E47": "-- E47 Forecasting and Simulation: Models and Applications"
+      "E49": "-- E49 Other"
+    "E5":
+      optgroup: "- E5 Monetary Policy, Central Banking, and the Supply of Money and Credit"
+      "E50": "-- E50 General"
+      "E51": "-- E51 Money Supply &bull; Credit &bull; Money Multipliers"
+      "E52": "-- E52 Monetary Policy"
+      "E58": "-- E58 Central Banks and Their Policies"
+      "E59": "-- E59 Other"
+    "E6":
+      opgroup: "- E6 Macroeconomic Policy, Macroeconomic Aspects of Public Finance, and General Outlook"
+      "E60": "-- E60 General"
+      "E61": "-- E61 Policy Objectives &bull; Policy Designs and Consistency &bull; Policy Coordination"
+      "E62": "-- E62 Fiscal Policy"
+      "E63": "-- E63 Comparative or Joint Analysis of Fiscal and Monetary Policy &bull; Stabilization &bull; Treasury Policy"
+      "E64": "-- E64 Incomes Policy &bull; Price Policy"
+      "E65": "-- E65 Studies of Particular Policy Episodes"
+      "E66": "-- E66 General Outlook and Conditions"
+      "E69": "-- E69 Other"
+  "F":
+    optgroup: "F - International Economics"
+    "F0":
+      optgroup: "- F0 General"
+      "F00": "-- F00 General"
+      "F01": "-- F01 Global Outlook"
+      "F02": "-- F02 International Economic Order and Integration"
+    "F1":
+      optgroup: "- F1 Trade"
+      "F10": "-- F10 General"
+      "F11": "-- F11 Neoclassical Models of Trade"
+      "F12": "-- F12 Models of Trade with Imperfect Competition and Scale Economies &bull; Fragmentation"
+      "F13": "-- F13 Trade Policy &bull; International Trade Organizations"
+      "F14": "-- F14 Empirical Studies of Trade"
+      "F15": "-- F15 Economic Integration"
+      "F16": "-- F16 Trade and Labor Market Interactions"
+      "F17": "-- F17 Trade Forecasting and Simulation"
+      "F18": "-- F18 Trade and Environment"
+      "F19": "-- F19 Other"
+    "F2":
+      optgroup: "- F2 International Factor Movements and International Business"
+      "F20": "-- F20 General"
+      "F21": "-- F21 International Investment &bull; Long-Term Capital Movements"
+      "F22": "-- F22 International Migration"
+      "F23": "-- F23 Multinational Firms &bull; International Business"
+      "F24": "-- F24 Remittances"
+      "F29": "-- F29 Other"
+    "F3":
+      optgroup: "- F3 International Finance"
+      "F30": "-- F30 General"
+      "F31": "-- F31 Foreign Exchange"
+      "F32": "-- F32 Current Account Adjustment &bull; Short-Term Capital Movements"
+      "F33": "-- F33 International Monetary Arrangements and Institutions"
+      "F34": "-- F34 International Lending and Debt Problems"
+      "F35": "-- F35 Foreign Aid"
+      "F36": "-- F36 Financial Aspects of Economic Integration"
+      "F37": "-- F37 International Finance Forecasting and Simulation: Models and Applications"
+      "F38": "-- F38 International Financial Policy: Financial Transactions Tax; Capital Controls"
+      "F39": "-- F39 Other"
+    "F4":
+      optgroup: "- F4 Macroeconomic Aspects of International Trade and Finance"
+      "F40": "-- F40 General"
+      "F41": "-- F41 Open Economy Macroeconomics"
+      "F42": "-- F42 International Policy Coordination and Transmission"
+      "F43": "-- F43 Economic Growth of Open Economies"
+      "F44": "-- F44 International Business Cycles"
+      "F45": "-- F45 Macroeconomic Issues of Monetary Unions"
+      "F47": "-- F47 Forecasting and Simulation: Models and Applications"
+      "F49": "-- F49 Other"
+    "F5":
+      optgroup: "- F5 International Relations, National Security, and International Political Economy"
+      "F50": "-- F50 General"
+      "F51": "-- F51 International Conflicts &bull; Negotiations &bull; Sanctions"
+      "F52": "-- F52 National Security &bull; Economic Nationalism"
+      "F53": "-- F53 International Agreements and Observance &bull; International Organizations"
+      "F54": "-- F54 Colonialism &bull; Imperialism &bull; Postcolonialism"
+      "F55": "-- F55 International Institutional Arrangements"
+      "F59": "-- F59 Other"
+    "F6":
+      optgroup: "- F6 Economic Impacts of Globalization"
+      "F60": "-- F60 General"
+      "F61": "-- F61 Microeconomic Impacts"
+      "F62": "-- F62 Macroeconomic Impacts"
+      "F63": "-- F63 Economic Development"
+      "F64": "-- F64 Environment"
+      "F65": "-- F65 Finance"
+      "F66": "-- F66 Labor"
+      "F68": "-- F68 Policy"
+      "F69": "-- F69 Other"
+  "G":
+    optgroup: "G - Financial Economics"
+    "G0":
+      optgroup: "- G0 General"
+      "G00": "-- G00 General"
+      "G01": "-- G01 Financial Crises"
+      "G02": "-- G02 Behavioral Finance: Underlying Principles"
+    "G1":
+      optgroup: "- G1 General Financial Markets"
+      "G10": "-- G10 General"
+      "G11": "-- G11 Portfolio Choice &bull; Investment Decisions"
+      "G12": "-- G12 Asset Pricing &bull; Trading Volume &bull; Bond Interest Rates"
+      "G13": "-- G13 Contingent Pricing &bull; Futures Pricing"
+      "G14": "-- G14 Information and Market Efficiency &bull; Event Studies &bull; Insider Trading"
+      "G15": "-- G15 International Financial Markets"
+      "G17": "-- G17 Financial Forecasting and Simulation"
+      "G18": "-- G18 Government Policy and Regulation"
+      "G19": "-- G19 Other"
+    "G2":
+      optgroup: "- G2 Financial Institutions and Services"
+      "G20": "-- G20 General"
+      "G21": "-- G21 Banks &bull; Depository Institutions &bull; Micro Finance Institutions &bull; Mortgages"
+      "G22": "-- G22 Insurance &bull; Insurance Companies &bull; Actuarial Studies"
+      "G23": "-- G23 Non-bank Financial Institutions &bull; Financial Instruments &bull; Institutional Investors"
+      "G24": "-- G24 Investment Banking &bull; Venture Capital &bull; Brokerage &bull; Ratings and Ratings Agencies"
+      "G28": "-- G28 Government Policy and Regulation"
+      "G29": "-- G29 Other"
+    "G3":
+      optgroup: "- G3 Corporate Finance and Governance"
+      "G30": "-- G30 General"
+      "G31": "-- G31 Capital Budgeting &bull; Fixed Investment and Inventory Studies &bull; Capacity"
+      "G32": "-- G32 Financing Policy &bull; Financial Risk and Risk Management &bull; Capital and Ownership Structure &bull; Value of Firms &bull; Goodwill"
+      "G33": "-- G33 Bankruptcy &bull; Liquidation"
+      "G34": "-- G34 Mergers &bull; Acquisitions &bull; Restructuring &bull; Corporate Governance"
+      "G35": "-- G35 Payout Policy"
+      "G38": "-- G38 Government Policy and Regulation"
+      "G39": "-- G39 Other"
+  "H":
+    optgroup: "H - Public Economics"
+    "H0":
+      optgroup: "- H0 General"
+      "H00": "-- H00 General"
+    "H1":
+      optgroup: "- H1 Structure and Scope of Government"
+      "H10": "-- H10 General"
+      "H11": "-- H11 Structure, Scope, and Performance of Government"
+      "H12": "-- H12 Crisis Management"
+      "H13": "-- H13 Economics of Eminent Domain &bull; Expropriation &bull; Nationalization"
+      "H19": "-- H19 Other"
+    "H2":
+      optgroup: "- H2 Taxation, Subsidies, and Revenue"
+      "H20": "-- H20 General"
+      "H21": "-- H21 Efficiency &bull; Optimal Taxation"
+      "H22": "-- H22 Incidence"
+      "H23": "-- H23 Externalities &bull; Redistributive Effects &bull; Environmental Taxes and Subsidies"
+      "H24": "-- H24 Personal Income and Other Nonbusiness Taxes and Subsidies"
+      "H25": "-- H25 Business Taxes and Subsidies"
+      "H26": "-- H26 Tax Evasion and Avoidance"
+      "H27": "-- H27 Other Sources of Revenue"
+      "H29": "-- H29 Other"
+    "H3":
+      optgroup: "- H3 Fiscal Policies and Behavior of Economic Agents"
+      "H30": "-- H30 General"
+      "H31": "-- H31 Household"
+      "H32": "-- H32 Firm"
+      "H39": "-- H39 Other"
+    "H4":
+      optgroup: "- H4 Publicly Provided Goods"
+      "H40": "-- H40 General"
+      "H41": "-- H41 Public Goods"
+      "H42": "-- H42 Publicly Provided Private Goods"
+      "H43": "-- H43 Project Evaluation &bull; Social Discount Rate"
+      "H44": "-- H44 Publicly Provided Goods: Mixed Markets"
+      "H49": "-- H49 Other"
+    "H5":
+      optgroup: "- H5 National Government Expenditures and Related Policies"
+      "H50": "-- H50 General"
+      "H51": "-- H51 Government Expenditures and Health"
+      "H52": "-- H52 Government Expenditures and Education"
+      "H53": "-- H53 Government Expenditures and Welfare Programs"
+      "H54": "-- H54 Infrastructures &bull; Other Public Investment and Capital Stock"
+      "H55": "-- H55 Social Security and Public Pensions"
+      "H56": "-- H56 National Security and War"
+      "H57": "-- H57 Procurement"
+      "H59": "-- H59 Other"
+    "H6":
+      optgroup: "- H6 National Budget, Deficit, and Debt"
+      "H60": "-- H60 General"
+      "H61": "-- H61 Budget &bull; Budget Systems"
+      "H62": "-- H62 Deficit &bull; Surplus"
+      "H63": "-- H63 Debt &bull; Debt Management &bull; Sovereign Debt"
+      "H68": "-- H68 Forecasts of Budgets, Deficits, and Debt"
+      "H69": "-- H69 Other"
+    "H7":
+      optgroup: "- H7 State and Local Government &bull; Intergovernmental Relations"
+      "H70": "-- H70 General"
+      "H71": "-- H71 State and Local Taxation, Subsidies, and Revenue"
+      "H72": "-- H72 State and Local Budget and Expenditures"
+      "H73": "-- H73 Interjurisdictional Differentials and Their Effects"
+      "H74": "-- H74 State and Local Borrowing"
+      "H75": "-- H75 State and Local Government: Health &bull; Education &bull; Welfare &bull; Public Pensions"
+      "H76": "-- H76 State and Local Government: Other Expenditure Categories"
+      "H77": "-- H77 Intergovernmental Relations &bull; Federalism &bull; Secession"
+      "H79": "-- H79 Other"
+    "H8":
+      optgroup: "- H8 Miscellaneous Issues"
+      "H80": "-- H80 General"
+      "H81": "-- H81 Governmental Loans &bull; Loan Guarantees &bull; Credits &bull; Grants &bull; Bailouts"
+      "H82": "-- H82 Governmental Property"
+      "H83": "-- H83 Public Administration &bull; Public Sector Accounting and Audits"
+      "H84": "-- H84 Disaster Aid"
+      "H87": "-- H87 International Fiscal Issues &bull; International Public Goods"
+      "H89": "-- H89 Other"
+  "I":
+    optgroup: "I - Health, Education, and Welfare"
+    "I0":
+      optgroup: "- I0 General"
+      "I00": "-- I00 General"
+    "I1":
+      optgroup: "- I1 Health"
+      "I10": "-- I10 General"
+      "I11": "-- I11 Analysis of Health Care Markets"
+      "I12": "-- I12 Health Behavior"
+      "I13": "-- I13 Health Insurance, Public and Private"
+      "I14": "-- I14 Health and Inequality"
+      "I15": "-- I15 Health and Economic Development"
+      "I18": "-- I18 Government Policy &bull; Regulation &bull; Public Health"
+      "I19": "-- I19 Other"
+    "I2":
+      optgroup: "- I2 Education and Research Institutions"
+      "I20": "-- I20 General"
+      "I21": "-- I21 Analysis of Education"
+      "I22": "-- I22 Educational Finance &bull; Financial Aid"
+      "I23": "-- I23 Higher Education &bull; Research Institutions"
+      "I24": "-- I24 Education and Inequality"
+      "I25": "-- I25 Education and Economic Development"
+      "I26": "-- I26 Returns to Education"
+      "I28": "-- I28 Government Policy"
+      "I29": "-- I29 Other"
+    "I3":
+      optgroup: "- I3 Welfare, Well-Being, and Poverty"
+      "I30": "-- I30 General"
+      "I31": "-- I31 General Welfare, Well-Being"
+      "I32": "-- I32 Measurement and Analysis of Poverty"
+      "I38": "-- I38 Government Policy &bull; Provision and Effects of Welfare Programs"
+      "I39": "-- I39 Other"
+  "J":
+    optgroup: "J - Labor and Demographic Economics"
+    "J0":
+      optgroup: "- J0 General"
+      "J00": "-- J00 General"
+      "J01": "-- J01 Labor Economics: General"
+      "J08": "-- J08 Labor Economics Policies"
+    "J1":
+      optgroup: "- J1 Demographic Economics"
+      "J10": "-- J10 General"
+      "J11": "-- J11 Demographic Trends, Macroeconomic Effects, and Forecasts"
+      "J12": "-- J12 Marriage &bull; Marital Dissolution &bull; Family Structure &bull; Domestic Abuse"
+      "J13": "-- J13 Fertility &bull; Family Planning &bull; Child Care &bull; Children &bull; Youth"
+      "J14": "-- J14 Economics of the Elderly &bull; Economics of the Handicapped &bull; Non-Labor Market Discrimination"
+      "J15": "-- J15 Economics of Minorities, Races, Indigenous Peoples, and Immigrants &bull; Non-labor Discrimination"
+      "J16": "-- J16 Economics of Gender &bull; Non-labor Discrimination"
+      "J17": "-- J17 Value of Life &bull; Forgone Income"
+      "J18": "-- J18 Public Policy"
+      "J19": "-- J19 Other"
+    "J2":
+      optgroup: "- J2 Demand and Supply of Labor"
+      "J20": "-- J20 General"
+      "J21": "-- J21 Labor Force and Employment, Size, and Structure"
+      "J22": "-- J22 Time Allocation and Labor Supply"
+      "J23": "-- J23 Labor Demand"
+      "J24": "-- J24 Human Capital &bull; Skills &bull; Occupational Choice &bull; Labor Productivity"
+      "J26": "-- J26 Retirement &bull; Retirement Policies"
+      "J28": "-- J28 Safety &bull; Job Satisfaction &bull; Related Public Policy"
+      "J29": "-- J29 Other"
+    "J3":
+      optgroup: "- J3 Wages, Compensation, and Labor Costs"
+      "J30": "-- J30 General"
+      "J31": "-- J31 Wage Level and Structure &bull; Wage Differentials"
+      "J32": "-- J32 Nonwage Labor Costs and Benefits &bull; Retirement Plans &bull; Private Pensions"
+      "J33": "-- J33 Compensation Packages &bull; Payment Methods"
+      "J38": "-- J38 Public Policy"
+      "J39": "-- J39 Other"
+    "J4":
+      optgroup: "- J4 Particular Labor Markets"
+      "J40": "-- J40 General"
+      "J41": "-- J41 Labor Contracts"
+      "J42": "-- J42 Monopsony &bull; Segmented Labor Markets"
+      "J43": "-- J43 Agricultural Labor Markets"
+      "J44": "-- J44 Professional Labor Markets &bull; Occupational Licensing"
+      "J45": "-- J45 Public Sector Labor Markets"
+      "J46": "-- J46 Informal Labor Markets"
+      "J47": "-- J47 Coercive Labor Markets"
+      "J48": "-- J48 Public Policy"
+      "J49": "-- J49 Other"
+    "J5":
+      optgroup: "- J5 Labor&ndash;Management Relations, Trade Unions, and Collective Bargaining"
+      "J50": "-- J50 General"
+      "J51": "-- J51 Trade Unions: Objectives, Structure, and Effects"
+      "J52": "-- J52 Dispute Resolution: Strikes, Arbitration, and Mediation &bull; Collective Bargaining"
+      "J53": "-- J53 Labor&ndash;Management Relations &bull; Industrial Jurisprudence"
+      "J54": "-- J54 Producer Cooperatives &bull; Labor Managed Firms &bull; Employee Ownership"
+      "J58": "-- J58 Public Policy"
+      "J59": "-- J59 Other"
+    "J6":
+      optgroup: "- J6 Mobility, Unemployment, Vacancies, and Immigrant Workers"
+      "J60": "-- J60 General"
+      "J61": "-- J61 Geographic Labor Mobility &bull; Immigrant Workers"
+      "J62": "-- J62 Job, Occupational, and Intergenerational Mobility"
+      "J63": "-- J63 Turnover &bull; Vacancies &bull; Layoffs"
+      "J64": "-- J64 Unemployment: Models, Duration, Incidence, and Job Search"
+      "J65": "-- J65 Unemployment Insurance &bull; Severance Pay &bull; Plant Closings"
+      "J68": "-- J68 Public Policy"
+      "J69": "-- J69 Other"
+    "J7":
+      optgroup: "- J7 Labor Discrimination"
+      "J70": "-- J70 General"
+      "J71": "-- J71 Discrimination"
+      "J78": "-- J78 Public Policy"
+      "J79": "-- J79 Other"
+    "J8":
+      optgroup: "- J8 Labor Standards: National and International"
+      "J80": "-- J80 General"
+      "J81": "-- J81 Working Conditions"
+      "J82": "-- J82 Labor Force Composition"
+      "J83": "-- J83 Workers' Rights"
+      "J88": "-- J88 Public Policy"
+      "J89": "-- J89 Other"
+  "K":
+    optgroup: "K - Law and Economics"
+    "K0":
+      optgroup: "- K0 General"
+      "K00": "-- K00 General"
+    "K1":
+      optgroup: "K1 - Basic Areas of Law"
+      "K10": "-- K10 General"
+      "K11": "-- K11 Property Law"
+      "K12": "-- K12 Contract Law"
+      "K13": "-- K13 Tort Law and Product Liability &bull; Forensic Economics"
+      "K14": "-- K14 Criminal Law"
+      "K19": "-- K19 Other"
+    "K2":
+      optgroup: "- K2 Regulation and Business Law"
+      "K20": "-- K20 General"
+      "K21": "-- K21 Antitrust Law"
+      "K22": "-- K22 Business and Securities Law"
+      "K23": "-- K23 Regulated Industries and Administrative Law"
+      "K29": "-- K29 Other"
+    "K3":
+      optgroup: "- K3 Other Substantive Areas of Law"
+      "K30": "-- K30 General"
+      "K31": "-- K31 Labor Law"
+      "K32": "-- K32 Environmental, Health, and Safety Law"
+      "K33": "-- K33 International Law"
+      "K34": "-- K34 Tax Law"
+      "K35": "-- K35 Personal Bankruptcy Law"
+      "K36": "-- K36 Family and Personal Law"
+      "K37": "-- K37 Immigration Law"
+      "K39": "-- K39 Other"
+    "K4":
+      optgroup: "- K4 Legal Procedure, the Legal System, and Illegal Behavior"
+      "K40": "-- K40 General"
+      "K41": "-- K41 Litigation Process"
+      "K42": "-- K42 Illegal Behavior and the Enforcement of Law"
+      "K49": "-- K49 Other"
+  "L":
+    optgroup: "L - Industrial Organization"
+    "L0":
+      optgroup: "- L0 General"
+      "L00": "-- L00 General"
+    "L1":
+      optgroup: "- L1 Market Structure, Firm Strategy, and Market Performance"
+      "L10": "-- L10 General"
+      "L11": "-- L11 Production, Pricing, and Market Structure &bull; Size Distribution of Firms"
+      "L12": "-- L12 Monopoly &bull; Monopolization Strategies"
+      "L13": "-- L13 Oligopoly and Other Imperfect Markets"
+      "L14": "-- L14 Transactional Relationships &bull; Contracts and Reputation &bull; Networks"
+      "L15": "-- L15 Information and Product Quality &bull; Standardization and Compatibility"
+      "L16": "-- L16 Industrial Organization and Macroeconomics: Industrial Structure and Structural Change &bull; Industrial Price Indices"
+      "L17": "-- L17 Open Source Products and Markets"
+      "L19": "-- L19 Other"
+    "L2":
+      optgroup: "- L2 Firm Objectives, Organization, and Behavior"
+      "L20": "-- L20 General"
+      "L21": "-- L21 Business Objectives of the Firm"
+      "L22": "-- L22 Firm Organization and Market Structure"
+      "L23": "-- L23 Organization of Production"
+      "L24": "-- L24 Contracting Out &bull; Joint Ventures &bull; Technology Licensing"
+      "L25": "-- L25 Firm Performance: Size, Diversification, and Scope"
+      "L26": "-- L26 Entrepreneurship"
+      "L29": "-- L29 Other"
+    "L3":
+      optgroup: "- L3 Nonprofit Organizations and Public Enterprise"
+      "L30": "-- L30 General"
+      "L31": "-- L31 Nonprofit Institutions &bull; NGOs &bull; Social Entrepreneurship"
+      "L32": "-- L32 Public Enterprises &bull; Public-Private Enterprises"
+      "L33": "-- L33 Comparison of Public and Private Enterprises and Nonprofit Institutions &bull; Privatization &bull; Contracting Out"
+      "L38": "-- L38 Public Policy"
+      "L39": "-- L39 Other"
+    "L4":
+      optgroup: "- L4 Antitrust Issues and Policies"
+      "L40": "-- L40 General"
+      "L41": "-- L41 Monopolization &bull; Horizontal Anticompetitive Practices"
+      "L42": "-- L42 Vertical Restraints &bull; Resale Price Maintenance &bull; Quantity Discounts"
+      "L43": "-- L43 Legal Monopolies and Regulation or Deregulation"
+      "L44": "-- L44 Antitrust Policy and Public Enterprises, Nonprofit Institutions, and Professional Organizations"
+      "L49": "-- L49 Other"
+    "L5":
+      optgroup: "- L5 Regulation and Industrial Policy"
+      "L50": "-- L50 General"
+      "L51": "-- L51 Economics of Regulation"
+      "L52": "-- L52 Industrial Policy &bull; Sectoral Planning Methods"
+      "L53": "-- L53 Enterprise Policy"
+      "L59": "-- L59 Other"
+    "L6":
+      optgroup: "- L6 Industry Studies: Manufacturing"
+      "L60": "-- L60 General"
+      "L61": "-- L61 Metals and Metal Products &bull; Cement &bull; Glass &bull; Ceramics"
+      "L62": "-- L62 Automobiles &bull; Other Transportation Equipment &bull; Related Parts and Equipment"
+      "L63": "-- L63 Microelectronics &bull; Computers &bull; Communications Equipment"
+      "L64": "-- L64 Other Machinery &bull; Business Equipment &bull; Armaments"
+      "L65": "-- L65 Chemicals &bull; Rubber &bull; Drugs &bull; Biotechnology"
+      "L66": "-- L66 Food &bull; Beverages &bull; Cosmetics &bull; Tobacco &bull; Wine and Spirits"
+      "L67": "-- L67 Other Consumer Nondurables: Clothing, Textiles, Shoes, and Leather Goods; Household Goods; Sports Equipment"
+      "L68": "-- L68 Appliances &bull; Furniture &bull; Other Consumer Durables"
+      "L69": "-- L69 Other"
+    "L7":
+      optgroup: "- L7 Industry Studies: Primary Products and Construction"
+      "L70": "-- L70 General"
+      "L71": "-- L71 Mining, Extraction, and Refining: Hydrocarbon Fuels"
+      "L72": "-- L72 Mining, Extraction, and Refining: Other Nonrenewable Resources"
+      "L73": "-- L73 Forest Products"
+      "L74": "-- L74 Construction"
+      "L78": "-- L78 Government Policy"
+      "L79": "-- L79 Other"
+    "L8":
+      optgroup: "- L8 Industry Studies: Services"
+      "L80": "-- L80 General"
+      "L81": "-- L81 Retail and Wholesale Trade &bull; e-Commerce"
+      "L82": "-- L82 Entertainment &bull; Media"
+      "L83": "-- L83 Sports &bull; Gambling &bull; Restaurants &bull; Recreation &bull; Tourism"
+      "L84": "-- L84 Personal, Professional, and Business Services"
+      "L85": "-- L85 Real Estate Services"
+      "L86": "-- L86 Information and Internet Services &bull; Computer Software"
+      "L87": "-- L87 Postal and Delivery Services"
+      "L88": "-- L88 Government Policy"
+      "L89": "-- L89 Other"
+    "L9":
+      optgroup: "- L9 Industry Studies: Transportation and Utilities"
+      "L90": "-- L90 General"
+      "L91": "-- L91 Transportation: General"
+      "L92": "-- L92 Railroads and Other Surface Transportation"
+      "L93": "-- L93 Air Transportation"
+      "L94": "-- L94 Electric Utilities"
+      "L95": "-- L95 Gas Utilities &bull; Pipelines &bull; Water Utilities"
+      "L96": "-- L96 Telecommunications"
+      "L97": "-- L97 Utilities: General"
+      "L98": "-- L98 Government Policy"
+      "L99": "-- L99 Other"
+  "M":
+    optgroup: "M - Business Administration and Business Economics &bull; Marketing &bull; Accounting &bull; Personnel Economics"
+    "M0":
+      optgroup: "- M0 General"
+      "M00": "-- M00 General"
+    "M1":
+      optgroup: "- M1 Business Administration"
+      "M10": "-- M10 General"
+      "M11": "-- M11 Production Management"
+      "M12": "-- M12 Personnel Management &bull; Executives; Executive Compensation"
+      "M13": "-- M13 New Firms &bull; Startups"
+      "M14": "-- M14 Corporate Culture &bull; Diversity &bull; Social Responsibility"
+      "M15": "-- M15 IT Management"
+      "M16": "-- M16 International Business Administration"
+      "M19": "-- M19 Other"
+    "M2":
+      optgroup: "- M2 Business Economics"
+      "M20": "-- M20 General"
+      "M21": "-- M21 Business Economics"
+      "M29": "-- M29 Other"
+    "M3":
+      optgroup: "- M3 Marketing and Advertising"
+      "M30": "-- M30 General"
+      "M31": "-- M31 Marketing"
+      "M37": "-- M37 Advertising"
+      "M38": "-- M38 Government Policy and Regulation"
+      "M39": "-- M39 Other"
+    "M4":
+      optgroup: "- M4 Accounting and Auditing"
+      "M40": "-- M40 General"
+      "M41": "-- M41 Accounting"
+      "M42": "-- M42 Auditing"
+      "M48": "-- M48 Government Policy and Regulation"
+      "M49": "-- M49 Other"
+    "M5":
+      optgroup: "- M5 Personnel Economics"
+      "M50": "-- M50 General"
+      "M51": "-- M51 Firm Employment Decisions &bull; Promotions"
+      "M52": "-- M52 Compensation and Compensation Methods and Their Effects"
+      "M53": "-- M53 Training"
+      "M54": "-- M54 Labor Management"
+      "M55": "-- M55 Labor Contracting Devices"
+      "M59": "-- M59 Other"
+  "N":
+    optgroup: "N - Economic History"
+    "N0":
+      optgroup: "- N0 General"
+      "N00": "-- N00 General"
+      "N01": "-- N01 Development of the Discipline: Historiographical; Sources and Methods"
+    "N1":
+      optgroup: "- N1 Macroeconomics and Monetary Economics &bull; Industrial Structure &bull; Growth &bull; Fluctuations"
+      "N10": "-- N10 General, International, or Comparative"
+      "N11": "-- N11 U.S. &bull; Canada: Pre-1913"
+      "N12": "-- N12 U.S. &bull; Canada: 1913&ndash;"
+      "N13": "-- N13 Europe: Pre-1913"
+      "N14": "-- N14 Europe: 1913&ndash;"
+      "N15": "-- N15 Asia including Middle East"
+      "N16": "-- N16 Latin America &bull; Caribbean"
+      "N17": "-- N17 Africa &bull; Oceania"
+    "N2":
+      optgroup: "- N2 Financial Markets and Institutions"
+      "N20": "-- N20 General, International, or Comparative"
+      "N21": "-- N21 U.S. &bull; Canada: Pre-1913"
+      "N22": "-- N22 U.S. &bull; Canada: 1913&ndash;"
+      "N23": "-- N23 Europe: Pre-1913"
+      "N24": "-- N24 Europe: 1913&ndash;"
+      "N25": "-- N25 Asia including Middle East"
+      "N26": "-- N26 Latin America &bull; Caribbean"
+      "N27": "-- N27 Africa &bull; Oceania"
+    "N3":
+      optgroup: "- N3 Labor and Consumers, Demography, Education, Health, Welfare, Income, Wealth, Religion, and Philanthropy"
+      "N30": "-- N30 General, International, or Comparative"
+      "N31": "-- N31 U.S. &bull; Canada: Pre-1913"
+      "N32": "-- N32 U.S. &bull; Canada: 1913-"
+      "N33": "-- N33 Europe: Pre-1913"
+      "N34": "-- N34 Europe: 1913-"
+      "N35": "-- N35 Asia including Middle East"
+      "N36": "-- N36 Latin America &bull; Caribbean"
+      "N37": "-- N37 Africa &bull; Oceania"
+    "N4":
+      optgroup: "- N4 Government, War, Law, International Relations, and Regulation"
+      "N40": "-- N40 General, International, or Comparative"
+      "N41": "-- N41 U.S. &bull; Canada: Pre-1913"
+      "N42": "-- N42 U.S. &bull; Canada: 1913&ndash;"
+      "N43": "-- N43 Europe: Pre-1913"
+      "N44": "-- N44 Europe: 1913&ndash;"
+      "N45": "-- N45 Asia including Middle East"
+      "N46": "-- N46 Latin America &bull; Caribbean"
+      "N47": "-- N47 Africa &bull; Oceania"
+    "N5":
+      optgroup: "- N5 Agriculture, Natural Resources, Environment, and Extractive Industries"
+      "N50": "-- N50 General, International, or Comparative"
+      "N51": "-- N51 U.S. &bull; Canada: Pre-1913"
+      "N52": "-- N52 U.S. &bull; Canada: 1913&ndash;"
+      "N53": "-- N53 Europe: Pre-1913"
+      "N54": "-- N54 Europe: 1913&ndash;"
+      "N55": "-- N55 Asia including Middle East"
+      "N56": "-- N56 Latin America &bull; Caribbean"
+      "N57": "-- N57 Africa &bull; Oceania"
+    "N6":
+      optgroup: "- N6 Manufacturing and Construction"
+      "N60": "-- N60 General, International, or Comparative"
+      "N61": "-- N61 U.S. &bull; Canada: Pre-1913"
+      "N62": "-- N62 U.S. &bull; Canada: 1913&ndash;"
+      "N63": "-- N63 Europe: Pre-1913"
+      "N64": "-- N64 Europe: 1913&ndash;"
+      "N65": "-- N65 Asia including Middle East"
+      "N66": "-- N66 Latin America &bull; Caribbean"
+      "N67": "-- N67 Africa &bull; Oceania"
+    "N7":
+      optgroup: "- N7 Transport, Trade, Energy, Technology, and Other Services"
+      "N70": "-- N70 General, International, or Comparative"
+      "N71": "-- N71 U.S. &bull; Canada: Pre-1913"
+      "N72": "-- N72 U.S. &bull; Canada: 1913&ndash;"
+      "N73": "-- N73 Europe: Pre-1913"
+      "N74": "-- N74 Europe: 1913&ndash;"
+      "N75": "-- N75 Asia including Middle East"
+      "N76": "-- N76 Latin America &bull; Caribbean"
+      "N77": "-- N77 Africa &bull; Oceania"
+    "N8":
+      optgroup: "- N8 Micro-Business History"
+      "N80": "-- N80 General, International, or Comparative"
+      "N81": "-- N81 U.S. &bull; Canada: Pre-1913"
+      "N82": "-- N82 U.S. &bull; Canada: 1913&ndash;"
+      "N83": "-- N83 Europe: Pre-1913"
+      "N84": "-- N84 Europe: 1913&ndash;"
+      "N85": "-- N85 Asia including Middle East"
+      "N86": "-- N86 Latin America &bull; Caribbean"
+      "N87": "-- N87 Africa &bull; Oceania"
+    "N9":
+      optgroup: "- N9 Regional and Urban History"
+      "N90": "-- N90 General, International, or Comparative"
+      "N91": "-- N91 U.S. &bull; Canada: Pre-1913"
+      "N92": "-- N92 U.S. &bull; Canada: 1913&ndash;"
+      "N93": "-- N93 Europe: Pre-1913"
+      "N94": "-- N94 Europe: 1913&ndash;"
+      "N95": "-- N95 Asia including Middle East"
+      "N96": "-- N96 Latin America &bull; Caribbean"
+      "N97": "-- N97 Africa &bull; Oceania"
+  "O":
+    optgroup: "O - Economic Development, Innovation, Technological Change, and Growth"
+    "O1":
+      optgroup: "- O1 Economic Development"
+      "O10": "-- O10 General"
+      "O11": "-- O11 Macroeconomic Analyses of Economic Development"
+      "O12": "-- O12 Microeconomic Analyses of Economic Development"
+      "O13": "-- O13 Agriculture &bull; Natural Resources &bull; Energy &bull; Environment &bull; Other Primary Products"
+      "O14": "-- O14 Industrialization &bull; Manufacturing and Service Industries &bull; Choice of Technology"
+      "O15": "-- O15 Human Resources &bull; Human Development &bull; Income Distribution &bull; Migration"
+      "O16": "-- O16 Financial Markets &bull; Saving and Capital Investment &bull; Corporate Finance and Governance"
+      "O17": "-- O17 Formal and Informal Sectors &bull; Shadow Economy &bull; Institutional Arrangements"
+      "O18": "-- O18 Urban, Rural, Regional, and Transportation Analysis &bull; Housing &bull; Infrastructure"
+      "O19": "-- O19 International Linkages to Development &bull; Role of International Organizations"
+    "O2":
+      optgroup: "- O2 Development Planning and Policy"
+      "O20": "-- O20 General"
+      "O21": "-- O21 Planning Models &bull; Planning Policy"
+      "O22": "-- O22 Project Analysis"
+      "O23": "-- O23 Fiscal and Monetary Policy in Development"
+      "O24": "-- O24 Trade Policy &bull; Factor Movement Policy &bull; Foreign Exchange Policy"
+      "O25": "-- O25 Industrial Policy"
+      "O29": "-- O29 Other"
+    "O3":
+      optgroup: "- O3 Innovation &bull; Research and Development &bull; Technological Change &bull; Intellectual Property Rights"
+      "O30": "-- O30 General"
+      "O31": "-- O31 Innovation and Invention: Processes and Incentives"
+      "O32": "-- O32 Management of Technological Innovation and R&D"
+      "O33": "-- O33 Technological Change: Choices and Consequences &bull; Diffusion Processes"
+      "O34": "-- O34 Intellectual Property and Intellectual Capital"
+      "O35": "-- O35 Social Innovation"
+      "O38": "-- O38 Government Policy"
+      "O39": "-- O39 Other"
+    "O4":
+      optgroup: "- O4 Economic Growth and Aggregate Productivity"
+      "O40": "-- O40 General"
+      "O41": "-- O41 One, Two, and Multisector Growth Models"
+      "O42": "-- O42 Monetary Growth Models"
+      "O43": "-- O43 Institutions and Growth"
+      "O44": "-- O44 Environment and Growth"
+      "O47": "-- O47 Empirical Studies of Economic Growth &bull; Aggregate Productivity &bull; Cross-Country Output Convergence"
+      "O49": "-- O49 Other"
+    "O5":
+      optgroup: "- O5 Economywide Country Studies"
+      "O50": "-- O50 General"
+      "O51": "-- O51 U.S. &bull; Canada"
+      "O52": "-- O52 Europe"
+      "O53": "-- O53 Asia including Middle East"
+      "O54": "-- O54 Latin America &bull; Caribbean"
+      "O55": "-- O55 Africa"
+      "O56": "-- O56 Oceania"
+      "O57": "-- O57 Comparative Studies of Countries"
+  "P":
+    optgroup: "P - Economic Systems"
+    "P0":
+      optgroup: "- P0 General"
+      "P00": "-- P00 General"
+    "P1":
+      optgroup: "- P1 Capitalist Systems"
+      "P10": "-- P10 General"
+      "P11": "-- P11 Planning, Coordination, and Reform"
+      "P12": "-- P12 Capitalist Enterprises"
+      "P13": "-- P13 Cooperative Enterprises"
+      "P14": "-- P14 Property Rights"
+      "P16": "-- P16 Political Economy"
+      "P17": "-- P17 Performance and Prospects"
+      "P19": "-- P19 Other"
+    "P2":
+      optgroup: "- P2 Socialist Systems and Transitional Economies"
+      "P20": "-- P20 General"
+      "P21": "-- P21 Planning, Coordination, and Reform"
+      "P22": "-- P22 Prices"
+      "P23": "-- P23 Factor and Product Markets &bull; Industry Studies &bull; Population"
+      "P24": "-- P24 National Income, Product, and Expenditure &bull; Money &bull; Inflation"
+      "P25": "-- P25 Urban, Rural, and Regional Economics"
+      "P26": "-- P26 Political Economy &bull; Property Rights"
+      "P27": "-- P27 Performance and Prospects"
+      "P28": "-- P28 Natural Resources &bull; Energy &bull; Environment"
+      "P29": "-- P29 Other"
+    "P3":
+      optgroup: "- P3 Socialist Institutions and Their Transitions"
+      "P30": "-- P30 General"
+      "P31": "-- P31 Socialist Enterprises and Their Transitions"
+      "P32": "-- P32 Collectives &bull; Communes &bull; Agriculture"
+      "P33": "-- P33 International Trade, Finance, Investment, Relations, and Aid"
+      "P34": "-- P34 Financial Economics"
+      "P35": "-- P35 Public Economics"
+      "P36": "-- P36 Consumer Economics &bull; Health &bull; Education and Training &bull; Welfare, Income, Wealth, and Poverty"
+      "P37": "-- P37 Legal Institutions &bull; Illegal Behavior"
+      "P39": "-- P39 Other"
+    "P4":
+      optgroup: "- P4 Other Economic Systems"
+      "P40": "-- P40 General"
+      "P41": "-- P41 Planning, Coordination, and Reform"
+      "P42": "-- P42 Productive Enterprises &bull; Factor and Product Markets &bull; Prices &bull; Population"
+      "P43": "-- P43 Public Economics &bull; Financial Economics"
+      "P44": "-- P44 National Income, Product, and Expenditure &bull; Money &bull; Inflation"
+      "P45": "-- P45 International Trade, Finance, Investment, and Aid"
+      "P46": "-- P46 Consumer Economics &bull; Health &bull; Education and Training &bull; Welfare, Income, Wealth, and Poverty"
+      "P47": "-- P47 Performance and Prospects"
+      "P48": "-- P48 Political Economy &bull; Legal Institutions &bull; Property Rights &bull; Natural Resources &bull; Energy &bull; Environment &bull; Regional Studies"
+      "P49": "-- P49 Other"
+    "P5":
+      optgroup: "- P5 Comparative Economic Systems"
+      "P50": "-- P50 General"
+      "P51": "-- P51 Comparative Analysis of Economic Systems"
+      "P52": "-- P52 Comparative Studies of Particular Economies"
+      "P59": "-- P59 Other"
+  "Q":
+    optgroup: "Q - Agricultural and Natural Resource Economics &bull; Environmental and Ecological Economics"
+    "Q0":
+      optgroup: "- Q0 General"
+      "Q00": "-- Q00 General"
+      "Q01": "-- Q01 Sustainable Development"
+      "Q02": "-- Q02 Commodity Markets"
+    "Q1":
+      optgroup: "- Q1 Agriculture"
+      "Q10": "-- Q10 General"
+      "Q11": "-- Q11 Aggregate Supply and Demand Analysis &bull; Prices"
+      "Q12": "-- Q12 Micro Analysis of Farm Firms, Farm Households, and Farm Input Markets"
+      "Q13": "-- Q13 Agricultural Markets and Marketing &bull; Cooperatives &bull; Agribusiness"
+      "Q14": "-- Q14 Agricultural Finance"
+      "Q15": "-- Q15 Land Ownership and Tenure &bull; Land Reform &bull; Land Use &bull; Irrigation &bull; Agriculture and Environment"
+      "Q16": "-- Q16 R&D &bull; Agricultural Technology &bull; Biofuels &bull; Agricultural Extension Services"
+      "Q17": "-- Q17 Agriculture in International Trade"
+      "Q18": "-- Q18 Agricultural Policy &bull; Food Policy"
+      "Q19": "-- Q19 Other"
+    "Q2":
+      optgroup: "- Q2 Renewable Resources and Conservation"
+      "Q20": "-- Q20 General"
+      "Q21": "-- Q21 Demand and Supply &bull; Prices"
+      "Q22": "-- Q22 Fishery &bull; Aquaculture"
+      "Q23": "-- Q23 Forestry"
+      "Q24": "-- Q24 Land"
+      "Q25": "-- Q25 Water"
+      "Q26": "-- Q26 Recreational Aspects of Natural Resources"
+      "Q27": "-- Q27 Issues in International Trade"
+      "Q28": "-- Q28 Government Policy"
+      "Q29": "-- Q29 Other"
+    "Q3":
+      optgroup: "- Q3 Nonrenewable Resources and Conservation"
+      "Q30": "-- Q30 General"
+      "Q31": "-- Q31 Demand and Supply &bull; Prices"
+      "Q32": "-- Q32 Exhaustible Resources and Economic Development"
+      "Q33": "-- Q33 Resource Booms"
+      "Q34": "-- Q34 Natural Resources and Domestic and International Conflicts"
+      "Q35": "-- Q35 Hydrocarbon Resources"
+      "Q37": "-- Q37 Issues in International Trade"
+      "Q38": "-- Q38 Government Policy"
+      "Q39": "-- Q39 Other"
+    "Q4":
+      optgroup: "- Q4 Energy"
+      "Q40": "-- Q40 General"
+      "Q41": "-- Q41 Demand and Supply &bull; Prices"
+      "Q42": "-- Q42 Alternative Energy Sources"
+      "Q43": "-- Q43 Energy and the Macroeconomy"
+      "Q47": "-- Q47 Energy Forecasting"
+      "Q48": "-- Q48 Government Policy"
+      "Q49": "-- Q49 Other"
+    "Q5":
+      optgroup: "- Q5 Environmental Economics"
+      "Q50": "-- Q50 General"
+      "Q51": "-- Q51 Valuation of Environmental Effects"
+      "Q52": "-- Q52 Pollution Control Adoption and Costs &bull; Distributional Effects &bull; Employment Effects"
+      "Q53": "-- Q53 Air Pollution &bull; Water Pollution &bull; Noise &bull; Hazardous Waste &bull; Solid Waste &bull; Recycling"
+      "Q54": "-- Q54 Climate &bull; Natural Disasters and Their Management &bull; Global Warming"
+      "Q55": "-- Q55 Technological Innovation"
+      "Q56": "-- Q56 Environment and Development &bull; Environment and Trade &bull; Sustainability &bull; Environmental Accounts and Accounting &bull; Environmental Equity &bull; Population Growth"
+      "Q57": "-- Q57 Ecological Economics: Ecosystem Services &bull; Biodiversity Conservation &bull; Bioeconomics &bull; Industrial Ecology"
+      "Q58": "-- Q58 Government Policy"
+      "Q59": "-- Q59 Other"
+  "R":
+    optgroup: "R - Urban, Rural, Regional, Real Estate, and Transportation Economics"
+    "R0":
+      optgroup: "- R0 General"
+      "R00": "-- R00 General"
+    "R1":
+      optgroup: "- R1 General Regional Economics"
+      "R10": "-- R10 General"
+      "R11": "-- R11 Regional Economic Activity: Growth, Development, Environmental Issues, and Changes"
+      "R12": "-- R12 Size and Spatial Distributions of Regional Economic Activity"
+      "R13": "-- R13 General Equilibrium and Welfare Economic Analysis of Regional Economies"
+      "R14": "-- R14 Land Use Patterns"
+      "R15": "-- R15 Econometric and Input&ndash;Output Models &bull; Other Models"
+      "R19": "-- R19 Other"
+    "R2":
+      optgroup: "- R2 Household Analysis"
+      "R20": "-- R20 General"
+      "R21": "-- R21 Housing Demand"
+      "R22": "-- R22 Other Demand"
+      "R23": "-- R23 Regional Migration &bull; Regional Labor Markets &bull; Population &bull; Neighborhood Characteristics"
+      "R28": "-- R28 Government Policy"
+      "R29": "-- R29 Other"
+    "R3":
+      optgroup: "- R3 Real Estate Markets, Spatial Production Analysis, and Firm Location"
+      "R30": "-- R30 General"
+      "R31": "-- R31 Housing Supply and Markets"
+      "R32": "-- R32 Other Spatial Production and Pricing Analysis"
+      "R33": "-- R33 Nonagricultural and Nonresidential Real Estate Markets"
+      "R38": "-- R38 Government Policy"
+      "R39": "-- R39 Other"
+    "R4":
+      optgroup: "- R4 Transportation Economics"
+      "R40": "-- R40 General"
+      "R41": "-- R41 Transportation: Demand, Supply, and Congestion &bull; Travel Time &bull; Safety and Accidents &bull; Transportation Noise"
+      "R42": "-- R42 Government and Private Investment Analysis &bull; Road Maintenance &bull; Transportation Planning"
+      "R48": "-- R48 Government Pricing and Policy"
+      "R49": "-- R49 Other"
+    "R5":
+      optgroup: "- R5 Regional Government Analysis"
+      "R50": "-- R50 General"
+      "R51": "-- R51 Finance in Urban and Rural Economies"
+      "R52": "-- R52 Land Use and Other Regulations"
+      "R53": "-- R53 Public Facility Location Analysis &bull; Public Investment and Capital Stock"
+      "R58": "-- R58 Regional Development Planning and Policy"
+      "R59": "-- R59 Other"
+  "Y":
+    optgroup: "Y - Miscellaneous Categories"
+    "Y1":
+      optgroup: "- Y1 Data: Tables and Charts"
+      "Y10": "-- Y10 Data: Tables and Charts"
+    "Y2":
+      optgroup: "- Y2 Introductory Material"
+      "Y20": "-- Y20 Introductory Material"
+    "Y3":
+      optgroup: "- Y3 Book Reviews (unclassified)"
+      "Y30": "-- Y30 Book Reviews (unclassified)"
+    "Y4":
+      optgroup: "- Y4 Dissertations (unclassified)"
+      "Y40": "-- Y40 Dissertations (unclassified)"
+    "Y5":
+      optgroup: "- Y5 Further Reading (unclassified)"
+      "Y50": "-- Y50 Further Reading (unclassified)"
+    "Y6":
+      optgroup: "- Y6 Excerpts"
+      "Y60": "-- Y60 Excerpts"
+    "Y7":
+      optgroup: "- Y7 No Author General Discussions"
+      "Y70": "-- Y70 No Author General Discussions"
+    "Y8":
+      optgroup: "- Y8 Related Disciplines"
+      "Y80": "-- Y80 Related Disciplines"
+    "Y9":
+      optgroup: "- Y9 Other"
+      "Y90": "-- Y90 Other"
+      "Y91": "-- Y91 Pictures and Maps"
+  "Z":
+    optgroup: "Z - Other Special Topics"
+    "Z0":
+      optgroup: "- Z0 General"
+      "Z00": "-- Z00 General"
+    "Z1":
+      optgroup: "- Z1 Cultural Economics &bull; Economic Sociology &bull; Economic Anthropology"
+      "Z10": "-- Z10 General"
+      "Z11": "-- Z11 Economics of the Arts and Literature"
+      "Z12": "-- Z12 Religion"
+      "Z13": "-- Z13 Economic Sociology &bull; Economic Anthropology &bull; Social and Economic Stratification"
+      "Z18": "-- Z18 Public Policy"
+      "Z19": "-- Z19 Other"

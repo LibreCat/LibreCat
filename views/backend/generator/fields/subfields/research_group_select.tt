@@ -1,0 +1,1 @@
+[% xprojects = h.get_list('research_group') %]<ul>[% FOREACH proj IN xprojects.keys.sort %]<li><a href="#" class="selectme" data-index="' + index + '" id="[% xprojects.$proj.oId %]">[% proj %]</a></li>[% END %]</ul>

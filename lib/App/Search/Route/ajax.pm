@@ -113,4 +113,27 @@ ajax '/get_department' => sub {
     }
 };
 
+=head2 AJAX /get_research_group
+
+=cut
+ajax '/get_research_group' => sub {
+	my $q;
+	@$q = map {
+		$_ .= '*' if $_ !~ /[äöüß]/;
+	} split(' ', lc params->{term});
+	
+	my $hits = h->search_research_group({q => $q, limit => 10});
+	
+	if($hits->{total}){
+		my $map;
+		@$map = map {
+			{ id => $_->{_id}, label => $_->{name} };
+		} @{$hits->{hits}};
+		return to_json $map;
+	}
+	else {
+		return to_json [];
+	}
+};
+
 1;

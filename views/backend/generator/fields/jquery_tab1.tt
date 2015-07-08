@@ -290,6 +290,11 @@ function selectButton(element){
 	    type_short = "pj";
 	    type_name = "Project";
 	}
+	else if(type == "research_group"){
+	    container.append('[% INCLUDE backend/generator/fields/subfields/research_group_select.tt %]');
+	    type_short = "rg";
+	    type_name = "Research Group";
+	}
 	var heading = modal.find('h4').first();
 	heading.html("");
 	heading.append('Choose a ' + type_name);
