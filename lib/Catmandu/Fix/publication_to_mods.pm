@@ -6,9 +6,9 @@ use Dancer qw(:syntax setting);
 
 my $genreMap = {
   biBachelorThesis => 'thesis',
-	biMasterThesis => 'thesis',
-	biDissertation => 'thesis',
-	biPostdocThesis => 'thesis',
+  biMasterThesis => 'thesis',
+  biDissertation => 'thesis',
+  biPostdocThesis => 'thesis',
   dissertation       => 'thesis',
   licentiateThesis   => 'licentiate thesis',
   journalArticle     => 'article',
@@ -36,8 +36,8 @@ my $genreMap = {
 
 my $accessLevelMap = {
  'admin' => 'yes',
- 'lu' => 'UniBi access only',
- 'openAccess' => 'no',
+ 'local' => 'UniBi access only',
+ 'open_access' => 'no',
 };
 
 my $identifiersMap = {
@@ -51,11 +51,11 @@ sub fix {
   my ( $self, $pub ) = @_;
 
   #$pub->{noRoot} = $noRoot;
-  $pub->{genre} =  $genreMap->{$pub->{documentType}} if $pub->{documentType};
-   
+  $pub->{genre} =  $genreMap->{$pub->{type}} if $pub->{type};
+
   if ( $pub->{file} ) {
     foreach my $r ( @{$pub->{file}} ) {
-      $r->{accessRestriction} =  $accessLevelMap->{ $r->{accessLevel} };
+      $r->{accessRestriction} =  $accessLevelMap->{ $r->{access_level} };
     }
   }
 
@@ -63,9 +63,9 @@ sub fix {
     my @newRm = ();
     foreach my $r ( @{$pub->{relatedMaterial}} ) {
       my $rmType = $r->{type}{typeName};
-            
+
       if ( $rmType eq 'relatedMaterialRecord') {
-        my $otherRecord = 'relates' 
+        my $otherRecord = 'relates'
           . ($r->{relationRole} eq 'to'
           ? 'From'
           : 'To');
@@ -94,13 +94,13 @@ sub fix {
     $pub->{relatedMaterial} = @newRm ? \@newRm : undef;
     delete $pub->{relatedMaterial} unless $pub->{relatedMaterial};
   }
-    
+
   for (qw/issn isbn otherPublicationIdentifier/) {
     @{$pub->{ $_}} = grep( !/^ISI:/, @{$pub->{$_}}) if $pub->{$_};
   }
 
   $pub->{host} = setting('host');
-  
+
   $pub;
 }
 

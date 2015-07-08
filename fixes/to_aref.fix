@@ -1,7 +1,7 @@
 # aref serialization format
 
 move_field(title, res.dct_title)
-append(dct_title, '@')
+append(res.dct_title, '@')
 move_field(year, res.dct_date)
 append(res.dct_date, '^xs_gYear')
 move_field(publisher, res.dct_publisher)
@@ -10,12 +10,41 @@ move_field(volume, res.bibo_volume)
 move_field(issue, res.bibo_issue)
 move_field(keyword, res.dct_subject)
 
-if exists(issn.0)
-  add_field(res.dct_isPartOf,issn.0)
-  prepend(res.dct_isPartOf, 'http://id.crossref.org/issn/')
+do list(path => abstract)
+  do identity()
+    move_field(text, tmp.$append)
+    move_field(lang, tmp.$append)
+    join_field(tmp,'@')
+  end
 end
-move_field(publication_identifier.urn, res.dct_identifier.$append)
-#move_field(publication_identifier.pmid, res.fabio_hasPubmedId)
+move_field(abstract.*.tmp, res.bibo_abstract.$append)
 
-move_field(res, 'http://pub.uni-bielefeld.de')
+move_field(language.*.iso, res.dct_language)
+move_field(doi, res.bibo_doi)
+
+move_field(author, res.bibo_authorlist)
+do list (path => res.bibo_authorlist)
+  do identity()
+    move_field(full_name,foaf_Person.foaf_name)
+    move_field(first_name,foaf_Person.foaf_givenName)
+    move_field(last_name,foaf_Person.foaf_surname)
+    move_field(id,foaf_Person.foaf_workInfoHomepage)
+    prepend(foaf_Person.foaf_workInfoHomepage,'http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=')
+  end
+end
+
+move_field(publication_identifier.issn.*, res.dct_isPartOf.$append)
+move_field(publication_identifier.eissn.*, res.dct_isPartOf.$append)
+move_field(publication_identifier.isbn.*, res.dct_isPartOf.$append)
+prepend(res.dct_isPartOf.*, 'http://id.crossref.org/issn/')
+
+move_field(publication_identifier.urn, res.dct_identifier.$append)
+prepend(external_id.isi, 'UT:')
+move_field(external_id.isi, res.dct_identifier.$append)
+move_field(external_id.pmid, res.fabio_hasPubmedId)
+
+retain_field(res)
+#prepend(_id,"http://pub.de")
+#move_field(res,_id)
+#move_field(res, "HOSTID")
 # append id...
