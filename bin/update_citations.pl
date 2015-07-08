@@ -6,7 +6,7 @@ use Catmandu::Sane;
 use Catmandu -all;
 use Getopt::Long;
 use Citation;
-use App::Catalogue::Controller::Publication qw/update_publication/;
+#use App::Catalogue::Controller::Publication qw/update_publication/;
 use POSIX qw(strftime);
 use Data::Dumper;
 
