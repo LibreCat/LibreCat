@@ -1,1 +1,39 @@
-publication_to_dc()
+# mapping pub data to dublic core (dc)
+
+move_field(title,'res.dc:title.$append')
+move_field(alternative_title,'res.dc:title.$append')
+
+move_field(author.*.full_name,'res.dc:creator.$append')
+move_field(editor.*.full_name,'res.dc:creator.$append')
+move_field(corporate_editor,'res.dc:creator.$append')
+
+move_field(year,'res.dc:date')
+move_field(publisher,'res.dc:publisher')
+
+move_field(keyword,'res.dc:subject')
+move_field(citation.ama,'res.dc:source.$append')
+
+prepend(doi,'doi/')
+move_field(doi,'res.dc:relation.$append')
+prepend(publication_identifier.issn.*,'issn/')
+move_field(publication_identifier.issn.*,'res.dc:relation.$append')
+prepend(publication_identifier.eissn.*,'issn/')
+move_field(publication_identifier.eissn.*,'res.dc:relation.$append')
+prepend(publication_identifier.isbn.*,'isbn/')
+move_field(publication_identifier.isbn.*,'res.dc:relation.$append')
+prepend(external_id.urn,'urn/')
+move_field(external_id.urn,'res.dc:relation.$append')
+prepend(external_id.isi,'wos/')
+move_field(external_id.isi,'res.dc:relation.$append')
+prepend(external_id.arxiv,'arxiv/')
+move_field(external_id.arxiv,'res.dc:relation.$append')
+prepend(external_id.pmid,'pmid/')
+move_field(external_id.pmid,'res.dc:relation.$append')
+
+prepend('res.dc:relation.*','info:eu-repo/semantics/altIdentifier/')
+
+#if ($pub->{fp7}) {
+#    push @{$dc->{relation} ||= []}, "info:eu-repo/grantAgreement/EC/" . $pub->{fp7};
+#} elsif ($pub->{fp6}) {
+#    push @{$dc->{relation} ||= []}, "info:eu-repo/grantAgreement/EC/" . $pub->{fp6};
+#}
