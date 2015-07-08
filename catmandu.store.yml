@@ -860,10 +860,11 @@ search:
                 'exact': {field: 'name.exact'}
               field: name
               sort: {field: 'name.exact'}
-            parent:
+            layer:
               op:
                 '=': true
-                'exact': true
+                '<>': true
+              field: layer
 
       research_group:
         cql_mapping:
@@ -1096,6 +1097,7 @@ search:
                   exact: {type: string, analyzer: tag}
               start_date: {type: string, index: not_analyzed}
               end_date: {type: string, index: not_analyzed}
+          publishing_date: {type: string, index: not_analyzed}
           abstract:
             properties:
               text: {type: string, include_in_all: true}
@@ -1247,7 +1249,11 @@ search:
             fields:
               name_lc: {type: string}
               exact:  {type: string, analyzer: tag}
-          tree: {type: string, analyzer: tag}
+          tree:
+            properties:
+              name: {type: string}
+              id: {type: string, analyzer: tag}
+          layer: {type: string, analyzer: tag}
 
       research_group:
         include_in_all: false

@@ -1,1 +1,1 @@
-[% xprojects = h.get_list('project') %]<ul>[% FOREACH proj IN xprojects.keys.sort %]<li><a href="#" class="selectme" data-index="' + index + '" id="[% xprojects.$proj.oId %]">[% proj %]</a></li>[% END %]</ul>
+[% xprojects = h.search_project({"hierarchy"="1"}) %]<ul>[% FOREACH proj IN xprojects.keys.sort %]<li><a href="#" class="selectme" data-index="' + index + '" id="[% xprojects.$proj.oId %]">[% proj | replace("'","&apos;") %]</a></li>[% END %]</ul>

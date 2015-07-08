@@ -395,6 +395,8 @@ sub update_record {
 	#compare version! through _version or through date_updated
 	$self->$bag->add($saved);
     $self->$bag->commit;
+    
+    sleep 1;
 
 	return $saved;
 }
@@ -630,14 +632,32 @@ sub search_department {
 
 	my $cql = "";
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
-
-	my $hits = department->search(
-	  cql_query => $cql,
-	  limit => $p->{limit} ||= 20,
-	  start => $p->{start} ||= 0,
-	);
-
-	return $hits;
+	
+	if($p->{hierarchy}){
+		my $hits = department->search(
+		    cql_query => $cql,
+		    limit => config->{store}->{maximum_page_size},
+		    start => 0,
+		);
+		
+		my $hierarchy;
+		$hits->each( sub {
+			my $hit = $_[0];
+			$hierarchy->{$hit->{tree}->[0]->{name}}->{oId} = $hit->{tree}->[0]->{id} if $hit->{layer} eq "1";
+			$hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{oId} = $hit->{tree}->[1]->{id} if $hit->{layer} eq "2";
+			$hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{$hit->{tree}->[2]->{name}}->{oId} = $hit->{tree}->[2]->{id} if $hit->{layer} eq "3";
+		});
+		
+		return $hierarchy;
+	}
+	else {
+		my $hits = department->search(
+		    cql_query => $cql,
+		    limit => $p->{limit} ||= 20,
+		    start => $p->{start} ||= 0,
+		);
+		return $hits;
+	}
 }
 
 sub search_project {
@@ -645,19 +665,39 @@ sub search_project {
 
 	my $cql = "";
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
+	
+	if($p->{hierarchy}){
+		$cql = $cql ? " AND funded=1" : "funded=1";
+		my $hits = project->search(
+		    cql_query => $cql,
+		    limit => config->{store}->{maximum_page_size},
+		    start => 0,
+		);
+		
+		my $hierarchy;
+		$hits->each( sub {
+			my $hit = $_[0];
+			my $display = $hit->{acronym} ? $hit->{acronym} . " | " . $hit->{name} : $hit->{name};
+			$hierarchy->{$display}->{oId} = $hit->{id};
+		});
+		
+		return $hierarchy;
+	}
+	else {
+		my $hits = project->search(
+		    cql_query => $cql,
+		    limit => $p->{limit} ||= config->{default_page_size},
+		    start => $p->{start} ||= 0,
+		    sru_sortkeys => $p->{sorting} ||= "name,,1",
+		);
+		
+		foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+			$hits->{$_} = $hits->$_;
+		}
+		
+		return $hits;
+	}
 
-	my $hits = project->search(
-		cql_query => $cql,
-		limit => $p->{limit} ||= config->{default_page_size},
-	  	start => $p->{start} ||= 0,
-       	sru_sortkeys => $p->{sorting} ||= "name,,1",
-	);
-
-	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-        $hits->{$_} = $hits->$_;
-    }
-
-	return $hits;
 }
 
 sub search_research_group {
@@ -666,18 +706,37 @@ sub search_research_group {
 	my $cql = "";
 	$cql = join(' AND ',@{$p->{q}}) if $p->{q};
 	
-	my $hits = research_group->search(
-	    cql_query => $cql,
-	    limit => $p->{limit} ||= config->{default_page_size},
-	    start => $p->{start} ||= 0,
-	    sru_sortkeys => $p->{sort} ||= "name,,1",
-	);
-
-	foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-		$hits->{$_} = $hits->$_;
+	if($p->{hierarchy}){
+		my $hits = research_group->search(
+		    cql_query => $cql,
+		    limit => config->{store}->{maximum_page_size},
+		    start => 0,
+		);
+		
+		my $hierarchy;
+		$hits->each( sub {
+			my $hit = $_[0];
+			my $display = $hit->{acronym} ? $hit->{acronym} . " | " . $hit->{name} : $hit->{name};
+			$hierarchy->{$display}->{oId} = $hit->{id};
+		});
+		
+		return $hierarchy;
 	}
-
-	return $hits;
+	else {
+		my $hits = research_group->search(
+	        cql_query => $cql,
+	        limit => $p->{limit} ||= config->{default_page_size},
+	        start => $p->{start} ||= 0,
+	        sru_sortkeys => $p->{sort} ||= "name,,1",
+	    );
+	    
+	    foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+	    	$hits->{$_} = $hits->$_;
+	    }
+	    
+	    return $hits;
+	}
+	
 }
 
 sub search_award {

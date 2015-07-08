@@ -385,896 +385,170 @@ sort_text:
   "publication.asc": "Publ./ Series/ Journal ascending"
   "publication.desc": "Publ./ Series/ Journal descending"
 
-department:
-  "BiSEd Bielefeld School of Education":
-    oId: 10057
-    'Beratungsstelle Master of Education (M.Ed.)':
-      oId: 4738321
-    'Didaktik des Sachunterrichts':
-      oId: 4261119
-    'EDV-Betreuung':
-      oId: 13073441
-    "Geschäftsführung":
-      oId: 4262949
-    "Medienkompetenz für Bildung und Schule":
-      oId: 4752565
-    "Praktikumsbüro":
-      oId: 4738309
-    'Projekt "EignungsFeedback"':
-      oId: 4261152
-    'Projekt "InKLuS"':
-      oId: 4261268
-    'Sekretariat':
-      oId: 4738228
-    'Studienkoordination':
-      oId: 12589383
-    'Verwaltung':
-      oId: 4260907
-  'Bielefeld Graduate School in History and Sociology':
-    oId: 6747229
-  'Bielefeld-Bonn-Stochastics':
-    oId: 89042
-  'Center for Interamerican Studies':
-    oId: 38670945
-  'Center of Excellence - Cognitive Interaction Technology CITEC':
-    oId: 8014655
-  "Centrum für Biotechnologie":
-    oId: 89815
-    'Bioinformatics Resource Facility':
-      oId: 441927
-    'Graduate Center':
-      oId: 16941123
-    "Institut für Biochemie und Biotechnik":
-      oId: 4838684
-    "Institut für Bioinformatik":
-      oId: 441317
-    "Institut für Biophysik und Nanowissenschaften":
-      oId: 2161137
-    "Institut für Genomforschung und Systembiologie":
-      oId: 441929
-    "Research Group A. Gölzhäuser":
-      oId: 33079548
-    "Research Group A. Hütten":
-      oId: 33079566
-    "Research Group A. Pühler":
-      oId: 33070639
-    'Research Group A. Tauch':
-      oId: 33070741
-    'Research Group B. Weisshaar':
-      oId: 33070678
-    'Research Group C. Kaltschmidt':
-      oId: 33070578
-    "Research Group C. Müller":
-      oId: 33070612
-    'Research Group D. Anselmetti':
-      oId: 33079524
-    'Research Group D. Staiger':
-      oId: 33070658
-    'Research Group E. Flaschel':
-      oId: 33086526
-    'Research Group G. Fischer von Mollard':
-      oId: 33086484
-    'Research Group G. Reiss':
-      oId: 33079602
-    "Research Group H. Gröger":
-      oId: 33086554
-    'Research Group H. Niemann':
-      oId: 33086703
-    'Research Group H. Ragg':
-      oId: 33086627
-    'Research Group K. Niehaus':
-      oId: 33070623
-    'Research Group K.-J. Dietz':
-      oId: 33070563
-    'Research Group M. Strous':
-      oId: 33070671
-    'Research Group N. Schaschke':
-      oId: 33086726
-    'Research Group N. Sewald':
-      oId: 33086655
-    'Research Group O. Kruse':
-      oId: 33086312
-    'Research Group T. Dierks':
-      oId: 33086409
-    'Research Group T. Kottke':
-      oId: 33086743
-    'Research Group T. Noll':
-      oId: 33086594
-    'Research Group U. Heinzmann':
-      oId: 33079537
-    'Research Group V. Wendisch':
-      oId: 33070705
-    'Research Group W. Pfeiffer':
-      oId: 33079586
-    'Research Group A. Goesmann':
-      oId: 33067438
-    'Research Group A. Sczyrba':
-      oId: 33067478
-    'Research Group J. Kalinowski':
-      oId: 33070724
-    'Research Group J. Stoye':
-      oId: 33067262
-    'Research Group R. Giegerich':
-      oId: 33067120
-    "Research Group R. Hofestädt":
-      oId: 33067184
-    'Research Group T. Nattkemper':
-      oId: 33067409
-    'weitere Mitglieder':
-      oId: 33070404
-  'Fachsprachenzentrum':
-    oId: 6826308
-  "Fakultät für Biologie":
-    oId: 10017
-    'Active Sensing':
-      oId: 18234269
-    'Algenbiotechnologie':
-      oId: 4833667
-    'Animal Behaviour':
-      oId: 18233836
-    'Biochemie und Physiologie der Pflanzen':
-      oId: 2685177
-    'Biochemische Zellbiologie':
-      oId: 2685621
-    'Biologiedidaktik (Botanik und Zellbiologie)':
-      oId: 2685608
-    'Biologiedidaktik (Zoologie/Humanbiologie)':
-      oId: 2685601
-    'Biologische Kybernetik':
-      oId: 2685507
-    "Chemische Ökologie":
-      oId: 4052827
-    'Evolutionsbiologie':
-      oId: 2685497
-    "Experimentelle Ökologie und Ökosystembiologie":
-      oId: 2685201
-    'Genetik der Prokaryoten':
-      oId: 2685319
-    'Genomforschung':
-      oId: 2684836
-    'Gentechnologie/Mikrobiologie':
-      oId: 2685250
-    'Kognitive Neurowissenschaften':
-      oId: 2685448
-    "Kommissionen und Ausschüsse":
-      oId: 6669006
-    'Molekulare Zellphysiologie':
-      oId: 2685209
-    'Neurobiologie':
-      oId: 2684834
-    'Proteom- und Metabolomforschung':
-      oId: 2685540
-    "Tierökologie":
-      oId: 2685511
-    'Verhaltensforschung':
-      oId: 2528935
-    'Zell- und Entwicklungsbiologie der Pflanzen':
-      oId: 2685483
-    'Zellbiologie der Tiere':
-      oId: 2685187
-  "Fakultät für Chemie":
-    oId: 10018
-    'Anorganische Chemie I':
-      oId: 17964
-    'Anorganische Chemie II':
-      oId: 17965
-    'Anorganische Chemie und Strukturchemie':
-      oId: 17966
-    'Biochemie I':
-      oId: 17967
-    'Biochemie II':
-      oId: 17968
-    'Biochemie III':
-      oId: 288445
-    'Biochemie IV':
-      oId: 5370069
-    'Chemie und Didaktik der Chemie I':
-      oId: 17973
-    'Chemie und Didaktik der Chemie II':
-      oId: 17974
-    'Organische Chemie I':
-      oId: 17975
-    'Organische Chemie II':
-      oId: 17976
-    'Organische Chemie III':
-      oId: 17977
-    'Physikalische Chemie I':
-      oId: 17978
-    'Physikalische Chemie II':
-      oId: 17980
-    'Physikalische Chemie III':
-      oId: 17981
-    'Theoretische Chemie':
-      oId: 17982
-  "Fakultät für Erziehungswissenschaft":
-    oId: 10021
-    'AG 1 - Allgemeine Erziehungswissenschaft':
-      oId: 7978103
-    'AG 2 - Sozialisation':
-      oId: 7978137
-    "AG 3 - Schultheorie mit dem Schwerpunkt Grund- und Förderschulen":
-      oId: 7978180
-    'AG 4 - Schulentwicklung und Schulforschung':
-      oId: 7978212
-    "AG 5 - Schulpädagogik und Allgemeine Didaktik":
-      oId: 7978223
-    'AG 6 - Weiterbildung & Governance of Lifelong Learning':
-      oId: 7978238
-    "AG 7 - Pädagogische Beratung":
-      oId: 7978263
-    'AG 8 - Soziale Arbeit':
-      oId: 7978278
-    "AG 9 - Medienpädagogik, Forschungsmethoden und Jugendforschung":
-      oId: 7978378
-    "AG 10 - Migrationspädagogik und Kulturarbeit":
-      oId: 7978400
-    'Frauenstudien':
-      oId: 86502
-    'Research School Education and Capabilities':
-      oId: 10848821
-  "Fakultät für Geschichtswissenschaft, Philosophie und Theologie":
-    oId: 10022
-    'Abteilung Geschichte':
-      oId: 10023
-      'Alte Geschichte':
-        oId: 3791069
-      'Didaktik der Geschichte':
-        oId: 3791122
-      'ENTRY':
-        oId: 16813171
-      'Geschichte als Beruf':
-        oId: 3791073
-      'Geschichte des 19. und 20. Jahrhunderts':
-        oId: 3791078
-      "Geschichte des Mittelalters und der Frühen Neuzeit":
-        oId: 3791087
-      'Geschichte moderner Gesellschaften':
-        oId: 3791091
-      'Geschlechtergeschichte':
-        oId: 3791096
-      'Historische Bildwissenschaft-Kunstgeschichte':
-        oId: 32742431
-      'Historische Politikforschung':
-        oId: 3803979
-      'Iberische und lateinamerikanische Geschichte':
-        oId: 3791099
-      'Kompetenznetz Lateinamerika':
-        oId: 19409167
-      "Osteuropäische Geschichte":
-        oId: 3791103
-      'Region in der Geschichte':
-        oId: 40284404
-      "Schule für Historische Forschung":
-        oId: 3652153
-      'Sozialgeschichte':
-        oId: 3791107
-      'Technik- und Umweltgeschichte':
-        oId: 3791111
-      'Wirtschaftsgeschichte':
-        oId: 3791114
-      'Zeitgeschichte':
-        oId: 3791117
-    'Abteilung Philosophie':
-      oId: 10024
-    'Abteilung Theologie':
-      oId: 10034
-      'Evangelische Theologie':
-        oId: 40416
-      "Forschungsstelle interdisziplinäre Religionsforschung":
-        oId: 7437678
-  "Fakultät für Gesundheitswissenschaften":
-    oId: 10046
-    'AG 1 Gesundheitssysteme, Gesundheitspolitik und Gesundheitssoziologie':
-      oId: 21331
-    "AG 2 Biomedizinische Grundlagen und Bevölkerungsmedizin":
-      oId: 21332
-    'AG 3 Epidemiologie & International Public Health':
-      oId: 21333
-    "AG 4 Prävention und Gesundheitsförderung":
-      oId: 21334
-    "AG 5 Gesundheitsökonomie und Gesundheitsmanagement":
-      oId: 21335
-    'AG 6 Versorgungsforschung/Pflegewissenschaft':
-      oId: 175759
-    'AG 7 Umwelt und Gesundheit':
-      oId: 175761
-    'AG 8 Demografie und Gesundheit':
-      oId: 175763
-    "Institut für Bevölkerungs- und Gesundheitsforschung":
-      oId: 10056
-    'Pflegeforschungsverbund NRW':
-      oId: 3678142
-    'WHO Collaborating Center':
-      oId: 21339
-    "Zentrum für Versorgungsforschung":
-      oId: 3678085
-  "Fakultät für Linguistik und Literaturwissenschaft":
-    oId: 10019
-    'Abteilung Kunst und Musik':
-      oId: 10035
-    'Arbeitsgruppen, Fachbereiche, Projekte, SFBs':
-      oId: 6564526
-      'Arbeitsgruppe Allgemeine Sprachwissenschaft':
-        oId: 18015421
-      'Arbeitsgruppe Computerlinguistik':
-        oId: 7357113
-      'Arbeitsgruppe Experimentelle Neurolinguistik':
-        oId: 7388525
-      'Arbeitsgruppe Klinische Linguistik':
-        oId: 18015487
-      'Arbeitsgruppe Kommunikation':
-        oId: 18015368
-      'Arbeitsgruppe Language and Cognition':
-        oId: 18015562
-      'Arbeitsgruppe Phonetik und Phonologie':
-        oId: 18015556
-      'Arbeitsgruppe Psycholinguistik':
-        oId: 18015583
-      'DSG':
-        oId: 6547387
-    'Beauftragte':
-      oId: 13222059
-    'EDV und Medien':
-      oId: 5765896
-    "Fakultätsausschüsse- und Kommissionen":
-      oId: 5425293
-    'LiLi-Kolleg':
-      oId: 17664447
-    'PunktUm':
-      oId: 40212328
-    "Studienfächer":
-      oId: 4961697
-  "Fakultät für Mathematik":
-    oId: 10020
-    'Emeriti/Professorinnen und Professoren im Ruhestand':
-      oId: 13021752
-    'WE IDM':
-      oId: 10055
-  "Fakultät für Physik":
-    oId: 10028
-    'AG Biophysik und angewandte Nanowissenschaften':
-      oId: 29125395
-    "AG Dünne Schichten & Physik der Nanostrukturen":
-      oId: 28536538
-    'AG Laserphysik und Laserspektroskopie':
-      oId: 29103968
-    'AG Mathematische Physik':
-      oId: 29104678
-    "AG Physik supramolekularer Systeme und Oberflächen":
-      oId: 29103248
-    'AG Theorie der Kondensierten Materie':
-      oId: 29105470
-    'BiBoS':
-      oId: 19453226
-    'Cosmology and Astroparticle Physics':
-      oId: 23381619
-    'Didaktik':
-      oId: 29104274
-    'Electroweak interactions':
-      oId: 23470617
-    'Elementary Particles and Quantum Fields':
-      oId: 23470443
-    "Lehrstuhl für Molekül- und Oberflächenphysik":
-      oId: 29133467
-    'Numerical simulations and field theory on the lattice':
-      oId: 23470456
-    'Theoretical atomic, molecular and laserphysics':
-      oId: 23470672
-    'Theory and phenomenology of heavy-ion collisions':
-      oId: 23470601
-  "Fakultät für Psychologie und Sportwissenschaft":
-    oId: 10025
-    'Abteilung Sportwissenschaft':
-      oId: 10027
-      'Arbeitsbereich I - Sportmedizin - Gesundheit und Training':
-        oId: 28977922
-      'Arbeitsbereich II - Neurokognition und Bewegung - Biomechanik':
-        oId: 28977957
-      'Arbeitsbereich III - Sport unf Gesellschaft':
-        oId: 28977996
-      'Arbeitsbereich IV - Sport und Erziehung':
-        oId: 28978161
-      'Arbeitsbereich V - Sport und Wirtschaft':
-        oId: 28978170
-    "Abteilung für Psychologie":
-      oId: 10026
-      'Abteilungsausschuss Psychologie':
-        oId: 7096708
-      'Arbeitseinheit 01 - Neurokognitive Psychologie':
-        oId: 33694
-      'Arbeitseinheit 02 - Allgemeine Psychologie II':
-        oId: 33695
-      'Arbeitseinheit 03 - Entwicklungspsych. u. Entwicklungspsychopathologie':
-        oId: 33696
-      'Arbeitseinheit 04 - Differentielle Psychologie':
-        oId: 33697
-      'Arbeitseinheit 05 - Sozialpsychologie':
-        oId: 33698
-      'Arbeitseinheit 06 - Methodenlehre':
-        oId: 33699
-      'Arbeitseinheit 07 - Klinische Kinder- u.Jugendlichenpsych.u.Psychotherap.':
-        oId: 33700
-      "Arbeitseinheit 09 - Pädagogische Psychologie":
-        oId: 33702
-      'Arbeitseinheit 10 - Arbeits- und Organisationspsychologie':
-        oId: 33703
-      'Arbeitseinheit 11 - Klinische Psychologie und Psychotherapie':
-        oId: 33704
-      'Arbeitseinheit 12 - Psychologie der Bildung und Erziehung':
-        oId: 33705
-      'Arbeitseinheit 13 - Bildungspsychologie':
-        oId: 29430555
-      'Arbeitseinheit 14 - Physiologische Psychologie':
-        oId: 33707
-      'Arbeitseinheit 15 - Gender and Emotion in Cognitive Interaction':
-        oId: 21484764
-      'Emeritierte Professoren':
-        oId: 18937064
-      "Hochschulamblanz für Kinder und Jugendliche":
-        oId: 9374862
-      "Hochschulambulanz für Erwachsene":
-        oId: 16365449
-  "Fakultät für Rechtswissenschaft":
-    oId: 10029
-    'Emeriti':
-      oId: 154099
-    'Institute':
-      oId: 154290
-    "Lehrstühle Rechtswissenschaft":
-      oId: 154294
-  "Fakultät für Soziologie":
-    oId: 10030
-    'Abteilung Geographie':
-      oId: 10033
-    'Arbeitsbereich 1 - Soziologische Theorie':
-      oId: 5656018
-    'Arbeitsbereich 2 - Methoden':
-      oId: 5656025
-    'Arbeitsbereich 3 - Organisationen':
-      oId: 5656030
-    'Arbeitsbereich 4 - Politik und Gesellschaft':
-      oId: 5656050
-    'Arbeitsbereich 5 - Sozialstruktur und soziale Ungleichheit':
-      oId: 5656055
-    'Arbeitsbereich 6 - Transnationalisierung und Entwicklung':
-      oId: 5656060
-    'Arbeitsbereich 7 - Wissenschaft, Technik, Medien':
-      oId: 5656064
-    'Arbeitsbereich 8 - Gender':
-      oId: 5656118
-    'Arbeitsbereich 9 - Didaktik der Sozialwissenschaften':
-      oId: 5656122
-    'Arbeitsbereich 10 - Wirtschaft und Arbeit':
-      oId: 19134156
-    'Emeriti und pensionierte WissenschaftlerInnen':
-      oId: 4009911
-    'Wissenschaftliche MitarbeiterInnen in Forschungsprojekten':
-      oId: 17799615
-  "Fakultät für Wirtschaftswissenschaften":
-    oId: 10031
-    'Bielefeld 2000 plus':
-      oId: 10114161
-    "Lehrstuhl für BWL, insb. Innovations- und Technologiemanagement":
-      oId: 38171018
-    "Lehrstuhl für BWL: Marketing":
-      oId: 29895914
-    "Lehrstuhl für VWL, Wirtschaftstheorie":
-      oId: 42173282
-  'Forschungsschwerpunkt Mathematisierung':
-    oId: 10060
-  'Hochschulrechenzentrum':
-    oId: 10015
-  "Institut für Pflegewissenschaft":
-    oId: 12824
-  "Institut für Weltgesellschaft":
-    oId: 89044
-  "Institut für Wissenschafts- und Technikforschung":
-    oId: 10061
-    'Bibliometriegruppe':
-      oId: 16315353
-    'Graduiertenkolleg 724':
-      oId: 3578599
-  "Institut für die Simulation komplexer Systeme":
-    oId: 89043
-  "Institut für interdisziplinäre Konflikt- und Gewaltforschung":
-    oId: 10058
-    'Leitung und Vorstand':
-      oId: 8401291
-    'Mitglieder Graduiertenkolleg':
-      oId: 8401510
-    "Studentische Hilfskräfte":
-      oId: 8400211
-    'Verwaltung':
-      oId: 8401593
-    'WissenschaftlerInnen':
-      oId: 16391837
-    "Wissenschaftliche Hilfskräfte":
-      oId: 16395301
-    'Wissenschaftlicher Beirat':
-      oId: 8838326
-    'assoziierte Mitglieder Graduiertenkolleg':
-      oId: 15945129
-    'assoziierte Mitglieder des Instituts':
-      oId: 10316540
-  "Institut für mathematische Wirtschaftsforschung":
-    oId: 10053
-  "Interdisziplinäres Zentrum für Frauen- und Geschlechterforschung":
-    oId: 10068
-  'Kontaktstelle Wissenschaftliche Weiterbildung':
-    oId: 10059
-  'Research Institute for Cognition and Robotics':
-    oId: 5408013
-    "Geschäftsführer":
-      oId: 5504838
-    'Graduate School':
-      oId: 6165534
-  'SFB 343 Diskrete Strukturen in der Mathematik':
-    oId: 10065
-  "SFB 360 Situierte Künstliche Kommunikatoren":
-    oId: 10066
-  "SFB 549 Prozessierung und Signalwirkung extrazellulärer Makromoleküle":
-    oId: 10063
-  'SFB 584 Das Politische als Kommunikationsraum in der Geschichte':
-    oId: 78418
-    '2. Phase':
-      oId: 10387210
-    '3. Phase':
-      oId: 10222814
-  "SFB 613 Physik von Einzelmolekülprozessen/mol.Erkennung in organ.Sys.":
-    oId: 78419
-  'SFB 673 Alignment in Communication':
-    oId: 2862170
-    'A1 - Modelling Partners':
-      oId: 27003888
-    'A2 - Processing of implicit common ground':
-      oId: 27015245
-    'A3 - Dialogue and group dynamics':
-      oId: 27014882
-    'A4 - Alignment of situation models':
-      oId: 27014970
-    'A5 - Alignment of attention in mediated communication':
-      oId: 27015189
-    "A6 - Evolutionäre Dynamik":
-      oId: 27015251
-    'A8 - Constructions: Bridging the gap between syntax and semantics':
-      oId: 27015092
-    'A9 - Alignment of intentions':
-      oId: 2608879
-    'A10 - Universals in alignment':
-      oId: 2608880
-    'ANF - Anforschungsgruppe':
-      oId: 2565232
-    'B1 - Speech-gesture alignment':
-      oId: 27015129
-    'B4 - Rhythm and timing in dialogue':
-      oId: 27015145
-    'B5 - Anticipatory alignment in dialogue':
-      oId: 27015384
-    'B6 - Understanding alignment from misalignment':
-      oId: 27015402
-    'C1 - Interaction Space':
-      oId: 27015432
-    'C2 - Communicating Emotions':
-      oId: 27015500
-    'C3 - Repairs and reformulations in dialogue':
-      oId: 27015508
-    'C4 - Adaptive alignment in human-robot-cooperation':
-      oId: 27015523
-    'C5 - Alignment in AR-based cooperation':
-      oId: 27015530
-    'X1 - Multimodal alignment corpora: ...':
-      oId: 27015553
-    'X2 - Multimodal alignment dialogue systems':
-      oId: 2608881
-  'SFB 701 Spectral Structures and Topological Methods in Mathematics':
-    oId: 435978
-    'A1: Spektraltheorie aperiodischer Ordnung':
-      oId: 17705358
-    'A2: Numerische Spektralanalyse unendlich-dim. Transferoperatoren':
-      oId: 3810911
-    "A3: Stochastische Prozesse in zufälligen Medien":
-      oId: 3810921
-    'A4: Asymptotik spektraler Verteilungen':
-      oId: 3810962
-    'A5: Stochastische Evolutionen im Kontinuum':
-      oId: 3811035
-    "A6: Analysis und stochastische Prozesse auf metrischen Maßräumen":
-      oId: 3811042
-    'A8: Nichtlokale Operatoren und langreichweitige Prozesse':
-      oId: 3810758
-    'B1: Dioph. Ungleichungen, Spektrale Strukturen u. Lin. Algebr. Gruppen':
-      oId: 3811071
-    'B2: Kombinat. und geometr. Struktur nichtperiodischer Parkettierungen':
-      oId: 3811103
-    "B3: Approximation u. Spektralanalyse äquivarianter dynamischer Systeme":
-      oId: 3811232
-    'B4: Stochastische part. Differentialgleich. und Kolmogorov-Operatoren':
-      oId: 3811268
-    'B5: Kristalline Kohomologie und abelsche Mannigfaltigkeiten':
-      oId: 3811288
-    'C1: Eichtheoretische Invarianten in drei und vier Dimensionen':
-      oId: 3810404
-    'C3: Topologische und spektrale Strukturen in der Darstellungstheorie':
-      oId: 3811337
-    'C7: Automorphe Darstellungen und ihre lokalen Faktoren':
-      oId: 14247976
-  "SFB 882 Von Heterogenitäten zu Ungleichheiten":
-    oId: 26155953
-    'SFB 882 Teilprojekt A':
-      oId: 26686764
-      'SFB 882 Teilprojekt A2':
-        oId: 26688158
-      'SFB 882 Teilprojekt A3':
-        oId: 26688208
-      'SFB 882 Teilprojekt A4':
-        oId: 26688232
-      'SFB 882 Teilprojekt A5':
-        oId: 26688314
-      'SFB 882 Teilprojekt A6':
-        oId: 26688381
-    'SFB 882 Teilprojekt B':
-      oId: 26686804
-      'SFB 882 Teilprojekt B1':
-        oId: 26688396
-      'SFB 882 Teilprojekt B2':
-        oId: 26688439
-      'SFB 882 Teilprojekt B3':
-        oId: 26688499
-      'SFB 882 Teilprojekt B4':
-        oId: 26688572
-      'SFB 882 Teilprojekt B5':
-        oId: 26688610
-    'SFB 882 Teilprojekt C':
-      oId: 26686846
-      'SFB 882 Teilprojekt C1':
-        oId: 26688635
-      'SFB 882 Teilprojekt C3':
-        oId: 26688781
-      'SFB 882 Teilprojekt C4':
-        oId: 26688966
-      'SFB 882 Teilprojekt C5':
-        oId: 26688975
-    'SFB 882 Teilprojekt INF':
-      oId: 26712853
-    'SFB 882 Teilprojekt MGK':
-      oId: 26712841
-    'SFB 882 Teilprojekt Z':
-      oId: 26712902
-  'Service Center Medien':
-    oId: 10016
-  "Servicebereich SL_K5 - Beratung für Studium, Lehre und Karriere":
-    oId: 622962
-  "Technische Fakultät":
-    oId: 10036
-    'AG Angewandte Informatik':
-      oId: 18304588
-    'AG Bioinformatik':
-      oId: 48518
-    'AG Biomathematik und Theoretische Bioinformatik':
-      oId: 201230
-    'AG Computergrafik und Geometrieverarbeitung':
-      oId: 3746190
-    'AG Fermentationstechnik':
-      oId: 10042
-    'AG Genominformatik':
-      oId: 66100
-    'AG Kognitronik und Sensorik':
-      oId: 15438710
-    'AG Neuroinformatik':
-      oId: 10038
-    'AG Neuromorphic Behaving Systems':
-      oId: 26824835
-    'AG Praktische Informatik':
-      oId: 10039
-    'AG Rechnernetze und verteilte Systeme':
-      oId: 10043
-    'AG Semantische Datenbanken und Wissensverarbeitung':
-      oId: 15019923
-    'AG Technische Informatik':
-      oId: 10040
-    'AG Texttechnologie/Angewandte Computerlinguistik':
-      oId: 14829942
-    'AG Theoretical Computer Science / Theoretische Informatik':
-      oId: 10037
-    'AG Wissensbasierte Systeme':
-      oId: 10044
-    'AG Zellkulturtechnik':
-      oId: 10045
-    "AG Zelluläre Genetik":
-      oId: 3855915
-    'Ambient Intelligence':
-      oId: 24110126
-    'Biodata Mining':
-      oId: 29610175
-    'Computational Genomics':
-      oId: 29609402
-    'Computational Metagenomics':
-      oId: 29610095
-    'Externe Lehrende TechFak':
-      oId: 21072
-    'International Graduate School in Bioinformatics and Genome Research':
-      oId: 48519
-    'Mechatronik Biomimetischer Aktuatoren':
-      oId: 26044108
-    'Rechnerbetriebsgruppe':
-      oId: 3157411
-    'Sociable Agents':
-      oId: 24110177
-  'Transferstelle':
-    oId: 10054
-  "Universitätsbibliothek":
-    oId: 10085
-  'Wissenschaftliche Einrichtung Laborschule':
-    oId: 10051
-  'Wissenschaftliche Einrichtung Oberstufenkolleg':
-    oId: 11292831
-  "Zentrum für interdisziplinäre Forschung":
-    oId: 10048
-
-project:
-  "AMARSI | Adaptive Modular Architecture for Rich Motor Skills":
-    oId: P461
-  "BIOCASCADES | Sustainable and Scalable Biocatalytic Cascade Reactions Training Network":
-    oId: P487
-  "COGIMON | Cognitive Interaction in Motion":
-    oId: P486
-  "Cyberbullying von Schülerinnen und Schülern: Eine qualitative Untersuchung zu Erfahrungen und Umgang mit Cyberbullying":
-    oId: P432
-  "DRIVER II | Digital Repository Infrastructure Vision for European Research II":
-    oId: P442
-  "ECHORD | European Clearing House for Open Robotics Development":
-    oId: P470
-  "EDUWEL | Education as Welfare - Enhancing opportunities for socially vulnerable youth in Europe":
-    oId: P453
-  "EMICAB | Embodied Motion Intelligence for Cognitive, Autonomous Robots":
-    oId: P471
-  "EUPRIMECARE | Quality and costs of primary care in Europe":
-    oId: P454
-  "Evaluation Antisemitismus":
-    oId: P440
-  "Evaluation des Landesprogramms „Weltoffenes Sachsen – für Demokratie und Toleranz“":
-    oId: P435
-  "FITNESSGENES | The origin of fitness: Tracing individual fitness differences to genetic variation in a wild bird population":
-    oId: P473
-  "Forschungsverbund: Desintegrationsprozesse – Stärkung von Integrationspotenzialen einer modernen Gesellschaft":
-    oId: P438
-  "Fremdheitsbilder im Konflikt - Zur symbolischen Konstruktion der Konflikte um islamische Raumsymbole":
-    oId: P430
-  "FURSEALFITNESS | Elucidating the relationship between heterozygosity and fitness in a natural marine mammal population":
-    oId: P478
-  "GENPREPAR | Genetic basis and functional consequences of pre- and post-hatching parental effects":
-    oId: P465
-  "Gruppenbezogene Menschenfeindlichkeit (GMF-Survey 2002-2012)":
-    oId: P439
-  "HADRONPHYSICS2 | Study of Strongly Interacting Matter":
-    oId: P449
-  "HADRONPHYSICS3 | Study of Strongly Interacting Matter":
-    oId: P474
-  "HILBERT | Gröbner strata in multigraded Hilbert schemes":
-    oId: P467
-  "HUMAVIPS | Humanoids with auditory and visual abilities in populated spaces":
-    oId: P460
-  "INSPECTED.NET | INvasive SPecies Evaluation, ConTrol & EDucation.NETwork":
-    oId: P468
-  "ISIGrowth | Innovation-fuelled, Sustainable, Inclusive Growth":
-    oId: P492
-  "ITALK | Integration and Transfer of Action and Language Knowledge in Robots":
-    oId: P444
-  "JAMES | Joint Action for Multimodal Embodied Social Systems":
-    oId: P472
-  "LANPERCEPT | Language and Perception":
-    oId: P480
-  "MAGICBULLET | Peptide-Drug Conjugates for Targeted Delivery in Tumor Therapy":
-    oId: P488
-  "MASEM | Making Sense of Metagenoms":
-    oId: P455
-  "MATHEMACS | MATHEmatics of Multi-level Anticipatory Complex Systems":
-    oId: P481
-  "MEDIA & CITIZENSHIP | Media and Citizenship: Transnational Television Cultures Reshaping Political Identity in the European Union":
-    oId: P447
-  "MEDIADEM | European Media Policies Revisited: Valuing and Reclaiming Free and Independent Media in Contemporary Democratic Systems":
-    oId: P456
-  "MERCI | Starting Grants – Monitoring European Research Council’s Implementation of Excellence":
-    oId: P450
-  "METAEXPLORE | Metagenomics for bioexploration - Tools and application":
-    oId: P448
-  "Modellprojekt &apos;Sozialraumanalysen zum Zusammenleben vor Ort&apos; (SoRA-ZO)":
-    oId: P436
-  "MONARCA | MONitoring, treAtment and pRediCtion of bipolAr Disorder Episodes":
-    oId: P463
-  "MONNET | Multilingual Ontologies for Networked Knowledge":
-    oId: P462
-  "NANOOXIDES | Nanosized porous molecular metal oxides with functionalizable cavities and soft matter behaviour allow studies of new phenomena":
-    oId: P483
-  "NITROSO COMPOUNDS | Exploring the Borderline of bonding in Group IV Nitroso Compounds by Gas Phase Electron Diffraction (GED)":
-    oId: P466
-  "OPENAIRE | Open Access Infrastructure for Research in Europe":
-    oId: P459
-  "OPENAIREPLUS | 2nd-Generation Open Access Infrastructure for Research in Europe":
-    oId: P475
-  "OpenAIRE2020 | Open Access Infrastructure for Research in Europe 2020":
-    oId: P490
-  "PORTDIAL | Language Resources for Portable Multilingual Spoken Dialogue Systems":
-    oId: P477
-  "PROMYSE | Products from methanol by synthetic cell factories":
-    oId: P476
-  "ROBOT-DOC | ROBOTics for Development Of Cognition":
-    oId: P451
-  "SARAFun | Smart Assembly Robot with Advanced FUNctionalities":
-    oId: P491
-  "Serientäter im Jugendalter. Soziale Hintergründe wiederholter Gewalttätigkeit. Verlaufsperspektiven":
-    oId: P431
-  "Sexuelle Belästigung und Soziosexualität":
-    oId: P433
-  "SOCIETY | Social Innovation - Empowering the Young (SocIEtY) for the Common Good":
-    oId: P482
-  "SOLARH2 | European Solar-Fuel Initiative - Renewable Hydrogen from Sun and Water. Science Linking Molecular Biomimetics and Genetics":
-    oId: P443
-  "Soziale Beziehungen und Konfliktpotentiale im Kontext von Erfahrungen verweigerter Teilhabe und Anerkennung von Jugendlichen mit und ohne Migrationshintergrund":
-    oId: P441
-  "SPERM EVOLUTION | Towards an evolutionary ecology of spermatogenesis":
-    oId: P484
-  "SPLASH | Sustainable PoLymers from Algae Sugars and Hydrocarbons":
-    oId: P479
-  "STRONGNET | Strong Interaction Supercomputing Training Network":
-    oId: P452
-  "SUNBIOPATH | Towards a better sunlight to biomass conversion efficiency in microalgae":
-    oId: P458
-  "THE | The Hand Embodied":
-    oId: P464
-  "TheraEDGE | An integrated platform enabling Theranostic applications at the Point of Primary Care":
-    oId: P445
-  "TOLLerant | Toll-Like Receptor 4 activation and function in diseases: an integrated chemical-biology approach.":
-    oId: P489
-  "TRANS-NET | Transnationalisation, Migration and Transformation: Multi-Level Analysis of Migrant Transnationalism":
-    oId: P446
-  "WEARHAP | WEARable HAPtics for Humans and Robots":
-    oId: P485
-  "Wissenschaft, Öffentlichkeit und Gesellschaft: Untersuchung des Wissensaustausches zwischen Wissenschaftlern und zivilgesellschaftlichen sowie staatlichen Akteuren":
-    oId: P434
-  "WORKABLE | Making Capabilities Work":
-    oId: P457
-  "YMOBILITY | Youth mobility: maximising opportunities for individuals, labour markets and regions in Europe":
-    oId: P493
-  "Zuwanderung, Figuration, Konflikt: Eine vergleichende sozialraumbezogene Analyse in Bradford und Duisburg":
-    oId: P437
-
-research_group:
-  "SP-01 - Learning to attend in sensorimotor task":
-    oId: RG10000
-  "SP-03 - Visual attention and decision making in insects":
-    oId: RG10001
-  "SP-05 - Social Motorics":
-    oId: RG10002
-  "SP-07 - Cognitive control and neurophysiological bases of planning and executing manual actions":
-    oId: RG10003
-  "SP-10 - Monitoring real-time real-world interaction in an identified neuron":
-    oId: RG10004
-  "IP-07 - Computational pragmatics - multimodal intention processing system":
-    oId: RG10005
-  "IP-08 - Active pre-touch sensing: from biology to neuromorphic biomimetic artifacts":
-    oId: RG10006
-  "IP-10 - Bio-inspired lightweight omni-directional visual system with local gain control":
-    oId: RG10007
-  "IP-13 - Towards a model for the incremental co-development of linguistic and conceptual representation of action":
-    oId: RG10008
-  "IP-15 - GoToGoal - Experimental Investigation of Goal Babbling":
-    oId: RG10009
-  "IP-18 - Interactional Coordination and Incrementality in HRI":
-    oId: RG10010
-  "IP-19 - Brain-machine interfaces to improve human-machine interaction using resource efficiency and adaptivity":
-    oId: RG10011
-  "IP-24 - Single and Dyadic Visuo-Haptic Task Learning":
-    oId: RG10012
-  "LSP-01 - The Cognitive Service Robotics Apartment as Ambient Host":
-    oId: RG10013
-  "LSP-02 - Deep Familiarization and Learning Grounded in Cooperative Manual Action and Language":
-    oId: RG10014
-  "LSP-03 - Intelligent Coaching Space":
-    oId: RG10015
-  "LSP-04 - Embodied Interaction as a Core of Cognitive Interaction: A holistic approach towards autonomous walking system":
-    oId: RG10016
-
+#project:
+#  "AMARSI | Adaptive Modular Architecture for Rich Motor Skills":
+#    oId: P461
+#  "BIOCASCADES | Sustainable and Scalable Biocatalytic Cascade Reactions Training Network":
+#    oId: P487
+#  "COGIMON | Cognitive Interaction in Motion":
+#    oId: P486
+#  "Cyberbullying von Schülerinnen und Schülern: Eine qualitative Untersuchung zu Erfahrungen und Umgang mit Cyberbullying":
+#    oId: P432
+#  "DRIVER II | Digital Repository Infrastructure Vision for European Research II":
+#    oId: P442
+#  "ECHORD | European Clearing House for Open Robotics Development":
+#    oId: P470
+#  "EDUWEL | Education as Welfare - Enhancing opportunities for socially vulnerable youth in Europe":
+#    oId: P453
+#  "EMICAB | Embodied Motion Intelligence for Cognitive, Autonomous Robots":
+#    oId: P471
+#  "EUPRIMECARE | Quality and costs of primary care in Europe":
+#    oId: P454
+#  "Evaluation Antisemitismus":
+#    oId: P440
+#  "Evaluation des Landesprogramms „Weltoffenes Sachsen – für Demokratie und Toleranz“":
+#    oId: P435
+#  "FITNESSGENES | The origin of fitness: Tracing individual fitness differences to genetic variation in a wild bird population":
+#    oId: P473
+#  "Forschungsverbund: Desintegrationsprozesse – Stärkung von Integrationspotenzialen einer modernen Gesellschaft":
+#    oId: P438
+#  "Fremdheitsbilder im Konflikt - Zur symbolischen Konstruktion der Konflikte um islamische Raumsymbole":
+#    oId: P430
+#  "FURSEALFITNESS | Elucidating the relationship between heterozygosity and fitness in a natural marine mammal population":
+#    oId: P478
+#  "GENPREPAR | Genetic basis and functional consequences of pre- and post-hatching parental effects":
+#    oId: P465
+#  "Gruppenbezogene Menschenfeindlichkeit (GMF-Survey 2002-2012)":
+#    oId: P439
+#  "HADRONPHYSICS2 | Study of Strongly Interacting Matter":
+#    oId: P449
+#  "HADRONPHYSICS3 | Study of Strongly Interacting Matter":
+#    oId: P474
+#  "HILBERT | Gröbner strata in multigraded Hilbert schemes":
+#    oId: P467
+#  "HUMAVIPS | Humanoids with auditory and visual abilities in populated spaces":
+#    oId: P460
+#  "INSPECTED.NET | INvasive SPecies Evaluation, ConTrol & EDucation.NETwork":
+#    oId: P468
+#  "ISIGrowth | Innovation-fuelled, Sustainable, Inclusive Growth":
+#    oId: P492
+#  "ITALK | Integration and Transfer of Action and Language Knowledge in Robots":
+#    oId: P444
+#  "JAMES | Joint Action for Multimodal Embodied Social Systems":
+#    oId: P472
+#  "LANPERCEPT | Language and Perception":
+#    oId: P480
+#  "MAGICBULLET | Peptide-Drug Conjugates for Targeted Delivery in Tumor Therapy":
+#    oId: P488
+#  "MASEM | Making Sense of Metagenoms":
+#    oId: P455
+#  "MATHEMACS | MATHEmatics of Multi-level Anticipatory Complex Systems":
+#    oId: P481
+#  "MEDIA & CITIZENSHIP | Media and Citizenship: Transnational Television Cultures Reshaping Political Identity in the European Union":
+#    oId: P447
+#  "MEDIADEM | European Media Policies Revisited: Valuing and Reclaiming Free and Independent Media in Contemporary Democratic Systems":
+#    oId: P456
+#  "MERCI | Starting Grants – Monitoring European Research Council’s Implementation of Excellence":
+#    oId: P450
+#  "METAEXPLORE | Metagenomics for bioexploration - Tools and application":
+#    oId: P448
+#  "Modellprojekt &apos;Sozialraumanalysen zum Zusammenleben vor Ort&apos; (SoRA-ZO)":
+#    oId: P436
+#  "MONARCA | MONitoring, treAtment and pRediCtion of bipolAr Disorder Episodes":
+#    oId: P463
+#  "MONNET | Multilingual Ontologies for Networked Knowledge":
+#    oId: P462
+#  "NANOOXIDES | Nanosized porous molecular metal oxides with functionalizable cavities and soft matter behaviour allow studies of new phenomena":
+#    oId: P483
+#  "NITROSO COMPOUNDS | Exploring the Borderline of bonding in Group IV Nitroso Compounds by Gas Phase Electron Diffraction (GED)":
+#    oId: P466
+#  "OPENAIRE | Open Access Infrastructure for Research in Europe":
+#    oId: P459
+#  "OPENAIREPLUS | 2nd-Generation Open Access Infrastructure for Research in Europe":
+#    oId: P475
+#  "OpenAIRE2020 | Open Access Infrastructure for Research in Europe 2020":
+#    oId: P490
+#  "PORTDIAL | Language Resources for Portable Multilingual Spoken Dialogue Systems":
+#    oId: P477
+#  "PROMYSE | Products from methanol by synthetic cell factories":
+#    oId: P476
+#  "ROBOT-DOC | ROBOTics for Development Of Cognition":
+#    oId: P451
+#  "SARAFun | Smart Assembly Robot with Advanced FUNctionalities":
+#    oId: P491
+#  "Serientäter im Jugendalter. Soziale Hintergründe wiederholter Gewalttätigkeit. Verlaufsperspektiven":
+#    oId: P431
+#  "Sexuelle Belästigung und Soziosexualität":
+#    oId: P433
+#  "SOCIETY | Social Innovation - Empowering the Young (SocIEtY) for the Common Good":
+#    oId: P482
+#  "SOLARH2 | European Solar-Fuel Initiative - Renewable Hydrogen from Sun and Water. Science Linking Molecular Biomimetics and Genetics":
+#    oId: P443
+#  "Soziale Beziehungen und Konfliktpotentiale im Kontext von Erfahrungen verweigerter Teilhabe und Anerkennung von Jugendlichen mit und ohne Migrationshintergrund":
+#    oId: P441
+#  "SPERM EVOLUTION | Towards an evolutionary ecology of spermatogenesis":
+#    oId: P484
+#  "SPLASH | Sustainable PoLymers from Algae Sugars and Hydrocarbons":
+#    oId: P479
+#  "STRONGNET | Strong Interaction Supercomputing Training Network":
+#    oId: P452
+#  "SUNBIOPATH | Towards a better sunlight to biomass conversion efficiency in microalgae":
+#    oId: P458
+#  "THE | The Hand Embodied":
+#    oId: P464
+#  "TheraEDGE | An integrated platform enabling Theranostic applications at the Point of Primary Care":
+#    oId: P445
+#  "TOLLerant | Toll-Like Receptor 4 activation and function in diseases: an integrated chemical-biology approach.":
+#    oId: P489
+#  "TRANS-NET | Transnationalisation, Migration and Transformation: Multi-Level Analysis of Migrant Transnationalism":
+#    oId: P446
+#  "WEARHAP | WEARable HAPtics for Humans and Robots":
+#    oId: P485
+#  "Wissenschaft, Öffentlichkeit und Gesellschaft: Untersuchung des Wissensaustausches zwischen Wissenschaftlern und zivilgesellschaftlichen sowie staatlichen Akteuren":
+#    oId: P434
+#  "WORKABLE | Making Capabilities Work":
+#    oId: P457
+#  "YMOBILITY | Youth mobility: maximising opportunities for individuals, labour markets and regions in Europe":
+#    oId: P493
+#  "Zuwanderung, Figuration, Konflikt: Eine vergleichende sozialraumbezogene Analyse in Bradford und Duisburg":
+#    oId: P437
+#
+#research_group:
+#  "SP-01 - Learning to attend in sensorimotor task":
+#    oId: RG10000
+#  "SP-03 - Visual attention and decision making in insects":
+#    oId: RG10001
+#  "SP-05 - Social Motorics":
+#    oId: RG10002
+#  "SP-07 - Cognitive control and neurophysiological bases of planning and executing manual actions":
+#    oId: RG10003
+#  "SP-10 - Monitoring real-time real-world interaction in an identified neuron":
+#    oId: RG10004
+#  "IP-07 - Computational pragmatics - multimodal intention processing system":
+#    oId: RG10005
+#  "IP-08 - Active pre-touch sensing: from biology to neuromorphic biomimetic artifacts":
+#    oId: RG10006
+#  "IP-10 - Bio-inspired lightweight omni-directional visual system with local gain control":
+#    oId: RG10007
+#  "IP-13 - Towards a model for the incremental co-development of linguistic and conceptual representation of action":
+#    oId: RG10008
+#  "IP-15 - GoToGoal - Experimental Investigation of Goal Babbling":
+#    oId: RG10009
+#  "IP-18 - Interactional Coordination and Incrementality in HRI":
+#    oId: RG10010
+#  "IP-19 - Brain-machine interfaces to improve human-machine interaction using resource efficiency and adaptivity":
+#    oId: RG10011
+#  "IP-24 - Single and Dyadic Visuo-Haptic Task Learning":
+#    oId: RG10012
+#  "LSP-01 - The Cognitive Service Robotics Apartment as Ambient Host":
+#    oId: RG10013
+#  "LSP-02 - Deep Familiarization and Learning Grounded in Cooperative Manual Action and Language":
+#    oId: RG10014
+#  "LSP-03 - Intelligent Coaching Space":
+#    oId: RG10015
+#  "LSP-04 - Embodied Interaction as a Core of Cognitive Interaction: A holistic approach towards autonomous walking system":
+#    oId: RG10016
+#
 #  "ZiF-Forschungsgruppe Biological Foundations of Human Culture":
 #    oId: RG27
 #  "ZiF-Forschungsgruppe Bürger, Bürgerlichkeit und bürgerliche Gesellschaft. Das 19. Jahrhundert im europäischen Vergleich":
