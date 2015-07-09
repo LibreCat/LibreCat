@@ -1,39 +1,73 @@
 # mapping pub data to dublic core (dc)
 
-move_field(title,'res.dc:title.$append')
-move_field(alternative_title,'res.dc:title.$append')
+copy_field(type, driver_type)
+lookup(driver_type, fixes/lookup/driver_types.csv)
+prepend(driver_type,'info:eu-repo/semantics/')
+move_field(driver_type, 'res.type.$append')
 
-move_field(author.*.full_name,'res.dc:creator.$append')
-move_field(editor.*.full_name,'res.dc:creator.$append')
-move_field(corporate_editor,'res.dc:creator.$append')
+copy_field(type, dini_type)
+lookup(dini_type, fixes/lookup/dini_types.csv, default: other)
+prepend(dini_type,'doc-type:')
+move_field(dini_type, 'res.type.$append')
+set_field('res.type.$append', text)
 
-move_field(year,'res.dc:date')
-move_field(publisher,'res.dc:publisher')
+move_field(title,'res.title.$append')
+move_field(alternative_title,'res.title.$append')
 
-move_field(keyword,'res.dc:subject')
-move_field(citation.ama,'res.dc:source.$append')
+move_field(author.*.full_name,'res.creator.$append')
+move_field(editor.*.full_name,'res.creator.$append')
+move_field(corporate_editor,'res.creator.$append')
+
+move_field(year,'res.date')
+move_field(publisher,'res.publisher')
+
+move_field(keyword,'res.subject')
+move_field(citation.ama,'res.source.$append')
+
+move_field(abstract.*.text, 'res.description.$append')
+
+move_field(language.*.iso, 'res.language.$append')
+lookup('res.language.*', fixes/oai_lang.csv)
 
 prepend(doi,'doi/')
-move_field(doi,'res.dc:relation.$append')
+move_field(doi,'res.relation.$append')
 prepend(publication_identifier.issn.*,'issn/')
-move_field(publication_identifier.issn.*,'res.dc:relation.$append')
+move_field(publication_identifier.issn.*,'res.relation.$append')
 prepend(publication_identifier.eissn.*,'issn/')
-move_field(publication_identifier.eissn.*,'res.dc:relation.$append')
+move_field(publication_identifier.eissn.*,'res.relation.$append')
 prepend(publication_identifier.isbn.*,'isbn/')
-move_field(publication_identifier.isbn.*,'res.dc:relation.$append')
+move_field(publication_identifier.isbn.*,'res.relation.$append')
 prepend(external_id.urn,'urn/')
-move_field(external_id.urn,'res.dc:relation.$append')
+move_field(external_id.urn,'res.relation.$append')
 prepend(external_id.isi,'wos/')
-move_field(external_id.isi,'res.dc:relation.$append')
+move_field(external_id.isi,'res.relation.$append')
 prepend(external_id.arxiv,'arxiv/')
-move_field(external_id.arxiv,'res.dc:relation.$append')
+move_field(external_id.arxiv,'res.relation.$append')
 prepend(external_id.pmid,'pmid/')
-move_field(external_id.pmid,'res.dc:relation.$append')
+move_field(external_id.pmid,'res.relation.$append')
 
-prepend('res.dc:relation.*','info:eu-repo/semantics/altIdentifier/')
+prepend('res.relation.*','info:eu-repo/semantics/altIdentifier/')
 
-#if ($pub->{fp7}) {
-#    push @{$dc->{relation} ||= []}, "info:eu-repo/grantAgreement/EC/" . $pub->{fp7};
-#} elsif ($pub->{fp6}) {
-#    push @{$dc->{relation} ||= []}, "info:eu-repo/grantAgreement/EC/" . $pub->{fp6};
+prepend(external_id.fp6,'info:eu-repo/grantAgreement/EC/')
+move_field(external_id.fp6,'res.relation.$append')
+
+prepend(external_id.fp7,'info:eu-repo/grantAgreement/EC/')
+move_field(external_id.fp7,'res.relation.$append')
+
+# file stuff
+move_field(file.*.content_type, 'res.format.$append')
+
+#if (my $file = $pub->{file}->[0]) {
+#   $dc->{format} = [ $file->{content_type} ];
+#   push (@{$dc->{identifier}}, "$host/download/".$pub->{_id}."/".$file->{file_id});
+#   if ($file->{access_level} eq 'open_access') {
+#       push @{$dc->{rights} ||= []}, "info:eu-repo/semantics/openAccess";
+#   } else {
+#       push @{$dc->{rights} ||= []}, "info:eu-repo/semantics/restrictedAccess";
+#   }
+#} else {
+#    push @{$dc->{rights} ||= []}, "info:eu-repo/semantics/restrictedAccess";
 #}
+
+retain_field(res)
+move_field(res, .)

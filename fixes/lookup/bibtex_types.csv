@@ -1,0 +1,8 @@
+type,bibtex_type
+book,book
+bookChapter,inbook
+bookEditor,book
+conference,inproceedings
+dissertation,phdthesis
+biDissertation,phdthesis
+journalArticle,article

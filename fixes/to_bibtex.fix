@@ -1,1 +1,42 @@
-publication_to_bibtex()
+# mapping to BibTeX format
+
+#_citekey PUB_ID
+# url host/ID
+
+if any_match(type, '^bi')
+    set_field(r.school, 'Bielefeld University')
+end
+
+move_field(type, r._type)
+lookup(r._type, fixes/lookup/bibtex_types.csv, default: misc)
+
+move_field(author.*.full_name, r.author.$append)
+move_field(editor.*.full_name, r.editor.$append)
+
+move_field(title, r.title)
+move_field(language.0.name, r.language)
+join_field(keyword, ', ')
+move_field(keyword, r.keyword)
+move_field(volume, r.volume)
+move_field(issue, r.number)
+move_field(year, r.year)
+move_field(doi, r.doi)
+move_field(publisher, r.publisher)
+move_field(publication_identifier.0.issn, r.issn)
+move_field(publication_identifier.0.eissn, r.issn)
+move_field(publication_identifier.0.isbn, r.isbn)
+move_field(abstract.0.text, r.abstract)
+move_field(conference.location, r.location)
+
+if any_match(r._type, article)
+    move_field(publication, r.journal)
+end
+if any_match(r._type, book)
+    move_field(publication, r.booktitle)
+end
+
+move_field(pages, r.pages)
+replace_all(r.pages, '-', '--')
+
+retain_field(r)
+move_field(r, .)

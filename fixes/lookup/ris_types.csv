@@ -1,0 +1,9 @@
+type,ris_type
+book,BOOK
+bookChapter,CHAP
+bookEditor,BOOK
+conference,CONF
+dissertation,THES
+journalArticle,JOUR
+licentiateThesis,THES
+researchData,DATA

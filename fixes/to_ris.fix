@@ -1,1 +1,29 @@
-publication_to_ris()
+# mapping to RIS format
+
+move_field(type, r.TY)
+lookup(r.TY, fixes/lookup/ris_types.csv, default: GEN)
+
+move_field(_id, r.ID)
+move_field(title, r.TI)
+move_field(volume, r.VL)
+move_field(issue, r.IS)
+move_field(keyword, r.KW)
+move_field(year, PY)
+move_field(publisher, PB)
+move_field(abstract.0.text, r.AB)
+move_field(author.*.full_name, r.AU.$append)
+move_field(editor.*.full_name, r.ED.$append)
+
+if any_match(r.TY, JOUR)
+    move_field(publication, r.JF)
+else
+    move_field(publication, r.T2)
+end
+
+#UR as URI
+# pages SP, EP
+move_field(publication_identifier.isbn.0, r.SN)
+move_field(publication_identifier.issn.0, r.SN)
+
+retain_field(r)
+move_field(r, .)
