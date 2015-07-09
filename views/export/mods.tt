@@ -13,13 +13,13 @@
 <genre
 [%- SWITCH type -%]
   [%- CASE 'journalArticle' -%]
-    [%- SWITCH articleType  -%]
+    [%- SWITCH article_type  -%]
       [%- CASE 'letterNote' -%]
   type="letter"
       [%- CASE 'original'   -%]
   type="originalArticle"
       [%- CASE 'review'     -%]
-  type="reviewX"
+  type="review"
     [%- END -%]
 [%- END -%]
 >[% genre | xml_strict %]</genre>
@@ -69,7 +69,7 @@
   [% IF type != 'translation' %]
   <role> <roleTerm type="text">author</roleTerm> </role>
   [% END %]
-  [% IF au.id %]
+  [% IF au.personNumber %]
   <identifier type="unibi">[% au.id %]</identifier>
   [% END %]
   [% IF au.orcid %]
@@ -136,7 +136,7 @@
 </name>
 [% END %]
 
-[% FOREACH rg IN researchGroup %]
+[% FOREACH rg IN research_group %]
 <name type="corporate">
   <namePart>[% rg.name | xml_strict %]</namePart>
   <role>
@@ -336,16 +336,8 @@ We acknowledge support for the Article Processing Charge by the Deutsche Forschu
 </note>
 [% END %]
 
-[% IF workReferences %]
-<note type="references">[% workReferences | xml_strict %]</note>
-[% END %]
-
 [% IF defense_date %]
 <dateOther encoding="w3cdtf" type="defenseDate">[% defense_date | xml_strict %]</dateOther>
-[% END %]
-
-[% IF additionalInformation %]
-<note type="additionalInfo">[% additionalInformation | xml_strict %]</note>
 [% END %]
 
 <recordInfo>

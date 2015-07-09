@@ -1,3 +1,18 @@
 # mods mapping
 
-publication_to_mods()
+move_field(type,genre)
+lookup(genre, fixes/lookup/mods_types.csv, default: thesis)
+
+do list(path => file)
+  do identity()
+    if any_match(access_level,admin)
+      add_field(accessRestriction,yes)
+    end
+    if any_match(access_level,local)
+      add_field(accessRestriction,'UniBi access only')
+    end
+    if any_match(access_level,open_access)
+      add_field(accessRestriction,no)
+    end
+  end
+end

@@ -1,0 +1,18 @@
+type,mods_type
+licentiateThesis,licentiate thesis
+journalArticle,article
+preprint,preprint
+report,report
+conference,conference paper
+conferenceEditor,conference publication
+conferenceAbstract,conference abstract
+workingPaper,working Paper
+book,book
+bookEditor,book
+bookChapter,book chapter
+newspaperArticle,newspaper article
+translation,translation
+review,review
+encyclopediaArticle,encyclopaedia entry
+patent,patent
+journalEditor,journal editor
