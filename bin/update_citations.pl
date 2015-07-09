@@ -21,8 +21,13 @@ GetOptions ("id=i" => \$id,
             "verbose" => \$verbose)
 or die("Error in command line arguments\n");
 
-my $bag = Catmandu->store('search')->bag('publication');
-my $backup = Catmandu->store('backup')->bag('publication');
+#my $bag = Catmandu->store('search')->bag('publication');
+use Catmandu::Importer::JSON;
+use Catmandu::Exporter::JSON;
+
+my $bag = Catmandu::Importer::JSON->new(file => "pub_backup.json");
+#my $backup = Catmandu->store('backup')->bag('publication');
+my $backup = Catmandu::Exporter::JSON->new(file => "pub_backup_cit.json");
 
 print Dumper strftime("%Y-%m-%dT%H:%M:%SZ", gmtime(time));
 
