@@ -10,6 +10,7 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use Dancer::Plugin::Catmandu::OAI;
 use Dancer::Plugin::Catmandu::SRU;
+use App::Helper;
 use Citation;
 
 =head2 GET /sru
