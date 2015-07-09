@@ -67,7 +67,7 @@
 	<dc:language xsi:type="dcterms:ISO639-2">[% language.0.iso %]</dc:language>
 	[% IF thesis %]
 		<thesis:degree>
-		<thesis:level>[% thesisLevel %]</thesis:level>
+		<thesis:level>[% thesis_level %]</thesis:level>
 		<thesis:grantor xsi:type="cc:Corporate" type="dcterms:ISO3166" countryCode="DE">
 		<cc:universityOrInstitution cc:GKD-Nr="[% institution.gndLib %]">
 		<cc:name>[% institution.name %]</cc:name>
