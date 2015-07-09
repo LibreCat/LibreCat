@@ -39,4 +39,4 @@ move_field(pages, r.pages)
 replace_all(r.pages, '-', '--')
 
 retain_field(r)
-move_field(r, .)q
+move_field(r, .)
