@@ -5,7 +5,7 @@
 
 [% num = total; n = 0 %]
 
-[% UNLESS request.path.match("/marked") %]
+[% UNLESS request.path.match("/marked") OR !thisPerson %]
 <div class="row">
   <div class="col-md-12[% UNLESS request.path.match("/person") OR total == 0 %] col-xs-8[% END %]">
     <h2 class="margin-top0">[% total %] [% IF bag == 'data' %][% lang ? "Data Publication" : "Datenpublikation" %][% ELSE %][% lang ? "Publication" : "Publikation" %][% END %][% IF num == 0 OR num > 1 %][% lang ? "s" : "en" %][% END %]
