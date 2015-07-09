@@ -2,7 +2,7 @@ package App::Helper::Helpers;
 
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
-use Catmandu::Util qw(:is :array :human trim);
+use Catmandu::Util qw(:io :is :array :human trim);
 use Catmandu::Fix qw(expand);
 use Dancer qw(:syntax vars params request);
 use Dancer::FileUtils qw(path);
