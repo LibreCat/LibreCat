@@ -1,12 +1,12 @@
 # mapping pub data to dublic core (dc)
 
 copy_field(type, driver_type)
-lookup(driver_type, fixes/driver_types.csv)
+lookup(driver_type, fixes/lookup/driver_types.csv)
 prepend(driver_type,'info:eu-repo/semantics/')
 move_field(driver_type, 'res.type.$append')
 
 copy_field(type, dini_type)
-lookup(dini_type, fixes/dini_types.csv, default: other)
+lookup(dini_type, fixes/lookup/dini_types.csv, default: other)
 prepend(dini_type,'doc-type:')
 move_field(dini_type, 'res.type.$append')
 set_field('res.type.$append', text)

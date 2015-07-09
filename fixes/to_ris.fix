@@ -1,7 +1,7 @@
 # mapping to RIS format
 
 move_field(type, r.TY)
-lookup(r.TY, fixes/ris_types.csv, default: GEN)
+lookup(r.TY, fixes/lookup/ris_types.csv, default: GEN)
 
 move_field(_id, r.ID)
 move_field(title, r.TI)

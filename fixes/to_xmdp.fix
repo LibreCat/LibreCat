@@ -1,7 +1,7 @@
 # mapping to xMetaDissPlus
 
 copy_field(type, dini_type)
-lookup(dini_type, fixes/dini_types.csv, default: other)
+lookup(dini_type, fixes/lookup/dini_types.csv, default: other)
 
 move_field(keyword, subject)
 move_field(year, date)
