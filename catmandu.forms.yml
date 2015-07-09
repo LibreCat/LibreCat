@@ -370,6 +370,22 @@ publicationTypes:
         year_extern: *year_extern
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        conference.divider: &conference_divider
+          label: "Conference Details"
+        conference.name: &conference_name
+          label: "Conference Name"
+          placeholder: "e.g. 3rd Conference on Nano-Physics"
+        conference.location: &conference_location
+          label: "Conference Location"
+          placeholder: "e.g. Berlin"
+        conference.date: &conference_date
+          label: "Conference Date"
+          label_start: "Start"
+          label_start_short: "Conference Start"
+          label_end: "End"
+          label_end_short: "Conference End"
+          placeholder_start: "YYYY-MM-DD"
+          placeholder_end: "YYYY-MM-DD"
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
@@ -428,22 +444,10 @@ publicationTypes:
           label_page: "Page"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        conference.divider: &conference_divider
-          label: "Conference Details"
-        conference.name: &conference_name
-          label: "Conference Name"
-          placeholder: "e.g. 3rd Conference on Nano-Physics"
-        conference.location: &conference_location
-          label: "Conference Location"
-          placeholder: "e.g. Berlin"
-        conference.date: &conference_date
-          label: "Conference Date"
-          label_start: "Start"
-          label_start_short: "Conference Start"
-          label_end: "End"
-          label_end_short: "Conference End"
-          placeholder_start: "YYYY-MM-DD"
-          placeholder_end: "YYYY-MM-DD"
+        conference.divider: *conference_divider
+        conference.name: *conference_name
+        conference.location: *conference_location
+        conference.date: *conference_date
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
@@ -728,6 +732,10 @@ publicationTypes:
         volume_issue_page: *volume_issue_page
         publication_status_language: *publication_status_language
         publication_identifier: *publication_identifier
+        conference.divider: *conference_divider
+        conference.name: *conference_name
+        conference.location: *conference_location
+        conference.date: *conference_date
       file_upload: *file_upload
       supplementary_fields:
         tab_name: "Additional Information"
