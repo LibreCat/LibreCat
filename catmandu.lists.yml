@@ -134,6 +134,9 @@ publication_identifier:
 
 publication_status:
   -
+    value: draft
+    name: "Draft"
+  -
     value: submitted
     name: "Submitted"
   -
@@ -224,7 +227,7 @@ relations_link:
   -
     relation: "confirmation"
     relation_text: "Confirmation Letter (for PUB record)"
-    link_text: "Conf. Letter"
+    link_text: "Confirmation Letter"
   -
     relation: "table_of_contents"
     relation_text: "Table of contents (of PUB record)"
@@ -301,6 +304,16 @@ relations_link:
     opposite: "popular_science"
     relation_text: "Research paper of (popular science PUB record)"
     link_text: "Research Paper"
+  -
+    relation: "translation"
+    opposite: "original"
+    relation_text: "Translation of (original PUB record)"
+    link_text: "Translation"
+  -
+    relation: "original"
+    opposite: "translation"
+    relation_text: "Original of (translation in PUB)"
+    link_text: "Original of Translation"
 
 relations_record:
   -
@@ -363,6 +376,16 @@ relations_record:
     opposite: "popular_science"
     relation_text: "Research paper of (popular science PUB record)"
     link_text: "Research Paper"
+  -
+    relation: "translation"
+    opposite: "original"
+    relation_text: "Translation of (original PUB record)"
+    link_text: "Translation"
+  -
+    relation: "original"
+    opposite: "translation"
+    relation_text: "Original of (translation in PUB)"
+    link_text: "Original of Translation"
   -
     relation: "other"
     relation_text: "In other relation (to PUB record)"
