@@ -1200,6 +1200,7 @@ publicationTypes:
         publisher: *publisher
         series_title_volume: *series_title_volume
         page: *page
+        edition: *edition
         publication_identifier: *publication_identifier
         year_extern: *year_extern
         publication_status_language: *publication_status_language
