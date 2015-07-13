@@ -3,7 +3,7 @@
 
 [% INCLUDE header.tt %]
 
-<!-- BEGIN add_new.tt -->
+<!-- BEGIN backend/add_new.tt -->
 
 <div class="col-md-9 col-md-offset-1"> <!-- main content (left) -->
 
@@ -103,6 +103,6 @@ $('#input_id').keydown(function () {
 });
 </script>
 
-<!-- END add_new.tt -->
+<!-- END backend/add_new.tt -->
 
 [% INCLUDE footer.tt %]

@@ -3,7 +3,7 @@
 
 [% INCLUDE header.tt %]
 
-<!-- BEGIN websites/marked.tt -->
+<!-- BEGIN marked/marked.tt -->
 
 <script src="/javascripts/jquery-sortable.js"></script>
 <script>
@@ -82,7 +82,7 @@
 
 </div>
 
-<!-- END websites/marked.tt -->
+<!-- END marked/marked.tt -->
 
 [% INCLUDE mark_all_js.tt %]
 

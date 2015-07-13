@@ -1,4 +1,4 @@
-<!-- BEGIN websites/hinweise_diss.tt -->
+<!-- BEGIN pubtheses/hinweise_diss.tt -->
 
     [% IF lang %]
 
@@ -58,4 +58,4 @@
 
     [% END %]
 
-<!-- END websites/hinweise_diss.tt -->
+<!-- END pubtheses/hinweise_diss.tt -->

@@ -1,8 +1,8 @@
 
-<!-- BEGIN person_dropzone.tt -->
+<!-- BEGIN backend/qae.tt -->
 
 <div id="dropzone_row">
    <div class="dropzone" id="qaeUpload"></div>
 </div>
 
-<!-- END person_dropzone.tt -->
+<!-- END backend/qae.tt -->

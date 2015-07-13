@@ -1,5 +1,5 @@
 
-<!-- BEGIN websites/tab_toolkit.tt -->
+<!-- BEGIN frontdoor/tab_toolkit.tt -->
 
 <div class="tab-pane" id="toolkit">
 Data provided by the <a href="http://toolkit.cit-ec.uni-bielefeld.de/">Cognitive Interaction Toolkit</a>.<br><br>
@@ -15,4 +15,4 @@ Data provided by the <a href="http://toolkit.cit-ec.uni-bielefeld.de/">Cognitive
 [% END %]
 </div>
 
-<!-- END websites/tab toolkit.tt -->
+<!-- END frontdoor/tab toolkit.tt -->

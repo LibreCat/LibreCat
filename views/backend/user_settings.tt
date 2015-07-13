@@ -1,6 +1,6 @@
 [% department = thisPerson.department %]
 
-<!-- BEGIN person_affiliation.tt -->
+<!-- BEGIN backend/user_settings.tt -->
 
 <form id="id_save_aff" action="/myPUB/person/affiliation" method="POST">
   <div class="row innerrow">
@@ -100,4 +100,4 @@ function submit_form(form_id){
 }
 </script>
 
-<!-- END person_affiliation.tt -->
+<!-- END backend/user_settings.tt -->

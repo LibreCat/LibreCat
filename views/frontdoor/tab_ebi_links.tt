@@ -1,4 +1,4 @@
-<!-- BEGIN frontdoor/tab_ebi.tt -->
+<!-- BEGIN frontdoor/tab_ebi_links.tt -->
 
 <div class="tab-pane" id="ebi_dblinks">
 
@@ -33,4 +33,4 @@
 
 </div>
 
-<!-- END frontdoor/tab_ebi.tt -->
+<!-- END frontdoor/tab_ebi_links.tt -->

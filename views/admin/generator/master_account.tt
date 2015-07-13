@@ -3,7 +3,7 @@
 
 [% INCLUDE header.tt %]
 
-<!-- BEGIN admin/edit_account.tt -->
+<!-- BEGIN admin/generator/edit_account.tt -->
 
 <div class="row">
 
@@ -159,6 +159,6 @@ $("input[name='account_type']").change(function(){
 
 </script>
 
-<!-- END admin/edit_account.tt -->
+<!-- END admin/generator/edit_account.tt -->
 
 [% INCLUDE footer.tt %]

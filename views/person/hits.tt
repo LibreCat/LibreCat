@@ -1,4 +1,4 @@
-<!-- BEGIN websites/hits_people.tt -->
+<!-- BEGIN person/hits.tt -->
 
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
 
@@ -52,4 +52,4 @@
 
 [% INCLUDE facets.tt %]
 
-<!-- END websites/hits_people.tt -->
+<!-- END person/hits.tt -->

@@ -1,4 +1,4 @@
-<!-- BEGIN websites/hits-project.tt -->
+<!-- BEGIN project/hits.tt -->
 
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
 
@@ -181,4 +181,4 @@
   [% INCLUDE websites/rightBoxTwitter.tt %]
 </div>
 
-<!-- END websites/hits_project.tt -->
+<!-- END project/hits.tt -->

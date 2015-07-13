@@ -1,5 +1,7 @@
 [% INCLUDE header.tt %]
 
+<!-- BEGIN websites/404.tt -->
+
 <div class="row"><!-- outer border -->
 
   <div class="col-md-11 col-sm-12"><!-- main content -->
@@ -29,5 +31,7 @@
   </div>
 
 </div>
+
+<!-- END websites/404.tt -->
 
 [% INCLUDE footer.tt %]

@@ -4,6 +4,8 @@
 [% qp.delete('splat') %]
 [% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
 
+<!-- BEGIN websites/418.tt -->
+
 <div class="row"><!-- outer border -->
 
   <div class="col-md-11 col-sm-12"><!-- main content -->
@@ -27,5 +29,7 @@
   </div>
 
 </div>
+
+<!-- END websites/418.tt -->
 
 [% INCLUDE footer.tt %]

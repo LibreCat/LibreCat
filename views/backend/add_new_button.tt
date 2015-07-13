@@ -1,8 +1,8 @@
 
-<!-- BEGIN add_new_button.tt -->
+<!-- BEGIN backend/add_new_button.tt -->
 
 <div id="add_new_button">
     <a href="/myPUB/record/new" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-plus"></span> Add new Publication</a>
 </div>
 
-<!-- END add_new_button.tt -->
+<!-- END backend/add_new_button.tt -->

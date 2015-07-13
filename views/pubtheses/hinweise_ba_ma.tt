@@ -1,4 +1,4 @@
-<!-- BEGIN websites/hinweis_ba_ma.tt -->
+<!-- BEGIN pubtheses/hinweis_ba_ma.tt -->
 
       [% IF lang %]
 
@@ -43,4 +43,4 @@
 
       [% END %]
 
-<!-- END websites/hinweis_ba_ma.tt -->
+<!-- END pubtheses/hinweis_ba_ma.tt -->

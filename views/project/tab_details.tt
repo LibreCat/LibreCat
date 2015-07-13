@@ -1,4 +1,4 @@
-<!-- BEGIN project/project_details.tt -->
+<!-- BEGIN project/tab_details.tt -->
 
 <div class="tab-pane active" id="project_details">
 
@@ -120,3 +120,5 @@
   [% END %]
 
 </div>
+
+<!-- END project/tab_details.tt -->

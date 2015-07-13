@@ -1,4 +1,4 @@
-<!-- BEGIN websites/berechtigte.tt -->
+<!-- BEGIN pubtheses/berechtigte.tt -->
 
 [% IF lang %]
 
@@ -43,4 +43,4 @@ F&uuml;r die Ver&ouml;ffentlichung im Internet ben&ouml;tigen wir lediglich ein 
 
 [% END %]
 
-<!-- END websites/berechtigte.tt -->
+<!-- END pubtheses/berechtigte.tt -->

@@ -1,6 +1,6 @@
 [% stats = h.get_statistics() %]
 
-<!-- BEGIN websites/home.tt -->
+<!-- BEGIN websites/tab_home.tt -->
 
 <div class="row"><!-- begin outer row -->
 
@@ -65,4 +65,4 @@
 
 </div><!-- end outer row -->
 
-<!-- END websites/home.tt -->
+<!-- END websites/tab_home.tt -->

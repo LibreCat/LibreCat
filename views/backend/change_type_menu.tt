@@ -1,5 +1,5 @@
 [% l_type = type.lower %]
-<!-- BEGIN change_type_menu.tt -->
+<!-- BEGIN backend/change_type_menu.tt -->
 
 <div class="dropdown">
   <div class="btn-group">
@@ -43,4 +43,4 @@
   </div>
 </div>
 
-<!-- END change_type_menu.tt -->
+<!-- END backend/change_type_menu.tt -->

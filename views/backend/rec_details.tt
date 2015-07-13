@@ -1,5 +1,5 @@
 
-<!-- BEGIN rec_details.tt -->
+<!-- BEGIN backend/rec_details.tt -->
 
 <div id="[% tabmodus %]_[% entry.item('_id') %]" class="collapse margin-top1-4">
 [% IF entry.author %]
@@ -101,4 +101,4 @@
   </div>
 [% END %]
 
-<!-- END rec_details.tt -->
+<!-- END backend/rec_details.tt -->

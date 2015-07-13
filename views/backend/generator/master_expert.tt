@@ -6,7 +6,7 @@
 
 [% INCLUDE header.tt %]
 
-<!-- BEGIN /backend/forms/master_expert.tt -->
+<!-- BEGIN backend/generator/master_expert.tt -->
 
 <div class="col-md-11 col-md-offset-1">
   
@@ -115,6 +115,6 @@
 {% INCLUDE fields/jquery_tab1.tt %}
 </script>
 
-<!-- END /backend/forms/master_expert.tt -->
+<!-- END backend/generator/master_expert.tt -->
 
 [% INCLUDE footer.tt %]

@@ -1,5 +1,5 @@
 
-<!-- BEGIN websites/theses_dropzone.tt -->
+<!-- BEGIN pubtheses/dropzone.tt -->
 
 [% IF submit_response %]
   <div class="alert alert-success" role="alert">[% submit_response %]</div>
@@ -16,4 +16,5 @@
   <div class="dropzone-previews col-md-12" id="theses_dz_preview"></div>
   
 </div>
-<!-- END websites/theses_dropzone.tt -->
+
+<!-- END pubtheses/dropzone.tt -->
