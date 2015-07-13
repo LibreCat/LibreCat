@@ -10,7 +10,7 @@
 [% END %]
 
 [% IF !thisPerson %]
-  <p>No info found.</p>
+  <p>Person ID not found.</p>
 [% ELSE %]
   [% IF thisPerson.bis.former == "1" %]
     <p>Former Bielefeld University Researcher</p>

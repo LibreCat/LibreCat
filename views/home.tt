@@ -25,9 +25,9 @@
         [% IF session.role == "delegate" %]Delegate's Page[% END %]
       (myPUB)
       </h1>
-     [% ELSE %]
+    [% ELSE %]
       <h1>
-      [% thisPerson.first_name %] [% thisPerson.last_name %]
+      [% UNLESS !thisPerson %][% thisPerson.first_name %] [% thisPerson.last_name %][% ELSE %]Person ID not found[% END %]
       </h1>
       <div class="pull-right margin-top-1">
 	<ul class="list-inline">
@@ -72,6 +72,8 @@
       [% END %]
 
     </div>
+
+    [% UNLESS !thisPerson %]
 
     <div class="row margin-xs-top"> <!-- row span11 publications, projects, departments -->
       <div class="col-md-12">
@@ -189,6 +191,8 @@
       })
       </script>
     </div>
+
+    [% END %]
 
   </div> <!-- main content (left) -->
 
