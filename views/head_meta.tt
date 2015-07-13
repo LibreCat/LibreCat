@@ -24,7 +24,7 @@
     <script src="/javascripts/bootstrap-select.min.js"></script>
     <script src="/javascripts/[% IF backend %]backend[% ELSE %]frontend[% END %].js"></script>
     <script src="/javascripts/dropzone.min.js"></script>
-    <script src="/javascripts/pub_dropzones.min.js"></script>
+    <script src="/javascripts/pub_dropzones.js"></script>
     [% IF bag == 'home' %]
 	<script src="/javascripts/angular-1.2.14.min.js"></script>
 	<script src="/javascripts/angularSearch.js"></script>

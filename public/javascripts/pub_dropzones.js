@@ -109,6 +109,7 @@ $(document).ready(function(){
 	                $('#select_ddc_0').closest('div.input-group').addClass('mandatory');
 	                $('#select_ddc_0').addClass('has-error');
 	                $('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
+	                $('label[for="select_ddc_0"]').closest('div').append('<span class="starMandatory"></span>');
 	              }
 	              
 	              file.previewElement.setAttribute("id", resp.tempid);

@@ -110,6 +110,7 @@ field_order:
     - ccs_class
     - genbank
     - nasc
+    - ddc
     - jel
     - thematic_area
     - popular_science
@@ -1035,6 +1036,9 @@ publicationTypes:
       supplementary_fields:
         tab_name: "Supplementary fields"
         abstract: *abstract
+        ddc:
+          label: "DDC"
+          mandatory: 0
         jel: *jel
         keyword: *keyword
         alternative_id: *alternative_id
