@@ -222,6 +222,10 @@ relations_file:
     relation: "other"
     relation_text: "In other relation (to PUB record)"
     link_text: "Other Relation"
+  -
+    relation: "hidden"
+    relation_text: "Suppl. Mat. for embedding only (hidden on frontdoor)"
+    link_text: "Hidden Supplementary Material"
 
 relations_link:
   -
