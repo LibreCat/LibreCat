@@ -96,6 +96,7 @@
   </ul>
 [% END %]
 
+[% IF backend AND session.role == "super_admin" OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR  facets.year.terms.size > 1 %]
 <ul class="nav nav-tabs nav-stacked ul1">
   [% IF backend AND session.role == "super_admin" %]
   <li>
@@ -225,6 +226,7 @@
   [% END %]
 </ul>
 [% END %]
+[% END %]
 
 [% IF facets.popular_science.terms.size > 0
    OR facets.extern.terms.size > 0
@@ -235,7 +237,7 @@
    OR facets.inspire.terms.size > 0 %]
 <ul class="nav nav-tabs nav-stacked margin-top1 ul2">
   [% IF facets.popular_science.terms.size > 0 %]
-  <li>
+  <li class="ul2li1">
     [% FOREACH t IN facets.popular_science.terms %]
       [% NEXT IF t.term == 0 %]
       [% IF t.count < total %]
@@ -248,7 +250,7 @@
   [% END %]
 
   [% IF facets.extern.terms.size > 0 %]
-  <li>
+  <li class="ul2li2">
     [% FOREACH t IN facets.extern.terms %]
       [% NEXT IF t.term == 0 %]
       [% IF t.count < total %]
@@ -261,7 +263,7 @@
   [% END %]
 
   [% IF facets.open_access.terms.size > 0 %]
-  <li>
+  <li class="ul2li3">
     [% FOREACH t IN facets.open_access.terms %]
       [% NEXT IF t.term == 0 %]
       [% IF t.count < total %]
@@ -277,7 +279,7 @@
      OR facets.arxiv.terms.size > 0
      OR facets.pmid.terms.size > 0
      OR facets.inspire.terms.size > 0 %]
-  <li>
+  <li class="ul2li4">
   <button data-toggle="collapse" data-target="#extid_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Indexed in' : 'Indexiert in' %]</button>
   <div class="facettecollapse">
     <ul id="extid_[% tabmodus %][% menu %]" class="collapse">
