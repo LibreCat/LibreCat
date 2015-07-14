@@ -42,7 +42,7 @@ type_map:
   conferenceAbstract: chapter
   conferenceEditor: book
   conference: chapter
-  dissertation: thesis
+  dissertation: book
   encyclopediaArticle: chapter
   journalArticle: article
   journalEditor: article
@@ -50,7 +50,11 @@ type_map:
   patent: article
   preprint: article
   report: book
-  researchData: researchData
+  researchData: book
   translation: book
+  translationChapter: chapter
   workingpaper: book
-  bi*: thesis
+  biDissertation: book
+  biBachelorThesis: book
+  biMasterThesis: book
+  biPostdocThesis: book
