@@ -80,6 +80,9 @@ sub index_citation_update {
 			$rec_prep->{'page-first'} = $1;
 			$rec_prep->{'page'} = $1 ."–" .$2;
 		}
+		elsif($rec->{'type'} eq "journalArticle"){
+			$rec_prep->{'page'} = $rec->{'page'};
+		}
 		else {
 			$rec_prep->{'number-of-pages'} = $rec->{'page'};
 		}
