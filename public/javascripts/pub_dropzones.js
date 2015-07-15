@@ -105,11 +105,11 @@ $(document).ready(function(){
 	                $("#licenses").find('div.alert-info.mandatory').addClass('alert-danger');
 	                $("#licenses").find('div.alert-info.mandatory').removeClass('alert-info');
 	                $("#licenses").find('input[name="accept"]').attr('checked', false);
-	                $('#select_ddc_0').addClass('mandatory');
-	                $('#select_ddc_0').closest('div.input-group').addClass('mandatory');
-	                $('#select_ddc_0').addClass('has-error');
-	                $('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
-	                $('label[for="select_ddc_0"]').closest('div').append('<span class="starMandatory"></span>');
+	                $('#licenses').find('#select_ddc_0').addClass('mandatory');
+	                $('#licenses').find('#select_ddc_0').closest('div.input-group').addClass('mandatory');
+	                $('#licenses').find('#select_ddc_0').addClass('has-error');
+	                $('#licenses').find('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
+	                $('#licenses').find('label[for="select_ddc_0"]').closest('div').append('<span class="starMandatory"></span>');
 	              }
 	              
 	              file.previewElement.setAttribute("id", resp.tempid);
