@@ -336,7 +336,7 @@
 
 [% IF qp.style AND !user_settings.style_eq_userstyle %]
   <div class="text-muted">
-    <a href="[% h.newuri_for("$path", qp, style="") %] rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    <a href="[% h.newuri_for("$path", qp, style="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
     <strong>Style:</strong>
     [% qp.style %]
 
