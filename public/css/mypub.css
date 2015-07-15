@@ -129,6 +129,7 @@ div.cmark{border:1px solid #ccc;padding:5px!important;}
 .librarian-approved{color:#9dad23;}
 
 /* nav links (filter publicatinons) */
+.facets .nav-tabs{border-bottom:0;}
 .nav-tabs>li>a,.nav-tabs>li>button{padding-top:8px;padding-bottom:8px;line-height:20px;border:1px solid transparent;border-radius:4px 4px 0 0;margin-right:0;}
 .nav-tabs.nav-stacked>li>a,.nav-tabs.nav-stacked>li>button{border:1px solid #ddd;border-radius:0}
 .nav-tabs.nav-stacked>li>button{background-color:white;width:100%;text-align:left;padding-left:12px;}

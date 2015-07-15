@@ -115,7 +115,7 @@
 	    [% tabmodus = 'admin' %]
 	    [% INCLUDE hits.tt %]
 	  </div>
-	  <div class="col-md-3 col-md-offset-1 col-sm-4">
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
 	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
@@ -128,7 +128,7 @@
 	    [% tabmodus = 'user' %]
 	    [% INCLUDE hits.tt %]
 	  </div>
-	  <div class="col-md-3 col-md-offset-1 col-sm-4">
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
 	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
@@ -138,7 +138,7 @@
 	    [% tabmodus = 'data' %]
 	    [% INCLUDE hits.tt %]
 	  </div>
-	  <div class="col-md-3 col-md-offset-1 col-sm-4">
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
 	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
@@ -150,7 +150,7 @@
 	    [% tabmodus = 'reviewer' %]
 	    [% INCLUDE hits.tt %]
 	  </div>
-	  <div class="col-md-3 col-md-offset-1 col-sm-4">
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
 	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
@@ -162,7 +162,7 @@
 	    [% tabmodus = 'data_manager' %]
 	    [% INCLUDE hits.tt %]
 	  </div>
-	  <div class="col-md-3 col-md-offset-1 col-sm-4">
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
 	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
@@ -176,7 +176,7 @@
 	    [% delegate_name = h.get_person(delegate_id).last_name %]
 	    [% INCLUDE hits.tt %]
 	  </div>
-	  <div class="col-md-3 col-md-offset-1 col-sm-4">
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
 	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
