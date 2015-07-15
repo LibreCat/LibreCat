@@ -96,9 +96,10 @@ get qr{/(data|publication)/embed/*} => sub {
 get qr{/embed/*} => sub {
 	my $p = h->extract_params();
 	my $portal = h->config->{portal}->{$p->{ttyp}} if $p->{ttyp};
+
 	if($portal){
 		my $pq = h->is_portal_default($p->{ttyp});
-		$p = $pq->{default_query};
+		$p = $pq->{full_query};
 	}
 	push @{$p->{q}}, ("status=public");
 	$p->{facets} = h->default_facets();

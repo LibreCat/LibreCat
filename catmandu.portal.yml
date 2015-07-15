@@ -27,17 +27,31 @@ pubbccpt:
     - 
       param: publicationstatus
       op: '<>'
-      or:
-        - submitted
-        - unpublished
+      or: submitted
+    -
+      param: publicationstatus
+      op: '<>'
+      or: unpublished
     - 
       param: documenttype
       op: '<>'
-      or: 'bi*'
+      or: 'biDissertation'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biPostdocThesis'
   style: ama
   limit: 10
   fmt: html
-  ttyp: bccpt
+  ttyp: pubbccpt
 
 pubbiotech:
   q:
@@ -52,10 +66,22 @@ pubbiotech:
       param: publishingyear
       op: '>='
       or: 2006
+    - 
+      param: documenttype
+      op: '<>'
+      or: 'biDissertation'
     -
       param: documenttype
       op: '<>'
-      or: 'bi*'
+      or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biPostdocThesis'
     -
       param: publicationstatus
       op: '<>'
@@ -80,9 +106,11 @@ bghs:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   style: mla
   limit: 10
   ttyp: bghs
@@ -97,9 +125,11 @@ bio:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   style: bio1
   limit: 10
   ttyp: bio
@@ -114,9 +144,11 @@ bio3:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   style: bio1
   limit: 10
   ttyp: bio3
@@ -131,9 +163,11 @@ bioplants:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   style: bio1
   limit: 10
   ttyp: bioplants
@@ -148,9 +182,11 @@ biobcb:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   style: bio1
   limit: 10
   ttyp: biobcb
@@ -165,9 +201,11 @@ cns:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   style: bio1
   limit: 10
   ttyp: cns
@@ -182,9 +220,11 @@ neurobio:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   style: bio1
   limit: 10
   ttyp: neurobio
@@ -199,9 +239,11 @@ citec:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
     -
       param: publishingyear
       op: '>='
@@ -220,9 +262,11 @@ citectcs:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   style: bio1
   limit: 10
   ttyp: citectcs
@@ -237,9 +281,11 @@ ipaed:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: ipaed
   fmt: html
@@ -253,9 +299,11 @@ hist:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: hist
   fmt: html
@@ -269,9 +317,11 @@ histde:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: histde
   fmt: html
@@ -285,9 +335,11 @@ hist1:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: hist1
   fmt: html
@@ -301,9 +353,11 @@ hist2:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: hist2
   fmt: html
@@ -317,9 +371,11 @@ hist3:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: hist3
   fmt: html
@@ -333,9 +389,11 @@ hist4:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: hist4
   fmt: html
@@ -349,9 +407,11 @@ hist5:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: hist5
   fmt: html
@@ -365,9 +425,11 @@ hist6:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: hist6
   fmt: html
@@ -381,9 +443,11 @@ hist7:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: hist7
   fmt: html
@@ -397,9 +461,11 @@ hist8:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: hist8
   fmt: html
@@ -413,9 +479,11 @@ gwiph:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: gwiph
   fmt: html
@@ -429,9 +497,11 @@ iffde:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: iffde
   fmt: html
@@ -469,9 +539,12 @@ imw:
     -
       param: documenttype
       op: '='
-      or:
-        - 'book*'
-        - 'journal*'
+      or: 
+        - 'book'
+        - 'bookChapter'
+        - 'bookEditor'
+        - 'journalArticle'
+        - 'journalEditor'
   limit: 10
   style: pub
   ttyp: imw
@@ -486,9 +559,11 @@ iwt:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: iwt
   fmt: html
@@ -502,9 +577,11 @@ physlat:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   style: aps
   limit: 10
   ttyp: physlat
@@ -523,9 +600,11 @@ physhe:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   style: aps
   limit: 10
   ttyp: physhe
@@ -540,9 +619,11 @@ sport:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: sport
   fmt: html
@@ -556,9 +637,11 @@ soz:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: soz
   fmt: html
@@ -572,9 +655,11 @@ vwl:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: vwl
   fmt: html
@@ -588,9 +673,11 @@ wiwi:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 5
   ttyp: wiwi
   fmt: html
@@ -604,9 +691,11 @@ wiwide:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 5
   ttyp: wiwide
   fmt: html
@@ -620,9 +709,11 @@ bwl:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: bwl
   fmt: html
@@ -636,9 +727,11 @@ bwlde:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: bwlde
   fmt: html
@@ -652,9 +745,11 @@ bwl2:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: bwl2
   fmt: html
@@ -668,9 +763,11 @@ bwl2de:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: bwl2de
   fmt: html
@@ -684,9 +781,11 @@ zif:
     -
       param: documenttype
       op: '<>'
-      or:
-        - 'biba*'
-        - 'bima*'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
   limit: 10
   ttyp: zif
   fmt: html

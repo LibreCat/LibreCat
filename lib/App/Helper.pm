@@ -846,11 +846,15 @@ sub is_portal_default {
 	my $p = $self->extract_params();
 
 	my $return_hash;
+	my $default_query;
+	my $full_query;
 
 	# Create default portal query hash
 	foreach my $key (keys %$portal){
 		if ($key ne "q"){
-			$return_hash->{default_query}->{$key} = $portal->{$key};
+			$default_query->{$key} = $portal->{$key};
+			$full_query->{$key} = $portal->{$key};
+			#$return_hash->{default_query}->{$key} = $portal->{$key};
 		}
 		else {
 			foreach my $entry (@{$portal->{q}}){
@@ -862,9 +866,12 @@ sub is_portal_default {
 				else {
 					$q = $entry->{or};
 				}
-				push @{$return_hash->{default_query}->{q}}, $entry->{param} . $entry->{op} . $q;
+				push @{$default_query->{q}}, $entry->{param} . $entry->{op} . $q;
+				push @{$full_query->{q}}, $entry->{param} . $entry->{op} . $q;
+				#push @{$return_hash->{default_query}->{q}}, $entry->{param} . $entry->{op} . $q;
 			}
 		}
+		$return_hash->{default_query} = $default_query;
 	}
 
 	if(!$p){
@@ -902,17 +909,17 @@ sub is_portal_default {
 							# e.g. if there is no parameter "department", this is not part of the
 							# default query, so add it to the return params that may be deletable
 							if (!$param ){
-								push @{$return_hash->{delete_them}}, $part;
+								push @{$return_hash->{delete_them}->{q}}, $part;
 							}
 							# e.g. if there IS a parameter "department" but the operator is not "="
 							# but "<>", this is not part of the default query
 							elsif (!$op){
-								push @{$return_hash->{delete_them}}, $part;
+								push @{$return_hash->{delete_them}->{q}}, $part;
 							}
 							# e.g. if there IS a parameter "department" AND the operator IS "="
 							# but the values don't match, this is not part of the default query
 							elsif (!$val){
-								push @{$return_hash->{delete_them}}, $part;
+								push @{$return_hash->{delete_them}->{q}}, $part;
 							}
 						}
 					}
@@ -923,11 +930,26 @@ sub is_portal_default {
 				# if the key doesn't exist in the portal config, it's not default query
 				# if the key DOES exist but the value does not match, it's not default query either
 				if(!$portal->{$key} or ($portal->{$key} and $portal->{$key} ne $p->{$key})){
-					$return_hash->{$key} = $p->{$key};
+					$return_hash->{delete_them}->{$key} = $p->{$key};
 				}
 			}
 		}
 	}
+	
+	if($return_hash->{delete_them}){
+		foreach my $key (keys %{$return_hash->{delete_them}}){
+			if ($key eq "q"){
+				foreach my $q (@{$return_hash->{delete_them}->{q}}){
+					push @{$full_query->{q}}, $q;
+				}
+			}
+			else {
+				$full_query->{$key} = $return_hash->{delete_them}->{$key};
+			}
+		}
+	}
+	
+	$return_hash->{full_query} = $full_query;
 
 	return $return_hash;
 }
