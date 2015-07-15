@@ -474,6 +474,9 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
 $('a.facet_[% tabmodus %]').click(function() {
   var par_key = $(this).data('key');
   if(par_key == "sort"){
+    if(!searchParams[par_key]){
+      searchParams[par_key] = [];
+    }
     searchParams[par_key].push($(this).data('value'));
   }
   else if(par_key == "q"){
