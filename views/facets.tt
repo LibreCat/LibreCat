@@ -51,7 +51,7 @@
         <button type="submit" class="btn btn-default">Go!</button>
       </span>
     </span>
-    [%- IF qp.q.size > 0 %]
+    [%- IF qp.q.size > 0 AND total > 0 %]
     [%- FOREACH val IN qp.q %]
       <input type="hidden" name="q" value="[% val %]" />
     [% END %]
@@ -63,8 +63,8 @@
 
 [% IF facets.status.terms.size > 1 OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR facets.year.terms.size > 1 OR bag == 'authorlist' %]
 
-<h3>[% IF bag == "data" %][% lang ? "Filter Data Publications" : "Datenpublikationen Filtern" %]
-    [% ELSIF bag == "authorlist" %][% lang ? "Filter Authorlist" : "Autorenliste Filtern" %]
+<h3>[% IF bag == "data" %][% lang ? "Filter Data Publications" : "Datenpublikationen filtern" %]
+    [% ELSIF bag == "authorlist" %][% lang ? "Filter Authorlist" : "Autorenliste filtern" %]
     [% ELSE %][% lang ? "Filter Publications" : "Publikationen Filtern" %][% END %]</h3>
 
 [% IF bag == "authorlist" %]
