@@ -207,7 +207,8 @@ sub index_citation_update {
 				$debug = $my_response;
 				#return $debug;
 
-				my $citation_ref = $json->decode($my_response->{_content});
+				#my $citation_ref = $json->decode($my_response->{_content});
+				my $citation_ref = $my_response->{_rc} ne "500" ? $json->decode($my_response->{_content}) : [{citation => ""}];
 				#$debug = $citation_ref;
 
 				if(@$citation_ref[0]->{citation}){
