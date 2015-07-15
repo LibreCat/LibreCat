@@ -16,3 +16,4 @@ if all_match('finalSubmit','recPublish')
 end
 
 remove_field('finalSubmit')
+delete_empty()
