@@ -420,8 +420,13 @@ sub delete_record {
 	#	cede;
 	}
 
-	my $saved = $self->backup->add($del);
-	return $self->bag->add($saved);
+	my $saved = $self->backup($bag)->add($del);
+	$self->publication->add($del);
+	$self->publication->commit;
+	
+	sleep 1;
+	
+	return $saved;
 }
 
 sub default_facets {
