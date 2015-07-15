@@ -243,7 +243,7 @@
       [% IF t.count < total %]
       <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="popularscience" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] Popular Science</a>
       [% ELSE %]
-      <div class="text-success"><strong>All publications are Popular Science Publications</strong></div>
+      <div class="text-success"><span class="glyphicon glyphicon-ok"></span> <strong>All publications are Popular Science Publications</strong></div>
       [% END %]
     [% END %]
   </li>
@@ -256,7 +256,7 @@
       [% IF t.count < total %]
       <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="extern" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% lang ? 'External Publication' : 'Externe Publikation' %][% IF t.count > 1 %][% lang ? "s" : "en" %][% END %]</a>
       [% ELSE %]
-      <div class="text-success"><strong>All publications are External Publications</strong></div>
+      <div class="text-success"><span class="glyphicon glyphicon-ok"></span> <strong>All publications are External Publications</strong></div>
       [% END %]
     [% END %]
   </li>
@@ -269,7 +269,7 @@
       [% IF t.count < total %]
       <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="fulltext" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] OA [% lang ? 'Fulltext' : 'Volltext' %][% IF t.count > 1 %][% lang ? "s" : "e" %][% END %]</a>
       [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications are OA Fulltexts</strong></div>
+      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>All publications are OA Fulltexts</strong></div>
       [% END %]
     [% END %]
   </li>
@@ -287,28 +287,28 @@
       [% IF facets.isi.terms.0.count < total %]
       <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="isi" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.isi.terms.0.count %] Web of Science</a></li>
       [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications have an ISI identifier</strong></div>
+      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>All publications have an ISI identifier</strong></div>
       [% END %]
     [% END %]
     [% IF facets.arxiv.terms.0.count %]
       [% IF facets.arxiv.terms.0.count < total %]
       <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="arxiv" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.arxiv.terms.0.count %] arXiv.org</a></li>
       [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications have an arXiv identifier</strong></div>
+      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>All publications have an arXiv identifier</strong></div>
       [% END %]
     [% END %]
     [% IF facets.pmid.terms.0.count %]
       [% IF facets.pmid.terms.0.count < total %]
       <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="pmid" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.pmid.terms.0.count %] Pubmed</a></li>
       [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications have an PMID identifier</strong></div>
+      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>All publications have an PMID identifier</strong></div>
       [% END %]
     [% END %]
     [% IF facets.inspire.terms.0.count %]
       [% IF facets.inspire.terms.0.count < total %]
       <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="inspire" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.inspire.terms.0.count %] INSPIRE HEP</a></li>
       [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><strong>All publications have an INSPIRE identifier</strong></div>
+      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>All publications have an INSPIRE identifier</strong></div>
       [% END %]
     [% END %]
     </ul>
