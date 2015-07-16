@@ -150,7 +150,7 @@
       <button data-toggle="collapse" data-target="#projecthitsperpage"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% qp.limit %][% ELSE %]: 20[% END %]</a></button>
       <div class="facettecollapse">
         <ul id="projecthitsperpage" class="collapse">
-          [% FOREACH limiting IN h.config.store.pagination_options %]
+          [% FOREACH limiting IN h.config.pagination_options %]
             [% IF limiting == qp.limit %]
               <li>[% limiting %]</li>
             [% ELSE %]
@@ -164,7 +164,7 @@
         <button data-toggle="collapse" data-target="#sort"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Sorting' : 'Sortierung' %]</a></button>
         <div class="facettecollapse">
         <ul id="sort" class="collapse[% IF qp.defined('sorting') AND qp.item('sorting') != "" %] in[% END %]">
-          [% FOREACH sortme IN h.config.store.project_sort_options %]
+          [% FOREACH sortme IN h.config.project_sort_options %]
             [% IF qp.sorting.grep("$sortme.key").0 %]
             <li>[% sortme.label %]</li>
             [% ELSE %]

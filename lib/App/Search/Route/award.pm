@@ -152,7 +152,7 @@ get qr{/award/*} => sub {
 		
 		my $preishits = h->award->search(
 		    cql_query => $cql,
-		    limit => h->config->{store}->{maximum_page_size},
+		    limit => h->config->{maximum_page_size},
 		    facets => {
 		    	year => {terms => {field => 'year', size => 100, order => 'reverse_term'}},
 		    	department => {terms => {field => 'department.name', size => 100, order => 'term'}},
@@ -232,7 +232,7 @@ get qr{/award/*} => sub {
 			
 			my $awardhits = h->award->search(
 			    cql_query => "awardid exact $id",
-			    limit => params->{limit} ||= h->config->{store}->{default_searchpage_size},
+			    limit => params->{limit} ||= h->config->{default_searchpage_size},
 			    start => params->{start} ||= 0,
 			    sru_sortkeys => "year,,0",
 			);
@@ -252,7 +252,7 @@ get qr{/award/*} => sub {
 			
 			my $otherHits = h->award->search(
 		        cql_query => "honoree exact \"$name\"",
-		        limit => h->config->{store}->{default_searchpage_size},
+		        limit => h->config->{default_searchpage_size},
 		        start => 0,
 		        sru_sortkeys => "year,,0",
 		    );

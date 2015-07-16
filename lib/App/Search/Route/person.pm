@@ -16,7 +16,7 @@ get qr{/person[/|?]*} => sub {
 	(params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
 
     $p->{start} = params->{start} if params->{start};
-	$p->{limit} = params->{limit} || h->config->{store}->{default_page_size};
+	$p->{limit} = params->{limit} || h->config->{default_page_size};
 
 #	if(params->{former}){
 #		my $former;
@@ -69,7 +69,7 @@ get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
 	my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '', $id);
 	$p->{sort} = $sort_style->{sort};
 	$p->{facets} = h->default_facets();
-	$p->{limit} = h->config->{store}->{maximum_page_size};
+	$p->{limit} = h->config->{maximum_page_size};
 
 	my $hits = h->search_publication($p);
 
@@ -82,7 +82,7 @@ get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
 	$researchhits = h->search_publication($p);
 	$hits->{researchhits} = $researchhits;
 
-	$p->{limit} = h->config->{store}->{maximum_page_size};
+	$p->{limit} = h->config->{maximum_page_size};
 	$hits->{style} = $sort_style->{style};
 	$hits->{sort} = $p->{sort};
 	$hits->{id} = $id;

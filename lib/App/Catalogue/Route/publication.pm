@@ -175,7 +175,7 @@ Prints the frontdoor for every record.
 
         my $hits = h->publication->get($id);
         $hits->{bag} = $hits->{type} eq "researchData" ? "data" : "publication";
-        $hits->{style} = h->config->{store}->{default_fd_style} || "default";
+        $hits->{style} = h->config->{default_fd_style} || "default";
         $hits->{marked}  = 0;
 
         template 'frontdoor/record.tt', $hits;

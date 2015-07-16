@@ -1283,35 +1283,3 @@ search:
                 fields:
                   name: {type: string, include_in_all: true}
                   exact: {type: string, analyzer: tag}
-
-default_page_size: 100
-default_searchpage_size: 10
-maximum_page_size: 1000
-pagination_options:
-  - 10
-  - 20
-  - 50
-  - 100
-sort_options:
-  - {key: year, label: "Publikationsjahr", label_en: "Publishing year"}
-  - {key: date_updated, label: "Update-Datum", label_en: "Date updated"}
-  - {key: title, label: "Titel", label_en: "Title" }
-  - {key: author, label: "Erstautor", label_en: "First author"}
-  - {key: type, label: "Publikationstyp", label_en: "Publication type"}
-  - {key: publication, label: "Reihe/ Journal", label_en: "Publ./ Series/ Journal"}
-sort_options_person:
-  - {key: fullname, label_en: "Alphabetically", label: "Alphabetisch"}
-  - {key: publcount, label_en: "Number of publications", label: "Anzahl der Publikationen"}
-project_sort_options:
-  - {key: name, label: "Name"}
-  - {key: acronym, label: "Acronym"}
-  - {key: startyear, label: "Start Year"}
-default_sort:
-  - year.desc
-  - date_updated.desc
-default_sort_backend:
-  - date_updated.desc
-  - year.desc
-default_style: 'default'
-default_fd_style: 'default'
-default_format: html

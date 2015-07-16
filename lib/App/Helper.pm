@@ -178,7 +178,7 @@ sub get_sort_style {
 		$style = $user_style;
 	}
 	else {
-		$style = $self->config->{store}->{default_style}
+		$style = $self->config->{default_style}
 	}
 
 	my $sort;
@@ -189,16 +189,16 @@ sub get_sort_style {
 #	} elsif ($user_sort) {
 #		$sort = $sort_backend = $user_sort;
 	} else {
-		$sort = $self->config->{store}->{default_sort};
-		$sort_backend = $self->config->{store}->{default_sort_backend};
+		$sort = $self->config->{default_sort};
+		$sort_backend = $self->config->{default_sort_backend};
 	}
 
 	$return->{sort} = $sort;
 	$return->{sort_backend} = $sort_backend;
 	#$return->{user_sort} = $user_sort if $user_sort;
 	$return->{user_style} = $user_style if ($user_style);
-	$return->{default_sort} = $self->config->{store}->{default_sort};
-	$return->{default_sort_backend} = $self->config->{store}->{default_sort_backend};
+	$return->{default_sort} = $self->config->{default_sort};
+	$return->{default_sort_backend} = $self->config->{default_sort_backend};
 
 	$return->{style} = $style;
 
@@ -207,12 +207,12 @@ sub get_sort_style {
 	#$return->{sort_eq_usersort} = 0;
 	#$return->{sort_eq_usersort} = is_same($user_sort, $return->{sort_backend}) if $user_sort;
 	$return->{sort_eq_default} = 0;
-	$return->{sort_eq_default} = is_same($return->{sort_backend}, $self->config->{store}->{default_sort_backend});
+	$return->{sort_eq_default} = is_same($return->{sort_backend}, $self->config->{default_sort_backend});
 
 	$return->{style_eq_userstyle} = 0;
 	$return->{style_eq_userstyle} = ($user_style eq $return->{style}) ? 1 : 0;
 	$return->{style_eq_default} = 0;
-	$return->{style_eq_default} = ($return->{style} eq $self->config->{store}->{default_style}) ? 1 : 0;
+	$return->{style_eq_default} = ($return->{style} eq $self->config->{default_style}) ? 1 : 0;
 
 	return $return;
 }
@@ -516,7 +516,7 @@ sub search_publication {
 	my $hits = publication->search(
 	    cql_query => $cql,
 		sru_sortkeys => $sort,
-		limit => $p->{limit} ||= $self->config->{store}->{default_page_size},
+		limit => $p->{limit} ||= $self->config->{default_page_size},
 		start => $p->{start} ||= 0,
 		facets => $p->{facets} ||= {},
 	);
@@ -612,7 +612,7 @@ sub search_researcher {
 
 	my $hits = researcher->search(
 		cql_query => $cql,
-	 	limit => $p->{limit} ||= config->{store}->{maximum_page_size},
+	 	limit => $p->{limit} ||= config->{maximum_page_size},
 		start => $p->{start} ||= 0,
 		sru_sortkeys => $p->{sorting} || "fullname,,1",
 	);
@@ -641,7 +641,7 @@ sub search_department {
 	if($p->{hierarchy}){
 		my $hits = department->search(
 		    cql_query => $cql,
-		    limit => config->{store}->{maximum_page_size},
+		    limit => config->{maximum_page_size},
 		    start => 0,
 		);
 		
@@ -675,7 +675,7 @@ sub search_project {
 		$cql = $cql ? " AND funded=1" : "funded=1";
 		my $hits = project->search(
 		    cql_query => $cql,
-		    limit => config->{store}->{maximum_page_size},
+		    limit => config->{maximum_page_size},
 		    start => 0,
 		);
 		
@@ -714,7 +714,7 @@ sub search_research_group {
 	if($p->{hierarchy}){
 		my $hits = research_group->search(
 		    cql_query => $cql,
-		    limit => config->{store}->{maximum_page_size},
+		    limit => config->{maximum_page_size},
 		    start => 0,
 		);
 		

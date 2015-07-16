@@ -37,7 +37,7 @@ get '/marked' => sub {
             push @tmp_hits, @{$hits->{hits}};
         }
     	$hits->{explinks} = $explinks;
-    	$hits->{style} = params->{style} || h->config->{store}->{default_style};
+    	$hits->{style} = params->{style} || h->config->{default_style};
     }
 
     $hits->{hits} = \@tmp_hits;
@@ -84,7 +84,7 @@ post '/marked' => sub {
 	my $del = params->{'x-tunneled-method'};
 	my $marked = [];
 	$marked = session 'marked';
-    $p->{limit} = h->config->{store}->{maximum_page_size};
+    $p->{limit} = h->config->{maximum_page_size};
     $p->{start} = 0;
 	push @{$p->{q}}, "status exact public";
 
