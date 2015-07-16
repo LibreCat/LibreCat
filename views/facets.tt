@@ -239,7 +239,6 @@
   [% IF facets.popular_science.terms.size > 0 %]
   <li class="ul2li1">
     [% FOREACH t IN facets.popular_science.terms %]
-      [% NEXT IF t.term == 0 %]
       [% IF t.count < total %]
       <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="popularscience" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] Popular Science</a>
       [% ELSE %]
@@ -252,7 +251,6 @@
   [% IF facets.extern.terms.size > 0 %]
   <li class="ul2li2">
     [% FOREACH t IN facets.extern.terms %]
-      [% NEXT IF t.term == 0 %]
       [% IF t.count < total %]
       <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="extern" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% lang ? 'External Publication' : 'Externe Publikation' %][% IF t.count > 1 %][% lang ? "s" : "en" %][% END %]</a>
       [% ELSE %]
@@ -265,7 +263,6 @@
   [% IF facets.open_access.terms.size > 0 %]
   <li class="ul2li3">
     [% FOREACH t IN facets.open_access.terms %]
-      [% NEXT IF t.term == 0 %]
       [% IF t.count < total %]
       <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="fulltext" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] OA [% lang ? 'Fulltext' : 'Volltext' %][% IF t.count > 1 %][% lang ? "s" : "e" %][% END %]</a>
       [% ELSE %]

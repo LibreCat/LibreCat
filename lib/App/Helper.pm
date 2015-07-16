@@ -444,7 +444,7 @@ sub default_facets {
 			}
 		},
 		open_access => { terms => { field => 'file.open_access', size => 1 } },
-		popular_science => { terms => { field => 'popular_science', size => 2 } },
+		popular_science => { terms => { field => 'popular_science', size => 1 } },
 		extern => { terms => { field => 'extern', size => 2 } },
 		status => { terms => { field => 'status', size => 8 } },
 		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },

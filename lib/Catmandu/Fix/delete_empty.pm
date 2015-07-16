@@ -23,6 +23,9 @@ sub fix {
     		if($data->{$key} and $data->{$key} eq ""){
     			delete $data->{$key};
     		}
+    		elsif(defined $data->{$key} and $data->{$key} eq "0"){
+    			delete $data->{$key};
+    		}
     	}
     }
 
