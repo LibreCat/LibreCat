@@ -426,7 +426,7 @@
     <ul id="embed_[% tabmodus %][% menu %]" class="collapse">
     [% FOREACH emb IN ['js', 'iframe', 'link'] %]
     <li><span class="fa fa-fw fa-arrow-circle-o-down"></span><strong>[% emb %]</strong>
-      <textarea class="form-control embed-facet_[% tabmodus %]" name="[% emb %]text" rows="2" id="id_[% emb %]text_[% tabmodus %][% menu %]" onclick="this.focus();this.select()" readonly="readonly"></textarea>
+      <textarea class="form-control embed-facet_[% tabmodus %]" name="[% emb %]text" rows="2" id="id_[% emb %]text_[% tabmodus %][% menu %]" onclick="this.focus();this.select()" readonly="readonly" style="cursor:pointer;"></textarea>
     </li>
     [% END %]
     </ul>
