@@ -61,13 +61,13 @@
 
 [% UNLESS request.path == "/marked" %]
 
-[% IF facets.status.terms.size > 1 OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR facets.year.terms.size > 1 OR bag == 'authorlist' %]
+[% IF facets.status.terms.size > 1 OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR facets.year.terms.size > 1 OR (bag == "authorlist" AND !qp.q.grep('^former').0) %]
 
 <h3>[% IF bag == "data" %][% lang ? "Filter Data Publications" : "Datenpublikationen filtern" %]
     [% ELSIF bag == "authorlist" %][% lang ? "Filter Authorlist" : "Autorenliste filtern" %]
     [% ELSE %][% lang ? "Filter Publications" : "Publikationen Filtern" %][% END %]</h3>
 
-[% IF bag == "authorlist" %]
+[% IF bag == "authorlist" AND !qp.q.grep('^former').0 %]
 [% other = {} %]
 [% CALL other.import(qp) %]
   <ul class="nav nav-tabs nav-stacked margin-bottom1">
