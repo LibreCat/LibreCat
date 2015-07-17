@@ -92,6 +92,7 @@ sub extract_params {
 	$p->{start} = $params->{start} if is_natural $params->{start};
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 	$p->{embed} = $params->{embed} if is_natural $params->{embed};
+	$p->{lang} = $params->{lang} if $params->{lang};
 	$p->{ttyp} = $params->{ttyp} if $params->{ttyp};
 
 	$p->{q} = array_uniq( $self->string_array($params->{q}) );
