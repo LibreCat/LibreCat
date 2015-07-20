@@ -2,7 +2,7 @@
 
 ## Embed Personal Publication List
 
-1. Find yourself at http://pub.uni-bielefeld.de/authorlist and got to your personal publicaition page at PUB.
+1. Find yourself at http://pub.uni-bielefeld.de/person and got to your personal publicaition page at PUB.
 
 2. If you like, use the filters on the right hand side to modify your list.
 

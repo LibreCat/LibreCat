@@ -38,7 +38,7 @@ get qr{/person[/|?]*} => sub {
 
 	my $hits = h->search_researcher($p);
 
-	$hits->{bag} = "authorlist";
+	$hits->{bag} = "person";
 	$hits->{former} = params->{former} if params->{former};
 
 	template $tmpl, $hits;

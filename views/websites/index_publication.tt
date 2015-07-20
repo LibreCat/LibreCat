@@ -34,7 +34,7 @@
           <!--
           <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=en" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lang ? 'Projects' : 'Projekte' %]</a></li>
           -->
-          <li[% IF bag == 'authorlist' %] class="active"[% END %]><a href="/person[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=en" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lang ? "Authors" : "Autoren" %]</a></li>
+          <li[% IF bag == 'person' %] class="active"[% END %]><a href="/person[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=en" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lang ? "Authors" : "Autoren" %]</a></li>
           <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' || bag == 'policy' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lang ? "About PUB" : "&Uuml;ber<span class=\"hidden-xs\"> PUB</span>" %] <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li[% IF bag == 'about' %] class="active"[% END %]><a href="/about[% lang ? "?lang=en" : "" %]">[% lang ? "Features" : "Features" %]</a></li>
@@ -96,8 +96,8 @@
         </div>
         -->
 
-        <div class="tab-pane[% bag == 'authorlist' ? ' active' : '' %]" id="people">
-          [% IF bag == 'authorlist' %]
+        <div class="tab-pane[% bag == 'person' ? ' active' : '' %]" id="people">
+          [% IF bag == 'person' %]
           <div class="row">
             [% INCLUDE person/hits.tt %]
           </div>

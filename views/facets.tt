@@ -14,7 +14,7 @@
 
 <div class="hidden-sm hidden-md hidden-lg"><hr></div>
 
-[% IF request.path.match("person") AND bag != 'authorlist' %]
+[% IF request.path.match("person") AND bag != 'person' %]
 <div class="margin-bottom1">
   <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>Marked Publication[% UNLESS marked == 1 %]s[% END %]</a>
 </div>
@@ -64,13 +64,13 @@
 [% END %]
 [% UNLESS request.path == "/marked" %]
 
-[% IF facets.status.terms.size > 1 OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR facets.year.terms.size > 1 OR (bag == "authorlist" AND !qp.q.grep('^former').0) %]
+[% IF facets.status.terms.size > 1 OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR facets.year.terms.size > 1 OR (bag == "person" AND !qp.q.grep('^former').0) %]
 
 <h3>[% IF bag == "data" %][% lang ? "Filter Data Publications" : "Datenpublikationen filtern" %]
-    [% ELSIF bag == "authorlist" %][% lang ? "Filter Authorlist" : "Autorenliste filtern" %]
+    [% ELSIF bag == "person" %][% lang ? "Filter Authorlist" : "Autorenliste filtern" %]
     [% ELSE %][% lang ? "Filter Publications" : "Publikationen Filtern" %][% END %]</h3>
 
-[% IF bag == "authorlist" AND !qp.q.grep('^former').0 %]
+[% IF bag == "person" AND !qp.q.grep('^former').0 %]
 [% other = {} %]
 [% CALL other.import(qp) %]
   <ul class="nav nav-tabs nav-stacked margin-bottom1">
@@ -347,7 +347,7 @@
 [% END %]
 
 <ul class="nav nav-tabs nav-stacked ul3">
-  [% IF (!request.path.match('person') OR bag == "authorlist") AND !request.path.match('marked') AND total > 9 %]
+  [% IF (!request.path.match('person') OR bag == "person") AND !request.path.match('marked') AND total > 9 %]
   <li>
     <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.default_page_size %][% END %]</button>
     <div class="facettecollapse">
@@ -368,7 +368,7 @@
     <button data-toggle="collapse" data-target="#sort_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Sorting' : 'Sortierung' %]</button>
     <div class="facettecollapse">
     <ul id="sort_[% tabmodus %][% menu %]" class="collapse">
-      [% IF bag == "authorlist" %]
+      [% IF bag == "person" %]
         [% sort_options = h.config.sort_options_person %]
       [% ELSE %]
         [% sort_options = h.config.sort_options %]
