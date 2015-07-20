@@ -928,6 +928,9 @@ sub is_portal_default {
 								push @{$return_hash->{delete_them}->{q}}, $part;
 							}
 						}
+						else {
+							push @{$return_hash->{delete_them}->{q}}, $part;
+						}
 					}
 				}
 			}
