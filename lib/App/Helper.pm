@@ -765,6 +765,14 @@ sub get_file_path {
 	segmented_path($id, segment_size => 3, base_path => $self->config->{upload_dir});
 }
 
+sub thumbnail_url {
+	my ($self, $id) = @_;
+	my $thumbnail = path($self->get_file_path($id), "thumbnail.png");
+    if (-e $thumbnail){
+    	return path($self->get_file_path($id), "thumbnail.png");
+    }
+}
+
 sub uri_for {
     my ($self, $path, $uri_params) = @_;
     $uri_params ||= {};
