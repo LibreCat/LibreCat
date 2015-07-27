@@ -158,6 +158,16 @@ en:
     name: "Name"
     acronym: "Acronym"
     startyear: "Start Year"
+  add_new:
+    heading: "Add New Publication"
+    import: "Enter a publication ID to import"
+    ids:
+      doi: "DOI"
+      pmid: "PMID"
+      arxiv: "ArXiv ID"
+      inspire: "Inspire ID"
+    do_it_yourself: "Choose a document type and fill out the empty form yourself"
+    drop_oa: "Drop your Open Access fulltext here"
   forms:
     book:
       label: "Book"
@@ -1102,6 +1112,16 @@ de:
     name: "Name"
     acronym: "Akronym"
     startyear: "Startjahr"
+  add_new:
+    heading: "Neue Publikation anlegen"
+    import: "Geben Sie einen Publikations-Identifier zum Import ein"
+    ids:
+      doi: "DOI"
+      pmid: "PMID"
+      arxiv: "ArXiv ID"
+      inspire: "Inspire ID"
+    do_it_yourself: "Wählen Sie einen Dokumenttyp und füllen Sie das leere Formular selbst aus"
+    drop_oa: "Ziehen Sie ihren Open Access Volltext hier her"
   forms:
     book:
       label: "Buch"
