@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html[% IF bag == 'home' %]ng-app="angularController"[% END %]>
+<html[% IF bag == 'home' %] ng-app="angularController"[% END %]>
 
 <!-- BEGIN header.tt -->
 
