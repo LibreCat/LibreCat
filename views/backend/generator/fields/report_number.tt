@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_report_number">
-      {% fields.basic_fields.report_number.label %}{% fields.supplementary_fields.report_number.label %}
+      [% lf.$type.field.report_number.label %]
     </label>
     {% IF fields.basic_fields.report_number.mandatory OR fields.supplementary_fields.report_number.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -9,8 +9,8 @@
     <div class="row innerrow">
       <div class="form-group col-md-3 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.report_number.mandatory OR fields.supplementary_fields.report_number.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.report_number.label %}{% fields.supplementary_fields.report_number.label %}</div>
-          <input type="text" name="report_number" id="id_report_number" value="[% report_number %]" placeholder="{% fields.basic_fields.report_number.placeholder %}{% fields.supplementary_fields.report_number.placeholder %}" class="sticky form-control{% IF fields.basic_fields.report_number.mandatory OR fields.supplementary_fields.report_number.mandatory %} required{% END %}"{% IF fields.basic_fields.report_number.readonly OR fields.supplementary_fields.report_number.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.report_number.label_short || lf.$type.field.report_number.label %]</div>
+          <input type="text" name="report_number" id="id_report_number" value="[% report_number %]" placeholder="[% lf.$type.field.report_number.placeholder %]" class="sticky form-control{% IF fields.basic_fields.report_number.mandatory OR fields.supplementary_fields.report_number.mandatory %} required{% END %}"{% IF fields.basic_fields.report_number.readonly OR fields.supplementary_fields.report_number.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

@@ -4,9 +4,12 @@
 [% backend = path.match('myPUB') ? 1 : 0 %]
 [% thisPerson = backend ? h.get_person(session.personNumber) : h.get_person(id) %]
 [% menu = "" %]
-[% IF (backend AND !lang) OR path.match('person') %]
+[% IF (backend AND !session.lang) OR path.match('person') %]
 [% lang = "en" %]
+[% ELSIF session.lang %]
+[% lang = session.lang %]
 [% END %]
+[% lf = h.config.language.$lang %]
 
 [% INCLUDE header.tt %]
 
@@ -19,25 +22,24 @@
     <div class="page-header" id="banner">
     [% IF backend %]
       <h1>
-        [% IF session.role == 'super_admin' %]Administration [% END %]
-        [% IF session.role == 'user' %]Author's Page [% END %]
-        [% IF (session.role == 'reviewer' OR session.role == 'super_admin') AND modus == "reviewer" %]Reviewer's Page [% END %]
-        [% IF session.role == "delegate" %]Delegate's Page[% END %]
-      (myPUB)
+        [% IF session.role == 'super_admin' %][% lf.main_page.heading_admin %][% END %]
+        [% IF session.role == 'user' %][% lf.main_page.heading_user %][% END %]
+        [% IF (session.role == 'reviewer' OR session.role == 'super_admin') AND modus == "reviewer" %][% lf.main_page.heading_reviewer %][% END %]
+        [% IF session.role == "delegate" %][% lf.main_page.heading_delegate %][% END %]
       </h1>
     [% ELSE %]
       <h1>
-      [% UNLESS !thisPerson %][% thisPerson.first_name %] [% thisPerson.last_name %][% ELSE %]Person ID not found[% END %]
+      [% UNLESS !thisPerson %][% thisPerson.first_name %] [% thisPerson.last_name %][% ELSE %][% lf.main_page.person_not_found %][% END %]
       </h1>
       <div class="pull-right margin-top-1">
 	<ul class="list-inline">
 	  [% IF session AND session.user %]
-	  <li><a href="/myPUB" title="[% lang ? "Logged in as" : "Angemeldet als" %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span>[% session.user %]<span class="hidden-sm hidden-xs"> (myPUB)</span></a></li>
+	  <li><a href="/myPUB" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span>[% session.user %]<span class="hidden-sm hidden-xs"> (myPUB)</span></a></li>
 	  [% END %]
 	  [% IF session AND session.user %]
-	  <li><a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">Logout</span></a></li>
+	  <li><a href="/logout" title="[% lf.main_page.logout %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% lf.main_page.logout %]</span></a></li>
 	  [% ELSE %]
-	  <li><a href="/login" title="Login (myPUB)"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a></li>
+	  <li><a href="/login" title="[% lf.main_page.login %]"><span class="glyphicon glyphicon-log-in fw"></span>[% lf.main_page.login %] (myPUB)</a></li>
 	  [% END %]
 	</ul>
       </div>
@@ -61,10 +63,10 @@
 
       [% IF backend %]
       <div class="col-md-3 col-md-offset-1 col-sm-3 col-xs-12">
-	<div class="well">
-	[% INCLUDE backend/add_new_button.tt %]
+	    <div class="well">
+	      [% INCLUDE backend/add_new_button.tt %]
           <div class="row">
-              <p class="text-center text-uppercase"><strong>or</strong></p>
+              <p class="text-center text-uppercase"><strong>[% lf.main_page.capital_or %]</strong></p>
           </div>
           [% INCLUDE backend/qae.tt %]
 	</div>
@@ -79,28 +81,28 @@
       <div class="col-md-12">
 	<ul class="nav nav-tabs">
 	[% IF backend AND session.role == 'super_admin' %]
-	  <li[% IF backend AND modus == "admin" %] class="active"[% END %]><a href="/myPUB/search/admin">All Publications</a></li>
+	  <li[% IF backend AND modus == "admin" %] class="active"[% END %]><a href="/myPUB/search/admin">[% lf.tabs.all_publications %]</a></li>
 	[% END %]
 	[% IF session.role == 'user' OR !backend %]
-	  <li[% IF modus == "user" %] class="active"[% END %]><a href="[% IF backend %]/myPUB/search[% ELSE %]/person/[% id %][% END %]">Publications</a></li>
+	  <li[% IF modus == "user" %] class="active"[% END %]><a href="[% IF backend %]/myPUB/search[% ELSE %]/person/[% id %][% END %]">[% lf.tabs.publications %]</a></li>
 	  [% IF researchhits AND researchhits.total != 0 %]
-	    <li[% IF modus == "data" %] class="active"[% END %]><a href="[% IF backend %]/myPUB/search/data[% ELSE %]/person/[% id %]/data[% END %]">Data Publications</a></li>
+	    <li[% IF modus == "data" %] class="active"[% END %]><a href="[% IF backend %]/myPUB/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% lf.tabs.data_publications %]</a></li>
 	  [% END %]
 	[% END %]
 	[% IF backend AND (session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer")) %]
-	  <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/search/reviewer">Publications for Review</a></li>
+	  <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/search/reviewer">[% lf.tabs.review_publications %]</a></li>
 	[% END %]
 	[% IF backend AND (session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager")) %]
-	  <li[% IF modus == "data_manager" OR session.role == "data_manager" %] class="active"[% END %]><a href="/myPUB/search/data_manager">Data Publications for Review</a></li>
+	  <li[% IF modus == "data_manager" OR session.role == "data_manager" %] class="active"[% END %]><a href="/myPUB/search/data_manager">[% lf.tabs.review_data_publications %]</a></li>
 	[% END %]
 	[% IF backend AND session.role == "delegate" %]
 	  [% FOREACH delegate_id IN thisPerson.delegate %]
-	  <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">Publ. [% lang ? "by" : "von" %] [% h.get_person(delegate_id).last_name %]</a></li>
+	  <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">[% lf.tabs.publications_by %] [% h.get_person(delegate_id).last_name %]</a></li>
 	  [% END %]
 	[% END %]
 	[% UNLESS backend %]
-	<li class="hidden-md hidden-lg hidden-sm"><a href="#facets">Search / Filter</a></li>
-	<li class="hidden-md hidden-lg hidden-sm"><a href="#export">Export Marked</a></li>
+	<li class="hidden-md hidden-lg hidden-sm"><a href="#facets">[% lf.facets.search_filter %]</a></li>
+	<li class="hidden-md hidden-lg hidden-sm"><a href="#export">[% lf.facets.export_marked %]</a></li>
 	[% END %]
 	</ul>
       </div>

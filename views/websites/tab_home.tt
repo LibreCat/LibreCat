@@ -15,31 +15,31 @@
 	  [% END %]
 	  <div class="col-lg-8 col-md-7 col-sm-6">
 	    <div class="input-group">
-	      <input type="text" name="cql_query" id="q_id" ng-model="yourQuery" ng-init="yourQuery='[% qp.cql_query %]'" value="[% qp.q %]" class="form-control" placeholder="[% lang ? "Search UniBi Publications" : "UniBi Publikationen suchen" %]">
+	      <input type="text" name="cql_query" id="q_id" ng-model="yourQuery" ng-init="yourQuery='[% qp.cql_query %]'" value="[% qp.q %]" class="form-control" placeholder="[% lf.home.search_placeholder %]">
 	      <span class="input-group-btn">
-		<button type="submit" class="btn btn-default">[% lang ? "Go!" : "Los!" %]</button>
+		<button type="submit" class="btn btn-default">[% lf.facets.go_button %]</button>
 	      </span>
 	    </div>
 	  </div>
 	  <div class="col-lg-4 col-md-5 col-sm-6 hidden-xs">
 	    <div class="btn-group">
 	      <div class="btn-group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-		[% lang ? "Fields" : "Felder" %] <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu">
-		  <li ng-repeat="field in fields"><a href="" class="ngadd" ng-click="addField(field.value)">{{field.text}}</a></li>
-		</ul>
+		    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+		    [% lf.home.fields %] <span class="caret"></span>
+		    </button>
+		    <ul class="dropdown-menu">
+		      <li ng-repeat="field in fields"><a href="" class="ngadd" ng-click="addField(field.value)">{{field.text}}</a></li>
+		    </ul>
 	      </div>
 	      <div class="btn-group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-		  [% lang ? "Operators" : "Operatoren" %] <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu">
-		  <li ng-repeat="operator in operators"><a href="" class="ngadd" ng-click="addOperator(operator.value)">{{operator.text}}</a></li>
-		</ul>
+		    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+		      [% lf.home.operators %] <span class="caret"></span>
+		    </button>
+		    <ul class="dropdown-menu">
+		      <li ng-repeat="operator in operators"><a href="" class="ngadd" ng-click="addOperator(operator.value)">{{operator.text}}</a></li>
+		    </ul>
 	      </div>
-	      <div class="btn-group"><a href="[% h.host %]/doc/api/intro.html#cql" class="btn btn-white btn-link">[% lang ? "Help" : "Hilfe" %]</a></div>
+	      <div class="btn-group"><a href="[% h.host %]/doc/api/intro.html#cql" class="btn btn-white btn-link">[% lf.home.help %]</a></div>
 	    </div>
 	  </div>
 	</form>
@@ -49,11 +49,11 @@
 
     <div class="row margin-top2">
       <div class="col-md-12">
-	<p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.publications %]</span> <a href="/publication[% lang ? "?lang=en" : "" %]">[% lang ? "Publications" : "Publikationen" %]</a></p>
-	<p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.pubpeople %]</span> <a href="/person[% lang ? "?lang=en" : "" %]">[% lang ? "Individual Author Pages" : "Pers<span class='xxs-only'>.</span><span class='hidden-xxs'>önliche</span> Publikationslisten" %]</a></p>
-	<p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researchdata %]</span> <a href="/data[% lang ? "?lang=en" : "" %]">[% lang ? "Data Publications" : "Datenpublikationen" %]</a></p>
-	<p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.oahits %]</span> <a href="/publication?q=fulltext=1[% lang ? "&lang=en" : "" %]">[% lang ? "Open Access Publications" : "Open Access Publikationen" %]</a></p>
-	<p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.theseshits %]</span> <a href="/publication?q=type=bi*[% lang ? "&lang=en" : "" %]">[% lang ? "Theses" : "Hochschulschriften" %]</a></p>
+	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.publications %]</span> <a href="/publication[% lang ? "?lang=$lang" : "" %]">[% lf.home.stats.publications %]</a></p>
+	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.pubpeople %]</span> <a href="/person[% lang ? "?lang=$lang" : "" %]">[% lf.home.stats.authors %]</a></p>
+	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researchdata %]</span> <a href="/data[% lang ? "?lang=$lang" : "" %]">[% lf.home.stats.data_publications %]</a></p>
+	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.oahits %]</span> <a href="/publication?q=fulltext=1[% lang ? "&lang=$lang" : "" %]">[% lf.home.stats.oa_publications %]</a></p>
+	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.theseshits %]</span> <a href="/publication?q=type=bi*[% lang ? "&lang=$lang" : "" %]">[% lf.home.stats.theses %]</a></p>
       </div>
     </div>
   

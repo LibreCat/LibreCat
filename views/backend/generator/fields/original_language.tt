@@ -3,7 +3,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="select_original_language_0">
-      {% fields.basic_fields.original_language.label %}{% fields.supplementary_fields.original_language.label %}
+      [% lf.$type.field.original_language.label %]
     </label>
     {% IF fields.basic_fields.original_language.mandatory OR fields.supplementary_fields.original_language.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -13,7 +13,7 @@
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.original_language.mandatory OR fields.supplementary_fields.original_language.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.original_language.label %}{% fields.supplementary_fields.original_language.label %}</div>
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.original_language.label_short || lf.$type.field.original_language.label %]</div>
           <select name="original_language.0.name" class="sticky form-control{% IF fields.basic_fields.original_language.mandatory OR fields.supplementary_fields.original_language.mandatory %} required{% END %}" id="select_original_language_0">
             [% FOREACH lang IN language_preselect.keys.sort %]
             <option value="[% lang %]"[% IF lang == language.name || (!original_language AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>
@@ -33,7 +33,7 @@
       <div class="row innerrow">
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.original_language.mandatory OR fields.supplementary_fields.original_language.mandatory %} mandatory{% END %}">
-            <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.original_language.label %}{% fields.supplementary_fields.original_language.label %}</div>
+            <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.original_language.label_short || lf.$type.field.original_language.label %]</div>
             <select name="original_language.[% loop.index %].name" class="sticky form-control{% IF fields.basic_fields.original_language.mandatory OR fields.supplementary_fields.original_language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_original_language_[% loop.index %]">
               [% FOREACH lang IN language_preselect.keys.sort %]
               <option value="[% lang %]"[% IF lang == lan.name %] selected="selected"[% END %]>[% lang %]</option>
@@ -54,7 +54,7 @@
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.original_language.mandatory OR fields.supplementary_fields.original_language.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.original_language.label %}{% fields.supplementary_fields.original_language.label %}</div>
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.original_language.label_short || lf.$type.field.original_language.label %]</div>
           <select name="original_language.0.name" class="sticky form-control{% IF fields.basic_fields.original_language.mandatory OR fields.supplementary_fields.original_language.mandatory %} required{% END %}" id="select_original_language_0">
             [% FOREACH lang IN language_preselect.keys.sort %]
             <option value="[% lang %]"[% IF lang == original_language.name || (!original_language AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>

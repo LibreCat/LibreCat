@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_page">
-      {% fields.basic_fields.page.label %}{% fields.supplementary_fields.page.label %}
+      [% lf.$type.field.page.label %]
     </label>
     {% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -9,8 +9,8 @@
     <div class="row innerrow">
       <div class="form-group col-md-3 col-xs-11">
         <div class="input-group sticky">
-          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.page.label %}{% fields.supplementary_fields.page.label %}</div>
-          <input type="text" name="page" id="id_page" value="[% page | html %]" placeholder="{% fields.basic_fields.page.placeholder %}{% fields.supplementary_fields.page.placeholder %}" class="sticky form-control{% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %} required{% END %}"{% IF fields.basic_fields.page.readonly OR fields.supplementary_fields.page.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.page.label_short || lf.$type.field.page.label %]</div>
+          <input type="text" name="page" id="id_page" value="[% page | html %]" placeholder="[% lf.$type.field.page.placeholder %]" class="sticky form-control{% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %} required{% END %}"{% IF fields.basic_fields.page.readonly OR fields.supplementary_fields.page.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

@@ -1,6 +1,12 @@
 [% qp = {} %]
 [% qp = h.extract_params %]
 [% pd = {} %]
+[% IF backend %]
+[% lang = session.lang %]
+[% ELSE %]
+[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "de" %]
+[% END %]
+[% lf = h.config.language.$lang %]
 [% IF embed AND qp.ttyp %]
 [% pd = h.is_portal_default(qp.ttyp) %]
 [% END %]
@@ -16,12 +22,12 @@
 
 [% IF request.path.match("person") AND bag != 'person' %]
 <div class="margin-bottom1">
-  <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>Marked Publication[% UNLESS marked == 1 %]s[% END %]</a>
+  <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>[% lf.mark.marked_publication %]</a>
 </div>
 [% END %]
 
 [%- IF (qp.q.size > 0 AND !qp.embed) OR pd.delete_them %]
-<h3 class="margin-top0">[% lang ? 'Filters and Search Terms' : 'Filter und Suchbegriffe' %]</h3>
+<h3 class="margin-top0">[% lf.facets.filters_and_searchterms %]</h3>
 [% other = {} %]
 [% CALL other.import(qp) %]
 [% CALL other.delete('q') %]
@@ -38,17 +44,17 @@
 [% IF qp.q.size == 0 %]
 <div class="row hidden-md hidden-lg hidden-sm"><!-- smartphones only -->
   <div class="col-xs-12">
-    <h2 class="margin-xs">[% lang ? 'Search' : 'Suche' %] / Filter[% lang ? '' : 'n' %]</h2>
+    <h2 class="margin-xs">[% lf.facets.search_filter %]</h2>
   </div>
 </div>
 [% END %]
 
-<h3[%- IF qp.q.size == 0 %] class="margin-top0"[% END %]>[% lang ? 'Search' : 'Suche' %]</h3>
+<h3[%- IF qp.q.size == 0 %] class="margin-top0"[% END %]>[% lf.facets.search %]</h3>
 <form action="#" method="get" class="form-inline" role="form">
     <span class="input-group">
-      <input type="text" value='' class="form-control" name="cql_query" placeholder="[% lang ? 'Search' : 'Suche' %]" />
+      <input type="text" value='' class="form-control" name="cql_query" placeholder="[% lf.facets.search %]" />
       <span class="input-group-btn">
-        <button type="submit" class="btn btn-default">Go!</button>
+        <button type="submit" class="btn btn-default">[% lf.facets.go_button %]</button>
       </span>
     </span>
     [%- IF qp.q.size > 0 AND total > 0 %]
@@ -66,19 +72,19 @@
 
 [% IF facets.status.terms.size > 1 OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR facets.year.terms.size > 1 OR (bag == "person" AND !qp.q.grep('^former').0) %]
 
-<h3>[% IF bag == "data" %][% lang ? "Filter Data Publications" : "Datenpublikationen filtern" %]
-    [% ELSIF bag == "person" %][% lang ? "Filter Authorlist" : "Autorenliste filtern" %]
-    [% ELSE %][% lang ? "Filter Publications" : "Publikationen Filtern" %][% END %]</h3>
+<h3>[% IF bag == "data" %][% lf.facets.filter_data_publications %]
+    [% ELSIF bag == "person" %][% lf.facets.filter_authorlist %]
+    [% ELSE %][% lf.facets.filter_publications %][% END %]</h3>
 
 [% IF bag == "person" AND !qp.q.grep('^former').0 %]
 [% other = {} %]
 [% CALL other.import(qp) %]
   <ul class="nav nav-tabs nav-stacked margin-bottom1">
     <li>
-      <a href="[% path %]?[% h.hash_to_url(other) %]&q=former<>1" rel="nofollow"><span class="fa fa-chevron-right"></span> [% lang ? 'Current UniBi Authors' : 'UniBi Autoren' %]</a>
+      <a href="[% path %]?[% h.hash_to_url(other) %]&q=former<>1" rel="nofollow"><span class="fa fa-chevron-right"></span> [% lf.facets.current_authors %]</a>
     </li>
     <li>
-      <a href="[% path %]?[% h.hash_to_url(other) %]&q=former=1" rel="nofollow"><span class="fa fa-chevron-right"></span> [% lang ? 'Former UniBi Authors' : 'Ehemalige UniBi Autoren' %]</a>
+      <a href="[% path %]?[% h.hash_to_url(other) %]&q=former=1" rel="nofollow"><span class="fa fa-chevron-right"></span> [% lf.facets.former_authors %]</a>
     </li>
   </ul>
 [% END %]
@@ -87,7 +93,7 @@
 [% IF facets.status.terms.size > 1 && backend %]
   <ul class="nav nav-tabs nav-stacked margin-bottom1 ul0">
     <li>
-      <button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down"></span> Visibility Status ([% facets.status.terms.size %])</button>
+      <button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down"></span> [% lf.facets.visibility_status %] ([% facets.status.terms.size %])</button>
       <div class="facettecollapse">
 	<ul id="status_[% tabmodus %][% menu %]" class="collapse">
 	  [% FOREACH stat IN facets.status.terms %]
@@ -103,7 +109,7 @@
 <ul class="nav nav-tabs nav-stacked ul1">
   [% IF backend AND session.role == "super_admin" %]
   <li>
-    <button data-toggle="collapse" data-target="#department_new_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>Department</button>
+    <button data-toggle="collapse" data-target="#department_new_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.department %]</button>
     <div class="facettecollapse normal">
       <ul id="department_new_[% tabmodus %][% menu %]" class="collapse[% IF qp.department %] in[% END %]">
       [% IF qp.department %]
@@ -151,11 +157,11 @@
 
   [% IF facets.type.terms.size > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#type_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Publication Type' : 'Publikationstyp' %] ([% facets.type.terms.size %])</button>
+    <button data-toggle="collapse" data-target="#type_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.publication_type %] ([% facets.type.terms.size %])</button>
     <div class="facettecollapse">
       <ul id="type_[% tabmodus %][% menu %]" class="collapse">
 	[% FOREACH type IN facets.type.terms %]
-	[% typeName = h.display_doctypes(type.term) %]
+	[% typeName = lf.forms.item(type.term).label %]
 	<li><a class="facet_[%tabmodus %][% menu %]" data-key="q" data-param="type" data-value="[% type.term %]" href="#" rel="nofollow">[% typeName %] ([% type.count %])</a></li>
 	[% END %]
       </ul>
@@ -176,7 +182,7 @@
  [% p.q = []; p.q.push(query); p.get_person = 1 %]
  [% authors = h.search_researcher(p) %]
   <li>
-    <button data-toggle="collapse" data-target="#authors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Uni-Bi Authors' : 'Uni-Bi Autoren' %] ([% facets.author.terms.size %])</button>
+    <button data-toggle="collapse" data-target="#authors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.current_authors %] ([% facets.author.terms.size %])</button>
     <div class="facettecollapse">
       <ul id="authors_[% tabmodus %][% menu %]" class="collapse">
 	[% FOREACH au IN facets.author.terms %]
@@ -201,7 +207,7 @@
   [% p.q = []; p.q.push(query); p.get_person = 1 %]
   [% editors = h.search_researcher(p) %]
   <li>
-    <button data-toggle="collapse" data-target="#editors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Uni-Bi Editors' : 'Uni-Bi Editoren' %] ([% facets.editor.terms.size %])</button>
+    <button data-toggle="collapse" data-target="#editors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.current_editors %] ([% facets.editor.terms.size %])</button>
     <div class="facettecollapse">
     <ul id="editors_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH ed IN facets.editor.terms %]
@@ -215,7 +221,7 @@
 
   [% IF facets.year.terms.size > 1 %]
   <li>
-    <button data-target="#year_[% tabmodus %][% menu %]" data-toggle="collapse" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Publishing Year' : 'Publikationsjahr' %] ([% facets.year.terms.size %])</button>
+    <button data-target="#year_[% tabmodus %][% menu %]" data-toggle="collapse" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.publishing_year %] ([% facets.year.terms.size %])</button>
     <div class="facettecollapse">
     <ul id="year_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH y IN facets.year.terms %]
@@ -243,9 +249,9 @@
   <li class="ul2li1">
     [% FOREACH t IN facets.popular_science.terms %]
       [% IF t.count < total %]
-      <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="popularscience" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] Popular Science</a>
+      <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="popularscience" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% lf.facets.popular_science %]</a>
       [% ELSE %]
-      <div class="text-success"><span class="glyphicon glyphicon-ok"></span> <strong>All publications are Popular Science Publications</strong></div>
+      <div class="text-success"><span class="glyphicon glyphicon-ok"></span> <strong>[% lf.facets.all_popular_science %]</strong></div>
       [% END %]
     [% END %]
   </li>
@@ -255,9 +261,9 @@
   <li class="ul2li2">
     [% FOREACH t IN facets.extern.terms %]
       [% IF t.count < total %]
-      <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="extern" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% lang ? 'External Publication' : 'Externe Publikation' %][% IF t.count > 1 %][% lang ? "s" : "en" %][% END %]</a>
+      <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="extern" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% lf.facets.external_publication %]</a>
       [% ELSE %]
-      <div class="text-success"><span class="glyphicon glyphicon-ok"></span> <strong>All publications are External Publications</strong></div>
+      <div class="text-success"><span class="glyphicon glyphicon-ok"></span> <strong>[% lf.facets.all_external_publication %]</strong></div>
       [% END %]
     [% END %]
   </li>
@@ -267,9 +273,9 @@
   <li class="ul2li3">
     [% FOREACH t IN facets.open_access.terms %]
       [% IF t.count < total %]
-      <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="fulltext" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] OA [% lang ? 'Fulltext' : 'Volltext' %][% IF t.count > 1 %][% lang ? "s" : "e" %][% END %]</a>
+      <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="fulltext" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% lf.facets.fulltext %]</a>
       [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>All publications are OA Fulltexts</strong></div>
+      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% lf.facets.all_fulltext %]</strong></div>
       [% END %]
     [% END %]
   </li>
@@ -280,35 +286,35 @@
      OR facets.pmid.terms.size > 0
      OR facets.inspire.terms.size > 0 %]
   <li class="ul2li4">
-  <button data-toggle="collapse" data-target="#extid_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Indexed in' : 'Indexiert in' %]</button>
+  <button data-toggle="collapse" data-target="#extid_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.indexed_in %]</button>
   <div class="facettecollapse">
     <ul id="extid_[% tabmodus %][% menu %]" class="collapse">
     [% IF facets.isi.terms.0.count %]
       [% IF facets.isi.terms.0.count < total %]
       <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="isi" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.isi.terms.0.count %] Web of Science</a></li>
       [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>All publications have an ISI identifier</strong></div>
+      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% lf.facets.all_isi %]</strong></div>
       [% END %]
     [% END %]
     [% IF facets.arxiv.terms.0.count %]
       [% IF facets.arxiv.terms.0.count < total %]
       <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="arxiv" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.arxiv.terms.0.count %] arXiv.org</a></li>
       [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>All publications have an arXiv identifier</strong></div>
+      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% lf.facets.all_arxiv %]</strong></div>
       [% END %]
     [% END %]
     [% IF facets.pmid.terms.0.count %]
       [% IF facets.pmid.terms.0.count < total %]
       <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="pmid" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.pmid.terms.0.count %] Pubmed</a></li>
       [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>All publications have an PMID identifier</strong></div>
+      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% lf.facets.all_pubmed %]</strong></div>
       [% END %]
     [% END %]
     [% IF facets.inspire.terms.0.count %]
       [% IF facets.inspire.terms.0.count < total %]
       <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="inspire" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.inspire.terms.0.count %] INSPIRE HEP</a></li>
       [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>All publications have an INSPIRE identifier</strong></div>
+      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% lf.facets.all_inspire %]</strong></div>
       [% END %]
     [% END %]
     </ul>
@@ -322,12 +328,12 @@
 
 [% IF total > 0 %]
 
-<h3[% IF request.path.match('marked') %] class="margin-top0"[% END %]>[% lang ? 'Display' : 'Darstellung' %][% UNLESS request.path.match('marked') %] / [% lang ? "Sort" : "Sortierung" %][% END %]</h3>
+<h3[% IF request.path.match('marked') %] class="margin-top0"[% END %]>[% lf.facets.display %][% UNLESS request.path.match('marked') %] / [% lf.facets.item('sort') %][% END %]</h3>
 
 [% IF qp.item('sort') %]
   <div class="text-muted">
     <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
-    <strong>Sorted by:</strong>
+    <strong>[% lf.facets.sorted_by %]:</strong>
     [% FOREACH setting IN qp.item('sort') %]
       [% setting %][% UNLESS loop.last %], [% END %]
     [% END %]
@@ -337,11 +343,11 @@
 [% IF qp.style AND !user_settings.style_eq_userstyle %]
   <div class="text-muted">
     <a href="[% h.newuri_for("$path", qp, style="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
-    <strong>Style:</strong>
+    <strong>[% lf.facets.citation_style %]:</strong>
     [% qp.style %]
 
     [% IF backend %]
-    <a type="button" href="/myPUB/person/preference?style=[% qp.style %]" name="save_settings" id="id_save_settings" class="btn btn-block btn-warning">Save this as public default</a><br />
+    <a type="button" href="/myPUB/person/preference?style=[% qp.style %]" name="save_settings" id="id_save_settings" class="btn btn-block btn-warning">[% lf.facets.save_as_default %]</a><br />
     [% END %]
   </div>
 [% END %]
@@ -349,7 +355,7 @@
 <ul class="nav nav-tabs nav-stacked ul3">
   [% IF (!request.path.match('person') OR bag == "person") AND !request.path.match('marked') AND total > 9 %]
   <li>
-    <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.default_page_size %][% END %]</button>
+    <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.hits_per_page %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.default_page_size %][% END %]</button>
     <div class="facettecollapse">
     <ul id="hitsperpage_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH lim IN h.config.pagination_options %]
@@ -365,7 +371,7 @@
   [% END %]
   [% IF !request.path.match('marked') AND total > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#sort_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Sorting' : 'Sortierung' %]</button>
+    <button data-toggle="collapse" data-target="#sort_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.item('sort') %]</button>
     <div class="facettecollapse">
     <ul id="sort_[% tabmodus %][% menu %]" class="collapse">
       [% IF bag == "person" %]
@@ -374,8 +380,8 @@
         [% sort_options = h.config.sort_options %]
       [% END %]
       [% FOREACH s IN sort_options %]
-        <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s.key %].asc" rel="nofollow">[% lang ? s.label_en : s.label %] <span class="glyphicon glyphicon-arrow-up"></span></a>
-        <a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s.key %].desc" rel="nofollow">
+        <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].asc" rel="nofollow">[% lf.sort_options.$s %] <span class="glyphicon glyphicon-arrow-up"></span></a>
+        <a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].desc" rel="nofollow">
         <span class="glyphicon glyphicon-arrow-down"></span></a></li>
       [% END %]
     </ul>
@@ -383,7 +389,7 @@
   </li>
   [% END %]
   <li>
-    <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? 'Citation Style' : 'Zitationsstil' %][% IF style != "default" AND style != "" %]: [% style %][% ELSIF style == "default" %]: default[% END %]</button>
+    <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.citation_style %][% IF style != "default" AND style != "" %]: [% style %][% ELSIF style == "default" %]: default[% END %]</button>
     <div class="facettecollapse">
     <ul id="style_[% tabmodus %][% menu %]" class="collapse">
       [% IF qp.style AND qp.style == "default" %]
@@ -403,27 +409,28 @@
   </li>
 </ul>
 
-<h3>Export[% UNLESS backend OR request.path.match('marked') %] / [% lang ? 'Embed' : 'Einbettung' %][% END %]</h3>
+[% UNLESS bag == "person" %]
+<h3>[% lf.facets.export %][% UNLESS backend OR request.path.match('marked') %] / [% lf.facets.embed %][% END %]</h3>
 
 <ul class="nav nav-tabs nav-stacked ul4">
   <li>
     <button data-toggle="collapse" data-target="#export_[% tabmodus %][% menu %]" class="btn btn-link">
-      <span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? "Export as" : "Exportieren als" %]
+      <span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.export_as %]
     </button>
     <div class="facettecollapse">
     <ul id="export_[% tabmodus %][% menu %]" class="collapse">
-      <li><a href="#modal_[% tabmodus %]" data-key="fmt" data-value="rtf" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>RTF (e.g. Word, Office)</a></li>
-      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="bibtex" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>BibTeX (e.g. Citavi)</a></li>
-      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="ris" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>RIS</a></li>
-      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="json" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>JSON</a></li>
-      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="yaml" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>YAML</a></li>
+      <li><a href="#modal_[% tabmodus %]" data-key="fmt" data-value="rtf" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% lf.facets.exports.rtf %]</a></li>
+      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="bibtex" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% lf.facets.exports.bibtex %]</a></li>
+      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="ris" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% lf.facets.exports.ris %]</a></li>
+      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="json" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% lf.facets.exports.json %]</a></li>
+      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="yaml" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% lf.facets.exports.yaml %]</a></li>
     </ul>
     </div>
   </li>
   [% IF !backend AND !request.path.match('marked') %]
   <li>
     <button data-toggle="collapse" data-target="#embed_[% tabmodus %][% menu %]" id="id_button_embed_[% tabmodus %][% menu %]" class="btn-link">
-      <span class="glyphicon glyphicon-chevron-down fw"></span>[% lang ? "Embed as" : "Einbetten als" %]
+      <span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.embed %]
     </button>
     <div class="facettecollapse">
     <ul id="embed_[% tabmodus %][% menu %]" class="collapse">
@@ -437,6 +444,7 @@
   </li>
   [% END %]
 </ul>
+[% END %] <!-- unless bag person -->
 [% END %] <!-- if total -->
 
 <!-- Modal -->

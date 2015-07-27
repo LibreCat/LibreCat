@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_application_date">
-      {% fields.basic_fields.application_date_number.label || fields.supplementary_fields.application_date_number.label %}
+      [% lf.$type.field.application_date_number.label %]
     </label>
     {% IF fields.basic_fields.application_date_number.mandatory OR fields.supplementary_fields.application_date_number.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -9,15 +9,15 @@
     <div class="row innerrow">
       <div class="form-group col-md-3 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.application_date_number.mandatory OR fields.supplementary_fields.application_date_number.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.application_date_number.label_ad %}{% fields.supplementary_fields.application_date_number.label_ad %}</div>
-          <input type="text" name="application_date" id="id_application_date" value="[% application_date | html %]" placeholder="{% fields.basic_fields.application_date_number.placeholder_ad || fields.supplementary_fields.application_date_number.placeholder_ad %}" class="sticky form-control{% IF fields.basic_fields.application_date_number.mandatory OR fields.supplementary_fields.application_date_number.mandatory %} required{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.application_date_number.label_ad %]</div>
+          <input type="text" name="application_date" id="id_application_date" value="[% application_date | html %]" placeholder="[% lf.$type.field.application_date_number.placeholder_ad %]" class="sticky form-control{% IF fields.basic_fields.application_date_number.mandatory OR fields.supplementary_fields.application_date_number.mandatory %} required{% END %}">
           <div class="input-group-addon"></div>
         </div>
       </div>
       <div class="form-group col-md-7 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.application_date_number.mandatory OR fields.supplementary_fields.application_date_number.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.application_date_number.label_an %}{% fields.supplementary_fields.application_date_number.label_an %}</div>
-          <input type="text" name="ipn" id="id_ipn" value="[% ipn | html %]" placeholder="{% fields.basic_fields.application_date_number.placeholder_an || fields.supplementary_fields.application_date_number.placeholder_an %}" class="sticky form-control{% IF fields.basic_fields.application_date_number.mandatory OR fields.supplementary_fields.application_date_number.mandatory %} required{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.application_date_number.label_an %]</div>
+          <input type="text" name="ipn" id="id_ipn" value="[% ipn | html %]" placeholder="[% lf.$type.field.application_date_number.placeholder_an %]" class="sticky form-control{% IF fields.basic_fields.application_date_number.mandatory OR fields.supplementary_fields.application_date_number.mandatory %} required{% END %}">
           <div class="input-group-addon"></div>
         </div>
       </div>

@@ -1,8 +1,13 @@
-
 <!-- BEGIN backend/qae.tt -->
 
 <div id="dropzone_row">
    <div class="dropzone" id="qaeUpload"></div>
 </div>
+
+<script>
+$(document).ready(function(){
+	Dropzone.options.qaeUpload.dictDefaultMessage = "<span class=\"fa fa-file-pdf-o fa-3x\"></span><br />[% lf.main_page.qae_drop_text %]";
+});
+</script>
 
 <!-- END backend/qae.tt -->

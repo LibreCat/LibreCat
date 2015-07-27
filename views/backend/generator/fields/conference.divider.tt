@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-md-12 col-xs-11">
     <hr />
-    <h3>{% fields.basic_fields.item('conference.divider').label %}{% fields.supplementary_fields.item('conference.divider').label %}</h3>
+    <h3>[% lf.$type.field.item('conference.divider').label %]</h3>
   </div>
 </div>

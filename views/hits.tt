@@ -2,21 +2,20 @@
 <!-- BEGIN hits.tt -->
 
 [% path = request.path %]
-
 [% num = total; n = 0 %]
 
 [% UNLESS request.path.match("/marked") %]
 <div class="row">
   <div class="col-md-12[% UNLESS request.path.match("/person") OR total == 0 %] col-xs-8[% END %]">
-    <h2 class="margin-top0">[% total %] [% IF bag == 'data' %][% lang ? "Data Publication" : "Datenpublikation" %][% ELSE %][% lang ? "Publication" : "Publikation" %][% END %][% IF num == 0 OR num > 1 %][% lang ? "s" : "en" %][% END %]
+    <h2 class="margin-top0">[% total %] [% IF bag == 'data' %][% lf.tabs.data_publications %][% ELSE %][% lf.tabs.publications %][% END %]
     [% IF backend AND session.role == "delegate" %]
-    [% lang ? "by" : "von" %] [% delegate_name %]
+    [% lf.main_page.by %] [% delegate_name %]
     [% END %]
     </h2>
   </div>
   [% UNLESS request.path.match("/person") OR total == 0 %]
   <div class="col-xs-4 hidden-md hidden-sm hidden-lg">
-     <a href="#facets"><span class="glyphicon glyphicon-filter"></span>[% lang ? 'Search' : 'Suche' %] / Filter[% lang ? '' : 'n' %]</a>
+     <a href="#facets"><span class="glyphicon glyphicon-filter"></span>[% lf.facets.search_filter %]</a>
   </div>
   [% END %]
 </div>
@@ -27,13 +26,13 @@
 [% all_marked = h.all_marked(request.params) %]
     <p>
       [% IF all_marked %]
-      <a class="btn btn-xs mark_all padding0" data-marked="1"><span class="fa fa-check-square-o fa-lg"></span> Unmark all</a>
+      <a class="btn btn-xs mark_all padding0" data-marked="1"><span class="fa fa-check-square-o fa-lg"></span> [% lf.mark.unmark_all %]</a>
       [% ELSE %]
-      <a class="btn btn-xs mark_all padding0" data-marked="0"><span class="fa fa-square-o fa-lg"></span> Mark all</a>
+      <a class="btn btn-xs mark_all padding0" data-marked="0"><span class="fa fa-square-o fa-lg"></span> [% lf.mark.mark_all %]</a>
       [% END %]
     </p>
 [% ELSIF request.path.match("/marked") %]
-  <p><a class="btn btn-xs mark_all padding0" data-marked="1"><span class="fa fa-square-o fa-lg"></span> Unmark all</a></p>
+  <p><a class="btn btn-xs mark_all padding0" data-marked="1"><span class="fa fa-square-o fa-lg"></span> [% lf.mark.unmark_all %]</a></p>
 [% END %]
 [% END %]
 
@@ -58,17 +57,17 @@
   <div class="col-md-1">
     [% SWITCH entry.status %]
     [% CASE "public" %]
-      <span class="text-success"><strong>Public</strong></span>
+      <span class="text-success"><strong>[% lf.main_page.statuses.public %]</strong></span>
     [% CASE "returned" %]
-      <span class="text-warning"><strong>Re-<br>turned</strong></span>
+      <span class="text-warning"><strong>[% lf.main_page.statuses.returned %]</strong></span>
     [% CASE "submitted" %]
-      <span class="text-info"><strong>Sub-<br>mitted</strong></span>
+      <span class="text-info"><strong>[% lf.main_page.statuses.submitted %]</strong></span>
     [% CASE "invalid" %]
-      <span class="text-danger"><strong>Invalid</strong></span>
+      <span class="text-danger"><strong>[% lf.main_page.statuses.invalid %]</strong></span>
     [% CASE "new" %]
-      <span class="text-info"><strong>New QaE</strong></span>
+      <span class="text-info"><strong>[% lf.main_page.statuses.qae %]</strong></span>
     [% CASE %]
-      <span class="text-muted"><strong>Private</strong></span>
+      <span class="text-muted"><strong>[% lf.main_page.statuses.private %]</strong></span>
     [% END %]
   </div>
 [% ELSIF request.path == "/marked" OR request.path.match("/person") %]
@@ -83,7 +82,7 @@
 [% ELSE %]
     <div class="col-md-12">
 [% END %]
-    <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% h.display_doctypes(entry.type) %] | PUB-ID: <span class="pubid">[% entry._id %]</span> </em>
+    <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% lf.forms.item(entry.type).label %] | PUB-ID: <span class="pubid">[% entry._id %]</span> </em>
     <div class="citation-block-div">
     [% IF style == 'default' %]
 	<a href="/myPUB/record/edit/[% entry._id %]"><strong>[% entry.title %]</strong></a><br>

@@ -2,7 +2,12 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
+[% IF backend %]
+[% lang = session.lang %]
+[% ELSE %]
+[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "de" %]
+[% END %]
+[% lf = h.config.language.$lang %]
 [% style = qp.style || 'default' %]
 
 <!-- BEGIN navbar.tt -->
@@ -22,12 +27,8 @@
       [% ELSE %]
 	<div class="hidden-sm hidden-lg hidden-md">
 	  <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" height="43" alt="" /></a>
-	  <span class="navbar-title"><a href="/"><span class="xxs-only"><img src="/images/publogo.gif" height="30" alt="PUB Bielefeld" /></span><span class="hidden-xxs">PUB &ndash;
-	  [% IF lang %]
-	    Publications at Bielefeld University
-	  [% ELSE %]
-	    Publikationen an der Uni Bielefeld
-	  [% END %]
+	  <span class="navbar-title"><a href="/"><span class="xxs-only"><img src="/images/publogo.gif" height="30" alt="PUB Bielefeld" /></span><span class="hidden-xxs">
+	    [% lf.header.title %]
 	  </span></a></span>
 	</div>
       [% END %]
@@ -36,22 +37,22 @@
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
      [% IF backend %]
-	<ul class="nav navbar-nav">
-         [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
-	 <li><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-sm">My Public Author Page</span></a></li>
-	 <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">myPUB</span></a></li>
-	 [% IF session.role == 'super_admin' %]
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>Admin <span class="glyphicon glyphicon-chevron-down"></span></a>
+	   <ul class="nav navbar-nav">
+       [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
+	     <li><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-sm">[% lf.header.my_author_page %]</span></a></li>
+	     <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF lang OR session.lang %]lang=[% lang || session.lang %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">[% lf.header.brand %]</span></a></li>
+	   [% IF session.role == 'super_admin' %]
+         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% lf.header.admin_menu.admin %] <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="/myPUB/admin/account"><span class="glyphicon glyphicon-user"></span>Manage Accounts</a></li>
-            <!-- <li><a href="/myPUB/admin/import"><span class="glyphicon glyphicon-import"></span>Import</a></li> -->
-            <li><a href="/myPUB/admin/project"><span class="glyphicon glyphicon-tasks"></span>Manage Projects</a></li>
-            <li><a href="/myPUB/admin/research_group"><span class="glyphicon glyphicon-tasks"></span>Manage Research Groups</a></li>
-            <!-- <li><a href="/myPUB/admin/journal"><span class="glyphicon glyphicon-user"></span>Manage Journals</a></li> -->
-            <li><a href="/myPUB/admin/award"><span class="glyphicon glyphicon-star"></span>Manage Awards</a></li>
+            <li><a href="/myPUB/admin/account"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_accounts %]</a></li>
+            <!-- <li><a href="/myPUB/admin/import"><span class="glyphicon glyphicon-import"></span>[% lf.header.admin_menu.import %]</a></li> -->
+            <li><a href="/myPUB/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_projects %]</a></li>
+            <li><a href="/myPUB/admin/research_group"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_research_groups %]</a></li>
+            <!-- <li><a href="/myPUB/admin/journal"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_journals %]</a></li> -->
+            <li><a href="/myPUB/admin/award"><span class="glyphicon glyphicon-star"></span>[% lf.header.admin_menu.manage_awards %]</a></li>
           </ul>
          </li>
-	 [% END %]
+	   [% END %]
        </ul>
        <ul class="nav navbar-nav navbar-right">
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <span class="hidden-sm">[% session.user %]</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
@@ -85,17 +86,13 @@
 	<div class="col-md-9 col-sm-11 col-xs-12">
 	  <div class="hidden-xs"><a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" alt="" /></a>
 	    <span class="navbar-title"><a href="/">
-	    [% IF lang %]
-	    PUB – Publications at Bielefeld University
-	    [% ELSE %]
-	    PUB – Publikationen an der Universität Bielefeld
-	    [% END %]
+	    [% lf.header.title %]
 	    </a></span>
 	  </div>
 	</div>
 	[% UNLESS request.path.match("/person/") OR request.path.match("/marked") %]
 	<div class="col-md-1 col-sm-1 col-md-offset-1">
-          <span class="select-language"><a href="[% h.host %]/[% UNLESS bag == 'home' %][% bag %][% END %][% lang ? "" : "?lang=en" %][% IF qp.q %][% IF lang %]?[% ELSE %]&[% END %]q=[% qp.q.join("&q=") | replace('"', '&quot;') %][% END %]">[% lang ? "Deutsch" : "English" %]</a></span>
+          <span class="select-language"><a href="[% h.host %]/[% UNLESS bag == 'home' %][% bag %][% END %][% lang == "en" ? "?lang=de" : "?lang=en" %][% IF qp.q %][% IF !lang %]?[% ELSE %]&[% END %]q=[% qp.q.join("&q=") | replace('"', '&quot;') %][% END %]">[% lf.header.lang %]</a></span>
 	</div>
 	[% END %]
       </div>

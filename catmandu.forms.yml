@@ -44,7 +44,6 @@ field_order:
     - supervisor
     - applicant
     - author_secondary
-    - extern
     - title
     - alternative_title
     - article_type
@@ -126,90 +125,63 @@ field_order:
     - related_material.link
 publicationTypes:
   book:
-    label: "Book"
+    genus: "n"
     tmpl: book
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: &doi
-          label: "DOI"
-          placeholder: "e.g. 10.4119/unibi/2695161"
-        title:
+          mandatory: 0
+          multiple: 0
+        title: &title
           mandatory: 1
-          label: "Book Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          multiple: 0
         alternative_title: &alternative_title
-          label: "Alternative Title"
-          placeholder: "e.g. Handbook of eBook Publishing - with a subtitle"
+          mandatory: 0
           multiple: 1
         author: &author_translator
-          first_name:
-            placeholder: "e.g. John"
-          last_name:
-            placeholder: "e.g. Appleseed"
           mandatory: 1
           multiple: 1
-          label: "Author"
           pevz: 1
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         edition: &edition
-          label: "Edition"
-          placeholder: "e.g. 2"
+          mandatory: 0
+          multiple: 0
         department: &department
-          label: "Department"
-          label_short: "Dept."
-          placeholder: "e.g. Fakult&auml;t f&uuml;r Physik"
+          mandatory: 0
           multiple: 1
         project: &project
-          label: "Project"
-          placeholder: "e.g. 2nd-Generation Open Access Infrastructure for Research in Europe"
+          mandatory: 0
           multiple: 1
         research_group: &research_group
-          label: "Research Group"
-          placeholder: "e.g. Social Motorics"
+          mandatory: 0
           multiple: 1
         place: &place
-          label: "Place<br>(of publication)"
-          label_short: "Place"
-          placeholder: "e.g. Berlin"
+          mandatory: 0
+          multiple: 0
         publisher: &publisher
-          label: "Publisher"
-          placeholder: "e.g. Elsevier"
+          mandatory: 0
+          multiple: 0
         year_extern: &year_extern
-          label: "Publishing Year"
           year:
             mandatory: 1
-            label_short: "Year"
-            placeholder: "e.g. 2015"
           extern:
-            label_short: "Extern"
-            placeholder: "Published while not employed at UniBi"
+            mandatory: 0
         page: &page
-          label: "Number of Pages"
-          placeholder: "e.g. 345"
+          mandatory: 0
+          multiple: 0
         series_title_volume: &series_title_volume
-          label: "Series Title / Volume"
-          label_series_title: "Series Title"
-          placeholder_series_title: "Series Title, e.g. Lecture Notes in Computer Science"
-          label_volume: "Volume"
-          placeholder_volume: "Volume, e.g. 3"
+          mandatory: 0
+          multiple: 0
         publication_identifier: &publication_identifier
-          label: "Publication<br>Identifier"
-          label_short: "Publ. Id."
-          placeholder: "Select (e)ISBN or (e)ISSN and enter it here"
+          mandatory: 0
           multiple: 1
         publication_status_language: &publication_status_language
-          label: "Status / Language"
           language:
-            label: "Language"
-            label_short: "Lang"
             mandatory: 0
             multiple: 1
           publication_status:
-            label: "Publication Status"
-            label_short: "Publ. Status"
+            mandatory: 0
+            multiple: 0
       file_upload: &file_upload
-        tab_name: "File Upload"
         dropzone_mainDoc:
           label: "<strong>Upload Main File(s) and Supplementary Material</strong> (max. 1000MB per file)"
         license:
@@ -231,7 +203,6 @@ publicationTypes:
           ddc:
             label: DDC
       supplementary_fields:
-        tab_name: "Additional Information"
         abstract: &abstract
           label: "Abstract"
           label2: "Abstract Language"
@@ -265,7 +236,6 @@ publicationTypes:
           label_short: "Ret. Rec. Ids"
           multiple: 1
       related_material: &related_material
-        tab_name: "Related Material"
         related_material.record:
           label: "Link to PUB record"
           label_short: "PUB-Rec."
@@ -277,31 +247,19 @@ publicationTypes:
         publish_button:
           alert: "Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified."
   bookeditor:
-    label: "Book (Editor)"
+    genus: "m"
     tmpl: bookEditor
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          mandatory: 1
-          label: "Book Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+        title: *title
         editor_solo: &editor_solo
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
           mandatory: 1
           multiple: 1
-          label: "Editor"
           pevz: 1
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         corporate_editor_solo: &corporate_editor_solo
           mandatory: 0
           multiple: 1
-          label: "Corporate Editor"
-          placeholder: "e.g. World Health Organization - Regional Office for Europe (WHO-Europe)"
         department: *department
         project: *project
         research_group: *research_group
@@ -316,7 +274,6 @@ publicationTypes:
         edition: *edition
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         abstract: *abstract
         keyword: *keyword
         external_id: *external_id
@@ -327,33 +284,21 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   bookchapter:
-    label: "Book Chapter"
+    genus: "n"
     tmpl: bookChapter
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          label: "Chapter Title"
-          placeholder: "e.g. How to publish an ebook"
-          mandatory: 1
+        title: *title
         alternative_title: *alternative_title
         author: *author_translator
         editor: &editor_only
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
           mandatory: 0
           multiple: 1
-          label: "Book Editor"
           pevz: 0
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         corporate_editor: &corporate_editor
           mandatory: 0
           multiple: 1
-          label: "Corporate Editor"
-          placeholder: "e.g. World Health Organization - Regional Office for Europe (WHO-Europe)"
         department: *department
         project: *project
         research_group: *research_group
@@ -361,35 +306,27 @@ publicationTypes:
         place: *place
         publisher: *publisher
         page: &pages
-          label: "Pages"
-          placeholder: "e.g. 12 - 20"
+          mandatory: 0
+          multiple: 0
         series_title_volume: *series_title_volume
         publication:
-          label: "Book Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
           mandatory: 1
         year_extern: *year_extern
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         conference.divider: &conference_divider
-          label: "Conference Details"
+          mandatory: 0
         conference.name: &conference_name
-          label: "Conference Name"
-          placeholder: "e.g. 3rd Conference on Nano-Physics"
+          mandatory: 0
+          multiple: 0
         conference.location: &conference_location
-          label: "Conference Location"
-          placeholder: "e.g. Berlin"
+          mandatory: 0
+          multiple: 0
         conference.date: &conference_date
-          label: "Conference Date"
-          label_start: "Start"
-          label_start_short: "Conference Start"
-          label_end: "End"
-          label_end_short: "Conference End"
           placeholder_start: "YYYY-MM-DD"
           placeholder_end: "YYYY-MM-DD"
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         abstract: *abstract
         keyword: *keyword
         jel: *jel
@@ -400,49 +337,34 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   conferenceabstract:
-    label: "Conference Abstract"
+    genus: "n"
     tmpl: conferenceAbstract
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          mandatory: 1
-          label: "Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+        title: *title
         author: *author_translator
         editor:
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
           mandatory: 0
           multiple: 1
-          label: "Editor"
           pevz: 0
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         corporate_editor: *corporate_editor
         department: *department
         project: *project
         research_group: *research_group
         alternative_title: *alternative_title
         publication:
-          label: "Proceedings Title"
-          placeholder: "e.g. Proceedings of the 3rd Conference on Nano-Physics"
+          multiple: 0
+          mandatory: 0
         year_extern: *year_extern
         place: *place
         publisher: *publisher
         series_title: &series_title
-          label: "Series Title"
-          placeholder: "e.g. Lecture Notes of eBook Publishing"
+          mandatory: 0
+          multiple: 0
         volume_issue_page: &volume_issue_page
-          label: "Vol. / Issue / Page"
-          placeholder_volume: "e.g. 3"
-          label_volume: "Volume"
-          placeholder_issue: "e.g. 5"
-          label_issue: "Issue"
-          placeholder_page: "e.g. 12 - 20"
-          label_page: "Page"
+          multiple: 0
+          mandatory: 0
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         conference.divider: *conference_divider
@@ -451,7 +373,6 @@ publicationTypes:
         conference.date: *conference_date
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         keyword: *keyword
         external_id: *external_id
         jel: *jel
@@ -461,16 +382,12 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   conferenceeditor:
-    label: "Conference (Editor)"
+    genus: "m"
     tmpl: conferenceEditor
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          mandatory: 1
-          label: "Book Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+        title: *title
         editor_solo: *editor_solo
         corporate_editor_solo: *corporate_editor_solo
         department: *department
@@ -482,23 +399,20 @@ publicationTypes:
         publisher: *publisher
         series_title_volume: *series_title_volume
         issue: &issue
-          label: "Issue"
-          placeholder: "e.g. 5"
+          mandatory: 0
+          multiple: 0
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         conference.divider:
-          label: "Conference Details"
+          mandatory: 0
         conference.name:
-          label: "Conference Name"
-          placeholder: "e.g. 3rd Conference on Nano-Physics"
+          mandatory: 0
         conference.location:
-          label: "Conference Location"
-          placeholder: "e.g. Berlin"
+          mandatory: 0
         conference.date: *conference_date
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         keyword: *keyword
         abstract: *abstract
         external_id: *external_id
@@ -509,28 +423,18 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   conference:
-    label: "Conference Paper"
+    genus: "m"
     tmpl: conference
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          mandatory: 1
-          label: "Paper Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+        title: *title
         alternative_title: *alternative_title
         author: *author_translator
         editor:
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
           mandatory: 0
           multiple: 1
-          label: "Editor"
           pevz: 0
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         corporate_editor: *corporate_editor
         place: *place
         publisher: *publisher
@@ -539,20 +443,17 @@ publicationTypes:
         research_group: *research_group
         volume_issue_page: *volume_issue_page
         publication:
-          label: "Proceedings Title"
-          placeholder: "e.g. Proceedings of the 3rd Conference on Nano-Physics"
+          mandatory: 0
         series_title: *series_title
         year_extern: *year_extern
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        conference.divider: &conference_divider
-          label: "Conference Details"
+        conference.divider: *conference_divider
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         keyword: *keyword
         abstract: *abstract
         external_id: *external_id
@@ -563,35 +464,20 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   dissertation:
-    label: "Dissertation"
+    genus: "f"
     tmpl: dissertation
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          mandatory: 1
-          label: "Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+        title: *title
         author:
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
           mandatory: 1
           multiple: 1
-          label: "Author"
           pevz: 1
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         supervisor:
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
           mandatory: 0
           multiple: 1
           pevz: 1
-          label: "Supervisor"
         year_extern: *year_extern
         alternative_title: *alternative_title
         department: *department
@@ -605,7 +491,6 @@ publicationTypes:
         publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         abstract: *abstract
         keyword: *keyword
         external_id: *external_id
@@ -615,16 +500,12 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   encyclopediaarticle:
-    label: "Encyclopedia Article"
+    genus: "m"
     tmpl: encyclopediaArticle
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          label: "Article Title"
-          mandatory: 1
-          placeholder: "e.g. Online-Publishing"
+        title: *title
         author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
@@ -632,9 +513,7 @@ publicationTypes:
         project: *project
         research_group: *research_group
         publication:
-          label: "Book Title"
           mandatory: 1
-          placeholder: "e.g. Encyclopedia on Publishing"
         publisher: *publisher
         series_title_volume: *series_title_volume
         place: *place
@@ -646,7 +525,6 @@ publicationTypes:
         publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         keyword: *keyword
         external_id: *external_id
         message: *message
@@ -656,16 +534,12 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   journalarticle:
-    label: "Journal Article"
+    genus: "m"
     tmpl: journalArticle
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          mandatory: 1
-          label: "Article Title"
-          placeholder: "e.g. The implications of eBook Publishing"
+        title: *title
         alternative_title: *alternative_title
         author: *author_translator
         department: *department
@@ -673,23 +547,19 @@ publicationTypes:
         research_group: *research_group
         publisher: *publisher
         publication: &publication_jtitle
-          label: "Journal Title"
-          placeholder: "e.g. Nature Genetics"
           mandatory: 1
         volume_issue_page: *volume_issue_page
         year_extern: *year_extern
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         article_type:
-          label: "Article Type"
-          label_short: "Article Type"
+          mandatory: 0
         conference.divider: *conference_divider
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         abstract: *abstract
         keyword: *keyword
         popular_science_quality_controlled: *popular_science_quality_controlled
@@ -711,16 +581,12 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   journaleditor:
-    label: "Journal (Editor)"
+    genus: "m"
     tmpl: journalEditor
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          mandatory: 1
-          label: "Issue Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+        title: *title
         editor_solo: *editor_solo
         corporate_editor_solo: *corporate_editor_solo
         department: *department
@@ -739,7 +605,6 @@ publicationTypes:
         conference.date: *conference_date
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         abstract: *abstract
         keyword: *keyword
         external_id: *external_id
@@ -751,36 +616,27 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   newspaperarticle:
-    label: "Newspaper Article"
+    genus: "m"
     tmpl: newspaperArticle
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         author: *author_translator
-        title:
-          mandatory: 1
-          label: "Article Title"
-          placeholder: "e.g. The implications of eBook Publishing"
+        title: *title
         department: *department
         project: *project
         research_group: *research_group
         year_extern: *year_extern
         publication_date: &publication_date
-          label: "Publication Date"
-          placeholder: "YYYY-MM-DD"
           mandatory: 1
         page: *pages
         issue: *issue
         publication:
-          label: "Newspaper Title"
-          placeholder: "e.g. The New York Times"
           mandatory: 1
         alternative_title: *alternative_title
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         external_id: *external_id
         keyword: *keyword
         popular_science: &popular_science
@@ -791,60 +647,34 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   patent:
-    label: "Patent"
+    genus: "n"
     tmpl: patent
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
-        title:
-          mandatory: 1
-          label: "Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+        title: *title
         alternative_title: *alternative_title
         author:
-          first_name:
-            placeholder: "e.g. John"
-          last_name:
-            placeholder: "e.g. Appleseed"
           mandatory: 1
           multiple: 1
-          label: "Inventor"
           pevz: 1
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         applicant:
-          label: "Applicant"
-          placeholder: "e.g. John Appleseed"
+          mandatory: 0
         department: *department
         project: *project
         research_group: *research_group
         year_extern: *year_extern
         publisher: *publisher
         publication_date_number:
-          label: "Publication Date/Number"
-          label_pd: "PD"
-          placeholder_pd: "YYYY-MM-DD"
-          label_pn: "PN"
-          placeholder_pn: "International Patent Number"
           mandatory: 1
         application_date_number:
-          label: "Application Date/Number"
-          label_ad: "AD"
-          placeholder_ad: "YYYY-MM-DD"
-          label_an: "AN"
-          placeholder_an: "Application Number"
+          mandatory: 0
         ipc:
-          label: "International Patent<br>Classification"
-          label_short: "IPC"
-          placeholder: "e.g. B25J 7/00"
           mandatory: 1
-        language:
-          label: "Language"
         publication_identifier: *publication_identifier
         page: *page
         publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         abstract: *abstract
         keyword: *keyword
         external_id: *external_id
@@ -856,19 +686,12 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   preprint:
-    label: "Preprint"
+    genus: "m"
     tmpl: preprint
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
-        title:
-          mandatory: 1
-          label: "Article Title"
-          placeholder: "e.g. The implications of eBook Publishing"
-        publication: &publication_jtitle
-          label: "Journal Title"
-          placeholder: "e.g. Nature Genetics"
-          mandatory: 1
+        title: *title
+        publication: *publication_jtitle
         author: *author_translator
         department: *department
         project: *project
@@ -880,7 +703,6 @@ publicationTypes:
         publication_identifier: *publication_identifier
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         abstract: *abstract
         keyword: *keyword
         external_id: *external_id
@@ -891,16 +713,12 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   report:
-    label: "Report"
+    genus: "m"
     tmpl: report
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          mandatory: 1
-          label: "Title"
-          placeholder: "e.g. Technical report employer survey Project B3"
+        title: *title
         author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
@@ -914,13 +732,11 @@ publicationTypes:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         report_number:
-          label: "Report Number"
-          placeholder: "e.g. NASA/TM-2015-123456"
+          mandatory: 0
         page: *page
         publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
@@ -931,16 +747,12 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   review:
-    label: "Book Review"
+    genus: "f"
     tmpl: review
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          mandatory: 1
-          label: "Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+        title: *title
         author: *author_translator
         editor: *editor_only
         corporate_editor: *corporate_editor
@@ -952,17 +764,14 @@ publicationTypes:
         alternative_title: *alternative_title
         place: *place
         publication:
-          label: "Book Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          mandatory: 0
         series_title:
-          label: "Journal Title"
-          placeholder: "e.g. Nature Genetics"
+          mandatory: 0
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         popular_science_quality_controlled: *popular_science_quality_controlled
         keyword: *keyword
         external_id: *external_id
@@ -972,46 +781,24 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   researchdata:
-    label: "Research Data"
+    genus: "m"
     tmpl: researchData
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi:
-          label: "DOI"
           readonly: 1
-        title:
-          mandatory: 1
-          label: "Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+        title: *title
         author:
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
           mandatory: 1
           multiple: 1
-          label: "Creator"
           pevz: 1
         department: *department
         project: *project
         research_group: *research_group
         publisher:
           mandatory: 1
-          label: "Publisher"
-          placeholder: "Publisher"
-          defaultvalue: "Bielefeld University"
-        year_extern:
-          label: "Year"
-          year:
-            mandatory: 1
-            label_short: "Year"
-            placeholder: "e.g. 2015"
-          extern:
-            label_short: "Extern"
-            placeholder: "Published while not employed at UniBi"
+        year_extern: *year_extern
       file_upload:
-        tab_name: "Research data upload"
         externalFiles:
           label: "Files available at"
         dropzone_mainDoc:
@@ -1034,7 +821,6 @@ publicationTypes:
             text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br>"
             contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
       supplementary_fields:
-        tab_name: "Supplementary fields"
         abstract: *abstract
         ddc:
           label: "DDC"
@@ -1043,7 +829,6 @@ publicationTypes:
         keyword: *keyword
         alternative_id: *alternative_id
       related_material: &related_material_rd
-        tab_name: "Related Material"
         related_material.rd:
           label: "Link to PUB record"
           label_short: "PUB-Rec."
@@ -1053,40 +838,22 @@ publicationTypes:
           label_short: "Ext. Link"
           placeholder: "Enter a remote location (URL) of your file here"
   translation:
-    label: "Translation"
+    genus: "f"
     tmpl: translation
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          mandatory: 1
-          label: "Book Title (Translation)"
-          label_short: "Title (Trans.)"
-          placeholder: "e.g. Handbuch des eBook Publishings"
+        title: *title
         alternative_title:
-          label: "Book Title (Original)"
-          label_short: "Title (Orig)"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          mandatory: 0
+          multiple: 0
         translator:
-          first_name:
-            placeholder: "e.g. John"
-          last_name:
-            placeholder: "e.g. Appleseed"
           mandatory: 1
           multiple: 1
-          label: "Translator"
           pevz: 1
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         author_secondary:
-          first_name:
-            placeholder: "e.g. John"
-          last_name:
-            placeholder: "e.g. Appleseed"
           multiple: 1
-          label: "Author (Original)"
           pevz: 0
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         department: *department
         project: *project
         research_group: *research_group
@@ -1107,7 +874,6 @@ publicationTypes:
           multiple: 1
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
@@ -1118,40 +884,22 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   translationchapter:
-    label: "Translation (Chapter)"
+    genus: "f"
     tmpl: translationChapter
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          mandatory: 1
-          label: "Chapter Title (Translation)"
-          label_short: "Title (Trans.)"
-          placeholder: "e.g. Handbuch des eBook Publishings"
+        title: *title
         alternative_title:
-          label: "Chapter Title (Original)"
-          label_short: "Title (Orig)"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          mandatory: 0
+          multiple: 1
         translator:
-          first_name:
-            placeholder: "e.g. John"
-          last_name:
-            placeholder: "e.g. Appleseed"
           mandatory: 1
           multiple: 1
-          label: "Translator"
           pevz: 1
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         author_secondary:
-          first_name:
-            placeholder: "e.g. John"
-          last_name:
-            placeholder: "e.g. Appleseed"
           multiple: 1
-          label: "Author"
           pevz: 0
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         department: *department
         project: *project
         research_group: *research_group
@@ -1160,19 +908,17 @@ publicationTypes:
         place: *place
         publisher: *publisher
         publication:
-          label: "Book Title"
-          placeholder: "e.g. Handbook of eBook Publishing"
+          mandatory: 0
         series_title:
-          label: "Journal Title"
-          placeholder: "e.g. Lecture Notes of eBook Publishing"
+          mandatory: 0
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status: *publication_status
         year_extern: *year_extern
+        language: *language
         original_language: *original_language
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         popular_science_quality_controlled: *popular_science_quality_controlled
         external_id: *external_id
         abstract: *abstract
@@ -1183,16 +929,12 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   workingpaper:
-    label: "Working Paper"
+    genus: "n"
     tmpl: workingPaper
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         doi: *doi
-        title:
-          mandatory: 1
-          label: "Title"
-          placeholder: "e.g. Working Paper on eBook Publishing"
+        title: *title
         alternative_title: *alternative_title
         author: *author_translator
         editor: *editor_only
@@ -1210,7 +952,6 @@ publicationTypes:
         publication_status_language: *publication_status_language
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
@@ -1220,74 +961,43 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   bithesis:
-    label: "Bielefeld Thesis"
+    genus: "f"
     tmpl: biDissertation
     fields:
       basic_fields:
-        tab_name: "Basic Fields"
         bi_doctype:
           label: "Documenttype"
           mandatory: 1
         author: &author
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
           mandatory: 1
           multiple: 1
-          label: "Author"
           pevz: 1
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
         email: &email
-          label: "E-Mail address"
-          label_short: "E-Mail"
-          placeholder: "e.g. me@example.com"
           mandatory: 1
         department: &department_diss
-          label: "Department"
-          placeholder: "Department"
           mandatory: 1
           multiple: 1
         supervisor: &supervisor
-          first_name:
-            placeholder: "First Name"
-          last_name:
-            placeholder: "Last Name"
           mandatory: 1
           multiple: 1
-          label: "Supervisor"
           pevz: 1
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
-        title:
-          mandatory: 1
-          label: "Title"
-          placeholder: "e.g. Strategic aspects of eBook Publishing in the Life Sciences"
+        title: *title
         language: &language_diss
-          label: "Language"
           default: "eng"
           mandatory: 1
         year:
          label: "Year"
-         placeholder: "YYYY"
          mandatory: 1
         defense_date: &defense_date
-          label: "Date of Defense"
-          placeholder: "YYYY-MM-DD"
           mandatory: 1
         publisher: &publisher_diss
-          label: "Publisher"
-          placeholder: "Publisher"
           mandatory: 1
         place: &place_diss
-          label: "Place<br>(of publication)"
-          label_short: "Place"
-          placeholder: "e.g. Berlin"
           mandatory: 1
         alternative_title: *alternative_title
         page: *page
       file_upload: *file_upload
       supplementary_fields:
-        tab_name: "Additional Information"
         abstract: *abstract
         keyword: *keyword
         pacs_class: &pacs
@@ -1307,16 +1017,16 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   bidissertation:
-    label: "Bielefeld Doctoral Thesis"
+    genus: "f"
     tmpl: biDissertation
   bimasterthesis:
-    label: "Bielefeld Master Thesis"
+    genus: "f"
     tmpl: biDissertation
   bipostdocthesis:
-    label: "Bielefeld Post-Doctoral Habilitation"
+    genus: "f"
     tmpl: biDissertation
   bibachelorthesis:
-    label: "Bielefeld Bachelor Thesis"
+    genus: "f"
     tmpl: biDissertation
 array_field:
   - abstract

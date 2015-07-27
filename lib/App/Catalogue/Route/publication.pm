@@ -57,11 +57,14 @@ Some fields are pre-filled.
             creator => {
                 id => session->{personNumber},
                 login => session->{user},
-            }
+            },
         };
 
         if ( $type eq "researchData" ) {
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
+        }
+        if(params->{lang}){
+        	$data->{lang} = params->{lang};
         }
 
         my $templatepath = "backend/forms";

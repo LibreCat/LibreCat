@@ -7,7 +7,7 @@
   <div class="col-md-10">
     <div class="form-group row innerrow">
       <div class="col-md-9">
-        <strong>Fieldname</strong> <span class="starMandatory"></span> = Required field
+        [% lf.mandatory_explain %]
       </div>
     </div>
   </div>

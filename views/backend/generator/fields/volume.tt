@@ -2,7 +2,7 @@
   <div class="col-md-2 hidden-xs hidden-sm">
     {% IF fields.basic_fields.volume.mandatory OR fields.supplementary_fields.volume.mandatory %}<span class="starMandatory">{% END %}
     <label for="id_volume">
-      {% fields.basic_fields.volume.label %}{% fields.supplementary_fields.volume.label %}
+      [% lf.$type.field.volume.label %]
     </label>
     {% IF fields.basic_fields.volume.mandatory OR fields.supplementary_fields.volume.mandatory %}</span>{% END %}
   </div>
@@ -10,8 +10,8 @@
     <div class="row innerrow">
       <div class="form-group col-md-3 col-xs-11">
         <div class="input-group sticky">
-          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.volume.label %}{% fields.supplementary_fields.volume.label %}</div>
-          <input type="text" name="volume" id="id_volume" value="[% volume | html %]" placeholder="{% fields.basic_fields.volume.placeholder %}{% fields.supplementary_fields.volume.placeholder %}" class="sticky form-control{% IF fields.basic_fields.volume.mandatory OR fields.supplementary_fields.volume.mandatory %} required{% END %}"{% IF fields.basic_fields.volume.readonly OR fields.supplementary_fields.volume.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.volume.label %]</div>
+          <input type="text" name="volume" id="id_volume" value="[% volume | html %]" placeholder="[% lf.$type.field.volume.placeholder %]" class="sticky form-control{% IF fields.basic_fields.volume.mandatory OR fields.supplementary_fields.volume.mandatory %} required{% END %}"{% IF fields.basic_fields.volume.readonly OR fields.supplementary_fields.volume.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

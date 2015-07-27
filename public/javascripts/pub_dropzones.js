@@ -9,7 +9,6 @@ $(document).ready(function(){
 		previewTemplate: "<span></span>",
 	    params: {access_level: "open_access", accept: 1, quickandeasy: 1},
 	    createImageThumbnails: false,
-	    dictDefaultMessage: "<span class=\"fa fa-file-pdf-o fa-3x\"></span><br />Drop Open Access fulltext (pdf) here and we'll do the rest.",
 	    dictMaxFilesExceeded: "Please submit or cancel your upload first before uploading more files.",
 	    init: function(){
 	    	$('.dz-default.dz-message').addClass('qae');

@@ -165,12 +165,12 @@
         <div class="facettecollapse">
         <ul id="sort" class="collapse[% IF qp.defined('sorting') AND qp.item('sorting') != "" %] in[% END %]">
           [% FOREACH sortme IN h.config.project_sort_options %]
-            [% IF qp.sorting.grep("$sortme.key").0 %]
-            <li>[% sortme.label %]</li>
+            [% IF qp.sorting.grep("$sortme").0 %]
+            <li>[% lf.sort_options.$sortme %]</li>
             [% ELSE %]
-              [% sortasc = sortme.key _ ".asc" %]
-              [% sortdesc = sortme.key _ ".desc" %]
-              <li><a href="[% h.newuri_for("$bag", qp, sorting="$sortasc") %]" rel="nofollow">[% sortme.label %]&nbsp;<span class="fa fa-arrow-up"></span></a>&nbsp;&nbsp;<a href="[% h.newuri_for("$path", qp, sorting="$sortdesc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
+              [% sortasc = sortme _ ".asc" %]
+              [% sortdesc = sortme _ ".desc" %]
+              <li><a href="[% h.newuri_for("$bag", qp, sorting="$sortasc") %]" rel="nofollow">[% lf.sort_options.$sortme %]&nbsp;<span class="fa fa-arrow-up"></span></a>&nbsp;&nbsp;<a href="[% h.newuri_for("$path", qp, sorting="$sortdesc") %]" rel="nofollow"><span class="fa fa-arrow-down"></span></a></li>
             [% END %]
           [% END %]
         </ul>

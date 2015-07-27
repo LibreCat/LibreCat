@@ -54,12 +54,12 @@ get '/login' => sub {
     redirect '/myPUB' if session('user');
 
     # not logged in yet
-    template 'login', {error_message => params->{error_message} || '', login => params->{login} || ''};
+    template 'login', {error_message => params->{error_message} || '', login => params->{login} || '', lang => params->{lang} || "de"};
 };
 
 =head2 POST /login
 
-Route where login data is sent to. On sucess redirects to
+Route where login data is sent to. On success redirects to
 '/' or to the path requested before
 
 =cut
@@ -75,6 +75,7 @@ post '/login' => sub {
         session role => $super_admin || $reviewer || $data_manager || $delegate || "user";
         session user         => $user->{login};
         session personNumber => $user->{_id};
+        session lang => $user->{lang} || params->{lang} || "en";
 
         redirect '/myPUB';
     }
@@ -90,7 +91,12 @@ The logout route. Destroys session.
 =cut
 any '/logout' => sub {
     session->destroy;
-    redirect '/';
+    if(params->{lang} and params->{lang} eq "en"){
+    	redirect '/en';
+    }
+    else {
+    	redirect '/';
+    }
 };
 
 =head2 ANY /access_denied

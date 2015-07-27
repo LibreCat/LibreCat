@@ -1,5 +1,6 @@
 [% path = request.path %]
 [% backend = path.match('myPUB') ? 1 : 0 %]
+[% lang = session.lang %]
 
 [% INCLUDE header.tt %]
 
@@ -50,25 +51,30 @@
       
       <div class="col-sm-4">
         [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_l %]
-          <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+        [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
+          <a href="/myPUB/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
         [% END %]
       </div>
       <div class="col-sm-4">
         [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_m %]
-          <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+        [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
+          <a href="/myPUB/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
         [% END %]
       </div>
       <div class="col-sm-4">
         [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_r %]
-          <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+        [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
+          <a href="/myPUB/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
         [% END %]
         [% IF session.role == "super_admin" %]
           [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_admin %]
-          <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+          [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
+          <a href="/myPUB/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
           [% END %]
         [% END %]
         [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_rd %]
-          <a href="/myPUB/record/new?type=[% h.config.forms.publicationTypes.$doctype.tmpl %]">[% h.config.forms.publicationTypes.$doctype.label %]</a><br />
+        [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
+          <a href="/myPUB/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
         [% END %]
       </div>
     </div>

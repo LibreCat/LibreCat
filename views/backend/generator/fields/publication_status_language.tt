@@ -4,7 +4,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="select_language_0">
-      {% fields.basic_fields.publication_status_language.label %}{% fields.supplementary_fields.publication_status_language.label %}
+      [% lf.$type.field.publication_status_language.label %]
     </label>
     {% IF fields.basic_fields.publication_status_language.mandatory OR fields.supplementary_fields.publication_status_language.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -12,9 +12,12 @@
     <div class="row innerrow">
       <div class="form-group col-md-5 col-xs-11" id="publication_status">
         <div class="input-group sticky{% IF fields.basic_fields.publication_status_language.publication_status.mandatory OR fields.supplementary_fields.publication_status_language.publication_status.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon">{% fields.basic_fields.publication_status_language.publication_status.label %}{% fields.supplementary_fields.publication_status_language.publication_status.label %}</div>
+          <div class="input-group-addon">
+            <span class="hidden-xs hidden-sm">[% lf.$type.field.publication_status_language.publication_status.label %]</span>
+            <span class="hidden-lg hidden-md">[% lf.$type.field.publication_status_language.publication_status.label_short %]</span>
+          </div>
           <select name="publication_status" class="sticky form-control{% IF fields.basic_fields.publication_status_language.publication_status.mandatory OR fields.supplementary_fields.publication_status_language.publication_status.mandatory %} required{% END %}" id="select_publication_status">
-            <option value=""[% IF !publication_status %] selected="selected"[% END %]>--- Select ---</option>
+            <option value=""[% IF !publication_status %] selected="selected"[% END %]>--- [% lf.button.select %] ---</option>
             [% FOREACH pi IN publ_status %]
               <option value="[% pi.value %]"[% IF publication_status == pi.value %] selected="selected"[% END %]>[% pi.name %]</option>
             [% END %]
@@ -28,7 +31,10 @@
         <div class="row">
           <div class="form-group col-md-10">
             <div class="input-group sticky{% IF fields.basic_fields.publication_status_language.language.mandatory OR fields.supplementary_fields.publication_status_language.language.mandatory %} mandatory{% END %}">
-              <div class="input-group-addon">{% fields.basic_fields.publication_status_language.language.label %}{% fields.supplementary_fields.publication_status_language.language.label %}</div>
+              <div class="input-group-addon">
+                <span class="hidden-xs hidden-sm">[% lf.$type.field.publication_status_language.language.label %]</span>
+                <span class="hidden-lg hidden-md">[% lf.$type.field.publication_status_language.language.label_short %]</span>
+              </div>
               <select name="language.0.name" class="sticky form-control{% IF fields.basic_fields.publication_status_language.language.mandatory OR fields.supplementary_fields.publication_status_language.language.mandatory %} required{% END %}" id="select_language_0">
                 [% FOREACH lang IN language_preselect.keys.sort %]
                 <option value="[% lang %]"[% IF lang == language.name || (!language AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>
@@ -48,7 +54,10 @@
           <div class="row">
             <div class="form-group col-md-10">
               <div class="input-group sticky{% IF fields.basic_fields.publication_status_language.language.mandatory OR fields.supplementary_fields.publication_status_language.language.mandatory %} mandatory{% END %}">
-                <div class="input-group-addon">{% fields.basic_fields.publication_status_language.language.label %}{% fields.supplementary_fields.publication_status_language.language.label %}</div>
+                <div class="input-group-addon">
+                  <span class="hidden-xs hidden-sm">[% lf.$type.field.publication_status_language.language.label %]</span>
+                  <span class="hidden-lg hidden-md">[% lf.$type.field.publication_status_language.language.label_short %]</span>
+                </div>
                 <select name="language.[% loop.index %].name" class="sticky form-control{% IF fields.basic_fields.publication_status_language.mandatory OR fields.supplementary_fields.publication_status_language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_language_[% loop.index %]">
                   [% FOREACH lang IN language_preselect.keys.sort %]
                   <option value="[% lang %]"[% IF lang == lan.name %] selected="selected"[% END %]>[% lang %]</option>
@@ -69,7 +78,10 @@
         <div class="row">
           <div class="form-group col-md-10">
             <div class="input-group sticky{% IF fields.basic_fields.publication_status_language.language.mandatory OR fields.supplementary_fields.publication_status_language.language.mandatory %} mandatory{% END %}">
-              <div class="input-group-addon">{% fields.basic_fields.publication_status_language.language.label %}{% fields.supplementary_fields.publication_status_language.language.label %}</div>
+              <div class="input-group-addon">
+                <span class="hidden-xs hidden-sm">[% lf.$type.field.publication_status_language.language.label %]</span>
+                <span class="hidden-lg hidden-md">[% lf.$type.field.publication_status_language.language.label_short %]</span>
+              </div>
               <select name="language.0.name" class="sticky form-control{% IF fields.basic_fields.publication_status_language.language.mandatory OR fields.supplementary_fields.publication_status_language.language.mandatory %} required{% END %}" id="select_language_0">
                 [% FOREACH lang IN language_preselect.keys.sort %]
                 <option value="[% lang %]"[% IF lang == language.name || (!language AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>

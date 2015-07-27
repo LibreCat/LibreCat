@@ -1,14 +1,14 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_select_bi_doctype">
-      {% fields.basic_fields.bi_doctype.label %}
+      [% lf.$type.field.bi_doctype.label %]
     </label>
   </div>
   <div class="col-md-10">
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky mandatory">
-          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.bi_doctype.label %}</div>
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.bi_doctype.label_short || lf.$type.field.bi_doctype.label %]</div>
           <select id="id_select_bi_doctype" class="sticky form-control">
             <option value="biDissertation"[% IF type == 'biDissertation' || !type %] selected="selected"[% END %]>biDissertation</option>
             <option value="biBachelorThesis"[% IF type == 'biBachelorThesis' %] selected="selected"[% END %]>biBachelorThesis</option>

@@ -2,7 +2,7 @@
   [% publication_identifier_list = h.get_list('publication_identifier') %]
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="select_publication_identifier">
-      {% fields.basic_fields.publication_identifier.label %}{% fields.supplementary_fields.publication_identifier.label %}
+      [% lf.$type.field.publication_identifier.label %]
     </label>
     {% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %}<span class="starMandatory"></span>&nbsp;{% END %}
   </div>
@@ -12,16 +12,16 @@
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.publication_identifier.label_short || fields.basic_fields.publication_identifier.label %}{% fields.supplementary_fields.publication_identifier.label_short || fields.supplementary_fields.publication_identifier.label %}</div>
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.publication_identifier.label_short || lf.$type.field.publication_identifier.label %]</div>
           <span class="input-group-btn">
             <select class="btn btn-default" name="publication_identifier.0.type" id="select_publication_identifier">
-              <option value="">-- Select --</option>
+              <option value="">-- [% lf.button.select %] --</option>
               [% FOREACH pubid IN publication_identifier_list.keys.sort %]
               <option value="[% pubid %]">[% publication_identifier_list.$pubid %]</option>
               [% END %]
             </select>
           </span>
-          <input type="text" value="" placeholder="{% fields.basic_fields.publication_identifier.placeholder %}{% fields.supplementary_fields.publication_identifier.placeholder %}" class="sticky form-control{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} required{% END %}" name="publication_identifier.0.value" id="publication_id_0" {% IF fields.basic_fields.publication_identifier.readonly OR fields.supplementary_fields.publication_identifier.readonly %} readonly="readonly"{% END %}/>
+          <input type="text" value="" placeholder="[% lf.$type.field.publication_identifier.placeholder %]" class="sticky form-control{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} required{% END %}" name="publication_identifier.0.value" id="publication_id_0" {% IF fields.basic_fields.publication_identifier.readonly OR fields.supplementary_fields.publication_identifier.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon" onclick="add_field('publId');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} data-mandatory="yes"{% END %}></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
@@ -35,16 +35,16 @@
         <div class="row innerrow">
           <div class="form-group col-md-10 col-xs-11">
             <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
-              <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.publication_identifier.label_short || fields.basic_fields.publication_identifier.label %}{% fields.supplementary_fields.publication_identifier.label_short || fields.supplementary_fields.publication_identifier.label %}</div>
+              <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.publication_identifier.label_short || lf.$type.field.publication_identifier.label %]</div>
               <span class="input-group-btn">
                 <select class="btn btn-default" name="publication_identifier.[% index %].type">
-                  <option value="">-- Select --</option>
+                  <option value="">-- [% lf.button.select %] --</option>
                   [% FOREACH pubid IN publication_identifier_list.keys.sort %]
                   <option value="[% pubid %]"[% IF pubid == pub_id %] selected="selected"[% END %]>[% publication_identifier_list.$pubid %]</option>
                   [% END %]
                 </select>
               </span>
-              <input type="text" value="[% identifier %]" placeholder="{% fields.basic_fields.publication_identifier.placeholder %}{% fields.supplementary_fields.publication_identifier.placeholder %}" class="sticky form-control{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %}[% IF index == "0" %] required[% END %]{% END %}" name="publication_identifier.[% index %].value" id="publication_id_[% index %]" {% IF fields.basic_fields.publication_identifier.readonly OR fields.supplementary_fields.publication_identifier.readonly %} readonly="readonly"{% END %}/>
+              <input type="text" value="[% identifier %]" placeholder="[% lf.$type.field.publication_identifier.placeholder %]" class="sticky form-control{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %}[% IF index == "0" %] required[% END %]{% END %}" name="publication_identifier.[% index %].value" id="publication_id_[% index %]" {% IF fields.basic_fields.publication_identifier.readonly OR fields.supplementary_fields.publication_identifier.readonly %} readonly="readonly"{% END %}/>
               <div class="input-group-addon" onclick="add_field('publId');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} data-mandatory="yes"{% END %}></span></div>
               <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             </div>
@@ -55,16 +55,16 @@
         <div class="row innerrow">
           <div class="form-group col-md-10 col-xs-11">
             <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
-              <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.publication_identifier.label_short || fields.basic_fields.publication_identifier.label %}{% fields.supplementary_fields.publication_identifier.label_short || fields.supplementary_fields.publication_identifier.label %}</div>
+              <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.publication_identifier.label_short || lf.$type.field.publication_identifier.label %]</div>
               <span class="input-group-btn">
                 <select class="btn btn-default" name="publication_identifier.[% index %].type">
-                  <option value="">-- Select --</option>
+                  <option value="">-- [% lf.button.select %] --</option>
                   [% FOREACH pubid IN publication_identifier_list.keys.sort %]
                   <option value="[% pubid %]"[% IF pubid == pub_id %] selected="selected"[% END %]>[% publication_identifier_list.$pubid %]</option>
                   [% END %]
                 </select>
               </span>
-              <input type="text" value="[% publication_identifier.$pub_id %]" placeholder="{% fields.basic_fields.publication_identifier.placeholder %}{% fields.supplementary_fields.publication_identifier.placeholder %}" class="sticky form-control{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %}[% IF index == "0" %] required[% END %]{% END %}" name="publication_identifier.[% index %].value" id="publication_id_[% index %]" {% IF fields.basic_fields.publication_identifier.readonly OR fields.supplementary_fields.publication_identifier.readonly %} readonly="readonly"{% END %}/>
+              <input type="text" value="[% publication_identifier.$pub_id %]" placeholder="[% lf.$type.field.publication_identifier.placeholder %]" class="sticky form-control{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %}[% IF index == "0" %] required[% END %]{% END %}" name="publication_identifier.[% index %].value" id="publication_id_[% index %]" {% IF fields.basic_fields.publication_identifier.readonly OR fields.supplementary_fields.publication_identifier.readonly %} readonly="readonly"{% END %}/>
               <div class="input-group-addon" onclick="add_field('publId');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} data-mandatory="yes"{% END %}></span></div>
               <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             </div>
@@ -77,16 +77,16 @@
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">{% fields.basic_fields.publication_identifier.label_short || fields.basic_fields.publication_identifier.label %}{% fields.supplementary_fields.publication_identifier.label_short || fields.supplementary_fields.publication_identifier.label %}</div>
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.publication_identifier.label_short || lf.$type.field.publication_identifier.label %]</div>
           <span class="input-group-btn">
             <select class="btn btn-default" name="publication_identifer.0.type">
-              <option value="">-- Select --</option>
+              <option value="">-- [% lf.button.select %] --</option>
               [% FOREACH pubid IN publication_identifier_list.keys.sort %]
               <option value="[% pubid %]">[% publication_identifier_list.$pubid %]</option>
               [% END %]
             </select>
           </span>
-          <input type="text" value="" placeholder="{% fields.basic_fields.publication_identifier.placeholder %}{% fields.supplementary_fields.publication_identifier.placeholder %}" class="sticky form-control{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} required{% END %}" name="publication_identifier.0.value" id="publication_id_0" {% IF fields.basic_fields.publication_identifier.readonly OR fields.supplementary_fields.publication_identifier.readonly %} readonly="readonly"{% END %}/>
+          <input type="text" value="" placeholder="[% lf.$type.field.publication_identifier.placeholder %]" class="sticky form-control{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} required{% END %}" name="publication_identifier.0.value" id="publication_id_0" {% IF fields.basic_fields.publication_identifier.readonly OR fields.supplementary_fields.publication_identifier.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon" onclick="add_field('publId');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.publication_identifier.mandatory OR fields.supplementary_fields.publication_identifier.mandatory %} data-mandatory="yes"{% END %}></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>

@@ -87,13 +87,34 @@ User can choose default edit mode for editing publications.
 "expert" -> one long edit form
 
 =cut
-    post '/edit_mode' => sub {
+    post '/edit_mode' => needs login => sub {
 
         my $person = h->get_person( session('personNumber') );
         my $mode = params->{edit_mode};
         if($mode eq "normal" or $mode eq "expert"){
         	$person->{edit_mode} = $mode;
         	h->update_record('researcher', $person);
+        }
+
+        redirect '/myPUB';
+
+    };
+
+=head2 POST /set_language
+
+User can choose default language for the myPUB backend
+"en" -> English - default
+"de" -> German
+
+=cut
+    post '/set_language' => needs login => sub {
+
+        my $person = h->get_person( session('personNumber') );
+        my $lang = params->{lang};
+        if($lang eq "en" or $lang eq "de"){
+        	$person->{lang} = $lang;
+        	h->update_record('researcher', $person);
+        	session lang => $lang;
         }
 
         redirect '/myPUB';
