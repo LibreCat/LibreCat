@@ -61,7 +61,7 @@ Some fields are pre-filled.
         };
 
         if ( $type eq "researchData" ) {
-            $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
+            $data->{doi} = h->config->{private}->{doi}->{prefix} . "/" . $id;
         }
         if(params->{lang}){
         	$data->{lang} = params->{lang};
