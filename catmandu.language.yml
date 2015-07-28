@@ -252,7 +252,7 @@ en:
           publication_status:
             label: "Publication Status"
             label_short: "Publ. Status"
-        dropzone_mainDoc:
+        dropzone_mainDoc: &dropzone_mainDoc
           label: "<strong>Upload Main File(s) and Supplementary Material</strong> (max. 1000MB per file)"
           dropzone_text: "Drop files here to upload ... or click!"
           access_level: "Access Level:"
@@ -265,7 +265,7 @@ en:
             request_a_copy: "<br />(Request a Copy)"
             local: "UniBi Only"
             open_access: "Open Access"
-        license:
+        license: &license
           heading: "Copyright and Licenses"
           pub_license:
             label: "Copyright Disclaimer"
@@ -292,12 +292,12 @@ en:
               name: "Creative Commons Attribution-ShareAlike 4.0 International Public License (CC BY-SA 4.0)"
               deed_url: "http://creativecommons.org/licenses/by-sa/4.0/"
               legal_code_url: "http://creativecommons.org/licenses/by-sa/4.0/legalcode"
-        urn:
+        urn: &urn
           label: "URN"
           placeholder: "e.g. urn:nbn:de:0070-pub-12345678"
           explain: "(A URN will be generated automatically if you upload a file!)"
           title: "The URN was generated automatically and cannot be changed"
-        ddc:
+        ddc: &ddc
           label: "DDC"
           select_ddc: "Select DDC"
     bookEditor: &bookeditor
@@ -333,6 +333,10 @@ en:
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         edition: *edition
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     bookeditor: *bookeditor
     bookChapter: &bookchapter
       label: "Book Chapter"
@@ -394,6 +398,10 @@ en:
           label_end_short: "End"
           placeholder_start: "YYYY-MM-DD"
           placeholder_end: "YYYY-MM-DD"
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     bookchapter: *bookchapter
     conferenceAbstract: &conferenceabstract
       label: "Conference Abstract"
@@ -450,6 +458,10 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     conferenceabstract: *conferenceabstract
     conferenceEditor: &conferenceeditor
       label: "Conference (Editor)"
@@ -477,6 +489,10 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     conferenceeditor: *conferenceeditor
     conference:
       label: "Conference Paper"
@@ -508,6 +524,10 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     dissertation:
       label: "Dissertation"
       tab: *tab
@@ -536,6 +556,10 @@ en:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     encyclopediaArticle: &encyclopediaarticle
       label: "Encyclopedia Article"
       tab: *tab
@@ -563,6 +587,10 @@ en:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     encyclopediaarticle: *encyclopediaarticle
     journalArticle: &journalarticle
       label: "Journal Article"
@@ -592,6 +620,10 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     journalarticle: *journalarticle
     journalEditor: &journaleditor
       label: "Journal (Editor)"
@@ -617,6 +649,10 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     journaleditor: *journaleditor
     newspaperArticle: &newspaperarticle
       label: "Newspaper Article"
@@ -643,6 +679,10 @@ en:
           placeholder: "e.g. The New York Times"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     newspaperarticle: *newspaperarticle
     patent:
       label: "Patent"
@@ -693,6 +733,10 @@ en:
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     preprint:
       label: "Preprint"
       tab: *tab
@@ -710,6 +754,10 @@ en:
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     report:
       label: "Report"
       tab: *tab
@@ -736,6 +784,10 @@ en:
           placeholder: "e.g. NASA/TM-2015-123456"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     review:
       label: "Book Review"
       tab: *tab
@@ -761,6 +813,10 @@ en:
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     researchData: &researchdata
       label: "Research Data"
       tab:
@@ -845,6 +901,10 @@ en:
         original_language: &original_language
           label: "Language (Original)"
           label_short: "Lang. (Orig.)"
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     translationChapter: &translationchapter
       label: "Translation (Chapter)"
       tab: *tab
@@ -902,6 +962,10 @@ en:
         publication_status: *publication_status
         language: *language
         original_language: *original_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     translationchapter: *translationchapter
     workingPaper: &workingpaper
       label: "Working Paper"
@@ -926,6 +990,10 @@ en:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     workingpaper: *workingpaper
     biDissertation: &bidissertation
       label: "Bielefeld Thesis"
@@ -974,6 +1042,10 @@ en:
           label: "Publisher"
           placeholder: "Publisher"
         page: *page
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     bidissertation: *bidissertation
     biMasterThesis: &bimasterthesis
       label: "Bielefeld Master Thesis"
@@ -1254,7 +1326,7 @@ de:
           publication_status:
             label: "Publikationsstatus"
             label_short: "Publ.status"
-        dropzone_mainDoc:
+        dropzone_mainDoc: &dropzone_mainDoc
           label: "<strong>Upload für Volltext und Anhänge/ Zusatzmaterialien</strong> (max. 1000MB pro Datei)"
           dropzone_text: "Datei hier her ziehen... oder klicken!"
           access_level: "Access Level:"
@@ -1267,7 +1339,7 @@ de:
             request_a_copy: "<br />(Kopie anfordern)"
             local: "Nur UniBi"
             open_access: "Open Access"
-        license:
+        license: &license
           heading: "Copyright und Lizenzen"
           pub_license:
             label: "Hinweise zum Urheberrecht"
@@ -1294,12 +1366,12 @@ de:
               name: "Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 International Public License (CC BY-SA 4.0)"
               deed_url: "http://creativecommons.org/licenses/by-sa/4.0/deed.de"
               legal_code_url: "http://creativecommons.org/licenses/by-sa/4.0/legalcode"
-        urn:
+        urn: &urn
           label: "URN"
           placeholder: "z.B. urn:nbn:de:0070-pub-12345678"
           explain: "(Wenn Sie eine Datei hochladen, wird automatisch eine URN generiert!)"
           title: "Die URN wurde automatisch generiert und kann nicht geändert werden."
-        ddc:
+        ddc: &ddc
           label: DDC
           select_ddc: "DDC auswählen"
     bookEditor: &bookeditor
@@ -1336,6 +1408,10 @@ de:
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         edition: *edition
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     bookeditor: *bookeditor
     bookChapter: &bookchapter
       label: "Kapitel"
@@ -1398,6 +1474,10 @@ de:
           label_end_short: "Ende"
           placeholder_start: "YYYY-MM-DD"
           placeholder_end: "YYYY-MM-DD"
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     bookchapter: *bookchapter
     conferenceAbstract: &conferenceabstract
       label: "Konferenz-Abstract"
@@ -1455,6 +1535,10 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     conferenceabstract: *conferenceabstract
     conferenceEditor: &conferenceeditor
       label: "Konferenz-Herausgeber"
@@ -1482,6 +1566,10 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     conferenceeditor: *conferenceeditor
     conference:
       label: "Konferenz-Beitrag"
@@ -1512,6 +1600,10 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     dissertation:
       label: "Dissertation"
       tab: *tab
@@ -1540,6 +1632,10 @@ de:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     encyclopediaArticle: &encyclopediaarticle
       label: "Enzyklopädie-Artikel"
       tab: *tab
@@ -1567,6 +1663,10 @@ de:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     encyclopediaarticle: *encyclopediaarticle
     journalArticle: &journalarticle
       label: "Zeitschriftenartikel"
@@ -1597,6 +1697,10 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     journalarticle: *journalarticle
     journalEditor: &journaleditor
       label: "Zeitschriften-Herausgeber"
@@ -1623,6 +1727,10 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     journaleditor: *journaleditor
     newspaperArticle: &newspaperarticle
       label: "Zeitungsartikel"
@@ -1649,6 +1757,10 @@ de:
           placeholder: "z.B. The New York Times"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     newspaperarticle: *newspaperarticle
     patent:
       label: "Patent"
@@ -1697,6 +1809,10 @@ de:
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     preprint:
       label: "Vorabdruck"
       tab: *tab
@@ -1715,6 +1831,10 @@ de:
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     report:
       label: "Bericht"
       tab: *tab
@@ -1741,6 +1861,10 @@ de:
           placeholder: "z.B. NASA/TM-2015-123456"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     review:
       label: "Buchrezension"
       tab: *tab
@@ -1766,6 +1890,10 @@ de:
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     researchData: &researchdata
       label: "Forschungsdatensatz"
       tab:
@@ -1850,6 +1978,10 @@ de:
         original_language: &original_language
           label: "Sprache (Original)"
           label_short: "Spr. (Orig.)"
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     translationChapter: &translationchapter
       label: "Übersetzung (Kapitel)"
       tab: *tab
@@ -1906,6 +2038,10 @@ de:
         publication_status: *publication_status
         language: *language
         original_language: *original_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     translationchapter: *translationchapter
     workingPaper: &workingpaper
       label: "Diskussionspapier"
@@ -1930,6 +2066,10 @@ de:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     workingpaper: *workingpaper
     biDissertation: &bidissertation
       label: "Bielefelder Dissertation"
@@ -1976,6 +2116,10 @@ de:
           label: "Verlag"
           placeholder: "Verlag"
         page: *page
+        dropzone_mainDoc: &dropzone_mainDoc
+        license: &license
+        urn: &urn
+        ddc: &ddc
     bidissertation: *bidissertation
     biMasterThesis: &bimasterthesis
       label: "Bielefelder Masterarbeit"
