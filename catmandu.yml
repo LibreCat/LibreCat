@@ -49,6 +49,10 @@ request_copy:
   period: 7 #days
   subject: 'Request for a copy of your publication'
 
+datacite_logfile: "/srv/www/pub/logs/datacite.log"
+doi:
+  log: "/srv/www/pub/log/doi_registry.log"
+
 plugins:
   'Auth::Tiny':
 
