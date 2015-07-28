@@ -77,7 +77,7 @@ en:
     logout: "Logout"
     add_new_button: "Add new Publication"
     capital_or: "OR"
-    qae_drop_text: "<span class=\"fa fa-file-pdf-o fa-3x\"></span><br />Drop Open Access fulltext (pdf)<br>here and we'll do the rest."
+    qae_drop_text: "<span class='fa fa-file-pdf-o fa-3x'></span><br />Drop Open Access fulltext (pdf)<br>here and we'll do the rest."
     heading_admin: "Administration (myPUB)"
     heading_user: "Author's Page (myPUB)"
     heading_reviewer: "Reviewer's Page (myPUB)"
@@ -300,6 +300,10 @@ en:
         ddc: &ddc
           label: "DDC"
           select_ddc: "Select DDC"
+        abstract: &abstract
+          label: "Abstract"
+          label2: "Abstract Language"
+          placeholder: "Abstract Text (you can use Markdown or MathJax for styling)"
     bookEditor: &bookeditor
       label: "Book (Editor)"
       tab: *tab
@@ -333,10 +337,11 @@ en:
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         edition: *edition
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     bookeditor: *bookeditor
     bookChapter: &bookchapter
       label: "Book Chapter"
@@ -398,10 +403,11 @@ en:
           label_end_short: "End"
           placeholder_start: "YYYY-MM-DD"
           placeholder_end: "YYYY-MM-DD"
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     bookchapter: *bookchapter
     conferenceAbstract: &conferenceabstract
       label: "Conference Abstract"
@@ -458,10 +464,10 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
     conferenceabstract: *conferenceabstract
     conferenceEditor: &conferenceeditor
       label: "Conference (Editor)"
@@ -489,10 +495,11 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     conferenceeditor: *conferenceeditor
     conference:
       label: "Conference Paper"
@@ -524,10 +531,10 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
     dissertation:
       label: "Dissertation"
       tab: *tab
@@ -556,10 +563,11 @@ en:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     encyclopediaArticle: &encyclopediaarticle
       label: "Encyclopedia Article"
       tab: *tab
@@ -587,10 +595,10 @@ en:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
     encyclopediaarticle: *encyclopediaarticle
     journalArticle: &journalarticle
       label: "Journal Article"
@@ -620,10 +628,11 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     journalarticle: *journalarticle
     journalEditor: &journaleditor
       label: "Journal (Editor)"
@@ -649,10 +658,11 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     journaleditor: *journaleditor
     newspaperArticle: &newspaperarticle
       label: "Newspaper Article"
@@ -679,10 +689,10 @@ en:
           placeholder: "e.g. The New York Times"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
     newspaperarticle: *newspaperarticle
     patent:
       label: "Patent"
@@ -733,10 +743,11 @@ en:
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     preprint:
       label: "Preprint"
       tab: *tab
@@ -754,10 +765,11 @@ en:
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     report:
       label: "Report"
       tab: *tab
@@ -784,10 +796,11 @@ en:
           placeholder: "e.g. NASA/TM-2015-123456"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     review:
       label: "Book Review"
       tab: *tab
@@ -813,10 +826,10 @@ en:
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
     researchData: &researchdata
       label: "Research Data"
       tab:
@@ -846,6 +859,52 @@ en:
           placeholder: "Publisher"
           defaultvalue: "Bielefeld University"
         year_extern: *year_extern
+        dropzone_mainDoc: &dropzone_mainDoc
+          label: "<strong>Upload File(s)</strong> (max. 1000MB per file)"
+          dropzone_text: "Drop files here to upload ... or click!"
+          access_level: "Access Level:"
+          upload_date: "Upload Date:"
+          user: "User:"
+          relation: "Relation:"
+          access:
+            closed: "Author/Reviewer"
+            until: "until"
+            request_a_copy: "<br />(Request a Copy)"
+            local: "UniBi Only"
+            open_access: "Open Access"
+        license:
+          heading: "Copyright and Licenses"
+          data_reuse_license:
+            label: "Data Re-Use License"
+            select_license: "Choose a license under which your uploaded data will be available:<br />"
+            select_a_license: "Select a license"
+            alert: "You need to choose a Data Re-Use License because you have attached files to this record."
+            pddl:
+              select_text: "No restrictions - PDDL"
+              name: "The Open Data Commons Public Domain Dedication and License (PDDL) v1.0"
+              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data<br /><a href='http://opendatacommons.org/licenses/pddl/' target='_blank'>http://opendatacommons.org/licenses/pddl/</a>"
+            odcby:
+              select_text: "Attribution required - ODC-By"
+              name: "The Open Data Commons Attribution License (ODC-By) v1.0"
+              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data<br /><a href='http://opendatacommons.org/licenses/by/' target='_blank'>http://opendatacommons.org/licenses/by/</a>"
+            odbl:
+              select_text: "Share alike - ODbL"
+              name: "The Open Database License (ODbL) v1.0"
+              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br /><a href='http://opendatacommons.org/licenses/odbl/' target='_blank'>http://opendatacommons.org/licenses/odbl/</a>"
+          open_data_release:
+            label: "Open Data Release - Declaration"
+            disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
+            accept_text: "I have read and agree with the information above about releasing data under the selected license."
+            alert: "You need to accept the Open Data Release Statement because you have attached files to this record."
+          other_data_license:
+            warning: "Visible/Editable for Library Admins only"
+            label: "Other license"
+          info:
+            text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br>"
+            contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
+        external_file:
+          label: "Files available at"
+        abstract: *abstract
     researchdata: *researchdata
     translation:
       label: "Translation"
@@ -901,10 +960,11 @@ en:
         original_language: &original_language
           label: "Language (Original)"
           label_short: "Lang. (Orig.)"
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     translationChapter: &translationchapter
       label: "Translation (Chapter)"
       tab: *tab
@@ -962,10 +1022,11 @@ en:
         publication_status: *publication_status
         language: *language
         original_language: *original_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     translationchapter: *translationchapter
     workingPaper: &workingpaper
       label: "Working Paper"
@@ -990,10 +1051,11 @@ en:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     workingpaper: *workingpaper
     biDissertation: &bidissertation
       label: "Bielefeld Thesis"
@@ -1042,10 +1104,11 @@ en:
           label: "Publisher"
           placeholder: "Publisher"
         page: *page
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     bidissertation: *bidissertation
     biMasterThesis: &bimasterthesis
       label: "Bielefeld Master Thesis"
@@ -1151,7 +1214,7 @@ de:
     logout: "Abmelden"
     add_new_button: "Neue Publikation"
     capital_or: "ODER"
-    qae_drop_text: "Open Access Volltext (pdf)<br>hier her ziehen und wir machen den Rest"
+    qae_drop_text: "<span class='fa fa-file-pdf-o fa-3x'></span><br />Open Access Volltext (pdf)<br>hier her ziehen und wir machen den Rest"
     heading_admin: "Administration (myPUB)"
     heading_user: "Autorenseite (myPUB)"
     heading_reviewer: "Reviewerseite (myPUB)"
@@ -1241,7 +1304,7 @@ de:
       arxiv: "ArXiv ID"
       inspire: "Inspire ID"
     do_it_yourself: "Wählen Sie einen Dokumenttyp und füllen Sie das leere Formular selbst aus"
-    drop_oa: "Ziehen Sie ihren Open Access Volltext hier her"
+    drop_oa: "Ziehen Sie Ihren Open Access Volltext hier her"
   forms:
     book:
       label: "Buch"
@@ -1374,6 +1437,10 @@ de:
         ddc: &ddc
           label: DDC
           select_ddc: "DDC auswählen"
+        abstract: &abstract
+          label: "Abstract"
+          label2: "Abstract Sprache"
+          placeholder: "Abstract Text (Sie können Markdown oder MathJax zum Formatieren benutzen)"
     bookEditor: &bookeditor
       label: "Buch-Herausgeber"
       tab: *tab
@@ -1408,10 +1475,11 @@ de:
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         edition: *edition
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     bookeditor: *bookeditor
     bookChapter: &bookchapter
       label: "Kapitel"
@@ -1474,10 +1542,11 @@ de:
           label_end_short: "Ende"
           placeholder_start: "YYYY-MM-DD"
           placeholder_end: "YYYY-MM-DD"
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     bookchapter: *bookchapter
     conferenceAbstract: &conferenceabstract
       label: "Konferenz-Abstract"
@@ -1535,10 +1604,10 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
     conferenceabstract: *conferenceabstract
     conferenceEditor: &conferenceeditor
       label: "Konferenz-Herausgeber"
@@ -1566,10 +1635,11 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     conferenceeditor: *conferenceeditor
     conference:
       label: "Konferenz-Beitrag"
@@ -1600,10 +1670,11 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     dissertation:
       label: "Dissertation"
       tab: *tab
@@ -1632,10 +1703,11 @@ de:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     encyclopediaArticle: &encyclopediaarticle
       label: "Enzyklopädie-Artikel"
       tab: *tab
@@ -1663,10 +1735,10 @@ de:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
     encyclopediaarticle: *encyclopediaarticle
     journalArticle: &journalarticle
       label: "Zeitschriftenartikel"
@@ -1697,10 +1769,11 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     journalarticle: *journalarticle
     journalEditor: &journaleditor
       label: "Zeitschriften-Herausgeber"
@@ -1727,10 +1800,11 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     journaleditor: *journaleditor
     newspaperArticle: &newspaperarticle
       label: "Zeitungsartikel"
@@ -1757,10 +1831,10 @@ de:
           placeholder: "z.B. The New York Times"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
     newspaperarticle: *newspaperarticle
     patent:
       label: "Patent"
@@ -1809,10 +1883,11 @@ de:
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     preprint:
       label: "Vorabdruck"
       tab: *tab
@@ -1831,10 +1906,11 @@ de:
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     report:
       label: "Bericht"
       tab: *tab
@@ -1861,10 +1937,11 @@ de:
           placeholder: "z.B. NASA/TM-2015-123456"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     review:
       label: "Buchrezension"
       tab: *tab
@@ -1890,10 +1967,10 @@ de:
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
     researchData: &researchdata
       label: "Forschungsdatensatz"
       tab:
@@ -1924,6 +2001,54 @@ de:
           placeholder: "Verlag"
           defaultvalue: "Bielefeld University"
         year_extern: *year_extern
+        dropzone_mainDoc:
+          label: "Datei hochladen"
+        dropzone_mainDoc:
+          label: "<strong>Datei(en) hochladen</strong> (max. 1000MB per file)"
+          dropzone_text: "Datei hier her ziehen... oder klicken!"
+          access_level: "Access Level:"
+          upload_date: "Upload Datum:"
+          user: "Nutzer:"
+          relation: "Relation:"
+          access:
+            closed: "Autor/Reviewer"
+            until: "bis"
+            request_a_copy: "<br />(Kopie anfordern)"
+            local: "Nur UniBi"
+            open_access: "Open Access"
+        license:
+          heading: "Copyright und Lizenzen"
+          data_reuse_license:
+            label: "Data Re-Use License"
+            select_license: "Wählen Sie eine Lizenz unter der Ihre Daten verfügbar sein sollen:<br />"
+            select_a_license: "Lizenz auswählen"
+            alert: "Sie müssen eine Data Re-Use License auswählen, wenn Sie Dateien angehängt haben."
+            pddl:
+              select_text: "No restrictions - PDDL"
+              name: "The Open Data Commons Public Domain Dedication and License (PDDL) v1.0"
+              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data<br /><a href='http://opendatacommons.org/licenses/pddl/' target='_blank'>http://opendatacommons.org/licenses/pddl/</a>"
+            odcby:
+              select_text: "Attribution required - ODC-By"
+              name: "The Open Data Commons Attribution License (ODC-By) v1.0"
+              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data<br /><a href='http://opendatacommons.org/licenses/by/' target='_blank'>http://opendatacommons.org/licenses/by/</a>"
+            odbl:
+              select_text: "Share alike - ODbL"
+              name: "The Open Database License (ODbL) v1.0"
+              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br /><a href='http://opendatacommons.org/licenses/odbl/' target='_blank'>http://opendatacommons.org/licenses/odbl/</a>"
+          open_data_release:
+            label: "Open Data Release - Declaration"
+            disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
+            accept_text: "I have read and agree with the information above about releasing data under the selected license."
+            alert: "Sie müssen dem Open Data Release Statement zustimmen, da Sie Dateien angehängt haben."
+          other_data_license:
+            warning: "Sichtbar/Editierbar nur für Admins"
+            label: "Andere Lizenz"
+          info:
+            text: "Wenn keine der oben genannten Lizenzen zu Ihren Daten passt oder wenn Sie andere Fragen haben, kontaktieren Sie bitte:<br>"
+            contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
+        external_file:
+          label: "Dateien verfügbar unter"
+        abstract: *abstract
     researchdata: *researchdata
     translation:
       label: "Übersetzung"
@@ -1978,10 +2103,11 @@ de:
         original_language: &original_language
           label: "Sprache (Original)"
           label_short: "Spr. (Orig.)"
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     translationChapter: &translationchapter
       label: "Übersetzung (Kapitel)"
       tab: *tab
@@ -2038,10 +2164,11 @@ de:
         publication_status: *publication_status
         language: *language
         original_language: *original_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     translationchapter: *translationchapter
     workingPaper: &workingpaper
       label: "Diskussionspapier"
@@ -2066,10 +2193,11 @@ de:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     workingpaper: *workingpaper
     biDissertation: &bidissertation
       label: "Bielefelder Dissertation"
@@ -2116,10 +2244,11 @@ de:
           label: "Verlag"
           placeholder: "Verlag"
         page: *page
-        dropzone_mainDoc: &dropzone_mainDoc
-        license: &license
-        urn: &urn
-        ddc: &ddc
+        dropzone_mainDoc: *dropzone_mainDoc
+        license: *license
+        urn: *urn
+        ddc: *ddc
+        abstract: *abstract
     bidissertation: *bidissertation
     biMasterThesis: &bimasterthesis
       label: "Bielefelder Masterarbeit"

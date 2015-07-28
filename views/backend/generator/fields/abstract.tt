@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 form-group hidden-xs hidden-sm">
     <label for="id_abstract_0">
-      {% fields.basic_fields.abstract.label %}{% fields.supplementary_fields.abstract.label %}
+      [% lf.$type.field.abstract.label %]
     </label>
     {% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}<span class="starMandatory"></span>&nbsp;{% END %}
   </div>
@@ -11,7 +11,7 @@
     <div class="row innerrow">
       <div class="form-group sticky_top col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon">{% fields.basic_fields.abstract.label2 %}{% fields.supplementary_fields.abstract.label2 %}</div>
+          <div class="input-group-addon">[% lf.$type.field.abstract.label2 %]</div>
           <select name="abstract.0.lang" id="id_abstract_language_0" class="sticky form-control">
           [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
           <option value="[% h.get_list('language_preselect').$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
@@ -27,7 +27,7 @@
       </div>
       <div class="form-group sticky_bottom col-md-10 col-xs-11">
         <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-          <textarea rows="3" name="abstract.0.text" id="id_abstract_0" placeholder="{% fields.basic_fields.abstract.placeholder %}{% fields.supplementary_fields.abstract.placeholder %}" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
+          <textarea rows="3" name="abstract.0.text" id="id_abstract_0" placeholder="[% lf.$type.field.abstract.placeholder %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@
       <div class="row innerrow">
         <div class="form-group sticky_top col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-            <div class="input-group-addon">{% fields.basic_fields.abstract.label2 %}{% fields.supplementary_fields.abstract.label2 %}</div>
+            <div class="input-group-addon">[% lf.$type.field.abstract.label2 %]</div>
             <select name="abstract.[% loop.index %].lang" id="id_abstract_language_[% loop.index %]" class="sticky form-control">
             [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
             <option value="[% h.get_list('language_preselect').$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
@@ -52,7 +52,7 @@
         </div>
         <div class="form-group sticky_bottom col-md-10 col-xs-11">
           <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-            <textarea rows="3" name="abstract.[% loop.index %].text" id="id_abstract_[% loop.index %]" placeholder="{% fields.basic_fields.abstract.placeholder %}{% fields.supplementary_fields.abstract.placeholder %}" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}>[% ab.text | html %]</textarea>
+            <textarea rows="3" name="abstract.[% loop.index %].text" id="id_abstract_[% loop.index %]" placeholder="[% lf.$type.field.abstract.placeholder %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}>[% ab.text | html %]</textarea>
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@
     <div class="row innerrow">
       <div class="form-group sticky_top col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon">{% fields.basic_fields.abstract.label2 %}{% fields.supplementary_fields.abstract.label2 %}</div>
+          <div class="input-group-addon">[% lf.$type.field.abstract.label2 %]</div>
           <select name="abstract.0.lang" id="id_abstract_language_0" class="sticky form-control">
           [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
           <option value="[% h.get_list('language_preselect').$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
@@ -78,7 +78,7 @@
       </div>
       <div class="form-group sticky_bottom col-md-10 col-xs-11">
         <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-          <textarea rows="3" name="abstract.0.text" id="id_abstract_0" placeholder="{% fields.basic_fields.abstract.placeholder %}{% fields.supplementary_fields.abstract.placeholder %}" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
+          <textarea rows="3" name="abstract.0.text" id="id_abstract_0" placeholder="[% lf.$type.field.abstract.placeholder %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
         </div>
       </div>
     </div>

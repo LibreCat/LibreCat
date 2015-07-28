@@ -195,9 +195,6 @@ publicationTypes:
             multiple: 0
       supplementary_fields:
         abstract: &abstract
-          label: "Abstract"
-          label2: "Abstract Language"
-          placeholder: "Abstract Text (you can use Markdown or MathJax for styling)"
           multiple: 1
         keyword: &keyword
           label: "Keywords"
@@ -791,26 +788,16 @@ publicationTypes:
         year_extern: *year_extern
       file_upload:
         externalFiles:
-          label: "Files available at"
+          mandatory: 0
         dropzone_mainDoc:
-          label: "Upload files"
+          mandatory: 0
         license:
           data_reuse_license:
             mandatory: 1
-            label: "Data Re-Use License"
-            alert: "You need to choose a Data Re-Use License because you have attached files to this record."
           open_data_release:
             mandatory: 1
-            label: "Open Data Release - Declaration"
-            disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
-            accept_text: "I have read and agree with the information above about releasing data under the selected license."
-            alert: "You need to accept the Open Data Release Statement because you have attached files to this record."
           other_data_license:
-            warning: "Visible/Editable for Library Admins only"
-            label: "Other license"
-          info:
-            text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br>"
-            contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
+            mandatory: 0
       supplementary_fields:
         abstract: *abstract
         ddc:
