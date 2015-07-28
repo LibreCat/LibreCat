@@ -22,7 +22,7 @@ sub withAuthentication {
     my $username = shift;
     my $password = shift;
 
-    my $cfg = h->config->{authentication};
+    my $cfg = h->config->{private}->{authentication};
     my $host = $cfg->{param}->{host};
     my $authParam = $cfg->{param};
     

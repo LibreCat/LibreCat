@@ -37,7 +37,7 @@ sub run {
 
     my $browser = LWP::UserAgent->new;
     my $req =  HTTP::Request->new( GET => "https://oase.gbv.de/api/v1/reports/basic.json?identifier=oai%3Apub.uni-bielefeld.de%3A%25&from=$from&until=$until&granularity=month&content=counter%2Ccounter_abstract");
-    $req->authorization_basic($conf->{oa_stats}->{user}, $conf->{oa_stats}->{passwd});
+    $req->authorization_basic($conf->{private}->{oa_stats}->{user}, $conf->{private}->{oa_stats}->{passwd});
     my $json = $browser->request( $req )->content || die $@;
 
     if ($self->dry) {

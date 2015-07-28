@@ -31,4 +31,5 @@ data/
 .vagrant/
 uploads/
 tmp/
+catmandu.private.yml
 ~$

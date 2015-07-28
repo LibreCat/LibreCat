@@ -20,7 +20,7 @@ sub fix {
         }
 
         if ($oa) {
-            $pub->{urn} = h->generate_urn(h->config->{urn_prefix},$pub->{_id});
+            $pub->{urn} = h->generate_urn(h->config->{private}->{urn_prefix},$pub->{_id});
         }
     }
 
