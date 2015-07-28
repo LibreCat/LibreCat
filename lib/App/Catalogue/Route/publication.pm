@@ -258,7 +258,7 @@ Publishes private records, returns to the list.
 Changes the layout of the edit form.
 
 =cut
-    post '/change_mode' => sub {
+    post '/change_mode' => needs login => sub {
     	my $mode = params->{edit_mode};
         my $params = params;
 
