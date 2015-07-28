@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_urn">
-      {% fields.file_upload.license.urn.label %}
+      [% lf.$type.field.urn.label %]
     </label>
     {% IF fields.file_upload.license.urn.mandatory %}<span class="starMandatory"></span>&nbsp;{% END %}
   </div>
@@ -9,10 +9,13 @@
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.file_upload.license.urn.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">{% fields.file_upload.license.urn.label %}</div>
-          <input type="text" name="urn" id="id_urn" value="[% urn | html %]" placeholder="{% fields.file_upload.license.urn.placeholder %}" class="sticky form-control{% IF fields.file_upload.license.urn.mandatory %} required{% END %}"{% IF fields.file_upload.urn.license.readonly %} readonly="readonly" title="The URN was generated automatically and cannot be changed"{% END %}/>
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.urn.label %]</div>
+          <input type="text" name="urn" id="id_urn" value="[% urn | html %]" placeholder="[% lf.$type.field.urn.placeholder %]" class="sticky form-control{% IF fields.file_upload.license.urn.mandatory %} required{% END %}"{% IF fields.file_upload.license.urn.readonly %} readonly="readonly" title="[% lf.$type.field.urn.title %]"{% END %}/>
           <div class="input-group-addon"></div>
         </div>
+      </div>
+      <div class="form-group col-md-10 col-xs-11">
+        <span>[% lf.$type.field.urn.explain %]</span>
       </div>
     </div>
   </div>

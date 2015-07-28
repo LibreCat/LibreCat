@@ -77,7 +77,7 @@ en:
     logout: "Logout"
     add_new_button: "Add new Publication"
     capital_or: "OR"
-    qae_drop_text: "Drop Open Access fulltext (pdf)<br>here and we'll do the rest."
+    qae_drop_text: "<span class=\"fa fa-file-pdf-o fa-3x\"></span><br />Drop Open Access fulltext (pdf)<br>here and we'll do the rest."
     heading_admin: "Administration (myPUB)"
     heading_user: "Author's Page (myPUB)"
     heading_reviewer: "Reviewer's Page (myPUB)"
@@ -252,6 +252,54 @@ en:
           publication_status:
             label: "Publication Status"
             label_short: "Publ. Status"
+        dropzone_mainDoc:
+          label: "<strong>Upload Main File(s) and Supplementary Material</strong> (max. 1000MB per file)"
+          dropzone_text: "Drop files here to upload ... or click!"
+          access_level: "Access Level:"
+          upload_date: "Upload Date:"
+          user: "User:"
+          relation: "Relation:"
+          access:
+            closed: "Author/Reviewer"
+            until: "until"
+            request_a_copy: "<br />(Request a Copy)"
+            local: "UniBi Only"
+            open_access: "Open Access"
+        license:
+          heading: "Copyright and Licenses"
+          pub_license:
+            label: "Copyright Disclaimer"
+            disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
+            accept_text: "I accept"
+            alert: "You need to accept the Copyright Disclaimer because you have attached files to this record."
+          info:
+            text: "If you have any questions, please contact:<br>"
+            contact: "<strong>Support Publication Services<br>Susanne Riedel<br>Phone: 0521/106-4058<br>E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a><br><br></strong>"
+          cc_license:
+            label: "Creative Commons Licenses"
+            select_text: "If your uploaded document is available under a Creative Commons license, you can select it here:<br />"
+            select_a_license: "Select a license"
+            license_deed: "License Deed"
+            cc0:
+              name: "Creative Commons Public Domain Dedication (CC0 1.0)"
+              deed_url: "http://creativecommons.org/publicdomain/zero/1.0/"
+              legal_code_url: "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
+            ccby:
+              name: "Creative Commons Attribution 4.0 International Public License (CC-BY 4.0)"
+              deed_url: "http://creativecommons.org/licenses/by/4.0/"
+              legal_code_url: "http://creativecommons.org/licenses/by/4.0/legalcode"
+            ccbysa:
+              name: "Creative Commons Attribution-ShareAlike 4.0 International Public License (CC BY-SA 4.0)"
+              deed_url: "http://creativecommons.org/licenses/by-sa/4.0/"
+              legal_code_url: "http://creativecommons.org/licenses/by-sa/4.0/legalcode"
+        urn:
+          label: "URN"
+          placeholder: "e.g. urn:nbn:de:0070-pub-12345678"
+          explain: "(A URN will be generated automatically if you upload a file!)"
+          title: "The URN was generated automatically and cannot be changed"
+        ddc:
+          label: "DDC"
+          select_ddc: "Select DDC"
     bookEditor: &bookeditor
       label: "Book (Editor)"
       tab: *tab
@@ -1206,6 +1254,54 @@ de:
           publication_status:
             label: "Publikationsstatus"
             label_short: "Publ.status"
+        dropzone_mainDoc:
+          label: "<strong>Upload für Volltext und Anhänge/ Zusatzmaterialien</strong> (max. 1000MB pro Datei)"
+          dropzone_text: "Datei hier her ziehen... oder klicken!"
+          access_level: "Access Level:"
+          upload_date: "Upload Datum:"
+          user: "Nutzer:"
+          relation: "Relation:"
+          access:
+            closed: "Autor/Reviewer"
+            until: "bis"
+            request_a_copy: "<br />(Kopie anfordern)"
+            local: "Nur UniBi"
+            open_access: "Open Access"
+        license:
+          heading: "Copyright und Lizenzen"
+          pub_license:
+            label: "Hinweise zum Urheberrecht"
+            disclaimer_text: "Hiermit stelle ich der Universit&auml;t Bielefeld dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf PUB, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r PUB dargestellt sind, zur Verf&uuml;gung.<br><a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy / Rechtliche Rahmenbedingungen</a>"
+            accept_text: "Ich stimme zu"
+            alert: "Sie müssen den Hinweisen zum Urheberrecht zustimmen, wenn Sie eine Datei angehängt haben."
+          info:
+            text: "Wenn Sie Fragen haben, kontaktieren Sie bitte:<br>"
+            contact: "<strong>Support Publikationsdienste<br>Susanne Riedel<br>Tel.: 0521/106-4058<br>E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a><br><br></strong>"
+          cc_license:
+            label: "Creative Commons Lizenzen"
+            select_text: "Falls Ihr hochgeladenes Dokument unter einer Creative Commons Lizenz steht, können Sie diese hier auswählen:<br />"
+            select_a_license: "Lizenz auswählen"
+            license_deed: "Lizenzvertrag"
+            cc0:
+              name: "Creative Commons Public Domain Dedication (CC0 1.0)"
+              deed_url: "http://creativecommons.org/publicdomain/zero/1.0/deed.de"
+              legal_code_url: "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
+            ccby:
+              name: "Creative Commons Namensnennung 4.0 International Public License (CC-BY 4.0)"
+              deed_url: "http://creativecommons.org/licenses/by/4.0/deed.de"
+              legal_code_url: "http://creativecommons.org/licenses/by/4.0/legalcode"
+            ccbysa:
+              name: "Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 International Public License (CC BY-SA 4.0)"
+              deed_url: "http://creativecommons.org/licenses/by-sa/4.0/deed.de"
+              legal_code_url: "http://creativecommons.org/licenses/by-sa/4.0/legalcode"
+        urn:
+          label: "URN"
+          placeholder: "z.B. urn:nbn:de:0070-pub-12345678"
+          explain: "(Wenn Sie eine Datei hochladen, wird automatisch eine URN generiert!)"
+          title: "Die URN wurde automatisch generiert und kann nicht geändert werden."
+        ddc:
+          label: DDC
+          select_ddc: "DDC auswählen"
     bookEditor: &bookeditor
       label: "Buch-Herausgeber"
       tab: *tab

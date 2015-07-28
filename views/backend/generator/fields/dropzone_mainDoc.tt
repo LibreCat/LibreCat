@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-xs-10">
-    {% fields.file_upload.dropzone_mainDoc.label %}
+    [% lf.$type.field.dropzone_mainDoc.label %]
   </div>
 </div>
   
@@ -24,31 +24,31 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-2 text-muted">Access Level:</div>
-          <div class="col-xs-3 text-muted">Upload Date:</div>
-          <div class="col-xs-3 text-muted">User:</div>
-          <div class="col-xs-4 text-muted">Relation:</div>
+          <div class="col-xs-2 text-muted">[% lf.$type.field.dropzone_mainDoc.access_level %]</div>
+          <div class="col-xs-3 text-muted">[% lf.$type.field.dropzone_mainDoc.upload_date %]</div>
+          <div class="col-xs-3 text-muted">[% lf.$type.field.dropzone_mainDoc.user %]</div>
+          <div class="col-xs-4 text-muted">[% lf.$type.field.dropzone_mainDoc.relation %]</div>
         </div>
         <div class="row">
           <div class="col-xs-2" id="access_[% fi.file_id %]">
             [% SWITCH fi.access_level %]
             [% CASE "closed" %]
-            Author/Reviewer
+            [% lf.$type.field.dropzone_mainDoc.access.closed %]
             [% IF fi.embargo %]
-            <br />(until [% fi.embargo %])
+            <br />([% lf.$type.field.dropzone_mainDoc.access.until %] [% fi.embargo %])
             [% END %]
             [% IF fi.request_a_copy %]
-            <br />(Request a Copy)
+            [% lf.$type.field.dropzone_mainDoc.access.request_a_copy %]
             [% END %]
             
             [% CASE "local" %]
-            UniBi Only
+            [% lf.$type.field.dropzone_mainDoc.access.local %]
             [% IF fi.embargo %]
-            <br />(until [% fi.embargo %])
+            <br />([% lf.$type.field.dropzone_mainDoc.access.until %] [% fi.embargo %])
             [% END %]
             
             [% CASE "open_access" %]
-            Open Access
+            [% lf.$type.field.dropzone_mainDoc.access.open_access %]
             
             [% END %]
           </div>
@@ -81,3 +81,9 @@
     </span>
   </div>
 </div>
+
+<script>
+$(document).ready(function(){
+	Dropzone.options.uploadFiles.dictDefaultMessage = "[% lf.$type.field.dropzone_mainDoc.dropzone_text %]";
+});
+</script>

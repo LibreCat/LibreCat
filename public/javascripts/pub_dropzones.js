@@ -39,7 +39,6 @@ $(document).ready(function(){
 	    url: '/myPUB/upload',
 	    maxFileSize: 1000,
 	    previewTemplate: '<div class=\"col-md-11 dz-preview dz-file-preview\"></div>',
-	    dictDefaultMessage: 'Drop files here to upload ... or click!',
 	    createImageThumbnails: false,
 	    
 	    init: function() {

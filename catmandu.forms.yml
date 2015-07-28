@@ -183,25 +183,16 @@ publicationTypes:
             multiple: 0
       file_upload: &file_upload
         dropzone_mainDoc:
-          label: "<strong>Upload Main File(s) and Supplementary Material</strong> (max. 1000MB per file)"
+          mandatory: 0
         license:
           pub_license:
             mandatory: 1
-            label: "Copyright Disclaimer"
-            disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><br>Hiermit stelle ich der Universit&auml;t Bielefeld dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf PUB, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r PUB dargestellt sind, zur Verf&uuml;gung.<br><a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy / Rechtliche Rahmenbedingungen</a>"
-            accept_text: "I accept"
-            alert: "You need to accept the Copyright Disclaimer because you have attached files to this record."
-          info:
-            text: "If you have any questions, please contact:<br>"
-            contact: "<strong>Support Publication Services<br>Susanne Riedel<br>Phone: 0521/106-4058<br>E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a><br><br></strong>"
           cc_license:
             mandatory: 0
-            label: "Creative Commons Licenses"
           urn:
-            label: "URN"
-            placeholder: "e.g. urn:nbn:de:0070-pub-12345678 (a URN will be generated automatically if you upload a file!)"
+            mandatory: 0
           ddc:
-            label: DDC
+            multiple: 0
       supplementary_fields:
         abstract: &abstract
           label: "Abstract"
