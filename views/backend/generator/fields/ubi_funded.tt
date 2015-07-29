@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_ubi_funded">
-      {% fields.basic_fields.ubi_funded.label %}{% fields.supplementary_fields.ubi_funded.label %}
+      [% lf.$type.field.ubi_funded.label %]
     </label>
   </div>
   <div class="col-md-10">
@@ -10,7 +10,7 @@
         <div class="checkbox">
           <label class="checkbox-inline">
             <input type="checkbox" name="ubi_funded" id="id_ubi_funded" value="[% ubi_funded %]"[% IF session.role != super_admin %] readonly="readonly"[% END %]>
-            {% fields.basic_fields.ubi_funded.placeholder %}{% fields.supplementary_fields.ubi_funded.placeholder %}
+            [% lf.$type.field.ubi_funded.placeholder %]
           </label>
         </div>
       </div>

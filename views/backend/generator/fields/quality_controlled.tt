@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_quality_controlled">
-      {% fields.basic_fields.quality_controlled.label %}{% fields.supplementary_fields.quality_controlled.label %}
+      [% lf.$type.field.quality_controlled.label_short || lf.$type.field.quality_controlled.label %]
     </label>
   </div>
   <div class="col-md-10">
@@ -10,7 +10,7 @@
         <div class="checkbox">
           <label class="checkbox-inline">
             <input type="checkbox" name="quality_controlled" id="id_quality_controlled" value="1"[% IF quality_controlled %] checked="checked"[% END %]>
-            {% fields.basic_fields.quality_controlled.label %}{% fields.supplementary_fields.quality_controlled.label %}
+            [% lf.$type.field.quality_controlled.label %]
           </label>
         </div>
       </div>

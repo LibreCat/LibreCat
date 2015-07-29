@@ -197,31 +197,19 @@ publicationTypes:
         abstract: &abstract
           multiple: 1
         keyword: &keyword
-          label: "Keywords"
-          placeholder: "Keywords (multiple entries separated by semicolon, e.g. Keyword1 ; Keyword2 ; Keyword3)"
+          multiple: 0
         external_id: &external_id
-          label: "External Identifier"
-          label_short: "Ext. Id."
-          placeholder: "Select an Identifier (e.g. a PMID) and enter it here"
+          mandatory: 0
           multiple: 1
         message: &message
-          label: "Comments"
-          placeholder: "Enter some comments for reviewer / admin"
+          multiple: 0
         popular_science_quality_controlled: &popular_science_quality_controlled
-          popular_science:
-            label: "Popular Science"
-          quality_controlled:
-            label: "Quality Controlled"
+          multiple: 0
         jel: &jel
-          label: "JEL Classification"
-          label_short: "JEL"
           multiple: 1
         thematic_area: &thematic_area
-          label: "Thematic Area"
-          label_short: "Them. Area"
+          multiple: 0
         alternative_id: &alternative_id
-          label: "Returned Record Ids"
-          label_short: "Ret. Rec. Ids"
           multiple: 1
       related_material: &related_material
         related_material.record:
@@ -553,18 +541,13 @@ publicationTypes:
         popular_science_quality_controlled: *popular_science_quality_controlled
         external_id: *external_id
         nasc: &nasc
-          label: "NASC Seedstock ID"
-          label_short: "NASC"
-          placeholder: "NASC IDs (multiple entries separated by semicolon, e.g. N406423 ; N412826 ; N420684)"
+          multiple: 0
         genbank: &genbank
-          label: "Genbank ID"
-          label_short: "Genbank"
-          placeholder: "Genbank IDs (multiple entries separated by semicolon, e.g. AY323492 ; AY333421 ; AY323491)"
+          multiple: 0
         message: *message
         jel: *jel
         ubi_funded:
-          label: "Funding"
-          placeholder: "APC co-financed by DFG"
+          multiple: 0
         thematic_area: *thematic_area
         alternative_id: *alternative_id
       related_material: *related_material
@@ -599,7 +582,6 @@ publicationTypes:
         message: *message
         jel: *jel
         popular_science_quality_controlled: *popular_science_quality_controlled
-        message: *message
         thematic_area: *thematic_area
         alternative_id: *alternative_id
       related_material: *related_material
@@ -628,7 +610,7 @@ publicationTypes:
         external_id: *external_id
         keyword: *keyword
         popular_science: &popular_science
-          label: "Popular Science"
+          multiple: 0
         message: *message
         jel: *jel
         thematic_area: *thematic_area
@@ -670,7 +652,7 @@ publicationTypes:
         jel: *jel
         thematic_area: *thematic_area
         quality_controlled:
-          label: "Quality Controlled"
+          multiple: 0
         alternative_id: *alternative_id
       related_material: *related_material
   preprint:
@@ -801,7 +783,6 @@ publicationTypes:
       supplementary_fields:
         abstract: *abstract
         ddc:
-          label: "DDC"
           mandatory: 0
         jel: *jel
         keyword: *keyword
@@ -979,16 +960,10 @@ publicationTypes:
         abstract: *abstract
         keyword: *keyword
         pacs_class: &pacs
-          label: "PACS Code"
-          placeholder: "Physics and Astronomy Classification Scheme, e.g. 97.82.Fs"
           multiple: 1
         msc_class: &msc
-          label: "MSC Code"
-          placeholder: "Mathematics Subject Classification, e.g. 85A20"
           multiple: 1
         ccs_class: &ccs
-          label: "CCS Code"
-          placeholder: "Computing Classification System, e.g. Data Mining"
           multiple: 1
         message: *message
         jel: *jel

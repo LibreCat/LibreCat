@@ -304,6 +304,33 @@ en:
           label: "Abstract"
           label2: "Abstract Language"
           placeholder: "Abstract Text (you can use Markdown or MathJax for styling)"
+        keyword: &keyword
+          label: "Keywords"
+          placeholder: "Keywords (multiple entries separated by semicolon, e.g. Keyword1 ; Keyword2 ; Keyword3)"
+        external_id: &external_id
+          label: "External Identifier"
+          label_short: "Ext. Id."
+          placeholder: "Select an Identifier (e.g. a PMID) and enter it here"
+          select: "Select"
+        message: &message
+          label: "Comments"
+          placeholder: "Enter some comments for reviewer / admin"
+        popular_science_quality_controlled: &popular_science_quality_controlled
+          popular_science:
+            label: "Popular Science"
+          quality_controlled:
+            label: "Quality Controlled"
+        jel: &jel
+          label: "JEL Classification"
+          label_short: "JEL"
+          select_jel: "--- Select JEL ---"
+        thematic_area: &thematic_area
+          label: "Thematic Area"
+          label_short: "Them. Area"
+          select_thematic_area: "--- Select Thematic Area ---"
+        alternative_id: &alternative_id
+          label: "Returned Record Ids"
+          label_short: "Ret. Rec. Ids"
     bookEditor: &bookeditor
       label: "Book (Editor)"
       tab: *tab
@@ -342,6 +369,13 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     bookeditor: *bookeditor
     bookChapter: &bookchapter
       label: "Book Chapter"
@@ -408,6 +442,13 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     bookchapter: *bookchapter
     conferenceAbstract: &conferenceabstract
       label: "Conference Abstract"
@@ -468,6 +509,13 @@ en:
         license: *license
         urn: *urn
         ddc: *ddc
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     conferenceabstract: *conferenceabstract
     conferenceEditor: &conferenceeditor
       label: "Conference (Editor)"
@@ -500,6 +548,13 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     conferenceeditor: *conferenceeditor
     conference:
       label: "Conference Paper"
@@ -535,6 +590,13 @@ en:
         license: *license
         urn: *urn
         ddc: *ddc
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     dissertation:
       label: "Dissertation"
       tab: *tab
@@ -568,6 +630,12 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     encyclopediaArticle: &encyclopediaarticle
       label: "Encyclopedia Article"
       tab: *tab
@@ -599,6 +667,13 @@ en:
         license: *license
         urn: *urn
         ddc: *ddc
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     encyclopediaarticle: *encyclopediaarticle
     journalArticle: &journalarticle
       label: "Journal Article"
@@ -633,6 +708,24 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
+        nasc: &nasc
+          label: "NASC Seedstock ID"
+          label_short: "NASC"
+          placeholder: "NASC IDs (multiple entries separated by semicolon, e.g. N406423 ; N412826 ; N420684)"
+        genbank: &genbank
+          label: "Genbank ID"
+          label_short: "Genbank"
+          placeholder: "Genbank IDs (multiple entries separated by semicolon, e.g. AY323492 ; AY333421 ; AY323491)"
+        ubi_funded:
+          label: "Funding"
+          placeholder: "APC co-financed by DFG"
     journalarticle: *journalarticle
     journalEditor: &journaleditor
       label: "Journal (Editor)"
@@ -663,6 +756,13 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     journaleditor: *journaleditor
     newspaperArticle: &newspaperarticle
       label: "Newspaper Article"
@@ -693,6 +793,14 @@ en:
         license: *license
         urn: *urn
         ddc: *ddc
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
+        popular_science: &popular_science
+          label: "Popular Science"
     newspaperarticle: *newspaperarticle
     patent:
       label: "Patent"
@@ -748,6 +856,14 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
+        quality_controlled:
+          label: "Quality Controlled"
     preprint:
       label: "Preprint"
       tab: *tab
@@ -770,6 +886,13 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
+        popular_science: *popular_science
     report:
       label: "Report"
       tab: *tab
@@ -801,6 +924,13 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     review:
       label: "Book Review"
       tab: *tab
@@ -830,6 +960,13 @@ en:
         license: *license
         urn: *urn
         ddc: *ddc
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     researchData: &researchdata
       label: "Research Data"
       tab:
@@ -905,6 +1042,10 @@ en:
         external_file:
           label: "Files available at"
         abstract: *abstract
+        keyword: *keyword
+        jel: *jel
+        alternative_id: *alternative_id
+        ddc: *ddc
     researchdata: *researchdata
     translation:
       label: "Translation"
@@ -965,6 +1106,13 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     translationChapter: &translationchapter
       label: "Translation (Chapter)"
       tab: *tab
@@ -1027,6 +1175,13 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     translationchapter: *translationchapter
     workingPaper: &workingpaper
       label: "Working Paper"
@@ -1056,6 +1211,12 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     workingpaper: *workingpaper
     biDissertation: &bidissertation
       label: "Bielefeld Thesis"
@@ -1109,6 +1270,19 @@ en:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        message: *message
+        jel: *jel
+        alternative_id: *alternative_id
+        pacs_class: &pacs
+          label: "PACS Code"
+          placeholder: "Physics and Astronomy Classification Scheme, e.g. 97.82.Fs"
+        msc_class: &msc
+          label: "MSC Code"
+          placeholder: "Mathematics Subject Classification, e.g. 85A20"
+        ccs_class: &ccs
+          label: "CCS Code"
+          placeholder: "Computing Classification System, e.g. Data Mining"
     bidissertation: *bidissertation
     biMasterThesis: &bimasterthesis
       label: "Bielefeld Master Thesis"
@@ -1441,6 +1615,34 @@ de:
           label: "Abstract"
           label2: "Abstract Sprache"
           placeholder: "Abstract Text (Sie können Markdown oder MathJax zum Formatieren benutzen)"
+        keyword: &keyword
+          label: "Stichworte"
+          placeholder: "Stichworte (mehrere Einträge durch Semikolon trennen, z.B. Stichwort1 ; Stichwort 2 ; Stichwort3)"
+        external_id: &external_id
+          label: "Externer Identifier"
+          label_short: "Ext. Id."
+          placeholder: "Wählen Sie einen Identifier (z.B. eine PMID) und geben Sie ihn hier ein"
+          select: "Auswählen"
+        message: &message
+          label: "Kommentare"
+          placeholder: "Hier können Sie Anmerkungen für Reviewer/ Admins eintragen"
+        popular_science_quality_controlled: &popular_science_quality_controlled
+          popular_science:
+            label: "Populärwissenschaftliche Veröffentlichung"
+            label_short: "Pop.wiss. Veröff."
+          quality_controlled:
+            label: "Qualitätskontrolliert"
+        jel: &jel
+          label: "JEL Klassifikation"
+          label_short: "JEL"
+          select_jel: "--- JEL Auswählen ---"
+        thematic_area: &thematic_area
+          label: "Themengebiet"
+          label_short: "Them.geb."
+          select_thematic_area: "--- Themengebiet auswählen ---"
+        alternative_id: &alternative_id
+          label: "Returned Record Ids"
+          label_short: "Ret. Rec. Ids"
     bookEditor: &bookeditor
       label: "Buch-Herausgeber"
       tab: *tab
@@ -1480,6 +1682,13 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     bookeditor: *bookeditor
     bookChapter: &bookchapter
       label: "Kapitel"
@@ -1547,6 +1756,13 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     bookchapter: *bookchapter
     conferenceAbstract: &conferenceabstract
       label: "Konferenz-Abstract"
@@ -1608,6 +1824,13 @@ de:
         license: *license
         urn: *urn
         ddc: *ddc
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     conferenceabstract: *conferenceabstract
     conferenceEditor: &conferenceeditor
       label: "Konferenz-Herausgeber"
@@ -1640,6 +1863,13 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     conferenceeditor: *conferenceeditor
     conference:
       label: "Konferenz-Beitrag"
@@ -1675,6 +1905,13 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     dissertation:
       label: "Dissertation"
       tab: *tab
@@ -1708,6 +1945,12 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     encyclopediaArticle: &encyclopediaarticle
       label: "Enzyklopädie-Artikel"
       tab: *tab
@@ -1739,6 +1982,13 @@ de:
         license: *license
         urn: *urn
         ddc: *ddc
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     encyclopediaarticle: *encyclopediaarticle
     journalArticle: &journalarticle
       label: "Zeitschriftenartikel"
@@ -1774,6 +2024,24 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
+        nasc: &nasc
+          label: "NASC Seedstock ID"
+          label_short: "NASC"
+          placeholder: "NASC IDs (mehrere Einträge durch Semikolon trennen, z.B. N406423 ; N412826 ; N420684)"
+        genbank: &genbank
+          label: "Genbank ID"
+          label_short: "Genbank"
+          placeholder: "Genbank IDs (mehrere Einträge durch Semikolon trennen, z.B. AY323492 ; AY333421 ; AY323491)"
+        ubi_funded:
+          label: "Finanzierung"
+          placeholder: "Artikelgebühren co-finanziert von der DFG"
     journalarticle: *journalarticle
     journalEditor: &journaleditor
       label: "Zeitschriften-Herausgeber"
@@ -1805,6 +2073,13 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     journaleditor: *journaleditor
     newspaperArticle: &newspaperarticle
       label: "Zeitungsartikel"
@@ -1835,6 +2110,15 @@ de:
         license: *license
         urn: *urn
         ddc: *ddc
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
+        popular_science: &popular_science
+          label: "Populärwissenschaftliche Publikation"
+          label_short: "Pop.wiss. Publ."
     newspaperarticle: *newspaperarticle
     patent:
       label: "Patent"
@@ -1888,6 +2172,15 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
+        quality_controlled:
+          label: "Qualitätskontrolliert"
+          label_short: "Qual.kontr."
     preprint:
       label: "Vorabdruck"
       tab: *tab
@@ -1911,6 +2204,13 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
+        popular_science: *popular_science
     report:
       label: "Bericht"
       tab: *tab
@@ -1942,6 +2242,13 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     review:
       label: "Buchrezension"
       tab: *tab
@@ -1971,6 +2278,13 @@ de:
         license: *license
         urn: *urn
         ddc: *ddc
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     researchData: &researchdata
       label: "Forschungsdatensatz"
       tab:
@@ -2049,6 +2363,10 @@ de:
         external_file:
           label: "Dateien verfügbar unter"
         abstract: *abstract
+        keyword: *keyword
+        jel: *jel
+        alternative_id: *alternative_id
+        ddc: *ddc
     researchdata: *researchdata
     translation:
       label: "Übersetzung"
@@ -2108,6 +2426,13 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     translationChapter: &translationchapter
       label: "Übersetzung (Kapitel)"
       tab: *tab
@@ -2169,6 +2494,13 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        popular_science_quality_controlled: *popular_science_quality_controlled
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     translationchapter: *translationchapter
     workingPaper: &workingpaper
       label: "Diskussionspapier"
@@ -2198,6 +2530,12 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        external_id: *external_id
+        message: *message
+        jel: *jel
+        thematic_area: *thematic_area
+        alternative_id: *alternative_id
     workingpaper: *workingpaper
     biDissertation: &bidissertation
       label: "Bielefelder Dissertation"
@@ -2249,6 +2587,19 @@ de:
         urn: *urn
         ddc: *ddc
         abstract: *abstract
+        keyword: *keyword
+        message: *message
+        jel: *jel
+        alternative_id: *alternative_id
+        pacs_class: &pacs
+          label: "PACS Code"
+          placeholder: "Physics and Astronomy Classification Scheme, e.g. 97.82.Fs"
+        msc_class: &msc
+          label: "MSC Code"
+          placeholder: "Mathematics Subject Classification, e.g. 85A20"
+        ccs_class: &ccs
+          label: "CCS Code"
+          placeholder: "Computing Classification System, e.g. Data Mining"
     bidissertation: *bidissertation
     biMasterThesis: &bimasterthesis
       label: "Bielefelder Masterarbeit"

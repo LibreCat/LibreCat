@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_popular_science">
-      {% fields.basic_fields.popular_science.label %}{% fields.supplementary_fields.popular_science.label %}
+      [% lf.$type.field.popular_science.label_short || lf.$type.field.popular_science.label %]
     </label>
   </div>
   <div class="col-md-10 col-xs-11">
@@ -10,7 +10,7 @@
         <div class="checkbox">
           <label class="checkbox-inline">
             <input type="checkbox" name="popular_science" id="id_popular_science" value="1"[% IF popular_science %] checked="checked"[% END %]>
-            {% fields.basic_fields.popular_science.label %}{% fields.supplementary_fields.popular_science.label %}
+            [% lf.$type.field.popular_science.label %]
           </label>
         </div>
       </div>
