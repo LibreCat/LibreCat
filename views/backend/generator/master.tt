@@ -142,5 +142,6 @@
 </script>
 
 <!-- END backend/generator/master.tt -->
-
+[% lang = session.lang %]
+[% lf = h.config.language.$lang %]
 [% INCLUDE footer.tt %]

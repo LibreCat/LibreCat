@@ -118,5 +118,6 @@
 </script>
 
 <!-- END backend/generator/master_expert.tt -->
-
+[% lang = session.lang %]
+[% lf = h.config.language.$lang %]
 [% INCLUDE footer.tt %]
