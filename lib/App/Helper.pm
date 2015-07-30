@@ -500,7 +500,9 @@ sub sort_to_sru {
 }
 
 sub display_doctypes {
-	$_[0]->config->{forms}->{publicationTypes}->{lc $_[1]}->{label};
+	my $type = lc $_[1];
+	my $lang = $_[2] || "en";
+	$_[0]->config->{language}->{$lang}->{forms}->{$type}->{label};
 }
 
 sub display_name_from_value {
