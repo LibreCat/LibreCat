@@ -50,9 +50,8 @@ ajax '/get_alias/:id/:alias' => sub {
     my $term = params->{'alias'} || "";
     my $id = params->{'id'};
     my $hits = h->search_researcher( {q => ["alias=$term", "id<>$id"]});
-    my $alias = $hits->first || {};
 
-    return to_json {ok => $alias ? 0 : 1};
+    return to_json {ok => $hits->{total} ? 0 : 1};
 };
 
 =head2 AJAX /get_project

@@ -104,12 +104,13 @@ Forwards to /person/:ID
 get qr{/person/(\w+)/*} => sub {
 	my ($alias) = splat;
 
-	my $person = h->search_researcher({q => {alias => $alias}})->first;
-	if(!$person){
+	my $hits = h->search_researcher({q => ["alias=$alias"]});
+	if(!$hits->{total}){
 		status '404';
 		template 'websites/404', { path => request->path };
 	}
 	else {
+		my $person = $hits->first;
 		forward "/person/$person->{_id}";
 	}
 };
