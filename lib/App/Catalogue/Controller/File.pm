@@ -24,6 +24,9 @@ sub make_thumbnail {
     unless (-e $thumbnail) {
         system "convert -density 96 ${file_path}[0] $thumbnail_name";
     }
+    if(-e $thumbnail_name){
+    	return $thumbnail_name;
+    }
 }
 
 sub handle_file {

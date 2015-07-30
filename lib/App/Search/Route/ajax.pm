@@ -12,17 +12,6 @@ use Dancer qw/:syntax/;
 use Dancer::Plugin::Ajax;
 use App::Helper;
 
-=head2 GET '/thumbnail/:id'
-
-=cut
-get '/thumbnail/:id' => sub {
-    my $path = h->get_file_path(params->{id});
-    if (-e "$path/thumbail.png") {
-        send_file $path,
-            system_path  => 1,
-            content_type => 'image/png';
-    }
-};
 
 =head2 AJAX /metrics/:id
 

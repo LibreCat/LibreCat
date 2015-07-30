@@ -166,9 +166,8 @@
       <div class="col-sm-3 col-sm-offset-1 text-sm-right">
       [% IF bag != "data" %]
 	    [% IF fi %]
-	    [% thurl = h.thumbnail_url(_id) %]
 	    <a itemprop="thumbnailUrl" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]">
-	    <object data="[% thurl %]" class="img-thumbnail" itemprop="image">
+	    <object data="/thumbnail/[% _id %]" class="img-thumbnail" itemprop="image">
           <img src="/images/dummy_publication.png" class="img-thumbnail">
         </object>
 	    </a>
