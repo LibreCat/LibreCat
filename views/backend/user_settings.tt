@@ -5,7 +5,7 @@
 <form id="id_save_aff" action="/myPUB/person/affiliation" method="POST">
   <div class="row innerrow">
     <div class="col-md-12">
-      <h4>Department Affiliation</h4>
+      <h4>[% lf.header.department_affiliation %]</h4>
     </div>
   </div>
   <div class="row innerrow">
@@ -18,7 +18,7 @@
       <div class="form-group col-md-11">
         <div class="input-group sticky">
           <input type="text" onfocus="enable_autocomplete('person_aff',0);" class="sticky form-control" id="person_aff_autocomplete_0" value="" />
-          <div class="input-group-addon" class="department"><span id="person_aff_select_0" onclick="selectAffiliation(this);">Select</span></div>
+          <div class="input-group-addon" class="department"><span id="person_aff_select_0" onclick="selectAffiliation(this);">[% lf.forms.button.select %]</span></div>
 	  <div class="input-group-addon" onclick="add_field('person_affiliation');"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
@@ -33,7 +33,7 @@
         <div class="form-group col-md-11">
           <div class="input-group sticky">
             <input type="text" onfocus="enable_autocomplete('person_aff',[% loop.index %]);" class="sticky form-control" id="person_aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
-            <div class="input-group-addon"><span class="department" id="person_aff_select_[% loop.index %]" onclick="selectAffiliation(this);">Select</span></div>
+            <div class="input-group-addon"><span class="department" id="person_aff_select_[% loop.index %]" onclick="selectAffiliation(this);">[% lf.forms.button.select %]</span></div>
 	    <div class="input-group-addon" onclick="add_field('person_affiliation');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon" onclick="remove_field(this);submit_form('id_save_aff');"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
@@ -50,14 +50,14 @@
 <form id="id_save_mode" action="/myPUB/person/edit_mode" method="POST">
   <div class="row innerrow">
     <div class="col-md-12">
-      <h4>Default Edit Mode</h4>
+      <h4>[% lf.header.default_edit_mode %]</h4>
     </div>
   </div>
   <div class="row innerrow">
     <div class="col-md-7">
 	  <select id="edit_mode_select" name="edit_mode" class="form-control">
-	    <option value="normal"[% IF (thisPerson.edit_mode AND thisPerson.edit_mode == "normal") OR (!thisPerson.edit_mode AND session.role != "super_admin") %] selected="selected"[% END %]>Tabbed Form</option>
-	    <option value="expert"[% IF (thisPerson.edit_mode AND thisPerson.edit_mode == "expert") OR (!thisPerson.edit_mode AND session.role == "super_admin") %] selected="selected"[% END %]>Single Page Form</option>
+	    <option value="normal"[% IF (thisPerson.edit_mode AND thisPerson.edit_mode == "normal") OR (!thisPerson.edit_mode AND session.role != "super_admin") %] selected="selected"[% END %]>[% lf.forms.tab_form %]</option>
+	    <option value="expert"[% IF (thisPerson.edit_mode AND thisPerson.edit_mode == "expert") OR (!thisPerson.edit_mode AND session.role == "super_admin") %] selected="selected"[% END %]>[% lf.forms.sp_form %]</option>
 	  </select>
     </div>
   </div>
@@ -68,14 +68,14 @@
 <form id="id_save_lang" action="/myPUB/person/set_language" method="POST">
   <div class="row innerrow">
     <div class="col-md-12">
-      <h4>Default Language</h4>
+      <h4>[% lf.header.default_language %]</h4>
     </div>
   </div>
   <div class="row innerrow">
     <div class="col-md-7">
       <select id="lang_select" name="lang" class="form-control">
-        <option value="en"[% IF (thisPerson.lang AND thisPerson.lang == "en") OR !thisPerson.lang %] selected="selected"[% END %]>English</option>
-        <option value="de"[% IF (thisPerson.lang AND thisPerson.lang == "de") %] selected="selected"[% END %]>German</option>
+        <option value="en"[% IF (thisPerson.lang AND thisPerson.lang == "en") OR !thisPerson.lang %] selected="selected"[% END %]>[% lf.header.lang_select.eng %]</option>
+        <option value="de"[% IF (thisPerson.lang AND thisPerson.lang == "de") %] selected="selected"[% END %]>[% lf.header.lang_select.ger %]</option>
       </select>
     </div>
   </div>

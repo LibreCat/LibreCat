@@ -79,7 +79,7 @@
 	    </ul>
 	  </li>
 	 [% END %]
-         <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">Logout</span></a></li>
+         <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% lf.main_page.logout %]</span></a></li>
        </ul>
       [% ELSE %]
       <div class="row">

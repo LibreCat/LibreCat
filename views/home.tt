@@ -29,7 +29,7 @@
       </h1>
     [% ELSE %]
       <h1>
-      [% UNLESS !thisPerson %][% thisPerson.first_name %] [% thisPerson.last_name %][% ELSE %][% lf.main_page.person_not_found %][% END %]
+      [% UNLESS !thisPerson %][% thisPerson.first_name %] [% thisPerson.last_name %][% ELSE %][% lf.person_profile.id_not_found %][% END %]
       </h1>
       <div class="pull-right margin-top-1">
 	<ul class="list-inline">

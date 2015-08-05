@@ -10,14 +10,14 @@
 [% END %]
 
 [% IF !thisPerson %]
-  <p>Person ID not found.</p>
+  <p>[% lf.person_profile.id_not_found %]</p>
 [% ELSE %]
   [% IF thisPerson.bis.former == "1" %]
-    <p>Former Bielefeld University Researcher</p>
+    <p>[% lf.person_profile.former_researcher %]</p>
   [% ELSE %]
-    View in <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% id %]&amp;lang=en">Directory of Staff and Departments</a>
+    [% lf.person_profile.view_in %] <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% id %]&amp;lang=en">[% lf.person_profile.directory_of_staff %]</a>
     [% IF thisPerson.sfb882_profile %]
-    <br />View <a href="http://www.sfb882.uni-bielefeld.de/en/staff/[% id %]">SFB882-GK Profile</a>
+    <br />[% lf.person_profile.view %]<a href="http://www.sfb882.uni-bielefeld.de/en/staff/[% id %]">[% lf.person_profile.sfb_profile %]</a>
     [% END %]
 
     <div class="row">&nbsp;</div>
@@ -27,7 +27,7 @@
     <input type="hidden" name="_id" value="[% session.personNumber %]" />
     [% IF backend AND !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire OR thisPerson.alias) %]
     <div class="row col-md-12">
-      <span class="text-muted">No Author IDs set.</span>
+      <span class="text-muted">[% lf.person_profile.no_author_ids %]</span>
       <a href="#" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
     </div>
     [% END %]
@@ -53,14 +53,14 @@
 
     <div class="row authorIds_input" style="display:none;">
       <div class="col-md-4">
-	<span class="glyphicon glyphicon-question-sign" id="authorid_help" data-toggle="tooltip" data-placement="right" title="These IDs will be visible on your public person page immediately after saving."></span>
+	<span class="glyphicon glyphicon-question-sign" id="authorid_help" data-toggle="tooltip" data-placement="right" title="[% lf.person_profile.person_id_title %]"></span>
 	<script>
 	  $('#authorid_help').tooltip();
 	</script>
       </div>
       <div class="col-md-6">
-	<button type="button" id="saveAuthorIds" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-ok"></span> Save</button>
-	<button type="button" onclick="editAuthorIds('cancel');" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span>  Cancel</button>
+	<button type="button" id="saveAuthorIds" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-ok"></span> [% lf.forms.button.save %]</button>
+	<button type="button" onclick="editAuthorIds('cancel');" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span> [% lf.forms.button.cancel %]</button>
       </div>
     </div>
     </form>

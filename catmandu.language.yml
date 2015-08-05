@@ -24,6 +24,12 @@ en:
       manage_journals: "Manage Journals"
       manage_awards: "Manage Awards"
     lang: "Deutsch"
+    lang_select:
+      eng: "English"
+      ger: "German"
+    department_affiliation: "Department Affiliation"
+    default_edit_mode: "Default Edit Mode"
+    default_language: "Default Language"
   footer:
     this_is_us: "Bielefeld University Library"
     dini_alt: "DINI-Certificate 2010"
@@ -82,7 +88,6 @@ en:
     heading_user: "Author's Page (myPUB)"
     heading_reviewer: "Reviewer's Page (myPUB)"
     heading_delegate: "Delegate's Page (myPUB)"
-    person_not_found: "Person ID not found"
     logged_in_as: "Logged in as"
     by: "by"
     statuses:
@@ -100,6 +105,15 @@ en:
       request_a_copy_title: "Generate sharable links for files with 'Request a copy' status"
       publish: "Make public"
       return: "Return"
+  person_profile:
+    id_not_found: "Person ID not found."
+    former_researcher: "Former Bielefeld University Researcher"
+    view: "View "
+    view_in: "View in"
+    directory_of_staff: "Directory of Staff and Departments"
+    sfb_profile: "SFB882-GK Profile"
+    no_author_ids: "No Author IDs set."
+    person_id_title: "These IDs will be visible on your public person page immediately after saving."
   facets:
     filters_and_searchterms: "Filters and Search Terms"
     search_filter: "Search / Filter"
@@ -1297,7 +1311,9 @@ en:
       tab: *tab
     bibachelorthesis: *bibachelorthesis
     to_sp_form: "Change to single page form"
+    sp_form: "Single Page Form"
     to_tab_form: "Change to tabbed form"
+    tab_form: "Tabbed Form"
     title_new_n: "Add new "
     title_new_m: "Add new "
     title_new_f: "Add new "
@@ -1335,6 +1351,12 @@ de:
       manage_journals: "Journale verwalten"
       manage_awards: "Preise verwalten"
     lang: "English"
+    lang_select:
+      eng: "Englisch"
+      ger: "Deutsch"
+    department_affiliation: "Fakultät/ Zugehörigkeit"
+    default_edit_mode: "Standard Editiermodus"
+    default_language: "Standardsprache"
   footer:
     this_is_us: "Universitätsbibliothek Bielefeld"
     dini_alt: "DINI-Zertifikat 2010"
@@ -1393,7 +1415,6 @@ de:
     heading_user: "Autorenseite (myPUB)"
     heading_reviewer: "Reviewerseite (myPUB)"
     heading_delegate: "Delegate Seite (myPUB)"
-    person_not_found: "Personen-Id nicht gefunden"
     logged_in_as: "Angemeldet als"
     by: "von"
     statuses:
@@ -1411,6 +1432,15 @@ de:
       request_a_copy_title: "Generiert teilbare Links zu Dateien mit Status 'Request a copy'"
       publish: "Public stellen"
       return: "Zurückstellen"
+  person_profile:
+    id_not_found: "Personen-Id nicht gefunden."
+    former_researcher: "Ehemaliger Bielefelder Forscher"
+    view: ""
+    view_in: "Eintrag im"
+    directory_of_staff: "PEVZ"
+    sfb_profile: "SFB882-GK Profil"
+    no_author_ids: "Keine Autoren-Ids gesetzt."
+    person_id_title: "Diese Ids werden direkt nach dem Speichern auf Ihrer Personenseite sichtbar sein."
   facets:
     filters_and_searchterms: "Filter und Suchbegriffe"
     search_filter: "Suche / Filtern"
@@ -2614,7 +2644,9 @@ de:
       tab: *tab
     bibachelorthesis: *bibachelorthesis
     to_sp_form: "Zum Gesamtformular wechseln"
+    sp_form: "Gesamtformular"
     to_tab_form: "Zur Tab-Navigation wechseln"
+    tab_form: "Tab-Navigation"
     title_new_n: "Neues "
     title_new_m: "Neuer "
     title_new_f: "Neue "
