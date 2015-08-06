@@ -17,4 +17,10 @@
   
 </div>
 
+<script>
+$(document).ready(function(){
+	Dropzone.options.thesesUpload.dictDefaultMessage = "[% lf.main_page.theses_drop_text %]";
+});
+</script>
+
 <!-- END pubtheses/dropzone.tt -->

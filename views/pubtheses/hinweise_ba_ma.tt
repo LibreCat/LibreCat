@@ -1,6 +1,6 @@
 <!-- BEGIN pubtheses/hinweis_ba_ma.tt -->
 
-      [% IF lang %]
+      [% IF lang == "en" %]
 
       <h3>Specialties in Regard to Bachelor and Master Theses</h3>
 

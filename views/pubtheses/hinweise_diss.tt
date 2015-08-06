@@ -1,6 +1,6 @@
 <!-- BEGIN pubtheses/hinweise_diss.tt -->
 
-    [% IF lang %]
+    [% IF lang == "en" %]
 
     <h3>Specialties in Regard to Doctoral Theses</h3>
 
