@@ -4,7 +4,7 @@
 
   <div class="col-sm-8">
 
-  [% IF lang %]
+  [% IF lang == "en" %]
 
   <h2>Contact</h2>
   <p>We are happy to answer your questions personally and look forward to your suggestions.</p>

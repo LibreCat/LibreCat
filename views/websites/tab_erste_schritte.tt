@@ -4,7 +4,7 @@
 
   <div class="col-sm-8">
 
-    [% IF lang %]
+    [% IF lang == "en" %]
 
     <h2>PUB in a Nutshell</h2>
     <p><a href="/pub_handreichung.pdf"><span class="glyphicon glyphicon-chevron-right fw"></span>Download Short Guide (author's view)</a> (PDF, in German)</p>

@@ -4,7 +4,7 @@
 
   <div class="col-sm-8">
 
-    [% IF lang %]
+    [% IF lang == "en" %]
 
     <h2>PUB Policy</h2>
 

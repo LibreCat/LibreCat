@@ -29,20 +29,20 @@
     <div class="row margin-top1">
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
-          <li[% IF bag == 'home' %] class="active"[% END %]><a href="/[% lang ? "?lang=en" : "" %]">[% lf.tabs.home %]</a></li>
-          <li[% IF bag == 'publication' %] class="active"[% END %]><a href="/publication[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=en" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.publications %]</a></li>
-          <li[% IF bag == 'data' %] class="active"[% END %]><a href="/data[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=en" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.data_publications %]</a></li>
+          <li[% IF bag == 'home' %] class="active"[% END %]><a href="/[% lang ? "?lang=$lang" : "" %]">[% lf.tabs.home %]</a></li>
+          <li[% IF bag == 'publication' %] class="active"[% END %]><a href="/publication[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=$lang" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.publications %]</a></li>
+          <li[% IF bag == 'data' %] class="active"[% END %]><a href="/data[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=$lang" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.data_publications %]</a></li>
           <!--
-          <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=en" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.projects %]</a></li>
+          <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=$lang" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.projects %]</a></li>
           -->
-          <li[% IF bag == 'person' %] class="active"[% END %]><a href="/person[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=en" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.authors %]</a></li>
+          <li[% IF bag == 'person' %] class="active"[% END %]><a href="/person[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=$lang" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.authors %]</a></li>
           <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' || bag == 'policy' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lf.tabs.about %] <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li[% IF bag == 'about' %] class="active"[% END %]><a href="/about[% lang ? "?lang=en" : "" %]">[% lf.tabs.features %]</a></li>
+              <li[% IF bag == 'about' %] class="active"[% END %]><a href="/about[% lang ? "?lang=$lang" : "" %]">[% lf.tabs.features %]</a></li>
               <li><a href="[% h.host %]/doc/api">[% lf.tabs.documentation %]</a></li>
-              <li[% IF bag == 'faq' %] class="active"[% END %]><a href="/faq[% lang ? "?lang=en" : "" %]">[% lf.tabs.faq %]</a></li>
-              <li[% IF bag == 'contact' %] class="active"[% END %]><a href="/contact[% lang ? "?lang=en" : "" %]">[% lf.tabs.contact %]</a></li>
-              <li[% IF bag == 'policy' %] class="active"[% END %]><a href="/policy[% lang ? "?lang=en" : "" %]">[% lf.tabs.policy %]</a></li>
+              <li[% IF bag == 'faq' %] class="active"[% END %]><a href="/faq[% lang ? "?lang=$lang" : "" %]">[% lf.tabs.faq %]</a></li>
+              <li[% IF bag == 'contact' %] class="active"[% END %]><a href="/contact[% lang ? "?lang=$lang" : "" %]">[% lf.tabs.contact %]</a></li>
+              <li[% IF bag == 'policy' %] class="active"[% END %]><a href="/policy[% lang ? "?lang=$lang" : "" %]">[% lf.tabs.policy %]</a></li>
             </ul>
           </li>
           <li><a href="/policy" data-toggle="tab" style="display:none;">[% lf.tabs.policy %]</a></li>
