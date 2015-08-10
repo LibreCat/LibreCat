@@ -1,3 +1,8 @@
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+[% lang = "en" %]
+[% lf = h.config.language.$lang %]
+
 <!DOCTYPE html>
 <html ng-app="angularController">
 
@@ -8,9 +13,6 @@
     <link rel="icon" href="/images/icon_uni.png" type="image/png">
 
     [% INCLUDE head_meta.tt %]
-    [% qp = request.params.hash %]
-    [% qp.delete('splat') %]
-
   </head>
 
   <body class="embed">
