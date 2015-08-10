@@ -86,6 +86,7 @@ en:
     add_new_button: "Add new Publication"
     capital_or: "OR"
     qae_drop_text: "<span class='fa fa-file-pdf-o fa-3x'></span><br />Drop Open Access fulltext (pdf)<br>here and we'll do the rest."
+    theses_drop_text: "<span class='fa fa-file-pdf-o fa-3x'></span><br />Drop your thesis here."
     heading_admin: "Administration (myPUB)"
     heading_user: "Author's Page (myPUB)"
     heading_reviewer: "Reviewer's Page (myPUB)"
@@ -1415,6 +1416,7 @@ de:
     add_new_button: "Neue Publikation"
     capital_or: "ODER"
     qae_drop_text: "<span class='fa fa-file-pdf-o fa-3x'></span><br />Open Access Volltext (pdf)<br>hier her ziehen und wir machen den Rest"
+    theses_drop_text: "<span class='fa fa-file-pdf-o fa-3x'></span><br />Dissertation hier her ziehen."
     heading_admin: "Administration (myPUB)"
     heading_user: "Autorenseite (myPUB)"
     heading_reviewer: "Reviewerseite (myPUB)"
@@ -1515,7 +1517,8 @@ de:
     drop_oa: "Ziehen Sie Ihren Open Access Volltext hier her"
   forms:
     book:
-      label: "Buch"
+      label: "Book"
+#      label: "Buch"
       tab: &tab
         basic_fields: "Hauptfelder"
         file_upload: "Dateiupload"
@@ -1678,7 +1681,8 @@ de:
           label: "Returned Record Ids"
           label_short: "Ret. Rec. Ids"
     bookEditor: &bookeditor
-      label: "Buch-Herausgeber"
+      label: "Book (Editor)"
+#      label: "Buch-Herausgeber"
       tab: *tab
       field:
         doi: *doi
@@ -1725,7 +1729,8 @@ de:
         alternative_id: *alternative_id
     bookeditor: *bookeditor
     bookChapter: &bookchapter
-      label: "Kapitel"
+      label: "Book Chapter"
+#      label: "Kapitel"
       tab: *tab
       field:
         doi: *doi
@@ -1799,7 +1804,8 @@ de:
         alternative_id: *alternative_id
     bookchapter: *bookchapter
     conferenceAbstract: &conferenceabstract
-      label: "Konferenz-Abstract"
+      label: "Conference Abstract"
+#      label: "Konferenz-Abstract"
       tab: *tab
       field:
         doi: *doi
@@ -1867,7 +1873,8 @@ de:
         alternative_id: *alternative_id
     conferenceabstract: *conferenceabstract
     conferenceEditor: &conferenceeditor
-      label: "Konferenz-Herausgeber"
+      label: "Conference (Editor)"
+#      label: "Konferenz-Herausgeber"
       tab: *tab
       field:
         doi: *doi
@@ -1906,7 +1913,8 @@ de:
         alternative_id: *alternative_id
     conferenceeditor: *conferenceeditor
     conference:
-      label: "Konferenz-Beitrag"
+      label: "Conference Paper"
+#      label: "Konferenz-Beitrag"
       tab: *tab
       field:
         doi: *doi
@@ -1948,6 +1956,7 @@ de:
         alternative_id: *alternative_id
     dissertation:
       label: "Dissertation"
+#      label: "Dissertation"
       tab: *tab
       field:
         doi: *doi
@@ -1986,7 +1995,8 @@ de:
         thematic_area: *thematic_area
         alternative_id: *alternative_id
     encyclopediaArticle: &encyclopediaarticle
-      label: "Enzyklopädie-Artikel"
+      label: "Encyclopedia Article"
+#      label: "Enzyklopädie-Artikel"
       tab: *tab
       field:
         doi: *doi
@@ -2025,7 +2035,8 @@ de:
         alternative_id: *alternative_id
     encyclopediaarticle: *encyclopediaarticle
     journalArticle: &journalarticle
-      label: "Zeitschriftenartikel"
+      label: "Journal Article"
+#      label: "Zeitschriftenartikel"
       tab: *tab
       field:
         doi: *doi
@@ -2078,7 +2089,8 @@ de:
           placeholder: "Artikelgebühren co-finanziert von der DFG"
     journalarticle: *journalarticle
     journalEditor: &journaleditor
-      label: "Zeitschriften-Herausgeber"
+      label: "Journal (Editor)"
+#      label: "Zeitschriften-Herausgeber"
       tab: *tab
       field:
         doi: *doi
@@ -2116,7 +2128,8 @@ de:
         alternative_id: *alternative_id
     journaleditor: *journaleditor
     newspaperArticle: &newspaperarticle
-      label: "Zeitungsartikel"
+      label: "Newspaper Article"
+#      label: "Zeitungsartikel"
       tab: *tab
       field:
         title:
@@ -2156,6 +2169,7 @@ de:
     newspaperarticle: *newspaperarticle
     patent:
       label: "Patent"
+#      label: "Patent"
       tab: *tab
       field:
         doi: *doi
@@ -2216,7 +2230,8 @@ de:
           label: "Qualitätskontrolliert"
           label_short: "Qual.kontr."
     preprint:
-      label: "Vorabdruck"
+      label: "Preprint"
+#      label: "Vorabdruck"
       tab: *tab
       field:
         title:
@@ -2246,7 +2261,8 @@ de:
         alternative_id: *alternative_id
         popular_science: *popular_science
     report:
-      label: "Bericht"
+      label: "Report"
+#      label: "Bericht"
       tab: *tab
       field:
         doi: *doi
@@ -2284,7 +2300,8 @@ de:
         thematic_area: *thematic_area
         alternative_id: *alternative_id
     review:
-      label: "Buchrezension"
+      label: "Book Review"
+#      label: "Buchrezension"
       tab: *tab
       field:
         doi: *doi
@@ -2320,7 +2337,8 @@ de:
         thematic_area: *thematic_area
         alternative_id: *alternative_id
     researchData: &researchdata
-      label: "Forschungsdatensatz"
+      label: "Research Data"
+#      label: "Forschungsdatensatz"
       tab:
         basic_fields: "Hauptfelder"
         file_upload: "Forschungsdatenupload"
@@ -2403,7 +2421,8 @@ de:
         ddc: *ddc
     researchdata: *researchdata
     translation:
-      label: "Übersetzung"
+      label: "Translation"
+#      label: "Übersetzung"
       tab: *tab
       field:
         doi: *doi
@@ -2468,7 +2487,8 @@ de:
         thematic_area: *thematic_area
         alternative_id: *alternative_id
     translationChapter: &translationchapter
-      label: "Übersetzung (Kapitel)"
+      label: "Translation (Chapter)"
+#      label: "Übersetzung (Kapitel)"
       tab: *tab
       field:
         doi: *doi
@@ -2537,7 +2557,8 @@ de:
         alternative_id: *alternative_id
     translationchapter: *translationchapter
     workingPaper: &workingpaper
-      label: "Diskussionspapier"
+      label: "Working Paper"
+#      label: "Diskussionspapier"
       tab: *tab
       field:
         doi: *doi
@@ -2572,7 +2593,8 @@ de:
         alternative_id: *alternative_id
     workingpaper: *workingpaper
     biDissertation: &bidissertation
-      label: "Bielefelder Dissertation"
+      label: "Bielefeld Thesis"
+#      label: "Bielefelder Dissertation"
       tab: *tab
       field:
         bi_doctype:
@@ -2636,15 +2658,18 @@ de:
           placeholder: "Computing Classification System, e.g. Data Mining"
     bidissertation: *bidissertation
     biMasterThesis: &bimasterthesis
-      label: "Bielefelder Masterarbeit"
+      label: "Bielefeld Master Thesis"
+#      label: "Bielefelder Masterarbeit"
       tab: *tab
     bimasterthesis: *bimasterthesis
     biPostdocThesis: &bipostdocthesis
-      label: "Bielefelder Habilitationsschrift"
+      label: "Bielefeld Post-Doctoral Habilitation"
+#      label: "Bielefelder Habilitationsschrift"
       tab: *tab
     bipostdocthesis: *bipostdocthesis
     biBachelorThesis: &bibachelorthesis
-      label: "Bielefelder Bachelorarbeit"
+      label: "Bielefeld Bachelor Thesis"
+#      label: "Bielefelder Bachelorarbeit"
       tab: *tab
     bibachelorthesis: *bibachelorthesis
     to_sp_form: "Zum Gesamtformular wechseln"

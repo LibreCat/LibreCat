@@ -1,6 +1,6 @@
 <!-- BEGIN pubtheses/berechtigte.tt -->
 
-[% IF lang %]
+[% IF lang == "en" %]
 
 <h3>Information for Authors</h3>
 

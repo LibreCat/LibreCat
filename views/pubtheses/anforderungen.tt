@@ -1,6 +1,6 @@
 <!-- BEGIN pubtheses/anforderungen.tt -->
 
-    [% IF lang %]
+    [% IF lang == "en" %]
 
       <h3>Technical Requirements for Documents</h3>
 

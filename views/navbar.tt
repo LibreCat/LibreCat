@@ -23,7 +23,7 @@
 	<span class="icon-bar"></span>
       </button>
       [% IF backend %]
-	<a class="navbar-brand" href="/"><img src="/images/publogo.gif" height="30" alt="" /></a>
+	<a class="navbar-brand" href="/[% lang ? "?lang=$lang" : "" %]"><img src="/images/publogo.gif" height="30" alt="" /></a>
       [% ELSE %]
 	<div class="hidden-sm hidden-lg hidden-md">
 	  <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" height="43" alt="" /></a>

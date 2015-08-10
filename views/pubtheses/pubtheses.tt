@@ -2,7 +2,8 @@
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
 [% thisq = h.extract_params.q %]
-[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
+[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "de" %]
+[% lf = h.config.language.$lang %]
 [% style = qp.style || 'default' %]
 
 [% INCLUDE header.tt %]
@@ -33,7 +34,7 @@
 
       <div class="col-sm-8 col-xs-12">
 
-	[% IF lang %]
+	[% IF lang == "en" %]
 
 	<!-- <h2>PUB Theses</h2> -->
 	<p>PUB Theses represents the platform at Bielefeld University where you can submit your doctoral theses or postdoctoral theses or other types of examination papers for free-of-charge publication on the internet.</p>

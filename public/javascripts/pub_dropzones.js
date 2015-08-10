@@ -128,7 +128,6 @@ $(document).ready(function(){
 		previewsContainer: '#theses_dz_preview',
 		params: {access_level: "open_access", accept: 1, quickandeasy: 1},
 		createImageThumbnails: false,
-		dictDefaultMessage: "<span class=\"fa fa-file-pdf-o fa-3x\"></span><br />Drop your thesis here.",
 		dictMaxFilesExceeded: "Please submit or cancel your upload first before uploading more files.",
 		init: function(){
 		 	$('.dz-default.dz-message').addClass('qae');
