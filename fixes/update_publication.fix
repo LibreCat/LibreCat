@@ -11,6 +11,10 @@ maybe_add_urn()
 person()
 add_department()
 
+isbn13(publication_identifier.isbn.*)
+issn(publication_identifier.issn.*)
+issn(publication_identifier.eissn.*)
+
 if all_match('finalSubmit','recPublish')
     set_field('status','public')
 end
