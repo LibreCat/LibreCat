@@ -4,7 +4,7 @@
 [% IF backend %]
 [% lang = session.lang %]
 [% ELSE %]
-[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "de" %]
+[% lang = (path.search('/en') OR qp.lang == "en" OR lang == "en") ? "en" : "de" %]
 [% END %]
 [% lf = h.config.language.$lang %]
 [% IF embed AND qp.ttyp %]

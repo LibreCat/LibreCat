@@ -111,6 +111,7 @@ get qr{/embed/*} => sub {
 	$hits->{embed} = 1;
 	$hits->{ttyp} = $p->{ttyp} if $p->{ttyp};
 	$hits->{style} = $p->{style} ? $p->{style} : h->config->{default_style};
+	$hits->{lang} = $p->{lang} ? $p->{lang} : h->config->{default_lang};
 	template "iframe", $hits;
 };
 

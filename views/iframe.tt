@@ -1,6 +1,5 @@
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% lang = "en" %]
 [% lf = h.config.language.$lang %]
 
 <!DOCTYPE html>

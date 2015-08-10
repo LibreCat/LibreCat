@@ -94,10 +94,10 @@ pubbiotech:
       or: 1
   style: ama
   limit: 10
-  ttyp: bccpt
+  ttyp: pubbiotech
   fmt: html
     
-bghs:
+pubbghs:
   q:
     -
       param: department
@@ -113,10 +113,10 @@ bghs:
       or: 'biMasterThesis'
   style: mla
   limit: 10
-  ttyp: bghs
+  ttyp: pubbghs
   fmt: html
 
-bio:
+pubbio:
   q:
     -
       param: department
@@ -132,29 +132,10 @@ bio:
       or: 'biMasterThesis'
   style: bio1
   limit: 10
-  ttyp: bio
+  ttyp: pubbio
   fmt: html
 
-bio3:
-  q:
-    -
-      param: department
-      op: '='
-      or: 10017
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-  style: bio1
-  limit: 10
-  ttyp: bio3
-  fmt: html
-
-bioplants:
+pubbioplants:
   q:
     - 
       param: department
@@ -170,10 +151,10 @@ bioplants:
       or: 'biMasterThesis'
   style: bio1
   limit: 10
-  ttyp: bioplants
+  ttyp: pubbioplants
   fmt: html
 
-biobcb:
+pubbiobcb:
   q:
     -
       param: department
@@ -189,10 +170,10 @@ biobcb:
       or: 'biMasterThesis'
   style: bio1
   limit: 10
-  ttyp: biobcb
+  ttyp: pubbiobcb
   fmt: html
 
-cns:
+pubcns:
   q:
     -
       param: department
@@ -208,10 +189,10 @@ cns:
       or: 'biMasterThesis'
   style: bio1
   limit: 10
-  ttyp: cns
+  ttyp: pubcns
   fmt: html
 
-neurobio:
+pubneurobio:
   q:
     -
       param: department
@@ -227,10 +208,10 @@ neurobio:
       or: 'biMasterThesis'
   style: bio1
   limit: 10
-  ttyp: neurobio
+  ttyp: pubneurobio
   fmt: html
 
-citec:
+pubcitec:
   q:
     -
       param: department
@@ -250,10 +231,10 @@ citec:
       or: 2007
   style: bio1
   limit: 10
-  ttyp: citec
+  ttyp: pubcitec
   fmt: html
 
-citectcs:
+pubcitectcs:
   q:
     -
       param: department
@@ -269,10 +250,10 @@ citectcs:
       or: 'biMasterThesis'
   style: bio1
   limit: 10
-  ttyp: citectcs
+  ttyp: pubcitectcs
   fmt: html
 
-ipaed:
+pubipaed:
   q:
     -
       param: department
@@ -287,10 +268,10 @@ ipaed:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: ipaed
+  ttyp: pubipaed
   fmt: html
 
-hist:
+pubhist:
   q:
     -
       param: department
@@ -305,10 +286,10 @@ hist:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: hist
+  ttyp: pubhist
   fmt: html
 
-histde:
+pubhistde:
   q:
     -
       param: department
@@ -323,10 +304,10 @@ histde:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: histde
+  ttyp: pubhist
   fmt: html
 
-hist1:
+pubhist1:
   q:
     -
       param: department
@@ -341,10 +322,10 @@ hist1:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: hist1
+  ttyp: pubhist1
   fmt: html
 
-hist2:
+pubhist2:
   q:
     -
       param: department
@@ -359,10 +340,10 @@ hist2:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: hist2
+  ttyp: pubhist2
   fmt: html
 
-hist3:
+pubhist3:
   q:
     -
       param: department
@@ -377,10 +358,10 @@ hist3:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: hist3
+  ttyp: pubhist3
   fmt: html
 
-hist4:
+pubhist4:
   q:
     -
       param: department
@@ -395,10 +376,10 @@ hist4:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: hist4
+  ttyp: pubhist4
   fmt: html
 
-hist5:
+pubhist5:
   q:
     -
       param: department
@@ -413,10 +394,10 @@ hist5:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: hist5
+  ttyp: pubhist5
   fmt: html
 
-hist6:
+pubhist6:
   q:
     -
       param: department
@@ -431,10 +412,10 @@ hist6:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: hist6
+  ttyp: pubhist6
   fmt: html
 
-hist7:
+pubhist7:
   q:
     -
       param: department
@@ -449,10 +430,10 @@ hist7:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: hist7
+  ttyp: pubhist7
   fmt: html
 
-hist8:
+pubhist8:
   q:
     -
       param: department
@@ -467,10 +448,10 @@ hist8:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: hist8
+  ttyp: pubhist8
   fmt: html
 
-gwiph:
+pubgwiph:
   q:
     -
       param: department
@@ -485,10 +466,10 @@ gwiph:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: gwiph
+  ttyp: pubgwiph
   fmt: html
 
-iffde:
+pubiffde:
   q:
     -
       param: department
@@ -503,10 +484,10 @@ iffde:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: iffde
+  ttyp: pubiffde
   fmt: html
 
-ikg:
+pubikg:
   q:
     -
       param: department
@@ -517,20 +498,20 @@ ikg:
       op: '='
       or: eng
   limit: 10
-  ttyp: ikg
+  ttyp: pubikg
   fmt: html
 
-ikgde:
+pubikgde:
   q:
     -
       param: department
       op: '='
       or: 10058
   limit: 10
-  ttyp: ikgde
+  ttyp: pubikg
   fmt: html
 
-imw:
+pubimw:
   q:
     -
       param: department
@@ -547,10 +528,10 @@ imw:
         - 'journalEditor'
   limit: 10
   style: pub
-  ttyp: imw
+  ttyp: pubimw
   fmt: html
 
-iwt:
+pubiwt:
   q:
     -
       param: department
@@ -565,10 +546,10 @@ iwt:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: iwt
+  ttyp: pubiwt
   fmt: html
 
-physlat:
+pubphyslat:
   q:
     -
       param: department
@@ -584,10 +565,10 @@ physlat:
       or: 'biMasterThesis'
   style: aps
   limit: 10
-  ttyp: physlat
+  ttyp: pubphyslat
   fmt: html
 
-physhe:
+pubphyshe:
   q:
     -
       param: department
@@ -607,10 +588,10 @@ physhe:
       or: 'biMasterThesis'
   style: aps
   limit: 10
-  ttyp: physhe
+  ttyp: pubphyshe
   fmt: html
 
-sport:
+pubsport:
   q:
     -
       param: department
@@ -625,10 +606,10 @@ sport:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: sport
+  ttyp: pubsport
   fmt: html
 
-soz:
+pubsoz:
   q:
     -
       param: department
@@ -643,10 +624,10 @@ soz:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: soz
+  ttyp: pubsoz
   fmt: html
 
-vwl:
+pubvwl:
   q:
     -
       param: department
@@ -661,10 +642,10 @@ vwl:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: vwl
+  ttyp: pubvwl
   fmt: html
 
-wiwi:
+pubwiwi:
   q:
     -
       param: department
@@ -678,11 +659,12 @@ wiwi:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 5
-  ttyp: wiwi
+  ttyp: pubwiwi
   fmt: html
 
-wiwide:
+pubwiwide:
   q:
     -
       param: department
@@ -696,11 +678,12 @@ wiwide:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: de
   limit: 5
-  ttyp: wiwide
+  ttyp: pubwiwide
   fmt: html
 
-bwl:
+pubbwl:
   q:
     -
       param: department
@@ -715,10 +698,10 @@ bwl:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: bwl
+  ttyp: pubbwl
   fmt: html
 
-bwlde:
+pubbwlde:
   q:
     -
       param: department
@@ -733,46 +716,10 @@ bwlde:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: bwlde
+  ttyp: pubbwl
   fmt: html
 
-bwl2:
-  q:
-    -
-      param: department
-      op: '='
-      or: 29895914
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-  limit: 10
-  ttyp: bwl2
-  fmt: html
-
-bwl2de:
-  q:
-    -
-      param: department
-      op: '='
-      or: 29895914
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-  limit: 10
-  ttyp: bwl2de
-  fmt: html
-
-zif:
+pubzif:
   q:
     -
       param: department
@@ -787,5 +734,5 @@ zif:
       op: '<>'
       or: 'biMasterThesis'
   limit: 10
-  ttyp: zif
+  ttyp: pubzif
   fmt: html
