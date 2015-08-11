@@ -116,7 +116,7 @@
 	    [% dept = h.get_department(qp.department) %]
 	    <li>[% dept.name %]</li>
       [% ELSE %]
-      [% departments = h.get_list('department') %]
+      [% departments = h.search_department({"hierarchy"="1"}) %]
       [% FOREACH dept IN departments.keys.sort %]
 	    <li>
 	    [% thisdept = departments.$dept %]
