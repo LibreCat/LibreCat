@@ -685,6 +685,7 @@ sub search_department {
 		    cql_query => $cql,
 		    limit => $p->{limit} ||= 20,
 		    start => $p->{start} ||= 0,
+		    sru_sortkeys => "display,,1",
 		);
 		return $hits;
 	}

@@ -170,6 +170,40 @@ Input is person id. Returns warning if person is already in the database.
     	my $return = h->update_record('research_group', $p);
     	redirect '/myPUB/admin/research_group';
     };
+    
+    
+    
+    get '/department' => needs role => 'super_admin' => sub {
+    	my $hits = h->search_department({q => "", limit => 100, start => params->{start} || 0});
+        template 'admin/department', $hits;
+    };
+
+    get '/department/new' => needs role => 'super_admin' => sub {
+        template 'admin/department/edit_department',
+            { _id => h->new_record('department') };
+    };
+
+    get '/department/search' => sub {
+        my $p = h->extract_params();
+
+        my $hits = h->search_department($p);
+
+        template 'admin/department', $hits;
+    };
+
+    get '/department/edit/:id' => needs role => 'super_admin' => sub {
+        my $department = h->department->get(params->{id});
+        template 'admin/forms/edit_department', $department;
+    };
+
+    post '/department/update' => needs role => 'super_admin' => sub {
+        my $p = h->nested_params();
+    	my $return = h->update_record('department', $p);
+    	redirect '/myPUB/admin/department';
+    };
+    
+    
+    
 
     get '/award' => needs role => 'super_admin' => sub {
     	my $hits = h->search_award({q => "rectype=record", limit => 1000});

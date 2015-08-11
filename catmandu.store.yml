@@ -865,6 +865,12 @@ search:
                 '=': true
                 '<>': true
               field: layer
+            display:
+              op:
+                '=': true
+                'all': true
+              field: display
+              sort: {field: 'display.exact'}
 
       research_group:
         cql_mapping:
@@ -1254,6 +1260,11 @@ search:
               name: {type: string}
               id: {type: string, analyzer: tag}
           layer: {type: string, analyzer: tag}
+          display:
+            type: multi_field
+            fields:
+              display: {type: string}
+              exact: {type: string, analyzer: tag}
 
       research_group:
         include_in_all: false

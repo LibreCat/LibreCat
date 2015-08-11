@@ -51,3 +51,6 @@ $tta->process( "master_award.tt", $otherItems->{award}, "edit_award.tt" ) || die
 
 print "Generating edit_research_group page\n";
 $tta->process( "master_research_group.tt", $otherItems->{research_group}, "edit_research_group.tt") || die $tta->error(), "\n";
+
+print "Generating edit_department page\n";
+$tta->process( "master_department.tt", $otherItems->{department}, "edit_department.tt") || die $tta->error(), "\n";

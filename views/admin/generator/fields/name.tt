@@ -7,7 +7,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF name.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% name.label %}</div>
-          <input type="text" name="name" id="id_name" value="[% name %]" class="form-control"{% IF name.mandatory %} required{% END %}>
+          <input type="text" name="name" id="id_name" value="[% name | html %]" class="form-control"{% IF name.mandatory %} required{% END %}>
 	      <div class="input-group-addon"></div>
         </div>
       </div>

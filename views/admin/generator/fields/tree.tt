@@ -1,0 +1,54 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label>{% tree.label %}</label>
+  </div>
+  <div class="col-md-10" id="affiliation">
+  [% IF !tree %]
+    <div class="row innerrow">
+      <input type="hidden" name="tree.0.id" id="dp_idautocomplete_0" />
+      <input type="hidden" name="tree.0.name" id="dp_nameautocomplete_0" />
+      
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon hidden-lg hidden-md">{% tree.label %}</div>
+          <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control" id="dp_autocomplete_0" value="" />
+          <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="department_select_0">Select</span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+        </div>
+      </div>
+    </div>
+  [% ELSE %]
+  [% FOREACH dept IN tree %]
+    <div class="row innerrow">
+      <input type="hidden" name="tree.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+      <input type="hidden" name="tree.[% loop.index %].name" id="dp_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
+      
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon hidden-lg hidden-md">{% tree.label %}</div>
+          <input type="text" onfocus="enable_autocomplete('dp',[% loop.index %]);" class="sticky form-control" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+          <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="department_select_0">Select</span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
+          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+        </div>
+      </div>
+    </div>
+  [% END %]
+  [% END %]
+  
+  <div class="modal" id="selectModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">&hellip;</h4>
+            <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
+          </div>
+          <div class="modal-body">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

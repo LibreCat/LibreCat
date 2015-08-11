@@ -1213,6 +1213,20 @@ otherItems:
       placeholder: "YYYY-MM-DD"
     department:
       label: "Affiliation"
+  department:
+    department_field_order:
+      - id
+      - name
+      - tree
+    id:
+      label: "ID"
+      readonly: 1
+      mandatory: 1
+    name:
+      label: "Name"
+      mandatory: 1
+    tree:
+      label: "Department Hierarchy"
   award:
     award_field_order:
       - award_type

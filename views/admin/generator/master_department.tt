@@ -1,0 +1,82 @@
+[% path = request.path %]
+[% backend = path.match('myPUB') ? 1 : 0 %]
+
+[% INCLUDE header.tt %]
+
+<!-- BEGIN admin/generator/edit_department.tt -->
+
+<div class="row">
+
+  <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
+
+    <div class="page-header" id="banner">
+      <h1>
+      [% IF name %]
+      Edit Department "[% name | html %]"
+      [% ELSE %]
+      Add new Department
+      [% END %]
+      </h1>
+    </div>
+
+
+    <form action="/myPUB/admin/department/update" method="POST">
+      <input type="hidden" name="date_created" value="[% date_created %]" />
+
+      {% FOREACH key IN department_field_order %}
+{% template = "fields/" _ key _ ".tt" %}
+{% INCLUDE $template %}
+      {% END %}
+
+
+      <div class="row innerrow"><!-- button -->
+	<div class="col-md-12 buttonrow">
+	<span class="form-grou col-md-2">&nbsp;</span>
+	<span class="form-group col-md-2">
+	  <button type="button" class="btn btn-danger cancel-button"><span class="glyphicon glyphicon-remove"></span> Close</button>
+	</span>
+	<span class="form-group col-md-2">
+	  <button type="submit" id="id_do_nothing" class="btn btn-success change_tab"><span class="glyphicon glyphicon-ok"></span> Save</button>
+	</span>
+	</div>
+      </div>
+    </form>
+
+    <div class="modal" id="linkPevzModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	  <h4 class="modal-title">Several PEVZ Accounts found... make a choice</h4>
+	</div>
+	<div class="modal-body">
+	</div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- col-md -->
+
+</div><!-- row -->
+
+<script>
+$('button.cancel-button').click(function() {
+  window.location.href = '/myPUB/admin/department';
+});
+</script>
+
+<script>
+{% INCLUDE fields/jquery.tt %}
+
+$(document).on('click', '.single', function(){
+  var index = $(this).parent().parent().index();
+  if(parseInt(index) != 0){
+    $(this).parent().parent().remove();
+  }
+});
+
+</script>
+
+<!-- END admin/generator/edit_department.tt -->
+
+[% INCLUDE footer.tt %]

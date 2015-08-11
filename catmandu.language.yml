@@ -23,6 +23,7 @@ en:
       manage_research_groups: "Manage Research Groups"
       manage_journals: "Manage Journals"
       manage_awards: "Manage Awards"
+      manage_department: "Manage Departments"
     lang: "Deutsch"
     lang_select:
       eng: "English"
@@ -1353,6 +1354,7 @@ de:
       manage_research_groups: "Forschungsgruppen verwalten"
       manage_journals: "Journale verwalten"
       manage_awards: "Preise verwalten"
+      manage_department: "Einrichtungen verwalten"
     lang: "English"
     lang_select:
       eng: "Englisch"

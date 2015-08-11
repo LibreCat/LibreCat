@@ -48,6 +48,7 @@
             <!-- <li><a href="/myPUB/admin/import"><span class="glyphicon glyphicon-import"></span>[% lf.header.admin_menu.import %]</a></li> -->
             <li><a href="/myPUB/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_projects %]</a></li>
             <li><a href="/myPUB/admin/research_group"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_research_groups %]</a></li>
+            <li><a href="/myPUB/admin/department"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_department %]</a></li>
             <!-- <li><a href="/myPUB/admin/journal"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_journals %]</a></li> -->
             <li><a href="/myPUB/admin/award"><span class="glyphicon glyphicon-star"></span>[% lf.header.admin_menu.manage_awards %]</a></li>
           </ul>

@@ -367,16 +367,16 @@ comment: "some message or comment"
 ## department
 ```yaml
 -
-  id: 10018
+  _id: 10018
   name: "Fakultät für Chemie"
   display: "Fakultät für Chemie"
   tree:
     -
       id: 10018
       name: "Fakultät für Chemie"
-
+  layer: 1
 -
-  id: 16813171
+  _id: 16813171
   name: "ENTRY"
   display: "Fakultät für Geschichtswissenschaft, Philosophie und Theologie > Abteilung Geschichte > ENTRY"
   tree:
@@ -389,6 +389,7 @@ comment: "some message or comment"
     -
       id: 16813171
       name: "ENTRY"
+  layer: 3
 ```
 
 ## research_group

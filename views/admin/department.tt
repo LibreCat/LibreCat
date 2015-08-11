@@ -1,0 +1,69 @@
+[% path = request.path %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+[% backend = path.match('myPUB') ? 1 : 0 %]
+
+[% INCLUDE header.tt %]
+
+<!-- BEGIN admin/research_group.tt -->
+
+<div class="row">
+
+  <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
+
+    <div class="page-header" id="banner">
+      <h1>
+	Manage Departments
+      </h1>
+    </div>
+
+    <form role="form" action="/myPUB/admin/department/search" method="GET">
+      <div class="row">
+	<div class="col-md-5">
+	  <label for="id_q">Search Departments</label>
+	  <div class="input-group">
+	    <input type="text" class="form-control" name="cql_query" id="id_q" value="[% qp.cql_query || qp.q %]">
+	    <span class="input-group-btn">
+	      <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-search"></span> </i>Search</button>
+	    </span>
+	  </div><!-- /input-group -->
+	</div>
+      </div>
+    </form>
+
+    [% IF hits %]
+    <div class="row margin-top1">
+      <div class="col-md-12">
+	<h3>[% total ? total : "0" %] Results</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      [% INCLUDE pagination.tt %]
+    </div>
+
+    [% FOREACH p IN hits %]
+    <div class="row innerrow">
+      <div class="col-md-1">
+	    <span class="label label-success"><strong>[% p._id %]</strong></span>
+      </div>
+      <div class="col-md-9">
+	    <a href="/myPUB/admin/department/edit/[% p._id %]">[% p.name %]</a><br />
+	    <span class="text-muted">[% p.display %]</span>
+      </div>
+    </div>
+    [% END %]
+
+    <div class="row">
+      [% INCLUDE pagination.tt %]
+    </div>
+
+    [% END %]
+
+  </div>
+
+</div>
+
+<!-- END admin/research_group.tt -->
+
+[% INCLUDE footer.tt %]
