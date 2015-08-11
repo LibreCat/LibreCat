@@ -107,7 +107,7 @@ User can choose default language for the myPUB backend
 "de" -> German
 
 =cut
-    post '/set_language' => needs login => sub {
+    get '/set_language' => needs login => sub {
 
         my $person = h->get_person( session('personNumber') );
         my $lang = params->{lang};

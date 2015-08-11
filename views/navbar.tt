@@ -56,6 +56,9 @@
 	   [% END %]
        </ul>
        <ul class="nav navbar-nav navbar-right">
+         <li>
+           <div class="select-language"><a href="/myPUB/person/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]">[% lf.header.lang %]</a></div>
+	     </li>
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <span class="hidden-sm">[% session.user %]</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
             <div class="dropdown-menu" style="width:550px">
 	      [% INCLUDE backend/user_settings.tt %]
