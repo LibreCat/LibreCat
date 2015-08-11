@@ -13,7 +13,7 @@ engines:
 time_format: "%Y-%m-%dT%H:%M:%SZ"
 
 # default settings
-default_lang: default_en
+default_lang: en
 default_page_size: 100
 default_searchpage_size: 10
 maximum_page_size: 1000
@@ -47,7 +47,8 @@ default_fd_style: 'default'
 default_format: html
 
 request_copy:
-  period: 7 #days
+# period in days
+  period: 7
   subject: 'Request for a copy of your publication'
 
 datacite_logfile: "/srv/www/pub/logs/datacite.log"
