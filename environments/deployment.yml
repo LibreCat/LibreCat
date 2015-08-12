@@ -1,6 +1,6 @@
 # configuration file for production environment
 
-# only log warning and error messsages
+# only log warning and error messages
 log: "warning"
 
 # log message to a file in logs/
@@ -29,6 +29,8 @@ plack_middlewares:
 
 upload_dir: '/tmp'
 tmp_dir: '/tmp/pub'
+
+host: "https://pub3.uni-bielefeld.de"
 
 # workflow for thesis submission
 thesis:
