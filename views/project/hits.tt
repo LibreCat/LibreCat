@@ -1,10 +1,11 @@
 <!-- BEGIN project/hits.tt -->
 
-[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "" %]
+[% lang = session.lang ? session.lang : h.config.default_lang %]
+[% lf = h.config.language.$lang %]
 
 <div class="col-md-9">
   <div class="row">
-      <h2>[% total %] [% lang ? "Projects" : "Projekte" %]</h2>
+      <h2>[% total %] [% lf.project.heading %]</h2>
    </div>
 
 <div class="row">
@@ -21,13 +22,13 @@
         [% END %]
       [% END %]
       <div class="input-group">
-        <input type="text" name="q" id="q_id" value="[% qp.q | replace('"', '&quot;') %]"' class="form-control input-sm" placeholder="[% lang ? "Search" : "Suche" %]" />
+        <input type="text" name="q" id="q_id" value="[% qp.q | replace('"', '&quot;') %]"' class="form-control input-sm" placeholder="[% lf.facets.search %]" />
         <span class="input-group-btn">
-          <button type="submit" class="btn btn-sm btn-default">[% lang ? "Go!" : "Los!" %]</button>
+          <button type="submit" class="btn btn-sm btn-default">[% lf.facets.go_button %]</button>
         </span>
       </div>
       [% IF qp.q %]
-        <p class="text-muted"><a href="[% h.newuri_for("$data", qp, q="") %]" rel="nofollow"><span class="fa fa-times"></span></a> [% lang ? 'Search' : 'Suche' %]: [% qp.q %]</p>
+        <p class="text-muted"><a href="[% h.newuri_for("$data", qp, q="") %]" rel="nofollow"><span class="fa fa-times"></span></a> [% lf.facets.search %]: [% qp.q %]</p>
       [% END %]
     </form>
   </div>
@@ -65,7 +66,7 @@
 <div class="col-md-3">
   [% INCLUDE websites/rightBoxLogin.tt %]
 
-  <h5>[% lang ? 'Filter' : 'Filtern' %]</h5>
+  <h5>[% lf.project.filter %]</h5>
   [% IF qp.keys.0 %]
     [% IF qp.startYear %]
       <p class="text-muted"><a href="[% h.newuri_for("/project", qp, startYear="") %]" rel="nofollow"><span class="fa fa-times"></span></a> startYear: [% qp.startYear %]</p>
@@ -88,7 +89,7 @@
   <ul class="nav nav-tabs nav-stacked">
     [% IF facets.startYear.terms.0 %]
       <li>
-        <button data-toggle="collapse" data-target="#startYear"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Start Year' : 'Startjahr' %] ([% facets.startYear.terms.size %])</a></button>
+        <button data-toggle="collapse" data-target="#startYear"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lf.project.start_year %] ([% facets.startYear.terms.size %])</a></button>
         <div class="facettecollapse">
         <ul id="startYear" class="collapse[% IF qp.startYear %] in[% END %]">
           [% FOREACH date IN facets.startYear.terms %]
@@ -104,7 +105,7 @@
     [% END %]
     [% IF facets.endYear.terms.0 %]
       <li>
-        <button data-toggle="collapse" data-target="#endYear"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'End Year' : 'Endjahr' %] ([% facets.endYear.terms.size %])</a></button>
+        <button data-toggle="collapse" data-target="#endYear"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lf.project.end_year %] ([% facets.endYear.terms.size %])</a></button>
         <div class="facettecollapse">
         <ul id="endYear" class="collapse[% IF qp.endYear %] in[% END %]">
           [% FOREACH date IN facets.endYear.terms %]
@@ -120,7 +121,7 @@
     [% END %]
     [% IF facets.funder.terms.0 %]
       <li>
-        <button data-toggle="collapse" data-target="#funder"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Funding Organisation' : 'F&ouml;rderer' %] ([% facets.funder.terms.size %])</a></button>
+        <button data-toggle="collapse" data-target="#funder"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lf.project.funder %] ([% facets.funder.terms.size %])</a></button>
         <div class="facettecollapse">
         <ul id="funder" class="collapse[% IF qp.funder %] in[% END %]">
           [% FOREACH fund IN facets.funder.terms %]
@@ -140,14 +141,14 @@
 
   <ul class="nav nav-tabs nav-stacked">
     <li>
-      <a href="[% h.newuri_for("$path", qp, sc39="yes") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp; SC39 [% lang? 'Projects' : 'Projekte' %]</a>
+      <a href="[% h.newuri_for("$path", qp, sc39="yes") %]" rel="nofollow"><span class="fa fa-chevron-right"></span>&nbsp; SC39 [% lf.project.heading %]</a>
     </li>
   </ul>
   <br />
 
   <ul class="nav nav-tabs nav-stacked">
     <li>
-      <button data-toggle="collapse" data-target="#projecthitsperpage"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Hits per page' : 'Treffer pro Seite' %][% IF qp.limit %]: [% qp.limit %][% ELSE %]: 20[% END %]</a></button>
+      <button data-toggle="collapse" data-target="#projecthitsperpage"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lf.facets.hits_per_page %][% IF qp.limit %]: [% qp.limit %][% ELSE %]: 20[% END %]</a></button>
       <div class="facettecollapse">
         <ul id="projecthitsperpage" class="collapse">
           [% FOREACH limiting IN h.config.pagination_options %]
@@ -161,7 +162,7 @@
       </div>
     </li>
     <li>
-        <button data-toggle="collapse" data-target="#sort"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lang ? 'Sorting' : 'Sortierung' %]</a></button>
+        <button data-toggle="collapse" data-target="#sort"><a href="#"><span class="fa fa-chevron-down"></span>&nbsp;[% lf.facets.item('sort') %]</a></button>
         <div class="facettecollapse">
         <ul id="sort" class="collapse[% IF qp.defined('sorting') AND qp.item('sorting') != "" %] in[% END %]">
           [% FOREACH sortme IN h.config.project_sort_options %]

@@ -1,9 +1,9 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "de" %]
+[% lang = session.lang ? session.lang : h.config.default_lang %]
 [% lf = h.config.language.$lang %]
-[% style = qp.style || 'default' %]
+[% style = qp.style ? qp.style : 'default' %]
 
 [% INCLUDE header.tt %]
 
@@ -29,24 +29,24 @@
     <div class="row margin-top1">
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
-          <li[% IF bag == 'home' %] class="active"[% END %]><a href="/[% lang ? "?lang=$lang" : "" %]">[% lf.tabs.home %]</a></li>
-          <li[% IF bag == 'publication' %] class="active"[% END %]><a href="/publication[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=$lang" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.publications %]</a></li>
-          <li[% IF bag == 'data' %] class="active"[% END %]><a href="/data[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=$lang" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.data_publications %]</a></li>
+          <li[% IF bag == 'home' %] class="active"[% END %]><a href="/">[% lf.tabs.home %]</a></li>
+          <li[% IF bag == 'publication' %] class="active"[% END %]><a href="/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.publications %]</a></li>
+          <li[% IF bag == 'data' %] class="active"[% END %]><a href="/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.data_publications %]</a></li>
           <!--
-          <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=$lang" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.projects %]</a></li>
+          <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.projects %]</a></li>
           -->
-          <li[% IF bag == 'person' %] class="active"[% END %]><a href="/person[% IF lang OR qp.style OR qp.limit %]?[% END %][% lang ? "lang=$lang" : "" %][% IF lang AND (qp.style OR qp.limit) %]&[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.authors %]</a></li>
+          <li[% IF bag == 'person' %] class="active"[% END %]><a href="/person[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.authors %]</a></li>
           <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' || bag == 'policy' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lf.tabs.about %] <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li[% IF bag == 'about' %] class="active"[% END %]><a href="/about[% lang ? "?lang=$lang" : "" %]">[% lf.tabs.features %]</a></li>
+              <li[% IF bag == 'about' %] class="active"[% END %]><a href="/about">[% lf.tabs.features %]</a></li>
               <li><a href="[% h.host %]/doc/api">[% lf.tabs.documentation %]</a></li>
-              <li[% IF bag == 'faq' %] class="active"[% END %]><a href="/faq[% lang ? "?lang=$lang" : "" %]">[% lf.tabs.faq %]</a></li>
-              <li[% IF bag == 'contact' %] class="active"[% END %]><a href="/contact[% lang ? "?lang=$lang" : "" %]">[% lf.tabs.contact %]</a></li>
-              <li[% IF bag == 'policy' %] class="active"[% END %]><a href="/policy[% lang ? "?lang=$lang" : "" %]">[% lf.tabs.policy %]</a></li>
+              <li[% IF bag == 'faq' %] class="active"[% END %]><a href="/faq">[% lf.tabs.faq %]</a></li>
+              <li[% IF bag == 'contact' %] class="active"[% END %]><a href="/contact">[% lf.tabs.contact %]</a></li>
+              <li[% IF bag == 'policy' %] class="active"[% END %]><a href="/policy">[% lf.tabs.policy %]</a></li>
             </ul>
           </li>
           <li><a href="/policy" data-toggle="tab" style="display:none;">[% lf.tabs.policy %]</a></li>
-          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout?lang=[% lang %]" title="[% lf.main_page.logout %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% lf.main_page.logout %]</span></a>[% ELSE %]<a href="/login?lang=[% lang %]" title="[% lf.main_page.login %]"><span class="glyphicon glyphicon-log-in fw"></span>[% lf.main_page.login %]</a>[% END %]</li>
+          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="[% lf.main_page.logout %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% lf.main_page.logout %]</span></a>[% ELSE %]<a href="/login" title="[% lf.main_page.login %]"><span class="glyphicon glyphicon-log-in fw"></span>[% lf.main_page.login %]</a>[% END %]</li>
           [% IF session AND session.user %]<li class="navbar-right"><a href="/myPUB" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">(myPUB)</span></span></a></li>[% END %]
         </ul>
       </div>

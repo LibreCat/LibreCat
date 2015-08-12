@@ -54,7 +54,7 @@ get '/login' => sub {
     redirect '/myPUB' if session('user');
 
     # not logged in yet
-    template 'login', {error_message => params->{error_message} || '', login => params->{login} || '', lang => params->{lang} || "de"};
+    template 'login', {error_message => params->{error_message} || '', login => params->{login} || '', lang => params->{lang} || h->config->{default_lang}};
 };
 
 =head2 POST /login
@@ -75,7 +75,7 @@ post '/login' => sub {
         session role => $super_admin || $reviewer || $data_manager || $delegate || "user";
         session user         => $user->{login};
         session personNumber => $user->{_id};
-        session lang => $user->{lang} || params->{lang} || "en";
+        session lang => $user->{lang} || h->config->{default_lang};
 
         redirect '/myPUB';
     }
@@ -90,13 +90,28 @@ The logout route. Destroys session.
 
 =cut
 any '/logout' => sub {
+	my $lang = session->{lang};
     session->destroy;
-    if(params->{lang} and params->{lang} eq "en"){
-    	redirect '/en';
-    }
-    else {
+    session lang => $lang;
+    
+#    if(params->{lang} and params->{lang} eq "en"){
+#    	redirect '/en';
+#    }
+#    else {
     	redirect '/';
-    }
+#    }
+};
+
+=head2 GET /set_language
+
+Route to call when changing language in session
+
+=cut
+get '/set_language' => sub {
+	my $referer = request->{referer};
+	session lang => params->{lang};
+	$referer =~ s/lang=\w{2}\&*//g;
+	redirect $referer;
 };
 
 =head2 ANY /access_denied

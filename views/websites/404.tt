@@ -1,4 +1,6 @@
 [% INCLUDE header.tt %]
+[% lang = session.lang ? session.lang : h.config.default_lang %]
+[% lf = h.config.language.$lang %]
 
 <!-- BEGIN websites/404.tt -->
 
@@ -8,23 +10,13 @@
 
     <div id="banner">
 	<h1>
-	  [% IF lang %]
-	  File not found (404)
-	  [% ELSE %]
-	  Seite nicht gefunden (404)
-	  [% END %]
+	  [% lf.404.heading %]
 	</h1>
     </div>
 
     <div class="row margin-top1">
       <div class="col-md-12">
-	  [% IF lang %]
-	  <p>The page you requested couldn't be found.</p>
-	  <p><a href="/">Back to PUB homepage</a></p>
-	  [% ELSE %]
-	  <p>Die Seite wurde nicht gefunden</p>
-	  <p><a href="/">Zurück zur PUB-Startseite</a></p>
-	  [% END %]
+	  <p>[% lf.404.text %]</p>
       </div>
     </div>
 

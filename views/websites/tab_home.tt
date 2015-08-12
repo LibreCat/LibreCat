@@ -10,14 +10,11 @@
       <div class="col-md-12">
 	<div class="row">
 	<form action="/publication" method="get">
-	  [% IF lang %]
-	  <input type="hidden" name="lang" value="[% lang %]">
-	  [% END %]
 	  <div class="col-lg-8 col-md-7 col-sm-6">
 	    <div class="input-group">
 	      <input type="text" name="cql_query" id="q_id" ng-model="yourQuery" ng-init="yourQuery='[% qp.cql_query %]'" value="[% qp.q %]" class="form-control" placeholder="[% lf.home.search_placeholder %]">
 	      <span class="input-group-btn">
-		<button type="submit" class="btn btn-default">[% lf.facets.go_button %]</button>
+		    <button type="submit" class="btn btn-default">[% lf.facets.go_button %]</button>
 	      </span>
 	    </div>
 	  </div>

@@ -4,11 +4,7 @@
 [% backend = path.match('myPUB') ? 1 : 0 %]
 [% thisPerson = backend ? h.get_person(session.personNumber) : h.get_person(id) %]
 [% menu = "" %]
-[% IF (backend AND !session.lang) OR path.match('person') %]
-[% lang = "en" %]
-[% ELSIF session.lang %]
-[% lang = session.lang %]
-[% END %]
+[% lang = session.lang ? session.lang : h.config.default_lang %]
 [% lf = h.config.language.$lang %]
 
 [% INCLUDE header.tt %]

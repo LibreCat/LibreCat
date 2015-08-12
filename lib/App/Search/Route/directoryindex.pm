@@ -44,9 +44,9 @@ get qr{/en/puboa/*} => sub {
 
 
 #general stuff
-get qr{/en/*} => sub {
-	template 'websites/index_publication.tt';
-};
+#get qr{/en/*} => sub {
+#	template 'websites/index_publication.tt';
+#};
 
 get qr{/doc/api/*|/demo/*|/en/demo/*} => sub {
 	my $path = h->host . '/doc/api/index.html';

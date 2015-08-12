@@ -21,11 +21,11 @@
   
   <div class="row">
     [% IF bag == 'pubtheses' %]
-    <h4 class="margin-top0"><a href="/pub[% (lang && lang == "en") ? "?lang=en" : "" %]">[% lf.home.logos.brand %]</a></h4>
-    <a href="/[% (lang && lang == "en") ? "?lang=en" : "" %]"><img src="/images/publogo.gif" class="img-thumbnail" style="width:200px;"></a>
+    <h4 class="margin-top0"><a href="/">[% lf.home.logos.brand %]</a></h4>
+    <a href="/"><img src="/images/publogo.gif" class="img-thumbnail" style="width:200px;"></a>
     [% ELSE %]
-    <h4 class="margin-top0"><a href="/pubtheses[% (lang && lang == "en") ? "?lang=en" : "" %]">[% lf.home.logos.theses %]</a></h4>
-    <a href="/pubtheses[% (lang && lang == "en") ? "?lang=en" : "" %]"><span class="fa fa-graduation-cap fa-5x"></span></a>
+    <h4 class="margin-top0"><a href="/pubtheses">[% lf.home.logos.theses %]</a></h4>
+    <a href="/pubtheses"><span class="fa fa-graduation-cap fa-5x"></span></a>
     [% END %]
   </div>
   

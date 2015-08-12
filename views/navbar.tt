@@ -2,11 +2,7 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% IF backend %]
-[% lang = session.lang %]
-[% ELSE %]
-[% lang = (path.search('/en') OR qp.lang == "en") ? "en" : "de" %]
-[% END %]
+[% lang = session.lang ? session.lang : h.config.default_lang %]
 [% lf = h.config.language.$lang %]
 [% style = qp.style || 'default' %]
 
@@ -23,7 +19,7 @@
 	<span class="icon-bar"></span>
       </button>
       [% IF backend %]
-	<a class="navbar-brand" href="/[% lang ? "?lang=$lang" : "" %]"><img src="/images/publogo.gif" height="30" alt="" /></a>
+	<a class="navbar-brand" href="/"><img src="/images/publogo.gif" height="30" alt="" /></a>
       [% ELSE %]
 	<div class="hidden-sm hidden-lg hidden-md">
 	  <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" height="43" alt="" /></a>
@@ -40,7 +36,7 @@
 	   <ul class="nav navbar-nav">
        [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
 	     <li><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-sm">[% lf.header.my_author_page %]</span></a></li>
-	     <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF lang OR session.lang %]lang=[% lang || session.lang %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">[% lf.header.brand %]</span></a></li>
+	     <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">[% lf.header.brand %]</span></a></li>
 	   [% IF session.role == 'super_admin' %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% lf.header.admin_menu.admin %] <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -96,7 +92,7 @@
 	</div>
 	[% UNLESS request.path.match("/person/") OR request.path.match("/marked") %]
 	<div class="col-md-1 col-sm-1 col-md-offset-1">
-          <span class="select-language"><a href="[% h.host %]/[% UNLESS bag == 'home' %][% bag %][% END %][% lang == "en" ? "?lang=de" : "?lang=en" %][% IF qp.q %][% IF !lang %]?[% ELSE %]&[% END %]q=[% qp.q.join("&q=") | replace('"', '&quot;') %][% END %]">[% lf.header.lang %]</a></span>
+      <span class="select-language"><a href="[% h.host %]/set_language?[% session.lang == "en" ? "lang=de" : "lang=en" %]">[% lf.header.lang %]</a></span>
 	</div>
 	[% END %]
       </div>

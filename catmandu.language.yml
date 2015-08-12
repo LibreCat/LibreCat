@@ -118,6 +118,12 @@ en:
     sfb_profile: "SFB882-GK Profile"
     no_author_ids: "No Author IDs set."
     person_id_title: "These IDs will be visible on your public person page immediately after saving."
+  project:
+    heading: "Projects"
+    filter: "Filter"
+    start_year: "Start Year"
+    end_year: "End Year"
+    funder: "Funding Organisation"
   facets:
     filters_and_searchterms: "Filters and Search Terms"
     search_filter: "Search / Filter"
@@ -1331,6 +1337,15 @@ en:
       delete: "Delete"
       next: "Next"
       select: "Select"
+    418:
+      heading: "I'm a teapot (418)"
+      text: "You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br />The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)"
+    404:
+      heading: "Page not found (404)"
+      text: "The page you requested couldn't be found.<br /><br /><a href="/">Back to PUB homepage</a>"
+    403:
+      heading: "Access denied (403)"
+      text: "You don't have access to this file / folder.<br /><br /><a href="/">Back to PUB homepage</a>"
 
 de:
   login:
@@ -1449,6 +1464,12 @@ de:
     sfb_profile: "SFB882-GK Profil"
     no_author_ids: "Keine Autoren-Ids gesetzt."
     person_id_title: "Diese Ids werden direkt nach dem Speichern auf Ihrer Personenseite sichtbar sein."
+  project:
+    heading: "Projects"
+    filter: "Filtern"
+    start_year: "Startjahr"
+    end_year: "Endjahr"
+    funder: "Förderer"
   facets:
     filters_and_searchterms: "Filter und Suchbegriffe"
     search_filter: "Suche / Filtern"
@@ -2691,3 +2712,12 @@ de:
       delete: "Löschen"
       next: "Weiter"
       select: "Wählen"
+    418:
+      heading: "I'm a teapot (418)"
+      text: "Sie haben Kaffee von diesem Server angefordert. Die Antwort des Servers war: <strong>I'm a teapot</strong><br />The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)"
+    404:
+      heading: "Seite nicht gefunden (404)"
+      text: "Die Seite wurde nicht gefunden<br /><br /><a href='/'>Zurück zur PUB-Startseite</a>"
+    403:
+      heading: "Access denied (403)"
+      text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis.<br /><br /><a href="/">Zurück zur PUB-Startseite</a>"
