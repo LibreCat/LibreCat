@@ -165,13 +165,20 @@
 
       <div class="col-sm-3 col-sm-offset-1 text-sm-right">
       [% IF bag != "data" %]
-	    [% IF fi %]
-	    <a itemprop="thumbnailUrl" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]">
-	    <object data="/thumbnail/[% _id %]" class="img-thumbnail" itemprop="image">
-          <img src="/images/dummy_publication.png" class="img-thumbnail">
-        </object>
-	    </a>
-	    [% END %]
+      [% IF fi %]
+	<a itemprop="thumbnailUrl" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]">
+	<object data="/thumbnail/[% _id %]" itemprop="image" class="img-thumbnail">
+	  <span class="fa fa-file-pdf-o fa-5x btn text-success"></span>
+	</object>
+	</a>
+      [% ELSE %]
+	<div class="img-thumbnail nolink" title="Kein Volltext verfügbar / No fulltext available">
+	<span class="fa-stack fa-3x">
+	  <span class="fa fa-file-pdf-o fa-stack-1x"></span>
+	  <span class="fa fa-ban fa-stack-2x text-danger"></span>
+	</span>
+	</div>
+      [% END %]
       [% END %]
       </div>
 
