@@ -127,7 +127,7 @@ get '/rc/approve/:key' => sub {
 	$data->{approved} = 1;
 	$bag->add($data);
 	my $body = export_to_string({ key => params->{key} }, 'Template',
-		template => 'views/email/req_copy_approve.tt')
+		template => 'views/email/req_copy_approve.tt');
 	try {
 		email {
 			to => $data->{user_email},
