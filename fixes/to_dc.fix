@@ -53,21 +53,33 @@ move_field(external_id.fp6,'res.relation.$append')
 
 prepend(external_id.fp7,'info:eu-repo/grantAgreement/EC/')
 move_field(external_id.fp7,'res.relation.$append')
+#H2020 missing
+
+
 
 # file stuff
-move_field(file.*.content_type, 'res.format.$append')
+unless exists(file)
+  add_field('res.rights.$append','info:eu-repo/semantics/restrictedAccess')
+end
 
-#if (my $file = $pub->{file}->[0]) {
-#   $dc->{format} = [ $file->{content_type} ];
-#   push (@{$dc->{identifier}}, "$host/download/".$pub->{_id}."/".$file->{file_id});
-#   if ($file->{access_level} eq 'open_access') {
-#       push @{$dc->{rights} ||= []}, "info:eu-repo/semantics/openAccess";
-#   } else {
-#       push @{$dc->{rights} ||= []}, "info:eu-repo/semantics/restrictedAccess";
-#   }
-#} else {
-#    push @{$dc->{rights} ||= []}, "info:eu-repo/semantics/restrictedAccess";
-#}
+do list(path => file)
+  do identity()
+    unless all_match(relation, hidden)
+      move_field(content_type, 'res.format.$append')
+      add_field(tmp,'https://pub.uni-bielefeld.de')
+      add_field('tmp.$append',download)
+      copy_field(_id,'tmp.$append')
+      copy_field(file_id,'tmp.$append')
+      join_field(tmp,'/')
+      move_field(tmp,'res.identifier.$append')
+      if any_match(access_level,open_access)
+        add_field('res.rights.$append','info:eu-repo/semantics/openAccess')
+      else
+        add_field('res.rights.$append','info:eu-repo/semantics/restrictedAccess')
+      end
+    end
+  end
+end
 
 retain_field(res)
 move_field(res, .)

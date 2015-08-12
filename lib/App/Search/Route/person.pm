@@ -78,6 +78,7 @@ get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
 	@{$p->{q}} = @orig_q;
 	push @{$p->{q}}, "(type=researchData OR type=dara)";
 	push @{$p->{q}}, "person=$id";
+	push @{$p->{q}}, "status=public";
 	$p->{limit} = 1;
 	$researchhits = h->search_publication($p);
 	$hits->{researchhits} = $researchhits;

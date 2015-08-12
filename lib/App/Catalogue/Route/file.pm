@@ -11,7 +11,6 @@ All these must be public.
 use Catmandu::Sane;
 use Catmandu qw(export_to_string);
 use Dancer ':syntax';
-use Dancer::Request;
 use Dancer::Plugin::Email;
 use Dancer::Plugin::Auth::Tiny;
 use App::Helper;
@@ -41,114 +40,106 @@ sub _get_file_info {
 	}
 }
 
-=head1 PREFIX /rc
-
-Prefix for the feature 'request-a-copy'
-
-=cut
-prefix '/rc' => sub {
-
-=head2 GET /rc/:id/:file_id
+=head2 POST /rc/:id/:file_id
 
 Request a copy of the publication. Email will be sent to the author.
 
 =cut
-	post '/:id/:file_id' => sub {
-		my $bag = Catmandu->store->bag('request');
-		my $file = _get_file_info(params->{id}, params->{file_id});
-		unless ($file->{request_a_copy}) {
-			forward '/publication/'.params->{id}, {method => 'GET'};
-		}
+post '/rc/:id/:file_id' => sub {
+	require Dancer::Plugin::Email;
 
-		my $date_expires = _calc_date();
+	my $bag = Catmandu->store->bag('request');
+	my $file = _get_file_info(params->{id}, params->{file_id});
+	unless ($file->{request_a_copy}) {
+		forward '/publication/'.params->{id}, {method => 'GET'};
+	}
 
-		my $query = {
-			approved => 1,
+	my $date_expires = _calc_date();
+
+	my $query = {
+		approved => 1,
+		file_id => params->{file_id},
+		file_name => $file->{file_name},
+		date_expires => $date_expires,
+		record_id => params->{id},
+		};
+
+	my $hits = $bag->search(
+	    query => $query,
+	    limit => 1
+	);
+
+	if ($hits->first){
+		return to_json {
+			ok => true,
+			url => h->host . "/rc/" . $hits->first->{_id},
+		};
+	} else {
+		my $stored = $bag->add({
+			record_id => params->{id},
 			file_id => params->{file_id},
 			file_name => $file->{file_name},
 			date_expires => $date_expires,
-			record_id => params->{id},
-			};
+			user_email => params->{user_email},
+			approved => params->{approved} || 0,
+		});
 
-		my $hits = $bag->search(
-		    query => $query,
-		    limit => 1
-		);
-
-		if ($hits->first){
-			return to_json {
-				ok => true,
-				url => h->host . "/rc/" . $hits->first->{_id},
-			};
-		} else {
-			my $stored = $bag->add({
-				record_id => params->{id},
-				file_id => params->{file_id},
-				file_name => $file->{file_name},
-				date_expires => $date_expires,
+		my $file_creator_email = h->get_person($file->{creator})->{bis}->{email};
+		if(params->{user_email}){
+			my $pub = h->publication->get(params->{id});
+			my $mail_body = export_to_string({
+				title => $pub->{title},
 				user_email => params->{user_email},
-				approved => params->{approved} || 0,
-			});
-
-			my $file_creator_email = h->get_person($file->{creator})->{bis}->{email};
-			if(params->{user_email}){
-				my $pub = h->publication->get(params->{id});
-				my $mail_body = export_to_string({
-					title => $pub->{title},
-					user_email => params->{user_email},
-					mesg => params->{mesg} || '',
-					key => $stored->{_id},
-					host => h->host,
-					},
-					'Template',
-					template => 'views/email/req_copy.tt',
-				);
-				try {
-					email {
-						to => $file_creator_email,
-						subject => h->config->{request_copy}->{subject},
-						body => $mail_body,
-					};
-					#forward '/publication/'.params->{id}, {method => 'GET'};
-				} catch {
-					error "Could not send email: $_";
-				}
-			} else {
-				return h->host . "/rc/" . $stored->{_id};
+				mesg => params->{mesg} || '',
+				key => $stored->{_id},
+				host => h->host,
+				},
+				'Template',
+				template => 'views/email/req_copy.tt',
+			);
+			try {
+				email {
+					to => $file_creator_email,
+					subject => h->config->{request_copy}->{subject},
+					body => $mail_body,
+				};
+				return forward '/publication/'.params->{id}, {method => 'GET'};
+			} catch {
+				error "Could not send email: $_";
 			}
+		} else {
+			return h->host . "/rc/" . $stored->{_id};
 		}
-	};
+	}
+};
 
 =head2 GET /rc/approve/:key
 
 Author approves the request. Email will be sent to user.
 
 =cut
-	get '/approve/:key' => sub {
-		forward '/rc/approve', {key => params->{key}}, {method => 'POST'};
-	};
+get '/rc/approve/:key' => sub {
+	require Dancer::Plugin::Email;
 
-	post '/approve' => sub {
-		my $bag = Catmandu->store->bag('request');
-		my $data = $bag->get(params->{key});
-		return "Nothing to approve." unless $data;
+	my $bag = Catmandu->store->bag('request');
+	my $data = $bag->get(params->{key});
+	return "Nothing to approve." unless $data;
 
-		$data->{approved} = 1;
-		$bag->add($data);
-		try {
-			email {
-				to => $data->{user_email},
-				subject => h->config->{request_copy}->{subject},
-				body => export_to_string(
-					{ key => params->{key} },
-					'Template',
-					template => 'views/email/req_copy_approve.tt'),
-			};
-		} catch {
-			error "Could not send email: $_";
-		}
-		return "Thank you for your approval. The user will be notified to download the file.";
-	};
+	$data->{approved} = 1;
+	$bag->add($data);
+	my $body = export_to_string({ key => params->{key} }, 'Template',
+		template => 'views/email/req_copy_approve.tt')
+	try {
+		email {
+			to => $data->{user_email},
+			subject => h->config->{request_copy}->{subject},
+			body => $body,
+		};
+	} catch {
+		error "Could not send email: $_";
+	}
+	return "Thank you for your approval. The user will be notified to download the file.";
+};
 
 =head2 GET /rc/deny/:key
 
@@ -156,30 +147,28 @@ Author refuses the request for a copy. Email will be sent
 to user. Delete request key from database.
 
 =cut
-	get 'deny/:key' => sub {
-		forward '/rc/deny', {key => params->{key}}, {method => 'POST'};
-	};
+get '/rc/deny/:key' => sub {
+	require Dancer::Plugin::Email;
 
-	post '/deny' => sub {
-		my $bag = Catmandu->store->bag('request');
-		my $data = $bag->get(params->{key});
-		return "Nothing to deny." unless $data;
+	my $bag = Catmandu->store->bag('request');
+	my $data = $bag->get(params->{key});
+	return "Nothing to deny." unless $data;
 
-		$bag->delete(params->{key});
-		try {
-			email {
-				to => $data->{user_email},
-				subject => h->config->{request_copy}->{subject},
-				body => export_to_string(
-					{},
-					'Template',
-					template => 'views/email/req_copy_deny.tt'),
-			};
-		} catch {
-			error "Could not send email: $_";
-		}
-		return "The user will be notified that the request has been denied.";
-	};
+	$bag->delete(params->{key});
+	try {
+		email {
+			to => $data->{user_email},
+			subject => h->config->{request_copy}->{subject},
+			body => export_to_string(
+				{},
+				'Template',
+				template => 'views/email/req_copy_deny.tt'),
+		};
+	} catch {
+		error "Could not send email: $_";
+	}
+	return "The user will be notified that the request has been denied.";
+};
 
 =head2 GET /rc/:key
 
@@ -187,16 +176,14 @@ User received permission for downloading.
 Now get the document if time has not expired yet.
 
 =cut
-	get '/:key' => sub {
-		my $check = Catmandu->store->bag('request')->get(params->{key});
-		if ($check and $check->{approved} == 1) {
-			_send_it($check->{record_id}, $check->{file_name});
-		} else {
-			template 'error',
-				{message => "The time slot has expired. You can't download the document anymore."};
-		}
-	};
-
+get '/rc/:key' => sub {
+	my $check = Catmandu->store->bag('request')->get(params->{key});
+	if ($check and $check->{approved} == 1) {
+		_send_it($check->{record_id}, $check->{file_name});
+	} else {
+		template 'error',
+			{message => "The time slot has expired. You can't download the document anymore."};
+	}
 };
 
 =head2 GET /download/:id/:file_id
@@ -224,12 +211,12 @@ get '/download/:id/:file_id' => sub {
 # the route
 get '/thumbnail/:id' => sub {
     my $id = params->{id};
- 
+
     # get the publication
     if (my $pub = h->publication->get($id)) {
         return status 404 unless $pub->{status} eq 'public'; # check if it's public
         my $files = $pub->{file} || return status 404;
- 
+
         for my $file (@$files) {
             if ($file->{file_name} =~ /^thumbnail\.\w{2,3}$/) { # found the file
                 if ($file->{access_level} eq 'closed') {
@@ -239,7 +226,7 @@ get '/thumbnail/:id' => sub {
                     return status 401 unless request->address =~ h->config->{private}->{ip_range};
                 }
                 else {
-                	
+
                 	_send_it($id, $file->{file_name});
                 }
             }

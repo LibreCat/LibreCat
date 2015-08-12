@@ -1,5 +1,7 @@
 # mods mapping
 
+add_field(host,'https://pub.uni-bielefeld.de')
+
 move_field(type,genre)
 lookup(genre, fixes/lookup/mods_types.csv, default: thesis)
 

@@ -26,11 +26,6 @@ get '/record/:id' => sub {
     forward '/publication/'.params->{id};
 };
 
-get '/download/:id/:file_id' => sub {
-	my $path = h->host . 'myPUB/download/' . params->{'id'} . '/' . params->{'file_id'};
-	redirect $path;
-};
-
 get '/dublin_core/:id' => sub {
     forward '/publication/'.params->{id}, {fmt => 'dc'};
 };
