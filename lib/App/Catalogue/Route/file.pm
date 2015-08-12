@@ -103,7 +103,6 @@ post '/rc/:id/:file_id' => sub {
 					subject => h->config->{request_copy}->{subject},
 					body => $mail_body,
 				};
-				return forward '/publication/'.params->{id}, {method => 'GET'};
 			} catch {
 				error "Could not send email: $_";
 			}
@@ -128,7 +127,7 @@ get '/rc/approve/:key' => sub {
 	$data->{approved} = 1;
 	$bag->add($data);
 	my $body = export_to_string({ key => params->{key} }, 'Template',
-		template => 'views/email/req_copy_approve.tt')
+		template => 'views/email/req_copy_approve.tt');
 	try {
 		email {
 			to => $data->{user_email},
