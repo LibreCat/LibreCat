@@ -103,7 +103,6 @@ post '/rc/:id/:file_id' => sub {
 					subject => h->config->{request_copy}->{subject},
 					body => $mail_body,
 				};
-				return forward '/publication/'.params->{id}, {method => 'GET'};
 			} catch {
 				error "Could not send email: $_";
 			}
