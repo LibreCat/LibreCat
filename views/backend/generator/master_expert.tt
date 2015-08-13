@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-sm-9">
       [% IF title %]
-	 <h1>[% title %]</h1>
+	<h1>[% title %]</h1>
       [% ELSE %]
 	<h1 class="margin-top0">[% lf.title_new_{% genus %} %][% lf.$type.label %]</h1>
       [% END%]
@@ -36,6 +36,8 @@
     <input type="hidden" name="status" value="[% IF !status OR status == "new" %]private[% ELSE %][% status %][% END %]"/>
     <input type="hidden" name="new_record" value="[% title ? "0" : "1" %]"/>
     <input type="hidden" name="date_created" value="[% date_created %]" />
+    <input type="hidden" name="creator.login" value="[% creator ? creator.login : thisPerson.login %]" />
+    <input type="hidden" name="creator.id" value="[% creator ? creator.id : thisPerson._id %]" />
     <input type="hidden" name="edit_mode" id="edit_mode" value="expert" />
 
     <div class="tab tab-content edit-form">
