@@ -15,9 +15,9 @@
   [% IF thisPerson.bis.former == "1" %]
     <p>[% lf.person_profile.former_researcher %]</p>
   [% ELSE %]
-    [% lf.person_profile.view_in %] <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% id %]&amp;lang=en">[% lf.person_profile.directory_of_staff %]</a>
+    [% lf.person_profile.view_in %] <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% thisPerson._id %]&amp;lang=en">[% lf.person_profile.directory_of_staff %]</a>
     [% IF thisPerson.sfb882_profile %]
-    <br />[% lf.person_profile.view %]<a href="http://www.sfb882.uni-bielefeld.de/en/staff/[% id %]">[% lf.person_profile.sfb_profile %]</a>
+    <br />[% lf.person_profile.view %]<a href="http://www.sfb882.uni-bielefeld.de/en/staff/[% thisPerson._id %]">[% lf.person_profile.sfb_profile %]</a>
     [% END %]
 
     <div class="row">&nbsp;</div>
