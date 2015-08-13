@@ -18,14 +18,11 @@ my $thumb_dir = h->config->{thumb_dir};
 
 sub make_thumbnail {
     my ($id, $file_name) = @_;
+
     my $file_path = path(h->get_file_path($id), $file_name);
-    my $thumbnail = path(dirname($file_path), "thumbnail.*");
-    my $thumbnail_name = path(dirname($file_path), "thumbnail.png");
+    my $thumbnail = path(dirname($file_path), "thumbnail.png");
     unless (-e $thumbnail) {
-        system "convert -density 96 ${file_path}[0] $thumbnail_name";
-    }
-    if(-e $thumbnail_name){
-    	return $thumbnail_name;
+        system "convert -resize x200 ${file_path}[0] $thumbnail";
     }
 }
 
