@@ -1342,10 +1342,10 @@ en:
       text: "You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br />The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)"
     404:
       heading: "Page not found (404)"
-      text: "The page you requested couldn't be found.<br /><br /><a href="/">Back to PUB homepage</a>"
+      text: "The page you requested couldn't be found.<br /><br /><a href='/'>Back to PUB homepage</a>"
     403:
       heading: "Access denied (403)"
-      text: "You don't have access to this file / folder.<br /><br /><a href="/">Back to PUB homepage</a>"
+      text: "You don't have access to this file / folder.<br /><br /><a href='/'>Back to PUB homepage</a>"
 
 de:
   login:
@@ -2720,4 +2720,4 @@ de:
       text: "Die Seite wurde nicht gefunden<br /><br /><a href='/'>Zurück zur PUB-Startseite</a>"
     403:
       heading: "Access denied (403)"
-      text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis.<br /><br /><a href="/">Zurück zur PUB-Startseite</a>"
+      text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis.<br /><br /><a href='/'>Zurück zur PUB-Startseite</a>"
