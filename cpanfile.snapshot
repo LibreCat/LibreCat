@@ -170,6 +170,33 @@ DISTRIBUTIONS
       IO::String 0
       LaTeX::ToUnicode 0.02
       Test::More 0
+  Business-ISBN-2.09
+    pathname: B/BD/BDFOY/Business-ISBN-2.09.tar.gz
+    provides:
+      Business::ISBN 2.09
+      Business::ISBN10 2.09
+      Business::ISBN13 2.09
+    requirements:
+      Business::ISBN::Data 20140910
+      ExtUtils::MakeMaker 0
+      URI 0
+  Business-ISBN-Data-20140910.002
+    pathname: B/BD/BDFOY/Business-ISBN-Data-20140910.002.tar.gz
+    provides:
+      Business::ISBN 20140910.002
+      Business::ISBN::Data 20140910.002
+    requirements:
+      Carp 0
+      ExtUtils::MakeMaker 0
+      File::Basename 0
+      File::Spec::Functions 0
+  Business-ISSN-0.91
+    pathname: B/BD/BDFOY/Business-ISSN-0.91.tar.gz
+    provides:
+      Business::ISSN 0.91
+    requirements:
+      ExtUtils::MakeMaker 0
+      Test::More 0
   CGI-4.13
     pathname: L/LE/LEEJO/CGI-4.13.tar.gz
     provides:
@@ -281,10 +308,10 @@ DISTRIBUTIONS
     requirements:
       Carp 0
       ExtUtils::MakeMaker 0
-  Catmandu-0.9301
-    pathname: N/NI/NICS/Catmandu-0.9301.tar.gz
+  Catmandu-0.94
+    pathname: N/NI/NICS/Catmandu-0.94.tar.gz
     provides:
-      Catmandu 0.9301
+      Catmandu 0.94
       Catmandu::Addable undef
       Catmandu::ArrayIterator undef
       Catmandu::BadArg undef
@@ -300,6 +327,7 @@ DISTRIBUTIONS
       Catmandu::Cmd::data undef
       Catmandu::Cmd::delete undef
       Catmandu::Cmd::export undef
+      Catmandu::Cmd::help undef
       Catmandu::Cmd::import undef
       Catmandu::Cmd::info undef
       Catmandu::Cmd::move undef
@@ -310,7 +338,7 @@ DISTRIBUTIONS
       Catmandu::Exporter::CSV undef
       Catmandu::Exporter::JSON undef
       Catmandu::Exporter::Null undef
-      Catmandu::Exporter::RIS undef
+      Catmandu::Exporter::Text undef
       Catmandu::Exporter::YAML undef
       Catmandu::Fix undef
       Catmandu::Fix::Base undef
@@ -320,13 +348,21 @@ DISTRIBUTIONS
       Catmandu::Fix::Bind::identity undef
       Catmandu::Fix::Bind::list undef
       Catmandu::Fix::Bind::maybe undef
+      Catmandu::Fix::Bind::visitor undef
+      Catmandu::Fix::Bind::with undef
       Catmandu::Fix::Condition undef
       Catmandu::Fix::Condition::SimpleAllTest undef
       Catmandu::Fix::Condition::SimpleAnyTest undef
+      Catmandu::Fix::Condition::SimpleCompareTest undef
+      Catmandu::Fix::Condition::all_equal undef
       Catmandu::Fix::Condition::all_match undef
+      Catmandu::Fix::Condition::any_equal undef
       Catmandu::Fix::Condition::any_match undef
       Catmandu::Fix::Condition::exists undef
       Catmandu::Fix::Condition::greater_than undef
+      Catmandu::Fix::Condition::in undef
+      Catmandu::Fix::Condition::is_false undef
+      Catmandu::Fix::Condition::is_true undef
       Catmandu::Fix::Condition::less_than undef
       Catmandu::Fix::Has undef
       Catmandu::Fix::Parser undef
@@ -335,6 +371,7 @@ DISTRIBUTIONS
       Catmandu::Fix::add_to_store undef
       Catmandu::Fix::append undef
       Catmandu::Fix::array undef
+      Catmandu::Fix::assoc undef
       Catmandu::Fix::capitalize undef
       Catmandu::Fix::clone undef
       Catmandu::Fix::code undef
@@ -353,6 +390,7 @@ DISTRIBUTIONS
       Catmandu::Fix::lookup_in_store undef
       Catmandu::Fix::move_field undef
       Catmandu::Fix::nothing undef
+      Catmandu::Fix::perlcode undef
       Catmandu::Fix::prepend undef
       Catmandu::Fix::reject undef
       Catmandu::Fix::remove_field undef
@@ -378,6 +416,7 @@ DISTRIBUTIONS
       Catmandu::Importer::JSON undef
       Catmandu::Importer::Mock undef
       Catmandu::Importer::Modules undef
+      Catmandu::Importer::Text undef
       Catmandu::Importer::YAML undef
       Catmandu::Iterable undef
       Catmandu::Iterator undef
@@ -408,6 +447,7 @@ DISTRIBUTIONS
       Data::UUID 1.217
       Data::Util 0.59
       File::Find::Rule 0.33
+      File::Slurp::Tiny 0.003
       Hash::Merge::Simple 0
       IO::Handle::Util 0.01
       JSON::XS 2.3
@@ -506,6 +546,50 @@ DISTRIBUTIONS
       Moo > 1.004
       Template 2.22
       perl v5.10.1
+  Catmandu-Identifier-0.03
+    pathname: V/VP/VPEIL/Catmandu-Identifier-0.03.tar.gz
+    provides:
+      Catmandu::Fix::Condition::is_archived_web_uri undef
+      Catmandu::Fix::Condition::is_http_uri undef
+      Catmandu::Fix::Condition::is_https_uri undef
+      Catmandu::Fix::Condition::is_live_web_uri undef
+      Catmandu::Fix::Condition::is_uri undef
+      Catmandu::Fix::Condition::is_valid_isbn undef
+      Catmandu::Fix::Condition::is_valid_issn undef
+      Catmandu::Fix::Condition::is_web_uri undef
+      Catmandu::Fix::isbn10 undef
+      Catmandu::Fix::isbn13 undef
+      Catmandu::Fix::issn undef
+      Catmandu::Fix::memento_find undef
+      Catmandu::Fix::uuid undef
+      Catmandu::Identifier 0.03
+      Memento::TimeTravel 0.001
+    requirements:
+      Business::ISBN 2.09
+      Business::ISSN 0.91
+      Catmandu 0.94
+      Data::UUID 0
+      Data::Validate::URI 0
+      LWP::Simple 0
+      Module::Build 0.3601
+      Module::Build::Tiny 0.007
+      perl v5.10.1
+  Catmandu-Importer-getJSON-0.50
+    pathname: V/VO/VOJ/Catmandu-Importer-getJSON-0.50.tar.gz
+    provides:
+      Catmandu::Fix::get_json 0.50
+      Catmandu::Importer::getJSON 0.50
+      Importer::getJSON::FileCache 0.50
+      Importer::getJSON::MemoryCache 0.50
+    requirements:
+      Catmandu 0.9
+      Furl 3.0
+      JSON 2.90
+      Module::Build::Tiny 0.039
+      Moo 1.0
+      Scalar::Util 1.41
+      URI::Template 0.18
+      perl v5.10.1
   Catmandu-Inspire-0.265
     pathname: V/VP/VPEIL/Catmandu-Inspire-0.265.tar.gz
     provides:
@@ -518,17 +602,28 @@ DISTRIBUTIONS
       Module::Build 0.3601
       Moo 1.004
       perl v5.10.1
-  Catmandu-Store-Elasticsearch-0.0303
-    pathname: H/HO/HOCHSTEN/Catmandu-Store-Elasticsearch-0.0303.tar.gz
+  Catmandu-RIS-0.04
+    pathname: V/VP/VPEIL/Catmandu-RIS-0.04.tar.gz
     provides:
-      Catmandu::Store::Elasticsearch 0.0303
-      Catmandu::Store::Elasticsearch::Bag undef
-      Catmandu::Store::Elasticsearch::CQL undef
-      Catmandu::Store::Elasticsearch::Searcher undef
+      Catmandu::Exporter::RIS undef
+      Catmandu::Importer::RIS undef
+      Catmandu::RIS 0.04
+    requirements:
+      Catmandu 0.94
+      Encode 0
+      Module::Build 0.3601
+      perl 5.008005
+  Catmandu-Store-ElasticSearch-0.0304
+    pathname: H/HO/HOCHSTEN/Catmandu-Store-ElasticSearch-0.0304.tar.gz
+    provides:
+      Catmandu::Store::ElasticSearch 0.0304
+      Catmandu::Store::ElasticSearch::Bag undef
+      Catmandu::Store::ElasticSearch::CQL undef
+      Catmandu::Store::ElasticSearch::Searcher undef
     requirements:
       CQL::Parser 1.12
       Catmandu 0.9206
-      Module::Build 0.3601
+      Module::Build 0.28
       Moo 1.0
       Search::Elasticsearch 1.14
       perl v5.10.1
@@ -1154,6 +1249,36 @@ DISTRIBUTIONS
       Test::More 0.62
       XSLoader 0.02
       perl 5.008001
+  Data-Validate-Domain-0.11
+    pathname: D/DR/DROLSKY/Data-Validate-Domain-0.11.tar.gz
+    provides:
+      Data::Validate::Domain 0.11
+    requirements:
+      Exporter 0
+      ExtUtils::MakeMaker 0
+      Net::Domain::TLD 0
+      perl 5.006
+      strict 0
+      warnings 0
+  Data-Validate-IP-0.24
+    pathname: D/DR/DROLSKY/Data-Validate-IP-0.24.tar.gz
+    provides:
+      Data::Validate::IP 0.24
+    requirements:
+      Exporter 0
+      ExtUtils::MakeMaker 0
+      NetAddr::IP 4
+      Scalar::Util 0
+      strict 0
+      warnings 0
+  Data-Validate-URI-0.06
+    pathname: S/SO/SONNEN/Data-Validate-URI-0.06.tar.gz
+    provides:
+      Data::Validate::URI 0.06
+    requirements:
+      Data::Validate::Domain 0
+      Data::Validate::IP 0
+      ExtUtils::MakeMaker 0
   DateTime-1.18
     pathname: D/DR/DROLSKY/DateTime-1.18.tar.gz
     provides:
@@ -3632,6 +3757,14 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 0
       Test 0
       perl 5.006
+  Net-Domain-TLD-1.73
+    pathname: A/AL/ALEXP/Net-Domain-TLD-1.73.tar.gz
+    provides:
+      Net::Domain::TLD 1.73
+    requirements:
+      Carp 0
+      ExtUtils::MakeMaker 0
+      Storable 0
   Net-HTTP-6.07
     pathname: M/MS/MSCHILLI/Net-HTTP-6.07.tar.gz
     provides:
@@ -3699,6 +3832,19 @@ DISTRIBUTIONS
       POSIX 0
       Socket 0
       Time::HiRes 0
+  NetAddr-IP-4.075
+    pathname: M/MI/MIKER/NetAddr-IP-4.075.tar.gz
+    provides:
+      NetAddr::IP 4.075
+      NetAddr::IP::InetBase 0.08
+      NetAddr::IP::Lite 1.54
+      NetAddr::IP::Util 1.51
+      NetAddr::IP::UtilPP 1.09
+      NetAddr::IP::UtilPolluted 1.51
+      NetAddr::IP::Util_IS 1
+    requirements:
+      ExtUtils::MakeMaker 0
+      Test::More 0
   Number-Compare-0.03
     pathname: R/RC/RCLAMP/Number-Compare-0.03.tar.gz
     provides:
@@ -4125,6 +4271,16 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 0
       Scalar::Util 0
       perl 5.006
+  Scalar-List-Utils-1.42
+    pathname: P/PE/PEVANS/Scalar-List-Utils-1.42.tar.gz
+    provides:
+      List::Util 1.42
+      List::Util::XS 1.42
+      Scalar::Util 1.42
+      Sub::Util 1.42
+    requirements:
+      ExtUtils::MakeMaker 0
+      Test::More 0
   Scope-Guard-0.20
     pathname: C/CH/CHOCOLATE/Scope-Guard-0.20.tar.gz
     provides:
@@ -4947,6 +5103,17 @@ DISTRIBUTIONS
       parent 0
       perl 5.008001
       utf8 0
+  URI-Template-0.22
+    pathname: B/BR/BRICAS/URI-Template-0.22.tar.gz
+    provides:
+      URI::Template 0.22
+    requirements:
+      ExtUtils::MakeMaker 6.59
+      Test::More 0
+      URI 0
+      URI::Escape 0
+      Unicode::Normalize 0
+      perl 5.006
   Unicode-Stringprep-1.105
     pathname: C/CF/CFAERBER/Unicode-Stringprep-1.105.tar.gz
     provides:
@@ -5182,6 +5349,14 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 0
       perl 5.008001
+  all-0.5101
+    pathname: D/DE/DEXTER/all-0.5101.tar.gz
+    provides:
+      all 0.5101
+    requirements:
+      File::Find 0
+      File::Spec 0
+      perl 5.006
   asa-1.03
     pathname: A/AD/ADAMK/asa-1.03.tar.gz
     provides:
