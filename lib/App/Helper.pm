@@ -382,31 +382,9 @@ sub update_record {
 		foreach my $f (@{$rec->{file}}) {
 			if ($f->{access_level} eq 'open_access' && lc $f->{file_name} =~ /\.pdf$|\.ps$/) {
 				$thumbnail = App::Catalogue::Controller::File::make_thumbnail($rec->{_id}, $f->{file_name});
-				$thumbnail =~ s/.*\/(thumbnail\.\w{2,3})$/$1/g;
-				
-				my $now = $self->now;
-				$thumbnail_id = $self->new_record();
-				my $file_order = sprintf("%03d", $#{$rec->{file_order}} + 1);
-				$thumbnail_data = {
-					success => 1,
-					file_name => $thumbnail,
-					creator => Dancer::session->{user},
-					date_updated => $now,
-					date_created => $now,
-					access_level => "open_access",
-					open_access => 1,
-					content_type => 'image/png',
-					relation => "hidden",
-					year_last_uploaded => substr($now,0,4),
-					file_id => $thumbnail_id,
-					file_order => $file_order,
-				};
-				$thumbnail_data->{file_json} = to_json($thumbnail_data);
 				last;
 			}
 		}
-		push @{$rec->{file}}, $thumbnail_data if $thumbnail_data;
-		push @{$rec->{file_order}}, $thumbnail_id if $thumbnail_id and $thumbnail_data;
 		
 		App::Catalogue::Controller::Material::update_related_material($rec);
 		$rec->{citation} = Citation::index_citation_update($rec,0,'') || '';
@@ -472,9 +450,9 @@ sub default_facets {
 		status => { terms => { field => 'status', size => 8 } },
 		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
 		type => { terms => { field => 'type', size => 25 } },
-#		isi => { terms => { field => 'isi', size => 1 } },
+		isi => { terms => { field => 'isi', size => 1 } },
 #		arxiv => { terms => { field => 'arxiv', size => 1 } },
-#		pmid => { terms => { field => 'pmid', size => 1 } },
+		pmid => { terms => { field => 'pmid', size => 1 } },
 #		inspire => { terms => { field => 'inspire', size => 1 } },
 	};
 }
@@ -519,7 +497,9 @@ sub display_name_from_value {
 }
 
 sub host {
-	return "http://" . hostname_long;
+	my $self = shift;
+	#return "http://" . hostname_long;
+	return $self->config->{host};
 }
 
 sub shost {

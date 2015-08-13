@@ -210,27 +210,12 @@ get '/download/:id/:file_id' => sub {
 # the route
 get '/thumbnail/:id' => sub {
     my $id = params->{id};
-
-    # get the publication
-    if (my $pub = h->publication->get($id)) {
-        return status 404 unless $pub->{status} eq 'public'; # check if it's public
-        my $files = $pub->{file} || return status 404;
-
-        for my $file (@$files) {
-            if ($file->{file_name} =~ /^thumbnail\.\w{2,3}$/) { # found the file
-                if ($file->{access_level} eq 'closed') {
-                    return status 404;
-                }
-                if ($file->{access_level} eq 'local') { # check if ip is in range
-                    return status 401 unless request->address =~ h->config->{private}->{ip_range};
-                }
-                else {
-
-                	_send_it($id, $file->{file_name});
-                }
-            }
-        }
+    
+    my $path = h->get_file_path($id);
+    if (-e path($path, "thumbnail.png")){
+    	_send_it($id, "thumbnail.png");
     }
+
     status 404;
 };
 
