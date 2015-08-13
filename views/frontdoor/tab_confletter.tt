@@ -1,6 +1,6 @@
 
 <!-- BEGIN frontdoor/tab_confletter.tt -->
-	
+
 <div class="tab-pane" id="confletter">
   <div class="row">
     [% IF confLetter.size %]
@@ -9,7 +9,7 @@
       </div>
       <div class="col-md-10">
         [% FOREACH conf IN confLetter %]
-          <a href="[% h.shost %]/download/[% _id %]/[% conf.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF conf.description %]<i>Description:</i><br />[% conf.description %]<br /><br />[% END %]<i>Filename:</i><br />[% conf.file_name %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />Letter of Confirmation</a><br />
+          <a href="/download/[% _id %]/[% conf.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF conf.description %]<i>Description:</i><br />[% conf.description %]<br /><br />[% END %]<i>Filename:</i><br />[% conf.file_name %]"><img src="[% h.host %]/images/icon_weblink2.gif" alt="" class="textright" />Letter of Confirmation</a><br />
           <script>
             $('a.description').tooltip();
           </script>

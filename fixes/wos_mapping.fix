@@ -1,30 +1,33 @@
 
-# publication type
+# publication type missing
 
-#split_field('AU','_;_')
-split_field('AF','_;_')
-split_field('BE','_;_')
+move_field(AU, 'author')
+#move_field(AF.*, author.*.full_name)
+replace_all(author.*,"^","full_name:")
+split_field(author.*,":")
+hash(author.*)
 
 # authors
-do list (path => AF)
+do list (path => author)
   do identity ()
-    copy_field('name','last_name')
+    copy_field('full_name','last_name')
     replace_all('last_name','^(.*),.*','$1')
-    copy_field('name', 'first_name')
+    copy_field('full_name', 'first_name')
     replace_all('first_name', '.*,\s(.*)$','$1')
   end
 end
 
 move_field('TI','title')
-replace_all('title','_;_',' ')
+#replace_all('title','_;_',' ')
 
 #abstract
-move_field('AB','abstract.0.text')
-add_field('abstract.0.lang','eng')
-replace_all('abstract.0.text','_;_',' ')
+if exists (AB)
+  move_field('AB','abstract.0.text')
+  add_field('abstract.0.lang','eng')
+end
 
-replace_all('DE','_;_','; ')
-split_field('DE','; ')
+#replace_all('DE','_;_','; ')
+#split_field('DE','; ')
 move_field('DE','keyword')
 
 move_field('DI','doi')
@@ -32,7 +35,7 @@ move_field('DI','doi')
 # use maybe lookup via issn in crossref journal list
 move_field('SO','publication')
 
-move_field('LA','language.iso')
+#move_field('LA','language.iso')
 move_field('SN','publication_identifier.issn.0')
 move_field('EI','publication_identifier.eissn.0')
 replace_all('UT','^WOS:','')
@@ -68,3 +71,4 @@ remove_field('NR')
 remove_field('SP')
 remove_field('AR')
 remove_field('GP')
+remove_field(FX)

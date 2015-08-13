@@ -12,7 +12,6 @@ use Moo;
 use POSIX qw(strftime);
 use Hash::Merge::Simple qw(merge);
 use JSON;
-#use Coro;
 use Citation;
 
 Catmandu->load(':up');
@@ -165,8 +164,6 @@ sub get_sort_style {
 	my $return;
 	$param_sort = undef if ($param_sort eq "" or (ref $param_sort eq "ARRAY" and !$param_sort->[0]));
 	$param_style = undef if $param_style eq "";
-	my $user_sort = "";
-	#$user_sort = $user->{sort} if ($user && $user->{sort});
 	my $user_style = "";
 	$user_style = $user->{style} if ($user && $user->{style});
 
@@ -187,8 +184,6 @@ sub get_sort_style {
 	if($param_sort){
 		$param_sort = [$param_sort] if ref $param_sort ne "ARRAY";
 		$sort = $sort_backend = $param_sort;
-#	} elsif ($user_sort) {
-#		$sort = $sort_backend = $user_sort;
 	} else {
 		$sort = $self->config->{default_sort};
 		$sort_backend = $self->config->{default_sort_backend};
@@ -196,7 +191,6 @@ sub get_sort_style {
 
 	$return->{sort} = $sort;
 	$return->{sort_backend} = $sort_backend;
-	#$return->{user_sort} = $user_sort if $user_sort;
 	$return->{user_style} = $user_style if ($user_style);
 	$return->{default_sort} = $self->config->{default_sort};
 	$return->{default_sort_backend} = $self->config->{default_sort_backend};
@@ -205,8 +199,6 @@ sub get_sort_style {
 
 	Catmandu::Fix->new(fixes => ["delete_empty()"])->fix($return);
 
-	#$return->{sort_eq_usersort} = 0;
-	#$return->{sort_eq_usersort} = is_same($user_sort, $return->{sort_backend}) if $user_sort;
 	$return->{sort_eq_default} = 0;
 	$return->{sort_eq_default} = is_same($return->{sort_backend}, $self->config->{default_sort_backend});
 
@@ -356,8 +348,6 @@ sub get_metrics {
 sub new_record {
 	my ($self, $bag) = @_;
 
-	#return 3000000; #$self->update_record($bag,{new => 1})->{_id};
-
 	my $id = $self->bag->get('1')->{"latest"};
 	$id++;
 	$self->bag->add( { _id => "1", latest => $id } );
@@ -385,7 +375,7 @@ sub update_record {
 				last;
 			}
 		}
-		
+
 		App::Catalogue::Controller::Material::update_related_material($rec);
 		$rec->{citation} = Citation::index_citation_update($rec,0,'') || '';
 	}
@@ -396,8 +386,8 @@ sub update_record {
 	#compare version! through _version or through date_updated
 	$self->$bag->add($saved);
     $self->$bag->commit;
-    
-    sleep 1;
+
+    sleep 1; #bad hack!
 
 	return $saved;
 }
@@ -414,19 +404,16 @@ sub delete_record {
 	if ($bag eq 'publication') {
 		require App::Catalogue::Controller::File;
 		require App::Catalogue::Controller::Material;
-	#	my $wait = async {
 			App::Catalogue::Controller::Material::update_related_material($del);
 			App::Catalogue::Controller::File::delete_file($id);
-	#	};
-	#	cede;
 	}
 
 	my $saved = $self->backup($bag)->add($del);
 	$self->publication->add($del);
 	$self->publication->commit;
-	
+
 	sleep 1;
-	
+
 	return $saved;
 }
 
@@ -500,10 +487,6 @@ sub host {
 	my $self = shift;
 	#return "http://" . hostname_long;
 	return $self->config->{host};
-}
-
-sub shost {
-	return "https://" . hostname_long;
 }
 
 sub search_publication {
@@ -642,14 +625,14 @@ sub search_department {
 
 	my $cql = "";
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
-	
+
 	if($p->{hierarchy}){
 		my $hits = department->search(
 		    cql_query => $cql,
 		    limit => config->{maximum_page_size},
 		    start => 0,
 		);
-		
+
 		my $hierarchy;
 		$hits->each( sub {
 			my $hit = $_[0];
@@ -657,7 +640,7 @@ sub search_department {
 			$hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{oId} = $hit->{tree}->[1]->{id} if $hit->{layer} eq "2";
 			$hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{$hit->{tree}->[2]->{name}}->{oId} = $hit->{tree}->[2]->{id} if $hit->{layer} eq "3";
 		});
-		
+
 		return $hierarchy;
 	}
 	else {
@@ -676,7 +659,7 @@ sub search_project {
 
 	my $cql = "";
 	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
-	
+
 	if($p->{hierarchy}){
 		$cql = $cql ? " AND funded=1" : "funded=1";
 		my $hits = project->search(
@@ -684,14 +667,14 @@ sub search_project {
 		    limit => config->{maximum_page_size},
 		    start => 0,
 		);
-		
+
 		my $hierarchy;
 		$hits->each( sub {
 			my $hit = $_[0];
 			my $display = $hit->{acronym} ? $hit->{acronym} . " | " . $hit->{name} : $hit->{name};
 			$hierarchy->{$display}->{oId} = $hit->{id};
 		});
-		
+
 		return $hierarchy;
 	}
 	else {
@@ -701,11 +684,11 @@ sub search_project {
 		    start => $p->{start} ||= 0,
 		    sru_sortkeys => $p->{sorting} ||= "name,,1",
 		);
-		
+
 		foreach (qw(next_page last_page page previous_page pages_in_spread)) {
 			$hits->{$_} = $hits->$_;
 		}
-		
+
 		return $hits;
 	}
 
@@ -716,21 +699,21 @@ sub search_research_group {
 
 	my $cql = "";
 	$cql = join(' AND ',@{$p->{q}}) if $p->{q};
-	
+
 	if($p->{hierarchy}){
 		my $hits = research_group->search(
 		    cql_query => $cql,
 		    limit => config->{maximum_page_size},
 		    start => 0,
 		);
-		
+
 		my $hierarchy;
 		$hits->each( sub {
 			my $hit = $_[0];
 			my $display = $hit->{acronym} ? $hit->{acronym} . " | " . $hit->{name} : $hit->{name};
 			$hierarchy->{$display}->{oId} = $hit->{id};
 		});
-		
+
 		return $hierarchy;
 	}
 	else {
@@ -740,14 +723,14 @@ sub search_research_group {
 	        start => $p->{start} ||= 0,
 	        sru_sortkeys => $p->{sort} ||= "name,,1",
 	    );
-	    
+
 	    foreach (qw(next_page last_page page previous_page pages_in_spread)) {
 	    	$hits->{$_} = $hits->$_;
 	    }
-	    
+
 	    return $hits;
 	}
-	
+
 }
 
 sub search_award {
@@ -957,7 +940,7 @@ sub is_portal_default {
 			}
 		}
 	}
-	
+
 	if($return_hash->{delete_them}){
 		foreach my $key (keys %{$return_hash->{delete_them}}){
 			if ($key eq "q"){
@@ -970,7 +953,7 @@ sub is_portal_default {
 			}
 		}
 	}
-	
+
 	$return_hash->{full_query} = $full_query;
 
 	return $return_hash;
