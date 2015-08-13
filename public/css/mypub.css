@@ -84,6 +84,7 @@ a .total-marked{margin-right:5px;}
 
 /* image */
 .img-thumbnail{margin:0 5px 2px 0;}
+.img-thumbnail-fh{height:150px;width:auto;}
 
 /* buttons */
 .btn-white{background-image:none;background-color:#fff;border-color:#ccc!important;}
@@ -222,6 +223,7 @@ a{font-weight:bold;}
 @media (max-width:767px){
 footer{height:240px;/*footer height x 2*/}
 a{font-weight:bold;}
+.img-thumbnail-fh{height:50px;}
 }
   
 @media (max-width:992px){
