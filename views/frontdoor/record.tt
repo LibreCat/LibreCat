@@ -167,7 +167,7 @@
       [% IF fi %]
 	<a itemprop="thumbnailUrl" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]">
 	<object data="/thumbnail/[% _id %]" itemprop="image" class="img-thumbnail img-thumbnail-fh">
-	  <span class="fa fa-file-pdf-o fa-5x btn text-success"></span>
+	  <img src="/images/dummy_publication.png" class="img-thumbnail-fh" alt="Volltext öffnen / View fulltext" />
 	</object>
 	</a>
       [% ELSE %]
