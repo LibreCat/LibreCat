@@ -1204,6 +1204,15 @@ DISTRIBUTIONS
       Symbol 0
       Test 0
       perl 5.006
+  Data-Dumper-Concise-2.022
+    pathname: F/FR/FREW/Data-Dumper-Concise-2.022.tar.gz
+    provides:
+      Data::Dumper::Concise 2.022
+      Data::Dumper::Concise::Sugar undef
+      Devel::Dwarn undef
+    requirements:
+      ExtUtils::MakeMaker 6.59
+      perl 5.006
   Data-OptList-0.109
     pathname: R/RJ/RJBS/Data-OptList-0.109.tar.gz
     provides:
@@ -2419,6 +2428,26 @@ DISTRIBUTIONS
       perl 5.008001
       strict 0
       warnings 0
+  Exporter-Declare-0.114
+    pathname: E/EX/EXODIST/Exporter-Declare-0.114.tar.gz
+    provides:
+      Exporter::Declare 0.114
+      Exporter::Declare::Export undef
+      Exporter::Declare::Export::Alias undef
+      Exporter::Declare::Export::Generator undef
+      Exporter::Declare::Export::Sub undef
+      Exporter::Declare::Export::Variable undef
+      Exporter::Declare::Meta undef
+      Exporter::Declare::Specs undef
+    requirements:
+      Carp 0
+      Fennec::Lite 0.004
+      Meta::Builder 0.003
+      Scalar::Util 0
+      Test::Exception 0.29
+      Test::Simple 0.88
+      aliased 0
+      perl v5.8.0
   Exporter-Tiny-0.042
     pathname: T/TO/TOBYINK/Exporter-Tiny-0.042.tar.gz
     provides:
@@ -2476,6 +2505,15 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
+  Fennec-Lite-0.004
+    pathname: E/EX/EXODIST/Fennec-Lite-0.004.tar.gz
+    provides:
+      Fennec::Lite 0.004
+    requirements:
+      List::Util 0
+      Test::Builder 0
+      Test::More 0
+      perl 5.006
   File-Find-Rule-0.33
     pathname: R/RC/RCLAMP/File-Find-Rule-0.33.tar.gz
     provides:
@@ -2982,6 +3020,26 @@ DISTRIBUTIONS
       perl 5.008001
       strict 0
       warnings 0
+  Log-Contextual-0.006005
+    pathname: F/FR/FREW/Log-Contextual-0.006005.tar.gz
+    provides:
+      Log::Contextual 0.006005
+      Log::Contextual::Easy::Default 0.006005
+      Log::Contextual::Easy::Package 0.006005
+      Log::Contextual::Role::Router 0.006005
+      Log::Contextual::Role::Router::SetLogger 0.006005
+      Log::Contextual::Role::Router::WithLogger 0.006005
+      Log::Contextual::Router 0.006005
+      Log::Contextual::SimpleLogger 0.006005
+      Log::Contextual::TeeLogger 0.006005
+      Log::Contextual::WarnLogger 0.006005
+    requirements:
+      Carp 0
+      Data::Dumper::Concise 0
+      Exporter::Declare 0.111
+      ExtUtils::MakeMaker 0
+      Moo 1.003
+      Scalar::Util 0
   MIME-Types-2.09
     pathname: M/MA/MARKOV/MIME-Types-2.09.tar.gz
     provides:
@@ -3126,6 +3184,17 @@ DISTRIBUTIONS
       Test::More 0.94
       Time::Piece 1.12
       XSLoader 0.08
+  Meta-Builder-0.003
+    pathname: E/EX/EXODIST/Meta-Builder-0.003.tar.gz
+    provides:
+      Meta::Builder 0.003
+      Meta::Builder::Base undef
+      Meta::Builder::Util undef
+    requirements:
+      Carp 0
+      Fennec::Lite 0
+      Test::Exception 0
+      Test::More 0
   Module-Build-0.4211
     pathname: L/LE/LEONT/Module-Build-0.4211.tar.gz
     provides:
@@ -4190,6 +4259,16 @@ DISTRIBUTIONS
       URI 1.59
       parent 0
       perl 5.008001
+  Plack-Middleware-Negotiate-0.20
+    pathname: V/VO/VOJ/Plack-Middleware-Negotiate-0.20.tar.gz
+    provides:
+      Plack::Middleware::Negotiate 0.20
+    requirements:
+      HTTP::Negotiate 6.01
+      Log::Contextual 0.006
+      Module::Build::Tiny 0.039
+      Plack 1.0
+      perl v5.10.1
   Plack-Middleware-ReverseProxy-0.15
     pathname: M/MI/MIYAGAWA/Plack-Middleware-ReverseProxy-0.15.tar.gz
     provides:
@@ -5349,6 +5428,17 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 0
       perl 5.008001
+  aliased-0.34
+    pathname: E/ET/ETHER/aliased-0.34.tar.gz
+    provides:
+      aliased 0.34
+    requirements:
+      Carp 0
+      Exporter 0
+      Module::Build::Tiny 0.039
+      perl 5.006
+      strict 0
+      warnings 0
   all-0.5101
     pathname: D/DE/DEXTER/all-0.5101.tar.gz
     provides:
