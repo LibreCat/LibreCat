@@ -1,19 +1,15 @@
 # configuration for development environment
-log: "error"
+log: "debug"
 logger: file
 logger_format: %T [%{method}h] %h -- [%{accept_type}h]
 show_errors: 1
 warnings: 1
 traces: 1
 
-session: YAML
+session: Catmandu
 
 thesis:
   to: "vitali.peil@uni-bielefeld.de,petra.kohorst@uni-bielefeld.de"
   from: publikationsdienste.ub@uni-bielefeld.de
   subject: "[PUB TEST] New thesis submitted"
   urn_prefix: 'urn:nbn:de:hbz:361'
-
-plack_middlewares:
-  - ["ReverseProxy"]
-  - ["Deflater"]

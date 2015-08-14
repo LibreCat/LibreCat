@@ -37,6 +37,7 @@ requires 'Net::LDAPS';
 requires 'Plack';
 requires 'Plack::Middleware::ReverseProxy';
 requires 'Dancer::Middleware::Rebase';
+requires 'Plack::Middleware::Negotiate', '>= 0.20';
 requires 'Starman';
 
 # others
