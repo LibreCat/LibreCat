@@ -579,9 +579,7 @@ sub export_csl_json {
 	my $spec = config->{export}->{publication}->{csl_json};
 	my $out;
 	$hits->each(sub {
-		my $id = $_[0]->{_id};
-		my $csl = Citation::index_citation_update($id,0,'csl_json');
-		push @$out, $csl;
+		push @$out, Citation::index_citation_update($_[0],0,'csl_json');
 		});
 
 	my $f = export_to_string($out, $spec->{package}, $spec->{options} || {});
