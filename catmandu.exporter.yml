@@ -1,18 +1,6 @@
 _prefix:
   exporter:
 
-mime_types:
-  'application/json': 'json'
-  'text/x-yaml': 'yaml'
-  'text/x-bibtex': 'bibtex'
-  'application/x-research-info-systems': 'ris'
-  'application/mods+xml': 'mods'
-  'application/oaidc+xml': 'dc'
-  'application/oaidc+json': 'dc_json'
-  'application/rdf+xml': 'rdf'
-  'application/vnd.citationstyles.csl+json': 'csl_json'
-  'text/plain': 'redif'
-
 publication:
   json:
     package: 'JSON'
