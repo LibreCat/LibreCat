@@ -1164,6 +1164,7 @@ search:
           scoap3: {type: byte}
           phillister: {type: byte}
           opac: {type: byte}
+          foda: {type: byte}
           date_updated: {type: date, format: date_time_no_millis}
           file:
             properties:
