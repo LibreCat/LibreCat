@@ -196,7 +196,10 @@ $('.change_tab').click(function(e){
     else if(!check_license){
       $('#file_upload, #li_file_upload').addClass('active');
     }
-    e.preventDefault();
+    $('#mandatory-field-error').removeClass('hidden');
+    $('#mandatory-field-error').addClass('show');
+    window.scrollTo(0, 0);
+    //e.preventDefault();
   }
   else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish")){
     window.scrollTo(0, 0);
@@ -204,6 +207,8 @@ $('.change_tab').click(function(e){
   }
   else {
     $('.creator.has-error').removeClass('has-error');
+    $('#mandatory-field-error').removeClass('show');
+    $('#mandatory-field-error').addClass('hidden');
     if($(this).attr('name') != "finalSubmit"){
       if(this_button.attr('href')){
         var next_tab = this_button.attr('href').replace('#','');

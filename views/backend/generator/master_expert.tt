@@ -46,6 +46,10 @@
 
       <!-- STEP 1 -->
       <div id="basic_fields" class="tab_section">
+      
+      <div class="hidden bg-danger" id="mandatory-field-error">
+        <p>[% lf.mandatory_error %]</p>
+      </div>
 
 {% IF fields.basic_fields %}
   <h3>[% lf.$type.tab.basic_fields %]</h3>

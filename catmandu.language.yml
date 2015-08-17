@@ -1328,6 +1328,7 @@ en:
     title_new_m: "Add new "
     title_new_f: "Add new "
     mandatory_explain: "<strong>Fieldname</strong> <span class='starMandatory'></span> = Required field"
+    mandatory_error: "You missed some mandatory fields!"
     button:
       back: "Back"
       save: "Save"
@@ -2703,6 +2704,7 @@ de:
     title_new_m: "Neuer "
     title_new_f: "Neue "
     mandatory_explain: "<strong>Feldname</strong> <span class='starMandatory'></span> = Pflichtfeld"
+    mandatory_error: "Sie haben Pflichtfelder übersehen!"
     button:
       back: "Zurück"
       save: "Speichern"
