@@ -69,7 +69,7 @@
     <div class="page-header" id="banner">
 
       <ul class="breadcrumb">
-	<li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back to previous page</a></li>
+	<li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back</a></li>
 	<li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">Logout</span></a>[% ELSE %]<a href="/login" title="Login (myPUB)"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a>[% END %]</li>
 	[% IF session AND session.user %]<li class="navbar-right"><a href="/myPUB" title="[% lang ? "Logged in as:" : "Angemeldet als:" %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">(myPUB)</span></span></a></li>[% END %]
       </ul>
@@ -163,24 +163,17 @@
       </div><!-- end left col -->
 
       <div class="col-xs-2 col-sm-3 col-sm-offset-1 text-sm-right">
-      [% IF bag != "data" %]
       [% IF fi %]
-	<a itemprop="thumbnailUrl" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]">
-	<object data="/thumbnail/[% _id %]" itemprop="image" class="img-thumbnail img-thumbnail-fh">
-	  <img src="/images/dummy_publication.png" class="img-thumbnail-fh" alt="Volltext öffnen / View fulltext" />
-	</object>
-	</a>
+        <a itemprop="thumbnailUrl" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]">
+          <object data="/thumbnail/[% _id %]" itemprop="image" class="img-thumbnail img-thumbnail-fh">
+            <img src="/images/dummy_file.png" class="img-thumbnail-fh" alt="Volltext öffnen / View fulltext" />
+          </object>
+        </a>
       [% ELSE %]
-	<div class="img-thumbnail img-thumbnail-fh nolink">
-	<!-- 
-	<span class="fa-stack fa-3x">
-	  <span class="fa fa-file-pdf-o fa-stack-1x"></span>
-	  <span class="fa fa-ban fa-stack-2x text-danger"></span>
-	</span>
-	-->
-	<img src="/images/dummy_nofile.png" class="img-thumbnail-fh" alt="Kein Volltext verfügbar / No fulltext available" />
-	</div>
-      [% END %]
+	    <div class="img-thumbnail img-thumbnail-fh nolink">
+	      <img src="/images/dummy_nofile.png" class="img-thumbnail-fh" alt="Kein Volltext verfügbar / No fulltext available" />
+	      <!-- <p class="nofile">Kein Volltext verfügbar</p> -->
+	    </div>
       [% END %]
       </div>
 
