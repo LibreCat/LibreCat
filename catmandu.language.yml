@@ -155,11 +155,11 @@ en:
     sorted_by: "Sorted by"
     hits_per_page: "Hits per page"
     citation_style: "Citation Style"
+    save_style: "Save Style"
     embed: "Embed"
     export: "Export"
     export_as: "Export as"
     export_marked: "Export Marked"
-    save_as_default: "Save this as personal default"
     exports:
       rtf: "RTF (e.g. Word, Office)"
       bibtex: "BibTeX (e.g. Citavi)"
@@ -1338,15 +1338,15 @@ en:
       delete: "Delete"
       next: "Next"
       select: "Select"
-    418:
-      heading: "I'm a teapot (418)"
-      text: "You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br />The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)"
-    404:
-      heading: "Page not found (404)"
-      text: "The page you requested couldn't be found.<br /><br /><a href='/'>Back to PUB homepage</a>"
-    403:
-      heading: "Access denied (403)"
-      text: "You don't have access to this file / folder.<br /><br /><a href='/'>Back to PUB homepage</a>"
+  418:
+    heading: "I'm a teapot (418)"
+    text: "You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br />The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)"
+  404:
+    heading: "Page not found (404)"
+    text: "The page you requested couldn't be found.<br /><br /><a href='/'>Back to PUB homepage</a>"
+  403:
+    heading: "Access denied (403)"
+    text: "You don't have access to this file / folder.<br /><br /><a href='/'>Back to PUB homepage</a>"
 
 de:
   login:
@@ -1502,11 +1502,11 @@ de:
     sorted_by: "Sortiert nach"
     hits_per_page: "Treffer pro Seite"
     citation_style: "Zitationsstil"
+    save_style: "Zitationsstil speichern"
     embed: "Einbettung"
     export: "Export"
     export_as: "Exportieren als"
     export_marked: "Markierte exportieren"
-    save_as_default: "Als persönlichen Standard speichern"
     exports:
       rtf: "RTF (z.B. Word, Office)"
       bibtex: "BibTeX (z.B. Citavi)"
@@ -2714,12 +2714,12 @@ de:
       delete: "Löschen"
       next: "Weiter"
       select: "Wählen"
-    418:
-      heading: "I'm a teapot (418)"
-      text: "Sie haben Kaffee von diesem Server angefordert. Die Antwort des Servers war: <strong>I'm a teapot</strong><br />The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)"
-    404:
-      heading: "Seite nicht gefunden (404)"
-      text: "Die Seite wurde nicht gefunden<br /><br /><a href='/'>Zurück zur PUB-Startseite</a>"
-    403:
-      heading: "Access denied (403)"
-      text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis.<br /><br /><a href='/'>Zurück zur PUB-Startseite</a>"
+  418:
+    heading: "I'm a teapot (418)"
+    text: "Sie haben Kaffee von diesem Server angefordert. Die Antwort des Servers war: <strong>I'm a teapot</strong><br />The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)"
+  404:
+    heading: "Seite nicht gefunden (404)"
+    text: "Die Seite wurde nicht gefunden<br /><br /><a href='/'>Zurück zur PUB-Startseite</a>"
+  403:
+    heading: "Access denied (403)"
+    text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis.<br /><br /><a href='/'>Zurück zur PUB-Startseite</a>"
