@@ -81,6 +81,8 @@
   </div>
 </form>
 
+<hr />
+
 <script>
 // Select button (dept, proj, rg)
 function selectAffiliation(element){
