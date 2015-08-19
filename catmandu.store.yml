@@ -18,6 +18,7 @@ backup:
 #    password: pub15
     bags:
       publication: &backup_settings
+#        plugins: ['Versioning']
         plugins: ['Datestamps', 'Versioning']
         version_compare_ignore:
           - date_updated
@@ -742,6 +743,10 @@ search:
               op:
                 '=': true
               field: alternative_id
+            foda:
+              op:
+                '=': true
+              field: foda
 
       researcher:
         cql_mapping:
@@ -1173,6 +1178,7 @@ search:
               date_updated: {type: string}
 #              yearCreated: {type: date, format: "yyyy"}
           alternative_id: {type: string, analyzer: tag}
+          foda: {type: byte}
 
       researcher:
         include_in_all: false
