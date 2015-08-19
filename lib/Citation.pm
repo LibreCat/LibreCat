@@ -172,19 +172,9 @@ sub index_citation_update {
 	#return $json_citation;
 
 	use LWP::UserAgent;
-	my $ua = LWP::UserAgent->new;
+	my $ua = LWP::UserAgent->new();
 
-	use Sys::Hostname;
-	my $host = hostname;
-	my $hostname;
-	if($host =~ /pub3/){
-		$hostname = 'pub3.ub';
-	}
-	else {
-		$hostname = 'pub';
-	}
-	my $citeproc_url = 'http://' . $hostname . '.uni-bielefeld.de' . $conf->{citation}->{url};
-
+	my $citeproc_url = 'http://::'.$conf->{citation}->{url};
 	my $citation;
 	my $styleList = $conf->{citation}->{styles};
 
