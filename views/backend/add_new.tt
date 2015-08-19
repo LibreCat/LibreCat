@@ -22,7 +22,7 @@
 	      <div class="col-xs-3 col-md-2">
 	        <select class="selectpicker form-control" id="select_source">
 	          <option value="crossref" selected="selected">[% lf.add_new.ids.doi %]</option>
-	          <option value="pmc">[% lf.add_new.ids.pmid %]</option>
+	          <option value="epmc">[% lf.add_new.ids.pmid %]</option>
 	          <option value="arxiv">[% lf.add_new.ids.arxiv %]</option>
 	          <option value="inspire">[% lf.add_new.ids.inspire %]</option>
 	        </select>
@@ -49,7 +49,7 @@
       <h3 class="margin-top0">[% lf.add_new.do_it_yourself %]</h3>
     </div>
     <div class="row">
-      
+
       <div class="col-sm-4">
         [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_l %]
         [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
@@ -79,7 +79,7 @@
         [% END %]
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col-md-6">
 	<h4 class="text-uppercase text-center"><strong>- [% lf.main_page.capital_or %] -</strong></h4>

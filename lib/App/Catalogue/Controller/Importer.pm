@@ -80,7 +80,7 @@ sub epmc {
     Catmandu->importer(
         'EuropePMC',
         query => $id,
-        fix => ["$appdir/fixes/pmc_mapping.fix"],
+        fix => ["$appdir/fixes/epmc_mapping.fix"],
         )->first;
 }
 
