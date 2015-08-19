@@ -1,6 +1,8 @@
 # maps Inspire data to the local repository
 
 move_field('record','rec')
+# default type
+add_field(rec.type,journalArticle)
 move_field('rec.titles.title','rec.title')
 trim('rec.title')
 move_field('rec.titles.secondary-title','rec.publication')

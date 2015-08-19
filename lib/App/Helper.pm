@@ -366,17 +366,15 @@ sub update_record {
 		require App::Catalogue::Controller::Material;
 		($rec->{file}) && ($rec->{file} = App::Catalogue::Controller::File::handle_file($rec));
 
-		my $thumbnail_data;
-		my $thumbnail_id;
-		my $thumbnail;
 		foreach my $f (@{$rec->{file}}) {
 			if ($f->{access_level} eq 'open_access' && lc $f->{file_name} =~ /\.pdf$|\.ps$/) {
-				$thumbnail = App::Catalogue::Controller::File::make_thumbnail($rec->{_id}, $f->{file_name});
+				App::Catalogue::Controller::File::make_thumbnail($rec->{_id}, $f->{file_name});
 				last;
 			}
 		}
-
-		App::Catalogue::Controller::Material::update_related_material($rec);
+		if ($rec->{related_material}) {
+			App::Catalogue::Controller::Material::update_related_material($rec);
+		}
 		$rec->{citation} = Citation::index_citation_update($rec,0,'') || '';
 	}
 
@@ -404,8 +402,8 @@ sub delete_record {
 	if ($bag eq 'publication') {
 		require App::Catalogue::Controller::File;
 		require App::Catalogue::Controller::Material;
-			App::Catalogue::Controller::Material::update_related_material($del);
-			App::Catalogue::Controller::File::delete_file($id);
+		App::Catalogue::Controller::Material::update_related_material($del);
+		App::Catalogue::Controller::File::delete_file($id);
 	}
 
 	my $saved = $self->backup($bag)->add($del);
@@ -532,15 +530,11 @@ sub export_publication {
 
 		$options->{style} = $hits->{style} || 'default';
 	   	$options->{explinks} = params->{explinks};
-		@{$options->{fix}} = map {
-			my $f = $_;
-			path($self->config->{appdir},$f);
-		} @{$options->{fix}};
 	   	my $content_type = $spec->{content_type} || mime->for_name($fmt);
 	   	my $extension = $spec->{extension} || $fmt;
 
 	   	my $f = export_to_string( $hits, $package, $options );
-	   	($fmt eq 'bibtex') && ($f =~ s/(\\"\w)\s/{$1}/g);
+		#($fmt eq 'bibtex') && ($f =~ s/(\\"\w)\s/{$1}/g);
 		return $f if $to_string;
 
 	   	return Dancer::send_file (

@@ -1,6 +1,8 @@
 # pmc mapping...
 
 #move_field('pubType','type')
+#default type
+add_field(type,journalArticle)
 move_field('DOI','doi')
 move_field('pmid','external_id.pmid')
 move_field('journalTitle','publication')
