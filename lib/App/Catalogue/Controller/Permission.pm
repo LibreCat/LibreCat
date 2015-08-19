@@ -31,6 +31,9 @@ sub can_edit {
         my @delegate = map {"person=$_"} @{$user->{delegate}};
         $cql .= " OR " .join(' OR ', @delegate) .")";
     }
+    if($user_role ne 'super_admin'){
+    	$cql .= " AND type<>bidissertation AND type<>bimasterthesis AND type<>bibachelorthesis AND type<>bipostdocthesis";
+    }
 
     my $hits = h->publication->search(cql_query => $cql, limit => 1);
 
