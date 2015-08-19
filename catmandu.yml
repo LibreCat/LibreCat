@@ -58,12 +58,12 @@ doi:
 plugins:
   'Auth::Tiny':
 
-  # NYTProf:
-  #   enabled: 1
-  #   profiling_enabled: 1
-  #   profdir: '/home/bup/pub/profiledata'
-  #   nytprofhtml_path: '/home/bup/perl5/perlbrew/perls/perl-5.20.1/bin/nytprofhtml'
-  #   show_durations: 1
+  NYTProf:
+    enabled: 1
+    profiling_enabled: 1
+    profdir: '/home/bup/pub/profiledata'
+    nytprofhtml_path: '/home/bup/perl5/perlbrew/perls/perl-5.20.1/bin/nytprofhtml'
+    show_durations: 1
 
   Ajax:
     content_type: 'application/json'
