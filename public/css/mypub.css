@@ -37,6 +37,7 @@ h3.expert{border-bottom:1px dashed #b6c828;}
 
 /* fonts */
 .smaller-xs{font-size:70%;}
+.userrole ::first-letter {text-transform:uppercase;}
 
 /* links */
 .normal,.normal a,a small,small a{font-weight:normal!important;}
