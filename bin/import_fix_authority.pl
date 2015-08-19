@@ -78,7 +78,7 @@ my $n = $importer->each(sub {
 		'remove_field("bis_nonExist")',
 		'remove_field("bis_personTitle")',
 		'remove_field("access")',
-		'add_num_of_publs()',
+		#'add_num_of_publs()',
         ]
     );
 
