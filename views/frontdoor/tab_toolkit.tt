@@ -2,7 +2,7 @@
 <!-- BEGIN frontdoor/tab_toolkit.tt -->
 
 <div class="tab-pane" id="toolkit">
-Data provided by the <a href="http://toolkit.cit-ec.uni-bielefeld.de/">Cognitive Interaction Toolkit</a>.<br><br>
+[% lf.frontdoor.tabs.toolkit.data_by %]<br><br>
 [% FOREACH t IN toolkitData.keys %]
   [% IF t != "_id" %]
   <div class="row">

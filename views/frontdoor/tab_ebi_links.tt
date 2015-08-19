@@ -2,7 +2,7 @@
 
 <div class="tab-pane" id="ebi_dblinks">
 
-  <p>Data provided by the <a href="http://www.ebi.ac.uk/">European Bioinformatics Institute (EBI)</a></p>
+  <p>[% lf.frontdoor.tabs.ebi_links.data_by %]</p>
 
   [% FOREACH db IN ebi_data.db.keys %]
   <div class="row margin-top1">

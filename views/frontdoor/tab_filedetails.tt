@@ -4,14 +4,14 @@
 <div class="tab-pane" id="fileDetails">
   <div class="row">
     [% IF data_reuse_license OR other_data_license %]
-    <strong>All files available under the following license(s):</strong><br />
+    <strong>[% lf.frontdoor.license_heading %]</strong><br />
     [% END %]
     [% IF data_reuse_license %]
-      <div class="alert alert-green">Data Re-Use License
+      <div class="alert alert-green">[% lf.forms.$type.field.license.data_reuse_license.label %]
       [% SWITCH data_reuse_license %]
-	  [% CASE 'PDDL' %]<a href="http://opendatacommons.org/licenses/pddl/" target="_blank">The Open Data Commons Public Domain Dedication and License (PDDL) v1.0</a>
-	  [% CASE 'ODC-By' %]<a href="http://opendatacommons.org/licenses/by/" target="_blank">The Open Data Commons Attribution License (ODC-By) v1.0</a>
-	  [% CASE 'ODbL' %]<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">The Open Database License (ODbL) v1.0</a>
+	  [% CASE 'PDDL' %]<a href="http://opendatacommons.org/licenses/pddl/" target="_blank">[% lf.forms.$type.field.license.data_reuse_license.pddl.name %]</a>
+	  [% CASE 'ODC-By' %]<a href="http://opendatacommons.org/licenses/by/" target="_blank">[% lf.forms.$type.field.license.data_reuse_license.odcby.name %]</a>
+	  [% CASE 'ODbL' %]<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">[% lf.forms.$type.field.license.data_reuse_license.odbl.name %]</a>
       [% END %]
       </div>
     [% END %]
@@ -23,7 +23,7 @@
   [% FOREACH fi IN file.nsort('fileOrder') %]
   [% NEXT IF fi.relation != "main_file" %]
   <div class="row[% UNLESS loop.first %] margin-top1[% END %]">
-    <div class="col-md-2 text-muted">File Name</div>
+    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.name %]</div>
     <div class="col-md-10">
       <a href="/download/[% _id %]/[% fi.file_id %]">
         [% fi.file_name %]
@@ -32,7 +32,7 @@
   </div>
     [% IF fi.title %]
     <div class="row">
-      <div class="col-md-2 text-muted">File Title</div>
+      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.title %]</div>
       <div class="col-md-10">
         [% fi.title %]
       </div>
@@ -40,30 +40,30 @@
     [% END %]
     [% IF fi.description %]
     <div class="row">
-      <div class="col-md-2 text-muted">Description</div>
+      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.description %]</div>
       <div class="col-md-10">
         [% fi.description %]
       </div>
     </div>
     [% END %]
     <div class="row">
-    <div class="col-md-2 text-muted">Access Level</div>
+    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.access_level.label %]</div>
     <div class="col-md-10">
       [% SWITCH fi.access_level %]
         [% CASE 'open_access' %]
-        [% INCLUDE frontdoor/oa_lock.tt %] Open Access
+        [% INCLUDE frontdoor/oa_lock.tt %] [% lf.frontdoor.tabs.file_details.access_level.open_access %]
 
         [% CASE 'local' %]
-        [% INCLUDE frontdoor/oa_lock.tt %] UniBi Only
+        [% INCLUDE frontdoor/oa_lock.tt %] [% lf.frontdoor.tabs.file_details.access_level.local %]
 
         [% CASE 'closed' %]
-        [% INCLUDE frontdoor/oa_lock.tt %][% IF fi.request_a_copy %] Request a Copy[% ELSE %] Closed Access[% END %]
+        [% INCLUDE frontdoor/oa_lock.tt %][% IF fi.request_a_copy %] [% lf.frontdoor.tabs.file_details.access_level.request_a_copy %][% ELSE %] [% lf.frontdoor.tabs.file_details.access_level.closed %][% END %]
       [% END %]
     </div>
     </div>
     [% IF fi.date_updated %]
     <div class="row">
-      <div class="col-md-2 text-muted">Last Uploaded</div>
+      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.last_uploaded %]</div>
       <div class="col-md-10">
         [% fi.date_updated %]
       </div>
@@ -71,7 +71,7 @@
     [% END %]
     [% IF fi.checksum %]
     <div class="row">
-      <div class="col-md-2 text-muted">MD5 Checksum</div>
+      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.md5 %]</div>
       <div class="col-md-10">
         [% fi.checksum %]
       </div>
