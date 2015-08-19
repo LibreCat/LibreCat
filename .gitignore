@@ -28,6 +28,7 @@ bin/citec_authors.csv
 public/citec_authors.json
 local/
 data/
+profiledata/
 .vagrant/
 uploads/
 vendor/
