@@ -15,7 +15,9 @@
 
     <div class="row margin-top1">
       <div class="col-md-12">
-	  <p>[% lf.418.text %]</p>
+	  <p>[% lf.418.text %]<br /><br />
+	     <a href="[% path %]">[% lf.418.link_back %]</a>
+	  </p>
       </div>
     </div>
 

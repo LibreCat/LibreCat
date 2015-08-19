@@ -88,7 +88,7 @@ Checks if the user has permission the see/edit this record.
 
         unless (can_edit($id, session->{user}, session->{role})) {
             status '403';
-            forward '/access_denied';
+            forward '/access_denied', {referer => request->{referer}};
         }
         my $person = h->get_person(session->{personNumber});
         my $edit_mode = params->{edit_mode} || $person->{edit_mode};
