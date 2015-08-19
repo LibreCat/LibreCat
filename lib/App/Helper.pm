@@ -375,8 +375,9 @@ sub update_record {
 				last;
 			}
 		}
-
-		App::Catalogue::Controller::Material::update_related_material($rec);
+		if ($rec->{related_material}) {
+		    App::Catalogue::Controller::Material::update_related_material($rec);
+		}
 		$rec->{citation} = Citation::index_citation_update($rec,0,'') || '';
 	}
 
@@ -500,18 +501,32 @@ sub search_publication {
 	} else {
 		$cql = "status<>deleted";
 	}
+	
+	my $hits;
 
-	my $hits = publication->search(
-	    cql_query => $cql,
-		sru_sortkeys => $sort,
-		limit => $p->{limit} ||= $self->config->{default_page_size},
-		start => $p->{start} ||= 0,
-		facets => $p->{facets} ||= {},
-	);
-
-    foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-    	$hits->{$_} = $hits->$_;
-    }
+	try{
+		$hits = publication->search(
+		    cql_query => $cql,
+		    sru_sortkeys => $sort,
+		    limit => $p->{limit} ||= $self->config->{default_page_size},
+		    start => $p->{start} ||= 0,
+		    facets => $p->{facets} ||= {},
+		);
+		
+		foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+			$hits->{$_} = $hits->$_;
+		}
+	}
+	catch{
+		my $error;
+		if($_ =~ /(cql error\: unknown index .*?) at/){
+			$error = $1;
+		}
+		else {
+			$error = "An error has occurred.";
+		}
+		$hits = {total => 0, error => $error};
+	};
 
 	return $hits;
 }
@@ -532,10 +547,10 @@ sub export_publication {
 
 		$options->{style} = $hits->{style} || 'default';
 	   	$options->{explinks} = params->{explinks};
-		@{$options->{fix}} = map {
-			my $f = $_;
-			path($self->config->{appdir},$f);
-		} @{$options->{fix}};
+		#@{$options->{fix}} = map {
+		#	$self->config->{appdir} ."/". $_;
+			#join_path($self->config->{appdir},$f);
+		#} @{$options->{fix}};
 	   	my $content_type = $spec->{content_type} || mime->for_name($fmt);
 	   	my $extension = $spec->{extension} || $fmt;
 
