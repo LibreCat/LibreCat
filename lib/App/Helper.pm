@@ -93,6 +93,8 @@ sub extract_params {
 	$p->{embed} = $params->{embed} if is_natural $params->{embed};
 	$p->{lang} = $params->{lang} if $params->{lang};
 	$p->{ttyp} = $params->{ttyp} if $params->{ttyp};
+	$p->{ftyp} = $params->{ftyp} if $params->{ftyp};
+	$p->{enum} = $params->{enum} if $params->{enum};
 
 	$p->{q} = array_uniq( $self->string_array($params->{q}) );
 

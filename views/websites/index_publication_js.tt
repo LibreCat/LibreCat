@@ -14,7 +14,7 @@ document.write('<li>');
 [% IF style == "default" %]
 document.write('<a href="[% h.host %]/[% bag %]/[% entry._id %]">[% title %]</a><br />');
 [% END %]
-document.write('[%- string2 -%][% IF style != "apa_indent" AND style != "dgps" %]<br />[% END %] [% IF !phillister %][% INCLUDE links_js.tt %][% END %]</li>');
+document.write('[%- string2 -%][% IF style != "apa_indent" AND style != "dgps" %]<br />[% END %] [% INCLUDE links_js.tt %]</li>');
 [% END %]
 document.write ('</ul>') ;
 

@@ -8,7 +8,7 @@
 
 [% FOREACH entry IN hits %]
 [% FOREACH fi IN entry.file %]
-<a href="http://lockss.ub.uni-bielefeld.de/lockss/openaccess/[% fi.yearLastUploaded %]/entry-[% entry.oId %]-file-[% fi.fileOId %].pdf">[% h.host %]/download/[% entry.oId %]/[% fi.fileOId %]</a><br/>
+<a href="http://lockss.ub.uni-bielefeld.de/lockss/openaccess/[% fi.year_last_uploaded %]/entry-[% entry._id %]-file-[% fi.file_id %].pdf">[% h.host %]/download/[% entry._id %]/[% fi.file_id %]</a><br/>
 [% END %]
 [% END %]
 

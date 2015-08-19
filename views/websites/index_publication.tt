@@ -1,3 +1,4 @@
+<!-- % USE cache = Cache % -->
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
@@ -55,6 +56,11 @@
 
         <div class="tab-pane[% IF !bag || bag == 'home' %] active[% END %]" id="home">
           [% IF bag == 'home' || !bag %]
+            <!-- % cache.inc(
+               'template' => 'websites/tab_home.tt',
+               'keys' => {'bag' => bag},
+               'ttl' => 360
+               ) % -->
             [% INCLUDE websites/tab_home.tt %]
           [% END %]
         </div>
