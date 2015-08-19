@@ -533,8 +533,9 @@ sub export_publication {
 	   	my $content_type = $spec->{content_type} || mime->for_name($fmt);
 	   	my $extension = $spec->{extension} || $fmt;
 
+		$self->fixer($options->{fix}->[0])->fix($hits);
+		delete $options->{fix};
 	   	my $f = export_to_string( $hits, $package, $options );
-		#($fmt eq 'bibtex') && ($f =~ s/(\\"\w)\s/{$1}/g);
 		return $f if $to_string;
 
 	   	return Dancer::send_file (
