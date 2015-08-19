@@ -1,9 +1,7 @@
-[% INCLUDE header.tt %]
+[% PROCESS header.tt %]
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% lang = session.lang ? session.lang : h.config.default_lang %]
-[% lf = h.config.language.$lang %]
 
 <!-- BEGIN websites/418.tt -->
 

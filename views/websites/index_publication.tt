@@ -1,11 +1,9 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% lang = session.lang ? session.lang : h.config.default_lang %]
-[% lf = h.config.language.$lang %]
 [% style = qp.style ? qp.style : 'default' %]
 
-[% INCLUDE header.tt %]
+[% PROCESS header.tt %]
 
 <!-- BEGIN websites/index_publication.tt -->
 

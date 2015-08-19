@@ -1,6 +1,4 @@
-[% INCLUDE header.tt %]
-[% lang = session.lang ? session.lang : h.config.default_lang %]
-[% lf = h.config.language.$lang %]
+[% PROCESS header.tt %]
 
 <!-- BEGIN websites/404.tt -->
 
