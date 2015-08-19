@@ -264,7 +264,7 @@
 	<!-- Citations -->
 	<div id="citethis">
 
-	  <h3 id="cite">Cite this</h3>
+	  <h3 id="cite">[% lf.frontdoor.cite_this %]</h3>
 
 	  <ul class="nav nav-tabs">
 	    <li class="active"><a href="#ama" data-toggle="tab">AMA</a></li>
@@ -299,8 +299,8 @@
 	<div class="hidden-sm hidden-md hidden-lg"><hr></div>
 
 	<!-- Export -->
-	<h3 id="export">Export</h3>
-	<a class="label label-default total-marked" href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]">[% marked %]</a> <a href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]" rel="nofollow">Marked Publications</a>
+	<h3 id="export">[% lf.frontdoor.export %]</h3>
+	<a class="label label-default total-marked" href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]">[% marked %]</a> <a href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]" rel="nofollow">[% lf.frontdoor.marked %]</a>
 
 	<!-- trigger modal -->
 	<p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o fw1"></span>Open Data PUB</a></p>
@@ -391,7 +391,7 @@
 
 	<!-- Supplements -->
 	[% IF genbank OR nasc %]
-	<h3 id="supplements">Supplements</h3>
+	<h3 id="supplements">[% lf.frontdoor.supplements %]</h3>
 	  [% IF genbank %]
 	  <p>
 	  [% FOREACH id_entry IN genbank %]
@@ -401,7 +401,7 @@
 	    <a href="http://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]">[% id_entry %]</a>
 	    [% IF loop.count > 14 %]
 	    <span id="showGen">
-	      <br><a href="#supplements" onclick="ShowGenBankIDs();"><span class="glyphicon glyphicon-plus fw"></span>All</a>
+	      <br><a href="#supplements" onclick="ShowGenBankIDs();"><span class="glyphicon glyphicon-plus fw"></span>[% lf.frontdoor.show_all %]</a>
 	    </span>
 	    [% LAST %]
 	    [% END %]
@@ -421,22 +421,22 @@
 	[% END %]
 
 
-	<h3>Search this title in</h3>
+	<h3>[% lf.frontdoor.search_this %]</h3>
 
 	<p>
 	  <a href="http://scholar.google.com/scholar?q=allintitle%3A[% title | uri %]"><img src="/images/icon_gs.png" alt="" class="img-thumbnail">Google Scholar</a><br>
 	  <a href="http://www.base-search.net/Search/Results?lookfor=tit%3A&quot;[% title | uri %]&quot;&amp;lem=1&amp;type=all&amp;refid=pub"><img src="/images/icon_base.png" alt="" class="img-thumbnail">BASE</a><br>
 	  <a href="http://www.google.com/search?q=%22[% title | uri %]%22"><img src="/images/icon_google.gif" alt="" class="img-thumbnail">Google</a><br>
 	  [% IF isbn %]
-	  <a href="http://de.wikipedia.org/wiki/Spezial:ISBN-Suche/[% isbn.0 %]"><img src="/images/icon_wikipedia.png" alt="" class="img-thumbnail">ISBN search</a><br>
+	  <a href="http://de.wikipedia.org/wiki/Spezial:ISBN-Suche/[% isbn.0 %]"><img src="/images/icon_wikipedia.png" alt="" class="img-thumbnail">[% lf.frontdoor.isbn_search %]</a><br>
 	  [% END %]
 	  [% SWITCH type %]
 	  [% CASE ['book', 'dissertation', 'bookEditor', 'workingPaper', 'conferenceAbstract', 'conferenceEditor', 'journalArticle' ] %]
 	  [% IF localUser && !opac %]
 	  [% IF type == 'journalArticle' OR type == 'conferenceAbstract' %]
-	  <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% title | uri %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=ext&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="[% h.host %]/images/icon_ub.png" alt="" class="img-thumbnail">Catalogue.<em>plus!</em></a><br>
+	  <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% title | uri %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=ext&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="[% h.host %]/images/icon_ub.png" alt="" class="img-thumbnail">[% lf.frontdoor.catalogue %]</a><br>
 	  [% ELSE %]
-	  <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% title | uri %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=lok&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="[% h.host %]/images/icon_ub.png" alt="" class="img-thumbnail">Catalogue.<em>plus!</em></a><br>
+	  <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% title | uri %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=lok&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="[% h.host %]/images/icon_ub.png" alt="" class="img-thumbnail">[% lf.frontdoor.catalogue %]</a><br>
 	  <a href="http://www.digibib.net/opensearch?LOCATION=361&amp;SG1.SG.361:SGKatalogeBielefeld=on&amp;SG2.SG.361:SGKatalogeDeutschland=on&amp;SG3.SG.361:SGKatalogeInternational=on&amp;QUERY_azTI=[% title | uri %]"><img src="[% h.host %]/images/icon_digibib.png" alt="" class="img-thumbnail">Digibib</a>
 	  [% END %]
 	  [% END %]
@@ -445,7 +445,7 @@
 	  [% END %]
 	  [% CASE 'bookChapter' %]
 	  [% IF localUser && !opac %]
-	  <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% publication %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=ext&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="[% h.host %]/images/icon_ub.png" alt="" class="img-thumbnail">Catalogue.<em>plus!</em></a><br>
+	  <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% publication %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=ext&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="[% h.host %]/images/icon_ub.png" alt="" class="img-thumbnail">[% lf.frontdoor.catalogue %]</a><br>
 	  <a href="http://www.digibib.net/opensearch?LOCATION=361&amp;SG1.SG.361:SGKatalogeBielefeld=on&amp;SG2.SG.361:SGKatalogeDeutschland=on&amp;SG3.SG.361:SGKatalogeInternational=on&amp;QUERY_azTI=[% FOREACH rel_entry IN entry.host %][% rel_entry.title %][% END %]"><img src="[% h.host %]/images/icon_digibib.png" alt="" class="img-thumbnail">Digibib</a>
 	  [% END %]
 	  [% IF NOT localUser %]

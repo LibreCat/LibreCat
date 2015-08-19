@@ -173,6 +173,14 @@ en:
     download: "Download"
     show_all: "All"
     local_brand: "UniBi"
+    export: "Export"
+    marked: "Marked Publications"
+    cite_this: "Cite this"
+    supplements: "Supplements"
+    show_all: "All"
+    search_this: "Search this title in"
+    isbn_search: "ISBN Search"
+    catalogue: "Catalogue.<em>plus!</em>"
     tabs:
       details:
         label: "Details"
@@ -1624,6 +1632,14 @@ de:
     download: "Download"
     show_all: "Alle"
     local_brand: "UniBi"
+    export: "Export"
+    marked: "Markierte Publikationen"
+    cite_this: "Zitieren"
+    supplements: "Zusatzmaterialien"
+    show_all: "Alle"
+    search_this: "Suchen in"
+    isbn_search: "ISBN Suche"
+    catalogue: "Katalog.<em>plus!</em>"
     tabs:
       details:
         label: "Details"
