@@ -10,15 +10,14 @@ default:
         plugins: ['Datestamps']
 
 backup:
-  package: MongoDB 
+  package: DBI 
   options:
-    database_name: "Backup2"
-#    data_source: "DBI:mysql:database=PUBBackup"
-#    username: precious_pub
-#    password: pub15
+    data_source: "DBI:mysql:database=PUBBackup"
+    username: root 
+    password: pub33TX
     bags:
       publication: &backup_settings
-#        plugins: ['Versioning']
+        plugins: ['Versioning']
         plugins: ['Datestamps', 'Versioning']
         version_compare_ignore:
           - date_updated
