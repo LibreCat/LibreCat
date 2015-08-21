@@ -65,7 +65,7 @@
 
 <hr />
 
-<form id="id_save_lang" action="/myPUB/person/set_language" method="POST">
+<form id="id_save_lang" action="/myPUB/person/set_language" method="GET">
   <div class="row innerrow">
     <div class="col-md-12">
       <h4>[% lf.header.default_language %]</h4>
