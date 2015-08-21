@@ -136,7 +136,7 @@ new publication form.
         my $p = params;
         $p = h->nested_params($p);
         $fix->fix($p);
-        my $person = edit_person( session('personNumber') );
+        my $person = h->get_person( session('personNumber') );
         $person->{department} = $p->{department};
         h->update_record('researcher', $person);
 
