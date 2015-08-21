@@ -15,6 +15,12 @@ en:
     title: "PUB &ndash; Publications at Bielefeld University"
     my_author_page: "My Public Author Page"
     brand: "MyPUB"
+    role:
+      user: "User"
+      delegate: "Delegate"
+      reviewer: "Reviewer"
+      data_manager: "Data Manager"
+      super_admin: "Admin"
     admin_menu:
       admin: "Admin"
       manage_accounts: "Manage Accounts"
@@ -88,6 +94,7 @@ en:
     capital_or: "OR"
     qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br />Drop Open Access fulltext (pdf)<br>here and we'll do the rest."
     theses_drop_text: "<span class='fa fa-file-pdf-o fa-3x'></span><br />Drop your thesis here."
+    theses_success_text: "You have successfully submitted your thesis. We will contact you with further information. Thank you!"
     heading_admin: "Admin (myPUB)"
     heading_user: "User (myPUB)"
     heading_reviewer: "Reviewer (myPUB)"
@@ -1474,6 +1481,12 @@ de:
     title: "PUB &ndash; Publikationen an der Uni Bielefeld"
     my_author_page: "Meine Personenseite"
     brand: "myPUB"
+    role:
+      user: "User"
+      delegate: "Delegate"
+      reviewer: "Reviewer"
+      data_manager: "Data Manager"
+      super_admin: "Admin"
     admin_menu:
       admin: "Admin"
       manage_accounts: "Accounts verwalten"
@@ -1547,6 +1560,7 @@ de:
     capital_or: "ODER"
     qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br />Open Access Volltext (pdf)<br>hier her ziehen und wir machen den Rest"
     theses_drop_text: "<span class='fa fa-file-pdf-o fa-3x'></span><br />Dissertation hier her ziehen."
+    theses_success_text: "Sie haben Ihre Prüfungsschrift erfolgreich hochgeladen. Wir kontaktieren Sie mit weiteren Informationen. Vielen Dank!"
     heading_admin: "Admin (myPUB)"
     heading_user: "User (myPUB)"
     heading_reviewer: "Reviewer (myPUB)"

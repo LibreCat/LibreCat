@@ -61,20 +61,20 @@
             </div>
          </li>
 	 [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
-	  <li class="dropdown userrole"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% IF session.role == 'super_admin' %]Admin[% ELSE %][% session.role %][% END %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
+	  <li class="dropdown userrole"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% lf.header.role.${session.role} %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
 	    <ul class="dropdown-menu" role="menu">
-	      <li><a href="/myPUB/change_role/user">User</a></li>
+	      <li><a href="/myPUB/change_role/user">[% lf.header.role.user %]</a></li>
 	      [% IF thisPerson.delegate %]
-	      <li><a href="/myPUB/change_role/delegate">Delegate</a></li>
+	      <li><a href="/myPUB/change_role/delegate">[% lf.header.role.delegate %]</a></li>
 	      [% END %]
 	      [% IF thisPerson.reviewer %]
-	      <li><a href="/myPUB/change_role/reviewer">Reviewer</a></li>
+	      <li><a href="/myPUB/change_role/reviewer">[% lf.header.role.reviewer %]</a></li>
 	      [% END %]
 	      [% IF thisPerson.data_manager %]
-	      <li><a href="/myPUB/change_role/data_manager">Data Manager</a></li>
+	      <li><a href="/myPUB/change_role/data_manager">[% lf.header.role.data_manager %]</a></li>
 	      [% END %]
 	      [% IF thisPerson.super_admin %]
-	      <li><a href="/myPUB/change_role/admin">Admin</a></li>
+	      <li><a href="/myPUB/change_role/admin">[% lf.header.role.super_admin %]</a></li>
 	      [% END %]
 	    </ul>
 	  </li>
