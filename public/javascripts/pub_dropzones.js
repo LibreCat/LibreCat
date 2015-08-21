@@ -117,6 +117,10 @@ $(document).ready(function(){
 	              $('#sortFilesInput').append('<input type="hidden" name="file_order" id="file_order_' + resp.tempid + '" value="' + resp.tempid + '" />');
 	            }
 	        });
+	        this.on("error", function(file, errorMessage){
+			    var modal = Dropzone.createElement("<div class='alert alert-danger'>" + errorMessage + "</div>");
+			    file.previewElement.appendChild(modal);
+		    });
 	    },
 	};
 	
@@ -168,6 +172,9 @@ $(document).ready(function(){
 	            
 	            var defense_date = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Defense Date<span class='starMandatory'></span></label><div class='col-sm-5'><input type='text' name='defense_date' class='form-control' placeholder='YYYY-MM-DD' required /></div></div>'");
 	            form.appendChild(defense_date);
+
+	            var abstract_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Abstract</label><div class='col-sm-10'><textarea class='form-control' name='abstract'></textarea></div></div>");
+	            form.appendChild(abstract_field);
 	            
 	            var cc_license = Dropzone.createElement("<div class='row innerrow'><div class='col-md-12 alert alert-info'>If your uploaded data is available under a Creative Commons license, you can select it here:<br /><select name='cc_license' id='id_cc_license' class='form-control'><option value=''>Select a license</option><option value='cc_0'>CC0 (1.0)</option><option value='cc_by'>CC BY (4.0)</option><option value='cc_by_sa'>CC BY-SA (4.0)</option></select><br /><a data-target='#cc_0' data-toggle='collapse'><span class='glyphicon glyphicon-chevron-down'></span> Creative Commons Public Domain Dedication (CC0 1.0)</a><br /><div id='cc_0' class='collapse reuse-license'><img src='/images/cc0.png' /><br />License Deed <a href='http://creativecommons.org/publicdomain/zero/1.0/' target='_blank'>http://creativecommons.org/publicdomain/zero/1.0/</a><br /><a href='http://creativecommons.org/publicdomain/zero/1.0/legalcode' target='_blank'>http://creativecommons.org/publicdomain/zero/1.0/legalcode</a></div><a data-target='#cc_by' data-toggle='collapse'><span class='glyphicon glyphicon-chevron-down'></span> Creative Commons Attribution 4.0 International Public License (CC-BY 4.0)</a><br /><div id='cc_by' class='collapse reuse-license'><img src='/images/cc_by.png' /><br />License Deed <a href='http://creativecommons.org/licenses/by/4.0/' target='_blank'>http://creativecommons.org/licenses/by/4.0/</a><br /><a href='http://creativecommons.org/licenses/by/4.0/legalcode' target='_blank'>http://creativecommons.org/licenses/by/4.0/legalcode</a></div><a data-target='#cc_by_sa' data-toggle='collapse'><span class='glyphicon glyphicon-chevron-down'></span> Creative Commons Attribution-ShareAlike 4.0 International Public License (CC BY-SA 4.0)</a><br /><div id='cc_by_sa' class='collapse reuse-license'><img src='/images/cc_by_sa.png' /><br />License Deed <a href='http://creativecommons.org/licenses/by-sa/4.0/' target='_blank'>http://creativecommons.org/licenses/by-sa/4.0/</a><br /><a href='http://creativecommons.org/licenses/by-sa/4.0/legalcode' target='_blank'>http://creativecommons.org/licenses/by-sa/4.0/legalcode</a></div></div></div>");
 	            form.appendChild(cc_license);
