@@ -274,8 +274,6 @@
 	    <li><a href="#ieee" data-toggle="tab">IEEE</a></li>
 	    <li><a href="#lncs" data-toggle="tab">LNCS</a></li>
 	    <li><a href="#mla" data-toggle="tab">MLA</a></li>
-	    <li><a href="#bibtex" data-toggle="tab">BibTeX</a></li>
-	    <li><a href="#ris" data-toggle="tab">RIS</a></li>
 	  </ul>
 
 	  <div class="tab-content">
@@ -286,8 +284,6 @@
 	    <div id="ieee" class="tab-pane">[% citation.ieee %]</div>
 	    <div id="lncs" class="tab-pane">[% citation.lncs %]</div>
 	    <div id="mla" class="tab-pane">[% citation.mla %]</div>
-	    <div id="bibtex" class="tab-pane"><pre>[% h.export_in_frontdoor(request.path, _id, "bibtex") %]</pre></div>
-	    <div id="ris" class="tab-pane"><pre>[% h.export_in_frontdoor(request.path, _id, "ris") %]</pre></div>
 	  </div>
 
 	</div><!-- citethis -->
