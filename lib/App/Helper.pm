@@ -296,7 +296,7 @@ sub get_department {
 	if ( is_integer $_[1] ){
 		$_[0]->department->get($_[1]);
 	} elsif ( is_string $_[1] ) {
-		$_[0]->search_department(q => {"name=$_[1]"})->first;
+		$_[0]->search_department({q => ["name=$_[1]"]})->first;
 	}
 }
 
