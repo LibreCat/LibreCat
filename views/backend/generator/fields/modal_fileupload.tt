@@ -144,7 +144,7 @@
     }
 
     $.ajax({
-      url: '/myPUB/upload/update',
+      url: '/librecat/upload/update',
       data: formData,
       processData: false,
       contentType: false,

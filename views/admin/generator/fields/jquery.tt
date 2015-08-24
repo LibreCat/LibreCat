@@ -99,5 +99,5 @@ $('.change_tab').click(function(e){
 });
 
 $('button.cancel-button').click(function() {
-  window.location.href = '/myPUB';
+  window.location.href = '/librecat';
 });

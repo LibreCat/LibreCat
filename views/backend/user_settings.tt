@@ -2,7 +2,7 @@
 
 <!-- BEGIN backend/user_settings.tt -->
 
-<form id="id_save_aff" action="/myPUB/person/affiliation" method="POST">
+<form id="id_save_aff" action="/librecat/person/affiliation" method="POST">
   <div class="row innerrow">
     <div class="col-md-12">
       <h4>[% lf.header.department_affiliation %]</h4>
@@ -47,7 +47,7 @@
 
 <hr />
 
-<form id="id_save_mode" action="/myPUB/person/edit_mode" method="POST">
+<form id="id_save_mode" action="/librecat/person/edit_mode" method="POST">
   <div class="row innerrow">
     <div class="col-md-12">
       <h4>[% lf.header.default_edit_mode %]</h4>
@@ -65,7 +65,7 @@
 
 <hr />
 
-<form id="id_save_lang" action="/myPUB/person/set_language" method="GET">
+<form id="id_save_lang" action="/librecat/person/set_language" method="GET">
   <div class="row innerrow">
     <div class="col-md-12">
       <h4>[% lf.header.default_language %]</h4>

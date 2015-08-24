@@ -12,12 +12,12 @@ use Dancer qw(:syntax);
 use App::Helper;
 use Dancer::Plugin::Auth::Tiny;
 
-=head1 PREFIX /myPUB/person
+=head1 PREFIX /librecat/person
 
 All person settings are handled within the prefix '/person'.
 
 =cut
-prefix '/myPUB/person' => sub {
+prefix '/librecat/person' => sub {
 
 =head2 GET /preference
 
@@ -56,7 +56,7 @@ for his own publication list.
 
         h->update_record('researcher', $person);
 
-        redirect '/myPUB';
+        redirect '/librecat';
     };
 
 =head2 POST /author_id
@@ -72,11 +72,11 @@ be displayed on author's profile page.
         my @identifier = keys %{h->config->{lists}->{author_id}};
 
         map { $person->{$_} = params->{$_} ? params->{$_} : "" } @identifier;
-        redirect '/myPUB' if keys %{$person} > 1;
+        redirect '/librecat' if keys %{$person} > 1;
 
         my $result = h->update_record('researcher', $person);
 
-        redirect '/myPUB';
+        redirect '/librecat';
 
     };
 
@@ -96,13 +96,13 @@ User can choose default edit mode for editing publications.
         	h->update_record('researcher', $person);
         }
 
-        redirect '/myPUB';
+        redirect '/librecat';
 
     };
 
 =head2 POST /set_language
 
-User can choose default language for the myPUB backend
+User can choose default language for the librecat backend
 "en" -> English - default
 "de" -> German
 
@@ -117,7 +117,7 @@ User can choose default language for the myPUB backend
         	session lang => $lang;
         }
 
-        redirect '/myPUB';
+        redirect '/librecat';
 
     };
 
@@ -140,7 +140,7 @@ new publication form.
         $person->{department} = $p->{department};
         h->update_record('researcher', $person);
 
-        redirect '/myPUB';
+        redirect '/librecat';
 
     };
 

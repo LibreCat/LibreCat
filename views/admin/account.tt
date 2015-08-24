@@ -1,7 +1,7 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% backend = path.match('myPUB') ? 1 : 0 %]
+[% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
 
@@ -17,7 +17,7 @@
       </h1>
     </div>
 
-    <form role="form" action="/myPUB/admin/account/search" method="GET">
+    <form role="form" action="/librecat/admin/account/search" method="GET">
       <div class="row">
 	<div class="col-md-5">
 	  <label for="id_q"><span class="glyphicon glyphicon-search"></span> Search by name or PEVZ-ID</label>
@@ -31,7 +31,7 @@
       </div>
     </form>
 
-    <form role="form" action="/myPUB/admin/account/import" method="GET" class="margin-top1">
+    <form role="form" action="/librecat/admin/account/import" method="GET" class="margin-top1">
       <div class="row">
       <div class="col-md-5">
 	<label for="id_id"><span class="glyphicon glyphicon-download"></span> Import by PEVZ-ID</label>
@@ -46,11 +46,11 @@
     </form>
     
     [% IF error %]
-    <p class="text-danger">[% error %] <i> <span class="glyphicon glyphicon-pencil"></span></i><a href="/myPUB/admin/account/edit/[% qp.id %]">Edit</a></p>
+    <p class="text-danger">[% error %] <i> <span class="glyphicon glyphicon-pencil"></span></i><a href="/librecat/admin/account/edit/[% qp.id %]">Edit</a></p>
     [% END %]
 
     <div class="row col-md-12 margin-top1 margin-bottom2">
-      <a href="/myPUB/admin/account/new" class="btn btn-primary"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new account</a>
+      <a href="/librecat/admin/account/new" class="btn btn-primary"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new account</a>
     </div>
 
     [% IF hits %]
@@ -68,7 +68,7 @@
     <dl class="hitlist">
     [% FOREACH p IN hits %]
 	<dt>
-	<a href="/myPUB/admin/account/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% p.full_name %]</a>
+	<a href="/librecat/admin/account/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% p.full_name %]</a>
 	<span [% IF p.account_status == 'active' %]class="label label-success"[% ELSE %]class="label label-danger"[% END %]>
 	[% p.account_status || 'inactive' %]</span>
 	</dt>

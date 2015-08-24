@@ -11,16 +11,16 @@
 	[% IF title %]
         <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> [% lf.button.cancel %]</span></button>
 	[% ELSE %]
-	<a href="/myPUB/record/new" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> [% lf.button.cancel %]</span></a>
+	<a href="/librecat/record/new" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span><span class="hidden-xs"> [% lf.button.cancel %]</span></a>
 	[% END %]
         [% IF (status != "public" AND status != "submitted") OR (status == "submitted" AND session.role == "super_admin") %]
         <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-success change_tab"><span class="glyphicon glyphicon-upload"></span> [% lf.button.publish %]</button>
         [% END %]
         [% IF status == "public" %]
-        <a class="btn btn-danger" href="/myPUB/record/return/[% _id %]" onclick="return confirm('Are you sure you want to return this record from public view?');" name="return"><span class="glyphicon glyphicon-download"></span><span class="hidden-xs"> [% lf.button.return %]</span></a>
+        <a class="btn btn-danger" href="/librecat/record/return/[% _id %]" onclick="return confirm('Are you sure you want to return this record from public view?');" name="return"><span class="glyphicon glyphicon-download"></span><span class="hidden-xs"> [% lf.button.return %]</span></a>
         [% END %]
         [% IF session.role == "super_admin" %]
-        <a class="btn btn-danger" href="/myPUB/record/delete/[% _id %]" onclick="return confirm('Are you sure you want to delete this record?');" name="delete"><span class="glyphicon glyphicon-trash"></span><span class="hidden-xs"> [% lf.button.delete %]</span></a>
+        <a class="btn btn-danger" href="/librecat/record/delete/[% _id %]" onclick="return confirm('Are you sure you want to delete this record?');" name="delete"><span class="glyphicon glyphicon-trash"></span><span class="hidden-xs"> [% lf.button.delete %]</span></a>
         [% END %]
       </div>
     </div>

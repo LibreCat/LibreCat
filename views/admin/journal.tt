@@ -1,7 +1,7 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% backend = path.match('myPUB') ? 1 : 0 %]
+[% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
 

@@ -25,12 +25,12 @@ Dancer::Plugin::Auth::Tiny->extend(
         }
 );
 
-=head2 PREFIX /myPUB/search
+=head2 PREFIX /librecat/search
 
 All publication searches are handled within the prefix search.
 
 =cut
-prefix '/myPUB/search' => sub {
+prefix '/librecat/search' => sub {
 
 =head2 GET /admin
 
@@ -124,7 +124,7 @@ Performs search for data manager.
 
 	get '/delegate' => needs role => "delegate" => sub {
 		my $account = h->get_person(session->{user});
-		forward "/myPUB/search/delegate/$account->{delegate}->[0]", params;
+		forward "/librecat/search/delegate/$account->{delegate}->[0]", params;
 	};
 
 =head2 GET '/delegate/:delegate_id'

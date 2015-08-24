@@ -1,7 +1,7 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% backend = path.match('myPUB') ? 1 : 0 %]
+[% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
 
@@ -17,7 +17,7 @@
       </h1>
     </div>
 
-    <form role="form" action="/myPUB/admin/department/search" method="GET">
+    <form role="form" action="/librecat/admin/department/search" method="GET">
       <div class="row">
 	<div class="col-md-5">
 	  <label for="id_q">Search Departments</label>
@@ -48,7 +48,7 @@
 	    <span class="label label-success"><strong>[% p._id %]</strong></span>
       </div>
       <div class="col-md-9">
-	    <a href="/myPUB/admin/department/edit/[% p._id %]">[% p.name %]</a><br />
+	    <a href="/librecat/admin/department/edit/[% p._id %]">[% p.name %]</a><br />
 	    <span class="text-muted">[% p.display %]</span>
       </div>
     </div>

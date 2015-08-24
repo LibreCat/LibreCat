@@ -1,5 +1,5 @@
 [% path = request.path %]
-[% backend = path.match('myPUB') ? 1 : 0 %]
+[% backend = path.match('librecat') ? 1 : 0 %]
 [% lang = session.lang %]
 [% lf = h.config.language.$lang %]
 
@@ -18,7 +18,7 @@
     <div class="row">
       <h3>[% lf.add_new.import %]</h3>
       <div class="row">
-        <form role="form" class="form-inline" action="/myPUB/record/import" method="POST">
+        <form role="form" class="form-inline" action="/librecat/record/import" method="POST">
 	      <div class="col-xs-3 col-md-2">
 	        <select class="selectpicker form-control" id="select_source">
 	          <option value="crossref" selected="selected">[% lf.add_new.ids.doi %]</option>
@@ -53,29 +53,29 @@
       <div class="col-sm-4">
         [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_l %]
         [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
-          <a href="/myPUB/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
+          <a href="/librecat/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
         [% END %]
       </div>
       <div class="col-sm-4">
         [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_m %]
         [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
-          <a href="/myPUB/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
+          <a href="/librecat/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
         [% END %]
       </div>
       <div class="col-sm-4">
         [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_r %]
         [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
-          <a href="/myPUB/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
+          <a href="/librecat/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
         [% END %]
         [% IF session.role == "super_admin" %]
           [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_admin %]
           [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
-          <a href="/myPUB/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
+          <a href="/librecat/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
           [% END %]
         [% END %]
         [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_rd %]
         [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
-          <a href="/myPUB/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
+          <a href="/librecat/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
         [% END %]
       </div>
     </div>

@@ -51,7 +51,7 @@ Route the user will be sent to if login is required.
 =cut
 get '/login' => sub {
     # what are you doing? you're already in.
-    redirect '/myPUB' if session('user');
+    redirect '/librecat' if session('user');
 
     # not logged in yet
     template 'login', {error_message => params->{error_message} || '', login => params->{login} || '', lang => params->{lang} || h->config->{default_lang}};
@@ -77,7 +77,7 @@ post '/login' => sub {
         session personNumber => $user->{_id};
         session lang => $user->{lang} || h->config->{default_lang};
 
-        redirect '/myPUB';
+        redirect '/librecat';
     }
     else {
         forward '/login', {error_message => 'Wrong username or password!'}, {method => 'GET'};
