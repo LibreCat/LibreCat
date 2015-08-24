@@ -121,12 +121,12 @@ User sees this one if access is denied.
 =cut
 any '/access_denied' => sub {
     status '403';
-    template 'websites/403', {path => request->path};
+    template 'websites/403', {path => params->{referer}};
 };
 
 any qr{(/en)*/coffee} => sub {
 	status '418';
-	template 'websites/418';
+	template 'websites/418', {path => request->{referer}};
 };
 
 =head1 ANY {other route....}
@@ -136,7 +136,7 @@ Throws 'page not found'.
 =cut
 any qr{.*} => sub {
     status 'not_found';
-    template 'websites/404', {path => request->path};
+    template 'websites/404', {path => request->{referer}};
 };
 
 1;

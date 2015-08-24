@@ -93,6 +93,8 @@ sub extract_params {
 	$p->{embed} = $params->{embed} if is_natural $params->{embed};
 	$p->{lang} = $params->{lang} if $params->{lang};
 	$p->{ttyp} = $params->{ttyp} if $params->{ttyp};
+	$p->{ftyp} = $params->{ftyp} if $params->{ftyp};
+	$p->{enum} = $params->{enum} if $params->{enum};
 
 	$p->{q} = array_uniq( $self->string_array($params->{q}) );
 
@@ -373,7 +375,7 @@ sub update_record {
 			}
 		}
 		if ($rec->{related_material}) {
-			App::Catalogue::Controller::Material::update_related_material($rec);
+		    App::Catalogue::Controller::Material::update_related_material($rec);
 		}
 		$rec->{citation} = Citation::index_citation_update($rec,0,'') || '';
 	}
@@ -436,6 +438,7 @@ sub default_facets {
 		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
 		type => { terms => { field => 'type', size => 25 } },
 		isi => { terms => { field => 'isi', size => 1 } },
+		foda => { terms => { field => 'foda', size => 1 } },
 #		arxiv => { terms => { field => 'arxiv', size => 1 } },
 		pmid => { terms => { field => 'pmid', size => 1 } },
 #		inspire => { terms => { field => 'inspire', size => 1 } },
@@ -498,18 +501,32 @@ sub search_publication {
 	} else {
 		$cql = "status<>deleted";
 	}
+	
+	my $hits;
 
-	my $hits = publication->search(
-	    cql_query => $cql,
-		sru_sortkeys => $sort,
-		limit => $p->{limit} ||= $self->config->{default_page_size},
-		start => $p->{start} ||= 0,
-		facets => $p->{facets} ||= {},
-	);
-
-    foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-    	$hits->{$_} = $hits->$_;
-    }
+	try{
+		$hits = publication->search(
+		    cql_query => $cql,
+		    sru_sortkeys => $sort,
+		    limit => $p->{limit} ||= $self->config->{default_page_size},
+		    start => $p->{start} ||= 0,
+		    facets => $p->{facets} ||= {},
+		);
+		
+		foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+			$hits->{$_} = $hits->$_;
+		}
+	}
+	catch{
+		my $error;
+		if($_ =~ /(cql error\: unknown index .*?) at/){
+			$error = $1;
+		}
+		else {
+			$error = "An error has occurred.";
+		}
+		$hits = {total => 0, error => $error};
+	};
 
 	return $hits;
 }

@@ -1,6 +1,4 @@
-[% INCLUDE header.tt %]
-[% lang = session.lang ? session.lang : h.config.default_lang %]
-[% lf = h.config.language.$lang %]
+[% PROCESS header.tt %]
 
 <!-- BEGIN websites/404.tt -->
 
@@ -16,7 +14,9 @@
 
     <div class="row margin-top1">
       <div class="col-md-12">
-	  <p>[% lf.404.text %]</p>
+	  <p>[% lf.404.text %]<br /><br />
+	     <a href="[% path %]">[% lf.404.link_back %]</a>
+	  </p>
       </div>
     </div>
 

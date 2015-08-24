@@ -1,5 +1,4 @@
 <!-- BEGIN websites/index_publication_js_numasc.tt -->
-[% USE MDSimple %]
 
 [% IF bag == "data" %]
 [% hits = researchhits.hits %]
@@ -19,11 +18,11 @@ document.write ('<div style="padding-left:4em;">');
 document.write ('<i>[% entry.publishingYear %] | [% h.display_doctypes(entry.documentType) %] | PUB-ID: [% entry.oId %]</i><br />');
 [% IF style == 'default' %]
 [% title = entry.mainTitle.replace("'", "&apos;") %]
-document.write ('<a href="[% h.host %]/[% bag %]/[% entry.oId %]">[% title | md_simple %]</a><br />');
+document.write ('<a href="[% h.host %]/[% bag %]/[% entry.oId %]">[% title %]</a><br />');
 [% END %]
 [% string = entry.citation.$style %]
 [% string2 = string.replace("'", "&apos;") %]
-document.write ('[%- string2 | md_simple -%][% IF style != "apa_indent" AND style != "dgps" %]<br />[% END %] [% IF !phillister %][% INCLUDE links_js.tt %][% END %]</li>');
+document.write ('[%- string2 -%][% IF style != "apa_indent" AND style != "dgps" %]<br />[% END %] [% INCLUDE links_js.tt %]</li>');
 document.write ('</div>');
 [% END %]
 

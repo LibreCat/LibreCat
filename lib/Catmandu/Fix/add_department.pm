@@ -8,7 +8,7 @@ use Dancer qw(:syntax session);
 sub fix {
     my ($self, $data) = @_;
 
-    unless ($data->{department}) {
+    unless ($data->{department} and session->{personNumber}) {
         my $person = h->get_person( session->{personNumber} );
         $data->{department} = $person->{department};
         foreach my $d (@{$data->{department}}) {

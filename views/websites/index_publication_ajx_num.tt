@@ -1,7 +1,9 @@
 [% IF bag == "data" %]
 [% hits = researchhits.hits %]
 [% END %]
-[% INCLUDE websites/hits.tt %]
+[% lang = session.lang ? session.lang : h.config.default_lang %]
+[% lf = h.config.language.$lang %]
+[% INCLUDE hits.tt %]
 
 
 

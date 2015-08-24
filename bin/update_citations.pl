@@ -36,7 +36,7 @@ $bag->each(sub {
 #    my $citation = Citation::index_citation_update($rec,0,'','default');
 #    $rec->{citation}->{'default'} = $citation->{'default'};
 #    my $result = $backup->add($rec);
-    if ($missing && (!$rec->{citation} or !$rec->{citation}->{apa})) {
+    if ($missing && (!$rec->{citation} or !$rec->{citation}->{'default'})) {
     		print "Adding citation for $rec->{_id}\n" if $verbose;
     		$rec->{citation} = Citation::index_citation_update($rec,0,'');
     		#print Dumper $rec->{citation};

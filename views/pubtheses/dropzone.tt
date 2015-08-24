@@ -1,8 +1,8 @@
 
 <!-- BEGIN pubtheses/dropzone.tt -->
 
-[% IF submit_response %]
-  <div class="alert alert-success" role="alert">[% submit_response %]</div>
+[% IF pq.success %]
+  <div class="alert alert-success" role="alert">[% lf.main_page.theses_success_text %]</div>
 [% END %]
 
 <div id="dropzone_row" class="row">

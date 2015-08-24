@@ -10,14 +10,14 @@ default:
         plugins: ['Datestamps']
 
 backup:
-  package: MongoDB 
+  package: DBI 
   options:
-    database_name: "Backup2"
-#    data_source: "DBI:mysql:database=PUBBackup"
-#    username: precious_pub
-#    password: pub15
+    data_source: "DBI:mysql:database=PUBBackup"
+    username: root 
+    password: pub33TX
     bags:
       publication: &backup_settings
+        plugins: ['Versioning']
         plugins: ['Datestamps', 'Versioning']
         version_compare_ignore:
           - date_updated
@@ -742,6 +742,10 @@ search:
               op:
                 '=': true
               field: alternative_id
+            foda:
+              op:
+                '=': true
+              field: foda
 
       researcher:
         cql_mapping:
@@ -1164,6 +1168,7 @@ search:
           scoap3: {type: byte}
           phillister: {type: byte}
           opac: {type: byte}
+          foda: {type: byte}
           date_updated: {type: date, format: date_time_no_millis}
           file:
             properties:
@@ -1172,6 +1177,7 @@ search:
               date_updated: {type: string}
 #              yearCreated: {type: date, format: "yyyy"}
           alternative_id: {type: string, analyzer: tag}
+          foda: {type: byte}
 
       researcher:
         include_in_all: false

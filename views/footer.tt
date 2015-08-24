@@ -40,7 +40,7 @@
   </div>
 </footer>
 
-<script src="/javascripts/commonmark.js/dist/commonmark.min.js"></script>
+<script src="/javascripts/commonmark.js/dist/commonmark.js"></script>
 <script>
 var reader = new commonmark.Parser();
 var writer = new commonmark.HtmlRenderer();

@@ -37,6 +37,7 @@ h3.expert{border-bottom:1px dashed #b6c828;}
 
 /* fonts */
 .smaller-xs{font-size:70%;}
+.userrole ::first-letter {text-transform:uppercase;}
 
 /* links */
 .normal,.normal a,a small,small a{font-weight:normal!important;}
@@ -125,6 +126,9 @@ a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 #citethis .tab-pane.active{padding:8px;}
 div.cmark{border:1px solid #ccc;padding:5px!important;}
 #details, #ebi_citations, #confletter, #ebi_dblinks, #ebi_references, #fileDetails, #relMat, #relPubl, #relResData, #toolkit{padding-left:10px;}
+.alert-green {color: #4e4e4e;background-color: #f5f9d7;border-color: #d5dba5;}
+
+.nofile {font-size:24px;color:#666;width:150px;text-align:center;margin:25% auto;cursor:not-allowed;}
 
 /* librarian approved */
 .librarian-approved{color:#9dad23;}

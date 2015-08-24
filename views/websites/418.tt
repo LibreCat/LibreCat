@@ -1,9 +1,7 @@
-[% INCLUDE header.tt %]
+[% PROCESS header.tt %]
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% lang = session.lang ? session.lang : h.config.default_lang %]
-[% lf = h.config.language.$lang %]
 
 <!-- BEGIN websites/418.tt -->
 
@@ -17,7 +15,9 @@
 
     <div class="row margin-top1">
       <div class="col-md-12">
-	  <p>[% lf.418.text %]</p>
+	  <p>[% lf.418.text %]<br /><br />
+	     <a href="[% path %]">[% lf.418.link_back %]</a>
+	  </p>
       </div>
     </div>
 

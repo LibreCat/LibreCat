@@ -73,7 +73,14 @@ get qr{/(data|publication)/*} => sub {
 	} elsif ($p->{embed}) {
 		template "iframe", $hits;
 	} else {
-		template "websites/index_publication", $hits;
+		my $template = "websites/index_publication";
+		if($p->{ftyp}){
+			$template .= "_" . $p->{ftyp};
+			$template .= "_num" if ($p->{enum} and $p->{enum} eq "1");
+			$template .= "_numasc" if ($p->{enum} and $p->{enum} eq "2");
+			header("Content-Type" => "text/plain") unless ($p->{ftyp} eq 'iframe' || $p->{ftyp} eq 'pln');
+		}
+		template $template, $hits;
 	}
 
 };
@@ -111,7 +118,8 @@ get qr{/embed/*} => sub {
 	$hits->{embed} = 1;
 	$hits->{ttyp} = $p->{ttyp} if $p->{ttyp};
 	$hits->{style} = $p->{style} ? $p->{style} : h->config->{default_style};
-	$hits->{lang} = $p->{lang} ? $p->{lang} : h->config->{default_lang};
+	my $lang = session->{lang} || h->config->{default_lang};
+	$hits->{lang} = $lang;
 	template "iframe", $hits;
 };
 

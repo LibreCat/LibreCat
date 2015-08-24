@@ -5,7 +5,7 @@
 
 [% IF reviewedwork  %]
 <dl class="dl-horizontal">
-    <dt>Reviewed Work</dt>
+    <dt>[% lf.frontdoor.tabs.details.reviewed_work %]</dt>
     <dd>[% reviewedwork %]</dd>
 </dl>
 [% END %]
@@ -14,13 +14,13 @@
 [% FOREACH au IN author %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-md-2 text-muted">Authors</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.author.label %]</div>
     <div class="col-md-10">
   [% ELSE %];[% END %]
-  [% IF au.id %]<a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]</a><sup class="text-muted">UniBi</sup>[% ELSE %]<span itemprop="author">[% au.full_name %]</span>[% END %]
+  [% IF au.id %]<a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span itemprop="author">[% au.full_name %]</span>[% END %]
   [% IF loop.count > 11 %]
     <span id="showAut">
-      <br><a href="#details" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>All</a>
+      <br><a href="#details" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>[% lf.frontdoor.show_all %]</a>
     </span>
     </div>
   </div>
@@ -33,27 +33,27 @@
 [% FOREACH sup IN supervisor %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-md-2 text-muted">Supervisors</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.supervisor.label %]</div>
     <div class="col-md-10">
   [% ELSE %];[% END %]
-  [% IF sup.id %]<a href="/person/[% sup.id %]">[% sup.full_name %]</a><sup class="text-muted">UniBi</sup>[% ELSE %]<span>[% sup.full_name %]</span>[% END %]
+  [% IF sup.id %]<a href="/person/[% sup.id %]">[% sup.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span>[% sup.full_name %]</span>[% END %]
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
 [% FOREACH ed IN editor %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-md-2 text-muted">Editors</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.editor.label %]</div>
     <div class="col-md-10">
   [% ELSE %];[% END %]
-  [% IF ed.id %]<a itemprop="editor" href="/person/[% ed.id %]">[% ed.full_name %]</a><sup class="text-muted">UniBi</sup>[% ELSE %]<span itemprop="editor">[% ed.full_name %]</span>[% END %]
+  [% IF ed.id %]<a itemprop="editor" href="/person/[% ed.id %]">[% ed.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span itemprop="editor">[% ed.full_name %]</span>[% END %]
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
 [% FOREACH ed IN corporate_editor %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-md-2 text-muted">Corp. Ed.</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.corporate_editor.label %]</div>
     <div class="col-md-10">
   [% ELSE %];[% END %]
   [% ed %]
@@ -63,7 +63,7 @@
 [% FOREACH dep IN department %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-md-2 text-muted">Department</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.department.label %]</div>
     <div class="col-md-10">
   [% ELSE %]<br />[% END %]
   <a href="/[% bag %]?q=department=[% dep.id %]">[% dep.name %]</a>
@@ -73,7 +73,7 @@
 [% FOREACH proj IN project %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-md-2 text-muted">Project</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.project.label %]</div>
     <div class="col-md-10">
   [% ELSE %]<br />[% END %]
   <a href="/project/[% proj.id %]">[% proj.name %]</a>
@@ -82,14 +82,14 @@
 
 [% IF alternative_title %]
   <div class="row">
-    <div class="col-md-2 text-muted">Alternative Title</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.alternative_title.label %]</div>
     <div class="col-md-10" itemprop="alternativeHeadline">[% alternative_title.0 %]</div>
   </div>
 [% END %]
 
 [% IF abstract %]
   <div class="row">
-    <div class="col-md-2 text-muted">Abstract</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.abstract.label %]</div>
     <div class="col-md-10 cmark" itemprop="about">
     [% FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><br />[% END %]
 [% ab.text %]
@@ -100,7 +100,7 @@
 
 [% IF keyword %]
   <div class="row">
-    <div class="col-md-2 text-muted">Keywords</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.keyword.label %]</div>
     <div class="col-md-10" itemprop="keywords">
     [% FOREACH kw IN keyword %]
         <a href='/[% bag %]?q=keyword="[% kw %]"'>[% kw %]</a>
@@ -111,13 +111,13 @@
 [% END %]
 
   <div class="row">
-    <div class="col-md-2 text-muted">Year</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.year.label || lf.forms.$type.field.year_extern.label %]</div>
     <div class="col-md-10"><span itemprop="copyrightYear"><a href="/[% bag %]?q=year=[% year %]">[% year %]</a></span></div>
   </div>
 
 [% IF data_reuse_license %]
   <div class="row">
-    <div class="col-md-2 text-muted">Data Re-Use License</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.license.data_reuse_license.label %]</div>
     <div class="col-md-10">
     [% SWITCH data_reuse_license %]
     [% CASE 'PDDL' %] This <em>[% title %]</em> is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: <a href="http://opendatacommons.org/licenses/pddl/1.0">http://opendatacommons.org/licenses/pddl/1.0</a>
@@ -130,7 +130,7 @@
 
 [% IF conference.name %]
   <div class="row">
-    <div class="col-md-2 text-muted">Conf. Name</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.${conference.name}.label %]</div>
     <div class="col-md-10">
       [% conference.name %]
     </div>
@@ -139,7 +139,7 @@
 
 [% IF conference.location %]
   <div class="row">
-    <div class="col-md-2 text-muted">Location</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.${conference.location}.label_short %]</div>
     <div class="col-md-10">
       [% conference.location %]
     </div>
@@ -148,7 +148,7 @@
 
 [% IF conference.start_date %]
   <div class="row">
-    <div class="col-md-2 text-muted">Date</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.${conference.date}.label %]</div>
     <div class="col-md-10">
       [% conference.start_date %][% IF conference.end_date %] to [% conference.end_date %][% END %]
     </div>
@@ -157,7 +157,7 @@
 
 [% IF publication_identifier.isbn %]
   <div class="row">
-    <div class="col-md-2 text-muted">ISBN</div>
+    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.isbn %]</div>
     <div class="col-md-10" itemprop="isbn">
     [% FOREACH ib IN publication_identifier.isbn %]
       <a href='/publication?q=isbn=[% ib %]'>[% ib %]</a>
@@ -169,39 +169,39 @@
 
 [% IF publication_identifier.issn %]
   <div class="row">
-    <div class="col-md-2 text-muted">ISSN</div>
+    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.issn %]</div>
     <div class="col-md-10">[% FOREACH is IN publication_identifier.issn %]<a href="/publication?q=issn=[% is %]">[% is %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
 [% IF publication_identifier.eissn %]
   <div class="row">
-    <div class="col-md-2 text-muted">eISSN</div>
+    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.eissn %]</div>
     <div class="col-md-10">[% FOREACH es IN publication_identifier.eissn %]<a href="/publication?q=eissn=[% es %]">[% es %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
 [% IF ipn %]
   <div class="row">
-    <div class="col-md-2 text-muted">Int. Patent Number</div>
+    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.ipn %]</div>
     <div class="col-md-10">[% ipn %]</div>
   </div>
 [% END %]
 
 [% IF ipc %]
   <div class="row">
-    <div class="col-md-2 text-muted">Int. Patent Classification</div>
+    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.ipc %]</div>
     <div class="col-md-10">[% ipc %]</div>
   </div>
 [% END %]
 
 [% IF ubi_funded OR external_id.scoap3 %]
   <div class="row">
-    <div class="col-md-2 text-muted">Financial disclosure</div>
+    <div class="col-md-2 text-muted">[% lf.frontdoor.financial_disclosure %]</div>
     [% IF ubi_funded %]
-    <div class="col-md-10">Article Processing Charge funded by the <a href="http://www.dfg.de/">Deutsche Forschungsgemeinschaft</a> and the <a href="http://oa.uni-bielefeld.de/publikationsfonds.html">Open Access Publication Fund</a> of Bielefeld University.</div>
+    <div class="col-md-10">[% lf.frontdoor.ubi_funded %]</div>
     [% ELSIF external_id.scoap3 %]
-    <div class="col-md-10">Open Access publishing charge funded by <a href="http://scoap3.org/">SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University.</div>
+    <div class="col-md-10">[% lf.frontdoor.scoap3 %]</div>
     [% END %]
   </div>
 [% END %]
@@ -209,7 +209,7 @@
   <div class="row">
     <div class="col-md-2 text-muted">PUB-ID</div>
     <div class="col-md-10">
-    <a itemprop="url" href="[% request.uri_base %][% request.uri %]" title="Link to this page, e.g. for bookmarking">[% _id %]</a>
+    <a itemprop="url" href="[% request.uri_base %][% request.uri %]" title="[% lf.frontdoor.id_title %]">[% _id %]</a>
     </div>
   </div>
 </div>

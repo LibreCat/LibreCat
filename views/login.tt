@@ -8,6 +8,7 @@
 
     <form action="/login" method="post" class="form-horizontal">
       <h2 class="margin-top0">[% lf.login.login_heading %] </h2>
+      <input type="hidden" name="return_url" value="[% return_url %]">
 
       [% IF error_message %]
 	  <p class="text-danger"><strong>[% error_message %]</strong></p>
@@ -23,7 +24,6 @@
         <label class="col-md-3 control-label starMandatory" for="id_password">[% lf.login.password %]</label>
         <div class="col-md-8">
           <input type="password" class="form-control" name="pass" id="id_password" value="" placeholder="[% lf.login.password_placeholder %]" required>
-          <input type="hidden" name="return_url" value="[% return_url %]">
         </div>
       </div>
       <div class="form-group">
