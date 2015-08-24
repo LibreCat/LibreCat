@@ -1,7 +1,7 @@
 
 <!-- BEGIN pubtheses/dropzone.tt -->
 
-[% IF pq.success %]
+[% IF qp.success %]
   <div class="alert alert-success" role="alert">[% lf.main_page.theses_success_text %]</div>
 [% END %]
 
