@@ -20,12 +20,12 @@ use Dancer::Plugin::Auth::Tiny;
 use Crypt::Digest::MD5;
 use Encode qw(encode_utf8);
 
-=head1 PREFIX /myPUB
+=head1 PREFIX /librecat
 
 Section, where all uploads are handled.
 
 =cut
-prefix '/myPUB' => sub {
+prefix '/librecat' => sub {
 
   # receives file and places it in tmp
   # copies it to file with real filename (instead of tmp name)
@@ -167,7 +167,7 @@ prefix '/myPUB' => sub {
       unlink $path;
     }
 
-    redirect '/myPUB';
+    redirect '/librecat';
   };
 
   post '/thesesupload/submit' => sub {

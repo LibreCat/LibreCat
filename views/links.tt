@@ -1,9 +1,9 @@
 <!-- BEGIN links.tt -->
 
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
-<a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/myPUB/record/preview/[% entry._id %][% END %]" title="Show complete bibliographic and access information" target="_top">PUB</a>
+<a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="Show complete bibliographic and access information" target="_top">PUB</a>
   [% IF entry.file || entry.related_material || entry.externalFiles == "1" %]
-  | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/myPUB/record/preview/[% entry._id %][% END %]" class="label label-primary">Files available</a>
+  | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">Files available</a>
   [% END %]
 
   [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="/download/[% entry._id  %]/[% supp.file.file_id %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
@@ -37,11 +37,11 @@
 
 [% IF backend %]
   <br />
-  <a href="/myPUB/record/edit/[% entry._id %]">[% lf.main_page.links.edit %]</a>
+  <a href="/librecat/record/edit/[% entry._id %]">[% lf.main_page.links.edit %]</a>
   | <a data-toggle="collapse" href="#[% tabmodus %]_[% entry._id %]">[% lf.main_page.links.details %]</a>
 
   [% IF session.role == "super_admin" %]
-  | <a href="/myPUB/record/internal_view/[% entry._id %]" target="_blank">[% lf.main_page.links.internal_view %]</a>
+  | <a href="/librecat/record/internal_view/[% entry._id %]" target="_blank">[% lf.main_page.links.internal_view %]</a>
   [% END %]
   [% FOREACH fi IN entry.file %]
     [% IF fi.request_a_copy %]
@@ -50,9 +50,9 @@
     [% END %]
   [% END %]
   [% IF (entry.status != "public" AND entry.status != "submitted") OR (entry.status == "submitted" AND session.role == "super_admin") %]
-  | <a href="/myPUB/record/publish/[% entry._id %]">[% lf.main_page.links.publish %]</a>
+  | <a href="/librecat/record/publish/[% entry._id %]">[% lf.main_page.links.publish %]</a>
   [% ELSIF entry.status == "public" %]
-  | <a href="/myPUB/record/return/[% entry._id %]">[% lf.main_page.links.return %]</a>
+  | <a href="/librecat/record/return/[% entry._id %]">[% lf.main_page.links.return %]</a>
   [% END %]
   [% IF session.role == "super_admin" %]<span class="pull-right">[% entry.date_updated.replace('(T|Z)',' ') %]</span>[% END %]
 [% END %]

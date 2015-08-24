@@ -36,24 +36,24 @@
 	   <ul class="nav navbar-nav">
        [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
 	     <li><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-sm">[% lf.header.my_author_page %]</span></a></li>
-	     <li><a href="/[% IF session.user %]myPUB?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">[% lf.header.brand %]</span></a></li>
+	     <li><a href="/[% IF session.user %]librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">[% lf.header.brand %]</span></a></li>
 	   [% IF session.role == 'super_admin' %]
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% lf.header.admin_menu.admin %] <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="/myPUB/admin/account"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_accounts %]</a></li>
-            <!-- <li><a href="/myPUB/admin/import"><span class="glyphicon glyphicon-import"></span>[% lf.header.admin_menu.import %]</a></li> -->
-            <li><a href="/myPUB/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_projects %]</a></li>
-            <li><a href="/myPUB/admin/research_group"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_research_groups %]</a></li>
-            <li><a href="/myPUB/admin/department"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_department %]</a></li>
-            <!-- <li><a href="/myPUB/admin/journal"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_journals %]</a></li> -->
-            <li><a href="/myPUB/admin/award"><span class="glyphicon glyphicon-star"></span>[% lf.header.admin_menu.manage_awards %]</a></li>
+            <li><a href="/librecat/admin/account"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_accounts %]</a></li>
+            <!-- <li><a href="/librecat/admin/import"><span class="glyphicon glyphicon-import"></span>[% lf.header.admin_menu.import %]</a></li> -->
+            <li><a href="/librecat/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_projects %]</a></li>
+            <li><a href="/librecat/admin/research_group"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_research_groups %]</a></li>
+            <li><a href="/librecat/admin/department"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_department %]</a></li>
+            <!-- <li><a href="/librecat/admin/journal"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_journals %]</a></li> -->
+            <li><a href="/librecat/admin/award"><span class="glyphicon glyphicon-star"></span>[% lf.header.admin_menu.manage_awards %]</a></li>
           </ul>
          </li>
 	   [% END %]
        </ul>
        <ul class="nav navbar-nav navbar-right">
          <li>
-           <div class="select-language"><a href="/myPUB/person/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]">[% lf.header.lang %]</a></div>
+           <div class="select-language"><a href="/librecat/person/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]">[% lf.header.lang %]</a></div>
 	     </li>
          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <span class="hidden-sm">[% session.user %]</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
             <div class="dropdown-menu" style="width:550px">
@@ -63,18 +63,18 @@
 	 [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
 	  <li class="dropdown userrole"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% lf.header.role.${session.role} %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
 	    <ul class="dropdown-menu" role="menu">
-	      <li><a href="/myPUB/change_role/user">[% lf.header.role.user %]</a></li>
+	      <li><a href="/librecat/change_role/user">[% lf.header.role.user %]</a></li>
 	      [% IF thisPerson.delegate %]
-	      <li><a href="/myPUB/change_role/delegate">[% lf.header.role.delegate %]</a></li>
+	      <li><a href="/librecat/change_role/delegate">[% lf.header.role.delegate %]</a></li>
 	      [% END %]
 	      [% IF thisPerson.reviewer %]
-	      <li><a href="/myPUB/change_role/reviewer">[% lf.header.role.reviewer %]</a></li>
+	      <li><a href="/librecat/change_role/reviewer">[% lf.header.role.reviewer %]</a></li>
 	      [% END %]
 	      [% IF thisPerson.data_manager %]
-	      <li><a href="/myPUB/change_role/data_manager">[% lf.header.role.data_manager %]</a></li>
+	      <li><a href="/librecat/change_role/data_manager">[% lf.header.role.data_manager %]</a></li>
 	      [% END %]
 	      [% IF thisPerson.super_admin %]
-	      <li><a href="/myPUB/change_role/admin">[% lf.header.role.super_admin %]</a></li>
+	      <li><a href="/librecat/change_role/admin">[% lf.header.role.super_admin %]</a></li>
 	      [% END %]
 	    </ul>
 	  </li>

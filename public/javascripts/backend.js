@@ -1,6 +1,6 @@
 /**
  *
- * myPUB main/search page
+ * librecat main/search page
  *
  */
 
@@ -78,7 +78,7 @@ $(function () {
 		else{
 			$('#edit_mode').val('normal');
 		}
-		$('#edit_form').attr('action','/myPUB/record/change_mode');
+		$('#edit_form').attr('action','/librecat/record/change_mode');
 		$('#edit_form').submit();
 	});
 	$('.change_type').click(function(){
@@ -87,7 +87,7 @@ $(function () {
 			var newtype = $(this).data('val');
 			$('#id_type').val(newtype);
 			$('#id_select_type').remove();
-			$('#edit_form').attr('action','/myPUB/record/change_mode');
+			$('#edit_form').attr('action','/librecat/record/change_mode');
 			$('#edit_form').submit();
 		}
 	});

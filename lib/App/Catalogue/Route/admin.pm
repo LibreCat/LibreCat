@@ -27,12 +27,12 @@ Dancer::Plugin::Auth::Tiny->extend(
     }
 );
 
-=head1 PREFIX /myPUB/admin
+=head1 PREFIX /librecat/admin
 
 Permission: for admins only. Every other user will get a 403.
 
 =cut
-prefix '/myPUB/admin' => sub {
+prefix '/librecat/admin' => sub {
 
 =head2 GET /account
 
@@ -139,7 +139,7 @@ Input is person id. Returns warning if person is already in the database.
     post '/project/update' => needs role => 'super_admin' => sub {
         my $p = h->nested_params();
     	my $return = h->update_record('project', $p);
-    	redirect '/myPUB/admin/project';
+    	redirect '/librecat/admin/project';
     };
     
     get '/research_group' => needs role => 'super_admin' => sub {
@@ -168,7 +168,7 @@ Input is person id. Returns warning if person is already in the database.
     post '/research_group/update' => needs role => 'super_admin' => sub {
         my $p = h->nested_params();
     	my $return = h->update_record('research_group', $p);
-    	redirect '/myPUB/admin/research_group';
+    	redirect '/librecat/admin/research_group';
     };
     
     
@@ -199,7 +199,7 @@ Input is person id. Returns warning if person is already in the database.
     post '/department/update' => needs role => 'super_admin' => sub {
         my $p = h->nested_params();
     	my $return = h->update_record('department', $p);
-    	redirect '/myPUB/admin/department';
+    	redirect '/librecat/admin/department';
     };
     
     

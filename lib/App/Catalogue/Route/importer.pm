@@ -12,12 +12,12 @@ use Dancer::Plugin::Auth::Tiny;
 use App::Helper;
 use App::Catalogue::Controller::Importer;
 
-=head2 POST /myPUB/record/import
+=head2 POST /librecat/record/import
 
 Returns a form with imported data.
 
 =cut
-post '/myPUB/record/import' => needs login => sub {
+post '/librecat/record/import' => needs login => sub {
 	my $p = params;
 
     my $pub;

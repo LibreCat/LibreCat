@@ -1,7 +1,7 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% backend = path.match('myPUB') ? 1 : 0 %]
+[% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
 
@@ -35,7 +35,7 @@
         <div class="tab-pane active" id="preis_detail">
           <div class="row innerrow">
             <div class="col-md-10">
-            <a href="/myPUB/admin/award/new/record">--> Add new Preis</a>
+            <a href="/librecat/admin/award/new/record">--> Add new Preis</a>
             </div>
           </div>
         [% FOREACH p IN hits.nsort('sort_id') %]
@@ -46,7 +46,7 @@
 	          <span class="label label-success"><strong>[% p._id %]</strong></span>
             </div>
             <div class="col-md-9">
-	          <a href="/myPUB/admin/award/edit/[% p._id %]">[% awardData.title %] ([% p.honoree.0.full_name %])</a>
+	          <a href="/librecat/admin/award/edit/[% p._id %]">[% awardData.title %] ([% p.honoree.0.full_name %])</a>
 	          <br />
 	          <span class="text-muted">[% FOREACH dep IN p.department %][% dep.name %][% UNLESS loop.last %] | [% END %][% END %]</span>
             </div>
@@ -57,7 +57,7 @@
         <div class="tab-pane" id="preise">
           <div class="row innerrow">
             <div class="col-md-10">
-            <a href="/myPUB/admin/award/new/award">--> Add new Auszeichnung/Akademie/Award</a>
+            <a href="/librecat/admin/award/new/award">--> Add new Auszeichnung/Akademie/Award</a>
             </div>
           </div>
         [% FOREACH p IN preis.nsort('sort_id') %]
@@ -67,7 +67,7 @@
 	          <span class="label label-success"><strong>[% p._id %]</strong></span>
             </div>
             <div class="col-md-9">
-	          <a href="/myPUB/admin/award/edit/[% p._id %]">[% p.title %]</a>
+	          <a href="/librecat/admin/award/edit/[% p._id %]">[% p.title %]</a>
 	          <br />
             </div>
           </div>
@@ -77,7 +77,7 @@
         <div class="tab-pane" id="auszeichnung">
           <div class="row innerrow">
             <div class="col-md-10">
-            <a href="/myPUB/admin/award/new/award">--> Add new Auszeichnung/Akademie/Award</a>
+            <a href="/librecat/admin/award/new/award">--> Add new Auszeichnung/Akademie/Award</a>
             </div>
           </div>
         [% FOREACH p IN auszeichnung.nsort('sort_id') %]
@@ -87,7 +87,7 @@
 	          <span class="label label-success"><strong>[% p._id %]</strong></span>
             </div>
             <div class="col-md-9">
-	          <a href="/myPUB/admin/award/edit/[% p._id %]">[% p.title %]</a>
+	          <a href="/librecat/admin/award/edit/[% p._id %]">[% p.title %]</a>
 	          <br />
             </div>
           </div>
@@ -97,7 +97,7 @@
         <div class="tab-pane" id="akademie">
           <div class="row innerrow">
             <div class="col-md-10">
-            <a href="/myPUB/admin/award/new/award">--> Add new Auszeichnung/Akademie/Award</a>
+            <a href="/librecat/admin/award/new/award">--> Add new Auszeichnung/Akademie/Award</a>
             </div>
           </div>
         [% FOREACH p IN akademie.nsort('sort_id') %]
@@ -107,7 +107,7 @@
 	          <span class="label label-success"><strong>[% p._id %]</strong></span>
             </div>
             <div class="col-md-9">
-	          <a href="/myPUB/admin/award/edit/[% p._id %]">[% p.title %]</a>
+	          <a href="/librecat/admin/award/edit/[% p._id %]">[% p.title %]</a>
 	          <br />
             </div>
           </div>

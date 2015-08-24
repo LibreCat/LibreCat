@@ -4,20 +4,6 @@ use Catmandu::Sane;
 use Dancer qw(:syntax);
 use App::Helper;
 
-# redirect for old /luur login
-get qr{/luur/*|/luur/session} => sub {
-	redirect '/login';
-};
-
-# redirect for /index.html
-#get qr{(.*/index.html)} => sub {
-#	my ($path) = splat;
-#	$path =~ s/index.html//g;
-#	$path = h->host . $path;
-#	redirect $path, 301;
-#};
-
-
 #redirect for old websites
 get qr{/\(en\)/*} => sub {
 	my $path = h->host . "/en";

@@ -1,5 +1,5 @@
 [% path = request.path %]
-[% backend = path.match('myPUB') ? 1 : 0 %]
+[% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
 
@@ -20,7 +20,7 @@
     </div>
 
 
-    <form action="/myPUB/admin/project/update" method="POST">
+    <form action="/librecat/admin/project/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
 
       {% FOREACH key IN project_field_order %}
@@ -61,7 +61,7 @@
 
 <script>
 $('button.cancel-button').click(function() {
-  window.location.href = '/myPUB/admin/account';
+  window.location.href = '/librecat/admin/account';
 });
 </script>
 
@@ -74,7 +74,7 @@ $('#plusRV').click(function(){
   $('#reviewer').append('<div class="row innerrow"><input type="hidden" name="reviewer.' + index + '.id" id="rv_idautocomplete_' + index + '" /><input type="hidden" name="reviewer.' + index + '.name" id="rv_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="rv_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button reviewer" id="reviewer_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
   $('#reviewer').bind("click", function(){
     $( "#rv_autocomplete_" + index ).autocomplete({
-      source: "/myPUB/get_department",
+      source: "/librecat/get_department",
       minLength: 2,
       select: function( event, ui ) {
         $( "#rv_autocomplete_" + index ).val( ui.item.label );
@@ -92,7 +92,7 @@ $('#plusDM').click(function(){
   $('#data_manager').append('<div class="row innerrow"><input type="hidden" name="data_manager.' + index + '.id" id="dp_idautocomplete_' + index + '" /><input type="hidden" name="data_manager.' + index + '.name" id="dp_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" name="data_manager.' + index + '.name" id="dp_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button data_manager" id="data_manager_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
   $('#data_manager').bind("click", function(){
     $( "#dp_autocomplete_" + index ).autocomplete({
-      source: "/myPUB/get_department",
+      source: "/librecat/get_department",
       minLength: 2,
       select: function( event, ui ) {
         $( "#dp_autocomplete_" + index ).val( ui.item.label );

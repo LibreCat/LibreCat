@@ -1,5 +1,5 @@
 [% path = request.path %]
-[% backend = path.match('myPUB') ? 1 : 0 %]
+[% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
 
@@ -20,7 +20,7 @@
     </div>
 
 
-    <form action="/myPUB/admin/department/update" method="POST">
+    <form action="/librecat/admin/department/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
 
       {% FOREACH key IN department_field_order %}
@@ -61,7 +61,7 @@
 
 <script>
 $('button.cancel-button').click(function() {
-  window.location.href = '/myPUB/admin/department';
+  window.location.href = '/librecat/admin/department';
 });
 </script>
 

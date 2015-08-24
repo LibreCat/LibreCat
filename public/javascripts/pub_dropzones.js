@@ -3,7 +3,7 @@
  */
 $(document).ready(function(){
 	Dropzone.options.qaeUpload = {
-		url: '/myPUB/upload',
+		url: '/librecat/upload',
 		maxFileSize: 1000,
 		maxFiles: 1,
 		previewTemplate: "<span></span>",
@@ -25,7 +25,7 @@ $(document).ready(function(){
 	            var progresselement = progressbar.parentNode.parentNode;
 	            $(progresselement).remove();
 	            var resp = response;//JSON.parse(response);
-	            var modal = Dropzone.createElement("<div class='well' id='" + resp.tempname + "'><form id='form_" + resp.tempname + "' action='/myPUB/upload/qae/submit' method='post'><strong>" + file.name + "</strong><textarea class='form-control' placeholder='Type details about your publication here' name='description'></textarea><input type='hidden' name='file_name' value='" + resp.file_name + "' /><div class='checkbox'><label><input type='checkbox' required> I have read and accept the <a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy</a></label></div><input type='hidden' name='tempid' value='" + resp.tempid + "' /><input type='submit' class='btn btn-success' name='submit_or_cancel' value='Submit'/> <input type='reset' class='btn btn-warning' onclick='location.reload()' name='submit_or_cancel' value='Cancel' /></form></div>");
+	            var modal = Dropzone.createElement("<div class='well' id='" + resp.tempname + "'><form id='form_" + resp.tempname + "' action='/librecat/upload/qae/submit' method='post'><strong>" + file.name + "</strong><textarea class='form-control' placeholder='Type details about your publication here' name='description'></textarea><input type='hidden' name='file_name' value='" + resp.file_name + "' /><div class='checkbox'><label><input type='checkbox' required> I have read and accept the <a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy</a></label></div><input type='hidden' name='tempid' value='" + resp.tempid + "' /><input type='submit' class='btn btn-success' name='submit_or_cancel' value='Submit'/> <input type='reset' class='btn btn-warning' onclick='location.reload()' name='submit_or_cancel' value='Cancel' /></form></div>");
 	            file.previewElement.appendChild(modal);
 		    });
 	    	this.on("error", function(file, errorMessage){
@@ -34,13 +34,13 @@ $(document).ready(function(){
 		    });
 	    },
 	};
-	
+
 	Dropzone.options.uploadFiles = {
-	    url: '/myPUB/upload',
+	    url: '/librecat/upload',
 	    maxFileSize: 1000,
 	    previewTemplate: '<div class=\"col-md-11 dz-preview dz-file-preview\"></div>',
 	    createImageThumbnails: false,
-	    
+
 	    init: function() {
 	    	$('.dz-default.dz-message').addClass('col-md-11');
 	        this.on("addedfile", function(file) {
@@ -58,40 +58,40 @@ $(document).ready(function(){
 	            var resp = response;//JSON.parse(response);
 	            if(resp.success){
 	              $(file.previewElement).addClass("alert alert-success");
-	            	
+
 	              var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-12 padded text-muted\" id=\"filename_" + resp.tempid + "\"><span class=\"glyphicon glyphicon-file text-muted\"></span> <strong>" + file.name + "</strong></div></div>");
 	              file.previewElement.appendChild(fileName);
-	              
+
 	              var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-3 text-muted\">Upload Date:</div><div class=\"col-md-3 text-muted\">User:</div><div class=\"col-md-4 text-muted\">Relation:</div></div>");
 	              file.previewElement.appendChild(tagsRow);
-	              
+
 	              var accessString = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2\" id=\"access_" + resp.tempid + "\"><span>" + resp.access_level + "</span></div></div>");
 	              fileName.appendChild(accessString);
-	              
+
 	              var dateString = Dropzone.createElement("<div class=\"col-md-3\" id=\"updated_" + resp.tempid + "\"><span>" + resp.date_updated + "</span></div>");
 	              accessString.appendChild(dateString);
-	              
+
 	              var userString = Dropzone.createElement("<div class=\"col-md-3\" id=\"creator_" + resp.tempid + "\"><span>" + resp.creator + "</span></div>");
 	              accessString.appendChild(userString);
-	              
+
 	              var relationString = Dropzone.createElement("<div class=\"col-md-4\" id=\"relation_" + resp.tempid + "\"><span>" + resp.relation + "</span></div>");
 	              accessString.appendChild(relationString);
-	              
+
 	              file.previewElement.appendChild(accessString);
-	              
+
 	              var removeLink = Dropzone.createElement("<div class=\"corner_up\" id=\"corup_" + resp.tempid + "\"><a href=\"#\"><span class=\"glyphicon glyphicon-remove\"></span></a></div>");
 	              removeLink.addEventListener("click", function(e) {
 	                window.delete_file(resp.tempid);
 	                e.preventDefault();
 	              });
 	              file.previewElement.appendChild(removeLink);
-	              
+
 	              var editLink = Dropzone.createElement("<div class=\"corner_down\" id=\"cordown_" + resp.tempid + "\"><a href=\"#\" onclick=\"return false;\"><span class=\"glyphicon glyphicon-pencil\"></span></a></div>");
 	              editLink.addEventListener("click", function(e) {
 	                window.edit_file(resp.tempid, "[% _id %]");
 	              });
 	              file.previewElement.appendChild(editLink);
-	              
+
 	              var licenses = document.getElementById('licenses');
 	              if(licenses){
 	                var liClass = licenses.className;
@@ -109,11 +109,11 @@ $(document).ready(function(){
 	                $('#licenses').find('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
 	                $('#licenses').find('label[for="select_ddc_0"]').closest('div').append('<span class="starMandatory"></span>');
 	              }
-	              
+
 	              file.previewElement.setAttribute("id", resp.tempid);
 	              var input_element = Dropzone.createElement('<input type=\'hidden\' id=\'file_' + resp.tempid + '\' name=\'file\' value=\'' + resp.file_json + '\' />');
 	              file.previewElement.appendChild(input_element);
-	              
+
 	              $('#sortFilesInput').append('<input type="hidden" name="file_order" id="file_order_' + resp.tempid + '" value="' + resp.tempid + '" />');
 	            }
 	        });
@@ -123,9 +123,9 @@ $(document).ready(function(){
 		    });
 	    },
 	};
-	
+
 	Dropzone.options.thesesUpload = {
-		url: '/myPUB/thesesupload',
+		url: '/librecat/thesesupload',
 		maxFileSize: 1000,
 		maxFiles: 1,
 		previewTemplate: "<span></span>",
@@ -149,44 +149,44 @@ $(document).ready(function(){
 	            $(progresselement).remove();
 	            var resp = response;//JSON.parse(response);
 	            var well = Dropzone.createElement("<div class='well' id='" + resp.tempid + "'></div>");
-	            
-	            var form = Dropzone.createElement("<form class='form-horizontal' id='form_" + resp.tempid + "' action='/myPUB/thesesupload/submit' method='post'></form>");
-	            
+
+	            var form = Dropzone.createElement("<form class='form-horizontal' id='form_" + resp.tempid + "' action='/librecat/thesesupload/submit' method='post'></form>");
+
 	            var file_name = Dropzone.createElement("<h4 class='expert'><span class='fa fa-file-pdf-o'></span> " + file.name + "</h4>");
 	            form.appendChild(file_name);
-	            
+
 	            var type = Dropzone.createElement("<div class='form-group'><div class='col-sm-offset-2 col-sm-10'><div class='radio'><label><input type='radio' name='type' value='biDissertation' checked='checked'>Dissertation</label></div><div class='radio'><label><input type='radio' name='type' value='biMasterThesis'>Master Thesis</label></div><div class='radio'><label><input type='radio' name='type' value='biBachelorThesis'>Bachelor Thesis</label></div><div class='radio'><label><input type='radio' name='type'' value='biPostdocThesis'>Postdoc Thesis/Habilitation</label></div></div></div>");
 	            form.appendChild(type);
-	            
+
 	            var title = Dropzone.createElement("<div class='form-group'><label for='id_title' class='col-sm-2 control-label'>Title<span class='starMandatory'></span></label><div class='col-sm-10'><input type='text' name='title' class='form-control' id='id_title' placeholder='Title' required /></div></div>");
 	            form.appendChild(title);
-	            
+
 	            var author = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Author<span class='starMandatory'></span></label><div class='col-sm-5'><input type='text' name='author.first_name' class='form-control' placeholder='First Name' required /></div><div class='col-sm-5'><input type='text' name='author.last_name' class='form-control' placeholder='Last Name' /></div></div>");
 	            form.appendChild(author);
-	            
+
 	            var email = Dropzone.createElement("<div class='form-group'><label for='id_email' class='col-sm-2 control-label'>Email<span class='starMandatory'></span></label><div class='col-sm-10'><input type='email' class='form-control' id='id_email' placeholder='Email' name='email' required /></div></div>");
 	            form.appendChild(email);
-	            
+
 	            var supervisor = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Supervisor<span class='starMandatory'></span></label><div class='col-sm-5'><input type='text' name='supervisor.first_name' class='form-control' placeholder='First Name' required /></div><div class='col-sm-5'><input type='text' name='supervisor.last_name' class='form-control' placeholder='Last Name' /></div></div>");
 	            form.appendChild(supervisor);
-	            
+
 	            var defense_date = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Defense Date<span class='starMandatory'></span></label><div class='col-sm-5'><input type='text' name='defense_date' class='form-control' placeholder='YYYY-MM-DD' required /></div></div>'");
 	            form.appendChild(defense_date);
 
 	            var abstract_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Abstract</label><div class='col-sm-10'><textarea class='form-control' name='abstract'></textarea></div></div>");
 	            form.appendChild(abstract_field);
-	            
+
 	            var cc_license = Dropzone.createElement("<div class='row innerrow'><div class='col-md-12 alert alert-info'>If your uploaded data is available under a Creative Commons license, you can select it here:<br /><select name='cc_license' id='id_cc_license' class='form-control'><option value=''>Select a license</option><option value='cc_0'>CC0 (1.0)</option><option value='cc_by'>CC BY (4.0)</option><option value='cc_by_sa'>CC BY-SA (4.0)</option></select><br /><a data-target='#cc_0' data-toggle='collapse'><span class='glyphicon glyphicon-chevron-down'></span> Creative Commons Public Domain Dedication (CC0 1.0)</a><br /><div id='cc_0' class='collapse reuse-license'><img src='/images/cc0.png' /><br />License Deed <a href='http://creativecommons.org/publicdomain/zero/1.0/' target='_blank'>http://creativecommons.org/publicdomain/zero/1.0/</a><br /><a href='http://creativecommons.org/publicdomain/zero/1.0/legalcode' target='_blank'>http://creativecommons.org/publicdomain/zero/1.0/legalcode</a></div><a data-target='#cc_by' data-toggle='collapse'><span class='glyphicon glyphicon-chevron-down'></span> Creative Commons Attribution 4.0 International Public License (CC-BY 4.0)</a><br /><div id='cc_by' class='collapse reuse-license'><img src='/images/cc_by.png' /><br />License Deed <a href='http://creativecommons.org/licenses/by/4.0/' target='_blank'>http://creativecommons.org/licenses/by/4.0/</a><br /><a href='http://creativecommons.org/licenses/by/4.0/legalcode' target='_blank'>http://creativecommons.org/licenses/by/4.0/legalcode</a></div><a data-target='#cc_by_sa' data-toggle='collapse'><span class='glyphicon glyphicon-chevron-down'></span> Creative Commons Attribution-ShareAlike 4.0 International Public License (CC BY-SA 4.0)</a><br /><div id='cc_by_sa' class='collapse reuse-license'><img src='/images/cc_by_sa.png' /><br />License Deed <a href='http://creativecommons.org/licenses/by-sa/4.0/' target='_blank'>http://creativecommons.org/licenses/by-sa/4.0/</a><br /><a href='http://creativecommons.org/licenses/by-sa/4.0/legalcode' target='_blank'>http://creativecommons.org/licenses/by-sa/4.0/legalcode</a></div></div></div>");
 	            form.appendChild(cc_license);
-	            
+
 	            var hidden = Dropzone.createElement("<input type='hidden' name='file_name' value='" + resp.file_name + "' />");
 	            var hidden2 = Dropzone.createElement("<input type='hidden' name='tempid' value='" + resp.tempid + "' />");
 	            form.appendChild(hidden);
 	            form.appendChild(hidden2);
-	            
+
 	            var buttons = Dropzone.createElement("<div class='form-group'><div class='col-sm-10 col-sm-offset-2'><input type='submit' class='btn btn-default' name='submit_or_cancel' onclick='return confirm(\"I herewith place this document at the disposal of Bielefeld University for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.\");' value='Submit'/><input type='button' class='btn btn-default' onclick='location.reload();' value='Cancel' /></div></div>");
 	            form.appendChild(buttons);
-	            
+
 	            well.appendChild(form);
 	            file.previewElement.appendChild(well);
 		    });

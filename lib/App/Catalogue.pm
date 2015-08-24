@@ -15,38 +15,38 @@ use Dancer::Plugin::Auth::Tiny;
 use App::Helper;
 use all qw(App::Catalogue::Route::*);
 
-=head2 GET /myPUB
+=head2 GET /librecat
 
 The default route after logging in. Will be forwarded
 to default search page for current role.
 
 =cut
-get '/myPUB' => needs login => sub {
+get '/librecat' => needs login => sub {
     my $params = params;
 
     if ( session->{role} eq "super_admin" ) {
-        forward '/myPUB/search/admin', $params;
+        forward '/librecat/search/admin', $params;
     }
     elsif ( session->{role} eq "reviewer" ) {
-        forward '/myPUB/search/reviewer', $params;
+        forward '/librecat/search/reviewer', $params;
     }
     elsif ( session->{role} eq "dataManager" ) {
-        forward '/myPUB/search/data_manager', $params;
+        forward '/librecat/search/data_manager', $params;
     }
     elsif ( session->{role} eq "delegate" ) {
-    	forward '/myPUB/search/delegate', $params;
+    	forward '/librecat/search/delegate', $params;
     }
     else {
-        forward '/myPUB/search', $params;
+        forward '/librecat/search', $params;
     }
 };
 
-=head2 GET /myPUB/change_role/:change_role
+=head2 GET /librecat/change_role/:change_role
 
 Let the user change his role.
 
 =cut
-get '/myPUB/change_role/:role' => needs login => sub {
+get '/librecat/change_role/:role' => needs login => sub {
     my $user = h->get_person( session->{user} );
 
     # is user allowed to take this role?
@@ -66,7 +66,7 @@ get '/myPUB/change_role/:role' => needs login => sub {
     else {
         session role => "user";
     }
-    redirect '/myPUB';
+    redirect '/librecat';
 };
 
 1;

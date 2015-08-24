@@ -71,11 +71,11 @@
       <ul class="breadcrumb">
 	<li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>[% lf.frontdoor.crumb_back %]</a></li>
 	<li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% lf.main_page.logout %]</span></a>[% ELSE %]<a href="/login" title="[% lf.main_page.login %]"><span class="glyphicon glyphicon-log-in fw"></span>[% lf.main_page.login %]</a>[% END %]</li>
-	[% IF session AND session.user %]<li class="navbar-right"><a href="/myPUB" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">([% lf.header.brand %])</span></span></a></li>[% END %]
+	[% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">([% lf.header.brand %])</span></span></a></li>[% END %]
       </ul>
 
       [% IF _id %]
-      <h1 class="cmark" itemprop="name">[% title %][% IF status != "public" AND _id %] <a class="btn btn-sm btn-success" href="/myPUB/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> [% lf.main_page.links.publish %]</a> [% END %]</h1>
+      <h1 class="cmark" itemprop="name">[% title %][% IF status != "public" AND _id %] <a class="btn btn-sm btn-success" href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> [% lf.main_page.links.publish %]</a> [% END %]</h1>
       [% ELSE %]
       <h1>[% lf.frontdoor.no_record %]</h1>
       [% END %]

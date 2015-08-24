@@ -319,7 +319,7 @@ function selectButton(element){
 
 
 $('button.cancel-button').click(function() {
-  window.location.href = '/myPUB';
+  window.location.href = '/librecat';
 });
 
 
@@ -384,15 +384,15 @@ $("#id_conference_location").autocomplete("option", "delay", 100);
 $(function() {
   var puburl = '';
   [% IF modus == "super_admin" OR session.role == "super_admin" %]
-    puburl = '/myPUB/search/admin?fmt=autocomplete';
+    puburl = '/librecat/search/admin?fmt=autocomplete';
   [% ELSIF modus == "reviewer" OR session.role == "reviewer" %]
-    puburl = '/myPUB/search/reviewer?fmt=autocomplete';
+    puburl = '/librecat/search/reviewer?fmt=autocomplete';
   [% ELSIF modus == "dataManager" OR session.role == "dataManager" %]
-    puburl = '/myPUB/search/data_manager?fmt=autocomplete';
+    puburl = '/librecat/search/data_manager?fmt=autocomplete';
   [% ELSIF modus == "delegate" OR session.role == "delegate" %]
-    puburl = '/myPUB/search/delegate?fmt=autocomplete';
+    puburl = '/librecat/search/delegate?fmt=autocomplete';
   [% ELSE %]
-    puburl = '/myPUB/search?fmt=autocomplete';
+    puburl = '/librecat/search?fmt=autocomplete';
   [% END %]
   
   $( "#connect_autocomplete" ).autocomplete({

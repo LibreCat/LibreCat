@@ -33,7 +33,7 @@ All actions related to a publication record are handled under this prefix.
 
 =cut
 
-prefix '/myPUB/record' => sub {
+prefix '/librecat/record' => sub {
 
 =head2 GET /new
 
@@ -133,7 +133,7 @@ Checks if the user has the rights to update this record.
         my $result = h->update_record('publication', $p);
         #return to_dumper $result; # leave this here to make debugging easier
 
-        redirect '/myPUB';
+        redirect '/librecat';
     };
 
 =head2 GET /return/:id
@@ -155,7 +155,7 @@ Checks if the user has the rights to edit this record.
         $rec->{status} = "returned";
         h->update_record('publication', $rec);
 
-        redirect '/myPUB';
+        redirect '/librecat';
     };
 
 =head2 GET /delete/:id
@@ -165,7 +165,7 @@ Deletes record with id. For admins only.
 =cut
     get '/delete/:id' => needs role => 'super_admin' => sub {
         h->delete_record('publication', params->{id} );
-        redirect '/myPUB';
+        redirect '/librecat';
     };
 
 =head2 GET /preview/id
@@ -250,7 +250,7 @@ Publishes private records, returns to the list.
         $record->{status} = "public" if $field_check;
         h->update_record('publication', $record);
 
-        redirect '/myPUB';
+        redirect '/librecat';
     };
 
 =head2 GET /change_mode

@@ -1,7 +1,7 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% backend = path.match('myPUB') ? 1 : 0 %]
+[% backend = path.match('librecat') ? 1 : 0 %]
 [% thisPerson = backend ? h.get_person(session.personNumber) : h.get_person(id) %]
 [% menu = "" %]
 [% lang = session.lang ? session.lang : h.config.default_lang %]
@@ -30,7 +30,7 @@
       <div class="pull-right margin-top-1">
 	    <ul class="list-inline">
 	    [% IF session AND session.user %]
-	      <li><a href="/myPUB" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span>[% session.user %]<span class="hidden-sm hidden-xs"> (myPUB)</span></a></li>
+	      <li><a href="/librecat" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span>[% session.user %]<span class="hidden-sm hidden-xs"> (myPUB)</span></a></li>
 	    [% END %]
 	    [% IF session AND session.user %]
 	      <li><a href="/logout" title="[% lf.main_page.logout %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% lf.main_page.logout %]</span></a></li>
@@ -75,23 +75,23 @@
       <div class="col-md-12">
 	<ul class="nav nav-tabs">
 	[% IF backend AND session.role == 'super_admin' %]
-	  <li[% IF backend AND modus == "admin" %] class="active"[% END %]><a href="/myPUB/search/admin">[% lf.tabs.all_publications %]</a></li>
+	  <li[% IF backend AND modus == "admin" %] class="active"[% END %]><a href="/librecat/search/admin">[% lf.tabs.all_publications %]</a></li>
 	[% END %]
 	[% IF session.role == 'user' OR !backend %]
-	  <li[% IF modus == "user" %] class="active"[% END %]><a href="[% IF backend %]/myPUB/search[% ELSE %]/person/[% id %][% END %]">[% lf.tabs.publications %]</a></li>
+	  <li[% IF modus == "user" %] class="active"[% END %]><a href="[% IF backend %]/librecat/search[% ELSE %]/person/[% id %][% END %]">[% lf.tabs.publications %]</a></li>
 	  [% IF researchhits AND researchhits.total != 0 %]
-	    <li[% IF modus == "data" %] class="active"[% END %]><a href="[% IF backend %]/myPUB/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% lf.tabs.data_publications %]</a></li>
+	    <li[% IF modus == "data" %] class="active"[% END %]><a href="[% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% lf.tabs.data_publications %]</a></li>
 	  [% END %]
 	[% END %]
 	[% IF backend AND (session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer")) %]
-	  <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/myPUB/search/reviewer">[% lf.tabs.review_publications %]</a></li>
+	  <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/librecat/search/reviewer">[% lf.tabs.review_publications %]</a></li>
 	[% END %]
 	[% IF backend AND (session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager")) %]
-	  <li[% IF modus == "data_manager" OR session.role == "data_manager" %] class="active"[% END %]><a href="/myPUB/search/data_manager">[% lf.tabs.review_data_publications %]</a></li>
+	  <li[% IF modus == "data_manager" OR session.role == "data_manager" %] class="active"[% END %]><a href="/librecat/search/data_manager">[% lf.tabs.review_data_publications %]</a></li>
 	[% END %]
 	[% IF backend AND session.role == "delegate" %]
 	  [% FOREACH delegate_id IN thisPerson.delegate %]
-	  <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/myPUB/search/delegate/[% delegate_id %]">[% lf.tabs.publications_by %] [% h.get_person(delegate_id).last_name %]</a></li>
+	  <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/librecat/search/delegate/[% delegate_id %]">[% lf.tabs.publications_by %] [% h.get_person(delegate_id).last_name %]</a></li>
 	  [% END %]
 	[% END %]
 	[% UNLESS backend %]
