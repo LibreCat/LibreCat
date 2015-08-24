@@ -348,7 +348,6 @@
 	  <h3 id="wos">Web of Science</h3>
 	  <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">View record in Web of Science&reg;</a>
 
-	  [% ELSE %]
 	  <h3>Sources</h3>
 
 	  [% IF external_id.pmid %]
