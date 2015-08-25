@@ -193,6 +193,7 @@ publicationTypes:
             mandatory: 0
           ddc:
             multiple: 0
+            mandatory: file
       supplementary_fields:
         abstract: &abstract
           multiple: 1
@@ -955,7 +956,16 @@ publicationTypes:
           mandatory: 1
         alternative_title: *alternative_title
         page: *page
-      file_upload: *file_upload
+      file_upload: &file_upload
+        dropzone_mainDoc:
+          mandatory: 0
+        license:
+          pub_license:
+            mandatory: 1
+          urn:
+            mandatory: 1
+          ddc:
+            mandatory: 1
       supplementary_fields:
         abstract: *abstract
         keyword: *keyword
