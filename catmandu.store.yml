@@ -13,11 +13,11 @@ backup:
   package: DBI 
   options:
     data_source: "DBI:mysql:database=PUBBackup"
-    username: root 
+    username: root
     password: pub33TX
     bags:
       publication: &backup_settings
-        plugins: ['Versioning']
+#        plugins: ['Versioning']
         plugins: ['Datestamps', 'Versioning']
         version_compare_ignore:
           - date_updated
@@ -1119,7 +1119,10 @@ search:
           department:
             properties:
               id: {type: string, analyzer: tag}
-              tree: {type: string, analyzer: tag}
+              tree:
+                properties:
+                  name: {type: string, index: no}
+                  id: {type: string, analyzer: tag}
           proj: {type: byte}
           metrics:
             properties:

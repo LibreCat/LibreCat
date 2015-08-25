@@ -10,164 +10,108 @@
 
   <header>
     <nav class="navbar navbar-default navbar-fixed-top [% IF backend %] backend[% ELSE %] frontend[% END %]" role="navigation">
-    [% UNLESS backend %]<div class="container">[% END %]
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-	<span class="sr-only">Toggle navigation</span>
-	<span class="icon-bar"></span>
-	<span class="icon-bar"></span>
-	<span class="icon-bar"></span>
-      </button>
-      [% IF backend %]
+    [% IF backend %]
+      <div class="navbar-header">
+	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+	  <span class="sr-only">Toggle navigation</span>
+	  <span class="icon-bar"></span>
+	  <span class="icon-bar"></span>
+	  <span class="icon-bar"></span>
+	</button>
 	<a class="navbar-brand" href="/"><img src="/images/publogo.gif" height="30" alt="" /></a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+	[% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
+	  <li><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-sm">[% lf.header.my_author_page %]</span></a></li>
+	  <li><a href="/[% IF session.user %]librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">[% lf.header.brand %]</span></a></li>
+	[% IF session.role == 'super_admin' %]
+	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% lf.header.admin_menu.admin %] <span class="glyphicon glyphicon-chevron-down"></span></a>
+	  <ul class="dropdown-menu" role="menu">
+	    <li><a href="/librecat/admin/account"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_accounts %]</a></li>
+	    <!-- <li><a href="/librecat/admin/import"><span class="glyphicon glyphicon-import"></span>[% lf.header.admin_menu.import %]</a></li> -->
+	    <li><a href="/librecat/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_projects %]</a></li>
+	    <li><a href="/librecat/admin/research_group"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_research_groups %]</a></li>
+	    <li><a href="/librecat/admin/department"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_department %]</a></li>
+	    <!-- <li><a href="/librecat/admin/journal"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_journals %]</a></li> -->
+	    <li><a href="/librecat/admin/award"><span class="glyphicon glyphicon-star"></span>[% lf.header.admin_menu.manage_awards %]</a></li>
+	  </ul>
+	  </li>
+	[% END %]
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	<li>
+	  <a href="/librecat/person/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]"><span class="glyphicon glyphicon-flag"></span>[% lf.header.lang %]</a>
+	</li>
+	<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <span class="hidden-sm">[% session.user %]</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
+	  <div class="dropdown-menu" style="width:550px">
+	    [% INCLUDE backend/user_settings.tt %]
+	  </div>
+	</li>
+	[% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
+	<li class="dropdown userrole"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% lf.header.role.${session.role} %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
+	  <ul class="dropdown-menu" role="menu">
+	    <li><a href="/librecat/change_role/user">[% lf.header.role.user %]</a></li>
+	    [% IF thisPerson.delegate %]
+	    <li><a href="/librecat/change_role/delegate">[% lf.header.role.delegate %]</a></li>
+	    [% END %]
+	    [% IF thisPerson.reviewer %]
+	    <li><a href="/librecat/change_role/reviewer">[% lf.header.role.reviewer %]</a></li>
+	    [% END %]
+	    [% IF thisPerson.data_manager %]
+	    <li><a href="/librecat/change_role/data_manager">[% lf.header.role.data_manager %]</a></li>
+	    [% END %]
+	    [% IF thisPerson.super_admin %]
+	    <li><a href="/librecat/change_role/admin">[% lf.header.role.super_admin %]</a></li>
+	    [% END %]
+	  </ul>
+	</li>
+	[% END %]
+	<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% lf.main_page.logout %]</span></a></li>
+      </ul>
+      </div><!-- /.navbar-collapse -->
       [% ELSE %]
-	<div class="hidden-sm hidden-lg hidden-md">
+      <div class="container">
+      <div class="row">
+	<div class="col-xs-10 hidden-sm hidden-lg hidden-md">
 	  <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" height="43" alt="" /></a>
 	  <span class="navbar-title"><a href="/"><span class="xxs-only"><img src="/images/publogo.gif" height="30" alt="PUB Bielefeld" /></span><span class="hidden-xxs">
 	    [% lf.header.title %]
 	  </span></a></span>
 	</div>
-      [% END %]
-     </div>
-
-     <!-- Collect the nav links, forms, and other content for toggling -->
-     <div class="collapse navbar-collapse navbar-ex1-collapse">
-     [% IF backend %]
-	   <ul class="nav navbar-nav">
-       [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
-	     <li><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-sm">[% lf.header.my_author_page %]</span></a></li>
-	     <li><a href="/[% IF session.user %]librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span><span class="hidden-sm">[% lf.header.brand %]</span></a></li>
-	   [% IF session.role == 'super_admin' %]
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% lf.header.admin_menu.admin %] <span class="glyphicon glyphicon-chevron-down"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="/librecat/admin/account"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_accounts %]</a></li>
-            <!-- <li><a href="/librecat/admin/import"><span class="glyphicon glyphicon-import"></span>[% lf.header.admin_menu.import %]</a></li> -->
-            <li><a href="/librecat/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_projects %]</a></li>
-            <li><a href="/librecat/admin/research_group"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_research_groups %]</a></li>
-            <li><a href="/librecat/admin/department"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_department %]</a></li>
-            <!-- <li><a href="/librecat/admin/journal"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_journals %]</a></li> -->
-            <li><a href="/librecat/admin/award"><span class="glyphicon glyphicon-star"></span>[% lf.header.admin_menu.manage_awards %]</a></li>
-          </ul>
-         </li>
-	   [% END %]
-       </ul>
-       <ul class="nav navbar-nav navbar-right">
-         <li>
-           <div class="select-language"><a href="/librecat/person/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]">[% lf.header.lang %]</a></div>
-	     </li>
-         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <span class="hidden-sm">[% session.user %]</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
-            <div class="dropdown-menu" style="width:550px">
-	      [% INCLUDE backend/user_settings.tt %]
-            </div>
-         </li>
-	 [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
-	  <li class="dropdown userrole"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% lf.header.role.${session.role} %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
-	    <ul class="dropdown-menu" role="menu">
-	      <li><a href="/librecat/change_role/user">[% lf.header.role.user %]</a></li>
-	      [% IF thisPerson.delegate %]
-	      <li><a href="/librecat/change_role/delegate">[% lf.header.role.delegate %]</a></li>
-	      [% END %]
-	      [% IF thisPerson.reviewer %]
-	      <li><a href="/librecat/change_role/reviewer">[% lf.header.role.reviewer %]</a></li>
-	      [% END %]
-	      [% IF thisPerson.data_manager %]
-	      <li><a href="/librecat/change_role/data_manager">[% lf.header.role.data_manager %]</a></li>
-	      [% END %]
-	      [% IF thisPerson.super_admin %]
-	      <li><a href="/librecat/change_role/admin">[% lf.header.role.super_admin %]</a></li>
-	      [% END %]
-	    </ul>
-	  </li>
-	 [% END %]
-         <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% lf.main_page.logout %]</span></a></li>
-       </ul>
-      [% ELSE %]
-      <div class="row">
-	<div class="col-md-9 col-sm-11 col-xs-12">
-	  <div class="hidden-xs"><a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" alt="" /></a>
+	<div class="col-md-9 col-sm-11 hidden-xs">
+	  <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" alt="" /></a>
 	    <span class="navbar-title"><a href="/">
 	    [% lf.header.title %]
 	    </a></span>
+	</div>
+	<div class="col-md-1 col-sm-1 col-xs-2 col-md-offset-1">
+	  <span class="select-language pull-right"><a href="[% h.host %]/set_language?[% session.lang == "en" ? "lang=de" : "lang=en" %]"><span class="glyphicon glyphicon-flag"></span>[% lf.header.lang %]</a></span>
+	</div>
+      </div>
+      <div class="row innerrow">
+	<div class="col-md-9 col-sm-10 uninav">
+	</div>
+      </div>
+      </div><!-- /container -->
+      [% END %]
+    </nav>
+
+    <div class="modal" id="selectAFF">
+      <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h4 class="modal-title">Title</h4>
+	    <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
 	  </div>
-	</div>
-	[% UNLESS request.path.match("/person/") OR request.path.match("/marked") %]
-	<div class="col-md-1 col-sm-1 col-md-offset-1">
-      <span class="select-language"><a href="[% h.host %]/set_language?[% session.lang == "en" ? "lang=de" : "lang=en" %]">[% lf.header.lang %]</a></span>
-	</div>
-	[% END %]
-      </div>
-
-      <div class="row">
-	<div class="col-md-9 col-sm-10">
-	  <ul class="nav navbar-nav uninav">
-	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Universität<span class="glyphicon glyphicon-chevron-down"></span></a>
-	      <ul class="dropdown-menu" role="menu">
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Ueberblick/">Über uns / &Uuml;berblick</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/einrichtungen.html">Einrichtungen</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Serviceangebot/index.html">Organisation / Verwaltung</a></li>
-		<li><a href="http://www.uni-bielefeld.de/ZIF/">Zentrum für interdisziplinäre Forschung</a></li>
-		<li><a href="http://www.ub.uni-bielefeld.de/">Universitätsbibliothek</a></li>
-		<li><a href="http://www.uni-bielefeld.de/hrz/neu/">Hochschulrechenzentrum</a></li>
-		<li><a href="http://www.uni-bielefeld.de/gender/">Gender</a></li>
-		<li><a href="http://www.uni-bielefeld.de/kultur/">Kultur</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Ueberblick/Stadt_Region">Bielefeld und Region</a></li>
-		<li><a href="http://www.uni-bielefeld.de/bau/">Bauprojekte</a></li>
-	      </ul>
-	    </li>
-	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Fakultäten<span class="glyphicon glyphicon-chevron-down"></span></a>
-	      <ul class="dropdown-menu" role="menu">
-		<li><a href="http://www.uni-bielefeld.de/biologie/">Fakultät für Biologie</a></li>
-		<li><a href="http://www.uni-bielefeld.de/chemie/index.html">Fakultät für Chemie</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Erziehungswissenschaft/">Fakultät für Erziehungswissenschaft</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Geschichte_Philosophie_Theologie/index.html">Fakultät für Geschichtswissenschaft, <br /> Philosophie und Theologie </a></li> 
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Gesundheitswissenschaften/">Fakultät für Gesundheitswissenschaften </a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Lili/">Fakultät für Linguistik und <br/>Literaturwissenschaft</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Mathematik/">Fakultät für Mathematik</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Physik/">Fakultät für Physik</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Psychologie_Sport/index.html">Fakultät für Psychologie und Sportwissenschaft</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Rechtswissenschaft/">Fakultät für Rechtswissenschaft</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Soziologie/">Fakultät für Soziologie </a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Technische%20Fakultaet/">Technische Fakultät</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/Wirtschaftswissenschaften/">Fakultät für Wirtschaftswissenschaften</a></li>
-	      </ul>
-	    </li>
-	    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Informationen für &hellip;<span class="glyphicon glyphicon-chevron-down"></span></a>
-	      <ul class="dropdown-menu" role="menu">
-		<li><a href="http://www.uni-bielefeld.de/Benutzer/Studierende/">Studierende</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Benutzer/Lehrende/">Lehrende</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Benutzer/WissenschaftlerInnen/">WissenschaftlerInnen</a></li>
-		<li><a href="http://www.uni-bielefeld.de/nachwuchs/">Wiss. Nachwuchs</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Benutzer/MitarbeiterInnen/">MitarbeiterInnen</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Benutzer/SchuelerInnen/">SchülerInnen</a></li>
-		<li><a href="http://www.uni-bielefeld.de/weiterbildung/">Weiterbildungsinteressierte</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Benutzer/Wirtschaft/">Wirtschaft</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Benutzer/AbsolventInnen/">AbsolventInnen</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Benutzer/Gaeste/">Gäste</a></li>
-		<li><a href="http://www.uni-bielefeld.de/Benutzer/Presse/">Presse</a></li>
-	      </ul>
-	    </li>
-	  </ul>
-
-      </div>
-      </div>
-     [% END %]
-     </div><!-- /.navbar-collapse -->
-    [% UNLESS backend %]</div>[% END %]
-   </nav>
-
-  <div class="modal" id="selectAFF">
-    <div class="modal-dialog">
-      <div class="modal-content">
-	<div class="modal-header">
-	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	  <h4 class="modal-title">Title</h4>
-	  <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
-	</div>
-	<div class="modal-body">
+	  <div class="modal-body">
+	  </div>
 	</div>
       </div>
     </div>
-  </div>
 
   </header>
 

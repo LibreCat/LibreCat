@@ -71,6 +71,7 @@ prefix '/librecat' => sub {
   post '/thesesupload' => sub {
       my $file    = request->upload('file');
       my $file_data;
+      my $creator = session->{user} ? session->{user} : "pubtheses";
 
       if($file){
       	  my $now = h->now;
@@ -79,7 +80,7 @@ prefix '/librecat' => sub {
           $file_data = {
             success => 1,
             file_name => $file->{filename},
-            creator => session->{user},
+            creator => $creator,
             file_size => $file->{size},
             date_updated => $now,
             date_created => $now,
@@ -209,6 +210,10 @@ prefix '/librecat' => sub {
         	last_name => params->{'supervisor.last_name'},
         	full_name => params->{'supervisor.last_name'} . ", " . params->{'supervisor.first_name'},
         }],
+        abstract => [{
+        	lang => "eng",
+        	text => params->{'abstract'},
+        }],
         cc_license => params->{'cc_license'},
         defense_date => params->{'defense_date'},
       };
@@ -234,7 +239,7 @@ prefix '/librecat' => sub {
           title => $record->{title},
           author => $record->{author}->[0]->{full_name},
           _id => $id,
-          host => "http://pub3.ub.uni-bielefeld.de",#h->config->{host},
+          host => "https://pub3.uni-bielefeld.de",#h->config->{host},
           },
           'Template',
           template => 'views/email/new_thesis.tt'
@@ -255,8 +260,9 @@ prefix '/librecat' => sub {
       my $path = path( h->config->{tmp_dir}, params->{tempid}, $file_name);
       unlink $path;
     }
+    
+    redirect '/pubtheses?success=1';
 
-    template 'websites/index_publication.tt', {bag => 'pubtheses', submit_response => "You have successfully submitted your thesis. We will contact you with further information. Thank you!"};
   };
 
   post '/upload/update' => needs login =>  sub {

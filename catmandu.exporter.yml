@@ -40,6 +40,8 @@ publication:
   rtf:
     package: RTF
     content_type: 'application/rtf'
+    options:
+      fix: ["nothing()"]
     extension: rtf
     label: RTF
   aref:
@@ -85,6 +87,7 @@ publication:
   csl_json:
     package: 'JSON'
     options:
+      fix: ["nothing()"]
       pretty: 1
       array: 1
     content_type: 'application/vnd.citationstyles.csl+json'
@@ -94,6 +97,7 @@ publication:
     package: 'Template'
     content_type: text/plain
     options:
+      fix: ["nothing()"]
       template: views/export/redif_paper.tt
     extension: rdf
     label: 'ReDIF'
