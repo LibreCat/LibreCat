@@ -22,7 +22,7 @@ thesis:
   to: "vitali.peil@uni-bielefeld.de,bettina.weingarten@uni-bielefeld.de,petra.kohorst@uni-bielefeld.de"
   from: publikationsdienste.ub@uni-bielefeld.de
   subject: "[PUB] New thesis submitted"
-  urn_prefix: 'urn:nbn:de:hbz:361'
+  urn_prefix: 'urn:nbn:de:hbz:361-'
 
 institution:
   name_eng: 'Bielefeld University'
