@@ -241,7 +241,7 @@ en:
       export_search: "Export / Search"
     fulltext:
       view: "View fulltext"
-      not_available: "No fulltext available"
+      not_available: "No fulltext in PUB available"
     id_title: "Link to this page, e.g. for bookmarking"
     license_heading: "All files available under the following license(s):"
   mark:
@@ -1708,7 +1708,7 @@ de:
       export_search: "Export / Suche"
     fulltext:
       view: "Volltext öffnen"
-      not_available: "Kein Volltext verfügbar"
+      not_available: "Kein Volltext in PUB verfügbar"
     id_title: "Auf diese Seite verlinken, z.B. für Bookmarks"
     license_heading: "Alle Dateien verfügbar unter der/den folgenden Lizenz(en):"
   mark:
@@ -1996,17 +1996,17 @@ de:
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         conference.divider: &conference_divider
-          label: "Konferenz Details"
+          label: "Konferenzdetails"
         conference.name: &conference_name
-          label: "Konferenz Name"
+          label: "Konferenzname"
           label_short: "Name"
           placeholder: "z.B. 3. Konferenz über Nano-Physik"
         conference.location: &conference_location
-          label: "Konferenz Ort"
+          label: "Konferenzort"
           label_short: "Ort"
           placeholder: "z.B. Berlin"
         conference.date: &conference_date
-          label: "Konferenz Datum"
+          label: "Konferenzdatum"
           label_start: "Konferenz Beginn"
           label_start_short: "Beginn"
           label_end: "Konferenz Ende"
@@ -2055,7 +2055,7 @@ de:
         research_group: *research_group
         publication:
           label: "Berichtsbandtitel"
-          placeholder: "z.B. Berichtsband der 3. Konferenz über Nano-Physik"
+          placeholder: "z.B. Berichtsband der 3. Konferenz über Nanophysik"
         place: *place
         publisher: *publisher
         year_extern: *year_extern
@@ -2154,7 +2154,7 @@ de:
         volume_issue_page: *volume_issue_page
         publication:
           label: "Berichtsbandtitel"
-          placeholder: "z.B. Berichtsband der 3. Konferenz über Nano-Physik"
+          placeholder: "z.B. Berichtsband der 3. Konferenz über Nanophysik"
         series_title: *series_title
         place: *place
         publisher: *publisher
