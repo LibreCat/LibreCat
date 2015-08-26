@@ -119,7 +119,7 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/project/new' => needs role => 'super_admin' => sub {
-        template 'admin/project/edit_project',
+        template 'admin/forms/edit_project',
             { _id => h->new_record('project') };
     };
 
@@ -148,7 +148,7 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/research_group/new' => needs role => 'super_admin' => sub {
-        template 'admin/research_group/edit_research_group',
+        template 'admin/forms/edit_research_group',
             { _id => h->new_record('research_group') };
     };
 
@@ -179,7 +179,7 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/department/new' => needs role => 'super_admin' => sub {
-        template 'admin/department/edit_department',
+        template 'admin/forms/edit_department',
             { _id => h->new_record('department') };
     };
 
