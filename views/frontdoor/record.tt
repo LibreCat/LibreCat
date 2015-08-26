@@ -74,10 +74,8 @@
 	[% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">([% lf.header.brand %])</span></span></a></li>[% END %]
       </ul>
 
-      [% IF _id %]
-      <h1 class="cmark" itemprop="name">[% title %][% IF status != "public" AND _id %] <a class="btn btn-sm btn-success" href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> [% lf.main_page.links.publish %]</a> [% END %]</h1>
-      [% ELSE %]
-      <h1>[% lf.frontdoor.no_record %]</h1>
+      [% UNLESS _id %]
+	<h1>[% lf.frontdoor.no_record %]</h1>
       [% END %]
     </div>
 
@@ -86,6 +84,8 @@
     <div class="row margin-bottom1">
 
       <div class="col-xs-10 col-sm-8"><!-- begin left col -->
+
+	<h1 class="cmark" itemprop="name">[% title %][% IF status != "public" AND _id %] <a class="btn btn-sm btn-success" href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> [% lf.main_page.links.publish %]</a> [% END %]</h1>
 
 	[% IF citation %]
 	<div class="row">
@@ -170,9 +170,8 @@
           </object>
         </a>
       [% ELSE %]
-	    <div class="img-thumbnail img-thumbnail-fh nolink">
-	      <img src="/images/dummy_nofile.png" class="img-thumbnail-fh" alt="[% lf.frontdoor.fulltext.not_available %]" />
-	      <!-- <p class="nofile">Kein Volltext verfügbar</p> -->
+	    <div class="img-thumbnail img-thumbnail-fh">
+	      <p class="nofile">[% lf.frontdoor.fulltext.not_available %]</p>
 	    </div>
       [% END %]
       </div>
