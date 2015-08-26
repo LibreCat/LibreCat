@@ -81,13 +81,13 @@
 	    [% lf.header.title %]
 	  </span></a></span>
 	</div>
-	<div class="col-md-9 col-sm-11 hidden-xs">
+	<div class="col-md-7 col-sm-10 hidden-xs">
 	  <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" alt="" /></a>
 	    <span class="navbar-title"><a href="/">
 	    [% lf.header.title %]
 	    </a></span>
 	</div>
-	<div class="col-md-1 col-sm-1 col-xs-2 col-md-offset-1">
+	<div class="col-xs-2 col-md-offset-2">
 	  <span class="select-language pull-right"><a href="[% h.host %]/set_language?[% session.lang == "en" ? "lang=de" : "lang=en" %]"><span class="glyphicon glyphicon-flag"></span>[% lf.header.lang %]</a></span>
 	</div>
       </div>
@@ -117,6 +117,6 @@
 
   <main[% UNLESS backend %] class="front"[% END %]>
 
-  <div class="container[% IF title %] title[%END %]">
+  <div class="container[% IF title %] title[%END %][% IF _id %] publication[% END %]">
 
 <!-- END navbar.tt -->
