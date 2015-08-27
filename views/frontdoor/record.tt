@@ -85,7 +85,7 @@
 
       <div class="col-xs-10 col-sm-8"><!-- begin left col -->
 
-	<h1 class="cmark" itemprop="name">[% IF id=="1902272" %]Titel: [% END %][% title %][% IF status != "public" AND _id %] <a class="btn btn-sm btn-success" href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> [% lf.main_page.links.publish %]</a> [% END %]</h1>
+	<h1 class="cmark" itemprop="name">[% title %][% IF status != "public" AND _id %] <a class="btn btn-sm btn-success" href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> [% lf.main_page.links.publish %]</a> [% END %]</h1>
 
 	[% IF citation %]
 	<div class="row">
