@@ -231,14 +231,25 @@ Publishes private records, returns to the list.
 
         foreach my $key ( keys %$basic_fields ) {
             next if $key eq "tab_name";
-            if($key eq "writer"){
-            	my $writer_check = 0;
-            	foreach my $label (keys %{$basic_fields->{$key}->{label}}){
-            		if($record->{$basic_fields->{$key}->{label}->{$label}} and $record->{$basic_fields->{$key}->{label}->{$label}} ne ""){
-            			$writer_check = 1;
+            next if $key eq "bi_doctype";
+            if($key =~ /author|editor|translator|supervisor/){
+            	if($basic_fields->{$key} and $basic_fields->{$key}->{mandatory}){
+            		if(!$record->{$key}){
+            			$field_check = 0;
+            		}
+            		elsif($basic_fields->{$key}->{multiple}){
+            			foreach my $entry (@{$record->{$key}}){
+            				unless ($entry->{first_name} and $entry->{last_name}){
+            					$field_check = 0;
+            				}
+            			}
+            		}
+            		else{
+            			unless ($record->{$key}->{first_name} and $record->{$key}->{last_name}){
+            				$field_check = 0;
+            			}
             		}
             	}
-            	$field_check = 0 if !$writer_check;
             }
             elsif ( $basic_fields->{$key}->{mandatory} and $basic_fields->{$key}->{mandatory} eq "1"
                 and ( !$record->{$key} || $record->{$key} eq "" ) )

@@ -93,8 +93,9 @@ en:
     add_new_button: "Add new Publication"
     capital_or: "OR"
     qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br />Drop Open Access fulltext (pdf)<br>here and we'll do the rest."
-    theses_drop_text: "<span class='fa fa-file-pdf-o fa-3x'></span><br />Drop your thesis here."
+    theses_drop_text: "<spab ckass='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br />Drop your thesis here."
     theses_success_text: "You have successfully submitted your thesis. We will contact you with further information.<br />Thank you!"
+    theses_explain: "Please upload only ONE file (preferably .pdf). If you want to submit a document that consists of several parts (e.g. chapters) you need to put the files into an archive file (.zip or .gz)."
     heading_admin: "Admin (myPUB)"
     heading_user: "User (myPUB)"
     heading_reviewer: "Reviewer (myPUB)"
@@ -240,7 +241,7 @@ en:
       export_search: "Export / Search"
     fulltext:
       view: "View fulltext"
-      not_available: "No fulltext available"
+      not_available: "No fulltext in PUB available"
     id_title: "Link to this page, e.g. for bookmarking"
     license_heading: "All files available under the following license(s):"
   mark:
@@ -1559,8 +1560,9 @@ de:
     add_new_button: "Neue Publikation"
     capital_or: "ODER"
     qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br />Open Access Volltext (pdf)<br>hier her ziehen und wir machen den Rest"
-    theses_drop_text: "<span class='fa fa-file-pdf-o fa-3x'></span><br />Dissertation hier her ziehen."
+    theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br />Dissertation hier her ziehen."
     theses_success_text: "Sie haben Ihre Prüfungsschrift erfolgreich hochgeladen. Wir kontaktieren Sie mit weiteren Informationen.<br />Vielen Dank!"
+    theses_explain: "Bitte laden Sie EINE Datei (bevorzugt .pdf) hoch. Wenn Sie ein Dokument einbringen wollen, das aus mehreren Teildokumenten (z.B. Kapitel) besteht, müssen die Dateien in eine Archivdatei gepackt werden (.zip oder .gz)."
     heading_admin: "Admin (myPUB)"
     heading_user: "User (myPUB)"
     heading_reviewer: "Reviewer (myPUB)"
@@ -1706,7 +1708,7 @@ de:
       export_search: "Export / Suche"
     fulltext:
       view: "Volltext öffnen"
-      not_available: "Kein Volltext verfügbar"
+      not_available: "Kein Volltext in PUB verfügbar"
     id_title: "Auf diese Seite verlinken, z.B. für Bookmarks"
     license_heading: "Alle Dateien verfügbar unter der/den folgenden Lizenz(en):"
   mark:
@@ -1994,17 +1996,17 @@ de:
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         conference.divider: &conference_divider
-          label: "Konferenz Details"
+          label: "Konferenzdetails"
         conference.name: &conference_name
-          label: "Konferenz Name"
+          label: "Konferenzname"
           label_short: "Name"
           placeholder: "z.B. 3. Konferenz über Nano-Physik"
         conference.location: &conference_location
-          label: "Konferenz Ort"
+          label: "Konferenzort"
           label_short: "Ort"
           placeholder: "z.B. Berlin"
         conference.date: &conference_date
-          label: "Konferenz Datum"
+          label: "Konferenzdatum"
           label_start: "Konferenz Beginn"
           label_start_short: "Beginn"
           label_end: "Konferenz Ende"
@@ -2053,7 +2055,7 @@ de:
         research_group: *research_group
         publication:
           label: "Berichtsbandtitel"
-          placeholder: "z.B. Berichtsband der 3. Konferenz über Nano-Physik"
+          placeholder: "z.B. Berichtsband der 3. Konferenz über Nanophysik"
         place: *place
         publisher: *publisher
         year_extern: *year_extern
@@ -2152,7 +2154,7 @@ de:
         volume_issue_page: *volume_issue_page
         publication:
           label: "Berichtsbandtitel"
-          placeholder: "z.B. Berichtsband der 3. Konferenz über Nano-Physik"
+          placeholder: "z.B. Berichtsband der 3. Konferenz über Nanophysik"
         series_title: *series_title
         place: *place
         publisher: *publisher
