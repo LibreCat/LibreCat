@@ -438,10 +438,7 @@ sub default_facets {
 		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
 		type => { terms => { field => 'type', size => 25 } },
 		isi => { terms => { field => 'isi', size => 1 } },
-		foda => { terms => { field => 'foda', size => 1 } },
-#		arxiv => { terms => { field => 'arxiv', size => 1 } },
 		pmid => { terms => { field => 'pmid', size => 1 } },
-#		inspire => { terms => { field => 'inspire', size => 1 } },
 	};
 }
 
@@ -485,9 +482,7 @@ sub display_name_from_value {
 }
 
 sub host {
-	my $self = shift;
-	#return "http://" . hostname_long;
-	return $self->config->{host};
+	$_[0]->config->{host};
 }
 
 sub search_publication {
@@ -501,7 +496,7 @@ sub search_publication {
 	} else {
 		$cql = "status<>deleted";
 	}
-	
+
 	my $hits;
 
 	try{
@@ -512,7 +507,7 @@ sub search_publication {
 		    start => $p->{start} ||= 0,
 		    facets => $p->{facets} ||= {},
 		);
-		
+
 		foreach (qw(next_page last_page page previous_page pages_in_spread)) {
 			$hits->{$_} = $hits->$_;
 		}
