@@ -58,13 +58,6 @@ doi:
 plugins:
   'Auth::Tiny':
 
-  NYTProf:
-    enabled: 1
-    profiling_enabled: 1
-    profdir: '/home/bup/pub/profiledata'
-    nytprofhtml_path: '/home/bup/perl5/perlbrew/perls/perl-5.20.1/bin/nytprofhtml'
-    show_durations: 1
-
   Ajax:
     content_type: 'application/json'
 
@@ -99,7 +92,6 @@ plugins:
     uri_base: "http://pub.uni-bielefeld.de/oai"
     adminEmail: vitali.peil@uni-bielefeld.de
     earliestDatestamp: "1970-01-01T00:00:01Z"
-#    granularity: "YYYY-MM-DD"
     deletedRecord: persistent
     repositoryIdentifier: pub.uni-bielefeld.de
     get_record_cql_pattern: 'id exact "%s"'
