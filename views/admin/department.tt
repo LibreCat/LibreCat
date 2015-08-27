@@ -30,6 +30,12 @@
 	</div>
       </div>
     </form>
+    
+    <!-- 
+    <div class="row col-md-12 margin-top1 margin-bottom2">
+      <a href="/librecat/admin/department/new" class="btn btn-primary"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new department</a>
+    </div>
+    -->
 
     [% IF hits %]
     <div class="row margin-top1">
