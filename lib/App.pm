@@ -17,7 +17,6 @@ use App::Catalogue; # the backend
 use App::Helper;
 use Authentication::Authenticate;
 use Dancer::Plugin::Auth::Tiny;
-use Dancer::Plugin::NYTProf;
 
 # make variables with leading '_' visible in TT,
 # otherwise they are considered private
@@ -60,7 +59,7 @@ get '/login' => sub {
 =head2 POST /login
 
 Route where login data is sent to. On success redirects to
-'/' or to the path requested before
+'/librecat' or to the path requested before
 
 =cut
 post '/login' => sub {
@@ -90,16 +89,12 @@ The logout route. Destroys session.
 
 =cut
 any '/logout' => sub {
+    # preserves language setting only
 	my $lang = session->{lang};
     session->destroy;
     session lang => $lang;
-    
-#    if(params->{lang} and params->{lang} eq "en"){
-#    	redirect '/en';
-#    }
-#    else {
-    	redirect '/';
-#    }
+
+	redirect '/';
 };
 
 =head2 GET /set_language

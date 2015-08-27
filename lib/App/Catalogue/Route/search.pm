@@ -41,6 +41,9 @@ Performs search for admin.
 
         my $p = h->extract_params();
         $p->{facets} = h->default_facets();
+        # foda: Bielefeld specific!!
+        $p->{facets}->{foda} = { terms => { field => 'foda', size => 1 } };
+
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
 
@@ -129,8 +132,8 @@ Performs search for data manager.
 
 =head2 GET '/delegate/:delegate_id'
 
-    Performs a search of records for delegated person's
-    publications.
+Performs a search of records for delegated person's
+publications.
 
 =cut
     get '/delegate/:delegate_id' => sub {
@@ -174,7 +177,7 @@ Performs search for data manager.
 
 =head2 GET /
 
-    Performs search for user.
+Performs search for user.
 
 =cut
     get '/' => needs login => sub {
