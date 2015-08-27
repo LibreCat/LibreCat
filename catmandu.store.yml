@@ -2,9 +2,11 @@ _prefix:
   store:
 
 default:
-  package: MongoDB
+  package: DBI
   options:
-    database_name: PUBSystem
+    data_source: "DBI:mysql:database=PUBSystem"
+    username: root
+    password: pub33TX
     bags:
       session:
         plugins: ['Datestamps']
