@@ -349,10 +349,33 @@ sub get_metrics {
 
 sub new_record {
 	my ($self, $bag) = @_;
+	
+	my $id = "";
+	
+	if($bag eq "project"){
+		my $arr_ref;
+		@$arr_ref = sort { $b->{_id} cmp $a->{_id}} @{$self->project->to_array()};
+		$id = $arr_ref->[0]->{_id};
+		$id =~ s/^P//g;
+		$id++;
+		$id = "P".$id;
+	}
+	elsif($bag eq "research_group"){
+		my $arr_ref;
+		@$arr_ref = sort { $b->{_id} cmp $a->{_id}} @{$self->research_group->to_array()};
+		$id = $arr_ref->[0]->{_id};
+		$id =~ s/^RG//g;
+		$id++;
+		$id = "RG".$id;
+	}
+	else {
+		Catmandu->store->transaction( sub{
+		  $id = $self->bag->get('1')->{"latest"};
+		  $id++;
+		  $self->bag->add( { _id => "1", latest => $id } );
+		});
+	}
 
-	my $id = $self->bag->get('1')->{"latest"};
-	$id++;
-	$self->bag->add( { _id => "1", latest => $id } );
 	return $id;
 
 }
