@@ -247,7 +247,7 @@ relations_link:
   -
     relation: "other"
     relation_text: "In other relation (to PUB record)"
-    link_text: "Other Relation"
+    link_text: "In other Relation"
   -
     relation: "earlier_version"
     opposite: "later_version"
@@ -262,22 +262,22 @@ relations_link:
     relation: "contains"
     opposite: "published_in"
     relation_text: "Contains (PUB record)"
-    link_text: "Contains Document"
+    link_text: "Container of PUB Record"
   -
     relation: "published_in"
     opposite: "contains"
     relation_text: "Published in (PUB record)"
-    link_text: "Published in"
+    link_text: "Published in PUB record"
   -
     relation: "part_of_dissertation"
     opposite: "dissertation_contains"
     relation_text: "Part of dissertation (PUB record)"
-    link_text: "Published in Diss."
+    link_text: "Part of dissertation/PUB record"
   -
     relation: "dissertation_contains"
     opposite: "part_of_dissertation"
     relation_text: "Dissertation containing (PUB record)"
-    link_text: "Article in Dissertation"
+    link_text: "Article in this dissertation/PUB record"
   -
     relation: "old_edition"
     opposite: "new_edition"
