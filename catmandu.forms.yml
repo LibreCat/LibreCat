@@ -1229,8 +1229,7 @@ otherItems:
       - name
       - tree
     id:
-      label: "ID"
-      readonly: 1
+      label: "ID (or replace with PEVZ-ID)"
       mandatory: 1
     name:
       label: "Name"
