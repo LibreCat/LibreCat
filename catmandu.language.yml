@@ -10,7 +10,7 @@ en:
     password_placeholder: "HRZ Password"
     login_button: "Login"
     login_help: "HRZ Username and Password (used e.g. for Webmailer and Stud.IP)"
-    contact_us: "If you have any questions, don't hesitate to <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>contact us</a></strong> or call 106-4058."
+    contact_us: "<strong>Login failed?</strong><br />If you are a member of Bielefeld University but you still cannot log in to PUB, please <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>contact us</a></strong> or call 106-4058."
   header:
     title: "PUB &ndash; Publications at Bielefeld University"
     my_author_page: "My Public Author Page"
@@ -179,6 +179,7 @@ en:
     crumb_back: "Back"
     no_record: "This record does not exist or was deleted"
     download: "Download"
+    cc_license: "Creative Commons license"
     show_all: "All"
     local_brand: "UniBi"
     export: "Export"
@@ -379,19 +380,19 @@ en:
             text: "If you have any questions, please contact:<br>"
             contact: "<strong>Support Publication Services<br>Susanne Riedel<br>Phone: 0521/106-4058<br>E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a><br><br></strong>"
           cc_license:
-            label: "Creative Commons Licenses"
+            label: "Creative Commons License"
             select_text: "If your uploaded document is available under a Creative Commons license, you can select it here:<br />"
             select_a_license: "Select a license"
             license_deed: "License Deed"
-            cc0:
+            cc_0:
               name: "Creative Commons Public Domain Dedication (CC0 1.0)"
               deed_url: "http://creativecommons.org/publicdomain/zero/1.0/"
               legal_code_url: "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
-            ccby:
+            cc_by:
               name: "Creative Commons Attribution 4.0 International Public License (CC-BY 4.0)"
               deed_url: "http://creativecommons.org/licenses/by/4.0/"
               legal_code_url: "http://creativecommons.org/licenses/by/4.0/legalcode"
-            ccbysa:
+            cc_by_sa:
               name: "Creative Commons Attribution-ShareAlike 4.0 International Public License (CC BY-SA 4.0)"
               deed_url: "http://creativecommons.org/licenses/by-sa/4.0/"
               legal_code_url: "http://creativecommons.org/licenses/by-sa/4.0/legalcode"
@@ -1477,7 +1478,7 @@ de:
     password_placeholder: "HRZ Passwort"
     login_button: "Anmelden"
     login_help: "HRZ Benutzername und Passwort (wie z.B. für den Webmailer und Stud.IP)"
-    contact_us: "Falls Sie Fragen haben, <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>schreiben Sie uns</a></strong> oder rufen Sie uns an unter 106-4058."
+    contact_us: "<strong>Login fehlgeschlagen?</strong><br />Falls Sie der Universität Bielefeld angehören, sich aber trotzdem nicht in PUB einloggen können, <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>schreiben Sie uns</a></strong> oder rufen Sie uns an unter 106-4058."
   header:
     title: "PUB &ndash; Publikationen an der Uni Bielefeld"
     my_author_page: "Meine Personenseite"
@@ -1646,6 +1647,7 @@ de:
     crumb_back: "Zurück"
     no_record: "Dieser Eintrag exisitert nicht oder wurde gelöscht"
     download: "Download"
+    cc_license: "Creative Commons Lizenz"
     show_all: "Alle"
     local_brand: "UniBi"
     export: "Export"
@@ -1837,7 +1839,7 @@ de:
             local: "Nur UniBi"
             open_access: "Open Access"
         license: &license
-          heading: "Copyright und Lizenzen"
+          heading: "Copyright und Lizenz"
           pub_license:
             label: "Hinweise zum Urheberrecht"
             disclaimer_text: "Hiermit stelle ich der Universit&auml;t Bielefeld dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf PUB, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r PUB dargestellt sind, zur Verf&uuml;gung.<br><a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy / Rechtliche Rahmenbedingungen</a>"
@@ -1851,15 +1853,15 @@ de:
             select_text: "Falls Ihr hochgeladenes Dokument unter einer Creative Commons Lizenz steht, können Sie diese hier auswählen:<br />"
             select_a_license: "Lizenz auswählen"
             license_deed: "Lizenzvertrag"
-            cc0:
+            cc_0:
               name: "Creative Commons Public Domain Dedication (CC0 1.0)"
               deed_url: "http://creativecommons.org/publicdomain/zero/1.0/deed.de"
               legal_code_url: "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
-            ccby:
+            cc_by:
               name: "Creative Commons Namensnennung 4.0 International Public License (CC-BY 4.0)"
               deed_url: "http://creativecommons.org/licenses/by/4.0/deed.de"
               legal_code_url: "http://creativecommons.org/licenses/by/4.0/legalcode"
-            ccbysa:
+            cc_by_sa:
               name: "Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 International Public License (CC BY-SA 4.0)"
               deed_url: "http://creativecommons.org/licenses/by-sa/4.0/deed.de"
               legal_code_url: "http://creativecommons.org/licenses/by-sa/4.0/legalcode"
