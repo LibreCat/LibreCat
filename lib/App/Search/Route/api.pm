@@ -10,6 +10,7 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use Dancer::Plugin::Catmandu::OAI;
 use Dancer::Plugin::Catmandu::SRU;
+use Catmandu::Fix;
 use App::Helper;
 use Citation;
 
@@ -31,7 +32,14 @@ oai_provider '/oai',
     },
     set_specs_for => sub {
         my $pub = $_[0];
-        my $specs = [$pub->{type}];
+        Catmandu::Fix->new(fixes => [
+                "copy_field(type, doc_type)",
+                "lookup(doc_type, $ENV{LIBRECAT_HOME}/fixes/lookup/dini_types.csv, default: other)",
+                ])->fix($pub);
+
+        my $specs = [$pub->{type}, "doc-type:". $pub->{doc_type}];
+
+        push @$specs, $pub->{ddc};
 
         if ($pub->{ec_funded} && $pub->{ec_funded} eq '1') {
             if ($pub->{type} eq 'researchData') {
