@@ -23,7 +23,7 @@
 	  [% INCLUDE hits.tt %]
 	</div>
 	<div class="col-xs-4 col-md-3 col-md-offset-1">
-	  [% INCLUDE facets.tt %]
+	  [%IF total>1 %][% INCLUDE facets.tt %][% END %]
 	</div>
       </div>
     </div>
