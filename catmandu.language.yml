@@ -1473,6 +1473,7 @@ en:
     pevz_email: "This is the email address saved in BIS/PEVZ. To change it, please contact them."
     pevz_photo: "This is the photo saved in BIS/PEVZ. To change it, please contact them."
     quick_and_easy: "Quick and Easy Fileupload - If you drop your Open Access fulltext here and submit the form, a new, non-pubic record will be created in PUB which we will complete for you and then make it publicly visible."
+    add_new_button: "A selection of possible ways to create a new record in PUB. Importe via DOI, empty edit forms for the different publication types or quick and easy file upload."
 
 de:
   login:
@@ -2975,3 +2976,4 @@ de:
     pevz_email: "Dies ist die E-Mail Adresse, die im BIS/PEVZ gespeichert ist. Um sie zu ändern, wenden Sie sich bitte an die Mitarbeiter des PEVZ."
     pevz_photo: "Dies ist das Foto, das im BIS/PEVZ hinterlegt ist. Um Ihr Bild zu ändern, wenden Sie sich bitte an die Mitarbeiter des PEVZ."
     quick_and_easy: "Quick and Easy Dateiupload - Wenn Sie Ihren Open Access Volltext hier her ziehen und das Formular absenden, entsteht ein neuer, nicht-öffentlicher Eintrag in PUB, den wir für Sie vervollständigen und dann öffentlich sichtbar machen."
+    add_new_button: "Eine Auswahl an Möglichkeiten, neue Records in PUB anzulegen. Importe via DOI, leere Edit-Formulare im jeweiligen Datentyp oder quick and easy."
