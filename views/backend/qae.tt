@@ -1,6 +1,6 @@
 <!-- BEGIN backend/qae.tt -->
 
-<div id="dropzone_row" class="helpme" data-html="true" data-trigger="manual" data-placement="left" title="[% lf.help.quick_and_easy %]">
+<div id="dropzone_row" class="helpme" data-placement="left" title="[% lf.help.quick_and_easy %]">
    <div class="dropzone" id="qaeUpload"></div>
 </div>
 

@@ -6,7 +6,7 @@
 [% END %]
 
 [% IF thisPerson.bis.email %]
-<a class="helpme" data-html="true" data-trigger="manual" data-placement="top" title="[% lf.help.pevz_email %]" href="mailto:[% thisPerson.bis.email %]" itemprop="email">[% thisPerson.bis.email.replace('@|&#64;', ' [at] ') %]</a><br>
+<a class="helpme" data-placement="top" title="[% lf.help.pevz_email %]" href="mailto:[% thisPerson.bis.email %]" itemprop="email">[% thisPerson.bis.email.replace('@|&#64;', ' [at] ') %]</a><br>
 [% END %]
 
 [% IF !thisPerson %]
@@ -28,7 +28,7 @@
     [% IF backend AND !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire OR thisPerson.alias) %]
     <div class="row col-md-12">
       <span class="text-muted">[% lf.person_profile.no_author_ids %]</span>
-      <a href="#" class="helpme" data-html="true" data-trigger="manual" data-placement="right" title="[% lf.help.author_id %]" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
+      <a href="#" class="helpme" data-placement="right" title="[% lf.help.author_id %]" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
     </div>
     [% END %]
 
@@ -40,7 +40,7 @@
       [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]" target="_blank">[% thisPerson.$k %]</a>
       [% ELSE %][% thisPerson.$k %][% END %]
       [% IF backend %]
-      <a href="#" class="helpme" data-html="true" data-trigger="manual" data-placement="right" title="[% lf.help.author_id %]" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
+      <a href="#" class="helpme" data-placement="right" title="[% lf.help.author_id %]" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
       [% END %]
       </div>
     </div>
