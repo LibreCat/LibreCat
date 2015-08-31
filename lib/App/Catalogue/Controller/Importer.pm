@@ -2,15 +2,15 @@ package App::Catalogue::Controller::Importer;
 
 use Catmandu::Sane;
 use Catmandu;
+use Catmandu::Util qw(:io);
 use Furl;
-use Hash::Merge qw/merge/;
+use Hash::Merge qw(merge);
 use Moo;
-use App::Helper;
 
 has id => (is => 'ro', required => 1);
 has source => (is => 'ro', default => sub {'crossref'});
 
-my $appdir = h->config->{appdir} // $ENV{PWD};
+state $home = $ENV{LIBRECAT_HOME};
 
 sub fetch {
     my ($self) = @_;
@@ -26,7 +26,7 @@ sub arxiv {
     Catmandu->importer(
         'ArXiv',
         query => $id,
-        fix => ["$appdir/fixes/arxiv_mapping.fix"],
+        fix => [join_path($home,'fixes','arxiv_mapping.fix')],
         )->first;
 }
 
@@ -36,7 +36,7 @@ sub inspire {
     Catmandu->importer(
         'Inspire',
         id => $id,
-        fix => ["$appdir/fixes/inspire_mapping.fix"],
+        fix => [join_path($home,'fixes','inspire_mapping.fix')],
         )->first;
 }
 
@@ -46,7 +46,7 @@ sub crossref {
     my $data = Catmandu->importer(
         'getJSON',
         from => "http://api.crossref.org/works/$id",
-        fix => ["$appdir/fixes/crossref_mapping.fix"],
+        fix => [join_path($home,'fixes','crossref_mapping.fix')],
         )->first;
 
     # try @datacite if crossref has no data
@@ -70,7 +70,7 @@ sub datacite {
     Catmandu->importer(
         'XML',
         file => $res->content,
-        fix => ["$appdir/fixes/from_datacite.fix"],
+        fix => [join_path($home,'fixes','from_datacite.fix')],
         )->first;
 }
 
@@ -80,7 +80,7 @@ sub epmc {
     Catmandu->importer(
         'EuropePMC',
         query => $id,
-        fix => ["$appdir/fixes/epmc_mapping.fix"],
+        fix => [join_path($home,'fixes','epmc_mapping.fix')],
         )->first;
 }
 
@@ -98,14 +98,14 @@ sub bis {
     my $p1 = Catmandu->importer(
         'XML',
         file => $res->content,
-        fix => ["$appdir/fixes/pevz_mapping.fix"],
+        fix => [join_path($home,'fixes','pevz_mapping.fix')],
         )->first;
 
     $res = $furl->get($url2);
     my $p2 = Catmandu->importer(
         'XML',
         file => $res->content,
-        fix => ["$appdir/fixes/pevz_mapping.fix"],
+        fix => [join_path($home,'fixes','pevz_mapping.fix')],
         )->first;
 
     my $merger = Hash::Merge->new();

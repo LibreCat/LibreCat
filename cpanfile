@@ -37,6 +37,7 @@ requires 'Net::LDAPS';
 requires 'Plack';
 requires 'Plack::Middleware::ReverseProxy';
 requires 'Dancer::Middleware::Rebase';
+requires 'Plack::Middleware::Deflater';
 requires 'Plack::Middleware::Negotiate', '>= 0.20';
 requires 'Starman';
 
@@ -46,3 +47,4 @@ requires 'DateTime';
 requires 'Hash::Merge';
 requires 'Try::Tiny';
 requires 'Crypt::Digest::MD5';
+requires 'XML::RSS';

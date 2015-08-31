@@ -7,26 +7,40 @@ use Catmandu::Fix qw(expand);
 use Dancer qw(:syntax vars params request);
 use Dancer::FileUtils qw(path);
 use Sys::Hostname::Long;
-use Template;
 use Moo;
 use POSIX qw(strftime);
-use Hash::Merge::Simple qw(merge);
 use JSON;
 use Citation;
 
-Catmandu->load(':up');
+Catmandu->load($ENV{LIBRECAT_HOME});
 
 sub config {
-	state $config = merge(Catmandu->config, Dancer::config);
+	state $config = Catmandu->config;
+}
+
+sub home {
+	state $home = $ENV{LIBRECAT_HOME};
 }
 
 sub bag {
-	state $bag = Catmandu->store->bag;
+	state $bag = do {
+		if (Dancer::config->{environment} eq 'development') {
+			Catmandu->store('dev-default')->bag;
+		} else {
+			Catmandu->store->bag;
+		}
+	};
 }
 
 sub backup {
-	my ($self, $bag_name) = @_;
-	state $bag = Catmandu->store('backup')->bag($bag_name);
+	my ($self, $bag) = @_;
+	state $store = do {
+		if (Dancer::config->{environment} eq 'development') {
+			Catmandu->store('dev-backup')->bag($bag);
+		} else {
+				Catmandu->store('backup')->bag($bag);
+		}
+	};
 }
 
 sub publication {
@@ -51,13 +65,6 @@ sub department {
 
 sub research_group {
 	state $bag = Catmandu->store('search')->bag('research_group');
-}
-
-sub fixer {
-	my ($self, $fix_file) = @_;
-
-	my $appdir = $self->config->{appdir};
-	state $fixer = Catmandu->fixer("$appdir/fixes/$fix_file");
 }
 
 sub string_array {
@@ -403,7 +410,7 @@ sub update_record {
 		$rec->{citation} = Citation::index_citation_update($rec,0,'') || '';
 	}
 
-	$self->fixer("update_$bag.fix")->fix($rec);
+	Catmandu::Fix->new(fixes => [join_path($self->home,'fixes',"update_$bag.fix")])->fix($rec);
 	my $saved = $self->backup($bag)->add($rec);
 
 	#compare version! through _version or through date_updated
@@ -568,9 +575,11 @@ sub export_publication {
 	   	my $content_type = $spec->{content_type} || mime->for_name($fmt);
 	   	my $extension = $spec->{extension} || $fmt;
 
-		$self->fixer($options->{fix}->[0])->fix($hits);
-		delete $options->{fix};
-	   	my $f = export_to_string( $hits, $package, $options );
+		$options->{fix} = map {
+			join_path($self->home,'fix',$_);
+		} @{$options->{fix}};
+
+		my $f = export_to_string( $hits, $package, $options );
 		return $f if $to_string;
 
 	   	return Dancer::send_file (

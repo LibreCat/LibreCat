@@ -166,7 +166,7 @@
  [% END %]
 
  [% IF facets.author.terms.size > 1 %]
- 
+
  [% query = "id=(" %]
  [% FOREACH au IN facets.author.terms %]
    [% query = query _ au.term %]
@@ -191,7 +191,7 @@
   [% END %]
 
   [% IF facets.editor.terms.size > 1 %]
-  
+
   [% query = "id=(" %]
   [% FOREACH ed IN facets.editor.terms %]
    [% query = query _ ed.term %]

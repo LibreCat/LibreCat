@@ -1318,6 +1318,18 @@ DISTRIBUTIONS
       vars 0
       warnings 0
       warnings::register 0
+  DateTime-Format-Mail-0.402
+    pathname: B/BO/BOOK/DateTime-Format-Mail-0.402.tar.gz
+    provides:
+      DateTime::Format::Mail 0.402
+    requirements:
+      Carp 0
+      DateTime 0.18
+      ExtUtils::MakeMaker 0
+      Params::Validate 0
+      perl 5.006
+      strict 0
+      vars 0
   DateTime-Format-Strptime-1.56
     pathname: D/DR/DROLSKY/DateTime-Format-Strptime-1.56.tar.gz
     provides:
@@ -1332,6 +1344,14 @@ DISTRIBUTIONS
       Params::Validate 0.64
       strict 0
       vars 0
+  DateTime-Format-W3CDTF-0.06
+    pathname: G/GW/GWILLIAMS/DateTime-Format-W3CDTF-0.06.tar.gz
+    provides:
+      DateTime::Format::W3CDTF 0.06
+    requirements:
+      DateTime 0
+      ExtUtils::MakeMaker 6.42
+      Test::More 0.61
   DateTime-Locale-0.45
     pathname: D/DR/DROLSKY/DateTime-Locale-0.45.tar.gz
     provides:
@@ -4259,6 +4279,18 @@ DISTRIBUTIONS
       URI 1.59
       parent 0
       perl 5.008001
+  Plack-Middleware-Deflater-0.12
+    pathname: K/KA/KAZEBURO/Plack-Middleware-Deflater-0.12.tar.gz
+    provides:
+      Plack::Middleware::Deflater 0.12
+      Plack::Middleware::Deflater::Encoder 0.12
+    requirements:
+      Compress::Zlib 0
+      ExtUtils::MakeMaker 6.59
+      Plack 0
+      Test::More 0.96
+      Test::Requires 0
+      perl 5.008001
   Plack-Middleware-Negotiate-0.20
     pathname: V/VO/VOJ/Plack-Middleware-Negotiate-0.20.tar.gz
     provides:
@@ -4812,6 +4844,14 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 6.59
       Test::More 0.62
       perl 5.008001
+  Test-Manifest-2.02
+    pathname: B/BD/BDFOY/Test-Manifest-2.02.tar.gz
+    provides:
+      Test::Manifest 2.02
+    requirements:
+      ExtUtils::MakeMaker 0
+      Test::More 0.95
+      perl 5.006
   Test-Most-0.34
     pathname: O/OV/OVID/Test-Most-0.34.tar.gz
     provides:
@@ -5331,6 +5371,27 @@ DISTRIBUTIONS
       LWP::UserAgent 0
       Test::More 0
       perl 5.00405
+  XML-RSS-1.56
+    pathname: S/SH/SHLOMIF/XML-RSS-1.56.tar.gz
+    provides:
+      XML::RSS 1.56
+      XML::RSS::Private::Output::Base undef
+      XML::RSS::Private::Output::Roles::ImageDims undef
+      XML::RSS::Private::Output::Roles::ModulesElems undef
+      XML::RSS::Private::Output::V0_9 undef
+      XML::RSS::Private::Output::V0_91 undef
+      XML::RSS::Private::Output::V1_0 undef
+      XML::RSS::Private::Output::V2_0 undef
+    requirements:
+      DateTime 0
+      DateTime::Format::Mail 0
+      DateTime::Format::W3CDTF 0
+      HTML::Entities 0
+      Module::Build 0.36
+      Test::Manifest 0.9
+      Test::More 0
+      XML::Parser 2.23
+      perl 5.008
   XML-SAX-0.99
     pathname: G/GR/GRANTM/XML-SAX-0.99.tar.gz
     provides:
