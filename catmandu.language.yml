@@ -1468,6 +1468,11 @@ en:
     heading: "Access denied (403)"
     text: "You don't have access to this file / folder."
     link_back: "Back to previous page"
+  help:
+    author_id: "Click <span class='glyphicon glyphicon-pencil'></span> to edit/add your author ids and to set an alias by which your public author page will be accessible."
+    pevz_email: "This is the email address saved in BIS/PEVZ. To change it, please contact them."
+    pevz_photo: "This is the photo saved in BIS/PEVZ. To change it, please contact them."
+    quick_and_easy: "Quick and Easy Fileupload - If you drop your Open Access fulltext here and submit the form, a new, non-pubic record will be created in PUB which we will complete for you and then make it publicly visible."
 
 de:
   login:
@@ -2965,3 +2970,8 @@ de:
     heading: "Access denied (403)"
     text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis."
     link_back: "Zurück zur vorherigen Seite"
+  help:
+    author_id: "Klicken Sie auf <span class='glyphicon glyphicon-pencil'></span> um Ihre Autoren-IDs zu editieren und um einen Alias zu setzen, über den Ihre öffentliche Personenseite erreichbar ist."
+    pevz_email: "Dies ist die E-Mail Adresse, die im BIS/PEVZ gespeichert ist. Um sie zu ändern, wenden Sie sich bitte an die Mitarbeiter des PEVZ."
+    pevz_photo: "Dies ist das Foto, das im BIS/PEVZ hinterlegt ist. Um Ihr Bild zu ändern, wenden Sie sich bitte an die Mitarbeiter des PEVZ."
+    quick_and_easy: "Quick and Easy Dateiupload - Wenn Sie Ihren Open Access Volltext hier her ziehen und das Formular absenden, entsteht ein neuer, nicht-öffentlicher Eintrag in PUB, den wir für Sie vervollständigen und dann öffentlich sichtbar machen."

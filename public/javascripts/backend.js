@@ -26,6 +26,19 @@ $('.check_alias').keyup(function() {
 });
 });
 
+$(function() {
+	$('.toggle_help').click(function() {
+	    if($(this).hasClass('toggled')){
+	        $(this).removeClass('toggled');
+	        $('.helpme').tooltip('hide');
+	    }
+	    else{
+	        $(this).addClass('toggled');
+	        $('.helpme').tooltip('show');
+	    }
+	});
+});
+
 /**
  * Display/hide edit form for author IDs
  *
