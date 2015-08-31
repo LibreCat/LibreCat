@@ -1,6 +1,27 @@
 _prefix:
   store:
 
+dev-default:
+  package: MongoDB
+  options:
+    database_name: Test
+    bags:
+      session:
+        plugins: ['Datestamps']
+
+dev-backup:
+  package: MongoDB
+  options:
+    database_name: Backup
+    bags:
+      publication: &backup_dev
+        plugins: ['Datestamps']
+      award: *backup_dev
+      project: *backup_dev
+      researcher: *backup_dev
+      department: *backup_dev
+      research_group: *backup_dev
+
 default:
   package: MongoDB
   options:
@@ -10,14 +31,13 @@ default:
         plugins: ['Datestamps']
 
 backup:
-  package: DBI 
+  package: DBI
   options:
     data_source: "DBI:mysql:database=PUBBackup"
     username: root
     password: pub33TX
     bags:
       publication: &backup_settings
-#        plugins: ['Versioning']
         plugins: ['Datestamps', 'Versioning']
         version_compare_ignore:
           - date_updated

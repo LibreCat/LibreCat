@@ -25,7 +25,7 @@ $Template::Stash::PRIVATE = 0;
 # custom authenticate routine
 sub _authenticate {
     my ( $login, $pass ) = @_;
-    if (h->config->{environment} eq 'development') {
+    if (Dancer::config->{environment} eq 'development') {
         return {login => 'einstein', _id => 1234, role => 'user'};
     }
 

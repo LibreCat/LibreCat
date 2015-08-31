@@ -4,20 +4,10 @@ use Dancer;
 use FindBin qw($Bin);
 use App;
 
-#BEGIN {
-#    if (config->{environment} eq 'development') {
-#        set appdir => "$Bin/..";
-#        set upload_dir => "$Bin/../uploads";
-#        set tmp_dir => "$Bin/../tmp";
-#    }
-#}
-
-#dance;
-
 use Plack::Builder;
 
 my $app = sub {
-    my $env     = shift;
+    my $env = shift;
     my $request = Dancer::Request->new( env => $env );
     Dancer->dance($request);
 };
@@ -45,4 +35,3 @@ builder {
 #        extension => 'strip';  # e.g. http://example.org/foo.xml
     $app;
 };
-

@@ -1,7 +1,7 @@
 # configuration for development environment
 log: "debug"
 logger: file
-logger_format: %T [%{method}h] %h -- [%{accept_type}h]
+logger_format: %T [%h] - %f -- %m
 show_errors: 1
 warnings: 1
 traces: 1
