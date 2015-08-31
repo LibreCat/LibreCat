@@ -31,13 +31,16 @@
 </div>
 <div id="url">
 [% IF related_material %]
+<div class="row innerrow">
+  <div class="col-md-2">Related material is...</div>
+</div>
 [% FOREACH u IN related_material.link %]
 [% NEXT IF u.record %]
 <div class="row innerrow">
   <div class="col-md-2">
     <select class="relurl form-control" name="related_material.link.[% index %].relation">
-      [% FOREACH key IN h.config.lists.relations_link.keys.nsort %]
-      <option value="[% h.config.lists.relations_link.$key.relation %]"[% IF h.config.lists.relations_link.$key.relation == u.relation %] selected="selected"[% END %]>[% h.config.lists.relations_link.$key.link_text %]</option>
+      [% FOREACH entry IN h.config.lists.relations_link %]
+      <option value="[% entry.relation %]"[% IF entry.relation == u.relation %] selected="selected"[% END %]>[% entry.link_text %]</option>
       [% END %]
     </select>
   </div>

@@ -40,6 +40,7 @@
 	  </ul>
 	  </li>
 	[% END %]
+	  <li><a href="#" class="toggle_help"><span class="glyphicon glyphicon-question-sign"></span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 	<li>

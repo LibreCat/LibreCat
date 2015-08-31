@@ -30,6 +30,10 @@
 	</div>
       </div>
     </form>
+    
+    <div class="row col-md-12 margin-top1 margin-bottom2">
+      <a href="/librecat/admin/research_group/new" class="btn btn-primary"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new research group</a>
+    </div>
 
     [% IF hits %]
     <div class="row margin-top1">

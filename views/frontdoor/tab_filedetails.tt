@@ -6,18 +6,31 @@
     [% IF data_reuse_license OR other_data_license %]
     <strong>[% lf.frontdoor.license_heading %]</strong><br />
     [% END %]
+    <div class="alert alert-green">
     [% IF data_reuse_license %]
-      <div class="alert alert-green">[% lf.forms.$type.field.license.data_reuse_license.label %]
+      [% lf.forms.$type.field.license.data_reuse_license.label %]
       [% SWITCH data_reuse_license %]
 	  [% CASE 'PDDL' %]<a href="http://opendatacommons.org/licenses/pddl/" target="_blank">[% lf.forms.$type.field.license.data_reuse_license.pddl.name %]</a>
 	  [% CASE 'ODC-By' %]<a href="http://opendatacommons.org/licenses/by/" target="_blank">[% lf.forms.$type.field.license.data_reuse_license.odcby.name %]</a>
 	  [% CASE 'ODbL' %]<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">[% lf.forms.$type.field.license.data_reuse_license.odbl.name %]</a>
       [% END %]
-      </div>
+    [% END %]
+    [% IF cc_license %]
+      <strong>[% lf.forms.$type.field.license.cc_license.label %]:</strong><br />
+      [% SWITCH cc_license %]
+	    [% CASE 'cc_by' %]
+	    <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank"><img src="/images/cc_by.png" height="25px;" /></a>
+	    [% CASE 'cc_by_sa' %]
+	    <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><img src="/images/cc_by_sa.png" height="25px;" /></a>
+	    [% CASE 'cc_by_nd' %]
+	    <a href="http://creativecommons.org/licenses/by-nd/4.0/" target="_blank"><img src="/images/cc_by_nd.png" height="25px;" /></a>
+	  [% END %]
+	  [% lf.forms.$type.field.license.cc_license.$cc_license.name %]
     [% END %]
     [% IF other_data_license %]
-      <div class="alert alert-green">[% other_data_license %]</div>
+      [% other_data_license %]
     [% END %]
+    </div>
     </div>
 
   [% FOREACH fi IN file.nsort('fileOrder') %]

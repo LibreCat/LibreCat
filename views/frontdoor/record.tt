@@ -103,28 +103,47 @@
 	    <div class="row">
 	      <div class="col-xs-2 text-muted">[% lf.frontdoor.download %]</div>
 	      <div class="col-xs-10">
-		[% PROCESS frontdoor/oa_lock.tt %] <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a>
-		<span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
-		[% PROCESS frontdoor/modal_requestcopy.tt %]
-	      [% END %]
-	      [% IF loop.count > 1 %]
-		<br>[% PROCESS frontdoor/oa_lock.tt %] <a href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a>
-		<span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
-		[% PROCESS frontdoor/modal_requestcopy.tt %]
-	      [% END %]
-	      [% IF loop.count > 2 && loop.size > 3 %]
-		<span id="showFiles">
-		  <br><a href="#" onclick="ShowFiles();"><span class="glyphicon glyphicon-plus fw"></span>[% lf.frontdoor.show_all %]</a>
-		</span>
-		</div>
-	      </div>
-	      [% LAST %]
-	      [% END %]
-	      [% IF loop.last %]
-	      </div>
+		  [% PROCESS frontdoor/oa_lock.tt %] <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a>
+		  <span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
+		  [% PROCESS frontdoor/modal_requestcopy.tt %]
+	    [% END %]
+	    [% IF loop.count > 1 %]
+		  <br>[% PROCESS frontdoor/oa_lock.tt %] <a href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a>
+		  <span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
+		  [% PROCESS frontdoor/modal_requestcopy.tt %]
+	    [% END %]
+	    [% IF loop.count > 2 && loop.size > 3 %]
+		  <span id="showFiles">
+		    <br><a href="#" onclick="ShowFiles();"><span class="glyphicon glyphicon-plus fw"></span>[% lf.frontdoor.show_all %]</a>
+		  </span>
+		  </div>
+	    </div>
+	    [% LAST %]
+	    [% END %]
+	    [% IF loop.last %]
+	    </div>
 	    </div>
 	    [% END %]
 	  [% END %]
+	[% END %]
+	
+	[% IF cc_license %]
+	<div class="row">
+	  <div class="col-xs-2 text-muted">[% lf.frontdoor.cc_license %]</div>
+	  <div class="col-xs-10">
+	  [% SWITCH cc_license %]
+	    [% CASE 'cc_by' %]
+	    <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank"><img src="/images/cc_by.png" height="25px;" /></a>
+	    
+	    [% CASE 'cc_by_sa' %]
+	    <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><img src="/images/cc_by_sa.png" height="25px;" /></a>
+	    
+	    [% CASE 'cc_by_nd' %]
+	    <a href="http://creativecommons.org/licenses/by-nd/4.0/" target="_blank"><img src="/images/cc_by_nd.png" height="25px;" /></a>
+	      
+	  [% END %]
+	  </div>
+	</div>
 	[% END %]
 
 	[% IF doi %]
