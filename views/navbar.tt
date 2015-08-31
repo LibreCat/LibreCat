@@ -18,7 +18,7 @@
 	  <span class="icon-bar"></span>
 	  <span class="icon-bar"></span>
 	</button>
-	<a class="navbar-brand" href="/"><img src="/images/publogo.gif" height="30" alt="" /></a>
+	<a class="navbar-brand helpme" data-placement="bottom" title="[% lf.help.home %]" href="/"><img src="/images/publogo.gif" height="30" alt="" /></a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -43,16 +43,16 @@
 	  <li><a href="#" class="toggle_help"><span class="glyphicon glyphicon-question-sign"></span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-	<li>
+	<li class="helpme" data-placement="left" title="[% lf.help.change_language %]">
 	  <a href="/librecat/person/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]"><span class="glyphicon glyphicon-flag"></span>[% lf.header.lang %]</a>
 	</li>
-	<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <span class="hidden-sm">[% session.user %]</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
+	<li class="dropdown"><a href="#" class="dropdown-toggle helpme" data-placement="bottom" title="[% lf.help.user_settings %]" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <span class="hidden-sm">[% session.user %]</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
 	  <div class="dropdown-menu" style="width:550px">
 	    [% INCLUDE backend/user_settings.tt %]
 	  </div>
 	</li>
 	[% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
-	<li class="dropdown userrole"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% lf.header.role.${session.role} %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
+	<li class="dropdown userrole"><a href="#" class="dropdown-toggle helpme" data-placement="bottom" title="[% lf.help.role %]" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% lf.header.role.${session.role} %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
 	  <ul class="dropdown-menu" role="menu">
 	    <li><a href="/librecat/change_role/user">[% lf.header.role.user %]</a></li>
 	    [% IF thisPerson.delegate %]

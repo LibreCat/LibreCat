@@ -94,6 +94,14 @@ a .total-marked{margin-right:5px;}
 .btn-white{background-image:none;background-color:#fff;border-color:#ccc!important;}
 .btn-link{font-weight:bold;}
 
+/* tooltips */
+.helpme + .tooltip > .tooltip-inner {background-color: #193854; opacity: 0.8;}
+
+.helpme + .tooltip.top > .tooltip-arrow {border-top-color: #193854; opacity: 0.8;}
+.helpme + .tooltip.right > .tooltip-arrow {border-right-color: #193854; opacity: 0.8;}
+.helpme + .tooltip.left > .tooltip-arrow {border-left-color: #193854; opacity: 0.8;}
+.helpme + .tooltip.bottom > .tooltip-arrow {border-bottom-color: #193854; opacity: 0.8;}
+
 /* Anzahl Publikationen auf Startseite */
 .statalign{display:inline-block;min-width:50px;text-align:right;}
 

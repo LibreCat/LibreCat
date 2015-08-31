@@ -43,7 +43,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme" data-placement="bottom" title="[% lf.help.pevz_photo %]">
+      <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme" data-placement="top" title="[% lf.help.pevz_photo %]">
         [% IF thisPerson.bis.photo %]
         <img src="[% thisPerson.bis.photo %]" style="max-width:140px;" class="img-thumbnail" >
         [% ELSE %]
@@ -75,23 +75,23 @@
       <div class="col-md-12">
 	<ul class="nav nav-tabs">
 	[% IF backend AND session.role == 'super_admin' %]
-	  <li[% IF backend AND modus == "admin" %] class="active"[% END %]><a href="/librecat/search/admin">[% lf.tabs.all_publications %]</a></li>
+	  <li class="helpme[% IF backend AND modus == "admin" %] active[% END %]" title="[% lf.help.publication_admin %]"><a href="/librecat/search/admin">[% lf.tabs.all_publications %]</a></li>
 	[% END %]
 	[% IF session.role == 'user' OR !backend %]
-	  <li[% IF modus == "user" %] class="active"[% END %]><a href="[% IF backend %]/librecat/search[% ELSE %]/person/[% id %][% END %]">[% lf.tabs.publications %]</a></li>
+	  <li class="helpme[% IF modus == "user" %] active[% END %]" title="[% lf.help.publication_user %]"><a href="[% IF backend %]/librecat/search[% ELSE %]/person/[% id %][% END %]">[% lf.tabs.publications %]</a></li>
 	  [% IF researchhits AND researchhits.total != 0 %]
-	    <li[% IF modus == "data" %] class="active"[% END %]><a href="[% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% lf.tabs.data_publications %]</a></li>
+	    <li class="helpme[% IF modus == "data" %] active[% END %]" title="[% lf.help.publication_user_rd %]"><a href="[% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% lf.tabs.data_publications %]</a></li>
 	  [% END %]
 	[% END %]
 	[% IF backend AND (session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer")) %]
-	  <li[% IF modus == "reviewer" %] class="active"[% END %]><a href="/librecat/search/reviewer">[% lf.tabs.review_publications %]</a></li>
+	  <li class="helpme[% IF modus == "reviewer" %] active[% END %]" title="[% lf.help.publication_reviewer %]"><a href="/librecat/search/reviewer">[% lf.tabs.review_publications %]</a></li>
 	[% END %]
 	[% IF backend AND (session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager")) %]
-	  <li[% IF modus == "data_manager" OR session.role == "data_manager" %] class="active"[% END %]><a href="/librecat/search/data_manager">[% lf.tabs.review_data_publications %]</a></li>
+	  <li class="helpme[% IF modus == "data_manager" OR session.role == "data_manager" %] active[% END %]" title="[% lf.help.publication_data_manager %]"><a href="/librecat/search/data_manager">[% lf.tabs.review_data_publications %]</a></li>
 	[% END %]
 	[% IF backend AND session.role == "delegate" %]
 	  [% FOREACH delegate_id IN thisPerson.delegate %]
-	  <li[% IF modus.match(delegate_id) %] class="active"[% END %]><a href="/librecat/search/delegate/[% delegate_id %]">[% lf.tabs.publications_by %] [% h.get_person(delegate_id).last_name %]</a></li>
+	  <li class="[% IF loop.first %]helpme[% END %][% IF modus.match(delegate_id) %] active[% END %]"[% IF loop.first %] title="[% lf.help.publication_delegate %]"[% END %]><a href="/librecat/search/delegate/[% delegate_id %]">[% lf.tabs.publications_by %] [% h.get_person(delegate_id).last_name %]</a></li>
 	  [% END %]
 	[% END %]
 	[% UNLESS backend %]
@@ -122,7 +122,7 @@
 	<!-- publication -->
 	  <div class="col-sm-8">
 	    [% tabmodus = 'user' %]
-	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
+	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
 	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
@@ -132,7 +132,7 @@
 	<!-- data -->
 	  <div class="col-sm-8">
 	    [% tabmodus = 'data' %]
-	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
+	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
 	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
@@ -156,7 +156,7 @@
 	<div class="tab-pane[% IF session.role == 'data_manager' %] active[%END %]" id="publ-datamanager">
 	  <div class="col-sm-8">
 	    [% tabmodus = 'data_manager' %]
-	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
+	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
 	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
@@ -170,7 +170,7 @@
 	  <div class="col-sm-8">
 	    [% USE String; tabmodus = String.new('delegate_'); tabmodus = tabmodus.append(delegate_id).text %]
 	    [% delegate_name = h.get_person(delegate_id).last_name %]
-	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
+	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
 	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
