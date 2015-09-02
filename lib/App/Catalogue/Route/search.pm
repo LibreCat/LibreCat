@@ -127,7 +127,6 @@ Performs search for data manager.
 
 	get '/delegate' => needs role => "delegate" => sub {
 		my $account = h->get_person(session->{user});
-		#forward "/librecat/search/delegate/$account->{delegate}->[0]", params;
 		redirect "/librecat/search/delegate/$account->{delegate}->[0]";
 	};
 
