@@ -27,6 +27,10 @@ $('.check_alias').keyup(function() {
 });
 
 $(function() {
+    $('.helpme').tooltip({
+        html: true,
+        trigger: "manual",
+    });
 	$('.toggle_help').click(function() {
 	    if($(this).hasClass('toggled')){
 	        $(this).removeClass('toggled');

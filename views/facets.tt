@@ -89,7 +89,7 @@
 [% IF facets.status.terms.size > 1 && backend %]
   <ul class="nav nav-tabs nav-stacked margin-bottom1 ul0">
     <li>
-      <button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down"></span> [% lf.facets.visibility_status %] ([% facets.status.terms.size %])</button>
+      <button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left" title="[% lf.help.status %]"><span class="glyphicon glyphicon-chevron-down"></span> [% lf.facets.visibility_status %] ([% facets.status.terms.size %])</button>
       <div class="facettecollapse">
 	<ul id="status_[% tabmodus %][% menu %]" class="collapse">
 	  [% FOREACH stat IN facets.status.terms %]
@@ -102,7 +102,7 @@
 [% END %]
 
 [% IF backend AND session.role == "super_admin" OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR  facets.year.terms.size > 1 %]
-<ul class="nav nav-tabs nav-stacked ul1">
+<ul class="nav nav-tabs nav-stacked ul1 helpme" data-placement="left" title="[% lf.help.author_block %]">
   [% IF backend AND session.role == "super_admin" %]
   <li>
     <button data-toggle="collapse" data-target="#department_new_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.department %]</button>
@@ -248,7 +248,7 @@
    OR facets.arxiv.terms.size > 0
    OR facets.pmid.terms.size > 0
    OR facets.inspire.terms.size > 0 %]
-<ul class="nav nav-tabs nav-stacked margin-top1 ul2">
+<ul class="nav nav-tabs nav-stacked margin-top1 ul2 helpme" data-placement="left" title="[% lf.help.fulltext_block %]">
   [% IF facets.popular_science.terms.size > 0 %]
   <li class="ul2li1">
     [% FOREACH t IN facets.popular_science.terms %]
@@ -356,7 +356,7 @@
   </div>
 [% END %]
 
-<ul class="nav nav-tabs nav-stacked ul3">
+<ul class="nav nav-tabs nav-stacked ul3 helpme" data-placement="left" title="[% lf.help.display_block %]">
   [% IF (!request.path.match('person') OR bag == "person") AND !request.path.match('marked') AND total > 9 %]
   <li>
     <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.hits_per_page %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.default_page_size %][% END %]</button>
