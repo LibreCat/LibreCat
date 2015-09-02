@@ -15,12 +15,12 @@ sub can_edit {
     my ($id, $login, $user_role) = @_;
 
     my $user = h->get_person($login);
-    my $cql = "id=$id AND (person=$user->{_id} OR creator=$user->{_id}";
+    my $cql = "id=$id AND (person=$user->{_id}";
 
     if ($user_role eq 'super_admin') {
         return 1;
     } elsif ($user_role eq 'user') {
-        $cql .= ")";
+        $cql .= " OR creator=$user->{_id})";
     } elsif ($user_role eq 'reviewer') {
         my @deps = map {"department=$_->{id}"} @{$user->{reviewer}};
         $cql .= " OR " .join(' OR ', @deps) .")";
