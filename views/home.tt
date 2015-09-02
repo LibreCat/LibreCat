@@ -112,7 +112,7 @@
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
+	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
 	[% END %]
@@ -125,7 +125,7 @@
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
+	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
 	<div class="tab-pane[% IF modus == 'data' %] active[% END %]" id="publ-data">
@@ -135,7 +135,7 @@
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
+	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
 	[% END %]
@@ -147,7 +147,7 @@
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
+	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
 	[% END %]
@@ -159,7 +159,7 @@
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
+	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
 	[% END %]
@@ -173,7 +173,7 @@
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	    [% IF total >1 %][% INCLUDE facets.tt %][% END %]
+	    [% INCLUDE facets.tt %]
 	  </div>
 	</div>
 	[% END %]
