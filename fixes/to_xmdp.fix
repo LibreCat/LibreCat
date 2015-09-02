@@ -8,6 +8,6 @@ move_field(year, date)
 
 if all_match(type,^bi)
     move_field(type,thesis_level)
-    lookup(thesis_level, fixes/xmdp_types.csv)
+    lookup(thesis_level, fixes/lookup/xmdp_types.csv)
     set_field(thesis,1)
 end

@@ -6,35 +6,35 @@ publication:
     package: 'JSON'
     content_type: 'application/json'
     options:
-      fix: ["to_public.fix"]
+      fix: ["fixes/to_public.fix"]
       array: 1
     label: JSON
   jsonl:
     package: 'JSON'
     content_type: 'application/json'
     options:
-      fix: ["to_public.fix"]
+      fix: ["fixes/to_public.fix"]
     label: JSONLines
     extension: jsonl
   yaml:
     package: 'YAML'
     content_type: 'text/x-yaml'
     options:
-      fix: ["to_public.fix"]
+      fix: ["fixes/to_public.fix"]
     extension: yml
     label: YAML
   bibtex:
     package: 'BibTeX'
     content_type: 'text/x-bibtex'
     options:
-      fix: ["to_bibtex.fix"]
+      fix: ["fixes/to_bibtex.fix"]
     extension: bib
     label: BibTeX
   ris:
     package: 'RIS'
     content_type: 'application/x-research-info-systems'
     options:
-      fix: ["to_ris.fix"]
+      fix: ["fixes/to_ris.fix"]
     label: 'RIS (reference software)'
     extension: ris
   rtf:
@@ -48,14 +48,14 @@ publication:
     package: YAML
     content_type: 'text/x-yaml'
     options:
-      fix: ["to_aref.fix"]
+      fix: ["fixes/to_aref.fix"]
     label: 'aREF (another RDF Encoding Form)'
     extension: yml
   mods:
     package: 'Template'
     content_type: application/xml
     options:
-      fix: ["to_mods.fix"]
+      fix: ["fixes/to_mods.fix"]
       template: views/export/mods.tt
       xml: true
     extension: xml
@@ -74,14 +74,14 @@ publication:
     options:
       template: views/export/oai_dc.tt
       xml: true
-      fix: ["to_dc.fix"]
+      fix: ["fixes/to_dc.fix"]
     extension: xml
     label: Dublin Core
   dc_json:
     package: 'JSON'
     content_type: 'application/oaidc+json'
     options:
-      fix: ["to_dc.fix"]
+      fix: ["fixes/to_dc.fix"]
     extension: json
     label: 'DC JSON'
   csl_json:

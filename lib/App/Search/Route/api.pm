@@ -34,7 +34,7 @@ oai_provider '/oai',
         my $pub = $_[0];
         Catmandu::Fix->new(fixes => [
                 "copy_field(type, doc_type)",
-                "lookup(doc_type, $ENV{LIBRECAT_HOME}/fixes/lookup/dini_types.csv, default: other)",
+                "lookup(doc_type, fixes/lookup/dini_types.csv, default: other)",
                 ])->fix($pub);
 
         my $specs = [$pub->{type}, "doc-type:". $pub->{doc_type}];

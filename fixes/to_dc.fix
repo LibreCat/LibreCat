@@ -27,7 +27,7 @@ move_field(citation.ama,'res.source.$append')
 move_field(abstract.*.text, 'res.description.$append')
 
 move_field(language.*.iso, 'res.language.$append')
-lookup('res.language.*', fixes/oai_lang.csv)
+lookup('res.language.*', fixes/lookup/oai_lang.csv)
 
 prepend(doi,'doi/')
 move_field(doi,'res.relation.$append')
