@@ -166,6 +166,7 @@ publications.
         $hits->{sort} = $p->{sort};
         $hits->{user_settings} = $sort_style;
         $hits->{modus} = "delegate_".$id;
+        $hits->{delegate_id} = $id;
 
         if ($p->{fmt} ne 'html') {
             h->export_publication($hits, $p->{fmt});

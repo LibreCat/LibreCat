@@ -115,7 +115,7 @@ prefix '/librecat' => sub {
     if($submit_or_cancel eq "Submit"){
       my $id = h->new_record('publication');
       my $file_id = h->new_record('publication');
-      my $person = h->get_person(session->{personNumber});
+      my $person = h->get_person(params->{delegate} || session->{personNumber});
       my $now = h->now();
       $file_data->{saved} = 1;
 
@@ -139,11 +139,11 @@ prefix '/librecat' => sub {
           first_name => $person->{first_name},
           last_name => $person->{last_name},
           full_name => $person->{full_name},
-          id => session->{personNumber},
+          id => $person->{_id},
           }],
         year => substr($now, 0, 4),
         department => $person->{department},
-
+        creator => {id => session->{personNumber}, login => session->{user}},
       };
 
       push @{$record->{file}}, to_json({
@@ -168,7 +168,7 @@ prefix '/librecat' => sub {
       unlink $path;
     }
 
-    redirect '/librecat';
+    redirect request->{referer};
   };
 
   post '/thesesupload/submit' => sub {
