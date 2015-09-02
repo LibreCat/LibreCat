@@ -6,6 +6,7 @@ use Catmandu::Util qw(:io :is :array :human trim);
 use Catmandu::Fix qw(expand);
 use Dancer qw(:syntax vars params request);
 use Dancer::FileUtils qw(path);
+use Hash::Merge::Simple qw(merge);
 use Sys::Hostname::Long;
 use Moo;
 use POSIX qw(strftime);
@@ -15,7 +16,7 @@ use Citation;
 Catmandu->load($ENV{LIBRECAT_HOME});
 
 sub config {
-	state $config = Catmandu->config;
+	state $config = merge(Catmandu->config, Dancer::config);
 }
 
 sub home {
