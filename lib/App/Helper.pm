@@ -13,14 +13,10 @@ use POSIX qw(strftime);
 use JSON;
 use Citation;
 
-Catmandu->load($ENV{LIBRECAT_HOME});
+Catmandu->load(':up');
 
 sub config {
 	state $config = merge(Catmandu->config, Dancer::config);
-}
-
-sub home {
-	state $home = $ENV{LIBRECAT_HOME};
 }
 
 sub bag {
@@ -357,9 +353,9 @@ sub get_metrics {
 
 sub new_record {
 	my ($self, $bag) = @_;
-	
+
 	my $id = "";
-	
+
 	if($bag eq "project"){
 		my $arr_ref;
 		@$arr_ref = sort { $b->{_id} cmp $a->{_id}} @{$self->project->to_array()};
@@ -411,7 +407,7 @@ sub update_record {
 		$rec->{citation} = Citation::index_citation_update($rec,0,'') || '';
 	}
 
-	Catmandu::Fix->new(fixes => [join_path($self->home,'fixes',"update_$bag.fix")])->fix($rec);
+	Catmandu::Fix->new(fixes => [join_path('fixes',"update_$bag.fix")])->fix($rec);
 	my $saved = $self->backup($bag)->add($rec);
 
 	#compare version! through _version or through date_updated
@@ -575,10 +571,6 @@ sub export_publication {
 	   	$options->{explinks} = params->{explinks};
 	   	my $content_type = $spec->{content_type} || mime->for_name($fmt);
 	   	my $extension = $spec->{extension} || $fmt;
-
-		$options->{fix} = map {
-			join_path($self->home,'fix',$_);
-		} @{$options->{fix}};
 
 		my $f = export_to_string( $hits, $package, $options );
 		return $f if $to_string;

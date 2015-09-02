@@ -10,8 +10,6 @@ use Moo;
 has id => (is => 'ro', required => 1);
 has source => (is => 'ro', default => sub {'crossref'});
 
-state $home = $ENV{LIBRECAT_HOME};
-
 sub fetch {
     my ($self) = @_;
 
@@ -26,7 +24,7 @@ sub arxiv {
     Catmandu->importer(
         'ArXiv',
         query => $id,
-        fix => [join_path($home,'fixes','arxiv_mapping.fix')],
+        fix => [join_path('fixes','arxiv_mapping.fix')],
         )->first;
 }
 
@@ -36,7 +34,7 @@ sub inspire {
     Catmandu->importer(
         'Inspire',
         id => $id,
-        fix => [join_path($home,'fixes','inspire_mapping.fix')],
+        fix => [join_path('fixes','inspire_mapping.fix')],
         )->first;
 }
 
@@ -46,7 +44,7 @@ sub crossref {
     my $data = Catmandu->importer(
         'getJSON',
         from => "http://api.crossref.org/works/$id",
-        fix => [join_path($home,'fixes','crossref_mapping.fix')],
+        fix => [join_path('fixes','crossref_mapping.fix')],
         )->first;
 
     # try @datacite if crossref has no data
@@ -70,7 +68,7 @@ sub datacite {
     Catmandu->importer(
         'XML',
         file => $res->content,
-        fix => [join_path($home,'fixes','from_datacite.fix')],
+        fix => [join_path('fixes','from_datacite.fix')],
         )->first;
 }
 
@@ -80,7 +78,7 @@ sub epmc {
     Catmandu->importer(
         'EuropePMC',
         query => $id,
-        fix => [join_path($home,'fixes','epmc_mapping.fix')],
+        fix => [join_path('fixes','epmc_mapping.fix')],
         )->first;
 }
 
@@ -98,14 +96,14 @@ sub bis {
     my $p1 = Catmandu->importer(
         'XML',
         file => $res->content,
-        fix => [join_path($home,'fixes','pevz_mapping.fix')],
+        fix => [join_path('fixes','pevz_mapping.fix')],
         )->first;
 
     $res = $furl->get($url2);
     my $p2 = Catmandu->importer(
         'XML',
         file => $res->content,
-        fix => [join_path($home,'fixes','pevz_mapping.fix')],
+        fix => [join_path('fixes','pevz_mapping.fix')],
         )->first;
 
     my $merger = Hash::Merge->new();
