@@ -34,7 +34,7 @@
     <input type="hidden" name="type" value="{% tmpl %}" id="id_type"/>
     <input type="hidden" name="_id" value="[% _id %]"/>
     <input type="hidden" name="status" value="[% IF !status OR status == "new" %]private[% ELSE %][% status %][% END %]"/>
-    <input type="hidden" name="new_record" value="[% title ? "0" : "1" %]"/>
+    <input type="hidden" name="new_record" value="[% new_record %]"/>
     <input type="hidden" name="date_created" value="[% date_created %]" />
     <input type="hidden" name="creator.login" value="[% creator ? creator.login : thisPerson.login %]" />
     <input type="hidden" name="creator.id" value="[% creator ? creator.id : thisPerson._id %]" />

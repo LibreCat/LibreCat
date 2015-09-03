@@ -72,6 +72,8 @@ Some fields are pre-filled.
         if(($edit_mode and $edit_mode eq "expert") or ($edit_mode eq "" and session->{role} eq "super_admin")){
         	$templatepath .= "/expert";
         }
+        
+        $data->{new_record} = 1;
 
         template $templatepath . "/$type", $data;
     };
