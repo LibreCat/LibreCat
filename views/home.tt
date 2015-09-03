@@ -83,8 +83,10 @@
 	    <li class="helpme[% IF modus == "data" %] active[% END %]" title="[% lf.help.publication_user_rd %]"><a href="[% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% lf.tabs.data_publications %]</a></li>
 	  [% END %]
 	[% END %]
-	[% IF backend AND (session.role == 'reviewer' OR (session.role == 'super_admin' AND modus == "reviewer")) %]
-	  <li class="helpme[% IF modus == "reviewer" %] active[% END %]" title="[% lf.help.publication_reviewer %]"><a href="/librecat/search/reviewer">[% lf.tabs.review_publications %]</a></li>
+	[% IF backend AND session.role == 'reviewer' %]
+	  [% FOREACH department IN thisPerson.reviewer %]
+	  <li class="helpme[% IF modus.match(department.id) %] active[% END %]" title="[% lf.help.publication_reviewer %]"><a href="/librecat/search/reviewer/[% department.id %]">[% lf.tabs.review_publications %] [% department.name %]</a></li>
+	  [% END %]
 	[% END %]
 	[% IF backend AND (session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager")) %]
 	  <li class="helpme[% IF modus == "data_manager" OR session.role == "data_manager" %] active[% END %]" title="[% lf.help.publication_data_manager %]"><a href="/librecat/search/data_manager">[% lf.tabs.review_data_publications %]</a></li>
@@ -139,9 +141,9 @@
 	  </div>
 	</div>
 	[% END %]
-	[% IF backend AND (session.role == "reviewer" OR (session.role == "super_admin" AND modus == "reviewer")) %]
+	[% IF backend AND session.role == "reviewer" %]
 	<!-- backend + reviewer -->
-	<div class="tab-pane[% IF modus == 'reviewer' %] active[%END %]" id="publ-reviewer">
+	<div class="tab-pane[% IF modus.match(department_id) %] active[%END %]" id="publ-reviewer">
 	  <div class="col-sm-8">
 	    [% tabmodus = 'reviewer' %]
 	    [% INCLUDE hits.tt %]

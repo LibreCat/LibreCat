@@ -116,6 +116,7 @@ prefix '/librecat' => sub {
       my $id = h->new_record('publication');
       my $file_id = h->new_record('publication');
       my $person = h->get_person(params->{delegate} || session->{personNumber});
+      my $department = h->get_department(params->{reviewer}) if params->{reviewer};
       my $now = h->now();
       $file_data->{saved} = 1;
 
@@ -142,7 +143,7 @@ prefix '/librecat' => sub {
           id => $person->{_id},
           }],
         year => substr($now, 0, 4),
-        department => $person->{department},
+        department => $department || $person->{department},
         creator => {id => session->{personNumber}, login => session->{user}},
       };
 

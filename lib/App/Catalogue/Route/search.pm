@@ -67,13 +67,19 @@ Performs search for admin.
 Performs search for reviewer.
 
 =cut
-    get '/reviewer' => needs role => 'reviewer' => sub {
+
+    get '/reviewer' => needs role => "reviewer" => sub {
+    	my $account = h->get_person(session->{user});
+		redirect "/librecat/search/reviewer/$account->{reviewer}->[0]->{id}";
+    };
+    
+    get '/reviewer/:department_id' => needs role => 'reviewer' => sub {
 
         my $p = h->extract_params();
         my $id = session 'personNumber';
         my $account = h->get_person(session->{user});
-        my $dep_query = join( ' OR ', map{"department=$_->{id}";} @{$account->{reviewer}});
-        push @{$p->{q}}, "(($dep_query) OR person=$id OR creator=$id)";
+        my $dep_query = "department=" . params->{department_id};
+        push @{$p->{q}}, $dep_query;
 
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
@@ -83,7 +89,8 @@ Performs search for reviewer.
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
         $hits->{user_settings} = $sort_style;
-        $hits->{modus} = "reviewer";
+        $hits->{modus} = "reviewer_" . params->{department_id};
+        $hits->{department_id} = params->{department_id};
 
         if ($p->{fmt} ne 'html') {
             h->export_publication($hits, $p->{fmt});
@@ -125,6 +132,12 @@ Performs search for data manager.
 
     };
 
+=head2 GET '/delegate'
+
+Takes first request after login or change_role and redirects
+according to first delegate ID.
+
+=cut
 	get '/delegate' => needs role => "delegate" => sub {
 		my $account = h->get_person(session->{user});
 		redirect "/librecat/search/delegate/$account->{delegate}->[0]";
@@ -136,7 +149,7 @@ Performs a search of records for delegated person's
 publications.
 
 =cut
-    get '/delegate/:delegate_id' => sub {
+    get '/delegate/:delegate_id' => needs role => "delegate" => sub {
         my $p = h->extract_params();
         my $id = params->{delegate_id};
         push @{$p->{q}}, "(person=$id OR creator=$id)";
