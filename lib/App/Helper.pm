@@ -429,10 +429,13 @@ sub delete_record {
     };
 
 	if ($bag eq 'publication') {
+		my $rec = $self->publication->get($id);
+		$del->{date_created} = $rec->{date_created};
 		require App::Catalogue::Controller::File;
 		require App::Catalogue::Controller::Material;
 		App::Catalogue::Controller::Material::update_related_material($del);
 		App::Catalogue::Controller::File::delete_file($id);
+		delete $del->{related_material};
 	}
 
 	my $saved = $self->backup($bag)->add($del);
