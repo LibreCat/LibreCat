@@ -30,7 +30,7 @@ get '/librecat' => needs login => sub {
     elsif ( session->{role} eq "reviewer" ) {
         forward '/librecat/search/reviewer', $params;
     }
-    elsif ( session->{role} eq "dataManager" ) {
+    elsif ( session->{role} eq "data_manager" ) {
         forward '/librecat/search/data_manager', $params;
     }
     elsif ( session->{role} eq "delegate" ) {
