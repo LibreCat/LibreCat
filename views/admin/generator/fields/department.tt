@@ -5,14 +5,14 @@
   <div class="col-md-10" id="affiliation">
   [% IF !department %]
     <div class="row innerrow">
-      <input type="hidden" name="department.0.id" id="dp_idautocomplete_0" />
-      <input type="hidden" name="department.0.name" id="dp_nameautocomplete_0" />
+      <input type="hidden" name="department.0.id" id="aff_idautocomplete_0" />
+      <input type="hidden" name="department.0.name" id="aff_nameautocomplete_0" />
       
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% department.label %}</div>
-          <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control" id="dp_autocomplete_0" value="" />
-          <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="department_select_0">Select</span></div>
+          <input type="text" onfocus="enable_autocomplete('aff',0);" class="sticky form-control" id="aff_autocomplete_0" value="" />
+          <div class="input-group-addon"><span onclick="selectButton(this);" class="affiliation" id="affiliation_select_0">Select</span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
         </div>
@@ -21,14 +21,14 @@
   [% ELSE %]
   [% FOREACH dept IN department %]
     <div class="row innerrow">
-      <input type="hidden" name="department.[% loop.index %].id" id="dp_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
-      <input type="hidden" name="department.[% loop.index %].name" id="dp_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
+      <input type="hidden" name="department.[% loop.index %].id" id="aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
+      <input type="hidden" name="department.[% loop.index %].name" id="aff_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
       
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% department.label %}</div>
-          <input type="text" onfocus="enable_autocomplete('dp',[% loop.index %]);" class="sticky form-control" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
-          <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="department_select_0">Select</span></div>
+          <input type="text" onfocus="enable_autocomplete('aff',[% loop.index %]);" class="sticky form-control" id="aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+          <div class="input-group-addon"><span onclick="selectButton(this);" class="affiliation" id="affiliation_select_[% loop.index %]">Select</span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
         </div>
