@@ -10,11 +10,11 @@ sub fix {
 
     foreach my $d (@{$data->{department}}) {
     	my $dep;
-    	if($d->{id} !~ /\d{1,}/){
+    	if($d->{_id} !~ /\d{1,}/){
     		$dep = h->get_department($d->{name});
     	}
     	else {
-    		$dep = h->get_department($d->{id});
+    		$dep = h->get_department($d->{_id});
     	}
         
         $d->{tree} = ();

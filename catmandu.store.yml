@@ -627,7 +627,7 @@ search:
                 'any': true
                 'all': true
                 '>': true
-              field: ['department.id', 'department.tree']
+              field: ['department._id', 'department.tree']
               values: 'see the list of affiliations'
               description: 'will also find any subunits of the given organizationial unit'
             language:
@@ -1140,7 +1140,7 @@ search:
               exact: {type: string, analyzer: tag}
           department:
             properties:
-              id: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
               tree:
                 properties:
                   name: {type: string, index: no}
@@ -1235,11 +1235,11 @@ search:
               photo: {type: string, index: not_analyzed}
           department:
             properties:
-              id: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
               name: {type: string, include_in_all: true}
           reviewer:
             properties:
-              id: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
               name: {type: string}
           access:
             properties:

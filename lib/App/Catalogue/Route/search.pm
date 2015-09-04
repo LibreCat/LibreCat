@@ -70,7 +70,7 @@ Performs search for reviewer.
 
     get '/reviewer' => needs role => "reviewer" => sub {
     	my $account = h->get_person(session->{user});
-		redirect "/librecat/search/reviewer/$account->{reviewer}->[0]->{id}";
+		redirect "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
     };
     
     get '/reviewer/:department_id' => needs role => 'reviewer' => sub {
@@ -110,7 +110,7 @@ Performs search for data manager.
         my $p = h->extract_params();
         my $id = session 'personNumber';
         my $account = h->get_person(session->{user});
-        my $dep_query = join( ' OR ', map{"department=$_->{id}";} @{$account->{data_manager}});
+        my $dep_query = join( ' OR ', map{"department=$_->{_id}";} @{$account->{data_manager}});
         push @{$p->{q}}, "(($dep_query) OR person=$id OR creator=$id)";
         push @{$p->{q}}, "(type=researchData OR type=dara)";
 

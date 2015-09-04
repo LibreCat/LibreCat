@@ -85,7 +85,7 @@
 	[% END %]
 	[% IF backend AND session.role == 'reviewer' %]
 	  [% FOREACH department IN thisPerson.reviewer %]
-	  <li class="helpme[% IF modus.match(department.id) %] active[% END %]" title="[% lf.help.publication_reviewer %]"><a href="/librecat/search/reviewer/[% department.id %]">[% lf.tabs.review_publications %] [% department.name %]</a></li>
+	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_reviewer %]"><a href="/librecat/search/reviewer/[% department._id %]">[% lf.tabs.review_publications %] [% department.name %]</a></li>
 	  [% END %]
 	[% END %]
 	[% IF backend AND (session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager")) %]
