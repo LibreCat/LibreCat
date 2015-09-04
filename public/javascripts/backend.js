@@ -598,8 +598,13 @@ function enable_autocomplete(field, index){
 	}
 	$( "#" + field + "_autocomplete_" + index ).autocomplete({
 		source: "/get_" + type,
-		minLength: 2,
-		messages: {
+		minLength: 0,
+	    response: function( event, ui ) {
+            if (ui.content.length === 0) {
+                $("#" + field + "_autocomplete_" + index).focus();
+            }
+        },
+        messages: {
 	        noResults: '',
 	        results: function() {}
 	    },
