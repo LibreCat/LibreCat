@@ -94,20 +94,18 @@ function selectButton(element){
 	var modal = $('#selectModal');
 	var container = $('#selectModal').find('.modal-body').first();
 	container.html("");
-	if(type == "data_manager"){
+	if(type == "department" || type == "affiliation" || type == "data_manager" || type == "reviewer"){
 	    container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
-	    type_short = "dp";
 	    type_name = "Department";
+	}
+	if(type == "data_manager"){
+	    type_short = "dm";
 	}
 	else if(type == "reviewer"){
-	    container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
 	    type_short = "rv";
-	    type_name = "Department";
 	}
     else if (type == "affiliation") {
-        container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
         type_short = "aff";
-        type_name = "Department";
     }
 	var heading = modal.find('h4').first();
 	heading.html("");
@@ -118,6 +116,7 @@ function selectButton(element){
 	    $('#' + type_short + '_idautocomplete_' + index).val(id);
 	    $('#' + type_short + '_nameautocomplete_' + index).val(name);
 	    $('#' + type_short + '_autocomplete_' + index).val(name);
+	    $('#' + type_short + '_autocomplete_' + index ).attr('disabled', 'disabled');
 	    $('#selectModal').modal('hide');
 	});
 	modal.modal('show');

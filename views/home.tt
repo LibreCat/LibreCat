@@ -85,11 +85,13 @@
 	[% END %]
 	[% IF backend AND session.role == 'reviewer' %]
 	  [% FOREACH department IN thisPerson.reviewer %]
-	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_reviewer %]"><a href="/librecat/search/reviewer/[% department._id %]">[% lf.tabs.review_publications %] [% department.name %]</a></li>
+	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_reviewer %]"><a href="/librecat/search/reviewer/[% department._id %]">[% lf.tabs.publications %] [% department.name %]</a></li>
 	  [% END %]
 	[% END %]
-	[% IF backend AND (session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager")) %]
-	  <li class="helpme[% IF modus == "data_manager" OR session.role == "data_manager" %] active[% END %]" title="[% lf.help.publication_data_manager %]"><a href="/librecat/search/data_manager">[% lf.tabs.review_data_publications %]</a></li>
+	[% IF backend AND session.role == "data_manager" %]
+	  [% FOREACH department IN thisPerson.data_manager %]
+	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_data_manager %]"><a href="/librecat/search/data_manager/[% department._id %]">[% lf.tabs.data_publications %] [% department.name %]</a></li>
+	  [% END %]
 	[% END %]
 	[% IF backend AND session.role == "delegate" %]
 	  [% FOREACH delegate_id IN thisPerson.delegate %]

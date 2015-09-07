@@ -106,13 +106,18 @@ Performs search for data manager.
 
 =cut
     get '/data_manager' => needs role => 'data_manager' => sub {
+    	my $account = h->get_person(session->{user});
+    	redirect "/librecat/search/data_manager/$account->{data_manager}->[0]->{_id}";
+    };
+    
+    get '/data_manager/:department_id' => needs role => 'data_manager' => sub {
 
         my $p = h->extract_params();
         my $id = session 'personNumber';
         my $account = h->get_person(session->{user});
-        my $dep_query = join( ' OR ', map{"department=$_->{_id}";} @{$account->{data_manager}});
-        push @{$p->{q}}, "(($dep_query) OR person=$id OR creator=$id)";
+        my $dep_query = "department=" . params->{department_id};
         push @{$p->{q}}, "(type=researchData OR type=dara)";
+        push @{$p->{q}}, $dep_query;
 
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
@@ -122,7 +127,8 @@ Performs search for data manager.
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
         $hits->{user_settings} = $sort_style;
-        $hits->{modus} = "data_manager";
+        $hits->{modus} = "data_manager_" . params->{department_id};
+        $hits->{department_id} = params->{department_id};
 
         if ($p->{fmt} ne 'html') {
             h->export_publication($hits, $p->{fmt});
