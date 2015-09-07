@@ -166,6 +166,8 @@ sub index_citation_update {
 
 	my $rec_array;
 	push @$rec_array, $rec_prep;
+	
+	my $csl_json = $rec_prep;
 
 	my $json = new JSON;
 	my $json_citation = $json->encode($rec_array);
@@ -177,6 +179,7 @@ sub index_citation_update {
 	my $citeproc_url = 'http://::'.$conf->{citation}->{url};
 	my $citation;
 	my $styleList = $conf->{citation}->{styles};
+	
 
 	# wurden styles uebergeben, verarbeite nur diese
 	if (@styles){
@@ -243,6 +246,7 @@ sub index_citation_update {
 
 	if($returnType ne ""){
 		return $debug if $returnType eq 'debug';
+		return $csl_json if $returnType eq 'csl_json';
 		return $citation->{$styles[0]};
 	}
 	else {

@@ -611,7 +611,7 @@ sub export_autocomplete_json {
 sub export_csl_json {
 	my ($self, $hits) = @_;
 
-	my $spec = config->{export}->{publication}->{csl_json};
+	my $spec = config->{exporter}->{publication}->{csl_json};
 	my $out;
 	$hits->each(sub {
 		push @$out, Citation::index_citation_update($_[0],0,'csl_json');
