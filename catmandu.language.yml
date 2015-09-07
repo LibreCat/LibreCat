@@ -58,8 +58,6 @@ en:
     all_publications: "All Publications"
     publications: "Publications"
     data_publications: "Data Publications"
-    review_publications: "Publications"
-    review_data_publications: "Data Publications for Review"
     publications_by: "Publ. by"
     projects: "Projects"
     authors: "Authors"
@@ -435,6 +433,16 @@ en:
         alternative_id: &alternative_id
           label: "Returned Record Ids"
           label_short: "Ret. Rec. Ids"
+        related_material.record: &related_material_record
+          label: "Link to PUB record"
+          label_short: "PUB-Rec."
+          placeholder: "Start typing to search your publications."
+        related_material.link:
+          label: "Link to other record"
+          label_short: "Ext. Link"
+          placeholder: "Enter a remote location (URL) of your file here"
+        publish_button:
+          alert: "Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified."
     bookEditor: &bookeditor
       label: "Book (Editor)"
       tab: *tab
@@ -480,6 +488,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     bookeditor: *bookeditor
     bookChapter: &bookchapter
       label: "Book Chapter"
@@ -553,6 +562,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     bookchapter: *bookchapter
     conferenceAbstract: &conferenceabstract
       label: "Conference Abstract"
@@ -620,6 +630,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     conferenceabstract: *conferenceabstract
     conferenceEditor: &conferenceeditor
       label: "Conference (Editor)"
@@ -659,6 +670,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     conferenceeditor: *conferenceeditor
     conference:
       label: "Conference Paper"
@@ -701,6 +713,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     dissertation:
       label: "Dissertation"
       tab: *tab
@@ -740,6 +753,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     encyclopediaArticle: &encyclopediaarticle
       label: "Encyclopedia Article"
       tab: *tab
@@ -778,6 +792,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     encyclopediaarticle: *encyclopediaarticle
     journalArticle: &journalarticle
       label: "Journal Article"
@@ -830,6 +845,7 @@ en:
         ubi_funded:
           label: "Funding"
           placeholder: "APC co-financed by DFG"
+        related_material.record: *related_material_record
     journalarticle: *journalarticle
     journalEditor: &journaleditor
       label: "Journal (Editor)"
@@ -867,6 +883,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     journaleditor: *journaleditor
     newspaperArticle: &newspaperarticle
       label: "Newspaper Article"
@@ -905,6 +922,7 @@ en:
         alternative_id: *alternative_id
         popular_science: &popular_science
           label: "Popular Science"
+        related_material.record: *related_material_record
     newspaperarticle: *newspaperarticle
     patent:
       label: "Patent"
@@ -968,6 +986,7 @@ en:
         alternative_id: *alternative_id
         quality_controlled:
           label: "Quality Controlled"
+        related_material.record: *related_material_record
     preprint:
       label: "Preprint"
       tab: *tab
@@ -997,6 +1016,7 @@ en:
         thematic_area: *thematic_area
         alternative_id: *alternative_id
         popular_science: *popular_science
+        related_material.record: *related_material_record
     report:
       label: "Report"
       tab: *tab
@@ -1035,6 +1055,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     review:
       label: "Book Review"
       tab: *tab
@@ -1071,6 +1092,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     researchData: &researchdata
       label: "Research Data"
       tab:
@@ -1217,6 +1239,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     translationChapter: &translationchapter
       label: "Translation (Chapter)"
       tab: *tab
@@ -1286,6 +1309,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     translationchapter: *translationchapter
     workingPaper: &workingpaper
       label: "Working Paper"
@@ -1321,6 +1345,7 @@ en:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     workingpaper: *workingpaper
     biDissertation: &bidissertation
       label: "Bielefeld Thesis"
@@ -1387,6 +1412,7 @@ en:
         ccs_class: &ccs
           label: "CCS Code"
           placeholder: "Computing Classification System, e.g. Data Mining"
+        related_material.record: *related_material_record
     bidissertation: *bidissertation
     biMasterThesis: &bimasterthesis
       label: "Bielefeld Master Thesis"
@@ -1546,8 +1572,6 @@ de:
     all_publications: "Alle Publikationen"
     publications: "Publikationen"
     data_publications: "Datenpublikationen"
-    review_publications: "Publikationen"
-    review_data_publications: "Datenpublikationen zum Editieren"
     publications_by: "Publ. von"
     projects: "Projekte"
     authors: "Autoren"
@@ -1925,6 +1949,10 @@ de:
         alternative_id: &alternative_id
           label: "Returned Record Ids"
           label_short: "Ret. Rec. Ids"
+        related_material.record: &related_material_record
+          label: "Link zu PUB Eintrag"
+          label_short: "PUB-Eintr."
+          placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
     bookEditor: &bookeditor
       label: "Book (Editor)"
 #      label: "Buch-Herausgeber"
@@ -1972,6 +2000,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     bookeditor: *bookeditor
     bookChapter: &bookchapter
       label: "Book Chapter"
@@ -2047,6 +2076,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     bookchapter: *bookchapter
     conferenceAbstract: &conferenceabstract
       label: "Conference Abstract"
@@ -2116,6 +2146,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     conferenceabstract: *conferenceabstract
     conferenceEditor: &conferenceeditor
       label: "Conference (Editor)"
@@ -2156,6 +2187,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     conferenceeditor: *conferenceeditor
     conference:
       label: "Conference Paper"
@@ -2199,6 +2231,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     dissertation:
       label: "Dissertation"
 #      label: "Dissertation"
@@ -2239,6 +2272,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     encyclopediaArticle: &encyclopediaarticle
       label: "Encyclopedia Article"
 #      label: "Enzyklopädie-Artikel"
@@ -2278,6 +2312,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     encyclopediaarticle: *encyclopediaarticle
     journalArticle: &journalarticle
       label: "Journal Article"
@@ -2332,6 +2367,7 @@ de:
         ubi_funded:
           label: "Finanzierung"
           placeholder: "Artikelgebühren co-finanziert von der DFG"
+        related_material.record: *related_material_record
     journalarticle: *journalarticle
     journalEditor: &journaleditor
       label: "Journal (Editor)"
@@ -2371,6 +2407,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     journaleditor: *journaleditor
     newspaperArticle: &newspaperarticle
       label: "Newspaper Article"
@@ -2411,6 +2448,7 @@ de:
         popular_science: &popular_science
           label: "Populärwissenschaftliche Publikation"
           label_short: "Pop.wiss. Publ."
+        related_material.record: *related_material_record
     newspaperarticle: *newspaperarticle
     patent:
       label: "Patent"
@@ -2474,6 +2512,7 @@ de:
         quality_controlled:
           label: "Qualitätskontrolliert"
           label_short: "Qual.kontr."
+        related_material.record: *related_material_record
     preprint:
       label: "Preprint"
 #      label: "Vorabdruck"
@@ -2505,6 +2544,7 @@ de:
         thematic_area: *thematic_area
         alternative_id: *alternative_id
         popular_science: *popular_science
+        related_material.record: *related_material_record
     report:
       label: "Report"
 #      label: "Bericht"
@@ -2544,6 +2584,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     review:
       label: "Book Review"
 #      label: "Buchrezension"
@@ -2581,6 +2622,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     researchData: &researchdata
       label: "Research Data"
 #      label: "Forschungsdatensatz"
@@ -2731,6 +2773,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     translationChapter: &translationchapter
       label: "Translation (Chapter)"
 #      label: "Übersetzung (Kapitel)"
@@ -2800,6 +2843,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     translationchapter: *translationchapter
     workingPaper: &workingpaper
       label: "Working Paper"
@@ -2836,6 +2880,7 @@ de:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        related_material.record: *related_material_record
     workingpaper: *workingpaper
     biDissertation: &bidissertation
       label: "Bielefeld Thesis"
@@ -2901,6 +2946,7 @@ de:
         ccs_class: &ccs
           label: "CCS Code"
           placeholder: "Computing Classification System, e.g. Data Mining"
+        related_material.record: *related_material_record
     bidissertation: *bidissertation
     biMasterThesis: &bimasterthesis
       label: "Bielefeld Master Thesis"

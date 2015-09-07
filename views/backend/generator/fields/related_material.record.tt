@@ -1,14 +1,19 @@
 <div class="row innerrow">
-  <div class="col-md-2">
+  <div class="col-md-2 hidden-xs hidden-sm">
     <label for="connect_autocomplete">
-      {% fields.related_material.item('related_material.record').label %}{% IF fields.related_material.item('related_material.record').mandatory == "1" %}<span class="starMandatory"></span>{% END %}
+      [% lf.$type.field.item('related_material.record').label %]
     </label>
+    {% IF fields.related_material.item('related_material.record').mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10">
-    <div class="form-group">
-      <span class="form-group col-md-9">
-        <input type="text" class="form-control" placeholder="{% fields.related_material.item('related_material.record').placeholder %}" id="connect_autocomplete" value="" />
-      </span>
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky{% IF fields.related_material.item('related_material.record').mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.item('related_material.record').label_short || lf.$type.field.item('related_material.record').label %]</div>
+          <input type="text" class="sticky form-control" placeholder="[% lf.$type.field.item('related_material.record').placeholder %]" id="connect_autocomplete" value="" />
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
