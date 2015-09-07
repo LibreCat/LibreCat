@@ -1077,7 +1077,7 @@ otherItems:
     email:
       label: "Email"
     login:
-      label: "LDAP Login"
+      label: "Login Name (LDAP)"
       mandatory: 1
     department:
       label: "Affiliation"

@@ -99,7 +99,7 @@ $(function () {
 		$('#edit_form').submit();
 	});
 	$('.change_type').click(function(){
-		var sure = confirm("Changing the type of a record may result in loss of data if the new type uses different fields than the old one! Proceed with caution");
+		var sure = confirm("Changing the publication type may result in loss of data if the new type uses different fields from the previous one! Proceed with caution.");
 		if(sure){
 			var newtype = $(this).data('val');
 			$('#id_type').val(newtype);

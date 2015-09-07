@@ -1,6 +1,8 @@
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
 
+[% lang = session.lang ? session.lang : h.config.default_lang %]
+[% lf = h.config.language.$lang %]
 [% INCLUDE header.tt %]
 
 <!-- BEGIN marked/marked.tt -->
@@ -28,11 +30,11 @@
       <ul class="breadcrumb">
 	<li><span class="glyphicon glyphicon-chevron-left"></span>
 	  [% IF qp.person AND qp.person != "" %]
-	  <a href="[% h.newuri_for("/person/$qp.person", qp, person="") %]">Back to person page</a>
+	  <a href="[% h.newuri_for("/person/$qp.person", qp, person="") %]">[% lf.mark.back_person %]</a>
 	  [% ELSIF qp.department AND qp.department != "" %]
-	  <a href="[% h.newuri_for("/department/$qp.department", qp, department="") %]">Back to previous page</a>
+	  <a href="[% h.newuri_for("/department/$qp.department", qp, department="") %]">[% lf.mark.back_general %]</a>
 	  [% ELSIF qp.publication AND qp.publication != "" %]
-	  <a href="[% h.newuri_for("/publication/$qp.publication", qp, publication="") %]">Back to previous page</a>
+	  <a href="[% h.newuri_for("/publication/$qp.publication", qp, publication="") %]">[% lf.mark.back_general %]</a>
 	  [% ELSIF qp.data AND qp.data != "" %]
 	  <a href="[% h.newuri_for("/data/$qp.data", qp, data="") %]">Back to previous page</a>
 	  [% ELSE %]
@@ -44,7 +46,7 @@
           [% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% lang ? "Logged in as:" : "Angemeldet als:" %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">(myPUB)</span></span></a></li>[% END %]
       </ul>
 
-      <h1>[% IF total == 0 %]No [% END %]Marked Publications</h1>
+      <h1>[% lf.mark.marked_publication %]</h1>
 
     </div>
 
@@ -52,7 +54,7 @@
     <div class="row">
       <div class="col-md-12">
 	<ul class="nav nav-tabs">
-	  <li class="active"><a href="#"><span class="total-marked">[% total %]</span> Marked Publications</a></li>
+	  <li class="active"><a href="#"><span class="total-marked">[% total %]</span> [% lf.mark.marked_publication %]</a></li>
 	  <li class="hidden-md hidden-lg hidden-sm"><a href="#export">Display / Export</a></li>
 	</ul>
       </div>

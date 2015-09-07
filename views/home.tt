@@ -85,17 +85,17 @@
 	[% END %]
 	[% IF backend AND session.role == 'reviewer' %]
 	  [% FOREACH department IN thisPerson.reviewer %]
-	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_reviewer %]"><a href="/librecat/search/reviewer/[% department._id %]">[% lf.tabs.publications %] [% department.name %]</a></li>
+	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_reviewer %]"><a href="/librecat/search/reviewer/[% department._id %]">[% department.name %]</a></li>
 	  [% END %]
 	[% END %]
 	[% IF backend AND session.role == "data_manager" %]
 	  [% FOREACH department IN thisPerson.data_manager %]
-	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_data_manager %]"><a href="/librecat/search/data_manager/[% department._id %]">[% lf.tabs.data_publications %] [% department.name %]</a></li>
+	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_data_manager %]"><a href="/librecat/search/data_manager/[% department._id %]">[% department.name %]</a></li>
 	  [% END %]
 	[% END %]
 	[% IF backend AND session.role == "delegate" %]
 	  [% FOREACH delegate_id IN thisPerson.delegate %]
-	  <li class="[% IF loop.first %]helpme[% END %][% IF modus.match(delegate_id) %] active[% END %]"[% IF loop.first %] title="[% lf.help.publication_delegate %]"[% END %]><a href="/librecat/search/delegate/[% delegate_id %]">[% lf.tabs.publications_by %] [% h.get_person(delegate_id).last_name %]</a></li>
+	  <li class="[% IF loop.first %]helpme[% END %][% IF modus.match(delegate_id) %] active[% END %]"[% IF loop.first %] title="[% lf.help.publication_delegate %]"[% END %]><a href="/librecat/search/delegate/[% delegate_id %]">[% h.get_person(delegate_id).full_name %]</a></li>
 	  [% END %]
 	[% END %]
 	[% UNLESS backend %]
@@ -173,7 +173,7 @@
 	<div class="tab-pane[% IF modus.match(delegate_id) %] active[%END %]" id="publ-delegate_[% delegate_id %]">
 	  <div class="col-sm-8">
 	    [% USE String; tabmodus = String.new('delegate_'); tabmodus = tabmodus.append(delegate_id).text %]
-	    [% delegate_name = h.get_person(delegate_id).last_name %]
+	    [% delegate_name = h.get_person(delegate_id).full_name %]
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">

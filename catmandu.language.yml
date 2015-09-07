@@ -13,7 +13,7 @@ en:
     contact_us: "<strong>Login failed?</strong><br />If you are a member of Bielefeld University but you still cannot log in to PUB, please <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>contact us</a></strong> or call 106-4058."
   header:
     title: "PUB &ndash; Publications at Bielefeld University"
-    my_author_page: "My Public Author Page"
+    my_author_page: "My Individual Author Page"
     brand: "MyPUB"
     role:
       user: "User"
@@ -248,6 +248,8 @@ en:
     mark_all: "Mark all"
     unmark_all: "Unmark all"
     mark_unmark: "Mark/Unmark publication"
+    back_general: "Back to previous page"
+    back_person: "Back to person page"
   sort_options:
     year: "Publishing year"
     date_updated: Date updated
@@ -268,7 +270,7 @@ en:
       pmid: "PMID"
       arxiv: "ArXiv ID"
       inspire: "Inspire ID"
-    do_it_yourself: "Choose a document type and fill out the empty form yourself"
+    do_it_yourself: "Choose a document type and fill out the form"
     drop_oa: "Drop your Open Access fulltext here"
   forms:
     book:
@@ -1526,8 +1528,8 @@ de:
     login_help: "HRZ Benutzername und Passwort (wie z.B. für den Webmailer und Stud.IP)"
     contact_us: "<strong>Login fehlgeschlagen?</strong><br />Falls Sie der Universität Bielefeld angehören, sich aber trotzdem nicht in PUB einloggen können, <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>schreiben Sie uns</a></strong> oder rufen Sie uns an unter 106-4058."
   header:
-    title: "PUB &ndash; Publikationen an der Uni Bielefeld"
-    my_author_page: "Meine Personenseite"
+    title: "PUB &ndash; Publikationen an der Universität Bielefeld"
+    my_author_page: "Meine persönliche Publikationsliste"
     brand: "myPUB"
     role:
       user: "User"
@@ -1762,6 +1764,8 @@ de:
     mark_all: "Alle markieren"
     unmark_all: "Alle Markierungen löschen"
     mark_unmark: "Markieren/ Markierung löschen"
+    back_general: "Zurück zur vorherigen Seite"
+    back_person: "Zurück zur Personenseite"
   sort_options:
     year: "Publikationsjahr"
     date_updated: "Update-Datum"
@@ -1782,7 +1786,7 @@ de:
       pmid: "PMID"
       arxiv: "ArXiv ID"
       inspire: "Inspire ID"
-    do_it_yourself: "Wählen Sie einen Dokumenttyp und füllen Sie das leere Formular selbst aus"
+    do_it_yourself: "Wählen Sie einen Dokumenttyp und füllen Sie das Formular aus"
     drop_oa: "Ziehen Sie Ihren Open Access Volltext hier her"
   forms:
     book:
@@ -1941,7 +1945,7 @@ de:
         jel: &jel
           label: "JEL Klassifikation"
           label_short: "JEL"
-          select_jel: "--- JEL Auswählen ---"
+          select_jel: "--- JEL auswählen ---"
         thematic_area: &thematic_area
           label: "Themengebiet"
           label_short: "Them.geb."
@@ -2115,7 +2119,7 @@ de:
           label: "Serientitel"
           placeholder: "z.B. Lecture Notes of eBook Publishing"
         volume_issue_page: &volume_issue_page
-          label: "Band / Ausgabe / Seite"
+          label: "Band / Heft / Seite(n)"
           label_short: "Bd./Ausg./S."
           volume:
             placeholder: "z.B. 3"
@@ -2331,7 +2335,7 @@ de:
         research_group: *research_group
         publisher: *publisher
         publication: &publication_jtitle
-          label: "Journaltitel"
+          label: "Zeitschriftentitel"
           placeholder: "z.B. Nature Genetics"
         volume_issue_page: *volume_issue_page
         year_extern: *year_extern
