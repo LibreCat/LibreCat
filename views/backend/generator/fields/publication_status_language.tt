@@ -28,7 +28,7 @@
       <div class="col-md-6 col-xs-11" id="language">
         {% IF fields.basic_fields.publication_status_language.language.multiple OR fields.supplementary_fields.publication_status_language.language.multiple %}
         [% IF !language %]
-        <div class="row">
+        <div class="row innerrow">
           <div class="form-group col-md-10">
             <div class="input-group sticky{% IF fields.basic_fields.publication_status_language.language.mandatory OR fields.supplementary_fields.publication_status_language.language.mandatory %} mandatory{% END %}">
               <div class="input-group-addon">
@@ -51,7 +51,7 @@
         </div>
         [% ELSE %]
           [% FOREACH lan IN language %]
-          <div class="row">
+          <div class="row innerrow">
             <div class="form-group col-md-10">
               <div class="input-group sticky{% IF fields.basic_fields.publication_status_language.language.mandatory OR fields.supplementary_fields.publication_status_language.language.mandatory %} mandatory{% END %}">
                 <div class="input-group-addon">
