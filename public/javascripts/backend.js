@@ -126,9 +126,11 @@ function linkPevz(element){
 		var first_name = $('#' + type + 'first_name_' + lineId).val();
 		$('#' + type + 'orig_first_name_' + lineId).val(first_name);
 		var firstname = first_name.toLowerCase();
+		firstname = firstname.replace('\.','');
 		var last_name = $('#' + type + 'last_name_' + lineId).val();
 		$('#' + type + 'orig_last_name_' + lineId).val(last_name);
 		var lastname = last_name.toLowerCase();
+		lastname = lastname.replace('\.','');
 		if(firstname){
 			// if name consists of more than one word, use any and ""
 			if(firstname.indexOf(" ") > -1){
