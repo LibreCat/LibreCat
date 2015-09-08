@@ -25,8 +25,16 @@ User edits the preferred citation style and sorting
 for his own publication list.
 
 =cut
+    get '/preference/:delegate_id' => needs role => 'delegate' => sub {
+    	my $params;
+    	$params->{delegate_id} = params->{delegate_id};
+    	$params->{style} = params->{style} if params->{style};
+    	$params->{'sort'} = params->{'sort'} if params->{'sort'};
+    	forward '/librecat/person/preference', $params;
+    };
+    
     get '/preference' => needs login => sub {
-        my $person = h->get_person( session('personNumber') );
+        my $person = h->get_person( params->{delegate_id} || session('personNumber') );
         my $sort; my $tmp;
         if(params->{'sort'}){
         	if(ref params->{'sort'} ne "ARRAY"){

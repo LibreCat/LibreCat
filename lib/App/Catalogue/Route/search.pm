@@ -161,7 +161,7 @@ publications.
         push @{$p->{q}}, "(person=$id OR creator=$id)";
 
         $p->{facets} = h->default_facets;
-        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '', $id);
         $p->{sort} = $sort_style->{sort_backend};
 
         # override default author/editor facet
