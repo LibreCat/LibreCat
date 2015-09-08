@@ -1655,7 +1655,7 @@ de:
     go_button: "Los!"
     filter_data_publications: "Datenpublikationen filtern"
     filter_authorlist: "Autorenliste filtern"
-    filter_publications: "Publikationen Filtern"
+    filter_publications: "Publikationen filtern"
     visibility_status: "Sichtbarkeitsstatus"
     current_authors: "UniBi Autoren"
     current_editors: "UniBi Herausgeber"
@@ -1792,8 +1792,8 @@ de:
     drop_oa: "Ziehen Sie Ihren Open Access Volltext hier her"
   forms:
     book:
-      label: "Book"
-#      label: "Buch"
+#      label: "Book"
+      label: "Monographie"
       tab: &tab
         basic_fields: "Hauptfelder"
         file_upload: "Dateiupload"
@@ -1960,8 +1960,8 @@ de:
           label_short: "PUB-Eintr."
           placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
     bookEditor: &bookeditor
-      label: "Book (Editor)"
-#      label: "Buch-Herausgeber"
+#      label: "Book (Editor)"
+      label: "Sammelwerk"
       tab: *tab
       field:
         doi: *doi
@@ -2009,8 +2009,8 @@ de:
         related_material.record: *related_material_record
     bookeditor: *bookeditor
     bookChapter: &bookchapter
-      label: "Book Chapter"
-#      label: "Kapitel"
+#      label: "Book Chapter"
+      label: "Sammelbandbeitrag"
       tab: *tab
       field:
         doi: *doi
@@ -2029,8 +2029,8 @@ de:
             label: "Nachname"
             label_short: "Hrsg. Nachn."
             placeholder: "z.B. Müller"
-          label: "Buchherausgeber"
-          label_short: "Buchhrsg."
+          label: "Herausgeber"
+          label_short: "Hrsg."
           pevz_tooltip: "Publikation sichtbar/<br>unsichtbar machen<br>auf Ihrer Publikationsliste."
         corporate_editor: &corporate_editor
           label: "Körperschaftlicher Herausgeber"
@@ -2085,8 +2085,8 @@ de:
         related_material.record: *related_material_record
     bookchapter: *bookchapter
     conferenceAbstract: &conferenceabstract
-      label: "Conference Abstract"
-#      label: "Konferenz-Abstract"
+#      label: "Conference Abstract"
+      label: "Kurzbeitrag Konferenz"
       tab: *tab
       field:
         doi: *doi
@@ -2155,8 +2155,8 @@ de:
         related_material.record: *related_material_record
     conferenceabstract: *conferenceabstract
     conferenceEditor: &conferenceeditor
-      label: "Conference (Editor)"
-#      label: "Konferenz-Herausgeber"
+#      label: "Conference (Editor)"
+      label: "Konferenzband"
       tab: *tab
       field:
         doi: *doi
@@ -2196,8 +2196,8 @@ de:
         related_material.record: *related_material_record
     conferenceeditor: *conferenceeditor
     conference:
-      label: "Conference Paper"
-#      label: "Konferenz-Beitrag"
+#      label: "Conference Paper"
+      label: "Konferenzbeitrag"
       tab: *tab
       field:
         doi: *doi
@@ -2239,8 +2239,8 @@ de:
         alternative_id: *alternative_id
         related_material.record: *related_material_record
     dissertation:
-      label: "Dissertation"
 #      label: "Dissertation"
+      label: "Dissertation"
       tab: *tab
       field:
         doi: *doi
@@ -2280,8 +2280,8 @@ de:
         alternative_id: *alternative_id
         related_material.record: *related_material_record
     encyclopediaArticle: &encyclopediaarticle
-      label: "Encyclopedia Article"
-#      label: "Enzyklopädie-Artikel"
+#      label: "Encyclopedia Article"
+      label: "Lexikoneintrag"
       tab: *tab
       field:
         doi: *doi
@@ -2321,8 +2321,8 @@ de:
         related_material.record: *related_material_record
     encyclopediaarticle: *encyclopediaarticle
     journalArticle: &journalarticle
-      label: "Journal Article"
-#      label: "Zeitschriftenartikel"
+#      label: "Journal Article"
+      label: "Zeitschriftenaufsatz"
       tab: *tab
       field:
         doi: *doi
@@ -2376,8 +2376,8 @@ de:
         related_material.record: *related_material_record
     journalarticle: *journalarticle
     journalEditor: &journaleditor
-      label: "Journal (Editor)"
-#      label: "Zeitschriften-Herausgeber"
+#      label: "Journal (Editor)"
+      label: "Zeitschriftenheft"
       tab: *tab
       field:
         doi: *doi
@@ -2416,8 +2416,8 @@ de:
         related_material.record: *related_material_record
     journaleditor: *journaleditor
     newspaperArticle: &newspaperarticle
-      label: "Newspaper Article"
-#      label: "Zeitungsartikel"
+#      label: "Newspaper Article"
+      label: "Zeitungsartikel"
       tab: *tab
       field:
         title:
@@ -2457,8 +2457,8 @@ de:
         related_material.record: *related_material_record
     newspaperarticle: *newspaperarticle
     patent:
-      label: "Patent"
 #      label: "Patent"
+      label: "Patent"
       tab: *tab
       field:
         doi: *doi
@@ -2520,8 +2520,8 @@ de:
           label_short: "Qual.kontr."
         related_material.record: *related_material_record
     preprint:
+#      label: "Preprint"
       label: "Preprint"
-#      label: "Vorabdruck"
       tab: *tab
       field:
         title:
@@ -2552,8 +2552,8 @@ de:
         popular_science: *popular_science
         related_material.record: *related_material_record
     report:
+#      label: "Report"
       label: "Report"
-#      label: "Bericht"
       tab: *tab
       field:
         doi: *doi
@@ -2592,8 +2592,8 @@ de:
         alternative_id: *alternative_id
         related_material.record: *related_material_record
     review:
-      label: "Book Review"
-#      label: "Buchrezension"
+#      label: "Book Review"
+      label: "Rezension"
       tab: *tab
       field:
         doi: *doi
@@ -2630,8 +2630,8 @@ de:
         alternative_id: *alternative_id
         related_material.record: *related_material_record
     researchData: &researchdata
-      label: "Research Data"
-#      label: "Forschungsdatensatz"
+#      label: "Research Data"
+      label: "Datenpublikation"
       tab:
         basic_fields: "Hauptfelder"
         file_upload: "Forschungsdatenupload"
@@ -2714,8 +2714,8 @@ de:
         ddc: *ddc
     researchdata: *researchdata
     translation:
-      label: "Translation"
-#      label: "Übersetzung"
+#      label: "Translation"
+      label: "Übersetzung"
       tab: *tab
       field:
         doi: *doi
@@ -2781,8 +2781,8 @@ de:
         alternative_id: *alternative_id
         related_material.record: *related_material_record
     translationChapter: &translationchapter
-      label: "Translation (Chapter)"
-#      label: "Übersetzung (Kapitel)"
+#      label: "Translation (Chapter)"
+      label: "Übersetzung (Aufsatz)"
       tab: *tab
       field:
         doi: *doi
@@ -2852,8 +2852,8 @@ de:
         related_material.record: *related_material_record
     translationchapter: *translationchapter
     workingPaper: &workingpaper
-      label: "Working Paper"
-#      label: "Diskussionspapier"
+#      label: "Working Paper"
+      label: "Diskussionspapier"
       tab: *tab
       field:
         doi: *doi
@@ -2889,8 +2889,8 @@ de:
         related_material.record: *related_material_record
     workingpaper: *workingpaper
     biDissertation: &bidissertation
-      label: "Bielefeld Thesis"
-#      label: "Bielefelder Dissertation"
+#      label: "Bielefeld Thesis"
+      label: "Bielefelder E-Dissertation"
       tab: *tab
       field:
         bi_doctype:
@@ -2955,18 +2955,18 @@ de:
         related_material.record: *related_material_record
     bidissertation: *bidissertation
     biMasterThesis: &bimasterthesis
-      label: "Bielefeld Master Thesis"
-#      label: "Bielefelder Masterarbeit"
+#      label: "Bielefeld Master Thesis"
+      label: "Bielefelder Masterarbeit"
       tab: *tab
     bimasterthesis: *bimasterthesis
     biPostdocThesis: &bipostdocthesis
-      label: "Bielefeld Post-Doctoral Habilitation"
-#      label: "Bielefelder Habilitationsschrift"
+#      label: "Bielefeld Post-Doctoral Habilitation"
+      label: "Bielefelder E-Habilitation"
       tab: *tab
     bipostdocthesis: *bipostdocthesis
     biBachelorThesis: &bibachelorthesis
-      label: "Bielefeld Bachelor Thesis"
-#      label: "Bielefelder Bachelorarbeit"
+#      label: "Bielefeld Bachelor Thesis"
+      label: "Bielefelder Bachelorarbeit"
       tab: *tab
     bibachelorthesis: *bibachelorthesis
     to_sp_form: "Zum Gesamtformular wechseln"
@@ -3040,7 +3040,7 @@ de:
   help:
     author_id: "Klicken Sie auf <span class='glyphicon glyphicon-pencil'></span> um Ihre Autoren-IDs zu editieren und um einen Alias zu setzen, über den Ihre öffentliche Personenseite erreichbar ist."
     pevz_email: "Dies ist die E-Mail Adresse, die im BIS/PEVZ gespeichert ist. Um sie zu ändern, wenden Sie sich bitte an die Mitarbeiter des PEVZ."
-    pevz_photo: "Dies ist das Foto, das im BIS/PEVZ hinterlegt ist. Um Ihr Bild zu ändern, wenden Sie sich bitte an die Mitarbeiter des PEVZ."
+    pevz_photo: "Foto aus dem BIS/PEVZ."
     quick_and_easy: "Quick and Easy Dateiupload - Wenn Sie Ihren Open Access Volltext hier her ziehen und das Formular absenden, entsteht ein neuer, nicht-öffentlicher Eintrag in PUB, den wir für Sie vervollständigen und dann öffentlich sichtbar machen."
     add_new_button: "Eine Auswahl an Möglichkeiten, neue Records in PUB anzulegen. Importe via DOI, leere Edit-Formulare im jeweiligen Datentyp oder quick and easy."
     publication_user: "Ihre persönliche Publikationsliste. Wenn alle Ihre Publikationen öffentlich sichtbar sind, sieht diese Liste genau so aus, wie Ihre öffentliche Personenseite in PUB."

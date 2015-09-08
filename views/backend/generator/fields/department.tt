@@ -56,7 +56,7 @@
     </div>
     {% END %}
       
-    <div class="modal" id="selectModal">
+    <div class="modal" id="department_select_modal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">

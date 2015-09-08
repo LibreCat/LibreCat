@@ -54,5 +54,20 @@
       </div>
     </div>
     {% END %}
+    
+    <div class="modal" id="research_group_select_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">&hellip;</h4>
+            <div><small>Click a name to choose.</small></div>
+          </div>
+          <div class="modal-body">
+          </div>
+        </div>
+      </div>
+    </div>
+    
   </div>
 </div>

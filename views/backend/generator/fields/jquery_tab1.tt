@@ -282,8 +282,8 @@ function selectButton(element){
 	var type_name;
 	
 	var index = $(element).attr('id').replace(type + '_select_','').trim();
-	var modal = $('#selectModal');
-	var container = $('#selectModal').find('.modal-body').first();
+	var modal = $('#' + type + 'select_modal');
+	var container = $('#' + type + '_select_modal').find('.modal-body').first();
 	container.html("");
 	if(type == "department"){
 	    container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
@@ -311,7 +311,7 @@ function selectButton(element){
 	    $('#' + type_short + '_idautocomplete_' + index).val(id);
 	    $('#' + type_short + '_autocomplete_' + index).val(name);
 	    $('#' + type_short + '_autocomplete_' + index ).attr('disabled', 'disabled');
-	    $('#selectModal').modal('hide');
+	    $('#' + type + 'select_modal').modal('hide');
 	    $('input.sticky').blur();
 	});
 	modal.modal('show');
