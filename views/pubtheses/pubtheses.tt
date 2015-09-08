@@ -21,11 +21,6 @@
 	  [% IF session AND session.user %]
 	  <li><a href="/librecat" title="[% lang ? "Logged in as" : "Angemeldet als" %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span>[% session.user %]<span class="hidden-sm hidden-xs"> (myPUB)</span></a></li>
 	  [% END %]
-	  [% IF session AND session.user %]
-	  <li><a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">Logout</span></a></li>
-	  [% ELSE %]
-	  <li><a href="/login" title="Login (librecat)"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a></li>
-	  [% END %]
 	</ul>
       </div>
     </div>
