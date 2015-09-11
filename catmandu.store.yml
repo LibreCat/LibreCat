@@ -1248,7 +1248,7 @@ search:
           delegate: {type: string, analyzer: tag}
           data_manager:
             properties:
-              id: {type: string, anylzer: tag}
+              _id: {type: string, anylzer: tag}
               name: {type: string}
           date_updated: {type: string, analyzer: datestring}
           account_status: {type: string, analyzer: tag}
