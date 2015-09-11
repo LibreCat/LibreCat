@@ -200,6 +200,7 @@ prefix '/librecat' => sub {
         email => params->{email},
         publisher => "Universität Bielefeld",
         place => "Bielefeld",
+        department => [{name => "Universitätsbibliothek", _id => "10085", tree => [{name => "Universitätsbibliothek", id => "10085"}]}],
         author => [{
           first_name => params->{'author.first_name'},
           last_name => params->{'author.last_name'},
