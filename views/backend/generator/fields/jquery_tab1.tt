@@ -282,7 +282,7 @@ function selectButton(element){
 	var type_name;
 	
 	var index = $(element).attr('id').replace(type + '_select_','').trim();
-	var modal = $('#' + type + 'select_modal');
+	var modal = $('#' + type + '_select_modal');
 	var container = $('#' + type + '_select_modal').find('.modal-body').first();
 	container.html("");
 	if(type == "department"){
@@ -307,11 +307,18 @@ function selectButton(element){
 		var id = $(this).attr('id');
 	    var name = $(this).html();
 	    var index = $(this).attr('data-index');
+	    var display = $(this).attr('data-label');
 	    $('#' + type_short + '_nameautocomplete_' + index ).val(name);
 	    $('#' + type_short + '_idautocomplete_' + index).val(id);
-	    $('#' + type_short + '_autocomplete_' + index).val(name);
+	    if(display){
+	        $('#' + type_short + '_autocomplete_' + index).val(name + ' (' + display + ')');
+	        $('#' + type_short + '_autocomplete_' + index).attr('title', display);
+	    }
+	    else{
+	        $('#' + type_short + '_autocomplete_' + index).val(name);
+	    }
 	    $('#' + type_short + '_autocomplete_' + index ).attr('disabled', 'disabled');
-	    $('#' + type + 'select_modal').modal('hide');
+	    $('#' + type + '_select_modal').modal('hide');
 	    $('input.sticky').blur();
 	});
 	modal.modal('show');
