@@ -49,7 +49,7 @@
         <div class="input-group sticky{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.department.label_short || lf.$type.field.department.label %]</div>
           <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} required{% END %}" placeholder="[% lf.$type.field.department.placeholder %]" id="dp_autocomplete_0" value="[% department.0.name %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
-          <div class="input-group-addon" onclick="selectButton(this);"><span class="department" id="department_select_0">[% lf.button.select %]</span></div>
+          <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="department_select_0">[% lf.button.select %]</span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>

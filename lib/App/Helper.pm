@@ -548,7 +548,7 @@ sub search_publication {
 			$error = $1;
 		}
 		else {
-			$error = "An error has occurred.";
+			$error = "An error has occurred: $_";
 		}
 		$hits = {total => 0, error => $error};
 	};
@@ -670,8 +670,11 @@ sub search_department {
 		$hits->each( sub {
 			my $hit = $_[0];
 			$hierarchy->{$hit->{tree}->[0]->{name}}->{oId} = $hit->{tree}->[0]->{id} if $hit->{layer} eq "1";
+			$hierarchy->{$hit->{tree}->[0]->{name}}->{display} = $hit->{display} if $hit->{layer} eq "1";
 			$hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{oId} = $hit->{tree}->[1]->{id} if $hit->{layer} eq "2";
+			$hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{display} = $hit->{display} if $hit->{layer} eq "2";
 			$hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{$hit->{tree}->[2]->{name}}->{oId} = $hit->{tree}->[2]->{id} if $hit->{layer} eq "3";
+			$hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{$hit->{tree}->[2]->{name}}->{display} = $hit->{display} if $hit->{layer} eq "3";
 		});
 
 		return $hierarchy;
