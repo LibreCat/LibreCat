@@ -13,7 +13,7 @@ en:
     contact_us: "<strong>Login failed?</strong><br />If you are a member of Bielefeld University but you still cannot log in to PUB, please <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>contact us</a></strong> or call 106-4058."
   header:
     title: "PUB &ndash; Publications at Bielefeld University"
-    my_author_page: "My Individual Author Page"
+    my_author_page: "My Author Page"
     brand: "MyPUB"
     role:
       user: "User"
@@ -173,6 +173,19 @@ en:
       ris: "RIS"
       json: "JSON"
       yaml: "YAML"
+    sort_text:
+      "year.asc": "Publishing Year ascending"
+      "year.desc": "Publishing Year descending"
+      "date_updated.asc": "Date Updated ascending"
+      "date_updated.desc": "Date Updated descending"
+      "title.asc": "Title ascending"
+      "title.desc": "Title descending"
+      "author.asc": "First Author ascending"
+      "author.desc": "First Author descending"
+      "type.asc": "Publication Type ascending"
+      "type.desc": "Publication Type descending"
+      "publication.asc": "Publ./ Series/ Journal ascending"
+      "publication.desc": "Publ./ Series/ Journal descending"
   frontdoor:
     preview: "Preview"
     crumb_back: "Back"
@@ -1530,7 +1543,7 @@ de:
     contact_us: "<strong>Login fehlgeschlagen?</strong><br />Falls Sie der Universität Bielefeld angehören, sich aber trotzdem nicht in PUB einloggen können, <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>schreiben Sie uns</a></strong> oder rufen Sie uns an unter 106-4058."
   header:
     title: "PUB &ndash; Publikationen an der Universität Bielefeld"
-    my_author_page: "Meine persönliche Publikationsliste"
+    my_author_page: "Meine Publikationsliste"
     brand: "myPUB"
     role:
       user: "User"
@@ -1690,6 +1703,19 @@ de:
       ris: "RIS"
       json: "JSON"
       yaml: "YAML"
+    sort_text:
+      "year.asc": "Jahr aufsteigend"
+      "year.desc": "Jahr absteigend"
+      "date_updated.asc": "Änderungsdatum aufsteigend"
+      "date_updated.desc": "Änderungsdatum absteigend"
+      "title.asc": "Titel aufsteigend"
+      "title.desc": "Titel absteigend"
+      "author.asc": "Erstautor aufsteigend"
+      "author.desc": "Erstautor absteigend"
+      "type.asc": "Publikationstyp aufsteigend"
+      "type.desc": "Publikationstyp absteigend"
+      "publication.asc": "Publ./ Serie/ Journal aufsteigend"
+      "publication.desc": "Publ./ Serie/ Journal absteigend"
   frontdoor:
     preview: "Vorschau"
     crumb_back: "Zurück"

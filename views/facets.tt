@@ -339,7 +339,7 @@
     <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
     <strong>[% lf.facets.sorted_by %]:</strong>
     [% FOREACH setting IN qp.item('sort') %]
-      [% setting %][% UNLESS loop.last %], [% END %]
+      [% lf.facets.sort_text.$setting %][% UNLESS loop.last %], [% END %]
     [% END %]
   </div>
 [% END %]
