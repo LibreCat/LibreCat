@@ -38,3 +38,11 @@ and point your browser to http://localhost:5000/.
 ## Running with Docker
 
 This would be a nice feature. docker/docker-compose setup is still under development.
+
+# TODO
+
+- [ ] How to set up a demo version
+- [ ] Provide a Docker container
+- [ ] Choose a License
+- [ ] Write tests
+- [ ] Improve code quality
