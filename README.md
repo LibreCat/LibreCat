@@ -1,39 +1,40 @@
-# LibreCat - the new amazing repository
+# LibreCat - the new repository software powered by Catmandu
 
-## Installation
+## This software is under heavy development.
 
 ### Prereqs
 
-install OS packages as described here: https://github.com/LibreCat/Catmandu/wiki/Installation, e.g. on debian
+- Install OS packages as described here: https://github.com/LibreCat/Catmandu/wiki/Installation,
+
+e.g. on debian
 
 ```
 $ sudo apt-get install build-essential libexpat1-dev \
 libssl-dev libxml2-dev libxslt1-dev libgdbm-dev cpanminus
 ```
-
-install [Elasticsearch](http://elasticsearch.org) and [MongoDB](http://mongodb.org)
+- Install [Elasticsearch](http://elasticsearch.org) and [MongoDB](http://mongodb.org)
 
 ```
 $ sudo apt-get install elasticsearch mongodb
 ```
 
-
-### Get the sources
+- Get the sources
 
 ```
 # you need the recursive flag to get the git submodules
-$ git clone --recursive git@gitlab.ub.uni-bielefeld.de:vpeil/app-repository.git
-
-$ cd app-repository
-
-# --notest is just for a quick install
+$ git clone --recursive https://github.com/LibreCat/LibreCat.git
+$ cd LibreCat
 $ cpanm --notest --installdeps .
 ```
 
-### Congrats, you're done! Now, start the webserver
+- Start the webserver
 
 ```
 $ plackup -E development bin/app.pl
 ```
 
 and point your browser to http://localhost:5000/.
+
+## Running with Docker
+
+This would be a nice feature. docker/docker-compose setup is still under development.
