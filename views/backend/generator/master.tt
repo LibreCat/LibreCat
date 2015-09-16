@@ -10,18 +10,20 @@
 
 <!-- BEGIN backend/generator/master.tt -->
 
+<!-- changes here must be generated -->
+
 <div class="col-md-11 col-md-offset-1">
 
   <div class="page-header" id="banner">
     <div class="row">
-      <div class="col-sm-9">
+      <div class="col-sm-8">
       [% IF title %]
 	<h1>[% title %]</h1>
       [% ELSE %]
 	<h1 class="margin-top0">[% lf.title_new_{% genus %} %][% lf.$type.label %]</h1>
       [% END%]
       </div>
-      <div class="col-sm-3 text-right">
+      <div class="col-sm-4 text-right">
 	<button type="button" class="btn btn-xs change_mode hidden-xs margin-bottom1-2 fw7"><span class="glyphicon glyphicon-option-vertical"></span> [% lf.to_sp_form %]</button>
 	[% INCLUDE backend/change_type_menu.tt %]
 	  </div>

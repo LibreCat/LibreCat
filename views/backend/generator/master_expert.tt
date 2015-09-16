@@ -10,18 +10,20 @@
 
 <!-- BEGIN backend/generator/master_expert.tt -->
 
+<!-- changes here must be generated -->
+
 <div class="col-md-11 col-md-offset-1">
   
   <div class="page-header" id="banner">
     <div class="row">
-      <div class="col-sm-9">
+      <div class="col-sm-8">
       [% IF title %]
 	<h1>[% title %]</h1>
       [% ELSE %]
 	<h1 class="margin-top0">[% lf.title_new_{% genus %} %][% lf.$type.label %]</h1>
       [% END%]
       </div>
-      <div class="col-sm-3 text-right">
+      <div class="col-sm-4 text-right">
 	<button type="button" class="btn btn-xs hidden-xs change_mode margin-bottom1-2 fw7"><span class="glyphicon glyphicon-option-horizontal"></span> [% lf.to_tab_form %]</button>
 	  [% INCLUDE backend/change_type_menu.tt %]
       </div>

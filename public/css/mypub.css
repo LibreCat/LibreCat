@@ -123,8 +123,8 @@ a .total-marked{margin-right:5px;}
 .fw3{width:3em;/*not in use yet*/}
 .fw4{width:4em;/*not in use yet*/}
 .fw5{width:5em;/*not in use yet*/}
-.fw6{width:11.5em;/*fits publ-type-dropdown*/}
-.fw7{width:14em;/*fits change-edit-form-button*/}
+.fw6{width:150px;/*fits publ-type-dropdown*/}
+.fw7{width:175px;/*fits change-edit-form-button, must be +25px than .fw6 */}
 a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 
 /* frontdoor */
