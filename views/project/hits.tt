@@ -10,7 +10,7 @@
 
 <div class="row">
   <div class="col-md-7">
-    <form action="/project" method="get" class="form-inline">
+    <form action="/project" method="get">
       [% FOREACH key IN qp.keys %]
         [% NEXT IF key == "q" %]
         [% IF qp.$key.0 %]

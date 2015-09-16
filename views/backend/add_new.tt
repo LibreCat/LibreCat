@@ -18,7 +18,7 @@
     <div class="row">
       <h3>[% lf.add_new.import %]</h3>
       <div class="row">
-        <form role="form" class="form-inline" action="/librecat/record/import" method="POST">
+        <form role="form" action="/librecat/record/import" method="POST">
 	      <div class="col-xs-3 col-md-2">
 	        <select class="selectpicker form-control" id="select_source">
 	          <option value="crossref" selected="selected">[% lf.add_new.ids.doi %]</option>

@@ -46,7 +46,7 @@
 [% END %]
 
 <h3[%- IF qp.q.size == 0 %] class="margin-top0"[% END %]>[% lf.facets.search %]</h3>
-<form action="#" method="get" class="form-inline" role="form">
+<form action="#" method="get" role="form">
     <span class="input-group">
       <input type="text" value='' class="form-control" name="cql_query" placeholder="[% lf.facets.search %]" />
       <span class="input-group-btn">
