@@ -1,10 +1,6 @@
 
 <!-- BEGIN person_profile.tt -->
 
-[% IF backend %]
-<h2>[% IF thisPerson.bis.personTitle %]<span itemprop="honorificPrefix">[% thisPerson.bis.personTitle %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span></h2>
-[% END %]
-
 [% IF thisPerson.bis.email %]
 <a class="helpme" data-placement="top" title="[% lf.help.pevz_email %]" href="mailto:[% thisPerson.bis.email %]" itemprop="email">[% thisPerson.bis.email.replace('@|&#64;', ' [at] ') %]</a><br>
 [% END %]

@@ -18,10 +18,7 @@
     <div class="page-header" id="banner">
     [% IF backend %]
       <h1>
-        [% IF session.role == 'super_admin' %][% lf.main_page.heading_admin %][% END %]
-        [% IF session.role == 'user' %][% lf.main_page.heading_user %][% END %]
-        [% IF (session.role == 'reviewer' OR session.role == 'super_admin') AND modus == "reviewer" %][% lf.main_page.heading_reviewer %][% END %]
-        [% IF session.role == "delegate" %][% lf.main_page.heading_delegate %][% END %]
+      [% IF thisPerson.bis.personTitle %]<span itemprop="honorificPrefix">[% thisPerson.bis.personTitle %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %] ([% IF session.role == 'super_admin' %]Admin[% END %][% IF session.role == 'user' %]User[% END %][% IF session.role == 'reviewer' %]Reviewer[% END %][% IF session.role == "delegate" %]Delegate[% END %])
       </h1>
     [% ELSE %]
       <h1>
