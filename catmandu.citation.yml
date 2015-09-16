@@ -1,63 +1,27 @@
 _prefix:
   citation:
 
-url: '/CiteprocPhp/CiteProc.php'
-default_style: 'default'
-fd_style: 'default'
-styles:
-  - ama
-  - apa
-  - apa_indent
-  - aps
-  - bio1
-  - chicago
-  - default
-  - dgps
-  - ewi
-  - frontiers
-  - harvard1
-  - ieee
-  - lncs
-  - mla
-  - wels
-styles_public:
-  - ama
-  - apa
-  - apa_indent
-  - aps
-  - bio1
-  - chicago
-  - default
-  - dgps
-  - ewi
-  - frontiers
-  - harvard1
-  - ieee
-  - lncs
-  - mla
-  - wels
-type_map:
-  default: article
-  book: book
-  bookChapter: chapter
-  bookEditor: book
-  review: article
-  conferenceAbstract: chapter
-  conferenceEditor: book
-  conference: chapter
-  dissertation: book
-  encyclopediaArticle: chapter
-  journalArticle: article
-  journalEditor: article
-  newspaperArticle: article
-  patent: article
-  preprint: article
-  report: book
-  researchData: book
-  translation: book
-  translationChapter: chapter
-  workingPaper: book
-  biDissertation: book
-  biBachelorThesis: book
-  biMasterThesis: book
-  biPostdocThesis: book
+engine: csl # other choice is 'template'
+
+template:
+  template_path: 'views/citation.tt'
+
+csl:
+  url: 'http://::/CiteprocPhp/CiteProc.php' #absolute url
+  default_style: 'default'
+  styles:
+    - ama
+    - apa
+    - apa_indent
+    - aps
+    - bio1
+    - chicago
+    - default
+    - dgps
+    - ewi
+    - frontiers
+    - harvard1
+    - ieee
+    - lncs
+    - mla
+    - wels

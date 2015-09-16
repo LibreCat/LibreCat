@@ -1,0 +1,39 @@
+# map fields to csl
+
+lookup(type, fixes/lookup/csl_types.csv, default: book)
+move_field(publication,container-title)
+move_field(series_title,collection-title)
+move_field(year,sort-year)
+move_field(place,publisher-place)
+move_field(publication_status,status)
+move_field(conference.name,event)
+move_field(conference.location,event-place)
+move_field(doi,DOI)
+move_field(ipn,patentNumber)
+move_field(ipc,patentClassification)
+move_field(_id,recordid)
+move_field(alternative_title,originalTitle)
+
+do list(path => author)
+  do identity()
+    move_field(first_name,given)
+    move_field(last_name,family)
+    move_field(full_name,full)
+  end
+end
+
+do list(path => editor)
+  do identity()
+    move_field(first_name,given)
+    move_field(last_name,family)
+    move_field(full_name,full)
+  end
+end
+
+do list(path => translator)
+  do identity()
+    move_field(first_name,given)
+    move_field(last_name,family)
+    move_field(full_name,full)
+  end
+end

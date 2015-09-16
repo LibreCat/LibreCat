@@ -3,44 +3,57 @@ package Citation;
 use Catmandu::Sane;
 use Catmandu -load;
 use Catmandu::Util qw(:array);
-use Catmandu::Store::MongoDB;
-use JSON;
+use Catmandu::Error;
+use Moo;
+use LWP::UserAgent;
 
 Catmandu->load(':up');
-my $conf = Catmandu->config;
+my $conf = Catmandu->config->{citation};
 
-my $genreMap = $conf->{citation}->{type_map};
+has styles => (is => 'ro', default => sub { ['default'] });
+has all => (is => 'ro');
 
+sub BUILD {
+	my ($self) = @_;
+	if ($self->all) {
+		$self->styles = $conf->{csl}->{styles};
+	}
+	# check styles
+}
 
-=head1 overwriteCitations()
+sub _request {
+	my ($self, $content) = @_;
 
-Overwrites ALL citations for the given IDs in the database.
+	my $ua = LWP::UserAgent->new();
+	my $res = = $ua->post($conf->{csl}->{url}, Content => $content);
 
-For initial creation of DB.
+	return $res->{_rc} eq '200'
+		? $json->decode($res->{_content})[0]->{citation} : '';
+}
 
-Takes list of internal IDs, gets all info for each corresponding record,
-creates citations for styles given in conf/extension/mongodatabases.pl and writes them to a mongoDB
-(db name specified in mongodatabases.pl)
-Checks for existing IDs, deletes existing record and writes new one.
+sub create {
+	my ($self, $data) = @_;
 
-=cut
+	unless ($data->{title}) {
+		Catmandu::BadVal->throw('Title field is missing');
+	}
 
-sub updateAllCitations {
-	my $verbose = shift;
-	my @ids = @_;
+	my $cite;
 
-	foreach my $recId (@ids) {
-		id2citations($recId, $verbose, "");
+	if ($conf->{engine} eq 'template') {
+		return { default => export_to_string('Template', $data, { template => $conf->{template}->{template_path} }) };
+	} else {
+		my $csl_json = export_to_string(JSON, $data, { array => 1, fix => 'fixes/to_csl.fix' });
+		foreach my $s (@{$self->{styles}}) {
+			$cite->{$s} = $self->_request(["style => $s", "format => 'html'", "input => $csl_json"]);
+		}
+
+		return $cite;
 	}
 
 }
 
-
-=head1 id2citation
-
-Updated version of id2citations for new backend
-
-=cut
+__END__
 
 sub index_citation_update {
 	my ($rec, $verbose, $returnType, @styles) = @_;
@@ -57,24 +70,13 @@ sub index_citation_update {
 	};
 
 	my $rec_prep;
-	$rec_prep->{'title'} = $rec->{'title'};
 
 	# Only continue if title is present
-	if (!$rec_prep->{title}){
-		print "no title for ID $recId, no further processing for this ID"."\n" if $verbose;
-		return;
-	}
+#	if (!$rec_prep->{title}){
+#		print "no title for ID $recId, no further processing for this ID"."\n" if $verbose;
+#		return;
+#	}
 
-	if($rec->{'alternative_title'}){
-		$rec_prep->{'originalTitle'} = @{$rec->{'alternative_title'}}[0];
-	}
-
-	# journal/book info
-	$rec_prep->{'container-title'}  = $rec->{'publication'} if $rec->{'publication'}; #journal title
-	$rec_prep->{'collection-title'} = $rec->{'series_title'} if $rec->{'series_title'};
-	$rec_prep->{'publisher'}        = $rec->{'publisher'} if $rec->{'publisher'};
-	$rec_prep->{'volume'}           = "$rec->{'volume'}" if $rec->{'volume'};
-	$rec_prep->{'issue'}            = $rec->{'issue'} if $rec->{'issue'};
 	if($rec->{'page'}){
 		if($rec->{'page'} =~ /([^- ]+) - ([^- ]+)/ or $rec->{'page'} =~ /([^- ]+)-([^- ]+)/){
 			$rec_prep->{'page-first'} = $1;
@@ -87,86 +89,19 @@ sub index_citation_update {
 			$rec_prep->{'number-of-pages'} = $rec->{'page'};
 		}
 	}
-	#$rec_prep->{'page-first'}       = $rec->{page}->{start} if $rec->{page} and $rec->{page}->{start};
-	#$rec_prep->{'page'}             = $rec->{page}->{start} if $rec->{page} and $rec->{page}->{start};
-	#$rec_prep->{'page'}            .= '–'.$rec->{page}->{end} if ($rec->{page} and $rec->{page}->{start} and $rec->{page}->{end});
 	utf8::decode($rec_prep->{'page'}) if $rec_prep->{'page'};
-	#$rec_prep->{'number-of-pages'}  = $rec->{page}->{count} if $rec->{page} and $rec->{page}->{count};
 
 	my $publ_year = ($rec->{'publication_status'} && ($rec->{'publication_status'} =~ /submitted|accepted|inpress|unpublished/)) ? $status_ref->{$rec->{'publication_status'}} : $rec->{'year'};
 	push (@{$rec_prep->{'issued'}->{'date-parts'}}, [$publ_year]);
 
-	$rec_prep->{'sort-year'}        = $rec->{'year'};
-	$rec_prep->{'publisher-place'}  = $rec->{'place'} if $rec->{'place'};
-	$rec_prep->{'edition'}          = $rec->{'edition'} if $rec->{'edition'};
-	$rec_prep->{'status'}           = $rec->{'publication_status'} if $rec->{'publication_status'};
-
-	# conference info
-	$rec_prep->{'event'}            = $rec->{conference}->{name} if $rec->{conference} and $rec->{conference}->{name};
-	$rec_prep->{'event-place'}      = $rec->{conference}->{location} if $rec->{conference} and $rec->{conference}->{location};
-
-	# publication identifier
-	$rec_prep->{'DOI'}              = $rec->{'doi'} if $rec->{'doi'};
-	#$rec_prep->{'urn'}              = $rec->{'urn'} if $rec->{'urn'};
-	#$rec_prep->{'pubmedId'}         = $rec->{external_id}->{pmid} if $rec->{external_id} and $rec->{external_id}->{pmid};
-	#$rec_prep->{'arxivId'}          = $rec->{external_id}->{arxiv} if $rec->{external_id} and $rec->{external_id}->{arxiv};
-	$rec_prep->{'patentNumber'}     = $rec->{ipn} if $rec->{ipn};
-	$rec_prep->{'patentClassification'} = $rec->{ipc} if $rec->{ipc};
-
-	$rec_prep->{'type'}          = $rec->{type};
-
-	if($rec->{author}){
-		foreach my $author (@{$rec->{author}}) {
-			my $author_rec;
-			$author_rec->{'given'}  = $author->{first_name};
-			$author_rec->{family} = $author->{last_name};
-			$author_rec->{full}   = $author->{full_name};
-			$rec_prep->{sort_author} = $author->{full_name};
-
-			push @{$rec_prep->{'author'}}, $author_rec;
-		}
-	}
-
-	if($rec->{translator}){
-		foreach my $translator (@{$rec->{translator}}) {
-			my $translator_rec;
-			$translator_rec->{'given'}  = $translator->{'first_name'};
-			$translator_rec->{'family'} = $translator->{'last_name'};
-			$translator_rec->{'full'}   = $translator->{'full_name'};
-
-			push @{$rec_prep->{'translator'}}, $translator_rec;
-		}
-	}
-
-	if($rec->{editor}){
-		foreach my $editor (@{$rec->{editor}}) {
-			my $editor_rec;
-			$editor_rec->{'given'}  = $editor->{'first_name'};
-			$editor_rec->{'family'} = $editor->{'last_name'};
-			$editor_rec->{'full'}   = $editor->{'full_name'};
-			push @{$rec_prep->{'editor'}}, $editor_rec ;
-		}
-	}
-
-
-	if($rec->{'corporate_editor'}){
-		foreach my $ce (@{$rec->{'corporate_editor'}}){
-			my $literal;
-			$literal->{'literal'} = $ce;
-			push @{$rec_prep->{'editor'}}, $literal;
-		}
-	}
-
-	$rec_prep->{'type'} = $genreMap->{$rec_prep->{'type'}};
 	$rec_prep->{'publstatus'} = $rec->{'publication_status'} if $rec->{'publication_status'};
-	$rec_prep->{'recordid'} = $recId;
 
 	my $debug;
 	$debug = $rec_prep;
 
 	my $rec_array;
 	push @$rec_array, $rec_prep;
-	
+
 	my $csl_json = $rec_prep;
 
 	my $json = new JSON;
@@ -174,12 +109,12 @@ sub index_citation_update {
 	#return $json_citation;
 
 	use LWP::UserAgent;
-	my $ua = LWP::UserAgent->new();
+
 
 	my $citeproc_url = 'http://::'.$conf->{citation}->{url};
 	my $citation;
 	my $styleList = $conf->{citation}->{styles};
-	
+
 
 	# wurden styles uebergeben, verarbeite nur diese
 	if (@styles){
