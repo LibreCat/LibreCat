@@ -1,5 +1,0 @@
-# wos migrate fix
-
-remove_field('timesCitedHistory')
-move_field('citingURL','citing_url')
-move_field('timesCited','times_cited')
