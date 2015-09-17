@@ -61,6 +61,11 @@ plugins:
   Ajax:
     content_type: 'application/json'
 
+  Passphrase:
+    default: Bcrypt
+    Bcrypt:
+      cost: 8
+
   Email:
     type: 'html'
     headers:

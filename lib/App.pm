@@ -17,6 +17,7 @@ use App::Catalogue; # the backend
 use App::Helper;
 use Authentication::Authenticate;
 use Dancer::Plugin::Auth::Tiny;
+use Dancer::Plugin::Passphrase;
 
 # make variables with leading '_' visible in TT,
 # otherwise they are considered private
@@ -25,7 +26,7 @@ $Template::Stash::PRIVATE = 0;
 # custom authenticate routine
 sub _authenticate {
     my ( $login, $pass ) = @_;
-    if (Dancer::config->{environment} eq 'development') {
+    if (Dancer::config->{environment} eq 'development' && $login eq 'einstein') {
         return {login => 'einstein', _id => 1234, super_admin => 1};
     }
 
@@ -37,7 +38,7 @@ sub _authenticate {
         if ( $verify and $verify ne "error" ) {
             return $user;
         }
-    } elsif ($user->{password} eq params->{pass}) {
+    } elsif ( passphrase(params->{pass})->matches($user->{password}) ) {
         return $user;
     }
     return 0;
