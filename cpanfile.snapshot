@@ -308,10 +308,10 @@ DISTRIBUTIONS
     requirements:
       Carp 0
       ExtUtils::MakeMaker 0
-  Catmandu-0.9401
-    pathname: N/NI/NICS/Catmandu-0.9401.tar.gz
+  Catmandu-0.9402
+    pathname: N/NI/NICS/Catmandu-0.9402.tar.gz
     provides:
-      Catmandu 0.9401
+      Catmandu 0.9402
       Catmandu::Addable undef
       Catmandu::ArrayIterator undef
       Catmandu::BadArg undef
@@ -745,6 +745,22 @@ DISTRIBUTIONS
       base 0
       strict 0
       warnings 0
+  Class-Mix-0.005
+    pathname: Z/ZE/ZEFRAM/Class-Mix-0.005.tar.gz
+    provides:
+      Class::Mix 0.005
+    requirements:
+      Carp 0
+      Exporter 0
+      Module::Build 0
+      Params::Classify 0
+      Test::More 0
+      constant 0
+      if 0
+      parent 0
+      perl 5.006
+      strict 0
+      warnings 0
   Class-Singleton-1.5
     pathname: S/SH/SHAY/Class-Singleton-1.5.tar.gz
     provides:
@@ -814,6 +830,35 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 6.30
       Math::BigInt 1.997
       Test::More 0.90
+  Crypt-Eksblowfish-0.009
+    pathname: Z/ZE/ZEFRAM/Crypt-Eksblowfish-0.009.tar.gz
+    provides:
+      Crypt::Eksblowfish 0.009
+      Crypt::Eksblowfish::Bcrypt 0.009
+      Crypt::Eksblowfish::Blowfish 0.009
+      Crypt::Eksblowfish::Family 0.009
+      Crypt::Eksblowfish::Subkeyed 0.009
+      Crypt::Eksblowfish::Uklblowfish 0.009
+    requirements:
+      Carp 0
+      Class::Mix 0.001
+      Exporter 0
+      ExtUtils::CBuilder 0.15
+      MIME::Base64 2.21
+      Module::Build 0
+      Test::More 0
+      XSLoader 0
+      parent 0
+      perl 5.006
+      strict 0
+      warnings 0
+  Crypt-Rijndael-1.13
+    pathname: L/LE/LEONT/Crypt-Rijndael-1.13.tar.gz
+    provides:
+      Crypt::Rijndael 1.13
+    requirements:
+      ExtUtils::MakeMaker 0
+      perl 5.006
   Crypt-URandom-0.34
     pathname: D/DD/DDICK/Crypt-URandom-0.34.tar.gz
     provides:
@@ -1185,6 +1230,19 @@ DISTRIBUTIONS
       Net::SMTP::SSL 1.01
       Net::SSLeay 1.58
       perl 5.006
+  Dancer-Plugin-Passphrase-2.0.1
+    pathname: J/JA/JAITKEN/Dancer-Plugin-Passphrase-2.0.1.tar.gz
+    provides:
+      Dancer::Plugin::Passphrase 2.000001
+    requirements:
+      Dancer::Plugin 0
+      Data::Entropy::Algorithms 0.003
+      Digest 1.16
+      Digest::Bcrypt 0
+      Digest::SHA 5.74
+      ExtUtils::MakeMaker 6.30
+      MIME::Base64 3.08
+      Scalar::Util 1.20
   Dancer-Session-Catmandu-0.02
     pathname: N/NI/NICS/Dancer-Session-Catmandu-0.02.tar.gz
     provides:
@@ -1228,6 +1286,48 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 6.59
       perl 5.006
+  Data-Entropy-0.007
+    pathname: Z/ZE/ZEFRAM/Data-Entropy-0.007.tar.gz
+    provides:
+      Data::Entropy 0.007
+      Data::Entropy::Algorithms 0.007
+      Data::Entropy::RawSource::CryptCounter 0.007
+      Data::Entropy::RawSource::Local 0.007
+      Data::Entropy::RawSource::RandomOrg 0.007
+      Data::Entropy::RawSource::RandomnumbersInfo 0.007
+      Data::Entropy::Source 0.007
+    requirements:
+      Carp 0
+      Crypt::Rijndael 0
+      Data::Float 0.008
+      Errno 1.00
+      Exporter 0
+      HTTP::Lite 2.2
+      IO::File 1.03
+      Module::Build 0
+      Params::Classify 0
+      Test::More 0
+      constant 0
+      integer 0
+      parent 0
+      perl 5.006
+      strict 0
+      warnings 0
+  Data-Float-0.012
+    pathname: Z/ZE/ZEFRAM/Data-Float-0.012.tar.gz
+    provides:
+      Data::Float 0.012
+    requirements:
+      Carp 0
+      Exporter 0
+      Module::Build 0
+      Test::More 0
+      constant 0
+      integer 0
+      parent 0
+      perl 5.006
+      strict 0
+      warnings 0
   Data-OptList-0.109
     pathname: R/RJ/RJBS/Data-OptList-0.109.tar.gz
     provides:
@@ -2286,6 +2386,21 @@ DISTRIBUTIONS
       Filter::Util::Call 0
       Test::More 0
       perl 5.008001
+  Digest-Bcrypt-1.0.1
+    pathname: J/JA/JAITKEN/Digest-Bcrypt-1.0.1.tar.gz
+    provides:
+      Digest::Bcrypt 1.000001
+    requirements:
+      Carp 0
+      Crypt::Eksblowfish::Bcrypt 0
+      Digest 0
+      Digest::base 0
+      ExtUtils::MakeMaker 6.30
+      Test::More 0
+      bytes 0
+      parent 0
+      strict 0
+      warnings 0
   Digest-HMAC-1.03
     pathname: G/GA/GAAS/Digest-HMAC-1.03.tar.gz
     provides:
@@ -2753,6 +2868,17 @@ DISTRIBUTIONS
       URI 0
       URI::Escape 0
       perl 5.010
+  HTTP-Lite-2.44
+    pathname: N/NE/NEILB/HTTP-Lite-2.44.tar.gz
+    provides:
+      HTTP::Lite 2.44
+    requirements:
+      ExtUtils::MakeMaker 0
+      Fcntl 0
+      Socket 1.3
+      perl 5.005
+      strict 0
+      warnings 0
   HTTP-Message-6.06
     pathname: G/GA/GAAS/HTTP-Message-6.06.tar.gz
     provides:
@@ -4201,6 +4327,20 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 6.30
       XSLoader 0
+      strict 0
+      warnings 0
+  Params-Classify-0.013
+    pathname: Z/ZE/ZEFRAM/Params-Classify-0.013.tar.gz
+    provides:
+      Params::Classify 0.013
+    requirements:
+      Exporter 0
+      ExtUtils::ParseXS 2.2006
+      Module::Build 0
+      Scalar::Util 1.01
+      Test::More 0
+      parent 0
+      perl 5.006001
       strict 0
       warnings 0
   Params-Util-1.07

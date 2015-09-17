@@ -24,6 +24,7 @@ requires 'Dancer::Plugin::Catmandu::OAI';
 requires 'Dancer::Plugin::Catmandu::SRU';
 requires 'Dancer::Plugin::Email';
 requires 'Dancer::Plugin::Auth::Tiny';
+requires 'Dancer::Plugin::Passphrase';
 requires 'Dancer::Session::Catmandu';
 requires 'Template';
 requires 'Template::Plugin::Date';
