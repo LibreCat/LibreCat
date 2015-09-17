@@ -373,11 +373,11 @@ sub new_record {
 		$id = "RG".$id;
 	}
 	else {
-		Catmandu->store->transaction( sub{
+		#Catmandu->store->transaction( sub{
 		  $id = $self->bag->get('1')->{"latest"};
 		  $id++;
 		  $self->bag->add( { _id => "1", latest => $id } );
-		});
+		#});
 	}
 
 	return $id;
