@@ -89,7 +89,7 @@
 [% IF facets.status.terms.size > 1 && backend %]
   <ul class="nav nav-tabs nav-stacked margin-bottom1 ul0">
     <li>
-      <button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left" title="[% lf.help.status %]"><span class="glyphicon glyphicon-chevron-down"></span> [% lf.facets.visibility_status %] ([% facets.status.terms.size %])</button>
+      <button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left" title="[% lf.help.visibility_status %]"><span class="glyphicon glyphicon-chevron-down"></span> [% lf.facets.visibility_status %] ([% facets.status.terms.size %])</button>
       <div class="facettecollapse">
 	<ul id="status_[% tabmodus %][% menu %]" class="collapse">
 	  [% FOREACH stat IN facets.status.terms %]
