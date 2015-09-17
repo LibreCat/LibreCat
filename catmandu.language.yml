@@ -91,7 +91,7 @@ en:
     logout: "Logout"
     add_new_button: "Add new Publication"
     capital_or: "OR"
-    qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br />Drop Open Access fulltext (PDF)<br>here and we'll do the rest."
+    qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br />Drop Open Access fulltext (PDF)<br>here and we'll do the rest."
     theses_drop_text: "<spab ckass='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br />Drop your thesis here."
     theses_success_text: "You have successfully submitted your thesis. We will contact you with further information.<br />Thank you!"
     theses_explain: "Please upload only ONE file (preferably .pdf). If you want to submit a document that consists of several parts (e.g. chapters) you need to put the files into an archive file (.zip or .gz)."
