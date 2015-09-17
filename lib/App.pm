@@ -26,7 +26,7 @@ $Template::Stash::PRIVATE = 0;
 sub _authenticate {
     my ( $login, $pass ) = @_;
     if (Dancer::config->{environment} eq 'development') {
-        return {login => 'einstein', _id => 1234, role => 'user'};
+        return {login => 'einstein', _id => 1234, super_admin => 1};
     }
 
     my $user = h->get_person( $login );
@@ -72,7 +72,7 @@ post '/login' => sub {
         my $data_manager = "data_manager" if $user->{data_manager};
         my $delegate = "delegate" if $user->{delegate};
         session role => $super_admin || $reviewer || $data_manager || $delegate || "user";
-        session user         => $user->{login};
+        session user => $user->{login};
         session personNumber => $user->{_id};
         session lang => $user->{lang} || h->config->{default_lang};
 
