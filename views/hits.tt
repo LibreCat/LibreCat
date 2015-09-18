@@ -54,7 +54,7 @@
 <div class="row">
   [% bag = entry.type == "researchData" ? "data" : "publication" %]
 [% IF backend  %]
-  <div class="col-md-1">
+  <div class="col-md-1 helpme" data-placement="top" title="[% lf.help.statuses %]">
     [% SWITCH entry.status %]
     [% CASE "public" %]
       <span class="text-success"><strong>[% lf.main_page.statuses.public %]</strong></span>
@@ -78,7 +78,7 @@
 [% ELSE %]
 [% END %]
 [% IF backend OR request.path == "/marked" OR request.path.match("/person") %]
-    <div class="col-md-11">
+    <div class="col-md-11 helpme" data-placement="top" title="[% lf.help.citation %]">
 [% ELSE %]
     <div class="col-md-12">
 [% END %]

@@ -11,12 +11,20 @@
   [% IF thisPerson.bis.former == "1" %]
     <p>[% lf.person_profile.former_researcher %]</p>
   [% ELSE %]
-    [% lf.person_profile.view_in %] <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% thisPerson._id %]&amp;lang=en">[% lf.person_profile.directory_of_staff %]</a>
+    <div class="col-md-12 row">
+      <div class="row">
+	<div class="col-md-4">[% lf.person_profile.directory_of_staff %]</div>
+	<div class="col-md-6"><a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% thisPerson._id %]&amp;lang=en">[% thisPerson._id %]</a></div>
+      </div>
+    </div>
     [% IF thisPerson.sfb882_profile %]
-    <br />[% lf.person_profile.view %]<a href="http://www.sfb882.uni-bielefeld.de/en/staff/[% thisPerson._id %]">[% lf.person_profile.sfb_profile %]</a>
+    <div class="col-md-12 row">
+      <div class="row">
+	<div class="col-md-4">[% lf.person_profile.sfb_profile %]</div>
+	<div class="col-md-6"><a href="http://www.sfb882.uni-bielefeld.de/en/staff/[% thisPerson._id %]">[% thisPerson._id %]</a></div>
+      </div>
+    </div>
     [% END %]
-
-    <div class="row">&nbsp;</div>
 
     <div class="col-md-12 row hidden-xs">
     <form action="/librecat/person/author_id" id="author_id_form" method="POST">

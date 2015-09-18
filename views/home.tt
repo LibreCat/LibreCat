@@ -40,7 +40,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme" data-placement="top" title="[% lf.help.pevz_photo %]">
+      <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme" data-placement="left" title="[% lf.help.pevz_photo %]">
         [% IF thisPerson.bis.photo %]
         <img src="[% thisPerson.bis.photo %]" style="max-width:140px;" class="img-thumbnail" >
         [% ELSE %]
