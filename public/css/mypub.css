@@ -95,11 +95,12 @@ a .total-marked{margin-right:5px;}
 .btn-link{font-weight:bold;}
 
 /* tooltips */
-.helpme + .tooltip > .tooltip-inner {background-color: #193854; opacity: 0.9;}
-.helpme + .tooltip.top > .tooltip-arrow {border-top-color: #193854; opacity: 0.9;}
-.helpme + .tooltip.right > .tooltip-arrow {border-right-color: #193854; opacity: 0.9;}
-.helpme + .tooltip.left > .tooltip-arrow {border-left-color: #193854; opacity: 0.9;}
-.helpme + .tooltip.bottom > .tooltip-arrow {border-bottom-color: #193854; opacity: 0.9;}
+.helpme + .tooltip { opacity: .9; }
+.helpme + .tooltip > .tooltip-inner {background-color: #193854; }
+.helpme + .tooltip.top > .tooltip-arrow {border-top-color: #193854; }
+.helpme + .tooltip.right > .tooltip-arrow {border-right-color: #193854; }
+.helpme + .tooltip.left > .tooltip-arrow {border-left-color: #193854; }
+.helpme + .tooltip.bottom > .tooltip-arrow {border-bottom-color: #193854; }
 
 /* Anzahl Publikationen auf Startseite */
 .statalign{display:inline-block;min-width:50px;text-align:right;}
@@ -127,7 +128,7 @@ a .total-marked{margin-right:5px;}
 a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 
 /* frontdoor */
-#preview{position:absolute;top:200px;left:-100px;width:380px;padding:10px;font-size:24px;text-align:center;color:rgb(255,255,255);font-family:'trebuchet ms',verdana,arial,sans-serif;transform:rotate(-45deg);-webkit-transform:rotate(-45deg);transform-origin:50% 0px 0px;-webkit-transform-origin:50% 0px;background-color:rgb(0,0,0);border:1px solid rgb(170,170,170);z-index:12;opacity:0.5;}
+#preview{position:absolute;top:200px;left:-100px;width:380px;padding:10px;font-size:24px;text-align:center;color:rgb(255,255,255);font-family:'trebuchet ms',verdana,arial,sans-serif;transform:rotate(-45deg);-webkit-transform:rotate(-45deg);transform-origin:50% 0px 0px;-webkit-transform-origin:50% 0px;background-color:rgb(0,0,0);border:1px solid rgb(170,170,170);z-index:12;opacity:.5;}
 .text-muted,.text-tight{line-height:1.5;}
 .text-xtight{line-height:1.25;}
 #details .row{margin-top:6px;}
@@ -235,11 +236,13 @@ a{font-weight:bold;}
 }
 
 @media (max-width:767px){
+.helpme.helpme-sm + .tooltip { visibility:hidden; }
 footer{height:240px;/*footer height x 2*/}
 a{font-weight:bold;}
 }
   
 @media (max-width:992px){
+.helpme.helpme-md + .tooltip { visibility:hidden; }
 .page-header{padding-bottom:0;}
 .margin0-sm{margin-bottom:0!important;}
 a{font-weight:bold;}

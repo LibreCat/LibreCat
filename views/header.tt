@@ -8,13 +8,31 @@
 
   <head>
 
-    [% IF personPageTitle %]
-    <title>[% personPageTitle %]</title>
+  <title>
+    [% IF request.path.match("publication") %]
+    [% lf.tabs.publications %] ([% lf.header.title %])
+    [% ELSIF request.path.match("data") %]
+    [% lf.tabs.data_publications %] ([% lf.header.title_long %])
+    [% ELSIF request.path.match("person") %]
+    [% lf.tabs.authors %] ([% lf.header.title_long %])
+    [% ELSIF request.path.match("person/") %]
+    [% lf.header.title_person %] [% thisPerson.first_name %] [% thisPerson.last_name %]
+    [% ELSIF request.path.match("about") %]
+    [% lf.tabs.about %] ([% lf.header.title_long %])
+    [% ELSIF request.path.match("faq") %]
+    [% lf.tabs.faq %] ([% lf.header.title_long %])
+    [% ELSIF request.path.match("contact") %]
+    [% lf.tabs.contact %] ([% lf.header.title_long %])
+    [% ELSIF request.path.match("policy") %]
+    [% lf.tabs.policy %] ([% lf.header.title_long %])
+    [% ELSIF request.path.match("pubtheses") %]
+    PUB Theses ([% lf.header.title %])
     [% ELSIF title %]
-    <title>[% title %]</title>
+    [% title %]
     [% ELSE %]
-    <title>PUB &ndash; Publications at Bielefeld University</title>
+    [% lf.header.title_long %]
     [% END %]
+  </title>
 
     <link rel="icon" href="/images/icon_uni.png" type="image/png">
 
@@ -59,7 +77,7 @@
     [% reqpath = request.path %]
     [% personid = reqpath.search('person/(\d{1,})') %]
     [% query = qp.q | replace('"', '&quot;') %]
-    [% IF request.path.match("person") %]
+    [% IF request.path.match("person/") %]
       <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/daily', qp, q="person=$personid") %]" title="[% thisPerson.first_name %] [% thisPerson.last_name %]'s Publication (today)">
       <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/weekly', qp, q="person=$personid") %]" title="[% thisPerson.first_name %] [% thisPerson.last_name %]'s Publication (last week)">
       <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/monthly', qp, q="person=$personid") %]" title="[% thisPerson.first_name %] [% thisPerson.last_name %]'s Publication (last month)">

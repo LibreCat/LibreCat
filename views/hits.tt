@@ -54,7 +54,7 @@
 <div class="row">
   [% bag = entry.type == "researchData" ? "data" : "publication" %]
 [% IF backend  %]
-  <div class="col-md-1[% IF loop.first %] helpme[% END %]" data-placement="top" title="[% lf.help.statuses %]">
+  <div class="col-md-1[% IF loop.first %] helpme helpme-md[% END %]" data-placement="top" title="[% lf.help.statuses %]">
     [% SWITCH entry.status %]
     [% CASE "public" %]
       <span class="text-success"><strong>[% lf.main_page.statuses.public %]</strong></span>

@@ -40,7 +40,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme" data-placement="left" title="[% lf.help.pevz_photo %]">
+      <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme helpme-md" data-placement="left" title="[% lf.help.pevz_photo %]">
         [% IF thisPerson.bis.photo %]
         <img src="[% thisPerson.bis.photo %]" style="max-width:140px;" class="img-thumbnail" >
         [% ELSE %]
@@ -48,12 +48,12 @@
         [% END %]
       </div>
 
-      <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="col-md-6 col-sm-5 col-xs-12">
         [% INCLUDE person_profile.tt %]
       </div>
 
       [% IF backend %]
-      <div class="col-md-3 col-md-offset-1 col-sm-3 col-xs-12">
+      <div class="col-md-3 col-md-offset-1 col-sm-4 col-xs-12">
 	    <div class="well">
 	      [% INCLUDE backend/add_new_button.tt %]
           <div class="row">
