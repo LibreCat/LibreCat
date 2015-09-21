@@ -27,7 +27,7 @@
       <div class="pull-right margin-top-1">
 	    <ul class="list-inline">
 	    [% IF session AND session.user %]
-	      <li><a href="/librecat" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span>[% session.user %]<span class="hidden-sm hidden-xs"> (myPUB)</span></a></li>
+	      <li><a href="/librecat" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span>[% session.user %]</a></li>
 	    [% END %]
 	    [% IF session AND session.user %]
 	      <li><a href="/logout" title="[% lf.main_page.logout %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% lf.main_page.logout %]</span></a></li>

@@ -36,13 +36,13 @@
 	  [% ELSIF qp.publication AND qp.publication != "" %]
 	  <a href="[% h.newuri_for("/publication/$qp.publication", qp, publication="") %]">[% lf.mark.back_general %]</a>
 	  [% ELSIF qp.data AND qp.data != "" %]
-	  <a href="[% h.newuri_for("/data/$qp.data", qp, data="") %]">Back to previous page</a>
+	  <a href="[% h.newuri_for("/data/$qp.data", qp, data="") %]">[% lf.mark.back_general %]</a>
 	  [% ELSE %]
 	  [% qp.delete('fmt') %]
-	  <a href="javascript:history.back()">Back to previous page</a>
+	  <a href="javascript:history.back()">[% lf.mark.back_general %]</a>
 	  [% END %]
 	</li>
-          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">Logout</span></a>[% ELSE %]<a href="/login" title="Login (librecat)"><span class="glyphicon glyphicon-log-in fw"></span>Login (myPUB)</a>[% END %]</li>
+          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">Logout</span></a>[% ELSE %]<a href="/login" title="Login (librecat)"><span class="glyphicon glyphicon-log-in fw"></span>[% lf.main_page.login %]</a>[% END %]</li>
           [% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% lang ? "Logged in as:" : "Angemeldet als:" %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %] <span class="hidden-md">(myPUB)</span></span></a></li>[% END %]
       </ul>
 
@@ -55,7 +55,7 @@
       <div class="col-md-12">
 	<ul class="nav nav-tabs">
 	  <li class="active"><a href="#"><span class="total-marked">[% total %]</span> [% lf.mark.marked_publication %]</a></li>
-	  <li class="hidden-md hidden-lg hidden-sm"><a href="#export">Display / Export</a></li>
+	  <li class="hidden-md hidden-lg hidden-sm"><a href="#export">[% lf.mark.display_export %]</a></li>
 	</ul>
       </div>
     </div>
@@ -75,7 +75,7 @@
     [% ELSE %]
     <div class="row">
       <div class="col-md-12">
-	<p>You don't have any publications "marked" yet. If you want to add a publication to this list, please click on the link "Mark" next to the publication data. You can find these links on personal publication lists or on a publication page. You can export this list in several bibligraphic formats, like BibTex, RIS or RTF.</p>
+	<p>[% lf.mark.no_marked_publication %]</p>
       </div>
     </div>
     [% END %]

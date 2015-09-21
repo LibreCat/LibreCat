@@ -3,18 +3,18 @@ _prefix:
 
 en:
   login:
-    login_heading: "Login to PUB"
+    login_heading: "Login"
     username: "Username"
     username_placeholder: "HRZ Username"
     password: "Password"
     password_placeholder: "HRZ Password"
     login_button: "Login"
     login_help: "HRZ Username and Password (used e.g. for Webmailer and Stud.IP)"
-    contact_us: "<strong>Login failed?</strong><br />If you are a member of Bielefeld University but you still cannot log in to PUB, please <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>contact us</a></strong> or call 106-4058."
+    contact_us: "<strong>Login failed?</strong><br>If you are a member of Bielefeld University but you still cannot log in to PUB, please <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>contact us</a></strong> or call 106-4058."
   header:
     title: "PUB &ndash; Publications at Bielefeld University"
     my_author_page: "My Author Page"
-    brand: "MyPUB"
+    brand: "Home"
     role:
       user: "User"
       delegate: "Delegate"
@@ -51,8 +51,8 @@ en:
     contact: "Contact"
     policy: "PUB Policy"
     imprint: "Imprint"
-    powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat<img src='/images/librecat.png'></a>"
-    support: "<strong>Support Publication Services</strong><br>Susanne Riedel<br />Phone: 0521/106-4058<br /><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>"
+    powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat<img src='/images/librecat.png' alt=''></a>"
+    support: "<strong>Support Publication Services</strong><br>Susanne Riedel<br>Phone: 0521/106-4058<br><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>"
   tabs:
     home: "Home"
     all_publications: "All Publications"
@@ -87,13 +87,13 @@ en:
     you_have_no_photo: "You have not uploaded a picture to the directory of staff and departments."
     they_have_no_photo: "This person has not uploaded a picture to the directory of staff and departments."
   main_page:
-    login: "Login (myPUB)"
+    login: "Login"
     logout: "Logout"
     add_new_button: "Add new Publication"
     capital_or: "OR"
-    qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br />Drop Open Access fulltext (PDF)<br>here and we'll do the rest."
-    theses_drop_text: "<spab ckass='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br />Drop your thesis here."
-    theses_success_text: "You have successfully submitted your thesis. We will contact you with further information.<br />Thank you!"
+    qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Drop Open Access fulltext (PDF)<br>here and we'll do the rest."
+    theses_drop_text: "<spab ckass='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br>Drop your thesis here."
+    theses_success_text: "You have successfully submitted your thesis. We will contact you with further information.<br>Thank you!"
     theses_explain: "Please upload only ONE file (preferably .pdf). If you want to submit a document that consists of several parts (e.g. chapters) you need to put the files into an archive file (.zip or .gz)."
     heading_admin: "Admin"
     heading_user: "User"
@@ -259,11 +259,13 @@ en:
     license_heading: "All files available under the following license(s):"
   mark:
     marked_publication: "Marked Publication(s)"
+    no_marked_publication: "You don't have any publications 'marked' yet. If you want to add a publication to this page, please click on the link <em>Mark</em> next to the publication data. You can find this links on publication lists or on a publication page. You can export marked publicatoins in several bibligraphic formats, like BibTex, RIS or RTF."
     mark_all: "Mark all"
     unmark_all: "Unmark all"
     mark_unmark: "Mark/Unmark publication"
-    back_general: "Back to previous page"
+    back_general: "Back"
     back_person: "Back to person page"
+    display_export: "Display / Export"
   sort_options:
     year: "Publishing year"
     date_updated: Date updated
@@ -380,7 +382,7 @@ en:
           access:
             closed: "Author/Reviewer"
             until: "until"
-            request_a_copy: "<br />(Request a Copy)"
+            request_a_copy: "<br>(Request a Copy)"
             local: "UniBi Only"
             open_access: "Open Access"
         license: &license
@@ -395,7 +397,7 @@ en:
             contact: "<strong>Support Publication Services<br>Susanne Riedel<br>Phone: 0521/106-4058<br>E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a><br><br></strong>"
           cc_license:
             label: "Creative Commons License"
-            select_text: "If your uploaded document is available under a Creative Commons license, you can select it here:<br />"
+            select_text: "If your uploaded document is available under a Creative Commons license, you can select it here:<br>"
             select_a_license: "Select a license"
             license_deed: "License Deed"
             cc_0:
@@ -1148,28 +1150,28 @@ en:
           access:
             closed: "Author/Reviewer"
             until: "until"
-            request_a_copy: "<br />(Request a Copy)"
+            request_a_copy: "<br>(Request a Copy)"
             local: "UniBi Only"
             open_access: "Open Access"
         license:
           heading: "Copyright and Licenses"
           data_reuse_license:
             label: "Data Re-Use License"
-            select_license: "Choose a license under which your uploaded data will be available:<br />"
+            select_license: "Choose a license under which your uploaded data will be available:<br>"
             select_a_license: "Select a license"
             alert: "You need to choose a Data Re-Use License because you have attached files to this record."
             pddl:
               select_text: "No restrictions - PDDL"
               name: "The Open Data Commons Public Domain Dedication and License (PDDL) v1.0"
-              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data<br /><a href='http://opendatacommons.org/licenses/pddl/' target='_blank'>http://opendatacommons.org/licenses/pddl/</a>"
+              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data<br><a href='http://opendatacommons.org/licenses/pddl/' target='_blank'>http://opendatacommons.org/licenses/pddl/</a>"
             odcby:
               select_text: "Attribution required - ODC-By"
               name: "The Open Data Commons Attribution License (ODC-By) v1.0"
-              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data<br /><a href='http://opendatacommons.org/licenses/by/' target='_blank'>http://opendatacommons.org/licenses/by/</a>"
+              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data<br><a href='http://opendatacommons.org/licenses/by/' target='_blank'>http://opendatacommons.org/licenses/by/</a>"
             odbl:
               select_text: "Share alike - ODbL"
               name: "The Open Database License (ODbL) v1.0"
-              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br /><a href='http://opendatacommons.org/licenses/odbl/' target='_blank'>http://opendatacommons.org/licenses/odbl/</a>"
+              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br><a href='http://opendatacommons.org/licenses/odbl/' target='_blank'>http://opendatacommons.org/licenses/odbl/</a>"
           open_data_release:
             label: "Open Data Release - Declaration"
             disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
@@ -1500,28 +1502,28 @@ en:
       other: "Other"
   418:
     heading: "I'm a teapot (418)"
-    text: "You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br /><br /><a href='https://en.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
-    link_back: "Back to previous page"
+    text: "You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br><br><a href='https://en.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
+    link_back: "Back"
   404:
     heading: "Page not found (404)"
     text: "The page you requested couldn't be found."
-    link_back: "Back to previous page"
+    link_back: "Back"
   403:
     heading: "Access denied (403)"
     text: "You don't have access to this file / folder."
-    link_back: "Back to previous page"
+    link_back: "Back"
   help:
     home: "PUB home"
-    brand: "Personal home page"
-    my_author_page: "Your public author's page"
+    brand: "Personal<br>home page"
+    my_author_page: "Your public<br>author's page"
     help: "Show / hide tooltips"
     change_language: "Change language"
-    role: "Your user role<br>If you a reviewer or delegate you can change your roles here and work with the publications allocated for that role."
-    author_id: "Edit/add name by which your public author page will be accessible.<br>Edit/Add author ids (e.g. ORCID)."
-    user_settings: "Change<br>general<br>settings<br>(language, department , edit mode)."
-    pevz_photo: "Your photo. Change it in BIS/PEVZ."
-    pevz_email: "Your Email address. Change it in BIS/PEVZ."
-    add_new_button: "Create a new record in PUB: Import existing data via DOI or create a new record."
+    user_settings: "Change<br>general<br>settings<br>(language, department, edit mode)."
+    role: "Your user role<br>If you are reviewer/delegate you can change your role here to work with publications allocated for that role."
+    pevz_photo: "Your photo.<br>Can be changed in BIS/PEVZ."
+    pevz_email: "Your Email address.<br>Can be changed in BIS/PEVZ."
+    author_id: "Name, by which your public author page will also be accessible.<br><br>Add/Edit author IDs (e.g. ORCID)."
+    add_new_button: "Create a new record in PUB: Import existing data via DOI or enter data via a form."
     quick_and_easy: "Got an Open Access fulltext (PDF)? Drop it here and submit the form. A new, non-pubic record will be created. We will complete it for you and make it publicly visible."
     publication_user: "Your personal publication list. If all of your publications have been made public, this list will look exactly like the list on your public author's page."
     publication_user_rd: "Your personal publication list - research data."
@@ -1529,28 +1531,28 @@ en:
     publication_reviewer: "All publications of the department you have been granted access to."
     publication_data_manager: "All data publications of the department you have been granted access to."
     publication_admin: "All publications in PUB."
-    statuses: "Publication status of the publication."
+    statuses: "Visibility  status<br>of publication.<br>To change it, click on 'Edit'."
     citation: "Data of publication in selected citation style."
     search: "Search this publication list."
-    visibility_status: "Show only publications with a certain status like 'public' or 'private'."
-    author_block: "Show only publications of a certain type/author/editor/year. You can select multiple authors/editors and create co-authorship-lists."
-    fulltext_block: "Show only publications that have an open access fulltext or other distinction."
-    display_block: "Sort your selected publications, change the number of hits or the citation style."
+    visibility_status: "Filter publications by certain status like 'public' or 'private'."
+    author_block: "Filter publications by type, author, year. You can select multiple authors/editors and create co-authorship lists."
+    fulltext_block: "Filter publications by access, e.g. open access fulltext."
+    display_block: "Change display settings of publication list (hits per page, sorting, citation style)."
 
 de:
   login:
-    login_heading: "Für PUB anmelden"
+    login_heading: "Anmelden"
     username: "Benutzername"
     username_placeholder: "HRZ Benutzername"
     password: "Passwort"
     password_placeholder: "HRZ Passwort"
     login_button: "Anmelden"
     login_help: "HRZ Benutzername und Passwort (wie z.B. für den Webmailer und Stud.IP)"
-    contact_us: "<strong>Login fehlgeschlagen?</strong><br />Falls Sie der Universität Bielefeld angehören, sich aber trotzdem nicht in PUB einloggen können, <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>schreiben Sie uns</a></strong> oder rufen Sie uns an unter 106-4058."
+    contact_us: "<strong>Login fehlgeschlagen?</strong><br>Falls Sie der Universität Bielefeld angehören, sich aber trotzdem nicht in PUB einloggen können, <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>schreiben Sie uns</a></strong> oder rufen Sie uns an unter 106-4058."
   header:
     title: "PUB &ndash; Publikationen an der Universität Bielefeld"
     my_author_page: "Meine Personenseite"
-    brand: "myPUB"
+    brand: "Start"
     role:
       user: "User"
       delegate: "Delegate"
@@ -1587,8 +1589,8 @@ de:
     contact: "Kontakt"
     policy: "PUB-Leitlinien"
     imprint: "Impressum"
-    powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat<img src='/images/librecat.png'></a>"
-    support: "<strong>Support Publikationsdienste</strong><br>Susanne Riedel<br />Tel.: 0521/106-4058<br /><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>"
+    powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat<img src='/images/librecat.png' alt=''></a>"
+    support: "<strong>Support Publikationsdienste</strong><br>Susanne Riedel<br>Tel.: 0521/106-4058<br><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>"
   tabs:
     home: "Startseite"
     all_publications: "Alle Publikationen"
@@ -1623,13 +1625,13 @@ de:
     you_have_no_photo: "Sie haben kein Bild im PEVZ hinterlegt."
     they_have_no_photo: "Diese Person hat kein Bild im PEVZ hinterlegt."
   main_page:
-    login: "Anmelden (myPUB)"
+    login: "Anmelden"
     logout: "Abmelden"
     add_new_button: "Neue Publikation"
     capital_or: "ODER"
-    qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br />Open-Access-Volltext (PDF)<br>hier her ziehen und wir machen den Rest"
-    theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br />Dissertation hier her ziehen."
-    theses_success_text: "Sie haben Ihre Prüfungsschrift erfolgreich hochgeladen. Wir kontaktieren Sie mit weiteren Informationen.<br />Vielen Dank!"
+    qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Open-Access-Volltext (PDF)<br>hier her ziehen und wir machen den Rest"
+    theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br>Dissertation hier her ziehen."
+    theses_success_text: "Sie haben Ihre Prüfungsschrift erfolgreich hochgeladen. Wir kontaktieren Sie mit weiteren Informationen.<br>Vielen Dank!"
     theses_explain: "Bitte laden Sie EINE Datei (bevorzugt .pdf) hoch. Wenn Sie ein Dokument einbringen wollen, das aus mehreren Teildokumenten (z.B. Kapitel) besteht, müssen die Dateien in eine Archivdatei gepackt werden (.zip oder .gz)."
     heading_admin: "Admin"
     heading_user: "User"
@@ -1795,11 +1797,13 @@ de:
     license_heading: "Alle Dateien verfügbar unter der/den folgenden Lizenz(en):"
   mark:
     marked_publication: "Markierte Publikation(en)"
+    no_marked_publication: "Sie haben noch keine Publikation 'markiert'. Wenn Sie Publikationen zu dieser Seite hinzufügen möchten, klicken Sie auf den Link <em>Markieren</em> neben einer Publikation. Sie finden diesen Link auf Personenseiten, Publikationslisten oder Publikationsseiten. Anschließend können Sie markierte Publikationen in verschiedenen Formaten xportieren (z.B. BibTex, RIS oder RTF)."
     mark_all: "Alle markieren"
     unmark_all: "Alle Markierungen löschen"
     mark_unmark: "Markieren/ Markierung löschen"
-    back_general: "Zurück zur vorherigen Seite"
+    back_general: "Zurück"
     back_person: "Zurück zur Personenseite"
+    display_sort: "Darstellung / Sortierung"
   sort_options:
     year: "Publikationsjahr"
     date_updated: "Update-Datum"
@@ -1917,7 +1921,7 @@ de:
           access:
             closed: "Autor/Reviewer"
             until: "bis"
-            request_a_copy: "<br />(Kopie anfordern)"
+            request_a_copy: "<br>(Kopie anfordern)"
             local: "Nur UniBi"
             open_access: "Open Access"
         license: &license
@@ -1932,7 +1936,7 @@ de:
             contact: "<strong>Support Publikationsdienste<br>Susanne Riedel<br>Tel.: 0521/106-4058<br>E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a><br><br></strong>"
           cc_license:
             label: "Creative Commons Lizenzen"
-            select_text: "Falls Ihr hochgeladenes Dokument unter einer Creative Commons Lizenz steht, können Sie diese hier auswählen:<br />"
+            select_text: "Falls Ihr hochgeladenes Dokument unter einer Creative Commons Lizenz steht, können Sie diese hier auswählen:<br>"
             select_a_license: "Lizenz auswählen"
             license_deed: "Lizenzvertrag"
             cc_0:
@@ -2704,28 +2708,28 @@ de:
           access:
             closed: "Autor/Reviewer"
             until: "bis"
-            request_a_copy: "<br />(Kopie anfordern)"
+            request_a_copy: "<br>(Kopie anfordern)"
             local: "Nur UniBi"
             open_access: "Open Access"
         license:
           heading: "Copyright und Lizenzen"
           data_reuse_license:
             label: "Data Re-Use License"
-            select_license: "Wählen Sie eine Lizenz unter der Ihre Daten verfügbar sein sollen:<br />"
+            select_license: "Wählen Sie eine Lizenz unter der Ihre Daten verfügbar sein sollen:<br>"
             select_a_license: "Lizenz auswählen"
             alert: "Sie müssen eine Data Re-Use License auswählen, wenn Sie Dateien angehängt haben."
             pddl:
               select_text: "No restrictions - PDDL"
               name: "The Open Data Commons Public Domain Dedication and License (PDDL) v1.0"
-              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data<br /><a href='http://opendatacommons.org/licenses/pddl/' target='_blank'>http://opendatacommons.org/licenses/pddl/</a>"
+              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data<br><a href='http://opendatacommons.org/licenses/pddl/' target='_blank'>http://opendatacommons.org/licenses/pddl/</a>"
             odcby:
               select_text: "Attribution required - ODC-By"
               name: "The Open Data Commons Attribution License (ODC-By) v1.0"
-              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data<br /><a href='http://opendatacommons.org/licenses/by/' target='_blank'>http://opendatacommons.org/licenses/by/</a>"
+              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data<br><a href='http://opendatacommons.org/licenses/by/' target='_blank'>http://opendatacommons.org/licenses/by/</a>"
             odbl:
               select_text: "Share alike - ODbL"
               name: "The Open Database License (ODbL) v1.0"
-              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br /><a href='http://opendatacommons.org/licenses/odbl/' target='_blank'>http://opendatacommons.org/licenses/odbl/</a>"
+              license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br><a href='http://opendatacommons.org/licenses/odbl/' target='_blank'>http://opendatacommons.org/licenses/odbl/</a>"
           open_data_release:
             label: "Open Data Release - Declaration"
             disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
@@ -3059,16 +3063,16 @@ de:
       other: "Andere"
   418:
     heading: "I'm a teapot (418)"
-    text: "Sie haben Kaffee von diesem Server angefordert. Die Antwort des Servers war: <strong>I'm a teapot</strong><br /><br /><a href='https://de.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
-    link_back: "Zurück zur vorherigen Seite"
+    text: "Sie haben Kaffee von diesem Server angefordert. Die Antwort des Servers war: <strong>I'm a teapot</strong><br><br><a href='https://de.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
+    link_back: "Zurück"
   404:
     heading: "Seite nicht gefunden (404)"
     text: "Die Seite wurde nicht gefunden"
-    link_back: "Zurück zur vorherigen Seite"
+    link_back: "Zurück"
   403:
     heading: "Access denied (403)"
     text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis."
-    link_back: "Zurück zur vorherigen Seite"
+    link_back: "Zurück"
   help:
     home: "Startseite"
     brand: "Persönliche<br>Startseite"
@@ -3088,10 +3092,10 @@ de:
     publication_reviewer: "Diese Liste zeigt Ihnen alle Publikationen der Einrichtung für die Sie die Reviewer-Rechte erhalten haben."
     publication_data_manager: "Diese Liste zeigt Ihnen alle Datenpublikationen der Einrichtung für die Sie die Reviewer-Rechte erhalten haben."
     publication_admin: "Diese Liste zeigt Ihnen alle Publikationen in PUB."
-    statuses: "Status (Sichtbarkeit) der Publikation."
+    statuses: "Sichtbarkeitsstatus<br> der Publikation.<br>Änderung über den Link 'Editieren'."
     citation: "Publikationsdaten im ausgewählten Zitationsstil."
     search: "In dieser Publikationsliste suchen."
     visibility_status: "Auf Publikationen mit bestimmten Status einschränken, z.B. 'public' oder 'private'."
     author_block: "Auf Dokumenttyp, Autor oder Jahr einschränken. Autoren/Herausgeber können Sie mehrfach auswählen und so Co-Autorenschafts-Listen erstellen."
-    fulltext_block: "Auf Publikations-/Zugangsart (z.B. Open-Access-Volltexte) einschränken."
+    fulltext_block: "Auf Publikations-/Zugangsart einschränken, z.B. Open-Access-Volltexte."
     display_block: "Darstellung der Publikationsliste ändern (Treffer pro Seite, Sortierung, Zitationsstil)."
