@@ -75,27 +75,27 @@
       </div><!-- /.navbar-collapse -->
       [% ELSE %]
       <div class="container">
-      <div class="row">
-	<div class="col-xs-10 hidden-sm hidden-lg hidden-md">
-	  <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" height="43" alt="" /></a>
-	  <span class="navbar-title"><a href="/"><span class="xxs-only"><img src="/images/publogo.gif" height="30" alt="PUB Bielefeld" /></span><span class="hidden-xxs">
-	    [% lf.header.title %]
-	  </span></a></span>
+	<div class="row">
+	  <div class="col-xs-10 hidden-sm hidden-lg hidden-md">
+	    <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" height="43" alt="" /></a>
+	    <span class="navbar-title"><a href="/"><span class="xxs-only"><img src="/images/publogo.gif" height="30" alt="PUB Bielefeld" /></span><span class="hidden-xxs">
+	      [% lf.header.title_long %]
+	    </span></a></span>
+	  </div>
+	  <div class="col-md-8 col-sm-10 hidden-xs">
+	    <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" alt="" /></a>
+	      <span class="navbar-title"><a href="/">
+	      [% lf.header.title_long %]
+	      </a></span>
+	  </div>
+	  <div class="col-xs-2 col-md-offset-1">
+	    <span class="select-language pull-right"><a href="[% h.host %]/set_language?[% session.lang == "en" ? "lang=de" : "lang=en" %]"><span class="glyphicon glyphicon-flag"></span>[% lf.header.lang %]</a></span>
+	  </div>
 	</div>
-	<div class="col-md-7 col-sm-10 hidden-xs">
-	  <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" alt="" /></a>
-	    <span class="navbar-title"><a href="/">
-	    [% lf.header.title %]
-	    </a></span>
+	<div class="row innerrow">
+	  <div class="col-md-9 col-sm-10 uninav">
+	  </div>
 	</div>
-	<div class="col-xs-2 col-md-offset-2">
-	  <span class="select-language pull-right"><a href="[% h.host %]/set_language?[% session.lang == "en" ? "lang=de" : "lang=en" %]"><span class="glyphicon glyphicon-flag"></span>[% lf.header.lang %]</a></span>
-	</div>
-      </div>
-      <div class="row innerrow">
-	<div class="col-md-9 col-sm-10 uninav">
-	</div>
-      </div>
       </div><!-- /container -->
       [% END %]
     </nav>

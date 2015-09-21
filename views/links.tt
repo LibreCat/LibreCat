@@ -1,9 +1,9 @@
 <!-- BEGIN links.tt -->
 
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
-<a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="Show complete bibliographic and access information" target="_top">PUB</a>
+<a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="[% lf.main_page.links.view_details %]" target="_top">PUB</a>
   [% IF entry.file || entry.related_material || entry.externalFiles == "1" %]
-  | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">Files available</a>
+  | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">Files available[% lf.main_page.links.files %]</a>
   [% END %]
 
   [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="/download/[% entry._id  %]/[% supp.file.file_id %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
@@ -23,11 +23,11 @@
 <!--
     [% IF bag == "data" %]
   	[% IF entry.externalFiles == "1" %]
-	  | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">Files available</a>
+	  | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
 	[% ELSE %]
 	  [% FOREACH file IN entry.file %]
 	    [% IF file.open_access == 1 %]
-	      | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">Files available</a>
+	      | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
 	      [% LAST %]
 	    [% END %]
 	  [% END %]

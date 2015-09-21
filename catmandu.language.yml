@@ -114,6 +114,8 @@ en:
     links:
       edit: "Edit"
       details: "Details"
+      view_details: "Vollständige bibliographische Angaben und Zugriffsinformationen anzeigen"
+      files: "Files available"
       internal_view: "Internal View"
       request_a_copy: "Request a Copy"
       request_a_copy_title: "Generate sharable links for files with 'Request a copy' status"
@@ -1553,7 +1555,8 @@ de:
     login_help: "HRZ Benutzername und Passwort (wie z.B. für den Webmailer und Stud.IP)"
     contact_us: "<strong>Login fehlgeschlagen?</strong><br>Falls Sie der Universität Bielefeld angehören, sich aber trotzdem nicht in PUB einloggen können, <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>schreiben Sie uns</a></strong> oder rufen Sie uns an unter 106-4058."
   header:
-    title: "PUB &ndash; Publikationen an der Universität Bielefeld"
+    title: "Publikationen an der Universität Bielefeld"
+    title_long: "PUB &ndash; Publikationen an der Universität Bielefeld"
     title_person: "PUB  &ndash; Publikationsliste von"
     my_author_page: "Meine Publikationsliste"
     brand: "Start"
@@ -1654,13 +1657,15 @@ de:
     links:
       edit: "Editieren"
       details: "Details"
+      view_details: "Show complete bibliographic and access information"
+      files: "Dateien verfügbar"
       internal_view: "Interne Sicht"
       request_a_copy: "Exemplar anfordern"
       request_a_copy_title: "Generiert teilbare Links zu Dateien mit Status 'Request a copy'"
       publish: "Public stellen"
       return: "Zurückstellen"
   person_profile:
-    id_not_found: "Personen-Id nicht gefunden."
+    id_not_found: "PEVZ-ID nicht gefunden."
     former_researcher: "Ehemaliger Bielefelder Forscher"
     view: ""
     view_in: "Eintrag im"

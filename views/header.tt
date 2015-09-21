@@ -9,14 +9,16 @@
   <head>
 
   <title>
-    [% IF request.path.match("publication") %]
-    [% lf.tabs.publications %] ([% lf.header.title %])
+    [% IF title %]
+    [% title %]
+    [% ELSIF request.path.match("publication") %]
+    PUB &ndash; [% lf.tabs.publications %]
     [% ELSIF request.path.match("data") %]
     [% lf.tabs.data_publications %] ([% lf.header.title_long %])
-    [% ELSIF request.path.match("person") %]
-    [% lf.tabs.authors %] ([% lf.header.title_long %])
     [% ELSIF request.path.match("person/") %]
     [% lf.header.title_person %] [% thisPerson.first_name %] [% thisPerson.last_name %]
+    [% ELSIF request.path.match("person") %]
+    [% lf.tabs.authors %] ([% lf.header.title_long %])
     [% ELSIF request.path.match("about") %]
     [% lf.tabs.about %] ([% lf.header.title_long %])
     [% ELSIF request.path.match("faq") %]
@@ -27,8 +29,6 @@
     [% lf.tabs.policy %] ([% lf.header.title_long %])
     [% ELSIF request.path.match("pubtheses") %]
     PUB Theses ([% lf.header.title %])
-    [% ELSIF title %]
-    [% title %]
     [% ELSE %]
     [% lf.header.title_long %]
     [% END %]
