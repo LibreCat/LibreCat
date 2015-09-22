@@ -10,6 +10,9 @@ main{min-height:100%;height:auto!important;margin:0 auto -120px;}
 footer{height:120px;}
 }
 
+/* text color */
+.text-body{color:#333!important;}
+
 /* top navbar */
 .navbar-default.backend{border-color:#b6c828;}
 .navbar-default.frontend{background-image:none;background-color:#fff;box-shadow:none;border-color:#d3de73;}
