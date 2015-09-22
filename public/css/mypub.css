@@ -96,11 +96,12 @@ a .total-marked{margin-right:5px;}
 
 /* tooltips */
 .helpme + .tooltip { opacity: .9; }
-.helpme + .tooltip > .tooltip-inner {background-color: #193854; }
-.helpme + .tooltip.top > .tooltip-arrow {border-top-color: #193854; }
-.helpme + .tooltip.right > .tooltip-arrow {border-right-color: #193854; }
-.helpme + .tooltip.left > .tooltip-arrow {border-left-color: #193854; }
-.helpme + .tooltip.bottom > .tooltip-arrow {border-bottom-color: #193854; }
+.helpme + .tooltip > .tooltip-inner {background-color: #666;}
+.helpme + .tooltip > .tooltip-inner a {color:#fff!important;font-weight:normal;text-decoration:underline;}
+.helpme + .tooltip.top > .tooltip-arrow {border-top-color: #666; }
+.helpme + .tooltip.right > .tooltip-arrow {border-right-color: #666; }
+.helpme + .tooltip.left > .tooltip-arrow {border-left-color: #666; }
+.helpme + .tooltip.bottom > .tooltip-arrow {border-bottom-color: #666; }
 
 /* Anzahl Publikationen auf Startseite */
 .statalign{display:inline-block;min-width:50px;text-align:right;}
