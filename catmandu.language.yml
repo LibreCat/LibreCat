@@ -71,7 +71,7 @@ en:
     contact: "Contact"
     policy: "Policy"
   home:
-    search_placeholder: "Search UniBi Publications"
+    search_placeholder: "Search Publications in PUB"
     fields: "Fields"
     operators: "Operators"
     help: "Help"
@@ -149,7 +149,7 @@ en:
     current_editors: "UniBi Editors"
     former_authors: "Former UniBi Authors"
     department: "Department"
-    publication_type: "Document Type"
+    publication_type: "Publication Type"
     publishing_year: "Publishing Year"
     external_publication: "External Publication(s)"
     all_external_publication: "All publications are External Publications"
@@ -187,8 +187,8 @@ en:
       "title.desc": "Title descending"
       "author.asc": "First Author ascending"
       "author.desc": "First Author descending"
-      "type.asc": "Document Type ascending"
-      "type.desc": "Document Type descending"
+      "type.asc": "Publication Type ascending"
+      "type.desc": "Publication Type descending"
       "publication.asc": "Publ./ Series/ Journal ascending"
       "publication.desc": "Publ./ Series/ Journal descending"
   frontdoor:
@@ -221,7 +221,7 @@ en:
         ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href='http://oa.uni-bielefeld.de/publikationsfonds.html'>Open Access Publication Fund</a> of Bielefeld University."
         scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University."
       file_details:
-        label: "File Details"
+        label: "Files"
         name: "File Name"
         title: "File Title"
         description: "Description"
@@ -276,7 +276,7 @@ en:
     date_updated: Date updated
     title: "Title"
     author: "First Author"
-    type: "Document Type"
+    type: "Publication Type"
     publication: "Publ./ Series/ Journal"
     fullname: "Alphabetically"
     publcount: "Number of publications"
@@ -291,7 +291,7 @@ en:
       pmid: "PMID"
       arxiv: "ArXiv ID"
       inspire: "Inspire ID"
-    do_it_yourself: "Choose a document type and fill out the form"
+    do_it_yourself: "Choose a publication type and fill out the form"
     drop_oa: "Drop your Open Access fulltext here"
   forms:
     book:
@@ -315,7 +315,7 @@ en:
           placeholder: "e.g. Handbook of eBook Publishing - with a subtitle"
         author: &author_translator
           label: "Author"
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
+          pevz_tooltip: "Link / Unlink to publication list."
           first_name:
             label: "First Name"
             label_short: "Auth. First"
@@ -398,8 +398,8 @@ en:
             accept_text: "I accept"
             alert: "You need to accept the Copyright Disclaimer because you have attached files to this record."
           info:
-            text: "If you have any questions, please contact:<br>"
-            contact: "<strong>Support Publication Services<br>Susanne Riedel<br>Phone: 0521/106-4058<br>E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a><br><br></strong>"
+            text: "Questions about policy / license?"
+            contact: "Contact our support: Phone 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
           cc_license:
             label: "Creative Commons License"
             select_text: "If your uploaded document is available under a Creative Commons license, you can select it here:<br>"
@@ -444,7 +444,7 @@ en:
           popular_science:
             label: "Popular Science"
           quality_controlled:
-            label: "Quality Controlled"
+            label: "Peer Review"
         jel: &jel
           label: "JEL Classification"
           label_short: "JEL"
@@ -482,7 +482,7 @@ en:
             label_short: "Ed. Last"
             placeholder: "e.g. Appleseed"
           label: "Editor"
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
+          pevz_tooltip: "Link / Unlink to publication list."
         corporate_editor_solo: &corporate_editor_solo
           label: "Corporate Editor"
           label_short: "Copr. Ed."
@@ -534,7 +534,7 @@ en:
             label_short: "Ed. Last"
             placeholder: "e.g. Appleseed"
           label: "Book Editor"
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
+          pevz_tooltip: "Link / Unlink to publication list."
         corporate_editor: &corporate_editor
           label: "Corporate Editor"
           label_short: "Corp. Ed."
@@ -548,7 +548,7 @@ en:
         year_extern: *year_extern
         page: &pages
           label: "Pages"
-          placeholder: "e.g. 12 - 20"
+          placeholder: "e.g. 12 or 20 - 25"
         series_title_volume: *series_title_volume
         publication:
           label: "Book Title"
@@ -607,7 +607,7 @@ en:
             label_short: "Ed. Last"
             placeholder: "e.g. Appleseed"
           label: "Editor"
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
+          pevz_tooltip: "Link / Unlink to publication list."
         corporate_editor: *corporate_editor
         department: *department
         project: *project
@@ -633,7 +633,7 @@ en:
             label: "Issue"
             label_short: "Issue"
           page:
-            placeholder: "e.g. 12 - 20"
+            placeholder: "e.g. 12 or 20 - 25"
             label: "Page"
             label_short: "Page"
         publication_identifier: *publication_identifier
@@ -964,7 +964,7 @@ en:
             label_short: "Inv. Last"
             placeholder: "e.g. Appleseed"
           label: "Inventor"
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
+          pevz_tooltip: "Link / Unlink to publication list."
         applicant:
           label: "Applicant"
           label_short: "Appl."
@@ -1008,7 +1008,7 @@ en:
         thematic_area: *thematic_area
         alternative_id: *alternative_id
         quality_controlled:
-          label: "Quality Controlled"
+          label: "Peer Review"
         related_material.record: *related_material_record
     preprint:
       label: "Preprint"
@@ -1136,7 +1136,7 @@ en:
             label_short: "Crea. Last"
             placeholder: "e.g. Appleseed"
           label: "Creator"
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
+          pevz_tooltip: "Link / Unlink to publication list."
         department: *department
         project: *project
         research_group: *research_group
@@ -1219,7 +1219,7 @@ en:
             label_short: "Trans. Last"
             placeholder: "e.g. Appleseed"
           label: "Translator"
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
+          pevz_tooltip: "Link / Unlink to publication list."
         author_secondary:
           first_name:
             label: "First Name"
@@ -1230,7 +1230,7 @@ en:
             label_short: "Auth. Last"
             placeholder: "e.g. Appleseed"
           label: "Author (Original)"
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
+          pevz_tooltip: "Link / Unlink to publication list."
         edition: *edition
         department: *department
         project: *project
@@ -1283,7 +1283,7 @@ en:
             label_short: "Trans. Last"
             placeholder: "e.g. Appleseed"
           label: "Translator"
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
+          pevz_tooltip: "Link / Unlink to publication list."
         author_secondary:
           first_name:
             label: "First Name"
@@ -1296,7 +1296,7 @@ en:
           multiple: 1
           label: "Author"
           pevz: 0
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
+          pevz_tooltip: "Link / Unlink to publication list."
         alternative_title:
           label: "Chapter Title (Original)"
           label_short: "Title (Orig)"
@@ -1400,7 +1400,7 @@ en:
             label_short: "Superv. Last"
             placeholder: "e.g. Appleseed"
           label: "Supervisor"
-          pevz_tooltip: "Make publication<br>visibile / invisible<br>on your publication list."
+          pevz_tooltip: "Link / Unlink to publication list."
         year:
           label: "Year"
           placeholder: "YYYY"
@@ -1453,6 +1453,8 @@ en:
     sp_form: "Single Page Form"
     to_tab_form: "Change to tabbed form"
     tab_form: "Tabbed Form"
+    change_publication_type: "Change publication type"
+    toggle_dropdown: "Toggle dropdown"
     title_new_n: "Add new "
     title_new_m: "Add new "
     title_new_f: "Add new "
@@ -1528,7 +1530,7 @@ en:
     pevz_photo: "Your photo. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp?lang=en' target='_blank'>Change it?</a>"
     pevz_email: "Your Email address from BIS/PEVZ."
     author_id: "Name, by which your public author page will also be accessible.<br>Add/Edit author IDs (e.g. ORCID)."
-    add_new_button: "Create a new record in PUB: Import existing data via DOI or enter data via a form."
+    add_new_button: "Create a new record in PUB: Import existing data e.g. via DOI or enter data via a form."
     quick_and_easy: "Got an Open Access fulltext (PDF)? Drop it here and submit the form. A new, non-pubic record will be created. We will complete it for you and make it publicly visible."
     publication_user: "Your personal publication list. If all of your publications have been made public, this list will look exactly like the list on your public author's page."
     publication_user_rd: "Your personal publication list - research data."
@@ -1614,7 +1616,7 @@ de:
     contact: "Kontakt"
     policy: "Leitlinien"
   home:
-    search_placeholder: "UniBi Publikationen suchen"
+    search_placeholder: "Publikationen in PUB suchen"
     fields: "Felder"
     operators: "Operatoren"
     help: "Hilfe"
@@ -1692,7 +1694,7 @@ de:
     current_editors: "UniBi Herausgeber"
     former_authors: "Ehemalige UniBi Autoren"
     department: "Einrichtung"
-    publication_type: "Dokumenttyp"
+    publication_type: "Publikationstyp"
     publishing_year: "Publikationsjahr"
     external_publication: "Externe Publikation(en)"
     all_external_publication: "Alle Publikationen sind externe Publikationen"
@@ -1730,8 +1732,8 @@ de:
       "title.desc": "Titel absteigend"
       "author.asc": "Erstautor aufsteigend"
       "author.desc": "Erstautor absteigend"
-      "type.asc": "Dokumenttyp aufsteigend"
-      "type.desc": "Dokumenttyp absteigend"
+      "type.asc": "Publikationstyp aufsteigend"
+      "type.desc": "Publikationstyp absteigend"
       "publication.asc": "Publ./ Serie/ Journal aufsteigend"
       "publication.desc": "Publ./ Serie/ Journal absteigend"
   frontdoor:
@@ -1764,7 +1766,7 @@ de:
         ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href='http://oa.uni-bielefeld.de/publikationsfonds.html'>Open Access Publication Fund</a> of Bielefeld University."
         scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University."
       file_details:
-        label: "Datei-Informationen"
+        label: "Dateien"
         name: "Name"
         title: "Titel"
         description: "Beschreibung"
@@ -1819,7 +1821,7 @@ de:
     date_updated: "Update-Datum"
     title: "Titel"
     author: "Erstautor"
-    type: "Dokumenttyp"
+    type: "Publikationstyp"
     publication: "Reihe/ Journal"
     fullname: "Alphabetisch"
     publcount: "Anzahl der Publikationen"
@@ -1834,7 +1836,7 @@ de:
       pmid: "PMID"
       arxiv: "ArXiv ID"
       inspire: "Inspire ID"
-    do_it_yourself: "Wählen Sie einen Dokumenttyp und füllen Sie das Formular aus"
+    do_it_yourself: "Wählen Sie einen Publikationstyp und füllen Sie das Formular aus"
     drop_oa: "Ziehen Sie Ihren Open-Access-Volltext hier her"
   forms:
     book:
@@ -1859,7 +1861,7 @@ de:
           placeholder: "z.B. Handbuch der eBook-Veröffentlichung - mit einem Untertitel"
         author: &author_translator
           label: "Autor"
-          pevz_tooltip: "Publikation sichtbar/<br>unsichtbar machen<br>auf Ihrer Publikationsliste."
+          pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
           first_name:
             label: "Vorname"
             label_short: "Autor Vorn."
@@ -1942,8 +1944,8 @@ de:
             accept_text: "Ich stimme zu"
             alert: "Sie müssen den Hinweisen zum Urheberrecht zustimmen, wenn Sie eine Datei angehängt haben."
           info:
-            text: "Wenn Sie Fragen haben, kontaktieren Sie bitte:<br>"
-            contact: "<strong>Support Publikationsdienste<br>Susanne Riedel<br>Tel.: 0521/106-4058<br>E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a><br><br></strong>"
+            text: "Fragen zur Policy / Lizenz?"
+            contact: "Support Publikationsdienste, Tel.: 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
           cc_license:
             label: "Creative Commons Lizenzen"
             select_text: "Falls Ihr hochgeladenes Dokument unter einer Creative Commons Lizenz steht, können Sie diese hier auswählen:<br>"
@@ -1989,7 +1991,7 @@ de:
             label: "Populärwissenschaftliche Veröffentlichung"
             label_short: "Pop.wiss. Veröff."
           quality_controlled:
-            label: "Qualitätskontrolliert"
+            label: "Peer Review"
         jel: &jel
           label: "JEL Klassifikation"
           label_short: "JEL"
@@ -2023,7 +2025,7 @@ de:
             placeholder: "z.B. Müller"
           label: "Herausgeber"
           label_short: "Hrsg."
-          pevz_tooltip: "Publikation sichtbar/<br>unsichtbar machen<br>auf Ihrer Publikationsliste."
+          pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
         corporate_editor_solo: &corporate_editor_solo
           label: "Körperschaftlicher Herausgeber"
           label_short: "Körp. Hrsg."
@@ -2077,7 +2079,7 @@ de:
             placeholder: "z.B. Müller"
           label: "Herausgeber"
           label_short: "Hrsg."
-          pevz_tooltip: "Publikation sichtbar/<br>unsichtbar machen<br>auf Ihrer Publikationsliste."
+          pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
         corporate_editor: &corporate_editor
           label: "Körperschaftlicher Herausgeber"
           label_short: "Körp. Hrsg."
@@ -2091,7 +2093,7 @@ de:
         year_extern: *year_extern
         page: &pages
           label: "Seiten"
-          placeholder: "z.B. 12 - 20"
+          placeholder: "z.B. 12 oder 20 - 25"
         series_title_volume: *series_title_volume
         publication:
           label: "Buchtitel"
@@ -2152,7 +2154,7 @@ de:
             placeholder: "z.B. Müller"
           label: "Herausgeber"
           label_short: "Hrsg."
-          pevz_tooltip: "Publikation sichtbar/<br>unsichtbar machen<br>auf Ihrer Publikationsliste."
+          pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
         corporate_editor: *corporate_editor
         department: *department
         project: *project
@@ -2178,7 +2180,7 @@ de:
             label: "Ausgabe"
             label_short: "Ausg."
           page:
-            placeholder: "z.B. 12 - 20"
+            placeholder: "z.B. 12 oder 20 - 25"
             label: "Seite"
             label_short: "Seite"
         publication_identifier: *publication_identifier
@@ -2520,7 +2522,7 @@ de:
             label_short: "Erfinder Nachn."
             placeholder: "z.B. Müller"
           label: "Erfinder"
-          pevz_tooltip: "Publikation sichtbar/<br>unsichtbar machen<br>auf Ihrer Publikationsliste."
+          pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
         applicant:
           label: "Antragsteller"
           placeholder: "z.B. Hans Müller"
@@ -2562,7 +2564,7 @@ de:
         thematic_area: *thematic_area
         alternative_id: *alternative_id
         quality_controlled:
-          label: "Qualitätskontrolliert"
+          label: "Peer Review"
           label_short: "Qual.kontr."
         related_material.record: *related_material_record
     preprint:
@@ -2697,7 +2699,7 @@ de:
             label: "Nachname"
             placeholder: "z.B. Müller"
           label: "Creator"
-          pevz_tooltip: "Publikation sichtbar/<br>unsichtbar machen<br>auf Ihrer Publikationsliste."
+          pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
         department: *department
         project: *project
         research_group: *research_group
@@ -2783,7 +2785,7 @@ de:
             label_short: "Trans. Nachn."
             placeholder: "z.B. Müller"
           label: "Übersetzer"
-          pevz_tooltip: "Publikation sichtbar/<br>unsichtbar machen<br>auf Ihrer Publikationsliste."
+          pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
         author_secondary:
           first_name:
             label: "Vorname"
@@ -2794,7 +2796,7 @@ de:
             label_short: "Autor Nachn."
             placeholder: "z.B. Müller"
           label: "Autor (Original)"
-          pevz_tooltip: "Publikation sichtbar/<br>unsichtbar machen<br>auf Ihrer Publikationsliste."
+          pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
         edition: *edition
         department: *department
         project: *project
@@ -2847,7 +2849,7 @@ de:
             label_short: "Trans. Nachn."
             placeholder: "z.B. Müller"
           label: "Übersetzer"
-          pevz_tooltip: "Publikation sichtbar/<br>unsichtbar machen<br>auf Ihrer Publikationsliste."
+          pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
         author_secondary:
           first_name:
             label: "Vorname"
@@ -2858,7 +2860,7 @@ de:
             label_short: "Autor Nachn."
             placeholder: "z.B. Müller"
           label: "Autor"
-          pevz_tooltip: "Publikation sichtbar/<br>unsichtbar machen<br>auf Ihrer Publikationsliste."
+          pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
         alternative_title:
           label: "Kapitel Titel (Original)"
           label_short: "Titel (Orig)"
@@ -2963,7 +2965,7 @@ de:
             label_short: "Betr. Nachn."
             placeholder: "z.B. Müller"
           label: "Betreuer"
-          pevz_tooltip: "Publikation sichtbar/<br>unsichtbar machen<br>auf Ihrer Publikationsliste."
+          pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
         year:
           label: "Jahr"
           placeholder: "YYYY"
@@ -3018,6 +3020,8 @@ de:
     to_sp_form: "Zum Gesamtformular wechseln"
     sp_form: "Gesamtformular"
     to_tab_form: "Zur Tab-Navigation wechseln"
+    change_publication_type: "Publikationstyp ändern"
+    toggle_dropdown: "Menü aufklappen"
     tab_form: "Tab-Navigation"
     title_new_n: "Neues "
     title_new_m: "Neuer "
@@ -3094,7 +3098,7 @@ de:
     pevz_photo: "Ihr Foto. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp' target='_blank'>Ändern?</a>"
     pevz_email: "Ihre E-Mail-Adresse aus dem BIS/PEVZ."
     author_id: "Name, über den Ihre öffentliche Personenseite zusätzlich erreichbar sein soll.<br>Autoren-IDs<br>(z.B. ORCID)<br>ergänzen / editieren."
-    add_new_button: "Neuen Eintrag in PUB anlegen: Bestehende Daten via DOI importieren oder über Formular selbst eintragen."
+    add_new_button: "Neuen Eintrag in PUB anlegen: Bestehende Daten z.B. via DOI importieren oder über Formular selbst eintragen."
     quick_and_easy: "Sie haben einen Open-Access-Volltext (PDF-Datei)? Ziehen Sie in hier her und senden Sie das Formular ab. Wir vervollständigen den Eintrag für Sie und machen ihn öffentlich sichtbar."
     publication_user: "Ihre persönliche Publikationsliste. Wenn alle Ihre Publikationen öffentlich sichtbar sind, sieht diese Liste genau so aus, wie Ihre öffentliche Publikationsliste."
     publication_user_rd: "Ihre persönliche Publikationsliste - Forschungsdaten."
@@ -3106,6 +3110,6 @@ de:
     citation: "Publikationsdaten im ausgewählten Zitationsstil."
     search: "In dieser Publikationsliste suchen."
     visibility_status: "Auf Publikationen mit bestimmten Status einschränken, z.B. 'public' oder 'private'."
-    author_block: "Auf Dokumenttyp, Autor oder Jahr einschränken. Autoren/Herausgeber können Sie mehrfach auswählen und so Co-Autorenschafts-Listen erstellen."
+    author_block: "Auf Publikationstyp, Autor oder Jahr einschränken. Autoren/Herausgeber können Sie mehrfach auswählen und so Co-Autorenschafts-Listen erstellen."
     fulltext_block: "Auf Publikations-/Zugangsart einschränken, z.B. Open-Access-Volltexte."
     display_block: "Darstellung der Publikationsliste ändern (Treffer pro Seite, Sortierung, Zitationsstil)."
