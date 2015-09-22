@@ -63,6 +63,7 @@
           {% END %}
           </label>
         </div>
+        <p class="text-body">[% lf.$type.field.license.info.text %][% lf.$type.field.license.info.contact %]</p>
         </div>
       </div>
       {% END %}
@@ -105,10 +106,6 @@
       </div>
       {% END %}
 
-      <div class="row">
-      <div class="col-md-12">&nbsp;</div>
-      </div>
-
       {% IF fields.file_upload.license.other_data_license %}
       [% IF session.role == "super_admin" %]
       <div class="row">
@@ -129,12 +126,6 @@
       [% END %]
       {% END %}
 
-      <div class="row">
-        <div class="col-md-12">
-          [% lf.$type.field.license.info.text %]
-          [% lf.$type.field.license.info.contact %]
-        </div>
-      </div>
     </div>
   </div>
 </div>
