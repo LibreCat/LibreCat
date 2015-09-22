@@ -3,10 +3,10 @@
 
 <div class="dropdown">
   <div class="btn-group">
-    <button type="button" class="btn btn-xs fw6">[% h.config.language.$lang.forms.$type.label %]</button>
-    <button type="button" class="btn btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Change publication type">
+    <button type="button" class="btn btn-xs fw6 dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="[% lf.change_publication_type %]">[% h.config.language.$lang.forms.$type.label %]</button>
+    <button type="button" class="btn btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="[% lf.change_publication_type %]">
       <span class="caret"></span>
-      <span class="sr-only">Toggle Dropdown</span>
+      <span class="sr-only">[% lf.toggle_dropdown %]</span>
     </button>
     <ul class="dropdown-menu" role="menu">
       <li class="disabled"><a href="#">Change Type</a></li>
