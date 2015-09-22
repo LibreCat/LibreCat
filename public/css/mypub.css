@@ -233,7 +233,7 @@ body.embed {padding:0;margin:0;width:100%;}
 .hidden-xxs{display:none!important;}
 .navbar-title{padding:3px;margin:8px 0 0 10px;border:1px solid #ccc;border-radius:4px;}
 h2,.h2,h3,.h3{margin-top:11px;}
-a{font-weight:bold;}
+a{font-weight:bold!important;}
 }
 
 @media (max-width:767px){
