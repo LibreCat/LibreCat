@@ -87,7 +87,7 @@ publication:
   csl_json:
     package: 'JSON'
     options:
-      fix: ["nothing()"]
+      fix: ["fixes/to_csl.fix"]
       pretty: 1
       array: 1
     content_type: 'application/vnd.citationstyles.csl+json'
