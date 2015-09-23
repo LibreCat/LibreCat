@@ -404,7 +404,7 @@ sub update_record {
 		if ($rec->{related_material}) {
 		    App::Catalogue::Controller::Material::update_related_material($rec);
 		}
-		$rec->{citation} = Citation::index_citation_update($rec,0,'') || '';
+		#$rec->{citation} = Citation::index_citation_update($rec,0,'') || '';
 	}
 
 	Catmandu::Fix->new(fixes => [join_path('fixes',"update_$bag.fix")])->fix($rec);
@@ -613,9 +613,9 @@ sub export_csl_json {
 
 	my $spec = config->{exporter}->{publication}->{csl_json};
 	my $out;
-	$hits->each(sub {
-		push @$out, Citation::index_citation_update($_[0],0,'csl_json');
-		});
+#	$hits->each(sub {
+#		push @$out, Citation::index_citation_update($_[0],0,'csl_json');
+#		});
 
 	my $f = export_to_string($out, $spec->{package}, $spec->{options} || {});
 	return Dancer::send_file (

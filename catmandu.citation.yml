@@ -1,10 +1,12 @@
 _prefix:
   citation:
 
-engine: csl # other choice is 'template'
+# engine for citation generation
+# possible values are 'template' or 'csl'
+engine: template
 
 template:
-  template_path: 'views/citation.tt'
+  template: 'views/citation.tt'
 
 csl:
   url: 'http://::/CiteprocPhp/CiteProc.php' #absolute url
@@ -18,7 +20,6 @@ csl:
     - chicago
     - default
     - dgps
-    - ewi
     - frontiers
     - harvard1
     - ieee
