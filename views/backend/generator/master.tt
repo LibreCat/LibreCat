@@ -83,7 +83,6 @@
     {% END %}
   {% END %}
   {% INCLUDE fields/buttonrow_tab1.tt %}
-  {% INCLUDE fields/mandatory_explain.tt %}
 {% END %}
 
       </div><!-- tab-pane -->

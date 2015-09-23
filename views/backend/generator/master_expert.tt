@@ -110,7 +110,6 @@
       </div><!-- tab-pane -->
 
       {% INCLUDE fields/buttonrow_tab1.tt %}
-      {% INCLUDE fields/mandatory_explain.tt %}
 
     </div><!-- tab-content -->
   </form>
