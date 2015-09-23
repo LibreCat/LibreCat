@@ -245,9 +245,7 @@
    OR facets.extern.terms.size > 0
    OR facets.open_access.terms.size > 0
    OR facets.isi.terms.size > 0
-   OR facets.arxiv.terms.size > 0
-   OR facets.pmid.terms.size > 0
-   OR facets.inspire.terms.size > 0 %]
+   OR facets.pmid.terms.size > 0 %]
 <ul class="nav nav-tabs nav-stacked margin-top1 ul2 helpme" data-placement="left" title="[% lf.help.fulltext_block %]">
   [% IF facets.popular_science.terms.size > 0 %]
   <li class="ul2li1">
@@ -285,10 +283,7 @@
   </li>
   [% END %]
 
-  [% IF facets.isi.terms.size > 0
-     OR facets.arxiv.terms.size > 0
-     OR facets.pmid.terms.size > 0
-     OR facets.inspire.terms.size > 0 %]
+  [% IF facets.isi.terms.size > 0 OR facets.pmid.terms.size > 0 %]
   <li class="ul2li4">
   <button data-toggle="collapse" data-target="#extid_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.indexed_in %]</button>
   <div class="facettecollapse">
@@ -300,25 +295,11 @@
       <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% lf.facets.all_isi %]</strong></div>
       [% END %]
     [% END %]
-    [% IF facets.arxiv.terms.0.count %]
-      [% IF facets.arxiv.terms.0.count < total %]
-      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="arxiv" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.arxiv.terms.0.count %] arXiv.org</a></li>
-      [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% lf.facets.all_arxiv %]</strong></div>
-      [% END %]
-    [% END %]
     [% IF facets.pmid.terms.0.count %]
       [% IF facets.pmid.terms.0.count < total %]
       <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="pmid" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.pmid.terms.0.count %] Pubmed</a></li>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% lf.facets.all_pubmed %]</strong></div>
-      [% END %]
-    [% END %]
-    [% IF facets.inspire.terms.0.count %]
-      [% IF facets.inspire.terms.0.count < total %]
-      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="inspire" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.inspire.terms.0.count %] INSPIRE HEP</a></li>
-      [% ELSE %]
-      <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% lf.facets.all_inspire %]</strong></div>
       [% END %]
     [% END %]
     </ul>

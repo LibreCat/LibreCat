@@ -1,7 +1,7 @@
 requires 'perl', 'v5.10.1';
 
 # Catmandu
-requires 'Catmandu', '>=0.94';
+requires 'Catmandu', '>=0.9402';
 requires 'Catmandu::Store::ElasticSearch';
 requires 'Catmandu::Store::MongoDB';
 requires 'Catmandu::Store::DBI';
@@ -24,6 +24,8 @@ requires 'Dancer::Plugin::Catmandu::OAI';
 requires 'Dancer::Plugin::Catmandu::SRU';
 requires 'Dancer::Plugin::Email';
 requires 'Dancer::Plugin::Auth::Tiny';
+requires 'Dancer::Plugin::Passphrase';
+requires 'Dancer::Plugin::LDAP';
 requires 'Dancer::Session::Catmandu';
 requires 'Template';
 requires 'Template::Plugin::Date';

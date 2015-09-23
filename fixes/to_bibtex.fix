@@ -14,6 +14,8 @@ move_field(author.*.full_name, r.author.$append)
 move_field(editor.*.full_name, r.editor.$append)
 
 move_field(title, r.title)
+prepend(r.title,'{')
+append(r.title,'}')
 move_field(language.0.name, r.language)
 join_field(keyword, ', ')
 move_field(keyword, r.keyword)

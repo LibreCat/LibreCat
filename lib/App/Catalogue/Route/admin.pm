@@ -12,6 +12,7 @@ use Dancer ':syntax';
 use App::Helper;
 use App::Catalogue::Controller::Importer;
 use Dancer::Plugin::Auth::Tiny;
+use Dancer::Plugin::Passphrase;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -86,6 +87,7 @@ Saves the data in the authority database.
         my $p = params;
 
         $p = h->nested_params($p);
+        $p->{password} = passphrase($p->{password})->generate->rfc2307();
 
         h->update_record('researcher', $p);
         template 'admin/account';
@@ -141,7 +143,7 @@ Input is person id. Returns warning if person is already in the database.
     	my $return = h->update_record('project', $p);
     	redirect '/librecat/admin/project';
     };
-    
+
     get '/research_group' => needs role => 'super_admin' => sub {
     	my $hits = h->search_research_group({q => "", limit => 100, start => params->{start} || 0});
         template 'admin/research_group', $hits;
@@ -170,9 +172,9 @@ Input is person id. Returns warning if person is already in the database.
     	my $return = h->update_record('research_group', $p);
     	redirect '/librecat/admin/research_group';
     };
-    
-    
-    
+
+
+
     get '/department' => needs role => 'super_admin' => sub {
     	my $hits = h->search_department({q => "", limit => 100, start => params->{start} || 0});
         template 'admin/department', $hits;
@@ -201,9 +203,9 @@ Input is person id. Returns warning if person is already in the database.
     	my $return = h->update_record('department', $p);
     	redirect '/librecat/admin/department';
     };
-    
-    
-    
+
+
+
 
     get '/award' => needs role => 'super_admin' => sub {
     	my $hits = h->search_award({q => "rectype=record", limit => 1000});
@@ -214,7 +216,7 @@ Input is person id. Returns warning if person is already in the database.
     	$hits->{preis} = $preis->{hits};
         $hits->{auszeichnung} = $auszeichnung->{hits};
         $hits->{akademie} = $akademie->{hits};
-        
+
     	template 'admin/award', $hits;
     };
 

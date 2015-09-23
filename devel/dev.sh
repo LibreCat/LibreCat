@@ -1,31 +1,26 @@
 #!/bin/sh
 
-#if [ "$EUID" -ne "0" ]; then
-#   echo "This script must be run as root" 1>&2;
-#   exit 1;
-#fi
-test "$(whoami)" != 'root' && (echo you are using a non-privileged account; exit 1)
-
 case "$1" in
     init)
       docker run -d -p 9200:9200 -p 9300:9300 -v $PWD/data/es:/data --name elastic elasticsearch
       docker run -d -p 27017:27017 -v $PWD/data/mongo:/data/db --name mongodb mongo
-      #docker run -d -p 3306:3306 -v $PWD/data/mysql:/var/lib/mysql --name mysql-pub -e MYSQL_ROOT_PASSWORD=secret mysql:5.6
+      carton install --deployment
+      carton exec catmandu import YAML to search --bag researcher < devel/researcher.yml
+      carton exec catmandu import YAML to search --bag publication < devel/department.yml
+      echo '{"_id": "1", "latest" : "0"}' | carton exec catmandu import YAML
+      echo 'Start plackup in dev mode:\n carton exec plackup -E development -s Starman bin/app.pl'
       ;;
     start)
       docker start elastic
       docker start mongodb
-      #docker start mysql-pub
       ;;
     stop)
       docker stop elastic
       docker stop mongodb
-      #docker stop mysql-pub
       ;;
     destroy)
       docker rm elastic
       docker rm mongodb
-      #docker rm mysql-pub
       ;;
     *)
       echo $"Usage: $0 {init|start|stop|destroy}"

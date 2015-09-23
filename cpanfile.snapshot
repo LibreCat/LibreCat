@@ -308,10 +308,10 @@ DISTRIBUTIONS
     requirements:
       Carp 0
       ExtUtils::MakeMaker 0
-  Catmandu-0.94
-    pathname: N/NI/NICS/Catmandu-0.94.tar.gz
+  Catmandu-0.9402
+    pathname: N/NI/NICS/Catmandu-0.9402.tar.gz
     provides:
-      Catmandu 0.94
+      Catmandu 0.9402
       Catmandu::Addable undef
       Catmandu::ArrayIterator undef
       Catmandu::BadArg undef
@@ -382,8 +382,10 @@ DISTRIBUTIONS
       Catmandu::Fix::expand undef
       Catmandu::Fix::expand_date undef
       Catmandu::Fix::filter undef
+      Catmandu::Fix::flatten undef
       Catmandu::Fix::from_json undef
       Catmandu::Fix::hash undef
+      Catmandu::Fix::include undef
       Catmandu::Fix::join_field undef
       Catmandu::Fix::log undef
       Catmandu::Fix::lookup undef
@@ -406,6 +408,7 @@ DISTRIBUTIONS
       Catmandu::Fix::sum undef
       Catmandu::Fix::to_json undef
       Catmandu::Fix::trim undef
+      Catmandu::Fix::uniq undef
       Catmandu::Fix::upcase undef
       Catmandu::FixError undef
       Catmandu::FixParseError undef
@@ -639,6 +642,18 @@ DISTRIBUTIONS
       MongoDB v0.705.0.0
       Moo 1.006000
       perl v5.10.1
+  Catmandu-Validator-JSONSchema-0.1
+    pathname: N/NJ/NJFRANCK/Catmandu-Validator-JSONSchema-0.1.tar.gz
+    provides:
+      Catmandu::Validator::JSONSchema 0.1
+    requirements:
+      Catmandu 0.9103
+      JSON::Schema 0
+      Module::Build 0
+      Moo 0
+      Test::Exception 0
+      Test::More 0
+      perl v5.10.0
   Catmandu-XML-0.14
     pathname: V/VO/VOJ/Catmandu-XML-0.14.tar.gz
     provides:
@@ -730,6 +745,22 @@ DISTRIBUTIONS
       base 0
       strict 0
       warnings 0
+  Class-Mix-0.005
+    pathname: Z/ZE/ZEFRAM/Class-Mix-0.005.tar.gz
+    provides:
+      Class::Mix 0.005
+    requirements:
+      Carp 0
+      Exporter 0
+      Module::Build 0
+      Params::Classify 0
+      Test::More 0
+      constant 0
+      if 0
+      parent 0
+      perl 5.006
+      strict 0
+      warnings 0
   Class-Singleton-1.5
     pathname: S/SH/SHAY/Class-Singleton-1.5.tar.gz
     provides:
@@ -799,6 +830,35 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 6.30
       Math::BigInt 1.997
       Test::More 0.90
+  Crypt-Eksblowfish-0.009
+    pathname: Z/ZE/ZEFRAM/Crypt-Eksblowfish-0.009.tar.gz
+    provides:
+      Crypt::Eksblowfish 0.009
+      Crypt::Eksblowfish::Bcrypt 0.009
+      Crypt::Eksblowfish::Blowfish 0.009
+      Crypt::Eksblowfish::Family 0.009
+      Crypt::Eksblowfish::Subkeyed 0.009
+      Crypt::Eksblowfish::Uklblowfish 0.009
+    requirements:
+      Carp 0
+      Class::Mix 0.001
+      Exporter 0
+      ExtUtils::CBuilder 0.15
+      MIME::Base64 2.21
+      Module::Build 0
+      Test::More 0
+      XSLoader 0
+      parent 0
+      perl 5.006
+      strict 0
+      warnings 0
+  Crypt-Rijndael-1.13
+    pathname: L/LE/LEONT/Crypt-Rijndael-1.13.tar.gz
+    provides:
+      Crypt::Rijndael 1.13
+    requirements:
+      ExtUtils::MakeMaker 0
+      perl 5.006
   Crypt-URandom-0.34
     pathname: D/DD/DDICK/Crypt-URandom-0.34.tar.gz
     provides:
@@ -1170,6 +1230,29 @@ DISTRIBUTIONS
       Net::SMTP::SSL 1.01
       Net::SSLeay 1.58
       perl 5.006
+  Dancer-Plugin-LDAP-0.0050
+    pathname: H/HO/HORNBURG/Dancer-Plugin-LDAP-0.0050.tar.gz
+    provides:
+      Dancer::Plugin::LDAP 0.0050
+      Dancer::Plugin::LDAP::Handle 0.0050
+    requirements:
+      Dancer 1.3098
+      ExtUtils::MakeMaker 0
+      Net::LDAP 0
+      Test::More 0
+  Dancer-Plugin-Passphrase-2.0.1
+    pathname: J/JA/JAITKEN/Dancer-Plugin-Passphrase-2.0.1.tar.gz
+    provides:
+      Dancer::Plugin::Passphrase 2.000001
+    requirements:
+      Dancer::Plugin 0
+      Data::Entropy::Algorithms 0.003
+      Digest 1.16
+      Digest::Bcrypt 0
+      Digest::SHA 5.74
+      ExtUtils::MakeMaker 6.30
+      MIME::Base64 3.08
+      Scalar::Util 1.20
   Dancer-Session-Catmandu-0.02
     pathname: N/NI/NICS/Dancer-Session-Catmandu-0.02.tar.gz
     provides:
@@ -1213,6 +1296,48 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 6.59
       perl 5.006
+  Data-Entropy-0.007
+    pathname: Z/ZE/ZEFRAM/Data-Entropy-0.007.tar.gz
+    provides:
+      Data::Entropy 0.007
+      Data::Entropy::Algorithms 0.007
+      Data::Entropy::RawSource::CryptCounter 0.007
+      Data::Entropy::RawSource::Local 0.007
+      Data::Entropy::RawSource::RandomOrg 0.007
+      Data::Entropy::RawSource::RandomnumbersInfo 0.007
+      Data::Entropy::Source 0.007
+    requirements:
+      Carp 0
+      Crypt::Rijndael 0
+      Data::Float 0.008
+      Errno 1.00
+      Exporter 0
+      HTTP::Lite 2.2
+      IO::File 1.03
+      Module::Build 0
+      Params::Classify 0
+      Test::More 0
+      constant 0
+      integer 0
+      parent 0
+      perl 5.006
+      strict 0
+      warnings 0
+  Data-Float-0.012
+    pathname: Z/ZE/ZEFRAM/Data-Float-0.012.tar.gz
+    provides:
+      Data::Float 0.012
+    requirements:
+      Carp 0
+      Exporter 0
+      Module::Build 0
+      Test::More 0
+      constant 0
+      integer 0
+      parent 0
+      perl 5.006
+      strict 0
+      warnings 0
   Data-OptList-0.109
     pathname: R/RJ/RJBS/Data-OptList-0.109.tar.gz
     provides:
@@ -2271,6 +2396,21 @@ DISTRIBUTIONS
       Filter::Util::Call 0
       Test::More 0
       perl 5.008001
+  Digest-Bcrypt-1.0.1
+    pathname: J/JA/JAITKEN/Digest-Bcrypt-1.0.1.tar.gz
+    provides:
+      Digest::Bcrypt 1.000001
+    requirements:
+      Carp 0
+      Crypt::Eksblowfish::Bcrypt 0
+      Digest 0
+      Digest::base 0
+      ExtUtils::MakeMaker 6.30
+      Test::More 0
+      bytes 0
+      parent 0
+      strict 0
+      warnings 0
   Digest-HMAC-1.03
     pathname: G/GA/GAAS/Digest-HMAC-1.03.tar.gz
     provides:
@@ -2727,6 +2867,28 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 0
       Time::Local 0
       perl 5.006002
+  HTTP-Link-Parser-0.200
+    pathname: T/TO/TOBYINK/HTTP-Link-Parser-0.200.tar.gz
+    provides:
+      HTTP::Link::Parser 0.200
+      HTTP::Link::Parser::PlainLiteral undef
+    requirements:
+      ExtUtils::MakeMaker 6.17
+      HTTP::Message 0
+      URI 0
+      URI::Escape 0
+      perl 5.010
+  HTTP-Lite-2.44
+    pathname: N/NE/NEILB/HTTP-Lite-2.44.tar.gz
+    provides:
+      HTTP::Lite 2.44
+    requirements:
+      ExtUtils::MakeMaker 0
+      Fcntl 0
+      Socket 1.3
+      perl 5.005
+      strict 0
+      warnings 0
   HTTP-Message-6.06
     pathname: G/GA/GAAS/HTTP-Message-6.06.tar.gz
     provides:
@@ -2923,6 +3085,20 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 0
       Test::More 0
+  JSON-Hyper-0.011
+    pathname: T/TO/TOBYINK/JSON-Hyper-0.011.tar.gz
+    provides:
+      JSON::Hyper 0.011
+      JSON::Hyper::Link 0.011
+    requirements:
+      ExtUtils::MakeMaker 6.59
+      JSON 2.00
+      JSON::Path 0
+      LWP::UserAgent 0
+      Test::More 0.61
+      URI 1.30
+      URI::Escape 0
+      perl 5.008
   JSON-MaybeXS-1.003004
     pathname: E/ET/ETHER/JSON-MaybeXS-1.003004.tar.gz
     provides:
@@ -2936,6 +3112,33 @@ DISTRIBUTIONS
       JSON::PP 2.27202
       Scalar::Util 0
       perl 5.006
+  JSON-Path-0.205
+    pathname: T/TO/TOBYINK/JSON-Path-0.205.tar.gz
+    provides:
+      JSON::Path 0.205
+      JSON::Path::Helper 0.205
+    requirements:
+      Exporter::Tiny 0
+      ExtUtils::MakeMaker 6.17
+      JSON 2.00
+      LV 0
+  JSON-Schema-0.016
+    pathname: T/TO/TOBYINK/JSON-Schema-0.016.tar.gz
+    provides:
+      JSON::Schema 0.016
+      JSON::Schema::Error 0.016
+      JSON::Schema::Helper 0.016
+      JSON::Schema::Null 0.016
+      JSON::Schema::Result 0.016
+    requirements:
+      ExtUtils::MakeMaker 6.17
+      HTTP::Link::Parser 0.100
+      JSON 2.00
+      JSON::Hyper 0
+      JSON::Path 0
+      LWP::UserAgent 0
+      autovivification 0
+      match::simple 0
   JSON-XS-3.01
     pathname: M/ML/MLEHMANN/JSON-XS-3.01.tar.gz
     provides:
@@ -2944,6 +3147,17 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 0
       Types::Serialiser 0
       common::sense 0
+  LV-0.006
+    pathname: T/TO/TOBYINK/LV-0.006.tar.gz
+    provides:
+      LV 0.006
+      LV::Backend::Magic 0.006
+      LV::Backend::Sentinel 0.006
+      LV::Backend::Tie 0.006
+      LV::Backend::Tie::TiedScalar 0.006
+    requirements:
+      ExtUtils::MakeMaker 6.17
+      perl 5.006000
   LWP-MediaTypes-6.02
     pathname: G/GA/GAAS/LWP-MediaTypes-6.02.tar.gz
     provides:
@@ -4125,6 +4339,20 @@ DISTRIBUTIONS
       XSLoader 0
       strict 0
       warnings 0
+  Params-Classify-0.013
+    pathname: Z/ZE/ZEFRAM/Params-Classify-0.013.tar.gz
+    provides:
+      Params::Classify 0.013
+    requirements:
+      Exporter 0
+      ExtUtils::ParseXS 2.2006
+      Module::Build 0
+      Scalar::Util 1.01
+      Test::More 0
+      parent 0
+      perl 5.006001
+      strict 0
+      warnings 0
   Params-Util-1.07
     pathname: A/AD/ADAMK/Params-Util-1.07.tar.gz
     provides:
@@ -4604,6 +4832,14 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 0
       Test::More 0
+  Sub-Infix-0.004
+    pathname: T/TO/TOBYINK/Sub-Infix-0.004.tar.gz
+    provides:
+      Sub::Infix 0.004
+      Sub::Infix::PartialApplication undef
+    requirements:
+      ExtUtils::MakeMaker 6.17
+      perl 5.006
   Sub-Install-0.928
     pathname: R/RJ/RJBS/Sub-Install-0.928.tar.gz
     provides:
@@ -5518,6 +5754,18 @@ DISTRIBUTIONS
       Test::More 0.47
       base 0
       perl 5.005
+  autovivification-0.16
+    pathname: V/VP/VPIT/autovivification-0.16.tar.gz
+    provides:
+      autovivification 0.16
+    requirements:
+      Config 0
+      Exporter 0
+      ExtUtils::MakeMaker 0
+      POSIX 0
+      Test::More 0
+      XSLoader 0
+      perl 5.008003
   bareword-filehandles-0.003
     pathname: I/IL/ILMARI/bareword-filehandles-0.003.tar.gz
     provides:
@@ -5608,6 +5856,18 @@ DISTRIBUTIONS
       URI::Escape 0
       WWW::RobotRules 6
       perl 5.008001
+  match-simple-0.009
+    pathname: T/TO/TOBYINK/match-simple-0.009.tar.gz
+    provides:
+      match::simple 0.009
+      match::smart 0.009
+    requirements:
+      Exporter::Tiny 0.026
+      ExtUtils::MakeMaker 6.17
+      List::Util 1.33
+      Scalar::Util 0
+      Sub::Infix 0.004
+      perl 5.006001
   multidimensional-0.011
     pathname: I/IL/ILMARI/multidimensional-0.011.tar.gz
     provides:
