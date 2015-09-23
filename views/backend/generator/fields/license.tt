@@ -63,7 +63,7 @@
           {% END %}
           </label>
         </div>
-        <p class="text-body">[% lf.$type.field.license.info.text %][% lf.$type.field.license.info.contact %]</p>
+        <p class="text-body">[% lf.$type.field.license.info.text %] [% lf.$type.field.license.info.contact %]</p>
         </div>
       </div>
       {% END %}
