@@ -24,7 +24,7 @@
       [% END%]
       </div>
       <div class="col-sm-4 text-right">
-	<button type="button" class="btn btn-xs change_mode hidden-xs margin-bottom1-2 fw7"><span class="glyphicon glyphicon-option-vertical"></span> [% lf.to_sp_form %]</button>
+	<button type="button" class="btn btn-xs change_mode hidden-xs margin-bottom1-2 fw7 helpme" data-placement="left" title="Change edit mode"><span class="glyphicon glyphicon-option-vertical"></span> [% lf.to_sp_form %]</button>
 	[% INCLUDE backend/change_type_menu.tt %]
 	  </div>
     </div>

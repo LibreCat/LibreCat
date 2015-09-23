@@ -1458,6 +1458,7 @@ en:
     title_new_n: "Add new "
     title_new_m: "Add new "
     title_new_f: "Add new "
+    mandatory: "Mandatory field"
     mandatory_error: "You missed some mandatory fields!"
     button:
       back: "Back"
@@ -1522,9 +1523,9 @@ en:
     home: "PUB home"
     brand: "Personal<br>home page"
     my_author_page: "Your publication list<br>(public records only)"
-    help: "Show / hide tooltips"
+    help: "More help necessary? Contact our support: Phone 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
     change_language: "Change language"
-    user_settings: "Change<br>general<br>settings<br>(language, department, edit mode)."
+    user_settings: "Change<br>department,<br>edit mode<br>default language."
     role: "Your user role<br>If you are reviewer/delegate you can change your role here to work with publications allocated for that role."
     pevz_photo: "Your photo. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp?lang=en' target='_blank'>Change it?</a>"
     pevz_email: "Your Email address from BIS/PEVZ."
@@ -1544,6 +1545,10 @@ en:
     author_block: "Filter publications by type, author, year. You can select multiple authors/editors and create co-authorship lists."
     fulltext_block: "Filter publications by access, e.g. open access fulltext."
     display_block: "Change display settings of publication list (hits per page, sorting, citation style)."
+    form_change_form: "Change edit mode"
+    form_change_type: "Change publication type"
+    form_sort_item: "Drag & drop to change position of author in author list"
+    form_add_field: "Add a field (+) or Remove this field (-)"
 
 de:
   login:
@@ -3025,6 +3030,7 @@ de:
     title_new_n: "Neues "
     title_new_m: "Neuer "
     title_new_f: "Neue "
+    mandatory: "Pflichtfeld"
     mandatory_error: "Sie haben Pflichtfelder übersehen!"
     button:
       back: "Zurück"
@@ -3089,9 +3095,9 @@ de:
     home: "Startseite"
     brand: "Persönliche<br>Startseite"
     my_author_page: "Ihre öffentliche<br>Publikationsliste"
-    help: "Tips anzeigen / ausblenden"
+    help: "Mehr Hilfe nötig? Support Publikationsdienste, Tel.: 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
     change_language: "Sprache wechseln"
-    user_settings: "Persönliche<br>Einstellungen<br>ändern<br>(Fakultät,<br>Editiermodus,<br>Sprache)"
+    user_settings: "Fakultät,<br>Editiermodus,<br>Standardsprache<br>ändern"
     role: "Ihre Rolle<br>im System<br>Ggf. wechseln und mit Publikationen arbeiten, für die Sie z.B. Reviewer-Rechte haben."
     pevz_photo: "Ihr Foto. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp' target='_blank'>Ändern?</a>"
     pevz_email: "Ihre E-Mail-Adresse aus dem BIS/PEVZ."
@@ -3111,3 +3117,7 @@ de:
     author_block: "Auf Publikationstyp, Autor oder Jahr einschränken. Autoren/Herausgeber können Sie mehrfach auswählen und so Co-Autorenschafts-Listen erstellen."
     fulltext_block: "Auf Publikations-/Zugangsart einschränken, z.B. Open-Access-Volltexte."
     display_block: "Darstellung der Publikationsliste ändern (Treffer pro Seite, Sortierung, Zitationsstil)."
+    form_change_form: "Editiermodus ändern"
+    form_change_type: "Publikationstyp ändern"
+    form_sort_item: "Drag & drop, um die Position des Autors in der Autorenliste zu ändern"
+    form_add_field: "Feld hinzufügen (+) or dieses Feld löschen (-)"
