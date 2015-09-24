@@ -4,7 +4,7 @@
 <div id="authorEditorTranslator">
   <div class="row authorspan innerrow">
     <div class="col-md-2 form-group hidden-xs hidden-sm">
-      <label class="helpme" data-placement="top" title="Mandatory field">
+      <label{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} class="helpme" data-toggle="tooltip" data-placement="top" title="[% lf.mandatory %]"{% END %}>
         [% lf.$type.field.author.label || lf.$type.field.author_secondary.label %]
       </label>
       {% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %}<span class="starMandatory"></span>{% END %}
@@ -16,6 +16,7 @@
         <input type="hidden" id="orig_first_name_0" value="" />
         <input type="hidden" id="orig_last_name_0" value="" />
 
+	<!-- 1 -->
         <div class="form-group col-md-4 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
@@ -23,11 +24,12 @@
               <span class="hidden-lg hidden-md">[% lf.$type.field.author.first_name.label_short || lf.$type.field.author_secondary.first_name.label_short %]</span>
             </div>
             <input type="text" id="first_name_0" name="author.0.first_name" placeholder="[% lf.$type.field.author.first_name.placeholder || lf.$type.field.author_secondary.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %] helpme[% END %]" data-placement="top" title="Add a field (+) or Remove this field (-)" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md helpme" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
+	<!-- 2 -->
         <div class="form-group col-md-6 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
@@ -35,12 +37,12 @@
               <span class="hidden-lg hidden-md">[% lf.$type.field.author.last_name.label_short || lf.$type.field.author_secondary.last_name.label_short %]</span>
             </div>
             <input type="text" id="last_name_0" name="author.0.last_name" placeholder="[% lf.$type.field.author.last_name.placeholder || lf.$type.field.author_secondary.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon hidden-xs hidden-sm[% IF loop.first %] helpme[% END %]" data-placement="top" title="Add a field (+) or Remove this field (-)" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm helpme" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
-            <div class="input-group-addon"><span id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" [% IF loop.first %]class="helpme"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.pevz_tooltip || lf.$type.field.author_secondary.pevz_tooltip %]" /></span></div>
+            <div class="input-group-addon"><span id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" class="helpme" data-toggle="tooltip" data-html="true" data-placement="bottom" title="Enter author name and click here to link it to author's publication list" /></span></div>
             {% END %}
-            <div class="input-group-addon sortitem[% IF loop.first %] helpme[% END %]" data-toggle="tooltip" data-placement="right" title="Drag & drop to change position of author in author list"><span class="glyphicon glyphicon-move"></span></div>
+            <div class="input-group-addon sortitem helpme" data-placement="right" title="[% lf.form_sort_item %]"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </div>
         {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
@@ -56,7 +58,7 @@
       <div class="row innerrow">
         <input type="hidden" id="orig_first_name_[% loop.index %]" value="[% name.first_name | html %]" />
         <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% name.last_name | html %]" />
-
+	<!-- 3 -->
         <div class="form-group col-md-4 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
@@ -64,11 +66,12 @@
               <span class="hidden-lg hidden-md">[% lf.$type.field.author.first_name.label_short || lf.$type.field.author_secondary.first_name.label_short %]</span>
             </div>
             <input type="text" id="first_name_[% loop.index %]" name="author.[% loop.index %].first_name" placeholder="[% lf.$type.field.author.first_name.placeholder || lf.$type.field.author_secondary.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %] helpme[% END %]" data-placement="top" title="Add a field (+) or Remove this field (-)" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             <div class="intpu-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
+	<!-- 4 -->
         <div class="form-group col-md-6 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
@@ -76,12 +79,12 @@
               <span class="hidden-lg hidden-md">[% lf.$type.field.author.last_name.label_short || lf.$type.field.author_secondary.last_name.label_short %]</span>
             </div>
             <input type="text" id="last_name_[% loop.index %]" name="author.[% loop.index %].last_name" placeholder="[% lf.$type.field.author.last_name.placeholder || lf.$type.field.author_secondary.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon hidden-xs hidden-sm[% IF loop.first %] helpme[% END %]" data-placement="top" title="Add a field (+) or Remove this field (-)" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
-            <div class="input-group-addon"><span id="link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type=""><img id="Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] [% IF loop.first %]class="helpme"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.pevz_tooltip || lf.$type.field.author_secondary.pevz_tooltip %]" /></span></div>
+            <div class="input-group-addon"><span id="link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type=""><img id="Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.pevz_tooltip || lf.$type.field.author_secondary.pevz_tooltip %]" /></span></div>
             {% END %}
-            <div class="input-group-addon sortitem[% IF loop.first %] helpme[% END %]" data-toggle="tooltip" data-placement="right" title="Drag & drop to change position of author in author list"><span class="glyphicon glyphicon-move"></span></div>
+            <div class="input-group-addon sortitem helpme" data-placement="right" title="[% lf.form_sort_item %]"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </div>
         {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
@@ -98,7 +101,7 @@
       <div class="row innerrow">
         <input type="hidden" id="orig_first_name_0" value="" />
         <input type="hidden" id="orig_last_name_0" value="" />
-
+	<!-- 5 -->
         <div class="form-group col-md-4 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
@@ -106,11 +109,12 @@
               <span class="hidden-lg hidden-md">[% lf.$type.field.author.first_name.label_short || lf.$type.field.author_secondary.first_name.label_short %]</span>
             </div>
             <input type="text" id="first_name_0" name="author.0.first_name" placeholder="[% lf.$type.field.author.first_name.placeholder || lf.$type.field.author_secondary.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="[% author.0.first_name %]" />
-            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %] helpme[% END %]" data-placement="top" title="Add a field (+) or Remove this field (-)" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
+	<!-- 6 -->
         <div class="form-group col-md-6 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
@@ -119,7 +123,7 @@
             </div>
             <input type="text" id="last_name_0" name="author.0.last_name" placeholder="{% fields.basic_fields.author.last_name.placeholder || fields.basic_fields.author_secondary.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="[% author.0.last_name %]" />
             {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
-            <div class="input-group-addon"><span id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" [% IF loop.first %]class="helpme"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.pevz_tooltip || lf.$type.field.author_secondary.pevz_tooltip %]" /></span></div>
+            <div class="input-group-addon"><span id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="Enter author name and click here to link it to author's publication list" /></span></div>
             {% ELSE %}
             <div class="input-group-addon"></div>
             {% END %}
