@@ -12,7 +12,9 @@ e.g. on debian
 $ sudo apt-get install build-essential libexpat1-dev \
 libssl-dev libxml2-dev libxslt1-dev libgdbm-dev cpanminus
 ```
-- Install [Elasticsearch](http://elasticsearch.org) and [MongoDB](http://mongodb.org)
+- Get and install [Elasticsearch](https://www.elastic.co/downloads/elasticsearch) and [MongoDB](https://www.mongodb.org/downloads) for your distribution (preferably from your package manager),
+
+e.g. on debian
 
 ```
 $ sudo apt-get install elasticsearch mongodb
@@ -27,13 +29,23 @@ $ cd LibreCat
 $ cpanm --notest --installdeps .
 ```
 
+- Generate the forms
+
+```
+$ perl bin/generate_forms.pl
+```
+
 - Start the webserver
 
 ```
-$ plackup -E development bin/app.pl
+$ starman bin/app.pl
 ```
 
 and point your browser to http://localhost:5000/.
+
+## Configuration
+
+
 
 ## Running with Docker
 
