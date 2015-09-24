@@ -126,7 +126,7 @@
 	    [% END %]
 	  [% END %]
 	[% END %]
-	
+
 	[% IF cc_license %]
 	<div class="row">
 	  <div class="col-xs-2 text-muted">[% lf.frontdoor.cc_license %]</div>
@@ -134,13 +134,13 @@
 	  [% SWITCH cc_license %]
 	    [% CASE 'cc_by' %]
 	    <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank"><img src="/images/cc_by.png" height="25px;" /></a>
-	    
+
 	    [% CASE 'cc_by_sa' %]
 	    <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><img src="/images/cc_by_sa.png" height="25px;" /></a>
-	    
+
 	    [% CASE 'cc_by_nd' %]
 	    <a href="http://creativecommons.org/licenses/by-nd/4.0/" target="_blank"><img src="/images/cc_by_nd.png" height="25px;" /></a>
-	      
+
 	  [% END %]
 	  </div>
 	</div>
@@ -292,6 +292,8 @@
 	    <li><a href="#ieee" data-toggle="tab">IEEE</a></li>
 	    <li><a href="#lncs" data-toggle="tab">LNCS</a></li>
 	    <li><a href="#mla" data-toggle="tab">MLA</a></li>
+        <li><a href="#bibtex" data-toggle="tab">BibTeX</a></li>
+        <li><a href="#ris" data-toggle="tab">RIS</a></li>
 	  </ul>
 
 	  <div class="tab-content">
@@ -302,6 +304,9 @@
 	    <div id="ieee" class="tab-pane">[% citation.ieee %]</div>
 	    <div id="lncs" class="tab-pane">[% citation.lncs %]</div>
 	    <div id="mla" class="tab-pane">[% citation.mla %]</div>
+        <div id="bibtex" class="tab-pane"></div>
+        <div id="ris" class="tab-pane"></div>
+
 	  </div>
 
 	</div><!-- citethis -->
@@ -483,6 +488,12 @@ $.getJSON("/metrics/[% _id %]").done(function( data ) {
   if (data.times_cited > 0) {
     $('#wos').after('<a href="'+ data.citing_url +'" target="_parent">Web of Science&reg; Times Cited: <strong class="wos-times-cited">'+ data.times_cited +'</strong></a></li><br>');
   }
+});
+$.getJSON("/bibtex/[% _id %]").done(function(data) {
+    $('#bibtex').prepend('<pre>'+ data.bibtex + '</pre>');
+});
+$.getJSON("/ris/[% _id %]").done(function(data) {
+    $('#ris').prepend('<pre>'+ data.ris +'</pre>');
 });
 </script>
 [% END %]
