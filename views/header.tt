@@ -2,7 +2,9 @@
 <html[% IF bag == 'home' %] ng-app="angularController"[% END %]>
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
 [% lf = h.config.language.$lang -%]
+
 <!-- BEGIN header.tt -->
+
   <head>
     <title>
       [% IF title %][% title %]
@@ -65,12 +67,14 @@
     [% END %]
     [% UNLESS backend %]
     <meta name="robots" content="index,follow,noimageindex" />
-    [% ELSE %]
+    [% ELSE -%]
     <meta name="robots" content="noindex,nofollow,noimageindex" />
-    [% END -%]
+    [% END %]
     [% INCLUDE head_meta.tt %]
   </head>
 
   <body[% IF bag == 'home' %] ng-controller="angularSearch"[% END %] itemscope itemtype="http://schema.org/WebPage">
+
   [% INCLUDE navbar.tt %]
+
 <!-- END header.tt -->
