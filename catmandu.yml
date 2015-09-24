@@ -1,6 +1,8 @@
 appname: "PUB - Publications at Bielefeld University"
-#host: "http://pub.uni-bielefeld.de"
+host: "http://pub.uni-bielefeld.de"
 charset: "UTF-8"
+
+ip_range: '8.8'
 
 # Template Engine
 template: "template_toolkit"
@@ -11,6 +13,11 @@ engines:
     end_tag:   '%]'
 
 time_format: "%Y-%m-%dT%H:%M:%SZ"
+
+# session handling
+# use default store
+session: "Catmandu"
+session_expires: 1 hr
 
 # default settings
 default_lang: de
@@ -51,10 +58,6 @@ request_copy:
   period: 7
   subject: 'Request for a copy of your publication'
 
-datacite_logfile: "/srv/www/pub/logs/datacite.log"
-doi:
-  log: "/srv/www/pub/log/doi_registry.log"
-
 plugins:
   'Auth::Tiny':
 
@@ -86,14 +89,14 @@ plugins:
       -
         identifier: "info:srw/schema/1/mods-v3.3"
         name: mods
-#        #fix: ['fixes/to_mods.fix']
+        fix: ['fixes/to_mods.fix']
         template: views/export/mods.tt
 
   'Catmandu::OAI':
     store: search
     bag: publication
     datestamp_field: date_updated
-    repositoryName: PUB - Publications at Bielefeld University
+    repositoryName: 'PUB - Publications at Bielefeld University'
     uri_base: "http://pub.uni-bielefeld.de/oai"
     adminEmail: vitali.peil@uni-bielefeld.de
     earliestDatestamp: "1970-01-01T00:00:01Z"
@@ -111,46 +114,39 @@ plugins:
         metadataNamespace: "http://www.openarchives.org/OAI/2.0/oai_dc/"
         template: views/export/oai_dc.tt
         cql_filter: 'status exact public OR status exact deleted'
-        fix:
-          - publication_to_dc()
+        fix: ["fixes/to_dc.fix"]
       -
         metadataPrefix: mods
         schema: "http://www.loc.gov/standards/mods/v3/mods-3-0.xsd"
         metadataNamespace: "http://www.loc.gov/mods/v3"
         template: views/export/mods.tt
         cql_filter: 'status exact public'
-        fix:
-          #- publication_to_mods()
-          - nothing()
+        fix: ["fixes/to_mods.fix"]
       -
         metadataPrefix: epicur
         schema: http://www.persistent-identifier.de/xepicur/version1.0/xepicur.xsd
         metadataNamespace: urn:nbn:de:1111-2004033116
         template: views/export/oai_epicur.tt
         filter: 'status exact public AND fulltext exact 1'
-        fix:
-          - add_field('host','http://pub.uni-bielefeld.de')
+        fix: ["add_field('host','http://pub.uni-bielefeld.de')"]
       -
         metadataPrefix: xMetaDissPlus
         schema: http://files.dnb.de/standards/xmetadissplus/xmetadissplus.xsd
         metadataNamespace: http://www.d-nb.de/standards/xmetadissplus
         template: views/export/oai_xmdp.tt
         cql_filter: 'status exact public AND type=bi*'
-        fix:
-          - publication_to_xmdp()
+        fix: ["fixes/to_xmdp.fix"]
       -
         metadataPrefix: oai_datacite
         schema: http://schema.datacite.org/meta/kernel-2.2/metadata.xsd
         metadataNamespace: http://www.datacite.org/schema/namespace
         template: views/export/datacite.tt
         filter: 'status exact public AND type=researchData'
-        fix:
-          - nothing()
+        fix: ["nothing()"]
       -
         metadataPrefix: rdf
         template: views/export/rdf.tt
-        fix:
-          - nothing()
+        fix: ["nothing()"]
         filter: 'status exact public'
         schema: http://www.openarchives.org/OAI/2.0/rdf.xsd
         metadataNamespace: http://www.openarchives.org/OAI/2.0/rdf/

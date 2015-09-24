@@ -7,14 +7,17 @@ use Catmandu::Importer::JSON;
 use Data::Dumper;
 
 Catmandu->load(':up');
-Catmandu->config;
+
+my $ind_name = Catmandu->config->{search}->{options}->{'index_name'};
+my $ind1 = $ind_name ."1";
+my $ind2 = $ind_name ."2";
 
 my $backup_store = Catmandu->store('backup');
 
 my $e = Search::Elasticsearch->new();
 
-my $pub1_exists = $e->indices->exists(index => 'pub1');
-my $pub2_exists = $e->indices->exists(index => 'pub2');
+my $ind1_exists = $e->indices->exists(index => $ind1);
+my $ind2_exists = $e->indices->exists(index => $ind2);
 
 sub _do_switch {
 	my ($old, $new) = @_;
@@ -37,13 +40,13 @@ sub _do_switch {
 		$e->indices->update_aliases(
 		    body => {
 		    	actions => [
-		    	    { add    => { alias => 'pub', index => $new }},
-		    	    { remove => { alias => 'pub', index => $old }}
+		    	    { add    => { alias => $ind_name, index => $new }},
+		    	    { remove => { alias => $ind_name, index => $old }}
 		    	]
 		    }
 		);
 
-		$checkForIndex = $e->indices->exists(index => 'pub');
+		$checkForIndex = $e->indices->exists(index => $ind_name);
 
 		if($checkForIndex){
 			print "Alias 'pub' is ok and points to index $new. Deleting $old.\n";
@@ -61,13 +64,13 @@ sub _do_switch {
 }
 
 # main
-if (($pub1_exists and !$pub2_exists) or (!$pub1_exists and !$pub2_exists)) {
+if (($ind1_exists and !$ind2_exists) or (!$ind1_exists and !$ind2_exists)) {
 
-	_do_switch('pub1','pub2');
+	_do_switch($ind1, $ind2);
 
-} elsif ($pub2_exists and !$pub1_exists) {
+} elsif ($ind2_exists and !$ind1_exists) {
 
-	_do_switch('pub2','pub1');
+	_do_switch($ind2, $ind1);
 
 } else { # $pub1_exists and $pub2_exists
 

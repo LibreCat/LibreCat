@@ -19,24 +19,12 @@ sub config {
 }
 
 sub bag {
-	state $bag = do {
-		if (Dancer::config->{environment} eq 'development') {
-			Catmandu->store('dev-default')->bag;
-		} else {
-			Catmandu->store->bag;
-		}
-	};
+	state $bag = Catmandu->store->bag;
 }
 
 sub backup {
 	my ($self, $bag) = @_;
-	state $store = do {
-		if (Dancer::config->{environment} eq 'development') {
-			Catmandu->store('dev-backup')->bag($bag);
-		} else {
-				Catmandu->store('backup')->bag($bag);
-		}
-	};
+	state $store = Catmandu->store('backup')->bag($bag);
 }
 
 sub publication {
