@@ -1,8 +1,7 @@
-
 <!-- BEGIN pagination.tt -->
 
 [% IF next_page or previous_page %]
-[% qp = request.params.hash; qp.delete('splat') %]
+[% qp = request.params.hash; qp.delete('splat') -%]
 <div class="col-md-12">
   <ul class="pagination">
     [% IF previous_page %]
@@ -39,4 +38,3 @@
 [% END %]
 
 <!-- END pagination.tt -->
-

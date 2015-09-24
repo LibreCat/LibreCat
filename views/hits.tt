@@ -1,9 +1,6 @@
-
 <!-- BEGIN hits.tt -->
-
-[% path = request.path %]
-[% num = total; n = 0 %]
-
+[% path = request.path -%]
+[% num = total; n = 0 -%]
 [% UNLESS request.path.match("/marked") %]
 <div class="row">
   <div class="col-md-12[% UNLESS request.path.match("/person") OR total == 0 %] col-xs-8[% END %]">
@@ -119,8 +116,6 @@
   [% INCLUDE pagination.tt %]
 </div>
 [% END %]
-
-
 
 <script>
   $('.citation-block-link').tooltip();

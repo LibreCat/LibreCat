@@ -1,16 +1,11 @@
-[% qp = request.params.hash %]
-[% qp.delete('splat') %]
-[% lf = h.config.language.$lang %]
-
+[% qp = request.params.hash -%]
+[% qp.delete('splat') -%]
+[% lf = h.config.language.$lang -%]
 <!DOCTYPE html>
-<html ng-app="angularController">
-
+<html>
   <head>
-
     <title>PUB &ndash; Publications at Bielefeld University</title>
-
     <link rel="icon" href="/images/icon_uni.png" type="image/png">
-
     [% INCLUDE head_meta.tt %]
   </head>
 
@@ -30,5 +25,4 @@
   </div>
 
   </body>
-
 </html>

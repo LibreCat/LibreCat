@@ -1,16 +1,16 @@
-[% qp = {} %]
-[% qp = h.extract_params %]
-[% pd = {} %]
-[% lang = session.lang ? session.lang : h.config.default_lang %]
-[% lf = h.config.language.$lang %]
+[% qp = {} -%]
+[% qp = h.extract_params -%]
+[% pd = {} -%]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lf = h.config.language.$lang -%]
 [% IF embed AND qp.ttyp %]
-[% pd = h.is_portal_default(qp.ttyp) %]
+[% pd = h.is_portal_default(qp.ttyp) -%]
 [% END %]
+
 <!-- BEGIN facets.tt -->
 
 [%- USE JSON -%]
 [%- USE date(format => '%Y') -%]
-
 <div id="facets"></div>
 <div id="export"></div>
 
@@ -74,7 +74,7 @@
 
 [% IF bag == "person" AND !qp.q.grep('^former').0 %]
 [% other = {} %]
-[% CALL other.import(qp) %]
+[% CALL other.import(qp) -%]
   <ul class="nav nav-tabs nav-stacked margin-bottom1">
     <li>
       <a href="[% path %]?[% h.hash_to_url(other) %]&q=former<>1" rel="nofollow"><span class="fa fa-chevron-right"></span> [% lf.facets.current_authors %]</a>
@@ -199,9 +199,9 @@
      [% query = query _  " OR " %]
    [% END %]
   [% END %]
-  [% query = query _ ")" %]
-  [% p.q = []; p.q.push(query); p.get_person = 1 %]
-  [% editors = h.search_researcher(p) %]
+  [% query = query _ ")" -%]
+  [% p.q = []; p.q.push(query); p.get_person = 1 -%]
+  [% editors = h.search_researcher(p) -%]
   <li>
     <button data-toggle="collapse" data-target="#editors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.current_editors %] ([% facets.editor.terms.size %])</button>
     <div class="facettecollapse">

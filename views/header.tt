@@ -1,45 +1,27 @@
 <!DOCTYPE html>
 <html[% IF bag == 'home' %] ng-app="angularController"[% END %]>
-
-[% lang = session.lang ? session.lang : h.config.default_lang %]
-[% lf = h.config.language.$lang %]
-
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lf = h.config.language.$lang -%]
 <!-- BEGIN header.tt -->
-
   <head>
-
-  <title>
-    [% IF title %]
-    [% title %]
-    [% ELSIF request.path.match("publication") %]
-    PUB &ndash; [% lf.tabs.publications %]
-    [% ELSIF request.path.match("data") %]
-    [% lf.tabs.data_publications %] ([% lf.header.title_long %])
-    [% ELSIF request.path.match("person/") %]
-    [% lf.header.title_person %] [% thisPerson.first_name %] [% thisPerson.last_name %]
-    [% ELSIF request.path.match("person") %]
-    [% lf.tabs.authors %] ([% lf.header.title_long %])
-    [% ELSIF request.path.match("about") %]
-    [% lf.tabs.about %] ([% lf.header.title_long %])
-    [% ELSIF request.path.match("faq") %]
-    [% lf.tabs.faq %] ([% lf.header.title_long %])
-    [% ELSIF request.path.match("contact") %]
-    [% lf.tabs.contact %] ([% lf.header.title_long %])
-    [% ELSIF request.path.match("policy") %]
-    [% lf.tabs.policy %] ([% lf.header.title_long %])
-    [% ELSIF request.path.match("pubtheses") %]
-    PUB Theses ([% lf.header.title %])
-    [% ELSE %]
-    [% lf.header.title_long %]
-    [% END %]
-  </title>
+    <title>
+      [% IF title %][% title %]
+      [% ELSIF request.path.match("publication") %]PUB &ndash; [% lf.tabs.publications %]
+      [% ELSIF request.path.match("data") %][% lf.tabs.data_publications %] ([% lf.header.title_long %])
+      [% ELSIF request.path.match("person/") %][% lf.header.title_person %] [% thisPerson.first_name %] [% thisPerson.last_name %]
+      [% ELSIF request.path.match("person") %][% lf.tabs.authors %] ([% lf.header.title_long %])
+      [% ELSIF request.path.match("about") %][% lf.tabs.about %] ([% lf.header.title_long %])
+      [% ELSIF request.path.match("faq") %][% lf.tabs.faq %] ([% lf.header.title_long %])
+      [% ELSIF request.path.match("contact") %][% lf.tabs.contact %] ([% lf.header.title_long %])
+      [% ELSIF request.path.match("policy") %][% lf.tabs.policy %] ([% lf.header.title_long %])
+      [% ELSIF request.path.match("pubtheses") %]PUB Theses ([% lf.header.title %])
+      [% ELSE %][% lf.header.title_long %]
+      [% END %]
+    </title>
 
     <link rel="icon" href="/images/icon_uni.png" type="image/png">
-
     [% IF title AND !backend %]
-
       <!-- Google Scholar -->
-
       [% IF title %]<meta name="citation_title" content="[% title %]">[% END %]
       [% FOREACH author_entry IN author %]<meta name="citation_author" content="[% author_entry.full_name %]">
       [% END -%]
@@ -54,9 +36,7 @@
       [% IF pagesEnd %]<meta name="citation_lastpage" content="[% pagesEnd %]" />[% END %]
       [% IF issn %]<meta name="citation_issn" content="[% issn.0 %]">[% END %]
       [% IF isbn %]<meta name="citation_isbn" content="[% isbn.0 %]">[% END %]
-
       <!-- DC-Tags -->
-
       <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
       <meta name="DC.title" content="[% IF personPageTitle %][% personPageTitle %][% ELSE %][% title %][% END %]">
       [% FOREACH author_entry IN author %]<meta name="DC.creator" content="[% author_entry.full_name %]">
@@ -73,10 +53,9 @@
       [% IF issn %]<link rel="DC.relation" href="urn:ISSN:[% issn.0 %]">[% END %]
       [% IF isbn %]<link rel="DC.relation" href="urn:ISBN:[% isbn.0 %]">[% END %]
     [% END %]
-
-    [% reqpath = request.path %]
-    [% personid = reqpath.search('person/(\d{1,})') %]
-    [% query = qp.q | replace('"', '&quot;') %]
+    [% reqpath = request.path -%]
+    [% personid = reqpath.search('person/(\d{1,})') -%]
+    [% query = qp.q | replace('"', '&quot;') -%]
     [% IF request.path.match("person/") %]
       <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/daily', qp, q="person=$personid") %]" title="[% thisPerson.first_name %] [% thisPerson.last_name %]'s Publication (today)">
       <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/weekly', qp, q="person=$personid") %]" title="[% thisPerson.first_name %] [% thisPerson.last_name %]'s Publication (last week)">
@@ -84,19 +63,14 @@
     [% ELSIF request.path.match("text") %]
       <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/monthly', qp, q="$query") %]" title="Publications last month">
     [% END %]
-
     [% UNLESS backend %]
     <meta name="robots" content="index,follow,noimageindex" />
     [% ELSE %]
     <meta name="robots" content="noindex,nofollow,noimageindex" />
-    [% END %]
-
+    [% END -%]
     [% INCLUDE head_meta.tt %]
-
   </head>
 
   <body[% IF bag == 'home' %] ng-controller="angularSearch"[% END %] itemscope itemtype="http://schema.org/WebPage">
-
   [% INCLUDE navbar.tt %]
-
 <!-- END header.tt -->

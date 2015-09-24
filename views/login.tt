@@ -1,5 +1,5 @@
 [% INCLUDE header.tt %]
-[% lf = h.config.language.$lang %]
+[% lf = h.config.language.$lang -%]
 
 <!-- BEGIN login.tt -->
 

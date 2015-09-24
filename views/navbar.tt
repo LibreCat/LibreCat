@@ -1,13 +1,12 @@
-[% thisPerson = h.get_person(session.personNumber) %]
-[% path = request.path %]
-[% qp = request.params.hash %]
-[% qp.delete('splat') %]
-[% lang = session.lang ? session.lang : h.config.default_lang %]
-[% lf = h.config.language.$lang %]
-[% style = qp.style || 'default' %]
+[% thisPerson = h.get_person(session.personNumber) -%]
+[% path = request.path -%]
+[% qp = request.params.hash -%]
+[% qp.delete('splat') -%]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lf = h.config.language.$lang -%]
+[% style = qp.style || 'default' -%]
 
 <!-- BEGIN navbar.tt -->
-
   <header>
     <nav class="navbar navbar-default navbar-fixed-top [% IF backend %] backend[% ELSE %] frontend[% END %]" role="navigation">
     [% IF backend %]
