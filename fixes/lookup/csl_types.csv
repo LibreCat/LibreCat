@@ -1,0 +1,12 @@
+type,csl_type
+bookChapter,chapter
+review,article
+conferenceAbstract,chapter
+conference,chapter
+encyclopediaArticle,chapter
+journalArticle,article
+journalEditor,article
+newspaperArticle,article
+patent,article
+preprint,article
+translationChapter,chapter

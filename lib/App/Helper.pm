@@ -11,7 +11,6 @@ use Sys::Hostname::Long;
 use Moo;
 use POSIX qw(strftime);
 use JSON;
-use Citation;
 
 Catmandu->load(':up');
 
@@ -20,24 +19,12 @@ sub config {
 }
 
 sub bag {
-	state $bag = do {
-		if (Dancer::config->{environment} eq 'development') {
-			Catmandu->store('dev-default')->bag;
-		} else {
-			Catmandu->store->bag;
-		}
-	};
+	state $bag = Catmandu->store->bag;
 }
 
 sub backup {
 	my ($self, $bag) = @_;
-	state $store = do {
-		if (Dancer::config->{environment} eq 'development') {
-			Catmandu->store('dev-backup')->bag($bag);
-		} else {
-				Catmandu->store('backup')->bag($bag);
-		}
-	};
+	state $store = Catmandu->store('backup')->bag($bag);
 }
 
 sub publication {
@@ -404,7 +391,6 @@ sub update_record {
 		if ($rec->{related_material}) {
 		    App::Catalogue::Controller::Material::update_related_material($rec);
 		}
-		$rec->{citation} = Citation::index_citation_update($rec,0,'') || '';
 	}
 
 	Catmandu::Fix->new(fixes => [join_path('fixes',"update_$bag.fix")])->fix($rec);
@@ -559,20 +545,17 @@ sub search_publication {
 sub export_publication {
 	my ($self, $hits, $fmt, $to_string) = @_;
 
-	if ($fmt eq 'csl_json') {
-		$self->export_csl_json($hits);
-	}
-	elsif($fmt eq 'autocomplete'){
+	if($fmt eq 'autocomplete'){
 		return $self->export_autocomplete_json($hits);
 	}
 
 	if ( my $spec = config->{exporter}->{publication}->{$fmt} ) {
 		my $package = $spec->{package};
-	   	my $options = $spec->{options} || {};
+		my $options = $spec->{options} || {};
 
 		$options->{style} = $hits->{style} || 'default';
 	   	$options->{explinks} = params->{explinks};
-	   	my $content_type = $spec->{content_type} || mime->for_name($fmt);
+	    my $content_type = $spec->{content_type} || mime->for_name($fmt);
 	   	my $extension = $spec->{extension} || $fmt;
 
 		my $f = export_to_string( $hits, $package, $options );
@@ -606,23 +589,6 @@ sub export_autocomplete_json {
 	});
 	my $json = to_json($jsonhash);
 	return $json;
-}
-
-sub export_csl_json {
-	my ($self, $hits) = @_;
-
-	my $spec = config->{exporter}->{publication}->{csl_json};
-	my $out;
-	$hits->each(sub {
-		push @$out, Citation::index_citation_update($_[0],0,'csl_json');
-		});
-
-	my $f = export_to_string($out, $spec->{package}, $spec->{options} || {});
-	return Dancer::send_file (
-   	    \$f,
-	    content_type => $spec->{content_type},
-	    filename     => "publications.$spec->{extension}"
-	   );
 }
 
 sub search_researcher {

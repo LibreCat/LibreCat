@@ -33,5 +33,5 @@ profiledata/
 uploads/
 vendor/
 tmp/
-catmandu.private.yml
+catmandu.local.yml
 ~$

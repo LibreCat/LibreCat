@@ -26,6 +26,20 @@ ajax '/metrics/:id' => sub {
     };
 };
 
+ajax '/bibtex/:id' => sub {
+    my $pub = h->publication->get(params->{id});
+    return to_json {
+        bibtex => h->export_publication($pub, 'bibtex', 1),
+    };
+};
+
+ajax '/ris/:id' => sub {
+    my $pub = h->publication->get(params->{id});
+    return to_json {
+        ris => h->export_publication($pub, 'ris', 1),
+    };
+};
+
 =head2 AJAX /search_researcher
 
 =cut
@@ -64,7 +78,7 @@ ajax '/get_project' => sub {
     } split(' ', lc params->{term});
 
     my $hits = h->search_project({q => $q, limit => 10});
-    
+
     if($hits->{total}){
     	my $map;
     	@$map = map {
@@ -75,7 +89,7 @@ ajax '/get_project' => sub {
     else {
     	return to_json [];
     }
-    
+
 };
 
 =head2 AJAX /get_department
@@ -88,7 +102,7 @@ ajax '/get_department' => sub {
     } split(' ', lc params->{term});
 
     my $hits = h->search_department({q => $q, limit => 10});
-    
+
     if($hits->{total}){
     	my $map;
     	@$map = map {
@@ -109,9 +123,9 @@ ajax '/get_research_group' => sub {
 	@$q = map {
 		$_ .= '*' if $_ !~ /[äöüß]/;
 	} split(' ', lc params->{term});
-	
+
 	my $hits = h->search_research_group({q => $q, limit => 10});
-	
+
 	if($hits->{total}){
 		my $map;
 		@$map = map {

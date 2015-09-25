@@ -1,43 +1,18 @@
 _prefix:
   store:
 
-dev-default:
-  package: MongoDB
-  options:
-    database_name: Test
-    bags:
-      session:
-        plugins: ['Datestamps']
-
-dev-backup:
-  package: MongoDB
-  options:
-    database_name: Backup
-    bags:
-      publication: &backup_dev
-        plugins: ['Datestamps']
-      award: *backup_dev
-      project: *backup_dev
-      researcher: *backup_dev
-      department: *backup_dev
-      research_group: *backup_dev
-
 default:
-  package: DBI
+  package: MongoDB
   options:
-    data_source: "DBI:mysql:database=PUBSystem"
-    username: root
-    password: pub33TX
+    database_name: librecat_system
     bags:
       session:
         plugins: ['Datestamps']
 
 backup:
-  package: DBI
+  package: MongoDB
   options:
-    data_source: "DBI:mysql:database=PUBBackup"
-    username: root
-    password: pub33TX
+    database_name: librecat_backup
     bags:
       publication: &backup_settings
         plugins: ['Datestamps', 'Versioning']
@@ -52,20 +27,13 @@ backup:
 metrics:
   package: MongoDB
   options:
-    database_name: PUBMetrics
+    database_name: librecat_metrics
     bags:
-      wos:
-        plugins: ['Datestamps', 'Versioning']
-      epmc_citations:
+      wos: &metrics_settings
         plugins: ['Datestamps']
-      epmc_referefences:
-        plugins: ['Datestamps']
-      epmc_dblinks:
-        plugins: ['Datestamps']
-      crossref:
-        plugins: ['Datestamps']
-      toolkit:
-        plugins: ['Datestamps']
+      epmc_citations: *metrics_settings
+      epmc_referefences: *metrics_settings
+      epmc_dblinks: *metrics_settings
 
 search:
   package: ElasticSearch
@@ -942,7 +910,7 @@ search:
               field: start_date
             end_date: *start_date
 
-    index_name: pub
+    index_name: librecat
     index_settings:
       analysis:
         analyzer:

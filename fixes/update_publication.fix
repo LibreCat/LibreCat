@@ -10,6 +10,7 @@ language()
 maybe_add_urn()
 person()
 add_department()
+add_citation()
 
 isbn13(publication_identifier.isbn.*)
 issn(publication_identifier.issn.*)

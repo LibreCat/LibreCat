@@ -5,13 +5,3 @@ logger_format: %T [%h] - %f -- %m
 show_errors: 1
 warnings: 1
 traces: 1
-
-session: Catmandu
-session_store: dev-default
-session_bag: session
-
-thesis:
-  to: "vitali.peil@uni-bielefeld.de,petra.kohorst@uni-bielefeld.de"
-  from: publikationsdienste.ub@uni-bielefeld.de
-  subject: "[PUB TEST] New thesis submitted"
-  urn_prefix: 'urn:nbn:de:hbz:361'
