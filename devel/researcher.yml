@@ -2,8 +2,9 @@
 _id: '1234'
 account_status: active
 account_type: external
-password: test
+password: secret
 login: einstein
+super_admin: 1
 department:
 - id: 9996
   name: 'Relativistic Theory Group'
