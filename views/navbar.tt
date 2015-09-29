@@ -75,7 +75,7 @@
       [% ELSE %]
       <div class="container">
 	<div class="row">
-	  <div class="col-xs-10 hidden-sm hidden-lg hidden-md">
+	  <div class="col-xs-11 hidden-sm hidden-lg hidden-md">
 	    <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" height="43" alt="" /></a>
 	    <span class="navbar-title"><a href="/"><span class="xxs-only"><img src="/images/publogo.gif" height="30" alt="PUB Bielefeld" /></span><span class="hidden-xxs">
 	      [% lf.header.title_long %]
@@ -87,7 +87,7 @@
 	      [% lf.header.title_long %]
 	      </a></span>
 	  </div>
-	  <div class="col-xs-2 col-md-offset-1">
+	  <div class="col-xs-1 col-sm-2 col-md-offset-1">
 	    <span class="select-language pull-right"><a href="/set_language?[% session.lang == "en" ? "lang=de" : "lang=en" %]"><span class="glyphicon glyphicon-flag hidden-xs"></span>[% lf.header.lang %]</a></span>
 	  </div>
 	</div>
