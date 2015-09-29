@@ -13,10 +13,10 @@
 	<div class="col-md-4 col-sm-5">
 	  <p>&copy; 2010-[% USE date %][% date.format(date.now, '%Y') %] <a href="http://www.ub.uni-bielefeld.de/[% lang ? "english/" : "" %]">[% lf.footer.this_is_us %]</a></p>
 	  <ul class="list-inline">
-	    <li><a href="http://www.dini.de/dini-zertifikat/" target="_blank"><img src="/images/logo_dini_2010.png" alt="[% lf.footer.dini_alt %]" title="[% lf.footer.dini_title %]" style="height:40px;"/></a></li>
-	    <li><a href="http://www.openaire.eu/" target="_blank"><img src="/images/logo_openaire_val.png" alt="[% lf.footer.openaire_alt %]" title="[% lf.footer.openaire_title %]" /></a></li>
-	    <li><a href="http://www.openarchives.org/Register/BrowseSites" target="_blank"><img src="/images/logo_oai.gif" alt="[% lf.footer.openarchives_alt %] " title="[% lf.footer.openarchives_title %]" style="height:40px;"/></a></li>
-	    <li><a href="http://www.datacite.org/" target="_blank"><img src="/images/logo_datacite.png" alt="[% lf.footer.datacite_alt %]" title="[% lf.footer.datacite_title %]" style="height:40px;"/></a></li>
+	    <li><a href="http://www.dini.de/dini-zertifikat/"><img src="/images/logo_dini_2010.png" alt="[% lf.footer.dini_alt %]" title="[% lf.footer.dini_title %]" style="height:40px;"/></a></li>
+	    <li><a href="http://www.openaire.eu/"><img src="/images/logo_openaire_val.png" alt="[% lf.footer.openaire_alt %]" title="[% lf.footer.openaire_title %]" /></a></li>
+	    <li><a href="http://www.openarchives.org/Register/BrowseSites"><img src="/images/logo_oai.gif" alt="[% lf.footer.openarchives_alt %] " title="[% lf.footer.openarchives_title %]" style="height:40px;"/></a></li>
+	    <li><a href="http://www.datacite.org/"><img src="/images/logo_datacite.png" alt="[% lf.footer.datacite_alt %]" title="[% lf.footer.datacite_title %]" style="height:40px;"/></a></li>
 	  </ul>
 	</div>
 	<div class="col-sm-4">

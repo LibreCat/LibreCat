@@ -29,16 +29,15 @@
 [% CALL other.delete('q') %]
 [%- FOREACH val IN qp.q %]
 [%- removed = [] -%]
-
 [%- CALL removed.import(qp.q) -%]
 [%- CALL removed.splice(loop.index, 1) -%]
 <p class="text-muted"><a href="[% path %]?q=[% removed.join('&q=') %][% h.hash_to_url(other) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
-[%- END %]
+[%- END %]	
 [%- END %]
 
 [% UNLESS request.path == "/marked" %]
 [% IF qp.q.size == 0 %]
-<div class="row hidden-md hidden-lg hidden-sm"><!-- smartphones only -->
+<div class="row hidden-md hidden-lg hidden-sm">
   <div class="col-xs-12">
     <h2 class="margin-xs">[% lf.facets.search_filter %]</h2>
   </div>
@@ -399,7 +398,7 @@
 
 <ul class="nav nav-tabs nav-stacked ul4">
   <li>
-    <button data-toggle="collapse" data-target="#export_[% tabmodus %][% menu %]" class="btn btn-link">
+    <button data-toggle="collapse" data-target="#export_[% tabmodus %][% menu %]" class="btn-link">
       <span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.export_as %]
     </button>
     <div class="facettecollapse">
