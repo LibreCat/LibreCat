@@ -223,7 +223,7 @@ input.has-error,.has-error input,select.has-error,.has-error select{background-c
 /* sort */
 .sortitem{cursor:move;}
 
-/* iframe styles */
+/* iframe (embed) styles */
 
 body.embed {padding:0;margin:0;width:100%;}
 .embed h2,.embed h3{font-weight:bold;}
@@ -253,7 +253,7 @@ a{font-weight:bold;}
 }
   
 @media (max-width:992px){
-.helpme.helpme-md + .tooltip { visibility:hidden; }
+.helpme.helpme-md + .tooltip {visibility:hidden;}
 .page-header{padding-bottom:0;}
 .margin0-sm{margin-bottom:0!important;}
 a{font-weight:bold;}
