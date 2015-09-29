@@ -57,19 +57,19 @@ oai_provider '/oai',
 
 get '/livecitation' => sub {
     my $params = params;
-    my $debug = $params->{debug} ? "debug" : "no_debug";
+    my $debug = $params->{debug} ? 1 : 0;
     unless ($params->{id} and $params->{style}) {
-        return "'id' and 'style' needed.";
+        return "Required parameters are 'id' and 'style'.";
     }
 
     my $pub = h->publication->get($params->{id});
 
-    my $response = Citation::index_citation_update($pub, 1, $debug, [$params->{style}]);
+    my $response = Citation->new(styles => [$params->{style}], debug => $debug)
+        ->create($pub)->{$params->{style}};
 
-    if($debug eq "debug"){
+    if($debug){
     	return to_dumper $response;
-    }
-    else {
+    } else {
     	utf8::decode($response);
     	template "websites/livecitation", {citation => $response};
     }

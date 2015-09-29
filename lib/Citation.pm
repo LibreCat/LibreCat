@@ -4,22 +4,27 @@ use Catmandu::Sane;
 use Catmandu -load;
 use Catmandu::Util qw(:array);
 use Catmandu::Error;
-use Moo;
 use JSON;
 use LWP::UserAgent;
+use Moo;
 
 Catmandu->load(':up');
 my $conf = Catmandu->config->{citation};
 
-has styles => (is => 'ro', default => sub { ['default'] });
+has style => (is => 'ro');
+has styles => (is => 'ro', lazy => 1, builder => '_build_styles');
 has locale => (is => 'ro', default => sub {'en'});
 has all => (is => 'ro');
 has debug => (is => 'ro');
 
-sub BUILD {
+sub _build_styles {
 	my ($self) = @_;
 	if ($self->all) {
-		$self->styles = $conf->{csl}->{styles};
+		return $conf->{csl}->{styles};
+	} elsif ($self->style) {
+		return [$self->style];
+	} else {
+		return ['default'];
 	}
 }
 
@@ -32,8 +37,12 @@ sub _request {
 	return $res if $self->debug;
 
 	my $json = JSON->new();
-	return $res->{_rc} eq '200'
-		? $json->decode($res->{_content})->	[0]->{citation} : '';
+	if ($res->{_rc} eq '200') {
+		my $obj = $json->decode($res->{_content});
+		return $obj->[0]->{citation};
+	} else {
+		return '';
+	}
 }
 
 sub create {
@@ -46,12 +55,12 @@ sub create {
 	my $cite;
 
 	if ($conf->{engine} eq 'template') {
-		return { default => export_to_string('Template', $data, { template => $conf->{template}->{template_path} }) };
+		return { default => export_to_string($data, 'Template', { template => $conf->{template}->{template_path} }) };
 	} else {
-		my $csl_json = export_to_string('JSON', $data, { array => 1, fix => 'fixes/to_csl.fix' });
+		my $csl_json = export_to_string($data, 'JSON', { array => 1, fix => 'fixes/to_csl.fix' });
 		foreach my $s (@{$self->{styles}}) {
 			my $locale = ($s eq 'dgps') ? 'de' : $self->locale;
-			$cite->{$s} = $self->_request(["locale => $locale", "style => $s", "format => 'html'", "input => $csl_json"]);
+			$cite->{$s} = $self->_request([locale => $locale, style => $s, format => 'html', input => $csl_json]);
 
 		}
 
