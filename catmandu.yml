@@ -19,6 +19,18 @@ time_format: "%Y-%m-%dT%H:%M:%SZ"
 session: "Catmandu"
 session_expires: 1 hr
 
+# directory for file storage
+upload_dir: '/tmp'
+tmp_dir: '/tmp/pub'
+
+urn_prefix: 'urn:whatever-'
+
+# authentication
+authentication:
+  param:
+    host: 'yourldaphost'
+    auth_base: 'uid=%s,ou=People,o=elearning-user,o=Uni-Bi'
+
 # default settings
 default_lang: de
 default_page_size: 100
