@@ -22,12 +22,10 @@ sub withAuthentication {
     my $username = shift;
     my $password = shift;
 
-    my $cfg = h->config->{authentication};
-    my $host = $cfg->{param}->{host};
-    my $authParam = $cfg->{param};
+    my $cfg = h->config->{authentication}->{param};
 
-    my $ldap = Net::LDAP->new( $host );
-    my $base = sprintf($authParam->{auth_base}, $username);
+    my $ldap = Net::LDAP->new( $cfg->{host} );
+    my $base = sprintf($cfg->{auth_base}, $username);
     my $bind = $ldap->bind( $base, password => $password);
 
     $ldap->unbind;

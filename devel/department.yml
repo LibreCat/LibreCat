@@ -1,6 +1,7 @@
 ---
 _id: 9999
 name: 'Department of Mathematics'
+display: 'Department of Mathematics'
 layer: 1
 tree:
 - id: 9999
@@ -9,6 +10,7 @@ tree:
 ---
 _id: 9998
 name: 'Analysis Group'
+display: 'Analysis Group'
 layer: 2
 tree:
   - id: 9999
@@ -19,6 +21,7 @@ tree:
 ---
 _id: 9997
 name: 'Department of Physics'
+display: 'Department of Physics'
 layer: 1
 tree:
   - id: 9997
@@ -27,6 +30,7 @@ tree:
 ---
 _id: 9996
 name: 'Relativity Theory Group'
+display: 'Relativity Theory Group'
 layer: 2
 tree:
   - id: 9997

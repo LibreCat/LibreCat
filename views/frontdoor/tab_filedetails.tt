@@ -6,6 +6,7 @@
     [% IF data_reuse_license OR other_data_license %]
     <strong>[% lf.frontdoor.license_heading %]</strong><br />
     [% END %]
+    [% IF data_reuse_license OR cc_license OR other_data_license %]
     <div class="alert alert-green">
     [% IF data_reuse_license %]
       [% lf.forms.$type.field.license.data_reuse_license.label %]
@@ -31,6 +32,7 @@
       [% other_data_license %]
     [% END %]
     </div>
+    [% END %]
     </div>
 
   [% FOREACH fi IN file.nsort('fileOrder') %]

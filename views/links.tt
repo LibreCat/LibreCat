@@ -1,20 +1,20 @@
 <!-- BEGIN links.tt -->
 
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
-<a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="[% lf.main_page.links.view_details %]" target="_top">PUB</a>
+<a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="[% lf.main_page.links.view_details %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>PUB</a>
   [% IF entry.file || entry.related_material || entry.externalFiles == "1" %]
   | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% lf.main_page.links.files %]</a>
   [% END %]
 
   [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="/download/[% entry._id  %]/[% supp.file.file_id %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
 
-  [% IF entry.doi %]| <a href="http://doi.org/[% entry.doi %]" target="_top">DOI</a>[% END %]
-  [% IF entry.external_id.isi %] | <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% entry.external_id.isi %]" target="_top">WoS</a>[% END %]
-  [% IF entry.external_id.pmid %] | <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% entry.external_id.pmid %]" target="_top">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% entry.external_id.pmid %]">Europe PMC</a>[% END %]
-  [% IF entry.external_id.arxiv %] | <a href="http://arxiv.org/abs/[% entry.external_id.arxiv %]" target="_top">arXiv</a>[% END %]
-  [% IF entry.external_id.inspire %] | <a href="http://inspirebeta.net/record/[% entry.external_id.inspire %]" target="_top">Inspire</a>[% END %]
-  [% IF entry.external_id.phillister %] | <a href="http://phillister.ub.uni-bielefeld.de/publication/[% entry.external_id.phillister.id %]" target="_top">PhilLister</a>[% END %]
-  [% IF entry.external_id.ahf %] | <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% entry.external_id.ahf %]" target="_top">AHF</a>[% END %]
+  [% IF entry.doi %]| <a href="http://doi.org/[% entry.doi %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>DOI</a>[% END %]
+  [% IF entry.external_id.isi %] | <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% entry.external_id.isi %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>WoS</a>[% END %]
+  [% IF entry.external_id.pmid %] | <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% entry.external_id.pmid %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% entry.external_id.pmid %]">Europe PMC</a>[% END %]
+  [% IF entry.external_id.arxiv %] | <a href="http://arxiv.org/abs/[% entry.external_id.arxiv %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>arXiv</a>[% END %]
+  [% IF entry.external_id.inspire %] | <a href="http://inspirebeta.net/record/[% entry.external_id.inspire %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>Inspire</a>[% END %]
+  [% IF entry.external_id.phillister %] | <a href="http://phillister.ub.uni-bielefeld.de/publication/[% entry.external_id.phillister.id %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>PhilLister</a>[% END %]
+  [% IF entry.external_id.ahf %] | <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% entry.external_id.ahf %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>AHF</a>[% END %]
 
   [% IF qp.timescited && entry.metrics.timesCited %]
 	| <a href="[% entry.metrics.citingURL %]" target="_parent">WOS&reg; Times Cited: [% entry.metrics.timesCited %]</a>
