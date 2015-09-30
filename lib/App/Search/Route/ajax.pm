@@ -35,8 +35,10 @@ ajax '/bibtex/:id' => sub {
 
 ajax '/ris/:id' => sub {
     my $pub = h->publication->get(params->{id});
+    my $ris = h->export_publication($pub, 'ris', 1);
+    utf8::decode($ris);
     return to_json {
-        ris => h->export_publication($pub, 'ris', 1),
+        ris => $ris,
     };
 };
 
