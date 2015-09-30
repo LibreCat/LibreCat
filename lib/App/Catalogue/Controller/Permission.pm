@@ -54,7 +54,7 @@ sub can_delete_file {
 sub can_download {
     my ($id, $file_id, $login, $role, $ip) = @_;
 
-    my $ip_range = h->config->{private}->{ip_range};
+    my $ip_range = h->config->{ip_range};
     my $pub = h->publication->get($id);
     my $access;
     my $file_name;

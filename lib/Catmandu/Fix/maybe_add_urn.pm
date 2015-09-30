@@ -8,7 +8,7 @@ use App::Helper;
 sub fix {
     my ($self, $pub) = @_;
     return $pub if $pub->{urn};
-    
+
     if ($pub->{type} =~ /^bi/) {
         $pub->{urn} = h->generate_urn(h->config->{thesis}->{urn_prefix},$pub->{_id});
     } elsif($pub->{file}) {
@@ -20,7 +20,7 @@ sub fix {
         }
 
         if ($oa) {
-            $pub->{urn} = h->generate_urn(h->config->{private}->{urn_prefix},$pub->{_id});
+            $pub->{urn} = h->generate_urn(h->config->{urn_prefix},$pub->{_id});
         }
     }
 
