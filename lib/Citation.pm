@@ -1,7 +1,7 @@
 package Citation;
 
 use Catmandu::Sane;
-use Catmandu -load;
+use Catmandu qw(:load export_to_string);
 use Catmandu::Util qw(:array);
 use Catmandu::Error;
 use JSON;
