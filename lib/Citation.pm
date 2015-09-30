@@ -57,7 +57,7 @@ sub create {
 		return { default => export_to_string($data, 'Template', { template => $conf->{template}->{template_path} }) };
 	} else {
 		my $csl_json = export_to_string($data, 'JSON', { array => 1, fix => 'fixes/to_csl.fix' });
-		foreach my $s (@{$self->{styles}}) {
+		foreach my $s (@{$self->styles}) {
 			my $locale = ($s eq 'dgps') ? 'de' : $self->locale;
 			$cite->{$s} = $self->_request([locale => $locale, style => $s, format => 'html', input => $csl_json]);
 
