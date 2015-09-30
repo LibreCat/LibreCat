@@ -4,7 +4,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(join_path segmented_path);
 use App::Helper;
 use Dancer::FileUtils qw/path dirname/;
-use JSON::MaybeXS qw(encode_json);
+use JSON::MaybeXS qw(decode_json encode_json);
 use File::Copy;
 use File::Path qw/rmtree/;
 use File::Basename;
@@ -34,7 +34,7 @@ sub handle_file {
 
 	if(!$previous_pub){
 		foreach my $fi (@{$pub->{file}}){
-			$fi = from_json($fi);
+			$fi = decode_json($fi);
 			$fi->{file_id} = h->new_record('publication') if !$fi->{file_id};
 			my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
 			if(defined $index){
@@ -66,7 +66,7 @@ sub handle_file {
 			if(ref $fi eq "HASH" and $fi->{file_json}){
 				$fi = $fi->{file_json};
 			}
-			$fi = from_json($fi);
+			$fi = decode_json($fi);
 			#update of existing file
 			if($fi->{file_id}){
 				$fi->{date_updated} = h->now();
