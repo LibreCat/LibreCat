@@ -144,7 +144,7 @@ en:
     filter_data_publications: "Filter Data Publications"
     filter_authorlist: "Filter Authorlist"
     filter_publications: "Filter Publications"
-    visibility_status: "Visibility Status"
+    visibility_status: "Status"
     current_authors: "UniBi Authors"
     current_editors: "UniBi Editors"
     former_authors: "Former UniBi Authors"
@@ -315,7 +315,7 @@ en:
           placeholder: "e.g. Handbook of eBook Publishing - with a subtitle"
         author: &author_translator
           label: "Author"
-          pevz_tooltip: "Link / Unlink to publication list."
+          pevz_tooltip: "Link to / Withdraw from publication list."
           first_name:
             label: "First Name"
             label_short: "Auth. First"
@@ -482,7 +482,7 @@ en:
             label_short: "Ed. Last"
             placeholder: "e.g. Appleseed"
           label: "Editor"
-          pevz_tooltip: "Link / Unlink to publication list."
+          pevz_tooltip: "Link to / Withdraw from publication list."
         corporate_editor_solo: &corporate_editor_solo
           label: "Corporate Editor"
           label_short: "Copr. Ed."
@@ -534,7 +534,7 @@ en:
             label_short: "Ed. Last"
             placeholder: "e.g. Appleseed"
           label: "Book Editor"
-          pevz_tooltip: "Link / Unlink to publication list."
+          pevz_tooltip: "Link to / Withdraw from publication list."
         corporate_editor: &corporate_editor
           label: "Corporate Editor"
           label_short: "Corp. Ed."
@@ -607,7 +607,7 @@ en:
             label_short: "Ed. Last"
             placeholder: "e.g. Appleseed"
           label: "Editor"
-          pevz_tooltip: "Link / Unlink to publication list."
+          pevz_tooltip: "Link to / Withdraw from publication list."
         corporate_editor: *corporate_editor
         department: *department
         project: *project
@@ -964,7 +964,7 @@ en:
             label_short: "Inv. Last"
             placeholder: "e.g. Appleseed"
           label: "Inventor"
-          pevz_tooltip: "Link / Unlink to publication list."
+          pevz_tooltip: "Link to / Withdraw from publication list."
         applicant:
           label: "Applicant"
           label_short: "Appl."
@@ -1136,7 +1136,7 @@ en:
             label_short: "Crea. Last"
             placeholder: "e.g. Appleseed"
           label: "Creator"
-          pevz_tooltip: "Link / Unlink to publication list."
+          pevz_tooltip: "Link to / Withdraw from publication list."
         department: *department
         project: *project
         research_group: *research_group
@@ -1219,7 +1219,7 @@ en:
             label_short: "Trans. Last"
             placeholder: "e.g. Appleseed"
           label: "Translator"
-          pevz_tooltip: "Link / Unlink to publication list."
+          pevz_tooltip: "Link to / Withdraw from publication list."
         author_secondary:
           first_name:
             label: "First Name"
@@ -1230,7 +1230,7 @@ en:
             label_short: "Auth. Last"
             placeholder: "e.g. Appleseed"
           label: "Author (Original)"
-          pevz_tooltip: "Link / Unlink to publication list."
+          pevz_tooltip: "Link to / Withdraw from publication list."
         edition: *edition
         department: *department
         project: *project
@@ -1283,7 +1283,7 @@ en:
             label_short: "Trans. Last"
             placeholder: "e.g. Appleseed"
           label: "Translator"
-          pevz_tooltip: "Link / Unlink to publication list."
+          pevz_tooltip: "Link to / Withdraw from publication list."
         author_secondary:
           first_name:
             label: "First Name"
@@ -1296,7 +1296,7 @@ en:
           multiple: 1
           label: "Author"
           pevz: 0
-          pevz_tooltip: "Link / Unlink to publication list."
+          pevz_tooltip: "Link to / Withdraw from publication list."
         alternative_title:
           label: "Chapter Title (Original)"
           label_short: "Title (Orig)"
@@ -1400,7 +1400,7 @@ en:
             label_short: "Superv. Last"
             placeholder: "e.g. Appleseed"
           label: "Supervisor"
-          pevz_tooltip: "Link / Unlink to publication list."
+          pevz_tooltip: "Link to / Withdraw from publication list."
         year:
           label: "Year"
           placeholder: "YYYY"
@@ -1692,7 +1692,7 @@ de:
     filter_data_publications: "Datenpublikationen filtern"
     filter_authorlist: "Autorenliste filtern"
     filter_publications: "Publikationen filtern"
-    visibility_status: "Sichtbarkeitsstatus"
+    visibility_status: "Status"
     current_authors: "UniBi Autoren"
     current_editors: "UniBi Herausgeber"
     former_authors: "Ehemalige UniBi Autoren"
