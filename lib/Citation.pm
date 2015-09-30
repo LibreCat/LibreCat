@@ -1,10 +1,10 @@
 package Citation;
 
 use Catmandu::Sane;
-use Catmandu -load;
+use Catmandu qw(:load export_to_string);
 use Catmandu::Util qw(:array);
 use Catmandu::Error;
-use JSON;
+use JSON::MaybeXS qw(decode_json);
 use LWP::UserAgent;
 use Moo;
 
@@ -36,9 +36,8 @@ sub _request {
 
 	return $res if $self->debug;
 
-	my $json = JSON->new();
 	if ($res->{_rc} eq '200') {
-		my $obj = $json->decode($res->{_content});
+		my $obj = decode_json($res->{_content});
 		return $obj->[0]->{citation};
 	} else {
 		return '';

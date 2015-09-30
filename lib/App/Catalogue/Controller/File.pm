@@ -4,8 +4,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(join_path segmented_path);
 use App::Helper;
 use Dancer::FileUtils qw/path dirname/;
-use Carp;
-use JSON;
+use JSON::MaybeXS qw(encode_json);
 use File::Copy;
 use File::Path qw/rmtree/;
 use File::Basename;
@@ -14,7 +13,6 @@ use Exporter qw/import/;
 our @EXPORT = qw/update_file delete_file handle_file make_thumbnail/;
 
 my $upload_dir = h->config->{upload_dir};
-my $thumb_dir = h->config->{thumb_dir};
 
 sub make_thumbnail {
     my ($id, $file_name) = @_;
@@ -60,7 +58,7 @@ sub handle_file {
 			delete $fi->{tempid} if $fi->{tempid};
 			delete $fi->{tempname} if $fi->{tempname};
 			delete $fi->{old_file_name} if $fi->{old_file_name};
-			$fi->{file_json} = to_json($fi);
+			$fi->{file_json} = encode_json($fi);
 		}
 	}
 	else{
@@ -92,12 +90,12 @@ sub handle_file {
 					delete $fi->{tempid} if $fi->{tempid};
 					delete $fi->{tempname} if $fi->{tempname};
 					delete $fi->{old_file_name} if $fi->{old_file_name};
-					$fi->{file_json} = to_json($fi);
+					$fi->{file_json} = encode_json($fi);
 				}
 				else {
 					# looks like it wasn't an existing file after all
 					# can this even happen???
-					$fi->{file_json} = to_json($fi);
+					$fi->{file_json} = encode_json($fi);
 				}
 			}
 			#new file
@@ -127,7 +125,7 @@ sub handle_file {
 				delete $fi->{tempid} if $fi->{tempid};
 				delete $fi->{tempname} if $fi->{tempname};
 				delete $fi->{old_file_name} if $fi->{old_file_name};
-				$fi->{file_json} = to_json($fi);
+				$fi->{file_json} = encode_json($fi);
 			}
 		}
 

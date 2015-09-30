@@ -7,10 +7,9 @@ use Catmandu::Fix qw(expand);
 use Dancer qw(:syntax vars params request);
 use Dancer::FileUtils qw(path);
 use Hash::Merge::Simple qw(merge);
-use Sys::Hostname::Long;
-use Moo;
 use POSIX qw(strftime);
-use JSON;
+use JSON::MaybeXS qw(encode_json);
+use Moo;
 
 Catmandu->load(':up');
 
@@ -587,8 +586,8 @@ sub export_autocomplete_json {
 			push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
 		}
 	});
-	my $json = to_json($jsonhash);
-	return $json;
+
+	return encode_json($jsonhash);
 }
 
 sub search_researcher {

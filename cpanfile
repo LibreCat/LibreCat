@@ -1,7 +1,7 @@
 requires 'perl', 'v5.10.1';
 
 # Catmandu
-requires 'Catmandu', '>=0.9402';
+requires 'Catmandu', '0.9403';
 requires 'Catmandu::Store::ElasticSearch';
 requires 'Catmandu::Store::MongoDB';
 #requires 'Catmandu::Store::DBI';
@@ -12,13 +12,12 @@ requires 'Catmandu::Importer::Inspire';
 requires 'Catmandu::Importer::EuropePMC';
 requires 'Catmandu::Importer::CrossRef';
 requires 'Catmandu::Importer::getJSON';
-requires 'Catmandu::Identifier', '>=0.03';
+requires 'Catmandu::Identifier', '0.04';
 requires 'Catmandu::RIS', '>=0.04';
 
 
 #Dancer
 requires 'Dancer';
-requires 'Dancer::Plugin';
 requires 'Dancer::FileUtils';
 requires 'Dancer::Plugin::Catmandu::OAI';
 requires 'Dancer::Plugin::Catmandu::SRU';
@@ -44,6 +43,8 @@ requires 'Starman';
 
 # others
 requires 'all';
+requires 'JSON::MaybeXS', '1.003005';
+requires 'YAML::XS', '0.41';
 requires 'DateTime';
 requires 'Hash::Merge';
 requires 'Try::Tiny';
