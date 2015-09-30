@@ -22,9 +22,28 @@ sub bag {
 	state $bag = Catmandu->store->bag;
 }
 
-sub backup {
-	my ($self, $bag) = @_;
-	state $store = Catmandu->store('backup')->bag($bag);
+sub backup_publication {
+	state $bag = Catmandu->store('backup')->bag('publication');
+}
+
+sub backup_project {
+	state $bag = Catmandu->store('backup')->bag('project');
+}
+
+sub backup_award {
+    state $bag = Catmandu->store('backup')->bag('award');
+}
+
+sub backup_researcher {
+	state $bag = Catmandu->store('backup')->bag('researcher');
+}
+
+sub backup_department {
+	state $bag = Catmandu->store('backup')->bag('department');
+}
+
+sub backup_research_group {
+	state $bag = Catmandu->store('backup')->bag('research_group');
 }
 
 sub publication {
@@ -394,7 +413,8 @@ sub update_record {
 	}
 
 	Catmandu::Fix->new(fixes => [join_path('fixes',"update_$bag.fix")])->fix($rec);
-	my $saved = $self->backup($bag)->add($rec);
+	my $bagname = "backup_$bag";
+	my $saved = $self->$bagname->add($rec);
 
 	#compare version! through _version or through date_updated
 	$self->$bag->add($saved);
@@ -424,7 +444,8 @@ sub delete_record {
 		delete $del->{related_material};
 	}
 
-	my $saved = $self->backup($bag)->add($del);
+	my $bagname = "backup_$bag";
+	my $saved = $self->$bag->add($del);
 	$self->publication->add($del);
 	$self->publication->commit;
 

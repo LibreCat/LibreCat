@@ -31,7 +31,7 @@ sub fix {
     			}
     		}
     	}
-    	my $saved = h->backup('publication')->add($hit);
+    	my $saved = h->backup_publication->add($hit);
     	h->publication->add($saved);
     	h->publication->commit;
     });
