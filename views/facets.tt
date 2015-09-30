@@ -116,7 +116,7 @@
 	    <li>
 	    [% thisdept = departments.$dept %]
 	      <a href="#" class="facet_[% tabmodus %]" data-key="q" data-param="department" data-value="[% departments.$dept.oId %]"><strong>[% dept %]</strong></a>
-	      [% IF departments.$dept.keys.size > 1 %]
+	      [% IF departments.$dept.keys.size > 2 %]
 	      <a href="#subdepts_[% departments.$dept.oId %][% menu %]" data-toggle="collapse">
 	        <span class="glyphicon glyphicon-chevron-down"></span>
 	      </a>
@@ -124,16 +124,16 @@
 	      <ul id="subdepts_[% departments.$dept.oId %][% menu %]" class="panel-collapse collapse">
 	        [% FOREACH subdept IN departments.$dept.keys.sort %]
 	        <li>
-	        [% NEXT IF subdept == "oId" %]
+	        [% NEXT IF subdept == "oId" OR subdept == "display" %]
 	        [% thissubdept = thisdept.$subdept %]
 	        <a href="#" class="facet_[% tabmodus %]" data-key="q" data-param="department" data-value="[% departments.$dept.$subdept.oId %]"><strong>[% subdept %]</strong></a>
-	        [% IF departments.$dept.$subdept.keys.size >1 %] <a href="#subsubdepts_[% departments.$dept.$subdept.oId %][% menu %]" data-toggle="collapse">
+	        [% IF departments.$dept.$subdept.keys.size > 2 %] <a href="#subsubdepts_[% departments.$dept.$subdept.oId %][% menu %]" data-toggle="collapse">
 	          <span class="glyphicon glyphicon-chevron-down"></span>
 	        </a>[% END %]
 	        <ul id="subsubdepts_[% departments.$dept.$subdept.oId %][% menu %]" class="panel-collapse collapse">
 	          [% FOREACH subsubdept IN departments.$dept.$subdept.keys.sort %]
 	          <li>
-	          [% NEXT IF subsubdept == "oId" %]
+	          [% NEXT IF subsubdept == "oId" OR subsubdept == "display" %]
 	          [% thissubsubdept = thissubdept.$subsubdept %]
 	            <a href="#" class="facet_[% tabmodus %]" data-key="q" data-param="department" data-value="[% departments.$dept.$subdept.$subsubdept.oId %]"><strong>[% subsubdept %]</strong></a>
 	          </li>
