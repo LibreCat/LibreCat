@@ -1,46 +1,64 @@
 # map fields to csl
 
 move_field(type, res.type)
-lookup(type, fixes/lookup/csl_types.csv, default: 'book')
+lookup(res.type, fixes/lookup/csl_types.csv, default: 'book')
+move_field(title, res.title)
+move_field(alternative_title.0, res.originalTitle)
 move_field(publication, res.container-title)
 move_field(series_title, res.collection-title)
-move_field(year, res.sort-year)
-move_field(place, res.publisher-place)
+move_field(publisher, res.publisher)
+move_field(volume, res.volume)
+move_field(issue, res.issue)
+
+if any_match(page, '-')
+  split_field(page, '-')
+  trim(page.0)
+  trim(page.1)
+  copy_field(page.0, res.page-first)
+  join_field(page, '-')
+  copy_field(page, res.page)
+else
+  if all_match(res.type, journalArticle)
+    move_field(page, res.page)
+  else
+    move_field(page, res.number-of-pages)
+  end
+end
+
 move_field(publication_status, res.status)
 copy_field(res.status, res.publstatus)
 copy_field(res.status, res.tmp_status)
+add_field(res.tmp_status, '0000')
 lookup(res.tmp_status, fixes/lookup/csl_status.csv, default: '0000')
-if all_match(res.tmp_status, '0000')
-  copy_field(res.sort-year,'res.issued.date-parts.0.0')
+if any_match(res.tmp_status, '0000')
+  copy_field(res.sort-year, res.issued.date-parts.0.0)
 else
-  copy_field(res.tmp_status,'res.issued.date-parts.0.0')
+  copy_field(res.tmp_status,res.issued.date-parts.0.0)
 end
 remove_field(res.tmp_status)
+
+move_field(year, res.sort-year)
+move_field(place, res.publisher-place)
+move_field(edition, res.edition)
+
 
 move_field(conference.name, res.event)
 move_field(conference.location, res.event-place)
 move_field(doi, res.DOI)
 move_field(ipn, res.patentNumber)
 move_field(ipc, res.patentClassification)
-move_field(_id, res.recordid)
-move_field(alternative_title, res.originalTitle)
-
-move_field(volume, res.volume)
-move_field(issue, res.issue)
-
-split_field(page, '-');
-trim(page.0)
-trim(page.1)
-copy_field(page.0, res.page-first)
-join_field(page, '-')
-if all_match(res.type, journalArticle)
-  move_field(page, res.page)
-else
-  move_field(page, res.number-of-pages)
-end
 
 move_field(author, res.author)
 do list(path => res.author)
+  do identity()
+    move_field(first_name,given)
+    move_field(last_name,family)
+    move_field(full_name,full)
+  end
+end
+
+move_field(translator, res.translator)
+do list(path => res.translator)
   do identity()
     move_field(first_name,given)
     move_field(last_name,family)
@@ -57,14 +75,13 @@ do list(path => res.editor)
   end
 end
 
-move_field(translator, res.translator)
-do list(path => res.translator)
-  do identity()
-    move_field(first_name,given)
-    move_field(last_name,family)
-    move_field(full_name,full)
-  end
-end
+#move_field(corporate_editor.*, res.corporate_editor.literal.*)
+# OR
+#do list(path => res.corporate_editor)
+#  add_field(res.literal.$append.literal, $_)
+#end
+
+move_field(_id, res.recordid)
 
 retain_field(res)
 move_field(res, .)
