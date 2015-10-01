@@ -131,17 +131,7 @@
 	<div class="row">
 	  <div class="col-xs-2 text-muted">[% lf.frontdoor.cc_license %]</div>
 	  <div class="col-xs-10">
-	  [% SWITCH cc_license %]
-	    [% CASE 'cc_by' %]
-	    <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank"><img src="/images/cc_by.png" height="25px;" /></a>
-
-	    [% CASE 'cc_by_sa' %]
-	    <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><img src="/images/cc_by_sa.png" height="25px;" /></a>
-
-	    [% CASE 'cc_by_nd' %]
-	    <a href="http://creativecommons.org/licenses/by-nd/4.0/" target="_blank"><img src="/images/cc_by_nd.png" height="25px;" /></a>
-
-	  [% END %]
+	  <a href="http://creativecommons.org/[% SWITCH cc_license %][% CASE 'cc_by' %]licenses/by/4.0/"><img src="/images/cc_by.png"[% CASE 'cc_by_sa' %]licenses/by-sa/4.0/"><img src="/images/cc_by_sa.png"[% CASE 'cc_0' %]publicdomain/zero/1.0/"><img src="/images/cc0.png"[% END %] height="25px;" /></a>
 	  </div>
 	</div>
 	[% END %]
