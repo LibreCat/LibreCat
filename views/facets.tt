@@ -328,7 +328,7 @@
   <div class="text-muted">
     <a href="[% h.newuri_for("$path", qp, style="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
     <strong>[% lf.facets.citation_style %]:</strong>
-    [% qp.style %]
+    [% style %]
 
     [% IF backend %]
     <a type="button" href="/librecat/person/preference[% IF session.role == "delegate" %]/[% delegate_id %][% END %]?style=[% qp.style %]" name="save_settings" id="id_save_settings" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> [% lf.facets.save_style %]</a><br />

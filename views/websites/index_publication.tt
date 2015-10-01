@@ -1,7 +1,6 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% style = qp.style ? qp.style : 'default' %]
 
 [% PROCESS header.tt %]
 

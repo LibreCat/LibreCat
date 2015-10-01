@@ -180,14 +180,14 @@ sub get_sort_style {
 
 	# set default values - to be overridden by more important values
 	my $style;
-	if($param_style && array_includes($self->config->{lists}->{styles},$param_style)){
+	if($param_style && array_includes($self->config->{citation}->{csl}->{styles},$param_style)){
 		$style = $param_style;
 	}
-	elsif($user_style && array_includes($self->config->{lists}->{styles},$user_style)){
+	elsif($user_style && array_includes($self->config->{citation}->{csl}->{styles},$user_style)){
 		$style = $user_style;
 	}
 	else {
-		$style = $self->config->{default_style}
+		$style = $self->config->{citation}->{csl}->{default_style};
 	}
 
 	my $sort;
@@ -216,7 +216,7 @@ sub get_sort_style {
 	$return->{style_eq_userstyle} = 0;
 	$return->{style_eq_userstyle} = ($user_style eq $return->{style}) ? 1 : 0;
 	$return->{style_eq_default} = 0;
-	$return->{style_eq_default} = ($return->{style} eq $self->config->{default_style}) ? 1 : 0;
+	$return->{style_eq_default} = ($return->{style} eq $self->config->{citation}->{csl}->{default_style}) ? 1 : 0;
 
 	return $return;
 }
