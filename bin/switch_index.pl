@@ -8,7 +8,7 @@ use Data::Dumper;
 
 Catmandu->load(':up');
 
-my $ind_name = Catmandu->config->{search}->{options}->{'index_name'};
+my $ind_name = Catmandu->config->{store}->{search}->{options}->{'index_name'};
 my $ind1 = $ind_name ."1";
 my $ind2 = $ind_name ."2";
 
