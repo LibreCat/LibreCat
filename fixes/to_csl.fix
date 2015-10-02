@@ -1,7 +1,7 @@
 # map fields to csl
 
 move_field(type, res.type)
-lookup(res.type, fixes/lookup/csl_types.csv, default: 'book')
+lookup(res.type, fixes/lookup/csl_types.csv)
 move_field(title, res.title)
 move_field(alternative_title.0, res.originalTitle)
 move_field(publication, res.container-title)
@@ -25,11 +25,13 @@ else
   end
 end
 
+move_field(year, res.sort-year)
+
 move_field(publication_status, res.status)
 copy_field(res.status, res.publstatus)
-copy_field(res.status, res.tmp_status)
 add_field(res.tmp_status, '0000')
-lookup(res.tmp_status, fixes/lookup/csl_status.csv, default: '0000')
+copy_field(res.status, res.tmp_status)
+lookup(res.tmp_status, fixes/lookup/csl_status.csv)
 if any_match(res.tmp_status, '0000')
   copy_field(res.sort-year, res.issued.date-parts.0.0)
 else
@@ -37,7 +39,6 @@ else
 end
 remove_field(res.tmp_status)
 
-move_field(year, res.sort-year)
 move_field(place, res.publisher-place)
 move_field(edition, res.edition)
 
