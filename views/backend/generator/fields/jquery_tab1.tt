@@ -211,7 +211,7 @@ $('.change_tab').click(function(e){
   }
   else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish")){
     window.scrollTo(0, 0);
-    e.preventDefault(); // prevents submission of form
+    //e.preventDefault();
   }
   else {
     $('.creator.has-error').removeClass('has-error');
