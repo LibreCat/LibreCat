@@ -95,7 +95,7 @@ $('.change_tab').click(function(e){
   }
   
   var volume = $('#id_volume').val();
-  if(!volume.match(/^\d+$/)){
+  if(!volume.match(/^\d*$/)){
     check = 0;
     $('#id_volume').addClass('has-error');
     $('#id_volume').val("");
