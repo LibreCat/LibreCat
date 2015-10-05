@@ -9,20 +9,18 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use App::Helper;
 
-# /person
-get qr{/person[/|?]*} => sub {
+=head2 GET /person
+
+Search API for person data.
+
+=cut
+get qr{/person/*} => sub {
 	my $tmpl = 'websites/index_publication.tt';
 	my $p = h->extract_params();
 	(params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, params->{text}) : (push @{$p->{q}}, '"'.params->{text}.'"') if params->{text};
 
     $p->{start} = params->{start} if params->{start};
 	$p->{limit} = params->{limit} || h->config->{default_page_size};
-
-#	if(params->{former}){
-#		my $former;
-#		(params->{former} eq "yes") ? ($former = "former=1") : ($former = "former=0");
-#		push @{$p->{q}}, $former;
-#	}
 
 	push @{$p->{q}}, "publcount>0";
 
@@ -56,16 +54,15 @@ get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
 
 	my @orig_q = @{$p->{q}};
 
-	push @{$p->{q}}, "person=$id";
-	push @{$p->{q}}, "status=public";
+	push @{$p->{q}}, ("person=$id", "status=public");
 
 	if($modus and $modus eq "data"){
 		push @{$p->{q}}, "(type=researchData OR type=dara)";
 	}
 	else{
-		push @{$p->{q}}, "type<>researchData";
-		push @{$p->{q}}, "type<>dara";
+		push @{$p->{q}}, ("type<>researchData", "type<>dara");
 	}
+
 	my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '', $id);
 	$p->{sort} = $sort_style->{sort};
 	$p->{facets} = h->default_facets();
@@ -76,12 +73,10 @@ get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
 	# search for research hits (only to see if present and to display tab)
 	my $researchhits;
 	@{$p->{q}} = @orig_q;
-	push @{$p->{q}}, "(type=researchData OR type=dara)";
-	push @{$p->{q}}, "person=$id";
-	push @{$p->{q}}, "status=public";
+	push @{$p->{q}}, ("(type=researchData OR type=dara)", "person=$id", "status=public");
 	$p->{limit} = 1;
-	$researchhits = h->search_publication($p);
-	$hits->{researchhits} = $researchhits;
+
+	$hits->{researchhits} = h->search_publication($p);
 
 	$p->{limit} = h->config->{maximum_page_size};
 	$hits->{style} = $sort_style->{style};
@@ -93,7 +88,11 @@ get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
     $marked ||= [];
     $hits->{marked} = @$marked;
 
-	template "home.tt", $hits;
+	if ($p->{fmt} ne 'html') {
+		h->export_publication($hits, $p->{fmt});
+	} else {
+		template "home.tt", $hits;
+	}
 };
 
 =head2 GET /person/alias
@@ -114,14 +113,6 @@ get qr{/person/(\w+)/*} => sub {
 		my $person = $hits->first;
 		forward "/person/$person->{_id}";
 	}
-};
-
-=head2 GET /person
-
-=cut
-get qr{/person/*} => sub {
-    my $path = h->host . '/person';
-    redirect $path;
 };
 
 1;
