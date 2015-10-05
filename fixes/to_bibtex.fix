@@ -4,7 +4,7 @@
 # url host/ID
 
 if any_match(type, '^bi')
-    set_field(r.school, 'Bielefeld University')
+  set_field(r.school, 'Bielefeld University')
 end
 
 move_field(type, r._type)
@@ -31,10 +31,9 @@ move_field(abstract.0.text, r.abstract)
 move_field(conference.location, r.location)
 
 if any_match(r._type, article)
-    move_field(publication, r.journal)
-end
-if any_match(r._type, book)
-    move_field(publication, r.booktitle)
+  move_field(publication, r.journal)
+else
+  move_field(publication, r.booktitle)
 end
 
 move_field(pages, r.pages)
