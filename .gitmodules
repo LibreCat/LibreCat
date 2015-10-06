@@ -1,6 +1,0 @@
-[submodule "public/javascripts/MathJax"]
-	path = public/javascripts/MathJax
-	url = https://github.com/mathjax/MathJax.git
-[submodule "public/javascripts/commonmark.js"]
-	path = public/javascripts/commonmark.js
-	url = https://github.com/jgm/commonmark.js.git

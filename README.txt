@@ -53,5 +53,8 @@ catmandu import YAML to search --bag publication <devel/publications.yml
 
 starman bin/app.pl --port 5000 -E development
 
+wget http://lib.ugent.be/download/librecat/MathJax.tgz
+wget http://lib.ugent.be/download/librecat/CommonMark.tgz
+
 tar zxvf MathJax.tgz
 tar zxvf CommonMark.tgz
