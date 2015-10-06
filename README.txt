@@ -38,11 +38,6 @@ source ~/.profile
 
 cd LibreCat
 
-#Make sure the cpanfile contains:
-# requires 'YAML';
-# requires 'JSON';
-# requires 'Sys::Hostname::Long';
-
 carton install
 
 perl bin/generate_forms.pl
@@ -51,7 +46,11 @@ echo '{"_id": "1", "latest" : "0"}' | catmandu import YAML
 catmandu import YAML to search --bag researcher <devel/researcher.yml
 catmandu import YAML to search --bag publication <devel/publications.yml
 
-starman bin/app.pl --port 5000 -E development
+cp catmandu.local.yml-example catmandu.local.yml
+
+# Boot the development server 
+# Your application is now running on http://localhost:5001
+./boot.sh
 
 wget http://lib.ugent.be/download/librecat/MathJax.tgz
 wget http://lib.ugent.be/download/librecat/CommonMark.tgz

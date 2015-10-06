@@ -1,0 +1,11 @@
+host: "http://localhost:5001"
+
+tmp_dir: '/data2/tmp'
+upload_dir: '/data2/librecat/file_uploads'
+
+thesis:
+    urn_prefix: 'urn:thesis-'
+private:
+    urn_prefix: 'urn:private-'
+    doi:
+        prefix: 10.001/test
