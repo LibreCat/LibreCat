@@ -1,24 +1,9 @@
-time_format: "%Y-%m-%dT%H:%M:%SZ"
-
 ip_range: '8.8'
+time_format: "%Y-%m-%dT%H:%M:%SZ"
 
 # directory for file storage
 upload_dir: '/tmp'
 tmp_dir: '/tmp/pub'
-
-urn_prefix: 'urn:whatever-'
-
-thesis:
-  to: 'send@me.org'
-  from: 'from@you.org'
-  subject: '[PUB] New thesis submitted'
-  urn_prefix: 'urn:thesis-'
-
-# datacite test prefix!
-doi:
-  prefix: "10.5072/test"
-  user: user
-  passwd: secret
 
 # authentication
 authentication:
@@ -27,7 +12,7 @@ authentication:
     auth_base: 'uid=%s,ou=People,o=elearning-user,o=Uni-Bi'
 
 # default settings
-default_lang: de
+default_lang: en
 default_page_size: 100
 default_searchpage_size: 10
 maximum_page_size: 1000
@@ -64,3 +49,4 @@ request_copy:
 # period in days
   period: 7
   subject: 'Request for a copy of your publication'
+
