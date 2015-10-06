@@ -1,7 +1,10 @@
-# main configuration file for Dancer
 appname: "PUB - Publications at Bielefeld University"
-host: "http://pub.uni-bielefeld.de"
 charset: "UTF-8"
+
+# session handling
+# use default store
+session: "Catmandu"
+session_expires: 1 hr
 
 # Template Engine
 template: "template_toolkit"
@@ -10,11 +13,6 @@ engines:
     encoding:  'utf8'
     start_tag: '[%'
     end_tag:   '%]'
-
-# session handling
-# use default store
-session: "Catmandu"
-session_expires: 2 hr
 
 plugins:
   'Auth::Tiny':
