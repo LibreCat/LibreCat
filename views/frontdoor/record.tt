@@ -20,6 +20,8 @@
 [% relResData = [] %]
 [% confLetter = [] %]
 [% relLink = [] %]
+[% relLinkRd = [] %]
+[% relLinkSw = [] %]
 [% relFile = [] %]
 [% relToc = [] %]
 [% IF external_id.pmid %]
@@ -41,7 +43,15 @@
     [% END %]
     [% END %]
   [% ELSIF key == "link" %]
-    [% relLink = related_material.$key %]
+    [% FOREACH linkentry IN related_material.$key %]
+      [% IF linkentry.relation == "research_data" %]
+        [% relLinkRd.push(linkentry) %]
+      [% ELSIF linkentry.relation == "software" %]
+        [% relLinkSw.push(linkentry) %]
+      [% ELSE %]
+        [% relLink.push(linkentry) %]
+      [% END %]
+    [% END %]
   [% END %]
 [% END %]
 [% FOREACH fi IN file %]
@@ -125,15 +135,6 @@
 	    </div>
 	    [% END %]
 	  [% END %]
-	[% END %]
-
-	[% IF cc_license %]
-	<div class="row">
-	  <div class="col-xs-2 text-muted">[% lf.frontdoor.cc_license %]</div>
-	  <div class="col-xs-10">
-	  <a href="http://creativecommons.org/[% SWITCH cc_license %][% CASE 'cc_by' %]licenses/by/4.0/"><img src="/images/cc_by.png"[% CASE 'cc_by_sa' %]licenses/by-sa/4.0/"><img src="/images/cc_by_sa.png"[% CASE 'cc_0' %]publicdomain/zero/1.0/"><img src="/images/cc0.png"[% END %] height="25px;" /></a>
-	  </div>
-	</div>
 	[% END %]
 
 	[% IF doi %]
@@ -226,6 +227,10 @@
 	  [% IF relMat.size OR relLink.size OR relFile.size OR relToc.size %]
 	  <li><a href="#relMat" data-toggle="tab">[% lf.frontdoor.tabs.related_material %]</a></li>
 	  [% END %]
+	  
+	  [% IF relLinkRd.size %]
+	  <li><a href="#relLinkRd" data-toggle="tab">[% lf.frontdoor.tabs.external_data %]</a></li>
+	  [% END %]
 
 	  <li class="hidden-md hidden-lg hidden-sm"><a href="#citethis">[% lf.frontdoor.tabs.cite_this %]</a></li>
 	  <li class="hidden-md hidden-lg hidden-sm"><a href="#export">[% lf.frontdoor.tabs.export_search %]</a></li>
@@ -262,6 +267,8 @@
 	  [% IF relMat.size OR relLink.size OR relFile.size OR relToc.size %]
 	    [% PROCESS frontdoor/tab_relmat.tt %]
 	  [% END %]
+	  
+	  [% IF relLinkRd.size %] [% PROCESS frontdoor/tab_extrd.tt %] [% END %]
 
 	  [% IF confLetter.size %]
 	    [% PROCESS frontdoor/tab_confletter.tt %]
