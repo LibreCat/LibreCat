@@ -51,3 +51,6 @@ requires 'Hash::Merge';
 requires 'Try::Tiny';
 requires 'Crypt::Digest::MD5';
 requires 'XML::RSS';
+requires 'YAML';
+requires 'JSON';
+requires 'Sys::Hostname::Long';

@@ -35,3 +35,7 @@ vendor/
 tmp/
 catmandu.local.yml
 ~$
+public/javascripts/commonmark.js
+public/javascripts/MathJax
+local
+cpanfile.snapshot
