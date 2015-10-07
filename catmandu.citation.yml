@@ -6,7 +6,7 @@ _prefix:
 engine: template
 
 template:
-  template: 'views/citation.tt'
+  template_path: 'views/citation.tt'
 
 csl:
   url: 'http://::/CiteprocPhp/CiteProc.php' #absolute url
