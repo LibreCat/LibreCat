@@ -367,6 +367,7 @@
 	  [% IF external_id.isi %]
 	  <h3 id="wos">Web of Science</h3>
 	  <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">View record in Web of Science&reg;</a>
+	  [% END %]
 
 	  <h3>Sources</h3>
 
@@ -392,13 +393,11 @@
 	  [% END %]
 
 	  [% IF external_id.opac %]
-	  <p><img src="/images/icon_uni.png" class="img-thumbnail" alt=""><a href=" http://katalogplus.ub.uni-bielefeld.de/title/[% external_id.opac %]">Library Catalogue</a></p>
+	  <p><img src="/images/icon_uni.png" class="img-thumbnail" alt=""><a href="http://katalogplus.ub.uni-bielefeld.de/title/[% external_id.opac %]">Library Catalogue</a></p>
 	  [% END %]
 
 	  [% IF external_id.phillister %]
 	  <p><img src="/images/icon_uni.png" class="img-thumbnail" alt="">PhilLister: <a href="http://phillister.ub.uni-bielefeld.de/publication/[% external_id.phillister %]">[% external_id.phillister %]</a></p>
-	  [% END %]
-
 	  [% END %]
 
 	[% END %]
@@ -436,36 +435,21 @@
 	[% END %]
 
 
+	<!-- Search title in -->
 	<h3>[% lf.frontdoor.search_this %]</h3>
 
 	<p>
 	  <a href="http://scholar.google.com/scholar?q=allintitle%3A[% title | uri %]"><img src="/images/icon_gs.png" alt="" class="img-thumbnail">Google Scholar</a><br>
 	  <a href="http://www.base-search.net/Search/Results?lookfor=tit%3A&quot;[% title | uri %]&quot;&amp;lem=1&amp;type=all&amp;refid=pub"><img src="/images/icon_base.png" alt="" class="img-thumbnail">BASE</a><br>
 	  <a href="http://www.google.com/search?q=%22[% title | uri %]%22"><img src="/images/icon_google.gif" alt="" class="img-thumbnail">Google</a><br>
-	  [% IF isbn %]
-	  <a href="http://de.wikipedia.org/wiki/Spezial:ISBN-Suche/[% isbn.0 %]"><img src="/images/icon_wikipedia.png" alt="" class="img-thumbnail">[% lf.frontdoor.isbn_search %]</a><br>
+	  [% IF publication_identifier.isbn %]
+	  <a href="http://de.wikipedia.org/wiki/Spezial:ISBN-Suche/[% publication_identifier.isbn.0 %]"><img src="/images/icon_wikipedia.png" alt="" class="img-thumbnail">[% lf.frontdoor.isbn_search %]</a><br>
 	  [% END %]
-	  [% SWITCH type %]
-	  [% CASE ['book', 'dissertation', 'bookEditor', 'workingPaper', 'conferenceAbstract', 'conferenceEditor', 'journalArticle' ] %]
-	  [% IF localUser && !opac %]
-	  [% IF type == 'journalArticle' OR type == 'conferenceAbstract' %]
-	  <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% title | uri %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=ext&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="[% h.host %]/images/icon_ub.png" alt="" class="img-thumbnail">[% lf.frontdoor.catalogue %]</a><br>
-	  [% ELSE %]
-	  <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% title | uri %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=lok&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="[% h.host %]/images/icon_ub.png" alt="" class="img-thumbnail">[% lf.frontdoor.catalogue %]</a><br>
-	  <a href="http://www.digibib.net/opensearch?LOCATION=361&amp;SG1.SG.361:SGKatalogeBielefeld=on&amp;SG2.SG.361:SGKatalogeDeutschland=on&amp;SG3.SG.361:SGKatalogeInternational=on&amp;QUERY_azTI=[% title | uri %]"><img src="[% h.host %]/images/icon_digibib.png" alt="" class="img-thumbnail">Digibib</a>
-	  [% END %]
-	  [% END %]
-	  [% IF NOT localUser %]
-	  <a href="http://kvk.ubka.uni-karlsruhe.de/hylib-bin/kvk/nph-kvk2.cgi?maske=kvk-last&amp;lang=de&amp;title=KIT-Bibliothek%3A+Karlsruher+Virtueller+Katalog+KVK+%3A+Ergebnisanzeige&amp;head=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-head-de-2010-11-08.html&amp;header=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-header-de-2010-11-08.html&amp;spacer=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-spacer-de-2010-11-08.html&amp;footer=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-footer-de-2010-11-08.html&amp;css=none&amp;input-charset=utf-8&amp;Timeout=120&amp;TI=[% title | uri %]&amp;kataloge=SWB&amp;kataloge=BVB&amp;kataloge=NRW&amp;kataloge=HEBIS&amp;kataloge=HEBIS_RETRO&amp;kataloge=KOBV_SOLR&amp;kataloge=GBV&amp;kataloge=DDB&amp;kataloge=STABI_BERLIN&amp;kataloge=BIBOPAC&amp;kataloge=SWISSBIB&amp;kataloge=LOC_DIREKT&amp;kataloge=WORLDCAT&amp;kataloge=AMAZON_DE&amp;kataloge=AMAZON_US"><img src="[% h.host %]/images/icon_kvk.png" alt="" class="img-thumbnail">KVK</a><br>
-	  [% END %]
-	  [% CASE 'bookChapter' %]
-	  [% IF localUser && !opac %]
-	  <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% publication %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=ext&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="[% h.host %]/images/icon_ub.png" alt="" class="img-thumbnail">[% lf.frontdoor.catalogue %]</a><br>
-	  <a href="http://www.digibib.net/opensearch?LOCATION=361&amp;SG1.SG.361:SGKatalogeBielefeld=on&amp;SG2.SG.361:SGKatalogeDeutschland=on&amp;SG3.SG.361:SGKatalogeInternational=on&amp;QUERY_azTI=[% FOREACH rel_entry IN entry.host %][% rel_entry.title %][% END %]"><img src="[% h.host %]/images/icon_digibib.png" alt="" class="img-thumbnail">Digibib</a>
-	  [% END %]
-	  [% IF NOT localUser %]
-	  <a href="http://kvk.ubka.uni-karlsruhe.de/hylib-bin/kvk/nph-kvk2.cgi?maske=kvk-last&amp;lang=de&amp;title=KIT-Bibliothek%3A+Karlsruher+Virtueller+Katalog+KVK+%3A+Ergebnisanzeige&amp;head=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-head-de-2010-11-08.html&amp;header=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-header-de-2010-11-08.html&amp;spacer=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-spacer-de-2010-11-08.html&amp;footer=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-footer-de-2010-11-08.html&amp;css=none&amp;input-charset=utf-8&amp;Timeout=120&amp;TI=[% FOREACH rel_entry IN entry.host %][% rel_entry.title %][% END %]&amp;kataloge=SWB&amp;kataloge=BVB&amp;kataloge=NRW&amp;kataloge=HEBIS&amp;kataloge=HEBIS_RETRO&amp;kataloge=KOBV_SOLR&amp;kataloge=GBV&amp;kataloge=DDB&amp;kataloge=STABI_BERLIN&amp;kataloge=BIBOPAC&amp;kataloge=SWISSBIB&amp;kataloge=LOC_DIREKT&amp;kataloge=WORLDCAT&amp;kataloge=AMAZON_DE&amp;kataloge=AMAZON_US"><img src="[% h.host %]/images/icon_kvk.png" alt="" class="img-thumbnail">KVK</a>
-	  [% END %]
+	  [% IF localUser && !external_id.opac %]
+	    [% SWITCH type %]
+	    [% CASE ['book', 'bookChapter', 'dissertation', 'bookEditor', 'workingPaper', 'conferenceAbstract', 'conferenceEditor', 'journalArticle' ] %]
+	      <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% IF type == 'bookChapter' %][% publication %][% ELSE %][% title | uri %][% END %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=[% IF type == 'journalArticle' OR type == 'conferenceAbstract' %]ext[% ELSE %]lok[% END %]&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="[% h.host %]/images/icon_ub.png" alt="" class="img-thumbnail">[% lf.frontdoor.catalogue %]</a>
+	    [% END %]
 	  [% END %]
 	</p>
 
