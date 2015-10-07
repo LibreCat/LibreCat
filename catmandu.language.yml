@@ -1481,6 +1481,10 @@ en:
       inpress: "In Press"
       epub_ahead: "Epub ahead of print"
       published: "Published"
+    article_type:
+      original: "Original Article"
+      review: "Review"
+      letter_note: "Letter / Note"
     language:
       ara: "Arabic"
       chi: "Chinese"
@@ -3054,6 +3058,10 @@ de:
       inpress: "Im Druck"
       epub_ahead: "Elektronische Veröffentlichung vor dem Druck"
       published: "Veröffentlicht"
+    article_type:
+      original: "Forschungsartikel"
+      review: "Review"
+      letter_note: "Letter"
     language:
       ara: "Arabisch"
       chi: "Chinesisch"

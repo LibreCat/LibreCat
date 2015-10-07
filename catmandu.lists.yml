@@ -171,15 +171,9 @@ publication_status:
   - published
 
 article_type:
-  -
-    value: original
-    name: "Original Article"
-  -
-    value: review
-    name: "Review"
-  -
-    value: letter_note
-    name: "Letter / Note"
+  - original
+  - review
+  - letter_note
 
 gs_doc_type:
   book: 'book'
