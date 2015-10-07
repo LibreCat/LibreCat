@@ -53,4 +53,10 @@ post '/librecat/record/import' => needs login => sub {
 
 };
 
+post '/librecat/record/import_bibtex' => needs login => sub {
+	my $p = params;
+	
+	return template "backend/add_new", {error => "This feature has not been implemented yet. Stay tuned!"};
+};
+
 1;
