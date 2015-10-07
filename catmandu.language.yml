@@ -255,6 +255,7 @@ en:
         label: "Letter of Confirmation"
         confirmation: "Confirmation"
       related_material: "Related Material"
+      external_data: "External Data"
       cite_this: "Cite This"
       export_search: "Export / Search"
     fulltext:
@@ -1804,6 +1805,7 @@ de:
         label: "Bestätigungsschreiben"
         confirmation: "Bestätigung"
       related_material: "Zusatzmaterial"
+      external_data: "Externe Daten"
       cite_this: "Zitieren"
       export_search: "Export / Suche"
     fulltext:

@@ -1,0 +1,40 @@
+
+<!-- BEGIN frontdoor/tab_relmat.tt -->
+
+<div class="tab-pane" id="relLinkRd">
+  <div class="row">
+
+    [% IF relLinkRd.size %]
+      <div class="col-md-2 text-muted">
+        Research Data
+      </div>
+      <div class="col-md-10">
+        [% FOREACH fi IN relLinkRd %]
+          [% INCLUDE frontdoor/oa_lock.tt %] <a href="[% fi.url %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF fi.description %]<em>Description:</em><br>[% fi.description %]<br><br>[% END %]<em>Location:</em><br>[% fi.url %]">[% fi.title ? fi.title : fi.url %]</a><br>
+          <script>
+            $('a.description').tooltip();
+          </script>
+        [% END %]
+      </div>
+      <div>&nbsp;</div>
+    [% END %]
+    
+    [% IF relLinkSw.size %]
+      <div class="col-md-2 text-muted">
+        Software
+      </div>
+      <div class="col-md-10">
+        [% FOREACH fi IN relLinkSw %]
+          [% INCLUDE frontdoor/oa_lock.tt %] <a href="[% fi.url %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF fi.description %]<em>Description:</em><br>[% fi.description %]<br><br>[% END %]<em>Location:</em><br>[% fi.url %]">[% fi.title ? fi.title : fi.url %]</a><br>
+          <script>
+            $('a.description').tooltip();
+          </script>
+        [% END %]
+      </div>
+      <div>&nbsp;</div>
+    [% END %]
+
+  </div><!-- frontdoor -->
+</div><!-- tab-pane relMat -->
+
+<!-- END frontdoor/tab_relmat.tt -->

@@ -245,6 +245,14 @@ relations_link:
     relation_text: "Supplementary Material (of PUB record)"
     link_text: "Suppl. Material"
   -
+    relation: "research_data"
+    relation_text: "Research Data (of PUB record)"
+    link_text: "Research Data"
+  -
+    relation: "software"
+    relation_text: "Software (for PUB record)"
+    link_text: "Software"
+  -
     relation: "other"
     relation_text: "In other relation (to PUB record)"
     link_text: "In other Relation"
