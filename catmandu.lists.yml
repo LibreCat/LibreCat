@@ -163,24 +163,12 @@ publication_identifier:
   eisbn: "eISBN"
 
 publication_status:
-  -
-    value: draft
-    name: "Draft"
-  -
-    value: submitted
-    name: "Submitted"
-  -
-    value: accepted
-    name: "Accepted"
-  -
-    value: inpress
-    name: "In Press"
-  -
-    value: epub_ahead
-    name: "Epub ahead of print"
-  -
-    value: published
-    name: "Published"
+  - draft
+  - submitted
+  - accepted
+  - inpress
+  - epub_ahead
+  - published
 
 article_type:
   -
