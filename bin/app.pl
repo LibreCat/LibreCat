@@ -3,7 +3,8 @@
 use Dancer;
 use FindBin qw($Bin);
 use App;
-
+use Log::Log4perl;
+use Log::Any::Adapter;
 use Plack::Builder;
 
 my $app = sub {
@@ -11,6 +12,9 @@ my $app = sub {
     my $request = Dancer::Request->new( env => $env );
     Dancer->dance($request);
 };
+
+Log::Log4perl::init('log4perl.conf');
+Log::Any::Adapter->set('Log4perl');
 
 builder {
     enable "ReverseProxy";
