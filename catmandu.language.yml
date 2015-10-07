@@ -285,14 +285,15 @@ en:
     startyear: "Start Year"
   add_new:
     heading: "Add New Publication"
-    import: "Enter a publication ID to import"
+    import: "Option 1:<br />Enter a publication ID to import"
     ids:
       doi: "DOI"
       pmid: "PMID"
       arxiv: "ArXiv ID"
       inspire: "Inspire ID"
-    do_it_yourself: "Choose a publication type and fill out the form"
-    drop_oa: "Drop your Open Access fulltext here"
+    do_it_yourself: "Option 2:<br />Choose a type and fill out the form"
+    drop_oa: "Option 3:<br />Drop your Open Access fulltext here"
+    paste_bibtex: "Option 4:<br />Paste your BibTex record here"
   forms:
     book:
       label: "Book"
@@ -1833,14 +1834,15 @@ de:
     startyear: "Startjahr"
   add_new:
     heading: "Neue Publikation anlegen"
-    import: "Geben Sie einen Publikations-Identifier zum Import ein"
+    import: "Option 1:<br />Geben Sie einen Publikations-Identifier zum Import ein"
     ids:
       doi: "DOI"
       pmid: "PMID"
       arxiv: "ArXiv ID"
       inspire: "Inspire ID"
-    do_it_yourself: "Wählen Sie einen Publikationstyp und füllen Sie das Formular aus"
-    drop_oa: "Ziehen Sie Ihren Open-Access-Volltext hier her"
+    do_it_yourself: "Option 2:<br />Wählen Sie einen Typ und füllen Sie das Formular aus"
+    drop_oa: "Option 3:<br />Ziehen Sie Ihren Open-Access-Volltext hier her"
+    paste_bibtex: "Option 4:<br />Fügen Sie Ihren BibTex Eintrag hier ein"
   forms:
     book:
 #      label: "Book"
@@ -1984,7 +1986,7 @@ de:
         external_id: &external_id
           label: "Externer Identifier"
           label_short: "Ext. Id."
-          placeholder: "Wählen Sie einen Identifier (z.B. eine PMID) und geben Sie ihn hier ein"
+          placeholder: "Wählen Sie einen Identifier aus (z.B. eine PMID) und geben Sie ihn hier ein"
           select: "Auswählen"
         message: &message
           label: "Kommentare"
@@ -2730,7 +2732,7 @@ de:
           heading: "Copyright und Lizenzen"
           data_reuse_license:
             label: "Data Re-Use License"
-            select_license: "Wählen Sie eine Lizenz unter der Ihre Daten verfügbar sein sollen:<br>"
+            select_license: "Wählen Sie eine Lizenz aus unter der Ihre Daten verfügbar sein sollen:<br>"
             select_a_license: "Lizenz auswählen"
             alert: "Sie müssen eine Data Re-Use License auswählen, wenn Sie Dateien angehängt haben."
             pddl:
@@ -3042,7 +3044,7 @@ de:
       return: "Zurückstellen"
       delete: "Löschen"
       next: "Weiter"
-      select: "Wählen"
+      select: "Auswählen"
     publication_status:
       draft: "Entwurf"
       submitted: "Eingereicht"
