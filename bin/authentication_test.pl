@@ -1,5 +1,26 @@
 #!/usr/bin/env perl
+=head1 NAME
 
+authentication_test.pl - Test your authentication settings
+
+=head1 SYNOPSIS
+
+	$ perl bin/authentication_test.pl mylogin -p
+	Password: *****
+	OK
+
+	$ perl bin/authentication_test.pl 
+	           --package=Authentication::Test
+	           --param foo=bar
+	           --param test=ok  mylogin -p
+	Password: *****
+	OK	           
+
+=head1 SEE ALSO
+
+L<log4perl.conf>
+
+=cut
 use lib qw(../lib);
 use Catmandu;
 use Catmandu::Util;
