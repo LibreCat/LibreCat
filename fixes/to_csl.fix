@@ -1,6 +1,6 @@
 # map fields to csl
 
-move_field(type, res.type)
+copy_field(type, res.type)
 lookup(res.type, fixes/lookup/csl_types.csv)
 move_field(title, res.title)
 move_field(alternative_title.0, res.originalTitle)
@@ -18,10 +18,10 @@ if any_match(page, '-')
   join_field(page, '-')
   copy_field(page, res.page)
 else
-  if all_match(res.type, journalArticle)
-    move_field(page, res.page)
+  if any_match(type, journalArticle)
+    copy_field(page, res.page)
   else
-    move_field(page, res.number-of-pages)
+    copy_field(page, res.number-of-pages)
   end
 end
 
@@ -29,9 +29,9 @@ move_field(year, res.sort-year)
 
 move_field(publication_status, res.status)
 copy_field(res.status, res.publstatus)
-add_field(res.tmp_status, '0000')
+#add_field(res.tmp_status, '0000')
 copy_field(res.status, res.tmp_status)
-lookup(res.tmp_status, fixes/lookup/csl_status.csv)
+lookup(res.tmp_status, fixes/lookup/csl_status.csv, default:'0000')
 if any_match(res.tmp_status, '0000')
   copy_field(res.sort-year, res.issued.date-parts.0.0)
 else
@@ -76,7 +76,7 @@ do list(path => res.editor)
   end
 end
 
-move_field(corporate_editor.*, 'res.editor.$append.literal')
+#move_field(corporate_editor.*, res.editor.$append.literal)
 
 move_field(_id, res.recordid)
 
