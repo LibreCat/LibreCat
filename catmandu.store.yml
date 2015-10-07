@@ -603,9 +603,9 @@ search:
                 '=': true
                 '<>': true
                 'exact': true
-              field: ['language.iso', 'language.name']
-              values: 'three letter language code (iso639-2b) or the language name, e.g. german'
-              description: 'will find both, the iso version and the long version'
+              field: ['language.iso']
+              values: 'three letter language code (iso639-2b)'
+              description: 'will find the iso version of the language'
             type: &type
               op:
                 '=': true
@@ -1069,7 +1069,6 @@ search:
           language:
             properties:
               iso: {type: string, analyzer: tag}
-              name: {type: string, analyzer: tag}
           extern: {type: byte}
           ubi_funded: {type: byte}
           quality_controlled: {type: byte}

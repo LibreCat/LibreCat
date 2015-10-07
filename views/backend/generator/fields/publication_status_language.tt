@@ -35,13 +35,13 @@
                 <span class="hidden-xs hidden-sm">[% lf.$type.field.publication_status_language.language.label %]</span>
                 <span class="hidden-lg hidden-md">[% lf.$type.field.publication_status_language.language.label_short %]</span>
               </div>
-              <select name="language.0.name" class="sticky form-control{% IF fields.basic_fields.publication_status_language.language.mandatory OR fields.supplementary_fields.publication_status_language.language.mandatory %} required{% END %}" id="select_language_0">
-                [% FOREACH lang IN language_preselect.keys.sort %]
-                <option value="[% lang %]"[% IF lang == language.name || (!language AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>
+              <select name="language.0.iso" class="sticky form-control{% IF fields.basic_fields.publication_status_language.language.mandatory OR fields.supplementary_fields.publication_status_language.language.mandatory %} required{% END %}" id="select_language_0">
+                [% FOREACH lang IN language_preselect %]
+                <option value="[% lang %]"[% IF lang == language.iso || (!language AND lang=="eng") %] selected="selected"[% END %]>[% lf.language.$lang %]</option>
                 [% END %]
                 <option value="2436687"></option>
-                [% FOREACH lang IN language_list.keys.sort %]
-                <option value="[% lang %]"[% IF lang == language.name %] selected="selected"[% END %]>[% lang %]</option>
+                [% FOREACH lang IN language_list.sort %]
+                <option value="[% lang %]"[% IF lang == language.iso %] selected="selected"[% END %]>[% lf.language.$lang %]</option>
                 [% END %]
               </select>
               <div class="input-group-addon" onclick="add_field('language');"><span class="glyphicon glyphicon-plus"></span></div>
@@ -58,13 +58,13 @@
                   <span class="hidden-xs hidden-sm">[% lf.$type.field.publication_status_language.language.label %]</span>
                   <span class="hidden-lg hidden-md">[% lf.$type.field.publication_status_language.language.label_short %]</span>
                 </div>
-                <select name="language.[% loop.index %].name" class="sticky form-control{% IF fields.basic_fields.publication_status_language.mandatory OR fields.supplementary_fields.publication_status_language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_language_[% loop.index %]">
-                  [% FOREACH lang IN language_preselect.keys.sort %]
-                  <option value="[% lang %]"[% IF lang == lan.name %] selected="selected"[% END %]>[% lang %]</option>
+                <select name="language.[% loop.index %].iso" class="sticky form-control{% IF fields.basic_fields.publication_status_language.mandatory OR fields.supplementary_fields.publication_status_language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_language_[% loop.index %]">
+                  [% FOREACH lang IN language_preselect %]
+                  <option value="[% lang %]"[% IF lang == lan.iso %] selected="selected"[% END %]>[% lf.language.$lang %]</option>
                   [% END %]
                   <option value="2436687"></option>
-                  [% FOREACH lang IN language_list.keys.sort %]
-                  <option value="[% lang %]"[% IF lang == lan.name %] selected="selected"[% END %]>[% lang %]</option>
+                  [% FOREACH lang IN language_list.sort %]
+                  <option value="[% lang %]"[% IF lang == lan.iso %] selected="selected"[% END %]>[% lf.language.$lang %]</option>
                   [% END %]
                 </select>
                 <div class="input-group-addon" onclick="add_field('language');"><span class="glyphicon glyphicon-plus"></span></div>
@@ -82,13 +82,13 @@
                 <span class="hidden-xs hidden-sm">[% lf.$type.field.publication_status_language.language.label %]</span>
                 <span class="hidden-lg hidden-md">[% lf.$type.field.publication_status_language.language.label_short %]</span>
               </div>
-              <select name="language.0.name" class="sticky form-control{% IF fields.basic_fields.publication_status_language.language.mandatory OR fields.supplementary_fields.publication_status_language.language.mandatory %} required{% END %}" id="select_language_0">
-                [% FOREACH lang IN language_preselect.keys.sort %]
-                <option value="[% lang %]"[% IF lang == language.name || (!language AND lang=="English") %] selected="selected"[% END %]>[% lang %]</option>
+              <select name="language.0.iso" class="sticky form-control{% IF fields.basic_fields.publication_status_language.language.mandatory OR fields.supplementary_fields.publication_status_language.language.mandatory %} required{% END %}" id="select_language_0">
+                [% FOREACH lang IN language_preselect %]
+                <option value="[% lang %]"[% IF lang == language.iso || (!language AND lang=="eng") %] selected="selected"[% END %]>[% lf.language.$lang %]</option>
                 [% END %]
                 <option value="2436687"></option>
-                [% FOREACH lang IN language_list.keys.sort %]
-                <option value="[% lang %]"[% IF lang == language.name %] selected="selected"[% END %]>[% lang %]</option>
+                [% FOREACH lang IN language_list.sort %]
+                <option value="[% lang %]"[% IF lang == language.iso %] selected="selected"[% END %]>[% lf.language.$lang %]</option>
                 [% END %]
               </select>
               <div class="input-group-addon"></div>

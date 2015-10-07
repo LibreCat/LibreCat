@@ -163,7 +163,7 @@
 	    [% END %]
 
 	    [% FOREACH lang IN language %]
-	      [% IF lang.name AND bag != "data" %]
+	      [% IF lang.iso AND bag != "data" %]
 	      |<!-- <meta itemprop="inLanguage" content="[% schema.langCode %]"> --> <em>[% lf.forms.language.${lang.iso} %]</em>
 	      [% END %]
 	    [% END %]
