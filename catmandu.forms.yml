@@ -191,6 +191,7 @@ publicationTypes:
             mandatory: 0
           urn:
             mandatory: 0
+            readonly: admin
           ddc:
             multiple: 0
             mandatory: file
