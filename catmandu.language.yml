@@ -292,7 +292,7 @@ en:
       pmid: "PMID"
       arxiv: "ArXiv ID"
       inspire: "Inspire ID"
-    do_it_yourself: "Option 2:<br />Choose a type and fill out the form"
+    do_it_yourself: "Option 2:<br />Select a type and fill out the form"
     drop_oa: "Option 3:<br />Drop your Open Access fulltext here"
     paste_bibtex: "Option 4:<br />Paste your BibTex record here"
   forms:
@@ -1164,9 +1164,9 @@ en:
           heading: "Copyright and Licenses"
           data_reuse_license:
             label: "Data Re-Use License"
-            select_license: "Choose a license under which your uploaded data will be available:<br>"
+            select_license: "Select a license under which your uploaded data will be available:<br>"
             select_a_license: "Select a license"
-            alert: "You need to choose a Data Re-Use License because you have attached files to this record."
+            alert: "You need to select a Data Re-Use License because you have attached files to this record."
             pddl:
               select_text: "No restrictions - PDDL"
               name: "The Open Data Commons Public Domain Dedication and License (PDDL) v1.0"
