@@ -53,7 +53,6 @@ requires 'Crypt::Digest::MD5';
 requires 'XML::RSS';
 requires 'YAML';
 requires 'JSON';
-requires 'Sys::Hostname::Long';
 requires 'Log::Log4perl';
 requires 'Log::Any::Adapter';
 requires 'Log::Any::Adapter::Log4perl';
