@@ -12,6 +12,7 @@ use App::Catalogue::Controller::Permission qw/:can/;
 use Dancer qw(:syntax);
 use Encode qw(encode);
 use Dancer::Plugin::Auth::Tiny;
+use Dancer::Plugin::Email;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -134,6 +135,21 @@ Checks if the user has the rights to update this record.
 
         my $result = h->update_record('publication', $p);
         #return to_dumper $result; # leave this here to make debugging easier
+
+        if ($result->{type} =~ /^bi/) {
+            my $mail_body = export_to_string($result, 'Template', template => 'views/email/thesis_published.tt');
+
+            try {
+                email {
+                    to => $result->{email},
+                    subject => h->config->{thesis}->{subject},
+                    body => $mail_body,
+                    reply_to => h->config->{thesis}->{to},
+                };
+            } catch {
+                error "Could not send email: $_";
+            }
+        }
 
         redirect '/librecat';
     };

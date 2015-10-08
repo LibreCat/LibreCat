@@ -1,3 +1,4 @@
+lookup(cc_license, fixes/lookup/licenses.csv)
 remove_field('author.*.login')
 remove_field('author.*.email')
 remove_field('author.*.autoren_ansetzung')

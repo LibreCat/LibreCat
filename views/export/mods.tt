@@ -200,6 +200,10 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 [% END %]
 [% END %]
 
+[% IF cc_license %]
+<accessCondition type="use and reproduction">[% cc_license %]</accessCondition>
+[% END %]
+
 [% IF publisher or publishingDate or publishingYear or conferenceDate or conferenceLocation %]
 <originInfo>
   [% IF publisher %]
