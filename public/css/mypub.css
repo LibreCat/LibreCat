@@ -199,6 +199,7 @@ div.sticky.mandatory{border:1px solid #666;}
 div.sticky_top{margin-bottom:0;border-bottom-left-radius:0;border-bottom:none;}
 div.sticky_top div.sticky{border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;}
 div.sticky_top div.sticky div.input-group-addon{border-bottom-left-radius:0;border-bottom-right-radius:0;}
+textarea{resize:none;}
 div.sticky_bottom textarea{margin-top:0;border-top-left-radius:0;border-top-right-radius:0;}
 div.input-group.sticky .input-group-addon,div.sticky input,div.sticky select,div.sticky textarea{border:none;outline:0;}
 div.sticky span.label.label-default{background-color:transparent;border:1px solid #ccc;color:inherit;}
