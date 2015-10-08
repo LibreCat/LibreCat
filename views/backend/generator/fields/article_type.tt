@@ -13,7 +13,7 @@
           <select name="article_type" class="sticky form-control{% IF fields.basic_fields.article_type.mandatory OR fields.supplementary_fields.article_type.mandatory %} required{% END %}" id="select_article_type">
             <option value=""[% IF !article_type %] selected="selected"[% END %]>--- [% lf.button.select %] ---</option>
             [% FOREACH at IN h.get_list('article_type') %]
-              <option value="[% at.value %]"[% IF at.value == article_type %] selected="selected"[% END %]>[% at.name %]</option>
+              <option value="[% at %]"[% IF at == article_type %] selected="selected"[% END %]>[% lf.article_type.$at %]</option>
             [% END %]
           </select>
           <div class="input-group-addon"></div>

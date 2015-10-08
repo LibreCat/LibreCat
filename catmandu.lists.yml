@@ -61,38 +61,68 @@ styles:
   - sfb882
 
 language_preselect:
-  "English": "eng" #190
-  "German": "ger" #196
+# English
+  - eng
+# German
+  - ger
 
 language:
-  "Arabic": "ara" #185
-  "Chinese": "chi" #187
-  "Croatian": "hrv" #2459065
-  "Czech": "cze" #2561692
-  "Danish": "dan" #189
-  "Dutch": "dut" #2309957
-  "Finnish": "fin" #192
-  "French": "fre" #194
-  "Greek": "gre" #198
-  "Hebrew": "heb" #200
-  "Hungarian": "hun" #1706791
-  "Icelandic": "ice" #202
-  "Italian": "ita" #204
-  "Japanese": "jpn" #206
-  "Korean": "kor" #2309964
-  "Latin": "lat" #208
-  "Latvian": "lav" #2428385
-  "Mongolian": "mon" #2309960
-  "Norwegian": "nor" #210
-  "Polish": "pol" #212
-  "Portuguese": "por" #206541
-  "Romanian": "rum" #214
-  "Russian": "rus" #216
-  "Serbian": "srp" #2428389
-  "Spanish": "spa" #218
-  "Swedish": "swe" #219
-  "Turkish": "tur" #2561691
-  "Other": "other" #221
+# Arabic
+  - ara
+# Chinese
+  - chi
+# Croatian
+  - hrv
+# Czech
+  - cze
+# Danish
+  - dan
+# Dutch
+  - dut
+# Finnish
+  - fin
+# French
+  - fre
+# Greek
+  - gre
+# Hebrew
+  - heb
+# Hungarian
+  - hun
+# Icelandic
+  - ice
+# Italian
+  - ita
+# Japanese
+  - jpn
+# Korean
+  - kor
+# Latin
+  - lat
+# Latvian
+  - lav
+# Mongolian
+  - mon
+# Norwegian
+  - nor
+# Polish
+  - pol
+# Portuguese
+  - por
+# Romanian
+  - rum
+# Russian
+  - rus
+# Serbian
+  - srp
+# Spanish
+  - spa
+# Swedish
+  - swe
+# Turkish
+  - tur
+# Other
+  - other
 
 external_identifier:
   isi:
@@ -133,35 +163,17 @@ publication_identifier:
   eisbn: "eISBN"
 
 publication_status:
-  -
-    value: draft
-    name: "Draft"
-  -
-    value: submitted
-    name: "Submitted"
-  -
-    value: accepted
-    name: "Accepted"
-  -
-    value: inpress
-    name: "In Press"
-  -
-    value: epub_ahead
-    name: "Epub ahead of print"
-  -
-    value: published
-    name: "Published"
+  - draft
+  - submitted
+  - accepted
+  - inpress
+  - epub_ahead
+  - published
 
 article_type:
-  -
-    value: original
-    name: "Original Article"
-  -
-    value: review
-    name: "Review"
-  -
-    value: letter_note
-    name: "Letter / Note"
+  - original
+  - review
+  - letter_note
 
 gs_doc_type:
   book: 'book'
@@ -244,6 +256,14 @@ relations_link:
     relation: "supplementary_material"
     relation_text: "Supplementary Material (of PUB record)"
     link_text: "Suppl. Material"
+  -
+    relation: "research_data"
+    relation_text: "Research Data (of PUB record)"
+    link_text: "Research Data"
+  -
+    relation: "software"
+    relation_text: "Software (for PUB record)"
+    link_text: "Software"
   -
     relation: "other"
     relation_text: "In other relation (to PUB record)"

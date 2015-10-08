@@ -58,8 +58,11 @@ oai_provider '/oai',
 get '/livecitation' => sub {
     my $params = params;
     my $debug = $params->{debug} ? 1 : 0;
-    unless ($params->{id} and $params->{style}) {
+    unless (($params->{id} and $params->{style}) or $params->{info} or $params->{styles}) {
         return "Required parameters are 'id' and 'style'.";
+    }
+    if($params->{styles}){
+    	return to_json h->config->{citation}->{csl}->{styles};
     }
 
     my $pub = h->publication->get($params->{id});

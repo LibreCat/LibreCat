@@ -94,6 +94,14 @@ $('.change_tab').click(function(e){
     $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
   }
   
+  var volume = $('#id_volume').val();
+  if(!volume.match(/^\d*$/)){
+    check = 0;
+    $('#id_volume').addClass('has-error');
+    $('#id_volume').val("");
+    $('#id_volume').attr("placeholder","Numbers only!");
+  }
+  
   if((this_button.attr('href') && (this_button.attr('href') == "#supplementary_fields" || this_button.attr('href') == "#related_material")) || ($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish"))){
     if($('#id_data_reuse_license').length || $('#id_open_data_release').length){
       if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
@@ -199,7 +207,7 @@ $('.change_tab').click(function(e){
     $('#mandatory-field-error').removeClass('hidden');
     $('#mandatory-field-error').addClass('show');
     window.scrollTo(0, 0);
-    //e.preventDefault();
+    e.preventDefault(); // prevents submission of form
   }
   else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish")){
     window.scrollTo(0, 0);

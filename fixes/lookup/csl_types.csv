@@ -1,4 +1,5 @@
 type,csl_type
+default,article
 bookChapter,chapter
 review,article
 conferenceAbstract,chapter

@@ -6,11 +6,10 @@ hash_array()
 compact_array('department')
 compact_array('project')
 clean_abstract()
-language()
+#language()
 maybe_add_urn()
 person()
 add_department()
-add_citation()
 
 isbn13(publication_identifier.isbn.*)
 issn(publication_identifier.issn.*)
@@ -22,3 +21,5 @@ end
 
 remove_field('finalSubmit')
 delete_empty()
+
+add_citation()

@@ -10,7 +10,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.file_upload.license.urn.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.urn.label %]</div>
-          <input type="text" name="urn" id="id_urn" value="[% urn | html %]" placeholder="[% lf.$type.field.urn.placeholder %]" class="sticky form-control{% IF fields.file_upload.license.urn.mandatory %} required{% END %}"{% IF fields.file_upload.license.urn.readonly %} readonly="readonly" title="[% lf.$type.field.urn.title %]"{% END %}/>
+          <input type="text" name="urn" id="id_urn" value="[% urn | html %]" placeholder="[% lf.$type.field.urn.placeholder %]" class="sticky form-control{% IF fields.file_upload.license.urn.mandatory %} required{% END %}"{% IF fields.file_upload.license.urn.readonly == "admin" %}[% IF session.role != "super_admin" %] readonly="readonly" title="[% lf.$type.field.urn.title %]"[% END %]{% ELSIF fields.file_upload.license.urn.readonly %} readonly="readonly" title="[% lf.$type.field.urn.title %]"{% END %}/>
           <div class="input-group-addon"></div>
         </div>
       </div>

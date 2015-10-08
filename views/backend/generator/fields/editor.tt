@@ -35,7 +35,7 @@
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('editor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} data-mandatory="yes"{% END %}></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.editor.pevz OR fields.basic_fields.editor_solo.pevz OR fields.supplementary_fields.editor.pevz OR fields.supplementary_fields.editor_solo.pevz %}
-            <div class="input-group-addon"><span id="editor_link_pevz_0" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% lf.$type.field.editor.pevz_tooltip || lf.$type.field.editor_solo.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="editor_link_pevz_0" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.editor.pevz_tooltip || lf.$type.field.editor_solo.pevz_tooltip %]" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
@@ -76,7 +76,7 @@
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('editor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} data-mandatory="yes"{% END %}></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.editor.pevz OR fields.basic_fields.editor_solo.pevz OR fields.supplementary_fields.editor.pevz OR fields.supplementary_fields.editor_solo.pevz %}
-            <div class="input-group-addon"><span id="editor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% lf.$type.field.editor.pevz_tooltip || lf.$type.field.editor_solo.pevz_tooltip %}" /></span></div>
+            <div class="input-group-addon"><span id="editor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="editor_"><img id="editor_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.editor.pevz_tooltip || lf.$type.field.editor_solo.pevz_tooltip %]" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
