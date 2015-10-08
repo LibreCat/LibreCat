@@ -15,6 +15,10 @@ isbn13(publication_identifier.isbn.*)
 issn(publication_identifier.issn.*)
 issn(publication_identifier.eissn.*)
 
+split_field(nasc, ' ; ')
+split_field(genbank, ' ; ')
+split_field(keyword, ' ; ')
+
 if all_match('finalSubmit','recPublish')
     set_field('status','public')
 end
