@@ -208,7 +208,7 @@ sub get_sort_style {
 
 	$return->{style} = $style;
 
-	Catmandu::Fix->new(fixes => ["delete_empty()"])->fix($return);
+	Catmandu::Fix->new(fixes => ["vacuum()"])->fix($return);
 
 	$return->{sort_eq_default} = 0;
 	$return->{sort_eq_default} = is_same($return->{sort_backend}, $self->config->{default_sort_backend});

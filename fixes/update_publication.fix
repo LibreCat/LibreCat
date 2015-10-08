@@ -1,6 +1,6 @@
 # fix publication data at update
 
-delete_empty()
+vacuum()
 publication_identifier()
 hash_array()
 compact_array('department')
@@ -24,6 +24,6 @@ if all_match('finalSubmit','recPublish')
 end
 
 remove_field('finalSubmit')
-delete_empty()
+vacuum()
 
 add_citation()
