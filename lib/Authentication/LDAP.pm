@@ -76,7 +76,7 @@ with 'Authentication';
 has host          => (is => 'ro', required => 1);
 has base          => (is => 'ro');
 has password      => (is => 'ro');
-has auth_base     => (is => 'ro', requires => 1);
+has auth_base     => (is => 'ro', required => 1);
 has search_filter => (is => 'ro');
 has search_base   => (is => 'ro');
 has search_attr   => (is => 'ro');
@@ -84,7 +84,7 @@ has ldap          => (is => 'lazy');
 
 sub _build_ldap {
     my ($self) = @_;
-    
+
     $self->log->debug("connecting to " . $self->host);
     my $ldap = Net::LDAP->new( $self->host );
 
@@ -114,7 +114,7 @@ sub authenticate {
 
     # Check if we need to translate the username
     $username = $self->search($username) if $self->search_filter;
-    
+
     $self->log->debug("username: $username ; password: " . length($password) . " bytes");
     return -1 unless defined($username) & defined($password);
 
