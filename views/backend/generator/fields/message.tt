@@ -7,10 +7,9 @@
   <div class="col-md-10">
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky">
+        <div class="sticky">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.message.label %]</div>
           <textarea rows="3" name="message" id="id_message" placeholder="[% lf.$type.field.message.placeholder %]" class="sticky form-control">[% message | html %]</textarea>
-          <div class="input-group-addon"></div>
         </div>
       </div>
     </div>

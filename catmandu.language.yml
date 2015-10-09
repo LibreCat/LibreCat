@@ -461,10 +461,20 @@ en:
           label: "Link to PUB record"
           label_short: "PUB-Rec."
           placeholder: "Start typing to search your publications."
+        related_material.select: "Select type of related material"
         related_material.link:
           label: "Link to other record"
           label_short: "Ext. Link"
           placeholder: "Enter a remote location (URL) of your file here"
+        related_material.url:
+          label_short: "URL"
+          placeholder: "URL"
+        related_material.title:
+          label_short: "Title"
+          placeholder: "Title"
+        related_material.title:
+          label_short: "Description"
+          placeholder: "Description"
         publish_button:
           alert: "Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified."
     bookEditor: &bookeditor
@@ -2016,6 +2026,22 @@ de:
           label: "Link zu PUB Eintrag"
           label_short: "PUB-Eintr."
           placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
+        related_material.select: "Art des Zusatzmaterials auswählen &hellip;"
+        related_material.link:
+          label: "Link zu Datensatz"
+          label_short: "Ext. Link"
+          placeholder: "Geben Sie die URL Ihrer Datei hier ein"
+        related_material.url:
+          label_short: "URL"
+          placeholder: "URL"
+        related_material.title:
+          label_short: "Titel"
+          placeholder: "Titel"
+        related_material.title:
+          label_short: "Beschreibung"
+          placeholder: "Beschreibung"
+        publish_button:
+          alert: "Sie sind sicher, dass Sie diesen Datensatz 'Public' stellen wollen? Sie können dies nicht selbst rückgängig machen. Alle hochgeladenen Dateien werden gemäß dem 'Access Level', den Sie festgelegt haben, veröffentlicht."
     bookEditor: &bookeditor
 #      label: "Book (Editor)"
       label: "Sammelwerk"

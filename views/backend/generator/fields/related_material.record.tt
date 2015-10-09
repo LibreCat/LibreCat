@@ -38,7 +38,9 @@
         <input type="hidden" id="related_material_id_[% index %]" name="related_material.record.[% index %].id" value="[% rel.id %]" />
       </span>
       <span class="col-md-1">
-        <span class="glyphicon glyphicon-minus connect"></span>
+      <button class="btn btn-default connect">
+        <span class="glyphicon glyphicon-minus"></span>
+      </button>
       </span>
     </div>
   </div>

@@ -24,6 +24,11 @@ backup:
       department: *backup_settings
       research_group: *backup_settings
 
+reqcopy:
+  package: MongoDB
+  options:
+    database_name: librecat_requestcopy
+
 metrics:
   package: MongoDB
   options:
