@@ -97,7 +97,7 @@ field_order:
     - message
   file_upload:
     - external_file
-    - dropzone_mainDoc
+    - dropzone
     - ddc
     - urn
     - license
@@ -182,7 +182,7 @@ publicationTypes:
             mandatory: 0
             multiple: 0
       file_upload: &file_upload
-        dropzone_mainDoc:
+        dropzone:
           mandatory: 0
         license:
           pub_license:
@@ -773,7 +773,7 @@ publicationTypes:
       file_upload:
         externalFiles:
           mandatory: 0
-        dropzone_mainDoc:
+        dropzone:
           mandatory: 0
         license:
           data_reuse_license:
@@ -958,7 +958,7 @@ publicationTypes:
         alternative_title: *alternative_title
         page: *page
       file_upload: &file_upload
-        dropzone_mainDoc:
+        dropzone:
           mandatory: 0
         license:
           pub_license:

@@ -378,7 +378,7 @@ en:
           publication_status:
             label: "Publication Status"
             label_short: "Publ. Status"
-        dropzone_mainDoc: &dropzone_mainDoc
+        dropzone: &dropzone
           label: "<strong>Upload Main File(s) and Supplementary Material</strong> (max. 1000MB per file)"
           dropzone_text: "Drop files here to upload ... or click!"
           access_level: "Access Level:"
@@ -512,7 +512,7 @@ en:
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         edition: *edition
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -587,7 +587,7 @@ en:
           label_end_short: "End"
           placeholder_start: "YYYY-MM-DD"
           placeholder_end: "YYYY-MM-DD"
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -657,7 +657,7 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -697,7 +697,7 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -742,7 +742,7 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -783,7 +783,7 @@ en:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -823,7 +823,7 @@ en:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -865,7 +865,7 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -915,7 +915,7 @@ en:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -955,7 +955,7 @@ en:
           placeholder: "e.g. The New York Times"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -1019,7 +1019,7 @@ en:
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -1051,7 +1051,7 @@ en:
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -1091,7 +1091,7 @@ en:
           placeholder: "e.g. NASA/TM-2015-123456"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -1130,7 +1130,7 @@ en:
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -1172,7 +1172,7 @@ en:
           placeholder: "Publisher"
           defaultvalue: "Bielefeld University"
         year_extern: *year_extern
-        dropzone_mainDoc: &dropzone_mainDoc
+        dropzone: &dropzone
           label: "<strong>Upload File(s)</strong> (max. 1000MB per file)"
           dropzone_text: "Drop files here to upload ... or click!"
           access_level: "Access Level:"
@@ -1279,7 +1279,7 @@ en:
         original_language: &original_language
           label: "Language (Original)"
           label_short: "Lang. (Orig.)"
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -1350,7 +1350,7 @@ en:
         publication_status: *publication_status
         language: *language
         original_language: *original_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -1388,7 +1388,7 @@ en:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -1449,7 +1449,7 @@ en:
           label: "Publisher"
           placeholder: "Publisher"
         page: *page
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -1964,7 +1964,7 @@ de:
           publication_status:
             label: "Publikationsstatus"
             label_short: "Publ.status"
-        dropzone_mainDoc: &dropzone_mainDoc
+        dropzone: &dropzone
           label: "<strong>Upload für Volltext und Anhänge/ Zusatzmaterialien</strong> (max. 1000MB pro Datei)"
           dropzone_text: "Datei hier her ziehen... oder klicken!"
           access_level: "Access Level:"
@@ -2101,7 +2101,7 @@ de:
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         edition: *edition
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2178,7 +2178,7 @@ de:
           label_end_short: "Ende"
           placeholder_start: "YYYY-MM-DD"
           placeholder_end: "YYYY-MM-DD"
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2250,7 +2250,7 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2291,7 +2291,7 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2336,7 +2336,7 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2379,7 +2379,7 @@ de:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2420,7 +2420,7 @@ de:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2464,7 +2464,7 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2516,7 +2516,7 @@ de:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2557,7 +2557,7 @@ de:
           placeholder: "z.B. The New York Times"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2621,7 +2621,7 @@ de:
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2656,7 +2656,7 @@ de:
         page: *page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2697,7 +2697,7 @@ de:
           placeholder: "z.B. NASA/TM-2015-123456"
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2737,7 +2737,7 @@ de:
         volume_issue_page: *volume_issue_page
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2781,9 +2781,7 @@ de:
           placeholder: "Verlag"
           defaultvalue: "Bielefeld University"
         year_extern: *year_extern
-        dropzone_mainDoc:
-          label: "Datei hochladen"
-        dropzone_mainDoc:
+        dropzone:
           label: "<strong>Datei(en) hochladen</strong> (max. 1000MB per file)"
           dropzone_text: "Datei hier her ziehen... oder klicken!"
           access_level: "Access Level:"
@@ -2890,7 +2888,7 @@ de:
         original_language: &original_language
           label: "Sprache (Original)"
           label_short: "Spr. (Orig.)"
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -2961,7 +2959,7 @@ de:
         publication_status: *publication_status
         language: *language
         original_language: *original_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -3000,7 +2998,7 @@ de:
         series_title_volume: *series_title_volume
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
@@ -3060,7 +3058,7 @@ de:
           label: "Verlag"
           placeholder: "Verlag"
         page: *page
-        dropzone_mainDoc: *dropzone_mainDoc
+        dropzone: *dropzone
         license: *license
         urn: *urn
         ddc: *ddc
