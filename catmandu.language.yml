@@ -463,12 +463,11 @@ en:
           placeholder: "Start typing to search your publications."
         related_material.select: "Select type of related material"
         related_material.link: &related_material_link
-          label: "Link to other record"
+          label: "Link to external source"
           label_short: "Ext. Link"
-          placeholder: "Enter a remote location (URL) of your file here"
           url:
             label_short: "URL"
-            placeholder: "URL of external link (with http://)"
+            placeholder: "URL of external link (enter with http://)"
           title:
             label_short: "Title"
             placeholder: "Title of external link"
@@ -1496,6 +1495,8 @@ en:
     form_change_type: "Change publication type"
     form_sort_item: "Drag & drop to change position of author in author list"
     form_add_field: "Add a field (+) or Remove this field (-)"
+    form_relmat_record: "Link one of your own publication from PUB with this record."
+    form_relmat_link: "Link another publication from PUB or an external websites to this record."
     button:
       back: "Back"
       save: "Save"
@@ -2050,15 +2051,14 @@ de:
           placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
         related_material.select: "Art des Zusatzmaterials auswählen &hellip;"
         related_material.link: &related_material_link
-          label: "Link zu Datensatz"
+          label: "Link zu externer Quelle"
           label_short: "Ext. Link"
-          placeholder: "Geben Sie die URL Ihrer Datei hier ein"
           url:
             label_short: "URL"
-            placeholder: "URL des Datensatzes (mit http://)"
+            placeholder: "URL der Quelle (Eingabe mit http://)"
           title:
             label_short: "Titel"
-            placeholder: "Titel des Datensatzes"
+            placeholder: "Titel der Quelle"
           description:
             label_short: "Beschreibung"
             placeholder: "Beschreibung"
@@ -3108,8 +3108,8 @@ de:
     form_change_type: "Publikationstyp ändern"
     form_sort_item: "Drag & drop, um die Position des Autors in der Autorenliste zu ändern"
     form_add_field: "Feld hinzufügen (+) or dieses Feld löschen (-)"
-    form_relmat_link: "Eigene Publikationen in PUB mit dieser Publikation verlinken. Sie erscheint unter Zusatzmaterial."
-    form_relmat_record: "Andere Publikationen aus PUB oder externe Webseiten mit dieser Publikation verlinken. Sie erscheint unter Zusatzmaterial."
+    form_relmat_record: "Eigene Publikationen aus PUB mit dieser Publikation verbinden. Nach der Auswahl wählen Sie im zweiten Schritt die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
+    form_relmat_link: "Externe Webseite mit dieser Publikation verbindne. Nach Klick auf [+] wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
     button:
       back: "Zurück"
       save: "Speichern"
