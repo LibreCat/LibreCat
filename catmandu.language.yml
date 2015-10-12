@@ -391,6 +391,21 @@ en:
             request_a_copy: "<br>(Request a Copy)"
             local: "UniBi Only"
             open_access: "Open Access"
+          edit_modal:
+            heading: "Edit Uploaded File"
+            heading_file: "File"
+            current_file: "Current file:"
+            relation: "Relation (\"Uploaded document is...\")"
+            access:
+              open_access: "Open Access (File is freely available, effective immediately)"
+              local: "Local Access (UniBi only)"
+              closed: "Closed Access (Author/Reviewer only)"
+              request_a_copy: "Request a Copy (Closed Access except upon request)"
+              embargo: "Switch to Open Access on:"
+            additional_information:
+              heading: "Additional Information"
+              title: "Title"
+              description: "Description"
         license: &license
           heading: "Copyright and Licenses"
           pub_license:
@@ -1978,6 +1993,21 @@ de:
             request_a_copy: "<br>(Kopie anfordern)"
             local: "Nur UniBi"
             open_access: "Open Access"
+          edit_modal:
+            heading: "Hochgeladene Datei bearbeiten"
+            heading_file: "Datei"
+            current_file: "Aktuelle Datei:"
+            relation: "Relation (\"Hochgeladenes Dokument ist...\")"
+            access:
+              open_access: "Open Access (Datei ist frei verfügbar, ab sofort)"
+              local: "Local Access (Nur UniBi)"
+              closed: "Closed Access (Nur Autor/Reviewer)"
+              request_a_copy: "Request a Copy (Closed Access außer auf Anfrage)"
+              embargo: "Zu Open Access wechseln am:"
+            additional_information:
+              heading: "Zusätzliche Informationen"
+              title: "Titel"
+              description: "Beschreibung"
         license: &license
           heading: "Copyright und Lizenz"
           pub_license:

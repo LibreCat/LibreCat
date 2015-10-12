@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Edit Uploaded File</h3>
+        <h3>[% lf.$type.field.dropzone.edit_modal.heading %]</h3>
       </div>
 
       <form enctype="multipart/form-data" name="upLoad" id="upLoad">
@@ -16,17 +16,17 @@
         <input type="hidden" name="creator" id="id_creator" value="" />
         <input type="hidden" name="cancel" value="" />
 
-        <h4>File</h4>
+        <h4>[% lf.$type.field.dropzone.edit_modal.heading_file %]</h4>
         <div class="form-group">
           <label class="text" id="fileNameTag" style="display:none">
-            Current file:
+            [% lf.$type.field.dropzone.edit_modal.current_file %]
             <input type="text" name="fileName" id="id_fileName" value="" readonly="readonly" class="form-control"/>
           </label>
           <input type="file" name="file" id="id_file" size="40" />
         </div>
 
         <div class="form-group">
-          <strong>Relation ("Uploaded document is...")</strong><br />
+          <strong>[% lf.$type.field.dropzone.edit_modal.relation %]</strong><br />
           <select name="relation" class="form-control" id="id_select_relation">
             <option value="main_file"[% IF !relation %] selected="selected"[% END %]>Main File</option>
             [% FOREACH rel IN h.config.lists.relations_file %]
@@ -52,37 +52,37 @@
           </script>
 
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="open_access" onclick="oamode(this.form, true);"/> Open Access (File is freely available, effective immediately)
+            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="open_access" onclick="oamode(this.form, true);"/> [% lf.$type.field.dropzone.edit_modal.access.open_access %]
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="local" onclick="oamode(this.form,false);" /> Local Access (UniBi only)
+            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="local" onclick="oamode(this.form,false);" /> [% lf.$type.field.dropzone.edit_modal.access.local %]
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="closed" onclick="oamode(this.form,false);" /> Closed Access (Author/Reviewer only)
+            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="closed" onclick="oamode(this.form,false);" /> [% lf.$type.field.dropzone.edit_modal.access.closed %]
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_request" value="request" onclick="oamode(this.form,false);" /> Request a Copy (Closed Access except upon request)
+            <input type="radio" name="accessLevel" id="id_accessLevel_request" value="request" onclick="oamode(this.form,false);" /> [% lf.$type.field.dropzone.edit_modal.access.request_a_copy %]
           </label>
           <label class="checkbox control-label">
-            <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />Switch to Open Access on:<br />
+            <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />[% lf.$type.field.dropzone.edit_modal.access.embargo %]<br />
           </label>
           <input type="text" class="form-control" name="embargo" id="id_embargo" placeholder="YYYY-MM-DD" value="">
         </div>
 
-        <h4>Additional Information</h4>
+        <h4>[% lf.$type.field.dropzone.edit_modal.additional_information.heading %]</h4>
         <div class="form-group">
-          <strong>Title</strong><br />
+          <strong>[% lf.$type.field.dropzone.edit_modal.additional_information.title %]</strong><br />
           <input type="text" name="title" id="id_fileTitle" value="" class="form-control" />
         </div>
 
         <div class="form-group">
-          <strong>Description</strong><br />
+          <strong>[% lf.$type.field.dropzone.edit_modal.additional_information.description %]</strong><br />
           <textarea name="description" id="id_fileDescription" class="form-control" rows="3">[% description %]</textarea>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" name="finalSubmit" id="fileSubmit"><span class="glyphicon glyphicon-ok"></span> Save</button>
-        <button type="button" class="btn btn-warning" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+        <button type="button" class="btn btn-success" name="finalSubmit" id="fileSubmit"><span class="glyphicon glyphicon-ok"></span> [% lf.button.save %]</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span> [% lf.button.cancel %]</button>
       </div>
       </form>
     </div>
