@@ -28,6 +28,21 @@ get qr{/en/puboa/*} => sub {
 	redirect 'http://oa.uni-bielefeld.de/', 301;
 };
 
+# The ONLY redirect we will do for the more-than-old /pub? interface
+# Redirect old frontdoor requests pub.uni-bielefeld.de/pub?func=drec&id=[id]
+# (some of these have been printed in articles...)
+get qr{/pub} => sub {
+	if(params->{func} and params->{func} eq "drec"){
+		if(params->{id}){
+			redirect 'https://pub.uni-bielefeld.de/publication/'.params->{id};
+		}
+	}
+	else{
+		status 'not_found';
+		template 'websites/404', {path => request->{referer}};
+	}
+};
+
 
 #general stuff
 #get qr{/en/*} => sub {
