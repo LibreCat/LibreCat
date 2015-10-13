@@ -42,23 +42,23 @@
 [% IF related_material %]
 [% FOREACH u IN related_material.link %]
 [% NEXT IF u.record %]
-  <div class="col-md-10 col-md-offset-2">
+  <div class="col-md-10 col-xs-12 col-md-offset-2">
     <div class="row innerrow">
-      <div class="col-md-3">
+      <div class="col-xs-3">
 	<select class="relurl form-control" name="related_material.link.[% loop.index %].relation">
 	  [% FOREACH entry IN h.config.lists.relations_link %]
 	  <option value="[% entry.relation %]"[% IF entry.relation == u.relation %] selected="selected"[% END %]>[% entry.link_text %]</option>
 	  [% END %]
 	</select>
       </div>
-      <div class="col-md-7">
-	<span class="form-group col-md-9">
+      <div class="col-md-7 col-xs-9">
+	<span class="form-group col-xs-9">
 	  <span class="glyphicon glyphicon-link"></span> <a href="[% u.url %]" target="_blank">[% u.title %]</a><br /><span class="text-muted">[% u.description %]</span>
 	  <input type="hidden" name="related_material.link.[% loop.index %].url" value="[% u.url %]" />
 	  <input type="hidden" name="related_material.link.[% loop.index %].title" value="[% u.title | html %]" />
 	  <input type="hidden" name="related_material.link.[% loop.index %].description" value="[% u.description | html %]" />
 	</span>
-	<span class="col-md-1">
+	<span class="col-xs-1">
 	  <button class="btn btn-default connect">
 	    <span class="glyphicon glyphicon-minus"></span>
 	  </button>
