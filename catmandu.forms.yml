@@ -46,7 +46,6 @@ field_order:
     - author_secondary
     - title
     - alternative_title
-    - article_type
     - publication
     - editor
     - corporate_editor
@@ -102,6 +101,7 @@ field_order:
     - urn
     - license
   supplementary_fields:
+    - article_type
     - abstract
     - keyword
     - pacs_class
@@ -530,14 +530,14 @@ publicationTypes:
         year_extern: *year_extern
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        article_type:
-          mandatory: 0
         conference.divider: *conference_divider
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
       file_upload: *file_upload
       supplementary_fields:
+        article_type:
+          mandatory: 0
         abstract: *abstract
         keyword: *keyword
         popular_science_quality_controlled: *popular_science_quality_controlled
