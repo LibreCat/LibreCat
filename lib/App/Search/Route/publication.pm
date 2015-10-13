@@ -74,7 +74,7 @@ get qr{/(data|publication)/*} => sub {
 		template "iframe", $hits;
 	} else {
 		my $template = "websites/index_publication";
-		if($p->{ftyp}){
+		if($p->{ftyp} and $p->{ftyp} =~ /ajax|js|pln/){
 			$template .= "_" . $p->{ftyp};
 			$template .= "_num" if ($p->{enum} and $p->{enum} eq "1");
 			$template .= "_numasc" if ($p->{enum} and $p->{enum} eq "2");
