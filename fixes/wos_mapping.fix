@@ -82,4 +82,4 @@ remove_field(GP)
 remove_field(FX)
 remove_field(SU)
 
-delete_empty()
+vacuum()

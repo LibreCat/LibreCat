@@ -1,7 +1,7 @@
 requires 'perl', 'v5.10.1';
 
 # Catmandu
-requires 'Catmandu', '>=0.9402';
+requires 'Catmandu', '>=0.95';
 requires 'Catmandu::Store::ElasticSearch';
 requires 'Catmandu::Store::MongoDB';
 #requires 'Catmandu::Store::DBI';
@@ -51,8 +51,8 @@ requires 'Hash::Merge';
 requires 'Try::Tiny';
 requires 'Crypt::Digest::MD5';
 requires 'XML::RSS';
-requires 'YAML';
-requires 'JSON';
+requires 'YAML::XS';
+requires 'JSON::MaybeXS';
 requires 'Log::Log4perl';
 requires 'Log::Any::Adapter';
 requires 'Log::Any::Adapter::Log4perl';
