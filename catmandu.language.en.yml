@@ -459,6 +459,7 @@ forms:
       popular_science_quality_controlled: &popular_science_quality_controlled
         popular_science:
           label: "Popular Science"
+          label_short: "Pop.Sci."
         quality_controlled:
           label: "Peer Review"
       jel: &jel
@@ -509,6 +510,7 @@ forms:
           label_short: "Ed. Last"
           placeholder: "e.g. Appleseed"
         label: "Editor"
+        label_short: "Ed."
         pevz_tooltip: "Link to / Withdraw from publication list."
       corporate_editor_solo: &corporate_editor_solo
         label: "Corporate Editor"
@@ -562,6 +564,7 @@ forms:
           label_short: "Ed. Last"
           placeholder: "e.g. Appleseed"
         label: "Book Editor"
+        label_short: "Ed."
         pevz_tooltip: "Link to / Withdraw from publication list."
       corporate_editor: &corporate_editor
         label: "Corporate Editor"
@@ -636,6 +639,7 @@ forms:
           label_short: "Ed. Last"
           placeholder: "e.g. Appleseed"
         label: "Editor"
+        label_short: "Ed."
         pevz_tooltip: "Link to / Withdraw from publication list."
       corporate_editor: *corporate_editor
       department: *department
@@ -652,7 +656,8 @@ forms:
         label: "Series Title"
         placeholder: "e.g. Lecture Notes of eBook Publishing"
       volume_issue_page: &volume_issue_page
-        label: "Vol. / Issue / Page"
+        label: "Volume / Issue / Page"
+        label_short: "Vol./Iss./Pg."
         volume:
           placeholder: "e.g. 3"
           label: "Volume"
@@ -758,6 +763,7 @@ forms:
       license: *license
       urn: *urn
       ddc: *ddc
+      abstract: *abstract
       keyword: *keyword
       external_id: *external_id
       message: *message
@@ -815,6 +821,7 @@ forms:
       doi: *doi
       title:
         label: "Article Title"
+        label_short: "Title"
         placeholder: "e.g. Online-Publishing"
       alternative_title: *alternative_title
       author: *author_translator
@@ -826,7 +833,6 @@ forms:
       research_group: *research_group
       publication:
         label: "Book Title"
-        mandatory: 1
         placeholder: "e.g. Encyclopedia on Publishing"
       place: *place
       publisher: *publisher
@@ -856,6 +862,7 @@ forms:
       doi: *doi
       title:
         label: "Article Title"
+        label_short: "Title"
         placeholder: "e.g. The implications of eBook Publishing"
       alternative_title: *alternative_title
       author: *author_translator
@@ -910,6 +917,7 @@ forms:
       doi: *doi
       title:
         label: "Issue Title"
+        label_short: "Title"
         placeholder: "e.g. Handbook of eBook Publishing"
       editor_solo: *editor_solo
       corporate_editor_solo: *corporate_editor_solo
@@ -961,6 +969,7 @@ forms:
     field:
       title:
         label: "Article Title"
+        label_short: "Title"
         placeholder: "e.g. The implications of eBook Publishing"
       alternative_title: *alternative_title
       author: *author_translator
@@ -990,6 +999,7 @@ forms:
       alternative_id: *alternative_id
       popular_science: &popular_science
         label: "Popular Science"
+        label_short: "Pop.Sci."
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   newspaperarticle: *newspaperarticle
@@ -1055,6 +1065,7 @@ forms:
       alternative_id: *alternative_id
       quality_controlled:
         label: "Peer Review"
+        label_short: "Qual.contr."
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   preprint:
@@ -1063,6 +1074,7 @@ forms:
     field:
       title:
         label: "Article Title"
+        label_short: "Titel"
         placeholder: "e.g. The implications of eBook Publishing"
       publication: *publication_jtitle
       author: *author_translator
@@ -1346,9 +1358,7 @@ forms:
           label: "Last Name"
           label_short: "Auth. Last"
           placeholder: "e.g. Appleseed"
-        multiple: 1
         label: "Author"
-        pevz: 0
         pevz_tooltip: "Link to / Withdraw from publication list."
       alternative_title:
         label: "Chapter Title (Original)"

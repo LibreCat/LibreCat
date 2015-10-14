@@ -270,7 +270,7 @@ mark:
   mark_unmark: "Markieren/ Markierung löschen"
   back_general: "Zurück"
   back_person: "Zurück zur Personenseite"
-  display_sort: "Darstellung / Sortierung"
+  display_export: "Darstellung / Sortierung"
 sort_options:
   year: "Publikationsjahr"
   date_updated: "Update-Datum"
@@ -296,7 +296,6 @@ add_new:
   paste_bibtex: "Option 4:<br />Fügen Sie Ihren BibTex Eintrag hier ein"
 forms:
   book:
-#    label: "Book"
     label: "Monographie"
     tab: &tab
       basic_fields: "Hauptfelder"
@@ -355,9 +354,9 @@ forms:
         extern:
           label_short: "Extern"
           placeholder: "Veröffentlicht vor/nach Beschäftigung an der UniBi"
-      page: &page
-        label: "Anzahl Seiten"
+      page: &pages
         label_short: "Seiten"
+        label: "Anzahl Seiten"
         placeholder: "z.B. 345"
       series_title_volume: &series_title_volume
         label: "Serientitel / Band"
@@ -440,7 +439,7 @@ forms:
         explain: "(Wenn Sie eine Datei hochladen, wird automatisch eine URN generiert!)"
         title: "Die URN wurde automatisch generiert und kann nicht geändert werden."
       ddc: &ddc
-        label: DDC
+        label: "DDC"
         select_ddc: "DDC auswählen"
       abstract: &abstract
         label: "Abstract"
@@ -496,7 +495,6 @@ forms:
       publish_button:
         alert: "Sie sind sicher, dass Sie diesen Datensatz 'Public' stellen wollen? Sie können dies nicht selbst rückgängig machen. Alle hochgeladenen Dateien werden gemäß dem 'Access Level', den Sie festgelegt haben, veröffentlicht."
   bookEditor: &bookeditor
-#    label: "Book (Editor)"
     label: "Sammelwerk"
     tab: *tab
     field:
@@ -525,7 +523,7 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
-      page: *page
+      page: *pages
       series_title_volume: *series_title_volume
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
@@ -546,7 +544,6 @@ forms:
       related_material.link: *related_material_link
   bookeditor: *bookeditor
   bookChapter: &bookchapter
-#    label: "Book Chapter"
     label: "Sammelbandbeitrag"
     tab: *tab
     field:
@@ -580,7 +577,7 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
-      page: &pages
+      page: &page_range
         label: "Seiten"
         placeholder: "z.B. 12 oder 20 - 25"
       series_title_volume: *series_title_volume
@@ -623,7 +620,6 @@ forms:
       related_material.link: *related_material_link
   bookchapter: *bookchapter
   conferenceAbstract: &conferenceabstract
-#    label: "Conference Abstract"
     label: "Kurzbeitrag Konferenz"
     tab: *tab
     field:
@@ -651,6 +647,7 @@ forms:
       research_group: *research_group
       publication:
         label: "Berichtsbandtitel"
+        label_short: "Ber.bandtitel"
         placeholder: "z.B. Berichtsband der 3. Konferenz über Nanophysik"
       place: *place
       publisher: *publisher
@@ -671,8 +668,6 @@ forms:
           label_short: "Ausg."
         page:
           placeholder: "z.B. 12 oder 20 - 25"
-          label: "Seite"
-          label_short: "Seite"
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
       conference.divider: *conference_divider
@@ -694,7 +689,6 @@ forms:
       related_material.link: *related_material_link
   conferenceabstract: *conferenceabstract
   conferenceEditor: &conferenceeditor
-#    label: "Conference (Editor)"
     label: "Konferenzband"
     tab: *tab
     field:
@@ -709,7 +703,7 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
-      page: *page
+      page: *pages
       series_title_volume: *series_title_volume
       issue: &issue
         label: "Ausgabe"
@@ -736,7 +730,6 @@ forms:
       related_material.link: *related_material_link
   conferenceeditor: *conferenceeditor
   conference:
-#    label: "Conference Paper"
     label: "Konferenzbeitrag"
     tab: *tab
     field:
@@ -754,6 +747,7 @@ forms:
       volume_issue_page: *volume_issue_page
       publication:
         label: "Berichtsbandtitel"
+        label_short: "Ber.bandtitel"
         placeholder: "z.B. Berichtsband der 3. Konferenz über Nanophysik"
       series_title: *series_title
       place: *place
@@ -780,7 +774,6 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   dissertation:
-#    label: "Dissertation"
     label: "Dissertation"
     tab: *tab
     field:
@@ -804,7 +797,7 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
-      page: *page
+      page: *pages
       series_title_volume: *series_title_volume
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
@@ -822,7 +815,6 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   encyclopediaArticle: &encyclopediaarticle
-#    label: "Encyclopedia Article"
     label: "Lexikoneintrag"
     tab: *tab
     field:
@@ -864,7 +856,6 @@ forms:
       related_material.link: *related_material_link
   encyclopediaarticle: *encyclopediaarticle
   journalArticle: &journalarticle
-#    label: "Journal Article"
     label: "Zeitschriftenaufsatz"
     tab: *tab
     field:
@@ -920,7 +911,6 @@ forms:
       related_material.link: *related_material_link
   journalarticle: *journalarticle
   journalEditor: &journaleditor
-#    label: "Journal (Editor)"
     label: "Zeitschriftenheft"
     tab: *tab
     field:
@@ -937,7 +927,20 @@ forms:
       research_group: *research_group
       publisher: *publisher
       publication: *publication_jtitle
-      volume_issue_page: *volume_issue_page
+      volume_issue_page: &volume_issue_page
+        label: "Vol. / Issue / Page"
+        volume:
+          placeholder: "e.g. 3"
+          label: "Volume"
+          label_short: "Volume"
+        issue:
+          placeholder: "e.g. 5"
+          label: "Issue"
+          label_short: "Issue"
+        page:
+          label: "Number of Pages"
+          label_short: "Pages"
+          placeholder: "e.g. 12 or 20 - 25"
       year_extern: *year_extern
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
@@ -961,13 +964,12 @@ forms:
       related_material.link: *related_material_link
   journaleditor: *journaleditor
   newspaperArticle: &newspaperarticle
-#    label: "Newspaper Article"
     label: "Zeitungsartikel"
     tab: *tab
     field:
       title:
         label: "Titel des Artikels"
-        label: "Titel"
+        label_short: "Titel"
         placeholder: "z.B. Die Folgen des eBook-Veröffentlichens"
       alternative_title: *alternative_title
       author: *author_translator
@@ -979,9 +981,10 @@ forms:
         label: "Veröffentlichungsdatum"
         label_short: "Veröff.datum"
         placeholder: "YYYY-MM-DD"
-      page: *pages
+      page: *page_range
       publication:
         label: "Zeitungstitel"
+        label_short: "Zeit.titel"
         placeholder: "z.B. The New York Times"
       publication_status_language: *publication_status_language
       dropzone: *dropzone
@@ -1001,7 +1004,6 @@ forms:
       related_material.link: *related_material_link
   newspaperarticle: *newspaperarticle
   patent:
-#    label: "Patent"
     label: "Patent"
     tab: *tab
     field:
@@ -1021,6 +1023,7 @@ forms:
         pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
       applicant:
         label: "Antragsteller"
+        label_short: "Antr.steller"
         placeholder: "z.B. Hans Müller"
       department: *department
       project: *project
@@ -1045,7 +1048,8 @@ forms:
         placeholder: "z.B. B25J 7/00"
       language:
         label: "Sprache"
-      page: *page
+        label_short: "Spr."
+      page: *pages
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
       dropzone: *dropzone
@@ -1065,13 +1069,12 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   preprint:
-#    label: "Preprint"
     label: "Preprint"
     tab: *tab
     field:
       title:
         label: "Titel des Artikels"
-        label: "Titel"
+        label_short: "Titel"
         placeholder: "z.B. Die Folgen der eBook-Veröffentlichung"
       publication: *publication_jtitle
       author: *author_translator
@@ -1080,7 +1083,7 @@ forms:
       research_group: *research_group
       publisher: *publisher
       year_extern: *year_extern
-      page: *page
+      page: *pages
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
       dropzone: *dropzone
@@ -1098,7 +1101,6 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   report:
-#    label: "Report"
     label: "Report"
     tab: *tab
     field:
@@ -1116,7 +1118,7 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
-      page: *page
+      page: *pages
       series_title_volume: *series_title_volume
       report_number:
         label: "Reportnummer"
@@ -1139,7 +1141,6 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   review:
-#    label: "Book Review"
     label: "Rezension"
     tab: *tab
     field:
@@ -1178,25 +1179,23 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   researchData: &researchdata
-#    label: "Research Data"
     label: "Datenpublikation"
     tab:
       basic_fields: "Hauptfelder"
       file_upload: "Forschungsdatenupload"
       supplementary_fields: "Weitere Informationen"
       related_material: "Zusätzliches Material"
-      department: *department
-      project: *project
-      research_group: *research_group
     field:
       doi: *doi
       title: *title
       author:
         first_name:
           label: "Vorname"
+          label_short: "Vorn."
           placeholder: "z.B. Hans"
         last_name:
           label: "Nachname"
+          label_short: "Nachn."
           placeholder: "z.B. Müller"
         label: "Creator"
         pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
@@ -1208,7 +1207,7 @@ forms:
         placeholder: "Verlag"
         defaultvalue: "Bielefeld University"
       year_extern: *year_extern
-      dropzone:
+      dropzone: &dropzone
         label: "<strong>Datei(en) hochladen</strong> (max. 1000MB per file)"
         dropzone_text: "Datei hier her ziehen... oder klicken!"
         access_level: "Access Level:"
@@ -1262,7 +1261,6 @@ forms:
         label: "Related Material"
   researchdata: *researchdata
   translation:
-#    label: "Translation"
     label: "Übersetzung"
     tab: *tab
     field:
@@ -1304,7 +1302,7 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
-      page: *page
+      page: *pages
       series_title_volume: *series_title_volume
       publication_identifier: *publication_identifier
       publication_status: &publication_status
@@ -1330,7 +1328,6 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   translationChapter: &translationchapter
-#    label: "Translation (Chapter)"
     label: "Übersetzung (Aufsatz)"
     tab: *tab
     field:
@@ -1402,7 +1399,6 @@ forms:
       related_material.link: *related_material_link
   translationchapter: *translationchapter
   workingPaper: &workingpaper
-#    label: "Working Paper"
     label: "Diskussionspapier"
     tab: *tab
     field:
@@ -1421,7 +1417,7 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
-      page: *page
+      page: *pages
       series_title_volume: *series_title_volume
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
@@ -1440,7 +1436,6 @@ forms:
       related_material.link: *related_material_link
   workingpaper: *workingpaper
   biDissertation: &bidissertation
-#    label: "Bielefeld Thesis"
     label: "Bielefelder E-Dissertation"
     tab: *tab
     field:
@@ -1484,7 +1479,7 @@ forms:
       publisher: &publisher_diss
         label: "Verlag"
         placeholder: "Verlag"
-      page: *page
+      page: *pages
       dropzone: *dropzone
       license: *license
       urn: *urn
@@ -1507,17 +1502,14 @@ forms:
       related_material.link: *related_material_link
   bidissertation: *bidissertation
   biMasterThesis: &bimasterthesis
-#    label: "Bielefeld Master Thesis"
     label: "Bielefelder Masterarbeit"
     tab: *tab
   bimasterthesis: *bimasterthesis
   biPostdocThesis: &bipostdocthesis
-#    label: "Bielefeld Post-Doctoral Habilitation"
     label: "Bielefelder E-Habilitation"
     tab: *tab
   bipostdocthesis: *bipostdocthesis
   biBachelorThesis: &bibachelorthesis
-#    label: "Bielefeld Bachelor Thesis"
     label: "Bielefelder Bachelorarbeit"
     tab: *tab
   bibachelorthesis: *bibachelorthesis
@@ -1557,6 +1549,11 @@ forms:
     original: "Forschungsartikel"
     review: "Review"
     letter_note: "Letter"
+  page_range_number:
+    page: "Seite"
+    pages: "Seiten"
+    page_range: "Seitenbereich"
+    article_number: "Artikelnummer"
   language:
     ara: "Arabisch"
     chi: "Chinesisch"
