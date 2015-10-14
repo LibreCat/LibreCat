@@ -668,6 +668,8 @@ forms:
           label_short: "Ausg."
         page:
           placeholder: "z.B. 12 oder 20 - 25"
+          label: "Anzahl Seiten"
+          label_short: "Seiten"
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
       conference.divider: *conference_divider
@@ -1552,7 +1554,7 @@ forms:
   page_range_number:
     page: "Seite"
     pages: "Seiten"
-    page_range: "Seitenbereich"
+    page_range: "Seite(nbereich)"
     article_number: "Artikelnummer"
   language:
     ara: "Arabisch"

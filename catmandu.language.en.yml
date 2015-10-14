@@ -668,6 +668,8 @@ forms:
           label_short: "Issue"
         page:
           placeholder: "e.g. 12 or 20 - 25"
+          label: "Number of Pages"
+          label_short: "Pages"
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
       conference.divider: *conference_divider
@@ -1554,7 +1556,7 @@ forms:
   page_range_number:
     page: "Page"
     pages: "Pages"
-    page_range: "Page Range"
+    page_range: "Page(-Range)"
     article_number: "Article Number"
   language:
     ara: "Arabic"
