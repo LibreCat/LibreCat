@@ -298,17 +298,17 @@ forms:
   book:
     label: "Monographie"
     tab: &tab
-      basic_fields: "Hauptfelder"
-      file_upload: "Dateiupload"
-      supplementary_fields: "Weitere Informationen"
-      related_material: "Zusätzliches Material"
+      basic_fields: "Details"
+      file_upload: "Upload"
+      supplementary_fields: "Weitere Angaben"
+      related_material: "Verknüpfungen"
     field:
       doi: &doi
         label: "DOI"
         placeholder: "z.B. 10.4119/unibi/2695161"
         title: "Der DOI wird automatisch generiert und kann nicht verändert werden."
       title: &booktitle
-        label: "Buchtitel"
+        label: "Titel"
         placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
       alternative_title: &alternative_title
         label: "Alternativer Titel"
@@ -326,7 +326,7 @@ forms:
           label_short: "Autor Nachn."
           placeholder: "z.B. Müller"
       edition: &edition
-        label: "Ausgabe"
+        label: "Auflage"
         placeholder: "z.B. 2"
       department: &department
         label: "Einrichtung"
@@ -340,7 +340,7 @@ forms:
         label_short: "Forsch.gr."
         placeholder: "z.B. Social Motorics"
       place: &place
-        label: "Ort<br>(der Veröffentlichung)"
+        label: "Verlagsort"
         label_short: "Ort"
         placeholder: "z.B. Berlin"
       publisher: &publisher
@@ -367,8 +367,8 @@ forms:
           label: "Band"
           placeholder: "Band, z.B. 3"
       publication_identifier: &publication_identifier
-        label: "Publikations-<br>Kennung"
-        label_short: "Publ. Kenn."
+        label: "ISSN / ISBN"
+        label_short: "ISSN/ISBN"
         placeholder: "z.B. (e)ISBN oder (e)ISSN auswählen und eintragen"
       publication_status_language: &publication_status_language
         label: "Status / Sprache"
@@ -376,8 +376,8 @@ forms:
           label: "Sprache"
           label_short: "Sprache"
         publication_status:
-          label: "Publikationsstatus"
-          label_short: "Publ.status"
+          label: "Status"
+          label_short: "Status"
       dropzone: &dropzone
         label: "<strong>Upload für Volltext und Anhänge/ Zusatzmaterialien</strong> (max. 1000MB pro Datei)"
         dropzone_text: "Datei hier her ziehen... oder klicken!"
@@ -407,7 +407,7 @@ forms:
             title: "Titel"
             description: "Beschreibung"
       license: &license
-        heading: "Copyright und Lizenz"
+        heading: "Urheberrecht / Lizenzen"
         pub_license:
           label: "Hinweise zum Urheberrecht"
           disclaimer_text: "Hiermit stelle ich der Universit&auml;t Bielefeld dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf PUB, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r PUB dargestellt sind, zur Verf&uuml;gung.<br><a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy / Rechtliche Rahmenbedingungen</a>"
@@ -443,7 +443,7 @@ forms:
         select_ddc: "DDC auswählen"
       abstract: &abstract
         label: "Abstract"
-        label2: "Abstract Sprache"
+        label2: "Sprache"
         placeholder: "Abstract Text (Sie können Markdown oder MathJax zum Formatieren benutzen)"
       keyword: &keyword
         label: "Stichworte"
@@ -495,7 +495,7 @@ forms:
       publish_button:
         alert: "Sie sind sicher, dass Sie diesen Datensatz 'Public' stellen wollen? Sie können dies nicht selbst rückgängig machen. Alle hochgeladenen Dateien werden gemäß dem 'Access Level', den Sie festgelegt haben, veröffentlicht."
   bookEditor: &bookeditor
-    label: "Sammelwerk"
+    label: "Herausgeber Sammelwerk"
     tab: *tab
     field:
       doi: *doi
@@ -544,12 +544,12 @@ forms:
       related_material.link: *related_material_link
   bookeditor: *bookeditor
   bookChapter: &bookchapter
-    label: "Sammelbandbeitrag"
+    label: "Sammelwerksbeitrag"
     tab: *tab
     field:
       doi: *doi
       title:
-        label: "Titel des Kapitels"
+        label: "Titel"
         label_short: "Titel"
         placeholder: "z.B. Wie man ein eBook veröffentlicht"
       alternative_title: *alternative_title
@@ -578,7 +578,7 @@ forms:
       publisher: *publisher
       year_extern: *year_extern
       page: &page_range
-        label: "Seiten"
+        label: "Seite(n)"
         placeholder: "z.B. 12 oder 20 - 25"
       series_title_volume: *series_title_volume
       publication:
@@ -587,10 +587,10 @@ forms:
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
       conference.divider: &conference_divider
-        label: "Konferenzdetails"
+        label: "Konferenzangaben"
       conference.name: &conference_name
-        label: "Konferenzname"
-        label_short: "Name"
+        label: "Konferenz"
+        label_short: "Konf."
         placeholder: "z.B. 3. Konferenz über Nano-Physik"
       conference.location: &conference_location
         label: "Konferenzort"
@@ -646,17 +646,17 @@ forms:
       project: *project
       research_group: *research_group
       publication:
-        label: "Berichtsbandtitel"
-        label_short: "Ber.bandtitel"
+        label: "Titel des Konferenzbandes"
+        label_short: "Konf.band Titel"
         placeholder: "z.B. Berichtsband der 3. Konferenz über Nanophysik"
       place: *place
       publisher: *publisher
       year_extern: *year_extern
       series_title: &series_title
-        label: "Serientitel"
+        label: "Serien- oder Zeitschriftentitel"
         placeholder: "z.B. Lecture Notes of eBook Publishing"
       volume_issue_page: &volume_issue_page
-        label: "Band / Heft / Seite(n)"
+        label: "Band / Ausgabe / Seite(n)"
         label_short: "Bd./Ausg./S."
         volume:
           placeholder: "z.B. 3"
@@ -705,11 +705,8 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
-      page: *pages
-      series_title_volume: *series_title_volume
-      issue: &issue
-        label: "Ausgabe"
-        placeholder: "z.B. 5"
+      series_title: *series_title
+      volume_issue_page: *volume_issue_page
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
       conference.divider: *conference_divider
@@ -737,7 +734,7 @@ forms:
     field:
       doi: *doi
       title:
-        label: "Beitragstitel"
+        label: "Titel"
         placeholder: "z.B. eBook Veröffentlichung"
       alternative_title: *alternative_title
       author: *author_translator
@@ -748,8 +745,8 @@ forms:
       research_group: *research_group
       volume_issue_page: *volume_issue_page
       publication:
-        label: "Berichtsbandtitel"
-        label_short: "Ber.bandtitel"
+        label: "Titel des Konferenzbandes"
+        label_short: "Konf.band Titel"
         placeholder: "z.B. Berichtsband der 3. Konferenz über Nanophysik"
       series_title: *series_title
       place: *place
@@ -822,7 +819,7 @@ forms:
     field:
       doi: *doi
       title:
-        label: "Titel des Artikels"
+        label: "Titel"
         label_short: "Titel"
         placeholder: "z.B. Das Online-Veröffentlichen"
       alternative_title: *alternative_title
@@ -834,7 +831,7 @@ forms:
       project: *project
       research_group: *research_group
       publication:
-        label: "Buchtitel"
+        label: "Lexikontitel"
         placeholder: "z.B. Enzyklopädie des Veröffentlichens"
       place: *place
       publisher: *publisher
@@ -863,7 +860,7 @@ forms:
     field:
       doi: *doi
       title:
-        label: "Titel des Artikels"
+        label: "Titel"
         label_short: "Titel"
         placeholder: "z.B. Die Folgen der eBook-Veröffentlichung"
       alternative_title: *alternative_title
@@ -899,13 +896,13 @@ forms:
       thematic_area: *thematic_area
       alternative_id: *alternative_id
       nasc: &nasc
-        label: "NASC Seedstock ID"
+        label: "NASC Seed Stock ID"
         label_short: "NASC"
         placeholder: "NASC IDs (mehrere Einträge durch Semikolon trennen, z.B. N406423 ; N412826 ; N420684)"
       genbank: &genbank
-        label: "Genbank ID"
-        label_short: "Genbank"
-        placeholder: "Genbank IDs (mehrere Einträge durch Semikolon trennen, z.B. AY323492 ; AY333421 ; AY323491)"
+        label: "GenBank ID"
+        label_short: "GenBank"
+        placeholder: "GenBank IDs (mehrere Einträge durch Semikolon trennen, z.B. AY323492 ; AY333421 ; AY323491)"
       ubi_funded:
         label: "Finanzierung"
         placeholder: "Artikelgebühren co-finanziert von der DFG"
@@ -913,12 +910,12 @@ forms:
       related_material.link: *related_material_link
   journalarticle: *journalarticle
   journalEditor: &journaleditor
-    label: "Zeitschriftenheft"
+    label: "Sonderausgabe Zeitschrift"
     tab: *tab
     field:
       doi: *doi
       title:
-        label: "Titel der Ausgabe"
+        label: "Titel"
         label_short: "Titel"
         placeholder: "z.B. Handbook of eBook Publishing"
       editor_solo: *editor_solo
@@ -930,19 +927,19 @@ forms:
       publisher: *publisher
       publication: *publication_jtitle
       volume_issue_page: &volume_issue_page
-        label: "Vol. / Issue / Page"
+        label: "Band / Ausgab / Seite(n)"
         volume:
-          placeholder: "e.g. 3"
-          label: "Volume"
-          label_short: "Volume"
+          placeholder: "z.B. 3"
+          label: "Band"
+          label_short: "Band"
         issue:
-          placeholder: "e.g. 5"
-          label: "Issue"
-          label_short: "Issue"
+          placeholder: "z.B. 5"
+          label: "Ausgabe"
+          label_short: "Ausg."
         page:
-          label: "Number of Pages"
-          label_short: "Pages"
-          placeholder: "e.g. 12 or 20 - 25"
+          label: "Seite(n)"
+          label_short: "Seite(n)"
+          placeholder: "z.B. 12 oder 20 - 25"
       year_extern: *year_extern
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
@@ -970,7 +967,7 @@ forms:
     tab: *tab
     field:
       title:
-        label: "Titel des Artikels"
+        label: "Titel"
         label_short: "Titel"
         placeholder: "z.B. Die Folgen des eBook-Veröffentlichens"
       alternative_title: *alternative_title
@@ -1030,7 +1027,6 @@ forms:
       department: *department
       project: *project
       research_group: *research_group
-      publisher: *publisher
       year_extern: *year_extern
       publication_date_number:
         label: "Veröffentlichungsdatum/-nummer"
@@ -1052,8 +1048,6 @@ forms:
         label: "Sprache"
         label_short: "Spr."
       page: *pages
-      publication_identifier: *publication_identifier
-      publication_status_language: *publication_status_language
       dropzone: *dropzone
       license: *license
       urn: *urn
@@ -1062,12 +1056,8 @@ forms:
       keyword: *keyword
       external_id: *external_id
       message: *message
-      jel: *jel
       thematic_area: *thematic_area
       alternative_id: *alternative_id
-      quality_controlled:
-        label: "Peer Review"
-        label_short: "Qual.kontr."
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   preprint:
@@ -1075,7 +1065,7 @@ forms:
     tab: *tab
     field:
       title:
-        label: "Titel des Artikels"
+        label: "Titel"
         label_short: "Titel"
         placeholder: "z.B. Die Folgen der eBook-Veröffentlichung"
       publication: *publication_jtitle
@@ -1162,7 +1152,8 @@ forms:
         label: "Buchtitel"
         placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
       series_title:
-        label: "Zeitschr.titel"
+        label: "Serien- oder Zeitschriftentitel"
+        label_short: "Serien-/Zeitschr.titel"
         placeholder: "z.B. Nature Genetics"
       volume_issue_page: *volume_issue_page
       publication_identifier: *publication_identifier
@@ -1268,11 +1259,11 @@ forms:
     field:
       doi: *doi
       title:
-        label: "Buchtitel (Übersetzung)"
+        label: "Titel (Übersetzung)"
         label_short: "Titel (Übers.)"
         placeholder: "z.B. Die Folgen des eBook Veröffentlichens"
       alternative_title:
-        label: "Buchtitel (Original)"
+        label: "Titel (Original)"
         label_short: "Titel (Orig)"
         placeholder: "z.B. Handbook of eBook Publishing"
       translator:
@@ -1308,8 +1299,8 @@ forms:
       series_title_volume: *series_title_volume
       publication_identifier: *publication_identifier
       publication_status: &publication_status
-        label: "Publikationsstatus"
-        label_short: "Publ.status"
+        label: "Status"
+        label_short: "Status"
       language: &language
         label: "Sprache"
       original_language: &original_language
@@ -1336,7 +1327,7 @@ forms:
       doi: *doi
       editor: *editor_only
       title:
-        label: "Kapitel Titel (Übersetzung)"
+        label: "Titel (Übersetzung)"
         label_short: "Titel (Übers.)"
         placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
       translator:
@@ -1362,7 +1353,7 @@ forms:
         label: "Autor"
         pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
       alternative_title:
-        label: "Kapitel Titel (Original)"
+        label: "Titel (Original)"
         label_short: "Titel (Orig)"
         placeholder: "z.B. Handbook of eBook Publishing"
       edition: *edition
@@ -1376,8 +1367,8 @@ forms:
         label: "Buchtitel"
         placeholder: "z.B. Handbook of eBook Publishing"
       series_title:
-        label: "Zeitschriftentitel"
-        label_short: "Zeitschr.titel"
+        label: "Serien- oder Zeitschriftentitel"
+        label_short: "Serien-/Zeitschr.titel"
         placeholder: "z.B. Lecture Notes of eBook Publishing"
       volume_issue_page: *volume_issue_page
       year_extern: *year_extern
@@ -1410,8 +1401,6 @@ forms:
         placeholder: "z.B. Diskussionspapier über die eBook-Veröffentlichung"
       alternative_title: *alternative_title
       author: *author_translator
-      editor: *editor_only
-      corporate_editor: *corporate_editor
       edition: *edition
       department: *department
       project: *project

@@ -298,17 +298,17 @@ forms:
   book:
     label: "Book"
     tab: &tab
-      basic_fields: "Basic Fields"
-      file_upload: "File Upload"
+      basic_fields: "Details"
+      file_upload: "Upload"
       supplementary_fields: "Additional Information"
-      related_material: "Related Material"
+      related_material: "Links"
     field:
       doi: &doi
         label: "DOI"
         placeholder: "e.g. 10.4119/unibi/2695161"
         title: "The DOI will be generated automatically and cannot be changed."
       title: &booktitle
-        label: "Book Title"
+        label: "Title"
         placeholder: "e.g. Handbook of eBook Publishing"
       alternative_title: &alternative_title
         label: "Alternative Title"
@@ -340,7 +340,7 @@ forms:
         label_short: "Res. Gr."
         placeholder: "e.g. Social Motorics"
       place: &place
-        label: "Place<br>(of publication)"
+        label: "Place of Publication"
         label_short: "Place"
         placeholder: "e.g. Berlin"
       publisher: &publisher
@@ -367,8 +367,8 @@ forms:
           label: "Volume"
           placeholder: "Volume, e.g. 3"
       publication_identifier: &publication_identifier
-        label: "Publication<br>Identifier"
-        label_short: "Publ. Id."
+        label: "ISSN / ISBN"
+        label_short: "ISSN/ISBN"
         placeholder: "e.g. select (e)ISBN or (e)ISSN and enter it here"
       publication_status_language: &publication_status_language
         label: "Status / Language"
@@ -376,10 +376,10 @@ forms:
           label: "Language"
           label_short: "Lang."
         publication_status:
-          label: "Publication Status"
-          label_short: "Publ. Status"
+          label: "Status"
+          label_short: "Status"
       dropzone: &dropzone
-        label: "<strong>Upload Main File(s) and Supplementary Material</strong> (max. 1000MB per file)"
+        label: "<strong>Upload Main File and Supplementary Material</strong> (max. 1000MB per file)"
         dropzone_text: "Drop files here to upload ... or click!"
         access_level: "Access Level:"
         upload_date: "Upload Date:"
@@ -443,7 +443,7 @@ forms:
         select_ddc: "Select DDC"
       abstract: &abstract
         label: "Abstract"
-        label2: "Abstract Language"
+        label2: "Language"
         placeholder: "Abstract Text (you can use Markdown or MathJax for styling)"
       keyword: &keyword
         label: "Keywords"
@@ -461,7 +461,7 @@ forms:
           label: "Popular Science"
           label_short: "Pop.Sci."
         quality_controlled:
-          label: "Peer Review"
+          label: "Quality Controlled"
       jel: &jel
         label: "JEL Classification"
         label_short: "JEL"
@@ -549,7 +549,7 @@ forms:
     field:
       doi: *doi
       title:
-        label: "Chapter Title"
+        label: "Title"
         label_short: "Title"
         placeholder: "e.g. How to publish an ebook"
       alternative_title: *alternative_title
@@ -578,7 +578,7 @@ forms:
       publisher: *publisher
       year_extern: *year_extern
       page: &page_range
-        label: "Pages"
+        label: "Page(s)"
         placeholder: "e.g. 12 or 20 - 25"
       series_title_volume: *series_title_volume
       publication:
@@ -589,7 +589,7 @@ forms:
       conference.divider: &conference_divider
         label: "Conference Details"
       conference.name: &conference_name
-        label: "Conference Name"
+        label: "Conference"
         label_short: "Name"
         placeholder: "e.g. 3rd Conference on Nano-Physics"
       conference.location: &conference_location
@@ -653,10 +653,10 @@ forms:
       publisher: *publisher
       year_extern: *year_extern
       series_title: &series_title
-        label: "Series Title"
+        label: "Series or Journal Title"
         placeholder: "e.g. Lecture Notes of eBook Publishing"
       volume_issue_page: &volume_issue_page
-        label: "Volume / Issue / Page"
+        label: "Volume / Issue / Page(s)"
         label_short: "Vol./Iss./Pg."
         volume:
           placeholder: "e.g. 3"
@@ -705,11 +705,8 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
-      page: *pages
-      series_title_volume: *series_title_volume
-      issue: &issue
-        label: "Issue"
-        placeholder: "e.g. 5"
+      series_title: *series_title
+      volume_issue_page: *volume_issue_page
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
       conference.divider: *conference_divider
@@ -737,7 +734,7 @@ forms:
     field:
       doi: *doi
       title:
-        label: "Paper Title"
+        label: "Title"
         placeholder: "e.g. Handbook of eBook Publishing"
       alternative_title: *alternative_title
       author: *author_translator
@@ -822,7 +819,7 @@ forms:
     field:
       doi: *doi
       title:
-        label: "Article Title"
+        label: "Title"
         label_short: "Title"
         placeholder: "e.g. Online-Publishing"
       alternative_title: *alternative_title
@@ -834,7 +831,7 @@ forms:
       project: *project
       research_group: *research_group
       publication:
-        label: "Book Title"
+        label: "Encyclopedia Title"
         placeholder: "e.g. Encyclopedia on Publishing"
       place: *place
       publisher: *publisher
@@ -863,7 +860,7 @@ forms:
     field:
       doi: *doi
       title:
-        label: "Article Title"
+        label: "Title"
         label_short: "Title"
         placeholder: "e.g. The implications of eBook Publishing"
       alternative_title: *alternative_title
@@ -899,13 +896,13 @@ forms:
       thematic_area: *thematic_area
       alternative_id: *alternative_id
       nasc: &nasc
-        label: "NASC Seedstock ID"
+        label: "NASC Seed Stock ID"
         label_short: "NASC"
         placeholder: "NASC IDs (multiple entries separated by semicolon, e.g. N406423 ; N412826 ; N420684)"
       genbank: &genbank
-        label: "Genbank ID"
-        label_short: "Genbank"
-        placeholder: "Genbank IDs (multiple entries separated by semicolon, e.g. AY323492 ; AY333421 ; AY323491)"
+        label: "GenBank ID"
+        label_short: "GenBank"
+        placeholder: "GenBank IDs (multiple entries separated by semicolon, e.g. AY323492 ; AY333421 ; AY323491)"
       ubi_funded:
         label: "Funding"
         placeholder: "APC co-financed by DFG"
@@ -913,12 +910,12 @@ forms:
       related_material.link: *related_material_link
   journalarticle: *journalarticle
   journalEditor: &journaleditor
-    label: "Journal (Editor)"
+    label: "Special Issue"
     tab: *tab
     field:
       doi: *doi
       title:
-        label: "Issue Title"
+        label: "Title"
         label_short: "Title"
         placeholder: "e.g. Handbook of eBook Publishing"
       editor_solo: *editor_solo
@@ -930,7 +927,7 @@ forms:
       publisher: *publisher
       publication: *publication_jtitle
       volume_issue_page: &volume_issue_page
-        label: "Vol. / Issue / Page"
+        label: "Volume / Issue / Page(s)"
         volume:
           placeholder: "e.g. 3"
           label: "Volume"
@@ -970,7 +967,7 @@ forms:
     tab: *tab
     field:
       title:
-        label: "Article Title"
+        label: "Title"
         label_short: "Title"
         placeholder: "e.g. The implications of eBook Publishing"
       alternative_title: *alternative_title
@@ -1030,7 +1027,6 @@ forms:
       department: *department
       project: *project
       research_group: *research_group
-      publisher: *publisher
       year_extern: *year_extern
       publication_date_number:
         label: "Publication Date/Number"
@@ -1052,8 +1048,6 @@ forms:
         label: "Language"
         label_short: "Lang."
       page: *pages
-      publication_identifier: *publication_identifier
-      publication_status_language: *publication_status_language
       dropzone: *dropzone
       license: *license
       urn: *urn
@@ -1062,12 +1056,8 @@ forms:
       keyword: *keyword
       external_id: *external_id
       message: *message
-      jel: *jel
       thematic_area: *thematic_area
       alternative_id: *alternative_id
-      quality_controlled:
-        label: "Peer Review"
-        label_short: "Qual.contr."
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   preprint:
@@ -1075,7 +1065,7 @@ forms:
     tab: *tab
     field:
       title:
-        label: "Article Title"
+        label: "Title"
         label_short: "Titel"
         placeholder: "e.g. The implications of eBook Publishing"
       publication: *publication_jtitle
@@ -1162,7 +1152,8 @@ forms:
         label: "Book Title"
         placeholder: "e.g. Handbook of eBook Publishing"
       series_title:
-        label: "Journal Title"
+        label: "Series or Journal Title"
+        label_short: "Series/Journal Title"
         placeholder: "e.g. Nature Genetics"
       volume_issue_page: *volume_issue_page
       publication_identifier: *publication_identifier
@@ -1268,11 +1259,11 @@ forms:
     field:
       doi: *doi
       title:
-        label: "Book Title (Translation)"
+        label: "Title (Translation)"
         label_short: "Title (Trans.)"
         placeholder: "e.g. Handbuch des eBook Publishings"
       alternative_title:
-        label: "Book Title (Original)"
+        label: "Title (Original)"
         label_short: "Title (Orig)"
         placeholder: "e.g. Handbook of eBook Publishing"
       translator:
@@ -1308,8 +1299,8 @@ forms:
       series_title_volume: *series_title_volume
       publication_identifier: *publication_identifier
       publication_status: &publication_status
-        label: "Publication Status"
-        label_short: "Publ. Status"
+        label: "Status"
+        label_short: "Status"
       language: &language
         label: "Language"
         label_short: "Lang."
@@ -1331,13 +1322,13 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   translationChapter: &translationchapter
-    label: "Translation (Chapter)"
+    label: "Translation (Section)"
     tab: *tab
     field:
       doi: *doi
       editor: *editor_only
       title:
-        label: "Chapter Title (Translation)"
+        label: "Title (Translation)"
         label_short: "Title (Trans.)"
         placeholder: "e.g. Handbuch des eBook Publishings"
       translator:
@@ -1363,7 +1354,7 @@ forms:
         label: "Author"
         pevz_tooltip: "Link to / Withdraw from publication list."
       alternative_title:
-        label: "Chapter Title (Original)"
+        label: "Title (Original)"
         label_short: "Title (Orig)"
         placeholder: "e.g. Handbook of eBook Publishing"
       edition: *edition
@@ -1377,7 +1368,8 @@ forms:
         label: "Book Title"
         placeholder: "e.g. Handbook of eBook Publishing"
       series_title:
-        label: "Journal Title"
+        label: "Series or Journal Title"
+        label_short: "Series/Journal Title"
         placeholder: "e.g. Lecture Notes of eBook Publishing"
       volume_issue_page: *volume_issue_page
       year_extern: *year_extern
@@ -1410,8 +1402,6 @@ forms:
         placeholder: "e.g. Working Paper on eBook Publishing"
       alternative_title: *alternative_title
       author: *author_translator
-      editor: *editor_only
-      corporate_editor: *corporate_editor
       edition: *edition
       department: *department
       project: *project
