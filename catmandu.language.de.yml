@@ -1089,7 +1089,6 @@ forms:
       jel: *jel
       thematic_area: *thematic_area
       alternative_id: *alternative_id
-      popular_science: *popular_science
       related_material.record: *related_material_record
       related_material.link: *related_material_link
   report:

@@ -659,7 +659,8 @@ publicationTypes:
     fields:
       basic_fields:
         title: *title
-        publication: *publication_jtitle
+        publication:
+          mandatory: 0
         author: *author_translator
         department: *department
         project: *project
@@ -677,7 +678,6 @@ publicationTypes:
         message: *message
         jel: *jel
         thematic_area: *thematic_area
-        popular_science: *popular_science
         alternative_id: *alternative_id
       related_material: *related_material
   report:
