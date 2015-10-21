@@ -1428,7 +1428,7 @@ forms:
   biDissertation: &bidissertation
     label: "Bielefelder E-Dissertation"
     tab: *tab
-    field:
+    field: &field
       bi_doctype:
         label: "Documenttyp"
       email: &email
@@ -1494,14 +1494,17 @@ forms:
   biMasterThesis: &bimasterthesis
     label: "Bielefelder Masterarbeit"
     tab: *tab
+    field: *field
   bimasterthesis: *bimasterthesis
   biPostdocThesis: &bipostdocthesis
     label: "Bielefelder E-Habilitation"
     tab: *tab
+    field: *field
   bipostdocthesis: *bipostdocthesis
   biBachelorThesis: &bibachelorthesis
     label: "Bielefelder Bachelorarbeit"
     tab: *tab
+    field: *field
   bibachelorthesis: *bibachelorthesis
   to_sp_form: "Zum Gesamtformular wechseln"
   sp_form: "Gesamtformular"

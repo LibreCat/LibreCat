@@ -1429,7 +1429,7 @@ forms:
   biDissertation: &bidissertation
     label: "Bielefeld Thesis"
     tab: *tab
-    field:
+    field: &field
       bi_doctype:
         label: "Documenttype"
         label_short: "Doc.type"
@@ -1497,14 +1497,17 @@ forms:
   biMasterThesis: &bimasterthesis
     label: "Bielefeld Master Thesis"
     tab: *tab
+    field: *field
   bimasterthesis: *bimasterthesis
   biPostdocThesis: &bipostdocthesis
     label: "Bielefeld Post-Doctoral Habilitation"
     tab: *tab
+    field: *field
   bipostdocthesis: *bipostdocthesis
   biBachelorThesis: &bibachelorthesis
     label: "Bielefeld Bachelor Thesis"
     tab: *tab
+    field: *field
   bibachelorthesis: *bibachelorthesis
   to_sp_form: "Change to single page form"
   sp_form: "Single Page Form"

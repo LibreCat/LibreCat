@@ -979,13 +979,13 @@ publicationTypes:
     tmpl: biDissertation
   bimasterthesis:
     genus: "f"
-    tmpl: biDissertation
+    tmpl: biMasterThesis
   bipostdocthesis:
     genus: "f"
-    tmpl: biDissertation
+    tmpl: biPostDocThesis
   bibachelorthesis:
     genus: "f"
-    tmpl: biDissertation
+    tmpl: biBachelorThesis
 array_field:
   - abstract
   - alternative_title
