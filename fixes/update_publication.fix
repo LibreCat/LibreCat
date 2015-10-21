@@ -1,6 +1,7 @@
 # fix publication data at update
 
-vacuum()
+#vacuum()
+delete_empty()
 publication_identifier()
 page_range_number()
 hash_array()
@@ -27,6 +28,7 @@ if all_match('finalSubmit','recPublish')
 end
 
 remove_field('finalSubmit')
-vacuum()
+#vacuum()
+delete_empty()
 
 add_citation()
