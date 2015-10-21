@@ -530,8 +530,7 @@ search:
             doi:
               op:
                 '=': true
-                'exact': {field: 'doi.exact'}
-                '<>': true
+                'exact': true 
               field: 'doi'
             year: &year
               op:
@@ -1147,11 +1146,7 @@ search:
             fields:
               publisher: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
-          doi:
-            type: multi_field
-            fields:
-              doi: {type: string, analyzer: datestring}
-              exact: {type: string, analyzer: tag}
+          doi: {type: string, index: not_analyzed}
           ddc: {type: string}
           external_id:
             properties:
@@ -1183,6 +1178,7 @@ search:
 #              yearCreated: {type: date, format: "yyyy"}
           alternative_id: {type: string, analyzer: tag}
           foda: {type: byte}
+          defense_date: {type: date, index: no}
 
       researcher:
         include_in_all: false
