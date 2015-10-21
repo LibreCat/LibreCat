@@ -1,0 +1,127 @@
+<!-- BEGIN footer_hist.tmpl -->
+
+</div>
+<div id="RightCol">
+
+<h1 style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #7EA2D5; padding-top:0px;  padding-bottom:4px; margin-top:-3px; font-size:11pt;">[% lang ? "Filter List" : "Liste Filtern" %]</h1>
+
+<form name="filter" action="/project" accept-charset="utf-8" method="get" id="Filter">
+
+[% tabelle = [
+  ['10023','Research fields / Work Groups'],
+  ['3791069','Alte Geschichte'],
+  ['3791087','Geschichte des Mittelalters und der Frühen Neuzeit'],
+  ['3791078','Geschichte des 19. und 20. Jahrhunderts'],
+  ['3791096','Moderne Geschichte und Geschlechtergeschichte'],
+  ['3791117','Zeitgeschichte'],
+  ['3791122','Didaktik der Geschichte'],
+  ['3791073','Geschichte als Beruf'],
+  ['3791091','Geschichte moderner Gesellschaften'],
+  ['32742431','Historische Bildwissenschaft/Kunstgeschichte'],
+  ['3803979','Historische Politikforschung'],
+  ['37416959','Historische Wissenschaftsforschung'],
+  ['3791099','Iberoamerikanische Geschichte'],  
+  ['3791103','Osteurop&auml;ische Geschichte'],
+  ['40284404','Region in der Geschichte'],  
+  ['3791114','Wirtschaftsgeschichte']
+ ]
+%]
+
+[% hist_funder = {
+  'bielefelder nachwuchsfonds' = 'Bielefelder Nachwuchsfonds'
+  'bmbf' = 'BMBF'
+  'center for advanced holocaust studies ushmm' = 'Center for Advanced Holocaust Studies USHMM'
+  'cluster of excellence: asia and europe in a global context' = 'Cluster of Excellence: Asia and Europe in a Global Context'
+  'conacyt, mexiko' = 'Conacyt, Mexiko'
+  'deutsches forum für kunstgeschichte, paris' = 'Deutsches Forum für Kunstgeschichte, Paris'
+  'dfg' = 'DFG'
+  'dfg netzwerkgruppe: vormoderne monarchische herrschaftsformen im transkulturellen vergleich' = 'DFG Netzwerkgruppe: Vormoderne monarchische Herrschaftsformen im transkulturellen Vergleich'
+  'dfg-graduiertenkolleg 1049 "archiv, macht, wissen"' = 'DFG-Graduiertenkolleg 1049 "Archiv, Macht, Wissen"'
+  'dhi paris' = 'DHI Paris'
+  'dzhk' = 'DZHK'
+  'eu' = 'EU'
+  'evangelisches studienwerk villigst' = 'Evangelisches Studienwerk Villigst'
+  'exzellenzinitiative' = 'Exzellenzinitiative'
+  'firma neotechnik fördersysteme göthe & prior gmbH & co. kg' = 'Firma NEOTECHNIK Fördersysteme Göthe & Prior GmbH & Co. KG'
+  'forschungs-innovations-fonds' = 'Forschungs-Innovations-Fonds'
+  'forschungsstipendium des deutschen historischen instituts (dhi), warschau, polen' = 'Forschungsstipendium des Deutschen Historischen Instituts (DHI), Warschau, Polen'
+  'fritz thyssen stiftung' = 'Fritz Thyssen Stiftung'
+  'fritz thyssen stiftung reisebeihilfe' = 'Fritz Thyssen Stiftung Reisebeihilfe'
+  'gerald d. feldman-reisebeihilfe der max weber stiftung' = 'Gerald D. Feldman-Reisebeihilfe der Max Weber Stiftung'
+  'hans böckler stiftung' = 'Hans Böckler Stiftung'
+  'humboldt-universität berlin' = 'Humboldt-Universität Berlin'
+  'ikos, oslo, norwegen' = 'IKOS, Oslo, Norwegen'
+  'kunstakademie münster' = 'Kunstakademie Münster'
+  'osaka city university' = 'Osaka City University'
+  'promotionsstelle bghs' = 'Promotionsstelle BGHS'
+  'reisestipendien der bghs' = 'Reisestipendien der BGHS'
+  'rektoratsstipendium universität bielefeld' = 'Rektoratsstipendium Universität Bielefeld'
+  'rudolf-august oetker-stiftung' = 'Rudolf-August Oetker-Stiftung'
+  'sfb 584 das politische als kommunikationsraum in der geschichte' = 'SFB 584 Das Politische als Kommunikationsraum in der Geschichte'
+  'stiftung mercator' = 'Stiftung Mercator'
+  'stipendium der bghs' = 'Stipendium der BGHS'
+  'stipendium der fakultät für geschichtswissenschaft, philosophie und theologie, universität bielefeld' = 'Stipendium dr Fakultät für Geschichtswissenschaft, Philosophie und Theologie, Universität Bielefeld'
+  'stipendium der fondation pour la mémoire de la shoah, paris, frankreich' = 'Stipendium der Fondation pour la Mémoire de la Shoah, Paris, Frankreich'
+  'universidad de guadalajara' = 'Universidad de Guadalajara'
+  'université paris I panthéon-sorbonne (hicsa)' = 'Université Paris I Panthéon-Sorbonne (HiCSA)'
+  'university college london' = 'University College London'
+  'zif' = 'ZiF'
+};
+%]
+
+<select size="1" name="department" onchange="document.filter.submit();">
+[% FOREACH row IN tabelle %]
+<option value="[% row.0 %]"
+[% IF (qp.department AND row.0 == qp.department) OR (!qp.department AND row.0 == "10023") %] selected="selected" [% END %] 
+>[% row.1 %]</option>
+[% END %]
+</select>
+<noscript><input type="submit" value="GO!" /></noscript>
+
+<select size="1" name="projecttype" onchange="document.filter.submit();">
+<option value="">-- Verbundprojekt --</option>
+<option value="bghs"[% IF qp.projecttype AND qp.projecttype == "bghs" %]selected="selected"[% END %]>BGHS Projekte</option>
+<option value="entangled americas"[% IF qp.projecttype AND qp.projecttype == "entangled americas" %]selected="selected"[% END %]>Entangled Americas</option>
+</select>
+
+<select size="1" name="funder" onchange="document.filter.submit();">
+  <option value="">-- F&ouml;rderer --</option>
+[% FOREACH fund IN hist_funder.keys.sort %]
+  <option value="[% fund %]"[% IF qp.funder.lower == fund %] selected="selected"[% END %]>[% hist_funder.$fund %]</option>
+[% END %]
+</select>
+
+[% tabelle = [
+  ['5','5 hits per page'],
+  ['10','10 hits per page'],
+  ['20','20 hits per page'],
+  ['50','50 hits per page']
+ ]
+%]
+
+<select size="1" name="limit" onchange="document.filter.submit();">
+[% FOREACH row IN tabelle %]
+<option value="[% row.0 %]"
+[% IF row.0 == qp.limit %] selected="selected" [% END %] 
+>[% row.1 %]</option>
+[% END %]
+</select>
+<noscript><input type="submit" value="GO!" /></noscript>
+
+
+[% IF qp.department %]
+<p><a href="/project?ttyp=hist_proj">[% lang ? "Remove Current Filters" : "Filteroptionen entfernen" %]</a></p>
+[% END %]
+
+<input type="hidden" name="ttyp" value="hist_proj" />
+</form>
+
+<p style="font-size:8pt;"><em>[% lang ? "You can combine search and filter options" : "Sie können Suche und Filteroptionen kombinieren" %]</em></p>
+
+</div>
+
+</body>
+
+<!-- END footer_hist.tmpl -->
+
+</html>

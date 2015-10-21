@@ -115,13 +115,13 @@ search:
                 '=': true
                 'exact': true
               field: 'description'
-            funders:
+            funder:
               op:
                 'any': true
                 'all': true
                 '=': true
                 'exact': true
-              field: 'project_funders'
+              field: 'funder'
             funded:
               op:
                 '=': true
@@ -154,8 +154,8 @@ search:
                 'all': true
                 'any': true
                 '=': true
-                'exact': {field: 'isOwnedByDepartment.name.exact'}
-              field: ['isOwnedByDepartment.organizationNumber', 'isOwnedByDepartment.name']
+                'exact': {field: 'department.name.exact'}
+              field: ['department.id', 'department.name']
             cooperator:
               op:
                 'any': true
@@ -190,6 +190,12 @@ search:
                 '=': true
                 'exact': {field: ['owner.name.full_name.exact', 'principal_investigator.name.full_name.exact', 'member.name.full_name.exact']}
               field: ['owner.name.full_name', 'owner.person_number', 'principal_investigator.name.full_name', 'principal_investigator.person_number', 'member.name.full_name', member.person_number']
+            projecttype:
+              op:
+                'any': true
+                'all': true
+                '=': true
+              field: 'project_type'
 
       award:
         cql_mapping:
@@ -989,6 +995,7 @@ search:
                       exact: {type: string, analyzer: tag}
           principal_investigator: *personField2
           member: *personField2
+          project_type: {type: string}
 
       award:
         include_in_all: false
