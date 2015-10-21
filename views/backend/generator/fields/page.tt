@@ -7,9 +7,20 @@
   </div>
   <div class="col-md-10">
     <div class="row innerrow">
-      <div class="form-group col-md-3 col-xs-11">
+      <div class="form-group {% IF fields.basic_fields.page.options %}col-md-4{% ELSE %}col-md-3{% END %} col-xs-11">
         <div class="input-group sticky">
+          {% IF fields.basic_fields.page.options %}
+          <span class="input-group-btn">
+            <select class="btn btn-default" name="page_range_number.type" id="select_page_range_number">
+              <option value="">-- [% lf.button.select %] --</option>
+              {% FOREACH prn IN fields.basic_fields.page.options %}
+              <option value="{% prn %}">[% lf.page_range_number.{% prn %} %]</option>
+              {% END %}
+            </select>
+          </span>
+          {% ELSE %}
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.page.label_short || lf.$type.field.page.label %]</div>
+          {% END %}
           <input type="text" name="page" id="id_page" value="[% page | html %]" placeholder="[% lf.$type.field.page.placeholder %]" class="sticky form-control{% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %} required{% END %}"{% IF fields.basic_fields.page.readonly OR fields.supplementary_fields.page.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>

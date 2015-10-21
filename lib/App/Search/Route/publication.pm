@@ -70,11 +70,14 @@ get qr{/(data|publication)/*} => sub {
 
 	if ($p->{fmt} ne 'html') {
 		h->export_publication($hits, $p->{fmt});
-	} elsif ($p->{embed}) {
+	} elsif ($p->{embed} or ($p->{ftyp} and $p->{ftyp} eq "iframe")) {
+		my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
+		$hits->{lang} = $lang;
+		$hits->{embed} = 1;
 		template "iframe", $hits;
 	} else {
 		my $template = "websites/index_publication";
-		if($p->{ftyp}){
+		if($p->{ftyp} and $p->{ftyp} =~ /ajax|js|pln/){
 			$template .= "_" . $p->{ftyp};
 			$template .= "_num" if ($p->{enum} and $p->{enum} eq "1");
 			$template .= "_numasc" if ($p->{enum} and $p->{enum} eq "2");
@@ -117,7 +120,7 @@ get qr{/embed/*} => sub {
 	$hits->{bag} = "publication";
 	$hits->{embed} = 1;
 	$hits->{ttyp} = $p->{ttyp} if $p->{ttyp};
-	$hits->{style} = $p->{style} ? $p->{style} : h->config->{default_style};
+	$hits->{style} = $sort_style->{style};#$p->{style} ? $p->{style} : h->config->{default_style};
 	my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
 	$hits->{lang} = $lang;
 	template "iframe", $hits;

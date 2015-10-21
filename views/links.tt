@@ -13,7 +13,7 @@
   [% IF entry.external_id.pmid %] | <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% entry.external_id.pmid %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% entry.external_id.pmid %]">Europe PMC</a>[% END %]
   [% IF entry.external_id.arxiv %] | <a href="http://arxiv.org/abs/[% entry.external_id.arxiv %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>arXiv</a>[% END %]
   [% IF entry.external_id.inspire %] | <a href="http://inspirebeta.net/record/[% entry.external_id.inspire %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>Inspire</a>[% END %]
-  [% IF entry.external_id.phillister %] | <a href="http://phillister.ub.uni-bielefeld.de/publication/[% entry.external_id.phillister.id %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>PhilLister</a>[% END %]
+  [% IF entry.external_id.phillister %] | <a href="http://phillister.ub.uni-bielefeld.de/publication/[% entry.external_id.phillister %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>PhilLister</a>[% END %]
   [% IF entry.external_id.ahf %] | <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% entry.external_id.ahf %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>AHF</a>[% END %]
 
   [% IF qp.timescited && entry.metrics.timesCited %]

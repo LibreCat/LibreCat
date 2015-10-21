@@ -18,12 +18,9 @@ if any_match(page, '-')
   join_field(page, '-')
   copy_field(page, res.page)
 else
-  if any_match(type, journalArticle)
-    copy_field(page, res.page)
-  else
-    copy_field(page, res.number-of-pages)
-  end
+  copy_field(page, res.number-of-pages)
 end
+move_field(article_number, res.number)
 
 move_field(year, res.sort-year)
 

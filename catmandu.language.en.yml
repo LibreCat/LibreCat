@@ -1,0 +1,1618 @@
+_prefix:
+  language:
+    en:
+
+login:
+  login_heading: "Login"
+  username: "Username"
+  username_placeholder: "HRZ Username"
+  password: "Password"
+  password_placeholder: "HRZ Password"
+  login_button: "Login"
+  login_help: "HRZ Username and Password (used e.g. for Webmailer and Stud.IP)"
+  contact_us: "<strong>Login failed?</strong><br>If you are a member of Bielefeld University but you still cannot log in to PUB, please <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>contact us</a></strong> or call 106-4058."
+header:
+  title: "Publications at Bielefeld University"
+  title_long: "PUB &ndash; Publications at Bielefeld University"
+  title_person: "PUB  &ndash; Publication list of"
+  my_author_page: "My Publication List"
+  brand: "Home"
+  role:
+    user: "User"
+    delegate: "Delegate"
+    reviewer: "Reviewer"
+    data_manager: "Data Manager"
+    super_admin: "Admin"
+  admin_menu:
+    admin: "Admin"
+    manage_accounts: "Manage Accounts"
+    import: "Import"
+    manage_projects: "Manage Projects"
+    manage_research_groups: "Manage Research Groups"
+    manage_journals: "Manage Journals"
+    manage_awards: "Manage Awards"
+    manage_department: "Manage Departments"
+  lang: "Deutsch"
+  lang_select:
+    eng: "English"
+    ger: "German"
+  department_affiliation: "Department Affiliation"
+  default_edit_mode: "Default Edit Mode"
+  default_language: "Default Language"
+footer:
+  this_is_us: "Bielefeld University Library"
+  dini_alt: "DINI-Certificate 2010"
+  dini_title: "PUB has been honoured with the DINI-Certificate 2010"
+  openaire_alt: "OpenAIRE valid"
+  openaire_title: "PUB is 100% OpenAIRE valid"
+  openarchives_alt: "Open Archives Data Provider"
+  openarchives_title: "PUB is registered Data Provider of the Open Archives Initiative"
+  datacite_alt: "DataCite"
+  datacite_title: "PUB registers Research Data with DataCite"
+  faq: "FAQ"
+  contact: "Contact"
+  policy: "PUB Policy"
+  imprint: "Imprint"
+  powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat<img src='/images/librecat.png' alt=''></a>"
+  support: "<strong>Support Publication Services</strong><br>Susanne Riedel<br>Phone: 0521/106-4058<br><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>"
+tabs:
+  home: "Home"
+  all_publications: "All Publications"
+  publications: "Publications"
+  data_publications: "Data Publications"
+  publications_by: "Publ. by"
+  projects: "Projects"
+  authors: "Authors"
+  authors_title: "Authors"
+  about: "Features"
+  documentation: "API Documentation"
+  faq: "FAQ"
+  contact: "Contact"
+  policy: "Policy"
+home:
+  search_placeholder: "Search Publications in PUB"
+  fields: "Fields"
+  operators: "Operators"
+  help: "Help"
+  stats:
+    publications: "Publications"
+    authors: "Individual Author Pages"
+    data_publications: "Data Publications"
+    oa_publications: "Open Access Publications"
+    theses: "Theses"
+  logos:
+    oa: "Open Access at<br>Bielefeld University"
+    rd_management: "Research Data Management"
+    brand: "PUB"
+    brand_long: "PUB &ndash; Publications at Bielefeld University"
+    theses: "PUB Theses"
+  you_have_no_photo: "You have not uploaded a picture to the directory of staff and departments."
+  they_have_no_photo: "This person has not uploaded a picture to the directory of staff and departments."
+main_page:
+  login: "Login"
+  logout: "Logout"
+  add_new_button: "Add new Publication"
+  capital_or: "OR"
+  qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Drop Open Access fulltext (PDF)<br>here and we'll do the rest."
+  theses_drop_text: "<spab ckass='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br>Drop your thesis here."
+  theses_success_text: "You have successfully submitted your thesis. We will contact you with further information.<br>Thank you!"
+  theses_explain: "Please upload only ONE file (preferably .pdf). If you want to submit a document that consists of several parts (e.g. chapters) you need to put the files into an archive file (.zip or .gz)."
+  heading_admin: "Admin"
+  heading_user: "User"
+  heading_reviewer: "Reviewer"
+  heading_delegate: "Delegate"
+  logged_in_as: "Logged in as"
+  by: "by"
+  statuses:
+    public: "Public"
+    returned: "Re-<br>turned"
+    submitted: "Sub-<br>mitted"
+    invalid: "Invalid"
+    qae: "New QaE"
+    private: "Private"
+  links:
+    edit: "Edit"
+    details: "Details"
+    view_details: "Vollständige bibliographische Angaben und Zugriffsinformationen anzeigen"
+    files: "Files available"
+    internal_view: "Internal View"
+    request_a_copy: "Request a Copy"
+    request_a_copy_title: "Generate sharable links for files with 'Request a copy' status"
+    publish: "Make public"
+    return: "Return"
+person_profile:
+  id_not_found: "Person ID not found."
+  former_researcher: "Former Bielefeld University Researcher"
+  view: "View "
+  view_in: "View in"
+  directory_of_staff: "PEVZ-ID"
+  sfb_profile: "SFB882-GK Profile"
+  no_author_ids: "No Author IDs set."
+  person_id_title: "These IDs will be visible on your public person page immediately after saving."
+project:
+  heading: "Projects"
+  filter: "Filter"
+  start_year: "Start Year"
+  end_year: "End Year"
+  funder: "Funding Organisation"
+facets:
+  filters_and_searchterms: "Filters and Search Terms"
+  search_filter: "Search / Filter"
+  search: "Search"
+  go_button: "Go!"
+  filter_data_publications: "Filter Data Publications"
+  filter_authorlist: "Filter Authorlist"
+  filter_publications: "Filter Publications"
+  visibility_status: "Status"
+  current_authors: "UniBi Authors"
+  current_editors: "UniBi Editors"
+  former_authors: "Former UniBi Authors"
+  department: "Department"
+  publication_type: "Publication Type"
+  publishing_year: "Publishing Year"
+  external_publication: "External Publication(s)"
+  all_external_publication: "All publications are External Publications"
+  fulltext: "OA Fulltext(s)"
+  all_fulltext: "All publications are OA Fulltexts"
+  popular_science: "Popular Science"
+  all_popular_science: "All publications are Popular Science Publications"
+  indexed_in: "Indexed in"
+  all_isi: "All publications have an ISI identifier"
+  all_arxiv: "All publications have an arXiv identifier"
+  all_pubmed: "All publications have an PMID identifier"
+  all_inspire: "All publications have an INSPIRE identifier"
+  display: "Display"
+  sort: "Sort"
+  sorted_by: "Sorted by"
+  hits_per_page: "Hits per page"
+  citation_style: "Citation Style"
+  save_style: "Save Style"
+  embed: "Embed"
+  export: "Export"
+  export_as: "Export as"
+  export_marked: "Export Marked"
+  exports:
+    rtf: "RTF (e.g. Word, Office)"
+    bibtex: "BibTeX (e.g. Citavi)"
+    ris: "RIS"
+    json: "JSON"
+    yaml: "YAML"
+  sort_text:
+    "year.asc": "Publishing Year ascending"
+    "year.desc": "Publishing Year descending"
+    "date_updated.asc": "Date Updated ascending"
+    "date_updated.desc": "Date Updated descending"
+    "title.asc": "Title ascending"
+    "title.desc": "Title descending"
+    "author.asc": "First Author ascending"
+    "author.desc": "First Author descending"
+    "type.asc": "Publication Type ascending"
+    "type.desc": "Publication Type descending"
+    "publication.asc": "Publ./ Series/ Journal ascending"
+    "publication.desc": "Publ./ Series/ Journal descending"
+frontdoor:
+  preview: "Preview"
+  crumb_back: "Back"
+  no_record: "This record does not exist or was deleted"
+  download: "Download"
+  cc_license: "Creative Commons license"
+  show_all: "All"
+  local_brand: "UniBi"
+  export: "Export"
+  marked: "Marked Publications"
+  cite_this: "Cite this"
+  supplements: "Supplements"
+  show_all: "All"
+  search_this: "Search this title in"
+  isbn_search: "ISBN Search"
+  catalogue: "Catalogue.<em>plus!</em>"
+  tabs:
+    details:
+      label: "Details"
+      reviewed_work: "Reviewed Work"
+      isbn: "ISBN"
+      issn: "ISSN"
+      eisbn: "eISBN"
+      eissn: "eISSN"
+      ipn: "Int. Patent Number"
+      ipc: "Int. Patent Classification"
+      financial_disclosure: "Financial disclosure"
+      ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href='http://oa.uni-bielefeld.de/publikationsfonds.html'>Open Access Publication Fund</a> of Bielefeld University."
+      scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University."
+    file_details:
+      label: "Files"
+      name: "File Name"
+      title: "File Title"
+      description: "Description"
+      access_level:
+        label: "Access Level"
+        open_access: "Open Access"
+        local: "UniBi Only"
+        request_a_copy: "Request a Copy"
+        closed: "Closed Access"
+      last_uploaded: "Last Uploaded"
+      md5: "MD5 Checksum"
+    publication:
+      label: "Publications"
+      cited_by: "This data publication is cited in the following publications:"
+    data_publication:
+      label: "Data Publications"
+      cites: "This publication cites the following data publications:"
+    toolkit:
+      label: "Cognitive Interaction Toolkit"
+      data_by: "Data provided by the <a href='http://toolkit.cit-ec.uni-bielefeld.de/'>Cognitive Interaction Toolkit</a>."
+    ebi_links:
+      label: "EBI BioEntities"
+      data_by: "Data provided by the <a href='http://www.ebi.ac.uk/'>European Bioinformatics Institute (EBI)</a>"
+    epmc_citation:
+      label: "Citations"
+      data_by: "Data provided by <a href='http://europepmc.org/'>Europe PubMed Central</a>."
+    epmc_references:
+      label: "References"
+      data_by: "Data provided by <a href='http://europepmc.org/'>Europe PubMed Central</a>."
+    confirmation_letter:
+      label: "Letter of Confirmation"
+      confirmation: "Confirmation"
+    related_material: "Related Material"
+    external_data: "External Data"
+    cite_this: "Cite This"
+    export_search: "Export / Search"
+  fulltext:
+    view: "View fulltext"
+    not_available: "No fulltext in PUB available"
+  id_title: "Link to this page, e.g. for bookmarking"
+  license_heading: "All files available under the following license(s):"
+mark:
+  marked_publication: "Marked Publication(s)"
+  no_marked_publication: "You don't have any publications 'marked' yet. If you want to add a publication to this page, please click on the link <em>Mark</em> next to the publication data. You can find this links on publication lists or on a publication page. You can export marked publicatoins in several bibligraphic formats, like BibTex, RIS or RTF."
+  mark_all: "Mark all"
+  unmark_all: "Unmark all"
+  mark_unmark: "Mark/Unmark publication"
+  back_general: "Back"
+  back_person: "Back to person page"
+  display_export: "Display / Export"
+sort_options:
+  year: "Publishing year"
+  date_updated: Date updated
+  title: "Title"
+  author: "First Author"
+  type: "Publication Type"
+  publication: "Publ./ Series/ Journal"
+  fullname: "Alphabetically"
+  publcount: "Number of publications"
+  name: "Name"
+  acronym: "Acronym"
+  startyear: "Start Year"
+add_new:
+  heading: "Add New Publication"
+  import: "Option 1:<br />Enter a publication ID to import"
+  ids:
+    doi: "DOI"
+    pmid: "PMID"
+    arxiv: "ArXiv ID"
+    inspire: "Inspire ID"
+  do_it_yourself: "Option 2:<br />Select a type and fill out the form"
+  drop_oa: "Option 3:<br />Drop your Open Access fulltext here"
+  paste_bibtex: "Option 4:<br />Paste your BibTex record here"
+forms:
+  book:
+    label: "Book"
+    tab: &tab
+      basic_fields: "Details"
+      file_upload: "Upload"
+      supplementary_fields: "Additional Information"
+      related_material: "Links"
+    field:
+      doi: &doi
+        label: "DOI"
+        placeholder: "e.g. 10.4119/unibi/2695161"
+        title: "The DOI will be generated automatically and cannot be changed."
+      title: &booktitle
+        label: "Title"
+        placeholder: "e.g. Handbook of eBook Publishing"
+      alternative_title: &alternative_title
+        label: "Alternative Title"
+        label_short: "Alt. Title"
+        placeholder: "e.g. Handbook of eBook Publishing - with a subtitle"
+      author: &author_translator
+        label: "Author"
+        pevz_tooltip: "Link to / Withdraw from publication list."
+        first_name:
+          label: "First Name"
+          label_short: "Auth. First"
+          placeholder: "e.g. John"
+        last_name:
+          label: "Last Name"
+          label_short: "Auth. Last"
+          placeholder: "e.g. Appleseed"
+      edition: &edition
+        label: "Edition"
+        placeholder: "e.g. 2"
+      department: &department
+        label: "Department"
+        label_short: "Dept."
+        placeholder: "e.g. Fakult&auml;t f&uuml;r Physik"
+      project: &project
+        label: "Project"
+        placeholder: "e.g. 2nd-Generation Open Access Infrastructure for Research in Europe"
+      research_group: &research_group
+        label: "Research Group"
+        label_short: "Res. Gr."
+        placeholder: "e.g. Social Motorics"
+      place: &place
+        label: "Place of Publication"
+        label_short: "Place"
+        placeholder: "e.g. Berlin"
+      publisher: &publisher
+        label: "Publisher"
+        placeholder: "e.g. Elsevier"
+      year_extern: &year_extern
+        label: "Publishing Year"
+        year:
+          label_short: "Year"
+          placeholder: "e.g. 2015"
+        extern:
+          label_short: "Extern"
+          placeholder: "Published while not employed at UniBi"
+      page: &pages
+        label_short: "Pages"
+        label: "Number of Pages"
+        placeholder: "e.g. 345"
+      series_title_volume: &series_title_volume
+        label: "Series Title / Volume"
+        series_title:
+          label: "Series Title"
+          placeholder: "Series Title, e.g. Lecture Notes in Computer Science"
+        volume:
+          label: "Volume"
+          placeholder: "Volume, e.g. 3"
+      publication_identifier: &publication_identifier
+        label: "ISSN / ISBN"
+        label_short: "ISSN/ISBN"
+        placeholder: "e.g. select (e)ISBN or (e)ISSN and enter it here"
+      publication_status_language: &publication_status_language
+        label: "Status / Language"
+        language:
+          label: "Language"
+          label_short: "Lang."
+        publication_status:
+          label: "Status"
+          label_short: "Status"
+      dropzone: &dropzone
+        label: "<strong>Upload Main File and Supplementary Material</strong> (max. 1000MB per file)"
+        dropzone_text: "Drop files here to upload ... or click!"
+        access_level: "Access Level:"
+        upload_date: "Upload Date:"
+        user: "User:"
+        relation: "Relation:"
+        access:
+          closed: "Author/Reviewer"
+          until: "until"
+          request_a_copy: "<br>(Request a Copy)"
+          local: "UniBi Only"
+          open_access: "Open Access"
+        edit_modal:
+          heading: "Edit Uploaded File"
+          heading_file: "File"
+          current_file: "Current file:"
+          relation: "Relation (\"Uploaded document is...\")"
+          access:
+            open_access: "Open Access (File is freely available, effective immediately)"
+            local: "Local Access (UniBi only)"
+            closed: "Closed Access (Author/Reviewer only)"
+            request_a_copy: "Request a Copy (Closed Access except upon request)"
+            embargo: "Switch to Open Access on:"
+          additional_information:
+            heading: "Additional Information"
+            title: "Title"
+            description: "Description"
+      license: &license
+        heading: "Copyright and Licenses"
+        pub_license:
+          label: "Copyright Disclaimer"
+          disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
+          accept_text: "I accept"
+          alert: "You need to accept the Copyright Disclaimer because you have attached files to this record."
+        info:
+          text: "Questions about policy / license?"
+          contact: "Contact our support: Phone 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
+        cc_license:
+          label: "Creative Commons License"
+          select_text: "If your uploaded document is available under a Creative Commons license, you can select it here:<br>"
+          select_a_license: "Select a license"
+          license_deed: "License Deed"
+          cc_0:
+            name: "Creative Commons Public Domain Dedication (CC0 1.0)"
+            deed_url: "http://creativecommons.org/publicdomain/zero/1.0/"
+            legal_code_url: "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
+          cc_by:
+            name: "Creative Commons Attribution 4.0 International Public License (CC-BY 4.0)"
+            deed_url: "http://creativecommons.org/licenses/by/4.0/"
+            legal_code_url: "http://creativecommons.org/licenses/by/4.0/legalcode"
+          cc_by_sa:
+            name: "Creative Commons Attribution-ShareAlike 4.0 International Public License (CC BY-SA 4.0)"
+            deed_url: "http://creativecommons.org/licenses/by-sa/4.0/"
+            legal_code_url: "http://creativecommons.org/licenses/by-sa/4.0/legalcode"
+      urn: &urn
+        label: "URN"
+        placeholder: "e.g. urn:nbn:de:0070-pub-12345678"
+        explain: "(A URN will be generated automatically if you upload a file!)"
+        title: "The URN was generated automatically and cannot be changed"
+      ddc: &ddc
+        label: "DDC"
+        select_ddc: "Select DDC"
+      abstract: &abstract
+        label: "Abstract"
+        label2: "Language"
+        placeholder: "Abstract Text (you can use Markdown or MathJax for styling)"
+      keyword: &keyword
+        label: "Keywords"
+        placeholder: "Keywords (multiple entries separated by semicolon, e.g. Keyword1 ; Keyword2 ; Keyword3)"
+      external_id: &external_id
+        label: "External Identifier"
+        label_short: "Ext. Id."
+        placeholder: "Select an Identifier (e.g. a PMID) and enter it here"
+        select: "Select"
+      message: &message
+        label: "Comments"
+        placeholder: "Enter some comments for reviewer / admin"
+      popular_science_quality_controlled: &popular_science_quality_controlled
+        popular_science:
+          label: "Popular Science"
+          label_short: "Pop.Sci."
+        quality_controlled:
+          label: "Quality Controlled"
+      jel: &jel
+        label: "JEL Classification"
+        label_short: "JEL"
+        select_jel: "--- Select JEL ---"
+      thematic_area: &thematic_area
+        label: "Thematic Area"
+        label_short: "Them. Area"
+        select_thematic_area: "--- Select Thematic Area ---"
+      alternative_id: &alternative_id
+        label: "Returned Record Ids"
+        label_short: "Ret. Rec. Ids"
+      related_material.record: &related_material_record
+        label: "Link to PUB record"
+        label_short: "PUB-Rec."
+        placeholder: "Start typing to search your publications."
+      related_material.select: "Select type of related material"
+      related_material.link: &related_material_link
+        label: "Link to external source"
+        label_short: "Ext. Link"
+        url:
+          label_short: "URL"
+          placeholder: "URL of external link (enter with http://)"
+        title:
+          label_short: "Title"
+          placeholder: "Title of external link"
+        description:
+          label_short: "Description"
+          placeholder: "Description of external link"
+        button:
+          label: "Add"
+      publish_button:
+        alert: "Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified."
+  bookEditor: &bookeditor
+    label: "Book (Editor)"
+    tab: *tab
+    field:
+      doi: *doi
+      title: *booktitle
+      editor_solo: &editor_solo
+        first_name:
+          label: "First Name"
+          label_short: "Ed. First"
+          placeholder: "e.g. John"
+        last_name:
+          label: "Last Name"
+          label_short: "Ed. Last"
+          placeholder: "e.g. Appleseed"
+        label: "Editor"
+        label_short: "Ed."
+        pevz_tooltip: "Link to / Withdraw from publication list."
+      corporate_editor_solo: &corporate_editor_solo
+        label: "Corporate Editor"
+        label_short: "Copr. Ed."
+        placeholder: "e.g. World Health Organization - Regional Office for Europe (WHO-Europe)"
+      alternative_title: *alternative_title
+      department: *department
+      project: *project
+      research_group: *research_group
+      place: *place
+      publisher: *publisher
+      year_extern: *year_extern
+      page: *pages
+      series_title_volume: *series_title_volume
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      edition: *edition
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  bookeditor: *bookeditor
+  bookChapter: &bookchapter
+    label: "Book Chapter"
+    tab: *tab
+    field:
+      doi: *doi
+      title:
+        label: "Title"
+        label_short: "Title"
+        placeholder: "e.g. How to publish an ebook"
+      alternative_title: *alternative_title
+      author: *author_translator
+      editor: &editor_only
+        first_name:
+          label: "First Name"
+          label_short: "Ed. First"
+          placeholder: "e.g. John"
+        last_name:
+          label: "Last Name"
+          label_short: "Ed. Last"
+          placeholder: "e.g. Appleseed"
+        label: "Book Editor"
+        label_short: "Ed."
+        pevz_tooltip: "Link to / Withdraw from publication list."
+      corporate_editor: &corporate_editor
+        label: "Corporate Editor"
+        label_short: "Corp. Ed."
+        placeholder: "e.g. World Health Organization - Regional Office for Europe (WHO-Europe)"
+      edition: *edition
+      department: *department
+      project: *project
+      research_group: *research_group
+      place: *place
+      publisher: *publisher
+      year_extern: *year_extern
+      page: &page_range
+        label: "Page(s)"
+        placeholder: "e.g. 12 or 20 - 25"
+      series_title_volume: *series_title_volume
+      publication:
+        label: "Book Title"
+        placeholder: "e.g. Handbook of eBook Publishing"
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      conference.divider: &conference_divider
+        label: "Conference Details"
+      conference.name: &conference_name
+        label: "Conference"
+        label_short: "Name"
+        placeholder: "e.g. 3rd Conference on Nano-Physics"
+      conference.location: &conference_location
+        label: "Conference Location"
+        label_short: "Location"
+        placeholder: "e.g. Berlin"
+      conference.date: &conference_date
+        label: "Conference Date"
+        label_start: "Conference Start"
+        label_start_short: "Start"
+        label_end: "Conference End"
+        label_end_short: "End"
+        placeholder_start: "YYYY-MM-DD"
+        placeholder_end: "YYYY-MM-DD"
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  bookchapter: *bookchapter
+  conferenceAbstract: &conferenceabstract
+    label: "Conference Abstract"
+    tab: *tab
+    field:
+      doi: *doi
+      title: &title
+        label: "Title"
+        placeholder: "e.g. Handbook of eBook Publishing"
+      alternative_title: *alternative_title
+      author: *author_translator
+      editor: &editor
+        first_name:
+          label: "First Name"
+          label_short: "Ed. First"
+          placeholder: "e.g. John"
+        last_name:
+          label: "Last Name"
+          label_short: "Ed. Last"
+          placeholder: "e.g. Appleseed"
+        label: "Editor"
+        label_short: "Ed."
+        pevz_tooltip: "Link to / Withdraw from publication list."
+      corporate_editor: *corporate_editor
+      department: *department
+      project: *project
+      research_group: *research_group
+      publication:
+        label: "Proceedings Title"
+        label_short: "Proc. Title"
+        placeholder: "e.g. Proceedings of the 3rd Conference on Nano-Physics"
+      place: *place
+      publisher: *publisher
+      year_extern: *year_extern
+      series_title: &series_title
+        label: "Series or Journal Title"
+        placeholder: "e.g. Lecture Notes of eBook Publishing"
+      volume_issue_page: &volume_issue_page
+        label: "Volume / Issue / Page(s)"
+        label_short: "Vol./Iss./Pg."
+        volume:
+          placeholder: "e.g. 3"
+          label: "Volume"
+          label_short: "Volume"
+        issue:
+          placeholder: "e.g. 5"
+          label: "Issue"
+          label_short: "Issue"
+        page:
+          placeholder: "e.g. 12 or 20 - 25"
+          label: "Number of Pages"
+          label_short: "Pages"
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  conferenceabstract: *conferenceabstract
+  conferenceEditor: &conferenceeditor
+    label: "Conference (Editor)"
+    tab: *tab
+    field:
+      doi: *doi
+      title: *booktitle
+      editor_solo: *editor_solo
+      corporate_editor_solo: *corporate_editor_solo
+      alternative_title: *alternative_title
+      department: *department
+      project: *project
+      research_group: *research_group
+      place: *place
+      publisher: *publisher
+      year_extern: *year_extern
+      series_title: *series_title
+      volume_issue_page: *volume_issue_page
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  conferenceeditor: *conferenceeditor
+  conference:
+    label: "Conference Paper"
+    tab: *tab
+    field:
+      doi: *doi
+      title:
+        label: "Title"
+        placeholder: "e.g. Handbook of eBook Publishing"
+      alternative_title: *alternative_title
+      author: *author_translator
+      editor: *editor
+      corporate_editor: *corporate_editor
+      department: *department
+      project: *project
+      research_group: *research_group
+      volume_issue_page: *volume_issue_page
+      publication:
+        label: "Proceedings Title"
+        label_short: "Proc. Title"
+        placeholder: "e.g. Proceedings of the 3rd Conference on Nano-Physics"
+      series_title: *series_title
+      place: *place
+      publisher: *publisher
+      year_extern: *year_extern
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  dissertation:
+    label: "Dissertation"
+    tab: *tab
+    field:
+      doi: *doi
+      title: *title
+      alternative_title: *alternative_title
+      author: *author_translator
+      supervisor:
+        first_name:
+          label: "First Name"
+          label_short: "Superv. First"
+          placeholder: "e.g. John"
+        last_name:
+          label: "Last Name"
+          label_short: "Superv. Last"
+          placeholder: "e.g. Appleseed"
+        label: "Supervisor"
+      department: *department
+      project: *project
+      research_group: *research_group
+      place: *place
+      publisher: *publisher
+      year_extern: *year_extern
+      page: *pages
+      series_title_volume: *series_title_volume
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  encyclopediaArticle: &encyclopediaarticle
+    label: "Encyclopedia Article"
+    tab: *tab
+    field:
+      doi: *doi
+      title:
+        label: "Title"
+        label_short: "Title"
+        placeholder: "e.g. Online-Publishing"
+      alternative_title: *alternative_title
+      author: *author_translator
+      editor: *editor_only
+      corporate_editor: *corporate_editor
+      edition: *edition
+      department: *department
+      project: *project
+      research_group: *research_group
+      publication:
+        label: "Encyclopedia Title"
+        placeholder: "e.g. Encyclopedia on Publishing"
+      place: *place
+      publisher: *publisher
+      year_extern: *year_extern
+      page: *page_range
+      series_title_volume: *series_title_volume
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  encyclopediaarticle: *encyclopediaarticle
+  journalArticle: &journalarticle
+    label: "Journal Article"
+    tab: *tab
+    field:
+      doi: *doi
+      title:
+        label: "Title"
+        label_short: "Title"
+        placeholder: "e.g. The implications of eBook Publishing"
+      alternative_title: *alternative_title
+      author: *author_translator
+      department: *department
+      project: *project
+      research_group: *research_group
+      publisher: *publisher
+      publication: &publication_jtitle
+        label: "Journal Title"
+        placeholder: "e.g. Nature Genetics"
+      volume_issue_page: *volume_issue_page
+      year_extern: *year_extern
+      article_type:
+        label: "Article Type"
+        label_short: "Art. Type"
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      nasc: &nasc
+        label: "NASC Seed Stock ID"
+        label_short: "NASC"
+        placeholder: "NASC IDs (multiple entries separated by semicolon, e.g. N406423 ; N412826 ; N420684)"
+      genbank: &genbank
+        label: "GenBank ID"
+        label_short: "GenBank"
+        placeholder: "GenBank IDs (multiple entries separated by semicolon, e.g. AY323492 ; AY333421 ; AY323491)"
+      ubi_funded:
+        label: "Funding"
+        placeholder: "APC co-financed by DFG"
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  journalarticle: *journalarticle
+  journalEditor: &journaleditor
+    label: "Special Issue"
+    tab: *tab
+    field:
+      doi: *doi
+      title:
+        label: "Title"
+        label_short: "Title"
+        placeholder: "e.g. Handbook of eBook Publishing"
+      editor_solo: *editor_solo
+      corporate_editor_solo: *corporate_editor_solo
+      alternative_title: *alternative_title
+      department: *department
+      project: *project
+      research_group: *research_group
+      publisher: *publisher
+      publication: *publication_jtitle
+      volume_issue_page: &volume_issue_page
+        label: "Volume / Issue / Page(s)"
+        volume:
+          placeholder: "e.g. 3"
+          label: "Volume"
+          label_short: "Volume"
+        issue:
+          placeholder: "e.g. 5"
+          label: "Issue"
+          label_short: "Issue"
+        page:
+          label: "Number of Pages"
+          label_short: "Pages"
+          placeholder: "e.g. 12 or 20 - 25"
+      year_extern: *year_extern
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  journaleditor: *journaleditor
+  newspaperArticle: &newspaperarticle
+    label: "Newspaper Article"
+    tab: *tab
+    field:
+      title:
+        label: "Title"
+        label_short: "Title"
+        placeholder: "e.g. The implications of eBook Publishing"
+      alternative_title: *alternative_title
+      author: *author_translator
+      department: *department
+      project: *project
+      research_group: *research_group
+      year_extern: *year_extern
+      publication_date: &publication_date
+        label: "Publication Date"
+        label_short: "Publ. Date"
+        placeholder: "YYYY-MM-DD"
+      page: *page_range
+      publication:
+        label: "Newspaper Title"
+        label_short: "News. Title"
+        placeholder: "e.g. The New York Times"
+      publication_status_language: *publication_status_language
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      popular_science: &popular_science
+        label: "Popular Science"
+        label_short: "Pop.Sci."
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  newspaperarticle: *newspaperarticle
+  patent:
+    label: "Patent"
+    tab: *tab
+    field:
+      doi: *doi
+      title: *title
+      alternative_title: *alternative_title
+      author:
+        first_name:
+          label: "First Name"
+          label_short: "Inv. First"
+          placeholder: "e.g. John"
+        last_name:
+          label: "Last Name"
+          label_short: "Inv. Last"
+          placeholder: "e.g. Appleseed"
+        label: "Inventor"
+        pevz_tooltip: "Link to / Withdraw from publication list."
+      applicant:
+        label: "Applicant"
+        label_short: "Appl."
+        placeholder: "e.g. John Appleseed"
+      department: *department
+      project: *project
+      research_group: *research_group
+      year_extern: *year_extern
+      publication_date_number:
+        label: "Publication Date/Number"
+        label_pd: "Publ.Date"
+        placeholder_pd: "YYYY-MM-DD"
+        label_pn: "Publ.No."
+        placeholder_pn: "International Patent Number"
+      application_date_number:
+        label: "Application Date/Number"
+        label_ad: "Appl.Date"
+        placeholder_ad: "YYYY-MM-DD"
+        label_an: "Appl.No."
+        placeholder_an: "Application Number"
+      ipc:
+        label: "International Patent<br>Classification"
+        label_short: "IPC"
+        placeholder: "e.g. B25J 7/00"
+      language:
+        label: "Language"
+        label_short: "Lang."
+      page: *pages
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  preprint:
+    label: "Preprint"
+    tab: *tab
+    field:
+      title:
+        label: "Title"
+        label_short: "Titel"
+        placeholder: "e.g. The implications of eBook Publishing"
+      publication: *publication_jtitle
+      author: *author_translator
+      department: *department
+      project: *project
+      research_group: *research_group
+      publisher: *publisher
+      year_extern: *year_extern
+      page: *pages
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  report:
+    label: "Report"
+    tab: *tab
+    field:
+      doi: *doi
+      title:
+        label: "Title"
+        placeholder: "e.g. Technical report employer survey Project B3"
+      alternative_title: *alternative_title
+      author: *author_translator
+      editor: *editor_only
+      corporate_editor: *corporate_editor
+      department: *department
+      project: *project
+      research_group: *research_group
+      place: *place
+      publisher: *publisher
+      year_extern: *year_extern
+      page: *pages
+      series_title_volume: *series_title_volume
+      report_number:
+        label: "Report Number"
+        label_short: "Rep.No."
+        placeholder: "e.g. NASA/TM-2015-123456"
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  review:
+    label: "Book Review"
+    tab: *tab
+    field:
+      doi: *doi
+      title: *title
+      alternative_title: *alternative_title
+      author: *author_translator
+      editor: *editor_only
+      corporate_editor: *corporate_editor
+      department: *department
+      project: *project
+      research_group: *research_group
+      place: *place
+      publisher: *publisher
+      year_extern: *year_extern
+      publication:
+        label: "Book Title"
+        placeholder: "e.g. Handbook of eBook Publishing"
+      series_title:
+        label: "Series or Journal Title"
+        label_short: "Series/Journal Title"
+        placeholder: "e.g. Nature Genetics"
+      volume_issue_page: *volume_issue_page
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  researchData: &researchdata
+    label: "Research Data"
+    tab:
+      basic_fields: "Basic Fields"
+      file_upload: "Research data upload"
+      supplementary_fields: "Supplementary fields"
+      related_material: "Related Material"
+    field:
+      doi: *doi
+      title: *title
+      author:
+        first_name:
+          label: "First Name"
+          label_short: "Crea. First"
+          placeholder: "e.g. John"
+        last_name:
+          label: "Last Name"
+          label_short: "Crea. Last"
+          placeholder: "e.g. Appleseed"
+        label: "Creator"
+        pevz_tooltip: "Link to / Withdraw from publication list."
+      department: *department
+      project: *project
+      research_group: *research_group
+      publisher:
+        label: "Publisher"
+        placeholder: "Publisher"
+        defaultvalue: "Bielefeld University"
+      year_extern: *year_extern
+      dropzone: &dropzone
+        label: "<strong>Upload File(s)</strong> (max. 1000MB per file)"
+        dropzone_text: "Drop files here to upload ... or click!"
+        access_level: "Access Level:"
+        upload_date: "Upload Date:"
+        user: "User:"
+        relation: "Relation:"
+        access:
+          closed: "Author/Reviewer"
+          until: "until"
+          request_a_copy: "<br>(Request a Copy)"
+          local: "UniBi Only"
+          open_access: "Open Access"
+      license:
+        heading: "Copyright and Licenses"
+        data_reuse_license:
+          label: "Data Re-Use License"
+          select_license: "Select a license under which your uploaded data will be available:<br>"
+          select_a_license: "Select a license"
+          alert: "You need to select a Data Re-Use License because you have attached files to this record."
+          pddl:
+            select_text: "No restrictions - PDDL"
+            name: "The Open Data Commons Public Domain Dedication and License (PDDL) v1.0"
+            license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data<br><a href='http://opendatacommons.org/licenses/pddl/' target='_blank'>http://opendatacommons.org/licenses/pddl/</a>"
+          odcby:
+            select_text: "Attribution required - ODC-By"
+            name: "The Open Data Commons Attribution License (ODC-By) v1.0"
+            license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data<br><a href='http://opendatacommons.org/licenses/by/' target='_blank'>http://opendatacommons.org/licenses/by/</a>"
+          odbl:
+            select_text: "Share alike - ODbL"
+            name: "The Open Database License (ODbL) v1.0"
+            license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br><a href='http://opendatacommons.org/licenses/odbl/' target='_blank'>http://opendatacommons.org/licenses/odbl/</a>"
+        open_data_release:
+          label: "Open Data Release - Declaration"
+          disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
+          accept_text: "I have read and agree with the information above about releasing data under the selected license."
+          alert: "You need to accept the Open Data Release Statement because you have attached files to this record."
+        other_data_license:
+          warning: "Visible/Editable for Library Admins only"
+          label: "Other license"
+        info:
+          text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br>"
+          contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
+      external_file:
+        label: "Files available at"
+      abstract: *abstract
+      keyword: *keyword
+      jel: *jel
+      alternative_id: *alternative_id
+      ddc: *ddc
+      related_material.rd:
+        label: "Related Material"
+  researchdata: *researchdata
+  translation:
+    label: "Translation"
+    tab: *tab
+    field:
+      doi: *doi
+      title:
+        label: "Title (Translation)"
+        label_short: "Title (Trans.)"
+        placeholder: "e.g. Handbuch des eBook Publishings"
+      alternative_title:
+        label: "Title (Original)"
+        label_short: "Title (Orig)"
+        placeholder: "e.g. Handbook of eBook Publishing"
+      translator:
+        first_name:
+          label: "First Name"
+          label_short: "Trans. First"
+          placeholder: "e.g. John"
+        last_name:
+          label: "Last Name"
+          label_short: "Trans. Last"
+          placeholder: "e.g. Appleseed"
+        label: "Translator"
+        pevz_tooltip: "Link to / Withdraw from publication list."
+      author_secondary:
+        first_name:
+          label: "First Name"
+          label_short: "Auth. First"
+          placeholder: "e.g. John"
+        last_name:
+          label: "Last Name"
+          label_short: "Auth. Last"
+          placeholder: "e.g. Appleseed"
+        label: "Author (Original)"
+        pevz_tooltip: "Link to / Withdraw from publication list."
+      edition: *edition
+      department: *department
+      project: *project
+      research_group: *research_group
+      place: *place
+      publisher: *publisher
+      year_extern: *year_extern
+      page: *pages
+      series_title_volume: *series_title_volume
+      publication_identifier: *publication_identifier
+      publication_status: &publication_status
+        label: "Status"
+        label_short: "Status"
+      language: &language
+        label: "Language"
+        label_short: "Lang."
+      original_language: &original_language
+        label: "Language (Original)"
+        label_short: "Lang. (Orig.)"
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  translationChapter: &translationchapter
+    label: "Translation (Section)"
+    tab: *tab
+    field:
+      doi: *doi
+      editor: *editor_only
+      title:
+        label: "Title (Translation)"
+        label_short: "Title (Trans.)"
+        placeholder: "e.g. Handbuch des eBook Publishings"
+      translator:
+        first_name:
+          label: "First Name"
+          label_short: "Trans. First"
+          placeholder: "e.g. John"
+        last_name:
+          label: "Last Name"
+          label_short: "Trans. Last"
+          placeholder: "e.g. Appleseed"
+        label: "Translator"
+        pevz_tooltip: "Link to / Withdraw from publication list."
+      author_secondary:
+        first_name:
+          label: "First Name"
+          label_short: "Auth. First"
+          placeholder: "e.g. John"
+        last_name:
+          label: "Last Name"
+          label_short: "Auth. Last"
+          placeholder: "e.g. Appleseed"
+        label: "Author"
+        pevz_tooltip: "Link to / Withdraw from publication list."
+      alternative_title:
+        label: "Title (Original)"
+        label_short: "Title (Orig)"
+        placeholder: "e.g. Handbook of eBook Publishing"
+      edition: *edition
+      editor: *editor_only
+      department: *department
+      project: *project
+      research_group: *research_group
+      place: *place
+      publisher: *publisher
+      publication:
+        label: "Book Title"
+        placeholder: "e.g. Handbook of eBook Publishing"
+      series_title:
+        label: "Series or Journal Title"
+        label_short: "Series/Journal Title"
+        placeholder: "e.g. Lecture Notes of eBook Publishing"
+      volume_issue_page: *volume_issue_page
+      year_extern: *year_extern
+      publication_identifier: *publication_identifier
+      publication_status: *publication_status
+      language: *language
+      original_language: *original_language
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  translationchapter: *translationchapter
+  workingPaper: &workingpaper
+    label: "Working Paper"
+    tab: *tab
+    field:
+      doi: *doi
+      title:
+        label: "Title"
+        placeholder: "e.g. Working Paper on eBook Publishing"
+      alternative_title: *alternative_title
+      author: *author_translator
+      edition: *edition
+      department: *department
+      project: *project
+      research_group: *research_group
+      place: *place
+      publisher: *publisher
+      year_extern: *year_extern
+      page: *pages
+      series_title_volume: *series_title_volume
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  workingpaper: *workingpaper
+  biDissertation: &bidissertation
+    label: "Bielefeld Thesis"
+    tab: *tab
+    field:
+      bi_doctype:
+        label: "Documenttype"
+        label_short: "Doc.type"
+      email: &email
+        label: "Email address"
+        label_short: "Email"
+        placeholder: "e.g. me@example.com"
+      title:
+        label: "Title"
+        placeholder: "e.g. Strategic aspects of eBook Publishing in the Life Sciences"
+      language: &language_diss
+        label: "Language"
+        label_short: "Lang."
+        default: "eng"
+      alternative_title: *alternative_title
+      author: *author_translator
+      supervisor: &supervisor
+        first_name:
+          label: "First Name"
+          label_short: "Superv. First"
+          placeholder: "e.g. John"
+        last_name:
+          label: "Last Name"
+          label_short: "Superv. Last"
+          placeholder: "e.g. Appleseed"
+        label: "Supervisor"
+        pevz_tooltip: "Link to / Withdraw from publication list."
+      year:
+        label: "Year"
+        placeholder: "YYYY"
+      defense_date: &defense_date
+        label: "Date of Defense"
+        label_short: "Def.date"
+        placeholder: "YYYY-MM-DD"
+      department: *department
+      place: &place_diss
+        label: "Place<br>(of publication)"
+        label_short: "Place"
+        placeholder: "e.g. Berlin"
+      publisher: &publisher_diss
+        label: "Publisher"
+        placeholder: "Publisher"
+      page: *pages
+      dropzone: *dropzone
+      license: *license
+      urn: *urn
+      ddc: *ddc
+      abstract: *abstract
+      keyword: *keyword
+      message: *message
+      jel: *jel
+      alternative_id: *alternative_id
+      pacs_class: &pacs
+        label: "PACS Code"
+        placeholder: "Physics and Astronomy Classification Scheme, e.g. 97.82.Fs"
+      msc_class: &msc
+        label: "MSC Code"
+        placeholder: "Mathematics Subject Classification, e.g. 85A20"
+      ccs_class: &ccs
+        label: "CCS Code"
+        placeholder: "Computing Classification System, e.g. Data Mining"
+      related_material.record: *related_material_record
+      related_material.link: *related_material_link
+  bidissertation: *bidissertation
+  biMasterThesis: &bimasterthesis
+    label: "Bielefeld Master Thesis"
+    tab: *tab
+  bimasterthesis: *bimasterthesis
+  biPostdocThesis: &bipostdocthesis
+    label: "Bielefeld Post-Doctoral Habilitation"
+    tab: *tab
+  bipostdocthesis: *bipostdocthesis
+  biBachelorThesis: &bibachelorthesis
+    label: "Bielefeld Bachelor Thesis"
+    tab: *tab
+  bibachelorthesis: *bibachelorthesis
+  to_sp_form: "Change to single page form"
+  sp_form: "Single Page Form"
+  to_tab_form: "Change to tabbed form"
+  tab_form: "Tabbed Form"
+  toggle_dropdown: "Toggle dropdown"
+  title_new_n: "Add new "
+  title_new_m: "Add new "
+  title_new_f: "Add new "
+  mandatory: "Mandatory field"
+  mandatory_error: "You missed some mandatory fields or there are other errors! Please check your data."
+  form_change_form: "Change edit mode"
+  form_change_type: "Change publication type"
+  form_sort_item: "Drag & drop to change position of author in author list"
+  form_add_field: "Add a field (+) or Remove this field (-)"
+  form_relmat_record: "Link one of your own publication from PUB to this record."
+  form_relmat_link: "Link a publication from an external website to this record."
+  button:
+    back: "Back"
+    save: "Save"
+    cancel: "Cancel"
+    publish: "Make Public"
+    return: "Return"
+    delete: "Delete"
+    next: "Next"
+    select: "Select"
+  publication_status:
+    draft: "Draft"
+    submitted: "Submitted"
+    accepted: "Accepted"
+    inpress: "In Press"
+    epub_ahead: "Epub ahead of print"
+    published: "Published"
+  article_type:
+    original: "Original Article"
+    review: "Review"
+    letter_note: "Letter / Note"
+  page_range_number:
+    page: "Page"
+    pages: "Pages"
+    page_range: "Page(-Range)"
+    article_number: "Article Number"
+  language:
+    ara: "Arabic"
+    chi: "Chinese"
+    hrv: "Croatian"
+    cze: "Czech"
+    dan: "Danish"
+    dut: "Dutch"
+    eng: "English"
+    fin: "Finnish"
+    fre: "French"
+    ger: "German"
+    gre: "Greek"
+    heb: "Hebrew"
+    hun: "Hungarian"
+    ice: "Icelandic"
+    ita: "Italian"
+    jpn: "Japanese"
+    kor: "Korean"
+    lat: "Latin"
+    lav: "Latvian"
+    mon: "Mongolian"
+    nor: "Norwegian"
+    pol: "Polish"
+    por: "Portuguese"
+    rum: "Romanian"
+    rus: "Russian"
+    srp: "Serbian"
+    spa: "Spanish"
+    swe: "Swedish"
+    tur: "Turkish"
+    other: "Other"
+418:
+  heading: "I'm a teapot (418)"
+  text: "You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br><br><a href='https://en.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
+  link_back: "Back"
+404:
+  heading: "Page not found (404)"
+  text: "The page you requested couldn't be found."
+  link_back: "Back"
+403:
+  heading: "Access denied (403)"
+  text: "You don't have access to this file / folder."
+  link_back: "Back"
+help:
+  home: "PUB home"
+  brand: "Personal<br>home page"
+  my_author_page: "Your publication list<br>(public records only)"
+  help: "More help necessary? Contact our support: Phone 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
+  change_language: "Change language"
+  user_settings: "Change<br>department,<br>edit mode<br>default language."
+  role: "Your user role<br>If you are reviewer/delegate you can change your role here to work with publications allocated for that role."
+  pevz_photo: "Your photo. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp?lang=en' target='_blank'>Change it?</a>"
+  pevz_email: "Your Email address from BIS/PEVZ."
+  author_id: "Name, by which your public author page will also be accessible.<br>Add/Edit author IDs (e.g. ORCID)."
+  add_new_button: "Create a new record in PUB: Import existing data e.g. via DOI or enter data via a form."
+  quick_and_easy: "Got an Open Access fulltext (PDF)? Drop it here and submit the form. A new, non-pubic record will be created. We will complete it for you and make it publicly visible."
+  publication_user: "Your personal publication list. If all of your publications have been made public, this list will look exactly like the list on your public author's page."
+  publication_user_rd: "Your personal publication list - research data."
+  publication_delegate: "Each of these tabs shows the publication list of a person, you have been granted access to. The lists have been grouped by person to give you a better overview of your work area."
+  publication_reviewer: "All publications of the department you have been granted access to."
+  publication_data_manager: "All data publications of the department you have been granted access to."
+  publication_admin: "All publications in PUB."
+  statuses: "Visibility  status<br>of publication.<br>To change it, click on 'Edit'."
+  citation: "Data of publication in selected citation style."
+  search: "Search this publication list."
+  visibility_status: "Filter publications by certain status like 'public' or 'private'."
+  author_block: "Filter publications by type, author, year. You can select multiple authors/editors and create co-authorship lists."
+  fulltext_block: "Filter publications by access, e.g. open access fulltext."
+  display_block: "Change display settings of publication list (hits per page, sorting, citation style)."

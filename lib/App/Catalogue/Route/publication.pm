@@ -7,6 +7,8 @@ Route handler for publications.
 =cut
 
 use Catmandu::Sane;
+use Catmandu qw(:load export_to_string);
+use Catmandu::Fix qw(expand);
 use App::Helper;
 use App::Catalogue::Controller::Permission qw/:can/;
 use Dancer qw(:syntax);
@@ -302,6 +304,15 @@ Changes the layout of the edit form.
         		$fi->{file_json} = to_json($fi);
         	}
         }
+
+        Catmandu::Fix->new(fixes => [
+            'publication_identifier()',
+            'page_range_number()',
+            'clean_abstract()',
+            'split_field(nasc, " ; ")',
+            'split_field(genbank, " ; ")',
+            'split_field(keyword, " ; ")',
+        ])->fix($params);
 
         my $path = "backend/forms/";
         $path .= "expert/" if $mode eq "expert";

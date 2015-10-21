@@ -1082,6 +1082,7 @@ search:
           volume: {type: string, analyzer: tag}
           intvolume: {type: string, analyzer: tag}
           issue: {type: string}
+          article_number: {type: string, analyzer: tag}
           publication_identifier:
             properties:
               isbn: {type: string, analyzer: tag, include_in_all: true}
