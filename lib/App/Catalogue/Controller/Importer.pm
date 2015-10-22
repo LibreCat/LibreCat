@@ -48,7 +48,7 @@ sub crossref {
         )->first;
 
     # try @datacite if crossref has no data
-    if(!$data) {
+    if(!$data or $data->{doi} ne $id) {
         $data = $self->datacite($id);
     }
 
@@ -79,6 +79,16 @@ sub epmc {
         'EuropePMC',
         query => $id,
         fix => [join_path('fixes','epmc_mapping.fix')],
+        )->first;
+}
+
+sub bibtex {
+    my ($self, $bibtex) = @_;
+
+    Catmandu->importer(
+        'BibTeX',
+        file => \$bibtex,
+        fix => [join_path('fixes','bibtex_mapping.fix')],
         )->first;
 }
 

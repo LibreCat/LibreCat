@@ -98,9 +98,10 @@
       </div>
       <div class="col-md-5">
         <h3 class="margin-top0">[% lf.add_new.paste_bibtex %]</h3>
-        <form role="form" action="/librecat/record/import_bibtex" method="POST">
+        <form role="form" action="/librecat/record/import" method="POST">
 	      <div class="well col-xs-11 col-md-12">
-            <textarea class="form-control" rows="3" placeholder="Please paste only one record at a time."></textarea>
+            <textarea class="form-control" rows="3" name="bibtex_input" placeholder="Please paste only one record at a time."></textarea>
+            <input type="hidden" id="bibtex_source" name="source" value="bibtex">
             <button type="submit" class="btn btn-default">Import</button>
           </div>
         </form>
