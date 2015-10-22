@@ -1106,8 +1106,6 @@ forms:
         placeholder: "z.B. Technischer Report: Arbeitgeberbefragung Projekt B3"
       alternative_title: *alternative_title
       author: *author_translator
-      editor: *editor_only
-      corporate_editor: *corporate_editor
       department: *department
       project: *project
       research_group: *research_group
@@ -1130,7 +1128,6 @@ forms:
       keyword: *keyword
       external_id: *external_id
       message: *message
-      popular_science_quality_controlled: *popular_science_quality_controlled
       jel: *jel
       thematic_area: *thematic_area
       alternative_id: *alternative_id

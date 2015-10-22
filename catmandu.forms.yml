@@ -688,8 +688,6 @@ publicationTypes:
         doi: *doi
         title: *title
         author: *author_translator
-        editor: *editor_only
-        corporate_editor: *corporate_editor
         department: *department
         project: *project
         research_group: *research_group
@@ -708,7 +706,6 @@ publicationTypes:
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
-        popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         jel: *jel
         thematic_area: *thematic_area
