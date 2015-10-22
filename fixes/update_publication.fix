@@ -15,9 +15,9 @@ add_department()
 
 copy_field(bi_doctype,type)
 
-isbn13(publication_identifier.isbn.*)
-issn(publication_identifier.issn.*)
-issn(publication_identifier.eissn.*)
+#isbn13(publication_identifier.isbn.*)
+#issn(publication_identifier.issn.*)
+#issn(publication_identifier.eissn.*)
 
 split_field(nasc, ' ; ')
 split_field(genbank, ' ; ')
