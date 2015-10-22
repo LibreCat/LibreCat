@@ -313,7 +313,7 @@ forms:
       alternative_title: &alternative_title
         label: "Alternative Title"
         label_short: "Alt. Title"
-        placeholder: "e.g. Handbook of eBook Publishing - with a subtitle"
+        placeholder: "e.g. Handbuch der eBook-Veröffentlichung"
       author: &author_translator
         label: "Author"
         pevz_tooltip: "Link to / Withdraw from publication list."
