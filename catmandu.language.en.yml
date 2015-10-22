@@ -41,6 +41,7 @@ header:
   default_language: "Default Language"
 footer:
   this_is_us: "Bielefeld University Library"
+  language_url: "english/"
   dini_alt: "DINI-Certificate 2010"
   dini_title: "PUB has been honoured with the DINI-Certificate 2010"
   openaire_alt: "OpenAIRE valid"
