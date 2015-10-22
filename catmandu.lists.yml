@@ -42,6 +42,7 @@ styles_public:
   - lncs
   - mla
   - wels
+  - angewandte-chemie
 
 styles:
   - ama
@@ -59,6 +60,7 @@ styles:
   - pub
   - wels
   - sfb882
+  - angewandte-chemie
 
 language_preselect:
 # English
