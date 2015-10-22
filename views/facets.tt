@@ -394,7 +394,7 @@
 </ul>
 
 [% UNLESS bag == "person" %]
-<h3>[% lf.facets.export %][% UNLESS backend OR request.path.match('marked') %] / [% lf.facets.embed %][% END %]</h3>
+<h3>[% lf.facets.export %][% UNLESS backend OR request.path.match('marked') OR request.path.match('embed') OR qp.ftyp %] / [% lf.facets.embed %][% END %]</h3>
 
 <ul class="nav nav-tabs nav-stacked ul4">
   <li>
@@ -411,7 +411,7 @@
     </ul>
     </div>
   </li>
-  [% IF !backend AND !request.path.match('marked') %]
+  [% UNLESS backend OR request.path.match('marked') OR request.path.match('embed') OR qp.ftyp %]
   <li>
     <button data-toggle="collapse" data-target="#embed_[% tabmodus %][% menu %]" id="id_button_embed_[% tabmodus %][% menu %]" class="btn-link">
       <span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.embed %]
@@ -455,6 +455,7 @@ var path = '[% request.path %]',
 searchParams = [% qp.json %];
 
 $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
+    console.log(searchParams)
     var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ window.location.href +'&ftyp=js"><\/script><noscript><a href="'+ window.location.href +'" target="_blank">Pers&ouml;nliche Publikationsliste &gt;&gt; / My Publication List &gt;&gt;</a></noscript></div>';
     var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="https://pub3.uni-bielefeld.de/embed[% h.newuri_for("", qp, fmt="") %]"></iframe>';
     var emb_link = '<a href="'+ window.location.href +'">My Publication List</a>';
