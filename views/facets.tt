@@ -456,9 +456,9 @@ searchParams = [% qp.json %];
 
 $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     console.log(searchParams)
-    var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ window.location.href +'&ftyp=js"><\/script><noscript><a href="'+ window.location.href +'" target="_blank">Pers&ouml;nliche Publikationsliste &gt;&gt; / My Publication List &gt;&gt;</a></noscript></div>';
-    var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="https://pub3.uni-bielefeld.de/embed[% h.newuri_for("", qp, fmt="") %]"></iframe>';
-    var emb_link = '<a href="'+ window.location.href +'">My Publication List</a>';
+    var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ window.location.href +'&ftyp=js"><\/script><noscript><a href="'+ window.location.href +'" target="_blank">[% lf.facets.embed_linktext %]</a></noscript></div>';
+    var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="[% embedstrings.iframe %]"></iframe>';
+    var emb_link = '<a href="'+ window.location.href +'">[% lf.facets.embed_linktext %]</a>';
     $('#id_jstext_[% tabmodus %][% menu %]').val(emb_js);
     $('#id_iframetext_[% tabmodus %][% menu %]').val(emb_iframe);
     $('#id_linktext_[% tabmodus %][% menu %]').val(emb_link);

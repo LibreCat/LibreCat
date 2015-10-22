@@ -168,6 +168,7 @@ facets:
   citation_style: "Citation Style"
   save_style: "Save Style"
   embed: "Embed"
+  embed_linktext: "My Publication List"
   export: "Export"
   export_as: "Export as"
   export_marked: "Export Marked"
