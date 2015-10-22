@@ -95,7 +95,7 @@ main_page:
   capital_or: "ODER"
   qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Open-Access-Volltext (PDF)<br>hier her ziehen und wir machen den Rest"
   theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br>Dissertation hier her ziehen."
-  theses_success_text: "Sie haben Ihre Prüfungsschrift erfolgreich hochgeladen. Wir kontaktieren Sie mit weiteren Informationen.<br>Vielen Dank!"
+  theses_success_text: "Sie haben Ihre Prüfungsschrift erfolgreich hochgeladen. Wir kontaktieren Sie mit weiteren Informationen.<br>Vielen Dank!<br>Zurück zu <a href='/pubtheses'>PUBTheses</a>"
   theses_explain: "Bitte laden Sie EINE Datei (bevorzugt .pdf) hoch. Wenn Sie ein Dokument einbringen wollen, das aus mehreren Teildokumenten (z.B. Kapitel) besteht, müssen die Dateien in eine Archivdatei gepackt werden (.zip oder .gz)."
   heading_admin: "Admin"
   heading_user: "User"

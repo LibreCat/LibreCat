@@ -1,5 +1,6 @@
-
 <!-- BEGIN pubtheses/dropzone.tt -->
+
+[% ddc = h.get_list('ddc') %]
 
 [% IF qp.success %]
   <div class="alert alert-success" role="alert">[% lf.main_page.theses_success_text %]</div>
@@ -11,6 +12,16 @@
     <div class="dropzone" id="thesesUpload"></div>
 
     <p class="margin-top1"><a href="/policy.html#depositpolicy">PUB Deposit Policy</a></p>
+    <p><a href="#ddc_list" data-target="#ddc_list" data-toggle="collapse">DDC List <span class="glyphicon glyphicon-chevron-down"></span></a><br />
+    <p class="collapse" id="ddc_list">
+    [% FOREACH key IN ddc.keys.sort %]
+    <strong>[% ddc.$key.optgroup %]</strong><br />
+    [% FOREACH subkey IN ddc.$key.keys.sort %]
+    [% NEXT IF subkey == "optgroup" %]
+    [% ddc.$key.$subkey %]<br />
+    [% END %]
+    [% END %]
+    </p>
     
     <p>[% lf.main_page.theses_explain %]</p>
   

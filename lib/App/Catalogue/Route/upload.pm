@@ -202,6 +202,7 @@ prefix '/librecat' => sub {
     			email => params->{email},
     			publisher => "Universität Bielefeld",
     			place => "Bielefeld",
+    			ddc => [params->{ddc}],
     			department => [{name => "Universitätsbibliothek", _id => "10085", tree => [{name => "Universitätsbibliothek", id => "10085"}]}],
     			author => [{
     				first_name => params->{'author.first_name'},
@@ -210,9 +211,19 @@ prefix '/librecat' => sub {
     			}],
     			year => substr(params->{'defense_date'}, 0, 4),
     			supervisor => [{
-    				first_name => params->{'supervisor.first_name'},
-    				last_name => params->{'supervisor.last_name'},
-    				full_name => params->{'supervisor.last_name'} . ", " . params->{'supervisor.first_name'},
+    				first_name => params->{'supervisor.0.first_name'},
+    				last_name => params->{'supervisor.0.last_name'},
+    				full_name => params->{'supervisor.0.last_name'} . ", " . params->{'supervisor.0.first_name'},
+    			},
+    			{
+    				first_name => params->{'supervisor.1.first_name'},
+    				last_name => params->{'supervisor.1.last_name'},
+    				full_name => params->{'supervisor.1.last_name'} . ", " . params->{'supervisor.1.first_name'},
+    			},
+    			{
+    				first_name => params->{'supervisor.2.first_name'},
+    				last_name => params->{'supervisor.2.last_name'},
+    				full_name => params->{'supervisor.2.last_name'} . ", " . params->{'supervisor.2.first_name'},
     			}],
     			abstract => [{
     				lang => "eng",
