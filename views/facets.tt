@@ -437,11 +437,11 @@
     <div class="modal-content">
       <div class="modal-header">
 	     <button type="button" class="close" data-dismiss="modal"><span class="fa fa-fw fa-times"></span></button>
-	     <h3 id="ModalExport">Export Options</h3>
+	     <h3 id="ModalExport">[% lf.facets.export_options %]</h3>
       </div>
       <div class="modal-body">
-	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]&amp;explinks=yes" class="rtfmodal" rel="nofollow">Export list with links ("PUB | DOI | WoS" etc.)</a></p>
-	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]" class="rtfmodal" rel="nofollow">Export list without links</a></p>
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]&amp;explinks=yes" class="rtfmodal" rel="nofollow">[% lf.facets.export_withlinks %]</a></p>
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]" class="rtfmodal" rel="nofollow">[% lf.facets.export_withoutlinks %]</a></p>
       </div>
     </div>
   </div>

@@ -172,6 +172,9 @@ facets:
   export: "Export"
   export_as: "Exportieren als"
   export_marked: "Markierte exportieren"
+  export_options: "Exportoptionen"
+  export_withlinks: "Liste mit Links exportieren (PUB | DOI | WoS etc.)"
+  export_withoutlinks: "Liste ohne Links exportieren"
   exports:
     rtf: "RTF (z.B. Word, Office)"
     bibtex: "BibTeX (z.B. Citavi)"
