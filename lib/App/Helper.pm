@@ -473,8 +473,8 @@ sub default_facets {
 		status => { terms => { field => 'status', size => 8 } },
 		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
 		type => { terms => { field => 'type', size => 25 } },
-		isi => { terms => { field => 'isi', size => 1 } },
-		pmid => { terms => { field => 'pmid', size => 1 } },
+		#isi => { terms => { field => 'isi', size => 1 } },
+		#pmid => { terms => { field => 'pmid', size => 1 } },
 	};
 }
 
@@ -878,12 +878,10 @@ sub is_portal_default {
 		if ($key ne "q"){
 			$default_query->{$key} = $portal->{$key};
 			$full_query->{$key} = $portal->{$key};
-			#$return_hash->{default_query}->{$key} = $portal->{$key};
 		}
 		else {
 			foreach my $entry (@{$portal->{q}}){
 				my $q;
-				#$q = $entry->{param} . $entry->{op};
 				if(ref $entry->{or} eq "ARRAY"){
 					$q = "(" . join(" OR ", @{$entry->{or}}) . ")";
 				}
@@ -892,7 +890,6 @@ sub is_portal_default {
 				}
 				push @{$default_query->{q}}, $entry->{param} . $entry->{op} . $q;
 				push @{$full_query->{q}}, $entry->{param} . $entry->{op} . $q;
-				#push @{$return_hash->{default_query}->{q}}, $entry->{param} . $entry->{op} . $q;
 			}
 		}
 		$return_hash->{default_query} = $default_query;
