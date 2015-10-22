@@ -1,0 +1,15 @@
+# Mapping: Import BibTex to PUB
+
+move_field(_type,type)
+lookup(type, fixes/lookup/bibtex.csv, default: journalArticle)
+move_field(note, message)
+move_field(keywords, keyword)
+move_field(abstract, abstract.0.text)
+move_field(number, issue)
+move_field(address, place)
+move_field(issn, 'publication_identifier.isbn.$append')
+move_field(isbn, 'publication_identifier.issn.$append')
+move_field(journal, publication)
+move_field(series, series_title)
+move_field(booktitle, publication)
+move_field(school, publisher)

@@ -1,51 +1,84 @@
 #!/usr/bin/env perl
 
-use lib qw(/srv/www/pub/lib);
+use lib qw(../lib /srv/www/pub/lib);
 
 use Catmandu::Sane;
 use Catmandu -all;
 use Getopt::Long;
 use Citation;
-#use App::Catalogue::Controller::Publication qw/update_publication/;
-use POSIX qw(strftime);
+use Catmandu::Fix::clone as => 'clone';
+use Catmandu::Exporter::YAML;
 use Data::Dumper;
 
 Catmandu->load(':up');
-#Catmandu->config;
 
-my ($id, $style, $missing, $verbose);
+my $exp = Catmandu::Exporter::YAML->new();
 
-GetOptions ("id=i" => \$id,
-            "style=s"   => \$style,
-            "missing"  => \$missing,
-            "verbose" => \$verbose)
-or die("Error in command line arguments\n");
+my ($q, $style, $missing, $verbose, $dry);
 
-#my $bag = Catmandu->store('search')->bag('publication');
-use Catmandu::Importer::JSON;
-use Catmandu::Exporter::JSON;
+GetOptions ("q=s" => \$q,
+            "style=s" => \$style,
+            "missing" => \$missing,
+            "verbose" => \$verbose,
+            "dry" => \$dry,
+            ) or die ("Error in command line arguments\n");
 
-my $bag = Catmandu::Importer::JSON->new(file => "pub_backup.json");
-#my $backup = Catmandu->store('backup')->bag('publication');
-my $backup = Catmandu::Exporter::JSON->new(file => "pub_backup_cit.json");
+my $bag = Catmandu->store('search')->bag('publication');
+my $backup = Catmandu->store('backup')->bag('publication');
+my $cite_obj = $style ? Citation->new(style => $style) : Citation->new(all => 1);
 
-print Dumper strftime("%Y-%m-%dT%H:%M:%SZ", gmtime(time));
-
-$bag->each(sub {
+my $hits = $q ? $bag->search(cql_query => $q, limit => 1000) : $bag;
+$hits->each(sub {
     my $rec = $_[0];
-#    my $citation = Citation::index_citation_update($rec,0,'','default');
-#    $rec->{citation}->{'default'} = $citation->{'default'};
-#    my $result = $backup->add($rec);
-    if ($missing && (!$rec->{citation} or !$rec->{citation}->{'default'})) {
-    		print "Adding citation for $rec->{_id}\n" if $verbose;
-    		$rec->{citation} = Citation::index_citation_update($rec,0,'');
-    		#print Dumper $rec->{citation};
-
-        my $result = $backup->add($rec);
-        #$bag->add($result);
-        #$bag->commit;
-    }
+    my $d = clone $rec;
+    next if ($missing and $rec->{citation});
+    say "processing $rec->{_id} and $style..." if $verbose;
+    $style ? ( $rec->{citation}->{$style} = $cite_obj->create($d)->{$style} )
+        : ( $rec->{citation} = $cite_obj->create($d) );
 });
 
-print "Done\n";
-print Dumper strftime("%Y-%m-%dT%H:%M:%SZ", gmtime(time));
+if (!$dry) {
+    my $saved = $backup->add_many($hits);
+    $bag->add_many($saved);
+
+    $backup->commit;
+    $bag->commit;
+} else {
+    $exp->add_many($hits);
+}
+
+=head1 NAME
+
+update_citations.pl
+
+=head2 USAGE
+
+perl bin/update_citations.pl [options]
+
+=head2 OPTIONS
+
+=over
+
+=item --dry:
+
+Dry run.
+
+=item --style:
+
+Specify the style. If no style is provided all styles will be processed.
+
+=item --q:
+
+Specify the CQL query. If no query is given all records will be processed.
+
+=item --missing:
+
+This flag flag will only affect records with no citations.
+
+=item --verbose:
+
+Prints some messages to STDOUT.
+
+=back
+
+=cut
