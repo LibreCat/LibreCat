@@ -210,27 +210,11 @@ prefix '/librecat' => sub {
     				full_name => params->{'author.last_name'} . ", " . params->{'author.first_name'},
     			}],
     			year => substr(params->{'defense_date'}, 0, 4),
-    			supervisor => [{
-    				first_name => params->{'supervisor.0.first_name'},
-    				last_name => params->{'supervisor.0.last_name'},
-    				full_name => params->{'supervisor.0.last_name'} . ", " . params->{'supervisor.0.first_name'},
-    			},
-    			{
-    				first_name => params->{'supervisor.1.first_name'},
-    				last_name => params->{'supervisor.1.last_name'},
-    				full_name => params->{'supervisor.1.last_name'} . ", " . params->{'supervisor.1.first_name'},
-    			},
-    			{
-    				first_name => params->{'supervisor.2.first_name'},
-    				last_name => params->{'supervisor.2.last_name'},
-    				full_name => params->{'supervisor.2.last_name'} . ", " . params->{'supervisor.2.first_name'},
-    			}],
     			abstract => [{
     				lang => "eng",
     				text => params->{'abstract'},
     			}],
     			cc_license => params->{'cc_license'},
-    			defense_date => params->{'defense_date'},
     		};
     		push @{$record->{file}}, to_json({
     			file_name => $file_name,
