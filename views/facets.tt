@@ -455,9 +455,22 @@ var path = '[% request.path %]',
 searchParams = [% qp.json %];
 
 $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
-    console.log(searchParams)
-    var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ window.location.href +'&ftyp=js"><\/script><noscript><a href="'+ window.location.href +'" target="_blank">[% lf.facets.embed_linktext %]</a></noscript></div>';
-    var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="[% embedstrings.iframe %]"></iframe>';
+    var embed_link = window.location.href;
+    var regex = /\/person\/(\d{1,})/;
+    var match = regex.exec(embed_link);
+    if(match){
+      embed_link = embed_link.replace(/\/person\/\d{1,}/,"/publication");
+      var regex2 = /\?/;
+      var question = regex2.exec(embed_link);
+      if(question){
+        embed_link = embed_link + "&q=person=" + match[1];
+      }
+      else {
+        embed_link = embed_link + "?q=person=" + match[1];
+      }
+    }
+    var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ embed_link +'&ftyp=js"><\/script><noscript><a href="'+ embed_link +'" target="_blank">[% lf.facets.embed_linktext %]</a></noscript></div>';
+    var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="' + embed_link + '&ftyp=iframe"></iframe>';
     var emb_link = '<a href="'+ window.location.href +'">[% lf.facets.embed_linktext %]</a>';
     $('#id_jstext_[% tabmodus %][% menu %]').val(emb_js);
     $('#id_iframetext_[% tabmodus %][% menu %]').val(emb_iframe);
