@@ -131,7 +131,7 @@ person_profile:
   no_author_ids: "Keine Autoren-Ids gesetzt."
   person_id_title: "Diese Ids werden direkt nach dem Speichern auf Ihrer Personenseite sichtbar sein."
 project:
-  heading: "Projects"
+  heading: "Projekte"
   filter: "Filtern"
   start_year: "Startjahr"
   end_year: "Endjahr"
