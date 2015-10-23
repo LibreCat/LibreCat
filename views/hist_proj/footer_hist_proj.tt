@@ -1,11 +1,12 @@
-<!-- BEGIN footer_hist.tmpl -->
+<!-- BEGIN footer_hist_proj.tt -->
 
-</div>
-<div id="RightCol">
+<h1 style="border-bottom-width:4px;border-bottom-style:solid;border-bottom-color:#7EA2D5;padding-bottom:4px;font-size:11pt;font-weight:bold;">[% lang ? "Filter List" : "Liste Filtern" %]</h1>
 
-<h1 style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #7EA2D5; padding-top:0px;  padding-bottom:4px; margin-top:-3px; font-size:11pt;">[% lang ? "Filter List" : "Liste Filtern" %]</h1>
+[% IF qp.department %]
+<p class="text-alert"><strong><a href="/project?ttyp=hist_proj"><span class="glyphicon glyphicon-remove"></span>[% lang ? "Remove Current Filters" : "Filteroptionen entfernen" %]</a></strong></p>
+[% END %]
 
-<form name="filter" action="/project" accept-charset="utf-8" method="get" id="Filter">
+<form name="filter" action="/project" accept-charset="utf-8" method="get" id="Filter" class="form-group-md">
 
 [% tabelle = [
   ['10023','Research fields / Work Groups'],
@@ -21,7 +22,7 @@
   ['3803979','Historische Politikforschung'],
   ['37416959','Historische Wissenschaftsforschung'],
   ['3791099','Iberoamerikanische Geschichte'],  
-  ['3791103','Osteurop&auml;ische Geschichte'],
+  ['3791103','Osteuropäische Geschichte'],
   ['40284404','Region in der Geschichte'],  
   ['3791114','Wirtschaftsgeschichte']
  ]
@@ -69,7 +70,7 @@
 };
 %]
 
-<select size="1" name="department" onchange="document.filter.submit();">
+<select size="1" name="department" onchange="document.filter.submit();" class="form-control margin-bottom1-2">
 [% FOREACH row IN tabelle %]
 <option value="[% row.0 %]"
 [% IF (qp.department AND row.0 == qp.department) OR (!qp.department AND row.0 == "10023") %] selected="selected" [% END %] 
@@ -78,14 +79,14 @@
 </select>
 <noscript><input type="submit" value="GO!" /></noscript>
 
-<select size="1" name="projecttype" onchange="document.filter.submit();">
-<option value="">-- Verbundprojekt --</option>
+<select size="1" name="projecttype" onchange="document.filter.submit();" class="form-control margin-bottom1-2">
+<option value="">Verbundprojekt</option>
 <option value="bghs"[% IF qp.projecttype AND qp.projecttype == "bghs" %]selected="selected"[% END %]>BGHS Projekte</option>
 <option value="entangled americas"[% IF qp.projecttype AND qp.projecttype == "entangled americas" %]selected="selected"[% END %]>Entangled Americas</option>
 </select>
 
-<select size="1" name="funder" onchange="document.filter.submit();">
-  <option value="">-- F&ouml;rderer --</option>
+<select size="1" name="funder" onchange="document.filter.submit();" class="form-control margin-bottom1-2">
+  <option value="">Förderer</option>
 [% FOREACH fund IN hist_funder.keys.sort %]
   <option value="[% fund %]"[% IF qp.funder.lower == fund %] selected="selected"[% END %]>[% hist_funder.$fund %]</option>
 [% END %]
@@ -99,7 +100,7 @@
  ]
 %]
 
-<select size="1" name="limit" onchange="document.filter.submit();">
+<select size="1" name="limit" onchange="document.filter.submit();" class="form-control margin-bottom1">
 [% FOREACH row IN tabelle %]
 <option value="[% row.0 %]"
 [% IF row.0 == qp.limit %] selected="selected" [% END %] 
@@ -107,21 +108,9 @@
 [% END %]
 </select>
 <noscript><input type="submit" value="GO!" /></noscript>
-
-
-[% IF qp.department %]
-<p><a href="/project?ttyp=hist_proj">[% lang ? "Remove Current Filters" : "Filteroptionen entfernen" %]</a></p>
-[% END %]
-
 <input type="hidden" name="ttyp" value="hist_proj" />
 </form>
 
-<p style="font-size:8pt;"><em>[% lang ? "You can combine search and filter options" : "Sie können Suche und Filteroptionen kombinieren" %]</em></p>
+<p class="text-muted"><em>[% lang ? "You can combine search and filter options" : "Sie können Suche und Filteroptionen kombinieren" %]</em></p>
 
-</div>
-
-</body>
-
-<!-- END footer_hist.tmpl -->
-
-</html>
+<!-- END footer_hist_proj.tt -->
