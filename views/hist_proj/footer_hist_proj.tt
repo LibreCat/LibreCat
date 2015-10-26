@@ -1,12 +1,40 @@
 <!-- BEGIN footer_hist_proj.tt -->
 
-<h1 style="border-bottom-width:4px;border-bottom-style:solid;border-bottom-color:#7EA2D5;padding-bottom:4px;font-size:11pt;font-weight:bold;">[% lang ? "Filter List" : "Liste Filtern" %]</h1>
+<h3>[% lf.facets.search_filter %]</h3>
 
 [% IF qp.department %]
-<p class="text-alert"><strong><a href="/project?ttyp=hist_proj"><span class="glyphicon glyphicon-remove"></span>[% lang ? "Remove Current Filters" : "Filteroptionen entfernen" %]</a></strong></p>
+<p class="text-alert"><strong><a href="/project?ttyp=hist_proj"><span class="glyphicon glyphicon-remove"></span>[% lf.project.filter_remove %]</a></strong></p>
 [% END %]
 
-<form name="filter" action="/project" accept-charset="utf-8" method="get" id="Filter" class="form-group-md">
+
+<form action="/project" method="get" role="form" class="form-group-md">
+  <input type="hidden" name="ttyp" value="hist_proj" />
+  <input type="hidden" name="department" value="10023" />
+  [% FOREACH key IN qp.keys %]
+    [% NEXT IF key == "q" %]
+    [% NEXT IF key == "ttyp" %]
+    [% NEXT IF key == "department" %]
+    [% NEXT IF key == "ftext" %]
+    [% IF qp.$key.0 %]
+      [% FOREACH val in qp.$key %]
+	<input type="hidden" name="[% key %]" value="[% val %]" />
+      [% END %]
+    [% ELSE %]
+      <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
+    [% END %]
+  [% END %]
+  <span class="input-group">
+    <input type="text" name="ftext" id="q_id" value="[% qp.ftext | replace('"', '&quot;') %]"' class="form-control input-sm" placeholder="[% lf.facets.search %]" />
+    <span class="input-group-btn">
+    <button type="submit" class="btn btn-sm btn-default">[% lf.facets.go_button %]</button>
+    </span>
+  </span>
+  [% IF qp.q %]
+    <p class="text-muted"><a href="[% h.newuri_for("$data", qp, q="") %]" rel="nofollow"><span class="fa fa-times"></span></a> [% lf.facets.search %]: [% qp.q %]</p>
+  [% END %]
+</form>
+
+<form name="filter" action="/project" accept-charset="utf-8" method="get" id="Filter" class="form-group-md margin-top1">
 
 [% tabelle = [
   ['10023','Research fields / Work Groups'],
@@ -111,6 +139,6 @@
 <input type="hidden" name="ttyp" value="hist_proj" />
 </form>
 
-<p class="text-muted"><em>[% lang ? "You can combine search and filter options" : "Sie können Suche und Filteroptionen kombinieren" %]</em></p>
+<p class="text-muted"><em>[% lf.project.filter_help %]</em></p>
 
 <!-- END footer_hist_proj.tt -->

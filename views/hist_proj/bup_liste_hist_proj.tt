@@ -14,32 +14,6 @@
 
       <h3>[% total %] [% lf.project.heading %]</h3>
 
-      <form action="/project" method="get" role="form" class="form-inline">
-	<input type="hidden" name="ttyp" value="hist_proj" />
-	<input type="hidden" name="department" value="10023" />
-	[% FOREACH key IN qp.keys %]
-	  [% NEXT IF key == "q" %]
-	  [% NEXT IF key == "ttyp" %]
-	  [% NEXT IF key == "department" %]
-	  [% IF qp.$key.0 %]
-	    [% FOREACH val in qp.$key %]
-	      <input type="hidden" name="[% key %]" value="[% val %]" />
-	    [% END %]
-	  [% ELSE %]
-	    <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
-	  [% END %]
-	[% END %]
-	<span class="input-group">
-	  <input type="text" name="ftext" id="q_id" value="[% qp.ftext | replace('"', '&quot;') %]"' class="form-control input-sm" placeholder="[% lf.facets.search %]" />
-	  <span class="input-group-btn">
-	  <button type="submit" class="btn btn-sm btn-default">[% lf.facets.go_button %]</button>
-	  </span>
-	</span>
-	[% IF qp.q %]
-	  <p class="text-muted"><a href="[% h.newuri_for("$data", qp, q="") %]" rel="nofollow"><span class="fa fa-times"></span></a> [% lf.facets.search %]: [% qp.q %]</p>
-	[% END %]
-      </form>
-
       [% INCLUDE hist_proj/pagination.tt %]
       <div class="row" style="padding-left:13px;">
 	<div class="col-md-12" style="margin-right:20px;">
