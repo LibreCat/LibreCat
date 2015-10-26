@@ -57,7 +57,9 @@
   [% ELSIF entry.status == "public" %]
   | <a href="/librecat/record/return/[% entry._id %]">[% lf.main_page.links.return %]</a>
   [% END %]
+  [% IF session.role == "super_admin" %]
   <span class="pull-right">[% entry.date_updated.replace('(T|Z)',' ') %]</span>
+  [% END %]
 [% END %]
 
 <!-- END links.tt -->
