@@ -133,6 +133,8 @@ person_profile:
 project:
   heading: "Projekte"
   filter: "Filtern"
+  filter_remove: "Filteroptionen entfernen"
+  filter_help: "Sie können Suche und Filteroptionen kombinieren"
   start_year: "Startjahr"
   end_year: "Endjahr"
   funder: "Förderer"
