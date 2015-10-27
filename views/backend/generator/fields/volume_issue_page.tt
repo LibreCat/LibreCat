@@ -29,11 +29,19 @@
       </div>
       <div class="form-group col-md-4 col-xs-11">
         <div class="input-group sticky">
-          <div class="input-group-addon">
-            <span class="hidden-xs hidden-sm">[% lf.$type.field.volume_issue_page.page.label %]</span>
-            <span class="hidden-lg hidden-md">[% lf.$type.field.volume_issue_page.page.label_short %]</span>
-          </div>
-          <input type="text" name="page" id="id_page" value="[% page | html %]" placeholder="[% lf.$type.field.volume_issue_page.page.placeholder %]" class="sticky form-control{% IF fields.basic_fields.volume_issue_page.mandatory OR fields.supplementary_fields.volume_issue_page.mandatory %} required{% END %}"{% IF fields.basic_fields.volume_issue_page.readonly OR fields.supplementary_fields.volume_issue_page.readonly %} readonly="readonly"{% END %}>
+          {% IF fields.basic_fields.volume_issue_page.options %}
+          <span class="input-group-btn">
+            <select class="btn btn-default" name="page_range_number.type" id="select_page_range_number">
+              <option value="">-- [% lf.button.select %] --</option>
+              {% FOREACH prn IN fields.basic_fields.volume_issue_page.options %}
+              <option value="{% prn %}"[% IF article_number AND "{% prn %}" == "article_number" %] selected="selected"[% END %]>[% lf.page_range_number.{% prn %} %]</option>
+              {% END %}
+            </select>
+          </span>
+          {% ELSE %}
+          <div class="input-group-addon">[% lf.$type.field.volume_issue_page.page.label_short || lf.$type.field.volume_issue_page.page.label %]</div>
+          {% END %}
+          <input type="text" name="page_range_number.value" id="id_page" value="[% page || article_number %]" placeholder="[% lf.$type.field.volume_issue_page.page.placeholder %]" class="sticky form-control{% IF fields.basic_fields.volume_issue_page.mandatory OR fields.supplementary_fields.volume_issue_page.mandatory %} required{% END %}"{% IF fields.basic_fields.volume_issue_page.readonly OR fields.supplementary_fields.volume_issue_page.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

@@ -1,0 +1,73 @@
+[%  INCLUDE hist_proj/header_hist_proj.tt %]
+
+<!-- BEGIN bup_liste_hist_proj.tmpl -->
+
+[% USE year = date(format => '%Y', locale => 'de_DE') %]
+[% curr_year = year.format %] 
+[% last_year = curr_year - 1 %]
+
+[% path = request.path %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+
+<h3>[% total %] [% session.lang == "en" ? "Projects" : "Projekte" %]</h3>
+
+[% IF qp.department AND qp.department != "10023" OR qp.projecttype OR qp.funder %]
+<p style="color:red;">Filter:[% IF qp.department AND qp.department != "10023" %] Department[% END %][% IF qp.projecttype %][% IF qp.department AND qp.department != "10023" %] und[% END %] Verbundprojekt[% END %][% IF qp.funder %][% IF (qp.department AND qp.department != "10023") OR qp.projecttype %] und[% END %] F&ouml;rderer[% END %] <strong><a href="/project?ttyp=hist_proj">([% lang ? "Remove Current Filters" : "Filteroptionen entfernen" %])</a></strong></p>
+[% END %]
+
+<form action="/project" method="get" class="form-inline">
+  <input type="hidden" name="ttyp" value="hist_proj" />
+  <input type="hidden" name="department" value="10023" />
+  [% FOREACH key IN qp.keys %]
+    [% NEXT IF key == "q" %]
+    [% NEXT IF key == "ttyp" %]
+    [% NEXT IF key == "department" %]
+    [% IF qp.$key.0 %]
+      [% FOREACH val in qp.$key %]
+        <input type="hidden" name="[% key %]" value="[% val %]" />
+      [% END %]
+    [% ELSE %]
+      <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
+    [% END %]
+  [% END %]
+  <div class="input-append">
+    <input type="text" name="ftext" id="q_id" value="[% qp.ftext | replace('"', '&quot;') %]"' class="form-control input-sm" placeholder="[% lang ? "Search" : "Suche" %]" />
+    <button type="submit" class="btn btn-sm btn-default">[% lang ? "Go!" : "Los!" %]</button>
+  </div>
+  [% IF qp.q %]
+    <p class="text-muted"><a href="[% h.newuri_for("$data", qp, q="") %]" rel="nofollow"><span class="fa fa-times"></span></a> [% lang ? 'Search' : 'Suche' %]: [% qp.q %]</p>
+  [% END %]
+</form>
+
+[% INCLUDE hist_proj/pagination.tt %]
+<div class="row" style="padding-left:13px;">
+  <div class="col-md-12" style="margin-right:20px;">
+  [% FOREACH project IN hits %]
+    <strong><a href="/project/[% project._id %]" target="_blank">[% project.name %][% IF project.acronym %] ([% project.acronym %])[% END %]</a></strong><br />
+    <div>
+      <p class="muted">
+      [% IF project.start_year AND project.end_year %]
+        [% project.start_year %] - [% project.end_year %]<br />
+      [% END %]
+
+      [% IF project.description %]
+        [% IF project.description.length() > 200 %]
+          [% project.description.substr(0, 200); %]...
+        [% ELSE %]
+          [% project.description %]
+        [% END %]
+      [% ELSE %]
+        [% project.call_identifier %]
+      [% END %]
+      </p>
+    </div>
+  [% END %]
+  </div>
+</div>
+
+[% INCLUDE hist_proj/pagination.tt %]
+
+<!-- END bup_liste_hist_proj.tmpl -->
+
+[%  INCLUDE hist_proj/footer_hist_proj.tt %]

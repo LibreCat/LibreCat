@@ -48,12 +48,6 @@ catmandu import YAML to search --bag publication <devel/publications.yml
 
 cp catmandu.local.yml-example catmandu.local.yml
 
-# Boot the development server 
+# Boot the development server
 # Your application is now running on http://localhost:5001
 ./boot.sh
-
-wget http://lib.ugent.be/download/librecat/MathJax.tgz
-wget http://lib.ugent.be/download/librecat/CommonMark.tgz
-
-tar zxvf MathJax.tgz
-tar zxvf CommonMark.tgz

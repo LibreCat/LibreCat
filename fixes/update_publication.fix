@@ -1,24 +1,34 @@
 # fix publication data at update
 
+#vacuum()
 delete_empty()
 publication_identifier()
+page_range_number()
 hash_array()
 compact_array('department')
 compact_array('project')
 clean_abstract()
-language()
+#language()
 maybe_add_urn()
 person()
 add_department()
-add_citation()
 
-isbn13(publication_identifier.isbn.*)
-issn(publication_identifier.issn.*)
-issn(publication_identifier.eissn.*)
+copy_field(bi_doctype,type)
+
+#isbn13(publication_identifier.isbn.*)
+#issn(publication_identifier.issn.*)
+#issn(publication_identifier.eissn.*)
+
+split_field(nasc, ' ; ')
+split_field(genbank, ' ; ')
+split_field(keyword, ' ; ')
 
 if all_match('finalSubmit','recPublish')
     set_field('status','public')
 end
 
 remove_field('finalSubmit')
+#vacuum()
 delete_empty()
+
+add_citation()

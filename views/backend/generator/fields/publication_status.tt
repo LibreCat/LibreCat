@@ -14,7 +14,7 @@
           <select name="publication_status" class="sticky form-control{% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %} required{% END %}" id="select_publication_status">
             <option value=""[% IF !publication_status %] selected="selected"[% END %]>--- Select ---</option>
             [% FOREACH pi IN publ_status %]
-              <option value="[% pi.value %]"[% IF publication_status == pi.value %] selected="selected"[% END %]>[% pi.name %]</option>
+              <option value="[% pi %]"[% IF publication_status == pi %] selected="selected"[% END %]>[% lf.publication_status.$pi %]</option>
             [% END %]
           </select>
           <div class="input-group-addon"></div>

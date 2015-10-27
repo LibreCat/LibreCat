@@ -9,7 +9,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky mandatory">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.bi_doctype.label_short || lf.$type.field.bi_doctype.label %]</div>
-          <select id="id_select_bi_doctype" class="sticky form-control">
+          <select id="id_select_bi_doctype" name="bi_doctype" class="sticky form-control">
             <option value="biDissertation"[% IF type == 'biDissertation' || !type %] selected="selected"[% END %]>biDissertation</option>
             <option value="biBachelorThesis"[% IF type == 'biBachelorThesis' %] selected="selected"[% END %]>biBachelorThesis</option>
             <option value="biMasterThesis"[% IF type == 'biMasterThesis' %] selected="selected"[% END %]>biMasterThesis</option>

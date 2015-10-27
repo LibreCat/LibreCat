@@ -328,7 +328,7 @@
   <div class="text-muted">
     <a href="[% h.newuri_for("$path", qp, style="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
     <strong>[% lf.facets.citation_style %]:</strong>
-    [% qp.style %]
+    [% style %]
 
     [% IF backend %]
     <a type="button" href="/librecat/person/preference[% IF session.role == "delegate" %]/[% delegate_id %][% END %]?style=[% qp.style %]" name="save_settings" id="id_save_settings" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> [% lf.facets.save_style %]</a><br />
@@ -394,7 +394,7 @@
 </ul>
 
 [% UNLESS bag == "person" %]
-<h3>[% lf.facets.export %][% UNLESS backend OR request.path.match('marked') %] / [% lf.facets.embed %][% END %]</h3>
+<h3>[% lf.facets.export %][% UNLESS backend OR request.path.match('marked') OR request.path.match('embed') OR qp.ftyp %] / [% lf.facets.embed %][% END %]</h3>
 
 <ul class="nav nav-tabs nav-stacked ul4">
   <li>
@@ -411,7 +411,7 @@
     </ul>
     </div>
   </li>
-  [% IF !backend AND !request.path.match('marked') %]
+  [% UNLESS backend OR request.path.match('marked') OR request.path.match('embed') OR qp.ftyp %]
   <li>
     <button data-toggle="collapse" data-target="#embed_[% tabmodus %][% menu %]" id="id_button_embed_[% tabmodus %][% menu %]" class="btn-link">
       <span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.embed %]
@@ -437,11 +437,11 @@
     <div class="modal-content">
       <div class="modal-header">
 	     <button type="button" class="close" data-dismiss="modal"><span class="fa fa-fw fa-times"></span></button>
-	     <h3 id="ModalExport">Export Options</h3>
+	     <h3 id="ModalExport">[% lf.facets.export_options %]</h3>
       </div>
       <div class="modal-body">
-	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]&amp;explinks=yes" class="rtfmodal" rel="nofollow">Export list with links ("PUB | DOI | WoS" etc.)</a></p>
-	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]" class="rtfmodal" rel="nofollow">Export list without links</a></p>
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]&amp;explinks=yes" class="rtfmodal" rel="nofollow">[% lf.facets.export_withlinks %]</a></p>
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]" class="rtfmodal" rel="nofollow">[% lf.facets.export_withoutlinks %]</a></p>
       </div>
     </div>
   </div>
@@ -455,9 +455,23 @@ var path = '[% request.path %]',
 searchParams = [% qp.json %];
 
 $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
-    var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ window.location.href +'&ftyp=js"><\/script><noscript><a href="'+ window.location.href +'" target="_blank">Pers&ouml;nliche Publikationsliste &gt;&gt; / My Publication List &gt;&gt;</a></noscript></div>';
-    var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="'+ window.location.href +'&ftyp=iframe"></iframe>';
-    var emb_link = '<a href="'+ window.location.href +'">My Publication List</a>';
+    var embed_link = window.location.href;
+    var regex = /\/person\/(\d{1,})/;
+    var match = regex.exec(embed_link);
+    if(match){
+      embed_link = embed_link.replace(/\/person\/\d{1,}/,"/publication");
+      var regex2 = /\?/;
+      var question = regex2.exec(embed_link);
+      if(question){
+        embed_link = embed_link + "&q=person=" + match[1];
+      }
+      else {
+        embed_link = embed_link + "?q=person=" + match[1];
+      }
+    }
+    var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ embed_link +'&ftyp=js"><\/script><noscript><a href="'+ embed_link +'" target="_blank">[% lf.facets.embed_linktext %]</a></noscript></div>';
+    var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="' + embed_link + '&ftyp=iframe"></iframe>';
+    var emb_link = '<a href="'+ window.location.href +'">[% lf.facets.embed_linktext %]</a>';
     $('#id_jstext_[% tabmodus %][% menu %]').val(emb_js);
     $('#id_iframetext_[% tabmodus %][% menu %]').val(emb_iframe);
     $('#id_linktext_[% tabmodus %][% menu %]').val(emb_link);

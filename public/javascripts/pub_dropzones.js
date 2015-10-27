@@ -157,21 +157,18 @@ $(document).ready(function(){
 
 	            var type = Dropzone.createElement("<div class='form-group'><div class='col-sm-offset-2 col-sm-10'><div class='radio'><label><input type='radio' name='type' value='biDissertation' checked='checked'>Dissertation</label></div><div class='radio'><label><input type='radio' name='type' value='biMasterThesis'>Master Thesis</label></div><div class='radio'><label><input type='radio' name='type' value='biBachelorThesis'>Bachelor Thesis</label></div><div class='radio'><label><input type='radio' name='type'' value='biPostdocThesis'>Postdoc Thesis/Habilitation</label></div></div></div>");
 	            form.appendChild(type);
-
-	            var title = Dropzone.createElement("<div class='form-group'><label for='id_title' class='col-sm-2 control-label'>Title<span class='starMandatory'></span></label><div class='col-sm-10'><input type='text' name='title' class='form-control' id='id_title' placeholder='Title' required /></div></div>");
-	            form.appendChild(title);
-
+	            
 	            var author = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Author<span class='starMandatory'></span></label><div class='col-sm-5'><input type='text' name='author.first_name' class='form-control' placeholder='First Name' required /></div><div class='col-sm-5'><input type='text' name='author.last_name' class='form-control' placeholder='Last Name' /></div></div>");
 	            form.appendChild(author);
-
+	            
 	            var email = Dropzone.createElement("<div class='form-group'><label for='id_email' class='col-sm-2 control-label'>Email<span class='starMandatory'></span></label><div class='col-sm-10'><input type='email' class='form-control' id='id_email' placeholder='Email' name='email' required /></div></div>");
 	            form.appendChild(email);
 
-	            var supervisor = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Supervisor<span class='starMandatory'></span></label><div class='col-sm-5'><input type='text' name='supervisor.first_name' class='form-control' placeholder='First Name' required /></div><div class='col-sm-5'><input type='text' name='supervisor.last_name' class='form-control' placeholder='Last Name' /></div></div>");
-	            form.appendChild(supervisor);
-
-	            var defense_date = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Defense Date<span class='starMandatory'></span></label><div class='col-sm-5'><input type='text' name='defense_date' class='form-control' placeholder='YYYY-MM-DD' required /></div></div>'");
-	            form.appendChild(defense_date);
+	            var title = Dropzone.createElement("<div class='form-group'><label for='id_title' class='col-sm-2 control-label'>Title<span class='starMandatory'></span></label><div class='col-sm-10'><input type='text' name='title' class='form-control' id='id_title' placeholder='Title' required /></div></div>");
+	            form.appendChild(title);
+	            
+	            var ddc_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>DDC<span class='starMandatory'></span></label><div class='col-sm-10'><input type='text' name='ddc' class='form-control' placeholder='e.g. 006 (please check the DDC list above for the correct number)' required /></div></div>");
+	            form.appendChild(ddc_field);
 
 	            var abstract_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Abstract</label><div class='col-sm-10'><textarea class='form-control' name='abstract'></textarea></div></div>");
 	            form.appendChild(abstract_field);

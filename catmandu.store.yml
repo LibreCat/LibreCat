@@ -24,6 +24,11 @@ backup:
       department: *backup_settings
       research_group: *backup_settings
 
+reqcopy:
+  package: MongoDB
+  options:
+    database_name: librecat_requestcopy
+
 metrics:
   package: MongoDB
   options:
@@ -110,13 +115,13 @@ search:
                 '=': true
                 'exact': true
               field: 'description'
-            funders:
+            funder:
               op:
                 'any': true
                 'all': true
                 '=': true
                 'exact': true
-              field: 'project_funders'
+              field: 'funder'
             funded:
               op:
                 '=': true
@@ -149,8 +154,8 @@ search:
                 'all': true
                 'any': true
                 '=': true
-                'exact': {field: 'isOwnedByDepartment.name.exact'}
-              field: ['isOwnedByDepartment.organizationNumber', 'isOwnedByDepartment.name']
+                'exact': {field: 'department.name.exact'}
+              field: ['department.id', 'department.name']
             cooperator:
               op:
                 'any': true
@@ -185,6 +190,12 @@ search:
                 '=': true
                 'exact': {field: ['owner.name.full_name.exact', 'principal_investigator.name.full_name.exact', 'member.name.full_name.exact']}
               field: ['owner.name.full_name', 'owner.person_number', 'principal_investigator.name.full_name', 'principal_investigator.person_number', 'member.name.full_name', member.person_number']
+            projecttype:
+              op:
+                'any': true
+                'all': true
+                '=': true
+              field: 'project_type'
 
       award:
         cql_mapping:
@@ -519,8 +530,7 @@ search:
             doi:
               op:
                 '=': true
-                'exact': {field: 'doi.exact'}
-                '<>': true
+                'exact': true 
               field: 'doi'
             year: &year
               op:
@@ -603,9 +613,9 @@ search:
                 '=': true
                 '<>': true
                 'exact': true
-              field: ['language.iso', 'language.name']
-              values: 'three letter language code (iso639-2b) or the language name, e.g. german'
-              description: 'will find both, the iso version and the long version'
+              field: ['language.iso']
+              values: 'three letter language code (iso639-2b)'
+              description: 'will find the iso version of the language'
             type: &type
               op:
                 '=': true
@@ -984,6 +994,7 @@ search:
                       exact: {type: string, analyzer: tag}
           principal_investigator: *personField2
           member: *personField2
+          project_type: {type: string}
 
       award:
         include_in_all: false
@@ -1069,7 +1080,6 @@ search:
           language:
             properties:
               iso: {type: string, analyzer: tag}
-              name: {type: string, analyzer: tag}
           extern: {type: byte}
           ubi_funded: {type: byte}
           quality_controlled: {type: byte}
@@ -1078,6 +1088,7 @@ search:
           volume: {type: string, analyzer: tag}
           intvolume: {type: string, analyzer: tag}
           issue: {type: string}
+          article_number: {type: string, analyzer: tag}
           publication_identifier:
             properties:
               isbn: {type: string, analyzer: tag, include_in_all: true}
@@ -1135,11 +1146,7 @@ search:
             fields:
               publisher: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
-          doi:
-            type: multi_field
-            fields:
-              doi: {type: string, analyzer: datestring}
-              exact: {type: string, analyzer: tag}
+          doi: {type: string, index: not_analyzed}
           ddc: {type: string}
           external_id:
             properties:
@@ -1171,6 +1178,7 @@ search:
 #              yearCreated: {type: date, format: "yyyy"}
           alternative_id: {type: string, analyzer: tag}
           foda: {type: byte}
+          defense_date: {type: date, index: no}
 
       researcher:
         include_in_all: false

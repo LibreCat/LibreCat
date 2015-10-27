@@ -1,0 +1,13 @@
+bibtex,pub
+article,journalArticle
+book,book
+inbook,bookChapter
+conference,conference
+phdthesis,dissertation
+unpublished,preprint
+techreport,report
+booklet,book
+incollection,bookChapter
+inproceedings,conference
+masterthesis,dissertation
+proceedings,conferenceEditor

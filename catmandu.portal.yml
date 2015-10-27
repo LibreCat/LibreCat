@@ -49,9 +49,90 @@ pubbccpt:
       op: '<>'
       or: 'biPostdocThesis'
   style: ama
+  lang: en
   limit: 10
-  fmt: html
   ttyp: pubbccpt
+  fmt: html
+
+pubbghs:
+  q:
+    -
+      param: department
+      op: '='
+      or: 6747229
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
+  style: mla
+  lang: en
+  limit: 10
+  ttyp: pubbghs
+  fmt: html
+
+pubbio:
+  q:
+    -
+      param: department
+      op: '='
+      or: 10017
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
+  style: bio1
+  lang: en
+  limit: 10
+  ttyp: pubbio
+  fmt: html
+
+pubbiobcb:
+  q:
+    -
+      param: department
+      op: '='
+      or: '2685608'
+    -
+      param: documenttype
+      op: '<>'
+      #or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
+  style: bio1
+  lang: en
+  limit: 10
+  ttyp: pubbiobcb
+  fmt: html
+
+pubbioplants:
+  q:
+    - 
+      param: department
+      op: '='
+      or: 2685177
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
+  style: bio1
+  lang: en
+  limit: 10
+  ttyp: pubbioplants
+  fmt: html
 
 pubbiotech:
   q:
@@ -93,164 +174,9 @@ pubbiotech:
       op: '<>'
       or: 1
   style: ama
+  lang: en
   limit: 10
   ttyp: pubbiotech
-  fmt: html
-    
-pubbghs:
-  q:
-    -
-      param: department
-      op: '='
-      or: 6747229
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-  style: mla
-  limit: 10
-  ttyp: pubbghs
-  fmt: html
-
-pubbio:
-  q:
-    -
-      param: department
-      op: '='
-      or: 10017
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-  style: bio1
-  limit: 10
-  ttyp: pubbio
-  fmt: html
-
-pubbioplants:
-  q:
-    - 
-      param: department
-      op: '='
-      or: 2685177
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-  style: bio1
-  limit: 10
-  ttyp: pubbioplants
-  fmt: html
-
-pubbiobcb:
-  q:
-    -
-      param: department
-      op: '='
-      or: '2685608'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-  style: bio1
-  limit: 10
-  ttyp: pubbiobcb
-  fmt: html
-
-pubcns:
-  q:
-    -
-      param: department
-      op: '='
-      or: 2685448
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-  style: bio1
-  limit: 10
-  ttyp: pubcns
-  fmt: html
-
-pubneurobio:
-  q:
-    -
-      param: department
-      op: '='
-      or: 2684834
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-  style: bio1
-  limit: 10
-  ttyp: pubneurobio
-  fmt: html
-
-pubcitec:
-  q:
-    -
-      param: department
-      op: '='
-      or: 8014655
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-    -
-      param: publishingyear
-      op: '>='
-      or: 2007
-  style: bio1
-  limit: 10
-  ttyp: pubcitec
-  fmt: html
-
-pubcitectcs:
-  q:
-    -
-      param: department
-      op: '='
-      or: 10037
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-  style: bio1
-  limit: 10
-  ttyp: pubcitectcs
   fmt: html
 
 pubipaed:
@@ -267,6 +193,7 @@ pubipaed:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: de
   limit: 10
   ttyp: pubipaed
   fmt: html
@@ -285,6 +212,7 @@ pubhist:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 10
   ttyp: pubhist
   fmt: html
@@ -303,6 +231,7 @@ pubhistde:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: de
   limit: 10
   ttyp: pubhist
   fmt: html
@@ -321,6 +250,7 @@ pubhist1:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 10
   ttyp: pubhist1
   fmt: html
@@ -339,6 +269,7 @@ pubhist2:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 10
   ttyp: pubhist2
   fmt: html
@@ -357,6 +288,7 @@ pubhist3:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 10
   ttyp: pubhist3
   fmt: html
@@ -375,6 +307,7 @@ pubhist4:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 10
   ttyp: pubhist4
   fmt: html
@@ -393,6 +326,7 @@ pubhist5:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 10
   ttyp: pubhist5
   fmt: html
@@ -411,6 +345,7 @@ pubhist6:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 10
   ttyp: pubhist6
   fmt: html
@@ -429,6 +364,7 @@ pubhist7:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 10
   ttyp: pubhist7
   fmt: html
@@ -447,6 +383,7 @@ pubhist8:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 10
   ttyp: pubhist8
   fmt: html
@@ -465,6 +402,7 @@ pubgwiph:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: de
   limit: 10
   ttyp: pubgwiph
   fmt: html
@@ -483,6 +421,7 @@ pubiffde:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: de
   limit: 10
   ttyp: pubiffde
   fmt: html
@@ -497,7 +436,8 @@ pubikg:
       param: language
       op: '='
       or: eng
-  limit: 10
+  lang: en
+  limit: 3
   ttyp: pubikg
   fmt: html
 
@@ -507,7 +447,8 @@ pubikgde:
       param: department
       op: '='
       or: 10058
-  limit: 10
+  lang: de
+  limit: 3
   ttyp: pubikg
   fmt: html
 
@@ -526,8 +467,8 @@ pubimw:
         - 'bookEditor'
         - 'journalArticle'
         - 'journalEditor'
+  lang: en
   limit: 10
-  style: pub
   ttyp: pubimw
   fmt: html
 
@@ -545,8 +486,29 @@ pubiwt:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 10
   ttyp: pubiwt
+  fmt: html
+
+pubneurobio:
+  q:
+    -
+      param: department
+      op: '='
+      or: 2684834
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
+  style: bio1
+  lang: en
+  limit: 10
+  ttyp: pubneurobio
   fmt: html
 
 pubphyslat:
@@ -564,11 +526,12 @@ pubphyslat:
       op: '<>'
       or: 'biMasterThesis'
   style: aps
+  lang: en
   limit: 10
   ttyp: pubphyslat
   fmt: html
 
-pubphyshe:
+pubhighenergy:
   q:
     -
       param: department
@@ -587,6 +550,7 @@ pubphyshe:
       op: '<>'
       or: 'biMasterThesis'
   style: aps
+  lang: en
   limit: 10
   ttyp: pubphyshe
   fmt: html
@@ -605,6 +569,7 @@ pubsport:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: de
   limit: 10
   ttyp: pubsport
   fmt: html
@@ -623,6 +588,7 @@ pubsoz:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: de
   limit: 10
   ttyp: pubsoz
   fmt: html
@@ -641,6 +607,7 @@ pubvwl:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 10
   ttyp: pubvwl
   fmt: html
@@ -697,6 +664,7 @@ pubbwl:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: en
   limit: 10
   ttyp: pubbwl
   fmt: html
@@ -715,24 +683,7 @@ pubbwlde:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+  lang: de
   limit: 10
   ttyp: pubbwl
-  fmt: html
-
-pubzif:
-  q:
-    -
-      param: department
-      op: '='
-      or: 10048
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-  limit: 10
-  ttyp: pubzif
   fmt: html

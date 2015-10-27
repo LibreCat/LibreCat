@@ -1,3 +1,5 @@
+[% language_preselect = h.get_list('language_preselect') %]
+[% language_list = h.get_list('language') %]
 <div class="row innerrow">
   <div class="col-md-2 form-group hidden-xs hidden-sm">
     <label for="id_abstract_0">
@@ -13,12 +15,12 @@
         <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
           <div class="input-group-addon">[% lf.$type.field.abstract.label2 %]</div>
           <select name="abstract.0.lang" id="id_abstract_language_0" class="sticky form-control">
-          [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
-          <option value="[% h.get_list('language_preselect').$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
+          [% FOREACH lang IN language_preselect %]
+          <option value="[% lang %]" [% IF lang == "eng" %]selected="selected"[% END %]>[% lf.language.$lang %]</option>
           [% END %]
           <option value="2436687"></option>
-          [% FOREACH lang IN h.get_list('language').keys.sort %]
-          <option value="[% h.get_list('language').$lang %]" [% IF abLanguageOId == h.get_list('language').$lang %]selected="selected"[% END %]>[% lang %]</option>
+          [% FOREACH lang IN language_list.sort %]
+          <option value="[% lang %]" [% IF abLanguageOId == lang %]selected="selected"[% END %]>[% lf.language.$lang %]</option>
           [% END %]
           </select>
           <div class="input-group-addon" onclick="add_field('abstract');"><span class="glyphicon glyphicon-plus"></span></div>
@@ -38,12 +40,12 @@
           <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">[% lf.$type.field.abstract.label2 %]</div>
             <select name="abstract.[% loop.index %].lang" id="id_abstract_language_[% loop.index %]" class="sticky form-control">
-            [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
-            <option value="[% h.get_list('language_preselect').$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
+            [% FOREACH lang IN language_preselect %]
+            <option value="[% lang %]" [% IF lang == "eng" %]selected="selected"[% END %]>[% lf.language.$lang %]</option>
             [% END %]
             <option value="2436687"></option>
-            [% FOREACH lang IN h.get_list('language').keys.sort %]
-            <option value="[% h.get_list('language').$lang %]" [% IF abLanguageOId == h.get_list('language').$lang %]selected="selected"[% END %]>[% lang %]</option>
+            [% FOREACH lang IN language_list.sort %]
+            <option value="[% lang %]" [% IF abLanguageOId == lang %]selected="selected"[% END %]>[% lf.language.$lang %]</option>
             [% END %]
             </select>
             <div class="input-group-addon" onclick="add_field('abstract');"><span class="glyphicon glyphicon-plus"></span></div>
@@ -64,12 +66,12 @@
         <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
           <div class="input-group-addon">[% lf.$type.field.abstract.label2 %]</div>
           <select name="abstract.0.lang" id="id_abstract_language_0" class="sticky form-control">
-          [% FOREACH lang IN h.get_list('language_preselect').keys.sort %]
-          <option value="[% h.get_list('language_preselect').$lang %]" [% IF lang == "English" %]selected="selected"[% END %]>[% lang %]</option>
+          [% FOREACH lang IN language_preselect %]
+          <option value="[% lang %]" [% IF lang == "eng" %]selected="selected"[% END %]>[% lf.language.$lang %]</option>
           [% END %]
           <option value="2436687"></option>
-          [% FOREACH lang IN h.get_list('language').keys.sort %]
-          <option value="[% h.get_list('language').$lang %]" [% IF abLanguageOId == h.get_list('language').$lang %]selected="selected"[% END %]>[% lang %]</option>
+          [% FOREACH lang IN language_list.sort %]
+          <option value="[% lang %]" [% IF abLanguageOId == lang %]selected="selected"[% END %]>[% lf.language.$lang %]</option>
           [% END %]
           </select>
           <div class="input-group-addon" onclick="add_field('abstract');"><span class="glyphicon glyphicon-plus"></span></div>

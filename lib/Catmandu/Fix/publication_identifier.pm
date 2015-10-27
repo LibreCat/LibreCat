@@ -33,24 +33,6 @@ sub fix {
 			}
 		}
 	}
-	if($data->{nasc}){
-		my @nasc;
-		@nasc = split(" ; ", $data->{nasc});
-		delete $data->{nasc};
-		$data->{nasc} = \@nasc;
-	}
-	if($data->{genbank}){
-		my @genbank;
-		@genbank = split(" ; ", $data->{genbank});
-		delete $data->{genbank};
-		$data->{genbank} = \@genbank;
-	}
-	if($data->{keyword}){
-		my @keyword;
-		@keyword = split(" ; ", $data->{keyword});
-		delete $data->{keyword};
-		$data->{keyword} = \@keyword;
-	}
 
 	return $data;
 }

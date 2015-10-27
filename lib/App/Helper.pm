@@ -180,14 +180,14 @@ sub get_sort_style {
 
 	# set default values - to be overridden by more important values
 	my $style;
-	if($param_style && array_includes($self->config->{lists}->{styles},$param_style)){
+	if($param_style && array_includes($self->config->{citation}->{csl}->{styles},$param_style)){
 		$style = $param_style;
 	}
-	elsif($user_style && array_includes($self->config->{lists}->{styles},$user_style)){
+	elsif($user_style && array_includes($self->config->{citation}->{csl}->{styles},$user_style)){
 		$style = $user_style;
 	}
 	else {
-		$style = $self->config->{default_style}
+		$style = $self->config->{citation}->{csl}->{default_style};
 	}
 
 	my $sort;
@@ -208,7 +208,7 @@ sub get_sort_style {
 
 	$return->{style} = $style;
 
-	Catmandu::Fix->new(fixes => ["delete_empty()"])->fix($return);
+	Catmandu::Fix->new(fixes => ["vacuum()"])->fix($return);
 
 	$return->{sort_eq_default} = 0;
 	$return->{sort_eq_default} = is_same($return->{sort_backend}, $self->config->{default_sort_backend});
@@ -216,7 +216,7 @@ sub get_sort_style {
 	$return->{style_eq_userstyle} = 0;
 	$return->{style_eq_userstyle} = ($user_style eq $return->{style}) ? 1 : 0;
 	$return->{style_eq_default} = 0;
-	$return->{style_eq_default} = ($return->{style} eq $self->config->{default_style}) ? 1 : 0;
+	$return->{style_eq_default} = ($return->{style} eq $self->config->{citation}->{csl}->{default_style}) ? 1 : 0;
 
 	return $return;
 }
@@ -473,8 +473,8 @@ sub default_facets {
 		status => { terms => { field => 'status', size => 8 } },
 		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
 		type => { terms => { field => 'type', size => 25 } },
-		isi => { terms => { field => 'isi', size => 1 } },
-		pmid => { terms => { field => 'pmid', size => 1 } },
+		#isi => { terms => { field => 'isi', size => 1 } },
+		#pmid => { terms => { field => 'pmid', size => 1 } },
 	};
 }
 
@@ -878,12 +878,10 @@ sub is_portal_default {
 		if ($key ne "q"){
 			$default_query->{$key} = $portal->{$key};
 			$full_query->{$key} = $portal->{$key};
-			#$return_hash->{default_query}->{$key} = $portal->{$key};
 		}
 		else {
 			foreach my $entry (@{$portal->{q}}){
 				my $q;
-				#$q = $entry->{param} . $entry->{op};
 				if(ref $entry->{or} eq "ARRAY"){
 					$q = "(" . join(" OR ", @{$entry->{or}}) . ")";
 				}
@@ -892,7 +890,6 @@ sub is_portal_default {
 				}
 				push @{$default_query->{q}}, $entry->{param} . $entry->{op} . $q;
 				push @{$full_query->{q}}, $entry->{param} . $entry->{op} . $q;
-				#push @{$return_hash->{default_query}->{q}}, $entry->{param} . $entry->{op} . $q;
 			}
 		}
 		$return_hash->{default_query} = $default_query;

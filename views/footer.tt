@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-sm-12">
 	<div class="col-md-4 col-sm-5">
-	  <p>&copy; 2010-[% USE date %][% date.format(date.now, '%Y') %] <a href="http://www.ub.uni-bielefeld.de/[% lang ? "english/" : "" %]">[% lf.footer.this_is_us %]</a></p>
+	  <p>&copy; 2010-[% USE date %][% date.format(date.now, '%Y') %] <a href="http://www.ub.uni-bielefeld.de/[% lf.footer.language_url %]">[% lf.footer.this_is_us %]</a></p>
 	  <ul class="list-inline">
 	    <li><a href="http://www.dini.de/dini-zertifikat/"><img src="/images/logo_dini_2010.png" alt="[% lf.footer.dini_alt %]" title="[% lf.footer.dini_title %]" style="height:40px;"/></a></li>
 	    <li><a href="http://www.openaire.eu/"><img src="/images/logo_openaire_val.png" alt="[% lf.footer.openaire_alt %]" title="[% lf.footer.openaire_title %]" /></a></li>
@@ -21,14 +21,12 @@
 	</div>
 	<div class="col-sm-4">
 	  <ul class="list-inline margin0-sm">
-	    <li><a href="[% h.host %]/faq?lang=[% lang %]">[% lf.footer.faq %]</a></li>
-	    <li><a href="[% h.host %]/contact?lang=[% lang %]">[% lf.footer.contact %]</a></li>
-	    <li><a href="[% h.host %]/policy?lang=[% lang %]">[% lf.footer.policy %]</a></li>
-	    <li><a href="http://www.ub.uni-bielefeld.de/[% lang ? "english/" : "" %]biblio/kontakt/impressum/">[% lf.footer.imprint %]</a></li>
+	    <li><a href="/contact">[% lf.footer.contact %]</a></li>
+	    <li><a href="/policy">[% lf.footer.policy %]</a></li>
+	    <li><a href="http://www.ub.uni-bielefeld.de/[% lf.footer.language_url %]biblio/kontakt/impressum/">[% lf.footer.imprint %]</a></li>
 	  </ul>
 	  <ul class="list-inline">
 	    <li>[% lf.footer.powered_by %]</li>
-	    <!-- <li>[% lang ? "and" : "und" %] <a href="https://github.com/">GitHub<span class="fa fa-github fa-2x pull-right"></span></a></li> -->
 	  </ul>
 	</div>
 	<div class="col-md-4 col-sm-3 text-tight">
@@ -39,7 +37,7 @@
   </div>
 </footer>
 
-<script src="/javascripts/commonmark.js/dist/commonmark.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/commonmark/0.22.0/commonmark.min.js"></script>
 <script>
 var reader = new commonmark.Parser();
 var writer = new commonmark.HtmlRenderer();
@@ -58,7 +56,7 @@ $(document).ready(function () {
     tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
   });
 </script>
-<script src="/javascripts/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 </body>
 

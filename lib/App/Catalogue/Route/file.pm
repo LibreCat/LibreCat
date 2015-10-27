@@ -48,7 +48,7 @@ Request a copy of the publication. Email will be sent to the author.
 post '/rc/:id/:file_id' => sub {
 	require Dancer::Plugin::Email;
 
-	my $bag = Catmandu->store->bag('request');
+	my $bag = Catmandu->store('reqcopy')->bag;
 	my $file = _get_file_info(params->{id}, params->{file_id});
 	unless ($file->{request_a_copy}) {
 		forward '/publication/'.params->{id}, {method => 'GET'};
@@ -120,7 +120,7 @@ Author approves the request. Email will be sent to user.
 get '/rc/approve/:key' => sub {
 	require Dancer::Plugin::Email;
 
-	my $bag = Catmandu->store->bag('request');
+	my $bag = Catmandu->store('reqcopy')->bag;
 	my $data = $bag->get(params->{key});
 	return "Nothing to approve." unless $data;
 
@@ -149,7 +149,7 @@ to user. Delete request key from database.
 get '/rc/deny/:key' => sub {
 	require Dancer::Plugin::Email;
 
-	my $bag = Catmandu->store->bag('request');
+	my $bag = Catmandu->store('reqcopy')->bag;
 	my $data = $bag->get(params->{key});
 	return "Nothing to deny." unless $data;
 
@@ -176,7 +176,7 @@ Now get the document if time has not expired yet.
 
 =cut
 get '/rc/:key' => sub {
-	my $check = Catmandu->store->bag('request')->get(params->{key});
+	my $check = Catmandu->store('reqcopy')->bag->get(params->{key});
 	if ($check and $check->{approved} == 1) {
 		_send_it($check->{record_id}, $check->{file_name});
 	} else {
@@ -192,7 +192,7 @@ and user rights will be checked before.
 
 =cut
 get '/download/:id/:file_id' => sub {
-
+# todo: send 404 if file does not exist!!!
 	my ($ok, $file_name) = can_download(
 				params->{id},
 				params->{file_id},

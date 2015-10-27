@@ -65,9 +65,6 @@ $('.change_tab').click(function(e){
   }
 
   $('.required').each(function(){
-    if($(this).attr('name').indexOf('ddc') == 0){
-      return true;
-    } 
     if(!$(this).val()){
       $(this).addClass('has-error');
       $(this).closest('div.input-group.mandatory').addClass("has-error");
@@ -83,7 +80,7 @@ $('.change_tab').click(function(e){
       $(this).closest('div.input-group.mandatory').removeClass("has-error");
     }
   });
-  
+
   var year = $('#id_year').val();
   var currentYear = (new Date).getFullYear();
   var maxYear = currentYear + 5;
@@ -93,7 +90,15 @@ $('.change_tab').click(function(e){
     $('#id_year').val("");
     $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
   }
-  
+
+  var volume = $('#id_volume').val();
+  if(volume && !volume.match(/^\d*$/)){
+    check = 0;
+    $('#id_volume').addClass('has-error');
+    $('#id_volume').val("");
+    $('#id_volume').attr("placeholder","Numbers only!");
+  }
+
   if((this_button.attr('href') && (this_button.attr('href') == "#supplementary_fields" || this_button.attr('href') == "#related_material")) || ($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish"))){
     if($('#id_data_reuse_license').length || $('#id_open_data_release').length){
       if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_open_data_release').is(':checked') || $('#id_data_reuse_license').val() == '')){
@@ -160,7 +165,7 @@ $('.change_tab').click(function(e){
         }
       }
     }
-  
+
     if($('#ddc').length){
       if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#select_ddc_0').val() || $('#select_ddc_0').val() == "")){
         $('#select_ddc_0').addClass('has-error');
@@ -170,7 +175,7 @@ $('.change_tab').click(function(e){
       }
       else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && (!$('#select_ddc_0').val() || $('#select_ddc_0').val() == "")){
         $('#select_ddc_0').addClass('has-error');
-        $('#select_ddc_0').closest('div.input-group').addClass("has-error");
+        $('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
         check_license = 0;
         e.preventDefault();
       }
@@ -183,7 +188,7 @@ $('.change_tab').click(function(e){
       }
     }
   }
-  
+
   if(!check || !check_license){
     $('#basic_fields, #li_basic_fields').removeClass('active');
     $('#file_upload, #li_file_upload').removeClass('active');
@@ -199,7 +204,7 @@ $('.change_tab').click(function(e){
     $('#mandatory-field-error').removeClass('hidden');
     $('#mandatory-field-error').addClass('show');
     window.scrollTo(0, 0);
-    //e.preventDefault();
+    e.preventDefault(); // prevents submission of form
   }
   else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish")){
     window.scrollTo(0, 0);
@@ -418,7 +423,7 @@ $(function() {
       else{
         index = 0;
       }
-      $('#relatesTo').append('<div class="row innerrow"><div class="col-md-2"><select class="relmat form-control" name="related_material.record.' + index + '.relation">[% FOREACH key IN h.config.lists.relations_record %]<option value="[% key.relation %]"[% IF key.relation == "earlier_version" %] selected="selected"[% END %]>[% key.link_text %]</option>[% END %]</select></div><div class="col-md-10"><span class="form-group col-md-7"><span class="glyphicon glyphicon-file"></span> <a href="/publication/' + ui.item.id + '" target="_blank">' + ui.item.title + '</a><input type="hidden" id="related_material_id_' + index +'" name="related_material.record.' + index + '.id" value="' + ui.item.id + '" /></span><span class="col-md-2"><button role="button" class="btn btn-default connect"><span class="glyphicon glyphicon-minus"></span></button></span></div></div>');
+      $('#relatesTo').append('<div class="col-md-10 col-xs-12 col-md-offset-2"><div class="row innerrow"><div class="col-xs-3"><select class="relmat form-control" name="related_material.record.' + index + '.relation">[% FOREACH key IN h.config.lists.relations_record %]<option value="[% key.relation %]"[% IF key.relation == "earlier_version" %] selected="selected"[% END %]>[% key.link_text %]</option>[% END %]</select></div><div class="col-md-7 col-xs-9"><div class="form-group col-xs-9"><span class="glyphicon glyphicon-file"></span> <a href="/publication/' + ui.item.id + '" target="_blank">' + ui.item.title + '</a><input type="hidden" id="related_material_id_' + index +'" name="related_material.record.' + index + '.id" value="' + ui.item.id + '" /></div><div class="col-xs-1"><button role="button" class="btn btn-default connect"><span class="glyphicon glyphicon-minus"></span></button></div></div></div>');
     },
     close: function(){
       $("#connect_autocomplete").val("");
@@ -444,7 +449,7 @@ $('#add_relurl').click(function(){
     
     var index = $('#url div.innerrow').length;
     
-    $('#url').append('<div class="row innerrow"><div class="col-md-2"><select class="relurl form-control" name="related_material.link.' + index + '.relation">[% FOREACH key IN h.config.lists.relations_link %]<option value="[% key.relation %]">[% key.link_text %]</option>[% END %]</select></div><div class="col-md-10"><span class="form-group col-md-9"><span class="glyphicon glyphicon-link"></span> <a href="' + url + '" target="_blank">' + title + '</a><br /><span class="text-muted">' + description + '</span><input type="hidden" name="related_material.link.' + index + '.url" value="' + $('#relurl_url').val() + '" /><input type="hidden" name="related_material.link.' + index + '.title" value="' + $('#relurl_title').val() + '" /><input type="hidden" name="related_material.link.' + index + '.description" value="' + $('#relurl_description').val() + '" /></span><span class="col-md-1"><span class="glyphicon glyphicon-minus connect"></span></span></div></div>');
+    $('#url').append('<div class="col-md-10 col-xs-12 col-md-offset-2"><div class="row innerrow"><div class="col-xs-3"><select class="relurl form-control" name="related_material.link.' + index + '.relation">[% FOREACH key IN h.config.lists.relations_link %]<option value="[% key.relation %]">[% key.link_text %]</option>[% END %]</select></div><div class="col-md-7 col-xs-9"><div class="form-group col-xs-9"><span class="glyphicon glyphicon-link"></span> <a href="' + url + '" target="_blank">' + title + '</a><br /><span class="text-muted">' + description + '</span><input type="hidden" name="related_material.link.' + index + '.url" value="' + $('#relurl_url').val() + '" /><input type="hidden" name="related_material.link.' + index + '.title" value="' + $('#relurl_title').val() + '" /><input type="hidden" name="related_material.link.' + index + '.description" value="' + $('#relurl_description').val() + '" /></div><div class="col-xs-1"><button role="button" class="btn btn-default"><span class="glyphicon glyphicon-minus connect"></span></button></div></div></div>');
     $('#relurl_url').val('');
     $('#relurl_title').val('');
     $('#relurl_description').val('');

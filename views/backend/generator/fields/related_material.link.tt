@@ -1,61 +1,71 @@
+<!-- related_material.link.tt -->
+
 <div class="row innerrow">
-  <div class="col-md-2">
-    {% IF fields.related_material.item('related_material.link').mandatory %}<span class="starMandatory">{% END %}
-    <label for="relurl_url">
-    {% fields.related_material.item('related_material.link').label %}
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="relurl_url" class="helpme" data-placement="bottom" title="[% lf.form_relmat_link %]">
+    [% lf.$type.field.item('related_material.link').label %]
     </label>
-    {% IF fields.related_material.item('related_material.link').mandatory %}</span>{% END %}
+    {% IF fields.related_material.item('related_material.link').mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10">
-    <div class="form-group">
-    <span class="form-group col-md-4">
-      <input type="text" placeholder="URL" id="relurl_url" class="form-control" value="" />
-    </span>
-    <span class="form-group col-md-5">
-      <input type="text" placeholder="Title" id="relurl_title" class="form-control" value="" />
-    </span>
+    <div class="row innerrow">
+      <div class="form-group col-md-5 col-xs-11">
+        <div class="input-group sticky{% IF fields.basic_fields.publication_status_language.publication_status.mandatory OR fields.supplementary_fields.publication_status_language.publication_status.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.item('related_material.link').label_short || lf.$type.field.item('related_material.link').label %]</div>
+          <input type="text" placeholder="[% lf.$type.field.item('related_material.link').url.placeholder %]" id="relurl_url" class="form-control sticky" value="" />
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+      <div class="form-group col-md-5 col-xs-11">
+        <div class="input-group sticky{% IF fields.basic_fields.publication_status_language.publication_status.mandatory OR fields.supplementary_fields.publication_status_language.publication_status.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.item('related_material.link').label_short || lf.$type.field.item('related_material.link').label %]</div>
+          <input type="text" placeholder="[% lf.$type.field.item('related_material.link').title.placeholder %]" id="relurl_title" class="form-control sticky" value="" />
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row innerrow">
+      <div class="form-group col-md-8 col-xs-9">
+        <div class="sticky">
+          <textarea placeholder="[% lf.$type.field.item('related_material.link').description.placeholder %]" id="relurl_description" class="form-control sticky"></textarea>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <button type="button" id="add_relurl" class="btn btn-default">
+	    <span class="glyphicon glyphicon-plus"></span>
+	</button>
+      </div>
     </div>
   </div>
 </div>
-<div class="row innerrow">
-  <div class="col-md-10 col-md-offset-2">
-    <div class="form-group">
-    <span class="form-group col-md-7">
-      <textarea placeholder="Description" id="relurl_description" class="form-control"></textarea>
-    </span>
-    <span class="form-group col-md-2">
-      <button type="button" id="add_relurl" class="btn btn-default">Add</button>
-    </span>
-    </div>
-  </div>
-</div>
-<div id="url">
+<div id="url" class="row innerrow">
 [% IF related_material %]
-<div class="row innerrow">
-  <div class="col-md-2">Related material is...</div>
-</div>
 [% FOREACH u IN related_material.link %]
 [% NEXT IF u.record %]
-<div class="row innerrow">
-  <div class="col-md-2">
-    <select class="relurl form-control" name="related_material.link.[% index %].relation">
-      [% FOREACH entry IN h.config.lists.relations_link %]
-      <option value="[% entry.relation %]"[% IF entry.relation == u.relation %] selected="selected"[% END %]>[% entry.link_text %]</option>
-      [% END %]
-    </select>
+  <div class="col-md-10 col-xs-12 col-md-offset-2">
+    <div class="row innerrow">
+      <div class="col-xs-3">
+	<select class="relurl form-control" name="related_material.link.[% loop.index %].relation">
+	  [% FOREACH entry IN h.config.lists.relations_link %]
+	  <option value="[% entry.relation %]"[% IF entry.relation == u.relation %] selected="selected"[% END %]>[% entry.link_text %]</option>
+	  [% END %]
+	</select>
+      </div>
+      <div class="col-md-7 col-xs-9">
+	<span class="form-group col-xs-9">
+	  <span class="glyphicon glyphicon-link"></span> <a href="[% u.url %]" target="_blank">[% u.title %]</a><br /><span class="text-muted">[% u.description %]</span>
+	  <input type="hidden" name="related_material.link.[% loop.index %].url" value="[% u.url %]" />
+	  <input type="hidden" name="related_material.link.[% loop.index %].title" value="[% u.title | html %]" />
+	  <input type="hidden" name="related_material.link.[% loop.index %].description" value="[% u.description | html %]" />
+	</span>
+	<span class="col-xs-1">
+	  <button class="btn btn-default connect">
+	    <span class="glyphicon glyphicon-minus"></span>
+	  </button>
+	</span>
+      </div>
+    </div>
   </div>
-  <div class="col-md-10">
-    <span class="form-group col-md-9">
-      <span class="glyphicon glyphicon-link"></span> <a href="[% u.url %]" target="_blank">[% u.title %]</a><br /><span class="text-muted">[% u.description %]</span>
-      <input type="hidden" name="related_material.link.[% index %].url" value="[% u.url %]" />
-      <input type="hidden" name="related_material.link.[% index %].title" value="[% u.title | html %]" />
-      <input type="hidden" name="related_material.link.[% index %].description" value="[% u.description | html %]" />
-    </span>
-    <span class="col-md-1">
-      <span class="glyphicon glyphicon-minus connect"></span>
-    </span>
-  </div>
-</div>
 [% END %]
 [% END %]
 </div>

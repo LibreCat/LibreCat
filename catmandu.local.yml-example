@@ -3,6 +3,9 @@ host: "http://localhost:5001"
 tmp_dir: '/data2/tmp'
 upload_dir: '/data2/librecat/file_uploads'
 
+thesis:
+    urn_prefix: 'urn:thesis-'
+
 authentication:
   package: Authentication::LDAP
   param:
@@ -13,3 +16,4 @@ authentication:
     search_filter: '(uid=%s)'
     search_base: 'dc=ugent, dc=be'
     search_attr: 'ugentID'
+

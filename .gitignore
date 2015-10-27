@@ -22,9 +22,6 @@ sessions/
 views/backend/forms/
 views/admin/forms/
 logs/
-t/testPetra.pl
-bin/europepmc/*.json
-bin/citec_authors.csv
 public/citec_authors.json
 local/
 data/
@@ -35,7 +32,12 @@ vendor/
 tmp/
 catmandu.local.yml
 ~$
+<<<<<<< HEAD
 public/javascripts/commonmark.js
 public/javascripts/MathJax
 local
 cpanfile.snapshot
+=======
+local
+cpanfile.snapshot
+>>>>>>> master

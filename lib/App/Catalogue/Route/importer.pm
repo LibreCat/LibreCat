@@ -25,8 +25,8 @@ post '/librecat/record/import' => needs login => sub {
 	my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
     try {
-        $pub = App::Catalogue::Controller::Importer->new(
-			id => $p->{id},
+		$pub = App::Catalogue::Controller::Importer->new(
+			id => $p->{id} || $p->{bibtex_input},
 			source => $p->{source},
 			)->fetch;
 
@@ -39,7 +39,7 @@ post '/librecat/record/import' => needs login => sub {
 			if (($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
 				$templatepath .= "/expert";
 			}
-			
+
 			$pub->{new_record} = 1;
 
 			return template $templatepath . "/$type", $pub;

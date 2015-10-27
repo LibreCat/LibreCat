@@ -55,7 +55,8 @@ prepend(external_id.fp7,'info:eu-repo/grantAgreement/EC/')
 move_field(external_id.fp7,'res.relation.$append')
 #H2020 missing
 
-
+lookup(cc_license, fixes/lookup/licenses.csv)
+move_field(cc_license,'res.rights.$append')
 
 # file stuff
 unless exists(file)

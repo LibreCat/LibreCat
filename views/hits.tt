@@ -84,7 +84,7 @@
     [% IF style == 'default' %]
 	<a href="/librecat/record/edit/[% entry._id %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title %]</strong></a><br>
     [% END %]
-    <a href="[% IF backend %]/librecat/record/edit[% ELSE %]/[% bag %][% END %]/[% entry._id %]" [% UNLESS request.path.match("/embed") %]onclick="window.top.location='[% IF backend %]/myPUB/record/edit[% ELSE %]/[% bag %][% END %]/[% entry._id %]'"[% ELSE%] target="_blank"[% END %] class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="[% IF backend %][% lf.main_page.links.edit %][% ELSE %][% lf.main_page.links.view_details %][% END %]"></a>
+    <a href="[% IF backend %]/librecat/record/edit[% ELSE %]/[% bag %][% END %]/[% entry._id %]" [% UNLESS request.path.match("/embed") %]onclick="window.top.location='[% IF backend %]/librecat/record/edit[% ELSE %]/[% bag %][% END %]/[% entry._id %]'"[% ELSE%] target="_blank"[% END %] class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="[% IF backend %][% lf.main_page.links.edit %][% ELSE %][% lf.main_page.links.view_details %][% END %]"></a>
     [% IF entry.citation.$style %]
       [% entry.citation.$style %][% IF style != "apa_indent" %]<br>[% END %]
     [% END %]
