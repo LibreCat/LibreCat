@@ -688,8 +688,6 @@ publicationTypes:
         doi: *doi
         title: *title
         author: *author_translator
-        editor: *editor_only
-        corporate_editor: *corporate_editor
         department: *department
         project: *project
         research_group: *research_group
@@ -708,7 +706,6 @@ publicationTypes:
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
-        popular_science_quality_controlled: *popular_science_quality_controlled
         message: *message
         jel: *jel
         thematic_area: *thematic_area
@@ -979,13 +976,13 @@ publicationTypes:
     tmpl: biDissertation
   bimasterthesis:
     genus: "f"
-    tmpl: biDissertation
+    tmpl: biMasterThesis
   bipostdocthesis:
     genus: "f"
-    tmpl: biDissertation
+    tmpl: biPostDocThesis
   bibachelorthesis:
     genus: "f"
-    tmpl: biDissertation
+    tmpl: biBachelorThesis
 array_field:
   - abstract
   - alternative_title

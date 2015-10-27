@@ -15,13 +15,13 @@
       [% END %]
 
       <div class="form-group[% IF error_message AND !login %] has-error[% END %]">
-        <label class="col-md-3 control-label starMandatory" for="id_login">[% lf.login.username %]</label>
+        <label class="col-md-3 control-label" for="id_login">[% lf.login.username %]</label>
         <div class="col-md-8">
           <input type="text" class="form-control" name="user" id="id_login" value="[% login %]" placeholder="[% lf.login.username_placeholder %]" required>
         </div>
       </div>
       <div class="form-group[% IF error_message %] has-error[% END %]">
-        <label class="col-md-3 control-label starMandatory" for="id_password">[% lf.login.password %]</label>
+        <label class="col-md-3 control-label" for="id_password">[% lf.login.password %]</label>
         <div class="col-md-8">
           <input type="password" class="form-control" name="pass" id="id_password" value="" placeholder="[% lf.login.password_placeholder %]" required>
         </div>
@@ -33,12 +33,6 @@
       </div>
     </form>
 
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-6 col-md-offset-2">
-    <span class="starMandatory"></span> [% lf.login.login_help %]
   </div>
 </div>
 

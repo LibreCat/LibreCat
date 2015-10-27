@@ -7,7 +7,7 @@ login:
   username: "Username"
   username_placeholder: "HRZ Username"
   password: "Password"
-  password_placeholder: "HRZ Password"
+  password_placeholder: "HRZ Password (used e.g. for Webmailer and Stud.IP)"
   login_button: "Login"
   login_help: "HRZ Username and Password (used e.g. for Webmailer and Stud.IP)"
   contact_us: "<strong>Login failed?</strong><br>If you are a member of Bielefeld University but you still cannot log in to PUB, please <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>contact us</a></strong> or call 106-4058."
@@ -41,6 +41,7 @@ header:
   default_language: "Default Language"
 footer:
   this_is_us: "Bielefeld University Library"
+  language_url: "english/"
   dini_alt: "DINI-Certificate 2010"
   dini_title: "PUB has been honoured with the DINI-Certificate 2010"
   openaire_alt: "OpenAIRE valid"
@@ -51,7 +52,7 @@ footer:
   datacite_title: "PUB registers Research Data with DataCite"
   faq: "FAQ"
   contact: "Contact"
-  policy: "PUB Policy"
+  policy: "Policy"
   imprint: "Imprint"
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat<img src='/images/librecat.png' alt=''></a>"
   support: "<strong>Support Publication Services</strong><br>Susanne Riedel<br>Phone: 0521/106-4058<br><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>"
@@ -95,7 +96,7 @@ main_page:
   capital_or: "OR"
   qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Drop Open Access fulltext (PDF)<br>here and we'll do the rest."
   theses_drop_text: "<spab ckass='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br>Drop your thesis here."
-  theses_success_text: "You have successfully submitted your thesis. We will contact you with further information.<br>Thank you!"
+  theses_success_text: "You have successfully submitted your thesis. We will contact you with further information.<br>Thank you!<br>Back to <a href='/pubtheses'>PUBTheses</a>"
   theses_explain: "Please upload only ONE file (preferably .pdf). If you want to submit a document that consists of several parts (e.g. chapters) you need to put the files into an archive file (.zip or .gz)."
   heading_admin: "Admin"
   heading_user: "User"
@@ -168,9 +169,13 @@ facets:
   citation_style: "Citation Style"
   save_style: "Save Style"
   embed: "Embed"
+  embed_linktext: "My Publication List"
   export: "Export"
   export_as: "Export as"
   export_marked: "Export Marked"
+  export_options: "Export Options"
+  export_withlinks: "Export list with links (PUB | DOI | WoS etc.)"
+  export_withoutlinks: "Export list without links"
   exports:
     rtf: "RTF (e.g. Word, Office)"
     bibtex: "BibTeX (e.g. Citavi)"
@@ -313,7 +318,7 @@ forms:
       alternative_title: &alternative_title
         label: "Alternative Title"
         label_short: "Alt. Title"
-        placeholder: "e.g. Handbook of eBook Publishing - with a subtitle"
+        placeholder: "e.g. Handbuch der eBook-Veröffentlichung"
       author: &author_translator
         label: "Author"
         pevz_tooltip: "Link to / Withdraw from publication list."
@@ -1101,8 +1106,6 @@ forms:
         placeholder: "e.g. Technical report employer survey Project B3"
       alternative_title: *alternative_title
       author: *author_translator
-      editor: *editor_only
-      corporate_editor: *corporate_editor
       department: *department
       project: *project
       research_group: *research_group
@@ -1125,7 +1128,6 @@ forms:
       keyword: *keyword
       external_id: *external_id
       message: *message
-      popular_science_quality_controlled: *popular_science_quality_controlled
       jel: *jel
       thematic_area: *thematic_area
       alternative_id: *alternative_id
@@ -1429,7 +1431,7 @@ forms:
   biDissertation: &bidissertation
     label: "Bielefeld Thesis"
     tab: *tab
-    field:
+    field: &field
       bi_doctype:
         label: "Documenttype"
         label_short: "Doc.type"
@@ -1497,14 +1499,17 @@ forms:
   biMasterThesis: &bimasterthesis
     label: "Bielefeld Master Thesis"
     tab: *tab
+    field: *field
   bimasterthesis: *bimasterthesis
   biPostdocThesis: &bipostdocthesis
     label: "Bielefeld Post-Doctoral Habilitation"
     tab: *tab
+    field: *field
   bipostdocthesis: *bipostdocthesis
   biBachelorThesis: &bibachelorthesis
     label: "Bielefeld Bachelor Thesis"
     tab: *tab
+    field: *field
   bibachelorthesis: *bibachelorthesis
   to_sp_form: "Change to single page form"
   sp_form: "Single Page Form"

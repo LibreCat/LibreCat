@@ -7,7 +7,7 @@ login:
   username: "Benutzername"
   username_placeholder: "HRZ Benutzername"
   password: "Passwort"
-  password_placeholder: "HRZ Passwort"
+  password_placeholder: "HRZ Passwort (wie z.B. für den Webmailer und Stud.IP)"
   login_button: "Anmelden"
   login_help: "HRZ Benutzername und Passwort (wie z.B. für den Webmailer und Stud.IP)"
   contact_us: "<strong>Login fehlgeschlagen?</strong><br>Falls Sie der Universität Bielefeld angehören, sich aber trotzdem nicht in PUB einloggen können, <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>schreiben Sie uns</a></strong> oder rufen Sie uns an unter 106-4058."
@@ -41,6 +41,7 @@ header:
   default_language: "Standardsprache"
 footer:
   this_is_us: "Universitätsbibliothek Bielefeld"
+  language_url: ""
   dini_alt: "DINI-Zertifikat 2010"
   dini_title: "PUB ist mit dem DINI-Zertifikat 2010 ausgezeichnet"
   openaire_alt: "OpenAIRE valide"
@@ -51,7 +52,7 @@ footer:
   datacite_title: "PUB registriert Forschungsdaten bei DataCite"
   faq: "FAQ"
   contact: "Kontakt"
-  policy: "PUB-Leitlinien"
+  policy: "Leitlinien"
   imprint: "Impressum"
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat<img src='/images/librecat.png' alt=''></a>"
   support: "<strong>Support Publikationsdienste</strong><br>Susanne Riedel<br>Tel.: 0521/106-4058<br><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>"
@@ -95,7 +96,7 @@ main_page:
   capital_or: "ODER"
   qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Open-Access-Volltext (PDF)<br>hier her ziehen und wir machen den Rest"
   theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br>Dissertation hier her ziehen."
-  theses_success_text: "Sie haben Ihre Prüfungsschrift erfolgreich hochgeladen. Wir kontaktieren Sie mit weiteren Informationen.<br>Vielen Dank!"
+  theses_success_text: "Sie haben Ihre Prüfungsschrift erfolgreich hochgeladen. Wir kontaktieren Sie mit weiteren Informationen.<br>Vielen Dank!<br>Zurück zu <a href='/pubtheses'>PUBTheses</a>"
   theses_explain: "Bitte laden Sie EINE Datei (bevorzugt .pdf) hoch. Wenn Sie ein Dokument einbringen wollen, das aus mehreren Teildokumenten (z.B. Kapitel) besteht, müssen die Dateien in eine Archivdatei gepackt werden (.zip oder .gz)."
   heading_admin: "Admin"
   heading_user: "User"
@@ -168,9 +169,13 @@ facets:
   citation_style: "Zitationsstil"
   save_style: "Zitationsstil speichern"
   embed: "Einbettung"
+  embed_linktext: "Meine Publikationsliste"
   export: "Export"
   export_as: "Exportieren als"
   export_marked: "Markierte exportieren"
+  export_options: "Exportoptionen"
+  export_withlinks: "Liste mit Links exportieren (PUB | DOI | WoS etc.)"
+  export_withoutlinks: "Liste ohne Links exportieren"
   exports:
     rtf: "RTF (z.B. Word, Office)"
     bibtex: "BibTeX (z.B. Citavi)"
@@ -313,7 +318,7 @@ forms:
       alternative_title: &alternative_title
         label: "Alternativer Titel"
         label_short: "Alt. Titel"
-        placeholder: "z.B. Handbuch der eBook-Veröffentlichung - mit einem Untertitel"
+        placeholder: "z.B. Handbook of eBook Publishing"
       author: &author_translator
         label: "Autor"
         pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
@@ -1101,8 +1106,6 @@ forms:
         placeholder: "z.B. Technischer Report: Arbeitgeberbefragung Projekt B3"
       alternative_title: *alternative_title
       author: *author_translator
-      editor: *editor_only
-      corporate_editor: *corporate_editor
       department: *department
       project: *project
       research_group: *research_group
@@ -1125,7 +1128,6 @@ forms:
       keyword: *keyword
       external_id: *external_id
       message: *message
-      popular_science_quality_controlled: *popular_science_quality_controlled
       jel: *jel
       thematic_area: *thematic_area
       alternative_id: *alternative_id
@@ -1260,7 +1262,7 @@ forms:
       title:
         label: "Titel (Übersetzung)"
         label_short: "Titel (Übers.)"
-        placeholder: "z.B. Die Folgen des eBook Veröffentlichens"
+        placeholder: "z.B. Handbuch des eBook Veröffentlichens"
       alternative_title:
         label: "Titel (Original)"
         label_short: "Titel (Orig)"
@@ -1428,7 +1430,7 @@ forms:
   biDissertation: &bidissertation
     label: "Bielefelder E-Dissertation"
     tab: *tab
-    field:
+    field: &field
       bi_doctype:
         label: "Documenttyp"
       email: &email
@@ -1494,14 +1496,17 @@ forms:
   biMasterThesis: &bimasterthesis
     label: "Bielefelder Masterarbeit"
     tab: *tab
+    field: *field
   bimasterthesis: *bimasterthesis
   biPostdocThesis: &bipostdocthesis
     label: "Bielefelder E-Habilitation"
     tab: *tab
+    field: *field
   bipostdocthesis: *bipostdocthesis
   biBachelorThesis: &bibachelorthesis
     label: "Bielefelder Bachelorarbeit"
     tab: *tab
+    field: *field
   bibachelorthesis: *bibachelorthesis
   to_sp_form: "Zum Gesamtformular wechseln"
   sp_form: "Gesamtformular"

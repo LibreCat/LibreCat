@@ -46,11 +46,11 @@
 
     <div class="row margin-top2">
       <div class="col-md-12">
-	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.publications %]</span> <a href="/publication[% lang ? "?lang=$lang" : "" %]">[% lf.home.stats.publications %]</a></p>
-	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.pubpeople %]</span> <a href="/person[% lang ? "?lang=$lang" : "" %]">[% lf.home.stats.authors %]</a></p>
-	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researchdata %]</span> <a href="/data[% lang ? "?lang=$lang" : "" %]">[% lf.home.stats.data_publications %]</a></p>
-	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.oahits %]</span> <a href="/publication?q=fulltext=1[% lang ? "&lang=$lang" : "" %]">[% lf.home.stats.oa_publications %]</a></p>
-	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.theseshits %]</span> <a href="/publication?q=type=bi*[% lang ? "&lang=$lang" : "" %]">[% lf.home.stats.theses %]</a></p>
+	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.publications %]</span> <a href="/publication">[% lf.home.stats.publications %]</a></p>
+	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.pubpeople %]</span> <a href="/person">[% lf.home.stats.authors %]</a></p>
+	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researchdata %]</span> <a href="/data">[% lf.home.stats.data_publications %]</a></p>
+	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.oahits %]</span> <a href="/publication?q=fulltext=1">[% lf.home.stats.oa_publications %]</a></p>
+	    <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.theseshits %]</span> <a href="/publication?q=type=bi*">[% lf.home.stats.theses %]</a></p>
       </div>
     </div>
   

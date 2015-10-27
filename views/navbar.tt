@@ -33,7 +33,8 @@
 	    <!-- <li><a href="/librecat/admin/import"><span class="glyphicon glyphicon-import"></span>[% lf.header.admin_menu.import %]</a></li> -->
 	    <li><a href="/librecat/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_projects %]</a></li>
 	    <li><a href="/librecat/admin/research_group"><span class="fa fa-group fw"></span>[% lf.header.admin_menu.manage_research_groups %]</a></li>
-	    <li><a href="/librecat/admin/department"><span class="glyphicon glyphicon-home"></span>[% lf.header.admin_menu.manage_department %]</a></li>
+<!--	    <li><a href="/librecat/admin/department"><span class="glyphicon glyphicon-home"></span>[% lf.header.admin_menu.manage_department %]</a></li>
+-->
 	    <!-- <li><a href="/librecat/admin/journal"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_journals %]</a></li> -->
 	    <li><a href="/librecat/admin/award"><span class="glyphicon glyphicon-star"></span>[% lf.header.admin_menu.manage_awards %]</a></li>
 	  </ul>

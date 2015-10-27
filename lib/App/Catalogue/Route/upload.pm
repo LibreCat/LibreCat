@@ -202,6 +202,7 @@ prefix '/librecat' => sub {
     			email => params->{email},
     			publisher => "Universität Bielefeld",
     			place => "Bielefeld",
+    			ddc => [params->{ddc}],
     			department => [{name => "Universitätsbibliothek", _id => "10085", tree => [{name => "Universitätsbibliothek", id => "10085"}]}],
     			author => [{
     				first_name => params->{'author.first_name'},
@@ -209,17 +210,11 @@ prefix '/librecat' => sub {
     				full_name => params->{'author.last_name'} . ", " . params->{'author.first_name'},
     			}],
     			year => substr(params->{'defense_date'}, 0, 4),
-    			supervisor => [{
-    				first_name => params->{'supervisor.first_name'},
-    				last_name => params->{'supervisor.last_name'},
-    				full_name => params->{'supervisor.last_name'} . ", " . params->{'supervisor.first_name'},
-    			}],
     			abstract => [{
     				lang => "eng",
     				text => params->{'abstract'},
     			}],
     			cc_license => params->{'cc_license'},
-    			defense_date => params->{'defense_date'},
     		};
     		push @{$record->{file}}, to_json({
     			file_name => $file_name,

@@ -13,6 +13,7 @@ csl:
   default_style: 'default'
   styles:
     - ama
+    - angewandte-chemie
     - apa
     - apa_indent
     - aps
