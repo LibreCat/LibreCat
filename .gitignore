@@ -32,12 +32,5 @@ vendor/
 tmp/
 catmandu.local.yml
 ~$
-<<<<<<< HEAD
-public/javascripts/commonmark.js
-public/javascripts/MathJax
 local
 cpanfile.snapshot
-=======
-local
-cpanfile.snapshot
->>>>>>> master
