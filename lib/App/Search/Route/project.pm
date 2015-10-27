@@ -28,12 +28,13 @@ get qr{/project/(P\d+)/*} => sub {
 get qr{/project/*} => sub {
 	if(params->{ttyp} and params->{ttyp} eq "hist_proj"){
 		my $hits;
+		my $limit = params->{limit} ||= h->config->{store}->{default_searchpage_size};
 		my $p = {
-			limit => params->{limit} ||= h->config->{store}->{default_searchpage_size},
+			limit => $limit,
 			start => params->{start} ||= 0,
 		};
 		
-		$p->{q};
+		#$p->{q};
 		if(params->{q}){
 			$p->{q} = params->{q};
 		}
@@ -87,6 +88,7 @@ get qr{/project/*} => sub {
 		$hits = h->search_project($p);
 		
 		$hits->{bag} = 'project';
+		$hits->{limit} = $limit;
 		template "hist_proj/bup_liste_hist_proj.tt", $hits;
 	}
 	else{
