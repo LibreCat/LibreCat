@@ -392,6 +392,8 @@ forms:
         upload_date: "Upload Date:"
         user: "User:"
         relation: "Relation:"
+        copy_link: "Copy file URL"
+        copy_link_popup: "Copy file URL to clipboard: Ctrl+C, Enter"
         access:
           closed: "Author/Reviewer"
           until: "until"
@@ -1210,6 +1212,8 @@ forms:
         upload_date: "Upload Date:"
         user: "User:"
         relation: "Relation:"
+        copy_link: "Copy file URL"
+        copy_link_popup: "Copy file URL to clipboard: Ctrl+C, Enter"
         access:
           closed: "Author/Reviewer"
           until: "until"

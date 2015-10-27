@@ -393,6 +393,8 @@ forms:
         upload_date: "Upload Datum:"
         user: "Nutzer:"
         relation: "Relation:"
+        copy_link: "URL der Datei kopieren"
+        copy_link_popup: "Datei-URL in Zwischenablage kopieren:<br />Strg+C, Eingabe"
         access:
           closed: "Autor/Reviewer"
           until: "bis"
@@ -1211,6 +1213,8 @@ forms:
         upload_date: "Upload Datum:"
         user: "Nutzer:"
         relation: "Relation:"
+        copy_link: "URL der Datei kopieren"
+        copy_link_popup: "Datei-URL in Zwischenablage kopieren: Strg+C, Eingabe"
         access:
           closed: "Autor/Reviewer"
           until: "bis"
