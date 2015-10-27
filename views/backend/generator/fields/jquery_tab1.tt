@@ -166,7 +166,7 @@ $('.change_tab').click(function(e){
       }
     }
 
-    if($('#ddc').length){
+    if($('#ddc').length && $('#ddc').find('select').hasClass('required')){
       if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#select_ddc_0').val() || $('#select_ddc_0').val() == "")){
         $('#select_ddc_0').addClass('has-error');
         $('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");

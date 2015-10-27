@@ -103,7 +103,7 @@ $(document).ready(function(){
 	                $("#licenses").find('div.alert-info.mandatory').addClass('alert-danger');
 	                $("#licenses").find('div.alert-info.mandatory').removeClass('alert-info');
 	                $("#licenses").find('input[name="accept"]').attr('checked', false);
-	                $('#licenses').find('#select_ddc_0').addClass('mandatory');
+	                $('#licenses').find('#select_ddc_0').addClass('required');
 	                $('#licenses').find('#select_ddc_0').closest('div.input-group').addClass('mandatory');
 	                $('#licenses').find('#select_ddc_0').addClass('has-error');
 	                $('#licenses').find('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
