@@ -58,3 +58,4 @@ requires 'Log::Any::Adapter::Log4perl';
 requires 'Getopt::Long';
 requires 'Net::LDAP';
 requires 'Net::LDAPS';
+requires 'Email::Sender::Simple';
