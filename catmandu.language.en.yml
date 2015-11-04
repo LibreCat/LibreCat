@@ -1259,6 +1259,7 @@ forms:
       ddc: *ddc
       related_material.rd:
         label: "Related Material"
+      related_material.link: *related_material_link
   researchdata: *researchdata
   translation:
     label: "Translation"
