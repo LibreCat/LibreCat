@@ -66,7 +66,7 @@
     <div class="col-md-2 text-muted">[% lf.forms.$type.field.department.label %]</div>
     <div class="col-md-10">
   [% ELSE %]<br />[% END %]
-  <a href="/[% bag %]?q=department=[% dep._id %]">[% dep.name %]</a>
+  <a href="/[% bag %]?q=department=[% dep._id %]">[% h.get_department(dep._id).display %]</a>
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 

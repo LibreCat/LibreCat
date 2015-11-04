@@ -11,7 +11,8 @@ clean_abstract()
 #language()
 maybe_add_urn()
 person()
-add_department()
+#add_department()
+department_tree()
 
 copy_field(bi_doctype,type)
 

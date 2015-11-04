@@ -76,14 +76,7 @@
     <div class="col-md-2 text-muted">Departments</div>
     <div class="col-md-10">
     [% FOREACH dept IN entry.department %]
-      [% department = h.get_department(dept._id) %]
-      [% IF department.tree.2 %]
-        [% department.tree.2.name %] /
-      [% END %]
-      [% IF department.tree.1 %]
-        [% department.tree.1.name %] /
-      [% END %]
-      [% dept.name %]<br>
+      [% h.get_department(dept._id).display %]<br>
     [% END %]
     </div>
   </div>
