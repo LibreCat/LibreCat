@@ -38,13 +38,15 @@ source ~/.profile
 
 cd LibreCat
 
+# Need cpanm, carton
 carton install
 
-perl bin/generate_forms.pl
+carton exec perl bin/generate_forms.pl
 
-echo '{"_id": "1", "latest" : "0"}' | catmandu import YAML
-catmandu import YAML to search --bag researcher <devel/researcher.yml
-catmandu import YAML to search --bag publication <devel/publications.yml
+carton exec catmandu import YAML to --bag researcher < devel/researcher.yml
+carton exec catmandu import YAML to --bag publication < devel/publications.yml
+carton exec catmandu import YAML to search --bag researcher < devel/researcher.yml
+carton exec catmandu import YAML to search --bag publication < devel/publications.yml
 
 cp catmandu.local.yml-example catmandu.local.yml
 
