@@ -7,8 +7,8 @@ thesis:
     urn_prefix: 'urn:thesis-'
 
 authentication:
-  package: Authentication::LDAP
-  param:
+  package: LibreCat::Auth::LDAP
+  options:
     host: 'ldaps://ldaps.ugent.be'
     base: 'ugentID=870910100341,ou=applications,dc=ugent,dc=be'
     password: '*************************'
