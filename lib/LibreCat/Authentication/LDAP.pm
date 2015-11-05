@@ -63,9 +63,9 @@ sub _authenticate {
 
     return 0 unless $bind;
 
-    $self->log->debug("...code " . $bind->code);
+    $self->log->debug("...code " . $bind->code . ": error: " . $bind->error);
 
-	$self->log->debug("unbind");
+    $self->log->debug("unbind");
     $self->ldap->unbind;
 
     $bind->code == Net::LDAP::LDAP_SUCCESS ? 1 : 0;

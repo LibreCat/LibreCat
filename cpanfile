@@ -25,13 +25,12 @@ requires 'Dancer::Plugin::Email';
 requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Plugin::Passphrase';
 requires 'Dancer::Session::Catmandu';
+requires 'Dancer::Test';
 requires 'Template';
 requires 'Template::Plugin::Date';
 requires 'Template::Plugin::JSON';
 requires 'Furl';
 requires 'HTML::Entities';
-requires 'Net::LDAP';
-requires 'Net::LDAPS';
 
 #Plack
 requires 'Plack';
@@ -51,8 +50,12 @@ requires 'Try::Tiny';
 requires 'Crypt::Digest::MD5';
 requires 'XML::RSS';
 requires 'YAML::XS';
+requires 'YAML';
 requires 'JSON::MaybeXS';
 requires 'Log::Log4perl';
 requires 'Log::Any::Adapter';
 requires 'Log::Any::Adapter::Log4perl';
 requires 'Getopt::Long';
+requires 'Net::LDAP';
+requires 'Net::LDAPS';
+requires 'Email::Sender::Simple';

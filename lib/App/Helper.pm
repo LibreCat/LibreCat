@@ -1,5 +1,6 @@
 package App::Helper::Helpers;
 
+use FindBin;
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
 use Catmandu::Util qw(:io :is :array :human trim);
@@ -11,10 +12,14 @@ use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
 use Moo;
 
-Catmandu->load(':up');
-
 sub config {
-    state $config = merge(Catmandu->config, Dancer::config);
+    state $config;
+    # Required to load Catmandu at run time to for the Dancer::Test framework
+    unless ($config) {
+        Catmandu->load("$FindBin::Bin/..");
+        $config = merge(Catmandu->config, Dancer::config);
+    }
+    $config;
 }
 
 sub bag {
@@ -206,7 +211,7 @@ sub get_sort_style {
     $return->{default_sort} = $self->config->{default_sort};
     $return->{default_sort_backend} = $self->config->{default_sort_backend};
 
-    $return->{style} = $style;
+    $return->{style} = $style // "";
 
     Catmandu::Fix->new(fixes => ["vacuum()"])->fix($return);
 
