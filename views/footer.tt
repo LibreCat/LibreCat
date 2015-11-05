@@ -37,7 +37,7 @@
   </div>
 </footer>
 
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/commonmark/0.22.0/commonmark.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/commonmark/0.22.0/commonmark.min.js"></script>
 <script>
 var reader = new commonmark.Parser();
 var writer = new commonmark.HtmlRenderer();
