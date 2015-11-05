@@ -1,8 +1,8 @@
-package LibreCat::Authentication;
+package LibreCat::Auth;
 
-use namespace::clean;
 use Catmandu::Sane;
 use Moo::Role;
+use namespace::clean;
 
 with 'Catmandu::Logger';
 
@@ -34,18 +34,18 @@ __END__
 
 =head1 NAME
 
-LibreCat::Authentication - LibreCat authentication role
+LibreCat::Auth - LibreCat authentication role
 
 =head1 SYNOPSIS
 
-    package MyAuthentication;
+    package MyAuth;
 
     use Moo;
 
-    with 'LibreCat::Authentication';
+    with 'LibreCat::Auth';
 
     sub authenticate {
-        my ($self,$params) = @_;
+        my ($self, $params) = @_;
         $params->{password} eq 'secret';
     }
 
@@ -76,8 +76,8 @@ Returns 1 on success, 0 on failure.
 
 =head1 SEE ALSO
 
-L<LibreCat::Authentication::Simple>,
-L<LibreCat::Authentication::Multi>,
-L<LibreCat::Authentication::LDAP>
+L<LibreCat::Auth::Simple>,
+L<LibreCat::Auth::Multi>,
+L<LibreCat::Auth::LDAP>
 
 =cut

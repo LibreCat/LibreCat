@@ -1,11 +1,12 @@
-package LibreCat::Authentication::LDAP;
+package LibreCat::Auth::LDAP;
 
 use Catmandu::Sane;
 use Net::LDAP;
 use Moo;
 use Carp;
+use namespace::clean;
 
-with 'LibreCat::Authentication';
+with 'LibreCat::Auth';
 
 has host          => (is => 'ro', required => 1);
 has base          => (is => 'ro');
@@ -108,13 +109,13 @@ __END__
 
 =head1 NAME
 
-LibreCat::Authentication::LDAP - A LibreCat LDAP authentication package
+LibreCat::Auth::LDAP - A LibreCat LDAP authentication package
 
 =head1 SYNOPSIS
 
-    use LibreCat::Authentication::LDAP;
+    use LibreCat::Auth::LDAP;
 
-    my $auth = LibreCat::Authentication::LDAP->new(
+    my $auth = LibreCat::Auth::LDAP->new(
         host => 'ldaps://ldaps.ugent.be'
         auth_base => 'ugentID=%s,ou=people,dc=UGent,dc=be'
     );
@@ -170,6 +171,6 @@ to the 'ugentID' of the user.
 
 =head1 SEE ALSO
 
-L<LibreCat::Authentication>
+L<LibreCat::Auth>
 
 =cut

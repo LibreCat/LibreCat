@@ -1,22 +1,23 @@
-package LibreCat::Authentication::Multi;
+package LibreCat::Auth::Multi;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(is_instance require_package);
 use Moo;
+use namespace::clean;
 
-with 'LibreCat::Authentication';
+with 'LibreCat::Auth';
 
 has methods => (
     is => 'ro',
     required => 1,
 );
 
-has _instances => (
+has _auths => (
     is => 'lazy',
-    builder => '_build_instances',
+    builder => '_build_auths',
 );
 
-sub _build_instances {
+sub _build_auths {
     my ($self) = @_;
     [map {
         is_instance($_)
@@ -27,8 +28,8 @@ sub _build_instances {
 
 sub _authenticate {
     my ($self, $params) = @_;
-    for (@{$self->_instances}) {
-        $_->authenticate($params) && return 1;
+    for my $auth (@{$self->_auths}) {
+        $auth->authenticate($params) && return 1;
     }
     0;
 }
@@ -41,23 +42,23 @@ __END__
 
 =head1 NAME
 
-LibreCat::Authentication::Multi - A LibreCat authentication package that
+LibreCat::Auth::Multi - A LibreCat authentication package that
 tries multiple authentication methods.
 
 =head1 SYNOPSIS
 
-    use LibreCat::Authentication::Multi;
+    use LibreCat::Auth::Multi;
 
-    my $auth = Authentication::Multi->new(
+    my $auth = Auth::Multi->new(
         methods => [
             {
-                package => 'LibreCat::Authentication::Simple',
+                package => 'LibreCat::Auth::Simple',
                 options => {
                     users => { demo => {password => 'demo'} },
                 },
             },
             {
-                package => 'LibreCat::Authentication::LDAP',
+                package => 'LibreCat::Auth::LDAP',
                 options => {
                     # ...
                 },
@@ -81,6 +82,6 @@ See synopsis.
 
 =head1 SEE ALSO
 
-L<LibreCat::Authentication>
+L<LibreCat::Auth>
 
 =cut
