@@ -38,7 +38,7 @@
     <dt><a href="/person/[% person._id %]">[% person.full_name %][% IF person.bis_personTitle %], [% person.bis_personTitle %][% END %] ([% person.publication_hits %] [% lf.tabs.publications %][% IF person.research_hits %], [% person.research_hits %] [% lf.tabs.data_publications %][% END %])</a></dt>
     <dd>
       [% FOREACH affil IN person.department %]
-	<span class="text-muted">[% affil.name %]</span>[% IF !loop.last %], [% END %]
+	<span class="text-muted">[% h.get_department(affil._id).display %]</span>[% IF !loop.last %],<br />[% END %]
       [% END %]
     </dd>
     [% END %]

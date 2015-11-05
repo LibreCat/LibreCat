@@ -1122,8 +1122,7 @@ search:
               _id: {type: string, analyzer: tag}
               tree:
                 properties:
-                  name: {type: string, index: no}
-                  id: {type: string, analyzer: tag}
+                  _id: {type: string, analyzer: tag}
           proj: {type: byte}
           metrics:
             properties:
@@ -1212,11 +1211,9 @@ search:
           department:
             properties:
               _id: {type: string, analyzer: tag}
-              name: {type: string, include_in_all: true}
           reviewer:
             properties:
               _id: {type: string, analyzer: tag}
-              name: {type: string}
           access:
             properties:
               id: {type: string, anylzer: tag}
@@ -1264,8 +1261,7 @@ search:
               exact:  {type: string, analyzer: tag}
           tree:
             properties:
-              name: {type: string}
-              id: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
           layer: {type: string, analyzer: tag}
           display:
             type: multi_field

@@ -6,7 +6,6 @@
   [% IF !department %]
     <div class="row innerrow">
       <input type="hidden" name="department.0._id" id="aff_idautocomplete_0" />
-      <input type="hidden" name="department.0.name" id="aff_nameautocomplete_0" />
       
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky">
@@ -22,7 +21,6 @@
   [% FOREACH dept IN department %]
     <div class="row innerrow">
       <input type="hidden" name="department.[% loop.index %]._id" id="aff_idautocomplete_[% loop.index %]" value="[% dept._id %]" />
-      <input type="hidden" name="department.[% loop.index %].name" id="aff_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
       
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky">

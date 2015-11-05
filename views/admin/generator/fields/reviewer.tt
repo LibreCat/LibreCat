@@ -6,7 +6,6 @@
   [% IF !reviewer %]
     <div class="row innerrow">
       <input type="hidden" name="reviewer.0._id" id="rv_idautocomplete_0" />
-      <input type="hidden" name="reviewer.0.name" id="rv_nameautocomplete_0" />
       
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky">
@@ -22,7 +21,6 @@
   [% FOREACH dept IN reviewer %]
     <div class="row innerrow">
       <input type="hidden" name="reviewer.[% loop.index %]._id" id="rv_idautocomplete_[% loop.index %]" value="[% dept._id %]" />
-      <input type="hidden" name="reviewer.[% loop.index %].name" id="rv_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
       
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky">
