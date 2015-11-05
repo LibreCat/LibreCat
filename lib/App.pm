@@ -26,7 +26,15 @@ $Template::Stash::PRIVATE = 0;
 
 # custom authenticate routine
 sub _authenticate {
-    my ( $login, $pass ) = @_;
+    my ($login, $pass) = @_;
+    
+    state $auth = do {
+        my $pkg = Catmandu::Util::require_package(
+            h->config->{authentication}->{package}
+        );
+        my $param = h->config->{authentication}->{options} // {};
+        $pkg->new($param);
+    };
 
     if (Dancer::config->{environment} eq 'development' && $login eq 'einstein') {
         return {login => 'einstein', _id => 1234, super_admin => 1};
@@ -36,13 +44,10 @@ sub _authenticate {
     return 0 unless $user;
 
     if (!$user->{account_type} or ($user->{account_type} and $user->{account_type} ne 'external')) {
-        my $pkg   = Catmandu::Util::require_package( 
-                            h->config->{authentication}->{package} // 'Authentication::LDAP' 
-                    );
-        my $param = h->config->{authentication}->{param} // {};
-        my $auth  = $pkg->new(%$param);
-
-        my $verify = $auth->authenticate( params->{user}, params->{pass} );
+        my $verify = $auth->authenticate({
+            username => params->{user},
+            password => params->{pass},
+        });
 
         return $user if $verify == 1;
     } 
