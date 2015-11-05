@@ -36,7 +36,7 @@
           <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' || bag == 'policy' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lf.tabs.about %] <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li[% IF bag == 'about' %] class="active"[% END %]><a href="/about">[% lf.tabs.about %]</a></li>
-              <li><a href="[% h.host %]/doc/api">[% lf.tabs.documentation %]</a></li>
+              <li><a href="/doc/api">[% lf.tabs.documentation %]</a></li>
               <li[% IF bag == 'contact' %] class="active"[% END %]><a href="/contact">[% lf.tabs.contact %]</a></li>
               <li[% IF bag == 'policy' %] class="active"[% END %]><a href="/policy">[% lf.tabs.policy %]</a></li>
             </ul>

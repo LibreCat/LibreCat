@@ -446,7 +446,7 @@
           [% IF localUser && !external_id.opac %]
             [% SWITCH type %]
             [% CASE ['book', 'bookChapter', 'dissertation', 'bookEditor', 'workingPaper', 'conferenceAbstract', 'conferenceEditor', 'journalArticle' ] %]
-              <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% IF type == 'bookChapter' %][% publication %][% ELSE %][% title | uri %][% END %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=[% IF type == 'journalArticle' OR type == 'conferenceAbstract' %]ext[% ELSE %]lok[% END %]&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="[% h.host %]/images/icon_ub.png" alt="" class="img-thumbnail">[% lf.frontdoor.catalogue %]</a>
+              <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% IF type == 'bookChapter' %][% publication %][% ELSE %][% title | uri %][% END %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=[% IF type == 'journalArticle' OR type == 'conferenceAbstract' %]ext[% ELSE %]lok[% END %]&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="/images/icon_ub.png" alt="" class="img-thumbnail">[% lf.frontdoor.catalogue %]</a>
             [% END %]
           [% END %]
         </p>

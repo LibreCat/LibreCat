@@ -362,7 +362,7 @@
       </div>
       <div id="Diss" class="panel-collapse collapse">
         <div class="panel-body">
-          <p>The sub-collection <a href="[% h.host %]/en/pubtheses">PUB Theses</a> is the platform for the electronic publication of Bielefeld doctoral and postdoctoral theses.
+          <p>The sub-collection <a href="/en/pubtheses">PUB Theses</a> is the platform for the electronic publication of Bielefeld doctoral and postdoctoral theses.
 		On the supervisor's recommendation outstandingly excellent bachelor's and master's theses may be published as well.<br /> The authors themselves upload their work, including the description,
 		 we permanently archive them and ensure the global presence in search engines and databases.</p>
         </div>
@@ -402,7 +402,7 @@
 
     <div class="panel panel-default">
       <div class="panel-heading" data-parent="#accordion_faq">
-        <a href="[% h.host %]/en/policy" class="accordion-toggle">
+        <a href="/en/policy" class="accordion-toggle">
           <span class="fa fa-chevron-right"></span> Guidelines for PUB
         </a>
       </div>
@@ -779,7 +779,7 @@
       </div>
       <div id="Diss" class="panel-collapse collapse">
         <div class="panel-body">
-          <p>Die Untercollection <a href="[% h.host %]/pubtheses">PUB Theses</a> ist die Plattform f&uuml;r die elektronische Ver&ouml;ffentlichung
+          <p>Die Untercollection <a href="/pubtheses">PUB Theses</a> ist die Plattform f&uuml;r die elektronische Ver&ouml;ffentlichung
 	      von Bielefelder Dissertationen und Habilitationen. Auf Empfehlung der Pr&uuml;fer k&ouml;nnen auch besonders gute Bachelor- und Masterarbeiten ver&ouml;ffentlicht werden.
 	      Die Autorinnen und Autoren laden ihre Arbeiten inklusive der Beschreibungsdaten selbst&auml;ndig hoch, wir archivieren sie dauerhaft und sorgen f&uuml;r den weltweiten Nachweis
 	      in Suchmaschinen und Datenbanken. </p>
@@ -821,7 +821,7 @@
 
     <div class="panel panel-default margin-top2">
       <div class="panel-heading" data-parent="#accordion_faq">
-        <a href="[% h.host %]/policy" class="accordion-toggle">
+        <a href="/policy" class="accordion-toggle">
           <span class="fa fa-chevron-right"></span> Leitlinien für PUB
         </a>
       </div>

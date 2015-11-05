@@ -23,11 +23,11 @@
 <!--
     [% IF bag == "data" %]
   	[% IF entry.externalFiles == "1" %]
-	  | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
+	  | <a href="/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
 	[% ELSE %]
 	  [% FOREACH file IN entry.file %]
 	    [% IF file.open_access == 1 %]
-	      | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
+	      | <a href="/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
 	      [% LAST %]
 	    [% END %]
 	  [% END %]
