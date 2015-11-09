@@ -20,15 +20,20 @@ use App::Helper;
 use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::Passphrase;
 
+use LibreCat::User;
+
 # make variables with leading '_' visible in TT,
 # otherwise they are considered private
 $Template::Stash::PRIVATE = 0;
 
 # custom authenticate routine
+# TODO password crypt
 sub _authenticate {
-    my ($login, $pass) = @_;
+    my ($username, $password) = @_;
     
-    state $auth = do {
+    state $USER = LibreCat::User->new(Catmandu->config->{user});
+
+    state $AUTH = do {
         my $pkg = Catmandu::Util::require_package(
             h->config->{authentication}->{package}
         );
@@ -36,27 +41,42 @@ sub _authenticate {
         $pkg->new($param);
     };
 
-    if (Dancer::config->{environment} eq 'development' && $login eq 'einstein') {
-        return {login => 'einstein', _id => 1234, super_admin => 1};
-    }
-
-    my $user = h->get_person( $login );
-    return 0 unless $user;
-
-    if (!$user->{account_type} or ($user->{account_type} and $user->{account_type} ne 'external')) {
-        my $verify = $auth->authenticate({
-            username => params->{user},
-            password => params->{pass},
-        });
-
-        return $user if $verify == 1;
-    } 
-    elsif ( passphrase(params->{pass})->matches($user->{password}) ) {
-        return $user;
-    }
-
-    return 0;
+    my $user = $USER->find_by_username($username) || return;
+    $AUTH->authenticate({username => $username, password => $password}) || return;
+    $user;
 }
+#sub _authenticate {
+    #my ($login, $pass) = @_;
+    
+    #state $auth = do {
+        #my $pkg = Catmandu::Util::require_package(
+            #h->config->{authentication}->{package}
+        #);
+        #my $param = h->config->{authentication}->{options} // {};
+        #$pkg->new($param);
+    #};
+
+    #if (Dancer::config->{environment} eq 'development' && $login eq 'einstein') {
+        #return {login => 'einstein', _id => 1234, super_admin => 1};
+    #}
+
+    #my $user = h->get_person( $login );
+    #return 0 unless $user;
+
+    #if (!$user->{account_type} or ($user->{account_type} and $user->{account_type} ne 'external')) {
+        #my $verify = $auth->authenticate({
+            #username => params->{user},
+            #password => params->{pass},
+        #});
+
+        #return $user if $verify == 1;
+    #} 
+    #elsif ( passphrase(params->{pass})->matches($user->{password}) ) {
+        #return $user;
+    #}
+
+    #return 0;
+#}
 
 =head2 GET /login
 
