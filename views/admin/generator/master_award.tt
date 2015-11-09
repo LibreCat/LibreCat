@@ -52,12 +52,12 @@
       </div>
     </form>
 
-    <div class="modal" id="linkPevzModal">
+    <div class="modal" id="link_person_modal">
     <div class="modal-dialog">
       <div class="modal-content">
 	<div class="modal-header">
 	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	  <h4 class="modal-title">Several PEVZ Accounts found... make a choice</h4>
+	  <h4 class="modal-title">Several Accounts found... make a choice</h4>
 	</div>
 	<div class="modal-body">
 	</div>

@@ -141,7 +141,7 @@ publicationTypes:
         author: &author_translator
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         edition: &edition
           mandatory: 0
           multiple: 0
@@ -234,7 +234,7 @@ publicationTypes:
         editor_solo: &editor_solo
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         corporate_editor_solo: &corporate_editor_solo
           mandatory: 0
           multiple: 1
@@ -273,7 +273,7 @@ publicationTypes:
         editor: &editor_only
           mandatory: 0
           multiple: 1
-          pevz: 0
+          idm: 0
         corporate_editor: &corporate_editor
           mandatory: 0
           multiple: 1
@@ -325,7 +325,7 @@ publicationTypes:
         editor:
           mandatory: 0
           multiple: 1
-          pevz: 0
+          idm: 0
         corporate_editor: *corporate_editor
         department: *department
         project: *project
@@ -409,7 +409,7 @@ publicationTypes:
         editor:
           mandatory: 0
           multiple: 1
-          pevz: 0
+          idm: 0
         corporate_editor: *corporate_editor
         place: *place
         publisher: *publisher
@@ -448,11 +448,11 @@ publicationTypes:
         author:
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         supervisor:
           mandatory: 0
           multiple: 1
-          pevz: 1
+          idm: 1
         year_extern: *year_extern
         alternative_title: *alternative_title
         department: *department
@@ -630,7 +630,7 @@ publicationTypes:
         author:
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         applicant:
           mandatory: 0
         department: *department
@@ -756,7 +756,7 @@ publicationTypes:
         author:
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         department: *department
         project: *project
         research_group: *research_group
@@ -804,10 +804,10 @@ publicationTypes:
         translator:
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         author_secondary:
           multiple: 1
-          pevz: 0
+          idm: 0
         department: *department
         project: *project
         research_group: *research_group
@@ -850,10 +850,10 @@ publicationTypes:
         translator:
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         author_secondary:
           multiple: 1
-          pevz: 0
+          idm: 0
         department: *department
         project: *project
         research_group: *research_group
@@ -923,7 +923,7 @@ publicationTypes:
         author: &author
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         email: &email
           mandatory: 1
         department: &department_diss
@@ -932,7 +932,7 @@ publicationTypes:
         supervisor: &supervisor
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         title: *title
         language: &language_diss
           default: "eng"
@@ -1221,7 +1221,7 @@ otherItems:
       - name
       - tree
     id:
-      label: "ID (or replace with PEVZ-ID)"
+      label: "ID (or replace with Person-ID)"
       mandatory: 1
     name:
       label: "Name"
@@ -1262,7 +1262,7 @@ otherItems:
         mandatory: 1
       title:
         label: "Title"
-      pevz: 1
+      idm: 1
     title:
       label: "Title"
       mandatory: 1
