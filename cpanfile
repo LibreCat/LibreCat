@@ -24,7 +24,6 @@ requires 'Dancer::Plugin::Catmandu::OAI';
 requires 'Dancer::Plugin::Catmandu::SRU';
 requires 'Dancer::Plugin::Email';
 requires 'Dancer::Plugin::Auth::Tiny';
-requires 'Dancer::Plugin::Passphrase';
 requires 'Dancer::Session::Catmandu';
 requires 'Dancer::Test';
 requires 'Template';
@@ -45,6 +44,7 @@ requires 'Starman';
 
 # others
 requires 'all';
+requires 'App::bmkpasswd', '2.010001';
 requires 'DateTime';
 requires 'Hash::Merge';
 requires 'Try::Tiny';
