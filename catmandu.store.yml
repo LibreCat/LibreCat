@@ -1228,7 +1228,7 @@ search:
           account_type: {type: string}
           ext_institution: {type: string}
           password: {type: string}
-          sfb882_profile: {type: byte}
+          other_profile: {type: byte}
 #          email: {type: string, analyzer: tag}
 #          sort: {type: string}
           orcid: {type: string, analyzer: tag}

@@ -17,11 +17,11 @@
 	<div class="col-md-6"><a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% thisPerson._id %]&amp;lang=en">[% thisPerson._id %]</a></div>
       </div>
     </div>
-    [% IF thisPerson.sfb882_profile %]
+    [% IF thisPerson.other_profile %]
     <div class="col-md-12 row">
       <div class="row">
-	<div class="col-md-4">[% lf.person_profile.sfb_profile %]</div>
-	<div class="col-md-6"><a href="http://www.sfb882.uni-bielefeld.de/en/staff/[% thisPerson._id %]">[% thisPerson._id %]</a></div>
+	<div class="col-md-4">[% lf.person_profile.other_profile %]</div>
+	<div class="col-md-6"><a href="[% lf.person_profile.other_profile_url %][% thisPerson._id %]">[% lf.person_profile.other_profile_url %][% thisPerson._id %]</a></div>
       </div>
     </div>
     [% END %]

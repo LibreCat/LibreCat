@@ -127,7 +127,8 @@ person_profile:
   view: "View "
   view_in: "View in"
   directory_of_staff: "PEVZ-ID"
-  sfb_profile: "SFB882-GK Profile"
+  other_profile: "SFB882-GK Profile"
+  other_profile_url: "http://www.sfb882.uni-bielefeld.de/en/staff/"
   no_author_ids: "No Author IDs set."
   person_id_title: "These IDs will be visible on your public person page immediately after saving."
 project:
@@ -323,7 +324,7 @@ forms:
         placeholder: "e.g. Handbuch der eBook-Veröffentlichung"
       author: &author_translator
         label: "Author"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Link to / Withdraw from publication list."
         first_name:
           label: "First Name"
           label_short: "Auth. First"
@@ -520,7 +521,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Editor"
         label_short: "Ed."
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Link to / Withdraw from publication list."
       corporate_editor_solo: &corporate_editor_solo
         label: "Corporate Editor"
         label_short: "Copr. Ed."
@@ -574,7 +575,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Book Editor"
         label_short: "Ed."
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Link to / Withdraw from publication list."
       corporate_editor: &corporate_editor
         label: "Corporate Editor"
         label_short: "Corp. Ed."
@@ -649,7 +650,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Editor"
         label_short: "Ed."
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Link to / Withdraw from publication list."
       corporate_editor: *corporate_editor
       department: *department
       project: *project
@@ -1028,7 +1029,7 @@ forms:
           label_short: "Inv. Last"
           placeholder: "e.g. Appleseed"
         label: "Inventor"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Link to / Withdraw from publication list."
       applicant:
         label: "Applicant"
         label_short: "Appl."
@@ -1196,7 +1197,7 @@ forms:
           label_short: "Crea. Last"
           placeholder: "e.g. Appleseed"
         label: "Creator"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Link to / Withdraw from publication list."
       department: *department
       project: *project
       research_group: *research_group
@@ -1284,7 +1285,7 @@ forms:
           label_short: "Trans. Last"
           placeholder: "e.g. Appleseed"
         label: "Translator"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Link to / Withdraw from publication list."
       author_secondary:
         first_name:
           label: "First Name"
@@ -1295,7 +1296,7 @@ forms:
           label_short: "Auth. Last"
           placeholder: "e.g. Appleseed"
         label: "Author (Original)"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Link to / Withdraw from publication list."
       edition: *edition
       department: *department
       project: *project
@@ -1349,7 +1350,7 @@ forms:
           label_short: "Trans. Last"
           placeholder: "e.g. Appleseed"
         label: "Translator"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Link to / Withdraw from publication list."
       author_secondary:
         first_name:
           label: "First Name"
@@ -1360,7 +1361,7 @@ forms:
           label_short: "Auth. Last"
           placeholder: "e.g. Appleseed"
         label: "Author"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Link to / Withdraw from publication list."
       alternative_title:
         label: "Title (Original)"
         label_short: "Title (Orig)"
@@ -1465,7 +1466,7 @@ forms:
           label_short: "Superv. Last"
           placeholder: "e.g. Appleseed"
         label: "Supervisor"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Link to / Withdraw from publication list."
       year:
         label: "Year"
         placeholder: "YYYY"
@@ -1610,8 +1611,8 @@ help:
   change_language: "Change language"
   user_settings: "Change<br>department,<br>edit mode<br>default language."
   role: "Your user role<br>If you are reviewer/delegate you can change your role here to work with publications allocated for that role."
-  pevz_photo: "Your photo. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp?lang=en' target='_blank'>Change it?</a>"
-  pevz_email: "Your Email address from BIS/PEVZ."
+  photo: "Your photo. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp?lang=en' target='_blank'>Change it?</a>"
+  email_encoded: "Your Email address from BIS/PEVZ."
   author_id: "Name, by which your public author page will also be accessible.<br>Add/Edit author IDs (e.g. ORCID)."
   add_new_button: "Create a new record in PUB: Import existing data e.g. via DOI or enter data via a form."
   quick_and_easy: "Got an Open Access fulltext (PDF)? Drop it here and submit the form. A new, non-pubic record will be created. We will complete it for you and make it publicly visible."

@@ -128,7 +128,8 @@ person_profile:
   view: ""
   view_in: "Eintrag im"
   directory_of_staff: "PEVZ-ID"
-  sfb_profile: "SFB882-GK Profil"
+  other_profile: "SFB882-GK Profil"
+  other_profile_url: "http://www.sfb882.uni-bielefeld.de/en/staff/"
   no_author_ids: "Keine Autoren-Ids gesetzt."
   person_id_title: "Diese Ids werden direkt nach dem Speichern auf Ihrer Personenseite sichtbar sein."
 project:
@@ -324,7 +325,7 @@ forms:
         placeholder: "z.B. Handbook of eBook Publishing"
       author: &author_translator
         label: "Autor"
-        pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
         first_name:
           label: "Vorname"
           label_short: "Autor Vorn."
@@ -521,7 +522,7 @@ forms:
           placeholder: "z.B. Müller"
         label: "Herausgeber"
         label_short: "Hrsg."
-        pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
       corporate_editor_solo: &corporate_editor_solo
         label: "Körperschaftlicher Herausgeber"
         label_short: "Körp. Hrsg."
@@ -575,7 +576,7 @@ forms:
           placeholder: "z.B. Müller"
         label: "Herausgeber"
         label_short: "Hrsg."
-        pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
       corporate_editor: &corporate_editor
         label: "Körperschaftlicher Herausgeber"
         label_short: "Körp. Hrsg."
@@ -650,7 +651,7 @@ forms:
           placeholder: "z.B. Müller"
         label: "Herausgeber"
         label_short: "Hrsg."
-        pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
       corporate_editor: *corporate_editor
       department: *department
       project: *project
@@ -1029,7 +1030,7 @@ forms:
           label_short: "Erfinder Nachn."
           placeholder: "z.B. Müller"
         label: "Erfinder"
-        pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
       applicant:
         label: "Antragsteller"
         label_short: "Antr.steller"
@@ -1197,7 +1198,7 @@ forms:
           label_short: "Nachn."
           placeholder: "z.B. Müller"
         label: "Creator"
-        pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
       department: *department
       project: *project
       research_group: *research_group
@@ -1285,7 +1286,7 @@ forms:
           label_short: "Trans. Nachn."
           placeholder: "z.B. Müller"
         label: "Übersetzer"
-        pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
       author_secondary:
         first_name:
           label: "Vorname"
@@ -1296,7 +1297,7 @@ forms:
           label_short: "Autor Nachn."
           placeholder: "z.B. Müller"
         label: "Autor (Original)"
-        pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
       edition: *edition
       department: *department
       project: *project
@@ -1349,7 +1350,7 @@ forms:
           label_short: "Trans. Nachn."
           placeholder: "z.B. Müller"
         label: "Übersetzer"
-        pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
       author_secondary:
         first_name:
           label: "Vorname"
@@ -1360,7 +1361,7 @@ forms:
           label_short: "Autor Nachn."
           placeholder: "z.B. Müller"
         label: "Autor"
-        pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
       alternative_title:
         label: "Titel (Original)"
         label_short: "Titel (Orig)"
@@ -1463,7 +1464,7 @@ forms:
           label_short: "Betr. Nachn."
           placeholder: "z.B. Müller"
         label: "Betreuer"
-        pevz_tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
       year:
         label: "Jahr"
         placeholder: "YYYY"
@@ -1608,8 +1609,8 @@ help:
   change_language: "Sprache wechseln"
   user_settings: "Fakultät,<br>Editiermodus,<br>Standardsprache<br>ändern"
   role: "Ihre Rolle<br>im System<br>Ggf. wechseln und mit Publikationen arbeiten, für die Sie z.B. Reviewer-Rechte haben."
-  pevz_photo: "Ihr Foto. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp' target='_blank'>Ändern?</a>"
-  pevz_email: "Ihre E-Mail-Adresse aus dem BIS/PEVZ."
+  photo: "Ihr Foto. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp' target='_blank'>Ändern?</a>"
+  email_encoded: "Ihre E-Mail-Adresse aus dem BIS/PEVZ."
   author_id: "Name, über den Ihre öffentliche Personenseite zusätzlich erreichbar sein soll.<br>Autoren-IDs<br>(z.B. ORCID)<br>ergänzen / editieren."
   add_new_button: "Neuen Eintrag in PUB anlegen: Bestehende Daten z.B. via DOI importieren oder über Formular selbst eintragen."
   quick_and_easy: "Sie haben einen Open-Access-Volltext (PDF-Datei)? Ziehen Sie in hier her und senden Sie das Formular ab. Wir vervollständigen den Eintrag für Sie und machen ihn öffentlich sichtbar."
