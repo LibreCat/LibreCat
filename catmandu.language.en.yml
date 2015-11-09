@@ -1539,11 +1539,24 @@ forms:
     back: "Back"
     save: "Save"
     cancel: "Cancel"
+    send: "Send Request"
+    close: "Close"
     publish: "Make Public"
     return: "Return"
     delete: "Delete"
     next: "Next"
     select: "Select"
+  general:
+    field:
+      email:
+        label: "E-Mail-Adresse"
+        placeholder: "Ihre E-Mail-Adresse"
+      message:
+        label: "Message"
+        placeholder: "Message"
+      message_author:
+        label: "Message"
+        placeholder: "Message to the author"
   publication_status:
     draft: "Draft"
     submitted: "Submitted"

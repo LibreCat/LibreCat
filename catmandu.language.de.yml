@@ -1471,7 +1471,7 @@ forms:
       defense_date: &defense_date
         label: "Verteidigungsdatum"
         label_short: "Verteid.datum"
-        placeholder: "YYYY-MM-DD"
+        placbuttoneholder: "YYYY-MM-DD"
       department: *department
       place: &place_diss
         label: "Ort<br>(der Veröffentlichung)"
@@ -1536,12 +1536,25 @@ forms:
   button:
     back: "Zurück"
     save: "Speichern"
+    send: "Abschicken"
+    close: "Schließen"
     cancel: "Abbrechen"
     publish: "Public stellen"
     return: "Zurückstellen"
     delete: "Löschen"
     next: "Weiter"
     select: "Auswählen"
+  general:
+    field:
+      email:
+        label: "E-Mail-Adresse"
+        placeholder: "Ihre E-Mail-Adresse"
+      message:
+        label: "Nachricht"
+        placeholder: "Nachricht"
+      message_author:
+        label: "Nachricht"
+        placeholder: "Nachricht an den Autor"
   publication_status:
     draft: "Entwurf"
     submitted: "Eingereicht"
