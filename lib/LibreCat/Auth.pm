@@ -17,7 +17,7 @@ sub _build_obfuscate_params {
 sub authenticate {
     my ($self, $params) = @_;
     if ($self->log->is_debug) {
-        my $p = [%$params];
+        my $p = {%$params};
         for my $k (@{$self->obfuscate_params}) {
             $p->{$k} = '*' x 8 if exists $p->{$k};
         }
@@ -76,8 +76,8 @@ Returns 1 on success, 0 on failure.
 
 =head1 SEE ALSO
 
-L<LibreCat::Auth::Simple>,
 L<LibreCat::Auth::Multi>,
-L<LibreCat::Auth::LDAP>
+L<LibreCat::Auth::LDAP>,
+L<LibreCat::Auth::Bag>
 
 =cut

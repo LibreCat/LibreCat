@@ -35,3 +35,5 @@ catmandu.local.yml
 local
 cpanfile.snapshot
 .perl-version
+log4perl.conf
+
