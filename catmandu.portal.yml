@@ -1,59 +1,6 @@
 _prefix:
   portal:
 
-pubbccpt:
-  q:
-    -
-      param: department
-      op: '='
-      or:
-        - 10017
-        - 10018
-        - 10028
-        - 10036
-        - 89815
-    - 
-      param: publishingyear
-      op: '>='
-      or: 2007
-    - 
-      param: publishingyear
-      op: '<='
-      or: 2011
-    - 
-      param: extern
-      op: '<>'
-      or: 1
-    - 
-      param: publicationstatus
-      op: '<>'
-      or: submitted
-    -
-      param: publicationstatus
-      op: '<>'
-      or: unpublished
-    - 
-      param: documenttype
-      op: '<>'
-      or: 'biDissertation'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biMasterThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biBachelorThesis'
-    -
-      param: documenttype
-      op: '<>'
-      or: 'biPostdocThesis'
-  style: ama
-  lang: en
-  limit: 10
-  ttyp: pubbccpt
-  fmt: html
-
 pubbghs:
   q:
     -
