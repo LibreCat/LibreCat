@@ -84,7 +84,6 @@ a .total-marked{margin-right:5px;}
 .padding-bottom0{padding-bottom:0!important;}
 .padding-bottom1-4{padding-bottom:5px!important;}
 .padding-bottom1-2,.padding-bottom1,.padding-bottom2,.padding-bottom3{padding-bottom:10px!important;}
-.tab-pane.active{padding-top:20px;}
 
 /* no border */
 .noborder{border:0;}
@@ -137,10 +136,6 @@ a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 .text-xtight{line-height:1.25;}
 #details .row{margin-top:6px;}
 #citethis{margin-bottom:21px;}
-#citethis .tab-content{border:1px solid #ddd;border-top:0;border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-top-right-radius:4px;}
-#citethis .tab-pane.active{padding:8px;}
-div.cmark{border:1px solid #ccc;padding:5px!important;}
-#details, #ebi_citations, #confletter, #ebi_dblinks, #ebi_references, #fileDetails, #relMat, #relPubl, #relResData, #toolkit{padding-left:10px;}
 .alert-green {color: #4e4e4e;background-color: #f5f9d7;border-color: #d5dba5;}
 
 .nofile {font-size:24px;color:#666;width:150px;text-align:center;margin:25% auto;cursor:not-allowed;}
@@ -236,6 +231,15 @@ body.embed {padding:0;margin:0;width:100%;}
 .embed .embed-only{display:inline;}
   
 /* special styles for screens */
+/* general */
+@media screen {
+div.cmark{border:1px solid #ccc;padding:5px!important;}
+#citethis .tab-content{border:1px solid #ddd;border-top:0;border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-top-right-radius:4px;}
+#citethis .tab-pane.active{padding:8px;}
+#details, #ebi_citations, #confletter, #ebi_dblinks, #ebi_references, #fileDetails, #relMat, #relPubl, #relResData, #toolkit{padding-left:10px;}
+.tab-pane.active{padding-top:20px;}
+}
+
 /* xxs */
 @media (max-width:479px){
 .hidden-xxs{display:none!important;}
@@ -318,11 +322,16 @@ main.front div#home {background:url(/images/pub_425px.jpg) 400px 100px no-repeat
 }
 /* print */
 @media print {
+.breadcrumb,.col-sm-2.col-sm-offset-1,.col-md-3.col-md-offset-1,footer,.list-inline,ul.nav-tabs li,.mark,.mark_all{display:none;}
 main{padding:0!important;}
+a{color:#000;font-weight:normal;}
+a[href^="/"]:after{content:" (http://pub.uni-bielefeld.de" attr(href) ") ";}
+a[href].label.label-primary:after,.citation-block-div a[href]:after,#details a[href]:after,.nav-tabs a[href]:after,.pagination a[href]:after{content:"";}
+ul.nav-tabs,.nav-tabs li.active,.nav-tabs li.active a{border:0;padding:0;}
+.nav-tabs li.active{display:inline;font-size:16px;font-weight:500!important;}
+#citethis .nav-tabs li.active{font-size:12px;}
 .tab-pane .col-sm-8{width:100%!important;}
-.breadcrumb,.col-sm-2.col-sm-offset-1,.col-md-3.col-md-offset-1,footer,.list-inline,.mark{display:none!important;}
-a[href^="/"]:after{content:" <http://pub.uni-bielefeld.de" attr(href) "> ";}
-a[href].label.label-primary:after,.citation-block-div a[href]:after,.nav-tabs a[href]:after,.pagination a[href]:after{content:"";}  
+#details .text-muted{font-weight:bold;}
 }
 
 /*****
