@@ -49,6 +49,7 @@ requires 'DateTime';
 requires 'Hash::Merge';
 requires 'Try::Tiny';
 requires 'Crypt::Digest::MD5';
+requires 'Crypt::SSLeay';
 requires 'XML::RSS';
 requires 'YAML::XS';
 requires 'YAML';
