@@ -84,7 +84,7 @@ post '/rc/:id/:file_id' => sub {
 			approved => params->{approved} || 0,
 		});
 
-		my $file_creator_email = h->get_person($file->{creator})->{bis}->{email};
+		my $file_creator_email = h->get_person($file->{creator})->{email_encoded};
 		if(params->{user_email}){
 			my $pub = h->publication->get(params->{id});
 			my $mail_body = export_to_string({

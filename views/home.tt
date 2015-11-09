@@ -18,7 +18,7 @@
     <div class="page-header" id="banner">
     [% IF backend %]
       <h1>
-      [% IF thisPerson.bis.personTitle %]<span itemprop="honorificPrefix">[% thisPerson.bis.personTitle %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span> ([% IF session.role == 'super_admin' %]Admin[% END %][% IF session.role == 'user' %]User[% END %][% IF session.role == 'reviewer' %]Reviewer[% END %][% IF session.role == "delegate" %]Delegate[% END %][% IF session.role == "data_manager" %]Data Manager[% END %])
+      [% IF thisPerson.idm_title %]<span itemprop="honorificPrefix">[% thisPerson.idm_title %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span> ([% IF session.role == 'super_admin' %]Admin[% END %][% IF session.role == 'user' %]User[% END %][% IF session.role == 'reviewer' %]Reviewer[% END %][% IF session.role == "delegate" %]Delegate[% END %][% IF session.role == "data_manager" %]Data Manager[% END %])
       </h1>
     [% ELSE %]
       <h1>
@@ -41,8 +41,8 @@
 
     <div class="row">
       <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme helpme-md" data-placement="top" title="[% lf.help.pevz_photo %]">
-        [% IF thisPerson.bis.photo %]
-        <img src="[% thisPerson.bis.photo %]" style="max-width:140px;" class="img-thumbnail" >
+        [% IF thisPerson.photo %]
+        <img src="[% thisPerson.photo %]" style="max-width:140px;" class="img-thumbnail" >
         [% ELSE %]
         <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail" title="[% backend ? lf.home.you_have_no_photo : lf.home.they_have_no_photo %]">
         [% END %]

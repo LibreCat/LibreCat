@@ -1200,14 +1200,12 @@ search:
           old_last_name: {type: string}
           first_name: {type: string}
           old_first_name: {type: string}
-          bis:
-            properties:
-              title: {type: string}
-              former: {type: byte}
-              nonexist: {type: byte}
-              forschend: {type: byte}
-              email: {type: string, index: not_analyzed}
-              photo: {type: string, index: not_analyzed}
+          idm_title: {type: string}
+          former: {type: byte}
+          nonexist: {type: byte}
+          researcher: {type: byte}
+          email_encoded: {type: string, index: not_analyzed}
+          photo: {type: string, index: not_analyzed}
           department:
             properties:
               _id: {type: string, analyzer: tag}
