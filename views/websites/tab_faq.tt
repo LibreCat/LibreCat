@@ -270,7 +270,7 @@
       </div>
       <div id="export" class="panel-collapse collapse">
         <div class="panel-body">
-          <p>Of course you can also export your references from PUB. Proceed to your personal list of publications (http://pub.uni-bielefeld.de/person/[PEVZ-ID]). There you will find the option &quot;Export as&quot;
+          <p>Of course you can also export your references from PUB. Proceed to your personal list of publications (https://pub.uni-bielefeld.de/person/[PEVZ-ID]). There you will find the option &quot;Export as&quot;
 		in the right column where several export formats such as BibTeX or RTF are available.
 		With just a few clicks you can export your entire list of publications or any list filtered according to different aspects. The export as unformatted text document in RTF format lends itself
 		to the rapid processing of lists for project reports, applications, CVs, and so on.</p>
@@ -682,7 +682,7 @@
       </div>
       <div id="export" class="panel-collapse collapse">
         <div class="panel-body">
-          <p>Selbstverst&auml;ndlich k&ouml;nnen Sie Ihre Literaturangaben auch wieder exportieren. Gehen Sie dazu auf Ihre pers&ouml;nliche Publikationsliste (http://pub.uni-bielefeld.de/person/[PEVZ-ID]). Dort finden Sie in der rechten Spalte
+          <p>Selbstverst&auml;ndlich k&ouml;nnen Sie Ihre Literaturangaben auch wieder exportieren. Gehen Sie dazu auf Ihre pers&ouml;nliche Publikationsliste (https://pub.uni-bielefeld.de/person/[PEVZ-ID]). Dort finden Sie in der rechten Spalte
 		die Option &quot;Export as&quot;, wo mehrere Exportformate wie BibTeX oder auch RTF zur Auswahl stehen. Damit k&ouml;nnen Sie mit wenigen Klicks Ihre komplette Publikationsliste oder eine nach
 		verschiedenen Aspekten gefilterte und sortierte Liste exportieren. Der Export als unformatiertes Textdokument im RTF-Format bietet sich f&uuml;r die rasche Weiterverarbeitung einer Liste
 		f&uuml;r Projektberichte, Antr&auml;ge, CVs usw. an.</p>
