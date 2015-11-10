@@ -15,6 +15,7 @@ engines:
 # use default store
 session: "Catmandu"
 session_expires: 2 hr
+auto_page: 1
 
 plugins:
   'Auth::Tiny':

@@ -18,16 +18,18 @@
   </div>
 
   <hr>
-  
-  [% IF bag == 'pubtheses' %]
-  <div class="row">
-    <h4 class="margin-top0"><a href="/">[% lf.home.logos.brand_long %]</a></h4>
-    <a href="/"><img src="/images/publogo.gif" class="img-thumbnail" style="width:200px;"></a>
-  </div>
-  [% ELSE %]
+
   <div class="row">
     <h4 class="margin-top0"><a href="/pubtheses">[% lf.home.logos.theses %]</a></h4>
     <a href="/pubtheses"><span class="fa fa-graduation-cap fa-5x"></span></a>
+  </div>
+  
+  [% IF request.path.match("docs") OR request.path.match("pubtheses") %]
+  <hr>
+  
+  <div class="row">
+    <h4 class="margin-top0"><a href="/">[% lf.home.logos.brand_long %]</a></h4>
+    <a href="/"><img src="/images/publogo.gif" class="img-thumbnail" style="width:200px;"></a>
   </div>
   [% END %]
   

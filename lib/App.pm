@@ -139,9 +139,9 @@ any qr{(/en)*/coffee} => sub {
 Throws 'page not found'.
 
 =cut
-any qr{.*} => sub {
-    status 'not_found';
-    template 'websites/404', {path => request->{referer}};
+any qr{/websites/*.*|/admin/*.*|/backend/*.*|/email/*.*|/frontdoor/*.*} => sub {
+	status 'not_found';
+	template 'websites/404', {path => request->{referer}};
 };
 
 1;
