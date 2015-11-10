@@ -45,7 +45,7 @@ sub _get_file_info {
 Request a copy of the publication. Email will be sent to the author.
 
 =cut
-post '/rc/:id/:file_id' => sub {
+any '/rc/:id/:file_id' => sub {
 	require Dancer::Plugin::Email;
 
 	my $bag = Catmandu->store('reqcopy')->bag;
@@ -98,11 +98,12 @@ post '/rc/:id/:file_id' => sub {
 				template => 'views/email/req_copy.tt',
 			);
 			try {
-				email {
+				my $mail_response = email {
 					to => $file_creator_email,
 					subject => h->config->{request_copy}->{subject},
 					body => $mail_body,
 				};
+				return redirect "/publication/".params->{id} if $mail_response =~ /success/i;
 			} catch {
 				error "Could not send email: $_";
 			}
