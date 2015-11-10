@@ -95,7 +95,7 @@
         <li><input type="text" val="" onclick="this.focus();this.select()" style="width:100%;"></li>
       </ul>
       [% ELSE %]
-      <span class="text-danger"><span class="glyphicon glyphicon-remove"></span> Only pulic records can be shared! Click on "Make public" and try again</span>
+      <span class="text-danger"><span class="glyphicon glyphicon-remove"></span> [% lf.main_page.links.request_a_copy_not_public %]</span>
       [% END %]
     </div>
     [% END %]

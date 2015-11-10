@@ -67,7 +67,7 @@ function editAuthorIds(direction){
  * @param pub_id
  */
 function generate_link(file_id, pub_id){
-	var url = '/requestcopy/' + pub_id + '/' + file_id;
+	var url = '/rc/' + pub_id + '/' + file_id;
 	$.post(url, {approved:1}, function(data){
 		var request_url = data.url;
 		$("ul[id$='_rac_dd_" + file_id + "'] li input").val(request_url);

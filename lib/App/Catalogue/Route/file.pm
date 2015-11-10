@@ -22,7 +22,13 @@ sub _send_it {
 	my ($id, $file_name) = @_;
 	my $dest_dir = h->get_file_path($id);
 	my $path_to_file = path($dest_dir, $file_name);
-	return Dancer::send_file($path_to_file, system_path => 1);
+	if(-e $path_to_file){
+		return Dancer::send_file($path_to_file, system_path => 1);
+	}
+	else {
+		template 'websites/error',
+			{message => "The file does not exist anymore. We're sorry."};
+	}
 }
 
 sub _calc_date {
@@ -108,7 +114,10 @@ any '/rc/:id/:file_id' => sub {
 				error "Could not send email: $_";
 			}
 		} else {
-			return h->host . "/rc/" . $stored->{_id};
+			return to_json {
+				ok => true,
+				url => h->host . "/rc/" . $stored->{_id},
+			};
 		}
 	}
 };
@@ -181,7 +190,7 @@ get '/rc/:key' => sub {
 	if ($check and $check->{approved} == 1) {
 		_send_it($check->{record_id}, $check->{file_name});
 	} else {
-		template 'error',
+		template 'websites/error',
 			{message => "The time slot has expired. You can't download the document anymore."};
 	}
 };

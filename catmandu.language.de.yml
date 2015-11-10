@@ -120,6 +120,7 @@ main_page:
     internal_view: "Interne Sicht"
     request_a_copy: "Exemplar anfordern"
     request_a_copy_title: "Generiert teilbare Links zu Dateien mit Status 'Request a copy'"
+    request_a_copy_not_public: "Nur Datensätze mit Status 'public' können geteilt werden! Klicken Sie auf \"Public stellen\" und versuchen Sie es erneut."
     publish: "Public stellen"
     return: "Zurückstellen"
 person_profile:

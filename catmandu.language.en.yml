@@ -119,6 +119,7 @@ main_page:
     internal_view: "Internal View"
     request_a_copy: "Request a Copy"
     request_a_copy_title: "Generate sharable links for files with 'Request a copy' status"
+    request_a_copy_not_public: "Only pulic records can be shared! Click \"Make public\" and try again."
     publish: "Make public"
     return: "Return"
 person_profile:
