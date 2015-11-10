@@ -506,6 +506,9 @@ forms:
           label: "Hinzufügen"
       publish_button:
         alert: "Sie sind sicher, dass Sie diesen Datensatz 'Public' stellen wollen? Sie können dies nicht selbst rückgängig machen. Alle hochgeladenen Dateien werden gemäß dem 'Access Level', den Sie festgelegt haben, veröffentlicht."
+      locked: &locked
+        label: "Locked for editing (except for admins)"
+        label_short: "Locked"
   bookEditor: &bookeditor
     label: "Herausgeber Sammelwerk"
     tab: *tab
@@ -554,6 +557,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   bookeditor: *bookeditor
   bookChapter: &bookchapter
     label: "Sammelwerksbeitrag"
@@ -630,6 +634,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   bookchapter: *bookchapter
   conferenceAbstract: &conferenceabstract
     label: "Kurzbeitrag Konferenz"
@@ -701,6 +706,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   conferenceabstract: *conferenceabstract
   conferenceEditor: &conferenceeditor
     label: "Konferenzband"
@@ -739,6 +745,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   conferenceeditor: *conferenceeditor
   conference:
     label: "Konferenzbeitrag"
@@ -784,6 +791,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   dissertation:
     label: "Dissertation"
     tab: *tab
@@ -825,6 +833,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   encyclopediaArticle: &encyclopediaarticle
     label: "Lexikoneintrag"
     tab: *tab
@@ -865,6 +874,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   encyclopediaarticle: *encyclopediaarticle
   journalArticle: &journalarticle
     label: "Zeitschriftenaufsatz"
@@ -920,6 +930,7 @@ forms:
         placeholder: "Artikelgebühren co-finanziert von der DFG"
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   journalarticle: *journalarticle
   journalEditor: &journaleditor
     label: "Sonderausgabe Zeitschrift"
@@ -973,6 +984,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   journaleditor: *journaleditor
   newspaperArticle: &newspaperarticle
     label: "Zeitungsartikel"
@@ -1013,6 +1025,7 @@ forms:
         label_short: "Pop.wiss. Publ."
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   newspaperarticle: *newspaperarticle
   patent:
     label: "Patent"
@@ -1072,6 +1085,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   preprint:
     label: "Preprint"
     tab: *tab
@@ -1103,6 +1117,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   report:
     label: "Report"
     tab: *tab
@@ -1140,6 +1155,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   review:
     label: "Rezension"
     tab: *tab
@@ -1179,6 +1195,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   researchData: &researchdata
     label: "Datenpublikation"
     tab:
@@ -1263,6 +1280,7 @@ forms:
       related_material_rd:
         label: "Related Material"
       related_material.link: *related_material_link
+      locked: *locked
   researchdata: *researchdata
   translation:
     label: "Übersetzung"
@@ -1331,6 +1349,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   translationChapter: &translationchapter
     label: "Übersetzung (Aufsatz)"
     tab: *tab
@@ -1401,6 +1420,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   translationchapter: *translationchapter
   workingPaper: &workingpaper
     label: "Diskussionspapier"
@@ -1436,6 +1456,7 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   workingpaper: *workingpaper
   biDissertation: &bidissertation
     label: "Bielefelder E-Dissertation"
@@ -1502,6 +1523,7 @@ forms:
         placeholder: "Computing Classification System, e.g. Data Mining"
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
   bidissertation: *bidissertation
   biMasterThesis: &bimasterthesis
     label: "Bielefelder Masterarbeit"

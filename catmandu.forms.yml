@@ -94,6 +94,7 @@ field_order:
     - popular_science_quality_controlled
     - ubi_funded
     - message
+    - locked
   file_upload:
     - external_file
     - dropzone
@@ -181,6 +182,8 @@ publicationTypes:
           publication_status:
             mandatory: 0
             multiple: 0
+        locked: &locked
+          mandatory: 0
       file_upload: &file_upload
         dropzone:
           mandatory: 0
@@ -250,6 +253,7 @@ publicationTypes:
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         edition: *edition
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         abstract: *abstract
@@ -303,6 +307,7 @@ publicationTypes:
         conference.date: &conference_date
           placeholder_start: "YYYY-MM-DD"
           placeholder_end: "YYYY-MM-DD"
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         abstract: *abstract
@@ -349,6 +354,7 @@ publicationTypes:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         keyword: *keyword
@@ -386,6 +392,7 @@ publicationTypes:
         conference.location:
           mandatory: 0
         conference.date: *conference_date
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         keyword: *keyword
@@ -427,6 +434,7 @@ publicationTypes:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         keyword: *keyword
@@ -464,6 +472,7 @@ publicationTypes:
         publisher: *publisher
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         abstract: *abstract
@@ -498,6 +507,7 @@ publicationTypes:
         page: *page_range
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         keyword: *keyword
@@ -536,6 +546,7 @@ publicationTypes:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         article_type:
@@ -580,6 +591,7 @@ publicationTypes:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         abstract: *abstract
@@ -609,6 +621,7 @@ publicationTypes:
           mandatory: 1
         alternative_title: *alternative_title
         publication_status_language: *publication_status_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         external_id: *external_id
@@ -644,6 +657,7 @@ publicationTypes:
         ipc:
           mandatory: 1
         page: *pages
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         abstract: *abstract
@@ -670,6 +684,7 @@ publicationTypes:
         page: *pages
         publication_status_language: *publication_status_language
         publication_identifier: *publication_identifier
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         abstract: *abstract
@@ -701,6 +716,7 @@ publicationTypes:
           mandatory: 0
         page: *pages
         publication_status_language: *publication_status_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         external_id: *external_id
@@ -735,6 +751,7 @@ publicationTypes:
         volume_issue_page: *volume_issue_page_number
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         popular_science_quality_controlled: *popular_science_quality_controlled
@@ -763,6 +780,7 @@ publicationTypes:
         publisher:
           mandatory: 1
         year_extern: *year_extern
+        locked: *locked
       file_upload:
         externalFiles:
           mandatory: 0
@@ -826,6 +844,7 @@ publicationTypes:
           label: "Language (Original)"
           label_short: "Lang. (Orig)"
           multiple: 0
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         external_id: *external_id
@@ -871,6 +890,7 @@ publicationTypes:
         year_extern: *year_extern
         language: *language
         original_language: *original_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         popular_science_quality_controlled: *popular_science_quality_controlled
@@ -902,6 +922,7 @@ publicationTypes:
         publication_identifier: *publication_identifier
         year_extern: *year_extern
         publication_status_language: *publication_status_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         external_id: *external_id
@@ -948,6 +969,7 @@ publicationTypes:
           mandatory: 1
         alternative_title: *alternative_title
         page: *pages
+        locked: *locked
       file_upload: &file_upload
         dropzone:
           mandatory: 0

@@ -746,6 +746,11 @@ search:
               op:
                 '=': true
               field: foda
+            locked:
+              op:
+                '=': true
+                '<>': true
+              field: locked
 
       researcher:
         cql_mapping:
@@ -1178,6 +1183,7 @@ search:
           alternative_id: {type: string, analyzer: tag}
           foda: {type: byte}
           defense_date: {type: date, index: no}
+          locked: {type: byte}
 
       researcher:
         include_in_all: false

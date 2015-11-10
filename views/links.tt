@@ -37,7 +37,7 @@
 
 [% IF backend %]
   <br />
-  [% IF !entry.type.match("^bi") OR session.role == "super_admin" %]<a href="/librecat/record/edit/[% entry._id %]">[% lf.main_page.links.edit %]</a>
+  [% IF (!entry.locked AND !entry.type.match("^bi")) OR session.role == "super_admin" %]<a href="/librecat/record/edit/[% entry._id %]">[% lf.main_page.links.edit %]</a>
   [% ELSE %]
   <strong>[% lf.main_page.links.edit %]</strong>
   [% END %]
