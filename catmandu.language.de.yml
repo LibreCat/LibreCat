@@ -303,6 +303,7 @@ add_new:
   do_it_yourself: "Option 2:<br />Wählen Sie einen Typ und füllen Sie das Formular aus"
   drop_oa: "Option 3:<br />Ziehen Sie Ihren Open-Access-Volltext hier her"
   paste_bibtex: "Option 4:<br />Fügen Sie Ihren BibTex Eintrag hier ein"
+  paste_bibtex_placeholder: "Bitte fügen Sie nur jeweils einen Datensatz ein"
 forms:
   book:
     label: "Monographie"
@@ -1535,15 +1536,16 @@ forms:
   form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf [+] wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
   button:
     back: "Zurück"
-    save: "Speichern"
-    send: "Abschicken"
-    close: "Schließen"
     cancel: "Abbrechen"
+    close: "Schließen"
+    delete: "Löschen"
+    import: "Importieren"
+    next: "Weiter"
     publish: "Public stellen"
     return: "Zurückstellen"
-    delete: "Löschen"
-    next: "Weiter"
+    save: "Speichern"
     select: "Auswählen"
+    send: "Abschicken"
   general:
     field:
       email:
