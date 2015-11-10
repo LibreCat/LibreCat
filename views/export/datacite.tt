@@ -36,12 +36,12 @@
 [% END %]
 <resourceType resourceTypeGeneral="Dataset">dataset</resourceType>
 <alternateIdentifiers>
-	<alternateIdentifier alternateIdentifierType="URL">http://pub.uni-bielefeld.de/data/[% oId %]</alternateIdentifier>
+	<alternateIdentifier alternateIdentifierType="URL">[% h.host %]/data/[% oId %]</alternateIdentifier>
 </alternateIdentifiers>
 [% IF relatedMaterial %]
 <relatedIdentifiers>
 [% FOREACH relMat IN relatedMaterial %]
-<relatedIdentifier relatedIdentifierType="URL" relationType="IsCitedBy">http://pub.uni-bielefeld.de/publication/[% relMat.relatesFrom.oId %]</relatedIdentifier>
+<relatedIdentifier relatedIdentifierType="URL" relationType="IsCitedBy">[% h.host %]/publication/[% relMat.relatesFrom.oId %]</relatedIdentifier>
 [% END %]
 </relatedIdentifiers>
 [% END %]
