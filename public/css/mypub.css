@@ -266,6 +266,8 @@ a{font-weight:bold;}
 .margin0-sm{margin-bottom:0!important;}
 a{font-weight:bold;}
 .nofile {margin:5% auto;}
+.fa-4x,.fa-5x{font-size:3em;}
+img.responsive{-moz-transform:scale(.75);-webkit-transform:scale(.75);transform:scale(.75);}
 }
 /* not xxs */
 @media (min-width:480px){
