@@ -8,8 +8,8 @@
 
 <!-- BEGIN navbar.tt -->
   <header>
-    <nav class="navbar navbar-default navbar-fixed-top [% IF backend %] backend[% ELSE %] frontend[% END %]" role="navigation">
-    [% IF backend %]
+    <nav class="navbar navbar-default navbar-fixed-top [% IF backend OR (session.user AND request.path.match("howto")) %] %] backend[% ELSE %] frontend[% END %]" role="navigation">
+    [% IF backend OR (session.user AND request.path.match("howto")) %]
       <div class="navbar-header">
 	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
 	  <span class="sr-only">Toggle navigation</span>
@@ -41,6 +41,7 @@
 	  </li>
 	[% END %]
 	  <li class="hidden-xs helpme helpme-md" data-placement="right" title="[% lf.help.help %]"><a href="#" class="toggle_help"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+	  <li><a href="/docs/howto"><span class="fa fa-lightbulb-o fa-lg"></span> [% lf.help.howto %]</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 	<li class="helpme helpme-md" data-placement="left" title="[% lf.help.change_language %]">
@@ -116,7 +117,7 @@
 
   </header>
 
-  <main[% UNLESS backend %] class="front"[% END %]>
+  <main[% UNLESS backend OR (session.user AND request.path.match("howto")) %] class="front"[% END %]>
 
   <div class="container[% IF title %] title[%END %][% IF _id %] publication[% END %]">
 
