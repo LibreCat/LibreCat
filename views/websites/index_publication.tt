@@ -37,9 +37,9 @@
             <ul class="dropdown-menu">
               <li><a href="/docs/howto/start">[% lf.tabs.start %]</a></li>
               <li><a href="/docs/howto/features">[% lf.tabs.features %]</a></li>
-              <li><a href="/doc/api">[% lf.tabs.documentation %]</a></li>
-              <li><a href="/docs/howto/contact">[% lf.tabs.contact %]</a></li>
               <li><a href="/docs/howto/policy">[% lf.tabs.policy %]</a></li>
+              <li><a href="/docs/howto/contact">[% lf.tabs.contact %]</a></li>
+              <li><a href="/doc/api">[% lf.tabs.documentation %]</a></li>
             </ul>
           </li>
           <li><a href="/policy" data-toggle="tab" style="display:none;">[% lf.tabs.policy %]</a></li>
