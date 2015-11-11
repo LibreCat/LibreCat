@@ -55,6 +55,8 @@ if exists(BP)
   join_field(page, '-')
 end
 
+move_field(AR,article_number)
+
 split_field(BN,'; ')
 move_field(BN,'publication_identifier.isbn.$append')
 move_field(PU,publisher)
@@ -77,7 +79,6 @@ remove_field(WC)
 remove_field(SC)
 remove_field(NR)
 remove_field(SP)
-remove_field(AR)
 remove_field(GP)
 remove_field(FX)
 remove_field(SU)

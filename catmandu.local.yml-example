@@ -5,10 +5,6 @@ upload_dir: '/data2/librecat/file_uploads'
 
 thesis:
     urn_prefix: 'urn:thesis-'
-private:
-    urn_prefix: 'urn:private-'
-    doi:
-        prefix: 10.001/test
 
 authentication:
   package: Authentication::LDAP
@@ -20,3 +16,4 @@ authentication:
     search_filter: '(uid=%s)'
     search_base: 'dc=ugent, dc=be'
     search_attr: 'ugentID'
+

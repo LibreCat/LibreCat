@@ -87,7 +87,9 @@ Saves the data in the authority database.
         my $p = params;
 
         $p = h->nested_params($p);
-        $p->{password} = passphrase($p->{password})->generate->rfc2307();
+        if ($p->{password}) {
+            $p->{password} = passphrase($p->{password})->generate->rfc2307();
+        }
 
         h->update_record('researcher', $p);
         template 'admin/account';

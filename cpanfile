@@ -15,7 +15,6 @@ requires 'Catmandu::Importer::getJSON';
 requires 'Catmandu::Identifier', '>=0.03';
 requires 'Catmandu::RIS', '>=0.04';
 
-
 #Dancer
 requires 'Dancer';
 requires 'Dancer::Plugin';

@@ -1,3 +1,5 @@
+[%- If !facets -%][% STOP %][% END %]
+
 [% qp = {} -%]
 [% qp = h.extract_params -%]
 [% pd = {} -%]
