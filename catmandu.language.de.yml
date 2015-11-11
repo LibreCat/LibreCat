@@ -246,10 +246,10 @@ frontdoor:
       md5: "MD5 Prüfsumme"
     publication:
       label: "Publikationen"
-      cited_by: "Diese Datenpublikation wird in folgenden Publikationen erwähnt:"
+      cited_by: "Diese Datenpublikation wird von folgenden Publikationen zitiert:"
     data_publication:
       label: "Datenpublikationen"
-      cites: "Diese Publikation erwähnt die folgenden Datenpublikationen:"
+      cites: "Diese Publikation zitiert die folgenden Datenpublikationen:"
     toolkit:
       label: "Cognitive Interaction Toolkit"
       data_by: "Daten bereitgestellt vom <a href='http://toolkit.cit-ec.uni-bielefeld.de/'>Cognitive Interaction Toolkit</a>."
@@ -1629,23 +1629,24 @@ forms:
     swe: "Schwedisch"
     tur: "Türkisch"
     other: "Andere"
-418:
-  heading: "I'm a teapot (418)"
-  text: "Sie haben Kaffee von diesem Server angefordert. Die Antwort des Servers war: <strong>I'm a teapot</strong><br><br><a href='https://de.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
-  link_back: "Zurück"
+403:
+  heading: "Kein Zugriff (403)"
+  text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis."
 404:
   heading: "Seite nicht gefunden (404)"
   text: "Die Seite wurde nicht gefunden"
-  link_back: "Zurück"
-403:
-  heading: "Access denied (403)"
-  text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis."
-  link_back: "Zurück"
+418:
+  heading: "I'm a teapot (418)"
+  text: "Sie haben Kaffee von diesem Server angefordert. Die Antwort des Servers war: <strong>I'm a teapot</strong><br><br><a href='https://de.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
+500:
+  heading: "Fehler beim Aufruf (500)"
+  text: "Huch - das hätte nicht passieren sollen. Leider ist bei Ihrer Anfrage ein Problem aufgetreten."
 help:
   home: "Startseite"
   brand: "Persönliche<br>Startseite"
   my_author_page: "Ihre öffentliche<br>Publikationsliste"
   help: "Mehr Hilfe nötig? Support Publikationsdienste, Tel.: 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
+  howto: "PUB Howto"
   change_language: "Sprache wechseln"
   user_settings: "Fakultät,<br>Editiermodus,<br>Standardsprache<br>ändern"
   role: "Ihre Rolle<br>im System<br>Ggf. wechseln und mit Publikationen arbeiten, für die Sie z.B. Reviewer-Rechte haben."

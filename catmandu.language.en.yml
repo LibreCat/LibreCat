@@ -1631,23 +1631,24 @@ forms:
     swe: "Swedish"
     tur: "Turkish"
     other: "Other"
-418:
-  heading: "I'm a teapot (418)"
-  text: "You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br><br><a href='https://en.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
-  link_back: "Back"
-404:
-  heading: "Page not found (404)"
-  text: "The page you requested couldn't be found."
-  link_back: "Back"
 403:
   heading: "Access denied (403)"
   text: "You don't have access to this file / folder."
-  link_back: "Back"
+404:
+  heading: "Page not found (404)"
+  text: "The page you requested couldn't be found."
+418:
+  heading: "I'm a teapot (418)"
+  text: "You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br><br><a href='https://en.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
+500:
+  heading: "A problem occured (500)"
+  text: "Uuuppps - this shouldn't happen, but it did."
 help:
   home: "PUB home"
   brand: "Personal<br>home page"
   my_author_page: "Your publication list<br>(public records only)"
   help: "More help necessary? Contact our support: Phone 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
+  howto: "PUB How-to"
   change_language: "Change language"
   user_settings: "Change<br>department,<br>edit mode<br>default language."
   role: "Your user role<br>If you are reviewer/delegate you can change your role here to work with publications allocated for that role."
