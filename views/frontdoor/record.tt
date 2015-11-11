@@ -70,7 +70,7 @@
 [% END %]
 
 [% qp = request.params.hash %]
-[% style = qp.style || 'default' %]
+[% style = style || qp.style || 'default' %]
 
 <div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/publication/[% _id %]"><!-- outer row-->
 
