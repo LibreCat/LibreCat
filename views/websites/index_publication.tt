@@ -104,25 +104,25 @@
 
         <div class="tab-pane[% bag == 'about' ? ' active' : '' %]" id="about">
           [% IF bag == 'about' %]
-            [% INCLUDE websites/tab_about.tt %]
+            [% INCLUDE docs/howto.tt %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'policy' ? ' active' : '' %]" id="policy">
           [% IF bag == 'policy' %]
-            [% INCLUDE websites/tab_policy.tt %]
+            [% INCLUDE docs/howto/policy.tt %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'faq' ? ' active ' : '' %]" id="faq">
           [% IF bag == 'faq' %]
-            [% INCLUDE websites/tab_faq.tt %]
+            [% INCLUDE docs/howto.tt %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'contact' ? ' active' : '' %]" id="contact">
           [% IF bag == 'contact' %]
-            [% INCLUDE websites/tab_contact.tt %]
+            [% INCLUDE docs/howto/contact.tt %]
           [% END %]
         </div>
 

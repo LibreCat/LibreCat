@@ -21,8 +21,8 @@
 	</div>
 	<div class="col-sm-4">
 	  <ul class="list-inline margin0-sm">
-	    <li><a href="/contact">[% lf.footer.contact %]</a></li>
-	    <li><a href="/policy">[% lf.footer.policy %]</a></li>
+	    <li><a href="/docs/howto/contact">[% lf.footer.contact %]</a></li>
+	    <li><a href="/docs/howto/policy">[% lf.footer.policy %]</a></li>
 	    <li><a href="http://www.ub.uni-bielefeld.de/[% lf.footer.language_url %]biblio/kontakt/impressum/">[% lf.footer.imprint %]</a></li>
 	  </ul>
 	  <ul class="list-inline">
