@@ -34,7 +34,8 @@ main{padding-top:30px;}
 
 /* headlines */
 h1,.h1,h2,.h2,h3,.h3{margin-top:31px;}
-[class^='col']>h2,.panel-body h3{margin-top:0;}
+[class^='col']>h2,.panel-body h2{margin-top:0;}
+.panel-body h3{margin-top:21px;}
 .title h1{font-size:22px;margin-top:0;}
 .publication h1{border-bottom:1px solid #eee;}
 h3 a{font-size:inherit;}
