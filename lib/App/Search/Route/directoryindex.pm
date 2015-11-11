@@ -16,10 +16,6 @@ get qr{/\(en\)/(.*)} => sub {
 	redirect $path, 301;
 };
 
-get qr{/workshop/*} => sub {
-	forward '/workshop/index.html';
-};
-
 get qr{/puboa/*} => sub {
 	redirect 'http://oa.uni-bielefeld.de/', 301;
 };
@@ -45,9 +41,6 @@ get qr{/pub} => sub {
 
 
 #general stuff
-#get qr{/en/*} => sub {
-#	template 'websites/index_publication.tt';
-#};
 
 get qr{/doc/api/*|/demo/*|/en/demo/*} => sub {
 	my $path = h->host . '/doc/api/index.html';
@@ -55,27 +48,57 @@ get qr{/doc/api/*|/demo/*|/en/demo/*} => sub {
 };
 
 get qr{/policy/*|/policy\.html} => sub {
-	template 'websites/index_publication.tt', {bag => 'policy'};
+	#template 'websites/index_publication.tt', {bag => 'policy'};
+	redirect 'docs/howto/policy';
 };
 
 get qr{/en/policy/*|/en/policy\.html} => sub {
-	template 'websites/index_publication.tt', {bag => 'policy', lang => 'en'};
+	#template 'websites/index_publication.tt', {bag => 'policy', lang => 'en'};
+	session lang => "en";
+	redirect 'docs/howto/policy';
 };
 
 get qr{/faq/*|/faq\.html|/erste-schritte\.html} => sub {
-	template 'websites/index_publication.tt', {bag => 'faq'};
+	#template 'websites/index_publication.tt', {bag => 'faq'};
+	redirect 'docs/howto';
 };
 
 get qr{/en/faq/*|/en/faq\.html|/en/erste-schritte\.html} => sub {
-	template 'websites/index_publication.tt', {bag => 'faq', lang => 'en'}
+	#template 'websites/index_publication.tt', {bag => 'faq', lang => 'en'}
+	session lang => "en";
+	redirect 'docs/howto';
 };
 
 get qr{/contact/*|/contact\.html} => sub {
-	template 'websites/index_publication.tt', {bag => 'contact'};
+	#template 'websites/index_publication.tt', {bag => 'contact'};
+	redirect 'docs/howto/contact';
 };
 
 get qr{/en/contact/*|/en/contact\.html} => sub {
-	template 'websites/index_publication.tt', {bag => 'contact', lang => 'en'};
+	#template 'websites/index_publication.tt', {bag => 'contact', lang => 'en'};
+	session lang => "en";
+	redirect 'docs/howto/contact';
+};
+
+get qr{/about/*} => sub {
+    #template 'websites/index_publication.tt', {bag => 'about'};
+    redirect 'docs/howto/start';
+};
+
+get qr{/en/about/*} => sub {
+    #template 'websites/index_publication.tt', {bag => 'about', lang => 'en'};
+    session lang => "en";
+    redirect 'docs/howto/start';
+};
+
+get qr{/workshop/*} => sub {
+	#forward '/workshop/index.html';
+	redirect '/docs/workshop/index.html', 301;
+};
+
+get qr{/workshop/(.*)} => sub {
+	my ($path) = splat;
+	redirect "/docs/workshop/" . $path;
 };
 
 get qr{/pubtheses/*} => sub {
@@ -84,14 +107,6 @@ get qr{/pubtheses/*} => sub {
 
 get qr{/en/pubtheses/*} => sub {
     template 'pubtheses/pubtheses.tt', {bag => 'pubtheses', lang => 'en'};
-};
-
-get qr{/about/*} => sub {
-    template 'websites/index_publication.tt', {bag => 'about'};
-};
-
-get qr{/en/about/*} => sub {
-    template 'websites/index_publication.tt', {bag => 'about', lang => 'en'};
 };
 
 1;
