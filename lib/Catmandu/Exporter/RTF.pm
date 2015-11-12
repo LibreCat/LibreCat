@@ -119,6 +119,12 @@ sub _add_cite {
     	$cite =~ s/<div style="text-indent:-25px; padding-left:25px;padding-bottom:0px;">(.*?)<\/div>/\\li380 \\fi-380 $1 /g;
     }
     $cite =~ s/<div>(.*?)<\/div>/$1/g;
+    
+    my $hyperlink;
+    if($cite =~ /<a href\=\"(.*?)\" target\=\"_blank\">(.*?)<\/a>/){
+    	$cite =~ s/<a href\=\"(.*?)\" target\=\"_blank\">(.*?)<\/a>/____/g;
+    	$hyperlink = "{\\field{\\*\\fldinst HYPERLINK $1}{\\fldrslt $2}}";
+    }
 
     $cite =~ s/ /___/g;
 
@@ -160,6 +166,7 @@ sub _add_cite {
     my $citestring = "{\\pard ";
     $citestring .= $rtftitle if $rtftitle;
     $citestring .= $cite;
+    #$citestring .= $hyperlink if $hyperlink;
     if($indent and $links){
     	$citestring .= "\\li380 " . $links;
     }
@@ -167,6 +174,7 @@ sub _add_cite {
     	$citestring .= $links;
     }
     $citestring .= "\\line\\par}\n";
+    $citestring =~ s/____/$hyperlink/g if $hyperlink;
     $citestring =~ s/___/ /g;
     $self->{_buf} .= $citestring;
 }
