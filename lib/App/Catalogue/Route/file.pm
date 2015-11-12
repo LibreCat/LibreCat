@@ -46,6 +46,82 @@ sub _get_file_info {
 	}
 }
 
+=head2 GET /rc/approve/:key
+
+Author approves the request. Email will be sent to user.
+
+=cut
+get '/rc/approve/:key' => sub {
+	require Dancer::Plugin::Email;
+
+	my $bag = Catmandu->store('reqcopy')->bag;
+	my $data = $bag->get(params->{key});
+	return "Nothing to approve." unless $data;
+
+	$data->{approved} = 1;
+	$bag->add($data);
+	
+	my $body = export_to_string({ key => params->{key}, host => h->host }, 'Template',
+		template => 'views/email/req_copy_approve.tt');
+	
+	try {
+		email {
+			to => $data->{user_email},
+			subject => h->config->{request_copy}->{subject},
+			body => $body,
+		};
+		return "Thank you for your approval. The user will be notified to download the file.";
+		
+	} catch {
+		return "Could not send email: $_";
+	}
+};
+
+=head2 GET /rc/deny/:key
+
+Author refuses the request for a copy. Email will be sent
+to user. Delete request key from database.
+
+=cut
+get '/rc/deny/:key' => sub {
+	require Dancer::Plugin::Email;
+
+	my $bag = Catmandu->store('reqcopy')->bag;
+	my $data = $bag->get(params->{key});
+	return "Nothing to deny." unless $data;
+
+	try {
+		email {
+			to => $data->{user_email},
+			subject => h->config->{request_copy}->{subject},
+			body => export_to_string(
+				{},
+				'Template',
+				template => 'views/email/req_copy_deny.tt'),
+		};
+		$bag->delete(params->{key});
+		return "The user will be notified that the request has been denied.";
+	} catch {
+		error "Could not send email: $_";
+	}
+};
+
+=head2 GET /rc/:key
+
+User received permission for downloading.
+Now get the document if time has not expired yet.
+
+=cut
+get '/rc/:key' => sub {
+	my $check = Catmandu->store('reqcopy')->bag->get(params->{key});
+	if ($check and $check->{approved} == 1) {
+		_send_it($check->{record_id}, $check->{file_name});
+	} else {
+		template 'websites/error',
+			{message => "The time slot has expired. You can't download the document anymore."};
+	}
+};
+
 =head2 POST /rc/:id/:file_id
 
 Request a copy of the publication. Email will be sent to the author.
@@ -74,124 +150,44 @@ any '/rc/:id/:file_id' => sub {
 	    query => $query,
 	    limit => 1
 	);
+	
+	my $stored = $bag->add({
+		record_id => params->{id},
+		file_id => params->{file_id},
+		file_name => $file->{file_name},
+		date_expires => $date_expires,
+		user_email => params->{user_email},
+		approved => params->{approved} || 0,
+	});
 
-	if ($hits->first){
+	my $file_creator_email = h->get_person($file->{creator})->{email};
+	if(params->{user_email}){
+		my $pub = h->publication->get(params->{id});
+		my $mail_body = export_to_string({
+			title => $pub->{title},
+			user_email => params->{user_email},
+			mesg => params->{mesg} || '',
+			key => $stored->{_id},
+			host => h->host,
+			},
+			'Template',
+			template => 'views/email/req_copy.tt',
+		);
+		try {
+			my $mail_response = email {
+				to => $file_creator_email,
+				subject => h->config->{request_copy}->{subject},
+				body => $mail_body,
+			};
+			return redirect "/publication/".params->{id} if $mail_response =~ /success/i;
+		} catch {
+			error "Could not send email: $_";
+		}
+	} else {
 		return to_json {
 			ok => true,
-			url => h->host . "/rc/" . $hits->first->{_id},
+			url => h->host . "/rc/" . $stored->{_id},
 		};
-	} else {
-		my $stored = $bag->add({
-			record_id => params->{id},
-			file_id => params->{file_id},
-			file_name => $file->{file_name},
-			date_expires => $date_expires,
-			user_email => params->{user_email},
-			approved => params->{approved} || 0,
-		});
-
-		my $file_creator_email = h->get_person($file->{creator})->{email_encoded};
-		if(params->{user_email}){
-			my $pub = h->publication->get(params->{id});
-			my $mail_body = export_to_string({
-				title => $pub->{title},
-				user_email => params->{user_email},
-				mesg => params->{mesg} || '',
-				key => $stored->{_id},
-				host => h->host,
-				},
-				'Template',
-				template => 'views/email/req_copy.tt',
-			);
-			try {
-				my $mail_response = email {
-					to => $file_creator_email,
-					subject => h->config->{request_copy}->{subject},
-					body => $mail_body,
-				};
-				return redirect "/publication/".params->{id} if $mail_response =~ /success/i;
-			} catch {
-				error "Could not send email: $_";
-			}
-		} else {
-			return to_json {
-				ok => true,
-				url => h->host . "/rc/" . $stored->{_id},
-			};
-		}
-	}
-};
-
-=head2 GET /rc/approve/:key
-
-Author approves the request. Email will be sent to user.
-
-=cut
-get '/rc/approve/:key' => sub {
-	require Dancer::Plugin::Email;
-
-	my $bag = Catmandu->store('reqcopy')->bag;
-	my $data = $bag->get(params->{key});
-	return "Nothing to approve." unless $data;
-
-	$data->{approved} = 1;
-	$bag->add($data);
-	my $body = export_to_string({ key => params->{key} }, 'Template',
-		template => 'views/email/req_copy_approve.tt');
-	try {
-		email {
-			to => $data->{user_email},
-			subject => h->config->{request_copy}->{subject},
-			body => $body,
-		};
-	} catch {
-		error "Could not send email: $_";
-	}
-	return "Thank you for your approval. The user will be notified to download the file.";
-};
-
-=head2 GET /rc/deny/:key
-
-Author refuses the request for a copy. Email will be sent
-to user. Delete request key from database.
-
-=cut
-get '/rc/deny/:key' => sub {
-	require Dancer::Plugin::Email;
-
-	my $bag = Catmandu->store('reqcopy')->bag;
-	my $data = $bag->get(params->{key});
-	return "Nothing to deny." unless $data;
-
-	$bag->delete(params->{key});
-	try {
-		email {
-			to => $data->{user_email},
-			subject => h->config->{request_copy}->{subject},
-			body => export_to_string(
-				{},
-				'Template',
-				template => 'views/email/req_copy_deny.tt'),
-		};
-	} catch {
-		error "Could not send email: $_";
-	}
-	return "The user will be notified that the request has been denied.";
-};
-
-=head2 GET /rc/:key
-
-User received permission for downloading.
-Now get the document if time has not expired yet.
-
-=cut
-get '/rc/:key' => sub {
-	my $check = Catmandu->store('reqcopy')->bag->get(params->{key});
-	if ($check and $check->{approved} == 1) {
-		_send_it($check->{record_id}, $check->{file_name});
-	} else {
-		template 'websites/error',
-			{message => "The time slot has expired. You can't download the document anymore."};
 	}
 };
 
