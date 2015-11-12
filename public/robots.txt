@@ -41,4 +41,4 @@ User-agent: WebSpider
 User-agent: YisouSpider
 Disallow: /
 
-Sitemap: http://pub.uni-bielefeld.de/pub_index.txt
+Sitemap: https://pub.uni-bielefeld.de/pub_index.txt
