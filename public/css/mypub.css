@@ -325,7 +325,7 @@ main.front div#home {background:url(/images/pub_425px.jpg) 400px 100px no-repeat
 }
 /* print */
 @media print {
-.breadcrumb,.col-sm-2.col-sm-offset-1,.col-md-3.col-md-offset-1,footer,.list-inline,ul.nav-tabs li,.mark,.mark_all{display:none;}
+.breadcrumb,.caret,.col-sm-2.col-sm-offset-1,.col-md-3.col-md-offset-1,footer,.list-inline,ul.nav-tabs li,.mark,.mark_all{display:none;}
 main{padding:0!important;}
 a{color:#000;font-weight:normal;}
 a[href^="/"]:after{content:" (http://pub.uni-bielefeld.de" attr(href) ") ";}
@@ -333,7 +333,7 @@ a[href].label.label-primary:after,.citation-block-div a[href]:after,#details a[h
 ul.nav-tabs,.nav-tabs li.active,.nav-tabs li.active a{border:0;padding:0;}
 .nav-tabs li.active{display:inline;font-size:16px;font-weight:500!important;}
 #citethis .nav-tabs li.active{font-size:12px;}
-.tab-pane .col-sm-8{width:100%!important;}
+.tab-pane .col-sm-8,.tab-howto .col-sm-9{width:100%!important;}
 #details .text-muted{font-weight:bold;}
 }
 
