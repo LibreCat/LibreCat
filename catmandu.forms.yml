@@ -126,7 +126,6 @@ field_order:
     - related_material.link
 publicationTypes:
   book:
-    genus: "n"
     tmpl: book
     fields:
       basic_fields:
@@ -228,7 +227,6 @@ publicationTypes:
         publish_button:
           alert: "Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified."
   bookeditor:
-    genus: "m"
     tmpl: bookEditor
     fields:
       basic_fields:
@@ -266,7 +264,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   bookchapter:
-    genus: "n"
     tmpl: bookChapter
     fields:
       basic_fields:
@@ -320,7 +317,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   conferenceabstract:
-    genus: "n"
     tmpl: conferenceAbstract
     fields:
       basic_fields:
@@ -366,7 +362,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   conferenceeditor:
-    genus: "m"
     tmpl: conferenceEditor
     fields:
       basic_fields:
@@ -405,7 +400,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   conference:
-    genus: "m"
     tmpl: conference
     fields:
       basic_fields:
@@ -447,7 +441,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   dissertation:
-    genus: "f"
     tmpl: dissertation
     fields:
       basic_fields:
@@ -484,7 +477,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   encyclopediaarticle:
-    genus: "m"
     tmpl: encyclopediaArticle
     fields:
       basic_fields:
@@ -519,7 +511,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   journalarticle:
-    genus: "m"
     tmpl: journalArticle
     fields:
       basic_fields:
@@ -567,7 +558,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   journaleditor:
-    genus: "m"
     tmpl: journalEditor
     fields:
       basic_fields:
@@ -604,7 +594,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   newspaperarticle:
-    genus: "m"
     tmpl: newspaperArticle
     fields:
       basic_fields:
@@ -634,7 +623,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   patent:
-    genus: "n"
     tmpl: patent
     fields:
       basic_fields:
@@ -668,7 +656,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   preprint:
-    genus: "m"
     tmpl: preprint
     fields:
       basic_fields:
@@ -696,7 +683,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   report:
-    genus: "m"
     tmpl: report
     fields:
       basic_fields:
@@ -728,7 +714,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   review:
-    genus: "f"
     tmpl: review
     fields:
       basic_fields:
@@ -763,7 +748,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   researchdata:
-    genus: "m"
     tmpl: researchData
     fields:
       basic_fields:
@@ -810,7 +794,6 @@ publicationTypes:
           label_short: "Ext. Link"
           placeholder: "Enter a remote location (URL) of your file here"
   translation:
-    genus: "f"
     tmpl: translation
     fields:
       basic_fields:
@@ -857,7 +840,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   translationchapter:
-    genus: "f"
     tmpl: translationChapter
     fields:
       basic_fields:
@@ -903,7 +885,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   workingpaper:
-    genus: "n"
     tmpl: workingPaper
     fields:
       basic_fields:
@@ -934,7 +915,6 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   bithesis:
-    genus: "f"
     tmpl: biDissertation
     fields:
       basic_fields:
@@ -994,16 +974,12 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: *related_material
   bidissertation:
-    genus: "f"
     tmpl: biDissertation
   bimasterthesis:
-    genus: "f"
     tmpl: biMasterThesis
   bipostdocthesis:
-    genus: "f"
     tmpl: biPostDocThesis
   bibachelorthesis:
-    genus: "f"
     tmpl: biBachelorThesis
 array_field:
   - abstract
