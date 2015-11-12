@@ -32,7 +32,7 @@ header:
     manage_journals: "Manage Journals"
     manage_awards: "Manage Awards"
     manage_department: "Manage Departments"
-  lang: "Deutsch"
+  lang: "De<span class='hidden-sm'>utsch</span>"
   lang_select:
     eng: "English"
     ger: "German"
@@ -1242,6 +1242,21 @@ forms:
           request_a_copy: "<br>(Request a Copy)"
           local: "UniBi Only"
           open_access: "Open Access"
+        edit_modal:
+          heading: "Edit Uploaded File"
+          heading_file: "File"
+          current_file: "Current file:"
+          relation: "Relation (\"Uploaded document is...\")"
+          access:
+            open_access: "Open Access (File is freely available, effective immediately)"
+            local: "Local Access (UniBi only)"
+            closed: "Closed Access (Author/Reviewer only)"
+            request_a_copy: "Request a Copy (Closed Access except upon request)"
+            embargo: "Switch to Open Access on:"
+          additional_information:
+            heading: "Additional Information"
+            title: "Title"
+            description: "Description"
       license:
         heading: "Copyright and Licenses"
         data_reuse_license:

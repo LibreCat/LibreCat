@@ -32,7 +32,7 @@ header:
     manage_journals: "Journale verwalten"
     manage_awards: "Preise verwalten"
     manage_department: "Einrichtungen verwalten"
-  lang: "English"
+  lang: "En<span class='hidden-sm'>glish</span>"
   lang_select:
     eng: "Englisch"
     ger: "Deutsch"
@@ -1243,6 +1243,21 @@ forms:
           request_a_copy: "<br>(Kopie anfordern)"
           local: "Nur UniBi"
           open_access: "Open Access"
+        edit_modal:
+          heading: "Hochgeladene Datei bearbeiten"
+          heading_file: "Datei"
+          current_file: "Aktuelle Datei:"
+          relation: "Relation (\"Hochgeladenes Dokument ist...\")"
+          access:
+            open_access: "Open Access (Datei ist frei verfügbar, ab sofort)"
+            local: "Local Access (Nur UniBi)"
+            closed: "Closed Access (Nur Autor/Reviewer)"
+            request_a_copy: "Request a Copy (Closed Access außer auf Anfrage)"
+            embargo: "Zu Open Access wechseln am:"
+          additional_information:
+            heading: "Zusätzliche Informationen"
+            title: "Titel"
+            description: "Beschreibung"
       license:
         heading: "Copyright und Lizenzen"
         data_reuse_license:
