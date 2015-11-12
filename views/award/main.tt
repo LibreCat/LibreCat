@@ -9,7 +9,7 @@
 [% END %]
 
 <link rel="stylesheet" type="text/css" href="/css/bootstrapAwards.css" />
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="/javascripts/award_bootstrap.min.js"></script>
 
 <div class="row"><!-- outer border -->
@@ -34,12 +34,12 @@
       <div class="tab-pane[% IF !submit && lists.auszeichnungentotal != 0 %] active[% END %]" id="awardemy">
         <ul class="unstyled">
           [% FOREACH key IN lists.auszeichnungen.sort %]
-          <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% key %]"><h5 class="awardheading"><img src="/images/preis.png" /> [% lists.auszeichnungen.$key %]</h5></a>
+          <a href="[% lang ? "/en" : "" %]/award/[% key %]"><h5 class="awardheading"><img src="/images/preis.png" /> [% lists.auszeichnungen.$key %]</h5></a>
           <ul class="unstyled honoreelist">
             [% FOREACH honoree IN lists.$key %]
             <li>
               <img src="/images/person.png" />
-              <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% honoree.preis %]">
+              <a href="[% lang ? "/en" : "" %]/award/[% honoree.preis %]">
               [% honoree.title %] [% honoree.first_name %] [% honoree.last_name %][% IF honoree.former_member == "verstorben" %] &dagger; [% END %]
               </a>
             </li>
@@ -53,12 +53,12 @@
       <div class="tab-pane[% IF !submit && lists.auszeichnungentotal == 0 && lists.awardstotal != 0 %] active[% END %]" id="award">
         <ul class="unstyled">
           [% FOREACH key IN lists.awards.sort %]
-          <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% key %]"><h5 class="awardheading"><img src="/images/preis.png" /> [% lists.awards.$key %]</h5></a>
+          <a href="[% lang ? "/en" : "" %]/award/[% key %]"><h5 class="awardheading"><img src="/images/preis.png" /> [% lists.awards.$key %]</h5></a>
           <ul class="unstyled honoreelist">
             [% FOREACH honoree IN lists.$key %]
             <li>
               <img src="/images/person.png" />
-              <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% honoree.preis %]">
+              <a href="[% lang ? "/en" : "" %]/award/[% honoree.preis %]">
               [% honoree.title %] [% honoree.first_name %] [% honoree.last_name %][% IF honoree.former_member == "verstorben" %] &dagger; [% END %]
               </a>
             </li>

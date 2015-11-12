@@ -22,7 +22,13 @@ sub _send_it {
 	my ($id, $file_name) = @_;
 	my $dest_dir = h->get_file_path($id);
 	my $path_to_file = path($dest_dir, $file_name);
-	return Dancer::send_file($path_to_file, system_path => 1);
+	if(-e $path_to_file){
+		return Dancer::send_file($path_to_file, system_path => 1);
+	}
+	else {
+		template 'websites/error',
+			{message => "The file does not exist anymore. We're sorry."};
+	}
 }
 
 sub _calc_date {
@@ -45,7 +51,7 @@ sub _get_file_info {
 Request a copy of the publication. Email will be sent to the author.
 
 =cut
-post '/rc/:id/:file_id' => sub {
+any '/rc/:id/:file_id' => sub {
 	require Dancer::Plugin::Email;
 
 	my $bag = Catmandu->store('reqcopy')->bag;
@@ -84,7 +90,7 @@ post '/rc/:id/:file_id' => sub {
 			approved => params->{approved} || 0,
 		});
 
-		my $file_creator_email = h->get_person($file->{creator})->{bis}->{email};
+		my $file_creator_email = h->get_person($file->{creator})->{email_encoded};
 		if(params->{user_email}){
 			my $pub = h->publication->get(params->{id});
 			my $mail_body = export_to_string({
@@ -98,16 +104,20 @@ post '/rc/:id/:file_id' => sub {
 				template => 'views/email/req_copy.tt',
 			);
 			try {
-				email {
+				my $mail_response = email {
 					to => $file_creator_email,
 					subject => h->config->{request_copy}->{subject},
 					body => $mail_body,
 				};
+				return redirect "/publication/".params->{id} if $mail_response =~ /success/i;
 			} catch {
 				error "Could not send email: $_";
 			}
 		} else {
-			return h->host . "/rc/" . $stored->{_id};
+			return to_json {
+				ok => true,
+				url => h->host . "/rc/" . $stored->{_id},
+			};
 		}
 	}
 };
@@ -180,7 +190,7 @@ get '/rc/:key' => sub {
 	if ($check and $check->{approved} == 1) {
 		_send_it($check->{record_id}, $check->{file_name});
 	} else {
-		template 'error',
+		template 'websites/error',
 			{message => "The time slot has expired. You can't download the document anymore."};
 	}
 };

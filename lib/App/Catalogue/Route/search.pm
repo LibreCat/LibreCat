@@ -146,7 +146,17 @@ according to first delegate ID.
 =cut
 	get '/delegate' => needs role => "delegate" => sub {
 		my $account = h->get_person(session->{user});
-		redirect "/librecat/search/delegate/$account->{delegate}->[0]";
+		if(params->{fmt} and params->{fmt} eq "autocomplete"){
+			my $p = h->extract_params();
+			foreach my $delegate (@{$account->{delegate}}){
+				push @{$p->{q}}, $delegate;
+			}
+			my $hits = h->search_publication($p);
+			h->export_publication($hits, params->{fmt});
+		}
+		else {
+			redirect "/librecat/search/delegate/$account->{delegate}->[0]";
+		}
 	};
 
 =head2 GET '/delegate/:delegate_id'

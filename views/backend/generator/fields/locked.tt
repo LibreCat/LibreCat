@@ -1,0 +1,21 @@
+[% IF session.role == "super_admin" %]
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_locked">
+      [% lf.$type.field.locked.label_short || lf.$type.field.locked.label %]
+    </label>
+  </div>
+  <div class="col-md-10 col-xs-11">
+    <div class="row innerrow">
+      <div class="col-md-10 col-xs-11">
+        <div class="checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="locked" id="id_locked" value="1"[% IF locked OR type.match('^bi') %] checked="checked"[% END %]>
+            [% lf.$type.field.locked.label %]
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+[% END %]

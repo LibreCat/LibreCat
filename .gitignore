@@ -30,6 +30,7 @@ profiledata/
 uploads/
 vendor/
 tmp/
+views/docs
 catmandu.local.yml
 ~$
 local

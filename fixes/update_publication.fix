@@ -11,7 +11,13 @@ clean_abstract()
 #language()
 maybe_add_urn()
 person()
-add_department()
+
+if exists(department)
+  copy_field(department.*._id,department.*.tmp)
+  lookup_in_store(department.*.tmp, search, bag:department)
+  move_field(department.*.tmp.tree, department.*.tree)
+  remove_field(department.*.tmp)
+end
 
 copy_field(bi_doctype,type)
 

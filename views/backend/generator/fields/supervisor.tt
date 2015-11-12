@@ -37,13 +37,13 @@
             <input type="text" id="supervisor_last_name_0" name="supervisor.0.last_name" placeholder="[% lf.$type.field.supervisor.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="" />
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('supervisor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
-            {% IF fields.basic_fields.supervisor.pevz OR fields.supplementary_fields.supervisor.pevz %}
-            <div class="input-group-addon"><span id="supervisor_link_pevz_0" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.supervisor.pevz_tooltip %]" /></span></div>
+            {% IF fields.basic_fields.supervisor.idm OR fields.supplementary_fields.supervisor.idm %}
+            <div class="input-group-addon"><span id="supervisor_link_person_0" onclick="link_person(this);" data-type="supervisor_"><img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.supervisor.tooltip %]" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </span>
-        {% IF fields.basic_fields.supervisor.pevz OR fields.supplementary_fields.supervisor.pevz %}
+        {% IF fields.basic_fields.supervisor.idm OR fields.supplementary_fields.supervisor.idm %}
         <script>
           $('#supervisor_Authorized0').tooltip();
         </script>
@@ -78,13 +78,13 @@
             <input type="text" id="supervisor_last_name_[% loop.index %]" name="supervisor.[% loop.index %].last_name" placeholder="[% lf.$type.field.supervisor.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% name.last_name | html %]" />
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('supervisor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
-            {% IF fields.basic_fields.supervisor.pevz OR fields.supplementary_fields.supervisor.pevz %}
-            <div class="input-group-addon"><span id="supervisor_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized[% loop.index %]" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.supervisor.pevz_tooltip %]" /></span></div>
+            {% IF fields.basic_fields.supervisor.idm OR fields.supplementary_fields.supervisor.idm %}
+            <div class="input-group-addon"><span id="supervisor_link_person_[% loop.index %]" onclick="link_person(this);" data-type="supervisor_"><img id="supervisor_Authorized[% loop.index %]" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.supervisor.tooltip %]" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </span>
-        {% IF fields.basic_fields.supervisor.pevz OR fields.supplementary_fields.supervisor.pevz %}
+        {% IF fields.basic_fields.supervisor.idm OR fields.supplementary_fields.supervisor.idm %}
         <script>
           $('#supervisor_Authorized[% loop.index %]').tooltip();
         </script>
@@ -116,14 +116,14 @@
               <span class="hidden-lg hidden-md">[% lf.$type.field.supervisor.last_name.label_short %]</span>
             </div>
             <input type="text" id="supervisor_last_name_0" name="supervisor.0.last_name" placeholder="[% lf.$type.field.supervisor.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% supervisor.0.last_name | html %]" />
-            {% IF fields.basic_fields.supervisor.pevz OR fields.supplementary_fields.supervisor.pevz %}
-            <div class="input-group-addon"><span id="supervisor_link_pevz_0" onclick="linkPevz(this);" data-type="supervisor_"><img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.supervisor.pevz_tooltip %]" /></span></div>
+            {% IF fields.basic_fields.supervisor.idm OR fields.supplementary_fields.supervisor.idm %}
+            <div class="input-group-addon"><span id="supervisor_link_person_0" onclick="link_person(this);" data-type="supervisor_"><img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.supervisor.tooltip %]" /></span></div>
             {% ELSE %}
             <div class="input-group-addon"></div>
             {% END %}
           </div>
         </span>
-        {% IF fields.basic_fields.supervisor.pevz OR fields.supplementary_fields.supervisor.pevz %}
+        {% IF fields.basic_fields.supervisor.idm OR fields.supplementary_fields.supervisor.idm %}
         <script>
           $('#supervisor_Authorized0').tooltip();
         </script>
@@ -135,7 +135,7 @@
     </div>
   </div>
 
-    <div class="modal" id="supervisor_linkPevzModal">
+    <div class="modal" id="supervisor_link_person_modal">
       <div class="modal-dialog">
 	<div class="modal-content">
 	  <div class="modal-header">

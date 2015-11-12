@@ -26,8 +26,8 @@
 	  <div class="input-group sticky{% IF honoree.mandatory %} mandatory{% END %}">
 	    <div class="input-group-addon">{% honoree.last_name.label %}</div>
 	    <input type="text" name="honoree.[% loop.index %].last_name" id="id_last_name_[% loop.index %]" value="[% hon.last_name %]" class="form-control sticky"{% IF honoree.last_name.mandatory %} required{% END %} [% IF hon.id %]readonly="readonly"[% END %] >
-	    {% IF honoree.pevz %}
-        <div class="input-group-addon"><span id="link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type=""><img id="Authorized[% loop.index %]" [% IF hon.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] style="height:20px;" [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% honoree.pevz_tooltip %}" /></span></div>
+	    {% IF honoree.idm %}
+        <div class="input-group-addon"><span id="link_person_[% loop.index %]" onclick="link_person(this);" data-type=""><img id="Authorized[% loop.index %]" [% IF hon.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] style="height:20px;" [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% honoree.tooltip %}" /></span></div>
         {% ELSE %}
         <div class="input-group-addon"></div>
         {% END %}
@@ -56,8 +56,8 @@
 	  <div class="input-group sticky{% IF honoree.mandatory %} mandatory{% END %}">
 	    <div class="input-group-addon">{% honoree.last_name.label %}</div>
 	    <input type="text" name="honoree.0.last_name" id="id_last_name_0" value="" class="form-control sticky"{% IF honoree.last_name.mandatory %} required{% END %}>
-	    {% IF honoree.pevz %}
-        <div class="input-group-addon"><span id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" style="height:20px;" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% honoree.pevz_tooltip %}" /></span></div>
+	    {% IF honoree.idm %}
+        <div class="input-group-addon"><span id="link_person_0" onclick="link_person(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" style="height:20px;" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="{% honoree.tooltip %}" /></span></div>
         {% ELSE %}
         <div class="input-group-addon"></div>
         {% END %}

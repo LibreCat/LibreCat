@@ -35,9 +35,9 @@
   [% IF key == "record" %]
     [% FOREACH rel_rec IN related_material.$key %]
     [% IF rel_rec.relation == "is_cited_by" %]
-      [% relResData.push(rel_rec) %]
-    [% ELSIF rel_rec.relation == "cites" %]
       [% relPubl.push(rel_rec) %]
+    [% ELSIF rel_rec.relation == "cites" %]
+      [% relResData.push(rel_rec) %]
     [% ELSE %]
       [% relMat.push(rel_rec) %]
     [% END %]
@@ -95,7 +95,7 @@
 
       <div class="col-xs-10 col-sm-8"><!-- begin left col -->
 
-        <h1 class="cmark" itemprop="name">[% title %][% IF status != "public" AND _id %] <a class="btn btn-sm btn-success" href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> [% lf.main_page.links.publish %]</a> [% END %]</h1>
+        <h1 class="cmark" itemprop="name">[% title %][% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") %] <a class="btn btn-sm btn-success" href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> [% lf.main_page.links.publish %]</a> [% END %]</h1>
 
         [% IF citation %]
         <div class="row">
@@ -369,35 +369,38 @@
           <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">View record in Web of Science&reg;</a>
           [% END %]
 
-          <h3>Sources</h3>
+	  [% IF external_id.pmid OR  external_id.arxiv OR external_id.inspire OR external_id.scoap3 OR external_id.ahf OR external_id.opac OR external_id.phillister %]
+	    <h3>Sources</h3>
 
-          [% IF external_id.pmid %]
-          <p><img src="/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% external_id.pmid %]<br>
-          <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% external_id.pmid %]">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% external_id.pmid %]">Europe PMC</a></p>
-          [% END %]
+	    [% IF external_id.pmid %]
+	    <p><img src="/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% external_id.pmid %]<br>
+	    <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% external_id.pmid %]">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% external_id.pmid %]">Europe PMC</a></p>
+	    [% END %]
 
-          [% IF external_id.arxiv %]
-          <p><img src="/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="http://arxiv.org/abs/[% external_id.arxiv %]">[% external_id.arxiv %]</a></p>
-          [% END %]
+	    [% IF external_id.arxiv %]
+	    <p><img src="/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="http://arxiv.org/abs/[% external_id.arxiv %]">[% external_id.arxiv %]</a></p>
+	    [% END %]
 
-          [% IF external_id.inspire %]
-          <p><img src="/images/icon_inspire.png" class="img-thumbnail" alt="">Inspire <a href="https://inspirehep.net/record/[% external_id.inspire %]">[% external_id.inspire %]</a></p>
-          [% END %]
+	    [% IF external_id.inspire %]
+	    <p><img src="/images/icon_inspire.png" class="img-thumbnail" alt="">Inspire <a href="https://inspirehep.net/record/[% external_id.inspire %]">[% external_id.inspire %]</a></p>
+	    [% END %]
 
-          [% IF external_id.scoap3 %]
-          <p><img src="/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="http://repo.scoap3.org/record/[% external_id.scoap3 %]">[% external_id.scoap3 %]</a></p>
-          [% END %]
+	    [% IF external_id.scoap3 %]
+	    <p><img src="/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="http://repo.scoap3.org/record/[% external_id.scoap3 %]">[% external_id.scoap3 %]</a></p>
+	    [% END %]
 
-          [% IF external_id.ahf %]
-          <p>AHF: <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% external_id.ahf %]">[% external_id.ahf %]</a></p>
-          [% END %]
+	    [% IF external_id.ahf %]
+	    <p>AHF: <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% external_id.ahf %]">[% external_id.ahf %]</a></p>
+	    [% END %]
 
-          [% IF external_id.opac %]
-          <p><img src="/images/icon_ub.png" class="img-thumbnail" alt=""><a href="http://katalogplus.ub.uni-bielefeld.de/title/[% external_id.opac %]">[% lf.frontdoor.catalogue %]</a></p>
-          [% END %]
+	    [% IF external_id.opac %]
+	    <p><img src="/images/icon_ub.png" class="img-thumbnail" alt=""><a href="http://katalogplus.ub.uni-bielefeld.de/title/[% external_id.opac %]">[% lf.frontdoor.catalogue %]</a></p>
+	    [% END %]
 
-          [% IF external_id.phillister %]
-          <p><img src="/images/icon_uni.png" class="img-thumbnail" alt="">PhilLister: <a href="http://phillister.ub.uni-bielefeld.de/publication/[% external_id.phillister %]">[% external_id.phillister %]</a></p>
+	    [% IF external_id.phillister %]
+	    <p><img src="/images/icon_uni.png" class="img-thumbnail" alt="">PhilLister: <a href="http://phillister.ub.uni-bielefeld.de/publication/[% external_id.phillister %]">[% external_id.phillister %]</a></p>
+	    [% END %]
+
           [% END %]
 
         [% END %]
@@ -446,7 +449,7 @@
           [% IF localUser && !external_id.opac %]
             [% SWITCH type %]
             [% CASE ['book', 'bookChapter', 'dissertation', 'bookEditor', 'workingPaper', 'conferenceAbstract', 'conferenceEditor', 'journalArticle' ] %]
-              <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% IF type == 'bookChapter' %][% publication %][% ELSE %][% title | uri %][% END %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=[% IF type == 'journalArticle' OR type == 'conferenceAbstract' %]ext[% ELSE %]lok[% END %]&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="[% h.host %]/images/icon_ub.png" alt="" class="img-thumbnail">[% lf.frontdoor.catalogue %]</a>
+              <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% IF type == 'bookChapter' %][% publication %][% ELSE %][% title | uri %][% END %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=[% IF type == 'journalArticle' OR type == 'conferenceAbstract' %]ext[% ELSE %]lok[% END %]&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="/images/icon_ub.png" alt="" class="img-thumbnail">[% lf.frontdoor.catalogue %]</a>
             [% END %]
           [% END %]
         </p>

@@ -10,7 +10,6 @@
     [% IF !department %]
     <div class="row innerrow">
       <input type="hidden" name="department.0._id" id="dp_idautocomplete_0" value="" />
-      <input type="hidden" name="department.0.name" id="dp_nameautocomplete_0" value="" />
     
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} mandatory{% END %}">
@@ -26,12 +25,11 @@
     [% FOREACH dept IN department %]
     <div class="row innerrow">
       <input type="hidden" name="department.[% loop.index %]._id" id="dp_idautocomplete_[% loop.index %]" value="[% dept._id %]" />
-      <input type="hidden" name="department.[% loop.index %].name" id="dp_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
           
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.department.label_short || lf.$type.field.department.label %]</div>
-          <input type="text" onfocus="enable_autocomplete('dp',[% loop.index %]);" class="sticky form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="[% lf.$type.field.department.placeholder %]" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} disabled="disabled" />
+          <input type="text" onfocus="enable_autocomplete('dp',[% loop.index %]);" class="sticky form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="[% lf.$type.field.department.placeholder %]" id="dp_autocomplete_[% loop.index %]" value="[% dept.display %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} disabled="disabled" />
           <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="department_select_[% loop.index %]">[% lf.button.select %]</span></div>
           <div class="input-group-addon" onclick="add_field('department'[% IF lf.$type.field.department.placeholder %],'[% lf.$type.field.department.placeholder %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
@@ -43,12 +41,11 @@
     {% ELSE %}
     <div class="row innerrow">
       <input type="hidden" name="department.0._id" id="dp_idautocomplete_0" value="[% department.0._id %]" />
-      <input type="hidden" name="department.0.name" id="dp_nameautocomplete_0" value="[% department.0.name %]" />
-    
+      
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.department.label_short || lf.$type.field.department.label %]</div>
-          <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} required{% END %}" placeholder="[% lf.$type.field.department.placeholder %]" id="dp_autocomplete_0" value="[% department.0.name %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
+          <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} required{% END %}" placeholder="[% lf.$type.field.department.placeholder %]" id="dp_autocomplete_0" value="[% department.0.display %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="department_select_0">[% lf.button.select %]</span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>

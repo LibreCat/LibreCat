@@ -1,14 +1,14 @@
 
 <!-- BEGIN person_profile.tt -->
 
-[% IF thisPerson.bis.email %]
-<a class="helpme helpme-md" data-placement="top" title="[% lf.help.pevz_email %]" href="mailto:[% thisPerson.bis.email %]" itemprop="email">[% thisPerson.bis.email.replace('@|&#64;', ' [at] ') %]</a><br>
+[% IF thisPerson.email_encoded || thisPerson.email %]
+<a class="helpme helpme-md" data-placement="top" title="[% lf.help.pevz_email %]" href="mailto:[% thisPerson.email_encoded || thisPerson.email %]" itemprop="email">[% thisPerson.email_encoded.replace('@|&#64;', ' [at] ') || thisPerson.email %]</a><br>
 [% END %]
 
 [% IF !thisPerson %]
   <p>[% lf.person_profile.id_not_found %]</p>
 [% ELSE %]
-  [% IF thisPerson.bis.former == "1" %]
+  [% IF thisPerson.former == "1" %]
     <p>[% lf.person_profile.former_researcher %]</p>
   [% ELSE %]
     <div class="col-md-12 row">
@@ -17,11 +17,11 @@
 	<div class="col-md-6"><a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% thisPerson._id %]&amp;lang=en">[% thisPerson._id %]</a></div>
       </div>
     </div>
-    [% IF thisPerson.sfb882_profile %]
+    [% IF thisPerson.other_profile %]
     <div class="col-md-12 row">
       <div class="row">
-	<div class="col-md-4">[% lf.person_profile.sfb_profile %]</div>
-	<div class="col-md-6"><a href="http://www.sfb882.uni-bielefeld.de/en/staff/[% thisPerson._id %]">[% thisPerson._id %]</a></div>
+	<div class="col-md-4">[% lf.person_profile.other_profile %]</div>
+	<div class="col-md-6"><a href="[% lf.person_profile.other_profile_url %][% thisPerson._id %]">[% lf.person_profile.other_profile_url %][% thisPerson._id %]</a></div>
       </div>
     </div>
     [% END %]

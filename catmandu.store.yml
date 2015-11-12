@@ -747,6 +747,11 @@ search:
               op:
                 '=': true
               field: foda
+            locked:
+              op:
+                '=': true
+                '<>': true
+              field: locked
 
       researcher:
         cql_mapping:
@@ -1123,8 +1128,7 @@ search:
               _id: {type: string, analyzer: tag}
               tree:
                 properties:
-                  name: {type: string, index: no}
-                  id: {type: string, analyzer: tag}
+                  _id: {type: string, analyzer: tag}
           proj: {type: byte}
           metrics:
             properties:
@@ -1180,6 +1184,7 @@ search:
           alternative_id: {type: string, analyzer: tag}
           foda: {type: byte}
           defense_date: {type: date, index: no}
+          locked: {type: byte}
 
       researcher:
         include_in_all: false
@@ -1202,22 +1207,18 @@ search:
           old_last_name: {type: string}
           first_name: {type: string}
           old_first_name: {type: string}
-          bis:
-            properties:
-              title: {type: string}
-              former: {type: byte}
-              nonexist: {type: byte}
-              forschend: {type: byte}
-              email: {type: string, index: not_analyzed}
-              photo: {type: string, index: not_analyzed}
+          idm_title: {type: string}
+          former: {type: byte}
+          nonexist: {type: byte}
+          researcher: {type: byte}
+          email_encoded: {type: string, index: not_analyzed}
+          photo: {type: string, index: not_analyzed}
           department:
             properties:
               _id: {type: string, analyzer: tag}
-              name: {type: string, include_in_all: true}
           reviewer:
             properties:
               _id: {type: string, analyzer: tag}
-              name: {type: string}
           access:
             properties:
               id: {type: string, anylzer: tag}
@@ -1234,7 +1235,7 @@ search:
           account_type: {type: string}
           ext_institution: {type: string}
           password: {type: string}
-          sfb882_profile: {type: byte}
+          other_profile: {type: byte}
 #          email: {type: string, analyzer: tag}
 #          sort: {type: string}
           orcid: {type: string, analyzer: tag}
@@ -1265,8 +1266,7 @@ search:
               exact:  {type: string, analyzer: tag}
           tree:
             properties:
-              name: {type: string}
-              id: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
           layer: {type: string, analyzer: tag}
           display:
             type: multi_field

@@ -238,7 +238,7 @@ relations_file:
     link_text: "Other Relation"
   -
     relation: "hidden"
-    relation_text: "Suppl. Mat. for embedding only (hidden on frontdoor)"
+    relation_text: "Supplementary Material (for embedding only, hidden on frontdoor)"
     link_text: "Hidden Supplementary Material"
 
 relations_link:

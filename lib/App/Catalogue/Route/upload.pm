@@ -209,7 +209,7 @@ prefix '/librecat' => sub {
     				last_name => params->{'author.last_name'},
     				full_name => params->{'author.last_name'} . ", " . params->{'author.first_name'},
     			}],
-    			year => substr(params->{'defense_date'}, 0, 4),
+    			year => substr($now, 0, 4),
     			abstract => [{
     				lang => "eng",
     				text => params->{'abstract'},

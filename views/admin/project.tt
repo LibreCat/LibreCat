@@ -50,7 +50,7 @@
     <div class="row innerrow">
       <div class="col-md-1">
 	<span class="glyphicon glyphicon-pencil"></span>
-	<a href="[% h.host %]/project/[% p._id %]" target="_blank"><span class="label label-success"><strong>[% p._id %]</strong></span></a>
+	<a href="/project/[% p._id %]" target="_blank"><span class="label label-success"><strong>[% p._id %]</strong></span></a>
       </div>
       <div class="col-md-9">
 	<a href="/librecat/admin/project/edit/[% p._id %]">[% IF p.acronym %][% p.acronym %] | [% END %][% p.name %]</a>

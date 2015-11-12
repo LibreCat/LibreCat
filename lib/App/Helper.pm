@@ -302,11 +302,10 @@ sub get_project {
 }
 
 sub get_department {
-	if ( is_integer $_[1] ){
-		$_[0]->department->get($_[1]);
-	} elsif ( is_string $_[1] ) {
-		$_[0]->search_department({q => ["name=$_[1]"]})->first;
-	}
+	my $result;
+	$result = $_[0]->department->get($_[1]);
+	$result = $_[0]->search_department({q => ["name=$_[1]"]})->first if !$result;
+	return $result;
 }
 
 sub get_research_group {
@@ -655,12 +654,19 @@ sub search_department {
 		my $hierarchy;
 		$hits->each( sub {
 			my $hit = $_[0];
-			$hierarchy->{$hit->{tree}->[0]->{name}}->{oId} = $hit->{tree}->[0]->{id} if $hit->{layer} eq "1";
-			$hierarchy->{$hit->{tree}->[0]->{name}}->{display} = $hit->{display} if $hit->{layer} eq "1";
-			$hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{oId} = $hit->{tree}->[1]->{id} if $hit->{layer} eq "2";
-			$hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{display} = $hit->{display} if $hit->{layer} eq "2";
-			$hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{$hit->{tree}->[2]->{name}}->{oId} = $hit->{tree}->[2]->{id} if $hit->{layer} eq "3";
-			$hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{$hit->{tree}->[2]->{name}}->{display} = $hit->{display} if $hit->{layer} eq "3";
+			$hierarchy->{$hit->{name}}->{oId} = $hit->{tree}->[0]->{_id} if $hit->{layer} eq "1";
+			$hierarchy->{$hit->{name}}->{display} = $hit->{display} if $hit->{layer} eq "1";
+			if ($hit->{layer} eq "2"){
+				my $layer = $self->get_department($hit->{tree}->[0]->{_id});
+				$hierarchy->{$layer->{name}}->{$hit->{name}}->{oId} = $hit->{tree}->[1]->{_id};
+				$hierarchy->{$layer->{name}}->{$hit->{name}}->{display} = $hit->{display};
+			}
+			if ($hit->{layer} eq "3"){
+				my $layer2 = $self->get_department($hit->{tree}->[0]->{_id});
+				my $layer3 = $self->get_department($hit->{tree}->[1]->{_id});
+				$hierarchy->{$layer2->{name}}->{$layer3->{name}}->{$hit->{name}}->{oId} = $hit->{tree}->[2]->{_id};
+				$hierarchy->{$layer2->{name}}->{$layer3->{name}}->{$hit->{name}}->{display} = $hit->{display};
+			}
 		});
 
 		return $hierarchy;

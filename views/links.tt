@@ -23,11 +23,11 @@
 <!--
     [% IF bag == "data" %]
   	[% IF entry.externalFiles == "1" %]
-	  | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
+	  | <a href="/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
 	[% ELSE %]
 	  [% FOREACH file IN entry.file %]
 	    [% IF file.open_access == 1 %]
-	      | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
+	      | <a href="/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
 	      [% LAST %]
 	    [% END %]
 	  [% END %]
@@ -37,7 +37,10 @@
 
 [% IF backend %]
   <br />
-  <a href="/librecat/record/edit/[% entry._id %]">[% lf.main_page.links.edit %]</a>
+  [% IF (!entry.locked AND !entry.type.match("^bi")) OR session.role == "super_admin" %]<a href="/librecat/record/edit/[% entry._id %]">[% lf.main_page.links.edit %]</a>
+  [% ELSE %]
+  <strong>[% lf.main_page.links.edit %]</strong>
+  [% END %]
   | <a data-toggle="collapse" href="#[% tabmodus %]_[% entry._id %]">[% lf.main_page.links.details %]</a>
 
   [% IF session.role == "super_admin" %]
@@ -54,7 +57,9 @@
   [% ELSIF entry.status == "public" %]
   | <a href="/librecat/record/return/[% entry._id %]">[% lf.main_page.links.return %]</a>
   [% END %]
+  [% IF session.role == "super_admin" %]
   <span class="pull-right">[% entry.date_updated.replace('(T|Z)',' ') %]</span>
+  [% END %]
 [% END %]
 
 <!-- END links.tt -->

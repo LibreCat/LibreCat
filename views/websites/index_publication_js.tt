@@ -1,8 +1,5 @@
 <!-- BEGIN websites/index_publication_js.tt -->
 
-[% IF bag == "data" %]
-[% hits = researchhits.hits %]
-[% END %]
 [% qp = request.params.hash %]
 document.write ('<!-- Citations in this list are displayed in "[% style %]" style. -->');
 document.write ('<ul[% IF qp.listyle %] style="[% qp.listyle %]"[% END %]>') ;
