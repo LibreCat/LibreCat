@@ -27,7 +27,7 @@
 	  <li class="helpme" data-placement="bottom" title="[% lf.help.brand %]"><a href="/[% IF session.user %]librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span>[% lf.header.brand %]</a></li>
 	  <li class="helpme" data-placement="bottom" title="[% lf.help.my_author_page %]"><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span>[% lf.header.my_author_page %]</a></li>
 	[% IF session.role == 'super_admin' %]
-	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% lf.header.admin_menu.admin %] <span class="glyphicon glyphicon-chevron-down"></span></a>
+	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span><span class="hidden-sm">[% lf.header.admin_menu.admin %]</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
 	  <ul class="dropdown-menu" role="menu">
 	    <li><a href="/librecat/admin/account"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_accounts %]</a></li>
 	    <!-- <li><a href="/librecat/admin/import"><span class="glyphicon glyphicon-import"></span>[% lf.header.admin_menu.import %]</a></li> -->
