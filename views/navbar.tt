@@ -41,7 +41,7 @@
 	  </li>
 	[% END %]
 	  <li class="hidden-xs helpme helpme-md" data-placement="right" title="[% lf.help.help %]"><a href="#" class="toggle_help"><span class="glyphicon glyphicon-question-sign"></span></a></li>
-	  <li><a href="/docs/howto"><span class="fa fa-lightbulb-o fa-lg"></span> [% lf.help.howto %]</a></li>
+	  <li><a href="/docs/howto"><span class="fa fa-lightbulb-o fa-lg"></span><span class="hidden-sm"> [% lf.help.howto %]</span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 	<li class="helpme helpme-md" data-placement="left" title="[% lf.help.change_language %]">
