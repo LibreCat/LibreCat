@@ -1,9 +1,11 @@
 [% path = request.path %]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lf = h.config.language.$lang -%]
 [% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
 
-<!-- BEGIN admin/generator/edit_account.tt -->
+<!-- BEGIN admin/generator/master_account.tt -->
 
 <div class="row">
 
@@ -24,8 +26,8 @@
       <div class="row innerrow"><!-- button -->
         <div class="col-md-12 buttonrow">
           <span class="form-group col-md-10 col-md-offset-2">
-            <button type="button" id="id_check_submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save</button>
-            <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+            <button type="button" id="id_check_submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> [% lf.forms.button.save %]</button>
+            <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> [% lf.forms.button.cancel %]</button>
           </span>
         </div>
       </div>
@@ -158,6 +160,6 @@ $("input[name='account_type']").change(function(){
 
 </script>
 
-<!-- END admin/generator/edit_account.tt -->
+<!-- END admin/generator/master_account.tt -->
 
 [% INCLUDE footer.tt %]

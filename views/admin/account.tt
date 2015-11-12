@@ -1,6 +1,8 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lf = h.config.language.$lang -%]
 [% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
@@ -46,7 +48,7 @@
     </form>
     
     [% IF error %]
-    <p class="text-danger">[% error %] <i> <span class="glyphicon glyphicon-pencil"></span></i><a href="/librecat/admin/account/edit/[% qp.id %]">Edit</a></p>
+    <p class="text-danger">[% error %] <a href="/librecat/admin/account/edit/[% qp.id %]"><span class="glyphicon glyphicon-pencil fw"></span>Edit</a></p>
     [% END %]
 
     <div class="row col-md-12 margin-top1 margin-bottom2">

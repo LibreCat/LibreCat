@@ -1,9 +1,11 @@
 [% path = request.path %]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lf = h.config.language.$lang -%]
 [% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
 
-<!-- BEGIN admin/generator/edit_department.tt -->
+<!-- BEGIN admin/generator/master_department.tt -->
 
 <div class="row">
 
@@ -28,18 +30,15 @@
 {% INCLUDE $template %}
       {% END %}
 
-
       <div class="row innerrow"><!-- button -->
-	<div class="col-md-12 buttonrow">
-	<span class="form-grou col-md-2">&nbsp;</span>
-	<span class="form-group col-md-2">
-	  <button type="button" class="btn btn-danger cancel-button"><span class="glyphicon glyphicon-remove"></span> Close</button>
-	</span>
-	<span class="form-group col-md-2">
-	  <button type="submit" id="id_do_nothing" class="btn btn-success change_tab"><span class="glyphicon glyphicon-ok"></span> Save</button>
-	</span>
-	</div>
+        <div class="col-md-12 buttonrow">
+          <span class="form-group col-md-10 col-md-offset-2">
+	  <button type="submit" id="id_do_nothing" class="btn btn-success change_tab"><span class="glyphicon glyphicon-ok"></span> [% lf.forms.button.save %]</button>
+	  <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> [% lf.forms.button.cancel %]</button>
+          </span>
+        </div>
       </div>
+
     </form>
 
     <div class="modal" id="link_person_modal">
@@ -77,6 +76,6 @@ $(document).on('click', '.single', function(){
 
 </script>
 
-<!-- END admin/generator/edit_department.tt -->
+<!-- END admin/generator/master_department.tt -->
 
 [% INCLUDE footer.tt %]
