@@ -607,7 +607,7 @@ sub export_autocomplete_json {
 		}
 	});
 
-	return encode_json($jsonhash);
+	return Dancer::to_json($jsonhash);
 }
 
 sub search_researcher {
