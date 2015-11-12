@@ -530,7 +530,7 @@ search:
             doi:
               op:
                 '=': true
-                'exact': true 
+                'exact': true
               field: 'doi'
             year: &year
               op:
@@ -671,6 +671,7 @@ search:
             fulltext:
               op:
                 '=': true
+                'exact': true
                 '<>': true
               field: 'file.open_access'
 #            yearlastuploaded:

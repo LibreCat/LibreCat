@@ -287,14 +287,15 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 </part>
 </relatedItem>
 
-[% IF related_material.record %]
+[%- IF related_material.record -%]
 <relatedItem type="Supplementary material">
   <location>
-  [% FOREACH rm IN related_material.record %]
+  [%- FOREACH rm IN related_material.record -%]
      <url>[% host %]/publication/[% rm.id %]</url>
-  [% END %]
+  [%- END -%]
+  </location>
 </relatedItem>
-[% END %]
+[%- END -%]
 
 [% IF related_material.link %]
 <relatedItem type="Supplementary material">
