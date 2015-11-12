@@ -4,7 +4,12 @@
 
       <h3>Technical Requirements for Documents</h3>
 
-      <p><strong>Under Construction. For the time being please refer to the German web page!</strong></p>
+      <p>PUB Theses represents the platform at Bielefeld University where university members and graduates can submit their doctoral theses and postdoctoral theses or other types of examination papers completed at Bielefeld University for free-of-charge publication on the internet.</p>
+      
+      <p>The electronic version should be submitted in PDF format. In case of more than one file you should use data archives .gz and .zip.<br />
+      If you intend to use another format or if multi-media elements are included in your work, please contact us beforehand.</p>
+      
+      <p>For the long-term availability of published documents, the distribution of unprotected documents is necessary. So documents may not be encrypted or password protected.</p>
 
     [% ELSE %]
 
