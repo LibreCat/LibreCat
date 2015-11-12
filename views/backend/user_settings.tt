@@ -12,8 +12,7 @@
     <div class="col-md-12" id="person_affiliation">
     [% IF !department %]
     <div class="row  innerrow">
-      <input type="hidden" name="department.0.id" id="person_aff_idautocomplete_0" value="" />
-      <input type="hidden" name="department.0.name" id="person_aff_nameautocomplete_0" value="" />
+      <input type="hidden" name="department.0._id" id="person_aff_idautocomplete_0" value="" />
     
       <div class="form-group col-md-11">
         <div class="input-group sticky">
@@ -27,12 +26,11 @@
     [% ELSE %]
       [% FOREACH dept IN department %]
       <div class="row innerrow">
-        <input type="hidden" name="department.[% loop.index %].id" id="person_aff_idautocomplete_[% loop.index %]" value="[% dept.id %]" />
-        <input type="hidden" name="department.[% loop.index %].name" id="person_aff_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
+        <input type="hidden" name="department.[% loop.index %]._id" id="person_aff_idautocomplete_[% loop.index %]" value="[% dept._id %]" />
           
         <div class="form-group col-md-11">
           <div class="input-group sticky">
-            <input type="text" onfocus="enable_autocomplete('person_aff',[% loop.index %]);" class="sticky form-control" id="person_aff_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+            <input type="text" onfocus="enable_autocomplete('person_aff',[% loop.index %]);" class="sticky form-control" id="person_aff_autocomplete_[% loop.index %]" value="[% h.get_department(dept._id).display %]" disabled="disabled" />
             <div class="input-group-addon"><span class="department" id="person_aff_select_[% loop.index %]" onclick="selectAffiliation(this);">[% lf.forms.button.select %]</span></div>
 	        <div class="input-group-addon" onclick="add_field('person_affiliation');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon" onclick="remove_field(this);submit_form('id_save_aff');"><span class="glyphicon glyphicon-minus"></span></div>
