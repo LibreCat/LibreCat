@@ -3,7 +3,7 @@
     <label>{% reviewer.label %}</label>
   </div>
   <div class="col-md-10" id="reviewer">
-  [% IF !reviewer %]
+  [% IF !reviewer OR !reviewer.0 %]
     <div class="row innerrow">
       <input type="hidden" name="reviewer.0._id" id="rv_idautocomplete_0" />
       

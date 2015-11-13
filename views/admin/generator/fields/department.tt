@@ -3,7 +3,7 @@
     <label>{% department.label %}</label>
   </div>
   <div class="col-md-10" id="affiliation">
-  [% IF !department %]
+  [% IF !department OR !department.0 %]
     <div class="row innerrow">
       <input type="hidden" name="department.0._id" id="aff_idautocomplete_0" />
       
