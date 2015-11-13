@@ -39,6 +39,7 @@ header:
   department_affiliation: "Fakultät/ Zugehörigkeit"
   default_edit_mode: "Standard Editiermodus"
   default_language: "Standardsprache"
+  beta: "Das neue Backend von PUB befindet sich noch im Beta-Stadium"
 footer:
   this_is_us: "Universitätsbibliothek Bielefeld"
   language_url: ""
@@ -1657,7 +1658,7 @@ help:
   home: "Startseite"
   brand: "Persönliche<br>Startseite"
   my_author_page: "Ihre öffentliche<br>Publikationsliste"
-  help: "Mehr Hilfe nötig? Support Publikationsdienste, Tel.: 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
+  help: "Die Funktionen von PUB im Überblick."
   howto: "PUB Howto"
   change_language: "Sprache wechseln"
   user_settings: "Fakultät,<br>Editiermodus,<br>Standardsprache<br>ändern"

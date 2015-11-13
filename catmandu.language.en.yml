@@ -39,6 +39,7 @@ header:
   department_affiliation: "Department Affiliation"
   default_edit_mode: "Default Edit Mode"
   default_language: "Default Language"
+  beta: "The new backend of PUB is in open beta phase"
 footer:
   this_is_us: "Bielefeld University Library"
   language_url: "english/"
@@ -1659,7 +1660,7 @@ help:
   home: "PUB home"
   brand: "Personal<br>home page"
   my_author_page: "Your publication list<br>(public records only)"
-  help: "More help necessary? Contact our support: Phone 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
+  help: "How to use PUB."
   howto: "PUB How-to"
   change_language: "Change language"
   user_settings: "Change<br>department,<br>edit mode<br>default language."
