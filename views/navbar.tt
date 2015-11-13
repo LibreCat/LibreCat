@@ -17,7 +17,7 @@
 	  <span class="icon-bar"></span>
 	  <span class="icon-bar"></span>
 	</button>
-	<a class="navbar-brand helpme" data-placement="bottom" title="[% lf.help.home %]" href="/"><img src="/images/publogo.gif" height="30" alt="" /></a>
+	<a class="navbar-brand helpme" data-placement="bottom" title="[% lf.help.home %]" href="/"><img src="/images/publogo.gif" style="height:30px" alt="" /></a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -30,18 +30,17 @@
 	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span><span class="hidden-sm">[% lf.header.admin_menu.admin %]</span> <span class="glyphicon glyphicon-chevron-down"></span></a>
 	  <ul class="dropdown-menu" role="menu">
 	    <li><a href="/librecat/admin/account"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_accounts %]</a></li>
-	    <!-- <li><a href="/librecat/admin/import"><span class="glyphicon glyphicon-import"></span>[% lf.header.admin_menu.import %]</a></li> -->
+	    <!--<li><a href="/librecat/admin/import"><span class="glyphicon glyphicon-import"></span>[% lf.header.admin_menu.import %]</a></li>-->
 	    <li><a href="/librecat/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_projects %]</a></li>
 	    <li><a href="/librecat/admin/research_group"><span class="fa fa-group fw"></span>[% lf.header.admin_menu.manage_research_groups %]</a></li>
-<!--	    <li><a href="/librecat/admin/department"><span class="glyphicon glyphicon-home"></span>[% lf.header.admin_menu.manage_department %]</a></li>
--->
-	    <!-- <li><a href="/librecat/admin/journal"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_journals %]</a></li> -->
+	    <!--<li><a href="/librecat/admin/department"><span class="glyphicon glyphicon-home"></span>[% lf.header.admin_menu.manage_department %]</a></li>-->
+	    <!--<li><a href="/librecat/admin/journal"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_journals %]</a></li>-->
 	    <li><a href="/librecat/admin/award"><span class="glyphicon glyphicon-star"></span>[% lf.header.admin_menu.manage_awards %]</a></li>
 	  </ul>
 	  </li>
 	[% END %]
-	  <li class="hidden-xs helpme helpme-md" data-placement="right" title="[% lf.help.help %]"><a href="#" class="toggle_help"><span class="glyphicon glyphicon-question-sign"></span></a></li>
-	  <li><a href="/docs/howto"><span class="fa fa-lightbulb-o fa-lg"></span><span class="hidden-sm"> [% lf.help.howto %]</span></a></li>
+	  <li class="hidden-xs"><a href="#" class="toggle_help"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+	  <li class="helpme helpme-md" data-placement="right" title="[% lf.help.help %]"><a href="/docs/howto"><span class="fa fa-lightbulb-o fa-lg"></span><span class="hidden-sm"> [% lf.help.howto %]</span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 	<li class="helpme helpme-md" data-placement="left" title="[% lf.help.change_language %]">
@@ -72,6 +71,7 @@
 	</li>
 	[% END %]
 	<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% lf.main_page.logout %]</span></a></li>
+	<li><img src="/images/beta_left.png" alt="Beta" style="height:50px;padding-right:5px;" title="[% lf.header.beta %]"></li>
       </ul>
       </div><!-- /.navbar-collapse -->
       [% ELSE %]
