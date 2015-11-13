@@ -46,30 +46,11 @@
 	<li class="helpme helpme-md" data-placement="left" title="[% lf.help.change_language %]">
 	  <a href="/librecat/person/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]"><span class="glyphicon glyphicon-flag"></span>[% lf.header.lang %]</a>
 	</li>
-	<li class="dropdown"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% lf.help.user_settings %]" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> [% session.user %] <span class="glyphicon glyphicon-chevron-down"></span></a>
+	<li class="dropdown"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% lf.help.user_settings %]" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> [% lf.header.settings %] <span class="glyphicon glyphicon-chevron-down"></span></a>
 	  <div class="dropdown-menu" style="width:550px">
 	    [% INCLUDE backend/user_settings.tt %]
 	  </div>
 	</li>
-	[% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
-	<li class="dropdown userrole"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% lf.help.role %]" data-toggle="dropdown"><span class="fa fa-users"></span> <em>[% lf.header.role.${session.role} %]</em> <span class="glyphicon glyphicon-chevron-down"></span></a>
-	  <ul class="dropdown-menu" role="menu">
-	    <li><a href="/librecat/change_role/user">[% lf.header.role.user %]</a></li>
-	    [% IF thisPerson.delegate %]
-	    <li><a href="/librecat/change_role/delegate">[% lf.header.role.delegate %]</a></li>
-	    [% END %]
-	    [% IF thisPerson.reviewer %]
-	    <li><a href="/librecat/change_role/reviewer">[% lf.header.role.reviewer %]</a></li>
-	    [% END %]
-	    [% IF thisPerson.data_manager %]
-	    <li><a href="/librecat/change_role/data_manager">[% lf.header.role.data_manager %]</a></li>
-	    [% END %]
-	    [% IF thisPerson.super_admin %]
-	    <li><a href="/librecat/change_role/admin">[% lf.header.role.super_admin %]</a></li>
-	    [% END %]
-	  </ul>
-	</li>
-	[% END %]
 	<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% lf.main_page.logout %]</span></a></li>
 	<li><img src="/images/beta_left.png" alt="Beta" style="height:50px;padding-right:5px;" title="[% lf.header.beta %]"></li>
       </ul>

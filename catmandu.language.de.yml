@@ -17,6 +17,8 @@ header:
   title_person: "PUB  &ndash; Publikationsliste von"
   my_author_page: "Meine Publikationsliste"
   brand: "Start"
+  role_label: "Rolle"
+  settings: "Einstellungen"
   role:
     user: "User"
     delegate: "Delegate"
@@ -37,6 +39,7 @@ header:
     eng: "Englisch"
     ger: "Deutsch"
   department_affiliation: "Fakultät/ Zugehörigkeit"
+  logged_in_as: "Eingeloggt als"
   default_edit_mode: "Standard Editiermodus"
   default_language: "Standardsprache"
   beta: "Das neue Backend von PUB befindet sich noch im Beta-Stadium"

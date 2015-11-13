@@ -2,6 +2,37 @@
 
 <!-- BEGIN backend/user_settings.tt -->
 
+  <div class="row innerrow">
+    <div class="col-md-12">
+      <h5>[% lf.header.logged_in_as %] <em><strong>[% session.user %]</strong></em></h5>
+    </div>
+  </div>
+  
+  [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
+  <div class="row innerrow">
+    <div class="col-md-12">
+      <h4>[% lf.header.role_label %]</h4>
+      <select id="role_select" class="form-control">
+        <option[% IF session.role == "user" %] selected="selected"[% END %] value="/librecat/change_role/user">[% lf.header.role.user %]</option>
+        [% IF thisPerson.delegate %]
+        <option[% IF session.role == "delegate" %] selected="selected"[% END %] value="/librecat/change_role/delegate">[% lf.header.role.delegate %]</option>
+	    [% END %]
+	    [% IF thisPerson.reviewer %]
+	    <option[% IF session.role == "reviewer" %] selected="selected"[% END %] value="/librecat/change_role/reviewer">[% lf.header.role.reviewer %]</option>
+	    [% END %]
+	    [% IF thisPerson.data_manager %]
+	    <option[% IF session.role == "data_manager" %] selected="selected"[% END %] value="/librecat/change_role/data_manager">[% lf.header.role.data_manager %]</option>
+	    [% END %]
+	    [% IF thisPerson.super_admin %]
+	    <option[% IF session.role == "super_admin" %] selected="selected"[% END %] value="/librecat/change_role/admin">[% lf.header.role.super_admin %]</option>
+	    [% END %]
+	  </select>
+    </div>
+  </div>
+  [% END %]
+  
+  <hr />
+
 <form id="id_save_aff" action="/librecat/person/affiliation" method="POST">
   <div class="row innerrow">
     <div class="col-md-12">
@@ -108,6 +139,12 @@ function selectAffiliation(element){
     });
     modal.modal('show');
 }
+
+$(function(){
+  $('#role_select').on("change", function(){
+    window.location = $(this).val();
+  });
+});
 
 $('#edit_mode_select').on("change", function(){
     submit_form('id_save_mode');

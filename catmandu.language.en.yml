@@ -17,6 +17,8 @@ header:
   title_person: "PUB  &ndash; Publication list of"
   my_author_page: "My Publication List"
   brand: "Home"
+  role_label: "Role"
+  settings: "Settings"
   role:
     user: "User"
     delegate: "Delegate"
@@ -37,6 +39,7 @@ header:
     eng: "English"
     ger: "German"
   department_affiliation: "Department Affiliation"
+  logged_in_as: "Logged in as"
   default_edit_mode: "Default Edit Mode"
   default_language: "Default Language"
   beta: "The new backend of PUB is in open beta phase"
