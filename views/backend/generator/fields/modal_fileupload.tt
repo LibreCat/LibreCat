@@ -55,7 +55,7 @@
             <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="open_access" onclick="oamode(this.form, true);"/> [% lf.$type.field.dropzone.edit_modal.access.open_access %]
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="local" onclick="oamode(this.form,false);" /> [% lf.$type.field.dropzone.edit_modal.access.local %]
+            <input type="radio" name="accessLevel" id="id_accessLevel_local" value="local" onclick="oamode(this.form,false);" /> [% lf.$type.field.dropzone.edit_modal.access.local %]
           </label>
           <label class="radio">
             <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="closed" onclick="oamode(this.form,false);" /> [% lf.$type.field.dropzone.edit_modal.access.closed %]
@@ -120,7 +120,7 @@
     if($('#id_accessLevel_openAccess').is(':checked')){
       formData.append("access_level", "open_access");
     }
-    else if($('#id_accessLevel_unibi').is(':checked')){
+    else if($('#id_accessLevel_local').is(':checked')){
       formData.append("access_level", "local");
     }
     else if($('#id_accessLevel_admin').is(':checked')){
@@ -153,21 +153,21 @@
       success: function(data){
         var accessLevel;
         if(data.access_level == "open_access"){
-          accessLevel = "Open Access";
+          accessLevel = "[% lf.$type.field.dropzone.access.open_access %]";
         }
         else if(data.access_level == "local"){
-          accessLevel = "UniBi only";
+          accessLevel = "[% lf.$type.field.dropzone.access.local %]";
           if(data.embargo){
-            accessLevel += "<br />(until " + data.embargo + ")";
+            accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " + data.embargo + ")";
           }
         }
         else if(data.access_level == "closed"){
-          accessLevel = "Author/Reviewer";
+          accessLevel = "[% lf.$type.field.dropzone.access.closed %]";
           if(data.embargo){
-            accessLevel += "<br />(until " + data.embargo + ")";
+            accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " + data.embargo + ")";
           }
           if(data.request_a_copy){
-            accessLevel += "<br />(Request a Copy)";
+            accessLevel += "<br />([% lf.$type.field.dropzone.access.request_a_copy %])";
           }
         }
 

@@ -396,7 +396,7 @@ function edit_file(fileId, id){
 		$('#id_accessEmbargo').prop('disabled',true);
 	}
 	else if(json.access_level == "local"){
-		$('#id_accessLevel_unibi').prop('checked',true);
+		$('#id_accessLevel_local').prop('checked',true);
 		$('#id_accessEmbargo').prop('disabled',false);
 	}
 	else if(json.access_level == "closed"){
