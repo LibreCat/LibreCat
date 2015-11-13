@@ -32,6 +32,11 @@ end
 if all_match('type','journal-article')
     set_field('type','journalArticle')
     move_field('container-title.0','publication')
+    if any_match(page, '-')
+      nothing()
+    else
+      move_field('page','article_number')
+    end
 end
 
 if all_match('type','book-chapter')
