@@ -217,13 +217,9 @@ publicationTypes:
           multiple: 1
       related_material: &related_material
         related_material.record:
-          label: "Link to PUB record"
-          label_short: "PUB-Rec."
-          placeholder: "Start typing to search your publications."
+          mandatory: 0
         related_material.link:
-          label: "Link to other record"
-          label_short: "Ext. Link"
-          placeholder: "Enter a remote location (URL) of your file here"
+          mandatory: 0
         publish_button:
           alert: "Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified."
   bookeditor:
@@ -786,13 +782,9 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: &related_material_rd
         related_material.rd:
-          label: "Link to PUB record"
-          label_short: "PUB-Rec."
-          placeholder: "Start typing to search your publications."
+          mandatory: 0
         related_material.link:
-          label: "Link to other record"
-          label_short: "Ext. Link"
-          placeholder: "Enter a remote location (URL) of your file here"
+          mandatory: 0
   translation:
     tmpl: translation
     fields:

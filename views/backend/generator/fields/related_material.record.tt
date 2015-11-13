@@ -29,22 +29,22 @@
   <div class="col-md-10 col-xs-12 col-md-offset-2">
     <div class="row innerrow">
       <div class="col-xs-3">
-	<select class="relmat form-control" name="related_material.record.[% index %].relation">
-	[% FOREACH key IN h.config.lists.relations_record %]
-	<option value="[% key.relation %]"[% IF key.relation == rel.relation %] selected="selected"[% END %]>[% key.link_text %]</option>
-	[% END %]
-	</select>
+        <select class="relmat form-control" name="related_material.record.[% index %].relation">
+        [% FOREACH key IN h.config.lists.relations_record %]
+          <option value="[% key.relation %]"[% IF key.relation == rel.relation %] selected="selected"[% END %]>[% key.link_text %]</option>
+        [% END %]
+        </select>
       </div>
       <div class="col-md-7 col-xs-9">
-	<span class="form-group col-xs-9">
-	  <span class="glyphicon glyphicon-file"></span> <a href="/publication/[% rel.id %]" target="_blank">[% record.title %]</a>
-	  <input type="hidden" id="related_material_id_[% index %]" name="related_material.record.[% index %].id" value="[% rel.id %]" />
-	</span>
-	<span class="col-xs-1">
-	<button class="btn btn-default connect">
-	  <span class="glyphicon glyphicon-minus"></span>
-	</button>
-	</span>
+        <span class="form-group col-xs-9">
+          <span class="glyphicon glyphicon-file"></span> <a href="/publication/[% rel.id %]" target="_blank">[% record.title %]</a>
+          <input type="hidden" id="related_material_id_[% index %]" name="related_material.record.[% index %].id" value="[% rel.id %]" />
+        </span>
+        <span class="col-xs-1">
+          <button class="btn btn-default connect">
+            <span class="glyphicon glyphicon-minus"></span>
+          </button>
+        </span>
       </div>
     </div>
   </div>

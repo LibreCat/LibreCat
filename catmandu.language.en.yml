@@ -1202,10 +1202,10 @@ forms:
   researchData: &researchdata
     label: "Research Data"
     tab:
-      basic_fields: "Basic Fields"
+      basic_fields: "Details"
       file_upload: "Research data upload"
-      supplementary_fields: "Supplementary fields"
-      related_material: "Related Material"
+      supplementary_fields: "Additional Information"
+      related_material: "Links"
     field:
       doi: *doi
       title: *title
@@ -1296,7 +1296,9 @@ forms:
       alternative_id: *alternative_id
       ddc: *ddc
       related_material.rd:
-        label: "Related Material"
+        label: "Link to PUB record"
+        label_short: "PUB-Rec."
+        placeholder: "Start typing to search your publications."
       related_material.link: *related_material_link
       locked: *locked
   researchdata: *researchdata

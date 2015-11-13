@@ -1203,10 +1203,10 @@ forms:
   researchData: &researchdata
     label: "Datenpublikation"
     tab:
-      basic_fields: "Hauptfelder"
+      basic_fields: "Details"
       file_upload: "Forschungsdatenupload"
-      supplementary_fields: "Weitere Informationen"
-      related_material: "Zusätzliches Material"
+      supplementary_fields: "Weitere Angaben"
+      related_material: "Verknüpfungen"
     field:
       doi: *doi
       title: *title
@@ -1296,8 +1296,10 @@ forms:
       jel: *jel
       alternative_id: *alternative_id
       ddc: *ddc
-      related_material_rd:
-        label: "Related Material"
+      related_material.rd:
+        label: "Link zu PUB Eintrag"
+        label_short: "PUB-Rec."
+        placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
       related_material.link: *related_material_link
       locked: *locked
   researchdata: *researchdata

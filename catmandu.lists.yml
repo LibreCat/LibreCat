@@ -204,11 +204,11 @@ gs_doc_type:
   dara: 'Da|Ra'
 
 relations_rd:
-  -
-    relation: "cites"
-    relation_text: "This publication cites the following data publications:"
-    link_text: "Cites"
-    opposite: "is_cited_by"
+#  -
+#    relation: "cites"
+#    relation_text: "This publication cites the following data publications:"
+#    link_text: "Cites"
+#    opposite: "is_cited_by"
   -
     relation: "is_cited_by"
     relation_text: "This data publication is cited in the following publications:"
