@@ -762,7 +762,7 @@ publicationTypes:
         year_extern: *year_extern
         locked: *locked
       file_upload:
-        externalFiles:
+        external_file:
           mandatory: 0
         dropzone:
           mandatory: 0
@@ -994,10 +994,6 @@ array_field:
   - pacs_class
   - project
   - research_group
-  - publication_identifier.issn
-  - publication_identifier.eissn
-  - publication_identifier.isbn
-  - publication_identifier.eisbn
   - supervisor
   - thematic_area
   - translator

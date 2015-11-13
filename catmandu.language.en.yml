@@ -1228,6 +1228,9 @@ forms:
         placeholder: "Publisher"
         defaultvalue: "Bielefeld University"
       year_extern: *year_extern
+      external_file:
+        label: "External File(s)"
+        checkbox: "Files available at"
       dropzone: &dropzone
         label: "<strong>Upload File(s)</strong> (max. 1000MB per file)"
         dropzone_text: "Drop files here to upload ... or click!"
@@ -1288,8 +1291,6 @@ forms:
         info:
           text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br>"
           contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
-      external_file:
-        label: "Files available at"
       abstract: *abstract
       keyword: *keyword
       jel: *jel
