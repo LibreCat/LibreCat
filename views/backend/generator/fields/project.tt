@@ -8,7 +8,7 @@
   <div class="col-md-10 col-xs-12" id="project">
     {% IF fields.basic_fields.project.multiple OR fields.supplementary_fields.project.multiple %}
     [% IF !project %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="project.0.id" id="pj_idautocomplete_0" value="" />
       <input type="hidden" name="project.0.name" id="pj_nameautocomplete_0" value="" />
       
@@ -24,7 +24,7 @@
     </div>
     [% ELSE %]
     [% FOREACH proj IN project %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="project.[% loop.index %].id" id="pj_idautocomplete_[% loop.index %]" value="[% proj.id %]" />
       <input type="hidden" name="project.[% loop.index %].name" id="pj_nameautocomplete_[% loop.index %]" value="[% proj.name %]" />
       

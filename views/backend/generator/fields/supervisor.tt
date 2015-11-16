@@ -12,7 +12,7 @@
     <div class="col-md-10 creator" id="supervisor">
       {% IF fields.basic_fields.supervisor.multiple OR fields.supplementary_fields.supervisor.multiple %}
       [% IF !supervisor %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" id="supervisor_orig_first_name_0" value="" />
         <input type="hidden" id="supervisor_orig_last_name_0" value="" />
 
@@ -53,7 +53,7 @@
       </div>
       [% ELSE %]
       [% FOREACH name IN supervisor %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" id="supervisor_orig_first_name_[% loop.index %]" value="" />
         <input type="hidden" id="supervisor_orig_last_name_[% loop.index %]" value="" />
 

@@ -9,7 +9,7 @@
   <div class="col-md-10" id="publId">
     {% IF fields.basic_fields.publication_identifier.multiple OR fields.supplementary_fields.publication_identifier.multiple %}
     [% IF !publication_identifier %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.publication_identifier.label_short || lf.$type.field.publication_identifier.label %]</div>
@@ -32,7 +32,7 @@
         [% index = loop.index %]
         [% IF publication_identifier.$pub_id.0 %]
         [% FOREACH identifier IN publication_identifier.$pub_id %]
-        <div class="row innerrow">
+        <div class="row innerrow multirow">
           <div class="form-group col-md-10 col-xs-11">
             <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
               <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.publication_identifier.label_short || lf.$type.field.publication_identifier.label %]</div>
@@ -52,7 +52,7 @@
         </div>
         [% END %]
         [% ELSE %]
-        <div class="row innerrow">
+        <div class="row innerrow multirow">
           <div class="form-group col-md-10 col-xs-11">
             <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
               <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.publication_identifier.label_short || lf.$type.field.publication_identifier.label %]</div>

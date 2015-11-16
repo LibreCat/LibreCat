@@ -8,7 +8,7 @@
   <div class="col-md-10 col-xs-12" id="research_group">
     {% IF fields.basic_fields.research_group.multiple OR fields.supplementary_fields.research_group.multiple %}
     [% IF !research_group %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="research_group.0.id" id="rg_idautocomplete_0" value="" />
       <input type="hidden" name="research_group.0.name" id="rg_nameautocomplete_0" value="" />
       
@@ -24,7 +24,7 @@
     </div>
     [% ELSE %]
     [% FOREACH proj IN research_group %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="research_group.[% loop.index %].id" id="rg_idautocomplete_[% loop.index %]" value="[% proj.id %]" />
       <input type="hidden" name="research_group.[% loop.index %].name" id="rg_nameautocomplete_[% loop.index %]" value="[% proj.name %]" />
       

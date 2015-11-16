@@ -463,10 +463,10 @@ $(function () {
 	});
 
 	$(".creator").sortable({
-		containerSelector: 'div.row.innerrow',
+		containerSelector: 'div.row.multirow',
 	    itemSelector: 'div.sortitem',
 	    update: function (event, ui) {
-		    $('.creator').find('div.row.innerrow').each(function(index){
+		    $('.creator').find('div.row.multirow').each(function(index){
 		    	var myitem = $(this);
 		    	myitem.find('input[name]').each(function(){
 		    		var myRegexp = /(.*\.)\d{1,}(\..*)/g;
@@ -482,8 +482,8 @@ $(function () {
 });
 
 function add_field(name, placeholder){
-	var items = $('#' + name + ' div.row.innerrow');
-	var index = items.index($('#' + name + ' div.row.innerrow').last()) + 1;
+	var items = $('#' + name + ' div.row.multirow');
+	var index = items.index($('#' + name + ' div.row.multirow').last()) + 1;
 	var blueprint = $(items[0]).clone();
 
 	$(blueprint).find('input, textarea, img, button, select, span').each(function(){
@@ -542,11 +542,11 @@ function add_field(name, placeholder){
 }
 
 function remove_field(object){
-	var container = $(object).closest('div.row.innerrow');
+	var container = $(object).closest('div.row.multirow');
 	var index = $(container).index();
 
 	if(parseInt(index) > 0){
-	  var all_containers = $(container).parent().children('div.row.innerrow');
+	  var all_containers = $(container).parent().children('div.row.multirow');
 	  $(container).remove();
 	  var cont = $(all_containers).slice(index);
 	  $(cont).each(function(cindex){

@@ -12,7 +12,7 @@
     <div class="col-md-10 creator" id="translator">
       {% IF fields.basic_fields.translator.multiple OR fields.supplementary_fields.translator.multiple %}
       [% IF !translator %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" id="translator_orig_first_name_0" value="" />
         <input type="hidden" id="translator_orig_last_name_0" value="" />
 
@@ -53,7 +53,7 @@
       </div>
       [% ELSE %]
       [% FOREACH name IN translator %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" id="translator_orig_first_name_[% loop.index %]" value="[% name.first_name | html %]" />
         <input type="hidden" id="translator_orig_last_name_[% loop.index %]" value="[% name.last_name | html %]" />
 

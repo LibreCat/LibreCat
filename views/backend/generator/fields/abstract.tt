@@ -10,7 +10,7 @@
   <div class="col-md-10" id="abstract">
     {% IF fields.basic_fields.abstract.multiple OR fields.supplementary_fields.abstract.multiple %}
     [% IF !abstract %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group sticky_top col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
           <div class="input-group-addon">[% lf.$type.field.abstract.label2 %]</div>
@@ -35,7 +35,7 @@
     </div>
     [% ELSE %]
       [% FOREACH ab IN abstract %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <div class="form-group sticky_top col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">[% lf.$type.field.abstract.label2 %]</div>

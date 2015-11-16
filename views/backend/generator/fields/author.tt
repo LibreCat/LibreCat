@@ -12,7 +12,7 @@
     <div class="col-md-10 creator" id="creator">
       {% IF fields.basic_fields.author.multiple OR fields.basic_fields.author_secondary.multiple %}
       [% IF !author %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" id="orig_first_name_0" value="" />
         <input type="hidden" id="orig_last_name_0" value="" />
 
@@ -55,7 +55,7 @@
       </div>
       [% ELSE %]
       [% FOREACH name IN author %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" id="orig_first_name_[% loop.index %]" value="[% name.first_name | html %]" />
         <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% name.last_name | html %]" />
 	<!-- 3 -->

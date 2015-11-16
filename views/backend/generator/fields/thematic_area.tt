@@ -9,7 +9,7 @@
   <div class="col-md-10 col-xs-12" id="thematic_area">
     {% IF fields.basic_fields.thematic_area.multiple OR fields.supplementary_fields.thematic_area.multiple %}
     [% IF !thematic_area %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.thematic_area.label_short || lf.$type.field.thematic_area.label %]</div>
@@ -26,7 +26,7 @@
     </div>
     [% ELSE %]
     [% FOREACH th_ar IN thematic_area %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.thematic_area.label_short || lf.$type.field.thematic_area.label %]</div>

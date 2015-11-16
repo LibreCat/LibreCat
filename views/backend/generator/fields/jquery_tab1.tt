@@ -239,9 +239,9 @@ $('#authedtrans_0').change(function() {
 });
 
 // minus
-$(document).on('click', '.inner_row', function(){
-  $(this).closest('div.innerrow').remove();
-});
+//$(document).on('click', '.multirow', function(){
+//  $(this).closest('div.multirow').remove();
+//});
 $(document).on('click', '.fullrow', function(){
   //var index = $(this).parent().parent().parent().parent().index();
   var index = $(this).closest('.row.authorspan').index();

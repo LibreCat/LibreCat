@@ -10,7 +10,7 @@
   <div class="col-md-10" id="ddc">
     {% IF fields.basic_fields.ddc.multiple OR fields.file_upload.license.ddc.multiple OR fields.supplementary_fields.ddc.multiple %}
     [% IF !ddc %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.file_upload.license.ddc.mandatory == "file" %}[% IF file AND file.0 %] mandatory[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.ddc.label %]</div>
@@ -32,7 +32,7 @@
     </div>
     [% ELSE %]
       [% FOREACH d IN ddc %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.file_upload.license.ddc.mandatory == "file" %}[% IF file AND file.0 %] mandatory[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.ddc.label %]</div>

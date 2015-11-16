@@ -8,7 +8,7 @@
   <div class="col-md-10 col-xs-12" id="department">
     {% IF fields.basic_fields.department.multiple OR fields.supplementary_fields.department.multiple %}
     [% IF !department OR !department.0 %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="department.0._id" id="dp_idautocomplete_0" value="" />
     
       <div class="form-group col-md-10 col-xs-11">
@@ -23,7 +23,7 @@
     </div>
     [% ELSE %]
     [% FOREACH dept IN department %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="department.[% loop.index %]._id" id="dp_idautocomplete_[% loop.index %]" value="[% dept._id %]" />
           
       <div class="form-group col-md-10 col-xs-11">

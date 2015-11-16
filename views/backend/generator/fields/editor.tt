@@ -9,7 +9,7 @@
     <div class="col-md-10 creator" id="editor">
       {% IF fields.basic_fields.editor.multiple OR fields.basic_fields.editor_solo.multiple OR fields.supplementary_fields.editor.multiple OR fields.supplementary_fields.editor_solo.multiple %}
       [% IF !editor %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" id="editor_orig_first_name_0" value="" />
         <input type="hidden" id="editor_orig_last_name_0" value="" />
 
@@ -35,7 +35,7 @@
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('editor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} data-mandatory="yes"{% END %}></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.editor.idm OR fields.basic_fields.editor_solo.idm OR fields.supplementary_fields.editor.idm OR fields.supplementary_fields.editor_solo.idm %}
-            <div class="input-group-addon"><span id="editor_link_person_0" onclick="link_eprson(this);" data-type="editor_"><img id="editor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip %]" /></span></div>
+            <div class="input-group-addon"><span id="editor_link_person_0" onclick="link_person(this);" data-type="editor_"><img id="editor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip %]" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
@@ -50,7 +50,7 @@
       </div>
     [% ELSE %]
     [% FOREACH name IN editor %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" id="editor_orig_first_name_[% loop.index %]" value="[% name.first_name | html %]" />
         <input type="hidden" id="editor_orig_last_name_[% loop.index %]" value="[% name.last_name | html %]" />
 
