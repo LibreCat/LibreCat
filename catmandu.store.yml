@@ -751,6 +751,14 @@ search:
                 '=': true
                 '<>': true
               field: locked
+            thematicarea:
+              op:
+                '=': true
+                '<>': true
+                'any': true
+                'all': true
+                'exact': true
+              field: thematic_area
 
       researcher:
         cql_mapping:
@@ -1094,6 +1102,7 @@ search:
           intvolume: {type: string, analyzer: tag}
           issue: {type: string}
           article_number: {type: string, analyzer: tag}
+          thematic_area: {type: string, analyzer: tag}
           publication_identifier:
             properties:
               isbn: {type: string, analyzer: tag, include_in_all: true}
