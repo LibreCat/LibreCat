@@ -987,6 +987,7 @@ array_field:
   - editor
   - editor_solo
   - file
+  - file_order
   - keyword
   - language
   - msc_class
