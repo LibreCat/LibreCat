@@ -43,17 +43,6 @@ get qr{/pub} => sub {
 	}
 };
 
-
-#general stuff
-#get qr{/en/*} => sub {
-#	template 'websites/index_publication.tt';
-#};
-
-get qr{/doc/api/*|/demo/*|/en/demo/*} => sub {
-	my $path = h->host . '/doc/api/index.html';
-	redirect $path;
-};
-
 get qr{/policy/*|/policy\.html} => sub {
 	template 'websites/index_publication.tt', {bag => 'policy'};
 };
