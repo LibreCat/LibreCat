@@ -414,6 +414,7 @@ relations_record:
     link_text: "Original of Translation"
   -
     relation: "other"
+    opposite: "other"
     relation_text: "In other relation (to PUB record)"
     link_text: "Other Relation"
 
