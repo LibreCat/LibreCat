@@ -43,6 +43,7 @@ Performs search for admin.
         $p->{facets} = h->default_facets();
         # foda: Bielefeld specific!!
         $p->{facets}->{foda} = { terms => { field => 'foda', size => 1 } };
+        push @{$p->{q}}, "status=public" if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -84,6 +85,7 @@ Performs search for reviewer.
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
+        push @{$p->{q}}, "status=public" if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         my $hits = h->search_publication($p);
         $hits->{style} = $sort_style->{style};
@@ -118,6 +120,7 @@ Performs search for data manager.
         my $dep_query = "department=" . params->{department_id};
         push @{$p->{q}}, "(type=researchData OR type=dara)";
         push @{$p->{q}}, $dep_query;
+        push @{$p->{q}}, "status=public" if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
@@ -148,6 +151,7 @@ according to first delegate ID.
 		my $account = h->get_person(session->{user});
 		if(params->{fmt} and params->{fmt} eq "autocomplete"){
 			my $p = h->extract_params();
+			push @{$p->{q}}, "status=public";
 			foreach my $delegate (@{$account->{delegate}}){
 				push @{$p->{q}}, $delegate;
 			}
@@ -169,6 +173,7 @@ publications.
         my $p = h->extract_params();
         my $id = params->{delegate_id};
         push @{$p->{q}}, "(person=$id OR creator=$id)";
+        push @{$p->{q}}, "status=public" if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         $p->{facets} = h->default_facets;
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '', $id);
@@ -219,6 +224,7 @@ Performs search for user.
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         push @{$p->{q}}, "type<>researchData";
         push @{$p->{q}}, "type<>dara";
+        push @{$p->{q}}, "status=public" if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
@@ -246,6 +252,7 @@ Performs search for user.
         @{$p->{q}} = @orig_q;
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         push @{$p->{q}}, "(type=researchData OR type=dara)";
+        push @{$p->{q}}, "status=public" if $p->{fmt} and $p->{fmt} eq "autocomplete";
         $researchhits = h->search_publication($p);
         $hits->{researchhits} = $researchhits if $researchhits;
 
@@ -269,6 +276,7 @@ Performs search for user.
 
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         push @{$p->{q}}, "(type=researchData OR type=dara)";
+        push @{$p->{q}}, "status=public" if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         $p->{facets} = h->default_facets();
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
