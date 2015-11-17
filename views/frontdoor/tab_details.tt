@@ -70,29 +70,42 @@
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
-[% FOREACH proj IN project %]
-  [% IF loop.first %]
+[%- FOREACH proj IN project -%]
+  [%- IF loop.first -%]
   <div class="row">
     <div class="col-md-2 text-muted">[% lf.forms.$type.field.project.label %]</div>
     <div class="col-md-10">
-  [% ELSE %]<br />[% END %]
+  [%- ELSE -%]<br />[% END %]
   <a href="/project/[% proj.id %]">[% proj.name %]</a>
-  [% IF loop.last %]</div></div>[% END %]
-[% END %]
+  [%- IF loop.last %]</div></div>[% END -%]
+[%- END -%]
 
-[% IF alternative_title %]
+[%- FOREACH rg IN research_group -%]
+  [%- IF loop.first -%]
+  <div class="row">
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.research_group.label %]</div>
+    <div class="col-md-10">
+  [%- ELSE -%]<br />[% END %]
+  [% rg.name %]
+  [% IF loop.last %]</div></div>[% END %]
+[%- END -%]
+
+[%- FOREACH at IN alternative_title -%]
+[%- IF loop.first -%]
   <div class="row">
     <div class="col-md-2 text-muted">[% lf.forms.$type.field.alternative_title.label %]</div>
-    <div class="col-md-10" itemprop="alternativeHeadline">[% alternative_title.0 %]</div>
-  </div>
-[% END %]
+    <div class="col-md-10" itemprop="alternativeHeadline">
+    [%- ELSE  -%]<br />[% END %]
+    [% at %]
+  [%- IF loop.last -%]</div></div>[% END %]
+[%- END -%]
 
 [% IF abstract %]
   <div class="row">
     <div class="col-md-2 text-muted">[% lf.forms.$type.field.abstract.label %]</div>
     <div class="col-md-10 cmark" itemprop="about">
     [% FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><br />[% END %]
-[% ab.text %]
+[% ab.text | html %]
     [% END %]
     </div>
   </div>
@@ -212,6 +225,38 @@
     <a itemprop="url" href="[% request.uri_base %][% request.uri %]" title="[% lf.frontdoor.id_title %]">[% _id %]</a>
     </div>
   </div>
+
+  <!-- Citations -->
+  <div id="citethis">
+
+  <h3 id="cite">[% lf.frontdoor.cite_this %]</h3>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#ama" data-toggle="tab">AMA</a></li>
+    <li><a href="#apa" data-toggle="tab">APA</a></li>
+    <li><a href="#frontiers" data-toggle="tab">Frontiers</a></li>
+    <li><a href="#harvard1" data-toggle="tab">Harvard</a></li>
+    <li><a href="#ieee" data-toggle="tab">IEEE</a></li>
+    <li><a href="#lncs" data-toggle="tab">LNCS</a></li>
+    <li><a href="#mla" data-toggle="tab">MLA</a></li>
+    <li><a href="#bibtex" data-toggle="tab">BibTeX</a></li>
+    <li><a href="#ris" data-toggle="tab">RIS</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="ama" class="tab-pane active">[% citation.ama %]</div>
+    <div id="apa" class="tab-pane">[% citation.apa %]</div>
+    <div id="frontiers" class="tab-pane">[% citation.frontiers %]</div>
+    <div id="harvard1" class="tab-pane">[% citation.harvard1 %]</div>
+    <div id="ieee" class="tab-pane">[% citation.ieee %]</div>
+    <div id="lncs" class="tab-pane">[% citation.lncs %]</div>
+    <div id="mla" class="tab-pane">[% citation.mla %]</div>
+    <div id="bibtex" class="tab-pane"></div>
+    <div id="ris" class="tab-pane"></div>
+  </div>
+
+  </div><!-- citethis -->
+
 </div>
 
 <!-- END frontdoor/tab_details.tt -->

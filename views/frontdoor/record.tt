@@ -173,17 +173,15 @@
       </div><!-- end left col -->
 
       <div class="col-xs-2 col-sm-3 col-sm-offset-1 text-sm-right">
-      [% IF fi %]
-        <a itemprop="thumbnailUrl" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]">
-          <object data="/thumbnail/[% _id %]" itemprop="image" class="img-thumbnail img-thumbnail-fh">
-            <img src="/images/dummy_file.png" class="img-thumbnail-fh" alt="[% lf.frontdoor.fulltext.view %]" />
-          </object>
-        </a>
-      [% ELSE %]
-            <div class="img-thumbnail img-thumbnail-fh">
-              <p class="nofile">[% lf.frontdoor.fulltext.not_available %]</p>
-            </div>
-      [% END %]
+	<div class="img-thumbnail img-thumbnail-fh">
+	[% IF fi %]
+	<a href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]" itemprop="thumbnailUrl" class="fulltext">
+	  <img src="/thumbnail/[% _id %]" itemprop="image" alt="[% lf.frontdoor.fulltext.view %]" title="[% lf.frontdoor.fulltext.view %]">
+	</a>
+	[% ELSE %]
+	<p class="nofile">[% lf.frontdoor.fulltext.not_available %]</p>
+	[% END %]
+	</div>
       </div>
 
     </div><!-- row -->
@@ -275,40 +273,8 @@
           [% END %]
 
         </div><!-- tab-content -->
-
-        <!-- Citations -->
-        <div id="citethis">
-
-          <h3 id="cite">[% lf.frontdoor.cite_this %]</h3>
-
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#ama" data-toggle="tab">AMA</a></li>
-            <li><a href="#apa" data-toggle="tab">APA</a></li>
-            <li><a href="#frontiers" data-toggle="tab">Frontiers</a></li>
-            <li><a href="#harvard1" data-toggle="tab">Harvard</a></li>
-            <li><a href="#ieee" data-toggle="tab">IEEE</a></li>
-            <li><a href="#lncs" data-toggle="tab">LNCS</a></li>
-            <li><a href="#mla" data-toggle="tab">MLA</a></li>
-        <li><a href="#bibtex" data-toggle="tab">BibTeX</a></li>
-        <li><a href="#ris" data-toggle="tab">RIS</a></li>
-          </ul>
-
-          <div class="tab-content">
-            <div id="ama" class="tab-pane active">[% citation.ama %]</div>
-            <div id="apa" class="tab-pane">[% citation.apa %]</div>
-            <div id="frontiers" class="tab-pane">[% citation.frontiers %]</div>
-            <div id="harvard1" class="tab-pane">[% citation.harvard1 %]</div>
-            <div id="ieee" class="tab-pane">[% citation.ieee %]</div>
-            <div id="lncs" class="tab-pane">[% citation.lncs %]</div>
-            <div id="mla" class="tab-pane">[% citation.mla %]</div>
-        <div id="bibtex" class="tab-pane"></div>
-        <div id="ris" class="tab-pane"></div>
-
-          </div>
-
-        </div><!-- citethis -->
-
-      </div><!-- tab-content -->
+      
+      </div>
 
       <div class="col-md-3 col-md-offset-1">
 
