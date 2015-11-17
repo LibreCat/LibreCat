@@ -56,6 +56,7 @@ $(document).ready(function(){
 	            var progresselement = progressbar.parentNode.parentNode;
 	            $(progresselement).remove();
 	            var resp = response;//JSON.parse(response);
+	            console.log(response);
 	            if(resp.success){
 	              $(file.previewElement).addClass("alert alert-success");
 

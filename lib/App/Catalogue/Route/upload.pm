@@ -37,7 +37,7 @@ prefix '/librecat' => sub {
       if($file){
       	  my $now = h->now;
       	  my $tempid = $file->{tempname};
-      	  $tempid =~ s/.*\/([^\/\.]*)\..*/$1/g;
+      	  $tempid =~ s/.*\/([^\/\.]*)\.*.*/$1/g;
           $file_data = {
             success => 1,
             file_name => $file->{filename},
