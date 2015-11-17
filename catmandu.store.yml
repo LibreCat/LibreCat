@@ -37,7 +37,7 @@ metrics:
       wos: &metrics_settings
         plugins: ['Datestamps']
       epmc_citations: *metrics_settings
-      epmc_referefences: *metrics_settings
+      epmc_references: *metrics_settings
       epmc_dblinks: *metrics_settings
 
 search:
