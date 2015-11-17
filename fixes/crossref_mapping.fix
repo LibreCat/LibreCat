@@ -20,13 +20,7 @@ move_field('ISSN','publication_identifier.issn')
 move_field('ISBN','publication_identifier.isbn')
 replace_all('isbn.*','^http://id.crossref.org/isbn/(.*)',$1)
 
-# authors
-do list (path => author)
-  do identity ()
-    move_field('given', 'first_name')
-    move_field('family','last_name')
-  end
-end
+split_author()
 
 # type mapping
 if all_match('type','journal-article')
