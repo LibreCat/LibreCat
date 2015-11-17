@@ -472,8 +472,8 @@ sub default_facets {
 		status => { terms => { field => 'status', size => 8 } },
 		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
 		type => { terms => { field => 'type', size => 25 } },
-		#isi => { terms => { field => 'isi', size => 1 } },
-		#pmid => { terms => { field => 'pmid', size => 1 } },
+		isi => { terms => { field => 'isi', size => 1 } },
+		pmid => { terms => { field => 'pmid', size => 1 } },
 	};
 }
 

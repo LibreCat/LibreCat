@@ -27,7 +27,7 @@ get qr{/(data|publication)/(\d{1,})/*(\w{1,})*/*} => sub {
 		$p->{q} = [];
 		push @{$p->{q}}, ("status=public", "altid=$id");
 		$hits = h->search_publication($p);
-		$altid = 1;
+		$altid = 1 if $hits->{total};
 	}
 	
 	$hits->{bag} = $bag;
@@ -42,6 +42,7 @@ get qr{/(data|publication)/(\d{1,})/*(\w{1,})*/*} => sub {
 	} else {
 		redirect "$bag/$hits->{hits}->[0]->{_id}", 301 if $altid;
 		$hits->{hits}->[0]->{bag} = $bag;
+		$hits->{total} ? status 200 : status 404;
 		template "frontdoor/record", $hits->{hits}->[0];
 	}
 };

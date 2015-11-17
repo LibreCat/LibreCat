@@ -10,6 +10,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(join_path);
 use Dancer qw/:syntax/;
 use Dancer::Plugin::Ajax;
+use HTML::Entities;
 use App::Helper;
 
 
@@ -29,7 +30,7 @@ ajax '/metrics/:id' => sub {
 ajax '/bibtex/:id' => sub {
     my $pub = h->publication->get(params->{id});
     return to_json {
-        bibtex => h->export_publication($pub, 'bibtex', 1),
+        bibtex => encode_entities(h->export_publication($pub, 'bibtex', 1)),
     };
 };
 
@@ -38,7 +39,7 @@ ajax '/ris/:id' => sub {
     my $ris = h->export_publication($pub, 'ris', 1);
     utf8::decode($ris);
     return to_json {
-        ris => $ris,
+        ris => encode_entities($ris),
     };
 };
 
