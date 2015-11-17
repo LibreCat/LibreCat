@@ -16,8 +16,6 @@ backup:
     bags:
       publication: &backup_settings
         plugins: ['Datestamps', 'Versioning']
-        version_compare_ignore:
-          - date_updated
       award: *backup_settings
       project: *backup_settings
       researcher: *backup_settings
