@@ -143,7 +143,7 @@
 
 [% IF conference.name %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.${conference.name}.label %]</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.item('conference.name').label %]</div>
     <div class="col-md-10">
       [% conference.name %]
     </div>
@@ -152,7 +152,7 @@
 
 [% IF conference.location %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.${conference.location}.label_short %]</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.item('conference.location').label_short %]</div>
     <div class="col-md-10">
       [% conference.location %]
     </div>
@@ -161,7 +161,7 @@
 
 [% IF conference.start_date %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.${conference.date}.label %]</div>
+    <div class="col-md-2 text-muted">[% lf.forms.$type.field.item('conference.date').label %]</div>
     <div class="col-md-10">
       [% conference.start_date %][% IF conference.end_date %] to [% conference.end_date %][% END %]
     </div>
