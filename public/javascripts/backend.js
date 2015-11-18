@@ -542,11 +542,11 @@ function add_field(name, placeholder){
 }
 
 function remove_field(object){
-	var container = $(object).closest('div.row.multirow');
+	var container = $(object).closest('div.multirow');
 	var index = $(container).index();
 
 	if(parseInt(index) > 0){
-	  var all_containers = $(container).parent().children('div.row.multirow');
+	  var all_containers = $(container).parent().children('div.multirow');
 	  $(container).remove();
 	  var cont = $(all_containers).slice(index);
 	  $(cont).each(function(cindex){
@@ -581,6 +581,34 @@ function remove_field(object){
 			}
 		});
 	}
+}
+
+function full_remove_field(object){
+	var container = $(object).closest('div.multirow');
+	var index = $(container).index();
+
+	  var all_containers = $(container).parent().children('div.multirow');
+	  $(container).remove();
+	  var cont = $(all_containers).slice(index);
+	  $(cont).each(function(cindex){
+		  var current_container = $(this);
+		  $(current_container).find('input, textarea, img, select, span').each(function(){
+			  if($(this).attr('id')){
+				  var newid = $(this).attr('id').replace(/\d+/g,cindex);
+				  $(this).attr('id', newid);
+			  }
+			  
+			  if($(this).attr('name')){
+				  var newname = $(this).attr('name').replace(/\d+/g,cindex);
+				  $(this).attr('name', newname);
+			  }
+			  
+			  if($(this).attr('onfocus')){
+				  var newattr = $(this).attr('onfocus').replace(/\d+/g,cindex);
+				  $(this).attr('onfocus', newattr);
+			  }
+		  });
+	  });
 }
 
 function enable_autocomplete(field, index){

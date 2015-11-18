@@ -26,7 +26,7 @@
   [% index = loop.index %]
   [% NEXT IF rel.id == "" %]
   [% record = h.publication.get(rel.id) %]
-  <div class="col-md-10 col-xs-12 col-md-offset-2">
+  <div class="col-md-10 col-xs-12 col-md-offset-2 multirow">
     <div class="row innerrow">
       <div class="col-xs-3">
         <select class="relmat form-control" name="related_material.record.[% index %].relation">
@@ -41,7 +41,7 @@
           <input type="hidden" id="related_material_id_[% index %]" name="related_material.record.[% index %].id" value="[% rel.id %]" />
         </span>
         <span class="col-xs-1">
-          <button class="btn btn-default connect">
+          <button class="btn btn-default remove_rel_rec" onclick="full_remove_field(this);">
             <span class="glyphicon glyphicon-minus"></span>
           </button>
         </span>
