@@ -38,6 +38,8 @@ end
 # author
 move_field('rec.contributors.authors.author', 'rec.author')
 remove_field('rec.contributors')
+flatten(rec.author)
+
 retain_field('rec')
 move_field('rec','')
-split_author('inspire')
+split_author()
