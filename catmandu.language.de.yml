@@ -348,7 +348,7 @@ forms:
       department: &department
         label: "Einrichtung"
         label_short: "Einr."
-        placeholder: "z.B. Fakult&auml;t f&uuml;r Physik"
+        placeholder: "Beginnen Sie zu tippen, um Einrichtungen zu durchsuchen, oder klicken Sie i für eine vollständige Liste."
       project: &project
         label: "Projekt"
         placeholder: "z.B. 2nd-Generation Open Access Infrastructure for Research in Europe"

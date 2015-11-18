@@ -280,56 +280,6 @@ function selectAuthedtrans(element){
 }
 
 
-// Select button (dept, proj, rg)
-function selectButton(element){
-	var type = $(element).attr('class').replace('btn select_button', '').trim();
-	var type_short;
-	var type_name;
-	
-	var index = $(element).attr('id').replace(type + '_select_','').trim();
-	var modal = $('#' + type + '_select_modal');
-	var container = $('#' + type + '_select_modal').find('.modal-body').first();
-	container.html("");
-	if(type == "department"){
-	    container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
-	    type_short = "dp";
-	    type_name = "Department";
-	}
-	else if(type == "project"){
-	    container.append('[% INCLUDE backend/generator/fields/subfields/project_select.tt %]');
-	    type_short = "pj";
-	    type_name = "Project";
-	}
-	else if(type == "research_group"){
-	    container.append('[% INCLUDE backend/generator/fields/subfields/research_group_select.tt %]');
-	    type_short = "rg";
-	    type_name = "Research Group";
-	}
-	var heading = modal.find('h4').first();
-	heading.html("");
-	heading.append('Choose a ' + type_name);
-	$('.selectme').bind("click", function(){
-		var id = $(this).attr('id');
-	    var name = $(this).html();
-	    var index = $(this).attr('data-index');
-	    var display = $(this).attr('data-label');
-	    $('#' + type_short + '_nameautocomplete_' + index ).val(name);
-	    $('#' + type_short + '_idautocomplete_' + index).val(id);
-	    if(display){
-	        $('#' + type_short + '_autocomplete_' + index).val(name + ' (' + display + ')');
-	        $('#' + type_short + '_autocomplete_' + index).attr('title', display);
-	    }
-	    else{
-	        $('#' + type_short + '_autocomplete_' + index).val(name);
-	    }
-	    $('#' + type_short + '_autocomplete_' + index ).attr('disabled', 'disabled');
-	    $('#' + type + '_select_modal').modal('hide');
-	    $('input.sticky').blur();
-	});
-	modal.modal('show');
-}
-
-
 $('button.cancel-button').click(function() {
   window.location.href = '/librecat';
 });

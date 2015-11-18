@@ -42,13 +42,13 @@
   <div class="row innerrow">
     <div class="col-md-12" id="person_affiliation">
     [% IF !department %]
-    <div class="row  innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="department.0._id" id="person_aff_idautocomplete_0" value="" />
     
       <div class="form-group col-md-11">
         <div class="input-group sticky">
           <input type="text" onfocus="enable_autocomplete('person_aff',0);" class="sticky form-control" id="person_aff_autocomplete_0" value="" />
-          <div class="input-group-addon" class="department"><span id="person_aff_select_0" onclick="selectAffiliation(this);">[% lf.forms.button.select %]</span></div>
+          <div class="input-group-addon" class="department"><a href="/docs/howto/departments" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
 	      <div class="input-group-addon" onclick="add_field('person_affiliation');"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
@@ -56,13 +56,13 @@
     </div>
     [% ELSE %]
       [% FOREACH dept IN department %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" name="department.[% loop.index %]._id" id="person_aff_idautocomplete_[% loop.index %]" value="[% dept._id %]" />
           
         <div class="form-group col-md-11">
           <div class="input-group sticky">
             <input type="text" onfocus="enable_autocomplete('person_aff',[% loop.index %]);" class="sticky form-control" id="person_aff_autocomplete_[% loop.index %]" value="[% h.get_department(dept._id).display %]" disabled="disabled" />
-            <div class="input-group-addon"><span class="department" id="person_aff_select_[% loop.index %]" onclick="selectAffiliation(this);">[% lf.forms.button.select %]</span></div>
+            <div class="input-group-addon"><a href="/docs/howto/departments" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
 	        <div class="input-group-addon" onclick="add_field('person_affiliation');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon" onclick="remove_field(this);submit_form('id_save_aff');"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
@@ -113,32 +113,6 @@
 <hr />
 
 <script>
-// Select button (dept, proj, rg)
-function selectAffiliation(element){
-    var type_short;
-    var type_name;
-
-    var index = $(element).attr('id').replace('person_aff_select_','').trim();
-    var modal = $('#selectAFF');
-    var container = $('#selectAFF').find('.modal-body').first();
-    container.html("");
-    container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
-    var heading = modal.find('h4').first();
-    heading.html("");
-    heading.append('Choose a Department');
-    $('.selectme').bind("click", function(e){
-        var id = $(this).attr('id');
-        var name = $(this).html();
-        $('#person_aff_idautocomplete_' + index).val(id);
-        $('#person_aff_nameautocomplete_' + index).val(name);
-        $('#person_aff_autocomplete_' + index).val(name);
-        $('#person_aff_autocomplete_' + index).attr("disabled","disabled");
-        $('#selectAFF').modal('hide');
-        submit_form('id_save_aff');
-        e.stopPropagation();
-    });
-    modal.modal('show');
-}
 
 $(function(){
   $('#role_select').on("change", function(){

@@ -347,7 +347,7 @@ forms:
       department: &department
         label: "Department"
         label_short: "Dept."
-        placeholder: "e.g. Fakult&auml;t f&uuml;r Physik"
+        placeholder: "Start typing to search departments or click i for a full list of possibilities."
       project: &project
         label: "Project"
         placeholder: "e.g. 2nd-Generation Open Access Infrastructure for Research in Europe"
