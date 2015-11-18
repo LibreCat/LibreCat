@@ -31,6 +31,7 @@
         <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
           <textarea rows="3" name="abstract.0.text" id="id_abstract_0" placeholder="[% lf.$type.field.abstract.placeholder %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
         </div>
+        <span class="text-muted">[% lf.$type.field.abstract.explain %]</span>
       </div>
     </div>
     [% ELSE %]
@@ -56,6 +57,7 @@
           <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
             <textarea rows="3" name="abstract.[% loop.index %].text" id="id_abstract_[% loop.index %]" placeholder="[% lf.$type.field.abstract.placeholder %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}>[% ab.text | html %]</textarea>
           </div>
+          <span class="text-muted">[% lf.$type.field.abstract.explain %]</span>
         </div>
       </div>
       [% END %]
@@ -82,6 +84,7 @@
         <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
           <textarea rows="3" name="abstract.0.text" id="id_abstract_0" placeholder="[% lf.$type.field.abstract.placeholder %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
         </div>
+        <span class="text-muted">[% lf.$type.field.abstract.explain %]</span>
       </div>
     </div>
     {% END %}
