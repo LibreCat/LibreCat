@@ -533,6 +533,7 @@ sub search_publication {
 	}
 
 	my $hits;
+	$cql =~ tr/äöüß/aous/;
 
 	try{
 		$hits = publication->search(
