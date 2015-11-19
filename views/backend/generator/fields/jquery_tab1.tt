@@ -65,6 +65,9 @@ $('.change_tab').click(function(e){
   }
 
   $('.required').each(function(){
+    if($(this).attr('name').match('ddc')){
+      return;
+    }
     if(!$(this).val()){
       $(this).addClass('has-error');
       $(this).closest('div.input-group.mandatory').addClass("has-error");
@@ -105,13 +108,13 @@ $('.change_tab').click(function(e){
         if($('#id_data_reuse_license').val() == ''){
           $('#id_data_reuse_license').parent().removeClass('alert-info');
           $('#id_data_reuse_license').parent().addClass('alert-danger');
-          alert('{% fields.file_upload.license.data_reuse_license.alert %}');
+          alert('[% lf.$type.field.license.data_reuse_license.alert %]');
           e.stopImmediatePropagation();
         }
         if(!$('#id_open_data_release').is(':checked')) {
           $('#odralert').removeClass('alert-info');
           $('#odralert').addClass('alert-danger');
-          alert('{% fields.file_upload.license.open_data_release.alert %}');
+          alert('[% lf.$type.field.license.open_data_release.alert %]');
           check_license = 0;
           e.stopImmediatePropagation();
         }
@@ -120,13 +123,13 @@ $('.change_tab').click(function(e){
         if($('#id_data_reuse_license').val() == ''){
           $('#id_data_reuse_license').parent().removeClass('alert-info');
           $('#id_data_reuse_license').parent().addClass('alert-danger');
-          alert('{% fields.file_upload.license.data_reuse_license.alert %}');
+          alert('[% lf.$type.field.license.data_reuse_license.alert %]');
           e.stopImmediatePropagation();
         }
         if(!$('#id_open_data_release').is(':checked')) {
           $('#odralert').removeClass('alert-info');
           $('#odralert').addClass('alert-danger');
-          alert('{% fields.file_upload.license.open_data_release.alert %}');
+          alert('[% lf.$type.field.license.open_data_release.alert %]');
           check_license = 0;
           e.stopImmediatePropagation();
         }
@@ -146,14 +149,14 @@ $('.change_tab').click(function(e){
       if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && !$('#id_pub_license').is(':checked')){
         $('#pub_license_alert').removeClass('alert-info');
         $('#pub_license_alert').addClass('alert-danger');
-        alert('{% fields.file_upload.license.pub_license.alert %}');
+        alert('[% lf.$type.field.license.pub_license.alert %]');
         check_license = 0;
         e.preventDefault();
       }
       else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && !$('#id_pub_license').is(':checked')){
         $('#pub_license_alert').removeClass('alert-info');
         $('#pub_license_alert').addClass('alert-danger');
-        alert('{% fields.file_upload.license.pub_license.alert %}');
+        alert('[% lf.$type.field.license.pub_license.alert %]');
         check_license = 0;
         e.preventDefault();
       }
@@ -207,7 +210,7 @@ $('.change_tab').click(function(e){
     e.preventDefault(); // prevents submission of form
   }
   else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish")){
-    window.scrollTo(0, 0);
+    //window.scrollTo(0, 0);
     //e.preventDefault();
   }
   else {
@@ -409,9 +412,4 @@ $('#add_relurl').click(function(){
     $('#relurl_title').val('');
     $('#relurl_description').val('');
   }
-});
-
-
-$('.sure').click(function(){
-  return confirm('{% fields.related_material.publish_button.alert %}');
 });
