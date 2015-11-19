@@ -12,9 +12,6 @@ get qr{/en/*} => sub {
 };
 
 get '/' => sub {
-	if(!session->{lang}){
-		session lang => "de";
-	}
     template '/websites/index_publication.tt', {bag => "home"};
 };
 
