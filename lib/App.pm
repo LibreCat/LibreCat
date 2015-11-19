@@ -63,7 +63,7 @@ get '/login' => sub {
     redirect '/librecat' if session('user');
 
     # not logged in yet
-    template 'login', {error_message => params->{error_message} || '', login => params->{login} || '', lang => params->{lang} || h->config->{default_lang}};
+    template 'login', {error_message => params->{error_message} || '', login => params->{login} || '', lang => session->{lang} || h->config->{default_lang}};
 };
 
 =head2 POST /login

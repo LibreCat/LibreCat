@@ -4,14 +4,14 @@
   </div>
   <div class="col-md-10" id="affiliation">
   [% IF !department OR !department.0 %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="department.0._id" id="aff_idautocomplete_0" />
       
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% department.label %}</div>
           <input type="text" onfocus="enable_autocomplete('aff',0);" class="sticky form-control" id="aff_autocomplete_0" value="" />
-          <div class="input-group-addon"><span onclick="selectButton(this);" class="affiliation" id="affiliation_select_0">Select</span></div>
+          <div class="input-group-addon"><a href="/docs/howto/departments" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
         </div>
@@ -19,14 +19,14 @@
     </div>
   [% ELSE %]
   [% FOREACH dept IN department %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="department.[% loop.index %]._id" id="aff_idautocomplete_[% loop.index %]" value="[% dept._id %]" />
       
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% department.label %}</div>
           <input type="text" onfocus="enable_autocomplete('aff',[% loop.index %]);" class="sticky form-control" id="aff_autocomplete_[% loop.index %]" value="[% h.get_department(dept._id).display %]" disabled="disabled" />
-          <div class="input-group-addon"><span onclick="selectButton(this);" class="affiliation" id="affiliation_select_[% loop.index %]">Select</span></div>
+          <div class="input-group-addon"><a href="/docs/howto/departments" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
         </div>
@@ -35,18 +35,5 @@
   [% END %]
   [% END %]
   
-  <div class="modal" id="selectModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">&hellip;</h4>
-            <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
-          </div>
-          <div class="modal-body">
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>

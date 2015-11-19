@@ -533,6 +533,7 @@ sub search_publication {
 	}
 
 	my $hits;
+	$cql =~ tr/äöüß/aous/;
 
 	try{
 		$hits = publication->search(
@@ -739,7 +740,7 @@ sub search_research_group {
 		$hits->each( sub {
 			my $hit = $_[0];
 			my $display = $hit->{acronym} ? $hit->{acronym} . " | " . $hit->{name} : $hit->{name};
-			$hierarchy->{$display}->{oId} = $hit->{id};
+			$hierarchy->{$display}->{oId} = $hit->{_id};
 		});
 
 		return $hierarchy;

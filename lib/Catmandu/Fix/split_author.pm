@@ -2,7 +2,6 @@ package Catmandu::Fix::split_author;
 
 use Catmandu::Sane;
 use Moo;
-use Catmandu::Fix::trim as => 'trim';
 
 sub fix {
     my ($self, $pub) = @_;
@@ -13,10 +12,12 @@ sub fix {
 
             $au = (ref $au eq 'ARRAY') ? ($au) : ([$au]);
             foreach my $a (@$au) {
-                if ($a =~ /(\w+\s*-*.*?)\s(\w+-*\w+)$/) {
-                    push @{$pub->{$entity}}, {full_name => "$1, $2", first_name => trim $2, last_name => trim $1};
+                if ($a =~ /(\w+)\s([A-Z]{1,2})/) {
+                    push @{$pub->{$entity}}, {full_name => "$1, $2", first_name => $2, last_name => $1};
+                } elsif ($a =~ /(\w+\s*-*.*?)\s(\w+-*\w+)$/) {
+                    push @{$pub->{$entity}}, {full_name => "$2, $1", first_name => $1, last_name => $2};
                 } elsif ($a =~ /(\w+),\s(\w+)/) {
-                    push @{$pub->{$entity}}, {full_name => trim $a, first_name => trim $2, last_name => trim $1};
+                    push @{$pub->{$entity}}, {full_name => $a, first_name => $2, last_name => $1};
                 }
             }
         }

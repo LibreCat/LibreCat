@@ -533,10 +533,13 @@ function add_field(name, placeholder){
 		break;
 	case "person_affiliation":
 		enable_autocomplete("person_aff", index)
-			break;
+		break;
 	case "project":
 		enable_autocomplete("pj", index)
-			break;
+		break;
+	case "research_group":
+		enable_autocomplete("rg", index)
+		break;
     }
 
 }

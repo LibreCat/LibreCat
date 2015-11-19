@@ -16,7 +16,7 @@
         <div class="input-group sticky{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.research_group.label_short || lf.$type.field.research_group.label %]</div>
           <input type="text" onfocus="enable_autocomplete('rg',0);" class="sticky form-control{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %} required{% END %}" placeholder="[% lf.$type.field.research_group.placeholder %]" id="rg_autocomplete_0" value=""{% IF fields.basic_fields.research_group.readonly OR fields.supplementary_fields.research_group.readonly %} readonly="readonly" {% END %}/>
-          <div class="input-group-addon"><span onclick="selectButton(this);" class="research_group" id="research_group_select_0"{% IF fields.basic_fields.research_group.readonly OR fields.supplementary_fields.research_group.readonly %} disabled {% END %}>[% lf.button.select %]</span></div>
+          <div class="input-group-addon"><a href="/docs/howto/research_groups" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
           <div class="input-group-addon" onclick="add_field('research_group'[% IF lf.$type.field.research_group.placeholder %],'[% lf.$type.field.research_group.placeholder %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
@@ -32,7 +32,7 @@
         <div class="input-group sticky{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.research_group.label_short || lf.$type.field.research_group.label %]</div>
           <input type="text" onfocus="enable_autocomplete('rg',[% loop.index %]);" class="sticky form-control{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="[% lf.$type.field.research_group.placeholder %]" id="rg_autocomplete_[% loop.index %]" value="[% proj.name %]"{% IF fields.basic_fields.research_group.readonly OR fields.supplementary_fields.research_group.readonly %} readonly="readonly" {% END %} disabled="disabled"/>
-          <div class="input-group-addon"><span onclick="selectButton(this);" class="research_group" id="research_group_select_[% loop.index %]"{% IF fields.basic_fields.research_group.readonly OR fields.supplementary_fields.research_group.readonly %} disabled {% END %}>[% lf.button.select %]</span></div>
+          <div class="input-group-addon"><a href="/docs/howto/research_groups" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
           <div class="input-group-addon" onclick="add_field('research_group'[% IF lf.$type.field.research_group.placeholder %],'[% lf.$type.field.research_group.placeholder %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
@@ -49,25 +49,11 @@
         <div class="input-group sticky{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.research_group.label_short || lf.$type.field.research_group.label %]</div>
           <input type="text" onfocus="enable_autocomplete('rg',0);" class="sticky form-control{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %} required{% END %}" placeholder="[% lf.$type.field.research_group.placeholder %]" id="rg_autocomplete_0" value=""{% IF fields.basic_fields.research_group.readonly OR fields.supplementary_fields.research_group.readonly %} readonly="readonly" {% END %}/>
-          <div class="input-group-addon"><span onclick="selectButton(this);" class="research_group" id="research_group_select_0"{% IF fields.basic_fields.research_group.readonly OR fields.supplementary_fields.research_group.readonly %} disabled {% END %}>[% lf.button.select %]</span></div>
+          <div class="input-group-addon"><a href="/docs/howto/research_groups" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
         </div>
       </div>
     </div>
     {% END %}
-    
-    <div class="modal" id="research_group_select_modal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">&hellip;</h4>
-            <div><small>Click a name to choose.</small></div>
-          </div>
-          <div class="modal-body">
-          </div>
-        </div>
-      </div>
-    </div>
     
   </div>
 </div>

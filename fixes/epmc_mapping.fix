@@ -18,4 +18,6 @@ move_field('pageInfo','page')
 
 # authors
 move_field('authorString','author')
+split_field(author, ',|;')
+trim(author.*)
 split_author()

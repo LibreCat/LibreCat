@@ -77,10 +77,11 @@ ajax '/get_alias/:id/:alias' => sub {
 ajax '/get_project' => sub {
     my $q;
     @$q = map {
-        $_ .= '*' if $_ !~ /[äöüß]/; #sorry for this bad hack ;-)
+    	$_ =~ tr/äöüß/aous/;
+        $_ .= '*';
     } split(' ', lc params->{term});
 
-    my $hits = h->search_project({q => $q, limit => 10});
+    my $hits = h->search_project({q => $q, limit => 100});
 
     if($hits->{total}){
     	my $map;
@@ -101,10 +102,11 @@ ajax '/get_project' => sub {
 ajax '/get_department' => sub {
     my $q;
     @$q = map {
-        $_ .= '*' if $_ !~ /[äöüß]/; #sorry for this bad hack ;-)
+        $_ =~ tr/äöüß/aous/;
+        $_ .= '*';
     } split(' ', lc params->{term});
 
-    my $hits = h->search_department({q => $q, limit => 10});
+    my $hits = h->search_department({q => $q, limit => 100});
 
     if($hits->{total}){
     	my $map;
@@ -124,10 +126,11 @@ ajax '/get_department' => sub {
 ajax '/get_research_group' => sub {
 	my $q;
 	@$q = map {
-		$_ .= '*' if $_ !~ /[äöüß]/;
+		$_ =~ tr/äöüß/aous/;
+		$_ .= '*';
 	} split(' ', lc params->{term});
 
-	my $hits = h->search_research_group({q => $q, limit => 10});
+	my $hits = h->search_research_group({q => $q, limit => 100});
 
 	if($hits->{total}){
 		my $map;

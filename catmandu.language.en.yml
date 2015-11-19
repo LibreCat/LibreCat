@@ -347,7 +347,7 @@ forms:
       department: &department
         label: "Department"
         label_short: "Dept."
-        placeholder: "e.g. Fakult&auml;t f&uuml;r Physik"
+        placeholder: "Start typing to search departments or click i for a full list of possibilities."
       project: &project
         label: "Project"
         placeholder: "e.g. 2nd-Generation Open Access Infrastructure for Research in Europe"
@@ -463,6 +463,7 @@ forms:
         label: "Abstract"
         label2: "Language"
         placeholder: "Abstract Text (you can use Markdown or MathJax for styling)"
+        explain: "You can style your text with <a href='http://spec.commonmark.org/0.22/#preliminaries' target='_blank'>Markdown</a>."
       keyword: &keyword
         label: "Keywords"
         placeholder: "Keywords (multiple entries separated by semicolon, e.g. Keyword1 ; Keyword2 ; Keyword3)"

@@ -152,8 +152,13 @@ according to first delegate ID.
 		if(params->{fmt} and params->{fmt} eq "autocomplete"){
 			my $p = h->extract_params();
 			push @{$p->{q}}, "status=public";
-			foreach my $delegate (@{$account->{delegate}}){
-				push @{$p->{q}}, $delegate;
+			if($account->{delegate}){
+				my $delegate_search = "";
+				foreach my $delegate (@{$account->{delegate}}){
+					$delegate_search .= "person=$delegate OR creator=$delegate OR ";
+				}
+				$delegate_search =~ s/ OR $//g;
+				push @{$p->{q}}, "(" . $delegate_search . ")" if $delegate_search ne "";
 			}
 			my $hits = h->search_publication($p);
 			h->export_publication($hits, params->{fmt});
