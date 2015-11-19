@@ -196,7 +196,7 @@ publicationTypes:
             readonly: admin
           ddc:
             multiple: 0
-            mandatory: file
+            mandatory: oa_file
       supplementary_fields:
         abstract: &abstract
           multiple: 1
@@ -220,8 +220,6 @@ publicationTypes:
           mandatory: 0
         related_material.link:
           mandatory: 0
-        publish_button:
-          alert: "Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified."
   bookeditor:
     tmpl: bookEditor
     fields:
