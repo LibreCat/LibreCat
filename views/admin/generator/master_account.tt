@@ -17,6 +17,13 @@
 
     <form id="id_account_form" action="/librecat/admin/account/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
+      <input type="hidden" name="email_encoded" value="[% email_encoded %]" />
+      <input type="hidden" name="other_profile" value="[% other_profile %]" />
+      <input type="hidden" name="title" value="[% title %]" />
+      <input type="hidden" name="idm_title" value="[% idm_title %]" />
+      <input type="hidden" name="former" value="[% former %]" />
+      <input type="hidden" name="researcher" value="[% researcher %]" />
+      <input type="hidden" name="nonexist" value="[% nonexist %]" />
 
       {% FOREACH key IN account_field_order %}
 {% template = "fields/" _ key _ ".tt" %}

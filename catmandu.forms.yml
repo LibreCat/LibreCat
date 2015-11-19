@@ -1019,6 +1019,7 @@ otherItems:
       - reviewer
       - edit_mode
       - author_ids
+      - photo
       - style
     id:
       label: "ID"
@@ -1075,6 +1076,8 @@ otherItems:
       multiple: 1
     author_ids:
       label: "Author IDs"
+    photo:
+      label: "BIS-Photo"
     edit_mode:
       label: "Edit Mode"
     style:
