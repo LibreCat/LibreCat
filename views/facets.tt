@@ -378,12 +378,7 @@
     <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.citation_style %][% IF style != "default" AND style != "" %]: [% style %][% ELSIF style == "default" %]: default[% END %]</button>
     <div class="facettecollapse">
     <ul id="style_[% tabmodus %][% menu %]" class="collapse">
-      [% IF qp.style AND qp.style == "default" %]
-      <li>default</li>
-      [% ELSE %]
-      <li><a href="[% h.newuri_for("$path", qp, style="default") %]" rel="nofollow">default</a></li>
-      [% END %]
-      [% FOREACH dstyle IN h.get_list('styles_public') %]
+      [% FOREACH dstyle IN h.config.citation.csl.styles %]
         [% IF dstyle == style %]
         <li>[% dstyle %]</li>
         [% ELSE %]

@@ -30,38 +30,6 @@ author_id:
     label: Alias
     url: "/person/"
 
-styles_public:
-  - ama
-  - apa
-  - apa_indent
-  - bio1
-  - ewi
-  - frontiers
-  - harvard1
-  - ieee
-  - lncs
-  - mla
-  - wels
-  - angewandte-chemie
-
-styles:
-  - ama
-  - apa
-  - apa_indent
-  - aps
-  - bio1
-  - ewi
-  - frontiers
-  - default
-  - harvard1
-  - ieee
-  - lncs
-  - mla
-  - pub
-  - wels
-  - sfb882
-  - angewandte-chemie
-
 language_preselect:
 # English
   - eng
