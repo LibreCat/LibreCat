@@ -407,7 +407,7 @@ forms:
         access:
           closed: "Author/Reviewer"
           until: "until"
-          request_a_copy: "<br>(Request a Copy)"
+          request_a_copy: "Request a Copy"
           local: "UniBi Only"
           open_access: "Open Access"
         edit_modal:
@@ -1248,7 +1248,7 @@ forms:
         access:
           closed: "Author/Reviewer"
           until: "until"
-          request_a_copy: "<br>(Request a Copy)"
+          request_a_copy: "Request a Copy"
           local: "UniBi Only"
           open_access: "Open Access"
         edit_modal:
