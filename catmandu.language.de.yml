@@ -34,7 +34,8 @@ header:
     manage_journals: "Journale verwalten"
     manage_awards: "Preise verwalten"
     manage_department: "Einrichtungen verwalten"
-  lang: "En<span class='hidden-sm'>glish</span>"
+  lang: "English"
+  lang_short: "EN"
   lang_select:
     eng: "Englisch"
     ger: "Deutsch"

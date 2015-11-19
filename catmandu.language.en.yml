@@ -34,7 +34,8 @@ header:
     manage_journals: "Manage Journals"
     manage_awards: "Manage Awards"
     manage_department: "Manage Departments"
-  lang: "De<span class='hidden-sm'>utsch</span>"
+  lang: "Deutsch"
+  lang_short: "DE"
   lang_select:
     eng: "English"
     ger: "German"
