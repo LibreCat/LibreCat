@@ -173,14 +173,11 @@
 
         var use_file_id;
         use_file_id = data.file_id ? data.file_id : data.tempid;
+        
+        var namediv = $('#' + use_file_id + ' div.padded');
+        namediv.html('');
+        namediv.html('<span class="glyphicon glyphicon-file text-muted"></span> <span class="text-muted"><strong>' + data.file_name + '</strong></span>');
 
-        var a = $('#' + use_file_id + ' div.padded a');
-        a.attr('title','');
-        a.attr('title',data.file_name);
-        a.html('');
-        a.html(data.file_name);
-        $('#filename_' + use_file_id).html("");
-        $('#filename_' + use_file_id).html('<span class="glyphicon glyphicon-file text-muted"></span> <a href="/download/[% id %]/' + use_file_id + '" target="_blank" title="' + data.file_name + '">' + data.file_name + '</a>');
         $('#access_' + use_file_id).html(accessLevel);
         $('#updated_' + use_file_id).html(data.date_updated);
         $('#creator_' + use_file_id).html(data.creator);
