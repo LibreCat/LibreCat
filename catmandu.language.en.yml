@@ -219,6 +219,8 @@ frontdoor:
   cite_this: "Cite this"
   supplements: "Supplements"
   show_all: "All"
+  view_wos: "View record in Web of Science"
+  sources: "Sources"
   search_this: "Search this title in"
   isbn_search: "ISBN Search"
   catalogue: "Catalogue.<em>plus!</em>"
@@ -512,8 +514,6 @@ forms:
           placeholder: "Description of external link"
         button:
           label: "Add"
-      publish_button:
-        alert: "Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified."
       locked: &locked
         label: "Locked for editing (except for admins)"
         label_short: "Locked"

@@ -220,6 +220,8 @@ frontdoor:
   cite_this: "Zitieren"
   supplements: "Zusatzmaterialien"
   show_all: "Alle"
+  view_wos: "Dieser Datensatz im Web of Science"
+  sources: "Quellen"
   search_this: "Suchen in"
   isbn_search: "ISBN Suche"
   catalogue: "Katalog.<em>plus!</em>"
@@ -513,8 +515,6 @@ forms:
           placeholder: "Beschreibung"
         button:
           label: "Hinzufügen"
-      publish_button:
-        alert: "Sie sind sicher, dass Sie diesen Datensatz 'Public' stellen wollen? Sie können dies nicht selbst rückgängig machen. Alle hochgeladenen Dateien werden gemäß dem 'Access Level', den Sie festgelegt haben, veröffentlicht."
       locked: &locked
         label: "Locked for editing (except for admins)"
         label_short: "Locked"
