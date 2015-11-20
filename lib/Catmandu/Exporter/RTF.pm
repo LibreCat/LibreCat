@@ -51,7 +51,7 @@ sub _add_cite {
 
         if (my $ext = $pub->{external_id}) {
             if ($ext->{isi}) {
-                $links .= "\\line WoS: {\\field{\\*\\fldinst HYPERLINK http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/$ext->{isi}}{\\fldrslt $ext->{isi}}}";
+                $links .= "\\line WoS: {\\field{\\*\\fldinst HYPERLINK http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&rft_id=info:ut/$ext->{isi}}{\\fldrslt $ext->{isi}}}";
             }
 
         	if($ext->{pmid}){

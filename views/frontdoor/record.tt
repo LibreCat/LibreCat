@@ -164,7 +164,8 @@
 
             [% FOREACH lang IN language %]
               [% IF lang.iso AND bag != "data" %]
-              |<!-- <meta itemprop="inLanguage" content="[% schema.langCode %]"> --> <em>[% lf.forms.language.${lang.iso} %]</em>
+              [%- IF loop.first %]|[% ELSE %],[% END -%]
+              <meta itemprop="inLanguage" content="[% lang.iso %]"><em>[% lf.forms.language.${lang.iso} %]</em>
               [% END %]
             [% END %]
           </div>
@@ -332,11 +333,11 @@
 
           [% IF external_id.isi %]
           <h3 id="wos">Web of Science</h3>
-          <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">View record in Web of Science&reg;</a>
+          <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">[% lf.frontdoor.view_wos %]&reg;</a>
           [% END %]
 
 	  [% IF external_id.pmid OR  external_id.arxiv OR external_id.inspire OR external_id.scoap3 OR external_id.ahf OR external_id.opac OR external_id.phillister %]
-	    <h3>Sources</h3>
+	    <h3>[% lf.frontdoor.sources %]</h3>
 
 	    [% IF external_id.pmid %]
 	    <p><img src="/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% external_id.pmid %]<br>

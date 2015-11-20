@@ -11,6 +11,7 @@ use Try::Tiny;
 use Dancer::Plugin::Auth::Tiny;
 use App::Helper;
 use App::Catalogue::Controller::Importer;
+use Catmandu::Fix::trim as => 'trim';
 
 =head2 POST /librecat/record/import
 
@@ -19,8 +20,8 @@ Returns a form with imported data.
 =cut
 post '/librecat/record/import' => needs login => sub {
 	my $p = params;
-
-    my $pub;
+	trim($p,'id','whitespace');
+        my $pub;
 	my $user = h->get_person( session->{personNumber} );
 	my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
