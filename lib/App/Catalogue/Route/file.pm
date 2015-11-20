@@ -23,7 +23,7 @@ sub _send_it {
 	my $dest_dir = h->get_file_path($id);
 	my $path_to_file = path($dest_dir, $file_name);
 	if(-e $path_to_file){
-		return Dancer::send_file($path_to_file, system_path => 1);
+		return Dancer::send_file($path_to_file, system_path => 1, filename => $file_name);
 	}
 	else {
 		template 'websites/error',
