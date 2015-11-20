@@ -4,8 +4,8 @@ retain_field('message')
 move_field('message','')
 
 #title
-move_field('subtitle.0','title.1')
-join_field('title',' - ')
+#move_field('subtitle.0','title.1')
+join_field('title',' ')
 remove_field('subtitle')
 trim('title')
 
@@ -18,7 +18,7 @@ trim('year')
 move_field('DOI','doi')
 move_field('ISSN','publication_identifier.issn')
 move_field('ISBN','publication_identifier.isbn')
-replace_all('isbn.*','^http://id.crossref.org/isbn/(.*)',$1)
+replace_all('publication_identifier.isbn.*','^http://id.crossref.org/isbn/(.*)',$1)
 
 # authors
 do list (path => author)
@@ -27,6 +27,8 @@ do list (path => author)
     move_field('family','last_name')
   end
 end
+
+add_field(publication_status, published)
 
 # type mapping
 if all_match('type','journal-article')
