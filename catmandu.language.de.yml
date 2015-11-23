@@ -466,8 +466,8 @@ forms:
       abstract: &abstract
         label: "Abstract"
         label2: "Sprache"
-        placeholder: "Abstract Text (Sie können Markdown oder MathJax zum Formatieren benutzen)"
-        explain: "Sie können Ihren Text mit <a href='http://spec.commonmark.org/0.22/#preliminaries' target='_blank'>Markdown</a> stylen."
+        placeholder: "Abstract Text (Sie können Markdown für Formatierungen verwenden)"
+        explain: "Verwenden Sie <a href='http://spec.commonmark.org/0.22/#preliminaries' target='_blank'>Markdown</a> für Formatierungen. Klicken Sie nach dem Speichern auf den Link 'PUB', um sich eine Vorschau anzuzeigen und die Formatierungen zu prüfen."
       keyword: &keyword
         label: "Stichworte"
         placeholder: "Stichworte (mehrere Einträge durch Semikolon trennen, z.B. Stichwort1 ; Stichwort 2 ; Stichwort3)"
