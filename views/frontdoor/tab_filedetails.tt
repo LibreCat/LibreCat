@@ -31,8 +31,8 @@
   [% FOREACH fi IN file.nsort('fileOrder') %]
   [% NEXT IF fi.relation != "main_file" %]
   <div class="row[% UNLESS loop.first %] margin-top1[% END %]">
-    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.name %]</div>
-    <div class="col-md-10">
+    <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.name %]</div>
+    <div class="col-md-9">
       <a href="/download/[% _id %]/[% fi.file_id %]">
         [% fi.file_name %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
@@ -40,23 +40,23 @@
   </div>
     [% IF fi.title %]
     <div class="row">
-      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.title %]</div>
-      <div class="col-md-10">
+      <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.title %]</div>
+      <div class="col-md-9">
         [% fi.title %]
       </div>
     </div>
     [% END %]
     [% IF fi.description %]
     <div class="row">
-      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.description %]</div>
-      <div class="col-md-10">
+      <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.description %]</div>
+      <div class="col-md-9">
         [% fi.description %]
       </div>
     </div>
     [% END %]
     <div class="row">
-    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.access_level.label %]</div>
-    <div class="col-md-10">
+    <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.access_level.label %]</div>
+    <div class="col-md-9">
       [% SWITCH fi.access_level %]
         [% CASE 'open_access' %]
         [% INCLUDE frontdoor/oa_lock.tt %] [% lf.frontdoor.tabs.file_details.access_level.open_access %]
@@ -71,16 +71,16 @@
     </div>
     [% IF fi.date_updated %]
     <div class="row">
-      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.last_uploaded %]</div>
-      <div class="col-md-10">
+      <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.last_uploaded %]</div>
+      <div class="col-md-9">
         [% fi.date_updated %]
       </div>
     </div>
     [% END %]
     [% IF fi.checksum %]
     <div class="row">
-      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.md5 %]</div>
-      <div class="col-md-10">
+      <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.md5 %]</div>
+      <div class="col-md-9">
         [% fi.checksum %]
       </div>
     </div>
