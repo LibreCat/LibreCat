@@ -108,14 +108,15 @@ get qr{/(data|publication)/embed/*} => sub {
 get qr{/embed/*} => sub {
 	my $p = h->extract_params();
 	my $portal = h->config->{portal}->{$p->{ttyp}} if $p->{ttyp};
+	my $pq;
 
 	if($portal){
-		my $pq = h->is_portal_default($p->{ttyp});
+		$pq = h->is_portal_default($p->{ttyp});
 		$p = $pq->{full_query};
 	}
 	push @{$p->{q}}, ("status=public");
 	$p->{facets} = h->default_facets();
-	my $sort_style = h->get_sort_style( params->{sort} || '', params->{style} || '');
+	my $sort_style = h->get_sort_style( params->{sort} || $pq->{default_query}->{'sort'} || '', params->{style} || '');
     $p->{sort} = $sort_style->{sort};
     $p->{start} = params->{start};
 	my $hits = h->search_publication($p);

@@ -448,7 +448,7 @@ pubimwwp:
       or: 0931-6558
   lang: en
   limit: 500
-  sort: volume.desc
+  sort: 'volume.desc'
   ttyp: pubimwwp
   fmt: html
 
