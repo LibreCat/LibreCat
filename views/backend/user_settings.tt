@@ -11,22 +11,24 @@
   [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
   <div class="row innerrow">
     <div class="col-md-11">
-      <h4>[% lf.header.role_label %]</h4>
-      <select id="role_select" class="form-control">
-        <option[% IF session.role == "user" %] selected="selected"[% END %] value="/librecat/change_role/user">[% lf.header.role.user %]</option>
-        [% IF thisPerson.delegate %]
-        <option[% IF session.role == "delegate" %] selected="selected"[% END %] value="/librecat/change_role/delegate">[% lf.header.role.delegate %]</option>
-	    [% END %]
-	    [% IF thisPerson.reviewer %]
-	    <option[% IF session.role == "reviewer" %] selected="selected"[% END %] value="/librecat/change_role/reviewer">[% lf.header.role.reviewer %]</option>
-	    [% END %]
-	    [% IF thisPerson.data_manager %]
-	    <option[% IF session.role == "data_manager" %] selected="selected"[% END %] value="/librecat/change_role/data_manager">[% lf.header.role.data_manager %]</option>
-	    [% END %]
-	    [% IF thisPerson.super_admin %]
-	    <option[% IF session.role == "super_admin" %] selected="selected"[% END %] value="/librecat/change_role/admin">[% lf.header.role.super_admin %]</option>
-	    [% END %]
-	  </select>
+      <h5>[% lf.header.role_label %]: <em><strong>[% lf.header.role.item(session.role) %]</strong></em></h5>
+      ([% lf.header.role_change %]
+      [% IF session.role != "user" %]
+      <a href="[% IF session.role != "user" %]/librecat/change_role/user[% END %]">[% lf.header.role.user %]</a>
+      [% END %]
+      [% IF thisPerson.delegate AND session.role != "delegate" %]
+      | <a href="/librecat/change_role/delegate">[% lf.header.role.delegate %]</a>
+	  [% END %]
+	  [% IF thisPerson.reviewer AND session.role != "reviewer" %]
+	  | <a href="/librecat/change_role/reviewer">[% lf.header.role.reviewer %]</a>
+	  [% END %]
+	  [% IF thisPerson.data_manager AND session.role != "data_manager" %]
+	  | <a href="/librecat/change_role/data_manager">[% lf.header.role.data_manager %]</a>
+	  [% END %]
+	  [% IF thisPerson.super_admin AND session.role != "super_admin" %]
+	  | <a href="/librecat/change_role/admin">[% lf.header.role.super_admin %]</a>
+	  [% END %]
+	  )
     </div>
   </div>
   [% END %]

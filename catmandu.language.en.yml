@@ -18,6 +18,7 @@ header:
   my_author_page: "My Publication List"
   brand: "Home"
   role_label: "Role"
+  role_change: "Change role:"
   settings: "Settings"
   role:
     user: "User"
