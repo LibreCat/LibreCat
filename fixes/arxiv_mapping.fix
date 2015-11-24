@@ -10,7 +10,7 @@ move_field('id','external_id.arxiv')
 # abstract, keywords
 move_field('summary','abstract.0.text')
 add_field('abstract.0.lang','eng')
-move_field('category.*.term','keyword.$append')
+#move_field('category.*.term','keyword.$append')
 trim('abstract.0.text')
 trim('title')
 
@@ -18,14 +18,14 @@ trim('title')
 replace_all('published','(^20[0-9][0-9]).*','$1')
 move_field('published','year')
 
-# multiple authors
+# authors
 do list (path => author)
   do identity ()
 	remove_field('arxiv:affiliation')
 	copy_field('name','last_name')
-	replace_all('last_name','.*\s(\S+)$','$1')
+	replace_all('last_name','.*\s(\w+)$','$1')
 	copy_field('name', 'first_name')
-	replace_all('first_name', '(.*)\s(\S+)$','$1')
+	replace_all('first_name', '(.*)\s(\w+)$','$1')
 	remove_field('name');
   end
 end
