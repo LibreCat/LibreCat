@@ -11,7 +11,6 @@
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% department.label %}</div>
           <input type="text" onfocus="enable_autocomplete('aff',0);" class="sticky form-control" id="aff_autocomplete_0" value="" />
-          <div class="input-group-addon"><a href="/docs/howto/departments" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
         </div>
@@ -26,7 +25,6 @@
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% department.label %}</div>
           <input type="text" onfocus="enable_autocomplete('aff',[% loop.index %]);" class="sticky form-control" id="aff_autocomplete_[% loop.index %]" value="[% h.get_department(dept._id).display %]" disabled="disabled" />
-          <div class="input-group-addon"><a href="/docs/howto/departments" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
         </div>

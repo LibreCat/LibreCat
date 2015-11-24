@@ -16,7 +16,6 @@
         <div class="input-group sticky{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.project.label %]</div>
           <input type="text" onfocus="enable_autocomplete('pj',0);" class="sticky form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} required{% END %}" placeholder="[% lf.$type.field.project.placeholder %]" id="pj_autocomplete_0" value=""{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
-          <div class="input-group-addon"><a href="/docs/howto/projects" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
           <div class="input-group-addon" onclick="add_field('project'[% IF lf.$type.field.project.placeholder %],'[% lf.$type.field.project.placeholder %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
@@ -32,7 +31,6 @@
         <div class="input-group sticky{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.project.label %]</div>
           <input type="text" onfocus="enable_autocomplete('pj',[% loop.index %]);" class="sticky form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="[% lf.$type.field.project.placeholder %]" id="pj_autocomplete_[% loop.index %]" value="[% proj.name %]"{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %} disabled="disabled"/>
-          <div class="input-group-addon"><a href="/docs/howto/projects" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
           <div class="input-group-addon" onclick="add_field('project'[% IF lf.$type.field.project.placeholder %],'[% lf.$type.field.project.placeholder %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
@@ -49,7 +47,7 @@
         <div class="input-group sticky{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.project.label %]</div>
           <input type="text" onfocus="enable_autocomplete('pj',0);" class="sticky form-control{% IF fields.basic_fields.project.mandatory OR fields.supplementary_fields.project.mandatory %} required{% END %}" placeholder="[% lf.$type.field.project.placeholder %]" id="pj_autocomplete_0" value=""{% IF fields.basic_fields.project.readonly OR fields.supplementary_fields.project.readonly %} readonly="readonly" {% END %}/>
-          <div class="input-group-addon"><a href="/docs/howto/projects" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
+          <div class="input-group-addon"></div>
         </div>
       </div>
     </div>

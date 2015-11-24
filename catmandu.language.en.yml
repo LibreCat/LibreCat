@@ -351,14 +351,14 @@ forms:
       department: &department
         label: "Department"
         label_short: "Dept."
-        placeholder: "Start typing to search departments or click i for a full list of possibilities."
+        placeholder: "Start typing, or use (arrow down) for the list."
       project: &project
         label: "Project"
-        placeholder: "e.g. 2nd-Generation Open Access Infrastructure for Research in Europe"
+        placeholder: "Start typing, or use (arrow down) for the list."
       research_group: &research_group
         label: "Research Group"
         label_short: "Res. Gr."
-        placeholder: "e.g. Social Motorics"
+        placeholder: "Start typing, or use (arrow down) for the list."
       place: &place
         label: "Place of Publication"
         label_short: "Place"

@@ -352,14 +352,14 @@ forms:
       department: &department
         label: "Einrichtung"
         label_short: "Einr."
-        placeholder: "Beginnen Sie zu tippen, um Einrichtungen zu durchsuchen, oder klicken Sie i für eine vollständige Liste."
+        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) für die vollständige Liste."
       project: &project
         label: "Projekt"
-        placeholder: "z.B. 2nd-Generation Open Access Infrastructure for Research in Europe"
+        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) für die vollständige Liste."
       research_group: &research_group
         label: "Forschungsgruppe"
         label_short: "Forsch.gr."
-        placeholder: "z.B. Social Motorics"
+        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) für die vollständige Liste."
       place: &place
         label: "Verlagsort"
         label_short: "Ort"
