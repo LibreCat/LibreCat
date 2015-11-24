@@ -163,7 +163,7 @@
   <div class="row">
     <div class="col-md-2 text-muted">[% lf.forms.$type.field.item('conference.date').label %]</div>
     <div class="col-md-10">
-      [% conference.start_date %][% IF conference.end_date %] to [% conference.end_date %][% END %]
+      [% conference.start_date %][% IF conference.end_date %] &ndash; [% conference.end_date %][% END %]
     </div>
   </div>
 [% END %]
