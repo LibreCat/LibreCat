@@ -142,6 +142,8 @@ person_profile:
   person_id_title: "These IDs will be visible on your public person page immediately after saving."
 project:
   heading: "Projects"
+  not_found: "Project ID not found"
+  period: "Project Period"
   filter: "Filter"
   filter_remove: "Remove Current Filters"
   filter_help: "You can combine search and filter options"
@@ -228,6 +230,7 @@ frontdoor:
   tabs:
     details:
       label: "Details"
+      department: "Deparment(s)"
       reviewed_work: "Reviewed Work"
       isbn: "ISBN"
       issn: "ISSN"
@@ -238,6 +241,15 @@ frontdoor:
       financial_disclosure: "Financial disclosure"
       ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href='http://oa.uni-bielefeld.de/publikationsfonds.html'>Open Access Publication Fund</a> of Bielefeld University."
       scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University."
+      ext_funded: "Externally Funded"
+      grantnumber: "Grant Number"
+      alt_name: "Alternative Name"
+      acronym: "Acronym"
+      coordinator: "Coordinator"
+      investigator: "Principal Investigator"
+      member: "Member"
+      funder: "Funder"
+      cooperator: "Cooperator"
     file_details:
       label: "Files"
       name: "File Name"
@@ -351,14 +363,14 @@ forms:
       department: &department
         label: "Department"
         label_short: "Dept."
-        placeholder: "Start typing, or use (arrow down) for the list."
+        placeholder: "Start typing, or use (arrow down) to choose a department from the list."
       project: &project
         label: "Project"
-        placeholder: "Start typing, or use (arrow down) for the list."
+        placeholder: "Start typing, or use (arrow down) to choose a project from the list."
       research_group: &research_group
         label: "Research Group"
         label_short: "Res. Gr."
-        placeholder: "Start typing, or use (arrow down) for the list."
+        placeholder: "Start typing, or use (arrow down) to choose a research group from the list."
       place: &place
         label: "Place of Publication"
         label_short: "Place"

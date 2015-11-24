@@ -4,14 +4,14 @@
 
   [% IF alternative_name %]
   <div class="row">
-      <div class="col-md-2 text-muted">Alternative Name</div>
+      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.alt_name %]</div>
       <div class="col-md-10">[% alternative_name %]</div>
   </div>
   [% END %]
 
   [% IF acronym %]
   <div class="row">
-      <div class="col-md-2 text-muted">Acronym</div>
+      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.acronym %]</div>
       <div class="col-md-10">[% acronym %]</div>
   </div>
   [% END %]
@@ -19,7 +19,7 @@
   [% IF owner %]
   <div class="row">
     <div class="col-md-2 text-muted">
-      Coordinator
+      [% lf.frontdoor.tabs.details.coordinator %]
     </div>
     <div class="col-md-10">
       [% FOREACH coord IN owner %]
@@ -35,7 +35,7 @@
   [% IF principal_investigator %]
   <div class="row">
     <div class="col-md-2 text-muted">
-      Principal Investigators
+      [% lf.frontdoor.tabs.details.investigator %]
     </div>
     <div class="col-md-10">
       [% FOREACH pi IN principal_investigator %]
@@ -51,7 +51,7 @@
   [% IF member %]
   <div class="row">
     <div class="col-md-2 text-muted">
-      Members
+      [% lf.frontdoor.tabs.details.member %]
     </div>
     <div class="col-md-10">
       [% FOREACH pm IN member %]
@@ -66,7 +66,7 @@
 
   [% IF department %]
   <div class="row">
-      <div class="col-md-2 text-muted">Department(s)</div>
+      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.deparment %]</div>
       <div class="col-md-10">[% FOREACH d IN department %]
       [% d.name %][% UNLESS loop.last %]<br />[% END %]
       [% END %]
@@ -76,14 +76,14 @@
 
   [% IF description %]
   <div class="row">
-      <div class="col-md-2 text-muted">Description</div>
+      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.file_details.description %]</div>
       <div class="col-md-10">[% description %]</div>
   </div>
   [% END %]
 
   [% IF grant_number %]
   <div class="row">
-      <div class="col-md-2 text-muted">Grant Number</div>
+      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.grantnumber %]</div>
       <div class="col-md-10">
 	<a href="http://cordis.europa.eu/projects/[% grant_number %]" target="_blank">[% grant_number %]</a>
       </div>
@@ -92,7 +92,7 @@
 
   [% IF funder %]
   <div class="row">
-      <div class="col-md-2 text-muted">Funders</div>
+      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.funder %]</div>
       <div class="col-md-10">[% FOREACH fund IN funder %]
       [% fund %][% UNLESS loop.last %]<br />[% END %]
       [% END %]
@@ -102,7 +102,7 @@
 
   [% IF cooperator %]
   <div class="row">
-      <div class="col-md-2 text-muted">Cooperators</div>
+      <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.cooperator %]</div>
       <div class="col-md-10">[% FOREACH coop IN cooperator %]
       [% coop %][% UNLESS loop.last %]<br />[% END %]
       [% END %]

@@ -1,4 +1,6 @@
 [% INCLUDE header.tt %]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lf = h.config.language.$lang -%]
 
 <!-- BEGIN project/project.tt -->
 
@@ -7,13 +9,13 @@
     <div class="page-header" id="banner">
 
       <ol class="breadcrumb">
-	   <li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back to previous page</a></li>
+	   <li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>[% lf.frontdoor.crumb_back %]</a></li>
       </ol>
 
       [% IF name %]
-      <h1 itemprop="name">[% name %]</h1>
+      <h1 itemprop="name">[% name %] ([% lf.hits.project %])</h1>
       [% ELSE %]
-      <h1>No project found!</h1>
+      <h1>[% lf.project.not_found %]</h1>
       [% STOP %]
       [% END %]
     </div>
@@ -24,7 +26,7 @@
     [% IF start_date %]
 	<div class="row">
 	  <div class="col-md-12">
-	    Project Period: [% start_date %][% IF end_date %] - [% end_date %][% END %]
+	    [% lf.project.period %]: [% start_date %][% IF end_date %] &ndash; [% end_date %][% END %]
 	  </div>
 	</div>
 	[% END %]
@@ -39,7 +41,7 @@
 	    [% IF funded %]|[% END %]
 	  [% END %]
 	  [% IF funded %]
-	    <em>Externally Funded</em>
+	    <em>[% lf.frontdoor.tabs.details.ext_funded %]</em>
 	  [% END %]
 	  </div>
 	</div>
@@ -49,8 +51,8 @@
     <div class="row">
       <div class="col-md-12">
 	    <ul class="nav nav-tabs">
-	      <li class="active"><a href="#project_details" data-toggle="tab">Details</a></li>
-          [% IF project_publication %]<li><a href="#project_publications" data-toggle="tab">Publications</a></li>[% END %]
+	      <li class="active"><a href="#project_details" data-toggle="tab">[% lf.frontdoor.tabs.details.label %]</a></li>
+          [% IF project_publication %]<li><a href="#project_publications" data-toggle="tab">[% lf.tabs.publications %]</a></li>[% END %]
         </ul>
       </div>
     </div>

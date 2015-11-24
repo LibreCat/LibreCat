@@ -78,6 +78,13 @@ tabs:
   faq: "FAQ"
   contact: "Kontakt"
   policy: "Leitlinien"
+hits:
+  publication: "Publikation"
+  publications: "Publikationen"
+  data_publication: "Datenpublikation"
+  data_publications: "Datenpublikationen"
+  project: "Projekt"
+  projects: "Projekte"
 home:
   search_placeholder: "Publikationen in PUB suchen"
   fields: "Felder"
@@ -139,10 +146,12 @@ person_profile:
   directory_of_staff: "PEVZ-ID"
   other_profile: "SFB882-GK Profil"
   other_profile_url: "http://www.sfb882.uni-bielefeld.de/en/staff/"
-  no_author_ids: "Keine Autoren-Ids gesetzt."
-  person_id_title: "Diese Ids werden direkt nach dem Speichern auf Ihrer Personenseite sichtbar sein."
+  no_author_ids: "Keine Autoren-IDs gesetzt."
+  person_id_title: "Diese IDs werden direkt nach dem Speichern auf Ihrer Personenseite sichtbar sein."
 project:
   heading: "Projekte"
+  not_found: "Unter dieser ID existiert kein Projekt"
+  period: "Projektzeitraum"
   filter: "Filtern"
   filter_remove: "Filteroptionen entfernen"
   filter_help: "Sie können Suche und Filteroptionen kombinieren"
@@ -229,6 +238,7 @@ frontdoor:
   tabs:
     details:
       label: "Details"
+      department: "Einrichtung(en)"
       reviewed_work: "Rezensiertes Werk"
       isbn: "ISBN"
       issn: "ISSN"
@@ -239,6 +249,15 @@ frontdoor:
       financial_disclosure: "Finanzierungs-Informationen"
       ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href='http://oa.uni-bielefeld.de/publikationsfonds.html'>Open Access Publication Fund</a> of Bielefeld University."
       scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University."
+      ext_funded: "Externally Funded"
+      grantnumber: "Grant Number"
+      alt_name: "Alternativer Name"
+      acronym: "Akronym"
+      coordinator: "Koordinator"
+      investigator: "Principal Investigator"
+      member: "Mitglieder"
+      funder: "Funder"
+      cooperator: "Cooperator"
     file_details:
       label: "Dateien"
       name: "Name"
@@ -352,14 +371,14 @@ forms:
       department: &department
         label: "Einrichtung"
         label_short: "Einr."
-        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) für die vollständige Liste."
+        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um eine Einrichtungen auszuwählen."
       project: &project
         label: "Projekt"
-        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) für die vollständige Liste."
+        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um ein Projekt auszuwählen."
       research_group: &research_group
         label: "Forschungsgruppe"
         label_short: "Forsch.gr."
-        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) für die vollständige Liste."
+        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um eine Forschungsgruppe auszuwählen."
       place: &place
         label: "Verlagsort"
         label_short: "Ort"
@@ -495,8 +514,8 @@ forms:
         label_short: "Them.geb."
         select_thematic_area: "--- Themengebiet auswählen ---"
       alternative_id: &alternative_id
-        label: "Returned Record Ids"
-        label_short: "Ret. Rec. Ids"
+        label: "Returned Record IDs"
+        label_short: "Ret. Rec. IDs"
       related_material.record: &related_material_record
         label: "Link zu PUB-Eintrag"
         label_short: "PUB-Eintr."

@@ -1,11 +1,12 @@
 <!-- BEGIN project/hits.tt -->
 
 [% lang = session.lang ? session.lang : h.config.default_lang %]
-[% lf = h.config.language.$lang %]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lf = h.config.language.$lang -%]
 
 <div class="col-md-9">
   <div class="row">
-      <h2>[% total %] [% lf.project.heading %]</h2>
+      <h2>[% total %] [% lf.hits.projects %]</h2>
    </div>
 
 <div class="row">
