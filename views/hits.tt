@@ -4,7 +4,7 @@
 [% UNLESS request.path.match("/marked") %]
 <div class="row">
   <div class="col-md-12[% UNLESS request.path.match("/person") OR total == 0 %] col-xs-8[% END %]">
-    <h2 class="margin-top0">[% total %] [% IF bag == 'data' OR tabmodus == "data" OR tabmodus == "data_manager" %][% lf.tabs.data_publications %][% ELSE %][% lf.tabs.publications %][% END %]
+    <h2 class="margin-top0">[% total %] [% IF total == 1 %][% IF bag == 'data' OR tabmodus == "data" OR tabmodus == "data_manager" %][% lf.tabs.data_publication %][% ELSE %][% lf.hits.publication %][% END %][% ELSE %][% IF bag == 'data' OR tabmodus == "data" OR tabmodus == "data_manager" %][% lf.tabs.data_publications %][% ELSE %][% lf.hits.publications %][% END %][% END %]
     [% IF backend AND session.role == "delegate" %]
     [% lf.main_page.by %] [% delegate_name %]
     [% END %]
