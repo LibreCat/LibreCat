@@ -30,16 +30,21 @@ sub update_related_material {
             my $op_relation = $ref->{opposite};
 
             if(!$opposite->{related_material} or !$opposite->{related_material}->{record}){
-            	push @{$opposite->{related_material}->{record}}, {id => $pub->{_id}, relation => $op_relation};
+            	push @{$opposite->{related_material}->{record}}, {id => $pub->{_id}, status => $pub->{status}, relation => $op_relation};
             }
             elsif($opposite->{related_material} and $opposite->{related_material}->{record}) {
             	my ($ref) = grep { $_->{relation} eq $op_relation and $_->{id} eq $pub->{_id} } @{$opposite->{related_material}->{record}};
             	if (!$ref){
-            		push @{$opposite->{related_material}->{record}}, {id => $pub->{_id}, relation => $op_relation};
+            		push @{$opposite->{related_material}->{record}}, {id => $pub->{_id}, status => $pub->{status}, relation => $op_relation};
+            	}
+            	else{
+            		$ref->{status} = $pub->{status};
             	}
             }
             h->publication->add($opposite);
             h->publication->commit;
+            
+            $rm->{status} = $opposite->{status};
         }
     }
     if($old_related_material_record){
