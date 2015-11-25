@@ -100,6 +100,6 @@
 
   <main[% UNLESS backend OR (session.user AND request.path.match("howto")) %] class="front"[% END %]>
 
-  <div class="container[% IF title %] title[%END %][% IF _id %] publication[% END %]">
+  <div class="container[% IF title OR name %] title[%END %][% IF _id %] publication[% END %]">
 
 <!-- END navbar.tt -->
