@@ -14,7 +14,7 @@ use Dancer ':syntax';
 use Dancer::Plugin::Email;
 use Dancer::Plugin::Auth::Tiny;
 use App::Helper;
-use App::Catalogue::Controller::Permission qw/can_download/;
+use App::Catalogue::Controller::Permission;
 use DateTime;
 use Try::Tiny;
 
@@ -199,7 +199,7 @@ and user rights will be checked before.
 =cut
 get '/download/:id/:file_id' => sub {
 # todo: send 404 if file does not exist!!!
-	my ($ok, $file_name) = can_download(
+	my ($ok, $file_name) = p->can_download(
 				params->{id},
 				params->{file_id},
 				session->{user},

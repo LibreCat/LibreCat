@@ -236,6 +236,10 @@
           <li class="hidden-md hidden-lg hidden-sm"><a href="#citethis">[% lf.frontdoor.tabs.cite_this %]</a></li>
           <li class="hidden-md hidden-lg hidden-sm"><a href="#export">[% lf.frontdoor.tabs.export_search %]</a></li>
 
+          [% IF session.user AND session.role AND p.can_edit(_id, session.user, session.role) %]
+          <li class="navbar-right"><a href="/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> [% lf.main_page.links.edit %]</a></li>
+          [% END %]
+
           [% IF status == "public" %]
           <li class="navbar-right"><a class="mark btn btn-xs" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="fa fa-check-square-o fa-lg"></span>[% ELSE %]<span class="fa fa-square-o fa-lg"></span>[% END %] [% lf.mark.mark_unmark %]</a></li>
           [% END %]

@@ -10,7 +10,7 @@ use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
 use Catmandu::Fix qw(expand);
 use App::Helper;
-use App::Catalogue::Controller::Permission qw/:can/;
+use App::Catalogue::Controller::Permission;
 use Dancer qw(:syntax);
 use Encode qw(encode);
 use Dancer::Plugin::Auth::Tiny;
@@ -91,7 +91,7 @@ Checks if the user has permission the see/edit this record.
     get '/edit/:id' => needs login => sub {
         my $id = param 'id';
 
-        unless (can_edit($id, session->{user}, session->{role})) {
+        unless (p->can_edit($id, session->{user}, session->{role})) {
             status '403';
             forward '/access_denied', {referer => request->{referer}};
         }
@@ -127,7 +127,7 @@ Checks if the user has the rights to update this record.
     post '/update' => needs login => sub {
         my $p = params;
 
-        unless ($p->{new_record} or can_edit($p->{_id}, session->{user}, session->{role})) {
+        unless ($p->{new_record} or p->can_edit($p->{_id}, session->{user}, session->{role})) {
             status '403';
             forward '/access_denied';
         }
@@ -169,7 +169,7 @@ Checks if the user has the rights to edit this record.
     get '/return/:id' => needs login => sub {
         my $id  = params->{id};
 
-        unless (can_edit($id, session->{user}, session->{role})) {
+        unless (p->can_edit($id, session->{user}, session->{role})) {
             status '403';
             forward '/access_denied';
         }
@@ -234,7 +234,7 @@ Publishes private records, returns to the list.
     get '/publish/:id' => needs login => sub {
         my $id = params->{id};
 
-        unless (can_edit($id, session->{user}, session->{role})) {
+        unless (p->can_edit($id, session->{user}, session->{role})) {
             status '403';
             forward '/access_denied';
         }
