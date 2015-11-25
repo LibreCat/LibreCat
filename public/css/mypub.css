@@ -137,7 +137,7 @@ a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 #preview{position:absolute;top:200px;left:-100px;width:380px;padding:10px;font-size:24px;text-align:center;color:rgb(255,255,255);font-family:'trebuchet ms',verdana,arial,sans-serif;transform:rotate(-45deg);-webkit-transform:rotate(-45deg);transform-origin:50% 0px 0px;-webkit-transform-origin:50% 0px;background-color:rgb(0,0,0);border:1px solid rgb(170,170,170);z-index:12;opacity:.5;}
 .text-muted,.text-tight{line-height:1.5;}
 .text-xtight{line-height:1.25;}
-#details .row{margin-top:6px;}
+#details .row,#project_details .row{margin-top:6px;}
 #citethis{margin-bottom:21px;}
 .alert-green {color: #4e4e4e;background-color: #f5f9d7;border-color: #d5dba5;}
 
