@@ -78,6 +78,15 @@ tabs:
   faq: "FAQ"
   contact: "Contact"
   policy: "Policy"
+hits:
+  author: "Author"
+  authors: "Authors"
+  publication: "Publication"
+  publications: "Publications"
+  data_publication: "Data Publication"
+  data_publications: "Data Publications"
+  project: "Project"
+  projects: "Projects"
 home:
   search_placeholder: "Search Publications in PUB"
   fields: "Fields"
@@ -143,6 +152,7 @@ person_profile:
 project:
   heading: "Projects"
   not_found: "Project ID not found"
+  funded_ext: "Externally Funded"
   period: "Project Period"
   filter: "Filter"
   filter_remove: "Remove Current Filters"
@@ -230,7 +240,7 @@ frontdoor:
   tabs:
     details:
       label: "Details"
-      department: "Deparment(s)"
+      department: "Department(s)"
       reviewed_work: "Reviewed Work"
       isbn: "ISBN"
       issn: "ISSN"
@@ -241,7 +251,6 @@ frontdoor:
       financial_disclosure: "Financial disclosure"
       ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href='http://oa.uni-bielefeld.de/publikationsfonds.html'>Open Access Publication Fund</a> of Bielefeld University."
       scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University."
-      ext_funded: "Externally Funded"
       grantnumber: "Grant Number"
       alt_name: "Alternative Name"
       acronym: "Acronym"

@@ -79,6 +79,8 @@ tabs:
   contact: "Kontakt"
   policy: "Leitlinien"
 hits:
+  author: "Autorin / Autor"
+  authors: "Autorinnen / Autoren"
   publication: "Publikation"
   publications: "Publikationen"
   data_publication: "Datenpublikation"
@@ -151,6 +153,7 @@ person_profile:
 project:
   heading: "Projekte"
   not_found: "Unter dieser ID existiert kein Projekt"
+  funded_ext: "Drittmittelprojekt"
   period: "Projektzeitraum"
   filter: "Filtern"
   filter_remove: "Filteroptionen entfernen"
@@ -249,14 +252,12 @@ frontdoor:
       financial_disclosure: "Finanzierungs-Informationen"
       ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href='http://oa.uni-bielefeld.de/publikationsfonds.html'>Open Access Publication Fund</a> of Bielefeld University."
       scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University."
-      ext_funded: "Externally Funded"
       grantnumber: "Grant Number"
       alt_name: "Alternativer Name"
       acronym: "Akronym"
       coordinator: "Koordinator"
       investigator: "Principal Investigator"
       member: "Mitglieder"
-      funder: "Funder"
       cooperator: "Cooperator"
     file_details:
       label: "Dateien"
