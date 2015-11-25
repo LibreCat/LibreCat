@@ -551,22 +551,23 @@ function remove_field(object){
 	if(parseInt(index) > 0){
 	  var all_containers = $(container).parent().children('div.multirow');
 	  $(container).remove();
-	  var cont = $(all_containers).slice(index);
+	  var cont = $(all_containers).slice(index + 1);
 	  $(cont).each(function(cindex){
+		  var newindex = parseInt(cindex) + parseInt(index);
 		  var current_container = $(this);
 		  $(current_container).find('input, textarea, img, select, span').each(function(){
 			  if($(this).attr('id')){
-				  var newid = $(this).attr('id').replace(/\d+/g,cindex);
+				  var newid = $(this).attr('id').replace(/\d+/g,newindex);
 				  $(this).attr('id', newid);
 			  }
 			  
 			  if($(this).attr('name')){
-				  var newname = $(this).attr('name').replace(/\d+/g,cindex);
+				  var newname = $(this).attr('name').replace(/\d+/g,newindex);
 				  $(this).attr('name', newname);
 			  }
 			  
 			  if($(this).attr('onfocus')){
-				  var newattr = $(this).attr('onfocus').replace(/\d+/g,cindex);
+				  var newattr = $(this).attr('onfocus').replace(/\d+/g,newindex);
 				  $(this).attr('onfocus', newattr);
 			  }
 		  });
@@ -592,22 +593,23 @@ function full_remove_field(object){
 
 	  var all_containers = $(container).parent().children('div.multirow');
 	  $(container).remove();
-	  var cont = $(all_containers).slice(index);
+	  var cont = $(all_containers).slice(index + 1);
 	  $(cont).each(function(cindex){
+		  var newindex = parseInt(cindex) + parseInt(index);
 		  var current_container = $(this);
 		  $(current_container).find('input, textarea, img, select, span').each(function(){
 			  if($(this).attr('id')){
-				  var newid = $(this).attr('id').replace(/\d+/g,cindex);
+				  var newid = $(this).attr('id').replace(/\d+/g,newindex);
 				  $(this).attr('id', newid);
 			  }
 			  
 			  if($(this).attr('name')){
-				  var newname = $(this).attr('name').replace(/\d+/g,cindex);
+				  var newname = $(this).attr('name').replace(/\d+/g,newindex);
 				  $(this).attr('name', newname);
 			  }
 			  
 			  if($(this).attr('onfocus')){
-				  var newattr = $(this).attr('onfocus').replace(/\d+/g,cindex);
+				  var newattr = $(this).attr('onfocus').replace(/\d+/g,newindex);
 				  $(this).attr('onfocus', newattr);
 			  }
 		  });
