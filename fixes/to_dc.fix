@@ -1,5 +1,6 @@
 # mapping pub data to dublic core (dc)
 
+move_field(_id,'res.identifier.$append')
 copy_field(type, driver_type)
 lookup(driver_type, fixes/lookup/driver_types.csv)
 prepend(driver_type,'info:eu-repo/semantics/')

@@ -25,6 +25,7 @@ do list (path => author)
   do identity ()
     move_field('given', 'first_name')
     move_field('family','last_name')
+    remove_field(affiliation)
   end
 end
 
@@ -53,11 +54,14 @@ if all_match('type','proceedings-article')
 end
 
 # cleaning record
-remove_field('score')
-remove_field('deposited')
-remove_field('indexed')
-remove_field('prefix')
-remove_field('URL')
-remove_field('issued')
-remove_field('member')
-remove_field('container-title')
+remove_field(score)
+remove_field(deposited)
+remove_field(indexed)
+remove_field(prefix)
+remove_field(URL)
+remove_field(link)
+remove_field(source)
+remove_field(issued)
+remove_field(member)
+remove_field(container-title)
+remove_field(funder)

@@ -56,3 +56,4 @@ requires 'Log::Log4perl';
 requires 'Log::Any::Adapter';
 requires 'Log::Any::Adapter::Log4perl';
 requires 'Getopt::Long';
+requires 'URL::Encode';
