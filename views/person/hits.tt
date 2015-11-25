@@ -50,6 +50,6 @@
 
 <div class="col-md-3 col-md-offset-1 col-sm-4">
 
-[% INCLUDE facets.tt %]
+[% INCLUDE filters.tt %]
 
 <!-- END person/hits.tt -->
