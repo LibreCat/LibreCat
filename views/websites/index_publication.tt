@@ -97,7 +97,12 @@
         <div class="tab-pane[% bag == 'person' ? ' active' : '' %]" id="people">
           [% IF bag == 'person' %]
           <div class="row">
-            [% INCLUDE person/hits.tt %]
+            <div class="col-sm-8">
+              [% INCLUDE person/hits.tt %]
+            </div>
+            <div class="col-sm-4 col-md-3 col-md-offset-1 facets">
+              [% INCLUDE filters.tt %]
+            </div>
           </div>
           [% END %]
         </div>
