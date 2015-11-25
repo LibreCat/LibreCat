@@ -6,6 +6,7 @@ use Catmandu::Util qw(:io);
 use Furl;
 use Hash::Merge qw(merge);
 use Moo;
+use URL::Encode qw(url_decode);
 
 has id => (is => 'ro', required => 1);
 has source => (is => 'ro', default => sub {'crossref'});
@@ -43,8 +44,9 @@ sub crossref {
 
     my $data = Catmandu->importer(
         'getJSON',
-        from => "http://api.crossref.org/works/$id",
+        from => url_decode ("http://api.crossref.org/works/$id"),
         fix => [join_path('fixes','crossref_mapping.fix')],
+        timeout => 10,
         )->first;
 
     # try @datacite if crossref has no data
