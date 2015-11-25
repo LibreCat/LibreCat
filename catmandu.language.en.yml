@@ -1693,7 +1693,7 @@ help:
   help: "How to use PUB."
   howto: "PUB How-to"
   change_language: "Change language"
-  user_settings: "Change<br>department,<br>edit mode<br>default language."
+  user_settings: "Change role,<br>department,<br>edit mode<br>default language."
   role: "Your user role<br>If you are reviewer/delegate you can change your role here to work with publications allocated for that role."
   photo: "Your photo. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp?lang=en' target='_blank'>Change it?</a>"
   email_encoded: "Your Email address from BIS/PEVZ."

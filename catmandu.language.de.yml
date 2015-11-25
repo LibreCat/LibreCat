@@ -1690,7 +1690,7 @@ help:
   help: "Die Funktionen von PUB im Überblick."
   howto: "PUB Howto"
   change_language: "Sprache wechseln"
-  user_settings: "Fakultät,<br>Editiermodus,<br>Standardsprache<br>ändern"
+  user_settings: "Rolle, >Fakultät,<br>Editiermodus,<br>Standardsprache<br>ändern"
   role: "Ihre Rolle<br>im System<br>Ggf. wechseln und mit Publikationen arbeiten, für die Sie z.B. Reviewer-Rechte haben."
   photo: "Ihr Foto. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp' target='_blank'>Ändern?</a>"
   email_encoded: "Ihre E-Mail-Adresse aus dem BIS/PEVZ."
