@@ -112,10 +112,12 @@ main_page:
   add_new_button: "Neue Publikation"
   capital_or: "ODER"
   qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Open-Access-Volltext (PDF)<br>hier her ziehen und wir machen den Rest"
-  theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br>Dissertation hier her ziehen."
+  theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Prüfungsarbeit hier her ziehen &hellip; oder klicken."
   theses_success_text: "You have successfully submitted your thesis!<br />All that's left to do is print and fill out this form: <a href='/pdf/revers_hochschulschriften.pdf'>Statement on the Granting of Exploitation Rights (PDF, only in German)</a> and send it to us. And we will contact you with further information.<br>Thank you!<br>Back to <a href='/pubtheses'>PUBTheses</a>"
   theses_success_text: "Sie haben Ihre Prüfungsschrift erfolgreich hochgeladen.<br />Füllen Sie bitte noch dieses Formular aus: <a href='/pdf/revers_hochschulschriften.pdf'>Schriftliche Erklärung zur Einräumung von Nutzungsrechten (PDF-Formular)</a> und senden Sie es an uns. Wir kontaktieren Sie mit weiteren Informationen.<br>Vielen Dank!<br>Zurück zu <a href='/pubtheses'>PUBTheses</a>"
   theses_explain: "Bitte laden Sie EINE Datei (bevorzugt .pdf) hoch. Wenn Sie ein Dokument einbringen wollen, das aus mehreren Teildokumenten (z.B. Kapitel) besteht, müssen die Dateien in eine Archivdatei gepackt werden (.zip oder .gz)."
+  depositpolicy: "Rechtliche Rahmenbedingungen (PUB Deposity Policy)"
+  ddc: "Liste der DDC-Klassen"
   heading_admin: "Admin"
   heading_user: "User"
   heading_reviewer: "Reviewer"
@@ -132,7 +134,7 @@ main_page:
   links:
     edit: "Editieren"
     details: "Details"
-    view_details: "Show complete bibliographic and access information"
+    view_details: "Publikationsseite in PUB anzeigen (Frontdoor)"
     files: "Dateien verfügbar"
     internal_view: "Interne Sicht"
     request_a_copy: "Exemplar anfordern"
@@ -256,9 +258,9 @@ frontdoor:
       alt_name: "Alternativer Name"
       acronym: "Akronym"
       coordinator: "Koordinator"
-      investigator: "Principal Investigator"
+      investigator: "Leiter"
       member: "Mitglieder"
-      cooperator: "Cooperator"
+      cooperator: "Mitwirkende"
     file_details:
       label: "Dateien"
       name: "Name"
@@ -299,7 +301,7 @@ frontdoor:
     export_search: "Export / Suche"
   fulltext:
     view: "Volltext öffnen"
-    not_available: "Kein Volltext in PUB verfügbar"
+    not_available: "Kein Volltext in PUB hochgeladen"
   id_title: "Auf diese Seite verlinken, z.B. für Bookmarks"
   license_heading: "Alle Dateien verfügbar unter der/den folgenden Lizenz(en):"
 mark:
@@ -453,7 +455,7 @@ forms:
         heading: "Urheberrecht / Lizenzen"
         pub_license:
           label: "Hinweise zum Urheberrecht"
-          disclaimer_text: "Hiermit stelle ich der Universit&auml;t Bielefeld dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf PUB, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r PUB dargestellt sind, zur Verf&uuml;gung.<br><a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy / Rechtliche Rahmenbedingungen</a>"
+          disclaimer_text: "Hiermit stelle ich der Universit&auml;t Bielefeld dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf PUB, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r PUB dargestellt sind, zur Verf&uuml;gung.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy / Rechtliche Rahmenbedingungen</a>"
           accept_text: "Ich stimme zu"
           alert: "Sie müssen den Hinweisen zum Urheberrecht zustimmen, wenn Sie eine Datei angehängt haben."
         info:
@@ -1601,6 +1603,8 @@ forms:
   form_add_field: "Feld hinzufügen (+) or dieses Feld löschen (-)"
   form_relmat_record: "Eigene Publikation aus PUB mit dieser verbinden. Nach Auswahl wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
   form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf [+] wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
+  confirm_return: "Möchten Sie diesen Datensatz wirklich zurückstellen und damit von öffentlichen Publikationsliste entfernen?"
+  confirm_delete: "Möchten Sie diesen Datensatz wirklich löschen?"
   button:
     back: "Zurück"
     cancel: "Abbrechen"
@@ -1613,6 +1617,7 @@ forms:
     save: "Speichern"
     select: "Auswählen"
     send: "Abschicken"
+    submit: "Hochladen"
   general:
     field:
       email:

@@ -87,6 +87,7 @@ hits:
   data_publications: "Data Publications"
   project: "Project"
   projects: "Projects"
+  links_pub: "Show complete bibliographic and access information"
 home:
   search_placeholder: "Search Publications in PUB"
   fields: "Fields"
@@ -112,9 +113,11 @@ main_page:
   add_new_button: "Add new Publication"
   capital_or: "OR"
   qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Drop Open Access fulltext (PDF)<br>here and we'll do the rest."
-  theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br>Drop your thesis here."
+  theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Drop your thesis here &hellip; or click."
   theses_success_text: "You have successfully submitted your thesis!<br />All that's left to do is print and fill out this form: <a href='/pdf/revers_hochschulschriften.pdf'>Statement on the Granting of Exploitation Rights (PDF, only in German)</a> and send it to us. And we will contact you with further information.<br>Thank you!<br>Back to <a href='/pubtheses'>PUBTheses</a>"
   theses_explain: "Please upload only ONE file (preferably .pdf). If you want to submit a document that consists of several parts (e.g. chapters) you need to put the files into an archive file (.zip or .gz)."
+  depositpolicy: "PUB Deposity Policy"
+  ddc: "DDC list"
   heading_admin: "Admin"
   heading_user: "User"
   heading_reviewer: "Reviewer"
@@ -299,7 +302,7 @@ frontdoor:
     export_search: "Export / Search"
   fulltext:
     view: "View fulltext"
-    not_available: "No fulltext in PUB available"
+    not_available: "No fulltext has been uploaded"
   id_title: "Link to this page, e.g. for bookmarking"
   license_heading: "All files available under the following license(s):"
 mark:
@@ -453,7 +456,7 @@ forms:
         heading: "Copyright and Licenses"
         pub_license:
           label: "Copyright Disclaimer"
-          disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
+          disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
           accept_text: "I accept"
           alert: "You need to accept the Copyright Disclaimer because you have attached files to this record."
         info:
@@ -1604,6 +1607,8 @@ forms:
   form_add_field: "Add a field (+) or Remove this field (-)"
   form_relmat_record: "Link one of your own publication from PUB to this record."
   form_relmat_link: "Link a publication from an external website to this record."
+  confirm_return: "Are you sure you want to return this record from public view?"
+  confirm_delete: "Are you sure you want to delete this record?"
   button:
     back: "Back"
     cancel: "Cancel"
@@ -1616,6 +1621,7 @@ forms:
     save: "Save"
     select: "Select"
     send: "Send Request"
+    submit: "Submit"
   general:
     field:
       email:
