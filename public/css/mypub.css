@@ -54,8 +54,8 @@ a .total-marked{margin-right:5px;}
 .nolink{cursor:default;}
 .select-language a{color:#777!important;font-weight:bold!important;}
 .dropdown.active a{cursor:pointer!important;}
-.long {display:inline-block;line-height:1.4;margin-bottom:6px;/* department display on frontdoor */}
-.long:last-child {margin-bottom:0;}
+.long{display:inline-block;line-height:1.4;margin-bottom:6px;/* department display on frontdoor */}
+.long:last-child{margin-bottom:0;}
 
 /*Some margin for row'ed paragraphs*/
 .row>p{margin-top:10px;}
