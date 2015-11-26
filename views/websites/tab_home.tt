@@ -36,7 +36,6 @@
 		      <li ng-repeat="operator in operators"><a href="" class="ngadd" ng-click="addOperator(operator.value)">{{operator.text}}</a></li>
 		    </ul>
 	      </div>
-	      <div class="btn-group"><a href="/doc/api/intro.html#cql" class="btn btn-white btn-link">[% lf.home.help %]</a></div>
 	    </div>
 	  </div>
 	</form>
