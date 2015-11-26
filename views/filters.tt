@@ -51,6 +51,7 @@
   [% END %]
   [% FOREACH key IN qp.keys %]
     [% NEXT IF key == "q" %]
+    [% NEXT IF key == "start" %]
     <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
   [% END %]
 </form>
@@ -222,6 +223,28 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     $('#id_jstext_[% tabmodus %][% menu %]').val(emb_js);
     $('#id_iframetext_[% tabmodus %][% menu %]').val(emb_iframe);
     $('#id_linktext_[% tabmodus %][% menu %]').val(emb_link);
+});
+
+$('a.facet_[% tabmodus %]').click(function() {
+  var par_key = $(this).data('key');
+  if(par_key == "sort"){
+    if(!searchParams[par_key]){
+      searchParams[par_key] = [];
+    }
+    searchParams[par_key].push($(this).data('value'));
+  }
+  else if(par_key == "q"){
+    searchParams[par_key].push($(this).data('param') + "=" + $(this).data('value'));
+  }
+  else {
+    searchParams[par_key] = $(this).data('value');
+  }
+  if(par_key == "q"){
+    delete searchParams.start;
+    delete searchParams.fmt;
+  }
+  var url = path+'?'+ $.param($.extend({}, searchParams), true);
+  window.location.replace(url);
 });
 
 $('button.collapse').click(function(e){

@@ -264,33 +264,4 @@
 
 [% END %] <!-- marked -->
 
-
-
-<script>
-var path = '[% request.path %]',
-searchParams = [% qp.json %];
-
-$('a.facet_[% tabmodus %]').click(function() {
-  var par_key = $(this).data('key');
-  if(par_key == "sort"){
-    if(!searchParams[par_key]){
-      searchParams[par_key] = [];
-    }
-    searchParams[par_key].push($(this).data('value'));
-  }
-  else if(par_key == "q"){
-    searchParams[par_key].push($(this).data('param') + "=" + $(this).data('value'));
-  }
-  else {
-    searchParams[par_key] = $(this).data('value');
-  }
-  if(par_key == "q"){
-    delete searchParams.start;
-    delete searchParams.fmt;
-  }
-  var url = path+'?'+ $.param($.extend({}, searchParams), true);
-  window.location.replace(url);
-});
-</script>
-
 <!-- END facets.tt -->
