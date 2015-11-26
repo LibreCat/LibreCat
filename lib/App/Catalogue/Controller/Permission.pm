@@ -71,7 +71,7 @@ sub can_download {
         # closed documents can be downloaded by user
         #if and only if the user can edit the record
         return (0, '') unless $login;
-        return (can_edit($id, $login, $role), $file_name);
+        return ($self->can_edit($id, $login, $role), $file_name);
     } else {
         return (0, '');
     }
