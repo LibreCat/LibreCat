@@ -18,8 +18,7 @@
     [% END %]
     [% IF cc_license %]
       <strong>[% lf.forms.$type.field.license.cc_license.label %]:</strong><br />
-	  <a href="http://creativecommons.org/[% SWITCH cc_license %][% CASE 'cc_by' %]licenses/by/4.0/"><img src="/images/cc_by.png"[% CASE 'cc_by_sa' %]licenses/by-sa/4.0/"><img src="/images/cc_by_sa.png"[% CASE 'cc_0' %]publicdomain/zero/1.0/"><img src="/images/cc0.png"[% END %] height="25px;" /></a>
-      [% lf.forms.$type.field.license.cc_license.$cc_license.name %]
+	  <a href="http://creativecommons.org/[% SWITCH cc_license %][% CASE 'cc_by' %]licenses/by/4.0/"><img src="/images/cc_by.png" alt="CC-BY"[% CASE 'cc_by_sa' %]licenses/by-sa/4.0/"><img src="/images/cc_by_sa.png" alt="CC-BY-SA"[% CASE 'cc_0' %]publicdomain/zero/1.0/"><img src="/images/cc0.png" alt="CC0"[% END %] class="img-thumbnail pull-left" /></a>[% lf.forms.$type.field.license.cc_license.$cc_license.name %]
     [% END %]
     [% IF other_data_license %]
       [% other_data_license %]
