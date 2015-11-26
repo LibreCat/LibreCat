@@ -327,7 +327,7 @@ function link_person(element){
 				var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
 				container.html('');
 				container_title.html('');
-				container.append('<p class="has-error">No results found.</p>');
+				container.append('<p class="has-error">No entry in Staff directory found.</p>');
 				container_title.append(title);
 				$('#' + type + 'link_person_modal').modal("show");
 			}
