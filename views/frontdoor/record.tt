@@ -328,7 +328,7 @@
               [% END %]
             </div>
             <div class="modal-footer">
-              For more information see our <a href="/doc/api">API documentation</a>.
+              For more information see our <a href="/docs/api">API documentation</a>.
             </div>
           </div>
           </div>
