@@ -50,7 +50,7 @@ sub crossref {
         )->first;
 
     # try @datacite if crossref has no data
-    if(!$data or $data->{doi} ne $id) {
+    if(!$data or lc $data->{doi} ne lc $id) {
         $data = $self->datacite($id);
     }
 
