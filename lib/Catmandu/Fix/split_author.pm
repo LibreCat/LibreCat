@@ -14,6 +14,8 @@ sub fix {
             foreach my $a (@$au) {
                 if ($a =~ /(\w+.*),\s(\w+.*)/) {
                     push @{$pub->{$entity}}, {full_name => $a, first_name => $2, last_name => $1};
+                } elsif ($a =~ /(\w+.*?)\s([A-Z]{1,2})(\sJr|\sSr)*$/) {
+                    push @{$pub->{$entity}}, {full_name => "$1, $2", first_name => $2, last_name => $1};
                 } elsif ($a =~ /(\w+.*?)\s(\w+.*)$/) {
                     push @{$pub->{$entity}}, {full_name => "$2, $1", first_name => $1, last_name => $2};
                 }
