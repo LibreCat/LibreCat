@@ -67,8 +67,8 @@
   [% IF department %]
   <div class="row">
       <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.details.department %]</div>
-      <div class="col-md-9">[% FOREACH d IN department %]
-      [% d.name %][% UNLESS loop.last %]<br />[% END %]
+      <div class="col-md-9">[% FOREACH dep IN department %]
+      <span class="long">[% h.get_department(dep._id).display %]</span>[% UNLESS loop.last %]<br />[% END %]
       [% END %]
       </div>
   </div>

@@ -132,12 +132,12 @@ sub handle_file {
 		# and then delete all files no longer in the list of files for that record
 		# (deleting files only removes the corresponding hidden input fields but not the actual files)
 		# (this makes it possible to discard all changes to a record, including changes to files)
-		foreach my $fil (@{$previous_pub->{file}}){
-			my( $index )= grep { $pub->{file}->[$_]->{file_id} eq $fil->{file_id} } 0..$#{$pub->{file}};
-			if(!defined $index){
-				delete_file($pub->{_id}, $fil->{file_name});
-			}
-		}
+#		foreach my $fil (@{$previous_pub->{file}}){
+#			my( $index )= grep { $pub->{file}->[$_]->{file_id} eq $fil->{file_id} } 0..$#{$pub->{file}};
+#			if(!defined $index){
+#				delete_file($pub->{_id}, $fil->{file_name});
+#			}
+#		}
 	}
 
 	foreach my $fi (@{$pub->{file}}){

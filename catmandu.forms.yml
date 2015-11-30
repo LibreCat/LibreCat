@@ -921,7 +921,6 @@ publicationTypes:
           mandatory: 1
           multiple: 1
         supervisor: &supervisor
-          mandatory: 1
           multiple: 1
           idm: 1
         title: *title

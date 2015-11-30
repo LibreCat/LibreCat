@@ -1,4 +1,4 @@
-package App::Catalogue::Controller::Permission;
+package App::Catalogue::Controller::Permission::Permissions;
 
 use Catmandu::Sane;
 use Catmandu;
@@ -6,15 +6,13 @@ use App::Helper;
 use Carp;
 use Exporter qw/import/;
 
-our @EXPORT_OK = qw/can_edit can_delete can_delete_file can_download/;
-our %EXPORT_TAGS = (
-  can => [qw/can_edit can_delete can_delete_file can_download/],
-);
+use Moo;
 
 sub can_edit {
-    my ($id, $login, $user_role) = @_;
+    my ($self, $id, $login, $user_role) = @_;
 
     my $user = h->get_person($login);
+
     my $cql = "id=$id AND (person=$user->{_id}";
 
     if ($user_role eq 'super_admin') {
@@ -41,18 +39,18 @@ sub can_edit {
 }
 
 sub can_delete {
-    my ($id, $role) = @_;
+    my ($self, $id, $role) = @_;
 
     ($role eq 'super_admin') ? return 1 : return 0;
 }
 
 sub can_delete_file {
-    my ($id, $user) = @_;
+    my ($self, $id, $user) = @_;
     return 0;
 }
 
 sub can_download {
-    my ($id, $file_id, $login, $role, $ip) = @_;
+    my ($self, $id, $file_id, $login, $role, $ip) = @_;
 
     my $ip_range = h->config->{ip_range};
     my $pub = h->publication->get($id);
@@ -73,11 +71,30 @@ sub can_download {
         # closed documents can be downloaded by user
         #if and only if the user can edit the record
         return (0, '') unless $login;
-        return (can_edit($id, $login, $role), $file_name);
+        return ($self->can_edit($id, $login, $role), $file_name);
     } else {
         return (0, '');
     }
 
 }
+
+
+package App::Catalogue::Controller::Permission;
+
+my $p = App::Catalogue::Controller::Permission::Permissions->new;
+
+use Catmandu::Sane;
+use Dancer qw(:syntax hook);
+use Dancer::Plugin;
+
+register p => sub { $p };
+
+hook before_template => sub {
+
+    $_[0]->{p} = $p;
+
+};
+
+register_plugin;
 
 1;

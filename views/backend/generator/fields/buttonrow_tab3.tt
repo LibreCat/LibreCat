@@ -17,10 +17,10 @@
         <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-success change_tab"><span class="glyphicon glyphicon-upload"></span> [% lf.button.publish %]</button>
         [% END %]
         [% IF status == "public" %]
-        <a class="btn btn-danger" href="/librecat/record/return/[% _id %]" onclick="return confirm('Are you sure you want to return this record from public view?');" name="return"><span class="glyphicon glyphicon-download"></span> [% lf.button.return %]</a>
+        <a class="btn btn-danger" href="/librecat/record/return/[% _id %]" onclick="return confirm('[% lf.form.confirm_return %]');" name="return"><span class="glyphicon glyphicon-download"></span> [% lf.button.return %]</a>
         [% END %]
         [% IF session.role == "super_admin" %]
-        <a class="btn btn-danger" href="/librecat/record/delete/[% _id %]" onclick="return confirm('Are you sure you want to delete this record?');" name="delete"><span class="glyphicon glyphicon-trash"></span> [% lf.button.delete %]</a>
+        <a class="btn btn-danger" href="/librecat/record/delete/[% _id %]" onclick="return confirm('[% lf.form.confirm_delete %]');" name="delete"><span class="glyphicon glyphicon-trash"></span> [% lf.button.delete %]</a>
         [% END %]
         [% IF !edit_mode OR edit_mode == "normal" %]
         <button type="button" class="btn btn-default change_tab" href="#related_material"><span class="hidden-xxs">[% lf.button.next %] </span><span class="fa fa-angle-double-right"></span></button>
