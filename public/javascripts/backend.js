@@ -222,10 +222,10 @@ function link_person(element){
 			else if(objJSON.length > 1 || (objJSON.length == 1 && objJSON[0].old_full_name && objJSON[0].full_name)){
 				var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
 				container_title.html('');
-				var title = 'Link to publication list';
+				var title = '<span class="glyphicon glyphicon-indent-left text-default"></span> Link to publication list: Choose name';
 				var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
 				container.html('');
-				var table = '<p>Several exakt matches for <em>' + firstname + ' ' + lastname + '</em> were found in the staff directory (PEVZ). Click on Person ID to view the person\'s profile in the PEVZ. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
+				var table = '<p>Several exakt matches for <em>' + firstname + ' ' + lastname + '</em> were found in the staff directory (PEVZ). Click on the number (Person ID) to view the person\'s profile in the PEVZ. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
 				var rows = "";
 				var table2 = '<table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
 				var rows2 = "";
@@ -276,7 +276,7 @@ function link_person(element){
 				}
 
 				if(rows == ""){
-					table = "<p>Several possible matches for <em>" + firstname + " " + lastname + "</em> were found in the staff directory (PEVZ). Click on Person ID to view the person\'s profile in the PEVZ. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p>";
+					table = "<p>Several possible matches for <em>" + firstname + " " + lastname + "</em> were found in the staff directory (PEVZ). Click on the number (Person ID) to view the person\'s profile in the PEVZ. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p>";
 				}
 				else{
 					table += rows + "</table>";
@@ -323,11 +323,11 @@ function link_person(element){
 			// No results found
 			else {
 				var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
-				var title = 'Link to publication list';
+				var title = '<span class="glyphicon glyphicon-remove-circle text-danger"></span> Link to publication list failed';
 				var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
 				container.html('');
 				container_title.html('');
-				container.append('<p class="has-error">No matching entry in staff directory (PEVZ) found. Please check the spelling of the author\'s name.</p>');
+				container.append('<p class="has-error">No matching entry in staff directory (PEVZ) found. Please check, if first and last name of the author are entered correctly. You can omit letters (e.g. just enter the last name, or the last name and first letter of first name).</p>');
 				container_title.append(title);
 				$('#' + type + 'link_person_modal').modal("show");
 			}
