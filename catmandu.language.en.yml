@@ -222,6 +222,10 @@ facets:
     "type.desc": "Publication Type descending"
     "publication.asc": "Publ./ Series/ Journal ascending"
     "publication.desc": "Publ./ Series/ Journal descending"
+    "publcount.asc": "Number of publications ascending"
+    "publcount.desc": "Number of publications descending"
+    "fullname.asc": "Alphabetically ascending"
+    "fullname.desc": "Alphabetically descending"
 frontdoor:
   preview: "Preview"
   crumb_back: "Back"

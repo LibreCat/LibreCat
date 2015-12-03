@@ -207,9 +207,7 @@ searchParams = [% qp.json %];
 
 $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var embed_link = window.location.href;
-    if ( !embed_link.match(/\?$/) ){
-      embed_link += '?';
-    }
+    delete searchParams.fmt;
     var regex = /\/person\/(\d{1,})/;
     var match = regex.exec(embed_link);
     if(match){
@@ -217,6 +215,7 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
       embed_link = embed_link.replace(/\/person\/\d{1,}.*/,"/publication?");
       embed_link = embed_link + $.param($.extend({}, searchParams), true); 
     }
+    if ( !embed_link.match(/\?/) ) { embed_link += '?';}
     var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ embed_link +'&ftyp=js"><\/script><noscript><a href="'+ embed_link +'" target="_blank">[% lf.facets.embed_linktext %]</a></noscript></div>';
     var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="' + embed_link + '&ftyp=iframe"></iframe>';
     var emb_link = '<a href="'+ window.location.href +'">[% lf.facets.embed_linktext %]</a>';
