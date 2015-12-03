@@ -2,6 +2,9 @@ _prefix:
   language:
     de:
 
+general:
+  plural: "en"
+  where: "in"
 login:
   login_heading: "Anmelden"
   username: "Benutzername"
@@ -237,6 +240,9 @@ frontdoor:
   export: "Export"
   marked: "Markierte Publikationen"
   cite_this: "Zitieren"
+  citation: "Zitation"
+  citation_found: "gefunden, die diesen Artikel zitieren"
+  display_10: "von denen 10 angezeigt werden"
   supplements: "Zusatzmaterialien"
   show_all: "Alle"
   view_wos: "Dieser Datensatz im Web of Science"
@@ -244,6 +250,8 @@ frontdoor:
   search_this: "Suchen in"
   isbn_search: "ISBN Suche"
   catalogue: "Katalog.<em>plus!</em>"
+  item: "Eintrag"
+  items: "Einträge"
   tabs:
     details:
       label: "Details"
