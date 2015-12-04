@@ -14,7 +14,7 @@
     <div class="col-md-12 row">
       <div class="row">
 	<div class="col-md-4">[% lf.person_profile.directory_of_staff %]</div>
-	<div class="col-md-6"><a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% thisPerson._id %]&amp;lang=en">[% thisPerson._id %]</a></div>
+	<div class="col-md-6"><a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% thisPerson._id %]">[% thisPerson._id %]</a></div>
       </div>
     </div>
     [% IF thisPerson.other_profile %]
