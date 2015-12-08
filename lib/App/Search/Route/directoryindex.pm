@@ -33,6 +33,10 @@ get qr{/pub} => sub {
 			redirect 'https://pub.uni-bielefeld.de/publication/'.params->{id};
 		}
 	}
+	elsif(params->{func} and params->{func} eq "plst"){
+		header("Content-Type" => "text/plain");
+		template 'docs/error_message/pub_list_js.tt', {interface_warning => 'Diese Schnittstelle zur Einbettung von Publikationslisten wird nicht mehr bedient. Bitte wenden Sie sich an <a href="mailto:publikationsdienste.ub@uni-bielefeld.de">publikationsdienste.ub@uni-bielefeld.de</a>, um die Einbettung umzustellen.'};
+	}
 	else{
 		status 'not_found';
 		template 'websites/404', {path => request->{referer}};
