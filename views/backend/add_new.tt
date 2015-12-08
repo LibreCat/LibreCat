@@ -24,7 +24,7 @@
 	          <option value="crossref" selected="selected">[% lf.add_new.ids.doi %]</option>
 	          <option value="epmc">[% lf.add_new.ids.pmid %]</option>
 	          <option value="arxiv">[% lf.add_new.ids.arxiv %]</option>
-	          <option value="inspire">[% lf.add_new.ids.inspire %]</option>
+	         <!-- <option value="inspire">[% lf.add_new.ids.inspire %]</option> -->
 	        </select>
 	      </div>
 	      <input type="hidden" id="input_source" name="source">
