@@ -77,6 +77,7 @@ sub datacite {
 sub epmc {
     my ($self, $id) = @_;
 
+    $id =~ s/^pmid.*?(\d+)/$1/i;
     Catmandu->importer(
         'EuropePMC',
         query => $id,

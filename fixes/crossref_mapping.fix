@@ -12,6 +12,7 @@ trim('title')
 #year
 move_field('issued.date-parts.0.0','year')
 move_field('deposited.date-parts.0.0','year')
+move_field('created.date-parts.0.0','year')
 trim('year')
 
 # identifier
