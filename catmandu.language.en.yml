@@ -1629,6 +1629,7 @@ forms:
     import: "Import"
     next: "Next"
     publish: "Make Public"
+    submitted: "Submit"
     return: "Return"
     save: "Save"
     select: "Select"

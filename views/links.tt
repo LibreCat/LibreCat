@@ -52,9 +52,9 @@
     [% LAST %]
     [% END %]
   [% END %]
-  [% IF (entry.status != "public" AND entry.status != "submitted" AND entry.status != "new") OR ((entry.status == "submitted" OR entry.status == "new") AND session.role == "super_admin") %]
+  [% IF (entry.status != "public" AND entry.status != "submitted" AND entry.status != "new" AND entry.type != "researchData") OR ((entry.status == "submitted" OR entry.status == "new") AND session.role == "super_admin") %]
   | <a href="/librecat/record/publish/[% entry._id %]">[% lf.main_page.links.publish %]</a>
-  [% ELSIF entry.status == "public" %]
+  [% ELSIF entry.status == "public" AND entry.type != "researchData" %]
   | <a href="/librecat/record/return/[% entry._id %]">[% lf.main_page.links.return %]</a>
   [% END %]
   <span class="pull-right">[% entry.date_updated.replace('(T|Z)',' ') %] (GMT)</span>

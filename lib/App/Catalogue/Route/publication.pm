@@ -155,6 +155,22 @@ Checks if the user has the rights to update this record.
                 error "Could not send email: $_";
             }
         }
+        
+        if ($result->{type} eq "researchData" and $result->{status} eq "submitted") {
+        	$result->{host} = h->host;
+            my $mail_body = export_to_string($result, 'Template', template => 'views/email/rd_submitted.tt');
+
+            try {
+                email {
+                    to => h->config->{research_data}->{to},#'petra.kohorst@uni-bielefeld.de',#$result->{email},
+                    subject => h->config->{research_data}->{subject},
+                    body => $mail_body,
+                    reply_to => h->config->{research_data}->{to},
+                };
+            } catch {
+                error "Could not send email: $_";
+            }
+        }
 
         redirect '/librecat';
     };

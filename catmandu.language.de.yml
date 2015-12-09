@@ -1625,6 +1625,7 @@ forms:
     import: "Importieren"
     next: "Weiter"
     publish: "Public stellen"
+    submitted: "Absenden"
     return: "Zurückstellen"
     save: "Speichern"
     select: "Auswählen"

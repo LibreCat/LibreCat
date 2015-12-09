@@ -13,10 +13,13 @@
 	[% ELSE %]
 	<a href="/librecat/record/new" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> [% lf.button.cancel %]</a>
 	[% END %]
-        [% IF (status != "public" AND status != "submitted") OR (status == "submitted" AND session.role == "super_admin") %]
+        [% IF (status != "public" AND status != "submitted" AND type != "researchData") OR (status == "submitted" AND session.role == "super_admin") OR (type == "researchData" AND session.role == "super_admin") %]
         <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-success change_tab"><span class="glyphicon glyphicon-upload"></span> [% lf.button.publish %]</button>
         [% END %]
-        [% IF status == "public" %]
+        [% IF type == "researchData" AND session.role != "super_admin" %]
+        <button type="submit" name="finalSubmit" value="recSubmit" class="btn btn-success change_tab"><span class="glyphicon glyphicon-upload"></span> [% lf.button.submitted %]</button>
+        [% END %]
+        [% IF status == "public" AND (type != "researchData" OR (type == "researchData" AND session.role == "super_admin")) %]
         <a class="btn btn-danger" href="/librecat/record/return/[% _id %]" onclick="return confirm([% lf.form.confirm_return %]');" name="return"><span class="glyphicon glyphicon-download"></span> [% lf.button.return %]</a>
         [% END %]
         [% IF session.role == "super_admin" %]

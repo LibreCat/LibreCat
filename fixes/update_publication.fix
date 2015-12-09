@@ -36,6 +36,9 @@ trim(keyword.*)
 if all_match('finalSubmit','recPublish')
     set_field('status','public')
 end
+if all_match('finalSubmit','recSubmit')
+    set_field('status','submitted')
+end
 
 remove_field('finalSubmit')
 #vacuum()
