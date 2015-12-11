@@ -1,6 +1,6 @@
 Guten Tag!
 
-Es gibt eine neue Datenpublikation zum Reviewen und Veröffentlichen:
+Es gibt eine neue Datenpublikation zum Reviewen und Veroeffentlichen:
 
 ID: [% _id %]
 "[% title %]"
@@ -8,4 +8,4 @@ ID: [% _id %]
 
 [% host %]/librecat/search/admin?q=id=[% _id %].
 
-Viel Spaß!
+Viel Spass!
