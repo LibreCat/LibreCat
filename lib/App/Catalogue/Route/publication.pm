@@ -146,7 +146,7 @@ Checks if the user has the rights to update this record.
 
             try {
                 email {
-                    to => 'petra.kohorst@uni-bielefeld.de',#$result->{email},
+                    to => $result->{email},
                     subject => h->config->{thesis}->{subject},
                     body => $mail_body,
                     reply_to => h->config->{thesis}->{to},
@@ -162,7 +162,7 @@ Checks if the user has the rights to update this record.
 
             try {
                 email {
-                    to => h->config->{research_data}->{to},#'petra.kohorst@uni-bielefeld.de',#$result->{email},
+                    to => h->config->{research_data}->{to},
                     subject => h->config->{research_data}->{subject},
                     body => $mail_body,
                     reply_to => h->config->{research_data}->{to},
@@ -307,7 +307,7 @@ Publishes private records, returns to the list.
 
             try {
                 email {
-                    to => 'petra.kohorst@uni-bielefeld.de',#$result->{email},
+                    to => $record->{email},
                     subject => h->config->{thesis}->{subject},
                     body => $mail_body,
                     reply_to => h->config->{thesis}->{to},
