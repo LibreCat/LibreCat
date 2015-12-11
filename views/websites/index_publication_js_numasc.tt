@@ -1,9 +1,5 @@
 <!-- BEGIN websites/index_publication_js_numasc.tt -->
 
-[% IF bag == "data" %]
-[% hits = researchhits.hits %]
-[% total = researchhits.total %]
-[% END %]
 [% qp = request.params.hash %]
 
 [% n = 1 %]
