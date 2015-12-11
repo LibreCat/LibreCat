@@ -238,7 +238,7 @@ prefix '/librecat' => sub {
     			title => $record->{title},
     			author => $record->{author}->[0]->{full_name},
     			_id => $id,
-    			host => "https://pub3.uni-bielefeld.de",#h->config->{host},
+    			host => h->config->{host},
                 },
                 'Template',
                 template => 'views/email/new_thesis.tt'
