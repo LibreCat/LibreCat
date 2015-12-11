@@ -97,6 +97,7 @@ sub extract_params {
 	$params ||= params;
 	my $p = {};
 	return $p if ref $params ne 'HASH';
+	
 	$p->{start} = $params->{start} if is_natural $params->{start};
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 	$p->{embed} = $params->{embed} if is_natural $params->{embed};
@@ -104,6 +105,10 @@ sub extract_params {
 	$p->{ttyp} = $params->{ttyp} if $params->{ttyp};
 	$p->{ftyp} = $params->{ftyp} if $params->{ftyp};
 	$p->{enum} = $params->{enum} if $params->{enum};
+	
+	if($p->{ftyp} and $p->{ftyp} =~ /ajx|js|pln/ and !$p->{limit}){
+		$p->{limit} = $self->config->{maximum_page_size};
+	}
 
 	$p->{q} = array_uniq( $self->string_array($params->{q}) );
 
