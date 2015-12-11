@@ -50,7 +50,7 @@ pubbiobcb:
     -
       param: documenttype
       op: '<>'
-      #or: 'biBachelorThesis'
+      or: 'biBachelorThesis'
     -
       param: documenttype
       op: '<>'
