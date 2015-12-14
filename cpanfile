@@ -5,7 +5,7 @@ requires 'Catmandu', '>=0.95';
 requires 'Catmandu::Store::ElasticSearch';
 requires 'Catmandu::Store::MongoDB';
 requires 'Catmandu::Store::DBI';
-requires 'Catmandu::BagIt';
+requires 'Catmandu::BagIt' , '>=0.07';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::Importer::XML';
 requires 'Catmandu::Importer::ArXiv';

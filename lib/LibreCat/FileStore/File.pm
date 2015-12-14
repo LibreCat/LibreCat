@@ -4,9 +4,8 @@ use Moo::Role;
 
 with 'Catmandu::Logger';
 
-has url           => (is => 'ro' , required => 1);
 has key           => (is => 'ro' , required => 1);
-has content_type  => (is => 'ro' , required => 1);
+has content_type  => (is => 'ro');
 has size          => (is => 'ro');
 has md5           => (is => 'ro');
 has created       => (is => 'ro');

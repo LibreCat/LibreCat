@@ -10,7 +10,7 @@ use Data::Dumper;
 
 my $pkg;
 BEGIN {
-    $pkg = 'LibreCat::FileStore::Bag';
+    $pkg = 'LibreCat::FileStore::BagIt';
     use_ok $pkg;
 }
 require_ok $pkg;
