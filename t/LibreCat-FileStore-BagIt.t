@@ -102,7 +102,7 @@ ok ! -r 't/local-store/000/000/001/235' , 'deleted the bag';
 
 done_testing;
 
-#remove_path("t/local-store");
+remove_path("t/local-store");
 
 sub remove_path {
     my $path = shift;
