@@ -4,28 +4,81 @@ use Moo;
 use Carp;
 use File::Path;
 use Catmandu::BagIt;
-use Data::Dumper;
+use LibreCat::FileStore::File::BagIt;
+
 use namespace::clean;
 
 with 'LibreCat::FileStore::Container';
 
+has _bagit => (is => 'ro');
+
 sub list {
+    my ($self) = @_;
+    my $bagit  = $self->_bagit;
+    my $path = $bagit->path;
+
+    my @result = ();
+
+    for my $file ($bagit->list_files) {
+        push @result , $self->get($file->filename);
+    }
+
+    return @result;
 }
 
 sub exists {
-    # body...
+    my ($self,$key) = @_;
+    my $bagit  = $self->_bagit;
+
+    defined $bagit->get_file($key);
 }
 
 sub get {
-    # body...
+    my ($self,$key) = @_;
+    my $bagit  = $self->_bagit;
+
+    my $file = $bagit->get_file($key);
+
+    return undef unless $file;
+
+    my $md5  = $bagit->get_checksum($key);
+    my $stat = [$file->fh->stat];
+
+    my $size     = $stat->[7];
+    my $modified = $stat->[9];
+    my $created  = $stat->[10]; # no real creation time exists on Unix
+
+    LibreCat::FileStore::File::BagIt->new(
+            key      => $key ,
+            size     => $size ,
+            md5      => $md5 ,
+            created  => $created ,
+            modified => $modified 
+    );
 }
 
 sub add {
-    # body...
+    my ($self,$key,$data) = @_;
+    my $bagit  = $self->_bagit; 
+
+    $bagit->add_file($key,$data);
 }
 
 sub delete {
-    # body...
+    my ($self,$key) = @_;
+    my $bagit  = $self->_bagit; 
+
+    $bagit->remove_file($key);
+}
+
+sub commit {
+    my ($self) = @_;
+    my $bagit  = $self->_bagit; 
+    my $path   = $bagit->path;
+
+    $bagit->write($path, overwrite => 1);
+
+    $self->{_bagit} = Catmandu::BagIt->read($path);
 }
 
 sub read_container {
@@ -44,6 +97,7 @@ sub read_container {
 
     $inst->{created}  = $bagit->get_info('Unix-Creation-Time');
     $inst->{modified} = $bagit->get_info('Unix-Modification-Time');
+    $inst->{_bagit}   = $bagit;
 
     $inst;
 }

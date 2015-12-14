@@ -13,6 +13,7 @@ requires 'exists';
 requires 'add';
 requires 'get';
 requires 'delete';
+requires 'commit';
 
 1;
 
