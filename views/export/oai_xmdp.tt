@@ -55,7 +55,7 @@
 	[%- END %]
 	[%IF defense_date %]<dcterms:dateAccepted xsi:type="dcterms:W3CDTF">[% defense_date %]</dcterms:dateAccepted>[% END %]
 	<dcterms:issued xsi:type="dcterms:W3CDTF">[% date %]</dcterms:issued>
-	<dc:type xsi:type="dini:PublType">[% dini_type %]</dc:type>
+	<dc:type xsi:type="dini:PublType">[% dini_type.replace('doc-type:','') %]</dc:type>
 	<dc:type xsi:type="dcterms:DCMIType">Text</dc:type>
 	<dini:version_driver>publishedVersion</dini:version_driver>
 	<dc:identifier xsi:type="urn:nbn">[% urn | xml_strict %]</dc:identifier>
