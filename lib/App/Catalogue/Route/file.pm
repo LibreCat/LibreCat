@@ -220,9 +220,10 @@ get '/thumbnail/:id' => sub {
     my $path = h->get_file_path($id);
     if (-e path($path, "thumbnail.png")){
     	_send_it($id, "thumbnail.png");
+    } else {
+        return Dancer::send_file('public/images/thumbnail_dummy.png', system_path => 1, filename => 'thumbnail_dummy.png');
     }
 
-    status 404;
 };
 
 1;

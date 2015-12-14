@@ -2,6 +2,9 @@ _prefix:
   language:
     en:
 
+general:
+  plural: "s"
+  where: "in"
 login:
   login_heading: "Login"
   username: "Username"
@@ -222,6 +225,10 @@ facets:
     "type.desc": "Publication Type descending"
     "publication.asc": "Publ./ Series/ Journal ascending"
     "publication.desc": "Publ./ Series/ Journal descending"
+    "publcount.asc": "Number of publications ascending"
+    "publcount.desc": "Number of publications descending"
+    "fullname.asc": "Alphabetically ascending"
+    "fullname.desc": "Alphabetically descending"
 frontdoor:
   preview: "Preview"
   crumb_back: "Back"
@@ -233,6 +240,9 @@ frontdoor:
   export: "Export"
   marked: "Marked Publications"
   cite_this: "Cite this"
+  citation: "Citation"
+  citation_found: "found citing this article"
+  display_10: "of which 10 are displayed"
   supplements: "Supplements"
   show_all: "All"
   view_wos: "View record in Web of Science"
@@ -240,6 +250,8 @@ frontdoor:
   search_this: "Search this title in"
   isbn_search: "ISBN Search"
   catalogue: "Catalogue.<em>plus!</em>"
+  item: "Item"
+  items: "Items"
   tabs:
     details:
       label: "Details"
@@ -1703,7 +1715,8 @@ help:
   role: "Your user role<br>If you are reviewer/delegate you can change your role here to work with publications allocated for that role."
   photo: "Your photo. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp?lang=en' target='_blank'>Change it?</a>"
   email_encoded: "Your Email address from BIS/PEVZ."
-  author_id: "Name, by which your public author page will also be accessible.<br>Add/Edit author IDs (e.g. ORCID)."
+  author_id: "Enter alias (for your public author page), or author IDs (e.g. ORCID)."
+  author_id_edit: "Edit ID, add more IDs."
   add_new_button: "Create a new record in PUB: Import existing data e.g. via DOI or enter data via a form."
   quick_and_easy: "Got an Open Access fulltext (PDF)? Drop it here and submit the form. A new, non-pubic record will be created. We will complete it for you and make it publicly visible."
   publication_user: "Your personal publication list. If all of your publications have been made public, this list will look exactly like the list on your public author's page."

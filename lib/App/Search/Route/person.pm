@@ -25,11 +25,11 @@ get qr{/person/*} => sub {
 	push @{$p->{q}}, "publcount>0";
 
 	my $cqlsort;
-	if(params->{sorting} and params->{sorting} =~ /(\w{1,})\.(\w{1,})/){
+	if(params->{'sort'} and params->{'sort'} =~ /(\w{1,})\.(\w{1,})/){
 		$cqlsort = $1 . ",,";
 		$cqlsort .= $2 eq "asc" ? "1" : "0";
 	}
-	$p->{sorting} = $cqlsort;
+	$p->{'sort'} = $cqlsort;
 
 	#to tell h->search_researcher to return people with one or more publications only
 	$p->{researcher_list} = 1;

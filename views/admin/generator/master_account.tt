@@ -24,6 +24,9 @@
       <input type="hidden" name="former" value="[% former %]" />
       <input type="hidden" name="researcher" value="[% researcher %]" />
       <input type="hidden" name="nonexist" value="[% nonexist %]" />
+      <input type="hidden" name="publication_hits" value="[% publication_hits %]" />
+      <input type="hidden" name="research_hits" value="[% research_hits %]" />
+      <input type="hidden" name="combined_hits" value="[% combined_hits %]" />
 
       {% FOREACH key IN account_field_order %}
 {% template = "fields/" _ key _ ".tt" %}
