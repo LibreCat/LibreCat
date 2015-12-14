@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Test::More;
 use Test::Exception;
+use File::Path qw(remove_tree);
 use Catmandu::Store::Hash;
 
 use Data::Dumper;
@@ -23,12 +24,18 @@ ok $store , 'created a store';
     my $container = $store->add('1235');
 
     ok $container , 'create the bag';
+
+    ok -r 't/local-store/000/000/001/235' , 'found a new bag';
 }
 
 {
     my $container = $store->get('1235');
 
     ok $container , 'retrieve the bag';
+
+    is $container->key , '1235' , '->key';
+    ok $container->modified     , '->modified';
+    ok $container->created      , '->created'; 
 }
 
 {
@@ -37,6 +44,18 @@ ok $store , 'created a store';
 
 ok $store->delete('1235') , 'remove the bag';
 
-ok ! -r 'r/local-store/000/000/001/235' , 'deleted the bag';
+ok ! -r 't/local-store/000/000/001/235' , 'deleted the bag';
 
 done_testing;
+
+#remove_path("t/local-store");
+
+sub remove_path {
+    my $path = shift;
+    # Stupid chdir trick to make remove_tree work
+    chdir("lib");
+    if (-d "../$path") {
+       remove_tree("../$path");
+    }
+    chdir("..");
+}
