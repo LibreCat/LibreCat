@@ -94,6 +94,9 @@ ok $store , 'filestore->new';
 	my $file = $container->get("poem2.txt");
 
 	ok $file , 'container->get (poem2)';
+
+	is $file->key  , 'poem2.txt' , 'file->key';
+	is $file->size , length(poem()) , 'file->size';
 }
 
 ok $store->delete('1235') , 'filestore->delete';
