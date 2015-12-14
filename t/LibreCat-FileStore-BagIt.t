@@ -17,18 +17,20 @@ BEGIN {
 }
 require_ok $pkg;
 
-my $store = $pkg->new(root => 't/local-store');
+my $store = $pkg->new(root => 't/test-store');
 
 ok $store , 'filestore->new';
 
+note("add container");
 {
     my $container = $store->add('1235');
 
     ok $container , 'filestore->add';
 
-    ok -r 't/local-store/000/000/001/235' , 'found a new bag';
+    ok -r 't/test-store/000/000/001/235' , 'found a new bag';
 }
 
+note("get container");
 {
     my $container = $store->get('1235');
 
@@ -39,10 +41,12 @@ ok $store , 'filestore->new';
     ok $container->created      , 'container->created'; 
 }
 
+note("exists container");
 {
     ok $store->exists('1235') , 'filestore->exists';
 }
 
+note("update container with files");
 {
 	my $container = $store->get('1235');
 
@@ -67,7 +71,7 @@ ok $store , 'filestore->new';
 
 	ok $container->commit , 'container->commit';
 
-	ok -r 't/local-store/000/000/001/235/data/poem.txt' , 'found a poem.txt on disk';
+	ok -r 't/test-store/000/000/001/235/data/poem.txt' , 'found a poem.txt on disk';
 
 	my $file = $container->get("poem.txt");
 
@@ -88,8 +92,8 @@ ok $store , 'filestore->new';
 
 	ok $container->commit , 'container->commit';
 
-	ok -r 't/local-store/000/000/001/235/data/poem.txt' , 'found a poem.txt on disk';
-	ok -r 't/local-store/000/000/001/235/data/poem2.txt' , 'found a poem2.txt on disk';
+	ok -r 't/test-store/000/000/001/235/data/poem.txt' , 'found a poem.txt on disk';
+	ok -r 't/test-store/000/000/001/235/data/poem2.txt' , 'found a poem2.txt on disk';
 
 	my $file = $container->get("poem2.txt");
 
@@ -97,15 +101,42 @@ ok $store , 'filestore->new';
 
 	is $file->key  , 'poem2.txt' , 'file->key';
 	is $file->size , length(poem()) , 'file->size';
+
+	is $file->fh->getline , "Roses are red,\n" , 'file->fh->getline';
 }
 
-ok $store->delete('1235') , 'filestore->delete';
+note("delete container");
+{
+	ok $store->delete('1235') , 'filestore->delete';
 
-ok ! -r 't/local-store/000/000/001/235' , 'deleted the bag';
+	ok ! -r 't/test-store/000/000/001/235' , 'deleted the bag';
+}
+
+note("open existing container");
+{
+	my $store = $pkg->new(root => 't/local-store');
+
+	ok $store , 'new';
+
+	my $container = $store->get('1');
+
+	ok $container , 'retrieve the bag';
+
+	my @list = $container->list;
+
+	ok @list == 1 , 'got one item in the container';
+
+	my $file = $list[0];
+
+	is ref($file) , 'LibreCat::FileStore::File::BagIt' , 'item is a FileStore::File';
+
+	is $file->key  , 'poem.txt' , 'file->key';
+	is $file->size , length(poem()) , 'file->size';
+}
 
 done_testing;
 
-remove_path("t/local-store");
+remove_path("t/test-store");
 
 sub remove_path {
     my $path = shift;

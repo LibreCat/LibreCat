@@ -41,6 +41,7 @@ sub get {
 
     return undef unless $file;
 
+    my $data = $file->fh;
     my $md5  = $bagit->get_checksum($key);
     my $stat = [$file->fh->stat];
 
@@ -53,7 +54,8 @@ sub get {
             size     => $size ,
             md5      => $md5 ,
             created  => $created ,
-            modified => $modified 
+            modified => $modified ,
+            data     => $data 
     );
 }
 

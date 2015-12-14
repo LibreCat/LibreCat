@@ -24,7 +24,6 @@ views/admin/forms/
 logs/
 public/citec_authors.json
 local/
-data/
 profiledata/
 .vagrant/
 uploads/
