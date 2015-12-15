@@ -1,5 +1,7 @@
 requires 'perl', 'v5.10.1';
 
+requires 'Business::ISBN', 0;
+
 # Catmandu
 requires 'Catmandu', '>=0.95';
 requires 'Catmandu::Store::ElasticSearch';
@@ -13,7 +15,7 @@ requires 'Catmandu::Importer::Inspire';
 requires 'Catmandu::Importer::EuropePMC';
 requires 'Catmandu::Importer::CrossRef';
 requires 'Catmandu::Importer::getJSON';
-requires 'Catmandu::Identifier', '>=0.03';
+requires 'Catmandu::Identifier', '>=0.05';
 requires 'Catmandu::RIS', '>=0.04';
 
 #Dancer
@@ -44,6 +46,8 @@ requires 'Starman';
 
 # others
 requires 'all';
+requires 'Business::ISBN10';
+requires 'Business::ISBN13';
 requires 'App::bmkpasswd', '2.010001';
 requires 'DateTime';
 requires 'Hash::Merge';

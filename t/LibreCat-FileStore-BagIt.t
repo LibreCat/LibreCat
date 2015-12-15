@@ -73,7 +73,7 @@ note("update container with files");
 
 	ok -r 't/test-store/000/000/001/235/data/poem.txt' , 'found a poem.txt on disk';
 
-	my $file = $container->get("poem.txt");
+	$file = $container->get("poem.txt");
 
 	ok $file , 'container->get';
 
@@ -95,7 +95,7 @@ note("update container with files");
 	ok -r 't/test-store/000/000/001/235/data/poem.txt' , 'found a poem.txt on disk';
 	ok -r 't/test-store/000/000/001/235/data/poem2.txt' , 'found a poem2.txt on disk';
 
-	my $file = $container->get("poem2.txt");
+	$file = $container->get("poem2.txt");
 
 	ok $file , 'container->get (poem2)';
 
