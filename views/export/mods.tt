@@ -242,6 +242,13 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 [%- IF defense_date %]
 <dateOther encoding="w3cdtf" type="defenseDate">[% defense_date | xml_strict %]</dateOther>
 [%- END %]
+<extension>
+<bibliographicCitation>
+[%- FOREACH sty IN citation.keys %]
+<[% sty %]>[% citation.$sty | xml_strict %]</[% sty %]>
+[%- END %]
+</bibliographicCitation>
+</extension>
 <recordInfo><recordIdentifier>[% _id %]</recordIdentifier>
 [%- IF date_created %]<recordCreationDate encoding="w3cdtf">[% date_created %]</recordCreationDate>[% END %]
 [%- IF date_updated %]<recordChangeDate encoding="w3cdtf">[% date_updated %]</recordChangeDate>[% END %]
