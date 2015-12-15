@@ -12,9 +12,12 @@ has root => (is => 'ro' , required => '1') ;
 sub list {
     my ($self,$callback) = @_;
     my $root = $self->root;
+    
     local (*FIND);
+    
     open (FIND,"find $root -maxdepth 5 -name data -type d|");
     while(<FIND>) {
+        chomp;
         s/\/data$//;
         s/$root//;
         s/\///g;
