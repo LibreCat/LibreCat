@@ -43,41 +43,39 @@ elsif ($cmd eq 'get') {
 elsif ($cmd eq 'delete') {
     cmd_delete(@ARGV);
 }
+elsif ($cmd eq 'purge') {
+    cmd_purge(@ARGV);
+}
+else {
+    print STDERR "unknown command - $cmd\n";
+    exit(1);
+}
 
 sub cmd_list {
     my ($key) = @_;
 
-    if ($key) {
-        my $ref = $store->get($key);
+    $store->list(sub {
+        my $key = shift;
 
-        croak "list - no such $key bag" unless $ref;
+        my $container = $store->get($key);
+        my $created   = $container->created;
+        my $modified  = $container->modified;
 
-        $ref->list();
-    }
-    else {
-        $store->list(sub {
-            my $key = shift;
+        my @files = $container->list;
 
-            my $container = $store->get($key);
-            my $created   = $container->created;
-            my $modified  = $container->modified;
+        my $size = 0;
 
-            my @files = $container->list;
+        for (@files) {
+            $size += $_->size;
+        }
 
-            my $size = 0;
-
-            for (@files) {
-                $size += $_->size;
-            }
-
-            printf "%-40.40s %4d %9d %-20.20s %-20.20s\n"
-                    , $key
-                    , int(@files)
-                    , $size
-                    , strftime("%Y-%m-%dT%H:%M:%S", localtime($modified))
-                    , strftime("%Y-%m-%dT%H:%M:%S", localtime($created));
-        });
-    }
+        printf "%-40.40s %4d %9d %-20.20s %-20.20s\n"
+                , $key
+                , int(@files)
+                , $size
+                , strftime("%Y-%m-%dT%H:%M:%S", localtime($modified))
+                , strftime("%Y-%m-%dT%H:%M:%S", localtime($created));
+    });
 }
 
 sub cmd_get {
@@ -87,7 +85,7 @@ sub cmd_get {
 
     my $container = $store->get($key);
 
-    croak "get - failed to load $key bag" unless $container;
+    croak "get - failed to load $key" unless $container;
 
     printf "key: %s\n" , $container->key;
     printf "created: %s\n", scalar localtime($container->created);
@@ -115,7 +113,7 @@ sub cmd_add {
 
     my $container = $store->get($key);
 
-    croak "add - failed to find $key bag" unless $container;
+    croak "add - failed to find $key" unless $container;
 
     my ($name,$path,$suffix) = fileparse($file);
 
@@ -132,13 +130,24 @@ sub cmd_delete {
 
     my $container = $store->get($key);
 
-    croak "delete - failed to find $key bag" unless $container;
+    croak "delete - failed to find $key" unless $container;
 
     $container->delete($name);
 
     $container->commit;
 
     cmd_get($key);
+}
+
+sub cmd_purge {
+    my ($key) = @_;
+    croak "delete - need a key" unless defined($key);
+
+    my $container = $store->get($key);
+
+    croak "delete - failed to find $key" unless $container;
+
+    $store->delete($key);
 }
 
 sub load {
@@ -152,6 +161,10 @@ usage: $0 [options] cmd
 
 cmds:
     list
+    get <key>
+    add <key> <file>
+    delete <key> <file>
+    purge <key>
 
 options:
     --file_store=... | -f=...
