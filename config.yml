@@ -87,7 +87,7 @@ plugins:
         metadataNamespace: urn:nbn:de:1111-2004033116
         template: views/export/oai_epicur.tt
         filter: 'status exact public AND fulltext exact 1'
-        fix: ["add_field('host','http://pub.uni-bielefeld.de')"]
+        fix: ["add_field('host','https://pub.uni-bielefeld.de')"]
       -
         metadataPrefix: xMetaDissPlus
         schema: http://files.dnb.de/standards/xmetadissplus/xmetadissplus.xsd
@@ -101,7 +101,7 @@ plugins:
         metadataNamespace: http://www.datacite.org/schema/namespace
         template: views/export/datacite.tt
         filter: 'status exact public AND type=researchData'
-        fix: ["nothing()"]
+        fix: ["add_field('host','https://pub.uni-bielefeld.de')"]
       -
         metadataPrefix: rdf
         template: views/export/rdf.tt
