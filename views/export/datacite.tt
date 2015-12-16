@@ -1,70 +1,66 @@
 [%- USE XML::Strict -%]
 <resource xmlns="http://datacite.org/schema/kernel-3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-3 http://schema.datacite.org/meta/kernel-3/metadata.xsd">
-[% IF doi %]
-<identifier identifierType="DOI">[% doi | xml_strict %]</identifier>
-[% ELSE %]
-<identifier identifierType="DOI">[% doiInfo.doi | xml_strict %]</identifier>
-[% END %]
+[%- IF doi %]<identifier identifierType="DOI">[% doi | xml_strict %]</identifier>[% END -%]
 <creators>
-[% FOREACH cr IN author %]<creator><creatorName>[% cr.fullName | xml_strict %]</creatorName></creator>[% END %]
+[% FOREACH au IN author %]<creator><creatorName>[% au.full_name | xml_strict %]</creatorName></creator>[% END %]
 </creators>
 <titles>
-	<title>[% mainTitle | xml_strict %]</title>
-[% IF alternativeTitle %]<title titleType="Subtitle">[% alternativeTitle | xml_strict %]</title>[% END %]
+	<title>[% title | xml_strict %]</title>
+[%- IF alternative_title %]<title titleType="Subtitle">[% alternative_title | xml_strict %]</title>[% END -%]
 </titles>
 <publisher>[% publisher | xml_strict %]</publisher>
-<publicationYear>[% publishingYear %]</publicationYear>
-[% IF keyword %]
-	<subjects>
-[% FOREACH subj IN keyword %]<subject>[% subj | xml_strict %]</subject>[% END %]
+<publicationYear>[% year %]</publicationYear>
+[%- IF keyword %]
+<subjects>
+[% FOREACH k IN keyword %]<subject>[% k | xml_strict %]</subject>[% END %]
 </subjects>
-[% END %]
-[% IF fp7 %]
+[%- END %]
+[%- IF fp7 %]
 <contributors>
 	<contributor contributorType="Funder">
 	<contributorName>European Commission</contributorName>
 	<nameIdentifier nameIdentifierScheme="info">info:eu-repo/grantAgreement/EC/[% fp7 %]</nameIdentifier>
 	</contributor>
 </contributors>
-[% END %]
+[%- END %]
 <dates>
-	<date dateType="Updated">[% dateLastChanged.substr(0,10) %]</date>
-	<date dateType="Submitted">[% dateCreated.substr(0,10) %]</date>
+	<date dateType="Updated">[% date_updated.substr(0,10) %]</date>
+	<date dateType="Submitted">[% date_created.substr(0,10) %]</date>
 </dates>
-[% IF language %]
-	<language>[% language.iso %]</language>
-[% END %]
+[%- IF language %]
+	<language>[% language.0.iso %]</language>
+[%- END %]
 <resourceType resourceTypeGeneral="Dataset">dataset</resourceType>
 <alternateIdentifiers>
-	<alternateIdentifier alternateIdentifierType="URL">[% h.host %]/data/[% oId %]</alternateIdentifier>
+	<alternateIdentifier alternateIdentifierType="URL">[% host %]/data/[% _id %]</alternateIdentifier>
 </alternateIdentifiers>
-[% IF relatedMaterial %]
+[%- IF related_material %]
 <relatedIdentifiers>
-[% FOREACH relMat IN relatedMaterial %]
-<relatedIdentifier relatedIdentifierType="URL" relationType="IsCitedBy">[% h.host %]/publication/[% relMat.relatesFrom.oId %]</relatedIdentifier>
-[% END %]
+[% FOREACH rm IN related_material.record %]
+<relatedIdentifier relatedIdentifierType="URL" relationType="IsCitedBy">[% host %]/publication/[% rm.id %]</relatedIdentifier>
+[%- END %]
 </relatedIdentifiers>
-[% END %]
-[% IF file.0 %]
+[%- END %]
+[%- IF file.0 %]
 <formats>
-[% FOREACH fi IN file %]<format>[% fi.contentType | xml_strict %]</format>[% END %]
+[%- FOREACH fi IN file %]<format>[% fi.content_type | xml_strict %]</format>[% END %]
 </formats>
-[% END %]
-[% IF dataReuseLicense %]
+[%- END %]
+[%- IF data_reuse_license %]
 <rightsList>
 	<rights
-	[% SWITCH dataReuseLicense %]
-    [% CASE 'PDDL' %] rightsURI="http://opendatacommons.org/licenses/pddl/1.0">The Open Data Commons Public Domain Dedication and License (PDDL) v1.0</rights>
-    [% CASE 'ODC-By' %] rightsURI="http://opendatacommons.org/licenses/by/1.0">The Open Data Commons Attribution License (ODC-By) v1.0</rights>
-    [% CASE 'ODbL' %] rightsURI="http://opendatacommons.org/licenses/odbl/1.0">The Open Database License (ODbL) v1.0</rights>
-    [% END %]
+	[%- SWITCH data_reuse_license %]
+    [%- CASE 'PDDL' %] rightsURI="http://opendatacommons.org/licenses/pddl/1.0">The Open Data Commons Public Domain Dedication and License (PDDL) v1.0</rights>
+    [%- CASE 'ODC-By' %] rightsURI="http://opendatacommons.org/licenses/by/1.0">The Open Data Commons Attribution License (ODC-By) v1.0</rights>
+    [%- CASE 'ODbL' %] rightsURI="http://opendatacommons.org/licenses/odbl/1.0">The Open Database License (ODbL) v1.0</rights>
+    [%- END %]
 </rightsList>
-[% END %]
-[% IF abstract %]
+[%- END %]
+[%- IF abstract %]
 <descriptions>
-[% FOREACH abs IN abstract %]
-	<description descriptionType="Abstract">[% abs.text | xml_strict %]</description>
-[% END %]
+[%- FOREACH ab IN abstract %]
+	<description descriptionType="Abstract">[% ab.text | xml_strict %]</description>
+[%- END %]
 </descriptions>
-[% END %]
+[%- END %]
 </resource>

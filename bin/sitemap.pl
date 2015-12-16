@@ -9,9 +9,11 @@ my $conf = Catmandu->config;
 my $bag = Catmandu->store('search')->bag('publication');
 
 $bag->each( sub {
-	my $rec = $_[0];
+    my $rec = $_[0];
+    next unless $rec->{status} && $rec->{status} eq 'public';
+
     my $type = ($rec->{type} eq 'researchData') ? 'data' : 'publication';
-	say "$conf->{host}/$type/$rec->{id}";
+	say "$conf->{host}/$type/$rec->{_id}";
     });
 
 #TODO: add person profile pages

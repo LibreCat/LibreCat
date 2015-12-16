@@ -101,7 +101,7 @@ plugins:
         metadataNamespace: http://www.datacite.org/schema/namespace
         template: views/export/datacite.tt
         cql: 'status exact public AND type=researchData'
-        fix: ["nothing()"]
+        fix: ["add_field('host','https://pub.uni-bielefeld.de')"]
       -
         metadataPrefix: rdf
         template: views/export/rdf.tt
