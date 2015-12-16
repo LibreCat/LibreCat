@@ -15,3 +15,4 @@ move_field("tmp2.0.pevz:email_verschleiert","email_encoded");
 remove_field("tmp2")
 remove_field("personid")
 remove_field("xmlns:pevz")
+vacuum()

@@ -73,7 +73,7 @@ move_field(cc_license,'dc.rights.$append')
 
 # file stuff
 unless exists(file)
-  add_field('dc.rights.$append','info:eu-repo/semantics/restrictedAccess')
+  add_field('dc.rights.$append','info:eu-repo/semantics/closedAccess')
 end
 
 do list(path => file)
@@ -89,7 +89,7 @@ do list(path => file)
       if any_match(access_level,open_access)
         add_field('dc.rights.$append','info:eu-repo/semantics/openAccess')
       else
-        add_field('dc.rights.$append','info:eu-repo/semantics/restrictedAccess')
+        add_field('dc.rights.$append','info:eu-repo/semantics/closedAccess')
       end
     end
   end

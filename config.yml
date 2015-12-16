@@ -15,7 +15,6 @@ engines:
 # use default store
 session: "Catmandu"
 session_expires: 2 hr
-auto_page: 1
 
 plugins:
   'Auth::Tiny':
@@ -112,7 +111,7 @@ plugins:
     sets:
       - setSpec: openaire_data
         setName: OpenAire_data
-        cql: 'type exact researchData AND ecfunded=1'
+        cql: 'type exact researchData'
       -
         setSpec: bookChapterFtxt
         setName: Book Chapter with fulltext
@@ -588,7 +587,7 @@ plugins:
       -
         setSpec: openaire
         setName: EC funded or open access
-        cql: 'ecfunded=1 OR fulltext exact 1'
+        cql: '(ecfunded=1 OR fulltext exact 1) AND type<>researchData'
       -
         setSpec: journalArticleFtxt
         setName: Journal Article with fulltext
