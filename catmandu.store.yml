@@ -881,6 +881,11 @@ search:
                 '=': true
                 '<>': true
               field: layer
+            inactive:
+              op:
+                '=': true
+                '<>': true
+              field: inactive
             display:
               op:
                 '=': true
@@ -1275,6 +1280,7 @@ search:
             properties:
               _id: {type: string, analyzer: tag}
           layer: {type: string, analyzer: tag}
+          inactive: {type: byte}
           display:
             type: multi_field
             fields:
