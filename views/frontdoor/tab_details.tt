@@ -14,7 +14,7 @@
 [% FOREACH au IN author %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.author.label %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.author.label || lf.forms.$type.field.author_secondary.label %]</div>
     <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
   [% IF au.id %]<a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span itemprop="author">[% au.full_name %]</span>[% END %]
@@ -43,7 +43,7 @@
 [% FOREACH ed IN editor %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.editor.label %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.editor.label || lf.forms.$type.field.editor_solo.label %]</div>
     <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
   [% IF ed.id %]<a itemprop="editor" href="/person/[% ed.id %]">[% ed.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span itemprop="editor">[% ed.full_name %]</span>[% END %]
@@ -53,7 +53,7 @@
 [% FOREACH ed IN corporate_editor %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.corporate_editor.label %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.corporate_editor.label || lf.forms.$type.field.corporate_editor_solo.label %]</div>
     <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
   [% ed %]
