@@ -37,7 +37,7 @@
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/commonmark/0.22.0/commonmark.min.js"></script>
+<script src="/javascripts/commonmarkjs/dist/commonmark.min.js"></script>
 <script>
 var reader = new commonmark.Parser();
 var writer = new commonmark.HtmlRenderer();
@@ -56,7 +56,7 @@ $(document).ready(function () {
     tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
   });
 </script>
-<script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script async src="/javascripts/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 </body>
 
