@@ -3,6 +3,7 @@ package App::Search::Route::directoryindex;
 use Catmandu::Sane;
 use Dancer qw(:syntax);
 use App::Helper;
+use Try::Tiny;
 
 #redirect for old websites
 get qr{/\(en\)/*} => sub {
@@ -134,6 +135,20 @@ get qr{/pubtheses/*} => sub {
 
 get qr{/en/pubtheses/*} => sub {
     template 'pubtheses/pubtheses.tt', {bag => 'pubtheses', lang => 'en'};
+};
+
+get qr{/docs/*} => sub {
+	redirect "docs/howto/start";
+};
+
+get qr{/docs/(.*)} => sub {
+    my ($path) = splat;
+    try {
+        template "docs/$path";
+    catch {
+        status 'not_found';
+        template 'websites/404', {path => request->{referer}};
+    }
 };
 
 1;
