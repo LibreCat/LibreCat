@@ -11,6 +11,7 @@ clean_abstract()
 #language()
 maybe_add_urn()
 person()
+volume_sort()
 
 if exists(department)
   copy_field(department.*._id,department.*.tmp)
