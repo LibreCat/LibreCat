@@ -3,6 +3,7 @@ package LibreCat::FileStore::BagIt;
 use Moo;
 use Carp;
 use LibreCat::FileStore::Container::BagIt;
+use feature 'state';
 use namespace::clean;
 
 with 'LibreCat::FileStore';
@@ -12,22 +13,30 @@ has root => (is => 'ro' , required => '1') ;
 sub list {
     my ($self,$callback) = @_;
     my $root = $self->root;
-    
-    local (*FIND);
-    
-    open (FIND,"find $root -maxdepth 5 -name data -type d|");
-    while(<FIND>) {
-        chomp;
-        s/\/data$//;
-        s/$root//;
-        s/\///g;
-        s/^0+//;
         
-        if ($callback) {
-            $callback->($_) || last;
+    return sub {
+        state $io;
+
+        unless (defined($io)) {
+            warn "l";
+            open($io,"find $root -maxdepth 5 -name data -type d|");
         }
-    }
-    close (FIND);
+        
+        my $line = <$io>;
+
+        unless (defined($line)) {
+            close($io);
+            return undef;
+        }
+
+        chop($line);
+        $line =~ s/\/data$//;
+        $line =~ s/$root//;
+        $line =~ s/\///g;
+        $line =~ s/^0+//;
+        
+        $line;
+    };
 }
 
 sub exists {
@@ -107,3 +116,45 @@ sub path_string {
 1;
 
 __END__
+
+
+=pod
+
+=head1 NAME
+
+LibreCat::FileStore::BagIt - A BagIt implementation of a file storage
+
+=head1 SYNOPSIS
+
+    use LibreCat::FileStore::BagIt;
+
+    my $filestore =>LibreCat::FileStore::BagIt->new(%options);
+
+    my $generator = $filestore->list;
+
+    while (my $key = $generator->()) {
+        my $container = $filestore->get($key);
+
+        for my $file ($container->list) {
+            my $filename = $file->key;
+            my $size     = $file->size;
+            my $checksum = $file->md5;
+            my $created  = $file->created;
+            my $modified = $file->modified;
+            my $io       = $file->data;
+        }
+    }
+
+    my $container = $filestore->get('1234');
+
+    if ($filestore->exists('1234')) {
+        ...
+    }
+
+    my $container = $filestore->add('1235');
+
+    $filestore->delete('1234');
+
+=head1 SEE ALSO
+
+L<LibreCat::FileStore>

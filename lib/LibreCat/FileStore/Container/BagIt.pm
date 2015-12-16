@@ -133,3 +133,36 @@ sub delete_container {
 1;
 
 __END__;
+
+=pod
+
+=head1 NAME
+
+LibreCat::FileStore::Container::BagIt - A BagIt implementation of a file storage container
+
+=head1 SYNOPSIS
+
+    use LibreCat::FileStore::BagIt;
+
+    my $filestore => LibreCat::FileStore::BagIt->new(%options);
+
+    my $container = $filestore->get('1234');
+
+    my @list_files = $container->list;
+
+    if ($container->exists($filename)) {
+        ....
+    }
+
+    $container->add($filename, IO::File->new('/path/to/file'));
+
+    my $file = $container->get($filename);
+
+    $container->delete($filename);
+
+    # write all changes to disk (network , database , ...)
+    $container->commit;
+
+=head1 SEE ALSO
+
+L<LibreCat::FileStore::Container>

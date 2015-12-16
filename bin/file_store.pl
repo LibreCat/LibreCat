@@ -54,9 +54,9 @@ else {
 sub cmd_list {
     my ($key) = @_;
 
-    $store->list(sub {
-        my $key = shift;
+    my $gen = $store->list;
 
+    while (my $key = $gen->()) {
         my $container = $store->get($key);
         my $created   = $container->created;
         my $modified  = $container->modified;
@@ -75,7 +75,7 @@ sub cmd_list {
                 , $size
                 , strftime("%Y-%m-%dT%H:%M:%S", localtime($modified))
                 , strftime("%Y-%m-%dT%H:%M:%S", localtime($created));
-    });
+    }
 }
 
 sub cmd_get {
