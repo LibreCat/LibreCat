@@ -42,7 +42,7 @@
 [% IF facets.status.terms.size > 1 && backend %]
   <ul class="nav nav-tabs nav-stacked margin-bottom1 ul0">
     <li>
-      <button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left" title="[% lf.help.visibility_status %]"><span class="glyphicon glyphicon-chevron-down"></span> [% lf.facets.visibility_status %] ([% facets.status.terms.size %])</button>
+      <button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left"><span class="glyphicon glyphicon-chevron-down"></span> [% lf.facets.visibility_status %]</button>
       <div class="facettecollapse">
 	<ul id="status_[% tabmodus %][% menu %]" class="collapse">
 	  [% FOREACH stat IN facets.status.terms %]
@@ -55,7 +55,7 @@
 [% END %]
 
 [% IF backend AND session.role == "super_admin" OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR  facets.year.terms.size > 1 %]
-<ul class="nav nav-tabs nav-stacked ul1 helpme" data-placement="left" title="[% lf.help.author_block %]">
+<ul class="nav nav-tabs nav-stacked ul1 helpme" data-placement="left">
   [% IF backend AND session.role == "super_admin" %]
   <li>
     <button data-toggle="collapse" data-target="#department_new_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.department %]</button>
@@ -106,7 +106,7 @@
 
   [% IF facets.type.terms.size > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#type_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.publication_type %] ([% facets.type.terms.size %])</button>
+    <button data-toggle="collapse" data-target="#type_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.publication_type %]</button>
     <div class="facettecollapse">
       <ul id="type_[% tabmodus %][% menu %]" class="collapse">
 	[% FOREACH type IN facets.type.terms %]
@@ -131,7 +131,7 @@
  [% p.q = []; p.q.push(query); p.get_person = 1 %]
  [% authors = h.search_researcher(p) %]
   <li>
-    <button data-toggle="collapse" data-target="#authors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.current_authors %] ([% facets.author.terms.size %])</button>
+    <button data-toggle="collapse" data-target="#authors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.current_authors %]</button>
     <div class="facettecollapse">
       <ul id="authors_[% tabmodus %][% menu %]" class="collapse">
 	[% FOREACH au IN facets.author.terms %]
@@ -156,7 +156,7 @@
   [% p.q = []; p.q.push(query); p.get_person = 1 -%]
   [% editors = h.search_researcher(p) -%]
   <li>
-    <button data-toggle="collapse" data-target="#editors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.current_editors %] ([% facets.editor.terms.size %])</button>
+    <button data-toggle="collapse" data-target="#editors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.current_editors %]</button>
     <div class="facettecollapse">
     <ul id="editors_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH ed IN facets.editor.terms %]
@@ -170,7 +170,7 @@
 
   [% IF facets.year.terms.size > 1 %]
   <li>
-    <button data-target="#year_[% tabmodus %][% menu %]" data-toggle="collapse" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.publishing_year %] ([% facets.year.terms.size %])</button>
+    <button data-target="#year_[% tabmodus %][% menu %]" data-toggle="collapse" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.publishing_year %]</button>
     <div class="facettecollapse">
     <ul id="year_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH y IN facets.year.terms %]
@@ -199,7 +199,7 @@
    OR facets.open_access.terms.size > 0
    OR facets.isi.terms.size > 0
    OR facets.pmid.terms.size > 0 %]
-<ul class="nav nav-tabs nav-stacked margin-top1 ul2 helpme" data-placement="left" title="[% lf.help.fulltext_block %]">
+<ul class="nav nav-tabs nav-stacked margin-top1 ul2 helpme" data-placement="left">
   [% IF facets.popular_science.terms.size > 0 %]
   <li class="ul2li1">
     [% FOREACH t IN facets.popular_science.terms %]
