@@ -9,7 +9,7 @@
       <div class="col-md-10 col-xs-11">
         <div class="checkbox">
           <label class="checkbox-inline">
-            <input type="checkbox" name="ubi_funded" id="id_ubi_funded" value="[% ubi_funded %]"[% IF session.role != super_admin %] readonly="readonly"[% END %][% IF ubi_funded %] checked="checked"[% END %]>
+            <input type="checkbox" name="ubi_funded" id="id_ubi_funded" value="1"[% IF session.role != super_admin %] readonly="readonly"[% END %][% IF ubi_funded %] checked="checked"[% END %]>
             [% lf.$type.field.ubi_funded.placeholder %]
           </label>
         </div>
