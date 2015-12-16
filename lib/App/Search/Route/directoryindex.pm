@@ -34,8 +34,39 @@ get qr{/pub} => sub {
 		}
 	}
 	elsif(params->{func} and params->{func} eq "plst"){
-		header("Content-Type" => "text/plain");
-		template 'docs/error_message/pub_list_js.tt', {interface_warning => 'Diese Schnittstelle zur Einbettung von Publikationslisten wird nicht mehr bedient. Bitte wenden Sie sich an <a href="mailto:publikationsdienste.ub@uni-bielefeld.de">publikationsdienste.ub@uni-bielefeld.de</a>, um die Einbettung umzustellen.'};
+		my $redirect_url = 'https://pub.uni-bielefeld.de/publication?';
+		my $redirect_params = '';
+		$redirect_params .= "&q=year=\"" .       params->{publyear} . "\"" if params->{publyear};
+		$redirect_params .= "&q=person=\"" .     params->{author} .   "\"" if params->{author};
+		$redirect_params .= "&q=person=\"" .     params->{editor} .   "\"" if params->{editor};
+		$redirect_params .= "&q=department=\"" . params->{dept} .     "\"" if params->{dept};
+		$redirect_params .= "&q=type=" .         params->{doctype}         if params->{doctype};
+		$redirect_params .= "&q=project=\"" .    params->{project} .  "\"" if params->{project};
+		$redirect_params .= "&q=title=\"" .      params->{title} .    "\"" if params->{title};
+		$redirect_params .= "&q=type=\"" .       params->{doctype} .  "\"" if params->{doctype};
+		$redirect_params .= "&q=fulltext=" .     params->{fulltext}        if params->{fulltext};
+		$redirect_params .= "&q=extern=" .       params->{extern}          if params->{extern};
+		
+		$redirect_params .= "&style=" . params->{style} if params->{style};
+		$redirect_params .= "&ftyp=" . params->{ftyp} if params->{ftyp};
+		$redirect_params .= "&ftyp=iframe" if !params->{ftyp};
+		$redirect_params .= "&sort=" . params->{sortc} . "." . params->{sorto} if params->{sortc} and params->{sorto};
+		$redirect_params .= "&sort=" . params->{sortc} . ".desc" if params->{sortc} and !params->{sorto};
+		$redirect_params .= "&sort=year." . params->{sorto} if params->{sorto} and !params->{sortc};
+		$redirect_params .= "&limit=" . params->{maxrecs} if params->{maxrecs};
+		$redirect_params .= "&start=" . params->{startrecs} if params->{startrecs};
+		
+		$redirect_params =~ s/^\&//g;
+		
+		redirect $redirect_url . $redirect_params;
+		
+#		if(params->{ftyp} and params->{ftyp} eq "js"){
+#			header("Content-Type" => "text/plain");
+#			template 'docs/error_message/pub_list_js.tt', {interface_warning => 'Diese Schnittstelle zur Einbettung von Publikationslisten wird nicht mehr bedient. Bitte wenden Sie sich an <a href="mailto:publikationsdienste.ub@uni-bielefeld.de">publikationsdienste.ub@uni-bielefeld.de</a>, um die Einbettung umzustellen.'};
+#		}
+#		else {
+#			template 'docs/error_message/pub_list.tt', {interface_warning => 'Diese Schnittstelle zur Einbettung von Publikationslisten wird nicht mehr bedient. Bitte wenden Sie sich an <a href="mailto:publikationsdienste.ub@uni-bielefeld.de">publikationsdienste.ub@uni-bielefeld.de</a>, um die Einbettung umzustellen.'};
+#		}
 	}
 	else{
 		status 'not_found';
