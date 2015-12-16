@@ -2,8 +2,23 @@
 
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
 <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="[% lf.main_page.links.view_details %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>PUB</a>
-  [% IF entry.file || entry.related_material || entry.externalFiles == "1" %]
+  [% IF entry.type == "researchData" AND (entry.file || entry.related_material || entry.externalFiles == "1") %]
   | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% lf.main_page.links.files %]</a>
+  [% ELSIF entry.type != "researchData" AND entry.file AND entry.file.size > 1 %]
+    [% display_file = [] %]
+    [% counter = 0 %]
+    [% FOREACH fi IN entry.file %]
+    [% IF fi.open_access %][% counter = counter + 1 %][% display_file.push(fi) %][% END %]
+    [% END %]
+    [% IF counter > 1 %]
+      | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% lf.main_page.links.files %]</a>
+    [% ELSIF counter == 1 %]
+      | <a href="/download/[% entry._id %]/[% display_file.0.file_id %]">[% display_file.0.content_type == "application/pdf" ? "PDF" : "File" %]</a>
+    [% END %]
+  [% ELSIF entry.type != "researchData" AND entry.file AND entry.file.size == 1 %]
+    [% IF entry.file.0.open_access %]
+    | <a href="/download/[% entry._id %]/[% entry.file.0.file_id %]">[% entry.file.0.content_type == "application/pdf" ? "PDF" : "File" %]</a>
+    [% END %]
   [% END %]
 
   [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="/download/[% entry._id  %]/[% supp.file.file_id %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
