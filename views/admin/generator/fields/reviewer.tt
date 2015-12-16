@@ -4,7 +4,7 @@
   </div>
   <div class="col-md-10" id="reviewer">
   [% IF !reviewer OR !reviewer.0 %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="reviewer.0._id" id="rv_idautocomplete_0" />
       
       <div class="form-group col-md-10 col-xs-11">
@@ -19,7 +19,7 @@
     </div>
   [% ELSE %]
   [% FOREACH dept IN reviewer %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="reviewer.[% loop.index %]._id" id="rv_idautocomplete_[% loop.index %]" value="[% dept._id %]" />
       
       <div class="form-group col-md-10 col-xs-11">
