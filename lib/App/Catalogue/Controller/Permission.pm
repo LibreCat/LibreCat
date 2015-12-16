@@ -54,7 +54,7 @@ sub can_download {
 
     my $ip_range = h->config->{ip_range};
     my $pub = h->publication->get($id);
-    my $access;
+    my $access = "";
     my $file_name;
     map {
         if ($_->{file_id} == $file_id) {
