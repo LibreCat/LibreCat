@@ -3,7 +3,7 @@
 use lib qw(./lib);
 use Catmandu::Util;
 use App::Helper;
-use App::Validator::Researcher;
+use App::Validator::Publication;
 use Log::Log4perl;
 use Log::Any::Adapter;
 use Getopt::Long;
@@ -13,7 +13,7 @@ use namespace::clean;
 Log::Log4perl::init('log4perl.conf');
 Log::Any::Adapter->set('Log4perl');
 
-my $logger = Log::Log4perl->get_logger('user_admin');
+my $logger = Log::Log4perl->get_logger('publication_admin');
 my $h      = App::Helper::Helpers->new;
 
 my $cmd = shift;
@@ -42,20 +42,19 @@ else {
 exit($ret);
 
 sub cmd_list {
-    my $count = $h->researcher->each(sub {
+    my $count = $h->publication->each(sub {
         my ($item) = @_;
         my $id       = $item->{_id};
-        my $login    = $item->{login};
-        my $name     = $item->{full_name};
-        my $status   = $item->{account_status};
-        my $type     = $item->{account_type};
-        my $is_admin = $item->{super_admin};
+        my $title    = $item->{title} // '---';
+        my $creator  = $item->{creator}->{login} // '---';
+        my $status   = $item->{status};
+        my $type     = $item->{ype};
 
-        printf "%s %5d %-20.20s %-40.40s %-10.10s %s\n" 
-                    , $is_admin ? "*" : " "
+        printf "%s %5d %-10.10s %-60.60s %-10.10s %s\n" 
+                    , " " # not use
                     , $id
-                    , $login
-                    , $name
+                    , $creator
+                    , $title
                     , $status
                     , $type; 
     });
@@ -69,7 +68,7 @@ sub cmd_get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = $h->get_person($id);
+    my $data = $h->get_publication($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -85,23 +84,23 @@ sub cmd_add {
 
     croak "only one record at a time allowed" unless Catmandu::Util::is_ref_hash($data);
     
-    my $validator = App::Validator::Researcher->new;
+    my $validator = App::Validator::Publication->new;
 
     if ($validator->is_valid($data)) {
-        my $result = $h->update_record('researcher', $data);
-        if ($result) {
-            print "added " . $data->{_id} . "\n";
-            return 0;
-        }
-        else {
-            print "ERROR: add " . $data->{_id} . " failed\n";
-            return 2; 
-        }
+         my $result = $h->update_record('researcher', $data);
+         if ($result) {
+             print "added " . $data->{_id} . "\n";
+             return 0;
+         }
+         else {
+             print "ERROR: add " . $data->{_id} . " failed\n";
+             return 2; 
+         }
     }
     else {
-        print STDERR "ERROR: not a valid researcher\n";
-        print STDERR join("\n",@{$validator->last_errors}) , "\n";
-        return 2;
+         print STDERR "ERROR: not a valid researcher\n";
+         print STDERR join("\n",@{$validator->last_errors}) , "\n";
+         return 2;
     }
 }
 
@@ -110,9 +109,9 @@ sub cmd_delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result = $h->researcher->delete($id);
+    my $result = $h->delete_record('publication',$id);
 
-    if ($h->researcher->commit) {
+    if ($result) {
         print "deleted $id\n";
         return 0;
     }
