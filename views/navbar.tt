@@ -71,7 +71,8 @@
 	      </a></span>
 	  </div>
 	  <div class="col-xs-1 col-sm-2 col-md-offset-1">
-	    <span class="select-language pull-right"><a href="/set_language?[% lang = session.lang ? session.lang : h.config.default_lang %]"><span class="glyphicon glyphicon-flag hidden-xs"></span>[% lf.header.lang %]</a></span>
+	    [% thisLang = session.lang ? session.lang : h.config.default_lang %]
+	    <span class="select-language pull-right"><a href="/set_language?[% thisLang == "en" ? "lang=de" : "lang=en" %]"><span class="glyphicon glyphicon-flag hidden-xs"></span>[% lf.header.lang %]</a></span>
 	  </div>
 	</div>
 	<div class="row innerrow">
