@@ -194,17 +194,17 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 [%- FOREACH j IN publication_identifier.isbn %]
   <identifier type="isbn">[% j | xml_strict %]</identifier>
 [%- END %]
-[%- IF external_identifier.arxiv %]
-  <identifier type="arXiv">[% external_identifier.arxiv| xml_strict %]</identifier>
+[%- IF external_id.arxiv %]
+  <identifier type="arXiv">[% external_id.arxiv| xml_strict %]</identifier>
 [%- END %]
-[%- IF external_identifier.inspire %]
-  <identifier type="INSPIRE">[% external_identifier.inspire | xml_strict %]</identifier>
+[%- IF external_id.inspire %]
+  <identifier type="INSPIRE">[% external_id.inspire | xml_strict %]</identifier>
 [%- END %]
-[%- IF external_identifier.pmid %]
-  <identifier type="MEDLINE">[% external_identifier.pmid | xml_strict %]</identifier>
+[%- IF external_id.pmid %]
+  <identifier type="MEDLINE">[% external_id.pmid | xml_strict %]</identifier>
 [%- END %]
-[%- IF external_identifier.isi %]
-  <identifier type="ISI">[% external_identifier.isi | xml_strict %]</identifier>
+[%- IF external_id.isi %]
+  <identifier type="ISI">[% external_id.isi | xml_strict %]</identifier>
 [%- END %]
 [%- IF urn %]<identifier type="urn">[% publication_identifier.urn | xml_strict %]</identifier>[% END %]
 [%- IF doi %]<location><url>http://doi.org/[% doi | xml_strict %]</url></location>[% END %]
