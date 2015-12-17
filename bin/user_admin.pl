@@ -82,8 +82,24 @@ sub cmd_add {
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
     my $data = Catmandu::Util::read_yaml($file);
+    
+    if (Catmandu::Util::is_hash_ref($data)) {
+        return _cmd_add($data);
+    }
+    elsif (Catmandu::Util::is_array_ref($data)) {
+        my $ret = 0;
+        for my $item (@$data) {
+            $ret += _cmd_add($item);
+        }
+        return $ret == 0;
+    }
+    else {
+        croak "unkown import format";
+    }
+}
 
-    croak "only one record at a time allowed" unless Catmandu::Util::is_hash_ref($data);
+sub _cmd_add {
+    my ($data) = @_;
     
     my $validator = App::Validator::Researcher->new;
 

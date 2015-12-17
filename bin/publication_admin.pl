@@ -82,7 +82,23 @@ sub cmd_add {
 
     my $data = Catmandu::Util::read_yaml($file);
 
-    croak "only one record at a time allowed" unless Catmandu::Util::is_hash_ref($data);
+    if (Catmandu::Util::is_hash_ref($data)) {
+        return _cmd_add($data);
+    }
+    elsif (Catmandu::Util::is_array_ref($data)) {
+        my $ret = 0;
+        for my $item (@$data) {
+            $ret += _cmd_add($item);
+        }
+        return $ret == 0;
+    }
+    else {
+        croak "unkown import format";
+    }
+}
+
+sub _cmd_add {
+    my $data = shift;
 
     my $validator = App::Validator::Publication->new;
 
