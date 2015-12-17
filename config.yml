@@ -1,6 +1,6 @@
 # main configuration file for Dancer
 appname: "PUB - Publications at Bielefeld University"
-host: "http://pub.uni-bielefeld.de"
+host: "https://pub.uni-bielefeld.de"
 charset: "UTF-8"
 
 # Template Engine
