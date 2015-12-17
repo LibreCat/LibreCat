@@ -206,8 +206,8 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 [%- IF external_id.isi %]
   <identifier type="ISI">[% external_id.isi | xml_strict %]</identifier>
 [%- END %]
-[%- IF urn %]<identifier type="urn">[% publication_identifier.urn | xml_strict %]</identifier>[% END %]
-[%- IF doi %]<location><url>http://doi.org/[% doi | xml_strict %]</url></location>[% END %]
+[%- IF urn %]<identifier type="urn">[% urn | xml_strict %]</identifier>[% END %]
+[%- IF doi %]<identifier type="doi">[% doi | xml_strict %]</identifier>[% END %]
 <part>
 [%- IF volume %]<detail type="volume"><number>[% volume | xml_strict %]</number></detail>[% END %]
 [%- IF issue %]<detail type="issue"><number>[% issue | xml_strict %]</number></detail>[% END %]
