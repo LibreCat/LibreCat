@@ -121,7 +121,7 @@ get qr{/embed/*} => sub {
 	$p->{facets}->{author}->{terms}->{size} = 100;
 	$p->{facets}->{editor}->{terms}->{size} = 100;
 
-	my $sort_style = h->get_sort_style( params->{sort} || $pq->{default_query}->{'sort'} || '', params->{style} || '');
+	my $sort_style = h->get_sort_style( params->{sort} || $pq->{default_query}->{'sort'} || '', params->{style} || $pq->{default_query}->{style} || '');
     $p->{sort} = $sort_style->{sort};
     $p->{start} = params->{start};
 	my $hits = h->search_publication($p);
