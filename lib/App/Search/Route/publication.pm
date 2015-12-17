@@ -22,14 +22,14 @@ get qr{/(data|publication)/(\d{1,})/*(\w{1,})*/*} => sub {
 	push @{$p->{q}}, ("status=public","id=$id");
 
 	my $hits = h->search_publication($p);
-	
+
 	if(!$hits->{total}){
 		$p->{q} = [];
 		push @{$p->{q}}, ("status=public", "altid=$id");
 		$hits = h->search_publication($p);
 		$altid = 1 if $hits->{total};
 	}
-	
+
 	$hits->{bag} = $bag;
 
 	my $marked = session 'marked';
@@ -116,6 +116,11 @@ get qr{/embed/*} => sub {
 	}
 	push @{$p->{q}}, ("status=public");
 	$p->{facets} = h->default_facets();
+
+	# override default facets
+	$p->{facets}->{author}->{terms}->{size} = 100;
+	$p->{facets}->{editor}->{terms}->{size} = 100;
+
 	my $sort_style = h->get_sort_style( params->{sort} || $pq->{default_query}->{'sort'} || '', params->{style} || '');
     $p->{sort} = $sort_style->{sort};
     $p->{start} = params->{start};
