@@ -82,12 +82,12 @@ sub cmd_add {
 
     my $data = Catmandu::Util::read_yaml($file);
 
-    croak "only one record at a time allowed" unless Catmandu::Util::is_ref_hash($data);
-    
+    croak "only one record at a time allowed" unless Catmandu::Util::is_hash_ref($data);
+
     my $validator = App::Validator::Publication->new;
 
     if ($validator->is_valid($data)) {
-         my $result = $h->update_record('researcher', $data);
+         my $result = $h->update_record('publication', $data);
          if ($result) {
              print "added " . $data->{_id} . "\n";
              return 0;

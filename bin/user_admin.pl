@@ -83,7 +83,7 @@ sub cmd_add {
 
     my $data = Catmandu::Util::read_yaml($file);
 
-    croak "only one record at a time allowed" unless Catmandu::Util::is_ref_hash($data);
+    croak "only one record at a time allowed" unless Catmandu::Util::is_hash_ref($data);
     
     my $validator = App::Validator::Researcher->new;
 
