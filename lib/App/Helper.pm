@@ -366,21 +366,33 @@ sub new_record {
 
     my $id = "";
 
-    if($bag eq "project"){
+    if ($bag eq "project"){
         my $arr_ref;
         @$arr_ref = sort { $b->{_id} cmp $a->{_id}} @{$self->project->to_array()};
-        $id = $arr_ref->[0]->{_id};
-        $id =~ s/^P//g;
-        $id++;
-        $id = "P".$id;
+
+        if (@$arr_ref > 0) {
+            $id = $arr_ref->[0]->{_id};
+            $id =~ s/^P//g;
+            $id++;
+            $id = "P".$id;
+        }
+        else {
+            $id = "P1";
+        }
     }
-    elsif($bag eq "research_group"){
+    elsif ($bag eq "research_group"){
         my $arr_ref;
         @$arr_ref = sort { $b->{_id} cmp $a->{_id}} @{$self->research_group->to_array()};
-        $id = $arr_ref->[0]->{_id};
-        $id =~ s/^RG//g;
-        $id++;
-        $id = "RG".$id;
+
+        if (@$arr_ref > 0) {
+            $id = $arr_ref->[0]->{_id};
+            $id =~ s/^RG//g;
+            $id++;
+            $id = "RG".$id;
+        }
+        else {
+            $id = "RG1";
+        }
     }
     else {
         # TODO race condition!

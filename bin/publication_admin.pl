@@ -80,21 +80,14 @@ sub cmd_add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $data = Catmandu::Util::read_yaml($file);
+    my $ret = 0;
 
-    if (Catmandu::Util::is_hash_ref($data)) {
-        return _cmd_add($data);
-    }
-    elsif (Catmandu::Util::is_array_ref($data)) {
-        my $ret = 0;
-        for my $item (@$data) {
-            $ret += _cmd_add($item);
-        }
-        return $ret == 0;
-    }
-    else {
-        croak "unkown import format";
-    }
+    Catmandu->importer('YAML', file => $file)->each( sub {
+        my $item = $_[0];
+        $ret += _cmd_add($item);        
+    });
+
+    return $ret == 0;
 }
 
 sub _cmd_add {

@@ -1,9 +1,10 @@
 #!/usr/bin/env perl
 
 use lib qw(./lib);
+use Catmandu;
 use Catmandu::Util;
 use App::Helper;
-use App::Validator::Researcher;
+use App::Validator::Department;
 use Log::Log4perl;
 use Log::Any::Adapter;
 use Getopt::Long;
@@ -13,7 +14,7 @@ use namespace::clean;
 Log::Log4perl::init('log4perl.conf');
 Log::Any::Adapter->set('Log4perl');
 
-my $logger = Log::Log4perl->get_logger('user_admin');
+my $logger = Log::Log4perl->get_logger('department_admin');
 my $h      = App::Helper::Helpers->new;
 
 my $cmd = shift;
@@ -42,22 +43,18 @@ else {
 exit($ret);
 
 sub cmd_list {
-    my $count = $h->researcher->each(sub {
+    my $count = $h->department->each(sub {
         my ($item) = @_;
         my $id       = $item->{_id};
-        my $login    = $item->{login};
-        my $name     = $item->{full_name};
-        my $status   = $item->{account_status};
-        my $type     = $item->{account_type};
-        my $is_admin = $item->{super_admin};
+        my $name     = $item->{name};
+        my $display  = $item->{display};
+        my $layer    = $item->{layer};
 
-        printf "%s %5d %-20.20s %-40.40s %-10.10s %s\n" 
-                    , $is_admin ? "*" : " "
+        printf "%-2.2d %5d %-40.40s %s\n" 
+                    , $layer
                     , $id
-                    , $login
                     , $name
-                    , $status
-                    , $type; 
+                    , $display; 
     });
     print "count: $count\n";
     
@@ -69,7 +66,7 @@ sub cmd_get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = $h->get_person($id);
+    my $data = $h->get_department($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -94,10 +91,10 @@ sub cmd_add {
 sub _cmd_add {
     my ($data) = @_;
     
-    my $validator = App::Validator::Researcher->new;
+    my $validator = App::Validator::Department->new;
 
     if ($validator->is_valid($data)) {
-        my $result = $h->update_record('researcher', $data);
+        my $result = $h->update_record('department', $data);
         if ($result) {
             print "added " . $data->{_id} . "\n";
             return 0;
@@ -119,9 +116,9 @@ sub cmd_delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result = $h->researcher->delete($id);
+    my $result = $h->department->delete($id);
 
-    if ($h->researcher->commit) {
+    if ($h->department->commit) {
         print "deleted $id\n";
         return 0;
     }
