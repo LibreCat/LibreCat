@@ -1,17 +1,18 @@
-# mapping from Bielefeld's identity management sytem
+# mapping from Bielefeld's identity management system
 # to PUB
 move_field("pevz:person","tmp")
 move_field("tmp.id","_id");
 move_field("tmp.pevz:nachname", "last_name");
 move_field("tmp.pevz:vorname","first_name");
-move_field("tmp.pevz:bildskalierturl","bis.photo"); #full_name?
-#move_field("tmp.pevz:title","bis.title");
+move_field("tmp.pevz:bildskalierturl","photo"); #full_name?
+move_field("tmp.pevz:titel","idm_title");
 if exists ("tmp.forschend")
-	add_field("bis.researcher","1");
+	add_field("researcher","1");
 end
 remove_field("tmp");
 move_field("pevz:kontakt","tmp2")
-move_field("tmp2.0.pevz:email_verschleiert","bis.email");
+move_field("tmp2.0.pevz:email_verschleiert","email_encoded");
 remove_field("tmp2")
 remove_field("personid")
 remove_field("xmlns:pevz")
+vacuum()

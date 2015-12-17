@@ -553,6 +553,8 @@ forms:
       locked: &locked
         label: "Locked for editing (except for admins)"
         label_short: "Locked"
+      link: &link
+        label: "URL"
   bookEditor: &bookeditor
     label: "Herausgeber Sammelwerk"
     tab: *tab
@@ -602,6 +604,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   bookeditor: *bookeditor
   bookChapter: &bookchapter
     label: "Sammelwerksbeitrag"
@@ -679,6 +682,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   bookchapter: *bookchapter
   conferenceAbstract: &conferenceabstract
     label: "Kurzbeitrag Konferenz"
@@ -751,6 +755,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   conferenceabstract: *conferenceabstract
   conferenceEditor: &conferenceeditor
     label: "Konferenzband"
@@ -790,6 +795,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   conferenceeditor: *conferenceeditor
   conference:
     label: "Konferenzbeitrag"
@@ -836,6 +842,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   dissertation:
     label: "Dissertation"
     tab: *tab
@@ -878,6 +885,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   encyclopediaArticle: &encyclopediaarticle
     label: "Lexikoneintrag"
     tab: *tab
@@ -919,6 +927,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   encyclopediaarticle: *encyclopediaarticle
   journalArticle: &journalarticle
     label: "Zeitschriftenaufsatz"
@@ -975,6 +984,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   journalarticle: *journalarticle
   journalEditor: &journaleditor
     label: "Sonderausgabe Zeitschrift"
@@ -1029,6 +1039,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   journaleditor: *journaleditor
   newspaperArticle: &newspaperarticle
     label: "Zeitungsartikel"
@@ -1070,6 +1081,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   newspaperarticle: *newspaperarticle
   patent:
     label: "Patent"
@@ -1130,6 +1142,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   preprint:
     label: "Preprint"
     tab: *tab
@@ -1162,6 +1175,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   report:
     label: "Report"
     tab: *tab
@@ -1200,6 +1214,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   review:
     label: "Rezension"
     tab: *tab
@@ -1240,6 +1255,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   researchData: &researchdata
     label: "Datenpublikation"
     tab:
@@ -1412,6 +1428,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   translationChapter: &translationchapter
     label: "Übersetzung (Aufsatz)"
     tab: *tab
@@ -1483,6 +1500,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   translationchapter: *translationchapter
   workingPaper: &workingpaper
     label: "Diskussionspapier"
@@ -1519,6 +1537,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   workingpaper: *workingpaper
   biDissertation: &bidissertation
     label: "Bielefelder E-Dissertation"
@@ -1586,6 +1605,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
+      link: *link
   bidissertation: *bidissertation
   biMasterThesis: &bimasterthesis
     label: "Bielefelder Masterarbeit"
@@ -1625,6 +1645,7 @@ forms:
     import: "Importieren"
     next: "Weiter"
     publish: "Public stellen"
+    submitted: "Absenden"
     return: "Zurückstellen"
     save: "Speichern"
     select: "Auswählen"

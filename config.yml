@@ -15,7 +15,6 @@ engines:
 # use default store
 session: "Catmandu"
 session_expires: 2 hr
-auto_page: 1
 
 plugins:
   'Auth::Tiny':
@@ -72,47 +71,47 @@ plugins:
         schema: "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"
         metadataNamespace: "http://www.openarchives.org/OAI/2.0/oai_dc/"
         template: views/export/oai_dc.tt
-        cql_filter: 'status exact public OR status exact deleted'
+        cql: '(status exact public OR status exact deleted)'
         fix: ["fixes/to_dc.fix"]
       -
         metadataPrefix: mods
         schema: "http://www.loc.gov/standards/mods/v3/mods-3-0.xsd"
         metadataNamespace: "http://www.loc.gov/mods/v3"
         template: views/export/mods.tt
-        cql_filter: 'status exact public'
+        cql: 'status exact public'
         fix: ["fixes/to_mods.fix"]
       -
         metadataPrefix: epicur
         schema: http://www.persistent-identifier.de/xepicur/version1.0/xepicur.xsd
         metadataNamespace: urn:nbn:de:1111-2004033116
         template: views/export/oai_epicur.tt
-        filter: 'status exact public AND fulltext exact 1'
+        cql: 'status exact public AND fulltext exact 1'
         fix: ["add_field('host','https://pub.uni-bielefeld.de')"]
       -
         metadataPrefix: xMetaDissPlus
         schema: http://files.dnb.de/standards/xmetadissplus/xmetadissplus.xsd
         metadataNamespace: http://www.d-nb.de/standards/xmetadissplus
         template: views/export/oai_xmdp.tt
-        cql_filter: 'status exact public AND type=bi*'
+        cql: 'status exact public AND type=bi*'
         fix: ["fixes/to_xmdp.fix"]
       -
         metadataPrefix: oai_datacite
         schema: http://schema.datacite.org/meta/kernel-2.2/metadata.xsd
         metadataNamespace: http://www.datacite.org/schema/namespace
         template: views/export/datacite.tt
-        filter: 'status exact public AND type=researchData'
+        cql: 'status exact public AND type=researchData'
         fix: ["add_field('host','https://pub.uni-bielefeld.de')"]
       -
         metadataPrefix: rdf
         template: views/export/rdf.tt
         fix: ["nothing()"]
-        filter: 'status exact public'
+        cql: 'status exact public'
         schema: http://www.openarchives.org/OAI/2.0/rdf.xsd
         metadataNamespace: http://www.openarchives.org/OAI/2.0/rdf/
     sets:
       - setSpec: openaire_data
         setName: OpenAire_data
-        cql: 'type exact researchData AND ecfunded=1'
+        cql: 'type exact researchData'
       -
         setSpec: bookChapterFtxt
         setName: Book Chapter with fulltext
@@ -588,7 +587,7 @@ plugins:
       -
         setSpec: openaire
         setName: EC funded or open access
-        cql: 'ecfunded=1 OR fulltext exact 1'
+        cql: '(ecfunded=1 OR fulltext exact 1) AND type<>researchData'
       -
         setSpec: journalArticleFtxt
         setName: Journal Article with fulltext

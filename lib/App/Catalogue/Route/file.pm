@@ -197,11 +197,13 @@ Download a document. Access level of the document
 and user rights will be checked before.
 
 =cut
-get '/download/:id/:file_id' => sub {
+get qr{/download/(\d+)/(\d+)} => sub {
+#get '/download/:id/:file_id' => sub {
 # todo: send 404 if file does not exist!!!
+    my ($id, $file_id) = splat;
 	my ($ok, $file_name) = p->can_download(
-				params->{id},
-				params->{file_id},
+				$id,
+				$file_id,
 				session->{user},
 				session->{role},
 				request->address);
@@ -210,7 +212,7 @@ get '/download/:id/:file_id' => sub {
 		return template 'websites/403',{path =>request->path};
 	}
 
-	_send_it(params->{id}, $file_name);
+	_send_it($id, $file_name);
 };
 
 # the route

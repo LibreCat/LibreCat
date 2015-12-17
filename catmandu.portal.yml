@@ -15,6 +15,10 @@ pubbghs:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   style: mla
   lang: en
   limit: 10
@@ -35,6 +39,10 @@ pubbio:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   style: bio1
   lang: en
   limit: 10
@@ -50,11 +58,15 @@ pubbiobcb:
     -
       param: documenttype
       op: '<>'
-      #or: 'biBachelorThesis'
+      or: 'biBachelorThesis'
     -
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   style: bio1
   lang: en
   limit: 10
@@ -75,6 +87,10 @@ pubbioplants:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   style: bio1
   lang: en
   limit: 10
@@ -95,6 +111,10 @@ pubbwl:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 10
   ttyp: pubbwl
@@ -114,6 +134,10 @@ pubbwlde:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: de
   limit: 10
   ttyp: pubbwl
@@ -133,6 +157,10 @@ pubipaed:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: de
   limit: 10
   ttyp: pubipaed
@@ -152,6 +180,10 @@ pubhist:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 10
   ttyp: pubhist
@@ -171,6 +203,10 @@ pubhistde:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: de
   limit: 10
   ttyp: pubhist
@@ -190,6 +226,10 @@ pubhist1:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 10
   ttyp: pubhist1
@@ -209,6 +249,10 @@ pubhist2:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 10
   ttyp: pubhist2
@@ -228,6 +272,10 @@ pubhist3:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 10
   ttyp: pubhist3
@@ -247,6 +295,10 @@ pubhist4:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 10
   ttyp: pubhist4
@@ -266,6 +318,10 @@ pubhist5:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 10
   ttyp: pubhist5
@@ -285,6 +341,10 @@ pubhist6:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 10
   ttyp: pubhist6
@@ -304,6 +364,10 @@ pubhist7:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 10
   ttyp: pubhist7
@@ -323,6 +387,10 @@ pubhist8:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 10
   ttyp: pubhist8
@@ -342,6 +410,10 @@ pubgwiph:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: de
   limit: 10
   ttyp: pubgwiph
@@ -365,6 +437,10 @@ pubhighenergy:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   style: aps
   lang: en
   limit: 10
@@ -385,6 +461,10 @@ pubiffde:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: de
   limit: 10
   ttyp: pubiffde
@@ -400,6 +480,10 @@ pubikg:
       param: language
       op: '='
       or: eng
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 3
   ttyp: pubikg
@@ -411,6 +495,10 @@ pubikgde:
       param: department
       op: '='
       or: 10058
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: de
   limit: 3
   ttyp: pubikg
@@ -446,6 +534,10 @@ pubimwwp:
       param: issn
       op: '='
       or: 0931-6558
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 500
   sort: 'volume.desc'
@@ -466,6 +558,10 @@ pubiwt:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 10
   ttyp: pubiwt
@@ -485,6 +581,10 @@ pubneurobio:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   style: bio1
   lang: en
   limit: 10
@@ -505,6 +605,10 @@ pubphyslat:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   style: aps
   lang: en
   limit: 10
@@ -517,6 +621,10 @@ pubpunktum:
       param: department
       op: '='
       or: 40212328
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: de
   limit: 10
   ttyp: pubpunktum
@@ -536,6 +644,10 @@ pubsport:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: de
   limit: 10
   ttyp: pubsport
@@ -555,6 +667,10 @@ pubsoz:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: de
   limit: 10
   ttyp: pubsoz
@@ -574,6 +690,10 @@ pubvhf:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   style: bio1
   lang: en
   limit: 10
@@ -594,6 +714,10 @@ pubvwl:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 10
   ttyp: pubvwl
@@ -613,6 +737,10 @@ pubwiwi:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: en
   limit: 5
   ttyp: pubwiwi
@@ -632,6 +760,10 @@ pubwiwide:
       param: documenttype
       op: '<>'
       or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
   lang: de
   limit: 5
   ttyp: pubwiwide

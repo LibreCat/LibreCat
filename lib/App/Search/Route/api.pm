@@ -32,14 +32,10 @@ oai_provider '/oai',
     },
     set_specs_for => sub {
         my $pub = $_[0];
-        Catmandu::Fix->new(fixes => [
-                "copy_field(type, doc_type)",
-                "lookup(doc_type, fixes/lookup/dini_types.csv, default: other)",
-                ])->fix($pub);
 
-        my $specs = [$pub->{type}, "doc-type:". $pub->{doc_type}];
+        my $specs = [$pub->{type}, $pub->{dini_type}];
 
-        push @$specs, $pub->{ddc};
+        push @$specs, "ddc:$_" for @{$pub->{ddc}};
 
         if ($pub->{ec_funded} && $pub->{ec_funded} eq '1') {
             if ($pub->{type} eq 'researchData') {

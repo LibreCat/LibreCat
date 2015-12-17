@@ -35,3 +35,6 @@ catmandu.local.yml
 ~$
 local
 cpanfile.snapshot
+public/javascripts/MathJax/*
+public/javascripts/commonmarkjs/*
+public/pub_index.txt

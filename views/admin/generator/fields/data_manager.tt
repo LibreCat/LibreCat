@@ -4,7 +4,7 @@
   </div>
   <div class="col-md-10" id="data_manager">
     [% IF !data_manager OR !data_manager.0 %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="data_manager.0._id" id="dm_idautocomplete_0" />
       
       <div class="form-group col-md-10 col-xs-11">
@@ -19,7 +19,7 @@
     </div>
     [% ELSE %]
     [% FOREACH dept IN data_manager %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="data_manager.[% loop.index %]._id" id="dm_idautocomplete_[% loop.index %]" value="[% dept._id %]" />
       <input type="hidden" name="data_manager.[% loop.index %].name" id="dm_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
       

@@ -105,6 +105,8 @@ ajax '/get_department' => sub {
         $_ =~ tr/äöüß/aous/;
         $_ .= '*';
     } split(' ', lc params->{term});
+    
+    push @$q, "inactive<>1";
 
     my $hits = h->search_department({q => $q, limit => 100});
 

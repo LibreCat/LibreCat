@@ -11,6 +11,7 @@ clean_abstract()
 #language()
 maybe_add_urn()
 person()
+volume_sort()
 
 if exists(department)
   copy_field(department.*._id,department.*.tmp)
@@ -35,6 +36,9 @@ trim(keyword.*)
 
 if all_match('finalSubmit','recPublish')
     set_field('status','public')
+end
+if all_match('finalSubmit','recSubmit')
+    set_field('status','submitted')
 end
 
 remove_field('finalSubmit')

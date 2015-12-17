@@ -5,6 +5,11 @@ use Catmandu -load;
 use Search::Elasticsearch;
 use Catmandu::Importer::JSON;
 use Data::Dumper;
+use Fcntl qw(:flock);
+
+open(SELF, "<", $0) or die "Cannot open $0 - $!";
+
+flock(SELF, LOCK_EX|LOCK_NB) or die "Script is already running";
 
 Catmandu->load(':up');
 

@@ -153,7 +153,7 @@ search:
                 'any': true
                 '=': true
                 'exact': {field: 'department.name.exact'}
-              field: ['department.id', 'department.name']
+              field: ['department._id', 'department.name']
             cooperator:
               op:
                 'any': true
@@ -603,7 +603,7 @@ search:
                 'any': true
                 'all': true
                 '>': true
-              field: ['department._id', 'department.tree']
+              field: ['department._id', 'department.tree._id']
               values: 'see the list of affiliations'
               description: 'will also find any subunits of the given organizationial unit'
             language:
@@ -881,6 +881,11 @@ search:
                 '=': true
                 '<>': true
               field: layer
+            inactive:
+              op:
+                '=': true
+                '<>': true
+              field: inactive
             display:
               op:
                 '=': true
@@ -988,7 +993,7 @@ search:
           cooperator: {type: string, analyzer: tag, include_in_all: true}
           department:
             properties:
-              id: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
               name:
                 type: multi_field
                 fields:
@@ -1275,6 +1280,7 @@ search:
             properties:
               _id: {type: string, analyzer: tag}
           layer: {type: string, analyzer: tag}
+          inactive: {type: byte}
           display:
             type: multi_field
             fields:
