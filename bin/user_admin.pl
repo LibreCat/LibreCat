@@ -51,7 +51,7 @@ sub cmd_list {
         my $type     = $item->{account_type};
         my $is_admin = $item->{super_admin};
 
-        printf "%s %5d %-20.20s %-40.40s %-10.10s %s\n" 
+        printf "%-2.2s %5d %-20.20s %-40.40s %-10.10s %s\n" 
                     , $is_admin ? "*" : " "
                     , $id
                     , $login
