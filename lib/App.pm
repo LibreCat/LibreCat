@@ -19,10 +19,13 @@ use App::Catalogue; # the backend
 use App::Helper;
 use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::Passphrase;
+use Dancer::Plugin::DirectoryView;
 
 # make variables with leading '_' visible in TT,
 # otherwise they are considered private
 $Template::Stash::PRIVATE = 0;
+
+directory_view '/RePEc';
 
 # custom authenticate routine
 sub _authenticate {
