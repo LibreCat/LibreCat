@@ -145,7 +145,7 @@ get qr{/docs/(.*)} => sub {
     my ($path) = splat;
     try {
         template "docs/$path";
-    catch {
+    } catch {
         status 'not_found';
         template 'websites/404', {path => request->{referer}};
     }
