@@ -97,7 +97,7 @@ sub extract_params {
 	$params ||= params;
 	my $p = {};
 	return $p if ref $params ne 'HASH';
-	
+
 	$p->{start} = $params->{start} if is_natural $params->{start};
 	$p->{limit} = $params->{limit} if is_natural $params->{limit};
 	$p->{embed} = $params->{embed} if is_natural $params->{embed};
@@ -105,7 +105,7 @@ sub extract_params {
 	$p->{ttyp} = $params->{ttyp} if $params->{ttyp};
 	$p->{ftyp} = $params->{ftyp} if $params->{ftyp};
 	$p->{enum} = $params->{enum} if $params->{enum};
-	
+
 	if($p->{ftyp} and $p->{ftyp} =~ /ajx|js|pln/ and !$p->{limit}){
 		$p->{limit} = $self->config->{maximum_page_size};
 	}
@@ -440,6 +440,7 @@ sub delete_record {
 	if ($bag eq 'publication') {
 		my $rec = $self->publication->get($id);
 		$del->{date_created} = $rec->{date_created};
+		$del->{oai_deleted} = 1 if ($rec->{oai_deleted} or $rec->{status} eq 'public');
 		require App::Catalogue::Controller::File;
 		require App::Catalogue::Controller::Material;
 		App::Catalogue::Controller::Material::update_related_material($del);

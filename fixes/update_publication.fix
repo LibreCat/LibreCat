@@ -36,9 +36,14 @@ trim(keyword.*)
 
 if all_match('finalSubmit','recPublish')
     set_field('status','public')
+    remove_field(oai_deleted)
 end
 if all_match('finalSubmit','recSubmit')
     set_field('status','submitted')
+end
+
+if all_match(status, returned)
+  add_field(oai_deleted, 1)
 end
 
 remove_field('finalSubmit')
