@@ -46,7 +46,7 @@ $('.change_tab').click(function(e){
       $(this).find('input[type!="hidden"]').removeClass("has-error");
       $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').removeClass("has-error");
     }
-    
+
     if($(this).find('input[type!="hidden"]').eq(0).val() && $(this).find('input[type!="hidden"]').eq(1).val()){
       oneauthor=1;
     }
@@ -197,7 +197,7 @@ $('.change_tab').click(function(e){
     $('#file_upload, #li_file_upload').removeClass('active');
     $('#supplementary_fields, #li_supplementary_fields').removeClass('active');
     $('#related_material, #li_related_material').removeClass('active');
-    
+
     if(!check){
       $('#basic_fields, #li_basic_fields').addClass('active');
     }
@@ -224,10 +224,10 @@ $('.change_tab').click(function(e){
         $('#file_upload, #li_file_upload').removeClass('active');
         $('#supplementary_fields, #li_supplementary_fields').removeClass('active');
         $('#related_material, #li_related_material').removeClass('active');
-        
+
         $('#' + next_tab).addClass('active');
         $('#li_' + next_tab).addClass('active');
-        
+
         e.preventDefault();
       }
     }
@@ -267,7 +267,7 @@ $(document).on('click', '.author', function(){
   container.find('img').each(function(){
     this.title = "";
     this.src = "/images/biNotAuthorized.png";
-  });  
+  });
 });
 $(document).on('click', '.connect', function(){
   var index = $(this).parent().parent().parent().index();
@@ -284,7 +284,7 @@ function selectAuthedtrans(element){
 
 
 $('button.cancel-button').click(function() {
-  window.location.href = '/librecat';
+  window.location.href = '[% return_url || "/librecat" %]';
 });
 
 
@@ -359,7 +359,7 @@ $(function() {
   [% ELSE %]
     puburl = '/librecat/search?fmt=autocomplete';
   [% END %]
-  
+
   $( "#connect_autocomplete" ).autocomplete({
     source: puburl,
     minLength: 2,
@@ -388,25 +388,25 @@ $(function() {
     },
   });
 });
-      
+
 $('#add_relurl').click(function(){
   var url = $('#relurl_url').val();
   var title = $('#relurl_title').val();
   var description = $('#relurl_description').val();
-  
+
   if(!url){
     $('#relurl_url').parent().addClass('has-error');
   }
   if(!title){
     $('#relurl_title').parent().addClass('has-error');
   }
-  
+
   if(url && title){
     $('#relurl_title').parent().removeClass('has-error');
     $('#relurl_url').parent().removeClass('has-error');
-    
+
     var index = $('#url div.innerrow').length;
-    
+
     $('#url').append('<div class="col-md-10 col-xs-12 col-md-offset-2"><div class="row innerrow"><div class="col-xs-3"><select class="relurl form-control" name="related_material.link.' + index + '.relation">[% FOREACH key IN h.config.lists.relations_link %]<option value="[% key.relation %]">[% key.link_text %]</option>[% END %]</select></div><div class="col-md-7 col-xs-9"><div class="form-group col-xs-9"><span class="glyphicon glyphicon-link"></span> <a href="' + url + '" target="_blank">' + title + '</a><br /><span class="text-muted">' + description + '</span><input type="hidden" name="related_material.link.' + index + '.url" value="' + $('#relurl_url').val() + '" /><input type="hidden" name="related_material.link.' + index + '.title" value="' + $('#relurl_title').val() + '" /><input type="hidden" name="related_material.link.' + index + '.description" value="' + $('#relurl_description').val() + '" /></div><div class="col-xs-1"><button role="button" class="btn btn-default"><span class="glyphicon glyphicon-minus connect"></span></button></div></div></div>');
     $('#relurl_url').val('');
     $('#relurl_title').val('');

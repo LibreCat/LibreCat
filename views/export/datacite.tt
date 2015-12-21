@@ -6,7 +6,7 @@
 </creators>
 <titles>
 	<title>[% title | xml_strict %]</title>
-[%- IF alternative_title %]<title titleType="Subtitle">[% alternative_title | xml_strict %]</title>[% END -%]
+[%- IF alternative_title.0 %]<title titleType="Subtitle">[% alternative_title.0 | xml_strict %]</title>[% END -%]
 </titles>
 <publisher>[% publisher | xml_strict %]</publisher>
 <publicationYear>[% year %]</publicationYear>

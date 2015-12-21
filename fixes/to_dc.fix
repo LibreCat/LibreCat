@@ -2,9 +2,9 @@
 
 add_field(tmp_id.$append, 'https://pub.uni-bielefeld.de')
 if any_match(type, researchData)
-  add_field(tmp_id.$append, 'data')
+  add_field(tmp_id.$append, data)
 else
-  add_field(tmp_id.$append, 'publication')
+  add_field(tmp_id.$append, publication)
 end
 copy_field(_id, tmp_id.$append)
 join_field(tmp_id, '/')
@@ -18,18 +18,18 @@ move_field(driver_type, 'dc.type.$append')
 copy_field(type, dini_type)
 lookup(dini_type, fixes/lookup/dini_types.csv, default: other)
 prepend(dini_type,'doc-type:')
-copy_field(dini_type, 'dc.type.$append')
-set_field('dc.type.$append', text)
+copy_field(dini_type, dc.type.$append)
+add_field(dc.type.$append, text)
 
-move_field(title,'dc.title.$append')
-move_field(alternative_title.0,'dc.title.$append')
+move_field(title,dc.title.$append)
+move_field(alternative_title.0,dc.title.$append)
 
-move_field(author.*.full_name,'dc.creator.$append')
-move_field(editor.*.full_name,'dc.creator.$append')
-move_field(corporate_editor,'dc.creator.$append')
+move_field(author.*.full_name,dc.creator.$append)
+move_field(editor.*.full_name,dc.creator.$append)
+move_field(corporate_editor,dc.creator.$append)
 
-move_field(year, dc.date)
-move_field(publisher, dc.publisher)
+move_field(year, dc.date.$append)
+move_field(publisher, dc.publisher.$append)
 
 move_field(keyword.*, dc.subject.$append)
 prepend(ddc.*, 'ddc:')
@@ -40,57 +40,62 @@ move_field(citation.ama, dc.source.$append)
 move_field(abstract.*.text, dc.description.$append)
 
 move_field(language.*.iso, dc.language.$append)
-lookup('dc.language.*', fixes/lookup/oai_lang.csv)
+lookup(dc.language.*, fixes/lookup/oai_lang.csv)
 
-prepend(doi,'doi/')
-move_field(doi,'dc.relation.$append')
-prepend(publication_identifier.issn.*,'issn/')
-move_field(publication_identifier.issn.*,'dc.relation.$append')
-prepend(publication_identifier.eissn.*,'issn/')
-move_field(publication_identifier.eissn.*,'dc.relation.$append')
-prepend(publication_identifier.isbn.*,'isbn/')
-move_field(publication_identifier.isbn.*,'dc.relation.$append')
-prepend(external_id.urn,'urn/')
-move_field(external_id.urn,'dc.relation.$append')
-prepend(external_id.isi,'wos/')
-move_field(external_id.isi,'dc.relation.$append')
-prepend(external_id.arxiv,'arxiv/')
-move_field(external_id.arxiv,'dc.relation.$append')
-prepend(external_id.pmid,'pmid/')
-move_field(external_id.pmid,'dc.relation.$append')
+prepend(doi, 'doi/')
+move_field(doi, dc.relation.$append)
+prepend(publication_identifier.issn.*, 'issn/')
+move_field(publication_identifier.issn.*, dc.relation.$append)
+prepend(publication_identifier.eissn.*, 'issn/')
+move_field(publication_identifier.eissn.*, dc.relation.$append)
+prepend(publication_identifier.isbn.*, 'isbn/')
+move_field(publication_identifier.isbn.*, dc.relation.$append)
+prepend(external_id.urn, 'urn/')
+move_field(external_id.urn, dc.relation.$append)
+prepend(external_id.isi, 'wos/')
+move_field(external_id.isi, dc.relation.$append)
+prepend(external_id.arxiv, 'arxiv/')
+move_field(external_id.arxiv, dc.relation.$append)
+prepend(external_id.pmid, 'pmid/')
+move_field(external_id.pmid, dc.relation.$append)
 
-prepend('dc.relation.*','info:eu-repo/semantics/altIdentifier/')
+prepend(dc.relation.*, 'info:eu-repo/semantics/altIdentifier/')
 
-prepend(external_id.fp6,'info:eu-repo/grantAgreement/EC/')
-move_field(external_id.fp6,'dc.relation.$append')
+prepend(external_id.fp6, 'info:eu-repo/grantAgreement/EC/')
+move_field(external_id.fp6, dc.relation.$append)
 
-prepend(external_id.fp7,'info:eu-repo/grantAgreement/EC/')
-move_field(external_id.fp7,'dc.relation.$append')
+prepend(external_id.fp7, 'info:eu-repo/grantAgreement/EC/')
+move_field(external_id.fp7, dc.relation.$append)
 #H2020 missing
 
-lookup(cc_license, fixes/lookup/licenses.csv)
-move_field(cc_license,'dc.rights.$append')
-
-# file stuff
-unless exists(file)
-  add_field('dc.rights.$append','info:eu-repo/semantics/closedAccess')
+if exists(cc_license)
+  lookup(cc_license, fixes/lookup/licenses.csv)
+  move_field(cc_license, dc.rights.$append)
 end
 
-do list(path => file)
+# files
+unless exists(file)
+  add_field(dc.rights.$append, 'info:eu-repo/semantics/closedAccess')
+end
+
+do list(path: file,var:loop)
   do identity()
     unless all_match(relation, hidden)
-      move_field(content_type, 'dc.format.$append')
-      add_field(tmp,'https://pub.uni-bielefeld.de')
-      add_field('tmp.$append',download)
-      copy_field(_id,'tmp.$append')
-      copy_field(file_id,'tmp.$append')
-      join_field(tmp,'/')
-      move_field(tmp,'dc.identifier.$append')
-      if any_match(access_level,open_access)
-        add_field('dc.rights.$append','info:eu-repo/semantics/openAccess')
-      else
-        add_field('dc.rights.$append','info:eu-repo/semantics/closedAccess')
-      end
+      add_field(tmpfile.$append, 'https://pub.uni-bielefeld.de')
+      add_field(tmpfile.$append, download)
+      copy_field(_id, tmpfile.$append)
+      copy_field(loop.file_id, tmpfile.$append)
+      join_field(tmpfile,'/')
+      move_field(tmpfile, dc.identifier.$append)
     end
   end
+end
+
+# set to OA if at least one file is OA
+if any_match(file.*.access_level, open_access)
+  add_field(dc.rights.$append, 'info:eu-repo/semantics/openAccess')
+elsif any_match(file.*.embargo, '^\d{4}')
+  add_field(dc.rights.$append, 'info:eu-repo/semantics/embargoedAccess')
+else
+  add_field(dc.rights.$append, 'info:eu-repo/semantics/closedAccess')
 end

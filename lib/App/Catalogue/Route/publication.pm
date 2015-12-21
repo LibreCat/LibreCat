@@ -15,6 +15,7 @@ use Dancer qw(:syntax);
 use Encode qw(encode);
 use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::Email;
+use LibreCat::Worker::DataCite;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -108,6 +109,7 @@ Checks if the user has permission the see/edit this record.
         	$edit_mode = "expert";
         }
 
+        $rec->{return_url} = request->{referer} if request->{referer};
         if ($rec) {
         	$rec->{edit_mode} = $edit_mode if $edit_mode;
             template $templatepath . "/$template", $rec;
@@ -134,7 +136,7 @@ Checks if the user has the rights to update this record.
         delete $p->{new_record};
 
         $p = h->nested_params($p);
-        
+
         my $old_status = $p->{status};
 
         my $result = h->update_record('publication', $p);
@@ -155,20 +157,33 @@ Checks if the user has the rights to update this record.
                 error "Could not send email: $_";
             }
         }
-        
-        if ($result->{type} eq "researchData" and $result->{status} eq "submitted") {
-        	$result->{host} = h->host;
-            my $mail_body = export_to_string($result, 'Template', template => 'views/email/rd_submitted.tt');
 
-            try {
-                email {
-                    to => h->config->{research_data}->{to},
-                    subject => h->config->{research_data}->{subject},
-                    body => $mail_body,
-                    reply_to => h->config->{research_data}->{to},
-                };
-            } catch {
-                error "Could not send email: $_";
+        if ($result->{type} eq "researchData") {
+            if ($result->{status} eq "submitted") {
+            	$result->{host} = h->host;
+                my $mail_body = export_to_string($result, 'Template', template => 'views/email/rd_submitted.tt');
+
+                try {
+                    email {
+                        to => h->config->{research_data}->{to},
+                        subject => h->config->{research_data}->{subject},
+                        body => $mail_body,
+                        reply_to => h->config->{research_data}->{to},
+                    };
+                } catch {
+                    error "Could not send email: $_";
+                }
+            }
+            elsif ($result->{status} eq 'public' and $result->{doi} =~ /unibi\/\d+$/) {
+                try {
+                    my $registry = LibreCat::Worker::DataCite->new(user => h->config->{doi}->{user}, password => h->config->{doi}->{passwd});
+                    $result->{host} = h->host;
+                    my $datacite_xml = export_to_string($result, 'Template', template => 'views/export/datacite.tt');
+                    #$registry->do_work($result->{doi}, h->host ."/data/$result->{_id}", $datacite_xml);
+                    $registry->metadata($result->{doi}, $datacite_xml);
+                } catch {
+                    error "Could not register DOI: $_ -- $result->{_id}";
+                }
             }
         }
 
@@ -300,7 +315,7 @@ Publishes private records, returns to the list.
 
         $record->{status} = "public" if $field_check;
         h->update_record('publication', $record);
-        
+
         if ($record->{type} =~ /^bi/ and $record->{status} eq "public" and $old_status ne "public") {
         	$record->{host} = h->host;
             my $mail_body = export_to_string($record, 'Template', template => 'views/email/thesis_published.tt');
