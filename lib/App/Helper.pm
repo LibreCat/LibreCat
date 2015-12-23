@@ -449,9 +449,9 @@ sub delete_record {
 	}
 
 	my $bagname = "backup_$bag";
-	my $saved = $self->$bag->add($del);
-	$self->publication->add($del);
-	$self->publication->commit;
+	my $saved = $self->$bagname->add($del);
+	$self->$bag->add($saved);
+	$self->$bag->commit;
 
 	sleep 1;
 
