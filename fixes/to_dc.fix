@@ -94,8 +94,10 @@ end
 # set to OA if at least one file is OA
 if any_match(file.*.access_level, open_access)
   add_field(dc.rights.$append, 'info:eu-repo/semantics/openAccess')
-elsif any_match(file.*.embargo, '^\d{4}')
-  add_field(dc.rights.$append, 'info:eu-repo/semantics/embargoedAccess')
 else
-  add_field(dc.rights.$append, 'info:eu-repo/semantics/closedAccess')
+  if any_match(file.*.embargo, '^\d{4}')
+    add_field(dc.rights.$append, 'info:eu-repo/semantics/embargoedAccess')
+  else
+    add_field(dc.rights.$append, 'info:eu-repo/semantics/closedAccess')
+  end
 end
