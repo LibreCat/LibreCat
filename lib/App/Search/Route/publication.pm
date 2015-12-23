@@ -20,12 +20,14 @@ get qr{/(data|publication)/(\d{1,})/*(\w{1,})*/*} => sub {
 	my $p = h->extract_params();
 	my $altid;
 	push @{$p->{q}}, ("status=public","id=$id");
+	push @{$p->{q}}, "type=researchData" if $bag eq 'data';
 
 	my $hits = h->search_publication($p);
 
 	if(!$hits->{total}){
 		$p->{q} = [];
 		push @{$p->{q}}, ("status=public", "altid=$id");
+		push @{$p->{q}}, "type=researchData" if $bag eq 'data';
 		$hits = h->search_publication($p);
 		$altid = 1 if $hits->{total};
 	}
