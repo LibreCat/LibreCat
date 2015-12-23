@@ -30,6 +30,9 @@
     <div class="row innerrow">
       <div class="col-xs-3">
         <select class="relmat form-control" name="related_material.record.[% index %].relation">
+        [% IF rel.relation == "cites" %]
+          <option value="cites" selected="selected">Cites</option>
+        [% END %]
         [% FOREACH key IN h.config.lists.relations_record %]
           <option value="[% key.relation %]"[% IF key.relation == rel.relation %] selected="selected"[% END %]>[% key.link_text %]</option>
         [% END %]
