@@ -15,3 +15,5 @@ join_field(old_full_name, ', ')
 if exists(orcid)
     add_orcid_to_pub()
 end
+
+compact_array(department)
