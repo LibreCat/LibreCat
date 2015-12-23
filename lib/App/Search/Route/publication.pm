@@ -40,7 +40,7 @@ get qr{/(data|publication)/(\d{1,})/*(\w{1,})*/*} => sub {
 	if ($p->{fmt} ne 'html') {
 		h->export_publication($hits, $p->{fmt});
 	} else {
-		redirect "$bag/$hits->{hits}->[0]->{_id}", 301 if $altid;
+		return redirect "$bag/$hits->{hits}->[0]->{_id}", 301 if $altid;
 		$hits->{hits}->[0]->{bag} = $bag;
 		$hits->{total} ? status 200 : status 404;
 		template "frontdoor/record", $hits->{hits}->[0];
