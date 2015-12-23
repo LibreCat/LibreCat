@@ -105,7 +105,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.abstract.label %]</div>
     <div class="col-lg-10 col-md-9 cmark" itemprop="about">
     [% FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><hr>[% END %]
-[% ab.text | html %]
+[% ab.text %]
     [% END %]
     </div>
   </div>
@@ -210,11 +210,11 @@
 
 [% IF ubi_funded OR external_id.scoap3 %]
   <div class="row">
-    <div class="col-lg-2 col-md-3 text-muted">[% lf.frontdoor.financial_disclosure %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.frontdoor.tabs.details.financial_disclosure %]</div>
     [% IF ubi_funded %]
-    <div class="col-lg-10 col-md-9">[% lf.frontdoor.ubi_funded %]</div>
+    <div class="col-lg-10 col-md-9">[% lf.frontdoor.tabs.details.ubi_funded %]</div>
     [% ELSIF external_id.scoap3 %]
-    <div class="col-lg-10 col-md-9">[% lf.frontdoor.scoap3 %]</div>
+    <div class="col-lg-10 col-md-9">[% lf.frontdoor.tabs.details.scoap3 %]</div>
     [% END %]
   </div>
 [% END %]
@@ -222,7 +222,7 @@
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">PUB-ID</div>
     <div class="col-lg-10 col-md-9">
-    <a itemprop="url" href="[% request.uri_base %][% request.uri %]" title="[% lf.frontdoor.id_title %]">[% _id %]</a>
+    <a itemprop="url" href="[% request.uri %]" title="[% lf.frontdoor.id_title %]">[% _id %]</a>
     </div>
   </div>
 

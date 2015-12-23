@@ -403,6 +403,11 @@ search:
               values: '0 or 1'
               description: '1 if not a UniBi publication'
             nonlu: *extern
+            oai_deleted:
+              op:
+                '=': true
+                'exact': true
+              field: 'oai_deleted'
             fundedbyubi:
               op:
                 '=': true

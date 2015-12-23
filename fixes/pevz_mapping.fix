@@ -4,14 +4,22 @@ move_field("pevz:person","tmp")
 move_field("tmp.id","_id");
 move_field("tmp.pevz:nachname", "last_name");
 move_field("tmp.pevz:vorname","first_name");
-move_field("tmp.pevz:bildskalierturl","photo"); #full_name?
+copy_field("last_name","full_name.$append");
+copy_field("first_name","full_name.$append");
+join_field("full_name",", ");
+move_field("tmp.pevz:bildskalierturl","photo");
 move_field("tmp.pevz:titel","idm_title");
 if exists ("tmp.forschend")
 	add_field("researcher","1");
 end
 remove_field("tmp");
 move_field("pevz:kontakt","tmp2")
-move_field("tmp2.0.pevz:email_verschleiert","email_encoded");
+if exists ("tmp2.0.pevz:email_verschleiert")
+  move_field("tmp2.0.pevz:email_verschleiert","email_encoded");
+end
+if exists ("tmp2.pevz:email_verschleiert") # not an array
+  move_field("tmp2.pevz:email_verschleiert","email_encoded");
+end
 remove_field("tmp2")
 remove_field("personid")
 remove_field("xmlns:pevz")

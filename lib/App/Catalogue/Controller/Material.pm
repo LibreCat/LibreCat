@@ -9,7 +9,7 @@ our @EXPORT = qw/update_related_material/;
 
 my $relations_link = h->config->{lists}->{relations_link};
 my $relations_record = h->config->{lists}->{relations_record};
-my $rd_relation = h->config->{lists}->{rd_relation};
+my $rd_relation = h->config->{lists}->{relations_rd};
 
 sub update_related_material {
     my $pub = shift;
@@ -25,6 +25,8 @@ sub update_related_material {
     	# set relation in other record
         if ( $rm->{id} ) {
             my $opposite = h->publication->get($rm->{id});
+            
+            push (@$relations_record, @$rd_relation);
 
             my ($ref) = grep { $_->{relation} eq $rm->{relation} } @$relations_record;
             my $op_relation = $ref->{opposite};

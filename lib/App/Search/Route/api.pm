@@ -28,7 +28,7 @@ Endpoint of the OAI interface.
 =cut
 oai_provider '/oai',
     deleted => sub {
-        defined $_[0]->{date_deleted};
+        defined $_[0]->{oai_deleted};
     },
     set_specs_for => sub {
         my $pub = $_[0];

@@ -42,7 +42,7 @@ get qr{/(data|publication)/(\d{1,})/*(\w{1,})*/*} => sub {
 	if ($p->{fmt} ne 'html') {
 		h->export_publication($hits, $p->{fmt});
 	} else {
-		redirect "$bag/$hits->{hits}->[0]->{_id}", 301 if $altid;
+		return redirect "$bag/$hits->{hits}->[0]->{_id}", 301 if $altid;
 		$hits->{hits}->[0]->{bag} = $bag;
 		$hits->{total} ? status 200 : status 404;
 		template "frontdoor/record", $hits->{hits}->[0];
@@ -123,7 +123,7 @@ get qr{/embed/*} => sub {
 	$p->{facets}->{author}->{terms}->{size} = 100;
 	$p->{facets}->{editor}->{terms}->{size} = 100;
 
-	my $sort_style = h->get_sort_style( params->{sort} || $pq->{default_query}->{'sort'} || '', params->{style} || '');
+	my $sort_style = h->get_sort_style( params->{sort} || $pq->{default_query}->{'sort'} || '', params->{style} || $pq->{default_query}->{style} || '');
     $p->{sort} = $sort_style->{sort};
     $p->{start} = params->{start};
 	my $hits = h->search_publication($p);

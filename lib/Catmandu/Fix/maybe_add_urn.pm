@@ -19,7 +19,7 @@ sub fix {
             }
         }
 
-        if ($oa) {
+        if ($oa and $pub->{type} ne 'researchData') {
             $pub->{urn} = h->generate_urn(h->config->{urn_prefix},$pub->{_id});
         }
     }

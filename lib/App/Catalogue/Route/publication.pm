@@ -179,8 +179,8 @@ Checks if the user has the rights to update this record.
                     my $registry = LibreCat::Worker::DataCite->new(user => h->config->{doi}->{user}, password => h->config->{doi}->{passwd});
                     $result->{host} = h->host;
                     my $datacite_xml = export_to_string($result, 'Template', template => 'views/export/datacite.tt');
-                    #$registry->do_work($result->{doi}, h->host ."/data/$result->{_id}", $datacite_xml);
-                    $registry->metadata($result->{doi}, $datacite_xml);
+                    $registry->do_work($result->{doi}, h->host ."/data/$result->{_id}", $datacite_xml);
+                    #$registry->metadata($result->{doi}, $datacite_xml);
                 } catch {
                     error "Could not register DOI: $_ -- $result->{_id}";
                 }

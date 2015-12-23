@@ -8,7 +8,7 @@
 
 <!-- BEGIN navbar.tt -->
   <header>
-    <nav class="navbar navbar-default navbar-fixed-top [% IF backend OR (session.user AND request.path.match("howto")) %] %] backend[% ELSE %] frontend[% END %]" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top[% IF backend OR (session.user AND request.path.match("howto")) %] backend[% ELSE %] frontend[% END %]" role="navigation">
     [% IF backend OR (session.user AND request.path.match("howto")) %]
       <div class="navbar-header">
 	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -71,7 +71,8 @@
 	      </a></span>
 	  </div>
 	  <div class="col-xs-1 col-sm-2 col-md-offset-1">
-	    <span class="select-language pull-right"><a href="/set_language?[% lang = session.lang ? session.lang : h.config.default_lang %]"><span class="glyphicon glyphicon-flag hidden-xs"></span>[% lf.header.lang %]</a></span>
+	    [% thisLang = session.lang ? session.lang : h.config.default_lang %]
+	    <span class="select-language pull-right"><a href="/set_language?[% thisLang == "en" ? "lang=de" : "lang=en" %]"><span class="glyphicon glyphicon-flag hidden-xs"></span>[% lf.header.lang %]</a></span>
 	  </div>
 	</div>
 	<div class="row innerrow">
