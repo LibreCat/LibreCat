@@ -1110,7 +1110,7 @@ forms:
       research_group: *research_group
       year_extern: *year_extern
       publication_date_number:
-        label: "Veröffentlichungsdatum/-nummer"
+        label: "Veröffentlichungsdatum/-nr."
         label_pd: "Vö.datum"
         placeholder_pd: "YYYY-MM-DD"
         label_pn: "Pat.nr."
