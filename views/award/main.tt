@@ -18,7 +18,7 @@
 
     <h1><img src="/images/preise_headline_[% lang ? "en" : "de" %].gif" /></h1>
     <div class="span6" style="text-align:right;margin-top:-50px;margin-left:-25px;">
-    <img src="/images/beta_unibi_right.png" width="50">
+    <img src="/images/beta_white_right.png" width="50">
     </div>
     <!-- the tabs -->
     <ul class="nav nav-tabs" id="myTab">
@@ -192,7 +192,7 @@
     <br />
     <br />
     <br />
-	<a href="http://www.ub.uni-bielefeld.de/"><img src="http://www.ub.uni-bielefeld.de/graphics/ubneu/logos/logoverbund_ub.png" width="210px" /></a>
+	<a href="http://www.ub.uni-bielefeld.de/"><img src="//www.ub.uni-bielefeld.de/graphics/ubneu/logos/logoverbund_ub.png" width="210px" /></a>
 	<br />
 	<br />
 	<br />
