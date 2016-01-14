@@ -1,14 +1,21 @@
 
 # publication type missing
 
-move_field(AU, 'author')
-#move_field(AF.*, author.*.full_name)
-replace_all(author.*,"^","full_name:")
-split_field(author.*,":")
-hash(author.*)
+# set default status and creator
+add_field(status, private)
+add_field(creator.login, 'PUB_WoS_Import')
+
+if exists(AF)
+  move_field(AF, _r.author)
+else
+  move_field(AU, _r.author)
+end
+replace_all(_r.author.*,"^","full_name:")
+split_field(_r.author.*,":")
+hash(_r.author.*)
 
 # authors
-do list (path => author)
+do list (_r.path => author)
   do identity ()
     copy_field('full_name','last_name')
     replace_all('last_name','^(.*),.*','$1')
@@ -17,66 +24,68 @@ do list (path => author)
   end
 end
 
-move_field(TI,title)
-join_field(title,' ')
+move_field(TI,_r.title)
+join_field(_r.title,' ')
+capitalize(_r.title)
 
 #abstract
 if exists (AB)
-  move_field('AB','abstract.0.text')
-  add_field('abstract.0.lang','eng')
+  move_field('AB','_r.abstract.0.text')
+  add_field('_r.abstract.0.lang','eng')
 end
 
-move_field('DE','keyword')
+move_field('DE','_r.keyword')
+split_field(_r.keyword, ';')
+trim(_r.keyword.*)
 
-move_field('DI','doi')
+move_field('DI','_r.doi')
 
 # use maybe lookup via issn in crossref journal list
-move_field('SO','publication')
+move_field('SO','_r.publication')
+capitalize(_r.publication)
 
-#move_field(LA,language.iso)
-move_field(SN,'publication_identifier.issn.0')
-move_field(EI,'publication_identifier.eissn.0')
+move_field(SN,'_r.publication_identifier.issn.0')
+move_field(EI,'_r.publication_identifier.eissn.0')
 replace_all(UT,'^WOS:','')
-move_field(UT,external_id.isi)
-move_field(PM,external_id.pmid)
-move_field(VL,volume)
-move_field(IS,issue)
-move_field(SE,series_title)
-move_field(PY,year)
+move_field(UT,_r.external_id.isi)
+move_field(PM,_r.external_id.pmid)
+move_field(VL,_r.volume)
+move_field(IS,_r.issue)
+move_field(SE,_r.series_title)
+move_field(PY,_r.year)
 
 if exists(PG)
-  move_field(PG, page)
+  move_field(PG, _r.page)
 end
 if exists(BP)
-  move_field(BP,'page.$append')
-  move_field(EP,'page.$append')
+  move_field(BP,'_r.page.$append')
+  move_field(EP,'_r.page.$append')
   join_field(page, '-')
 end
 
-move_field(AR,article_number)
+move_field(AR,_r.article_number)
 
 split_field(BN,'; ')
-move_field(BN,'publication_identifier.isbn.$append')
-move_field(PU,publisher)
-move_field(PI,place)
+move_field(BN.*,'_r.publication_identifier.isbn.$append')
+move_field(PU,_r.publisher)
+move_field(PI,_r.place)
 
 # conference
-move_field(CT,conference.name)
-move_field(CY,conference.date)
-move_field(CL,conference.location)
-join_field(conference.name, ' ')
+move_field(CT,_r.conference.name)
+move_field(CY,_r.conference.date)
+move_field(CL,_r.conference.location)
+join_field(_r.conference.name, ' ')
 
-# cleaning up
-remove_field(PA)
-remove_field(RP)
-remove_field(EM)
-remove_field(PD)
-remove_field(GA)
-remove_field(CR)
-remove_field(WC)
-remove_field(SC)
-remove_field(NR)
-remove_field(SP)
-remove_field(GP)
-remove_field(FX)
-remove_field(SU)
+# message
+timestamp(timestamp)
+datetime_format(timestamp, source_pattern: '%s', destination_pattern:    '%Y-%m-%d',)
+move_field(timestamp, _r.message.$append)
+prepend(_r.message.0, 'WoS Import ')
+move_field(LA, _r.message.$append)
+move_field(FU, _r.message.$append)
+prepend(_r.message.$last, 'Funder: ')
+join_field(_r.message, ' / ')
+
+retain_field(_r)
+move_field(_r, .)
+vacuum()
