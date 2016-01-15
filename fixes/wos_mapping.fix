@@ -1,8 +1,6 @@
-
 # publication type
 # set default type
 add_field(_r.type,journalArticle)
-
 
 # set default status and creator
 add_field(_r.status, private)

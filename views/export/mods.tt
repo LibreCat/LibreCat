@@ -188,7 +188,7 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 [%- FOREACH i IN publication_identifier.issn %]
   <identifier type="issn">[% i | xml_strict %]</identifier>
 [%- END %]
-[%- FOREACH i IN publication_identifier.eIssn %]
+[%- FOREACH i IN publication_identifier.eissn %]
   <identifier type="eIssn">[% i | xml_strict %]</identifier>
 [%- END %]
 [%- FOREACH j IN publication_identifier.isbn %]
