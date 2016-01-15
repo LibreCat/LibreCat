@@ -13,7 +13,9 @@ store:
       init_data:
         # stored password authentication
         - login: einstein
-          password: einstein
+          # password is same as login
+          # crypt a password with 'bmkpasswd [password]' in the shell
+          password: '$2a$08$p1zhJInkNqy9nvMFsEPde./hU4ERNQuX2UQUjZA/ddrp1uUXikn/6'
           _id: 1234
           super_admin: 1
 	# LDAP authentication
