@@ -598,8 +598,8 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-                'exact': {field: ['supervisor.fullName.exact', 'supervisor.personNumber']}
-              field: ['supervisor.fullName.exact', 'supervisor.personNumber']
+                'exact': {field: ['supervisor.full_name.exact', 'supervisor.id']}
+              field: ['supervisor.full_name.exact', 'supervisor.id']
             department:
               op:
                 '=': true
@@ -1092,6 +1092,7 @@ search:
           first_author: {type: string, analyzer: tag}
           editor: *personField
           translator: *personField
+          supervisor: *personField
           creator:
             properties:
               id: {type: string, analyzer: tag}
