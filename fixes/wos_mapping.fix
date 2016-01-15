@@ -1,9 +1,12 @@
 
-# publication type missing
+# publication type
+# set default type
+add_field(_r.type,journalArticle)
+
 
 # set default status and creator
-add_field(status, private)
-add_field(creator.login, 'PUB_WoS_Import')
+add_field(_r.status, private)
+add_field(_r.creator.login, 'PUB_WoS_Import')
 
 if exists(AF)
   move_field(AF, _r.author)
@@ -15,7 +18,7 @@ split_field(_r.author.*,":")
 hash(_r.author.*)
 
 # authors
-do list (_r.path => author)
+do list (path => _r.author)
   do identity ()
     copy_field('full_name','last_name')
     replace_all('last_name','^(.*),.*','$1')
@@ -35,7 +38,8 @@ if exists (AB)
 end
 
 move_field('DE','_r.keyword')
-split_field(_r.keyword, ';')
+split_field(_r.keyword.*, ';')
+flatten(_r.keyword)
 trim(_r.keyword.*)
 
 move_field('DI','_r.doi')
@@ -68,7 +72,9 @@ move_field(AR,_r.article_number)
 split_field(BN,'; ')
 move_field(BN.*,'_r.publication_identifier.isbn.$append')
 move_field(PU,_r.publisher)
+capitalize(_r.publisher)
 move_field(PI,_r.place)
+capitalize(_r.place)
 
 # conference
 move_field(CT,_r.conference.name)
@@ -82,8 +88,10 @@ datetime_format(timestamp, source_pattern: '%s', destination_pattern:    '%Y-%m-
 move_field(timestamp, _r.message.$append)
 prepend(_r.message.0, 'WoS Import ')
 move_field(LA, _r.message.$append)
-move_field(FU, _r.message.$append)
-prepend(_r.message.$last, 'Funder: ')
+if exists(FU)
+  move_field(FU, _r.message.$append)
+  prepend(_r.message.$last, 'Funder: ')
+end
 join_field(_r.message, ' / ')
 
 retain_field(_r)
