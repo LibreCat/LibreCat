@@ -222,7 +222,7 @@ function link_person(element){
 			else if(objJSON.length > 1 || (objJSON.length == 1 && objJSON[0].old_full_name && objJSON[0].full_name)){
 				var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
 				container_title.html('');
-				var title = '<span class="glyphicon glyphicon-indent-left text-default"></span> Link to publication list: Choose name';
+				var title = '<span class="glyphicon glyphicon-indent-left text-default"></span> UniBi author: Choose name';
 				var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
 				container.html('');
 				var table = '<p>Several exakt matches for <em>' + firstname + ' ' + lastname + '</em> were found in the staff directory (PEVZ). Click on the number (Person ID) to view the person\'s profile in the PEVZ. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
@@ -323,7 +323,7 @@ function link_person(element){
 			// No results found
 			else {
 				var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
-				var title = '<span class="glyphicon glyphicon-remove-circle text-danger"></span> Link to publication list failed';
+				var title = '<span class="glyphicon glyphicon-remove-circle text-danger"></span> No UniBi author found';
 				var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
 				container.html('');
 				container_title.html('');
