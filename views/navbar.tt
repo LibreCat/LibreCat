@@ -99,7 +99,7 @@
 
   </header>
 
-  <main[% UNLESS backend OR (session.user AND request.path.match("howto")) %] class="front"[% END %]>
+  <main[% UNLESS backend OR (session.user AND request.path.match("howto")) %] class="front"[% END %][% IF backend %] class="backend"[% END %]>
 
   <div class="container[% IF title OR name %] title[%END %][% IF _id %] publication[% END %]">
 
