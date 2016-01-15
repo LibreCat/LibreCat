@@ -80,7 +80,7 @@ end
 
 do list(path: file,var:loop)
   do identity()
-    unless all_match(relation, hidden)
+    if all_match(loop.access_level, open_access)
       add_field(tmpfile.$append, 'https://pub.uni-bielefeld.de')
       add_field(tmpfile.$append, download)
       copy_field(_id, tmpfile.$append)
