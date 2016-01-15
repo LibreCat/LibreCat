@@ -1,6 +1,3 @@
-
-# publication type missing
-
 # set default status and creator
 add_field(status, private)
 add_field(creator.login, 'PUB_WoS_Import')
