@@ -372,7 +372,7 @@ forms:
         placeholder: "e.g. Handbuch der eBook-Veröffentlichung"
       author: &author_translator
         label: "Author"
-        tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
         first_name:
           label: "First Name"
           label_short: "Auth. First"
@@ -573,7 +573,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Editor"
         label_short: "Ed."
-        tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       corporate_editor_solo: &corporate_editor_solo
         label: "Corporate Editor"
         label_short: "Copr. Ed."
@@ -629,7 +629,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Book Editor"
         label_short: "Ed."
-        tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       corporate_editor: &corporate_editor
         label: "Corporate Editor"
         label_short: "Corp. Ed."
@@ -706,7 +706,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Editor"
         label_short: "Ed."
-        tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       corporate_editor: *corporate_editor
       department: *department
       project: *project
@@ -1101,7 +1101,7 @@ forms:
           label_short: "Inv. Last"
           placeholder: "e.g. Appleseed"
         label: "Inventor"
-        tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       applicant:
         label: "Applicant"
         label_short: "Appl."
@@ -1277,7 +1277,7 @@ forms:
           label_short: "Crea. Last"
           placeholder: "e.g. Appleseed"
         label: "Creator"
-        tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       department: *department
       project: *project
       research_group: *research_group
@@ -1384,7 +1384,7 @@ forms:
           label_short: "Trans. Last"
           placeholder: "e.g. Appleseed"
         label: "Translator"
-        tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       author_secondary:
         first_name:
           label: "First Name"
@@ -1395,7 +1395,7 @@ forms:
           label_short: "Auth. Last"
           placeholder: "e.g. Appleseed"
         label: "Author (Original)"
-        tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       edition: *edition
       department: *department
       project: *project
@@ -1451,7 +1451,7 @@ forms:
           label_short: "Trans. Last"
           placeholder: "e.g. Appleseed"
         label: "Translator"
-        tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       author_secondary:
         first_name:
           label: "First Name"
@@ -1462,7 +1462,7 @@ forms:
           label_short: "Auth. Last"
           placeholder: "e.g. Appleseed"
         label: "Author"
-        tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       alternative_title:
         label: "Title (Original)"
         label_short: "Title (Orig)"
@@ -1571,7 +1571,7 @@ forms:
           label_short: "Superv. Last"
           placeholder: "e.g. Appleseed"
         label: "Supervisor"
-        tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       year:
         label: "Year"
         placeholder: "YYYY"

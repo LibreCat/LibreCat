@@ -371,7 +371,7 @@ forms:
         placeholder: "z.B. Handbook of eBook Publishing"
       author: &author_translator
         label: "Autor"
-        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Autor arbeitet an der Uni Bielefeld."
         first_name:
           label: "Vorname"
           label_short: "Autor Vorn."
@@ -572,7 +572,7 @@ forms:
           placeholder: "z.B. Müller"
         label: "Herausgeber"
         label_short: "Hrsg."
-        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Autor arbeitet an der Uni Bielefeld."
       corporate_editor_solo: &corporate_editor_solo
         label: "Körperschaftlicher Herausgeber"
         label_short: "Körp. Hrsg."
@@ -628,7 +628,7 @@ forms:
           placeholder: "z.B. Müller"
         label: "Herausgeber"
         label_short: "Hrsg."
-        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Autor arbeitet an der Uni Bielefeld."
       corporate_editor: &corporate_editor
         label: "Körperschaftlicher Herausgeber"
         label_short: "Körp. Hrsg."
@@ -705,7 +705,7 @@ forms:
           placeholder: "z.B. Müller"
         label: "Herausgeber"
         label_short: "Hrsg."
-        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Autor arbeitet an der Uni Bielefeld."
       corporate_editor: *corporate_editor
       department: *department
       project: *project
@@ -1100,7 +1100,7 @@ forms:
           label_short: "Erfinder Nachn."
           placeholder: "z.B. Müller"
         label: "Erfinder"
-        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Autor arbeitet an der Uni Bielefeld."
       applicant:
         label: "Antragsteller"
         label_short: "Antr.steller"
@@ -1276,7 +1276,7 @@ forms:
           label_short: "Nachn."
           placeholder: "z.B. Müller"
         label: "Creator"
-        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Autor arbeitet an der Uni Bielefeld."
       department: *department
       project: *project
       research_group: *research_group
@@ -1383,7 +1383,7 @@ forms:
           label_short: "Trans. Nachn."
           placeholder: "z.B. Müller"
         label: "Übersetzer"
-        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Autor arbeitet an der Uni Bielefeld."
       author_secondary:
         first_name:
           label: "Vorname"
@@ -1394,7 +1394,7 @@ forms:
           label_short: "Autor Nachn."
           placeholder: "z.B. Müller"
         label: "Autor (Original)"
-        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Autor arbeitet an der Uni Bielefeld."
       edition: *edition
       department: *department
       project: *project
@@ -1449,7 +1449,7 @@ forms:
           label_short: "Trans. Nachn."
           placeholder: "z.B. Müller"
         label: "Übersetzer"
-        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Autor arbeitet an der Uni Bielefeld."
       author_secondary:
         first_name:
           label: "Vorname"
@@ -1460,7 +1460,7 @@ forms:
           label_short: "Autor Nachn."
           placeholder: "z.B. Müller"
         label: "Autor"
-        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Autor arbeitet an der Uni Bielefeld."
       alternative_title:
         label: "Titel (Original)"
         label_short: "Titel (Orig)"
@@ -1567,7 +1567,7 @@ forms:
           label_short: "Betr. Nachn."
           placeholder: "z.B. Müller"
         label: "Betreuer"
-        tooltip: "Verknüpfung zur Publikationsliste<br>herstellen / aufheben."
+        tooltip: "Autor arbeitet an der Uni Bielefeld."
       year:
         label: "Jahr"
         placeholder: "YYYY"
