@@ -225,7 +225,7 @@ function link_person(element){
 				var title = '<span class="glyphicon glyphicon-indent-left text-default"></span> UniBi author: Choose name';
 				var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
 				container.html('');
-				var table = '<p>Several exakt matches for <em>' + firstname + ' ' + lastname + '</em> were found in the staff directory (PEVZ). Click on the number (Person ID) to view the person\'s profile in the PEVZ. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
+				var table = '<p>Several exact matches for <em>' + firstname + ' ' + lastname + '</em> were found in the staff directory (PEVZ). Click on the number (Person ID) to view the person\'s profile in the PEVZ. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
 				var rows = "";
 				var table2 = '<table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
 				var rows2 = "";
@@ -271,6 +271,9 @@ function link_person(element){
 					}
 					else {
 						rows2 += '<tr data-id="' + personId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
+						if(old_first_name || old_last_name){
+							rows2 += '<tr data-id="' + personId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+						}
 					}
 
 				}
