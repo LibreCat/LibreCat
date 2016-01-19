@@ -5,9 +5,9 @@
 /* sticky footer */
 @media screen{
 html,body,main{height:100%;}
-main{min-height:100%;height:auto!important;margin:0 auto -120px;}
-#push{height:160px;}
-footer{height:120px;}
+main{min-height:100%;height:auto!important;margin:0 auto -140px;}
+#push{height:180px;}
+footer{height:140px;}
 }
 
 /* text color */

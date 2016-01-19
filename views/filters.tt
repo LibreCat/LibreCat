@@ -182,6 +182,11 @@
 </ul>
 [% END %] <!-- unless bag person -->
 
+[% IF bag == 'data' %]
+<p class="margin-top1"><a href="http://service.re3data.org/repository/r3d100010750"><img src="/images/logo_re3data_big.png" alt="[% lf.footer.re3data_alt %]" title="[% lf.footer.re3data_title %]" style="width:100%;max-width:280px;" /></a></p>
+[% END %]
+
+
 <!-- Modal -->
 <div id="modal_[% tabmodus %]" class="modal">
   <div class="modal-dialog">
