@@ -236,7 +236,7 @@
           <li><a href="#relMat" data-toggle="tab">[% lf.frontdoor.tabs.related_material %]</a></li>
           [% END %]
           
-          [% IF relLinkRd.size %]
+          [% IF relLinkRd.size OR relLinkSw.size %]
           <li><a href="#relLinkRd" data-toggle="tab">[% lf.frontdoor.tabs.external_data %]</a></li>
           [% END %]
 
@@ -280,7 +280,7 @@
             [% PROCESS frontdoor/tab_relmat.tt %]
           [% END %]
           
-          [% IF relLinkRd.size %] [% PROCESS frontdoor/tab_extrd.tt %] [% END %]
+          [% IF relLinkRd.size OR relLinkSw.size %] [% PROCESS frontdoor/tab_extrd.tt %] [% END %]
 
           [% IF confLetter.size %]
             [% PROCESS frontdoor/tab_confletter.tt %]
