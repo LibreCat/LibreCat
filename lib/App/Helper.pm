@@ -123,6 +123,7 @@ sub extract_params {
 		$cql =~ s/^\s*(AND|OR)//g;
 		$cql =~ s/,//g;
 		$cql =~ s/\://g;
+		$cql =~ s/\.//g;
 		$cql =~ s/(NOT )(.*?)=/$2<>/g;
 		$cql =~ s/(NOT )([^=]*?)/basic<>$2/g;
 		$cql =~ s/(?<!")\b([^\s]+)\b, \b([^\s]+)\b(?!")/"$1, $2"/g;
