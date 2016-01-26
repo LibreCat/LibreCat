@@ -310,7 +310,7 @@ sub get_project {
 sub get_department {
 	my $result;
 	$result = $_[0]->department->get($_[1]);
-	$result = $_[0]->search_department({q => ["name=$_[1]"]})->first if !$result;
+	$result = $_[0]->search_department({q => ["name=\"$_[1]\""]})->first if !$result;
 	return $result;
 }
 
