@@ -40,7 +40,7 @@ sub _do_switch {
 	print "New index is $new. Testing...\n";
 	my $checkForIndex = $e->indices->exists(index => $new);
 	if($checkForIndex){
-		print "Index $new exists. Setting index alias 'pub' to $new, testing and then deleting index $old.\n";
+		print "Index $new exists. Setting index alias $ind_name to $new, testing and then deleting index $old.\n";
 
 		$e->indices->update_aliases(
 		    body => {
@@ -54,11 +54,11 @@ sub _do_switch {
 		$checkForIndex = $e->indices->exists(index => $ind_name);
 
 		if($checkForIndex){
-			print "Alias 'pub' is ok and points to index $new. Deleting $old.\n";
+			print "Alias $ind_name is ok and points to index $new. Deleting $old.\n";
 			$e->indices->delete(index => $old);
 		}
 		else {
-			print "Error: Could not create alias.\n";
+			print "Error: Could not create alias $ind_name.\n";
 			exit;
 		}
 	}
