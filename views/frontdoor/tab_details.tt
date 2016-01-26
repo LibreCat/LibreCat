@@ -76,7 +76,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.project.label %]</div>
     <div class="col-lg-10 col-md-9">
   [%- ELSE -%]<br />[% END %]
-  <a href="/project/[% proj.id %]">[% proj.name %]</a>
+  <a href="/project/[% proj._id %]">[% proj.name %]</a>
   [%- IF loop.last %]</div></div>[% END -%]
 [%- END -%]
 

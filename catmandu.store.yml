@@ -384,7 +384,7 @@ search:
                 '=': true
                 '<>': true
                 'exact': true
-              field: 'project.id'
+              field: 'project._id'
             conference:
               op:
                 'any': true
@@ -1031,7 +1031,7 @@ search:
           proof: {type: string, index: not_analyzed}
           title: {type: string}
           organization: {type: string}
-          year: {type: string, include_in_all: true}
+          year: {type: string, analyzer: tag}
           honoree:
             properties:
               first_name: {type: string}
@@ -1153,7 +1153,7 @@ search:
               timesCited: {type: integer}
           project:
             properties:
-              id: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
           publication:
             type: multi_field
             fields:

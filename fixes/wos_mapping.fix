@@ -1,16 +1,20 @@
 # publication type
 # set default type
 add_field(_r.type,journalArticle)
+add_field(_r.isi,1)
+add_field(_r.quality_controlled,1)
+add_field(_r.publication_status,published)
 
 # set default status and creator
-add_field(_r.status, private)
+add_field(_r.status, new)
 add_field(_r.creator.login, 'PUB_WoS_Import')
 
 if exists(AF)
-  move_field(AF, _r.author)
+  move_field(AF, _r.author.$append)
 else
-  move_field(AU, _r.author)
+  move_field(AU, _r.author.$append)
 end
+flatten(_r.author)
 replace_all(_r.author.*,"^","full_name:")
 split_field(_r.author.*,":")
 hash(_r.author.*)
@@ -94,4 +98,6 @@ join_field(_r.message, ' / ')
 
 retain_field(_r)
 move_field(_r, .)
+add_citation()
+
 vacuum()
