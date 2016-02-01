@@ -476,7 +476,7 @@ forms:
         cc_license:
           label: "Creative Commons Lizenzen"
           select_text: "Falls Ihr hochgeladenes Dokument unter einer Creative Commons Lizenz steht, können Sie diese hier auswählen:<br>"
-          select_a_license: "Lizenz auswählen"
+          select_a_license: "Lizenz wählen"
           license_deed: "Lizenzvertrag"
           cc_0:
             name: "Creative Commons Public Domain Dedication (CC0 1.0)"
@@ -497,7 +497,7 @@ forms:
         title: "Die URN wurde automatisch generiert und kann nicht geändert werden."
       ddc: &ddc
         label: "DDC"
-        select_ddc: "DDC auswählen"
+        select_ddc: "DDC wählen"
       abstract: &abstract
         label: "Abstract"
         label2: "Sprache"
@@ -510,7 +510,7 @@ forms:
         label: "Externer Identifier"
         label_short: "Ext. Id."
         placeholder: "Wählen Sie einen Identifier aus (z.B. eine PMID) und geben Sie ihn hier ein"
-        select: "Auswählen"
+        select: "Wählen"
       message: &message
         label: "Kommentare"
         placeholder: "Anmerkungen für Reviewer/ Admins eintragen"
@@ -523,11 +523,11 @@ forms:
       jel: &jel
         label: "JEL Klassifikation"
         label_short: "JEL"
-        select_jel: "--- JEL auswählen ---"
+        select_jel: "--- JEL wählen ---"
       thematic_area: &thematic_area
         label: "Themengebiet"
         label_short: "Them.geb."
-        select_thematic_area: "--- Themengebiet auswählen ---"
+        select_thematic_area: "--- Themengebiet wählen ---"
       alternative_id: &alternative_id
         label: "Returned Record IDs"
         label_short: "Ret. Rec. IDs"
@@ -535,7 +535,7 @@ forms:
         label: "Link zu PUB-Eintrag"
         label_short: "PUB-Eintr."
         placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
-      related_material.select: "Art des Zusatzmaterials auswählen &hellip;"
+      related_material.select: "Art des Zusatzmaterials wählen &hellip;"
       related_material.link: &related_material_link
         label: "Link zu externer Quelle"
         label_short: "Ext. Link"
@@ -1323,7 +1323,7 @@ forms:
         data_reuse_license:
           label: "Data Re-Use License"
           select_license: "Wählen Sie eine Lizenz aus unter der Ihre Daten verfügbar sein sollen:<br>"
-          select_a_license: "Lizenz auswählen"
+          select_a_license: "Lizenz wählen"
           alert: "Sie müssen eine Data Re-Use License auswählen, wenn Sie Dateien angehängt haben."
           pddl:
             select_text: "No restrictions - PDDL"
@@ -1648,7 +1648,7 @@ forms:
     submitted: "Absenden"
     return: "Zurückstellen"
     save: "Speichern"
-    select: "Auswählen"
+    select: "Wählen"
     send: "Abschicken"
     submit: "Hochladen"
   general:
@@ -1676,8 +1676,8 @@ forms:
   page_range_number:
     page: "Seite"
     pages: "Seiten"
-    page_range: "Seite(nbereich)"
-    article_number: "Artikelnummer"
+    page_range: "Seite(nber.)"
+    article_number: "Art.nummer"
   language:
     ara: "Arabisch"
     chi: "Chinesisch"
