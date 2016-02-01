@@ -6,7 +6,7 @@ password: secret
 login: einstein
 super_admin: 1
 department:
-- id: 9996
+- _id: 9996
   name: 'Relativistic Theory Group'
 email: einstein@physics.com
 first_name: Albert
