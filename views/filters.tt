@@ -117,9 +117,15 @@
         [% sort_options = h.config.sort_options %]
       [% END %]
       [% FOREACH s IN sort_options %]
+        [% gray = "" %]
+        [% FOREACH qs IN qp.item('sort') %][% IF qs == s _ ".asc" OR qs == s _ ".desc" %][% gray = "yes" %][% END %][% END %]
+        [% IF gray %]
+        <span class="text-muted">[% lf.sort_options.$s %]</span><br />
+        [% ELSE %]
         <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].asc" rel="nofollow">[% lf.sort_options.$s %] <span class="glyphicon glyphicon-arrow-up"></span></a>
         <a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].desc" rel="nofollow">
         <span class="glyphicon glyphicon-arrow-down"></span></a></li>
+        [% END %]
       [% END %]
     </ul>
     </div>

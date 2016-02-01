@@ -21,7 +21,7 @@ get qr{/en/award/(AW\d+)/*} => sub {
 	my $servername = request->uri_base;
 	my $ip = request->address;
 	#if ($servername =~ /pub2\.ub/ or $servername =~ /pub\.uni-bielefeld/){
-	if(!$ip or $ip and $ip ne "129.70.11.78"){
+	if(!$ip or $ip and $ip ne "129.70.11.105"){
 		forward '/';
 	}
 	
@@ -36,7 +36,7 @@ get qr{/award/(AW\d+)/*} => sub {
 	my $servername = request->uri_base;
 	my $ip = request->address;
 	#if ($servername =~ /pub\.uni-bielefeld/){
-	if(!$ip or $ip and $ip ne "129.70.11.78"){
+	if(!$ip or $ip and $ip ne "129.70.11.105"){
 		forward '/';
 	}
 	
@@ -52,7 +52,7 @@ get qr{/en/award/*} => sub {
 	my $servername = request->uri_base;
 	my $ip = request->address;
 	#if ($servername =~ /pub\.uni-bielefeld/){
-	if(!$ip or $ip and $ip ne "129.70.11.78"){
+	if(!$ip or $ip and $ip ne "129.70.11.105"){
 		forward '/';
 	}
 	
@@ -65,7 +65,7 @@ get qr{/award/*} => sub {
 	my $servername = request->uri_base;
 	my $ip = request->address;
 	#if ($servername =~ /pub\.uni-bielefeld/){
-	if(!$ip or $ip and $ip ne "129.70.11.78"){
+	if(!$ip or $ip and $ip ne "129.70.11.105"){
 		forward '/';
 	}
 	
@@ -163,14 +163,14 @@ get qr{/award/*} => sub {
 		    limit => h->config->{maximum_page_size},
 		    facets => {
 		    	year => {terms => {field => 'year', size => 100, order => 'term'}},
-		    	department => {terms => {field => 'department.name', size => 100, order => 'term'}},
-		    	einrichtung => {terms => {field => 'einrichtung.name', size => 100, order => 'term'}},
+		    	department => {terms => {field => 'department.name.exact', size => 100, order => 'term'}},
+		    	einrichtung => {terms => {field => 'einrichtung.name.exact', size => 100, order => 'term'}},
 		    	person => {terms => {field => 'honoree.full_name.exact', size => 100, order => 'term'}},
 		    },
 		    sru_sortkeys => "year,,0",
 		);
 		
-		#$preishits->{facets}->{year} = group_year_facet($preishits->{facets}->{year}) if $preishits and $preishits->{facets}->{year};
+		$preishits->{facets}->{year} = group_year_facet($preishits->{facets}->{year}) if $preishits and $preishits->{facets}->{year};
 		
 		foreach my $hit (@{$preishits->{hits}}){
 			#my $id = "";
@@ -265,7 +265,7 @@ get qr{/award/*} => sub {
 		        sru_sortkeys => "year,,0",
 		    );
 		    
-		    $hits->{otheraward} = $otherHits->{hits} if $otherHits->{total} != 0;
+		    $hits->{otheraward} = $otherHits if $otherHits->{total} != 0;
 		}
 		
 		$tmpl = "award/preisRecord";

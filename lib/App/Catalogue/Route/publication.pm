@@ -138,6 +138,11 @@ Checks if the user has the rights to update this record.
         $p = h->nested_params($p);
 
         my $old_status = $p->{status};
+        
+#        my $ip = request->address;
+#        if($ip and $ip eq "129.70.11.105"){
+#            return to_dumper $p;
+#        }
 
         my $result = h->update_record('publication', $p);
         #return to_dumper $result; # leave this here to make debugging easier

@@ -138,7 +138,7 @@
             [% FOREACH match IN matched.split(' ') %]
               [% newmatched = newmatched _ ' ' _ match.ucfirst %]
             [% END %]
-            <li style="padding-bottom:2px;"><a href="[% h.newuri_for("$path", qp, honoree="$per.term") %]">[% newmatched.trim %]</a></li>
+            <li style="padding-bottom:2px;"><a href="[% h.newuri_for("$path", qp, q="honoree=$per.term") %]">[% newmatched.trim %]</a></li>
             [% newmatched = '' %]
             [% matched = '' %]
           [% END %]
@@ -161,7 +161,7 @@
         <ul id="department" class="collapse[% IF qp.department %] in[% END %]">
           [% FOREACH dep IN facets.department.terms %]
           [% department = h.get_department(dep.term) %]
-          <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, department="$department.0.oId") %]">[% department.0.name %]</a></li>
+          <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, q="department=$department._id") %]">[% department.name %]</a></li>
           [% END %]
         </ul>
         </div>
@@ -172,7 +172,7 @@
         <ul id="einrichtung" class="collapse[% IF qp.einrichtung %] in[% END %]">
           [% FOREACH einr IN facets.einrichtung.terms %]
           [% einrichtung = h.get_department(einr.term) %]
-          <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, einrichtung="$einrichtung.0.oId") %]">[% einrichtung.0.name %]</a></li>
+          <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, q="einrichtung=$einrichtung._id") %]">[% einrichtung.name %]</a></li>
           [% END %]
         </ul>
         </div>

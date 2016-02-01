@@ -1681,7 +1681,7 @@ forms:
     page: "Page"
     pages: "Pages"
     page_range: "Page(-Range)"
-    article_number: "Article Number"
+    article_number: "Art. Number"
   language:
     ara: "Arabic"
     chi: "Chinese"

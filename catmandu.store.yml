@@ -1123,6 +1123,7 @@ search:
           publication_status: {type: string, analyzer: tag}
           report_number: {type: string, analyzer: tag}
           ipn: {type: string, analyzer: tag}
+          application_number: {type: string, index: no}
           conference:
             properties:
               name:
@@ -1200,7 +1201,6 @@ search:
               date_updated: {type: string}
 #              yearCreated: {type: date, format: "yyyy"}
           alternative_id: {type: string, analyzer: tag}
-          foda: {type: byte}
           defense_date: {type: date, index: no}
           locked: {type: byte}
 
