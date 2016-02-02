@@ -95,6 +95,16 @@ Saves the data in the authority database.
         template 'admin/account';
     };
 
+=head2 GET /account/delete/:id
+
+Deletes the account with ID :id.
+
+=cut
+    get '/account/delete/:id' => needs role => 'super_admin' => sub {
+        h->delete_record('researcher', params->{id} );
+        redirect '/librecat';
+    };
+
 =head2 GET /account/import
 
 Input is person id. Returns warning if person is already in the database.
