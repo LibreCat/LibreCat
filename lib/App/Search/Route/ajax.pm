@@ -60,6 +60,12 @@ ajax '/authority_user/:id' => sub {
     to_json $person;
 };
 
+ajax '/num_of_publ/:id' => sub {
+    my $id = params->{id};
+    my $hits = h->search_publication({q => ["person=$id"]});
+    return to_json {total => $hits->{total}};
+};
+
 =head2 AJAX /get_alias/:id/:alias
 
 =cut
@@ -105,7 +111,7 @@ ajax '/get_department' => sub {
         $_ =~ tr/äöüß/aous/;
         $_ .= '*';
     } split(' ', lc params->{term});
-    
+
     push @$q, "inactive<>1";
 
     my $hits = h->search_department({q => $q, limit => 100});
