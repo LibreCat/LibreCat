@@ -93,9 +93,10 @@
 <script>
 $(document).ready(function(){
   $('.num_publ').each(function(){
+    var element = this;
     var id = $(this).data('id');
     $.getJSON("/num_of_publ/" + id).done(function( res ) {
-        $('.num_publ').html(res.total);
+      $(element).html(res.total);
     });
   });
 });
