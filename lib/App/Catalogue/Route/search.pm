@@ -63,6 +63,66 @@ Performs search for admin.
 
     };
 
+=head2 GET /admin/similar_search
+
+Performs search for similar titles, admin only
+
+=cut
+
+    get '/admin/similar_search' => needs role => 'super_admin' => sub {
+
+        my $p = h->extract_params();
+        $p->{facets} = h->default_facets();
+        $p->{facets}->{foda} = { terms => { field => 'foda', size => 1 } };
+        #push @{$p->{q}}, "status=public" if $p->{fmt} and $p->{fmt} eq "autocomplete";
+
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
+
+        #my $hits = h->search_publication($p);
+        use Search::Elasticsearch;
+        my $e = Search::Elasticsearch->new();
+        my $hits = $e->search(
+            index => 'test',
+            body  => {
+                "query" =>
+                    { "bool" =>
+                        { "must" =>
+                            { "match" =>
+                                { "title" =>
+                                    { "query" => $p->{q}->[0],
+                                      "minimum_should_match" => "70%"}
+                                }
+                            },
+                          "should" =>
+                            { "match_phrase" =>
+                                { "title" =>
+                                    { "query" => $p->{q}->[0],
+                                      "slop" => "50"}
+                                }
+                            }
+                        }
+                    }
+                #query => {
+                #    match => { title => 'elasticsearch' }
+                #}
+            }
+        );
+        return to_dumper $hits;
+
+        #$hits->{style} = $sort_style->{style};
+        #$hits->{sort} = $p->{sort};
+        #$hits->{user_settings} = $sort_style;
+        #$hits->{modus} = "admin";
+
+        #if ($p->{fmt} ne 'html') {
+        #        h->export_publication($hits, $p->{fmt});
+        #} else {
+        #        template "home", $hits;
+        #}
+    };
+
+
 =head2 GET /reviewer
 
 Performs search for reviewer.
