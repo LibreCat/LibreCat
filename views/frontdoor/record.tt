@@ -97,7 +97,7 @@
 
       <div class="col-xs-10 col-sm-8"><!-- begin left col -->
 
-        <h1 class="cmark" itemprop="name">[% title %][% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "researchData" OR session.role == "super_admin") %] <a class="btn btn-sm btn-success" href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> [% lf.main_page.links.publish %]</a> [% END %]</h1>
+        <h1 class="cmark" itemprop="name">[% title %]</h1>
 
         [% IF citation %]
         <div class="row">
@@ -235,17 +235,13 @@
           [% IF relMat.size OR relLink.size OR relFile.size OR relToc.size %]
           <li><a href="#relMat" data-toggle="tab">[% lf.frontdoor.tabs.related_material %]</a></li>
           [% END %]
-          
+
           [% IF relLinkRd.size OR relLinkSw.size %]
           <li><a href="#relLinkRd" data-toggle="tab">[% lf.frontdoor.tabs.external_data %]</a></li>
           [% END %]
 
           <li class="hidden-md hidden-lg hidden-sm"><a href="#citethis">[% lf.frontdoor.tabs.cite_this %]</a></li>
           <li class="hidden-md hidden-lg hidden-sm"><a href="#export">[% lf.frontdoor.tabs.export_search %]</a></li>
-
-          [% IF session.user AND session.role AND p.can_edit(_id, session.user, session.role) %]
-          <li class="navbar-right"><a href="/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> [% lf.main_page.links.edit %]</a></li>
-          [% END %]
 
           [% IF status == "public" %]
           <li class="navbar-right"><a class="mark btn btn-xs" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="fa fa-check-square-o fa-lg"></span>[% ELSE %]<span class="fa fa-square-o fa-lg"></span>[% END %] [% lf.mark.mark_unmark %]</a></li>
@@ -279,7 +275,7 @@
           [% IF relMat.size OR relLink.size OR relFile.size OR relToc.size %]
             [% PROCESS frontdoor/tab_relmat.tt %]
           [% END %]
-          
+
           [% IF relLinkRd.size OR relLinkSw.size %] [% PROCESS frontdoor/tab_extrd.tt %] [% END %]
 
           [% IF confLetter.size %]
@@ -287,12 +283,24 @@
           [% END %]
 
         </div><!-- tab-content -->
-      
+
       </div>
 
       <div class="col-md-3 col-md-offset-1">
 
         <div class="hidden-sm hidden-md hidden-lg"><hr></div>
+
+        <!-- Edit -->
+        [% IF session.user AND session.role AND p.can_edit(_id, session.user, session.role) %]
+        <h3 id="edit">Editing Options</h3>
+        <a href="/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> &nbsp;EDIT this record</a><br />
+        [% IF status == "public" %]
+        <a href="/librecat/record/return/[% _id %]" onclick="return confirm('[% lf.forms.confirm_return %]');" name="return"><span class="glyphicon glyphicon-download"></span> RETURN this record to private status</a><br />
+        [% END %]
+        [% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "researchData" OR session.role == "super_admin") %]
+          <a href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> Make this record PUBLIC</a>
+        [% END %]
+        [% END %]
 
         <!-- Export -->
         <h3 id="export">[% lf.frontdoor.export %]</h3>
