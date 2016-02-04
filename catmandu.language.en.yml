@@ -1727,7 +1727,7 @@ forms:
   text: "Uuuppps - this shouldn't happen, but it did."
 help:
   home: "PUB home"
-  brand: "Personal<br>home page"
+  brand: "Backend<br>start page"
   my_author_page: "Your publication list<br>(public records only)"
   help: "How to use PUB."
   howto: "PUB How-to"

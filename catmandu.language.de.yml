@@ -1723,7 +1723,7 @@ forms:
   text: "Huch - das hätte nicht passieren sollen. Leider ist bei Ihrer Anfrage ein Problem aufgetreten."
 help:
   home: "Startseite"
-  brand: "Persönliche<br>Startseite"
+  brand: "Backend<br>Startseite"
   my_author_page: "Ihre öffentliche<br>Publikationsliste"
   help: "Die Funktionen von PUB im Überblick."
   howto: "PUB Howto"
