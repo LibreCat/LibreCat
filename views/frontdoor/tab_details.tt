@@ -244,13 +244,13 @@
   </ul>
 
   <div class="tab-content">
-    <div id="ama" class="tab-pane active">[% citation.ama %]</div>
-    <div id="apa" class="tab-pane">[% citation.apa %]</div>
-    <div id="frontiers" class="tab-pane">[% citation.frontiers %]</div>
-    <div id="harvard1" class="tab-pane">[% citation.harvard1 %]</div>
-    <div id="ieee" class="tab-pane">[% citation.ieee %]</div>
-    <div id="lncs" class="tab-pane">[% citation.lncs %]</div>
-    <div id="mla" class="tab-pane">[% citation.mla %]</div>
+    <div id="ama" class="tab-pane active cmark">[% citation.ama %]</div>
+    <div id="apa" class="tab-pane cmark">[% citation.apa %]</div>
+    <div id="frontiers" class="tab-pane cmark">[% citation.frontiers %]</div>
+    <div id="harvard1" class="tab-pane cmark">[% citation.harvard1 %]</div>
+    <div id="ieee" class="tab-pane cmark">[% citation.ieee %]</div>
+    <div id="lncs" class="tab-pane cmark">[% citation.lncs %]</div>
+    <div id="mla" class="tab-pane cmark">[% citation.mla %]</div>
     <div id="bibtex" class="tab-pane"></div>
     <div id="ris" class="tab-pane"></div>
   </div>
