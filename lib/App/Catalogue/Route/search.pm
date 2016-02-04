@@ -70,7 +70,7 @@ Performs search for similar titles, admin only
 =cut
 
     get '/admin/similar_search' => needs role => 'super_admin' => sub {
-        
+
         my $p = h->extract_params();
         $p->{facets} = h->default_facets();
         $p->{facets}->{foda} = { terms => { field => 'foda', size => 1 } };
@@ -103,23 +103,28 @@ Performs search for similar titles, admin only
                             }
                         }
                     }
-                #query => {
-                #    match => { title => 'elasticsearch' }
-                #}
             }
-        );
-        return to_dumper $hits;
+        )->{hits};
+        #return to_dumper $hits;
 
-        #$hits->{style} = $sort_style->{style};
-        #$hits->{sort} = $p->{sort};
-        #$hits->{user_settings} = $sort_style;
-        #$hits->{modus} = "admin";
+        my $realhits;
 
-        #if ($p->{fmt} ne 'html') {
-        #        h->export_publication($hits, $p->{fmt});
-        #} else {
-        #        template "home", $hits;
-        #}
+        foreach my $hit (@{$hits->{hits}}){
+          $hit->{_source}->{_score} = $hit->{_score};
+          push @$realhits, $hit->{_source};
+        }
+
+        @$realhits = sort { $a->{_score} <=> $b->{_score}} @$realhits;
+
+        $hits->{hits} = undef;
+        $hits->{hits} = $realhits;
+
+        $hits->{style} = $sort_style->{style};
+        $hits->{sort} = $p->{sort};
+        $hits->{user_settings} = $sort_style;
+        $hits->{modus} = "admin";
+
+        template "home", $hits;
     };
 
 
@@ -133,7 +138,7 @@ Performs search for reviewer.
     	my $account = h->get_person(session->{user});
 		redirect "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
     };
-    
+
     get '/reviewer/:department_id' => needs role => 'reviewer' => sub {
 
         my $p = h->extract_params();
@@ -171,7 +176,7 @@ Performs search for data manager.
     	my $account = h->get_person(session->{user});
     	redirect "/librecat/search/data_manager/$account->{data_manager}->[0]->{_id}";
     };
-    
+
     get '/data_manager/:department_id' => needs role => 'data_manager' => sub {
 
         my $p = h->extract_params();
