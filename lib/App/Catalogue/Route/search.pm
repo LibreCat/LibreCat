@@ -72,6 +72,11 @@ Performs search for similar titles, admin only
     get '/admin/similar_search' => needs role => 'super_admin' => sub {
 
         my $p = h->extract_params();
+
+        unless($p->{q} and ref $p->{q} eq "ARRAY" and $p->{q}->[0]){
+            return redirect '/librecat';
+        }
+
         $p->{facets} = h->default_facets();
         $p->{facets}->{foda} = { terms => { field => 'foda', size => 1 } };
         #push @{$p->{q}}, "status=public" if $p->{fmt} and $p->{fmt} eq "autocomplete";
