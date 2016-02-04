@@ -145,6 +145,7 @@ main_page:
     request_a_copy_not_public: "Only pulic records can be shared! Click \"Make public\" and try again."
     publish: "Make public"
     return: "Return"
+    search_similar: "Search similar titles"
 person_profile:
   id_not_found: "Person ID not found."
   former_researcher: "Former Bielefeld University Researcher"

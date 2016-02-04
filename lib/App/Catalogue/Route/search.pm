@@ -114,7 +114,7 @@ Performs search for similar titles, admin only
           push @$realhits, $hit->{_source};
         }
 
-        @$realhits = sort { $a->{_score} <=> $b->{_score}} @$realhits;
+        @$realhits = sort { $b->{_score} <=> $a->{_score}} @$realhits;
 
         $hits->{hits} = undef;
         $hits->{hits} = $realhits;
