@@ -79,50 +79,31 @@ Performs search for similar titles, admin only
 
         $p->{facets} = h->default_facets();
         $p->{facets}->{foda} = { terms => { field => 'foda', size => 1 } };
-        #push @{$p->{q}}, "status=public" if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
 
-        #my $hits = h->search_publication($p);
-        use Search::Elasticsearch;
-        my $e = Search::Elasticsearch->new();
-        my $hits = $e->search(
-            index => 'test',
-            body  => {
-                "query" =>
-                    { "bool" =>
-                        { "must" =>
-                            { "match" =>
-                                { "title" =>
-                                    { "query" => $p->{q}->[0],
-                                      "minimum_should_match" => "70%"}
-                                }
-                            },
-                          "should" =>
-                            { "match_phrase" =>
-                                { "title" =>
-                                    { "query" => $p->{q}->[0],
-                                      "slop" => "50"}
-                                }
-                            }
+        my $hits = h->publication->search(
+		    query => { "bool" =>
+                { "must" =>
+                    { "match" =>
+                        { "title" =>
+                            { "query" => $p->{q}->[0],
+                              "minimum_should_match" => "70%"}
+                        }
+                    },
+                  "should" =>
+                    { "match_phrase" =>
+                        { "title" =>
+                            { "query" => $p->{q}->[0],
+                              "slop" => "50"}
                         }
                     }
-            }
-        )->{hits};
-        #return to_dumper $hits;
-
-        my $realhits;
-
-        foreach my $hit (@{$hits->{hits}}){
-          $hit->{_source}->{_score} = $hit->{_score};
-          push @$realhits, $hit->{_source};
-        }
-
-        @$realhits = sort { $b->{_score} <=> $a->{_score}} @$realhits;
-
-        $hits->{hits} = undef;
-        $hits->{hits} = $realhits;
+                }
+            },
+		    limit => $p->{limit} ||=h->config->{default_page_size},
+		    start => $p->{start} ||= 0,
+		);
 
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
