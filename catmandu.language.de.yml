@@ -145,6 +145,7 @@ main_page:
     request_a_copy_not_public: "Nur Datensätze mit Status 'public' können geteilt werden! Klicken Sie auf \"Public stellen\" und versuchen Sie es erneut."
     publish: "Public stellen"
     return: "Zurückstellen"
+    search_similar: "Nach ähnlichen Titeln suchen"
 person_profile:
   id_not_found: "PEVZ-ID nicht gefunden."
   former_researcher: "Ehemaliger Bielefelder Forscher"
