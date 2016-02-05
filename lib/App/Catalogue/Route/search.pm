@@ -84,7 +84,7 @@ Performs search for similar titles, admin only
         $p->{sort} = $sort_style->{sort_backend};
 
         my $hits = h->publication->search(
-		    query => { "bool" =>
+            query => { "bool" =>
                 { "must" =>
                     { "match" =>
                         { "title" =>
@@ -101,8 +101,8 @@ Performs search for similar titles, admin only
                     }
                 }
             },
-		    limit => $p->{limit} ||=h->config->{default_page_size},
-		    start => $p->{start} ||= 0,
+            limit => $p->{limit} ||=h->config->{default_page_size},
+            start => $p->{start} ||= 0,
 		);
 
         $hits->{style} = $sort_style->{style};
