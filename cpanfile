@@ -1,10 +1,11 @@
 requires 'perl', 'v5.10.1';
 
 # Catmandu
-requires 'Catmandu', '>=0.95';
+requires 'Catmandu', '>=0.9505';
 requires 'Catmandu::Store::ElasticSearch';
 requires 'Catmandu::Store::MongoDB';
-#requires 'Catmandu::Store::DBI';
+requires 'Catmandu::Store::DBI';
+requires 'DBD::mysql';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::Importer::XML';
 requires 'Catmandu::Importer::ArXiv';

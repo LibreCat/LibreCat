@@ -63,6 +63,57 @@ Performs search for admin.
 
     };
 
+=head2 GET /admin/similar_search
+
+Performs search for similar titles, admin only
+
+=cut
+
+    get '/admin/similar_search' => needs role => 'super_admin' => sub {
+
+        my $p = h->extract_params();
+
+        unless($p->{q} and ref $p->{q} eq "ARRAY" and $p->{q}->[0]){
+            return redirect '/librecat';
+        }
+
+        $p->{facets} = h->default_facets();
+        $p->{facets}->{foda} = { terms => { field => 'foda', size => 1 } };
+
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
+
+        my $hits = h->publication->search(
+		    query => { "bool" =>
+                { "must" =>
+                    { "match" =>
+                        { "title" =>
+                            { "query" => $p->{q}->[0],
+                              "minimum_should_match" => "70%"}
+                        }
+                    },
+                  "should" =>
+                    { "match_phrase" =>
+                        { "title" =>
+                            { "query" => $p->{q}->[0],
+                              "slop" => "50"}
+                        }
+                    }
+                }
+            },
+		    limit => $p->{limit} ||=h->config->{default_page_size},
+		    start => $p->{start} ||= 0,
+		);
+
+        $hits->{style} = $sort_style->{style};
+        $hits->{sort} = $p->{sort};
+        $hits->{user_settings} = $sort_style;
+        $hits->{modus} = "admin";
+
+        template "home", $hits;
+    };
+
+
 =head2 GET /reviewer
 
 Performs search for reviewer.
@@ -73,7 +124,7 @@ Performs search for reviewer.
     	my $account = h->get_person(session->{user});
 		redirect "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
     };
-    
+
     get '/reviewer/:department_id' => needs role => 'reviewer' => sub {
 
         my $p = h->extract_params();
@@ -111,7 +162,7 @@ Performs search for data manager.
     	my $account = h->get_person(session->{user});
     	redirect "/librecat/search/data_manager/$account->{data_manager}->[0]->{_id}";
     };
-    
+
     get '/data_manager/:department_id' => needs role => 'data_manager' => sub {
 
         my $p = h->extract_params();
