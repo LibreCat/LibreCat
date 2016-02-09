@@ -112,7 +112,7 @@ $(document).ready(function(){
 	              }
 
 	              file.previewElement.setAttribute("id", resp.tempid);
-	              var input_element = Dropzone.createElement('<input type=\'hidden\' id=\'file_' + resp.tempid + '\' name=\'file\' value=\'' + resp.file_json + '\' />');
+	              var input_element = Dropzone.createElement('<input type=\'hidden\' id=\'file_' + resp.tempid + '\' name=\'file\' value=\'' + JSON.stringify(resp) + '\' />');
 	              file.previewElement.appendChild(input_element);
 
 	              $('#sortFilesInput').append('<input type="hidden" name="file_order" id="file_order_' + resp.tempid + '" value="' + resp.tempid + '" />');
