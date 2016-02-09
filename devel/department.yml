@@ -38,3 +38,12 @@ tree:
   - _id: 9996
     name: 'Relativity Theory Group'
 ...
+---
+_id: 10085
+name: "University Library"
+display: "University Library"
+layer: 1
+tree:
+  - _id: 10085
+    name: "University Library"
+...

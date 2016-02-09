@@ -1,3 +1,4 @@
+[% USE JSON %]
 <div class="row innerrow">
   <div class="col-xs-10">
     [% lf.$type.field.dropzone.label %]
@@ -67,7 +68,7 @@
         <div class="corner_down" id="cordown_[% fi.file_id %]" onclick="javascript:edit_file('[% fi.file_id %]', '[% _id %]');"><a href="#" onclick="return false;"><span class="glyphicon glyphicon-pencil"></span></a></div>
         [% END %]
 
-        <input type="hidden" id="file_[% fi.file_id %]" name="file" value='[% fi.file_json %]' />
+        <input type="hidden" id="file_[% fi.file_id %]" name="file" value='[% fi.json %]' />
       </div>
     [% END %]
     [% END %]

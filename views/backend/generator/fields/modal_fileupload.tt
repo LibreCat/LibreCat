@@ -173,7 +173,7 @@
 
         var use_file_id;
         use_file_id = data.file_id ? data.file_id : data.tempid;
-        
+
         var namediv = $('#' + use_file_id + ' div.padded');
         namediv.html('');
         namediv.html('<span class="glyphicon glyphicon-file text-muted"></span> <span class="text-muted"><strong>' + data.file_name + '</strong></span>');
@@ -182,7 +182,7 @@
         $('#updated_' + use_file_id).html(data.date_updated);
         $('#creator_' + use_file_id).html(data.creator);
         $('#relation_' + use_file_id).html(data.relation);
-        $('#file_' + use_file_id).val(data.file_json);
+        $('#file_' + use_file_id).val(JSON.stringify(data));
 
         $('#upLoad')[0].reset();
         $('#upLoad').find('input[type="hidden"]').val('');

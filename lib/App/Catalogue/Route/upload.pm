@@ -58,7 +58,7 @@ prefix '/librecat' => sub {
           my $filepath = path(h->config->{tmp_dir}, $tempid, $file->{filename});
       	  copy($file->{tempname}, $filepath);
 
-      	  $file_data->{file_json} = to_json($file_data);
+      	  #$file_data->{file_json} = to_json($file_data);
       	  my $status = unlink $file->{tempname};
       }
       else{
@@ -306,7 +306,7 @@ prefix '/librecat' => sub {
           $file_data->{embargo} = params->{embargo} if params->{embargo};
           $file_data->{file_id} = $file_id if $file_id;
           $file_data->{tempid} = $tempid if $tempid;
-          $file_data->{file_json} = to_json($file_data);
+          #$file_data->{file_json} = to_json($file_data);
       }
       else {
           $file_data = {

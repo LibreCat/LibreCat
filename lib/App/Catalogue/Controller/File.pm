@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(join_path segmented_path);
 use App::Helper;
 use Dancer::FileUtils qw/path dirname/;
+use Encode qw(decode encode);
 use JSON::MaybeXS qw(decode_json encode_json);
 use File::Copy;
 use File::Path qw/rmtree/;
@@ -34,6 +35,7 @@ sub handle_file {
 
 	if(!$previous_pub){
 		foreach my $fi (@{$pub->{file}}){
+      $fi = encode("utf8",$fi);
 			$fi = decode_json($fi);
 			$fi->{file_id} = h->new_record('publication') if !$fi->{file_id};
 			my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
@@ -48,25 +50,22 @@ sub handle_file {
 			system "mkdir -p $dest_dir" unless -d $dest_dir;
 
 			move($filepath,$dest_dir);
-
-			# remove tmp-folder
-			#my $path = path(h->config->{upload_dir}, $fi->{tempid});
-			#system "rm -r $path" if -d $path;
-
 			$fi->{open_access} = $fi->{access_level} eq "open_access" ? 1 : 0;
 
 			delete $fi->{tempid} if $fi->{tempid};
 			delete $fi->{tempname} if $fi->{tempname};
 			delete $fi->{old_file_name} if $fi->{old_file_name};
-			$fi->{file_json} = encode_json($fi);
+			delete $fi->{file_json} if $fi->{file_json};
 		}
 	}
 	else{
 		foreach my $fi (@{$pub->{file}}){
-			if(ref $fi eq "HASH" and $fi->{file_json}){
-				$fi = $fi->{file_json};
-			}
-			$fi = decode_json($fi);
+			#if(ref $fi eq "HASH" and $fi->{file_json}){
+			#	$fi = $fi->{file_json};
+			#}
+      $fi = encode("utf8", $fi);
+      $fi = decode_json($fi);
+
 			#update of existing file
 			if($fi->{file_id}){
 				$fi->{date_updated} = h->now();
@@ -90,12 +89,13 @@ sub handle_file {
 					delete $fi->{tempid} if $fi->{tempid};
 					delete $fi->{tempname} if $fi->{tempname};
 					delete $fi->{old_file_name} if $fi->{old_file_name};
-					$fi->{file_json} = encode_json($fi);
+          delete $fi->{file_json} if $fi->{file_json};
+					#$fi->{file_json} = encode_json($fi);
 				}
 				else {
 					# looks like it wasn't an existing file after all
 					# can this even happen???
-					$fi->{file_json} = encode_json($fi);
+					#$fi->{file_json} = encode_json($fi);
 				}
 			}
 			#new file
@@ -125,7 +125,8 @@ sub handle_file {
 				delete $fi->{tempid} if $fi->{tempid};
 				delete $fi->{tempname} if $fi->{tempname};
 				delete $fi->{old_file_name} if $fi->{old_file_name};
-				$fi->{file_json} = encode_json($fi);
+        delete $fi->{file_json} if $fi->{file_json};
+				#$fi->{file_json} = encode_json($fi);
 			}
 		}
 
