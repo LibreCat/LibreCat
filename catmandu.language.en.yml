@@ -1642,6 +1642,7 @@ forms:
   form_relmat_link: "Link a publication from an external website to this record."
   confirm_return: "Are you sure you want to return this record from public view?"
   confirm_delete: "Are you sure you want to delete this record?"
+  confirm_submit: "You are submitting your data. Once we have checked it, we will make it public."
   button:
     back: "Back"
     cancel: "Cancel"
