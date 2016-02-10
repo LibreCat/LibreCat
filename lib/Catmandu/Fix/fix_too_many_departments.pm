@@ -20,10 +20,10 @@ sub fix {
             	push @$delete_em, $full_dep->{tree}->[1]->{_id};
             }
         }
-        
+
         foreach my $del (@$delete_em){
         	my ($index) = grep { $data->{department}->[$_]->{_id} eq $del } 0..$#{$data->{department}};
-        	if($index){
+        	if(defined $index){
         		splice(@{$data->{department}}, $index, 1);
         	}
         }
