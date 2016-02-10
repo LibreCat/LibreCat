@@ -14,10 +14,14 @@ person()
 volume_sort()
 
 if exists(department)
-  copy_field(department.*._id,department.*.tmp)
-  lookup_in_store(department.*.tmp, search, bag:department)
-  move_field(department.*.tmp.tree, department.*.tree)
-  remove_field(department.*.tmp)
+  do list(path:department, var:loop)
+    do identity()
+      copy_field(loop._id,loop.tmp)
+      lookup_in_store(loop.tmp, search, bag:department)
+      move_field(loop.tmp.tree, loop.tree)
+      remove_field(loop.tmp)
+    end
+  end
 end
 fix_too_many_departments()
 
