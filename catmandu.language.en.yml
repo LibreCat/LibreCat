@@ -436,7 +436,7 @@ forms:
           label: "Status"
           label_short: "Status"
       dropzone: &dropzone
-        label: "<strong>Upload Main File and Supplementary Material</strong> (max. 1000MB per file)"
+        label: "<strong>Upload Main File and Supplementary Material</strong> (max. 500MB per file)"
         dropzone_text: "Drop files here to upload ... or click!"
         access_level: "Access Level:"
         upload_date: "Upload Date:"
