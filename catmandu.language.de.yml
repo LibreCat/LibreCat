@@ -1289,8 +1289,8 @@ forms:
       external_file:
         label: "Externe Datei(en)"
         checkbox: "Dateien verfügbar unter"
-      dropzone: &dropzone
-        label: "<strong>Datei(en) hochladen</strong> (max. 1000MB per file)"
+      dropzone:
+        label: "<strong>Datei(en) hochladen</strong> (max. 500MB per file)"
         dropzone_text: "Datei hier her ziehen... oder klicken!"
         access_level: "Access Level:"
         upload_date: "Upload Datum:"

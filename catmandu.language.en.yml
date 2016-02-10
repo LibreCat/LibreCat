@@ -1290,8 +1290,8 @@ forms:
       external_file:
         label: "External File(s)"
         checkbox: "Files available at"
-      dropzone: &dropzone
-        label: "<strong>Upload File(s)</strong> (max. 1000MB per file)"
+      dropzone:
+        label: "<strong>Upload File(s)</strong> (max. 500MB per file)"
         dropzone_text: "Drop files here to upload ... or click!"
         access_level: "Access Level:"
         upload_date: "Upload Date:"
