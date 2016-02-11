@@ -12,7 +12,7 @@ use Dancer::Plugin::Catmandu::OAI;
 use Dancer::Plugin::Catmandu::SRU;
 use Catmandu::Fix;
 use App::Helper;
-use Citation;
+use LibreCat::Citation;
 
 =head2 GET /sru
 
@@ -63,7 +63,7 @@ get '/livecitation' => sub {
 
     my $pub = h->publication->get($params->{id});
 
-    my $response = Citation->new(styles => [$params->{style}], debug => $debug)
+    my $response = LibreCat::Citation->new(styles => [$params->{style}], debug => $debug)
         ->create($pub)->{$params->{style}};
 
     if($debug){

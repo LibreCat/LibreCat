@@ -1,4 +1,29 @@
-package Citation;
+package LibreCat::Citation;
+
+=head1 NAME
+
+LibreCat::Citation - creates citations via a CSL engine or template
+
+=head1 SYNOPSIS
+
+	use LibreCat::Citation;
+
+	my $data = {};
+	my $styles = LibreCat::Citation->new(all => 1)->create($data);
+	# or
+	LibreCat::Citation->new(style => 'apa')->creat($data);
+
+=head1 CONFIGURATION
+
+	# catmandu.yml
+	citation:
+	  engine: template
+	  template:
+	    template_path: views/citation.tt
+	  csl:
+	    url: ...
+
+=cut
 
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
