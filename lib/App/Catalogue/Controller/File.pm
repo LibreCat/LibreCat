@@ -35,7 +35,7 @@ sub handle_file {
 
 	if(!$previous_pub){
 		foreach my $fi (@{$pub->{file}}){
-      $fi = encode("utf8",$fi);
+            $fi = encode("utf8",$fi);
 			$fi = decode_json($fi);
 			$fi->{file_id} = h->new_record('publication') if !$fi->{file_id};
 			my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
@@ -60,11 +60,10 @@ sub handle_file {
 	}
 	else{
 		foreach my $fi (@{$pub->{file}}){
-			#if(ref $fi eq "HASH" and $fi->{file_json}){
-			#	$fi = $fi->{file_json};
-			#}
-      $fi = encode("utf8", $fi);
-      $fi = decode_json($fi);
+            if(ref $fi ne "HASH"){
+                $fi = encode("utf8", $fi);
+                $fi = decode_json($fi);
+            }
 
 			#update of existing file
 			if($fi->{file_id}){
@@ -89,8 +88,7 @@ sub handle_file {
 					delete $fi->{tempid} if $fi->{tempid};
 					delete $fi->{tempname} if $fi->{tempname};
 					delete $fi->{old_file_name} if $fi->{old_file_name};
-          delete $fi->{file_json} if $fi->{file_json};
-					#$fi->{file_json} = encode_json($fi);
+                    delete $fi->{file_json} if $fi->{file_json};
 				}
 				else {
 					# looks like it wasn't an existing file after all
@@ -125,8 +123,7 @@ sub handle_file {
 				delete $fi->{tempid} if $fi->{tempid};
 				delete $fi->{tempname} if $fi->{tempname};
 				delete $fi->{old_file_name} if $fi->{old_file_name};
-        delete $fi->{file_json} if $fi->{file_json};
-				#$fi->{file_json} = encode_json($fi);
+                delete $fi->{file_json} if $fi->{file_json};
 			}
 		}
 
