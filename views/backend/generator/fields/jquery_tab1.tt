@@ -362,7 +362,7 @@ $(function() {
 
   $( "#connect_autocomplete" ).autocomplete({
     source: puburl,
-    minLength: 2,
+    minLength: 0,
     messages: {
 	    noResults: '',
 	    results: function() {}

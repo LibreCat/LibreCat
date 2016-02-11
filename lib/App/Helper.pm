@@ -138,8 +138,10 @@ sub extract_params {
 
 	# autocomplete functionality
 	if($params->{term}){
-		my $search_terms = join("* AND ", split(" ",$params->{term})) . "*";
-		push @{$p->{q}}, "title=(" . $search_terms . ") OR person=(" . $search_terms . ") OR id=(" . $search_terms . ")";
+		my $search_terms = join("* AND ", split(" ",$params->{term})) . "*" if $params->{term} !~ /^\d{1,}$/;
+		my $search_id = $params->{term} if $params->{term} =~ /^\d{1,}$/;
+		push @{$p->{q}}, "title=(" . lc $search_terms . ") OR person=(" . lc $search_terms . ")" if $search_terms;
+		push @{$p->{q}}, "id=$search_id OR person=$search_id" if $search_id;
 		$p->{fmt} = $params->{fmt};
 	}
 	else {
