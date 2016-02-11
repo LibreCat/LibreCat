@@ -19,7 +19,7 @@ get qr{/project/(P\d+)/*} => sub {
     my ($id) = splat;
     my $proj = h->project->get($id);
 
-    my $pub = h->publication->search(cql_query => "project=$id", limit => 100);
+    my $pub = h->publication->search(cql_query => "project=$id AND status=public", limit => 100);
     $proj->{project_publication} = $pub;
 
     template 'project/project', $proj;

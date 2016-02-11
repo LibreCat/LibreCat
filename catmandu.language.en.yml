@@ -436,7 +436,7 @@ forms:
           label: "Status"
           label_short: "Status"
       dropzone: &dropzone
-        label: "<strong>Upload Main File and Supplementary Material</strong> (max. 1000MB per file)"
+        label: "<strong>Upload Main File and Supplementary Material</strong> (max. 500MB per file)"
         dropzone_text: "Drop files here to upload ... or click!"
         access_level: "Access Level:"
         upload_date: "Upload Date:"
@@ -1290,8 +1290,8 @@ forms:
       external_file:
         label: "External File(s)"
         checkbox: "Files available at"
-      dropzone: &dropzone
-        label: "<strong>Upload File(s)</strong> (max. 1000MB per file)"
+      dropzone:
+        label: "<strong>Upload File(s)</strong> (max. 500MB per file)"
         dropzone_text: "Drop files here to upload ... or click!"
         access_level: "Access Level:"
         upload_date: "Upload Date:"
@@ -1642,6 +1642,7 @@ forms:
   form_relmat_link: "Link a publication from an external website to this record."
   confirm_return: "Are you sure you want to return this record from public view?"
   confirm_delete: "Are you sure you want to delete this record?"
+  confirm_submit: "You are submitting your data. Once we have checked it, we will make it public."
   button:
     back: "Back"
     cancel: "Cancel"

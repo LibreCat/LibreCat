@@ -4,7 +4,7 @@
 $(document).ready(function(){
 	Dropzone.options.qaeUpload = {
 		url: '/librecat/upload',
-		maxFileSize: 1000,
+		maxFilesize: 500,
 		maxFiles: 1,
 		previewTemplate: "<span></span>",
 	    params: {access_level: "open_access", accept: 1, quickandeasy: 1},
@@ -37,7 +37,7 @@ $(document).ready(function(){
 
 	Dropzone.options.uploadFiles = {
 	    url: '/librecat/upload',
-	    maxFileSize: 1000,
+	    maxFilesize: 500,
 	    previewTemplate: '<div class=\"col-md-11 dz-preview dz-file-preview\"></div>',
 	    createImageThumbnails: false,
 
@@ -127,7 +127,7 @@ $(document).ready(function(){
 
 	Dropzone.options.thesesUpload = {
 		url: '/librecat/thesesupload',
-		maxFileSize: 1000,
+		maxFilesize: 500,
 		maxFiles: 1,
 		previewTemplate: "<span></span>",
 		previewsContainer: '#theses_dz_preview',

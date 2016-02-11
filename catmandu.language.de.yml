@@ -435,7 +435,7 @@ forms:
           label: "Status"
           label_short: "Status"
       dropzone: &dropzone
-        label: "<strong>Upload für Volltext und Anhänge/ Zusatzmaterialien</strong> (max. 1000MB pro Datei)"
+        label: "<strong>Upload für Volltext und Anhänge/ Zusatzmaterialien</strong> (max. 500MB pro Datei)"
         dropzone_text: "Datei hier her ziehen... oder klicken!"
         access_level: "Access Level:"
         upload_date: "Upload Datum:"
@@ -1289,8 +1289,8 @@ forms:
       external_file:
         label: "Externe Datei(en)"
         checkbox: "Dateien verfügbar unter"
-      dropzone: &dropzone
-        label: "<strong>Datei(en) hochladen</strong> (max. 1000MB per file)"
+      dropzone:
+        label: "<strong>Datei(en) hochladen</strong> (max. 500MB per file)"
         dropzone_text: "Datei hier her ziehen... oder klicken!"
         access_level: "Access Level:"
         upload_date: "Upload Datum:"
@@ -1638,6 +1638,7 @@ forms:
   form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf [+] wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
   confirm_return: "Möchten Sie diesen Datensatz wirklich zurückstellen und damit von öffentlichen Publikationsliste entfernen?"
   confirm_delete: "Möchten Sie diesen Datensatz wirklich löschen?"
+  confirm_submit: "Sie senden Ihre Daten jetzt an uns. Nachdem wir die Metadaten überprüft haben, werden wir den Datensatz public stellen."
   button:
     back: "Zurück"
     cancel: "Abbrechen"
