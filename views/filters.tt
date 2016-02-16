@@ -1,11 +1,12 @@
 [% qp = {} -%]
 [% qp = h.extract_params -%]
 [% pd = {} -%]
-[% lang = session.lang ? session.lang : h.config.default_lang -%]
-[% lf = h.config.language.$lang -%]
 [% IF embed AND qp.ttyp %]
   [% pd = h.is_portal_default(qp.ttyp) -%]
+[% ELSE %]
+  [% lang = session.lang ? session.lang : h.config.default_lang -%]
 [% END %]
+[% lf = h.config.language.$lang -%]
 
 <!-- BEGIN filters.tt -->
 
@@ -139,7 +140,7 @@
     <ul id="style_[% tabmodus %][% menu %]" class="collapse">
       [% FOREACH dstyle IN h.config.citation.csl.styles %]
         [% IF dstyle == style %]
-        <li>[% dstyle %]</li>
+        <li><span class="text-muted">[% dstyle %]</span></li>
         [% ELSE %]
         <li><a href="[% h.newuri_for("$path", qp, style="$dstyle") %]" rel="nofollow">[% dstyle %]</a></li>
         [% END %]
