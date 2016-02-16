@@ -341,7 +341,10 @@ publicationTypes:
         series_title: &series_title
           mandatory: 0
           multiple: 0
-        volume_issue_page: &volume_issue_page
+        volume_issue_page: &volume_issue_page_number
+          options:
+            - page_range
+            - article_number
           multiple: 0
           mandatory: 0
         publication_identifier: *publication_identifier
@@ -378,7 +381,7 @@ publicationTypes:
         place: *place
         publisher: *publisher
         series_title: *series_title
-        volume_issue_page: *volume_issue_page
+        volume_issue_page: *volume_issue_page_number
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         conference.divider:
@@ -419,7 +422,7 @@ publicationTypes:
         department: *department
         project: *project
         research_group: *research_group
-        volume_issue_page: *volume_issue_page
+        volume_issue_page: *volume_issue_page_number
         publication:
           mandatory: 0
         series_title: *series_title
@@ -529,12 +532,7 @@ publicationTypes:
         publisher: *publisher
         publication: &publication_jtitle
           mandatory: 1
-        volume_issue_page: &volume_issue_page_number
-          options:
-            - page_range
-            - article_number
-          multiple: 0
-          mandatory: 0
+        volume_issue_page: *volume_issue_page_number
         year_extern: *year_extern
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
@@ -578,7 +576,7 @@ publicationTypes:
         year_extern: *year_extern
         alternative_title: *alternative_title
         publication: *publication_jtitle
-        volume_issue_page:
+        volume_issue_page: &volume_issue_page
           multiple: 0
           mandatory: 0
         publication_status_language: *publication_status_language
@@ -875,7 +873,7 @@ publicationTypes:
           mandatory: 0
         series_title:
           mandatory: 0
-        volume_issue_page: *volume_issue_page
+        volume_issue_page: *volume_issue_page_number
         publication_identifier: *publication_identifier
         publication_status: *publication_status
         year_extern: *year_extern
