@@ -10,6 +10,24 @@
 </dl>
 [% END %]
 
+[% FOREACH tr IN translator %]
+  [% IF loop.first %]
+  <div class="row">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.translator.label || lf.forms.$type.field.translator_secondary.label %]</div>
+    <div class="col-lg-10 col-md-9">
+  [% ELSE %];[% END %]
+  [% IF tr.id %]<a itemprop="author" href="/person/[% tr.id %]">[% tr.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span itemprop="author">[% tr.full_name %]</span>[% END %]
+  [% IF loop.count > 11 %]
+    <span id="showAut">
+      <br><a href="#details" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>[% lf.frontdoor.show_all %]</a>
+    </span>
+    </div>
+  </div>
+  [% LAST %]
+  [% END %]
+  [% IF loop.last %]</div></div>[% END %]
+[% END %]
+
 [% first_author = '' %]
 [% FOREACH au IN author %]
   [% IF loop.first %]
