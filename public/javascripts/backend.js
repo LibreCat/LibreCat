@@ -573,12 +573,12 @@ function remove_field(object){
 				  var newid = $(this).attr('id').replace(/\d+/g,newindex);
 				  $(this).attr('id', newid);
 			  }
-			  
+
 			  if($(this).attr('name')){
 				  var newname = $(this).attr('name').replace(/\d+/g,newindex);
 				  $(this).attr('name', newname);
 			  }
-			  
+
 			  if($(this).attr('onfocus')){
 				  var newattr = $(this).attr('onfocus').replace(/\d+/g,newindex);
 				  $(this).attr('onfocus', newattr);
@@ -615,12 +615,12 @@ function full_remove_field(object){
 				  var newid = $(this).attr('id').replace(/\d+/g,newindex);
 				  $(this).attr('id', newid);
 			  }
-			  
+
 			  if($(this).attr('name')){
 				  var newname = $(this).attr('name').replace(/\d+/g,newindex);
 				  $(this).attr('name', newname);
 			  }
-			  
+
 			  if($(this).attr('onfocus')){
 				  var newattr = $(this).attr('onfocus').replace(/\d+/g,newindex);
 				  $(this).attr('onfocus', newattr);

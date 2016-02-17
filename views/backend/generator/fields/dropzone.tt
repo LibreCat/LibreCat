@@ -4,7 +4,7 @@
     [% lf.$type.field.dropzone.label %]
   </div>
 </div>
-  
+
 <div class="row innerrow">
   <div class="dropzone alert alert-warning col-md-10" id="uploadFiles">
     <div class="fallback">
@@ -15,7 +15,7 @@
       </div>
       <div class="col-md-7">&nbsp;</div>
     </div>
-    
+
     [% IF file %]
     [% FOREACH fi IN file.nsort('file_order') %]
       <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.file_id %]">
@@ -41,16 +41,16 @@
             [% IF fi.request_a_copy %]
             [% lf.$type.field.dropzone.access.request_a_copy %]
             [% END %]
-            
+
             [% CASE "local" %]
             [% lf.$type.field.dropzone.access.local %]
             [% IF fi.embargo %]
             <br />([% lf.$type.field.dropzone.access.until %] [% fi.embargo %])
             [% END %]
-            
+
             [% CASE "open_access" %]
             [% lf.$type.field.dropzone.access.open_access %]
-            
+
             [% END %]
           </div>
           <div class="col-xs-3" id="updated_[% fi.file_id %]">
@@ -68,13 +68,13 @@
         <div class="corner_down" id="cordown_[% fi.file_id %]" onclick="javascript:edit_file('[% fi.file_id %]', '[% _id %]');"><a href="#" onclick="return false;"><span class="glyphicon glyphicon-pencil"></span></a></div>
         [% END %]
 
-        <input type="hidden" id="file_[% fi.file_id %]" name="file" value='[% fi.json %]' />
+        <input type="hidden" id="file_[% fi.file_id %]" name="file" value="[% fi.json | html %]" />
       </div>
     [% END %]
     [% END %]
   </div>
-    
-  <div class="col-md-2">  
+
+  <div class="col-md-2">
     <span id="sortFilesInput">
     [% FOREACH fi IN file.nsort('file_order') %]
       <input type="hidden" name="file_order" id="file_order_[% fi.file_id %]" value="[% fi.file_id %]" />
