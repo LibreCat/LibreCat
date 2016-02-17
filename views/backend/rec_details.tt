@@ -2,14 +2,6 @@
 <!-- BEGIN backend/rec_details.tt -->
 
 <div id="[% tabmodus %]_[% entry.item('_id') %]" class="collapse margin-top1-4">
-[% IF session.role == "super_admin" %]
-  <div class="col-md-12">
-    <div class="col-md-2 text-muted">Title (admin)</div>
-    <div class="col-md-10">
-      [% entry.title %]
-    </div>
-  </div>
-[% END %]
 
 [% IF entry.author %]
   <div class="col-md-12">
