@@ -143,6 +143,74 @@ pubbwlde:
   ttyp: pubbwl
   fmt: html
 
+pubcitec:
+  q:
+    -
+      param: department
+      op: '='
+      or: 8014655
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
+  lang: en
+  limit: 10
+  ttyp: pubcitec
+  fmt: html
+
+pubcitecde:
+  q:
+    -
+      param: department
+      op: '='
+      or: 8014655
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
+  lang: de
+  limit: 10
+  ttyp: pubcitecde
+  fmt: html
+
+pubcorlab:
+  q:
+    -
+      param: department
+      op: '='
+      or: 5408013
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
+  lang: en
+  limit: 10
+  ttyp: pubcorlab
+  fmt: html
+
+pubcogimon:
+  q:
+    -
+      param: project
+      op: '='
+      or: 'P486'
+  lang: en
+  limit: 10
+  ttyp: pubcogimon
+  fmt: html
+
 pubipaed:
   q:
     -
@@ -768,3 +836,4 @@ pubwiwide:
   limit: 5
   ttyp: pubwiwide
   fmt: html
+  
