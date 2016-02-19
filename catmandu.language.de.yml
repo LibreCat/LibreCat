@@ -538,19 +538,17 @@ forms:
         placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
       related_material.select: "Art des Zusatzmaterials wählen &hellip;"
       related_material.link: &related_material_link
-        label: "Link zu externer Quelle"
-        label_short: "Ext. Link"
+        label: "Link und Relation<br />zu externer Quelle"
+        label_short: "Externe Quelle"
         url:
           label_short: "URL"
-          placeholder: "URL der Quelle (Eingabe mit http://)"
+          placeholder: "URL der externen Quelle (Eingabe mit http://)"
         title:
           label_short: "Titel"
-          placeholder: "Titel der Quelle"
-        description:
-          label_short: "Beschreibung"
-          placeholder: "Beschreibung"
-        button:
-          label: "Hinzufügen"
+          placeholder: "Titel der externen Quelle"
+        relation:
+          label_short: "Quelle ist"
+          label: "Externe Quelle ist"
       locked: &locked
         label: "Locked for editing (except for admins)"
         label_short: "Locked"

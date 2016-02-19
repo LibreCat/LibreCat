@@ -200,7 +200,7 @@
       <div class="col-md-12">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#details" data-toggle="tab">[% lf.frontdoor.tabs.details.label %]</a></li>
-          [% IF mainFile AND mainFile.0.file_name %]
+          [% IF mainFile AND mainFile.0.file_name OR relFile.size %]
           <li><a href="#fileDetails" data-toggle="tab">[% lf.frontdoor.tabs.file_details.label %]</a></li>
           [% END %]
 
@@ -232,7 +232,7 @@
           <li><a href="#confletter" data-toggle="tab">[% lf.frontdoor.tabs.confirmation_letter.label %]</a>
           [% END %]
 
-          [% IF relMat.size OR relLink.size OR relFile.size OR relToc.size %]
+          [% IF relMat.size OR relLink.size OR relToc.size %]
           <li><a href="#relMat" data-toggle="tab">[% lf.frontdoor.tabs.related_material %]</a></li>
           [% END %]
 
@@ -258,7 +258,7 @@
 
           [% PROCESS frontdoor/tab_details.tt %]
 
-          [% IF mainFile AND mainFile.0.file_name %] [% PROCESS frontdoor/tab_filedetails.tt %] [% END %]
+          [% IF mainFile AND mainFile.0.file_name OR relFile.size %] [% PROCESS frontdoor/tab_filedetails.tt %] [% END %]
 
           [% IF relPubl %] [% PROCESS frontdoor/tab_relpubl.tt %] [% END %]
 
@@ -272,7 +272,7 @@
 
           [% IF epmc_ref %] [% PROCESS frontdoor/tab_ebi_ref.tt %] [% END %]
 
-          [% IF relMat.size OR relLink.size OR relFile.size OR relToc.size %]
+          [% IF relMat.size OR relLink.size OR relToc.size %]
             [% PROCESS frontdoor/tab_relmat.tt %]
           [% END %]
 

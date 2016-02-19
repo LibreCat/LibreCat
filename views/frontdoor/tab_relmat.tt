@@ -19,21 +19,6 @@
       <div>&nbsp;</div>
     [% END %]
 
-    [% IF relFile.size %]
-      <div class="col-md-2 text-muted">
-        File
-      </div>
-      <div class="col-md-10">
-        [% FOREACH fi IN relFile %]
-          [% INCLUDE frontdoor/oa_lock.tt %] <a href="/download/[% _id %]/[% fi.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF fi.description %]<em>Description:</em><br>[% fi.description %]<br><br>[% END %]<em>Filename:</em><br>[% fi.file_name %]">[% fi.title ? fi.title : fi.file_name %]</a> [% INCLUDE frontdoor/modal_requestcopy.tt %]<br>
-          <script>
-            $('a.description').tooltip();
-          </script>
-        [% END %]
-      </div>
-      <div>&nbsp;</div>
-    [% END %]
-
     [% IF relLink.size %]
       <div class="col-md-2 text-muted">
         Link

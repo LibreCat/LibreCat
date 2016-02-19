@@ -539,19 +539,17 @@ forms:
         placeholder: "Start typing to search your publications."
       related_material.select: "Select type of related material"
       related_material.link: &related_material_link
-        label: "Link to external source"
-        label_short: "Ext. Link"
+        label: "Link and relation<br />to external source"
+        label_short: "External Source"
         url:
           label_short: "URL"
-          placeholder: "URL of external link (enter with http://)"
+          placeholder: "URL of external source (enter with http://)"
         title:
           label_short: "Title"
-          placeholder: "Title of external link"
-        description:
-          label_short: "Description"
-          placeholder: "Description of external link"
-        button:
-          label: "Add"
+          placeholder: "Title of external source"
+        relation:
+          label_short: "Source is"
+          label: "External source is"
       locked: &locked
         label: "Locked for editing (except for admins)"
         label_short: "Locked"

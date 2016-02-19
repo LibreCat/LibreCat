@@ -388,28 +388,3 @@ $(function() {
     },
   });
 });
-
-$('#add_relurl').click(function(){
-  var url = $('#relurl_url').val();
-  var title = $('#relurl_title').val();
-  var description = $('#relurl_description').val();
-
-  if(!url){
-    $('#relurl_url').parent().addClass('has-error');
-  }
-  if(!title){
-    $('#relurl_title').parent().addClass('has-error');
-  }
-
-  if(url && title){
-    $('#relurl_title').parent().removeClass('has-error');
-    $('#relurl_url').parent().removeClass('has-error');
-
-    var index = $('#url div.innerrow').length;
-
-    $('#url').append('<div class="col-md-10 col-xs-12 col-md-offset-2"><div class="row innerrow"><div class="col-xs-3"><select class="relurl form-control" name="related_material.link.' + index + '.relation">[% FOREACH key IN h.config.lists.relations_link %]<option value="[% key.relation %]">[% key.link_text %]</option>[% END %]</select></div><div class="col-md-7 col-xs-9"><div class="form-group col-xs-9"><span class="glyphicon glyphicon-link"></span> <a href="' + url + '" target="_blank">' + title + '</a><br /><span class="text-muted">' + description + '</span><input type="hidden" name="related_material.link.' + index + '.url" value="' + $('#relurl_url').val() + '" /><input type="hidden" name="related_material.link.' + index + '.title" value="' + $('#relurl_title').val() + '" /><input type="hidden" name="related_material.link.' + index + '.description" value="' + $('#relurl_description').val() + '" /></div><div class="col-xs-1"><button role="button" class="btn btn-default"><span class="glyphicon glyphicon-minus connect"></span></button></div></div></div>');
-    $('#relurl_url').val('');
-    $('#relurl_title').val('');
-    $('#relurl_description').val('');
-  }
-});

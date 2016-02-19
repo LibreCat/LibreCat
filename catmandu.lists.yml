@@ -262,12 +262,12 @@ relations_link:
     relation: "part_of_dissertation"
     opposite: "dissertation_contains"
     relation_text: "Part of dissertation (PUB record)"
-    link_text: "Part of dissertation/PUB record"
+    link_text: "Article in this dissertation"
   -
     relation: "dissertation_contains"
     opposite: "part_of_dissertation"
     relation_text: "Dissertation containing (PUB record)"
-    link_text: "Article in this dissertation/PUB record"
+    link_text: "Dissertation containing PUB record"
   -
     relation: "old_edition"
     opposite: "new_edition"
