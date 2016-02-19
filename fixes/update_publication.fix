@@ -1,12 +1,12 @@
 # fix publication data at update
 
 #vacuum()
+compact_array('department')
+compact_array('project')
 delete_empty()
 publication_identifier()
 page_range_number()
 hash_array()
-compact_array('department')
-compact_array('project')
 clean_abstract()
 #language()
 maybe_add_urn()
