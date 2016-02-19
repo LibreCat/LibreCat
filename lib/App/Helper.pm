@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
 use Catmandu::Util qw(:io :is :array :human trim);
 use Catmandu::Fix qw(expand);
+use Catmandu::Store::DBI;
 use Dancer qw(:syntax vars params request);
 use Dancer::FileUtils qw(path);
 use Hash::Merge::Simple qw(merge);
@@ -23,6 +24,17 @@ sub bag {
 
 sub backup_publication {
 	state $bag = Catmandu->store('backup')->bag('publication');
+}
+
+sub backup_publication_static {
+	my ($self) = @_;
+	my $backup = Catmandu::Store::DBI->new(
+        'data_source' => $self->config->{store}->{backup}->{options}->{data_source},
+        username => $self->config->{store}->{backup}->{options}->{username},
+        password => $self->config->{store}->{backup}->{options}->{password},
+        bags => { publication => { plugins => ['Versioning'] }},
+    );
+	state $bag = $backup->bag('publication');
 }
 
 sub backup_project {

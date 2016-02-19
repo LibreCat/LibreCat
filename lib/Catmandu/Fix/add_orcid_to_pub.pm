@@ -9,12 +9,12 @@ Catmandu->load(':up');
 
 sub fix {
     my ($self, $data) = @_;
-    
+
     my $hits = h->search_publication({
     	q => ["person=$data->{_id}"],
     	limit => 1000,
     });
-    
+
     $hits->each(sub {
     	my $hit = $_[0];
     	if($hit->{author}){
@@ -31,7 +31,7 @@ sub fix {
     			}
     		}
     	}
-    	my $saved = h->backup_publication->add($hit);
+    	my $saved = h->backup_publication_static->add($hit);
     	h->publication->add($saved);
     	h->publication->commit;
     });
