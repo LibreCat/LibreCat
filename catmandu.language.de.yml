@@ -277,8 +277,10 @@ frontdoor:
     file_details:
       label: "Dateien"
       name: "Name"
+      relation: "Relation (zum PUB-Eintrag)"
       title: "Titel"
       description: "Beschreibung"
+      url: "URL"
       access_level:
         label: "Access Level"
         open_access: "Open Access"
@@ -308,7 +310,7 @@ frontdoor:
     confirmation_letter:
       label: "Bestätigungsschreiben"
       confirmation: "Bestätigung"
-    related_material: "Zusatzmaterial"
+    related_material: "Links"
     external_data: "Externe Daten"
     cite_this: "Zitieren"
     export_search: "Export / Suche"

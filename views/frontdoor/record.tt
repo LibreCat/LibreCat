@@ -23,7 +23,6 @@
 [% relLinkRd = [] %]
 [% relLinkSw = [] %]
 [% relFile = [] %]
-[% relToc = [] %]
 [% IF external_id.pmid %]
   [% epmc_cit = h.get_metrics('epmc_citations',external_id.pmid) %]
   [% epmc_ref = h.get_metrics('epmc_references',external_id.pmid) %]
@@ -60,8 +59,6 @@
   [% SWITCH fi.relation %]
     [% CASE "confirmation" %]
     [% confLetter.push(fi) %]
-    [% CASE "table_of_contents" %]
-    [% relToc.push(fi) %]
     [% CASE "main_file" %]
     [% mainFile.push(fi) %]
     [% CASE "hidden" %]
@@ -200,7 +197,7 @@
       <div class="col-md-12">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#details" data-toggle="tab">[% lf.frontdoor.tabs.details.label %]</a></li>
-          [% IF mainFile AND mainFile.0.file_name OR relFile.size %]
+          [% IF file AND file.size %]
           <li><a href="#fileDetails" data-toggle="tab">[% lf.frontdoor.tabs.file_details.label %]</a></li>
           [% END %]
 
@@ -258,7 +255,7 @@
 
           [% PROCESS frontdoor/tab_details.tt %]
 
-          [% IF mainFile AND mainFile.0.file_name OR relFile.size %] [% PROCESS frontdoor/tab_filedetails.tt %] [% END %]
+          [% IF file AND file.size %] [% PROCESS frontdoor/tab_filedetails.tt %] [% END %]
 
           [% IF relPubl %] [% PROCESS frontdoor/tab_relpubl.tt %] [% END %]
 
