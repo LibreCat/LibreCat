@@ -18,7 +18,6 @@ sub list {
         state $io;
 
         unless (defined($io)) {
-            warn "l";
             open($io,"find $root -maxdepth 5 -name data -type d|");
         }
         

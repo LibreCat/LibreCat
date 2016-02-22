@@ -1,9 +1,10 @@
 #!/usr/bin/env perl
 
 use lib qw(./lib);
+use Catmandu;
 use Catmandu::Util;
 use App::Helper;
-use App::Validator::Publication;
+use App::Validator::Award;
 use Log::Log4perl;
 use Log::Any::Adapter;
 use Getopt::Long;
@@ -13,7 +14,7 @@ use namespace::clean;
 Log::Log4perl::init('log4perl.conf');
 Log::Any::Adapter->set('Log4perl');
 
-my $logger = Log::Log4perl->get_logger('publication_admin');
+my $logger = Log::Log4perl->get_logger('award_admin');
 my $h      = App::Helper::Helpers->new;
 
 my $cmd = shift;
@@ -42,20 +43,16 @@ else {
 exit($ret);
 
 sub cmd_list {
-    my $count = $h->publication->each(sub {
+    my $count = $h->award->each(sub {
         my ($item) = @_;
         my $id       = $item->{_id};
-        my $title    = $item->{title} // '---';
-        my $creator  = $item->{creator}->{login} // '---';
-        my $status   = $item->{status};
-        my $type     = $item->{ype};
+        my $title    = $item->{title};
+        my $type     = $item->{rec_type};
 
-        printf "%-2.2s %5d %-10.10s %-60.60s %-10.10s %s\n" 
-                    , " " # not use
+        printf "%-2.2s %5.5s %-40.40s %s\n" 
+                    , " " # not used
                     , $id
-                    , $creator
                     , $title
-                    , $status
                     , $type; 
     });
     print "count: $count\n";
@@ -68,7 +65,7 @@ sub cmd_get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = $h->get_publication($id);
+    my $data = $h->get_award($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -91,25 +88,25 @@ sub cmd_add {
 }
 
 sub _cmd_add {
-    my $data = shift;
-
-    my $validator = App::Validator::Publication->new;
+    my ($data) = @_;
+    
+    my $validator = App::Validator::Award->new;
 
     if ($validator->is_valid($data)) {
-         my $result = $h->update_record('publication', $data);
-         if ($result) {
-             print "added " . $data->{_id} . "\n";
-             return 0;
-         }
-         else {
-             print "ERROR: add " . $data->{_id} . " failed\n";
-             return 2; 
-         }
+        my $result = $h->update_record('award', $data);
+        if ($result) {
+            print "added " . $data->{_id} . "\n";
+            return 0;
+        }
+        else {
+            print "ERROR: add " . $data->{_id} . " failed\n";
+            return 2; 
+        }
     }
     else {
-         print STDERR "ERROR: not a valid researcher\n";
-         print STDERR join("\n",@{$validator->last_errors}) , "\n";
-         return 2;
+        print STDERR "ERROR: not a valid award\n";
+        print STDERR join("\n",@{$validator->last_errors}) , "\n";
+        return 2;
     }
 }
 
@@ -118,9 +115,9 @@ sub cmd_delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result = $h->delete_record('publication',$id);
+    my $result = $h->award->delete($id);
 
-    if ($result) {
+    if ($h->award->commit) {
         print "deleted $id\n";
         return 0;
     }
