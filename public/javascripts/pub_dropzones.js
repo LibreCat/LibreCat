@@ -165,7 +165,7 @@ $(document).ready(function(){
 	            var email = Dropzone.createElement("<div class='form-group'><label for='id_email' class='col-sm-2 control-label'>Email<span class='starMandatory'></span></label><div class='col-sm-10'><input type='email' class='form-control' id='id_email' placeholder='Email' name='email' required /></div></div>");
 	            form.appendChild(email);
 
-	            var title = Dropzone.createElement("<div class='form-group'><label for='id_title' class='col-sm-2 control-label'>Title<span class='starMandatory'></span></label><div class='col-sm-10'><input type='text' name='title' class='form-control' id='id_title' placeholder='Title' required /></div></div>");
+	            var title = Dropzone.createElement("<div class='form-group'><label for='id_title' class='col-sm-2 control-label'>Title<span class='starMandatory'></span></label><div class='col-sm-10'><input type='text' name='title' class='form-control' id='id_title' placeholder='Title (of your thesis)' required /></div></div>");
 	            form.appendChild(title);
 	            
 	            var ddc_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>DDC<span class='starMandatory'></span></label><div class='col-sm-10'><input type='text' name='ddc' class='form-control' placeholder='e.g. 006 (please check the DDC list above for the correct number)' required /></div></div>");
