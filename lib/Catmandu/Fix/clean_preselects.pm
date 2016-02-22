@@ -1,4 +1,4 @@
-package Catmandu::Fix::clean_abstract;
+package Catmandu::Fix::clean_preselects;
 
 use Catmandu::Sane;
 use Moo;
