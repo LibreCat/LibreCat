@@ -24,7 +24,7 @@
     [% ELSE %]
     [% FOREACH proj IN project %]
     <div class="row innerrow multirow">
-      <input type="hidden" name="project.[% loop.index %]._id" id="pj_idautocomplete_[% loop.index %]" value="[% proj.id %]" />
+      <input type="hidden" name="project.[% loop.index %]._id" id="pj_idautocomplete_[% loop.index %]" value="[% proj._id %]" />
       <input type="hidden" name="project.[% loop.index %].name" id="pj_nameautocomplete_[% loop.index %]" value="[% proj.name %]" />
       
       <div class="form-group col-md-10 col-xs-11">
