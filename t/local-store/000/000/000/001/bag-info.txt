@@ -1,6 +1,0 @@
-Payload-Oxum: 65.1
-Bagging-Date: 2015-12-14
-Bag-Size: 0.2 KB
-Archive-Id: 1
-Unix-Creation-Time: 0
-Unix-Modification-Time: 0

@@ -60,9 +60,6 @@ sub find_by_username {
     return;
 }
 
-sub can {
-}
-
 1;
 
 __END__
