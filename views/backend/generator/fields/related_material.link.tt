@@ -68,7 +68,7 @@
         </div>
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.related_material.item('related_material.link').mandatory %} mandatory{% END %}">
-            <textarea name="related_material.link.[% loop.index %].description" placeholder="[% lf.$type.field.item('related_material.link').description.placeholder %]" class="form-control sticky">[% rel_link.description %]</textarea>
+            <textarea name="related_material.link.[% loop.index %].description" placeholder="[% lf.$type.field.item('related_material.link').description.placeholder %]" class="form-control sticky">[% IF rel_link.title %][% rel_link.title %] [% END %][% rel_link.description %]</textarea>
             <!-- <input type="text" name="related_material.link.[% loop.index %].title" placeholder="[% lf.$type.field.item('related_material.link').title.placeholder %]" id="relurl_title" class="form-control sticky" value="[% rel_link.title %]" /> -->
             <div class="input-group-addon"></div>
           </div>
