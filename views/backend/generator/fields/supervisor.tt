@@ -88,8 +88,8 @@
         <script>
           $('#supervisor_Authorized[% loop.index %]').tooltip();
         </script>
-        <input type="hidden" id="supervisor_id_[% loop.index %]" name="supervisor.[% loop.index %].id" value="" />
-        <input type="hidden" id="supervisor_orcid_[% loop.index %]" name="supervisor.[% loop.index %].orcid" value="" />
+        <input type="hidden" id="supervisor_id_[% loop.index %]" name="supervisor.[% loop.index %].id" value="[% name.id %]" />
+        <input type="hidden" id="supervisor_orcid_[% loop.index %]" name="supervisor.[% loop.index %].orcid" value="[% name.orcid %]" />
         {% END %}
       </div>
       [% END %]
