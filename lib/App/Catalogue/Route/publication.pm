@@ -138,7 +138,7 @@ Checks if the user has the rights to update this record.
         $p = h->nested_params($p);
 
         my $old_status = $p->{status};
-        
+
 #        my $ip = request->address;
 #        if($ip and $ip eq "129.70.11.105"){
 #            return to_dumper $p;
@@ -364,7 +364,7 @@ Changes the layout of the edit form.
         Catmandu::Fix->new(fixes => [
             'publication_identifier()',
             'page_range_number()',
-            'clean_abstract()',
+            'clean_preselects()',
             'split_field(nasc, " ; ")',
             'split_field(genbank, " ; ")',
             'split_field(keyword, " ; ")',
