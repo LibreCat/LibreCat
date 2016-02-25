@@ -615,6 +615,7 @@ publicationTypes:
           mandatory: 1
         alternative_title: *alternative_title
         publication_status_language: *publication_status_language
+        publication_identifier: *publication_identifier
         locked: *locked
       file_upload: *file_upload
       supplementary_fields:

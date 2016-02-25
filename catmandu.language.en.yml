@@ -1067,6 +1067,7 @@ forms:
         label_short: "News. Title"
         placeholder: "e.g. The New York Times"
       publication_status_language: *publication_status_language
+      publication_identifier: *publication_identifier
       dropzone: *dropzone
       license: *license
       urn: *urn
