@@ -16,7 +16,7 @@
         [% IF (status != "public" AND status != "submitted" AND type != "researchData") OR (status == "submitted" AND session.role == "super_admin") OR (type == "researchData" AND session.role == "super_admin") %]
         <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-success change_tab"><span class="glyphicon glyphicon-upload"></span> [% lf.button.publish %]</button>
         [% END %]
-        [% IF type == "researchData" AND session.role != "super_admin" %]
+        [% IF type == "researchData" AND session.role != "super_admin" AND status != "public" AND status != "submitted" %]
         <button type="submit" name="finalSubmit" value="recSubmit" onclick="return confirm('[% lf.confirm_submit %]');" class="btn btn-success change_tab"><span class="glyphicon glyphicon-upload"></span> [% lf.button.submitted %]</button>
         [% END %]
         [% IF status == "public" AND (type != "researchData" OR (type == "researchData" AND session.role == "super_admin")) %]
