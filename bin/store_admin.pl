@@ -18,7 +18,7 @@ Log::Any::Adapter->set('Log4perl');
 my $logger     = Log::Log4perl->get_logger('store_admin');
 
 my $file_store = 'BagIt';
-my $file_opt   = { root => '/data2/librecat/file_uploads' };
+my $file_opt   = { root => '/data2/librecat/bag_uploads' };
 
 GetOptions(
     "file_store|f=s" => \$file_store ,
@@ -113,7 +113,11 @@ sub cmd_add {
 
     my $container = $store->get($key);
 
-    croak "add - failed to find $key" unless $container;
+    unless ($container) {
+        $container = $store->add($key);
+    }
+
+    croak "add - failed to find or create $key" unless $container;
 
     my ($name,$path,$suffix) = fileparse($file);
 
