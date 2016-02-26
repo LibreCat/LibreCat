@@ -1066,6 +1066,7 @@ forms:
         label_short: "Zeit.titel"
         placeholder: "z.B. The New York Times"
       publication_status_language: *publication_status_language
+      publication_identifier: *publication_identifier
       dropzone: *dropzone
       license: *license
       urn: *urn
