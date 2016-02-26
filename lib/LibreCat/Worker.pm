@@ -5,8 +5,10 @@ LibreCat::Worker - a base class for workers
 =head1 SYNOPSIS
 
     package MyWorker;
+
     use Moo;
     with 'LibreCat::Worker';
+
     sub do_work {
         say "I'm working";
     }

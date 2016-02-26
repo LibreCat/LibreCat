@@ -8,11 +8,11 @@ App::Catalogue::Route::admin - Route handler for admin actions
 
 use Catmandu::Sane;
 use Catmandu::Util qw(trim);
+use App::bmkpasswd qw(mkpasswd);
 use Dancer ':syntax';
 use App::Helper;
 use App::Catalogue::Controller::Importer;
 use Dancer::Plugin::Auth::Tiny;
-use Dancer::Plugin::Passphrase;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -87,9 +87,7 @@ Saves the data in the authority database.
         my $p = params;
 
         $p = h->nested_params($p);
-        if ($p->{password}) {
-            $p->{password} = passphrase($p->{password})->generate->rfc2307();
-        }
+        $p->{password} = mkpasswd($p->{password});
 
         h->update_record('researcher', $p);
         template 'admin/account';

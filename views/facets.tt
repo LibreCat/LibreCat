@@ -194,13 +194,13 @@
 </ul>
 [% END %]
 
-[% IF facets.popular_science.terms.size > 0
-   OR facets.extern.terms.size > 0
-   OR facets.open_access.terms.size > 0
-   OR facets.isi.terms.size > 0
-   OR facets.pmid.terms.size > 0 %]
+[% IF (facets.popular_science.terms.size || 0) > 0
+   OR (facets.extern.terms.size || 0) > 0
+   OR (facets.open_access.terms.size || 0) > 0
+   OR (facets.isi.terms.size || 0) > 0
+   OR (facets.pmid.terms.size || 0) > 0 %]
 <ul class="nav nav-tabs nav-stacked margin-top1 ul2 helpme" data-placement="left">
-  [% IF facets.popular_science.terms.size > 0 %]
+  [% IF (facets.popular_science.terms.size || 0) > 0 %]
   <li class="ul2li1">
     [% FOREACH t IN facets.popular_science.terms %]
       [% IF t.count < total %]
@@ -212,7 +212,7 @@
   </li>
   [% END %]
 
-  [% IF facets.extern.terms.size > 0 %]
+  [% IF (facets.extern.terms.size || 0) > 0 %]
   <li class="ul2li2">
     [% FOREACH t IN facets.extern.terms %]
       [% IF t.count < total %]
@@ -224,7 +224,7 @@
   </li>
   [% END %]
 
-  [% IF facets.open_access.terms.size > 0 %]
+  [% IF (facets.open_access.terms.size || 0) > 0 %]
   <li class="ul2li3">
     [% FOREACH t IN facets.open_access.terms %]
       [% IF t.count < total %]
@@ -236,7 +236,7 @@
   </li>
   [% END %]
 
-  [% IF facets.isi.terms.size > 0 OR facets.pmid.terms.size > 0 %]
+  [% IF (facets.isi.terms.size || 0) > 0 OR (facets.pmid.terms.size || 0) > 0 %]
   <li class="ul2li4">
   <button data-toggle="collapse" data-target="#extid_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.indexed_in %]</button>
   <div class="facettecollapse">
