@@ -16,14 +16,17 @@ has namespace   => (is => 'ro' , default => sub { 'demo' });
 has dsnamespace => (is => 'ro' , default => sub { 'DS' } );
 has md5enabled  => (is => 'ro' , default => sub { '1'} );
 has versionable => (is => 'ro' , default => sub { '0'} );
+has purge       => (is => 'ro' , default => sub { '0'} );
 has fedora      => (is => 'lazy') ;
 
 sub _build_fedora {
     my ($self) = @_;
     my $fedora = Catmandu::FedoraCommons->new($self->url,$self->user,$self->password);
+    $fedora->{namespace}   = $self->namespace;
     $fedora->{dsnamespace} = $self->dsnamespace;
     $fedora->{md5enabled}  = $self->md5enabled;
     $fedora->{versionable} = $self->versionable;
+    $fedora->{purge}       = $self->purge;
     $fedora;
 }
 
@@ -37,7 +40,7 @@ sub list {
         state $ns_prefix = $self->namespace;
          
         if( ! defined $hits) {
-            my $res = $fedora->findObjects( query => "pid~${ns_prefix}*" );
+            my $res = $fedora->findObjects( query => "pid~${ns_prefix}* state=A" );
             unless ($res->is_ok) {
                 warn $res->error;
                 return undef;
@@ -57,24 +60,32 @@ sub list {
              
             $row  = 0;
             $hits = $res->parse_content;
-             
-            return $result->{pid};
+            
+            my $pid = $result->{pid};
+            $pid =~ s{^$ns_prefix:}{} if $pid;
+
+            return $pid;
         }  
         else {
             my $result = $hits->{results}->[ $row++ ];
-            return $result->{pid};
+
+            my $pid = $result->{pid};
+            $pid =~ s{^$ns_prefix:}{} if $pid;
+            
+            return $pid;
         }
     };
 }
 
 sub exists {
     my ($self,$key) = @_;
+    my $ns_prefix = $self->namespace;
 
     croak "Need a key" unless defined $key;
 
     $self->log->debug("Checking exists $key");
 
-    my $obj = $self->fedora->getObjectProfile(pid => $key);
+    my $obj = $self->fedora->getObjectProfile(pid => "$ns_prefix:$key");
 
     $obj->is_ok;
 }
@@ -86,7 +97,7 @@ sub add {
 
     $self->log->debug("Generating path container for key $key");
 
-    LibreCat::FileStore::Container::BagIt->create_container($self->fedora,$key);
+    LibreCat::FileStore::Container::FedoraCommons->create_container($self->fedora,$key);
 }
 
 sub get {
@@ -104,7 +115,7 @@ sub delete {
 
     croak "Need a key" unless defined $key;
 
-    LibreCat::FileStore::Container::BagIt->delete_container($self->fedora,$key);
+    LibreCat::FileStore::Container::FedoraCommons->delete_container($self->fedora,$key);
 }
 
 1;
@@ -130,6 +141,7 @@ LibreCat::FileStore::BagIt - A BagIt implementation of a file storage
         dsnamespace => 'DS' ,
         md5enabled => 1 ,
         versionable => 0 ,
+        purge => 1 ,
     );
 
     my $filestore =>LibreCat::FileStore::BagIt->new(%options);

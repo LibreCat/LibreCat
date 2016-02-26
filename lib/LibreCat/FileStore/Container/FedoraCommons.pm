@@ -18,7 +18,8 @@ has _fedora => (is => 'ro');
 sub list {
     my ($self) = @_;
     my $fedora  = $self->_fedora;
-    my $pid     = $self->key;
+    my $ns_prefix = $fedora->{namespace};
+    my $pid     = "$ns_prefix:" . $self->key;
     my $dsnamespace = $fedora->{dsnamespace};
 
     my $response = $fedora->listDatastreams(pid => $pid);
@@ -32,7 +33,8 @@ sub list {
     for my $ds (@{ $obj->{datastream} }) {
         my $dsid = $ds->{dsid};
         next unless $dsid =~ /^$dsnamespace\./;
-        push @result , $self->_get($dsid);
+        my $file = $self->_get($dsid);
+        push @result , $self->_get($dsid) if $file;
     }
 
     return @result;
@@ -41,7 +43,8 @@ sub list {
 sub _list_dsid {
     my ($self) = @_;
     my $fedora  = $self->_fedora;
-    my $pid     = $self->key;
+    my $ns_prefix = $fedora->{namespace};
+    my $pid     = "$ns_prefix:" . $self->key;
     my $dsnamespace = $fedora->{dsnamespace};
 
     my $response = $fedora->listDatastreams(pid => $pid);
@@ -67,7 +70,8 @@ sub _list_dsid {
 sub _dsid_by_label {
     my ($self,$key) = @_;
     my $fedora  = $self->_fedora;
-    my $pid     = $self->key;
+    my $ns_prefix = $fedora->{namespace};
+    my $pid     = "$ns_prefix:" . $self->key;
 
     my $response = $fedora->listDatastreams(pid => $pid);
 
@@ -102,7 +106,8 @@ sub get {
 sub _get {
     my ($self,$dsid) = @_;
     my $fedora  = $self->_fedora;
-    my $pid     = $self->key;
+    my $ns_prefix = $fedora->{namespace};
+    my $pid     = "$ns_prefix:" . $self->key;
 
     my $response = $fedora->getDatastreamHistory(pid => $pid , dsID => $dsid);
 
@@ -112,6 +117,8 @@ sub _get {
 
     my $first    = $object->{profile}->[0];
     my $last     = $object->{profile}->[-1];
+
+    return undef unless $first->{dsState} eq 'A';
 
     my $key      = $first->{dsLabel};
     my $size     = $first->{dsSize};
@@ -145,7 +152,8 @@ sub add {
 sub _add_filename {
     my ($self,$key,$data,$filename) = @_;
     my $fedora  = $self->_fedora;
-    my $pid     = $self->key;
+    my $ns_prefix = $fedora->{namespace};
+    my $pid     = "$ns_prefix:" . $self->key;
     my $dsnamespace = $fedora->{dsnamespace};
     my $versionable = $fedora->{versionable} ? 'true' : 'false';
 
@@ -189,7 +197,8 @@ sub _add_filename {
 sub _add_stream {
     my ($self,$key,$io) = @_;
     my $fedora  = $self->_fedora;
-    my $pid     = $self->key;
+    my $ns_prefix = $fedora->{namespace};
+    my $pid     = "$ns_prefix:" . $self->key;
     my $dsnamespace = $fedora->{dsnamespace};
     my $versionable = $fedora->{versionable}  ? 'true' : 'false' ;
 
@@ -274,13 +283,21 @@ sub _io_filename {
 sub delete {
     my ($self,$key) = @_;
     my $fedora  = $self->_fedora;
-    my $pid     = $self->key;
+    my $ns_prefix = $fedora->{namespace};
+    my $pid     = "$ns_prefix:" . $self->key;
 
     my $dsid = $self->_dsid_by_label($key);
 
     return undef unless $dsid;
 
-    my $response = $fedora->purgeDatastream(pid => $pid , dsID => $dsid);
+    my $response;
+
+    if ($fedora->{purge}) {
+        $response = $fedora->purgeDatastream(pid => $pid , dsID => $dsid);
+    }
+    else {
+        $response = $fedora->setDatastreamState(pid => $pid , dsID => $dsid, dsState => 'D');
+    }
 
     return $response->is_ok ? 1 : undef;
 }
@@ -290,17 +307,19 @@ sub commit {
 }
 
 sub read_container {
-    my ($class,$fedora,$pid) = @_;
+    my ($class,$fedora,$key) = @_;
     croak "Need a fedora connection" unless $fedora && ref($fedora) eq 'Catmandu::FedoraCommons';
-    croak "Need a pid" unless $pid;
+    croak "Need a key" unless $key;
 
-    my $response = $fedora->getObjectProfile(pid => $pid);
+    my $ns_prefix = $fedora->{namespace};
+
+    my $response = $fedora->getObjectProfile(pid => "$ns_prefix:$key");
 
     return undef unless $response->is_ok;
 
     my $object = $response->parse_content;
 
-    my $inst = $class->new(key  => $pid);
+    my $inst = $class->new(key  => $key);
 
     $inst->{created}  = str2time($object->{objCreateDate});
     $inst->{modified} = str2time($object->{objLastModDate});
@@ -310,27 +329,38 @@ sub read_container {
 }
 
 sub create_container {
-    my ($class,$fedora,$pid) = @_;
+    my ($class,$fedora,$key) = @_;
     croak "Need a fedora connection" unless $fedora && ref($fedora) eq 'Catmandu::FedoraCommons';
-    croak "Need a pid" unless $pid;
+    croak "Need a pid" unless $key;
+
+    my $ns_prefix = $fedora->{namespace};
 
     my $xml = Catmandu::Store::FedoraCommons::FOXML->new->serialize();
 
-    my $response = $fedora->ingest->(pid => $pid , xml => $xml , format => 'info:fedora/fedora-system:FOXML-1.1');
+    my $response = $fedora->ingest(pid => "$ns_prefix:$key" , xml => $xml , format => 'info:fedora/fedora-system:FOXML-1.1');
 
     return undef unless $response->is_ok;
 
     my $obj = $response->parse_content;
 
-    $class->read_container($fedora, $obj->{pid});
+    $class->read_container($fedora, $key);
 }
 
 sub delete_container {
-    my ($class,$fedora,$pid) = @_;
+    my ($class,$fedora,$key) = @_;
     croak "Need a fedora connection" unless $fedora && ref($fedora) eq 'Catmandu::FedoraCommons';
-    croak "Need a pid" unless $pid;
+    croak "Need a key" unless $key;
 
-    my $response = $fedora->modifyObject(pid => $pid , state => 'D');
+    my $ns_prefix = $fedora->{namespace};
+
+    my $response;
+
+    if ($fedora->{purge}) {
+        $response = $fedora->purgeObject(pid => "$ns_prefix:$key");
+    }
+    else {
+        $response = $fedora->modifyObject(pid => "$ns_prefix:$key", state => 'D');
+    }
 
     return undef unless $response->is_ok;
 
@@ -360,7 +390,7 @@ LibreCat::FileStore::Container::FedoraCommons - A FedoraCommons implementation o
         md5enabled => 1 ,
         versionable => 0 ,
     );
-    
+
     my $filestore => LibreCat::FileStore::FedoraCommons->new(%options);
 
     my $container = $filestore->get('demo:1234');
