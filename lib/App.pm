@@ -93,11 +93,11 @@ The logout route. Destroys session.
 =cut
 any '/logout' => sub {
     # preserves language setting only
-	my $lang = session->{lang};
+    my $lang = session->{lang};
     session->destroy;
     session lang => $lang;
 
-	redirect '/';
+    redirect '/';
 };
 
 =head2 GET /set_language
@@ -106,10 +106,10 @@ Route to call when changing language in session
 
 =cut
 get '/set_language' => sub {
-	my $referer = request->{referer};
-	session lang => params->{lang};
-	$referer =~ s/lang=\w{2}\&*//g;
-	redirect $referer;
+    my $referer = request->{referer};
+    session lang => params->{lang};
+    $referer =~ s/lang=\w{2}\&*//g;
+    redirect $referer;
 };
 
 =head2 ANY /access_denied
@@ -123,8 +123,8 @@ any '/access_denied' => sub {
 };
 
 any qr{(/en)*/coffee} => sub {
-	status '418';
-	template 'websites/418', {path => request->{referer}};
+    status '418';
+    template 'websites/418', {path => request->{referer}};
 };
 
 =head1 ANY {other route....}
@@ -133,8 +133,8 @@ Throws 'page not found'.
 
 =cut
 any qr{.*} => sub {
-	status 'not_found';
-	template 'websites/404', {path => request->{referer}};
+    status 'not_found';
+    template 'websites/404', {path => request->{referer}};
 };
 
 1;

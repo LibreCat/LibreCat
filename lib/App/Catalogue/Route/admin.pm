@@ -16,14 +16,14 @@ use Dancer::Plugin::Auth::Tiny;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
-    	my ($role, $coderef) = @_;
+        my ($role, $coderef) = @_;
         return sub {
-        	if ( session->{role} && $role eq session->{role} ) {
-        		goto $coderef;
-        	}
-        	else {
-        		redirect '/access_denied';
-        	}
+            if ( session->{role} && $role eq session->{role} ) {
+                goto $coderef;
+            }
+            else {
+                redirect '/access_denied';
+            }
         }
     }
 );
@@ -118,15 +118,15 @@ Input is person id. Returns warning if person is already in the database.
         }
         else {
             my $p = App::Catalogue::Controller::Importer->new(
-    			id => $id,
-    			source => 'bis',
-    			)->fetch;
+                id => $id,
+                source => 'bis',
+                )->fetch;
             template 'admin/forms/edit_account', $p;
         }
     };
 
     get '/project' => needs role => 'super_admin' => sub {
-    	my $hits = h->search_project({q => "", limit => 100, start => params->{start} || 0});
+        my $hits = h->search_project({q => "", limit => 100, start => params->{start} || 0});
         template 'admin/project', $hits;
     };
 
@@ -150,12 +150,12 @@ Input is person id. Returns warning if person is already in the database.
 
     post '/project/update' => needs role => 'super_admin' => sub {
         my $p = h->nested_params();
-    	my $return = h->update_record('project', $p);
-    	redirect '/librecat/admin/project';
+        my $return = h->update_record('project', $p);
+        redirect '/librecat/admin/project';
     };
 
     get '/research_group' => needs role => 'super_admin' => sub {
-    	my $hits = h->search_research_group({q => "", limit => 100, start => params->{start} || 0});
+        my $hits = h->search_research_group({q => "", limit => 100, start => params->{start} || 0});
         template 'admin/research_group', $hits;
     };
 
@@ -179,14 +179,14 @@ Input is person id. Returns warning if person is already in the database.
 
     post '/research_group/update' => needs role => 'super_admin' => sub {
         my $p = h->nested_params();
-    	my $return = h->update_record('research_group', $p);
-    	redirect '/librecat/admin/research_group';
+        my $return = h->update_record('research_group', $p);
+        redirect '/librecat/admin/research_group';
     };
 
 
 
     get '/department' => needs role => 'super_admin' => sub {
-    	my $hits = h->search_department({q => "", limit => 100, start => params->{start} || 0});
+        my $hits = h->search_department({q => "", limit => 100, start => params->{start} || 0});
         template 'admin/department', $hits;
     };
 
@@ -210,81 +210,81 @@ Input is person id. Returns warning if person is already in the database.
 
     post '/department/update' => needs role => 'super_admin' => sub {
         my $p = h->nested_params();
-    	my $return = h->update_record('department', $p);
-    	redirect '/librecat/admin/department';
+        my $return = h->update_record('department', $p);
+        redirect '/librecat/admin/department';
     };
 
 
 
 
     get '/award' => needs role => 'super_admin' => sub {
-    	my $hits = h->search_award({q => "rectype=record", limit => 1000});
-    	my $preis = h->search_award({q => "rectype=preis", limit => 1000});
-    	my $auszeichnung = h->search_award({q => "rectype=auszeichnung", limit => 1000});
-    	my $akademie = h->search_award({q => "rectype=akademie", limit => 1000});
+        my $hits = h->search_award({q => "rectype=record", limit => 1000});
+        my $preis = h->search_award({q => "rectype=preis", limit => 1000});
+        my $auszeichnung = h->search_award({q => "rectype=auszeichnung", limit => 1000});
+        my $akademie = h->search_award({q => "rectype=akademie", limit => 1000});
 
-    	$hits->{preis} = $preis->{hits};
+        $hits->{preis} = $preis->{hits};
         $hits->{auszeichnung} = $auszeichnung->{hits};
         $hits->{akademie} = $akademie->{hits};
 
-    	template 'admin/award', $hits;
+        template 'admin/award', $hits;
     };
 
     get '/award/edit/:id' => needs role => 'super_admin' => sub {
-    	my $id = param 'id';
-    	my $hits = h->get_award($id);
-    	my $award = h->search_award({q => "rectype<>record", limit => 1000});
-    	$hits->{award} = $award->{hits};
+        my $id = param 'id';
+        my $hits = h->get_award($id);
+        my $award = h->search_award({q => "rectype<>record", limit => 1000});
+        $hits->{award} = $award->{hits};
 
-    	template 'admin/forms/edit_award', $hits;
+        template 'admin/forms/edit_award', $hits;
     };
 
     get '/award/new/record' => needs role => 'super_admin' => sub {
-    	my $hits;
-    	my $award = h->search_award({q => "rectype<>record", limit => 1000});
-       	my $ids = h->award->to_array;
-    	my @newIds;
-    	foreach (@$ids){
-    		$_->{_id} =~ s/^AW//g;
-    		push @newIds, $_->{_id};
-    	}
-    	@newIds = sort {$a <=> $b} @newIds;
-    	my $idsLength = @newIds;
-    	my $createdid = $newIds[$idsLength-1];
-    	$createdid++;
+        my $hits;
+        my $award = h->search_award({q => "rectype<>record", limit => 1000});
+        my $ids = h->award->to_array;
+        my @newIds;
+        foreach (@$ids){
+            $_->{_id} =~ s/^AW//g;
+            push @newIds, $_->{_id};
+        }
+        @newIds = sort {$a <=> $b} @newIds;
+        my $idsLength = @newIds;
+        my $createdid = $newIds[$idsLength-1];
+        $createdid++;
 
-    	$hits->{_id} = "AW" . $createdid;
-    	$hits->{rec_type} = "record";
-    	$hits->{award} = $award->{hits};
-    	$hits->{"new"} = 1;
+        $hits->{_id} = "AW" . $createdid;
+        $hits->{rec_type} = "record";
+        $hits->{award} = $award->{hits};
+        $hits->{"new"} = 1;
 
-    	template 'admin/forms/edit_award', $hits;
+        template 'admin/forms/edit_award', $hits;
     };
 
     get '/award/new/award' => needs role => 'super_admin' => sub {
-    	my $hits;
-       	my $ids = h->award->to_array;
-    	my @newIds;
-    	foreach (@$ids){
-    		$_->{_id} =~ s/^AW//g;
-    		push @newIds, $_->{_id};
-    	}
-    	@newIds = sort {$a <=> $b} @newIds;
-    	my $idsLength = @newIds;
-    	my $createdid = $newIds[$idsLength-1];
-    	$createdid++;
+        my $hits;
+        my $ids = h->award->to_array;
+        my @newIds;
+        foreach (@$ids){
+            $_->{_id} =~ s/^AW//g;
+            push @newIds, $_->{_id};
+        }
+        @newIds = sort {$a <=> $b} @newIds;
+        my $idsLength = @newIds;
+        my $createdid = $newIds[$idsLength-1];
+        $createdid++;
 
-    	$hits->{_id} = "AW" . $createdid;
-    	$hits->{rec_type} = "preis";
-    	$hits->{"new"} = 1;
+        $hits->{_id} = "AW" . $createdid;
+        $hits->{rec_type} = "preis";
+        $hits->{"new"} = 1;
 
-    	template 'admin/forms/edit_award', $hits;
+        template 'admin/forms/edit_award', $hits;
     };
 
     post '/award/update' => needs role => 'super_admin' => sub {
-    	my $p = h->nested_params();
-    	my $return = h->update_record('award', $p);
-    	return to_dumper $return;
+        my $p = h->nested_params();
+        my $return = h->update_record('award', $p);
+        return to_dumper $return;
     };
 
 };

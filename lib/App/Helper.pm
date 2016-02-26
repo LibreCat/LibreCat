@@ -32,14 +32,14 @@ sub backup_publication {
 }
 
 sub backup_publication_static {
-	my ($self) = @_;
-	my $backup = Catmandu::Store::DBI->new(
+    my ($self) = @_;
+    my $backup = Catmandu::Store::DBI->new(
         'data_source' => $self->config->{store}->{backup}->{options}->{data_source},
         username => $self->config->{store}->{backup}->{options}->{username},
         password => $self->config->{store}->{backup}->{options}->{password},
         bags => { publication => { plugins => ['Versioning'] }},
     );
-	state $bag = $backup->bag('publication');
+    state $bag = $backup->bag('publication');
 }
 
 sub backup_project {
@@ -109,68 +109,68 @@ sub nested_params {
 }
 
 sub extract_params {
-	my ($self, $params) = @_;
+    my ($self, $params) = @_;
 
-	$params ||= params;
-	my $p = {};
-	return $p if ref $params ne 'HASH';
+    $params ||= params;
+    my $p = {};
+    return $p if ref $params ne 'HASH';
 
-	$p->{start} = $params->{start} if is_natural $params->{start};
-	$p->{limit} = $params->{limit} if is_natural $params->{limit};
-	$p->{embed} = $params->{embed} if is_natural $params->{embed};
-	$p->{lang} = $params->{lang} if $params->{lang};
-	$p->{ttyp} = $params->{ttyp} if $params->{ttyp};
-	$p->{ftyp} = $params->{ftyp} if $params->{ftyp};
-	$p->{enum} = $params->{enum} if $params->{enum};
+    $p->{start} = $params->{start} if is_natural $params->{start};
+    $p->{limit} = $params->{limit} if is_natural $params->{limit};
+    $p->{embed} = $params->{embed} if is_natural $params->{embed};
+    $p->{lang} = $params->{lang} if $params->{lang};
+    $p->{ttyp} = $params->{ttyp} if $params->{ttyp};
+    $p->{ftyp} = $params->{ftyp} if $params->{ftyp};
+    $p->{enum} = $params->{enum} if $params->{enum};
 
-	if($p->{ftyp} and $p->{ftyp} =~ /ajx|js|pln/ and !$p->{limit}){
-		$p->{limit} = $self->config->{maximum_page_size};
-	}
+    if($p->{ftyp} and $p->{ftyp} =~ /ajx|js|pln/ and !$p->{limit}){
+        $p->{limit} = $self->config->{maximum_page_size};
+    }
 
-	$p->{q} = array_uniq( $self->string_array($params->{q}) );
+    $p->{q} = array_uniq( $self->string_array($params->{q}) );
 
-	my $cql = $params->{cql_query} ||= '';
+    my $cql = $params->{cql_query} ||= '';
 
-	if ($cql) {
-		my $deletedq;
+    if ($cql) {
+        my $deletedq;
 
-		if(@$deletedq = ($cql =~ /((?=AND |OR |NOT )?[0-9a-zA-Z]+\=\s|(?=AND |OR |NOT )?[0-9a-zA-Z]+\=$)/g)){
-			$cql =~ s/((AND |OR |NOT )?[0-9a-zA-Z]+\=\s|(AND |OR |NOT )?[0-9a-zA-Z]+\=$)/ /g;
-		}
-		$cql =~ s/^\s*(AND|OR)//g;
-		$cql =~ s/,//g;
-		$cql =~ s/\://g;
-		$cql =~ s/\.//g;
-		$cql =~ s/(NOT )(.*?)=/$2<>/g;
-		$cql =~ s/(NOT )([^=]*?)/basic<>$2/g;
-		$cql =~ s/(?<!")\b([^\s]+)\b, \b([^\s]+)\b(?!")/"$1, $2"/g;
-		$cql =~ s/^\s+//; $cql =~ s/\s+$//; $cql =~ s/\s{2,}/ /;
-		if ($cql !~ /^("[^"]*"|'[^']*'|[0-9a-zA-Z]+(=| ANY | ALL | EXACT )"[^"]*")$/ and $cql !~ /^(([0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)(?<!ANY)(?<!ALL)(?<!EXACT)|"[^"]*"|'[^']*') (AND|OR) ([0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))$/ and $cql !~ /^(([0-9a-zA-Z]+( ANY | ALL | EXACT )"[^"]*"|"[^"]*"|'[^']*'|[0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR))( (AND|OR) (([0-9a-zA-Z]+( ANY | ALL | EXACT )"[^"]*")|"[^"]*"|'[^']*'|[0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**))*)$/) {
-			$cql =~ s/((?:(?:(?:[0-9a-zA-Z\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*') (?:AND|OR) )+(?:[0-9a-zA-Z\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))|[0-9a-zA-Z\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*')\s(?!AND )(?!OR )("[^"]*"|'[^']*'|.*?)/$1 AND $2/g;
-		}
-		push @{$p->{q}}, lc $cql;
-	}
+        if(@$deletedq = ($cql =~ /((?=AND |OR |NOT )?[0-9a-zA-Z]+\=\s|(?=AND |OR |NOT )?[0-9a-zA-Z]+\=$)/g)){
+            $cql =~ s/((AND |OR |NOT )?[0-9a-zA-Z]+\=\s|(AND |OR |NOT )?[0-9a-zA-Z]+\=$)/ /g;
+        }
+        $cql =~ s/^\s*(AND|OR)//g;
+        $cql =~ s/,//g;
+        $cql =~ s/\://g;
+        $cql =~ s/\.//g;
+        $cql =~ s/(NOT )(.*?)=/$2<>/g;
+        $cql =~ s/(NOT )([^=]*?)/basic<>$2/g;
+        $cql =~ s/(?<!")\b([^\s]+)\b, \b([^\s]+)\b(?!")/"$1, $2"/g;
+        $cql =~ s/^\s+//; $cql =~ s/\s+$//; $cql =~ s/\s{2,}/ /;
+        if ($cql !~ /^("[^"]*"|'[^']*'|[0-9a-zA-Z]+(=| ANY | ALL | EXACT )"[^"]*")$/ and $cql !~ /^(([0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)(?<!ANY)(?<!ALL)(?<!EXACT)|"[^"]*"|'[^']*') (AND|OR) ([0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))$/ and $cql !~ /^(([0-9a-zA-Z]+( ANY | ALL | EXACT )"[^"]*"|"[^"]*"|'[^']*'|[0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR))( (AND|OR) (([0-9a-zA-Z]+( ANY | ALL | EXACT )"[^"]*")|"[^"]*"|'[^']*'|[0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**))*)$/) {
+            $cql =~ s/((?:(?:(?:[0-9a-zA-Z\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*') (?:AND|OR) )+(?:[0-9a-zA-Z\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))|[0-9a-zA-Z\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*')\s(?!AND )(?!OR )("[^"]*"|'[^']*'|.*?)/$1 AND $2/g;
+        }
+        push @{$p->{q}}, lc $cql;
+    }
 
-	($params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, $params->{text}) : (push @{$p->{q}}, join(" AND ",split(/ |-/,$params->{text}))) if $params->{text};
+    ($params->{text} =~ /^".*"$/) ? (push @{$p->{q}}, $params->{text}) : (push @{$p->{q}}, join(" AND ",split(/ |-/,$params->{text}))) if $params->{text};
 
-	# autocomplete functionality
-	if($params->{term}){
-		my $search_terms = join("* AND ", split(" ",$params->{term})) . "*" if $params->{term} !~ /^\d{1,}$/;
-		my $search_id = $params->{term} if $params->{term} =~ /^\d{1,}$/;
-		push @{$p->{q}}, "title=(" . lc $search_terms . ") OR person=(" . lc $search_terms . ")" if $search_terms;
-		push @{$p->{q}}, "id=$search_id OR person=$search_id" if $search_id;
-		$p->{fmt} = $params->{fmt};
-	}
-	else {
-		my $formats = $self->config->{exporter}->{publication};
-		$p->{fmt} = ($params->{fmt} && $formats->{$params->{fmt}})
-		? $params->{fmt} : 'html';
-	}
+    # autocomplete functionality
+    if($params->{term}){
+        my $search_terms = join("* AND ", split(" ",$params->{term})) . "*" if $params->{term} !~ /^\d{1,}$/;
+        my $search_id = $params->{term} if $params->{term} =~ /^\d{1,}$/;
+        push @{$p->{q}}, "title=(" . lc $search_terms . ") OR person=(" . lc $search_terms . ")" if $search_terms;
+        push @{$p->{q}}, "id=$search_id OR person=$search_id" if $search_id;
+        $p->{fmt} = $params->{fmt};
+    }
+    else {
+        my $formats = $self->config->{exporter}->{publication};
+        $p->{fmt} = ($params->{fmt} && $formats->{$params->{fmt}})
+        ? $params->{fmt} : 'html';
+    }
 
-	$p->{style} = $params->{style} if $params->{style};
-	$p->{sort} = $self->string_array($params->{'sort'}) if $params->{'sort'};
+    $p->{style} = $params->{style} if $params->{style};
+    $p->{sort} = $self->string_array($params->{'sort'}) if $params->{'sort'};
 
-	$p;
+    $p;
 }
 
 sub hash_to_url {
@@ -327,10 +327,10 @@ sub get_project {
 }
 
 sub get_department {
-	my $result;
-	$result = $_[0]->department->get($_[1]);
-	$result = $_[0]->search_department({q => ["name=\"$_[1]\""]})->first if !$result;
-	return $result;
+    my $result;
+    $result = $_[0]->department->get($_[1]);
+    $result = $_[0]->search_department({q => ["name=\"$_[1]\""]})->first if !$result;
+    return $result;
 }
 
 sub get_research_group {
@@ -381,7 +381,7 @@ sub get_metrics {
 }
 
 sub new_record {
-	my ($self, $bag) = @_;
+    my ($self, $bag) = @_;
 
     my $id = "";
 
@@ -413,16 +413,16 @@ sub new_record {
             $id = "RG1";
         }
     }
-	else {
+    else {
         # TODO race condition!
         Catmandu->store->transaction( sub{
           my $rec = $self->bag->get_or_add('1', {latest => '0'});
           $id = ++$rec->{latest};
           $self->bag->add($rec);
         });
-	}
+    }
 
-	return $id;
+    return $id;
 }
 
 sub update_record {
@@ -469,21 +469,21 @@ sub delete_record {
         status => 'deleted',
     };
 
-	if ($bag eq 'publication') {
-		my $rec = $self->publication->get($id);
-		$del->{date_created} = $rec->{date_created};
-		$del->{oai_deleted} = 1 if ($rec->{oai_deleted} or $rec->{status} eq 'public');
-		require App::Catalogue::Controller::File;
-		require App::Catalogue::Controller::Material;
-		App::Catalogue::Controller::Material::update_related_material($del);
-		App::Catalogue::Controller::File::delete_file($id);
-		delete $del->{related_material};
-	}
+    if ($bag eq 'publication') {
+        my $rec = $self->publication->get($id);
+        $del->{date_created} = $rec->{date_created};
+        $del->{oai_deleted} = 1 if ($rec->{oai_deleted} or $rec->{status} eq 'public');
+        require App::Catalogue::Controller::File;
+        require App::Catalogue::Controller::Material;
+        App::Catalogue::Controller::Material::update_related_material($del);
+        App::Catalogue::Controller::File::delete_file($id);
+        delete $del->{related_material};
+    }
 
-	my $bagname = "backup_$bag";
-	my $saved = $self->$bagname->add($del);
-	$self->$bag->add($saved);
-	$self->$bag->commit;
+    my $bagname = "backup_$bag";
+    my $saved = $self->$bagname->add($del);
+    $self->$bag->add($saved);
+    $self->$bag->commit;
 
     sleep 1;
 
@@ -491,28 +491,28 @@ sub delete_record {
 }
 
 sub default_facets {
-	return {
-		author => {
-			terms => {
-				field   => 'author.id',
-				size    => 20,
-			}
-		},
-		editor => {
-			terms => {
-				field   => 'editor.id',
-				size    => 20,
-			}
-		},
-		open_access => { terms => { field => 'file.open_access', size => 1 } },
-		popular_science => { terms => { field => 'popular_science', size => 1 } },
-		extern => { terms => { field => 'extern', size => 2 } },
-		status => { terms => { field => 'status', size => 8 } },
-		year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
-		type => { terms => { field => 'type', size => 25 } },
-		isi => { terms => { field => 'isi', size => 1 } },
-		pmid => { terms => { field => 'pmid', size => 1 } },
-	};
+    return {
+        author => {
+            terms => {
+                field   => 'author.id',
+                size    => 20,
+            }
+        },
+        editor => {
+            terms => {
+                field   => 'editor.id',
+                size    => 20,
+            }
+        },
+        open_access => { terms => { field => 'file.open_access', size => 1 } },
+        popular_science => { terms => { field => 'popular_science', size => 1 } },
+        extern => { terms => { field => 'extern', size => 2 } },
+        status => { terms => { field => 'status', size => 8 } },
+        year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
+        type => { terms => { field => 'type', size => 25 } },
+        isi => { terms => { field => 'isi', size => 1 } },
+        pmid => { terms => { field => 'pmid', size => 1 } },
+    };
 }
 
 sub sort_to_sru {
@@ -559,45 +559,45 @@ sub host {
 }
 
 sub search_publication {
-	my ($self, $p) = @_;
+    my ($self, $p) = @_;
 
-	my $sort = $self->sort_to_sru($p->{sort});
-	my $cql = "";
-	if ($p->{q}) {
-		push @{$p->{q}}, "status<>deleted";
-		$cql = join(' AND ', @{$p->{q}});
-	} else {
-		$cql = "status<>deleted";
-	}
+    my $sort = $self->sort_to_sru($p->{sort});
+    my $cql = "";
+    if ($p->{q}) {
+        push @{$p->{q}}, "status<>deleted";
+        $cql = join(' AND ', @{$p->{q}});
+    } else {
+        $cql = "status<>deleted";
+    }
 
-	my $hits;
-	$cql =~ tr/äöüß/aous/;
+    my $hits;
+    $cql =~ tr/äöüß/aous/;
 
-	try{
-		$hits = publication->search(
-		    cql_query => $cql,
-		    sru_sortkeys => $sort,
-		    limit => $p->{limit} ||= $self->config->{default_page_size},
-		    start => $p->{start} ||= 0,
-		    facets => $p->{facets} ||= {},
-		);
+    try{
+        $hits = publication->search(
+            cql_query => $cql,
+            sru_sortkeys => $sort,
+            limit => $p->{limit} ||= $self->config->{default_page_size},
+            start => $p->{start} ||= 0,
+            facets => $p->{facets} ||= {},
+        );
 
-		foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-			$hits->{$_} = $hits->$_;
-		}
-	}
-	catch{
-		my $error;
-		if($_ =~ /(cql error\: unknown index .*?) at/){
-			$error = $1;
-		}
-		else {
-			$error = "An error has occurred: $_";
-		}
-		$hits = {total => 0, error => $error};
-	};
+        foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+            $hits->{$_} = $hits->$_;
+        }
+    }
+    catch{
+        my $error;
+        if($_ =~ /(cql error\: unknown index .*?) at/){
+            $error = $1;
+        }
+        else {
+            $error = "An error has occurred: $_";
+        }
+        $hits = {total => 0, error => $error};
+    };
 
-	return $hits;
+    return $hits;
 }
 
 sub export_publication {
@@ -628,25 +628,25 @@ sub export_publication {
 }
 
 sub export_autocomplete_json {
-	my ($self, $hits) = @_;
+    my ($self, $hits) = @_;
 
-	my $jsonhash = [];
-	$hits->each( sub{
-		my $hit = $_[0];
-		if($hit->{title} && $hit->{year}){
-			my $label = "$hit->{title} ($hit->{year}";
-			my $author = $hit->{author} || $hit->{editor} || [];
-			if($author && $author->[0]->{first_name} && $author->[0]->{last_name}){
-				$label .= ", " .$author->[0]->{first_name} . " " . $author->[0]->{last_name} .")";
-			}
-			else{
-				$label .= ")";
-			}
-			push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
-		}
-	});
+    my $jsonhash = [];
+    $hits->each( sub{
+        my $hit = $_[0];
+        if($hit->{title} && $hit->{year}){
+            my $label = "$hit->{title} ($hit->{year}";
+            my $author = $hit->{author} || $hit->{editor} || [];
+            if($author && $author->[0]->{first_name} && $author->[0]->{last_name}){
+                $label .= ", " .$author->[0]->{first_name} . " " . $author->[0]->{last_name} .")";
+            }
+            else{
+                $label .= ")";
+            }
+            push @$jsonhash, {id => $hit->{_id}, label => $label, title => "$hit->{title}"};
+        }
+    });
 
-	return Dancer::to_json($jsonhash);
+    return Dancer::to_json($jsonhash);
 }
 
 sub search_researcher {
@@ -655,12 +655,12 @@ sub search_researcher {
     my $cql = "";
     $cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
-	my $hits = researcher->search(
-		cql_query => $cql,
-	 	limit => $p->{limit} ||= config->{maximum_page_size},
-		start => $p->{start} ||= 0,
-		sru_sortkeys => $p->{'sort'} || "fullname,,1",
-	);
+    my $hits = researcher->search(
+        cql_query => $cql,
+        limit => $p->{limit} ||= config->{maximum_page_size},
+        start => $p->{start} ||= 0,
+        sru_sortkeys => $p->{'sort'} || "fullname,,1",
+    );
 
     foreach (qw(next_page last_page page previous_page pages_in_spread)) {
         $hits->{$_} = $hits->$_;
@@ -678,47 +678,47 @@ sub search_researcher {
 }
 
 sub search_department {
-	my ($self, $p) = @_;
+    my ($self, $p) = @_;
 
-	my $cql = "";
-	$cql = join(' AND ', @{$p->{q}}) if $p->{q};
+    my $cql = "";
+    $cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
-	if($p->{hierarchy}){
-		my $hits = department->search(
-		    cql_query => $cql,
-		    limit => config->{maximum_page_size},
-		    start => 0,
-		);
+    if($p->{hierarchy}){
+        my $hits = department->search(
+            cql_query => $cql,
+            limit => config->{maximum_page_size},
+            start => 0,
+        );
 
-		my $hierarchy;
-		$hits->each( sub {
-			my $hit = $_[0];
-			$hierarchy->{$hit->{name}}->{oId} = $hit->{tree}->[0]->{_id} if $hit->{layer} eq "1";
-			$hierarchy->{$hit->{name}}->{display} = $hit->{display} if $hit->{layer} eq "1";
-			if ($hit->{layer} eq "2"){
-				my $layer = $self->get_department($hit->{tree}->[0]->{_id});
-				$hierarchy->{$layer->{name}}->{$hit->{name}}->{oId} = $hit->{tree}->[1]->{_id};
-				$hierarchy->{$layer->{name}}->{$hit->{name}}->{display} = $hit->{display};
-			}
-			if ($hit->{layer} eq "3"){
-				my $layer2 = $self->get_department($hit->{tree}->[0]->{_id});
-				my $layer3 = $self->get_department($hit->{tree}->[1]->{_id});
-				$hierarchy->{$layer2->{name}}->{$layer3->{name}}->{$hit->{name}}->{oId} = $hit->{tree}->[2]->{_id};
-				$hierarchy->{$layer2->{name}}->{$layer3->{name}}->{$hit->{name}}->{display} = $hit->{display};
-			}
-		});
+        my $hierarchy;
+        $hits->each( sub {
+            my $hit = $_[0];
+            $hierarchy->{$hit->{name}}->{oId} = $hit->{tree}->[0]->{_id} if $hit->{layer} eq "1";
+            $hierarchy->{$hit->{name}}->{display} = $hit->{display} if $hit->{layer} eq "1";
+            if ($hit->{layer} eq "2"){
+                my $layer = $self->get_department($hit->{tree}->[0]->{_id});
+                $hierarchy->{$layer->{name}}->{$hit->{name}}->{oId} = $hit->{tree}->[1]->{_id};
+                $hierarchy->{$layer->{name}}->{$hit->{name}}->{display} = $hit->{display};
+            }
+            if ($hit->{layer} eq "3"){
+                my $layer2 = $self->get_department($hit->{tree}->[0]->{_id});
+                my $layer3 = $self->get_department($hit->{tree}->[1]->{_id});
+                $hierarchy->{$layer2->{name}}->{$layer3->{name}}->{$hit->{name}}->{oId} = $hit->{tree}->[2]->{_id};
+                $hierarchy->{$layer2->{name}}->{$layer3->{name}}->{$hit->{name}}->{display} = $hit->{display};
+            }
+        });
 
-		return $hierarchy;
-	}
-	else {
-		my $hits = department->search(
-		    cql_query => $cql,
-		    limit => $p->{limit} ||= 20,
-		    start => $p->{start} ||= 0,
-		    sru_sortkeys => "display,,1",
-		);
-		return $hits;
-	}
+        return $hierarchy;
+    }
+    else {
+        my $hits = department->search(
+            cql_query => $cql,
+            limit => $p->{limit} ||= 20,
+            start => $p->{start} ||= 0,
+            sru_sortkeys => "display,,1",
+        );
+        return $hits;
+    }
 }
 
 sub search_project {
@@ -762,38 +762,38 @@ sub search_project {
 }
 
 sub search_research_group {
-	my ($self, $p) = @_;
+    my ($self, $p) = @_;
 
-	my $cql = "";
-	$cql = join(' AND ',@{$p->{q}}) if $p->{q};
+    my $cql = "";
+    $cql = join(' AND ',@{$p->{q}}) if $p->{q};
 
-	if($p->{hierarchy}){
-		my $hits = research_group->search(
-		    cql_query => $cql,
-		    limit => config->{maximum_page_size},
-		    start => 0,
-		);
+    if($p->{hierarchy}){
+        my $hits = research_group->search(
+            cql_query => $cql,
+            limit => config->{maximum_page_size},
+            start => 0,
+        );
 
-		my $hierarchy;
-		$hits->each( sub {
-			my $hit = $_[0];
-			my $display = $hit->{acronym} ? $hit->{acronym} . " | " . $hit->{name} : $hit->{name};
-			$hierarchy->{$display}->{oId} = $hit->{_id};
-		});
+        my $hierarchy;
+        $hits->each( sub {
+            my $hit = $_[0];
+            my $display = $hit->{acronym} ? $hit->{acronym} . " | " . $hit->{name} : $hit->{name};
+            $hierarchy->{$display}->{oId} = $hit->{_id};
+        });
 
-		return $hierarchy;
-	}
-	else {
-		my $hits = research_group->search(
-	        cql_query => $cql,
-	        limit => $p->{limit} ||= config->{default_page_size},
-	        start => $p->{start} ||= 0,
-	        sru_sortkeys => $p->{sort} ||= "name,,1",
-	    );
+        return $hierarchy;
+    }
+    else {
+        my $hits = research_group->search(
+            cql_query => $cql,
+            limit => $p->{limit} ||= config->{default_page_size},
+            start => $p->{start} ||= 0,
+            sru_sortkeys => $p->{sort} ||= "name,,1",
+        );
 
-	    foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-	    	$hits->{$_} = $hits->$_;
-	    }
+        foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+            $hits->{$_} = $hits->$_;
+        }
 
         return $hits;
     }

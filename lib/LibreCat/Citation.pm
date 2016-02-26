@@ -6,22 +6,22 @@ LibreCat::Citation - creates citations via a CSL engine or template
 
 =head1 SYNOPSIS
 
-	use LibreCat::Citation;
+    use LibreCat::Citation;
 
-	my $data = {};
-	my $styles = LibreCat::Citation->new(all => 1)->create($data);
-	# or
-	LibreCat::Citation->new(style => 'apa')->creat($data);
+    my $data = {};
+    my $styles = LibreCat::Citation->new(all => 1)->create($data);
+    # or
+    LibreCat::Citation->new(style => 'apa')->creat($data);
 
 =head1 CONFIGURATION
 
-	# catmandu.yml
-	citation:
-	  engine: template
-	  template:
-	    template_path: views/citation.tt
-	  csl:
-	    url: ...
+    # catmandu.yml
+    citation:
+      engine: template
+      template:
+        template_path: views/citation.tt
+      csl:
+        url: ...
 
 =cut
 
@@ -43,53 +43,53 @@ has all => (is => 'ro');
 has debug => (is => 'ro');
 
 sub _build_styles {
-	my ($self) = @_;
-	if ($self->all) {
-		return $conf->{csl}->{styles};
-	} elsif ($self->style) {
-		return [$self->style];
-	} else {
-		return ['default'];
-	}
+    my ($self) = @_;
+    if ($self->all) {
+        return $conf->{csl}->{styles};
+    } elsif ($self->style) {
+        return [$self->style];
+    } else {
+        return ['default'];
+    }
 }
 
 sub _request {
-	my ($self, $content) = @_;
+    my ($self, $content) = @_;
 
-	my $ua = LWP::UserAgent->new();
-	my $res = $ua->post($conf->{csl}->{url}, Content => $content);
+    my $ua = LWP::UserAgent->new();
+    my $res = $ua->post($conf->{csl}->{url}, Content => $content);
 
-	return $res if $self->debug;
+    return $res if $self->debug;
 
-	if ($res->{_rc} eq '200') {
-		my $obj = decode_json($res->{_content});
-		return $obj->[0]->{citation};
-	} else {
-		return '';
-	}
+    if ($res->{_rc} eq '200') {
+        my $obj = decode_json($res->{_content});
+        return $obj->[0]->{citation};
+    } else {
+        return '';
+    }
 }
 
 sub create {
-	my ($self, $data) = @_;
+    my ($self, $data) = @_;
 
-	unless ($data->{title}) {
-		Catmandu::BadVal->throw('Title field is missing');
-	}
+    unless ($data->{title}) {
+        Catmandu::BadVal->throw('Title field is missing');
+    }
 
-	my $cite;
+    my $cite;
 
-	if ($conf->{engine} eq 'template') {
-		return { default => export_to_string($data, 'Template', { template => $conf->{template}->{template_path} }) };
-	} else {
-		my $csl_json = export_to_string($data, 'JSON', { array => 1, fix => 'fixes/to_csl.fix' });
-		foreach my $s (@{$self->styles}) {
-			my $locale = ($s eq 'dgps') ? 'de' : $self->locale;
-			$cite->{$s} = $self->_request([locale => $locale, style => $s, format => 'html', input => $csl_json]);
+    if ($conf->{engine} eq 'template') {
+        return { default => export_to_string($data, 'Template', { template => $conf->{template}->{template_path} }) };
+    } else {
+        my $csl_json = export_to_string($data, 'JSON', { array => 1, fix => 'fixes/to_csl.fix' });
+        foreach my $s (@{$self->styles}) {
+            my $locale = ($s eq 'dgps') ? 'de' : $self->locale;
+            $cite->{$s} = $self->_request([locale => $locale, style => $s, format => 'html', input => $csl_json]);
 
-		}
+        }
 
-		return $cite;
-	}
+        return $cite;
+    }
 
 }
 

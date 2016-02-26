@@ -14,7 +14,7 @@ get '/feed' => sub {
     my $now = DateTime->now->truncate(to => 'week');
 
     my $p = h->extract_params();
-	push @{$p->{q}},
+    push @{$p->{q}},
         ( "status exact public",
         "date_updated>". $now->strftime('"%FT%H:%M:00Z"') );
 
@@ -34,13 +34,13 @@ get '/feed' => sub {
     $hits->each( sub {
         my $hit = $_[0];
 
-	    if ($hit->{_id} && $hit->{citation}->{apa}) {
+        if ($hit->{_id} && $hit->{citation}->{apa}) {
             $rss->add_item(
                 link => h->host . "/publication/$hit->{_id}",
                 title => $hit->{citation}->{apa},
                 dc => $fix->fix($hit),
             );
-	    }
+        }
     });
 
     content_type 'xhtml';

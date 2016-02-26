@@ -16,37 +16,37 @@ Splash page for :id.
 
 =cut
 get qr{/(data|publication)/(\d{1,})/*} => sub {
-	my ($bag, $id) = splat;
-	my $p = h->extract_params();
-	my $altid;
-	push @{$p->{q}}, ("status=public","id=$id");
-	push @{$p->{q}}, ($bag eq 'data') ? "type=researchData" : "type<>researchData";
+    my ($bag, $id) = splat;
+    my $p = h->extract_params();
+    my $altid;
+    push @{$p->{q}}, ("status=public","id=$id");
+    push @{$p->{q}}, ($bag eq 'data') ? "type=researchData" : "type<>researchData";
 
-	my $hits = h->search_publication($p);
+    my $hits = h->search_publication($p);
 
-	if(!$hits->{total}){
-		$p->{q} = [];
-		push @{$p->{q}}, ("status=public", "altid=$id");
+    if(!$hits->{total}){
+        $p->{q} = [];
+        push @{$p->{q}}, ("status=public", "altid=$id");
                 push @{$p->{q}}, ($bag eq 'data') ? "type=researchData" : "type<>researchData";
-		$hits = h->search_publication($p);
-		$altid = 1 if $hits->{total};
-	}
+        $hits = h->search_publication($p);
+        $altid = 1 if $hits->{total};
+    }
 
-	$hits->{bag} = $bag;
+    $hits->{bag} = $bag;
 
-	my $marked = session 'marked';
+    my $marked = session 'marked';
     $marked ||= [];
     $hits->{hits}->[0]->{marked} = @$marked;
     $hits->{hits}->[0]->{style} = $style if $style;
 
-	if ($p->{fmt} ne 'html') {
-		h->export_publication($hits, $p->{fmt});
-	} else {
-		return redirect "$bag/$hits->{hits}->[0]->{_id}", 301 if $altid;
-		$hits->{hits}->[0]->{bag} = $bag;
-		$hits->{total} ? status 200 : status 404;
-		template "frontdoor/record", $hits->{hits}->[0];
-	}
+    if ($p->{fmt} ne 'html') {
+        h->export_publication($hits, $p->{fmt});
+    } else {
+        return redirect "$bag/$hits->{hits}->[0]->{_id}", 301 if $altid;
+        $hits->{hits}->[0]->{bag} = $bag;
+        $hits->{total} ? status 200 : status 404;
+        template "frontdoor/record", $hits->{hits}->[0];
+    }
 };
 
 =head2 GET /{data|publication}
@@ -105,22 +105,22 @@ get qr{/(data|publication)/embed/*} => sub {
 };
 
 get qr{/embed/*} => sub {
-	my $p = h->extract_params();
-	my $portal = h->config->{portal}->{$p->{ttyp}} if $p->{ttyp};
-	my $pq;
+    my $p = h->extract_params();
+    my $portal = h->config->{portal}->{$p->{ttyp}} if $p->{ttyp};
+    my $pq;
 
-	if($portal){
-		$pq = h->is_portal_default($p->{ttyp});
-		$p = $pq->{full_query};
-	}
-	push @{$p->{q}}, ("status=public");
-	$p->{facets} = h->default_facets();
+    if($portal){
+        $pq = h->is_portal_default($p->{ttyp});
+        $p = $pq->{full_query};
+    }
+    push @{$p->{q}}, ("status=public");
+    $p->{facets} = h->default_facets();
 
-	# override default facets
-	$p->{facets}->{author}->{terms}->{size} = 100;
-	$p->{facets}->{editor}->{terms}->{size} = 100;
+    # override default facets
+    $p->{facets}->{author}->{terms}->{size} = 100;
+    $p->{facets}->{editor}->{terms}->{size} = 100;
 
-	my $sort_style = h->get_sort_style( params->{sort} || $pq->{default_query}->{'sort'} || '', params->{style} || $pq->{default_query}->{style} || '');
+    my $sort_style = h->get_sort_style( params->{sort} || $pq->{default_query}->{'sort'} || '', params->{style} || $pq->{default_query}->{style} || '');
 
     $p->{sort} = $sort_style->{sort};
     $p->{start} = params->{start};

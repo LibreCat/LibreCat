@@ -43,7 +43,7 @@ oai_provider '/oai',
             } else {
                 push @$specs, "openaire";
             }
-	    }
+        }
 
         if ($pub->{file}->[0]->{open_access} && $pub->{file}->[0]->{open_access} eq '1') {
             push @$specs, "$pub->{type}Ftxt", "driver", "open_access";
@@ -58,7 +58,7 @@ get '/livecitation' => sub {
         return "Required parameters are 'id' and 'style'.";
     }
     if($params->{styles}){
-    	return to_json h->config->{citation}->{csl}->{styles};
+        return to_json h->config->{citation}->{csl}->{styles};
     }
 
     my $pub = h->publication->get($params->{id});
@@ -67,10 +67,10 @@ get '/livecitation' => sub {
         ->create($pub)->{$params->{style}};
 
     if($debug){
-    	return to_dumper $response;
+        return to_dumper $response;
     } else {
-    	utf8::decode($response);
-    	template "websites/livecitation", {citation => $response};
+        utf8::decode($response);
+        template "websites/livecitation", {citation => $response};
     }
 };
 

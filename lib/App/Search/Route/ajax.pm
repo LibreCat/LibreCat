@@ -83,21 +83,21 @@ ajax '/get_alias/:id/:alias' => sub {
 ajax '/get_project' => sub {
     my $q;
     @$q = map {
-    	$_ =~ tr/äöüß/aous/;
+        $_ =~ tr/äöüß/aous/;
         $_ .= '*';
     } split(' ', lc params->{term});
 
     my $hits = h->search_project({q => $q, limit => 100});
 
     if($hits->{total}){
-    	my $map;
-    	@$map = map {
-    		{ id => $_->{_id}, label => $_->{name} };
-    	} @{$hits->{hits}};
-    	return to_json $map;
+        my $map;
+        @$map = map {
+            { id => $_->{_id}, label => $_->{name} };
+        } @{$hits->{hits}};
+        return to_json $map;
     }
     else {
-    	return to_json [];
+        return to_json [];
     }
 
 };
@@ -117,14 +117,14 @@ ajax '/get_department' => sub {
     my $hits = h->search_department({q => $q, limit => 100});
 
     if($hits->{total}){
-    	my $map;
-    	@$map = map {
-    		{ id => $_->{_id}, label => $_->{display} };
-    	} @{$hits->{hits}};
-    	return to_json $map;
+        my $map;
+        @$map = map {
+            { id => $_->{_id}, label => $_->{display} };
+        } @{$hits->{hits}};
+        return to_json $map;
     }
     else {
-    	return to_json [];
+        return to_json [];
     }
 };
 
@@ -132,24 +132,24 @@ ajax '/get_department' => sub {
 
 =cut
 ajax '/get_research_group' => sub {
-	my $q;
-	@$q = map {
-		$_ =~ tr/äöüß/aous/;
-		$_ .= '*';
-	} split(' ', lc params->{term});
+    my $q;
+    @$q = map {
+        $_ =~ tr/äöüß/aous/;
+        $_ .= '*';
+    } split(' ', lc params->{term});
 
-	my $hits = h->search_research_group({q => $q, limit => 100});
+    my $hits = h->search_research_group({q => $q, limit => 100});
 
-	if($hits->{total}){
-		my $map;
-		@$map = map {
-			{ id => $_->{_id}, label => $_->{name} };
-		} @{$hits->{hits}};
-		return to_json $map;
-	}
-	else {
-		return to_json [];
-	}
+    if($hits->{total}){
+        my $map;
+        @$map = map {
+            { id => $_->{_id}, label => $_->{name} };
+        } @{$hits->{hits}};
+        return to_json $map;
+    }
+    else {
+        return to_json [];
+    }
 };
 
 1;
