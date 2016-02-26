@@ -41,7 +41,7 @@
     <div class="row authorIds">
       <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
       <div class="col-md-6">
-      [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]">[% thisPerson.$k %]</a>
+      [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]">[% thisPerson.$k %][% h.config.lists.author_id.$k.icon %]</a>
       [% ELSE %][% thisPerson.$k %][% END %]
       [% IF backend %]
       <a href="#" class="helpme helpme-md" data-placement="right" title="[% lf.help.author_id_edit %]" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>

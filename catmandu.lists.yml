@@ -11,6 +11,7 @@ author_id:
   orcid:
     label: ORCID
     url: "http://orcid.org/"
+    icon: " <sup><img src='/images/orcid_icon_16x16.png' /></sup>"
   googleScholar:
     label: Google Scholar Profile
     url: "http://scholar.google.de/citations?user="
