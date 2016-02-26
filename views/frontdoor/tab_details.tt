@@ -16,7 +16,12 @@
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.translator.label || lf.forms.$type.field.translator_secondary.label %]</div>
     <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
-  [% IF tr.id %]<a itemprop="author" href="/person/[% tr.id %]">[% tr.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span itemprop="author">[% tr.full_name %]</span>[% END %]
+  [% IF tr.id %]
+  <a itemprop="author" href="/person/[% tr.id %]">[% tr.full_name %]<sup class="text-muted">[% lf.frontdoor.local_brand %]</sup></a>
+  [% ELSE %]
+  <span itemprop="author">[% tr.full_name %]</span>
+  [% END %]
+  [% IF tr.orcid %]<a href="http://orcid.org/[% tr.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %]
   [% IF loop.count > 11 %]
     <span id="showAut">
       <br><a href="#details" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>[% lf.frontdoor.show_all %]</a>
@@ -35,7 +40,12 @@
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.author.label || lf.forms.$type.field.author_secondary.label %]</div>
     <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
-  [% IF au.id %]<a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span itemprop="author">[% au.full_name %]</span>[% END %]
+  [% IF au.id %]
+  <a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]<sup class="text-muted">[% lf.frontdoor.local_brand %]</sup></a>
+  [% ELSE %]
+  <span itemprop="author">[% au.full_name %]</span>
+  [% END %]
+  [% IF au.orcid %]<a href="http://orcid.org/[% au.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %]
   [% IF loop.count > 11 %]
     <span id="showAut">
       <br><a href="#details" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>[% lf.frontdoor.show_all %]</a>
@@ -54,7 +64,12 @@
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.supervisor.label %]</div>
     <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
-  [% IF sup.id %]<a href="/person/[% sup.id %]">[% sup.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span>[% sup.full_name %]</span>[% END %]
+  [% IF sup.id %]
+  <a href="/person/[% sup.id %]">[% sup.full_name %]<sup class="text-muted">[% lf.frontdoor.local_brand %]</sup></a>
+  [% ELSE %]
+  <span>[% sup.full_name %]</span>
+  [% END %]
+  [% IF sup.orcid %]<a href="http://orcid.org/[% sup.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %]
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
@@ -64,7 +79,12 @@
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.editor.label || lf.forms.$type.field.editor_solo.label %]</div>
     <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
-  [% IF ed.id %]<a itemprop="editor" href="/person/[% ed.id %]">[% ed.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span itemprop="editor">[% ed.full_name %]</span>[% END %]
+  [% IF ed.id %]
+  <a itemprop="editor" href="/person/[% ed.id %]">[% ed.full_name %]<sup class="text-muted">[% lf.frontdoor.local_brand %]</sup></a>
+  [% ELSE %]
+  <span itemprop="editor">[% ed.full_name %]</span>
+  [% END %]
+  [% IF ed.orcid %]<a href="http://orcid.org/[% ed.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %]
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
