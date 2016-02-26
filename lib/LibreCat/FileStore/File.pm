@@ -3,8 +3,6 @@ package LibreCat::FileStore::File;
 use Moo::Role;
 use IO::String;
 
-with 'Catmandu::Logger';
-
 has key           => (is => 'ro' , required => 1);
 has content_type  => (is => 'ro');
 has size          => (is => 'ro');

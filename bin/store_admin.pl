@@ -34,6 +34,9 @@ my $store = load();
 if ($cmd eq 'list') {
     cmd_list(@ARGV);
 }
+elsif ($cmd eq 'exists') {
+    cmd_exists(@ARGV);
+}
 elsif ($cmd eq 'add') {
     cmd_add(@ARGV);
 }
@@ -76,6 +79,18 @@ sub cmd_list {
                 , strftime("%Y-%m-%dT%H:%M:%S", localtime($modified))
                 , strftime("%Y-%m-%dT%H:%M:%S", localtime($created));
     }
+}
+
+sub cmd_exists {
+    my ($key) = @_;
+
+    croak "exists - need a key" unless defined($key);
+
+    my $ans = $store->exists($key);
+
+    printf "$key %s\n" , $ans ? "EXISTS" : "NOT_FOUND";
+
+    exit($ans ? 0 : 2);
 }
 
 sub cmd_get {

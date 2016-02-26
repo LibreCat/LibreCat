@@ -43,6 +43,8 @@ sub exists {
 
     croak "Need a key" unless defined $key;
 
+    $self->log->debug("Checking exists $key");
+    
     my $path = path_string($self->root,$key);
 
     -d $path;
@@ -127,7 +129,7 @@ LibreCat::FileStore::BagIt - A BagIt implementation of a file storage
 
     use LibreCat::FileStore::BagIt;
 
-    my $filestore =>LibreCat::FileStore::BagIt->new(%options);
+    my $filestore =>LibreCat::FileStore::BagIt->new(root => '/data2/librecat/bag_uploads');
 
     my $generator = $filestore->list;
 

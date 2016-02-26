@@ -66,3 +66,6 @@ requires 'Getopt::Long';
 requires 'Net::LDAP';
 requires 'Net::LDAPS';
 requires 'Email::Sender::Simple';
+
+requires 'Catmandu::Store::FedoraCommons';
+requires 'IO::All';
