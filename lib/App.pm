@@ -31,9 +31,9 @@ directory_view '/RePEc';
 sub _authenticate {
     my ($username, $password) = @_;
 
-    my $User = LibreCat::User->new(Catmandu->config->{user});
+    my $users = LibreCat::User->new(Catmandu->config->{user});
 
-    my $Auth = do {
+    my $auth = do {
         my $pkg = Catmandu::Util::require_package(
             h->config->{authentication}->{package}
         );
