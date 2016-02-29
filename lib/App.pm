@@ -29,9 +29,9 @@ $Template::Stash::PRIVATE = 0;
 sub _authenticate {
     my ($username, $password) = @_;
     
-    state $User = LibreCat::User->new(Catmandu->config->{user});
+    my $users = LibreCat::User->new(Catmandu->config->{user});
 
-    state $Auth = do {
+    my $auth = do {
         my $pkg = Catmandu::Util::require_package(
             h->config->{authentication}->{package}
         );
@@ -39,8 +39,8 @@ sub _authenticate {
         $pkg->new($param);
     };
 
-    my $user = $User->find_by_username($username) || return;
-    $Auth->authenticate({username => $username, password => $password}) || return;
+    my $user = $users->find_by_username($username) || return;
+    $auth->authenticate({username => $username, password => $password}) || return;
     $user;
 }
 
