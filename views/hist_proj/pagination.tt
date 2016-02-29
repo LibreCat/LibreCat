@@ -3,7 +3,7 @@
 [% IF next_page or previous_page %]
 [% qp = request.params.hash; qp.delete('splat') %]
 <div class="col-md-9">
-<ul class="pub_pagination">
+<ul class="pagination">
   [% IF previous_page %]
   [% s = start-limit < 0 ? 0 : start-limit %]
   <li class="prev"><a href='[% h.newuri_for("$path", qp, start="$s") %]' class="underline-part">&laquo;</a></li>
@@ -12,7 +12,7 @@
   [% FOREACH p IN pages_in_spread %]
   [% IF p == page %]
    [% s =  limit * (p - 1) %]
-  <li class="current"><a href=""><u>[% p %]</u></a></li>
+  <li class="active"><a href=""><u>[% p %]</u></a></li>
   [% ELSIF p.defined %]
   [% s = limit * (p - 1) %]
   <li><a href='[% h.newuri_for("$path", qp, start="$s") %]'>[% p %]</a></li>
@@ -30,4 +30,5 @@
 [% ELSE %]
 <div class="col-md-9">&nbsp;</div>
 [% END %]
+
 <!-- END pagination.tt -->

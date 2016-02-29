@@ -18,4 +18,15 @@ move_field('pageInfo','page')
 
 # authors
 move_field('authorString','author')
-split_author('epmc')
+split_field(author, ',|;')
+trim(author.*, 'nonword')
+split_author()
+#do list (var:loop, path => author)
+#  do identity()
+#    copy_field(loop,tmp)
+#    split_field(tmp, ' ')
+#    move_field(tmp.$last,loop.first_name)
+#    join_field(tmp, ' ')
+#    move_field(tmp,loop.last_name)
+ # end
+#end

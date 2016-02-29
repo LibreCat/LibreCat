@@ -1,17 +1,29 @@
 # fix publication data at update
 
 #vacuum()
+compact_array('department')
+compact_array('project')
 delete_empty()
 publication_identifier()
 page_range_number()
 hash_array()
-compact_array('department')
-compact_array('project')
-clean_abstract()
+clean_preselects()
 #language()
 maybe_add_urn()
 person()
-add_department()
+volume_sort()
+
+if exists(department)
+  do list(path:department, var:loop)
+    do identity()
+      copy_field(loop._id,loop.tmp)
+      lookup_in_store(loop.tmp, search, bag:department)
+      move_field(loop.tmp.tree, loop.tree)
+      remove_field(loop.tmp)
+    end
+  end
+end
+fix_too_many_departments()
 
 copy_field(bi_doctype,type)
 
@@ -19,12 +31,23 @@ copy_field(bi_doctype,type)
 #issn(publication_identifier.issn.*)
 #issn(publication_identifier.eissn.*)
 
-split_field(nasc, ' ; ')
-split_field(genbank, ' ; ')
-split_field(keyword, ' ; ')
+split_field(nasc, ';|,')
+trim(nasc.*)
+split_field(genbank, ';|,')
+trim(genbank.*)
+split_field(keyword, ';|,')
+trim(keyword.*)
 
 if all_match('finalSubmit','recPublish')
     set_field('status','public')
+    remove_field(oai_deleted)
+end
+if all_match('finalSubmit','recSubmit')
+    set_field('status','submitted')
+end
+
+if all_match(status, returned)
+  add_field(oai_deleted, 1)
 end
 
 remove_field('finalSubmit')

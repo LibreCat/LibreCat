@@ -29,7 +29,7 @@
       [% END -%]
       [% IF year %]<meta name="citation_date" content="[% year %]">[% END %]
       [% IF file %][% FOREACH fi IN file %][% IF fi.file_name %]
-      <meta name="citation_pdf_url" content="[% request.path %]/download/[% _id %]/[% fi.file_id %]">[% END %][% END %][% END %]
+      <meta name="citation_pdf_url" content="[% h.host %][% request.path %]/download/[% _id %]/[% fi.file_id %]">[% END %][% END %][% END %]
       [% IF doi %]<meta name="citation_pdf_url" content="http://doi.org/[% doi %]">[% ELSIF link %]<meta name="citation_pdf_url" content="[% link.0.url %]">[% END %]
       [% IF publication %]<meta name="citation_journal_title" content="[% publication %]" />[% END %]
       [% IF volume %]<meta name="citation_volume" content="[% volume %]" />[% END %]
@@ -45,7 +45,7 @@
       [% END %]
       [% IF year %]<meta name="DC.date" content="[% year %]">[% END %]
       [% IF language %]<meta name="DC.language" content="[% language.0.iso %]">[% END %]
-      <meta name="DC.identifier" content="[% request.base %]/[% request.path %]/[% _id %]">
+      <meta name="DC.identifier" content="[% h.host %][% request.path %]/[% _id %]">
       [% IF abstract %][% FOREACH abstract_entry IN abstract %][% UNLESS loop.first %][% END %]<meta name="DC.description" content="[% abstract_entry.text | html %]">[% END %][% END %]
       [% IF cc_license %]<meta name="DC.rights" scheme="DCTERMS.URI" content="http://creativecommons.org/[% SWITCH cc_license %][% CASE 'cc_by' %]licenses/by/4.0/[% CASE 'cc_by_sa' %]licenses/by-sa/4.0/[% CASE 'cc_0' %]publicdomain/zero/1.0/[% END %]">[% END %]
       [% FOREACH rel_entry IN entry.host %][% IF rel_entry.issn %]<meta name="DC.source.ISSN" content="[% rel_entry.issn.0 %]">[% END %][% IF rel_entry.isbn %]<meta name="DC.source.ISBN" content="[% rel_entry.isbn.0 %]">[% END %][% END %]

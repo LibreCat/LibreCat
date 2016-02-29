@@ -15,57 +15,35 @@
 
   <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
 
-    <div class="page-header" id="banner">
-    [% IF backend %]
-      <h1>
-      [% IF thisPerson.bis.personTitle %]<span itemprop="honorificPrefix">[% thisPerson.bis.personTitle %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span> ([% IF session.role == 'super_admin' %]Admin[% END %][% IF session.role == 'user' %]User[% END %][% IF session.role == 'reviewer' %]Reviewer[% END %][% IF session.role == "delegate" %]Delegate[% END %][% IF session.role == "data_manager" %]Data Manager[% END %])
-      </h1>
-    [% ELSE %]
-      <h1>
-      [% UNLESS !thisPerson %][% thisPerson.first_name %] [% thisPerson.last_name %][% ELSE %][% lf.person_profile.id_not_found %][% END %]
-      </h1>
-      <div class="pull-right margin-top-1">
-	    <ul class="list-inline">
-	    [% IF session AND session.user %]
-	      <li><a href="/librecat" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span>[% session.user %]</a></li>
-	    [% END %]
-	    [% IF session AND session.user %]
-	      <li><a href="/logout" title="[% lf.main_page.logout %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% lf.main_page.logout %]</span></a></li>
-	    [% ELSE %]
-	      <li><a href="/login" title="[% lf.main_page.login %]"><span class="glyphicon glyphicon-log-in fw"></span>[% lf.main_page.login %]</a></li>
-	    [% END %]
-	    </ul>
-      </div>
-    [% END %]
-    </div>
+    <div class="page-header">
 
-    <div class="row">
-      <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme helpme-md" data-placement="top" title="[% lf.help.pevz_photo %]">
-        [% IF thisPerson.bis.photo %]
-        <img src="[% thisPerson.bis.photo %]" style="max-width:140px;" class="img-thumbnail" >
-        [% ELSE %]
-        <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail" title="[% backend ? lf.home.you_have_no_photo : lf.home.they_have_no_photo %]">
-        [% END %]
-      </div>
-
-      <div class="col-md-6 col-sm-5 col-xs-12">
-        [% INCLUDE person_profile.tt %]
-      </div>
-
-      [% IF backend %]
-      <div class="col-md-3 col-md-offset-1 col-sm-4 col-xs-12">
-	    <div class="well">
-	      [% INCLUDE backend/add_new_button.tt %]
-          <div class="row">
-            <p class="text-center text-uppercase"><strong>[% lf.main_page.capital_or %]</strong></p>
-          </div>
-          [% INCLUDE backend/qae.tt %]
+      <div class="row">
+	<div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme helpme-md" data-placement="top" title="[% lf.help.pevz_photo %]">
+	  [% IF thisPerson.photo %]
+	  [%- photo_url=thisPerson.photo.replace('http:','') -%]
+	  <img src="[% photo_url %]" style="max-width:140px;" class="img-thumbnail" >
+	  [% ELSE %]
+	  <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail" title="[% backend ? lf.home.you_have_no_photo : lf.home.they_have_no_photo %]">
+	  [% END %]
 	</div>
+
+	<div class="col-md-6 col-sm-5 col-xs-12">
+	  <h3 class="margin-top0">[% UNLESS !thisPerson %][% IF thisPerson.idm_title %]<span itemprop="honorificPrefix">[% thisPerson.idm_title %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span>[% IF backend %] ([% IF session.role == 'super_admin' %]Admin[% END %][% IF session.role == 'user' %]User[% END %][% IF session.role == 'reviewer' %]Reviewer[% END %][% IF session.role == "delegate" %]Delegate[% END %][% IF session.role == "data_manager" %]Data Manager[% END %])[% END %][% ELSE %][% lf.person_profile.id_not_found %][% END %]</h3>
+	[% INCLUDE person_profile.tt %]
+	</div>
+
+	[% IF backend %]
+	<div class="col-md-3 col-md-offset-1 col-sm-4 col-xs-12">
+	  <div class="well">
+	      [% INCLUDE backend/add_new_button.tt %]
+	  </div>
+	</div>
+	[% END %]
+
       </div>
-      [% END %]
-
+    
     </div>
-
+    
     [% UNLESS !thisPerson %]
 
     <div class="row margin-xs-top"> <!-- row span11 publications, projects, departments -->
@@ -82,12 +60,12 @@
 	[% END %]
 	[% IF backend AND session.role == 'reviewer' %]
 	  [% FOREACH department IN thisPerson.reviewer %]
-	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_reviewer %]"><a href="/librecat/search/reviewer/[% department._id %]">[% department.name %]</a></li>
+	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_reviewer %]"><a href="/librecat/search/reviewer/[% department._id %]">[% h.get_department(department._id).display %]</a></li>
 	  [% END %]
 	[% END %]
 	[% IF backend AND session.role == "data_manager" %]
 	  [% FOREACH department IN thisPerson.data_manager %]
-	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_data_manager %]"><a href="/librecat/search/data_manager/[% department._id %]">[% department.name %]</a></li>
+	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_data_manager %]"><a href="/librecat/search/data_manager/[% department._id %]">[% h.get_department(department._id).display %]</a></li>
 	  [% END %]
 	[% END %]
 	[% IF backend AND session.role == "delegate" %]
@@ -98,6 +76,9 @@
 	[% UNLESS backend %]
 	<li class="hidden-md hidden-lg hidden-sm"><a href="#facets">[% lf.facets.search_filter %]</a></li>
 	<li class="hidden-md hidden-lg hidden-sm"><a href="#export">[% lf.facets.export_marked %]</a></li>
+	<li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="[% lf.main_page.logout %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% lf.main_page.logout %]</span></a>[% ELSE %]<a href="/login" title="[% lf.main_page.login %]"><span class="glyphicon glyphicon-log-in fw"></span>[% lf.main_page.login %]</a>[% END %]</li>
+	[% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
+	</ul>
 	[% END %]
 	</ul>
       </div>
@@ -113,7 +94,7 @@
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	    [% INCLUDE facets.tt %]
+	    [% INCLUDE filters.tt %]
 	  </div>
 	</div>
 	[% END %]
@@ -126,7 +107,7 @@
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	    [% INCLUDE facets.tt %]
+	    [% INCLUDE filters.tt %]
 	  </div>
 	</div>
 	<div class="tab-pane[% IF modus == 'data' %] active[% END %]" id="publ-data">
@@ -136,7 +117,7 @@
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	    [% INCLUDE facets.tt %]
+	    [% INCLUDE filters.tt %]
 	  </div>
 	</div>
 	[% END %]
@@ -148,7 +129,7 @@
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	    [% INCLUDE facets.tt %]
+	    [% INCLUDE filters.tt %]
 	  </div>
 	</div>
 	[% END %]
@@ -160,7 +141,7 @@
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	    [% INCLUDE facets.tt %]
+	    [% INCLUDE filters.tt %]
 	  </div>
 	</div>
 	[% END %]
@@ -174,7 +155,7 @@
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	    [% INCLUDE facets.tt %]
+	    [% INCLUDE filters.tt %]
 	  </div>
 	</div>
 	[% END %]

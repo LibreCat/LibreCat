@@ -27,8 +27,8 @@ authentication:
     auth_base: 'uid=%s,ou=People,o=elearning-user,o=Uni-Bi'
 
 # default settings
-default_lang: de
-default_page_size: 100
+default_lang: en
+default_page_size: 20
 default_searchpage_size: 10
 maximum_page_size: 1000
 pagination_options:

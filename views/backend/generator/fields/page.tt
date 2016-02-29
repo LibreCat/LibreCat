@@ -14,7 +14,7 @@
             <select class="btn btn-default" name="page_range_number.type" id="select_page_range_number">
               <option value="">-- [% lf.button.select %] --</option>
               {% FOREACH prn IN fields.basic_fields.page.options %}
-              <option value="{% prn %}">[% lf.page_range_number.{% prn %} %]</option>
+              <option value="{% prn %}"[% IF (article_number AND "{% prn %}" == "article_number") OR (page AND "{% prn %}" == "page_range") %] selected="selected"[% END %]>[% lf.page_range_number.{% prn %} %]</option>
               {% END %}
             </select>
           </span>

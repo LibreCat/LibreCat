@@ -8,7 +8,7 @@
   <div class="col-md-10" id="jel">
     {% IF fields.basic_fields.jel.multiple || fields.supplementary_fields.jel.multiple %}
     [% IF !jel %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.jel.mandatory || fields.supplementary_fields.jel.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.jel.label_short || lf.$type.field.jel.label %]</div>
@@ -37,7 +37,7 @@
     </div>
     [% ELSE %]
       [% FOREACH j IN jel %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.jel.mandatory || fields.supplementary_fields.jel.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.jel.label_short || lf.$type.field.jel.label %]</div>

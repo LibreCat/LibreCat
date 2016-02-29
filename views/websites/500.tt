@@ -1,0 +1,30 @@
+[% PROCESS header.tt %]
+[% path = request.path %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+
+<!-- BEGIN websites/500.tt -->
+
+<div class="row"><!-- outer border -->
+
+  <div class="col-md-11 col-sm-12"><!-- main content -->
+
+    <div id="banner">
+	<h1>[% lf.500.heading %]</h1>
+    </div>
+
+    <div class="row margin-top1">
+      <div class="col-md-12">
+	  <p>[% lf.500.text %]<br /><br />
+	     <a href="[% path %]">[% lf.frontdoor.crumb_back %]</a>
+	  </p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- END websites/500.tt -->
+
+[% INCLUDE footer.tt %]

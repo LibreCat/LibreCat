@@ -12,23 +12,23 @@ sub fix{
         
         @{$data->{$pers}} = grep defined, @{$data->{$pers}};
         my $splice_me;
-    	my $i = 0;
+        my $i = 0;
         
         foreach (@{$data->{$pers}}){
-        	if ($_->{first_name} and $_->{last_name}) {
-        		$_->{full_name} = $_->{last_name} . ", " . $_->{first_name};
-   				$i++;
-   			}
-   			else {
-   				push @$splice_me, $i;
-   			}
+            if ($_->{first_name} and $_->{last_name}) {
+                $_->{full_name} = $_->{last_name} . ", " . $_->{first_name};
+                $i++;
+            }
+            else {
+                push @$splice_me, $i;
+            }
         }
         
         if($splice_me){
-   			foreach (@$splice_me){
-   				splice @{$data->{$pers}}, $_, 1;
-   			}
-   		}
+            foreach (@$splice_me){
+                splice @{$data->{$pers}}, $_, 1;
+            }
+        }
     }
     return $data;
 }

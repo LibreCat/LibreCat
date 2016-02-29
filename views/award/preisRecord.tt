@@ -20,14 +20,14 @@
   
     <h1><img src="/images/preise_headline_[% lang ? "en" : "de" %].gif" /></h1>
     <div class="span6" style="text-align:right;margin-top:-50px;margin-left:-25px;">
-    <img src="/images/beta_unibi_right.png" width="50">
+    <img src="/images/beta_white_right.png" width="50">
     </div>
     
     <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% award_id %]"><h2><img src="/images/preis_gross.png" /> [% award_data.title %]</h2></a>
     
     <div class="span2" style="padding-bottom:10px;">
-    [% IF person.bis_photo %]
-      <object data="[% person.bis.photo %]" class="img-polaroid" style="max-width:120px;" itemprop="image">
+    [% IF person.photo %]
+      <object data="[% person.photo %]" class="img-polaroid" style="max-width:120px;" itemprop="image">
         <img src="/images/dummy.png" style="width:10px;" class="img-polaroid">
       </object>
 	[% ELSE %]

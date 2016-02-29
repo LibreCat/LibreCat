@@ -10,7 +10,7 @@
   <div class="col-md-10" id="original_language">
     {% IF fields.basic_fields.original_language.multiple OR fields.supplementary_fields.original_language.multiple %}
     [% IF !original_language %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.original_language.mandatory OR fields.supplementary_fields.original_language.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.original_language.label_short || lf.$type.field.original_language.label %]</div>
@@ -30,7 +30,7 @@
     </div>
     [% ELSE %]
       [% FOREACH lan IN original_language %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.original_language.mandatory OR fields.supplementary_fields.original_language.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.original_language.label_short || lf.$type.field.original_language.label %]</div>

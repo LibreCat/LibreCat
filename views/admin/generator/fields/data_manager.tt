@@ -3,10 +3,9 @@
     <label>{% data_manager.label %}</label>
   </div>
   <div class="col-md-10" id="data_manager">
-    [% IF !data_manager %]
-    <div class="row innerrow">
+    [% IF !data_manager OR !data_manager.0 %]
+    <div class="row innerrow multirow">
       <input type="hidden" name="data_manager.0._id" id="dm_idautocomplete_0" />
-      <input type="hidden" name="data_manager.0.name" id="dm_nameautocomplete_0" />
       
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky">
@@ -20,14 +19,14 @@
     </div>
     [% ELSE %]
     [% FOREACH dept IN data_manager %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="data_manager.[% loop.index %]._id" id="dm_idautocomplete_[% loop.index %]" value="[% dept._id %]" />
       <input type="hidden" name="data_manager.[% loop.index %].name" id="dm_nameautocomplete_[% loop.index %]" value="[% dept.name %]" />
       
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% data_manager.label %}</div>
-          <input type="text" class="sticky form-control" onfocus="enable_autocomplete('dm',[% loop.index %]);" id="dm_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
+          <input type="text" class="sticky form-control" onfocus="enable_autocomplete('dm',[% loop.index %]);" id="dm_autocomplete_[% loop.index %]" value="[% h.get_department(dept._id).display %]" disabled="disabled" />
           <div class="input-group-addon"><span onclick="selectButton(this);" class="data_manager" id="data_manager_select_0">Select</span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('data_manager');"></span></div>
           <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>

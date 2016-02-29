@@ -67,7 +67,7 @@ function editAuthorIds(direction){
  * @param pub_id
  */
 function generate_link(file_id, pub_id){
-	var url = '/requestcopy/' + pub_id + '/' + file_id;
+	var url = '/rc/' + pub_id + '/' + file_id;
 	$.post(url, {approved:1}, function(data){
 		var request_url = data.url;
 		$("ul[id$='_rac_dd_" + file_id + "'] li input").val(request_url);
@@ -112,12 +112,12 @@ $(function () {
 
 
 /**
- * Link author name to PEVZ account
+ * Link author name to person account
  */
-function linkPevz(element){
+function link_person(element){
 	var type = "";
 	type = $(element).attr('data-type');
-	var lineId = $(element).attr('id').replace(type + 'link_pevz_','');
+	var lineId = $(element).attr('id').replace(type + 'link_person_','');
 
 	if($('#' + type + 'Authorized' + lineId).attr('alt') == "Not Authorized"){
 		var puburl = '/search_researcher?term=';
@@ -182,14 +182,14 @@ function linkPevz(element){
 			// If only one hit... fill out fields and change img to green
 			if(objJSON.length == 1 && (!objJSON[0].old_full_name || !objJSON[0].full_name)){
 				var data = objJSON[0];
-				var pevzId = "";
+				var personId = "";
 				var orcid = "";
 				var first_name = "";
 				var last_name = "";
 
 				$.each(data, function(key, value){
 					if(key == "_id"){
-						pevzId = value;
+						personId = value;
 					}
 					if(key == "first_name"){
 						first_name = value;
@@ -209,10 +209,10 @@ function linkPevz(element){
 				$('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
 				$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 
-				$('#' + type + 'id_' + lineId).val(pevzId);
+				$('#' + type + 'id_' + lineId).val(personId);
 				$('#' + type + 'orcid_' + lineId).val(orcid);
 
-				pevzId = "";
+				personId = "";
 				orcid = "";
 				first_name = "";
 				last_name = "";
@@ -220,19 +220,19 @@ function linkPevz(element){
 
 			// If more than one hit... show modal with choices
 			else if(objJSON.length > 1 || (objJSON.length == 1 && objJSON[0].old_full_name && objJSON[0].full_name)){
-				var container_title = $('#' + type + 'linkPevzModal').find('.modal-title').first();
+				var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
 				container_title.html('');
-				var title = 'Several PEVZ Accounts found... make a choice';
-				var container = $('#' + type + 'linkPevzModal').find('.modal-body').first();
+				var title = '<span class="glyphicon glyphicon-indent-left text-default"></span> UniBi author: Choose name';
+				var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
 				container.html('');
-				var table = '<p><strong>Exact hits:</strong></p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>PEVZ-ID</th><th>Name</th></tr>';
+				var table = '<p>Several exact matches for <em>' + firstname + ' ' + lastname + '</em> were found in the staff directory (PEVZ). Click on the number (Person ID) to view the person\'s profile in the PEVZ. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
 				var rows = "";
-				var table2 = '<p><strong>Further hits:</strong></p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>PEVZ-ID</th><th>Name</th></tr>';
+				var table2 = '<table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
 				var rows2 = "";
 
 				for(var i=0;i<objJSON.length;i++){
 					var data = objJSON[i];
-					var pevzId = "";
+					var personId = "";
 					var orcid = "";
 					var first_name = "";
 					var old_first_name = "";
@@ -240,7 +240,7 @@ function linkPevz(element){
 					var old_last_name = "";
 					$.each(data, function(key, value){
 						if(key == "_id"){
-							pevzId = value;
+							personId = value;
 						}
 						if(key == "orcid"){
 							orcid = value;
@@ -264,19 +264,22 @@ function linkPevz(element){
 					});
 
 					if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase()) || (firstname == old_first_name.toLowerCase() && lastname == "") || (lastname == old_last_name.toLowerCase() && firstname == "") || (lastname == old_last_name.toLowerCase() && firstname == old_first_name.toLowerCase())){
-						rows += '<tr data-id="' + pevzId + '" data-orcid="' + orcid + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + pevzId + '" target="_blank">' + pevzId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="pevzLink">' + first_name + " " + last_name + '</a></td></tr>';
+						rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
 						if(old_first_name || old_last_name){
-							rows += '<tr data-id="' + pevzId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + pevzId + '" target="_blank">' + pevzId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="pevzLink">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+							rows += '<tr data-id="' + personId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
 						}
 					}
 					else {
-						rows2 += '<tr data-id="' + pevzId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + pevzId + '" target="_blank">' + pevzId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="pevzLink">' + first_name + " " + last_name + '</a></td></tr>';
+						rows2 += '<tr data-id="' + personId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
+						if(old_first_name || old_last_name){
+							rows2 += '<tr data-id="' + personId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+						}
 					}
 
 				}
 
 				if(rows == ""){
-					table = "<p><strong>Exact hits:</strong></p><p>There were no exact hits for <em>'" + firstname + " " + lastname + "'</em>.</p>";
+					table = "<p>Several possible matches for <em>" + firstname + " " + lastname + "</em> were found in the staff directory (PEVZ). Click on the number (Person ID) to view the person\'s profile in the PEVZ. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p>";
 				}
 				else{
 					table += rows + "</table>";
@@ -293,8 +296,8 @@ function linkPevz(element){
 				container.append(table);
 				container.append(table2);
 
-				$('.pevzLink').bind("click", function() {
-					var pevzId = $(this).parent().parent().attr('data-id');
+				$('.person_link').bind("click", function() {
+					var personId = $(this).parent().parent().attr('data-id');
 					var orcid = $(this).parent().parent().attr('data-orcid');
 					var first_name = $(this).parent().parent().find('.name').attr('data-firstname');
 					var last_name = $(this).parent().parent().find('.name').attr('data-lastname');
@@ -310,26 +313,26 @@ function linkPevz(element){
 					$('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
 					$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 
-					$('#' + type + 'id_' + lineId).val(pevzId);
+					$('#' + type + 'id_' + lineId).val(personId);
 					$('#' + type + 'orcid_' + lineId).val(orcid);
 
-					$('#' + type + 'linkPevzModal').modal("hide");
-					$('#' + type + 'linkPevzModal').find('.modal-body').first().html('');
+					$('#' + type + 'link_person_modal').modal("hide");
+					$('#' + type + 'link_person_modal').find('.modal-body').first().html('');
 				});
 
-				$('#' + type + 'linkPevzModal').modal("show");
+				$('#' + type + 'link_person_modal').modal("show");
 			}
 
 			// No results found
 			else {
-				var container_title = $('#' + type + 'linkPevzModal').find('.modal-title').first();
-				var title = 'Sorry...';
-				var container = $('#' + type + 'linkPevzModal').find('.modal-body').first();
+				var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
+				var title = '<span class="glyphicon glyphicon-remove-circle text-danger"></span> No UniBi author found';
+				var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
 				container.html('');
 				container_title.html('');
-				container.append('<p class="has-error">No results found.</p>');
+				container.append('<p class="has-error">No matching entry in staff directory (PEVZ) found. Please check, if first and last name of the author are entered correctly. You can omit letters (e.g. just enter the last name, or the last name and first letter of first name).</p>');
 				container_title.append(title);
-				$('#' + type + 'linkPevzModal').modal("show");
+				$('#' + type + 'link_person_modal').modal("show");
 			}
 		}, "json");
 	}
@@ -396,7 +399,7 @@ function edit_file(fileId, id){
 		$('#id_accessEmbargo').prop('disabled',true);
 	}
 	else if(json.access_level == "local"){
-		$('#id_accessLevel_unibi').prop('checked',true);
+		$('#id_accessLevel_local').prop('checked',true);
 		$('#id_accessEmbargo').prop('disabled',false);
 	}
 	else if(json.access_level == "closed"){
@@ -463,10 +466,10 @@ $(function () {
 	});
 
 	$(".creator").sortable({
-		containerSelector: 'div.row.innerrow',
+		containerSelector: 'div.row.multirow',
 	    itemSelector: 'div.sortitem',
 	    update: function (event, ui) {
-		    $('.creator').find('div.row.innerrow').each(function(index){
+		    $('.creator').find('div.row.multirow').each(function(index){
 		    	var myitem = $(this);
 		    	myitem.find('input[name]').each(function(){
 		    		var myRegexp = /(.*\.)\d{1,}(\..*)/g;
@@ -482,9 +485,15 @@ $(function () {
 });
 
 function add_field(name, placeholder){
-	var items = $('#' + name + ' div.row.innerrow');
-	var index = items.index($('#' + name + ' div.row.innerrow').last()) + 1;
+	var items = $('#' + name + ' div.row.multirow');
+	var index = items.index($('#' + name + ' div.row.multirow').last()) + 1;
 	var blueprint = $(items[0]).clone();
+	//var corrected_index = index;
+	//while(corrected_index > 99){
+	//	corrected_index = corrected_index - 100;
+	//}
+	//var label_index = index/100;
+	//label_index = Math.floor(label_index);
 
 	$(blueprint).find('input, textarea, img, button, select, span').each(function(){
 		if($(this).attr('id')){
@@ -494,6 +503,10 @@ function add_field(name, placeholder){
 
 		if($(this).attr('name')){
 			var newname = $(this).attr('name').replace(/0/g,index);
+			//var newname = $(this).attr('name').replace(/0/g,corrected_index);
+			//if(label_index && label_index > 0){
+			//	newname = $(this).attr('name').replace(/^(\w{1,})/g,'$1_' + label_index);
+			//}
 			$(this).attr('name', newname);
 		}
 		$(this).attr('disabled',false);
@@ -533,37 +546,41 @@ function add_field(name, placeholder){
 		break;
 	case "person_affiliation":
 		enable_autocomplete("person_aff", index)
-			break;
+		break;
 	case "project":
 		enable_autocomplete("pj", index)
-			break;
+		break;
+	case "research_group":
+		enable_autocomplete("rg", index)
+		break;
     }
 
 }
 
 function remove_field(object){
-	var container = $(object).closest('div.row.innerrow');
+	var container = $(object).closest('div.multirow');
 	var index = $(container).index();
 
 	if(parseInt(index) > 0){
-	  var all_containers = $(container).parent().children('div.row.innerrow');
+	  var all_containers = $(container).parent().children('div.multirow');
 	  $(container).remove();
-	  var cont = $(all_containers).slice(index);
+	  var cont = $(all_containers).slice(index + 1);
 	  $(cont).each(function(cindex){
+		  var newindex = parseInt(cindex) + parseInt(index);
 		  var current_container = $(this);
 		  $(current_container).find('input, textarea, img, select, span').each(function(){
 			  if($(this).attr('id')){
-				  var newid = $(this).attr('id').replace(/\d+/g,cindex);
+				  var newid = $(this).attr('id').replace(/\d+/g,newindex);
 				  $(this).attr('id', newid);
 			  }
-			  
+
 			  if($(this).attr('name')){
-				  var newname = $(this).attr('name').replace(/\d+/g,cindex);
+				  var newname = $(this).attr('name').replace(/\d+/g,newindex);
 				  $(this).attr('name', newname);
 			  }
-			  
+
 			  if($(this).attr('onfocus')){
-				  var newattr = $(this).attr('onfocus').replace(/\d+/g,cindex);
+				  var newattr = $(this).attr('onfocus').replace(/\d+/g,newindex);
 				  $(this).attr('onfocus', newattr);
 			  }
 		  });
@@ -581,6 +598,35 @@ function remove_field(object){
 			}
 		});
 	}
+}
+
+function full_remove_field(object){
+	var container = $(object).closest('div.multirow');
+	var index = $(container).index();
+
+	  var all_containers = $(container).parent().children('div.multirow');
+	  $(container).remove();
+	  var cont = $(all_containers).slice(index + 1);
+	  $(cont).each(function(cindex){
+		  var newindex = parseInt(cindex) + parseInt(index);
+		  var current_container = $(this);
+		  $(current_container).find('input, textarea, img, select, span').each(function(){
+			  if($(this).attr('id')){
+				  var newid = $(this).attr('id').replace(/\d+/g,newindex);
+				  $(this).attr('id', newid);
+			  }
+
+			  if($(this).attr('name')){
+				  var newname = $(this).attr('name').replace(/\d+/g,newindex);
+				  $(this).attr('name', newname);
+			  }
+
+			  if($(this).attr('onfocus')){
+				  var newattr = $(this).attr('onfocus').replace(/\d+/g,newindex);
+				  $(this).attr('onfocus', newattr);
+			  }
+		  });
+	  });
 }
 
 function enable_autocomplete(field, index){

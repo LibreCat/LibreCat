@@ -1,27 +1,27 @@
 
 <!-- BEGIN person_profile.tt -->
 
-[% IF thisPerson.bis.email %]
-<a class="helpme helpme-md" data-placement="top" title="[% lf.help.pevz_email %]" href="mailto:[% thisPerson.bis.email %]" itemprop="email">[% thisPerson.bis.email.replace('@|&#64;', ' [at] ') %]</a><br>
+[% IF thisPerson.email_encoded || thisPerson.email %]
+<a class="helpme helpme-md" data-placement="top" title="[% lf.help.pevz_email %]" href="mailto:[% thisPerson.email_encoded || thisPerson.email %]" itemprop="email">[% thisPerson.email_encoded.replace('@|&#64;', ' [at] ') || thisPerson.email %]</a><br>
 [% END %]
 
 [% IF !thisPerson %]
   <p>[% lf.person_profile.id_not_found %]</p>
 [% ELSE %]
-  [% IF thisPerson.bis.former == "1" %]
+  [% IF thisPerson.former == "1" %]
     <p>[% lf.person_profile.former_researcher %]</p>
   [% ELSE %]
     <div class="col-md-12 row">
       <div class="row">
 	<div class="col-md-4">[% lf.person_profile.directory_of_staff %]</div>
-	<div class="col-md-6"><a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% thisPerson._id %]&amp;lang=en">[% thisPerson._id %]</a></div>
+	<div class="col-md-6"><a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% thisPerson._id %]">[% thisPerson._id %]</a></div>
       </div>
     </div>
-    [% IF thisPerson.sfb882_profile %]
+    [% IF thisPerson.other_profile %]
     <div class="col-md-12 row">
       <div class="row">
-	<div class="col-md-4">[% lf.person_profile.sfb_profile %]</div>
-	<div class="col-md-6"><a href="http://www.sfb882.uni-bielefeld.de/en/staff/[% thisPerson._id %]">[% thisPerson._id %]</a></div>
+	<div class="col-md-4">[% lf.person_profile.other_profile %]</div>
+	<div class="col-md-6"><a href="[% lf.person_profile.other_profile_url %][% thisPerson._id %]">[% lf.person_profile.other_profile_url %][% thisPerson._id %]</a></div>
       </div>
     </div>
     [% END %]
@@ -41,10 +41,10 @@
     <div class="row authorIds">
       <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
       <div class="col-md-6">
-      [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]" target="_blank">[% thisPerson.$k %]</a>
+      [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]">[% thisPerson.$k %][% h.config.lists.author_id.$k.icon %]</a>
       [% ELSE %][% thisPerson.$k %][% END %]
       [% IF backend %]
-      <a href="#" class="helpme helpme-md" data-placement="right" title="[% lf.help.author_id %]" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
+      <a href="#" class="helpme helpme-md" data-placement="right" title="[% lf.help.author_id_edit %]" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
       [% END %]
       </div>
     </div>
@@ -63,8 +63,8 @@
 	</script>
       </div>
       <div class="col-md-6">
-	<button type="button" id="saveAuthorIds" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-ok"></span> [% lf.forms.button.save %]</button>
-	<button type="button" onclick="editAuthorIds('cancel');" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span> [% lf.forms.button.cancel %]</button>
+	<button type="button" id="saveAuthorIds" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> [% lf.forms.button.save %]</button>
+	<button type="button" onclick="editAuthorIds('cancel');" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> [% lf.forms.button.cancel %]</button>
       </div>
     </div>
     </form>

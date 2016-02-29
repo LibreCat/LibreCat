@@ -5,7 +5,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
 [%- FOREACH var IN ['title' 'creator' 'subject' 'description' 'publisher' 'contributor' 'date' 'type' 'format' 'identifier' 'source' 'language' 'relation' 'coverage' 'rights'] %]
-	[%- FOREACH val IN $var %]
+	[%- FOREACH val IN dc.$var %]
    	<dc:[% var %]>[% val | xml_strict %]</dc:[% var %]>
 	[%- END %]
 [%- END %]

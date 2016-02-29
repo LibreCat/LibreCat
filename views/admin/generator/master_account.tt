@@ -1,9 +1,11 @@
 [% path = request.path %]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lf = h.config.language.$lang -%]
 [% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
 
-<!-- BEGIN admin/generator/edit_account.tt -->
+<!-- BEGIN admin/generator/master_account.tt -->
 
 <div class="row">
 
@@ -15,6 +17,16 @@
 
     <form id="id_account_form" action="/librecat/admin/account/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
+      <input type="hidden" name="email_encoded" value="[% email_encoded %]" />
+      <input type="hidden" name="other_profile" value="[% other_profile %]" />
+      <input type="hidden" name="title" value="[% title %]" />
+      <input type="hidden" name="idm_title" value="[% idm_title %]" />
+      <input type="hidden" name="former" value="[% former %]" />
+      <input type="hidden" name="researcher" value="[% researcher %]" />
+      <input type="hidden" name="nonexist" value="[% nonexist %]" />
+      <input type="hidden" name="publication_hits" value="[% publication_hits %]" />
+      <input type="hidden" name="research_hits" value="[% research_hits %]" />
+      <input type="hidden" name="combined_hits" value="[% combined_hits %]" />
 
       {% FOREACH key IN account_field_order %}
 {% template = "fields/" _ key _ ".tt" %}
@@ -24,8 +36,9 @@
       <div class="row innerrow"><!-- button -->
         <div class="col-md-12 buttonrow">
           <span class="form-group col-md-10 col-md-offset-2">
-            <button type="button" id="id_check_submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save</button>
-            <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+            <button type="button" id="id_check_submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> [% lf.forms.button.save %]</button>
+            <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> [% lf.forms.button.cancel %]</button>
+            <a class="btn btn-danger" href="/librecat/admin/account/delete/[% _id %]" onclick="return confirm('Caution! You are deleting an account.');" name="delete"><span class="glyphicon glyphicon-trash"></span> Delete</a>
           </span>
         </div>
       </div>
@@ -158,6 +171,6 @@ $("input[name='account_type']").change(function(){
 
 </script>
 
-<!-- END admin/generator/edit_account.tt -->
+<!-- END admin/generator/master_account.tt -->
 
 [% INCLUDE footer.tt %]
