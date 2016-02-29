@@ -87,7 +87,7 @@ Saves the data in the authority database.
         my $p = params;
 
         $p = h->nested_params($p);
-        $p->{password} = mkpasswd($p->{password});
+        $p->{password} = mkpasswd($p->{password}) if $p->{password};
 
         h->update_record('researcher', $p);
         template 'admin/account';

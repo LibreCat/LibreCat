@@ -37,7 +37,6 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
     my $marked = session 'marked';
     $marked ||= [];
     $hits->{hits}->[0]->{marked} = @$marked;
-    $hits->{hits}->[0]->{style} = $style if $style;
 
     if ($p->{fmt} ne 'html') {
         h->export_publication($hits, $p->{fmt});

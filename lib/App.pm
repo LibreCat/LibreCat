@@ -33,7 +33,7 @@ sub _authenticate {
 
     state $User = LibreCat::User->new(Catmandu->config->{user});
 
-    state $Auth = do {
+    my $Auth = do {
         my $pkg = Catmandu::Util::require_package(
             h->config->{authentication}->{package}
         );
