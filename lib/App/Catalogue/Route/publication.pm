@@ -318,22 +318,37 @@ Publishes private records, returns to the list.
             }
         }
 
-        $record->{status} = "public" if $field_check;
-        h->update_record('publication', $record);
+        if($field_check){
+            if(session->{role} eq "super_admin"){
+                $record->{status} = "public";
+            }
+            else {
+                if ($record->{type} eq "researchData"){
+                    $record->{status} = "submitted" if $old_status eq "private";
+                }
+                else {
+                    $record->{status} = "public";
+                }
+            }
 
-        if ($record->{type} =~ /^bi/ and $record->{status} eq "public" and $old_status ne "public") {
-        	$record->{host} = h->host;
-            my $mail_body = export_to_string($record, 'Template', template => 'views/email/thesis_published.tt');
+            if($record->{status} ne $old_status){
+                h->update_record('publication', $record);
 
-            try {
-                email {
-                    to => $record->{email},
-                    subject => h->config->{thesis}->{subject},
-                    body => $mail_body,
-                    reply_to => h->config->{thesis}->{to},
-                };
-            } catch {
-                error "Could not send email: $_";
+                if ($record->{type} =~ /^bi/ and $record->{status} eq "public" and $old_status ne "public") {
+                	$record->{host} = h->host;
+                    my $mail_body = export_to_string($record, 'Template', template => 'views/email/thesis_published.tt');
+
+                    try {
+                        email {
+                            to => $record->{email},
+                            subject => h->config->{thesis}->{subject},
+                            body => $mail_body,
+                            reply_to => h->config->{thesis}->{to},
+                        };
+                    } catch {
+                        error "Could not send email: $_";
+                    }
+                }
             }
         }
 

@@ -295,7 +295,10 @@
         <h3 id="edit">Editing Options</h3>
         <a href="/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> &nbsp;Edit this record</a><br />
         [% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "researchData" OR session.role == "super_admin") %]
-          <a href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> Make this record public</a>
+          <a href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> Make this record public</a><br />
+        [% END %]
+        [% IF type == "researchData" AND status != "public" AND status != "submitted" AND session.role != "super_admin" %]
+          <a href="/librecat/record/publish/[% _id %]">Submit this record</a>
         [% END %]
         [% END %]
 
