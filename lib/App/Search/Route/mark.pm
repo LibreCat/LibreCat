@@ -36,18 +36,18 @@ get '/marked' => sub {
             $hits = h->search_publication($p);
             push @tmp_hits, @{$hits->{hits}};
         }
-    	$hits->{explinks} = $explinks;
-    	$hits->{style} = params->{style} || h->config->{default_style};
+        $hits->{explinks} = $explinks;
+        $hits->{style} = params->{style} || h->config->{default_style};
     }
 
     $hits->{hits} = \@tmp_hits;
     $hits->{total} = scalar @tmp_hits;
 
     if($fmt and $fmt ne 'html' and $hits->{total} ne "0"){
-    	h->export_publication( $hits, $fmt );
+        h->export_publication( $hits, $fmt );
     }
     else {
-    	template 'marked/marked.tt', $hits;
+        template 'marked/marked.tt', $hits;
     }
 
 };
@@ -62,16 +62,16 @@ post '/mark/:id' => sub {
     my $id = param 'id';
     my $del = params->{'x-tunneled-method'};
     if($del){
-    	my $marked = session 'marked';
-    	if ($marked) {
-			$marked = [ grep { $_ ne $id } @$marked ];
-			session 'marked' => $marked;
-		}
-		content_type 'application/json';
-		return to_json {
-			ok => true,
-			total => scalar @$marked,
-		};
+        my $marked = session 'marked';
+        if ($marked) {
+            $marked = [ grep { $_ ne $id } @$marked ];
+            session 'marked' => $marked;
+        }
+        content_type 'application/json';
+        return to_json {
+            ok => true,
+            total => scalar @$marked,
+        };
     }
 
     forward '/marked', {q => "id=$id"};
@@ -80,23 +80,23 @@ post '/mark/:id' => sub {
 
 post '/marked' => sub {
 
-	my $p = h->extract_params();
-	my $del = params->{'x-tunneled-method'};
-	my $marked = [];
-	$marked = session 'marked';
+    my $p = h->extract_params();
+    my $del = params->{'x-tunneled-method'};
+    my $marked = [];
+    $marked = session 'marked';
     $p->{limit} = h->config->{maximum_page_size};
     $p->{start} = 0;
-	push @{$p->{q}}, "status exact public";
+    push @{$p->{q}}, "status exact public";
 
-	if($del){
-		if (session 'marked') {
-			session 'marked' => [];
-		}
-		return to_json {
-			ok => true,
-			total => 0,
-		};
-	}
+    if($del){
+        if (session 'marked') {
+            session 'marked' => [];
+        }
+        return to_json {
+            ok => true,
+            total => 0,
+        };
+    }
 
     my $hits = h->search_publication($p);
 
@@ -108,12 +108,12 @@ post '/marked' => sub {
         };
     }
     elsif($hits->{total}){
-    	foreach (@{$hits->{hits}}){
-    		my $id = $_->{_id};
-    		push @$marked, $id unless array_includes($marked, $id);
-    	}
+        foreach (@{$hits->{hits}}){
+            my $id = $_->{_id};
+            push @$marked, $id unless array_includes($marked, $id);
+        }
 
-    	session 'marked' => $marked;
+        session 'marked' => $marked;
     }
 
     content_type 'application/json';
@@ -125,9 +125,9 @@ post '/marked' => sub {
 };
 
 post '/marked_total' => sub {
-	my $marked = [];
-	$marked = session 'marked' if session 'marked';
-	content_type 'application/json';
+    my $marked = [];
+    $marked = session 'marked' if session 'marked';
+    content_type 'application/json';
     return to_json {
         ok => true,
         total => scalar @$marked,
@@ -146,11 +146,11 @@ post '/reorder' => sub {
 
     $marked = [ grep { $_ ne params->{id} } @$marked ];
 
-	my @rest = splice (@$marked,params->{newpos});
-	push @$marked, params->{id};
-	push @$marked, @rest;
+    my @rest = splice (@$marked,params->{newpos});
+    push @$marked, params->{id};
+    push @$marked, @rest;
 
-	session 'marked' => $marked;
+    session 'marked' => $marked;
 
 };
 

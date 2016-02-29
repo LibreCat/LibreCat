@@ -6,14 +6,51 @@ upload_dir: '/data2/librecat/file_uploads'
 thesis:
     urn_prefix: 'urn:thesis-'
 
+store:
+  builtin_users:
+    package: Hash
+    options:
+      init_data:
+        # stored password authentication
+        - login: einstein
+          # password is same as login
+          # crypt a password with 'bmkpasswd [password]' in the shell
+          password: '$2a$08$p1zhJInkNqy9nvMFsEPde./hU4ERNQuX2UQUjZA/ddrp1uUXikn/6'
+          _id: 1234
+          super_admin: 1
+	# LDAP authentication
+        - login: nsteenla
+          _id: 4321
+
 authentication:
-  package: Authentication::LDAP
-  param:
-    host: 'ldaps://ldaps.ugent.be'
-    base: 'ugentID=870910100341,ou=applications,dc=ugent,dc=be'
-    password: '*************************'
-    auth_base: 'ugentID=%s,ou=people,dc=UGent,dc=be'
-    search_filter: '(uid=%s)'
-    search_base: 'dc=ugent, dc=be'
-    search_attr: 'ugentID'
+  package: LibreCat::Auth::Multi
+  options:
+    methods:
+      # password auth against users in config
+      - package: LibreCat::Auth::Bag
+        options:
+          store: builtin_users
+          username_attr: login
+      # password auth against database users
+      - package: LibreCat::Auth::Bag
+        options:
+          bag: researcher
+          username_attr: login
+      # LDAP auth
+      - package: LibreCat::Auth::LDAP
+        options:
+          host: 'ldaps://ldaps.ugent.be'
+          base: '********'
+          password: '********'
+          auth_base: 'ugentID=%s,ou=people,dc=UGent,dc=be'
+          search_filter: '(uid=%s)'
+          search_base: 'dc=ugent, dc=be'
+          search_attr: 'ugentID'
+
+user:
+  sources:
+    - store: builtin_users
+      username_attr: login
+    - bag: researcher
+      username_attr: login
 

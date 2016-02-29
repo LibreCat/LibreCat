@@ -34,7 +34,7 @@ get '/librecat' => needs login => sub {
         forward '/librecat/search/data_manager', $params;
     }
     elsif ( session->{role} eq "delegate" ) {
-    	forward '/librecat/search/delegate', $params;
+        forward '/librecat/search/delegate', $params;
     }
     else {
         forward '/librecat/search', $params;
@@ -51,9 +51,9 @@ get '/librecat/change_role/:role' => needs login => sub {
 
     # is user allowed to take this role?
 
-	if ( params->{role} eq "delegate" and $user->{delegate} ) {
-		session role => "delegate";
-	}
+    if ( params->{role} eq "delegate" and $user->{delegate} ) {
+        session role => "delegate";
+    }
     elsif ( params->{role} eq "reviewer" and $user->{reviewer} ) {
         session role => "reviewer";
     }

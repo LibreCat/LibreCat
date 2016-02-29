@@ -11,9 +11,9 @@ sub fix {
     my $delete_em;
 
     foreach my $d (@{$data->{department}}) {
-    	my $dep;
-    	$dep = h->search_department({q => [$d->{_id}]})->{hits}->[0];
-    	$d->{tree} = $dep->{tree};
+        my $dep;
+        $dep = h->search_department({q => [$d->{_id}]})->{hits}->[0];
+        $d->{tree} = $dep->{tree};
         $d->{display} = $dep->{display};
         
         #my $full_dep = h->get_department($d->{_id});
@@ -28,7 +28,7 @@ sub fix {
     foreach my $del (@$delete_em){
         my ($index) = grep { $data->{department}->[$_]->{_id} eq $del } 0..$#{$data->{department}};
         if($index){
-        	splice(@{$data->{department}}, $index, 1);
+            splice(@{$data->{department}}, $index, 1);
         }
     }
 

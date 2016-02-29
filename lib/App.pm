@@ -18,8 +18,8 @@ use App::Catalogue; # the backend
 
 use App::Helper;
 use Dancer::Plugin::Auth::Tiny;
-use Dancer::Plugin::Passphrase;
 use Dancer::Plugin::DirectoryView;
+use LibreCat::User;
 
 # make variables with leading '_' visible in TT,
 # otherwise they are considered private
@@ -29,31 +29,21 @@ directory_view '/RePEc';
 
 # custom authenticate routine
 sub _authenticate {
-    my ( $login, $pass ) = @_;
+    my ($username, $password) = @_;
 
-    if (Dancer::config->{environment} eq 'development' && $login eq 'einstein') {
-        return {login => 'einstein', _id => 1234, super_admin => 1};
-    }
+    state $User = LibreCat::User->new(Catmandu->config->{user});
 
-    my $user = h->get_person( $login );
-    return 0 unless $user;
+    my $Auth = do {
+        my $pkg = Catmandu::Util::require_package(
+            h->config->{authentication}->{package}
+        );
+        my $param = h->config->{authentication}->{options} // {};
+        $pkg->new($param);
+    };
 
-    if (!$user->{account_type} or ($user->{account_type} and $user->{account_type} ne 'external')) {
-        my $pkg   = Catmandu::Util::require_package( 
-                            h->config->{authentication}->{package} // 'Authentication::LDAP' 
-                    );
-        my $param = h->config->{authentication}->{param} // {};
-        my $auth  = $pkg->new(%$param);
-
-        my $verify = $auth->authenticate( params->{user}, params->{pass} );
-
-        return $user if $verify == 1;
-    } 
-    elsif ( passphrase(params->{pass})->matches($user->{password}) ) {
-        return $user;
-    }
-
-    return 0;
+    my $user = $User->find_by_username($username) || return;
+    $Auth->authenticate({username => $username, password => $password}) || return;
+    $user;
 }
 
 =head2 GET /login
@@ -103,11 +93,11 @@ The logout route. Destroys session.
 =cut
 any '/logout' => sub {
     # preserves language setting only
-	my $lang = session->{lang};
+    my $lang = session->{lang};
     session->destroy;
     session lang => $lang;
 
-	redirect '/';
+    redirect '/';
 };
 
 =head2 GET /set_language
@@ -116,10 +106,10 @@ Route to call when changing language in session
 
 =cut
 get '/set_language' => sub {
-	my $referer = request->{referer};
-	session lang => params->{lang};
-	$referer =~ s/lang=\w{2}\&*//g;
-	redirect $referer;
+    my $referer = request->{referer};
+    session lang => params->{lang};
+    $referer =~ s/lang=\w{2}\&*//g;
+    redirect $referer;
 };
 
 =head2 ANY /access_denied
@@ -133,8 +123,8 @@ any '/access_denied' => sub {
 };
 
 any qr{(/en)*/coffee} => sub {
-	status '418';
-	template 'websites/418', {path => request->{referer}};
+    status '418';
+    template 'websites/418', {path => request->{referer}};
 };
 
 =head1 ANY {other route....}
@@ -143,8 +133,8 @@ Throws 'page not found'.
 
 =cut
 any qr{.*} => sub {
-	status 'not_found';
-	template 'websites/404', {path => request->{referer}};
+    status 'not_found';
+    template 'websites/404', {path => request->{referer}};
 };
 
 1;

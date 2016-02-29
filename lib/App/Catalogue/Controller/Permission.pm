@@ -30,7 +30,7 @@ sub can_edit {
         $cql .= " OR " .join(' OR ', @delegate) .")";
     }
     if($user_role ne 'super_admin'){
-    	$cql .= " AND type<>bidissertation AND type<>bimasterthesis AND type<>bibachelorthesis AND type<>bipostdocthesis AND locked<>1";
+        $cql .= " AND type<>bidissertation AND type<>bimasterthesis AND type<>bibachelorthesis AND type<>bipostdocthesis AND locked<>1";
     }
 
     my $hits = h->publication->search(cql_query => $cql, limit => 1);
