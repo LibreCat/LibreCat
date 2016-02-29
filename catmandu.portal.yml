@@ -143,6 +143,7 @@ pubbwlde:
   ttyp: pubbwl
   fmt: html
 
+# Citec en
 pubcitec:
   q:
     -
@@ -162,6 +163,7 @@ pubcitec:
   ttyp: pubcitec
   fmt: html
 
+# Citec deutsch
 pubcitecde:
   q:
     -
@@ -179,6 +181,78 @@ pubcitecde:
   lang: de
   limit: 10
   ttyp: pubcitecde
+  fmt: html
+
+# Citec data publications en
+pubcitecdata:
+  q:
+    -
+      param: department
+      op: '='
+      or: 8014655
+    -
+      param: documenttype
+      op: '='
+      or: 'researchData'
+  lang: en
+  limit: 10
+  ttyp: pubcitecdata
+  fmt: html
+
+# Citec data publications de
+pubcitecdatade:
+  q:
+    -
+      param: department
+      op: '='
+      or: 8014655
+    -
+      param: documenttype
+      op: '='
+      or: 'researchData'
+  lang: de
+  limit: 10
+  ttyp: pubcitecdatade
+  fmt: html
+
+# Citec AG Semantic Computing en
+pubcitecsc:
+  q:
+    -
+      param: department
+      op: '='
+      or: 15019923
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
+  lang: en
+  limit: 10
+  ttyp: pubcitecsc
+  fmt: html
+
+# Citec AG Semantic Computing de
+pubcitecscde:
+  q:
+    -
+      param: department
+      op: '='
+      or: 15019923
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
+  lang: de
+  limit: 10
+  ttyp: pubcitecscde
   fmt: html
 
 pubcorlab:
