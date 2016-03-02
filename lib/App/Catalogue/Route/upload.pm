@@ -35,9 +35,9 @@ prefix '/librecat' => sub {
       my $file_data;
 
       if($file){
-      	  my $now = h->now;
-      	  my $tempid = $file->{tempname};
-      	  $tempid =~ s/.*\/([^\/\.]*)\.*.*/$1/g;
+          my $now = h->now;
+          my $tempid = $file->{tempname};
+          $tempid =~ s/.*\/([^\/\.]*)\.*.*/$1/g;
           $file_data = {
             success => 1,
             file_name => $file->{filename},
@@ -56,13 +56,13 @@ prefix '/librecat' => sub {
           my $filedir = path(h->config->{tmp_dir}, $tempid);
           mkdir $filedir || croak "Could not create dir $filedir: $!";
           my $filepath = path(h->config->{tmp_dir}, $tempid, $file->{filename});
-      	  copy($file->{tempname}, $filepath);
+          copy($file->{tempname}, $filepath);
 
-      	  #$file_data->{file_json} = to_json($file_data);
-      	  my $status = unlink $file->{tempname};
+          #$file_data->{file_json} = to_json($file_data);
+          my $status = unlink $file->{tempname};
       }
       else{
-      	$file_data = {success => 0, error_message => 'Sorry! The file upload failed.'}
+        $file_data = {success => 0, error_message => 'Sorry! The file upload failed.'}
       }
 
       return to_json($file_data);
@@ -74,9 +74,9 @@ prefix '/librecat' => sub {
       my $creator = session->{user} ? session->{user} : "pubtheses";
 
       if($file){
-      	  my $now = h->now;
-      	  my $tempid = $file->{tempname};
-      	  $tempid =~ s/.*\/([^\/\.]*)\..*/$1/g;
+          my $now = h->now;
+          my $tempid = $file->{tempname};
+          $tempid =~ s/.*\/([^\/\.]*)\..*/$1/g;
           $file_data = {
             success => 1,
             file_name => $file->{filename},
@@ -95,13 +95,13 @@ prefix '/librecat' => sub {
           my $filedir = path(h->config->{tmp_dir}, $tempid);
           mkdir $filedir || croak "Could not create dir $filedir: $!";
           my $filepath = path(h->config->{tmp_dir}, $tempid, $file->{filename});
-      	  copy($file->{tempname}, $filepath);
+          copy($file->{tempname}, $filepath);
 
-      	  $file_data->{file_json} = to_json($file_data);
-      	  my $status = unlink $file->{tempname};
+          $file_data->{file_json} = to_json($file_data);
+          my $status = unlink $file->{tempname};
       }
       else{
-      	$file_data = {success => 0, error_message => 'Sorry! The file upload failed.'}
+        $file_data = {success => 0, error_message => 'Sorry! The file upload failed.'}
       }
 
       return to_json($file_data);
@@ -178,86 +178,86 @@ prefix '/librecat' => sub {
     my $file_data;
 
     if($submit_or_cancel eq "Submit"){
-    	my $temp_file = path(h->config->{tmp_dir}, params->{tempid}, $file_name);
-    	if(system "-e $temp_file"){
-    		my $id = h->new_record('publication');
-    		my $file_id = h->new_record('publication');
-    		my $now = h->now();
-    		$file_data->{saved} = 1;
-    		
-    		my $path = h->get_file_path($id);
-    		system "mkdir -p $path" unless -d $path;
-    		my $result = move( path(h->config->{tmp_dir}, params->{tempid}, $file_name), $path ) || die $!;
-    		
-    		my $d = Crypt::Digest::MD5->new;
-    		$d->addfile(encode_utf8($path."/".$file_name));
-    		my $digest = $d->hexdigest; # hexadecimal form
-    		
-    		my $record = {
-    			_id => $id,
-    			status => "new",
-    			accept => 1,
-    			title => params->{title},
-    			type => params->{type},
-    			email => params->{email},
-    			publisher => "Universität Bielefeld",
-    			place => "Bielefeld",
-    			ddc => [params->{ddc}],
-    			department => [{name => "Universitätsbibliothek", _id => "10085", tree => [{name => "Universitätsbibliothek", id => "10085"}]}],
-    			author => [{
-    				first_name => params->{'author.first_name'},
-    				last_name => params->{'author.last_name'},
-    				full_name => params->{'author.last_name'} . ", " . params->{'author.first_name'},
-    			}],
-    			year => substr($now, 0, 4),
-    			abstract => [{
-    				lang => "eng",
-    				text => params->{'abstract'},
-    			}],
-    			cc_license => params->{'cc_license'},
-    		};
-    		push @{$record->{file}}, to_json({
-    			file_name => $file_name,
-    			file_id => $file_id,
-    			tempid => $file_id,
-    			access_level => "open_access",
-    			open_access => 1,
-    			date_updated => $now,
-    			date_created => $now,
-    			creator => "pubtheses",
-    			open_access => 1,
-    			relation => "main_file",
-    			checksum => $digest,
-    		});
-    		push @{$record->{file_order}}, $file_id;
-    		
-    		my $response = h->update_record('publication', $record);
-    		
-    		# send mail to librarian
-    		my $mail_body = export_to_string({
-    			title => $record->{title},
-    			author => $record->{author}->[0]->{full_name},
-    			_id => $id,
-    			host => h->config->{host},
+        my $temp_file = path(h->config->{tmp_dir}, params->{tempid}, $file_name);
+        if(system "-e $temp_file"){
+            my $id = h->new_record('publication');
+            my $file_id = h->new_record('publication');
+            my $now = h->now();
+            $file_data->{saved} = 1;
+            
+            my $path = h->get_file_path($id);
+            system "mkdir -p $path" unless -d $path;
+            my $result = move( path(h->config->{tmp_dir}, params->{tempid}, $file_name), $path ) || die $!;
+            
+            my $d = Crypt::Digest::MD5->new;
+            $d->addfile(encode_utf8($path."/".$file_name));
+            my $digest = $d->hexdigest; # hexadecimal form
+            
+            my $record = {
+                _id => $id,
+                status => "new",
+                accept => 1,
+                title => params->{title},
+                type => params->{type},
+                email => params->{email},
+                publisher => "Universität Bielefeld",
+                place => "Bielefeld",
+                ddc => [params->{ddc}],
+                department => [{name => "Universitätsbibliothek", _id => "10085", tree => [{name => "Universitätsbibliothek", id => "10085"}]}],
+                author => [{
+                    first_name => params->{'author.first_name'},
+                    last_name => params->{'author.last_name'},
+                    full_name => params->{'author.last_name'} . ", " . params->{'author.first_name'},
+                }],
+                year => substr($now, 0, 4),
+                abstract => [{
+                    lang => "eng",
+                    text => params->{'abstract'},
+                }],
+                cc_license => params->{'cc_license'},
+            };
+            push @{$record->{file}}, to_json({
+                file_name => $file_name,
+                file_id => $file_id,
+                tempid => $file_id,
+                access_level => "open_access",
+                open_access => 1,
+                date_updated => $now,
+                date_created => $now,
+                creator => "pubtheses",
+                open_access => 1,
+                relation => "main_file",
+                checksum => $digest,
+            });
+            push @{$record->{file_order}}, $file_id;
+            
+            my $response = h->update_record('publication', $record);
+            
+            # send mail to librarian
+            my $mail_body = export_to_string({
+                title => $record->{title},
+                author => $record->{author}->[0]->{full_name},
+                _id => $id,
+                host => h->config->{host},
                 },
                 'Template',
                 template => 'views/email/new_thesis.tt'
             );
             
             try {
-            	email {
-            		to => h->config->{thesis}->{to},
-            		subject => h->config->{thesis}->{subject},
-            		body => $mail_body,
-            		reply_to => $record->{email},
-            	};
+                email {
+                    to => h->config->{thesis}->{to},
+                    subject => h->config->{thesis}->{subject},
+                    body => $mail_body,
+                    reply_to => $record->{email},
+                };
             } catch {
-            	error "Could not send email: $_";
+                error "Could not send email: $_";
             }
-    	}
-    	else {
-    		redirect '/pubtheses';
-    	}
+        }
+        else {
+            redirect '/pubtheses';
+        }
 
     } else {
       my $path = path( h->config->{tmp_dir}, params->{tempid}, $file_name);
@@ -273,13 +273,13 @@ prefix '/librecat' => sub {
       my $old_file_name = params->{old_file_name} || params->{file_name};
       my $id            = params->{id};
       my $file_id       = params->{file_id};
-      my $tempid		= params->{tempid};
+      my $tempid        = params->{tempid};
       my $success       = 1;
 
       if ($file) {
-      	  my $filepath = path(h->config->{tmp_dir}, $file->{filename});
-      	  copy($file->{tempname}, $filepath);
-      	  my $status = unlink $file->{tempname};
+          my $filepath = path(h->config->{tmp_dir}, $file->{filename});
+          copy($file->{tempname}, $filepath);
+          my $status = unlink $file->{tempname};
       }
       my $open_access = params->{access_level} && params->{access_level} eq "open_access" ? 1 : 0;
 

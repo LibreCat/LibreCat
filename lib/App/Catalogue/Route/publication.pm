@@ -19,15 +19,15 @@ use LibreCat::Worker::DataCite;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
-    	my ($role, $coderef) = @_;
-    	return sub {
-    		if ( session->{role} && $role eq session->{role} ) {
-    			goto $coderef;
-    		}
-    		else {
-    			redirect '/access_denied';
-    		}
-    	}
+        my ($role, $coderef) = @_;
+        return sub {
+            if ( session->{role} && $role eq session->{role} ) {
+                goto $coderef;
+            }
+            else {
+                redirect '/access_denied';
+            }
+        }
     }
 );
 
@@ -68,13 +68,13 @@ Some fields are pre-filled.
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
         }
         if(params->{lang}){
-        	$data->{lang} = params->{lang};
+            $data->{lang} = params->{lang};
         }
 
         my $templatepath = "backend/forms";
 
         if(($edit_mode and $edit_mode eq "expert") or ($edit_mode eq "" and session->{role} eq "super_admin")){
-        	$templatepath .= "/expert";
+            $templatepath .= "/expert";
         }
 
         $data->{new_record} = 1;
@@ -105,13 +105,13 @@ Checks if the user has permission the see/edit this record.
         my $templatepath = "backend/forms";
         my $template = h->config->{forms}->{publicationTypes}->{lc $rec->{type}}->{tmpl} . ".tt";
         if(($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
-        	$templatepath .= "/expert";
-        	$edit_mode = "expert";
+            $templatepath .= "/expert";
+            $edit_mode = "expert";
         }
 
         $rec->{return_url} = request->{referer} if request->{referer};
         if ($rec) {
-        	$rec->{edit_mode} = $edit_mode if $edit_mode;
+            $rec->{edit_mode} = $edit_mode if $edit_mode;
             template $templatepath . "/$template", $rec;
         }
         else {
@@ -148,7 +148,7 @@ Checks if the user has the rights to update this record.
         #return to_dumper $result; # leave this here to make debugging easier
 
         if ($result->{type} =~ /^bi/ and $result->{status} eq "public" and $old_status ne "public") {
-        	$result->{host} = h->host;
+            $result->{host} = h->host;
             my $mail_body = export_to_string($result, 'Template', template => 'views/email/thesis_published.tt');
 
             try {
@@ -165,7 +165,7 @@ Checks if the user has the rights to update this record.
 
         if ($result->{type} eq "researchData") {
             if ($result->{status} eq "submitted") {
-            	$result->{host} = h->host;
+                $result->{host} = h->host;
                 my $mail_body = export_to_string($result, 'Template', template => 'views/email/rd_submitted.tt');
 
                 try {
@@ -251,16 +251,16 @@ For admins only!
 
 =cut
     get qr{/internal_view/(\w{1,})/*(\w{1,})*} => needs role => 'super_admin' => sub {
-		my ($id, $dumper) = splat;
-		my $pub = h->publication->get($id);
+        my ($id, $dumper) = splat;
+        my $pub = h->publication->get($id);
 
-		if($dumper and $dumper eq "dumper"){
-			return template 'backend/internal_view', {data => to_dumper($pub)};
-		} else {
+        if($dumper and $dumper eq "dumper"){
+            return template 'backend/internal_view', {data => to_dumper($pub)};
+        } else {
             return template 'backend/internal_view', {data => to_yaml($pub)};
         }
 
-	};
+    };
 
 =head2 GET /publish/:id
 
@@ -281,9 +281,9 @@ Publishes private records, returns to the list.
         #check if all mandatory fields are filled
         my $publtype;
         if ($record->{type} =~ /^bi[A-Z]/) {
-        	$publtype = "bithesis";
+            $publtype = "bithesis";
         } else {
-        	$publtype = lc($record->{type});
+            $publtype = lc($record->{type});
         }
 
         my $basic_fields = h->config->{forms}->{publicationTypes}->{$publtype}->{fields}->{basic_fields};
@@ -293,23 +293,23 @@ Publishes private records, returns to the list.
             next if $key eq "tab_name";
             next if $key eq "bi_doctype";
             if($key =~ /author|editor|translator|supervisor/){
-            	if($basic_fields->{$key} and $basic_fields->{$key}->{mandatory}){
-            		if(!$record->{$key}){
-            			$field_check = 0;
-            		}
-            		elsif($basic_fields->{$key}->{multiple}){
-            			foreach my $entry (@{$record->{$key}}){
-            				unless ($entry->{first_name} and $entry->{last_name}){
-            					$field_check = 0;
-            				}
-            			}
-            		}
-            		else{
-            			unless ($record->{$key}->{first_name} and $record->{$key}->{last_name}){
-            				$field_check = 0;
-            			}
-            		}
-            	}
+                if($basic_fields->{$key} and $basic_fields->{$key}->{mandatory}){
+                    if(!$record->{$key}){
+                        $field_check = 0;
+                    }
+                    elsif($basic_fields->{$key}->{multiple}){
+                        foreach my $entry (@{$record->{$key}}){
+                            unless ($entry->{first_name} and $entry->{last_name}){
+                                $field_check = 0;
+                            }
+                        }
+                    }
+                    else{
+                        unless ($record->{$key}->{first_name} and $record->{$key}->{last_name}){
+                            $field_check = 0;
+                        }
+                    }
+                }
             }
             elsif ( $basic_fields->{$key}->{mandatory} and $basic_fields->{$key}->{mandatory} eq "1"
                 and ( !$record->{$key} || $record->{$key} eq "" ) )
@@ -322,7 +322,7 @@ Publishes private records, returns to the list.
         h->update_record('publication', $record);
 
         if ($record->{type} =~ /^bi/ and $record->{status} eq "public" and $old_status ne "public") {
-        	$record->{host} = h->host;
+            $record->{host} = h->host;
             my $mail_body = export_to_string($record, 'Template', template => 'views/email/thesis_published.tt');
 
             try {
@@ -346,7 +346,7 @@ Changes the layout of the edit form.
 
 =cut
     post '/change_mode' => needs login => sub {
-    	my $mode = params->{edit_mode};
+        my $mode = params->{edit_mode};
         my $params = params;
 
         $params->{file} = [$params->{file}] if ($params->{file} and ref $params->{file} ne "ARRAY");
@@ -354,11 +354,11 @@ Changes the layout of the edit form.
 
         $params = h->nested_params($params);
         if($params->{file}){
-        	foreach my $fi (@{$params->{file}}){
-        		$fi = encode('UTF-8', $fi);
-        		$fi = from_json($fi);
-        		$fi->{file_json} = to_json($fi);
-        	}
+            foreach my $fi (@{$params->{file}}){
+                $fi = encode('UTF-8', $fi);
+                $fi = from_json($fi);
+                $fi->{file_json} = to_json($fi);
+            }
         }
 
         Catmandu::Fix->new(fixes => [

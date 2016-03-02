@@ -35,6 +35,8 @@ my $password;
 Log::Log4perl::init('log4perl.conf');
 Log::Any::Adapter->set('Log4perl');
 
+my $logger     = Log::Log4perl->get_logger('authentication_admin');
+
 GetOptions("package=s" => \$package, "param=s%" => \$param, "p" => \$password);
 
 my $user  = shift;

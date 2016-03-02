@@ -15,7 +15,7 @@ sub fix {
         my $oa = 0;
         foreach my $f (@{$pub->{file}}) {
             if($f->{access_level} eq 'open_access' and $f->{relation} eq "main_file"){
-            	$oa = 1;
+                $oa = 1;
             }
         }
 

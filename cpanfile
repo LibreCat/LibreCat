@@ -1,5 +1,7 @@
 requires 'perl', 'v5.10.1';
 
+requires 'Business::ISBN', 0;
+
 # Catmandu
 requires 'Catmandu', '>=0.9505';
 requires 'Catmandu::Store::ElasticSearch';
@@ -13,7 +15,7 @@ requires 'Catmandu::Importer::Inspire';
 requires 'Catmandu::Importer::EuropePMC';
 requires 'Catmandu::Importer::CrossRef';
 requires 'Catmandu::Importer::getJSON';
-requires 'Catmandu::Identifier', '>=0.03';
+requires 'Catmandu::Identifier', '>=0.05';
 requires 'Catmandu::RIS', '>=0.04';
 
 #Dancer
@@ -24,16 +26,14 @@ requires 'Dancer::Plugin::Catmandu::OAI';
 requires 'Dancer::Plugin::Catmandu::SRU';
 requires 'Dancer::Plugin::Email';
 requires 'Dancer::Plugin::Auth::Tiny';
-requires 'Dancer::Plugin::Passphrase';
 requires 'Dancer::Plugin::DirectoryView';
 requires 'Dancer::Session::Catmandu';
+requires 'Dancer::Test';
 requires 'Template';
 requires 'Template::Plugin::Date';
 requires 'Template::Plugin::JSON';
 requires 'Furl';
 requires 'HTML::Entities';
-requires 'Net::LDAP';
-requires 'Net::LDAPS';
 
 #Plack
 requires 'Plack';
@@ -47,12 +47,18 @@ requires 'Starman';
 
 # others
 requires 'all';
+requires 'Business::ISBN10';
+requires 'Business::ISBN13';
+requires 'App::bmkpasswd', '2.010001';
 requires 'DateTime';
 requires 'Hash::Merge';
 requires 'Try::Tiny';
 requires 'Crypt::Digest::MD5';
+requires 'Crypt::SSLeay';
+requires 'File::Basename';
 requires 'XML::RSS';
 requires 'YAML::XS';
+requires 'YAML';
 requires 'JSON::MaybeXS';
 requires 'Log::Log4perl';
 requires 'Log::Any::Adapter';
@@ -61,3 +67,6 @@ requires 'Getopt::Long';
 requires 'URL::Encode';
 requires 'Encode';
 requires 'Term::ReadKey';
+requires 'Net::LDAP';
+requires 'Net::LDAPS';
+requires 'Email::Sender::Simple';

@@ -56,9 +56,9 @@ Performs search for admin.
         $hits->{modus} = "admin";
 
         if ($p->{fmt} ne 'html') {
-        	h->export_publication($hits, $p->{fmt});
+            h->export_publication($hits, $p->{fmt});
         } else {
-        	template "home", $hits;
+            template "home", $hits;
         }
 
     };
@@ -121,8 +121,8 @@ Performs search for reviewer.
 =cut
 
     get '/reviewer' => needs role => "reviewer" => sub {
-    	my $account = h->get_person(session->{user});
-		redirect "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
+        my $account = h->get_person(session->{user});
+        redirect "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
     };
 
     get '/reviewer/:department_id' => needs role => 'reviewer' => sub {
@@ -159,8 +159,8 @@ Performs search for data manager.
 
 =cut
     get '/data_manager' => needs role => 'data_manager' => sub {
-    	my $account = h->get_person(session->{user});
-    	redirect "/librecat/search/data_manager/$account->{data_manager}->[0]->{_id}";
+        my $account = h->get_person(session->{user});
+        redirect "/librecat/search/data_manager/$account->{data_manager}->[0]->{_id}";
     };
 
     get '/data_manager/:department_id' => needs role => 'data_manager' => sub {
@@ -198,26 +198,26 @@ Takes first request after login or change_role and redirects
 according to first delegate ID.
 
 =cut
-	get '/delegate' => needs role => "delegate" => sub {
-		my $account = h->get_person(session->{user});
-		if(params->{fmt} and params->{fmt} eq "autocomplete"){
-			my $p = h->extract_params();
-			push @{$p->{q}}, "status=public";
-			if($account->{delegate}){
-				my $delegate_search = "";
-				foreach my $delegate (@{$account->{delegate}}){
-					$delegate_search .= "person=$delegate OR creator=$delegate OR ";
-				}
-				$delegate_search =~ s/ OR $//g;
-				push @{$p->{q}}, "(" . $delegate_search . ")" if $delegate_search ne "";
-			}
-			my $hits = h->search_publication($p);
-			h->export_publication($hits, params->{fmt});
-		}
-		else {
-			redirect "/librecat/search/delegate/$account->{delegate}->[0]";
-		}
-	};
+    get '/delegate' => needs role => "delegate" => sub {
+        my $account = h->get_person(session->{user});
+        if(params->{fmt} and params->{fmt} eq "autocomplete"){
+            my $p = h->extract_params();
+            push @{$p->{q}}, "status=public";
+            if($account->{delegate}){
+                my $delegate_search = "";
+                foreach my $delegate (@{$account->{delegate}}){
+                    $delegate_search .= "person=$delegate OR creator=$delegate OR ";
+                }
+                $delegate_search =~ s/ OR $//g;
+                push @{$p->{q}}, "(" . $delegate_search . ")" if $delegate_search ne "";
+            }
+            my $hits = h->search_publication($p);
+            h->export_publication($hits, params->{fmt});
+        }
+        else {
+            redirect "/librecat/search/delegate/$account->{delegate}->[0]";
+        }
+    };
 
 =head2 GET '/delegate/:delegate_id'
 
@@ -326,7 +326,7 @@ Performs search for user.
     };
 
     get '/data' => sub {
-    	my $p = h->extract_params();
+        my $p = h->extract_params();
         my $id = session 'personNumber';
         my @orig_q = @{$p->{q}};
 
