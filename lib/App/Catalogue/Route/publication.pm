@@ -349,6 +349,35 @@ Publishes private records, returns to the list.
                         error "Could not send email: $_";
                     }
                 }
+
+                if ($record->{type} eq "researchData") {
+                    if ($record->{status} eq "submitted") {
+                        $record->{host} = h->host;
+                        my $mail_body = export_to_string($record, 'Template', template => 'views/email/rd_submitted.tt');
+
+                        try {
+                            email {
+                                to => h->config->{research_data}->{to},
+                                subject => h->config->{research_data}->{subject},
+                                body => $mail_body,
+                                reply_to => h->config->{research_data}->{to},
+                            };
+                        } catch {
+                            error "Could not send email: $_";
+                        }
+                    }
+                    elsif ($record->{status} eq 'public' and $record->{doi} =~ /unibi\/\d+$/) {
+                        try {
+                            my $registry = LibreCat::Worker::DataCite->new(user => h->config->{doi}->{user}, password => h->config->{doi}->{passwd});
+                            $record->{host} = h->host;
+                            my $datacite_xml = export_to_string($record, 'Template', template => 'views/export/datacite.tt');
+                            $registry->do_work($record->{doi}, h->host ."/data/$record->{_id}", $datacite_xml);
+                            #$registry->metadata($result->{doi}, $datacite_xml);
+                        } catch {
+                            error "Could not register DOI: $_ -- $record->{_id}";
+                        }
+                    }
+                }
             }
         }
 
