@@ -46,6 +46,9 @@ elsif ($cmd eq 'get') {
 elsif ($cmd eq 'delete') {
     cmd_delete(@ARGV);
 }
+elsif ($cmd eq 'fetch') {
+    cmd_fetch(@ARGV);
+}
 elsif ($cmd eq 'purge') {
     cmd_purge(@ARGV);
 }
@@ -122,6 +125,27 @@ sub cmd_get {
     }
 }
 
+sub cmd_fetch {
+    my ($key,$filename) = @_;
+
+    croak "fetch - need a key" unless defined($key);
+    croak "fetch - need a file" unless defined($filename);
+
+    my $container = $store->get($key);
+
+    croak "get - failed to load $key" unless $container;
+
+    my $file = $container->get($filename);
+
+    my $io = $file->fh;
+
+    while (! $io->eof) {
+        my $buffer;
+        my $len = $io->read($buffer,1024);
+        syswrite(STDOUT,$buffer,1024);
+    }
+}
+
 sub cmd_add {
     my ($key,$file) = @_;
     croak "add - need a key and a file" unless defined($key) && defined($file) && -r $file;
@@ -183,6 +207,7 @@ cmds:
     get <key>
     add <key> <file>
     delete <key> <file>
+    fetch <key> <file>
     purge <key>
 
 options:

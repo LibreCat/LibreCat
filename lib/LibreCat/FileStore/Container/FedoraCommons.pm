@@ -125,7 +125,17 @@ sub _get {
     my $md5      = $first->{dsChecksum};
     my $created  = str2time($last->{dsCreateDate});
     my $modified = str2time($first->{dsCreateDate});
-    my $data     = undef;
+
+    my $data     = sub {
+            my $io = shift;
+            my $res = $fedora->getDatastreamDissemination(
+                        pid      => $pid, 
+                        dsID     => $dsid, 
+                        callback => sub {
+                my ($data, $response, $protocol) = @_;
+                print $io $data;
+            });
+    };
 
     LibreCat::FileStore::File::FedoraCommons->new(
             key      => $key ,

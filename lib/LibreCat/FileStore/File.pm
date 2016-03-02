@@ -2,6 +2,7 @@ package LibreCat::FileStore::File;
 
 use Moo::Role;
 use IO::String;
+use IO::Pipe;
 
 has key           => (is => 'ro' , required => 1);
 has content_type  => (is => 'ro');
@@ -11,14 +12,45 @@ has created       => (is => 'ro');
 has modified      => (is => 'ro');
 has data          => (is => 'ro');
 
-sub is_io {
-    my $self = shift;
-    ref($self->data) =~ /^IO/ ? 1 : 0;
-}
-
 sub fh {
     my $self = shift;
-    $self->is_io ? $self->data : IO::String->new($self->data);
+
+    if (ref($self->data) =~ /^IO/) {
+        $self->data;
+    }
+    elsif (ref($self->data) eq 'CODE') {
+        $self->io_from_callback($self->data);
+    }
+    elsif ($self->data =~ /^http/i) {
+        $self->io_from_url($self->data);
+    }
+    else {
+        IO::String->new($self->data);
+    }
+}
+
+sub io_from_url {
+    my $self = shift;
+    my $url  = shift;
+  
+    IO::Pipe->reader("curl -s \"$url\"");
+}
+
+sub io_from_callback {
+    my $self = shift;
+    my $callback = shift;
+
+    my $pid;
+    my $pipe = new IO::Pipe;
+
+    if ($pid = fork()) { # parent
+        $pipe->reader();
+        return $pipe;
+    }
+    elsif (defined($pid)) { # child
+        $pipe->writer;
+        $callback->($pipe);
+    }
 }
 
 1;
@@ -44,9 +76,8 @@ LibreCat::FileStore::File - Abstract definition of a stored file
     my $size         = $file->size;
     my $created      = $file->created;
     my $modified     = $file->modified;
-    my $data         = $file->data;
 
-    my $fh = $file->data->fh;
+    my $fh = $file->fh;
 
 =head1 METHODS
 
