@@ -41,13 +41,16 @@ elsif ($cmd eq 'add') {
     cmd_add(@ARGV);
 }
 elsif ($cmd eq 'get') {
-    cmd_get(@ARGV);
+    my ($key,$file) = @ARGV;
+    if (defined($file)) {
+        cmd_fetch($key,$file);
+    } 
+    else {
+        cmd_get($key);
+    }
 }
 elsif ($cmd eq 'delete') {
     cmd_delete(@ARGV);
-}
-elsif ($cmd eq 'fetch') {
-    cmd_fetch(@ARGV);
 }
 elsif ($cmd eq 'purge') {
     cmd_purge(@ARGV);
@@ -128,8 +131,8 @@ sub cmd_get {
 sub cmd_fetch {
     my ($key,$filename) = @_;
 
-    croak "fetch - need a key" unless defined($key);
-    croak "fetch - need a file" unless defined($filename);
+    croak "get - need a key" unless defined($key);
+    croak "get - need a file" unless defined($filename);
 
     my $container = $store->get($key);
 
@@ -204,10 +207,9 @@ usage: $0 [options] cmd
 
 cmds:
     list
-    get <key>
+    get <key> [<file>]
     add <key> <file>
     delete <key> <file>
-    fetch <key> <file>
     purge <key>
 
 options:
