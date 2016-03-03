@@ -253,28 +253,6 @@ frontdoor:
   catalogue: "Katalog.<em>plus!</em>"
   item: "Eintrag"
   items: "Einträge"
-  relation_heading:
-    main_file: "Volltext(e)"
-    table_of_contents: "Inhaltsverzeichnis"
-    erratum: "Erratum"
-    supplementary_material: "Zusatzmaterial"
-    research_data: "Forschungsdaten"
-    software: "Software"
-    earlier_version: "Fr&uuml;here Version"
-    later_version: "Sp&auml;tere Version"
-    contains: "Publikation, die diesen PUB Eintrag enth&auml;lt"
-    published_in: "Teil von (PUB Eintrag)"
-    dissertation_contains: "Dissertation, die diesen PUB Eintrag enth&auml;lt"
-    part_of_dissertation: "Teil dieser Dissertation"
-    old_edition: "Alte Ausgabe"
-    new_edition: "Neue Ausgabe"
-    continues: "Fortsetzung"
-    is_continued_by: "Vorheriger Teil"
-    popular_science: "Popul&auml;rwissenschaftliche Version"
-    research_paper: "Wissenschaftliche Version"
-    translation: "&Uuml;bersetzter Text"
-    original: "Originaltext"
-    other: "In sonstiger Relation"
   tabs:
     details:
       label: "Details"
@@ -298,6 +276,8 @@ frontdoor:
       cooperator: "Mitwirkende"
     file_details:
       label: "Dateien"
+      external_material: "Externes Material:"
+      internal_material: "Material in PUB:"
       name: "Name"
       relation: "Relation (zum PUB-Eintrag)"
       title: "Titel"
@@ -1733,6 +1713,82 @@ forms:
     swe: "Schwedisch"
     tur: "Türkisch"
     other: "Andere"
+  relation:
+    main_file:
+      display: "Volltext(e)"
+      select: "Volltext / Hauptdokument"
+    table_of_contents:
+      display: "Inhaltsverzeichnis"
+      select: "Inhaltsverzeichnis"
+    erratum:
+      display: "Erratum"
+      select: "Erratum"
+    supplementary_material:
+      display: "Zusatzmaterial"
+      select: "Zusatzmaterial"
+    research_data:
+      display: "Forschungsdaten"
+      select: "Forschungsdaten"
+    software:
+      display: "Software"
+      select: "Software"
+    earlier_version:
+      display: "Fr&uuml;here Version"
+      select: "Fr&uuml;here Version"
+    later_version:
+      display: "Sp&auml;tere Version"
+      select: "Sp&auml;tere Version"
+    contains:
+      display: "Publikation, die diesen PUB Eintrag enth&auml;lt"
+      select: "Publikation, die diesen PUB Eintrag enth&auml;lt"
+    published_in:
+      display: "Teil von (PUB Eintrag)"
+      select: "Teil von (PUB Eintrag)"
+    dissertation_contains:
+      display: "Dissertation, die diesen PUB Eintrag enth&auml;lt"
+      select: "Dissertation, die diesen PUB Eintrag enth&auml;lt"
+    part_of_dissertation:
+      display: "Teil dieser Dissertation"
+      select: "Teil dieser Dissertation"
+    old_edition:
+      display: "Alte Ausgabe"
+      select: "Alte Ausgabe"
+    new_edition:
+      display: "Neue Ausgabe"
+      select: "Neue Ausgabe"
+    continues:
+      display: "Fortsetzung"
+      select: "Fortsetzung"
+    is_continued_by:
+      display: "Vorheriger Teil"
+      select: "Vorheriger Teil"
+    popular_science:
+      display: "Popul&auml;rwissenschaftliche Version"
+      select: "Popul&auml;rwissenschaftliche Version"
+    research_paper:
+      display: "Wissenschaftliche Version"
+      select: "Wissenschaftliche Version"
+    translation:
+      display: "&Uuml;bersetzter Text"
+      select: "&Uuml;bersetzter Text"
+    original:
+      display: "Originaltext"
+      select: "Originaltext"
+    other:
+      display: "In sonstiger Relation"
+      select: "In sonstiger Relation"
+    cites:
+      display: "Zitiert"
+      select: "Zitiert"
+    is_cited_by:
+      display: "Wird zitiert von"
+      select: "Wird zitiert von"
+    confirmation:
+      display: "Best&auml;tigungsschreiben"
+      select: "Best&auml;tigungsschreiben"
+    hidden:
+      display: ""
+      select: "Zusatzmaterial (nur zur Einbettung, keine Anzeige auf Frontdoor)"
 403:
   heading: "Kein Zugriff (403)"
   text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis."

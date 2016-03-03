@@ -2,10 +2,15 @@
 
 <div class="tab-pane" id="relMat">
   [% IF relMat.size %]
+  <div class="row">
+    <div class="col-md-12">
+      <strong>[% lf.frontdoor.tabs.file_details.internal_material %]</strong>
+    </div>
+  </div>
   [% FOREACH rm IN relMat %]
   <div class="row[% UNLESS loop.first %] margin-top1[% END %]">
     <div class="col-md-12">
-      <strong>[% lf.frontdoor.relation_heading.${rm.relation} %]</strong>
+      <strong>[% lf.forms.relation.${rm.relation}.display %]</strong>
     </div>
   </div>
   <div class="row">
@@ -19,17 +24,25 @@
   [% END %] <!-- FOREACH -->
   [% END %] <!-- IF relMat -->
 
+  [% IF relMat.size && relLink.size %]
   <div class="row">
     <div class="col-md-12">
-      <strong>External material:</strong>
+      <hr />
     </div>
   </div>
+  [% END %]
+
   [% IF relLink.size %]
+  <div class="row">
+    <div class="col-md-12">
+      <strong>[% lf.frontdoor.tabs.file_details.external_material %]</strong>
+    </div>
+  </div>
   [% i = 0 %]
   [% FOREACH li IN relLink %]
   <div class="row[% UNLESS i == 0 %] margin-top1[% END %]">
     <div class="col-md-12">
-      <strong>[% lf.frontdoor.relation_heading.${li.relation} %]</strong>
+      <strong>[% lf.forms.relation.${li.relation}.display %]</strong>
     </div>
   </div>
   <div class="row">

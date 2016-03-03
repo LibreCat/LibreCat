@@ -29,7 +29,7 @@
   [% IF mainFile %]
   <div class="row">
     <div class="col-md-12">
-      <strong>[% lf.frontdoor.relation_heading.main_file %]</strong>
+      <strong>[% lf.forms.relation.main_file.display %]</strong>
     </div>
   </div>
 
@@ -103,7 +103,7 @@
   [% NEXT IF fi.relation == "main_file" OR fi.relation == "hidden" %]
   <div class="row[% UNLESS j == 0 %] margin-top1[% END %]">
     <div class="col-md-12">
-      <strong>[% lf.frontdoor.relation_heading.${fi.relation} %]</strong>
+      <strong>[% lf.forms.relation.${fi.relation}.display %]</strong>
     </div>
   </div>
   <div class="row">

@@ -27,7 +27,7 @@
           </div>
           <select class="sticky form-control" name="related_material.link.0.relation" id="select_external_id">
             [% FOREACH entry IN h.config.lists.relations_link %]
-            <option value="[% entry.relation %]">[% entry.link_text %]</option>
+            <option value="[% entry.relation %]">[% lf.relation.${entry.relation}.select %]</option>
             [% END %]
           </select>
           <div class="input-group-addon"></div>
@@ -61,7 +61,7 @@
             </div>
             <select class="sticky form-control" name="related_material.link.[% loop.index %].relation" id="select_external_id">
               [% FOREACH entry IN h.config.lists.relations_link %]
-              <option value="[% entry.relation %]"[% IF entry.relation == rel_link.relation %] selected="selected"[% END %]>[% entry.link_text %]</option>
+              <option value="[% entry.relation %]"[% IF entry.relation == rel_link.relation %] selected="selected"[% END %]>[% lf.relation.${entry.relation}.select %]</option>
               [% END %]
             </select>
             <div class="input-group-addon"></div>
@@ -96,7 +96,7 @@
           </div>
           <select class="sticky form-control" name="related_material.link.0.relation" id="select_external_id">
             [% FOREACH entry IN h.config.lists.relations_link %]
-            <option value="[% entry.relation %]"[% IF entry.relation == related_material.link.0.relation %] selected="selected"[% END %]>[% entry.link_text %]</option>
+            <option value="[% entry.relation %]"[% IF entry.relation == related_material.link.0.relation %] selected="selected"[% END %]>[% lf.relation.${entry.relation}.select %]</option>
             [% END %]
           </select>
           <div class="input-group-addon"></div>

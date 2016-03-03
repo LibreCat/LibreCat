@@ -253,28 +253,6 @@ frontdoor:
   catalogue: "Catalogue.<em>plus!</em>"
   item: "Item"
   items: "Items"
-  relation_heading:
-    main_file: "Main File(s)"
-    table_of_contents: "Table of Contents"
-    erratum: "Erratum"
-    supplementary_material: "Supplementary Material"
-    research_data: "Research Data"
-    software: "Software"
-    earlier_version: "Earlier Version"
-    later_version: "Later Version"
-    contains: "Publication containing PUB record"
-    published_in: "Part of PUB record"
-    dissertation_contains: "Dissertation containing PUB record"
-    part_of_dissertation: "Part of this Dissertation"
-    old_edition: "Old Edition"
-    new_edition: "New Edition"
-    continues: "Continuation"
-    is_continued_by: "Previous Item"
-    popular_science: "Popular Science"
-    research_paper: "Research Paper"
-    translation: "Translation"
-    original: "Original of Translation"
-    other: "In other Relation"
   tabs:
     details:
       label: "Details"
@@ -299,6 +277,8 @@ frontdoor:
       cooperator: "Cooperator"
     file_details:
       label: "Files"
+      external_material: "External material:"
+      internal_material: "Material in PUB:"
       name: "File Name"
       relation: "Relation (to PUB document)"
       title: "File Title"
@@ -1737,6 +1717,82 @@ forms:
     swe: "Swedish"
     tur: "Turkish"
     other: "Other"
+  relation:
+    main_file:
+      display: "Main File(s)"
+      select: "Main File"
+    table_of_contents:
+      display: "Table of Contents"
+      select: "Table of Contents"
+    erratum:
+      display: "Erratum"
+      select: "Erratum"
+    supplementary_material:
+      display: "Supplementary Material"
+      select: "Supplementary Material"
+    research_data:
+      display: "Research Data"
+      select: "Research Data"
+    software:
+      display: "Software"
+      select: "Software"
+    earlier_version:
+      display: "Earlier Version"
+      select: "Earlier Version"
+    later_version:
+      display: "Later Version"
+      select: "Later Version"
+    contains:
+      display: "Publication containing PUB record"
+      select: "Publication containing PUB record"
+    published_in:
+      display: "Part of PUB record"
+      select: "Part of PUB record"
+    dissertation_contains:
+      display: "Dissertation containing PUB record"
+      select: "Dissertation containing PUB record"
+    part_of_dissertation:
+      display: "Part of this Dissertation"
+      select: "Part of this Dissertation"
+    old_edition:
+      display: "Old Edition"
+      select: "Old Edition"
+    new_edition:
+      display: "New Edition"
+      select: "New Edition"
+    continues:
+      display: "Continuation"
+      select: "Continuation"
+    is_continued_by:
+      display: "Previous Item"
+      select: "Previous Item"
+    popular_science:
+      display: "Popular Science"
+      select: "Popular Science"
+    research_paper:
+      display: "Research Paper"
+      select: "Research Paper"
+    translation:
+      display: "Translation"
+      select: "Translation"
+    original:
+      display: "Original of Translation"
+      select: "Original of Translation"
+    other:
+      display: "In other Relation"
+      select: "In other Relation"
+    cites:
+      display: "Cites"
+      select: "Cites"
+    is_cited_by:
+      display: "Is cited by"
+      select: "Is cited by"
+    confirmation:
+      display: "Confirmation Letter"
+      select: "Confirmation Letter"
+    hidden:
+      display: ""
+      select: "Supplementary Material (for embedding only, hidden on frontdoor)"
 403:
   heading: "Access denied (403)"
   text: "You don't have access to this file / folder."
