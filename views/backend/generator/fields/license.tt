@@ -3,11 +3,11 @@
     <a href="#file_upload" data-target="#licenses" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span><strong>[% lf.$type.field.license.heading %]</strong></a><br />
 
     <div id="licenses" class="collapse[% IF file %] in[% END %]">
-    
+
       {% IF fields.file_upload.license.ddc %}
       {% INCLUDE fields/ddc.tt %}
       {% END %}
-      
+
       {% IF fields.file_upload.license.urn %}
       {% INCLUDE fields/urn.tt %}
       {% END %}
@@ -112,7 +112,7 @@
         <div class="col-md-12">
         <span class="starMandatory">[% lf.$type.field.license.other_data_license.warning %] <span class="glyphicon glyphicon-chevron-down"></span></span><br />
         <strong>[% lf.$type.field.license.other_data_license.label %]</strong><br />
-        <textarea rows="3" class="form-control" id="id_otherDataLicense" name="other_data_license">[% other_data_license %]</textarea>
+        <textarea rows="3" class="form-control" id="id_other_data_license" name="other_data_license">[% other_data_license %]</textarea>
         <span class="starMandatory">[% lf.$type.field.license.other_data_license.warning %] <span class="glyphicon glyphicon-chevron-up"></span></span><br /><br />
         </div>
       </div>
@@ -120,7 +120,7 @@
       <div class="row">
         <div class="col-md-12">
         <strong>[% lf.$type.field.license.other_data_license.label %]</strong><br />
-        <textarea rows="3" class="form-control" id="id_otherDataLicense" name="other_data_license" readonly="readonly">[% other_data_license %]</textarea>
+        <textarea rows="3" class="form-control" id="id_other_data_license" name="other_data_license" readonly="readonly">[% other_data_license %]</textarea>
         </div>
       </div>
       [% END %]
