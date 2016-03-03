@@ -253,6 +253,28 @@ frontdoor:
   catalogue: "Catalogue.<em>plus!</em>"
   item: "Item"
   items: "Items"
+  relation_heading:
+    main_file: "Main File(s)"
+    table_of_contents: "Table of Contents"
+    erratum: "Erratum"
+    supplementary_material: "Supplementary Material"
+    research_data: "Research Data"
+    software: "Software"
+    earlier_version: "Earlier Version"
+    later_version: "Later Version"
+    contains: "Publication containing PUB record"
+    published_in: "Part of PUB record"
+    dissertation_contains: "Dissertation containing PUB record"
+    part_of_dissertation: "Part of this Dissertation"
+    old_edition: "Old Edition"
+    new_edition: "New Edition"
+    continues: "Continuation"
+    is_continued_by: "Previous Item"
+    popular_science: "Popular Science"
+    research_paper: "Research Paper"
+    translation: "Translation"
+    original: "Original of Translation"
+    other: "In other Relation"
   tabs:
     details:
       label: "Details"
@@ -541,8 +563,8 @@ forms:
         placeholder: "Start typing to search your publications."
       related_material.select: "Select type of related material"
       related_material.link: &related_material_link
-        label: "Link and relation<br />to external source"
-        label_short: "External Source"
+        label: "Link and relation<br />to external material"
+        label_short: "External Material"
         url:
           label_short: "URL"
           placeholder: "URL of external source (enter with http://)"
@@ -550,8 +572,8 @@ forms:
           label_short: "Title"
           placeholder: "Title of external source"
         relation:
-          label_short: "Source is"
-          label: "External source is"
+          label_short: "Material is"
+          label: "External material is"
       locked: &locked
         label: "Locked for editing (except for admins)"
         label_short: "Locked"

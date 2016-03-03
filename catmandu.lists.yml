@@ -225,7 +225,7 @@ relations_link:
   -
     relation: "supplementary_material"
     relation_text: "Supplementary Material (of PUB record)"
-    link_text: "Suppl. Material"
+    link_text: "Supplementary Material"
   -
     relation: "research_data"
     relation_text: "Research Data (of PUB record)"
@@ -234,10 +234,6 @@ relations_link:
     relation: "software"
     relation_text: "Software (for PUB record)"
     link_text: "Software"
-  -
-    relation: "other"
-    relation_text: "In other relation (to PUB record)"
-    link_text: "In other Relation"
   -
     relation: "earlier_version"
     opposite: "later_version"
@@ -252,22 +248,22 @@ relations_link:
     relation: "contains"
     opposite: "published_in"
     relation_text: "Contains (PUB record)"
-    link_text: "Container of PUB Record"
+    link_text: "Publication containing PUB record"
   -
     relation: "published_in"
     opposite: "contains"
-    relation_text: "Published in (PUB record)"
-    link_text: "Published in PUB record"
-  -
-    relation: "part_of_dissertation"
-    opposite: "dissertation_contains"
-    relation_text: "Part of dissertation (PUB record)"
-    link_text: "Article in this dissertation"
+    relation_text: "Part of (PUB record)"
+    link_text: "Part of PUB record"
   -
     relation: "dissertation_contains"
     opposite: "part_of_dissertation"
     relation_text: "Dissertation containing (PUB record)"
     link_text: "Dissertation containing PUB record"
+  -
+    relation: "part_of_dissertation"
+    opposite: "dissertation_contains"
+    relation_text: "Part of dissertation (PUB record)"
+    link_text: "Part of this Dissertation"
   -
     relation: "old_edition"
     opposite: "new_edition"
@@ -287,7 +283,7 @@ relations_link:
     relation: "is_continued_by"
     opposite: "continues"
     relation_text: "Continued by (PUB record)"
-    link_text: "Previous Object"
+    link_text: "Previous Item"
   -
     relation: "popular_science"
     opposite: "research_paper"
@@ -308,6 +304,10 @@ relations_link:
     opposite: "translation"
     relation_text: "Original of (translation in PUB)"
     link_text: "Original of Translation"
+  -
+    relation: "other"
+    relation_text: "In other relation (to PUB record)"
+    link_text: "In other Relation"
 
 relations_record:
   -
@@ -324,22 +324,22 @@ relations_record:
     relation: "contains"
     opposite: "published_in"
     relation_text: "Contains (PUB record)"
-    link_text: "Contains Document"
+    link_text: "Publication containing PUB record"
   -
     relation: "published_in"
     opposite: "contains"
-    relation_text: "Published in (PUB record)"
-    link_text: "Published in"
-  -
-    relation: "part_of_dissertation"
-    opposite: "dissertation_contains"
-    relation_text: "Part of dissertation (PUB record)"
-    link_text: "Published in Diss."
+    relation_text: "Part of (PUB record)"
+    link_text: "Part of PUB record"
   -
     relation: "dissertation_contains"
     opposite: "part_of_dissertation"
     relation_text: "Dissertation containing (PUB record)"
-    link_text: "Article in Dissertation"
+    link_text: "Dissertation containing PUB record"
+  -
+    relation: "part_of_dissertation"
+    opposite: "dissertation_contains"
+    relation_text: "Part of dissertation (PUB record)"
+    link_text: "Part of this Dissertation"
   -
     relation: "old_edition"
     opposite: "new_edition"
@@ -359,7 +359,7 @@ relations_record:
     relation: "is_continued_by"
     opposite: "continues"
     relation_text: "Continued by (PUB record)"
-    link_text: "Previous Object"
+    link_text: "Previous Item"
   -
     relation: "popular_science"
     opposite: "research_paper"
@@ -384,7 +384,7 @@ relations_record:
     relation: "other"
     opposite: "other"
     relation_text: "In other relation (to PUB record)"
-    link_text: "Other Relation"
+    link_text: "In other Relation"
 
 thematic_area:
   diversity: Diversity
