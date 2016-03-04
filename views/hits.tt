@@ -4,11 +4,11 @@
 [% UNLESS request.path.match("/marked") %]
 <div class="row">
   <div class="col-md-12[% UNLESS request.path.match("/person") OR total == 0 %] col-xs-8[% END %]">
-    <h2 class="margin-top0">[% total %] [% IF bag == 'data' OR tabmodus == "data" OR tabmodus == "data_manager" %][% lf.tabs.data_publications %][% ELSE %][% lf.tabs.publications %][% END %]
+    <h3 class="margin-top0">[% total %] [% IF total == 1 %][% IF bag == 'data' OR tabmodus == "data" OR tabmodus == "data_manager" %][% lf.hits.data_publication %][% ELSE %][% lf.hits.publication %][% END %][% ELSE %][% IF bag == 'data' OR tabmodus == "data" OR tabmodus == "data_manager" %][% lf.tabs.data_publications %][% ELSE %][% lf.hits.publications %][% END %][% END %]
     [% IF backend AND session.role == "delegate" %]
     [% lf.main_page.by %] [% delegate_name %]
     [% END %]
-    </h2>
+    </h3>
   </div>
   [% UNLESS request.path.match("/person") OR total == 0 %]
   <div class="col-xs-4 hidden-md hidden-sm hidden-lg">
@@ -75,16 +75,20 @@
 [% ELSE %]
 [% END %]
 [% IF backend OR request.path == "/marked" OR request.path.match("/person") %]
-    <div class="col-md-11[% IF loop.first %] helpme[% END %]" data-placement="top" title="[% lf.help.citation %]">
+    <div class="col-md-11[% IF backend AND loop.first %] helpme" data-placement="top" title="[% lf.help.citation %][% END %]">
 [% ELSE %]
     <div class="col-md-12">
 [% END %]
     <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% lf.forms.item(entry.type).label %] | PUB-ID: <span class="pubid">[% entry._id %]</span> </em>
     <div class="citation-block-div">
     [% IF style == 'default' %]
-	<a href="/librecat/record/edit/[% entry._id %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title %]</strong></a><br>
+	<a href="[% h.host %]/[% IF backend %]librecat/record/edit[% ELSE %][% bag %][% END %]/[% entry._id %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title %]</strong></a><br>
     [% END %]
-    <a href="[% IF backend %]/librecat/record/edit[% ELSE %]/[% bag %][% END %]/[% entry._id %]" [% UNLESS request.path.match("/embed") %]onclick="window.top.location='[% IF backend %]/librecat/record/edit[% ELSE %]/[% bag %][% END %]/[% entry._id %]'"[% ELSE%] target="_blank"[% END %] class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="[% IF backend %][% lf.main_page.links.edit %][% ELSE %][% lf.main_page.links.view_details %][% END %]"></a>
+    [% IF backend AND ((!entry.locked AND !entry.type.match("^bi")) OR session.role == "super_admin") %]
+      <a href="/librecat/record/edit/[% entry._id %]" onclick="window.top.location='/librecat/record/edit/[% entry._id %]'" class="citation-block-link"></a>
+    [% ELSIF backend AND entry.status != "public" %]
+      <a href="/librecat/record/preview/[% entry._id %]" onclick="window.top.location='/librecat/record/preview/[% entry._id %]'" class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="[% lf.main_page.links.view_details %]"></a>
+    [% END %]
     [% IF entry.citation.$style %]
       [% entry.citation.$style %][% IF style != "apa_indent" %]<br>[% END %]
     [% END %]

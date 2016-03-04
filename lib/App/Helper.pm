@@ -5,6 +5,7 @@ use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
 use Catmandu::Util qw(:io :is :array :human trim);
 use Catmandu::Fix qw(expand);
+use Catmandu::Store::DBI;
 use Dancer qw(:syntax vars params request);
 use Dancer::FileUtils qw(path);
 use Hash::Merge::Simple qw(merge);
@@ -28,6 +29,17 @@ sub bag {
 
 sub backup_publication {
     state $bag = Catmandu->store('backup')->bag('publication');
+}
+
+sub backup_publication_static {
+    my ($self) = @_;
+    my $backup = Catmandu::Store::DBI->new(
+        'data_source' => $self->config->{store}->{backup}->{options}->{data_source},
+        username => $self->config->{store}->{backup}->{options}->{username},
+        password => $self->config->{store}->{backup}->{options}->{password},
+        bags => { publication => { plugins => ['Versioning'] }},
+    );
+    state $bag = $backup->bag('publication');
 }
 
 sub backup_project {
@@ -102,6 +114,7 @@ sub extract_params {
     $params ||= params;
     my $p = {};
     return $p if ref $params ne 'HASH';
+
     $p->{start} = $params->{start} if is_natural $params->{start};
     $p->{limit} = $params->{limit} if is_natural $params->{limit};
     $p->{embed} = $params->{embed} if is_natural $params->{embed};
@@ -109,6 +122,10 @@ sub extract_params {
     $p->{ttyp} = $params->{ttyp} if $params->{ttyp};
     $p->{ftyp} = $params->{ftyp} if $params->{ftyp};
     $p->{enum} = $params->{enum} if $params->{enum};
+
+    if($p->{ftyp} and $p->{ftyp} =~ /ajx|js|pln/ and !$p->{limit}){
+        $p->{limit} = $self->config->{maximum_page_size};
+    }
 
     $p->{q} = array_uniq( $self->string_array($params->{q}) );
 
@@ -123,6 +140,7 @@ sub extract_params {
         $cql =~ s/^\s*(AND|OR)//g;
         $cql =~ s/,//g;
         $cql =~ s/\://g;
+        $cql =~ s/\.//g;
         $cql =~ s/(NOT )(.*?)=/$2<>/g;
         $cql =~ s/(NOT )([^=]*?)/basic<>$2/g;
         $cql =~ s/(?<!")\b([^\s]+)\b, \b([^\s]+)\b(?!")/"$1, $2"/g;
@@ -137,8 +155,10 @@ sub extract_params {
 
     # autocomplete functionality
     if($params->{term}){
-        my $search_terms = join("* AND ", split(" ",$params->{term})) . "*";
-        push @{$p->{q}}, "title=(" . $search_terms . ") OR person=(" . $search_terms . ") OR id=(" . $search_terms . ")";
+        my $search_terms = join("* AND ", split(" ",$params->{term})) . "*" if $params->{term} !~ /^\d{1,}$/;
+        my $search_id = $params->{term} if $params->{term} =~ /^\d{1,}$/;
+        push @{$p->{q}}, "title=(" . lc $search_terms . ") OR person=(" . lc $search_terms . ")" if $search_terms;
+        push @{$p->{q}}, "id=$search_id OR person=$search_id" if $search_id;
         $p->{fmt} = $params->{fmt};
     }
     else {
@@ -307,11 +327,10 @@ sub get_project {
 }
 
 sub get_department {
-    if ( is_integer $_[1] ){
-        $_[0]->department->get($_[1]);
-    } elsif ( is_string $_[1] ) {
-        $_[0]->search_department({q => ["name=$_[1]"]})->first;
-    }
+    my $result;
+    $result = $_[0]->department->get($_[1]);
+    $result = $_[0]->search_department({q => ["name=\"$_[1]\""]})->first if !$result;
+    return $result;
 }
 
 sub get_research_group {
@@ -396,11 +415,11 @@ sub new_record {
     }
     else {
         # TODO race condition!
-        #Catmandu->store->transaction( sub{
+        Catmandu->store->transaction( sub{
           my $rec = $self->bag->get_or_add('1', {latest => '0'});
           $id = ++$rec->{latest};
           $self->bag->add($rec);
-        #});
+        });
     }
 
     return $id;
@@ -453,6 +472,7 @@ sub delete_record {
     if ($bag eq 'publication') {
         my $rec = $self->publication->get($id);
         $del->{date_created} = $rec->{date_created};
+        $del->{oai_deleted} = 1 if ($rec->{oai_deleted} or $rec->{status} eq 'public');
         require App::Catalogue::Controller::File;
         require App::Catalogue::Controller::Material;
         App::Catalogue::Controller::Material::update_related_material($del);
@@ -461,9 +481,9 @@ sub delete_record {
     }
 
     my $bagname = "backup_$bag";
-    my $saved = $self->$bag->add($del);
-    $self->publication->add($del);
-    $self->publication->commit;
+    my $saved = $self->$bagname->add($del);
+    $self->$bag->add($saved);
+    $self->$bag->commit;
 
     sleep 1;
 
@@ -490,8 +510,8 @@ sub default_facets {
         status => { terms => { field => 'status', size => 8 } },
         year => { terms => { field => 'year', size => 100, order => 'reverse_term'} },
         type => { terms => { field => 'type', size => 25 } },
-        #isi => { terms => { field => 'isi', size => 1 } },
-        #pmid => { terms => { field => 'pmid', size => 1 } },
+        isi => { terms => { field => 'isi', size => 1 } },
+        pmid => { terms => { field => 'pmid', size => 1 } },
     };
 }
 
@@ -551,6 +571,7 @@ sub search_publication {
     }
 
     my $hits;
+    $cql =~ tr/äöüß/aous/;
 
     try{
         $hits = publication->search(
@@ -625,7 +646,7 @@ sub export_autocomplete_json {
         }
     });
 
-    return encode_json($jsonhash);
+    return Dancer::to_json($jsonhash);
 }
 
 sub search_researcher {
@@ -638,7 +659,7 @@ sub search_researcher {
         cql_query => $cql,
         limit => $p->{limit} ||= config->{maximum_page_size},
         start => $p->{start} ||= 0,
-        sru_sortkeys => $p->{sorting} || "fullname,,1",
+        sru_sortkeys => $p->{'sort'} || "fullname,,1",
     );
 
     foreach (qw(next_page last_page page previous_page pages_in_spread)) {
@@ -672,12 +693,19 @@ sub search_department {
         my $hierarchy;
         $hits->each( sub {
             my $hit = $_[0];
-            $hierarchy->{$hit->{tree}->[0]->{name}}->{oId} = $hit->{tree}->[0]->{id} if $hit->{layer} eq "1";
-            $hierarchy->{$hit->{tree}->[0]->{name}}->{display} = $hit->{display} if $hit->{layer} eq "1";
-            $hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{oId} = $hit->{tree}->[1]->{id} if $hit->{layer} eq "2";
-            $hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{display} = $hit->{display} if $hit->{layer} eq "2";
-            $hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{$hit->{tree}->[2]->{name}}->{oId} = $hit->{tree}->[2]->{id} if $hit->{layer} eq "3";
-            $hierarchy->{$hit->{tree}->[0]->{name}}->{$hit->{tree}->[1]->{name}}->{$hit->{tree}->[2]->{name}}->{display} = $hit->{display} if $hit->{layer} eq "3";
+            $hierarchy->{$hit->{name}}->{oId} = $hit->{tree}->[0]->{_id} if $hit->{layer} eq "1";
+            $hierarchy->{$hit->{name}}->{display} = $hit->{display} if $hit->{layer} eq "1";
+            if ($hit->{layer} eq "2"){
+                my $layer = $self->get_department($hit->{tree}->[0]->{_id});
+                $hierarchy->{$layer->{name}}->{$hit->{name}}->{oId} = $hit->{tree}->[1]->{_id};
+                $hierarchy->{$layer->{name}}->{$hit->{name}}->{display} = $hit->{display};
+            }
+            if ($hit->{layer} eq "3"){
+                my $layer2 = $self->get_department($hit->{tree}->[0]->{_id});
+                my $layer3 = $self->get_department($hit->{tree}->[1]->{_id});
+                $hierarchy->{$layer2->{name}}->{$layer3->{name}}->{$hit->{name}}->{oId} = $hit->{tree}->[2]->{_id};
+                $hierarchy->{$layer2->{name}}->{$layer3->{name}}->{$hit->{name}}->{display} = $hit->{display};
+            }
         });
 
         return $hierarchy;
@@ -750,7 +778,7 @@ sub search_research_group {
         $hits->each( sub {
             my $hit = $_[0];
             my $display = $hit->{acronym} ? $hit->{acronym} . " | " . $hit->{name} : $hit->{name};
-            $hierarchy->{$display}->{oId} = $hit->{id};
+            $hierarchy->{$display}->{oId} = $hit->{_id};
         });
 
         return $hierarchy;

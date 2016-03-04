@@ -2,7 +2,7 @@
 
 <div class="tab-pane" id="ebi_citations">
 
-<h3 class="margin-top0">[% epmc_cit.total %] Citation[% IF epmc_cit.total != "1" %]s[% END %] in Europe PMC</h3>
+<h3 class="margin-top0">[% epmc_cit.total %] [% lf.frontdoor.citation %][% IF epmc_cit.total != "1" %][% lf.general.plural %][% END %] [% lf.general.where %] Europe PMC</h3>
 <p>[% lf.frontdoor.tabs.epmc_citation.data_by %]</p>
 [% FOREACH cite IN epmc_cit.entries.nsort('pubYear').reverse %]
 <div class="row">

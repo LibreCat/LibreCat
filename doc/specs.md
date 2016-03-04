@@ -153,6 +153,7 @@ related_material:
 	  -
 	    id: 123456
 		relation: is_part_of
+		status: public
 ```
 
 ## projects

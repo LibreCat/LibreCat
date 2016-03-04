@@ -1,15 +1,21 @@
-[% IF externalFiles == "1" OR doi %]
+[% IF external_file == "1" OR (doi AND title) %]
 <div class="row innerrow">
-  <div class="col-md-8">
-    <label class="checkbox">
-      <input type="checkbox" value="1" name="externalFiles"[% IF externalFiles == "1" %] checked="checked"[% END %] />
-      [% lf.$type.field.external_file.label %] <strong><a href="http://doi.org/[% doi %]" target="_blank">[% doi %]</a></strong>
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_external_file">
+      [% lf.$type.field.external_file.label %]
     </label>
   </div>
-</div>
-<div class="row innerrow">
-  <div class="col-md-8">
-    <hr />
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="col-md-10 col-xs-11">
+        <div class="checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" value="1" name="external_file"[% IF external_file == "1" %] checked="checked"[% END %] />
+            [% lf.$type.field.external_file.checkbox %] <strong><a href="http://doi.org/[% doi %]" target="_blank">[% doi %]</a></strong>
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 [% END %]

@@ -9,7 +9,7 @@
   <div class="col-md-10" id="alternative_id">
     {% IF fields.basic_fields.alternative_id.multiple OR fields.supplementary_fields.alternative_id.multiple %}
     [% IF !alternative_id %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.alternative_id.label %]</div>
@@ -21,7 +21,7 @@
     </div>
     [% ELSE %]
     [% FOREACH altid IN alternative_id %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %}[% IF loop.first %] mandatory[% END %]{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.alternative_id.label %]</div>

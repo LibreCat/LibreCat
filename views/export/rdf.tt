@@ -13,7 +13,7 @@
         [%- IF author %]
         <bibo:authorList rdf:parseType="Collection">
             [%- FOREACH person IN author %]
-            <foaf:Person[% IF person.personNumber %] rdf:about="http://pub.uni-bielefeld.de/person/[% person.personNumber %]"[% END %]>
+            <foaf:Person[% IF person.personNumber %] rdf:about="[% h.host %]/person/[% person.personNumber %]"[% END %]>
                 <foaf:name>[% person.fullName | xml_strict %]</foaf:name>
                 <foaf:surname>[% person.surname | xml_strict %]</foaf:surname>
                 <foaf:givenname>[% person.givenName | xml_strict %]</foaf:givenname>
@@ -57,7 +57,7 @@
         [%- IF file.size %]
         <dc:format>[% file.0.content_type %]</dc:format>
         [%- FOREACH f IN file %]
-        <ore:aggregates rdf:resource="http://pub.uni-bielefeld.de/download/[% oId | xml_strict %]/[% f.fileOId | xml_strict %]"/>
+        <ore:aggregates rdf:resource="[% h.host %]/download/[% oId | xml_strict %]/[% f.fileOId | xml_strict %]"/>
         [%- END %]
         [%- END %]
         [%- FOREACH val IN issn %]

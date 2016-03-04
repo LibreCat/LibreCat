@@ -12,7 +12,7 @@
     <div class="col-md-10 creator" id="translator">
       {% IF fields.basic_fields.translator.multiple OR fields.supplementary_fields.translator.multiple %}
       [% IF !translator %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" id="translator_orig_first_name_0" value="" />
         <input type="hidden" id="translator_orig_last_name_0" value="" />
 
@@ -37,13 +37,13 @@
             <input type="text" id="translator_last_name_0" name="translator.0.last_name" placeholder="[% lf.$type.field.translator.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="" />
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
-            {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
-            <div class="input-group-addon"><span id="translator_link_pevz_0" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.translator.pevz_tooltip %]" /></span></div>
+            {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}
+            <div class="input-group-addon"><span id="translator_link_person_0" onclick="link_person(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.translator.tooltip %]" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </div>
-        {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
+        {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}
         <script>
           $('#translator_Authorized0').tooltip();
         </script>
@@ -53,7 +53,7 @@
       </div>
       [% ELSE %]
       [% FOREACH name IN translator %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" id="translator_orig_first_name_[% loop.index %]" value="[% name.first_name | html %]" />
         <input type="hidden" id="translator_orig_last_name_[% loop.index %]" value="[% name.last_name | html %]" />
 
@@ -78,13 +78,13 @@
             <input type="text" id="translator_last_name_[% loop.index %]" name="translator.[% loop.index %].last_name" placeholder="[% lf.$type.field.translator.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.last_name | html %]" [% IF name.id %]readonly="readonly"[% END %] />
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
-            {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
-            <div class="input-group-addon"><span id="translator_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.translator.pevz_tooltip %]" /></span></div>
+            {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}
+            <div class="input-group-addon"><span id="translator_link_person_[% loop.index %]" onclick="link_person(this);" data-type="translator_"><img id="translator_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.translator.tooltip %]" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </div>
-        {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
+        {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}
         <script>
           $('#translator_Authorized[% loop.index %]').tooltip();
         </script>
@@ -116,14 +116,14 @@
               <span class="hidden-lg hidden-md">[% lf.$type.field.translator.last_name.label_short %]</span>
             </div>
             <input type="text" id="translator_last_name_0" name="translator.0.last_name" placeholder="[% lf.$type.field.translator.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="[% translator.0.last_name | html %]" />
-            {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
-            <div class="input-group-addon"><span id="translator_link_pevz_0" onclick="linkPevz(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.translator.pevz_tooltip %]" /></span></div>
+            {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}
+            <div class="input-group-addon"><span id="translator_link_person_0" onclick="link_person(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.translator.tooltip %]" /></span></div>
             {% ELSE %}
             <div class="input-group-addon"></div>
             {% END %}
           </div>
         </div>
-        {% IF fields.basic_fields.translator.pevz OR fields.supplementary_fields.translator.pevz %}
+        {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}
         <script>
           $('#translator_Authorized0').tooltip();
         </script>
@@ -135,7 +135,7 @@
     </div>
   </div>
 
-  <div class="modal" id="translator_linkPevzModal">
+  <div class="modal" id="translator_link_person_modal">
     <div class="modal-dialog">
       <div class="modal-content">
 	<div class="modal-header">

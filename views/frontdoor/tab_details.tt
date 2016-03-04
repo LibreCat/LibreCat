@@ -10,14 +10,42 @@
 </dl>
 [% END %]
 
+[% FOREACH tr IN translator %]
+  [% IF loop.first %]
+  <div class="row">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.translator.label || lf.forms.$type.field.translator_secondary.label %]</div>
+    <div class="col-lg-10 col-md-9">
+  [% ELSE %];[% END %]
+  [% IF tr.id %]
+  <a itemprop="author" href="/person/[% tr.id %]">[% tr.full_name %]<sup class="text-muted">[% lf.frontdoor.local_brand %]</sup></a>
+  [% ELSE %]
+  <span itemprop="author">[% tr.full_name %]</span>
+  [% END %]
+  [% IF tr.orcid %]<a href="http://orcid.org/[% tr.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %]
+  [% IF loop.count > 11 %]
+    <span id="showAut">
+      <br><a href="#details" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>[% lf.frontdoor.show_all %]</a>
+    </span>
+    </div>
+  </div>
+  [% LAST %]
+  [% END %]
+  [% IF loop.last %]</div></div>[% END %]
+[% END %]
+
 [% first_author = '' %]
 [% FOREACH au IN author %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.author.label %]</div>
-    <div class="col-md-10">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.author.label || lf.forms.$type.field.author_secondary.label %]</div>
+    <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
-  [% IF au.id %]<a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span itemprop="author">[% au.full_name %]</span>[% END %]
+  [% IF au.id %]
+  <a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]<sup class="text-muted">[% lf.frontdoor.local_brand %]</sup></a>
+  [% ELSE %]
+  <span itemprop="author">[% au.full_name %]</span>
+  [% END %]
+  [% IF au.orcid %]<a href="http://orcid.org/[% au.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %]
   [% IF loop.count > 11 %]
     <span id="showAut">
       <br><a href="#details" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>[% lf.frontdoor.show_all %]</a>
@@ -33,28 +61,38 @@
 [% FOREACH sup IN supervisor %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.supervisor.label %]</div>
-    <div class="col-md-10">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.supervisor.label %]</div>
+    <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
-  [% IF sup.id %]<a href="/person/[% sup.id %]">[% sup.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span>[% sup.full_name %]</span>[% END %]
+  [% IF sup.id %]
+  <a href="/person/[% sup.id %]">[% sup.full_name %]<sup class="text-muted">[% lf.frontdoor.local_brand %]</sup></a>
+  [% ELSE %]
+  <span>[% sup.full_name %]</span>
+  [% END %]
+  [% IF sup.orcid %]<a href="http://orcid.org/[% sup.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %]
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
 [% FOREACH ed IN editor %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.editor.label %]</div>
-    <div class="col-md-10">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.editor.label || lf.forms.$type.field.editor_solo.label %]</div>
+    <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
-  [% IF ed.id %]<a itemprop="editor" href="/person/[% ed.id %]">[% ed.full_name %]</a><sup class="text-muted">[% lf.frontdoor.local_brand %]</sup>[% ELSE %]<span itemprop="editor">[% ed.full_name %]</span>[% END %]
+  [% IF ed.id %]
+  <a itemprop="editor" href="/person/[% ed.id %]">[% ed.full_name %]<sup class="text-muted">[% lf.frontdoor.local_brand %]</sup></a>
+  [% ELSE %]
+  <span itemprop="editor">[% ed.full_name %]</span>
+  [% END %]
+  [% IF ed.orcid %]<a href="http://orcid.org/[% ed.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %]
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
 [% FOREACH ed IN corporate_editor %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.corporate_editor.label %]</div>
-    <div class="col-md-10">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.corporate_editor.label || lf.forms.$type.field.corporate_editor_solo.label %]</div>
+    <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
   [% ed %]
   [% IF loop.last %]</div></div>[% END %]
@@ -63,35 +101,48 @@
 [% FOREACH dep IN department %]
   [% IF loop.first %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.department.label %]</div>
-    <div class="col-md-10">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.department.label %]</div>
+    <div class="col-lg-10 col-md-9">
   [% ELSE %]<br />[% END %]
-  <a href="/[% bag %]?q=department=[% dep._id %]">[% dep.name %]</a>
+  <a href="/[% bag %]?q=department=[% dep._id %]" class="long">[% h.get_department(dep._id).display %]</a>
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
-[% FOREACH proj IN project %]
-  [% IF loop.first %]
+[%- FOREACH proj IN project -%]
+  [%- IF loop.first -%]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.project.label %]</div>
-    <div class="col-md-10">
-  [% ELSE %]<br />[% END %]
-  <a href="/project/[% proj.id %]">[% proj.name %]</a>
-  [% IF loop.last %]</div></div>[% END %]
-[% END %]
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.project.label %]</div>
+    <div class="col-lg-10 col-md-9">
+  [%- ELSE -%]<br />[% END %]
+  <a href="/project/[% proj._id %]">[% proj.name %]</a>
+  [%- IF loop.last %]</div></div>[% END -%]
+[%- END -%]
 
-[% IF alternative_title %]
+[%- FOREACH rg IN research_group -%]
+  [%- IF loop.first -%]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.alternative_title.label %]</div>
-    <div class="col-md-10" itemprop="alternativeHeadline">[% alternative_title.0 %]</div>
-  </div>
-[% END %]
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.research_group.label %]</div>
+    <div class="col-lg-10 col-md-9">
+  [%- ELSE -%]<br />[% END %]
+  [% rg.name %]
+  [% IF loop.last %]</div></div>[% END %]
+[%- END -%]
+
+[%- FOREACH at IN alternative_title -%]
+[%- IF loop.first -%]
+  <div class="row">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.alternative_title.label %]</div>
+    <div class="col-lg-10 col-md-9" itemprop="alternativeHeadline">
+    [%- ELSE  -%]<br />[% END %]
+    [% at %]
+  [%- IF loop.last -%]</div></div>[% END %]
+[%- END -%]
 
 [% IF abstract %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.abstract.label %]</div>
-    <div class="col-md-10 cmark" itemprop="about">
-    [% FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><br />[% END %]
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.abstract.label %]</div>
+    <div class="col-lg-10 col-md-9 cmark" itemprop="about">
+    [% FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><hr>[% END %]
 [% ab.text %]
     [% END %]
     </div>
@@ -100,8 +151,8 @@
 
 [% IF keyword %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.keyword.label %]</div>
-    <div class="col-md-10" itemprop="keywords">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.keyword.label %]</div>
+    <div class="col-lg-10 col-md-9" itemprop="keywords">
     [% FOREACH kw IN keyword %]
         <a href='/[% bag %]?q=keyword="[% kw %]"'>[% kw %]</a>
       [% UNLESS loop.last %]; [% END %]
@@ -111,14 +162,14 @@
 [% END %]
 
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.year.label || lf.forms.$type.field.year_extern.label %]</div>
-    <div class="col-md-10"><span itemprop="copyrightYear"><a href="/[% bag %]?q=year=[% year %]">[% year %]</a></span></div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.year.label || lf.forms.$type.field.year_extern.label %]</div>
+    <div class="col-lg-10 col-md-9"><span itemprop="copyrightYear"><a href="/[% bag %]?q=year=[% year %]">[% year %]</a></span></div>
   </div>
 
 [% IF data_reuse_license %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.license.data_reuse_license.label %]</div>
-    <div class="col-md-10">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.license.data_reuse_license.label %]</div>
+    <div class="col-lg-10 col-md-9">
     [% SWITCH data_reuse_license %]
     [% CASE 'PDDL' %] This <em>[% title %]</em> is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: <a href="http://opendatacommons.org/licenses/pddl/1.0">http://opendatacommons.org/licenses/pddl/1.0</a>
     [% CASE 'ODC-By' %] This <em>[% title %]</em> is made available under the Open Data Commons Attribution License: <a href="http://opendatacommons.org/licenses/by/1.0">http://opendatacommons.org/licenses/by/1.0</a>
@@ -130,8 +181,8 @@
 
 [% IF conference.name %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.${conference.name}.label %]</div>
-    <div class="col-md-10">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.item('conference.name').label %]</div>
+    <div class="col-lg-10 col-md-9">
       [% conference.name %]
     </div>
   </div>
@@ -139,8 +190,8 @@
 
 [% IF conference.location %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.${conference.location}.label_short %]</div>
-    <div class="col-md-10">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.item('conference.location').label_short %]</div>
+    <div class="col-lg-10 col-md-9">
       [% conference.location %]
     </div>
   </div>
@@ -148,17 +199,17 @@
 
 [% IF conference.start_date %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.forms.$type.field.${conference.date}.label %]</div>
-    <div class="col-md-10">
-      [% conference.start_date %][% IF conference.end_date %] to [% conference.end_date %][% END %]
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.item('conference.date').label %]</div>
+    <div class="col-lg-10 col-md-9">
+      [% conference.start_date %][% IF conference.end_date %] &ndash; [% conference.end_date %][% END %]
     </div>
   </div>
 [% END %]
 
 [% IF publication_identifier.isbn %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.isbn %]</div>
-    <div class="col-md-10" itemprop="isbn">
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.frontdoor.tabs.details.isbn %]</div>
+    <div class="col-lg-10 col-md-9" itemprop="isbn">
     [% FOREACH ib IN publication_identifier.isbn %]
       <a href='/publication?q=isbn=[% ib %]'>[% ib %]</a>
       [% UNLESS loop.last %], [% END %]
@@ -169,49 +220,81 @@
 
 [% IF publication_identifier.issn %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.issn %]</div>
-    <div class="col-md-10">[% FOREACH is IN publication_identifier.issn %]<a href="/publication?q=issn=[% is %]">[% is %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.frontdoor.tabs.details.issn %]</div>
+    <div class="col-lg-10 col-md-9">[% FOREACH is IN publication_identifier.issn %]<a href="/publication?q=issn=[% is %]">[% is %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
 [% IF publication_identifier.eissn %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.eissn %]</div>
-    <div class="col-md-10">[% FOREACH es IN publication_identifier.eissn %]<a href="/publication?q=eissn=[% es %]">[% es %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.frontdoor.tabs.details.eissn %]</div>
+    <div class="col-lg-10 col-md-9">[% FOREACH es IN publication_identifier.eissn %]<a href="/publication?q=eissn=[% es %]">[% es %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
 [% IF ipn %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.ipn %]</div>
-    <div class="col-md-10">[% ipn %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.frontdoor.tabs.details.ipn %]</div>
+    <div class="col-lg-10 col-md-9">[% ipn %]</div>
   </div>
 [% END %]
 
 [% IF ipc %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.frontdoor.tabs.details.ipc %]</div>
-    <div class="col-md-10">[% ipc %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.frontdoor.tabs.details.ipc %]</div>
+    <div class="col-lg-10 col-md-9">[% ipc %]</div>
   </div>
 [% END %]
 
 [% IF ubi_funded OR external_id.scoap3 %]
   <div class="row">
-    <div class="col-md-2 text-muted">[% lf.frontdoor.financial_disclosure %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.frontdoor.tabs.details.financial_disclosure %]</div>
     [% IF ubi_funded %]
-    <div class="col-md-10">[% lf.frontdoor.ubi_funded %]</div>
+    <div class="col-lg-10 col-md-9">[% lf.frontdoor.tabs.details.ubi_funded %]</div>
     [% ELSIF external_id.scoap3 %]
-    <div class="col-md-10">[% lf.frontdoor.scoap3 %]</div>
+    <div class="col-lg-10 col-md-9">[% lf.frontdoor.tabs.details.scoap3 %]</div>
     [% END %]
   </div>
 [% END %]
 
   <div class="row">
-    <div class="col-md-2 text-muted">PUB-ID</div>
-    <div class="col-md-10">
-    <a itemprop="url" href="[% request.uri_base %][% request.uri %]" title="[% lf.frontdoor.id_title %]">[% _id %]</a>
+    <div class="col-lg-2 col-md-3 text-muted">PUB-ID</div>
+    <div class="col-lg-10 col-md-9">
+    <a itemprop="url" href="[% request.uri %]" title="[% lf.frontdoor.id_title %]">[% _id %]</a>
     </div>
   </div>
+
+  <!-- Citations -->
+  <div id="citethis">
+
+  <h3 id="cite">[% lf.frontdoor.cite_this %]</h3>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#ama" data-toggle="tab">AMA</a></li>
+    <li><a href="#apa" data-toggle="tab">APA</a></li>
+    <li><a href="#frontiers" data-toggle="tab">Frontiers</a></li>
+    <li><a href="#harvard1" data-toggle="tab">Harvard</a></li>
+    <li><a href="#ieee" data-toggle="tab">IEEE</a></li>
+    <li><a href="#lncs" data-toggle="tab">LNCS</a></li>
+    <li><a href="#mla" data-toggle="tab">MLA</a></li>
+    <li><a href="#bibtex" data-toggle="tab">BibTeX</a></li>
+    <li><a href="#ris" data-toggle="tab">RIS</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="ama" class="tab-pane active cmark">[% citation.ama %]</div>
+    <div id="apa" class="tab-pane cmark">[% citation.apa %]</div>
+    <div id="frontiers" class="tab-pane cmark">[% citation.frontiers %]</div>
+    <div id="harvard1" class="tab-pane cmark">[% citation.harvard1 %]</div>
+    <div id="ieee" class="tab-pane cmark">[% citation.ieee %]</div>
+    <div id="lncs" class="tab-pane cmark">[% citation.lncs %]</div>
+    <div id="mla" class="tab-pane cmark">[% citation.mla %]</div>
+    <div id="bibtex" class="tab-pane"></div>
+    <div id="ris" class="tab-pane"></div>
+  </div>
+
+  </div><!-- citethis -->
+
 </div>
 
 <!-- END frontdoor/tab_details.tt -->

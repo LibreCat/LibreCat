@@ -9,22 +9,22 @@
 <meta name="description" content="Faculties and departments at Bielefeld University">
 
 <title>Academic Awards and Prizes</title>
-<link rel="meta" href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/index.html?__xsl=/templates/dcrdf.xsl"><link rel="icon" href="http://www.uni-bielefeld.de/icons/uni-logo-icon-16.png" type="image/png"><link rel="search" href="http://search.uni-bielefeld.de/cgi-bin/search.cgi" type="text/html"><link rel="help" href="/help.html" type="text/html"><link rel="copyright" type="text/html" href="http://www.uni-bielefeld.de/Universitaet/impressum.html"><link rel="stylesheet" href="http://www.uni-bielefeld.de/(en)/css/unistandard_2009.css" type="text/css"><script defer language="javascript" src="http://www.uni-bielefeld.de/javascript/CrossPlatform.js" type="text/javascript"></script><script defer language="javascript" src="http://www.uni-bielefeld.de/javascript/Popup.js" type="text/javascript"></script> <meta name="viewport" content="user-scalable=yes, width=device-width" />
- <link rel="stylesheet" type="text/css" href="http://www.uni-bielefeld.de/css/media_queries/smartphone.css" media="only screen and (max-device-width: 399px)" /> 
- <link rel="stylesheet" type="text/css" href="http://www.uni-bielefeld.de/css/media_queries/ipad_uni.css" media="only screen and (min-width: 400px) and (max-device-width: 769px)" /> 
- <link rel="stylesheet" type="text/css" href="http://www.uni-bielefeld.de/css/unistandard_2009.css" media="screen and (min-device-width: 770px)" />
+<link rel="meta" href="//www.uni-bielefeld.de/Universitaet/Einrichtungen/index.html?__xsl=/templates/dcrdf.xsl"><link rel="icon" href="//www.uni-bielefeld.de/icons/uni-logo-icon-16.png" type="image/png"><link rel="search" href="//search.uni-bielefeld.de/cgi-bin/search.cgi" type="text/html"><link rel="help" href="/help.html" type="text/html"><link rel="copyright" type="text/html" href="//www.uni-bielefeld.de/Universitaet/impressum.html"><link rel="stylesheet" href="//www.uni-bielefeld.de/(en)/css/unistandard_2009.css" type="text/css"><script defer language="javascript" src="//www.uni-bielefeld.de/javascript/CrossPlatform.js" type="text/javascript"></script><script defer language="javascript" src="//www.uni-bielefeld.de/javascript/Popup.js" type="text/javascript"></script> <meta name="viewport" content="user-scalable=yes, width=device-width" />
+ <link rel="stylesheet" type="text/css" href="//www.uni-bielefeld.de/css/media_queries/smartphone.css" media="only screen and (max-device-width: 399px)" /> 
+ <link rel="stylesheet" type="text/css" href="//www.uni-bielefeld.de/css/media_queries/ipad_uni.css" media="only screen and (min-width: 400px) and (max-device-width: 769px)" /> 
+ <link rel="stylesheet" type="text/css" href="//www.uni-bielefeld.de/css/unistandard_2009.css" media="screen and (min-device-width: 770px)" />
  
 <script type="text/javascript">
 [% INCLUDE award/javaScript.tt %]
 </script>
 
- <script type="text/javascript" src="http://www.uni-bielefeld.de/javascript/jquery.js"></script>
- <script type="text/javascript" src="http://www.uni-bielefeld.de/javascript/iphone.js"></script>
-<link rel="apple-touch-icon" href="http://www.uni-bielefeld.de/images/touch-icon-iphone.png">
+ <script type="text/javascript" src="//www.uni-bielefeld.de/javascript/jquery.js"></script>
+ <script type="text/javascript" src="//www.uni-bielefeld.de/javascript/iphone.js"></script>
+<link rel="apple-touch-icon" href="//www.uni-bielefeld.de/images/touch-icon-iphone.png">
 </head>
 
 <body>
-<div id="logo"><a href="http://www.uni-bielefeld.de/(en)/"><img border="0" height="72px" alt="Logo of Bielefeld University" src="http://www.uni-bielefeld.de/images/template_2009/logo.jpg" width="185px"></a></div><div id="titel"><img src="/images/preise_title_en.gif" /></div><div id="kopf"></div><div id="logo_einr"> </div><div id="piktogramm"> </div><div id="Kopfbild1"><img src="/images/kopfbild_award_links.jpg" alt="Hintergrundbild"></div><div id="Kopfbild2"><img src="/images/kopfbild_award_rechts.jpg" alt="Hintergrundbild"></div><div id="Kopfbild3"></div><div style="left:600px;" id="linkkopf"><a href="http://www.uni-bielefeld.de/(en)/Universitaet/Serviceangebot/Uni%20A-Z/index.html">University from A-Z</a></div><div id="pulldown"><style type=text/css>
+<div id="logo"><a href="//www.uni-bielefeld.de/(en)/"><img border="0" height="72px" alt="Logo of Bielefeld University" src="//www.uni-bielefeld.de/images/template_2009/logo.jpg" width="185px"></a></div><div id="titel"><img src="/images/preise_title_en.gif" /></div><div id="kopf"></div><div id="logo_einr"> </div><div id="piktogramm"> </div><div id="Kopfbild1"><img src="/images/kopfbild_award_links.jpg" alt="Hintergrundbild"></div><div id="Kopfbild2"><img src="/images/kopfbild_award_rechts.jpg" alt="Hintergrundbild"></div><div id="Kopfbild3"></div><div style="left:600px;" id="linkkopf"><a href="//www.uni-bielefeld.de/(en)/Universitaet/Serviceangebot/Uni%20A-Z/index.html">University from A-Z</a></div><div id="pulldown"><style type=text/css>
 
 #Navigation li:hover ul ul, #Navigation li:hover ul ul ul,
 #Navigation li.sfhover ul ul, #Navigation li.sfhover ul ul ul {
@@ -108,67 +108,67 @@ ul#Navigation a:hover {
 <div id="container">
   <ul id="Navigation">
     <li>
-      <a href="http://www.uni-bielefeld.de/(en)/Universitaet/">University</a>
+      <a href="//www.uni-bielefeld.de/(en)/Universitaet/">University</a>
       <ul>
-	   <li><a href="http://ekvv.uni-bielefeld.de/blog/uninews/">uni.news</a></li>
-	   <li><a href="http://www.uni-bielefeld.de/(en)/Universitaet/Ueberblick">About us</a></li>
-	   <li><a href="http://www.uni-bielefeld.de/(en)/Universitaet/Einrichtungen/">Faculties / Departments</a></li>
-	   <li><a href="http://www.uni-bielefeld.de/(en)/Universitaet/Serviceangebot/">Organization / Service</a></li>
-	   <li><a href="http://www.uni-bielefeld.de/(en)/Universitaet/Forschung/">Research</a></li>
-	   <li><a href="http://www.uni-bielefeld.de/(en)/International/Students/Degree/Studium/universitaet.html">Studying in Bielefeld</a></li>
-	   <li><a href="http://www.ub.uni-bielefeld.de/english/">Library</a></li>
+	   <li><a href="//ekvv.uni-bielefeld.de/blog/uninews/">uni.news</a></li>
+	   <li><a href="//www.uni-bielefeld.de/(en)/Universitaet/Ueberblick">About us</a></li>
+	   <li><a href="//www.uni-bielefeld.de/(en)/Universitaet/Einrichtungen/">Faculties / Departments</a></li>
+	   <li><a href="//www.uni-bielefeld.de/(en)/Universitaet/Serviceangebot/">Organization / Service</a></li>
+	   <li><a href="//www.uni-bielefeld.de/(en)/Universitaet/Forschung/">Research</a></li>
+	   <li><a href="//www.uni-bielefeld.de/(en)/International/Students/Degree/Studium/universitaet.html">Studying in Bielefeld</a></li>
+	   <li><a href="//www.ub.uni-bielefeld.de/english/">Library</a></li>
 
-	   <li><a href="http://www.uni-bielefeld.de/(en)/kultur/Portrait/">Culture</a></li>
+	   <li><a href="//www.uni-bielefeld.de/(en)/kultur/Portrait/">Culture</a></li>
       </ul>
     </li>
     <li>
-      <a href="http://www.uni-bielefeld.de/(en)/International/">|&nbsp;International&nbsp;</a>
+      <a href="//www.uni-bielefeld.de/(en)/International/">|&nbsp;International&nbsp;</a>
       <ul>
-<li><a href="http://www.uni-bielefeld.de/(en)/ZIF/index.html">ZiF - Center for Interdisciplinary Research</a></li>
-            <li><a href="http://www.uni-bielefeld.de/(en)/International/IO/">International Office</a></li>
+<li><a href="//www.uni-bielefeld.de/(en)/ZIF/index.html">ZiF - Center for Interdisciplinary Research</a></li>
+            <li><a href="//www.uni-bielefeld.de/(en)/International/IO/">International Office</a></li>
       </ul>
     </li>
     <li>
-      <a href="http://www.uni-bielefeld.de/(en)/Benutzer/">|&nbsp;Information&nbsp;for&nbsp;</a>
+      <a href="//www.uni-bielefeld.de/(en)/Benutzer/">|&nbsp;Information&nbsp;for&nbsp;</a>
       <ul>
-            <li><a href="http://www.uni-bielefeld.de/(en)/International/Students/">Students from abroad</a></li>
-            <li><a href="http://www.uni-bielefeld.de/(en)/International/Scientists/">Scholars</a></li>
-	   <li><a href="http://www.uni-bielefeld.de/(en)/nachwuchs/">Young Researchers</a></li>
-	   <li><a href="http://www.uni-bielefeld.de/(en)/Benutzer/WissenschaftlerInnen/">Academic Staff</a></li>
-	   <li><a href="http://www.uni-bielefeld.de/(en)/International/doctoralcandidates/">International Doctoral Candidates</a></li>
-	   <!-- <li><a href="http://www.uni-bielefeld.de/Benutzer/AbsolventInnen/index.html">Alumni</a></li> -->
-            <li><a href="http://www.uni-bielefeld.de/(en)/Benutzer/Gaeste/">Guests</a></li>
-	   <li><a href="http://www.uni-bielefeld.de/(en)/Universitaet/Einrichtungen/Kommunikation/presse.html">Press </a></li>
+            <li><a href="//www.uni-bielefeld.de/(en)/International/Students/">Students from abroad</a></li>
+            <li><a href="//www.uni-bielefeld.de/(en)/International/Scientists/">Scholars</a></li>
+	   <li><a href="//www.uni-bielefeld.de/(en)/nachwuchs/">Young Researchers</a></li>
+	   <li><a href="//www.uni-bielefeld.de/(en)/Benutzer/WissenschaftlerInnen/">Academic Staff</a></li>
+	   <li><a href="//www.uni-bielefeld.de/(en)/International/doctoralcandidates/">International Doctoral Candidates</a></li>
+	   <!-- <li><a href="//www.uni-bielefeld.de/Benutzer/AbsolventInnen/index.html">Alumni</a></li> -->
+            <li><a href="//www.uni-bielefeld.de/(en)/Benutzer/Gaeste/">Guests</a></li>
+	   <li><a href="//www.uni-bielefeld.de/(en)/Universitaet/Einrichtungen/Kommunikation/presse.html">Press </a></li>
 
       </ul>
     </li>
     <li>
-      <a href="#"><img src="http://www.uni-bielefeld.de/images/buttons/lupe.gif" alt="Lupe" border="0" style="margin-top: 6px; margin-left: 5px; vertical-align: text-bottom;"/></a>
+      <a href="#"><img src="//www.uni-bielefeld.de/images/buttons/lupe.gif" alt="Lupe" border="0" style="margin-top: 6px; margin-left: 5px; vertical-align: text-bottom;"/></a>
       <ul>
-        <li><a href="http://www.uni-bielefeld.de/(en)/Universitaet/Serviceangebot/Uni%20A-Z/index.html">University from A - Z</a></li>
-        <li><a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/i18nAct?lang=en">Staff and Departments Search </a></li>
-        <li><a href="http://www.uni-bielefeld.de/ekvv/">Course Catalog (in German)</a></li>
-<li style="list-style-image:url(http://www.uni-bielefeld.de/images/all/1pixgrau.gif)"><a href="http://www.uni-bielefeld.de/(en)/International/Students/Sprache/index.html">Language prerequisites</a> 
+        <li><a href="//www.uni-bielefeld.de/(en)/Universitaet/Serviceangebot/Uni%20A-Z/index.html">University from A - Z</a></li>
+        <li><a href="//ekvv.uni-bielefeld.de/pers_publ/publ/i18nAct?lang=en">Staff and Departments Search </a></li>
+        <li><a href="//www.uni-bielefeld.de/ekvv/">Course Catalog (in German)</a></li>
+<li style="list-style-image:url(//www.uni-bielefeld.de/images/all/1pixgrau.gif)"><a href="//www.uni-bielefeld.de/(en)/International/Students/Sprache/index.html">Language prerequisites</a> 
 </li> 
-          <li><a href="http://www.uni-bielefeld.de/(en)/Universitaet/Studium/Studierendensekretariat/International/Bewerbung/index.html">Application, Admission</a></li>
-          <li><a href="http://www.uni-bielefeld.de/(en)/Universitaet/Ueberblick/Organisation/Hochschulrat/hochschulrat.html">University Council</a></li>
-          <li><a href="http://www.uni-bielefeld.de/(en)/Universitaet/Aktuelles/Exzellenzinitiative/index.html">Excellence Initiative</a></li>
-        <li><a href="http://search.uni-bielefeld.de/index.php?l=en">Search</a></li>
-        <li><a href="http://www.uni-bielefeld.de/(en)/Universitaet/Serviceangebot/Kontakt/index.html">Contact</a></li>
-        <li><a href="http://webmail.uni-bielefeld.de">Webmail</a></li>
+          <li><a href="//www.uni-bielefeld.de/(en)/Universitaet/Studium/Studierendensekretariat/International/Bewerbung/index.html">Application, Admission</a></li>
+          <li><a href="//www.uni-bielefeld.de/(en)/Universitaet/Ueberblick/Organisation/Hochschulrat/hochschulrat.html">University Council</a></li>
+          <li><a href="//www.uni-bielefeld.de/(en)/Universitaet/Aktuelles/Exzellenzinitiative/index.html">Excellence Initiative</a></li>
+        <li><a href="//search.uni-bielefeld.de/index.php?l=en">Search</a></li>
+        <li><a href="//www.uni-bielefeld.de/(en)/Universitaet/Serviceangebot/Kontakt/index.html">Contact</a></li>
+        <li><a href="//webmail.uni-bielefeld.de">Webmail</a></li>
       </ul>
     </li>
   </ul>
 </div></div><div id="language"><a class="select-language" href="[% request.env.REQUEST_URI.substr(3) %]">
                    
-                  <img border="0" alt="Flag" src="http://www.uni-bielefeld.de/icons/de.gif">
+                  <img border="0" alt="Flag" src="//www.uni-bielefeld.de/icons/de.gif">
                       Deutsch
                     </a></div><div id="history">
 <table border="0" valign="middle" cellspacing="0" cellpadding="0" height="34px" width="100%">
 
 <tr>
 
-<td><a class="history" href="http://www.uni-bielefeld.de/(en)/">Bielefeld University</a> &gt; <a href="/en/award/" class="history">Academic Awards and Prizes</a></td>
+<td><a class="history" href="//www.uni-bielefeld.de/(en)/">Bielefeld University</a> &gt; <a href="/en/award/" class="history">Academic Awards and Prizes</a></td>
 
 </tr>
 
@@ -179,7 +179,7 @@ ul#Navigation a:hover {
 <div id="header">
 <div onclick="toggleMenu()" class="leftButton">Navigation</div>
 <span class="footer">Push button to fold and unfold</span>
-<div id="utility"><a style="font-weight:bold; background-color: #f0f0f0;color: #333333; display: block; font-size: 16px; margin-bottom: -1px; margin-left: -10px; padding-top: 6px; padding-right: 10px; padding-bottom: 6px; padding-left: 10px; margin-left:1px; margin-right:11px; text-decoration: none;" href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/">Faculties and Departments</a><br>
+<div id="utility"><a style="font-weight:bold; background-color: #f0f0f0;color: #333333; display: block; font-size: 16px; margin-bottom: -1px; margin-left: -10px; padding-top: 6px; padding-right: 10px; padding-bottom: 6px; padding-left: 10px; margin-left:1px; margin-right:11px; text-decoration: none;" href="//www.uni-bielefeld.de/Universitaet/Einrichtungen/">Faculties and Departments</a><br>
 
 <ul id="menu-toc">
 <li><a href="#gen_id_2">Faculties and Departments </a></li>
@@ -190,8 +190,8 @@ ul#Navigation a:hover {
 </ul>
 
 <ul class="menu-left">
-<li><a href="http://www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/index.html">Faculties</a></li>
-<li><a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/i18nAct?lang=en">Staff and Department Search</a></li>
+<li><a href="//www.uni-bielefeld.de/Universitaet/Einrichtungen/Fakultaeten/index.html">Faculties</a></li>
+<li><a href="//ekvv.uni-bielefeld.de/pers_publ/publ/i18nAct?lang=en">Staff and Department Search</a></li>
 </ul>
 <br>
 </div> <!-- utility -->

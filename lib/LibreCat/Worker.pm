@@ -7,7 +7,6 @@ LibreCat::Worker - a base class for workers
     package MyWorker;
 
     use Moo;
-
     with 'LibreCat::Worker';
 
     sub do_work {

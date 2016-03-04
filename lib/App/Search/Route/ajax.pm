@@ -10,6 +10,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(join_path);
 use Dancer qw/:syntax/;
 use Dancer::Plugin::Ajax;
+use HTML::Entities;
 use App::Helper;
 
 
@@ -29,7 +30,7 @@ ajax '/metrics/:id' => sub {
 ajax '/bibtex/:id' => sub {
     my $pub = h->publication->get(params->{id});
     return to_json {
-        bibtex => h->export_publication($pub, 'bibtex', 1),
+        bibtex => encode_entities(h->export_publication($pub, 'bibtex', 1)),
     };
 };
 
@@ -38,7 +39,7 @@ ajax '/ris/:id' => sub {
     my $ris = h->export_publication($pub, 'ris', 1);
     utf8::decode($ris);
     return to_json {
-        ris => $ris,
+        ris => encode_entities($ris),
     };
 };
 
@@ -59,6 +60,12 @@ ajax '/authority_user/:id' => sub {
     to_json $person;
 };
 
+ajax '/num_of_publ/:id' => sub {
+    my $id = params->{id};
+    my $hits = h->search_publication({q => ["person=$id"]});
+    return to_json {total => $hits->{total}};
+};
+
 =head2 AJAX /get_alias/:id/:alias
 
 =cut
@@ -76,20 +83,21 @@ ajax '/get_alias/:id/:alias' => sub {
 ajax '/get_project' => sub {
     my $q;
     @$q = map {
-        $_ .= '*' if $_ !~ /[äöüß]/; #sorry for this bad hack ;-)
+        $_ =~ tr/äöüß/aous/;
+        $_ .= '*';
     } split(' ', lc params->{term});
 
-    my $hits = h->search_project({q => $q, limit => 10});
+    my $hits = h->search_project({q => $q, limit => 100});
 
     if($hits->{total}){
-    	my $map;
-    	@$map = map {
-    		{ id => $_->{_id}, label => $_->{name} };
-    	} @{$hits->{hits}};
-    	return to_json $map;
+        my $map;
+        @$map = map {
+            { id => $_->{_id}, label => $_->{name} };
+        } @{$hits->{hits}};
+        return to_json $map;
     }
     else {
-    	return to_json [];
+        return to_json [];
     }
 
 };
@@ -100,20 +108,23 @@ ajax '/get_project' => sub {
 ajax '/get_department' => sub {
     my $q;
     @$q = map {
-        $_ .= '*' if $_ !~ /[äöüß]/; #sorry for this bad hack ;-)
+        $_ =~ tr/äöüß/aous/;
+        $_ .= '*';
     } split(' ', lc params->{term});
 
-    my $hits = h->search_department({q => $q, limit => 10});
+    push @$q, "inactive<>1";
+
+    my $hits = h->search_department({q => $q, limit => 100});
 
     if($hits->{total}){
-    	my $map;
-    	@$map = map {
-    		{ id => $_->{_id}, label => $_->{display} };
-    	} @{$hits->{hits}};
-    	return to_json $map;
+        my $map;
+        @$map = map {
+            { id => $_->{_id}, label => $_->{display} };
+        } @{$hits->{hits}};
+        return to_json $map;
     }
     else {
-    	return to_json [];
+        return to_json [];
     }
 };
 
@@ -121,23 +132,24 @@ ajax '/get_department' => sub {
 
 =cut
 ajax '/get_research_group' => sub {
-	my $q;
-	@$q = map {
-		$_ .= '*' if $_ !~ /[äöüß]/;
-	} split(' ', lc params->{term});
+    my $q;
+    @$q = map {
+        $_ =~ tr/äöüß/aous/;
+        $_ .= '*';
+    } split(' ', lc params->{term});
 
-	my $hits = h->search_research_group({q => $q, limit => 10});
+    my $hits = h->search_research_group({q => $q, limit => 100});
 
-	if($hits->{total}){
-		my $map;
-		@$map = map {
-			{ id => $_->{_id}, label => $_->{name} };
-		} @{$hits->{hits}};
-		return to_json $map;
-	}
-	else {
-		return to_json [];
-	}
+    if($hits->{total}){
+        my $map;
+        @$map = map {
+            { id => $_->{_id}, label => $_->{name} };
+        } @{$hits->{hits}};
+        return to_json $map;
+    }
+    else {
+        return to_json [];
+    }
 };
 
 1;

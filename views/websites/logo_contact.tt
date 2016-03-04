@@ -7,7 +7,7 @@
 
   <div class="row">
     <h4 class="margin-top0"><a href="http://oa.uni-bielefeld.de/[% (lang && lang == "en") ? "en" : "" %]">[% lf.home.logos.oa %]</a></h4>
-    <a href="http://oa.uni-bielefeld.de/[% (lang && lang == "en") ? "en" : "" %]"><img src="/images/logo_oa.png" width="50" alt=""></a>
+    <a href="http://oa.uni-bielefeld.de/[% (lang && lang == "en") ? "en" : "" %]"><img src="/images/logo_oa_50px.png" class="responsive" alt=""></a>
   </div>
 
   <hr>
@@ -18,18 +18,16 @@
   </div>
 
   <hr>
-  
-  [% IF bag == 'pubtheses' %]
+
   <div class="row">
+  [% IF request.path.match("docs") OR request.path.match("pubtheses") %]
     <h4 class="margin-top0"><a href="/">[% lf.home.logos.brand_long %]</a></h4>
-    <a href="/"><img src="/images/publogo.gif" class="img-thumbnail" style="width:200px;"></a>
-  </div>
+    <a href="/"><img src="/images/publogo_200px.gif" class="img-thumbnail responsive"></a>
   [% ELSE %]
-  <div class="row">
     <h4 class="margin-top0"><a href="/pubtheses">[% lf.home.logos.theses %]</a></h4>
     <a href="/pubtheses"><span class="fa fa-graduation-cap fa-5x"></span></a>
-  </div>
   [% END %]
+  </div>
   
 </div>
 

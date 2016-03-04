@@ -9,7 +9,7 @@
 [% END %]
 
 <link rel="stylesheet" type="text/css" href="/css/bootstrapAwards.css" />
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="/javascripts/award_bootstrap.min.js"></script>
 
 <div class="row"><!-- outer border -->
@@ -18,7 +18,7 @@
 
     <h1><img src="/images/preise_headline_[% lang ? "en" : "de" %].gif" /></h1>
     <div class="span6" style="text-align:right;margin-top:-50px;margin-left:-25px;">
-    <img src="/images/beta_unibi_right.png" width="50">
+    <img src="/images/beta_white_right.png" width="50">
     </div>
     <!-- the tabs -->
     <ul class="nav nav-tabs" id="myTab">
@@ -34,12 +34,12 @@
       <div class="tab-pane[% IF !submit && lists.auszeichnungentotal != 0 %] active[% END %]" id="awardemy">
         <ul class="unstyled">
           [% FOREACH key IN lists.auszeichnungen.sort %]
-          <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% key %]"><h5 class="awardheading"><img src="/images/preis.png" /> [% lists.auszeichnungen.$key %]</h5></a>
+          <a href="[% lang ? "/en" : "" %]/award/[% key %]"><h5 class="awardheading"><img src="/images/preis.png" /> [% lists.auszeichnungen.$key %]</h5></a>
           <ul class="unstyled honoreelist">
             [% FOREACH honoree IN lists.$key %]
             <li>
               <img src="/images/person.png" />
-              <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% honoree.preis %]">
+              <a href="[% lang ? "/en" : "" %]/award/[% honoree.preis %]">
               [% honoree.title %] [% honoree.first_name %] [% honoree.last_name %][% IF honoree.former_member == "verstorben" %] &dagger; [% END %]
               </a>
             </li>
@@ -53,12 +53,12 @@
       <div class="tab-pane[% IF !submit && lists.auszeichnungentotal == 0 && lists.awardstotal != 0 %] active[% END %]" id="award">
         <ul class="unstyled">
           [% FOREACH key IN lists.awards.sort %]
-          <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% key %]"><h5 class="awardheading"><img src="/images/preis.png" /> [% lists.awards.$key %]</h5></a>
+          <a href="[% lang ? "/en" : "" %]/award/[% key %]"><h5 class="awardheading"><img src="/images/preis.png" /> [% lists.awards.$key %]</h5></a>
           <ul class="unstyled honoreelist">
             [% FOREACH honoree IN lists.$key %]
             <li>
               <img src="/images/person.png" />
-              <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% honoree.preis %]">
+              <a href="[% lang ? "/en" : "" %]/award/[% honoree.preis %]">
               [% honoree.title %] [% honoree.first_name %] [% honoree.last_name %][% IF honoree.former_member == "verstorben" %] &dagger; [% END %]
               </a>
             </li>
@@ -138,7 +138,7 @@
             [% FOREACH match IN matched.split(' ') %]
               [% newmatched = newmatched _ ' ' _ match.ucfirst %]
             [% END %]
-            <li style="padding-bottom:2px;"><a href="[% h.newuri_for("$path", qp, honoree="$per.term") %]">[% newmatched.trim %]</a></li>
+            <li style="padding-bottom:2px;"><a href="[% h.newuri_for("$path", qp, q="honoree=$per.term") %]">[% newmatched.trim %]</a></li>
             [% newmatched = '' %]
             [% matched = '' %]
           [% END %]
@@ -161,7 +161,7 @@
         <ul id="department" class="collapse[% IF qp.department %] in[% END %]">
           [% FOREACH dep IN facets.department.terms %]
           [% department = h.get_department(dep.term) %]
-          <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, department="$department.0.oId") %]">[% department.0.name %]</a></li>
+          <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, q="department=$department._id") %]">[% department.name %]</a></li>
           [% END %]
         </ul>
         </div>
@@ -172,7 +172,7 @@
         <ul id="einrichtung" class="collapse[% IF qp.einrichtung %] in[% END %]">
           [% FOREACH einr IN facets.einrichtung.terms %]
           [% einrichtung = h.get_department(einr.term) %]
-          <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, einrichtung="$einrichtung.0.oId") %]">[% einrichtung.0.name %]</a></li>
+          <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, q="einrichtung=$einrichtung._id") %]">[% einrichtung.name %]</a></li>
           [% END %]
         </ul>
         </div>
@@ -192,7 +192,7 @@
     <br />
     <br />
     <br />
-	<a href="http://www.ub.uni-bielefeld.de/"><img src="http://www.ub.uni-bielefeld.de/graphics/ubneu/logos/logoverbund_ub.png" width="210px" /></a>
+	<a href="http://www.ub.uni-bielefeld.de/"><img src="//www.ub.uni-bielefeld.de/graphics/ubneu/logos/logoverbund_ub.png" width="210px" /></a>
 	<br />
 	<br />
 	<br />

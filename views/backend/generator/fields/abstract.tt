@@ -10,7 +10,7 @@
   <div class="col-md-10" id="abstract">
     {% IF fields.basic_fields.abstract.multiple OR fields.supplementary_fields.abstract.multiple %}
     [% IF !abstract %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group sticky_top col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
           <div class="input-group-addon">[% lf.$type.field.abstract.label2 %]</div>
@@ -29,13 +29,14 @@
       </div>
       <div class="form-group sticky_bottom col-md-10 col-xs-11">
         <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-          <textarea rows="3" name="abstract.0.text" id="id_abstract_0" placeholder="[% lf.$type.field.abstract.placeholder %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
+          <textarea rows="6" name="abstract.0.text" id="id_abstract_0" placeholder="[% lf.$type.field.abstract.placeholder %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
         </div>
+        <span class="text-muted">[% lf.$type.field.abstract.explain %]</span>
       </div>
     </div>
     [% ELSE %]
       [% FOREACH ab IN abstract %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <div class="form-group sticky_top col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">[% lf.$type.field.abstract.label2 %]</div>
@@ -54,8 +55,9 @@
         </div>
         <div class="form-group sticky_bottom col-md-10 col-xs-11">
           <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-            <textarea rows="3" name="abstract.[% loop.index %].text" id="id_abstract_[% loop.index %]" placeholder="[% lf.$type.field.abstract.placeholder %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}>[% ab.text | html %]</textarea>
+            <textarea rows="6" name="abstract.[% loop.index %].text" id="id_abstract_[% loop.index %]" placeholder="[% lf.$type.field.abstract.placeholder %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}>[% ab.text | html %]</textarea>
           </div>
+          <span class="text-muted">[% lf.$type.field.abstract.explain %]</span>
         </div>
       </div>
       [% END %]
@@ -80,8 +82,9 @@
       </div>
       <div class="form-group sticky_bottom col-md-10 col-xs-11">
         <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-          <textarea rows="3" name="abstract.0.text" id="id_abstract_0" placeholder="[% lf.$type.field.abstract.placeholder %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
+          <textarea rows="6" name="abstract.0.text" id="id_abstract_0" placeholder="[% lf.$type.field.abstract.placeholder %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
         </div>
+        <span class="text-muted">[% lf.$type.field.abstract.explain %]</span>
       </div>
     </div>
     {% END %}

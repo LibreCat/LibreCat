@@ -7,7 +7,7 @@
 		</delivery>
 	</administrative_data>
 	<record>
-		<identifier scheme="urn:nbn:de" type="frontpage" role="primary">[% publication_identifier.urn.0 | xml_strict %]</identifier>
+		<identifier scheme="urn:nbn:de" type="frontpage" role="primary">[% urn | xml_strict %]</identifier>
 		<resource>
 			<identifier scheme="url" type="frontpage" role="primary">[% host %]/publication/[% _id %]</identifier>
 			<format scheme="imt">text/html</format>

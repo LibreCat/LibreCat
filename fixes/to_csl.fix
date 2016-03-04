@@ -73,7 +73,9 @@ do list(path => res.editor)
   end
 end
 
-#move_field(corporate_editor.*, res.editor.$append.literal)
+if exists(corporate_editor)
+  move_field(corporate_editor.*, 'res.editor.$append.literal')
+end
 
 move_field(_id, res.recordid)
 

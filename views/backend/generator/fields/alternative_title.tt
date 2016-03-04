@@ -8,7 +8,7 @@
   <div class="col-md-10" id="alternative_title">
     {% IF fields.basic_fields.alternative_title.multiple OR fields.supplementary_fields.alternative_title.multiple %}
     [% IF !alternative_title %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.alternative_title.label_short || lf.$type.field.alternative_title.label %]</div>
@@ -20,7 +20,7 @@
     </div>
     [% ELSE %]
     [% FOREACH alttitle IN alternative_title %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.alternative_title.mandatory OR fields.supplementary_fields.alternative_title.mandatory %}[% IF loop.first %] mandatory[% END %]{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.alternative_title.label_short || lf.$type.field.alternative_title.label %]</div>

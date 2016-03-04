@@ -20,7 +20,7 @@
       [% IF title %]
 	<h1>[% title %]</h1>
       [% ELSE %]
-	<h1 class="margin-top0">[% lf.title_new_{% genus %} %][% lf.$type.label %]</h1>
+	<h1 class="margin-top0">[% lf.$type.label %]</h1>
       [% END%]
       </div>
       <div class="col-sm-4 text-right">

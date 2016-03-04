@@ -8,7 +8,7 @@
   <div class="col-md-10" id="pacs_class">
     {% IF fields.basic_fields.pacs_class.multiple OR fields.supplementary_fields.pacs_class.multiple %}
     [% IF !pacs_class %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.pacs_class.mandatory OR fields.supplementary_fields.pacs_class.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.pacs_class.label %]</div>
@@ -20,7 +20,7 @@
     </div>
     [% ELSE %]
     [% FOREACH keyw IN pacs_class %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group{% IF fields.basic_fields.pacs_class.mandatory OR fields.supplementary_fields.pacs_class.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.pacs_class.label %]</div>

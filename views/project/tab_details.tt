@@ -4,24 +4,24 @@
 
   [% IF alternative_name %]
   <div class="row">
-      <div class="col-md-2 text-muted">Alternative Name</div>
-      <div class="col-md-10">[% alternative_name %]</div>
+      <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.details.alt_name %]</div>
+      <div class="col-md-9">[% alternative_name %]</div>
   </div>
   [% END %]
 
   [% IF acronym %]
   <div class="row">
-      <div class="col-md-2 text-muted">Acronym</div>
-      <div class="col-md-10">[% acronym %]</div>
+      <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.details.acronym %]</div>
+      <div class="col-md-9">[% acronym %]</div>
   </div>
   [% END %]
 
   [% IF owner %]
   <div class="row">
-    <div class="col-md-2 text-muted">
-      Coordinator
+    <div class="col-md-3 text-muted">
+      [% lf.frontdoor.tabs.details.coordinator %]
     </div>
-    <div class="col-md-10">
+    <div class="col-md-9">
       [% FOREACH coord IN owner %]
 	[% IF coord.title != "" %]
 	  [% coord.title %]
@@ -34,10 +34,10 @@
 
   [% IF principal_investigator %]
   <div class="row">
-    <div class="col-md-2 text-muted">
-      Principal Investigators
+    <div class="col-md-3 text-muted">
+      [% lf.frontdoor.tabs.details.investigator %]
     </div>
-    <div class="col-md-10">
+    <div class="col-md-9">
       [% FOREACH pi IN principal_investigator %]
 	[% IF pi.title != "" %]
 	  [% pi.title %]
@@ -50,10 +50,10 @@
 
   [% IF member %]
   <div class="row">
-    <div class="col-md-2 text-muted">
-      Members
+    <div class="col-md-3 text-muted">
+      [% lf.frontdoor.tabs.details.member %]
     </div>
-    <div class="col-md-10">
+    <div class="col-md-9">
       [% FOREACH pm IN member %]
 	[% IF pm.title != "" %]
 	  [% pm.title %]
@@ -66,9 +66,9 @@
 
   [% IF department %]
   <div class="row">
-      <div class="col-md-2 text-muted">Department(s)</div>
-      <div class="col-md-10">[% FOREACH d IN department %]
-      [% d.name %][% UNLESS loop.last %]<br />[% END %]
+      <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.details.department %]</div>
+      <div class="col-md-9">[% FOREACH dep IN department %]
+      <span class="long">[% h.get_department(dep._id).display %]</span>[% UNLESS loop.last %]<br />[% END %]
       [% END %]
       </div>
   </div>
@@ -76,15 +76,15 @@
 
   [% IF description %]
   <div class="row">
-      <div class="col-md-2 text-muted">Description</div>
-      <div class="col-md-10">[% description %]</div>
+      <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.description %]</div>
+      <div class="col-md-9">[% description %]</div>
   </div>
   [% END %]
 
   [% IF grant_number %]
   <div class="row">
-      <div class="col-md-2 text-muted">Grant Number</div>
-      <div class="col-md-10">
+      <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.details.grantnumber %]</div>
+      <div class="col-md-9">
 	<a href="http://cordis.europa.eu/projects/[% grant_number %]" target="_blank">[% grant_number %]</a>
       </div>
   </div>
@@ -92,8 +92,8 @@
 
   [% IF funder %]
   <div class="row">
-      <div class="col-md-2 text-muted">Funders</div>
-      <div class="col-md-10">[% FOREACH fund IN funder %]
+      <div class="col-md-3 text-muted">[% lf.project.funder %]</div>
+      <div class="col-md-9">[% FOREACH fund IN funder %]
       [% fund %][% UNLESS loop.last %]<br />[% END %]
       [% END %]
       </div>
@@ -102,8 +102,8 @@
 
   [% IF cooperator %]
   <div class="row">
-      <div class="col-md-2 text-muted">Cooperators</div>
-      <div class="col-md-10">[% FOREACH coop IN cooperator %]
+      <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.details.cooperator %]</div>
+      <div class="col-md-9">[% FOREACH coop IN cooperator %]
       [% coop %][% UNLESS loop.last %]<br />[% END %]
       [% END %]
       </div>
@@ -112,8 +112,8 @@
 
   [% IF url %]
   <div class="row">
-      <div class="col-md-2 text-muted">URL</div>
-      <div class="col-md-10">
+      <div class="col-md-3 text-muted">URL</div>
+      <div class="col-md-9">
 	  <a href="[% url %]" target="_blank">[% url %]</a>
       </div>
   </div>

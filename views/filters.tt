@@ -1,0 +1,266 @@
+[% qp = {} -%]
+[% qp = h.extract_params -%]
+[% pd = {} -%]
+[% IF embed AND qp.ttyp %]
+  [% pd = h.is_portal_default(qp.ttyp) -%]
+[% ELSE %]
+  [% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% END %]
+[% lf = h.config.language.$lang -%]
+
+<!-- BEGIN filters.tt -->
+
+[%- USE JSON -%]
+[%- USE date(format => '%Y') -%]
+<div id="filters"></div>
+<div id="export"></div>
+
+<div class="hidden-sm hidden-md hidden-lg"><hr></div>
+
+[% IF request.path.match("person") AND bag != 'person' %]
+<div class="margin-bottom1">
+  <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>[% lf.mark.marked_publication %]</a>
+</div>
+[% END %]
+
+[%- IF (qp.q.size > 0 AND !qp.embed) OR pd.delete_them %]
+  <h3 class="margin-top0">[% lf.facets.filters_and_searchterms %]</h3>
+  [% other = {} %]
+  [% CALL other.import(qp) %]
+  [% CALL other.delete('q') %]
+  [%- FOREACH val IN qp.q %]
+    [%- removed = [] -%]
+    [%- CALL removed.import(qp.q) -%]
+    [%- CALL removed.splice(loop.index, 1) -%]
+    <p class="text-muted"><a href="[% path %]?q=[% removed.join('&q=') %][% h.hash_to_url(other) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
+  [%- END %]
+[%- END %]
+
+[% UNLESS request.path.match('marked') %]
+<h3[%- IF qp.q.size == 0 %] class="margin-top0"[% END %]>[% lf.facets.search %]</h3>
+<form action="#" method="get" role="form" class="helpme helpme-md" data-placement="left" title="[% lf.help.search %]">
+  <span class="input-group">
+    <input type="text" value='' class="form-control" name="cql_query" placeholder="[% lf.facets.search %]" />
+    <span class="input-group-btn">
+      <button type="submit" class="btn btn-default">[% lf.facets.go_button %]</button>
+    </span>
+  </span>
+  [%- IF qp.q.size > 0 AND total > 0 %]
+    [%- FOREACH val IN qp.q %]
+    <input type="hidden" name="q" value="[% val %]" />
+    [% END %]
+  [% END %]
+  [% FOREACH key IN qp.keys %]
+    [% NEXT IF key == "q" %]
+    [% NEXT IF key == "start" %]
+    <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
+  [% END %]
+</form>
+[% END %]
+
+
+<!-- include facets.tt here -->
+  [% INCLUDE facets.tt %]
+<!-- end include facets.tt -->
+
+
+[% IF hits.0.citation OR total > 1 %]
+
+<h3[% IF request.path.match('marked') %] class="margin-top0"[% END %]>[% lf.facets.display %][% UNLESS request.path.match('marked') %] / [% lf.facets.item('sort') %][% END %]</h3>
+
+[% IF qp.item('sort') %]
+  <div class="text-muted">
+    <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    <strong>[% lf.facets.sorted_by %]:</strong>
+    [% FOREACH setting IN qp.item('sort') %]
+      [% lf.facets.sort_text.$setting %][% UNLESS loop.last %], [% END %]
+    [% END %]
+  </div>
+[% END %]
+
+[% IF qp.style AND !user_settings.style_eq_userstyle %]
+  <div class="text-muted">
+    <a href="[% h.newuri_for("$path", qp, style="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    <strong>[% lf.facets.citation_style %]:</strong>
+    [% style %]
+
+    [% IF backend %]
+    <a type="button" href="/librecat/person/preference[% IF session.role == "delegate" %]/[% delegate_id %][% END %]?style=[% qp.style %]" name="save_settings" id="id_save_settings" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> [% lf.facets.save_style %]</a><br />
+    [% END %]
+  </div>
+[% END %]
+
+<ul class="nav nav-tabs nav-stacked ul3[% IF backend %] helpme" data-placement="left" title="[% lf.help.display_block %][% END %]">
+  [% IF (!request.path.match('person') OR bag == "person") AND !request.path.match('marked') AND total > 9 %]
+  <li>
+    <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.hits_per_page %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.default_page_size %][% END %]</button>
+    <div class="facettecollapse">
+    <ul id="hitsperpage_[% tabmodus %][% menu %]" class="collapse">
+      [% FOREACH lim IN h.config.pagination_options %]
+        [% IF (qp.limit AND qp.limit == lim) OR (!qp.limit AND lim == h.config.default_page_size) %]
+        <li>[% lim %]</li>
+        [% ELSE %]
+          <li><a href="[% h.newuri_for($path, qp,limit="$lim") %]" rel="nofollow">[% lim %]</a></li>
+        [% END %]
+      [% END %]
+    </ul>
+    </div>
+  </li>
+  [% END %]
+  [% IF !request.path.match('marked') AND total > 1 %]
+  <li>
+    <button data-toggle="collapse" data-target="#sort_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.item('sort') %]</button>
+    <div class="facettecollapse">
+    <ul id="sort_[% tabmodus %][% menu %]" class="collapse">
+      [% IF bag == "person" %]
+        [% sort_options = h.config.sort_options_person %]
+      [% ELSE %]
+        [% sort_options = h.config.sort_options %]
+      [% END %]
+      [% FOREACH s IN sort_options %]
+        [% gray = "" %]
+        [% FOREACH qs IN qp.item('sort') %][% IF qs == s _ ".asc" OR qs == s _ ".desc" %][% gray = "yes" %][% END %][% END %]
+        [% IF gray %]
+        <span class="text-muted">[% lf.sort_options.$s %]</span><br />
+        [% ELSE %]
+        <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].asc" rel="nofollow">[% lf.sort_options.$s %] <span class="glyphicon glyphicon-arrow-up"></span></a>
+        <a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].desc" rel="nofollow">
+        <span class="glyphicon glyphicon-arrow-down"></span></a></li>
+        [% END %]
+      [% END %]
+    </ul>
+    </div>
+  </li>
+  [% END %]
+
+  [% IF hits.0.citation %]
+  <li>
+    <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.citation_style %][% IF style != "default" AND style != "" %]: [% style %][% ELSIF style == "default" %]: default[% END %]</button>
+    <div class="facettecollapse">
+    <ul id="style_[% tabmodus %][% menu %]" class="collapse">
+      [% FOREACH dstyle IN h.config.citation.csl.styles %]
+        [% IF dstyle == style %]
+        <li><span class="text-muted">[% dstyle %]</span></li>
+        [% ELSE %]
+        <li><a href="[% h.newuri_for("$path", qp, style="$dstyle") %]" rel="nofollow">[% dstyle %]</a></li>
+        [% END %]
+      [% END %]
+    </ul>
+    </div>
+  </li>
+  [% END %]
+</ul>
+[% END %]
+
+[% UNLESS bag == "person" %]
+<h3>[% lf.facets.export %][% UNLESS backend OR request.path.match('marked') OR request.path.match('embed') OR qp.ftyp %] / [% lf.facets.embed %][% END %]</h3>
+
+<ul class="nav nav-tabs nav-stacked ul4">
+  <li>
+    <button data-toggle="collapse" data-target="#export_[% tabmodus %][% menu %]" class="btn-link">
+      <span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.export_as %]
+    </button>
+    <div class="facettecollapse">
+    <ul id="export_[% tabmodus %][% menu %]" class="collapse">
+      <li><a href="#modal_[% tabmodus %]" data-key="fmt" data-value="rtf" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% lf.facets.exports.rtf %]</a></li>
+      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="bibtex" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% lf.facets.exports.bibtex %]</a></li>
+      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="ris" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% lf.facets.exports.ris %]</a></li>
+      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="json" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% lf.facets.exports.json %]</a></li>
+      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="yaml" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% lf.facets.exports.yaml %]</a></li>
+    </ul>
+    </div>
+  </li>
+  [% UNLESS backend OR request.path.match('marked') OR request.path.match('embed') OR qp.ftyp %]
+  <li>
+    <button data-toggle="collapse" data-target="#embed_[% tabmodus %][% menu %]" id="id_button_embed_[% tabmodus %][% menu %]" class="btn-link">
+      <span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.embed %]
+    </button>
+    <div class="facettecollapse">
+    <ul id="embed_[% tabmodus %][% menu %]" class="collapse">
+    [% FOREACH emb IN ['js', 'iframe', 'link'] %]
+    <li><span class="fa fa-fw fa-arrow-circle-o-down"></span><strong>[% emb %]</strong>
+      <textarea class="form-control embed-facet_[% tabmodus %]" name="[% emb %]text" rows="2" id="id_[% emb %]text_[% tabmodus %][% menu %]" onclick="this.focus();this.select()" readonly="readonly" style="cursor:pointer;"></textarea>
+    </li>
+    [% END %]
+    </ul>
+    </div>
+  </li>
+  [% END %]
+</ul>
+[% END %] <!-- unless bag person -->
+
+[% IF bag == 'data' %]
+<p class="margin-top1"><a href="http://service.re3data.org/repository/r3d100010750"><img src="/images/logo_re3data_big.png" alt="[% lf.footer.re3data_alt %]" title="[% lf.footer.re3data_title %]" style="width:100%;max-width:280px;" /></a></p>
+[% END %]
+
+
+<!-- Modal -->
+<div id="modal_[% tabmodus %]" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+	     <button type="button" class="close" data-dismiss="modal"><span class="fa fa-fw fa-times"></span></button>
+	     <h3 id="ModalExport">[% lf.facets.export_options %]</h3>
+      </div>
+      <div class="modal-body">
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]&amp;explinks=yes" class="rtfmodal" rel="nofollow">[% lf.facets.export_withlinks %]</a></p>
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]" class="rtfmodal" rel="nofollow">[% lf.facets.export_withoutlinks %]</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$('.rtfmodal').click(function(){
+  $('#[% bag == "data" ? "myRdModal" : "myModal" %]').modal('hide');
+});
+var path = '[% request.path %]',
+searchParams = [% qp.json %];
+
+$('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
+    var embed_link = window.location.href;
+    delete searchParams.fmt;
+    var regex = /\/person\/(\d{1,})/;
+    var match = regex.exec(embed_link);
+    if(match){
+      embed_link = embed_link.replace(/\/person\/\d{1,}\/data\.*/,"/data?");
+      embed_link = embed_link.replace(/\/person\/\d{1,}.*/,"/publication?");
+      embed_link = embed_link + $.param($.extend({}, searchParams), true); 
+    }
+    if ( !embed_link.match(/\?/) ) { embed_link += '?';}
+    var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ embed_link +'&ftyp=js"><\/script><noscript><a href="'+ embed_link +'" target="_blank">[% lf.facets.embed_linktext %]</a></noscript></div>';
+    var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="' + embed_link + '&ftyp=iframe"></iframe>';
+    var emb_link = '<a href="'+ window.location.href +'">[% lf.facets.embed_linktext %]</a>';
+    $('#id_jstext_[% tabmodus %][% menu %]').val(emb_js);
+    $('#id_iframetext_[% tabmodus %][% menu %]').val(emb_iframe);
+    $('#id_linktext_[% tabmodus %][% menu %]').val(emb_link);
+});
+
+$('a.facet_[% tabmodus %]').click(function() {
+  var par_key = $(this).data('key');
+  if(par_key == "sort"){
+    if(!searchParams[par_key]){
+      searchParams[par_key] = [];
+    }
+    searchParams[par_key].push($(this).data('value'));
+  }
+  else if(par_key == "q"){
+    searchParams[par_key].push($(this).data('param') + "=" + $(this).data('value'));
+  }
+  else {
+    searchParams[par_key] = $(this).data('value');
+  }
+  if(par_key == "q"){
+    delete searchParams.start;
+    delete searchParams.fmt;
+  }
+  var url = path+'?'+ $.param($.extend({}, searchParams), true);
+  window.location.replace(url);
+});
+
+$('button.collapse').click(function(e){
+  e.preventDefault();
+});
+</script>
+
+<!-- END filters.tt -->

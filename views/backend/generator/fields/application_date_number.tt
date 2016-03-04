@@ -17,7 +17,7 @@
       <div class="form-group col-md-7 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.application_date_number.mandatory OR fields.supplementary_fields.application_date_number.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.application_date_number.label_an %]</div>
-          <input type="text" name="ipn" id="id_ipn" value="[% ipn | html %]" placeholder="[% lf.$type.field.application_date_number.placeholder_an %]" class="sticky form-control{% IF fields.basic_fields.application_date_number.mandatory OR fields.supplementary_fields.application_date_number.mandatory %} required{% END %}">
+          <input type="text" name="application_number" id="id_application_number" value="[% application_number | html %]" placeholder="[% lf.$type.field.application_date_number.placeholder_an %]" class="sticky form-control{% IF fields.basic_fields.application_date_number.mandatory OR fields.supplementary_fields.application_date_number.mandatory %} required{% END %}">
           <div class="input-group-addon"></div>
         </div>
       </div>

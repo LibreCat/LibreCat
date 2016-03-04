@@ -15,11 +15,11 @@ sub fix {
         my $oa = 0;
         foreach my $f (@{$pub->{file}}) {
             if($f->{access_level} eq 'open_access' and $f->{relation} eq "main_file"){
-            	$oa = 1;
+                $oa = 1;
             }
         }
 
-        if ($oa) {
+        if ($oa and $pub->{type} ne 'researchData') {
             $pub->{urn} = h->generate_urn(h->config->{urn_prefix},$pub->{_id});
         }
     }
