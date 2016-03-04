@@ -17,19 +17,19 @@ Log::Any::Adapter->set('Log4perl');
 
 my $logger     = Log::Log4perl->get_logger('store_admin');
 
-my $file_store = 'BagIt';
-my $file_opt   = { root => '/data2/librecat/bag_uploads' };
+my $file_store = 'Simple';
+my $file_opt   = { root => '/data2/librecat/file_uploads' };
 
 GetOptions(
     "file_store|f=s" => \$file_store ,
-    "file_opt|o=s"   => \$file_opt ,
+    "file_opt|o=s%"   => \$file_opt ,
 );
 
 my $cmd = shift;
 
 usage() unless $cmd;
 
-my $store = load();
+my $store = load($file_store,$file_opt);
 
 if ($cmd eq 'list') {
     cmd_list(@ARGV);
@@ -197,6 +197,7 @@ sub cmd_purge {
 }
 
 sub load {
+    my ($file_store,$file_opt) = @_;
     my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
     $pkg->new(%$file_opt);
 }
