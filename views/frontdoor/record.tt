@@ -197,7 +197,7 @@
       <div class="col-md-12">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#details" data-toggle="tab">[% lf.frontdoor.tabs.details.label %]</a></li>
-          [% IF file AND file.size %]
+          [% IF (mainFile AND mainFile.size) OR (relFile AND relFile.size) %]
           <li><a href="#fileDetails" data-toggle="tab">[% lf.frontdoor.tabs.file_details.label %]</a></li>
           [% END %]
 
