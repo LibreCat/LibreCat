@@ -130,6 +130,12 @@ Performs search for reviewer.
         my $p = h->extract_params();
         my $id = session 'personNumber';
         my $account = h->get_person(session->{user});
+
+        # if user not reviewer or not allowed to access chosen department
+        unless ($account->{reviewer} and grep {params->{department_id} eq $_->{_id}} @{$account->{reviewer}}){
+            return redirect "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
+        }
+
         my $dep_query = "department=" . params->{department_id};
         push @{$p->{q}}, $dep_query;
 
