@@ -28,9 +28,9 @@
         <div class="form-group">
           <strong>[% lf.$type.field.dropzone.edit_modal.relation %]</strong><br />
           <select name="relation" class="form-control" id="id_select_relation">
-            <option value="main_file"[% IF !relation %] selected="selected"[% END %]>Main File</option>
+            <option value="main_file"[% IF !relation %] selected="selected"[% END %]>[% lf.relation.main_file.select %]</option>
             [% FOREACH rel IN h.config.lists.relations_file %]
-              <option value="[% rel.relation %]"[% IF rel.relation == relation %] selected="selected"[% END %]>[% rel.relation_text %]</option>
+              <option value="[% rel.relation %]"[% IF rel.relation == relation %] selected="selected"[% END %]>[% lf.relation.${rel.relation}.select %]</option>
             [% END %]
           </select>
         </div>
