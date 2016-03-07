@@ -28,7 +28,7 @@
 	</div>
 
 	<div class="col-md-6 col-sm-5 col-xs-12">
-	  <h3 class="margin-top0">[% UNLESS !thisPerson %][% IF thisPerson.idm_title %]<span itemprop="honorificPrefix">[% thisPerson.idm_title %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span>[% IF backend %] ([% IF session.role == 'super_admin' %]Admin[% END %][% IF session.role == 'user' %]User[% END %][% IF session.role == 'reviewer' %]Reviewer[% END %][% IF session.role == "delegate" %]Delegate[% END %][% IF session.role == "data_manager" %]Data Manager[% END %])[% END %][% ELSE %][% lf.person_profile.id_not_found %][% END %]</h3>
+	  <h3 class="margin-top0">[% UNLESS !thisPerson %][% IF thisPerson.idm_title %]<span itemprop="honorificPrefix">[% thisPerson.idm_title %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span>[% IF backend %] ([% IF session.role == 'super_admin' %]Admin[% END %][% IF session.role == 'user' %]User[% END %][% IF session.role == 'reviewer' %]Reviewer[% END %][% IF session.role == "project_manager" %]Project Manager[% END %][% IF session.role == "delegate" %]Delegate[% END %][% IF session.role == "data_manager" %]Data Manager[% END %])[% END %][% ELSE %][% lf.person_profile.id_not_found %][% END %]</h3>
 	[% INCLUDE person_profile.tt %]
 	</div>
 
@@ -41,9 +41,9 @@
 	[% END %]
 
       </div>
-    
+
     </div>
-    
+
     [% UNLESS !thisPerson %]
 
     <div class="row margin-xs-top"> <!-- row span11 publications, projects, departments -->
@@ -63,6 +63,11 @@
 	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_reviewer %]"><a href="/librecat/search/reviewer/[% department._id %]">[% h.get_department(department._id).display %]</a></li>
 	  [% END %]
 	[% END %]
+    [% IF backend AND session.role == "project_manager" %]
+      [% FOREACH project IN thisPerson.project_manager %]
+      <li class="helpme[% IF modus.match(project._id) %] active[% END %]" title="[% lf.help.publication_project_manager %]"><a href="/librecat/search/project_manager/[% project._id %]">[% h.get_project(project._id).name %]</a></li>
+      [% END %]
+    [% END %]
 	[% IF backend AND session.role == "data_manager" %]
 	  [% FOREACH department IN thisPerson.data_manager %]
 	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% lf.help.publication_data_manager %]"><a href="/librecat/search/data_manager/[% department._id %]">[% h.get_department(department._id).display %]</a></li>
@@ -126,6 +131,18 @@
 	<div class="tab-pane[% IF modus.match(department_id) %] active[%END %]" id="publ-reviewer">
 	  <div class="col-sm-8">
 	    [% tabmodus = 'reviewer' %]
+	    [% INCLUDE hits.tt %]
+	  </div>
+	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
+	    [% INCLUDE filters.tt %]
+	  </div>
+	</div>
+	[% END %]
+    [% IF backend AND (session.role == "project_manager" OR (session.role == "super_admin" AND modus == "project_manager")) %]
+	<!-- backend + project_manager -->
+	<div class="tab-pane[% IF session.role == 'project_manager' %] active[%END %]" id="publ-projectmanager">
+	  <div class="col-sm-8">
+	    [% tabmodus = 'project_manager' %]
 	    [% INCLUDE hits.tt %]
 	  </div>
 	  <div class="col-md-3 col-md-offset-1 col-sm-4 facets">

@@ -30,6 +30,9 @@ get '/librecat' => needs login => sub {
     elsif ( session->{role} eq "reviewer" ) {
         forward '/librecat/search/reviewer', $params;
     }
+    elsif ( session->{role} eq "project_manager") {
+        forward '/librecat/search/project_manager', $params;
+    }
     elsif ( session->{role} eq "data_manager" ) {
         forward '/librecat/search/data_manager', $params;
     }
@@ -56,6 +59,9 @@ get '/librecat/change_role/:role' => needs login => sub {
     }
     elsif ( params->{role} eq "reviewer" and $user->{reviewer} ) {
         session role => "reviewer";
+    }
+    elsif ( params->{role} eq "project_manager" and $user->{project_manager} ) {
+        session role => "project_manager";
     }
     elsif ( params->{role} eq "data_manager" and $user->{data_manager} ) {
         session role => "data_manager";

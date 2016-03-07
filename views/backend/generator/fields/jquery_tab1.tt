@@ -356,6 +356,8 @@ $(function() {
     puburl = '/librecat/search/admin?fmt=autocomplete';
   [% ELSIF modus == "reviewer" OR session.role == "reviewer" %]
     puburl = '/librecat/search/reviewer?fmt=autocomplete';
+  [% ELSIF modus == "project_manager" OR session.role == "project_manager" %]
+    puburl = '/librecat/search/project_manager?fmt=autocomplete';
   [% ELSIF modus == "dataManager" OR session.role == "dataManager" %]
     puburl = '/librecat/search/data_manager?fmt=autocomplete';
   [% ELSIF modus == "delegate" OR session.role == "delegate" %]

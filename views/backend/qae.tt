@@ -1,7 +1,7 @@
 <!-- BEGIN backend/qae.tt -->
 
 <div id="dropzone_row" class="helpme" data-placement="left" title="[% lf.help.quick_and_easy %]">
-   <div class="dropzone" id="qaeUpload" data-reviewer="[% department_id %]" data-delegate="[% delegate_id %]"></div>
+   <div class="dropzone" id="qaeUpload" data-reviewer="[% department_id %]" data-project_manager="[% project_manager_id %]" data-delegate="[% delegate_id %]"></div>
 </div>
 
 <script>

@@ -117,6 +117,7 @@ prefix '/librecat' => sub {
       my $file_id = h->new_record('publication');
       my $person = h->get_person(params->{delegate} || session->{personNumber});
       my $department = h->get_department(params->{reviewer}) if params->{reviewer};
+      my $project = h->get_project(params->{project_manager}) if params->{project_manager};
       my $now = h->now();
       $file_data->{saved} = 1;
 
@@ -146,6 +147,8 @@ prefix '/librecat' => sub {
         department => $department || $person->{department},
         creator => {id => session->{personNumber}, login => session->{user}},
       };
+
+      $record->{project} = $project if $project;
 
       push @{$record->{file}}, to_json({
         file_name => $file_name,
@@ -184,15 +187,15 @@ prefix '/librecat' => sub {
             my $file_id = h->new_record('publication');
             my $now = h->now();
             $file_data->{saved} = 1;
-            
+
             my $path = h->get_file_path($id);
             system "mkdir -p $path" unless -d $path;
             my $result = move( path(h->config->{tmp_dir}, params->{tempid}, $file_name), $path ) || die $!;
-            
+
             my $d = Crypt::Digest::MD5->new;
             $d->addfile(encode_utf8($path."/".$file_name));
             my $digest = $d->hexdigest; # hexadecimal form
-            
+
             my $record = {
                 _id => $id,
                 status => "new",
@@ -230,9 +233,9 @@ prefix '/librecat' => sub {
                 checksum => $digest,
             });
             push @{$record->{file_order}}, $file_id;
-            
+
             my $response = h->update_record('publication', $record);
-            
+
             # send mail to librarian
             my $mail_body = export_to_string({
                 title => $record->{title},
@@ -243,7 +246,7 @@ prefix '/librecat' => sub {
                 'Template',
                 template => 'views/email/new_thesis.tt'
             );
-            
+
             try {
                 email {
                     to => h->config->{thesis}->{to},
@@ -263,7 +266,7 @@ prefix '/librecat' => sub {
       my $path = path( h->config->{tmp_dir}, params->{tempid}, $file_name);
       unlink $path;
     }
-    
+
     redirect '/pubtheses?success=1';
 
   };

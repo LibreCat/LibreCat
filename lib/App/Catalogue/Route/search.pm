@@ -159,6 +159,47 @@ Performs search for reviewer.
 
     };
 
+
+=head2 GET /reviewer
+
+Performs search for reviewer.
+
+=cut
+
+    get '/project_manager' => needs role => "project_manager" => sub {
+        my $account = h->get_person(session->{user});
+        redirect "/librecat/search/project_manager/$account->{project_manager}->[0]->{_id}";
+    };
+
+    get '/project_manager/:project_id' => needs role => 'project_manager' => sub {
+
+        my $p = h->extract_params();
+        my $id = session 'personNumber';
+        my $account = h->get_person(session->{user});
+        my $dep_query = "project=" . params->{project_id};
+        push @{$p->{q}}, $dep_query;
+
+        $p->{facets} = h->default_facets();
+        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        $p->{sort} = $sort_style->{sort_backend};
+        push @{$p->{q}}, "status=public" if $p->{fmt} and $p->{fmt} eq "autocomplete";
+
+        my $hits = h->search_publication($p);
+        $hits->{style} = $sort_style->{style};
+        $hits->{sort} = $p->{sort};
+        $hits->{user_settings} = $sort_style;
+        $hits->{modus} = "project_manager_" . params->{project_id};
+        $hits->{project_id} = params->{project_id};
+
+        if ($p->{fmt} ne 'html') {
+            h->export_publication($hits, $p->{fmt});
+        } else {
+            template "home", $hits;
+        }
+
+    };
+
+
 =head2 GET /datamanager
 
 Performs search for data manager.

@@ -27,6 +27,7 @@ header:
     user: "User"
     delegate: "Delegate"
     reviewer: "Reviewer"
+    project_manager: "Project Manager"
     data_manager: "Data Manager"
     super_admin: "Admin"
   admin_menu:
@@ -124,6 +125,7 @@ main_page:
   heading_admin: "Admin"
   heading_user: "User"
   heading_reviewer: "Reviewer"
+  heading_project_manager: "Project Manager"
   heading_delegate: "Delegate"
   logged_in_as: "Logged in as"
   by: "by"
@@ -1747,6 +1749,7 @@ help:
   publication_user_rd: "Your personal publication list - research data."
   publication_delegate: "Each of these tabs shows the publication list of a person, you have been granted access to. The lists have been grouped by person to give you a better overview of your work area."
   publication_reviewer: "All publications of the department you have been granted access to."
+  publication_project_manager: "All publications of the project you have been granted access to."
   publication_data_manager: "All data publications of the department you have been granted access to."
   publication_admin: "All publications in PUB."
   statuses: "Visibility  status<br>of publication.<br>To change it, click on 'Edit'."

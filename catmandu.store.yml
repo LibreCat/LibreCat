@@ -1237,6 +1237,9 @@ search:
           reviewer:
             properties:
               _id: {type: string, analyzer: tag}
+          project_manager:
+            properties:
+              _id: {type: string, analyzer: tag}
           access:
             properties:
               id: {type: string, anylzer: tag}

@@ -111,7 +111,14 @@ function selectButton(element){
 	    container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
 	    type_name = "Department";
 	}
-	if(type == "data_manager"){
+    else if(type == "project_manager"){
+        container.append('[% INCLUDE backend/generator/fields/subfields/project_select.tt %]');
+        type_name = "Project";
+    }
+    if(type == "project_manager"){
+        type_short = "pm";
+    }
+	else if(type == "data_manager"){
 	    type_short = "dm";
 	}
 	else if(type == "reviewer"){
