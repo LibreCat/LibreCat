@@ -176,6 +176,12 @@ Performs search for reviewer.
         my $p = h->extract_params();
         my $id = session 'personNumber';
         my $account = h->get_person(session->{user});
+
+        # if user not project_manager or not allowed to access chosen project
+        unless ($account->{project_manager} and grep {params->{project_id} eq $_->{_id}} @{$account->{project_manager}}){
+            return redirect "/librecat/search/project_manager/$account->{project_manager}->[0]->{_id}";
+        }
+
         my $dep_query = "project=" . params->{project_id};
         push @{$p->{q}}, $dep_query;
 
