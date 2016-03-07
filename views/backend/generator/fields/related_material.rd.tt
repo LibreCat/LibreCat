@@ -31,10 +31,10 @@
       <div class="col-xs-3">
 	    <select class="relmat form-control" name="related_material.record.[% index %].relation">
 	    [% FOREACH key IN h.config.lists.relations_rd %]
-	      <option value="[% key.relation %]"[% IF key.relation == rel.relation %] selected="selected"[% END %]>[% lf.relation.${key.relation} %]</option>
+	      <option value="[% key.relation %]"[% IF key.relation == rel.relation %] selected="selected"[% END %]>[% lf.relation.${key.relation}.select %]</option>
 	    [% END %]
 	    [% FOREACH key IN h.config.lists.relations_record %]
-	      <option value="[% key.relation %]"[% IF key.relation == rel.relation %] selected="selected"[% END %]>[% lf.relation.${key.relation} %]</option>
+	      <option value="[% key.relation %]"[% IF key.relation == rel.relation %] selected="selected"[% END %]>[% lf.relation.${key.relation}.select %]</option>
 	    [% END %]
 	    </select>
       </div>
