@@ -229,12 +229,12 @@
           <li><a href="#confletter" data-toggle="tab">[% lf.frontdoor.tabs.confirmation_letter.label %]</a>
           [% END %]
 
-          [% IF relMat.size OR relLink.size OR relToc.size %]
+          [% IF relMat.size OR relLink.size %]
           <li><a href="#relMat" data-toggle="tab">[% lf.frontdoor.tabs.related_material %]</a></li>
           [% END %]
 
           [% IF relLinkRd.size OR relLinkSw.size %]
-          <li><a href="#relLinkRd" data-toggle="tab">[% lf.frontdoor.tabs.external_data %]</a></li>
+          <li><a href="#relLinkRd" data-toggle="tab">[% lf.frontdoor.tabs.external_data.label %]</a></li>
           [% END %]
 
           <li class="hidden-md hidden-lg hidden-sm"><a href="#citethis">[% lf.frontdoor.tabs.cite_this %]</a></li>
@@ -269,7 +269,7 @@
 
           [% IF epmc_ref %] [% PROCESS frontdoor/tab_ebi_ref.tt %] [% END %]
 
-          [% IF relMat.size OR relLink.size OR relToc.size %]
+          [% IF relMat.size OR relLink.size %]
             [% PROCESS frontdoor/tab_relmat.tt %]
           [% END %]
 

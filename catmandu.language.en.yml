@@ -314,7 +314,10 @@ frontdoor:
       label: "Letter of Confirmation"
       confirmation: "Confirmation"
     related_material: "Links"
-    external_data: "External Data"
+    external_data:
+      label: "Software/ Ext. Data"
+      research_data: "External Research Data:"
+      software: "Software:"
     cite_this: "Cite This"
     export_search: "Export / Search"
   fulltext:

@@ -313,7 +313,10 @@ frontdoor:
       label: "Bestätigungsschreiben"
       confirmation: "Bestätigung"
     related_material: "Links"
-    external_data: "Externe Daten"
+    external_data:
+      label: "Software/ Ext. Daten"
+      research_data: "Externe Forschungsdaten:"
+      software: "Software:"
     cite_this: "Zitieren"
     export_search: "Export / Suche"
   fulltext:
