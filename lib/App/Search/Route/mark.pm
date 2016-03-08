@@ -40,7 +40,15 @@ get '/marked' => sub {
         $hits->{style} = params->{style} || h->config->{default_style};
     }
 
-    $hits->{hits} = \@tmp_hits;
+    # sort hits according to id-order in session (making drag and drop sorting possible)
+    my $result_hits;
+    foreach my $sh (@{session 'marked'}){
+        my $hit;
+        @$hit = grep {$sh eq $_->{_id}} @tmp_hits;
+        push @$result_hits, $hit->[0];
+    }
+
+    $hits->{hits} = $result_hits;
     $hits->{total} = scalar @tmp_hits;
 
     if($fmt and $fmt ne 'html' and $hits->{total} ne "0"){
