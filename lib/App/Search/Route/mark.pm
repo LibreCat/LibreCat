@@ -27,7 +27,7 @@ get '/marked' => sub {
     my $fmt = $p->{fmt};
     my $explinks = $p->{explinks};
     my $marked = session 'marked';
-    my ($hits, @tmp_hits);
+    my ($hits, @tmp_hits, $result_hits);
 
     if($marked and ref $marked eq "ARRAY"){
         while ( my @chunks = splice(@$marked,0,100) ) {
@@ -38,14 +38,13 @@ get '/marked' => sub {
         }
         $hits->{explinks} = $explinks;
         $hits->{style} = params->{style} || h->config->{default_style};
-    }
 
-    # sort hits according to id-order in session (making drag and drop sorting possible)
-    my $result_hits;
-    foreach my $sh (@{session 'marked'}){
-        my $hit;
-        @$hit = grep {$sh eq $_->{_id}} @tmp_hits;
-        push @$result_hits, $hit->[0];
+        # sort hits according to id-order in session (making drag and drop sorting possible)
+        foreach my $sh (@{session 'marked'}){
+            my $hit;
+            @$hit = grep {$sh eq $_->{_id}} @tmp_hits;
+            push @$result_hits, $hit->[0];
+        }
     }
 
     $hits->{hits} = $result_hits;
