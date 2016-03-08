@@ -23,7 +23,6 @@
 [% relLinkRd = [] %]
 [% relLinkSw = [] %]
 [% relFile = [] %]
-[% relToc = [] %]
 [% IF external_id.pmid %]
   [% epmc_cit = h.get_metrics('epmc_citations',external_id.pmid) %]
   [% epmc_ref = h.get_metrics('epmc_references',external_id.pmid) %]
@@ -60,8 +59,6 @@
   [% SWITCH fi.relation %]
     [% CASE "confirmation" %]
     [% confLetter.push(fi) %]
-    [% CASE "table_of_contents" %]
-    [% relToc.push(fi) %]
     [% CASE "main_file" %]
     [% mainFile.push(fi) %]
     [% CASE "hidden" %]
@@ -200,7 +197,7 @@
       <div class="col-md-12">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#details" data-toggle="tab">[% lf.frontdoor.tabs.details.label %]</a></li>
-          [% IF mainFile AND mainFile.0.file_name %]
+          [% IF (mainFile AND mainFile.size) OR (relFile AND relFile.size) %]
           <li><a href="#fileDetails" data-toggle="tab">[% lf.frontdoor.tabs.file_details.label %]</a></li>
           [% END %]
 
@@ -232,12 +229,12 @@
           <li><a href="#confletter" data-toggle="tab">[% lf.frontdoor.tabs.confirmation_letter.label %]</a>
           [% END %]
 
-          [% IF relMat.size OR relLink.size OR relFile.size OR relToc.size %]
+          [% IF relMat.size OR relLink.size %]
           <li><a href="#relMat" data-toggle="tab">[% lf.frontdoor.tabs.related_material %]</a></li>
           [% END %]
 
           [% IF relLinkRd.size OR relLinkSw.size %]
-          <li><a href="#relLinkRd" data-toggle="tab">[% lf.frontdoor.tabs.external_data %]</a></li>
+          <li><a href="#relLinkRd" data-toggle="tab">[% lf.frontdoor.tabs.external_data.label %]</a></li>
           [% END %]
 
           <li class="hidden-md hidden-lg hidden-sm"><a href="#citethis">[% lf.frontdoor.tabs.cite_this %]</a></li>
@@ -258,7 +255,7 @@
 
           [% PROCESS frontdoor/tab_details.tt %]
 
-          [% IF mainFile AND mainFile.0.file_name %] [% PROCESS frontdoor/tab_filedetails.tt %] [% END %]
+          [% IF file AND file.size %] [% PROCESS frontdoor/tab_filedetails.tt %] [% END %]
 
           [% IF relPubl %] [% PROCESS frontdoor/tab_relpubl.tt %] [% END %]
 
@@ -272,7 +269,7 @@
 
           [% IF epmc_ref %] [% PROCESS frontdoor/tab_ebi_ref.tt %] [% END %]
 
-          [% IF relMat.size OR relLink.size OR relFile.size OR relToc.size %]
+          [% IF relMat.size OR relLink.size %]
             [% PROCESS frontdoor/tab_relmat.tt %]
           [% END %]
 

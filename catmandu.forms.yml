@@ -223,6 +223,7 @@ publicationTypes:
         related_material.record:
           mandatory: 0
         related_material.link:
+          multiple: 1
           mandatory: 0
   bookeditor:
     tmpl: bookEditor
@@ -1018,6 +1019,7 @@ array_field:
   - alternative_id
   - jel
   - link
+  - related_material.link
 
 otherItems:
   user_account:

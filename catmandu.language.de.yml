@@ -276,9 +276,13 @@ frontdoor:
       cooperator: "Mitwirkende"
     file_details:
       label: "Dateien"
+      external_material: "Externes Material:"
+      internal_material: "Material in PUB:"
       name: "Name"
+      relation: "Relation (zum PUB-Eintrag)"
       title: "Titel"
       description: "Beschreibung"
+      url: "URL"
       access_level:
         label: "Access Level"
         open_access: "Open Access"
@@ -308,8 +312,11 @@ frontdoor:
     confirmation_letter:
       label: "Bestätigungsschreiben"
       confirmation: "Bestätigung"
-    related_material: "Zusatzmaterial"
-    external_data: "Externe Daten"
+    related_material: "Links"
+    external_data:
+      label: "Software/ Ext. Daten"
+      research_data: "Externe Forschungsdaten:"
+      software: "Software:"
     cite_this: "Zitieren"
     export_search: "Export / Suche"
   fulltext:
@@ -538,19 +545,17 @@ forms:
         placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
       related_material.select: "Art des Zusatzmaterials wählen &hellip;"
       related_material.link: &related_material_link
-        label: "Link zu externer Quelle"
-        label_short: "Ext. Link"
+        label: "Link und Relation<br />zu externer Quelle"
+        label_short: "Externe Quelle"
         url:
           label_short: "URL"
-          placeholder: "URL der Quelle (Eingabe mit http://)"
+          placeholder: "URL der externen Quelle (Eingabe mit http://)"
         title:
           label_short: "Titel"
-          placeholder: "Titel der Quelle"
-        description:
-          label_short: "Beschreibung"
-          placeholder: "Beschreibung"
-        button:
-          label: "Hinzufügen"
+          placeholder: "Titel der externen Quelle"
+        relation:
+          label_short: "Quelle ist"
+          label: "Externe Quelle ist"
       locked: &locked
         label: "Locked for editing (except for admins)"
         label_short: "Locked"
@@ -1686,7 +1691,7 @@ forms:
     chi: "Chinesisch"
     hrv: "Kroatisch"
     cze: "Tschechisch"
-    dan: "Dänish"
+    dan: "Dänisch"
     dut: "Niederländisch"
     eng: "Englisch"
     fin: "Finnisch"
@@ -1712,6 +1717,82 @@ forms:
     swe: "Schwedisch"
     tur: "Türkisch"
     other: "Andere"
+  relation:
+    main_file:
+      display: "Volltext(e)"
+      select: "Volltext / Hauptdokument"
+    table_of_contents:
+      display: "Inhaltsverzeichnis"
+      select: "Inhaltsverzeichnis"
+    erratum:
+      display: "Erratum"
+      select: "Erratum"
+    supplementary_material:
+      display: "Zusatzmaterial"
+      select: "Zusatzmaterial"
+    research_data:
+      display: "Forschungsdaten"
+      select: "Forschungsdaten"
+    software:
+      display: "Software"
+      select: "Software"
+    earlier_version:
+      display: "Fr&uuml;here Version"
+      select: "Fr&uuml;here Version"
+    later_version:
+      display: "Sp&auml;tere Version"
+      select: "Sp&auml;tere Version"
+    contains:
+      display: "Publikation, die diesen PUB Eintrag enth&auml;lt"
+      select: "Publikation, die diesen PUB Eintrag enth&auml;lt"
+    published_in:
+      display: "Teil von (PUB Eintrag)"
+      select: "Teil von (PUB Eintrag)"
+    dissertation_contains:
+      display: "Dissertation, die diesen PUB Eintrag enth&auml;lt"
+      select: "Dissertation, die diesen PUB Eintrag enth&auml;lt"
+    part_of_dissertation:
+      display: "Teil dieser Dissertation"
+      select: "Teil dieser Dissertation"
+    old_edition:
+      display: "Alte Ausgabe"
+      select: "Alte Ausgabe"
+    new_edition:
+      display: "Neue Ausgabe"
+      select: "Neue Ausgabe"
+    continues:
+      display: "Fortsetzung"
+      select: "Fortsetzung"
+    is_continued_by:
+      display: "Vorheriger Teil"
+      select: "Vorheriger Teil"
+    popular_science:
+      display: "Popul&auml;rwissenschaftliche Version"
+      select: "Popul&auml;rwissenschaftliche Version"
+    research_paper:
+      display: "Wissenschaftliche Version"
+      select: "Wissenschaftliche Version"
+    translation:
+      display: "&Uuml;bersetzter Text"
+      select: "&Uuml;bersetzter Text"
+    original:
+      display: "Originaltext"
+      select: "Originaltext"
+    other:
+      display: "In sonstiger Relation"
+      select: "In sonstiger Relation"
+    cites:
+      display: "Zitiert"
+      select: "Zitiert"
+    is_cited_by:
+      display: "Wird zitiert von"
+      select: "Wird zitiert von"
+    confirmation:
+      display: "Best&auml;tigungsschreiben"
+      select: "Best&auml;tigungsschreiben"
+    hidden:
+      display: ""
+      select: "Zusatzmaterial (nur zur Einbettung, keine Anzeige auf Frontdoor)"
 403:
   heading: "Kein Zugriff (403)"
   text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis."
