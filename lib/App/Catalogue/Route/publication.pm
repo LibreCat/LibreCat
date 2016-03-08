@@ -143,6 +143,9 @@ Checks if the user has the rights to update this record.
 #        if($ip and $ip eq "129.70.11.105"){
 #            return to_dumper $p;
 #        }
+	if ( $p->{type} eq "researchData" && !$p->{doi}) {
+            $p->{doi} = h->config->{doi}->{prefix} . "/" . $p->{_id};
+        }
 
         my $result = h->update_record('publication', $p);
         #return to_dumper $result; # leave this here to make debugging easier
