@@ -327,7 +327,7 @@ frontdoor:
   license_heading: "All files available under the following license(s):"
 mark:
   marked_publication: "Marked Publication(s)"
-  no_marked_publication: "You don't have any publications 'marked' yet. If you want to add a publication to this page, please click on the link <em>Mark</em> next to the publication data. You can find this links on publication lists or on a publication page. You can export marked publicatoins in several bibligraphic formats, like BibTex, RIS or RTF."
+  no_marked_publication: "You don't have any publications 'marked' yet. If you want to add a publication to this page, please click on the link <em>Mark</em> next to the publication data. You can find this links on publication lists or on a publication page. You can export marked publications in several bibligraphic formats, like BibTex, RIS or RTF."
   mark_all: "Mark all"
   unmark_all: "Unmark all"
   mark_unmark: "Mark/Unmark publication"

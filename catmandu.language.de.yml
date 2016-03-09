@@ -326,7 +326,7 @@ frontdoor:
   license_heading: "Alle Dateien verfügbar unter der/den folgenden Lizenz(en):"
 mark:
   marked_publication: "Markierte Publikation(en)"
-  no_marked_publication: "Sie haben noch keine Publikation 'markiert'. Wenn Sie Publikationen zu dieser Seite hinzufügen möchten, klicken Sie auf den Link <em>Markieren</em> neben einer Publikation. Sie finden diesen Link auf Personenseiten, Publikationslisten oder Publikationsseiten. Anschließend können Sie markierte Publikationen in verschiedenen Formaten xportieren (z.B. BibTex, RIS oder RTF)."
+  no_marked_publication: "Sie haben noch keine Publikation 'markiert'. Wenn Sie Publikationen zu dieser Seite hinzufügen möchten, klicken Sie auf den Link <em>Markieren</em> neben einer Publikation. Sie finden diesen Link auf Personenseiten, Publikationslisten oder Publikationsseiten. Anschließend können Sie markierte Publikationen in verschiedenen Formaten exportieren (z.B. BibTex, RIS oder RTF)."
   mark_all: "Alle markieren"
   unmark_all: "Alle Markierungen löschen"
   mark_unmark: "Markieren/ Markierung löschen"
