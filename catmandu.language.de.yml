@@ -1746,8 +1746,8 @@ forms:
       display: "Publikation, die diesen PUB Eintrag enth&auml;lt"
       select: "Publikation, die diesen PUB Eintrag enth&auml;lt"
     published_in:
-      display: "Teil von (PUB Eintrag)"
-      select: "Teil von (PUB Eintrag)"
+      display: "Teil von PUB Eintrag"
+      select: "Teil von PUB Eintrag"
     dissertation_contains:
       display: "Dissertation, die diesen PUB Eintrag enth&auml;lt"
       select: "Dissertation, die diesen PUB Eintrag enth&auml;lt"
