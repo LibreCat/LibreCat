@@ -137,7 +137,7 @@ main_page:
   links:
     edit: "Edit"
     details: "Details"
-    view_details: "Vollständige bibliographische Angaben und Zugriffsinformationen anzeigen"
+    view_details: "Show complete bibliographic information and access options."
     files: "Files available"
     internal_view: "Internal View"
     request_a_copy: "Request a Copy"
@@ -377,7 +377,7 @@ forms:
       alternative_title: &alternative_title
         label: "Alternative Title"
         label_short: "Alt. Title"
-        placeholder: "e.g. Handbuch der eBook-Veröffentlichung"
+        placeholder: "e.g. Handbuch der eBook-Ver&ouml;ffentlichung"
       author: &author_translator
         label: "Author"
         tooltip: "Activate if UniBi author."
