@@ -915,7 +915,7 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
-      page: *pages
+      page: *page_range
       series_title_volume: *series_title_volume
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
