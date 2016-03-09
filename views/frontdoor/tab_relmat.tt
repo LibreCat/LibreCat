@@ -14,8 +14,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3 text-muted">[% rm.id %]</div>
-    <div class="col-md-9">
+    <div class="col-md-12">
       [% rec = h.get_publication(rm.id) %]
       <a href="/publication/[% rm.id %]">[% rec.title %]</a><br />
       [% rec.citation.default %]<br />
