@@ -52,8 +52,7 @@
 	  </div>
 	</li>
 	<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% lf.main_page.logout %]</span></a></li>
-	<li><img src="/images/beta_left.png" alt="Beta" style="height:50px;padding-right:5px;" title="[% lf.header.beta %]"></li>
-      </ul>
+	  </ul>
       </div><!-- /.navbar-collapse -->
       [% ELSE %]
       <div class="container">
