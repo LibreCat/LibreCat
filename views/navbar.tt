@@ -23,10 +23,13 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
-	[% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
+	  [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
 	  <li class="helpme" data-placement="bottom" title="[% lf.help.brand %]"><a href="/[% IF session.user %]librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span>[% IF session.role == 'super_admin' %]<span class="hidden-sm">[% END %][% lf.header.brand %][% IF session.role == 'super_admin' %]</span>[% END %]</a></li>
 	  <li class="helpme" data-placement="bottom" title="[% lf.help.my_author_page %]"><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span>[% lf.header.my_author_page %]</a></li>
-	[% IF session.role == 'super_admin' %]
+      [% IF session.role == 'award_admin' %]
+      <li><a href="/librecat/admin/award"><span class="glyphicon glyphicon-star"></span>[% lf.header.admin_menu.manage_awards %]</a></li>
+      [% END %]
+	  [% IF session.role == 'super_admin' %]
 	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% lf.header.admin_menu.admin %] <span class="glyphicon glyphicon-chevron-down"></span></a>
 	  <ul class="dropdown-menu" role="menu">
 	    <li><a href="/librecat/admin/account"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_accounts %]</a></li>

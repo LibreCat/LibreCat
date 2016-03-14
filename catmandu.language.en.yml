@@ -28,6 +28,7 @@ header:
     delegate: "Delegate"
     reviewer: "Reviewer"
     project_reviewer: "Project Reviewer"
+    award_admin: "Award Admin"
     data_manager: "Data Manager"
     super_admin: "Admin"
   admin_menu:

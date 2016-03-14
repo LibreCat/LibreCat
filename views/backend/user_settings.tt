@@ -24,6 +24,8 @@
 	  [% END %]
       [% IF thisPerson.project_reviewer AND session.role != "project_reviewer" %]
       | <a href="/librecat/change_role/project_reviewer">[% lf.header.role.project_reviewer %]</a>
+      [% IF thisPerson.award_admin AND session.role != "award_admin" %]
+      | <a href="/librecat/change_role/award_admin">[% lf.header.role.award_admin %]</a>
       [% END %]
 	  [% IF thisPerson.data_manager AND session.role != "data_manager" %]
 	  | <a href="/librecat/change_role/data_manager">[% lf.header.role.data_manager %]</a>

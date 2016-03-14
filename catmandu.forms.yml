@@ -1039,6 +1039,7 @@ otherItems:
       - department
       - account_status
       - super_admin
+      - award_admin
       - delegate
       - data_manager
       - project_reviewer
@@ -1091,6 +1092,8 @@ otherItems:
       label: "Active"
     super_admin:
       label: "Library Admin"
+    award_admin:
+      label: "Award Admin"
     delegate:
       label: "Manage publications for"
       multiple: 1

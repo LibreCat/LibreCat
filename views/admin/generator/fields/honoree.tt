@@ -7,6 +7,8 @@
   </div>
   [% IF honoree %]
   [% FOREACH hon IN honoree %]
+  <input type="hidden" id="orig_first_name_[% loop.index %]" value="[% hon.first_name %]" />
+  <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% hon.last_name %]" />
   <div class="col-md-10">
     <div class="form-group col-md-3 col-xs-11">
       <div class="input-group sticky">
@@ -37,6 +39,8 @@
   </div>
   [% END %]
   [% ELSE %]
+  <input type="hidden" id="orig_first_name_0" value="" />
+  <input type="hidden" id="orig_last_name_0" value="" />
   <div class="col-md-10">
     <div class="form-group col-md-3 col-xs-11">
       <div class="input-group sticky">
