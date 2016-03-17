@@ -667,7 +667,6 @@ pubikzww:
       param: documenttype
       op: '<>'
       or: 'researchData'
-  style: pub
   lang: de
   limit: 10
   ttyp: pubikzww
