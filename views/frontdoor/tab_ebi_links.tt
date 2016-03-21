@@ -9,7 +9,7 @@
     <div class="col-md-2 text-muted">[% db %]</div>
     <div class="col-md-10">
     [% total = ebi_data.db.$db.total %]
-      [% IF db == 'EMBL' %]<a href="http://www.ebi.ac.uk/ena/data/search?query=[% external_id.pmid %]">[% total %]</a>[% ELSE %][% total %][% END %] item[% IF external_id.pmid.total != "1" %]s[% END %] found citing this article[% IF total > 10 %] of which 10 are displayed[% END %]
+      [% IF db == 'EMBL' %]<a href="http://www.ebi.ac.uk/ena/data/search?query=[% external_id.pmid %]">[% total %]</a>[% ELSE %]<strong>[% total %]</strong>[% END %] [% IF total == "1" %][% lf.frontdoor.item %][% ELSE %][% lf.frontdoor.items %][% END %] [% lf.frontdoor.citation_found %][% IF total > 10 %] [% lf.frontdoor.display_10 %][% END %]
       [% max = (total - 1 > 9) ? 9 : (total - 1)  %]
       [% FOREACH i IN [0..max] %]
 	<div class="row margin-top1-2">
@@ -18,11 +18,11 @@
 	    <a href="[% item.info5.content %]">[% item.info2.content %] ([% db %]: [% item.info1.content %])</a><br />
 	    [% item.info3.label %]: [% item.info3.content %]<br />
 	    [% IF db == 'EMBL' %]
-	    <a class="normal" href="http://www.ebi.ac.uk/ena/data/view/[% item.info1.content %]&display=fasta&download=fasta&filename=[% item.info1.content %].fasta"><span class="fa fa-share-square-o"></span>Download in FASTA format</a>
+	    <a class="normal" href="http://www.ebi.ac.uk/ena/data/view/[% item.info1.content %]&display=fasta&download=fasta&filename=[% item.info1.content %].fasta"><span class="fa fa-share-square-o fw"></span>Download in FASTA format</a>
 	    [% ELSIF db == 'UNIPROT' %]
-	    <a class="normal" href="http://www.uniprot.org/uniprot/[% item.info1.content %].fasta"><span class="fa fa-share-square-o"></span>Download in FASTA format</a>
+	    <a class="normal" href="http://www.uniprot.org/uniprot/[% item.info1.content %].fasta"><span class="fa fa-share-square-o fw"></span>Download in FASTA format</a>
 	    [% ELSIF db == 'PDB' %]
-	    <a class="normal" href="http://www.ebi.ac.uk/pdbe-srv/view/files/[% item.info1.content %].ent"><span class="fa fa-share-square-o"></span>Public wwPDB file in PDB format</a>
+	    <a class="normal" href="http://www.ebi.ac.uk/pdbe-srv/view/files/[% item.info1.content %].ent"><span class="fa fa-share-square-o fw"></span>Public wwPDB file in PDB format</a>
 	    [% END %]
 	  </div>
 	</div>

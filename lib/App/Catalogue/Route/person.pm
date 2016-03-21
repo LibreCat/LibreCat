@@ -26,40 +26,40 @@ for his own publication list.
 
 =cut
     get '/preference/:delegate_id' => needs role => 'delegate' => sub {
-    	my $params;
-    	$params->{delegate_id} = params->{delegate_id};
-    	$params->{style} = params->{style} if params->{style};
-    	$params->{'sort'} = params->{'sort'} if params->{'sort'};
-    	forward '/librecat/person/preference', $params;
+        my $params;
+        $params->{delegate_id} = params->{delegate_id};
+        $params->{style} = params->{style} if params->{style};
+        $params->{'sort'} = params->{'sort'} if params->{'sort'};
+        forward '/librecat/person/preference', $params;
     };
     
     get '/preference' => needs login => sub {
         my $person = h->get_person( params->{delegate_id} || session('personNumber') );
         my $sort; my $tmp;
         if(params->{'sort'}){
-        	if(ref params->{'sort'} ne "ARRAY"){
-        		$sort = [params->{sort}];
-        	}
-        	else{
-        		$sort = params->{sort};
-        	}
+            if(ref params->{'sort'} ne "ARRAY"){
+                $sort = [params->{sort}];
+            }
+            else{
+                $sort = params->{sort};
+            }
 
-        	foreach my $s (@$sort){
-        		if($s =~ /(\w{1,})\.(asc|desc)/){
-        			push @{$tmp->{'sort'}}, $s;
-        		}
-        	}
-        	$person->{'sort'} = $tmp->{'sort'};
+            foreach my $s (@$sort){
+                if($s =~ /(\w{1,})\.(asc|desc)/){
+                    push @{$tmp->{'sort'}}, $s;
+                }
+            }
+            $person->{'sort'} = $tmp->{'sort'};
         }
         else {
-        	$person->{'sort'} = undef;
+            $person->{'sort'} = undef;
         }
 
         if(params->{style}){
-        	$person->{style} = params->{style} if array_includes(h->config->{lists}->{styles},params->{style});
+            $person->{style} = params->{style} if array_includes(h->config->{citation}->{csl}->{styles},params->{style});
         }
         else {
-        	$person->{style} = undef;
+            $person->{style} = undef;
         }
 
         h->update_record('researcher', $person);
@@ -100,8 +100,8 @@ User can choose default edit mode for editing publications.
         my $person = h->get_person( session('personNumber') );
         my $mode = params->{edit_mode};
         if($mode eq "normal" or $mode eq "expert"){
-        	$person->{edit_mode} = $mode;
-        	h->update_record('researcher', $person);
+            $person->{edit_mode} = $mode;
+            h->update_record('researcher', $person);
         }
 
         redirect '/librecat';
@@ -120,9 +120,9 @@ User can choose default language for the librecat backend
         my $person = h->get_person( session('personNumber') );
         my $lang = params->{lang};
         if($lang eq "en" or $lang eq "de"){
-        	$person->{lang} = $lang;
-        	h->update_record('researcher', $person);
-        	session lang => $lang;
+            $person->{lang} = $lang;
+            h->update_record('researcher', $person);
+            session lang => $lang;
         }
 
         redirect '/librecat';
@@ -137,9 +137,9 @@ new publication form.
 =cut
     post '/affiliation' => needs login => sub {
 
-    	my $fix = Catmandu::Fix->new(
-    	  fixes => [ 'compact_array("department")']
-    	);
+        my $fix = Catmandu::Fix->new(
+          fixes => [ 'compact_array("department")']
+        );
 
         my $p = params;
         $p = h->nested_params($p);

@@ -87,6 +87,7 @@ field_order:
     - conference.date
     - ipc
     - external_id
+    - link
     - nasc
     - genbank
     - popular_science
@@ -94,6 +95,7 @@ field_order:
     - popular_science_quality_controlled
     - ubi_funded
     - message
+    - locked
   file_upload:
     - external_file
     - dropzone
@@ -116,6 +118,7 @@ field_order:
     - quality_controlled
     - popular_science_quality_controlled
     - external_id
+    - link
     - message
     - ubi_funded
     - alternative_id
@@ -125,7 +128,6 @@ field_order:
     - related_material.link
 publicationTypes:
   book:
-    genus: "n"
     tmpl: book
     fields:
       basic_fields:
@@ -141,7 +143,7 @@ publicationTypes:
         author: &author_translator
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         edition: &edition
           mandatory: 0
           multiple: 0
@@ -181,6 +183,8 @@ publicationTypes:
           publication_status:
             mandatory: 0
             multiple: 0
+        locked: &locked
+          mandatory: 0
       file_upload: &file_upload
         dropzone:
           mandatory: 0
@@ -194,7 +198,7 @@ publicationTypes:
             readonly: admin
           ddc:
             multiple: 0
-            mandatory: file
+            mandatory: oa_file
       supplementary_fields:
         abstract: &abstract
           multiple: 1
@@ -213,19 +217,14 @@ publicationTypes:
           multiple: 0
         alternative_id: &alternative_id
           multiple: 1
+        link: &link
+          multiple: 0
       related_material: &related_material
         related_material.record:
-          label: "Link to PUB record"
-          label_short: "PUB-Rec."
-          placeholder: "Start typing to search your publications."
+          mandatory: 0
         related_material.link:
-          label: "Link to other record"
-          label_short: "Ext. Link"
-          placeholder: "Enter a remote location (URL) of your file here"
-        publish_button:
-          alert: "Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified."
+          mandatory: 0
   bookeditor:
-    genus: "m"
     tmpl: bookEditor
     fields:
       basic_fields:
@@ -234,7 +233,7 @@ publicationTypes:
         editor_solo: &editor_solo
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         corporate_editor_solo: &corporate_editor_solo
           mandatory: 0
           multiple: 1
@@ -250,6 +249,7 @@ publicationTypes:
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         edition: *edition
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         abstract: *abstract
@@ -260,9 +260,9 @@ publicationTypes:
         popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   bookchapter:
-    genus: "n"
     tmpl: bookChapter
     fields:
       basic_fields:
@@ -273,7 +273,7 @@ publicationTypes:
         editor: &editor_only
           mandatory: 0
           multiple: 1
-          pevz: 0
+          idm: 0
         corporate_editor: &corporate_editor
           mandatory: 0
           multiple: 1
@@ -303,6 +303,7 @@ publicationTypes:
         conference.date: &conference_date
           placeholder_start: "YYYY-MM-DD"
           placeholder_end: "YYYY-MM-DD"
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         abstract: *abstract
@@ -313,9 +314,9 @@ publicationTypes:
         popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   conferenceabstract:
-    genus: "n"
     tmpl: conferenceAbstract
     fields:
       basic_fields:
@@ -325,7 +326,7 @@ publicationTypes:
         editor:
           mandatory: 0
           multiple: 1
-          pevz: 0
+          idm: 0
         corporate_editor: *corporate_editor
         department: *department
         project: *project
@@ -340,7 +341,10 @@ publicationTypes:
         series_title: &series_title
           mandatory: 0
           multiple: 0
-        volume_issue_page: &volume_issue_page
+        volume_issue_page: &volume_issue_page_number
+          options:
+            - page_range
+            - article_number
           multiple: 0
           mandatory: 0
         publication_identifier: *publication_identifier
@@ -349,6 +353,7 @@ publicationTypes:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         keyword: *keyword
@@ -358,9 +363,9 @@ publicationTypes:
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   conferenceeditor:
-    genus: "m"
     tmpl: conferenceEditor
     fields:
       basic_fields:
@@ -376,7 +381,7 @@ publicationTypes:
         place: *place
         publisher: *publisher
         series_title: *series_title
-        volume_issue_page: *volume_issue_page
+        volume_issue_page: *volume_issue_page_number
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         conference.divider:
@@ -386,6 +391,7 @@ publicationTypes:
         conference.location:
           mandatory: 0
         conference.date: *conference_date
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         keyword: *keyword
@@ -396,9 +402,9 @@ publicationTypes:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   conference:
-    genus: "m"
     tmpl: conference
     fields:
       basic_fields:
@@ -409,14 +415,14 @@ publicationTypes:
         editor:
           mandatory: 0
           multiple: 1
-          pevz: 0
+          idm: 0
         corporate_editor: *corporate_editor
         place: *place
         publisher: *publisher
         department: *department
         project: *project
         research_group: *research_group
-        volume_issue_page: *volume_issue_page
+        volume_issue_page: *volume_issue_page_number
         publication:
           mandatory: 0
         series_title: *series_title
@@ -427,6 +433,7 @@ publicationTypes:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         keyword: *keyword
@@ -437,9 +444,9 @@ publicationTypes:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   dissertation:
-    genus: "f"
     tmpl: dissertation
     fields:
       basic_fields:
@@ -448,11 +455,11 @@ publicationTypes:
         author:
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         supervisor:
           mandatory: 0
           multiple: 1
-          pevz: 1
+          idm: 1
         year_extern: *year_extern
         alternative_title: *alternative_title
         department: *department
@@ -464,6 +471,7 @@ publicationTypes:
         publisher: *publisher
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         abstract: *abstract
@@ -473,9 +481,9 @@ publicationTypes:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   encyclopediaarticle:
-    genus: "m"
     tmpl: encyclopediaArticle
     fields:
       basic_fields:
@@ -498,6 +506,7 @@ publicationTypes:
         page: *page_range
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         keyword: *keyword
@@ -507,9 +516,9 @@ publicationTypes:
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   journalarticle:
-    genus: "m"
     tmpl: journalArticle
     fields:
       basic_fields:
@@ -523,12 +532,7 @@ publicationTypes:
         publisher: *publisher
         publication: &publication_jtitle
           mandatory: 1
-        volume_issue_page: &volume_issue_page_number
-          options:
-            - page_range
-            - article_number
-          multiple: 0
-          mandatory: 0
+        volume_issue_page: *volume_issue_page_number
         year_extern: *year_extern
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
@@ -536,6 +540,7 @@ publicationTypes:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         article_type:
@@ -554,9 +559,9 @@ publicationTypes:
           multiple: 0
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   journaleditor:
-    genus: "m"
     tmpl: journalEditor
     fields:
       basic_fields:
@@ -571,7 +576,7 @@ publicationTypes:
         year_extern: *year_extern
         alternative_title: *alternative_title
         publication: *publication_jtitle
-        volume_issue_page:
+        volume_issue_page: &volume_issue_page
           multiple: 0
           mandatory: 0
         publication_status_language: *publication_status_language
@@ -580,6 +585,7 @@ publicationTypes:
         conference.name: *conference_name
         conference.location: *conference_location
         conference.date: *conference_date
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         abstract: *abstract
@@ -590,9 +596,9 @@ publicationTypes:
         popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   newspaperarticle:
-    genus: "m"
     tmpl: newspaperArticle
     fields:
       basic_fields:
@@ -609,6 +615,8 @@ publicationTypes:
           mandatory: 1
         alternative_title: *alternative_title
         publication_status_language: *publication_status_language
+        publication_identifier: *publication_identifier
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         external_id: *external_id
@@ -619,9 +627,9 @@ publicationTypes:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   patent:
-    genus: "n"
     tmpl: patent
     fields:
       basic_fields:
@@ -630,7 +638,7 @@ publicationTypes:
         author:
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         applicant:
           mandatory: 0
         department: *department
@@ -644,6 +652,7 @@ publicationTypes:
         ipc:
           mandatory: 1
         page: *pages
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         abstract: *abstract
@@ -652,9 +661,9 @@ publicationTypes:
         message: *message
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   preprint:
-    genus: "m"
     tmpl: preprint
     fields:
       basic_fields:
@@ -670,6 +679,7 @@ publicationTypes:
         page: *pages
         publication_status_language: *publication_status_language
         publication_identifier: *publication_identifier
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         abstract: *abstract
@@ -679,9 +689,9 @@ publicationTypes:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   report:
-    genus: "m"
     tmpl: report
     fields:
       basic_fields:
@@ -701,6 +711,7 @@ publicationTypes:
           mandatory: 0
         page: *pages
         publication_status_language: *publication_status_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         external_id: *external_id
@@ -710,9 +721,9 @@ publicationTypes:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   review:
-    genus: "f"
     tmpl: review
     fields:
       basic_fields:
@@ -735,6 +746,7 @@ publicationTypes:
         volume_issue_page: *volume_issue_page_number
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         popular_science_quality_controlled: *popular_science_quality_controlled
@@ -744,9 +756,9 @@ publicationTypes:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   researchdata:
-    genus: "m"
     tmpl: researchData
     fields:
       basic_fields:
@@ -756,15 +768,16 @@ publicationTypes:
         author:
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         department: *department
         project: *project
         research_group: *research_group
         publisher:
           mandatory: 1
         year_extern: *year_extern
+        locked: *locked
       file_upload:
-        externalFiles:
+        external_file:
           mandatory: 0
         dropzone:
           mandatory: 0
@@ -784,15 +797,10 @@ publicationTypes:
         alternative_id: *alternative_id
       related_material: &related_material_rd
         related_material.rd:
-          label: "Link to PUB record"
-          label_short: "PUB-Rec."
-          placeholder: "Start typing to search your publications."
+          mandatory: 0
         related_material.link:
-          label: "Link to other record"
-          label_short: "Ext. Link"
-          placeholder: "Enter a remote location (URL) of your file here"
+          mandatory: 0
   translation:
-    genus: "f"
     tmpl: translation
     fields:
       basic_fields:
@@ -804,10 +812,10 @@ publicationTypes:
         translator:
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         author_secondary:
           multiple: 1
-          pevz: 0
+          idm: 0
         department: *department
         project: *project
         research_group: *research_group
@@ -826,6 +834,7 @@ publicationTypes:
           label: "Language (Original)"
           label_short: "Lang. (Orig)"
           multiple: 0
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         external_id: *external_id
@@ -836,9 +845,9 @@ publicationTypes:
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   translationchapter:
-    genus: "f"
     tmpl: translationChapter
     fields:
       basic_fields:
@@ -850,10 +859,10 @@ publicationTypes:
         translator:
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         author_secondary:
           multiple: 1
-          pevz: 0
+          idm: 0
         department: *department
         project: *project
         research_group: *research_group
@@ -865,12 +874,13 @@ publicationTypes:
           mandatory: 0
         series_title:
           mandatory: 0
-        volume_issue_page: *volume_issue_page
+        volume_issue_page: *volume_issue_page_number
         publication_identifier: *publication_identifier
         publication_status: *publication_status
         year_extern: *year_extern
         language: *language
         original_language: *original_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         popular_science_quality_controlled: *popular_science_quality_controlled
@@ -881,9 +891,9 @@ publicationTypes:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   workingpaper:
-    genus: "n"
     tmpl: workingPaper
     fields:
       basic_fields:
@@ -902,6 +912,7 @@ publicationTypes:
         publication_identifier: *publication_identifier
         year_extern: *year_extern
         publication_status_language: *publication_status_language
+        locked: *locked
       file_upload: *file_upload
       supplementary_fields:
         external_id: *external_id
@@ -911,9 +922,9 @@ publicationTypes:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   bithesis:
-    genus: "f"
     tmpl: biDissertation
     fields:
       basic_fields:
@@ -923,16 +934,15 @@ publicationTypes:
         author: &author
           mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         email: &email
           mandatory: 1
         department: &department_diss
           mandatory: 1
           multiple: 1
         supervisor: &supervisor
-          mandatory: 1
           multiple: 1
-          pevz: 1
+          idm: 1
         title: *title
         language: &language_diss
           default: "eng"
@@ -948,6 +958,7 @@ publicationTypes:
           mandatory: 1
         alternative_title: *alternative_title
         page: *pages
+        locked: *locked
       file_upload: &file_upload
         dropzone:
           mandatory: 0
@@ -970,18 +981,15 @@ publicationTypes:
         message: *message
         jel: *jel
         alternative_id: *alternative_id
+        link: *link
       related_material: *related_material
   bidissertation:
-    genus: "f"
     tmpl: biDissertation
   bimasterthesis:
-    genus: "f"
     tmpl: biMasterThesis
   bipostdocthesis:
-    genus: "f"
     tmpl: biPostDocThesis
   bibachelorthesis:
-    genus: "f"
     tmpl: biBachelorThesis
 array_field:
   - abstract
@@ -997,22 +1005,19 @@ array_field:
   - editor
   - editor_solo
   - file
-  - keyword
+  - file_order
   - language
   - msc_class
   - original_language
   - pacs_class
   - project
   - research_group
-  - publication_identifier.issn
-  - publication_identifier.eissn
-  - publication_identifier.isbn
-  - publication_identifier.eisbn
   - supervisor
   - thematic_area
   - translator
   - alternative_id
   - jel
+  - link
 
 otherItems:
   user_account:
@@ -1033,6 +1038,7 @@ otherItems:
       - reviewer
       - edit_mode
       - author_ids
+      - photo
       - style
     id:
       label: "ID"
@@ -1070,7 +1076,7 @@ otherItems:
       label: "Email"
     login:
       label: "Login Name (LDAP)"
-      mandatory: 1
+      mandatory: 0
     department:
       label: "Affiliation"
       multiple: 1
@@ -1089,6 +1095,8 @@ otherItems:
       multiple: 1
     author_ids:
       label: "Author IDs"
+    photo:
+      label: "BIS-Photo"
     edit_mode:
       label: "Edit Mode"
     style:
@@ -1221,7 +1229,7 @@ otherItems:
       - name
       - tree
     id:
-      label: "ID (or replace with PEVZ-ID)"
+      label: "ID (or replace with Person-ID)"
       mandatory: 1
     name:
       label: "Name"
@@ -1262,7 +1270,7 @@ otherItems:
         mandatory: 1
       title:
         label: "Title"
-      pevz: 1
+      idm: 1
     title:
       label: "Title"
       mandatory: 1

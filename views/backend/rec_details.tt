@@ -2,14 +2,6 @@
 <!-- BEGIN backend/rec_details.tt -->
 
 <div id="[% tabmodus %]_[% entry.item('_id') %]" class="collapse margin-top1-4">
-[% IF session.role == "super_admin" %]
-  <div class="col-md-12">
-    <div class="col-md-2 text-muted">Title (admin)</div>
-    <div class="col-md-10">
-      [% entry.title %]
-    </div>
-  </div>
-[% END %]
 
 [% IF entry.author %]
   <div class="col-md-12">
@@ -17,10 +9,14 @@
     <div class="col-md-10">
     [% FOREACH auth IN entry.author %]
       [% IF auth.id %]
-        <a href="/librecat?q=author=[% auth.id %]">[% auth.full_name %]</a><sup class="text-muted">UniBi</sup><br>
+        <a href="/librecat?q=author=[% auth.id %]">[% auth.full_name %]<sup class="text-muted">UniBi</sup></a>
       [% ELSE %]
-        <a href='/librecat?q=person="[% auth.full_name %]"'>[% auth.full_name %]</a><br>
+        <a href='/librecat?q=person="[% auth.full_name %]"'>[% auth.full_name %]</a>
       [% END %]
+      [% IF auth.orcid %]
+        <a href="http://orcid.org/[% auth.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>
+      [% END %]
+      <br>
     [% END %]
     </div>
   </div>
@@ -32,10 +28,14 @@
     <div class="col-md-10">
     [% FOREACH ed IN entry.editor %]
       [% IF ed.id %]
-        <a href="/librecat?q=editor=[% ed.id %]">[% ed.full_name %]</a><sup class="text-muted">UniBi</sup><br>
+        <a href="/librecat?q=editor=[% ed.id %]">[% ed.full_name %]<sup class="text-muted">UniBi</sup></a>
       [% ELSE %]
-        <a href='/librecat?q=person="[% ed.full_name %]"'>[% ed.full_name %]</a><br>
+        <a href='/librecat?q=person="[% ed.full_name %]"'>[% ed.full_name %]</a>
       [% END %]
+      [% IF ed.orcid %]
+        <a href="http://orcid.org/[% ed.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>
+      [% END %]
+      <br>
     [% END %]
     </div>
   </div>
@@ -46,11 +46,15 @@
     <div class="col-md-2 text-muted">Translators</div>
     <div class="col-md-10">
     [% FOREACH tr IN entry.translator %]
-      [% IF ed.id %]
-        <a href="/librecat?q=translator=[% tr.id %]">[% tr.full_name %]</a><sup class="text-muted">UniBi</sup><br>
+      [% IF tr.id %]
+        <a href="/librecat?q=translator=[% tr.id %]">[% tr.full_name %]<sup class="text-muted">UniBi</sup></a>
       [% ELSE %]
-        <a href='/librecat?q=person="[% tr.full_name %]"'>[% tr.full_name %]</a><br>
+        <a href='/librecat?q=person="[% tr.full_name %]"'>[% tr.full_name %]</a>
       [% END %]
+      [% IF tr.orcid %]
+        <a href="http://orcid.org/[% tr.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>
+      [% END %]
+      <br>
     [% END %]
     </div>
   </div>
@@ -61,11 +65,15 @@
     <div class="col-md-2 text-muted">Supervisors</div>
     <div class="col-md-10">
     [% FOREACH sv IN entry.supervisor %]
-      [% IF ed.id %]
-        <a href="/librecat?q=supervisor=[% sv.id %]">[% sv.full_name %]</a><sup class="text-muted">UniBi</sup><br>
+      [% IF sv.id %]
+        <a href="/librecat?q=supervisor=[% sv.id %]">[% sv.full_name %]<sup class="text-muted">UniBi</sup></a>
       [% ELSE %]
-        <a href='/librecat?q=person="[% sv.full_name %]"'>[% sv.full_name %]</a><br>
+        <a href='/librecat?q=person="[% sv.full_name %]"'>[% sv.full_name %]</a>
       [% END %]
+      [% IF tr.orcid %]
+        <a href="http://orcid.org/[% sv.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>
+      [% END %]
+      <br>
     [% END %]
     </div>
   </div>
@@ -76,14 +84,7 @@
     <div class="col-md-2 text-muted">Departments</div>
     <div class="col-md-10">
     [% FOREACH dept IN entry.department %]
-      [% department = h.get_department(dept._id) %]
-      [% IF department.tree.2 %]
-        [% department.tree.2.name %] /
-      [% END %]
-      [% IF department.tree.1 %]
-        [% department.tree.1.name %] /
-      [% END %]
-      [% dept.name %]<br>
+      [% h.get_department(dept._id).display %]<br>
     [% END %]
     </div>
   </div>
@@ -102,7 +103,7 @@
         <li><input type="text" val="" onclick="this.focus();this.select()" style="width:100%;"></li>
       </ul>
       [% ELSE %]
-      <span class="text-danger"><span class="glyphicon glyphicon-remove"></span> Only pulic records can be shared! Click on "Make public" and try again</span>
+      <span class="text-danger"><span class="glyphicon glyphicon-remove"></span> [% lf.main_page.links.request_a_copy_not_public %]</span>
       [% END %]
     </div>
     [% END %]

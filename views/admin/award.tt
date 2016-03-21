@@ -1,6 +1,8 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lf = h.config.language.$lang -%]
 [% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
@@ -42,11 +44,10 @@
         [% awardData = h.get_award(p.award_id) %]
           <div class="row innerrow">
             <div class="col-md-1">
-	          <span class="glyphicon glyphicon-pencil"></span>
 	          <span class="label label-success"><strong>[% p._id %]</strong></span>
             </div>
             <div class="col-md-9">
-	          <a href="/librecat/admin/award/edit/[% p._id %]">[% awardData.title %] ([% p.honoree.0.full_name %])</a>
+	          <a href="/librecat/admin/award/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% awardData.title %] ([% p.honoree.0.full_name %])</a>
 	          <br />
 	          <span class="text-muted">[% FOREACH dep IN p.department %][% dep.name %][% UNLESS loop.last %] | [% END %][% END %]</span>
             </div>
@@ -63,11 +64,10 @@
         [% FOREACH p IN preis.nsort('sort_id') %]
           <div class="row innerrow">
             <div class="col-md-1">
-	          <span class="glyphicon glyphicon-pencil"></span>
 	          <span class="label label-success"><strong>[% p._id %]</strong></span>
             </div>
             <div class="col-md-9">
-	          <a href="/librecat/admin/award/edit/[% p._id %]">[% p.title %]</a>
+	          <a href="/librecat/admin/award/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% p.title %]</a>
 	          <br />
             </div>
           </div>
@@ -83,11 +83,10 @@
         [% FOREACH p IN auszeichnung.nsort('sort_id') %]
           <div class="row innerrow">
             <div class="col-md-1">
-	          <span class="glyphicon glyphicon-pencil"></span>
 	          <span class="label label-success"><strong>[% p._id %]</strong></span>
             </div>
             <div class="col-md-9">
-	          <a href="/librecat/admin/award/edit/[% p._id %]">[% p.title %]</a>
+	          <a href="/librecat/admin/award/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% p.title %]</a>
 	          <br />
             </div>
           </div>
@@ -103,11 +102,10 @@
         [% FOREACH p IN akademie.nsort('sort_id') %]
           <div class="row innerrow">
             <div class="col-md-1">
-	          <span class="glyphicon glyphicon-pencil"></span>
 	          <span class="label label-success"><strong>[% p._id %]</strong></span>
             </div>
             <div class="col-md-9">
-	          <a href="/librecat/admin/award/edit/[% p._id %]">[% p.title %]</a>
+	          <a href="/librecat/admin/award/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% p.title %]</a>
 	          <br />
             </div>
           </div>

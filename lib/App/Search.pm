@@ -7,8 +7,8 @@ use all qw(App::Search::Route::*);
 use App::Helper;
 
 get qr{/en/*} => sub {
-	session lang => "en";
-	template '/websites/index_publication.tt', {bag => "home"};
+    session lang => "en";
+    template '/websites/index_publication.tt', {bag => "home"};
 };
 
 get '/' => sub {

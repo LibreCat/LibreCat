@@ -1,0 +1,44 @@
+# robots.txt for http://pub.uni-bielefeld.de
+
+User-agent: *
+Disallow: /*&fmt=*
+Disallow: /*?fmt=*
+Disallow: /feed
+Disallow: /luur/authority_organization
+Disallow: /luur/export
+Disallow: /luur/Record
+Disallow: /luur/record
+Disallow: /luur/record_material
+Disallow: /marked
+Disallow: /pub?dept
+Disallow: /pub?func
+Disallow: /reorder
+Disallow: /doc
+Disallow: /sru
+Disallow: /RePEc
+
+# unerwuenschte Bots ganz aussperren
+User-agent: 360Spider
+User-agent: AcoonBot
+User-agent: AhrefsBot
+User-agent: DotBot
+User-agent: EasouSpider
+User-agent: ExaBot
+User-agent: Ezooms
+User-agent: LiteFinder
+User-agent: MegaIndex.ru
+User-agent: MJ12Bot
+User-agent: Nachobot
+User-agent: parsijoo
+User-agent: Riddler
+User-agent: Scrapy
+User-agent: SiteBot
+User-agent: Sogou
+User-agent: UnwindFetchor
+User-agent: WBSearchBot
+User-agent: WebCopier
+User-agent: WebSpider
+User-agent: YisouSpider
+Disallow: /
+
+Sitemap: https://pub.uni-bielefeld.de/pub_index.txt

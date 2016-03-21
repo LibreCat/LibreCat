@@ -15,21 +15,21 @@ sub fix {
     } else {
         $tmp_type = lc($data->{type});
     }
-	my $fields = $conf->{forms}->{publicationTypes}->{$tmp_type}->{fields};
+    my $fields = $conf->{forms}->{publicationTypes}->{$tmp_type}->{fields};
 
-	foreach my $key (keys %$data){
-		my $ref = ref $data->{$key};
-		my $array_field = $conf->{forms}->{array_field};
+    foreach my $key (keys %$data){
+        my $ref = ref $data->{$key};
+        my $array_field = $conf->{forms}->{array_field};
 
-		if($ref ne "ARRAY" and array_includes($array_field,$key)){
-			$data->{$key} = [$data->{$key}];
-		}
-		if($ref eq "ARRAY" and !array_includes($array_field,$key)){
-			$data->{$key} = $data->{$key}->[0];
-		}
-	}
+        if($ref ne "ARRAY" and array_includes($array_field,$key)){
+            $data->{$key} = [$data->{$key}];
+        }
+        if($ref eq "ARRAY" and !array_includes($array_field,$key)){
+            $data->{$key} = $data->{$key}->[0];
+        }
+    }
 
-	return $data;
+    return $data;
 }
 
 1;

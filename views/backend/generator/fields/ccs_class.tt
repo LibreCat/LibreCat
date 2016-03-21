@@ -8,7 +8,7 @@
   <div class="col-md-10" id="ccs_class">
     {% IF fields.basic_fields.ccs_class.multiple OR fields.supplementary_fields.ccs_class.multiple %}
     [% IF !ccs_class %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.ccs_class.label %]</div>
@@ -20,7 +20,7 @@
     </div>
     [% ELSE %]
     [% FOREACH keyw IN ccs_class %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} mandatory{% END %}">
           <div class="input-group-addon">[% lf.$type.field.ccs_class.label %]</div>

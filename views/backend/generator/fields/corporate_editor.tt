@@ -8,7 +8,7 @@
   <div class="col-md-10" id="corporate_editor">
     {% IF fields.basic_fields.corporate_editor.multiple OR fields.basic_fields.corporate_editor_solo.multiple OR fields.supplementary_fields.corporate_editor.multiple OR fields.supplementary_fields.corporate_editor_solo.multiple %}
     [% IF !corporate_editor %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
 	    <div class="input-group sticky{% IF fields.basic_fields.corporate_editor.mandatory OR fields.basic_fields.corporate_editor_solo.mandatory OR fields.supplementary_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor_solo.mandatory %} mandatory{% END %}">
 	      <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.corporate_editor.label_short || lf.$type.field.corporate_editor.label || lf.$type.field.corporate_editor_solo.label_short || lf.$type.field.corporate_editor_solo.label %]</div>
@@ -20,7 +20,7 @@
     </div>
     [% ELSE %]
     [% FOREACH cored IN corporate_editor %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
 	    <div class="input-group sticky{% IF fields.basic_fields.corporate_editor.mandatory OR fields.basic_fields.corporate_editor_solo.mandatory OR fields.supplementary_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor_solo.mandatory %} mandatory{% END %}">
 	      <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.corporate_editor.label || lf.$type.field.corporate_editor_solo.label %]</div>

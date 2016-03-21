@@ -28,7 +28,7 @@
     [% IF next_page %]
     [% s = start+limit %]
     <li>
-      <a href="'[% h.newuri_for("$path", qp, start="$s") %]" aria-label="Next">
+      <a href="[% h.newuri_for("$path", qp, start="$s") %]" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

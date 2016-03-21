@@ -24,7 +24,7 @@
 	      <input type="text" name="member.0.last_name" id="member_last_name_0" value="[% member.0.last_name %]" class="form-control sticky"{% IF member.mandatory %} required{% END %}>
 	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('member');" class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
-          <div class="input-group-addon"><span id="member_link_pevz_0" onclick="linkPevz(this);" data-type="member_"><img id="member_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" /></span></div>
+          <div class="input-group-addon"><span id="member_link_person_0" onclick="link_person(this);" data-type="member_"><img id="member_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" /></span></div>
           <div class="input-group-addon"><span id="member_revert_0" data-type="member_" onclick="revert_name(this);"><span class="fa fa-undo"></span></span></div>
 	    </div>
 	  </div>
@@ -48,7 +48,7 @@
 	      <input type="text" name="member.[% loop.index %].last_name" id="member_last_name_[% loop.index %]" value="[% pi.last_name %]" class="form-control sticky"{% IF member.mandatory %} required{% END %}>
 	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('member');" class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
-          <div class="input-group-addon"><span id="member_link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type="member_"><img id="member_Authorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" /></span></div>
+          <div class="input-group-addon"><span id="member_link_person_[% loop.index %]" onclick="link_person(this);" data-type="member_"><img id="member_Authorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" /></span></div>
           <div class="input-group-addon"><span id="member_revert_[% loop.index %]" data-type="member_" onclick="revert_name(this);"><span class="fa fa-undo"></span></span></div>
 	    </div>
 	  </div>

@@ -22,7 +22,7 @@
             [% lf.$type.field.dropzone.edit_modal.current_file %]
             <input type="text" name="fileName" id="id_fileName" value="" readonly="readonly" class="form-control"/>
           </label>
-          <input type="file" name="file" id="id_file" size="40" />
+          <!-- <input type="file" name="file" id="id_file" size="40" /> -->
         </div>
 
         <div class="form-group">
@@ -55,7 +55,7 @@
             <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="open_access" onclick="oamode(this.form, true);"/> [% lf.$type.field.dropzone.edit_modal.access.open_access %]
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_unibi" value="local" onclick="oamode(this.form,false);" /> [% lf.$type.field.dropzone.edit_modal.access.local %]
+            <input type="radio" name="accessLevel" id="id_accessLevel_local" value="local" onclick="oamode(this.form,false);" /> [% lf.$type.field.dropzone.edit_modal.access.local %]
           </label>
           <label class="radio">
             <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="closed" onclick="oamode(this.form,false);" /> [% lf.$type.field.dropzone.edit_modal.access.closed %]
@@ -92,20 +92,20 @@
 <script>
 
 //if(navigator.userAgent.indexOf('MSIE') == -1){
-  $("#id_file").change(function (){
-    var fileName = $(this).val().replace(/C:\\fakepath\\/,"");
-    $("#id_fileName").val(fileName);
-  });
+  //$("#id_file").change(function (){
+    //var fileName = $(this).val().replace(/C:\\fakepath\\/,"");
+    //$("#id_fileName").val(fileName);
+  //});
 
   $('#fileSubmit').click( function() {
-    var inputs = $(":file");
+    //var inputs = $(":file");
     var file_id = $('#id_file_id').val();
     var tempid = $('#id_temp_id').val();
 
     var formData = new FormData();
-    if(inputs.eq(0)){
-      formData.append("file", inputs.eq(0).prop("files")[0]);
-    }
+    //if(inputs.eq(0)){
+      //formData.append("file", inputs.eq(0).prop("files")[0]);
+    //}
     formData.append("id", "[% _id %]");
     if(file_id){
       formData.append("file_id", file_id);
@@ -120,7 +120,7 @@
     if($('#id_accessLevel_openAccess').is(':checked')){
       formData.append("access_level", "open_access");
     }
-    else if($('#id_accessLevel_unibi').is(':checked')){
+    else if($('#id_accessLevel_local').is(':checked')){
       formData.append("access_level", "local");
     }
     else if($('#id_accessLevel_admin').is(':checked')){
@@ -153,39 +153,36 @@
       success: function(data){
         var accessLevel;
         if(data.access_level == "open_access"){
-          accessLevel = "Open Access";
+          accessLevel = "[% lf.$type.field.dropzone.access.open_access %]";
         }
         else if(data.access_level == "local"){
-          accessLevel = "UniBi only";
+          accessLevel = "[% lf.$type.field.dropzone.access.local %]";
           if(data.embargo){
-            accessLevel += "<br />(until " + data.embargo + ")";
+            accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " + data.embargo + ")";
           }
         }
         else if(data.access_level == "closed"){
-          accessLevel = "Author/Reviewer";
+          accessLevel = "[% lf.$type.field.dropzone.access.closed %]";
           if(data.embargo){
-            accessLevel += "<br />(until " + data.embargo + ")";
+            accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " + data.embargo + ")";
           }
           if(data.request_a_copy){
-            accessLevel += "<br />(Request a Copy)";
+            accessLevel += "<br />([% lf.$type.field.dropzone.access.request_a_copy %])";
           }
         }
 
         var use_file_id;
         use_file_id = data.file_id ? data.file_id : data.tempid;
 
-        var a = $('#' + use_file_id + ' div.padded a');
-        a.attr('title','');
-        a.attr('title',data.file_name);
-        a.html('');
-        a.html(data.file_name);
-        $('#filename_' + use_file_id).html("");
-        $('#filename_' + use_file_id).html('<span class="glyphicon glyphicon-file text-muted"></span> <a href="/download/[% id %]/' + use_file_id + '" target="_blank" title="' + data.file_name + '">' + data.file_name + '</a>');
+        var namediv = $('#' + use_file_id + ' div.padded');
+        namediv.html('');
+        namediv.html('<span class="glyphicon glyphicon-file text-muted"></span> <span class="text-muted"><strong>' + data.file_name + '</strong></span>');
+
         $('#access_' + use_file_id).html(accessLevel);
         $('#updated_' + use_file_id).html(data.date_updated);
         $('#creator_' + use_file_id).html(data.creator);
         $('#relation_' + use_file_id).html(data.relation);
-        $('#file_' + use_file_id).val(data.file_json);
+        $('#file_' + use_file_id).val(JSON.stringify(data));
 
         $('#upLoad')[0].reset();
         $('#upLoad').find('input[type="hidden"]').val('');

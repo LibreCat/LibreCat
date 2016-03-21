@@ -1,0 +1,24 @@
+[% PROCESS header.tt %]
+[% path = request.path %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+
+<!-- BEGIN websites/error.tt -->
+
+<div class="row"><!-- outer border -->
+
+  <div class="col-md-11 col-sm-12"><!-- main content -->
+
+    <div class="row margin-top1">
+      <div class="col-md-12">
+	  <p class="text-error">[% message %]</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- END websites/418.tt -->
+
+[% INCLUDE footer.tt %]

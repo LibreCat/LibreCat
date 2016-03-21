@@ -16,8 +16,6 @@ backup:
     bags:
       publication: &backup_settings
         plugins: ['Datestamps', 'Versioning']
-        version_compare_ignore:
-          - date_updated
       award: *backup_settings
       project: *backup_settings
       researcher: *backup_settings
@@ -37,7 +35,7 @@ metrics:
       wos: &metrics_settings
         plugins: ['Datestamps']
       epmc_citations: *metrics_settings
-      epmc_referefences: *metrics_settings
+      epmc_references: *metrics_settings
       epmc_dblinks: *metrics_settings
 
 search:
@@ -155,7 +153,7 @@ search:
                 'any': true
                 '=': true
                 'exact': {field: 'department.name.exact'}
-              field: ['department.id', 'department.name']
+              field: ['department._id', 'department.name']
             cooperator:
               op:
                 'any': true
@@ -386,7 +384,7 @@ search:
                 '=': true
                 '<>': true
                 'exact': true
-              field: 'project.id'
+              field: 'project._id'
             conference:
               op:
                 'any': true
@@ -405,6 +403,11 @@ search:
               values: '0 or 1'
               description: '1 if not a UniBi publication'
             nonlu: *extern
+            oai_deleted:
+              op:
+                '=': true
+                'exact': true
+              field: 'oai_deleted'
             fundedbyubi:
               op:
                 '=': true
@@ -530,7 +533,7 @@ search:
             doi:
               op:
                 '=': true
-                'exact': true 
+                'exact': true
               field: 'doi'
             year: &year
               op:
@@ -595,8 +598,8 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-                'exact': {field: ['supervisor.fullName.exact', 'supervisor.personNumber']}
-              field: ['supervisor.fullName.exact', 'supervisor.personNumber']
+                'exact': {field: ['supervisor.full_name.exact', 'supervisor.id']}
+              field: ['supervisor.full_name.exact', 'supervisor.id']
             department:
               op:
                 '=': true
@@ -605,7 +608,7 @@ search:
                 'any': true
                 'all': true
                 '>': true
-              field: ['department._id', 'department.tree']
+              field: ['department._id', 'department.tree._id']
               values: 'see the list of affiliations'
               description: 'will also find any subunits of the given organizationial unit'
             language:
@@ -671,6 +674,7 @@ search:
             fulltext:
               op:
                 '=': true
+                'exact': true
                 '<>': true
               field: 'file.open_access'
 #            yearlastuploaded:
@@ -746,6 +750,19 @@ search:
               op:
                 '=': true
               field: foda
+            locked:
+              op:
+                '=': true
+                '<>': true
+              field: locked
+            thematicarea:
+              op:
+                '=': true
+                '<>': true
+                'any': true
+                'all': true
+                'exact': true
+              field: thematic_area
 
       researcher:
         cql_mapping:
@@ -869,6 +886,11 @@ search:
                 '=': true
                 '<>': true
               field: layer
+            inactive:
+              op:
+                '=': true
+                '<>': true
+              field: inactive
             display:
               op:
                 '=': true
@@ -976,7 +998,7 @@ search:
           cooperator: {type: string, analyzer: tag, include_in_all: true}
           department:
             properties:
-              id: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
               name:
                 type: multi_field
                 fields:
@@ -1009,7 +1031,7 @@ search:
           proof: {type: string, index: not_analyzed}
           title: {type: string}
           organization: {type: string}
-          year: {type: string, include_in_all: true}
+          year: {type: string, analyzer: tag}
           honoree:
             properties:
               first_name: {type: string}
@@ -1070,6 +1092,7 @@ search:
           first_author: {type: string, analyzer: tag}
           editor: *personField
           translator: *personField
+          supervisor: *personField
           creator:
             properties:
               id: {type: string, analyzer: tag}
@@ -1089,6 +1112,7 @@ search:
           intvolume: {type: string, analyzer: tag}
           issue: {type: string}
           article_number: {type: string, analyzer: tag}
+          thematic_area: {type: string, analyzer: tag}
           publication_identifier:
             properties:
               isbn: {type: string, analyzer: tag, include_in_all: true}
@@ -1099,6 +1123,7 @@ search:
           publication_status: {type: string, analyzer: tag}
           report_number: {type: string, analyzer: tag}
           ipn: {type: string, analyzer: tag}
+          application_number: {type: string, index: no}
           conference:
             properties:
               name:
@@ -1122,15 +1147,14 @@ search:
               _id: {type: string, analyzer: tag}
               tree:
                 properties:
-                  name: {type: string, index: no}
-                  id: {type: string, analyzer: tag}
+                  _id: {type: string, analyzer: tag}
           proj: {type: byte}
           metrics:
             properties:
               timesCited: {type: integer}
           project:
             properties:
-              id: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
           publication:
             type: multi_field
             fields:
@@ -1177,8 +1201,8 @@ search:
               date_updated: {type: string}
 #              yearCreated: {type: date, format: "yyyy"}
           alternative_id: {type: string, analyzer: tag}
-          foda: {type: byte}
           defense_date: {type: date, index: no}
+          locked: {type: byte}
 
       researcher:
         include_in_all: false
@@ -1201,22 +1225,18 @@ search:
           old_last_name: {type: string}
           first_name: {type: string}
           old_first_name: {type: string}
-          bis:
-            properties:
-              title: {type: string}
-              former: {type: byte}
-              nonexist: {type: byte}
-              forschend: {type: byte}
-              email: {type: string, index: not_analyzed}
-              photo: {type: string, index: not_analyzed}
+          idm_title: {type: string}
+          former: {type: byte}
+          nonexist: {type: byte}
+          researcher: {type: byte}
+          email_encoded: {type: string, index: not_analyzed}
+          photo: {type: string, index: not_analyzed}
           department:
             properties:
               _id: {type: string, analyzer: tag}
-              name: {type: string, include_in_all: true}
           reviewer:
             properties:
               _id: {type: string, analyzer: tag}
-              name: {type: string}
           access:
             properties:
               id: {type: string, anylzer: tag}
@@ -1233,7 +1253,7 @@ search:
           account_type: {type: string}
           ext_institution: {type: string}
           password: {type: string}
-          sfb882_profile: {type: byte}
+          other_profile: {type: byte}
 #          email: {type: string, analyzer: tag}
 #          sort: {type: string}
           orcid: {type: string, analyzer: tag}
@@ -1264,9 +1284,9 @@ search:
               exact:  {type: string, analyzer: tag}
           tree:
             properties:
-              name: {type: string}
-              id: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
           layer: {type: string, analyzer: tag}
+          inactive: {type: byte}
           display:
             type: multi_field
             fields:

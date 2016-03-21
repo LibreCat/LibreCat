@@ -4,34 +4,43 @@ retain_field('message')
 move_field('message','')
 
 #title
-move_field('subtitle.0','title.1')
-join_field('title',' - ')
+#move_field('subtitle.0','title.1')
+join_field('title',' ')
 remove_field('subtitle')
 trim('title')
 
 #year
 move_field('issued.date-parts.0.0','year')
 move_field('deposited.date-parts.0.0','year')
+move_field('created.date-parts.0.0','year')
 trim('year')
 
 # identifier
 move_field('DOI','doi')
 move_field('ISSN','publication_identifier.issn')
 move_field('ISBN','publication_identifier.isbn')
-replace_all('isbn.*','^http://id.crossref.org/isbn/(.*)',$1)
+replace_all('publication_identifier.isbn.*','^http://id.crossref.org/isbn/(.*)',$1)
 
 # authors
 do list (path => author)
   do identity ()
     move_field('given', 'first_name')
     move_field('family','last_name')
+    remove_field(affiliation)
   end
 end
+
+add_field(publication_status, published)
 
 # type mapping
 if all_match('type','journal-article')
     set_field('type','journalArticle')
     move_field('container-title.0','publication')
+    if any_match(page, '-')
+      nothing()
+    else
+      move_field('page','article_number')
+    end
 end
 
 if all_match('type','book-chapter')
@@ -46,11 +55,14 @@ if all_match('type','proceedings-article')
 end
 
 # cleaning record
-remove_field('score')
-remove_field('deposited')
-remove_field('indexed')
-remove_field('prefix')
-remove_field('URL')
-remove_field('issued')
-remove_field('member')
-remove_field('container-title')
+remove_field(score)
+remove_field(deposited)
+remove_field(indexed)
+remove_field(prefix)
+remove_field(URL)
+remove_field(link)
+remove_field(source)
+remove_field(issued)
+remove_field(member)
+remove_field(container-title)
+remove_field(funder)
