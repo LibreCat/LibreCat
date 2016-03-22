@@ -36,6 +36,8 @@ sub fix {
         h->publication->commit;
     });
 
+    return $data;
+
 }
 
 1;
