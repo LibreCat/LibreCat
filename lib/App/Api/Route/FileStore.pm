@@ -6,6 +6,7 @@ use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::StreamData;
 use App::Helper;
+use IO::File;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -170,9 +171,8 @@ prefix '/librecat/api' => sub {
         }
     };
 
-    post '/filestore/:key/:filename' => sub {
+    post '/filestore/:key' => sub {
         my $key       = param('key');
-        my $filename  = param('filename');
 
         content_type 'application/json';
 
@@ -183,7 +183,13 @@ prefix '/librecat/api' => sub {
         }
 
         if ($container) {
-            $container->add($filename, "Testing $$");
+            my $file    = request->upload('file');
+
+            unless ($file) {
+                return do_error('ILLEGAL_INPUT','need a file',400);
+            }
+            
+            $container->add($file->{filename}, IO::File->new($file->{tempname}));
 
             $container->commit;
 
