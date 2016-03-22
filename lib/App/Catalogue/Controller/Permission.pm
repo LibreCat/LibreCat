@@ -22,8 +22,8 @@ sub can_edit {
     } elsif ($user_role eq 'reviewer') {
         my @deps = map {"department=$_->{_id}"} @{$user->{reviewer}};
         $cql .= " OR " .join(' OR ', @deps) .")";
-    } elsif ($user_role eq 'project_manager') {
-        my @projs = map {"project=$_->{_id}"} @{$user->{project_manager}};
+    } elsif ($user_role eq 'project_reviewer') {
+        my @projs = map {"project=$_->{_id}"} @{$user->{project_reviewer}};
         $cql .= " OR " . join(' OR ', @projs) . ")";
     } elsif ($user_role eq 'data_manager') {
         # not yet correct/enough!!!

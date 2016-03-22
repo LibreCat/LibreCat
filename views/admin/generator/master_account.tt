@@ -111,11 +111,11 @@ function selectButton(element){
 	    container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
 	    type_name = "Department";
 	}
-    else if(type == "project_manager"){
+    else if(type == "project_reviewer"){
         container.append('[% INCLUDE backend/generator/fields/subfields/project_select.tt %]');
         type_name = "Project";
     }
-    if(type == "project_manager"){
+    if(type == "project_reviewer"){
         type_short = "pm";
     }
 	else if(type == "data_manager"){

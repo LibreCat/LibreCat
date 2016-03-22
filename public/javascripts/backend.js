@@ -541,7 +541,7 @@ function add_field(name, placeholder){
 	case "data_manager":
 		enable_autocomplete("dm", index)
 		break;
-	case "project_manager":
+	case "project_reviewer":
 	    enable_autocomplete("pm", index)
 		break;
 	case "reviewer":

@@ -117,7 +117,7 @@ prefix '/librecat' => sub {
       my $file_id = h->new_record('publication');
       my $person = h->get_person(params->{delegate} || session->{personNumber});
       my $department = h->get_department(params->{reviewer}) if params->{reviewer};
-      my $project = h->get_project(params->{project_manager}) if params->{project_manager};
+      my $project = h->get_project(params->{project_reviewer}) if params->{project_reviewer};
       my $now = h->now();
       $file_data->{saved} = 1;
 

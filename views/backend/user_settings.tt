@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.project_manager OR thisPerson.data_manager %]
+  [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.project_reviewer OR thisPerson.data_manager %]
   <div class="row innerrow">
     <div class="col-md-11">
       <h5>[% lf.header.role_label %]: <em><strong>[% lf.header.role.item(session.role) %]</strong></em></h5>
@@ -22,8 +22,8 @@
 	  [% IF thisPerson.reviewer AND session.role != "reviewer" %]
 	  | <a href="/librecat/change_role/reviewer">[% lf.header.role.reviewer %]</a>
 	  [% END %]
-      [% IF thisPerson.project_manager AND session.role != "project_manager" %]
-      | <a href="/librecat/change_role/project_manager">[% lf.header.role.project_manager %]</a>
+      [% IF thisPerson.project_reviewer AND session.role != "project_reviewer" %]
+      | <a href="/librecat/change_role/project_reviewer">[% lf.header.role.project_reviewer %]</a>
       [% END %]
 	  [% IF thisPerson.data_manager AND session.role != "data_manager" %]
 	  | <a href="/librecat/change_role/data_manager">[% lf.header.role.data_manager %]</a>

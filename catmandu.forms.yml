@@ -1035,7 +1035,7 @@ otherItems:
       - super_admin
       - delegate
       - data_manager
-      - project_manager
+      - project_reviewer
       - reviewer
       - edit_mode
       - author_ids
@@ -1091,8 +1091,8 @@ otherItems:
     data_manager:
       label: "Data Manager"
       multiple: 1
-    project_manager:
-      label: "Project Manager"
+    project_reviewer:
+      label: "Project Reviewer"
       multiple: 1
     reviewer:
       label: "Reviewer"

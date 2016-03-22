@@ -166,20 +166,20 @@ Performs search for reviewer.
 
 =cut
 
-    get '/project_manager' => needs role => "project_manager" => sub {
+    get '/project_reviewer' => needs role => "project_reviewer" => sub {
         my $account = h->get_person(session->{user});
-        redirect "/librecat/search/project_manager/$account->{project_manager}->[0]->{_id}";
+        redirect "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}";
     };
 
-    get '/project_manager/:project_id' => needs role => 'project_manager' => sub {
+    get '/project_reviewer/:project_id' => needs role => 'project_reviewer' => sub {
 
         my $p = h->extract_params();
         my $id = session 'personNumber';
         my $account = h->get_person(session->{user});
 
-        # if user not project_manager or not allowed to access chosen project
-        unless ($account->{project_manager} and grep {params->{project_id} eq $_->{_id}} @{$account->{project_manager}}){
-            return redirect "/librecat/search/project_manager/$account->{project_manager}->[0]->{_id}";
+        # if user not project_reviewer or not allowed to access chosen project
+        unless ($account->{project_reviewer} and grep {params->{project_id} eq $_->{_id}} @{$account->{project_reviewer}}){
+            return redirect "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}";
         }
 
         my $dep_query = "project=" . params->{project_id};
@@ -194,7 +194,7 @@ Performs search for reviewer.
         $hits->{style} = $sort_style->{style};
         $hits->{sort} = $p->{sort};
         $hits->{user_settings} = $sort_style;
-        $hits->{modus} = "project_manager_" . params->{project_id};
+        $hits->{modus} = "project_reviewer_" . params->{project_id};
         $hits->{project_id} = params->{project_id};
 
         if ($p->{fmt} ne 'html') {
