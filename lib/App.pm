@@ -15,6 +15,7 @@ use Dancer ':syntax';
 
 use App::Search; # the frontend
 use App::Catalogue; # the backend
+use App::Api; # the api
 
 use App::Helper;
 use Dancer::Plugin::Auth::Tiny;

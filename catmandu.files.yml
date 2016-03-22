@@ -1,0 +1,6 @@
+---
+files:
+    package: Simple
+    options:
+        root: /data2/librecat/file_uploads
+    buffer_size: 8192

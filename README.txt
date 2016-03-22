@@ -43,9 +43,8 @@ carton install
 
 carton exec perl bin/generate_forms.pl
 
-carton exec catmandu import YAML to search --bag department < devel/department.yml
-carton exec catmandu import YAML to search --bag researcher < devel/researcher.yml
-carton exec catmandu import YAML to search --bag publication < devel/publications.yml
+./index.sh drop
+./index.sh create
 
 cp catmandu.local.yml-example catmandu.local.yml
 

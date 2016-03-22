@@ -27,6 +27,7 @@ requires 'Dancer::Plugin::Catmandu::SRU';
 requires 'Dancer::Plugin::Email';
 requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Plugin::DirectoryView';
+requires 'Dancer::Plugin::StreamData';
 requires 'Dancer::Session::Catmandu';
 requires 'Dancer::Test';
 requires 'Template';
