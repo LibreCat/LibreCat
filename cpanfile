@@ -1,6 +1,7 @@
 requires 'perl', 'v5.10.1';
 
 requires 'Business::ISBN', 0;
+requires 'Search::Elasticsearch', '==1.19';
 
 # Catmandu
 requires 'Catmandu', '>=0.9505';

@@ -327,10 +327,11 @@ sub get_project {
 }
 
 sub get_department {
-    my $result;
-    $result = $_[0]->department->get($_[1]);
-    $result = $_[0]->search_department({q => ["name=\"$_[1]\""]})->first if !$result;
-    return $result;
+    if ($_[1] && length $_[1]) {
+        my $result = $_[0]->department->get($_[1]);
+        $result = $_[0]->search_department({q => ["name=\"$_[1]\""]})->first if !$result;
+        return $result;
+    }
 }
 
 sub get_research_group {
