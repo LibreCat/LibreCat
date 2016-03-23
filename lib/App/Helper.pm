@@ -739,7 +739,7 @@ sub search_project {
         $hits->each( sub {
             my $hit = $_[0];
             my $display = $hit->{acronym} ? $hit->{acronym} . " | " . $hit->{name} : $hit->{name};
-            $hierarchy->{$display}->{oId} = $hit->{id};
+            $hierarchy->{$display}->{oId} = $hit->{_id};
         });
 
         return $hierarchy;
