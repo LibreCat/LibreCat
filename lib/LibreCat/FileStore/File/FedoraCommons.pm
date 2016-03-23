@@ -12,7 +12,7 @@ __END__
 
 =head1 NAME
 
-LibreCat::FileStore::File::FedoraCommons - A FedoraCommons implementaiton of a stored file
+LibreCat::FileStore::File::FedoraCommons - A FedoraCommons implementation of a stored file
 
 =head1 SYNOPSIS
 

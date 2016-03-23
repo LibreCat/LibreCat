@@ -120,13 +120,13 @@ __END__
 
 =head1 NAME
 
-LibreCat::FileStore::BagIt - A BagIt implementation of a file storage
+LibreCat::FileStore::Simple - The default implementation of a file storage
 
 =head1 SYNOPSIS
 
-    use LibreCat::FileStore::BagIt;
+    use LibreCat::FileStore::Simple;
 
-    my $filestore =>LibreCat::FileStore::BagIt->new(root => '/data2/librecat/bag_uploads');
+    my $filestore =>LibreCat::FileStore::Simple->new(root => '/data2/librecat/file_uploads');
 
     my $generator = $filestore->list;
 

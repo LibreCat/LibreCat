@@ -12,7 +12,7 @@ __END__
 
 =head1 NAME
 
-LibreCat::FileStore::File::Simple - A default implementaiton of a stored file
+LibreCat::FileStore::File::Simple - A default implementation of a stored file
 
 =head1 SYNOPSIS
 

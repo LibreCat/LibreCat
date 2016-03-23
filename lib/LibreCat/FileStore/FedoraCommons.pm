@@ -127,7 +127,7 @@ __END__
 
 =head1 NAME
 
-LibreCat::FileStore::BagIt - A BagIt implementation of a file storage
+LibreCat::FileStore::FedoraCommons - A FedoraCommons 3.X implementation of a file storage
 
 =head1 SYNOPSIS
 
@@ -144,7 +144,7 @@ LibreCat::FileStore::BagIt - A BagIt implementation of a file storage
         purge => 1 ,
     );
 
-    my $filestore =>LibreCat::FileStore::BagIt->new(%options);
+    my $filestore =>LibreCat::FileStore::FedoraCommons->new(%options);
 
     my $generator = $filestore->list;
 

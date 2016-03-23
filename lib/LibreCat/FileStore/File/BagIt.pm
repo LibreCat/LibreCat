@@ -12,7 +12,7 @@ __END__
 
 =head1 NAME
 
-LibreCat::FileStore::File::BagIt - A BagIt implementaiton of a stored file
+LibreCat::FileStore::File::BagIt - A BagIt implementation of a stored file
 
 =head1 SYNOPSIS
 

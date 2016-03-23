@@ -27,9 +27,9 @@ LibreCat::FileStore::Container - Abstract definition of a file storage container
 
 =head1 SYNOPSIS
 
-    use LibreCat::FileStore::XYZ;
+    use LibreCat::FileStore::Simple;
 
-    my $filestore => LibreCat::FileStore::XYZ->new(%options);
+    my $filestore => LibreCat::FileStore::Simple->new(%options);
 
     my $container = $filestore->get('1234');
 

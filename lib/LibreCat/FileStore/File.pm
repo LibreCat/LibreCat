@@ -65,9 +65,9 @@ LibreCat::FileStore::File - Abstract definition of a stored file
 
 =head1 SYNOPSIS
 
-    use LibreCat::FileStore::XYZ;
+    use LibreCat::FileStore::Simple;
 
-    my $filestore => LibreCat::FileStore::XYZ->new(%options);
+    my $filestore => LibreCat::FileStore::Simple->new(%options);
 
     my $file = $filestore->get('1234')->get('myfile.txt');
 

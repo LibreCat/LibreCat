@@ -1,5 +1,11 @@
 package App::Api::Route::Demo;
 
+=head1 NAME
+
+App::Catalogue::Route::Demo - REST API demonstrator for LibreCat coders
+
+=cut
+
 use Catmandu::Sane;
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
@@ -44,8 +50,12 @@ sub do_error {
 }
 
 prefix '/librecat/api' => sub {
-    #-------------------------------------------------------
-    # Demonstrator code for file upload/access...
+=head2 GET /librecat/api
+
+Return a HTML page with demonstrators for file upload, file access , etc.
+
+=cut
+
     get '/' => needs role => 'api_access' => sub {
         template 'api/filestore';
     };
@@ -73,7 +83,6 @@ prefix '/librecat/api' => sub {
 
         template 'api/filestore' , $res;
     };
-    #-------------------------------------------------------
 };
 
 1;

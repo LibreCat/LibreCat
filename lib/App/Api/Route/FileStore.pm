@@ -1,5 +1,11 @@
 package App::Api::Route::FileStore;
 
+=head1 NAME
+
+App::Catalogue::Route::FileStore - REST API for managing the repository backend storage
+
+=cut
+
 use Catmandu::Sane;
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
@@ -54,6 +60,22 @@ sub do_error {
 }
 
 prefix '/librecat/api' => sub {
+
+=head2 GET /librecat/api/filestore
+
+Return a text stream of all container identifier in the repository.
+E.g.
+
+    $ curl -H "Content-Type: application/json" -X GET  "http://localhost:5001/librecat/api/filestore"
+    000000122
+    000000006
+    000000010
+    000000121
+    000000001
+    000000008
+
+=cut
+
 	get '/filestore' => needs role => 'api_access' => sub {
         my $gen = file_store()->list;
 
@@ -69,6 +91,29 @@ prefix '/librecat/api' => sub {
             $writer->close();
         });
     };
+
+=head2 GET /librecat/api/filestore/:key
+
+Return the content of a container in JSON format
+
+E.g.
+
+    $ curl -H "Content-Type: application/json" -X GET  "http://localhost:5001/librecat/api/filestore/000000008"
+    {
+       "files" : [
+          {
+             "md5" : "",
+             "key" : "rprogramming.pdf",
+             "modified" : 1457099958,
+             "size" : 10930639
+          }
+       ],
+       "modified" : 1457102844,
+       "created" : 1457102844,
+       "key" : "000000008"
+    }
+
+=cut
 
     get '/filestore/:key' => needs role => 'api_access' => sub {
         my $key = param('key');
@@ -106,6 +151,16 @@ prefix '/librecat/api' => sub {
         }
     };
 
+=head2 GET /librecat/api/filestore/:key/:filename
+
+Return the binary content of a file in a container 
+
+E.g.
+
+    $ curl -H "Content-Type: application/json" -X GET  "http://localhost:5001/librecat/api/filestore/000000008/rprogramming.pdf"
+    <... binary data ...>
+
+=cut
     get '/filestore/:key/:filename' => needs role => 'api_access' => sub {
         my $key       = param('key');
         my $filename  = param('filename');
@@ -143,6 +198,17 @@ prefix '/librecat/api' => sub {
         }
     };
 
+=head2 DEL /librecat/api/filestore/:key
+
+Delete a container from the repository
+
+E.g.
+
+    $ curl -H "Content-Type: application/json" -X DEL  "http://localhost:5001/librecat/api/filestore/000000008"
+    { "ok": "1"}
+
+=cut
+
     del '/filestore/:key' => needs role => 'api_access' => sub {
         my $key       = param('key');
 
@@ -158,6 +224,17 @@ prefix '/librecat/api' => sub {
             return do_error('NOT_FOUND','no such container',404);
         }
     };
+
+=head2 DEL /librecat/api/filestore/:key/:filename
+
+Delete a file in a container from the repository
+
+E.g.
+
+    $ curl -H "Content-Type: application/json" -X DEL  "http://localhost:5001/librecat/api/filestore/000000008/rprogramming.pdf"
+    { "ok": "1"}
+
+=cut
 
     del '/filestore/:key/:filename' => needs role => 'api_access' => sub {
         my $key       = param('key');
@@ -185,6 +262,17 @@ prefix '/librecat/api' => sub {
             return do_error('NOT_FOUND','no such container',404);
         }
     };
+
+=head2 POST /librecat/api/filestore/:key
+
+Add a file to a container in the repository
+
+E.g.
+
+    $ curl -H "Content-Type: application/json" -F file=@rpogramming.pdf -X POST  "http://localhost:5001/librecat/api/filestore/000000008"
+    { "ok": "1"}
+
+=cut
 
     post '/filestore/:key' => needs role => 'api_access' => sub {
         my $key       = param('key');
