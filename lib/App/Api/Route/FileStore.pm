@@ -1,7 +1,6 @@
 package App::Api::Route::FileStore;
 
 use Catmandu::Sane;
-use Catmandu::Util qw(trim);
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::StreamData;
@@ -12,11 +11,14 @@ Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
         my ($role, $coderef) = @_;
         return sub {
-            if ( session->{role} && $role eq session->{role} ) {
+            if ($role eq 'api_access' && ip_match(request->address)) {
+                goto $coderef;
+            }
+            elsif ( session->{role} && $role eq session->{role} ) {
                 goto $coderef;
             }
             else {
-                redirect '/access_denied';
+                return do_error('NOT_ALLOWED','access denied',404);
             }
         }
     }
@@ -24,9 +26,22 @@ Dancer::Plugin::Auth::Tiny->extend(
 
 set serializer => 'JSON';
 
+sub ip_match {
+    my $ip = shift;
+    my $access    = h->config->{filestore_api}->{access} // {};
+    my $ip_ranges = $access->{ip_ranges} // [];
+
+    for my $range (@$ip_ranges) {
+        $range =~ s{\*}{\\w+}g;
+        return 1 if ($ip =~ /^$range$/);
+    } 
+
+    return 0;
+}
+
 sub file_store {
-    my $file_store = h->config->{files}->{package};
-    my $file_opts  = h->config->{files}->{options} // {};
+    my $file_store = h->config->{filestore}->{package};
+    my $file_opts  = h->config->{filestore}->{options} // {};
 
     my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
     $pkg->new(%$file_opts);
@@ -39,7 +54,7 @@ sub do_error {
 }
 
 prefix '/librecat/api' => sub {
-	get '/filestore' => sub {
+	get '/filestore' => needs role => 'api_access' => sub {
         my $gen = file_store()->list;
 
         content_type 'text/plain';
@@ -55,7 +70,7 @@ prefix '/librecat/api' => sub {
         });
     };
 
-    get '/filestore/:key' => sub {
+    get '/filestore/:key' => needs role => 'api_access' => sub {
         my $key = param('key');
         my $container = file_store()->get($key);
 
@@ -91,7 +106,7 @@ prefix '/librecat/api' => sub {
         }
     };
 
-    get '/filestore/:key/:filename' => sub {
+    get '/filestore/:key/:filename' => needs role => 'api_access' => sub {
         my $key       = param('key');
         my $filename  = param('filename');
 
@@ -107,7 +122,7 @@ prefix '/librecat/api' => sub {
                 return stream_data($io, sub {
                         my ($data,$writer) = @_;
 
-                        my $buffer_size = h->config->{files}->{buffer_size} // 1024;
+                        my $buffer_size = h->config->{filestore_api}->{buffer_size} // 1024;
 
                         while (! $data->eof) {
                             my $buffer;
@@ -128,7 +143,7 @@ prefix '/librecat/api' => sub {
         }
     };
 
-    del '/filestore/:key' => sub {
+    del '/filestore/:key' => needs role => 'api_access' => sub {
         my $key       = param('key');
 
         content_type 'application/json';
@@ -144,7 +159,7 @@ prefix '/librecat/api' => sub {
         }
     };
 
-    del '/filestore/:key/:filename' => sub {
+    del '/filestore/:key/:filename' => needs role => 'api_access' => sub {
         my $key       = param('key');
         my $filename  = param('filename');
 
@@ -171,7 +186,7 @@ prefix '/librecat/api' => sub {
         }
     };
 
-    post '/filestore/:key' => sub {
+    post '/filestore/:key' => needs role => 'api_access' => sub {
         my $key       = param('key');
 
         content_type 'application/json';
@@ -188,7 +203,7 @@ prefix '/librecat/api' => sub {
             unless ($file) {
                 return do_error('ILLEGAL_INPUT','need a file',400);
             }
-            
+
             $container->add($file->{filename}, IO::File->new($file->{tempname}));
 
             $container->commit;

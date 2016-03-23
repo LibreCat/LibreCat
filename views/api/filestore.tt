@@ -1,0 +1,20 @@
+<html>
+<body>
+
+<h1>API</h1>
+
+<h2>FileStore</h2>
+
+<h3>Upload</h3>
+<p>[% upload_message %]</p>
+<form method="post" enctype="multipart/form-data">
+ 	<input type="hidden" name="action" value="upload">
+    Select container key:
+    <input type="text" name="key" size="9"><br>
+    Select file to upload:
+    <input type="file" name="file"><br>
+    <input type="submit" name="submit" value="Upload">
+</form>
+
+</body>
+</html>
