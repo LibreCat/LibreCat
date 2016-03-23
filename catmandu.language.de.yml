@@ -27,6 +27,7 @@ header:
     user: "User"
     delegate: "Delegate"
     reviewer: "Reviewer"
+    project_reviewer: "Projekt Reviewer"
     data_manager: "Data Manager"
     super_admin: "Admin"
   admin_menu:
@@ -124,6 +125,7 @@ main_page:
   heading_admin: "Admin"
   heading_user: "User"
   heading_reviewer: "Reviewer"
+  heading_project_reviewer: "Projekt Reviewer"
   heading_delegate: "Delegate"
   logged_in_as: "Angemeldet als"
   by: "von"
@@ -1824,6 +1826,7 @@ help:
   publication_user_rd: "Ihre pers&ouml;nliche Publikationsliste - Forschungsdaten."
   publication_delegate: "Jeder dieser Tabs zeigt Ihnen die Publikationsliste einer bestimmten Person, zu der Ihnen Zugriff gew&auml;hrt wurde. Die Publikationen wurden nach Personen gruppiert, um Ihnen einen besseren &Uuml;berblick &uuml;ber Ihren Arbeitsbereich in PUB zu geben."
   publication_reviewer: "Diese Liste zeigt Ihnen alle Publikationen der Einrichtung f&uuml;r die Sie die Reviewer-Rechte erhalten haben."
+  publication_project_reviewer: "Diese Liste zeigt Ihnen alle Publikationen des Projektes, für das Sie die Reviewer-Rechte erhalten haben."
   publication_data_manager: "Diese Liste zeigt Ihnen alle Datenpublikationen der Einrichtung f&uuml;r die Sie die Reviewer-Rechte erhalten haben."
   publication_admin: "Diese Liste zeigt Ihnen alle Publikationen in PUB."
   statuses: "Sichtbarkeitsstatus<br> der Publikation.<br>&Auml;nderung &uuml;ber den Link 'Editieren'."

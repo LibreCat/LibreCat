@@ -25,7 +25,7 @@ $(document).ready(function(){
 	            var progresselement = progressbar.parentNode.parentNode;
 	            $(progresselement).remove();
 	            var resp = response;//JSON.parse(response);
-	            var modal = Dropzone.createElement("<div class='well' id='" + resp.tempname + "'><form id='form_" + resp.tempname + "' action='/librecat/upload/qae/submit' method='post'><strong>" + file.name + "</strong><textarea class='form-control' placeholder='Type details about your publication here' name='description'></textarea><input type='hidden' name='reviewer' value='" + $('#qaeUpload').data('reviewer') + "' /><input type='hidden' name='delegate' value='" + $('#qaeUpload').data('delegate') + "'/><input type='hidden' name='file_name' value='" + resp.file_name + "' /><div class='checkbox'><label><input type='checkbox' required> I have read and accept the <a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a></label></div><input type='hidden' name='tempid' value='" + resp.tempid + "' /><input type='submit' class='btn btn-success' name='submit_or_cancel' value='Submit'/> <input type='reset' class='btn btn-warning' onclick='location.reload()' name='submit_or_cancel' value='Cancel' /></form></div>");
+	            var modal = Dropzone.createElement("<div class='well' id='" + resp.tempname + "'><form id='form_" + resp.tempname + "' action='/librecat/upload/qae/submit' method='post'><strong>" + file.name + "</strong><textarea class='form-control' placeholder='Type details about your publication here' name='description'></textarea><input type='hidden' name='reviewer' value='" + $('#qaeUpload').data('reviewer') + "' /><input type='hidden' name='project_reviewer' value='" + $('#qaeUpload').data('project_reviewer') + "' /><input type='hidden' name='delegate' value='" + $('#qaeUpload').data('delegate') + "'/><input type='hidden' name='file_name' value='" + resp.file_name + "' /><div class='checkbox'><label><input type='checkbox' required> I have read and accept the <a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a></label></div><input type='hidden' name='tempid' value='" + resp.tempid + "' /><input type='submit' class='btn btn-success' name='submit_or_cancel' value='Submit'/> <input type='reset' class='btn btn-warning' onclick='location.reload()' name='submit_or_cancel' value='Cancel' /></form></div>");
 	            file.previewElement.appendChild(modal);
 		    });
 	    	this.on("error", function(file, errorMessage){
@@ -158,16 +158,16 @@ $(document).ready(function(){
 
 	            var type = Dropzone.createElement("<div class='form-group'><div class='col-sm-offset-2 col-sm-10'><div class='radio'><label><input type='radio' name='type' value='biDissertation' checked='checked'>Dissertation</label></div><div class='radio'><label><input type='radio' name='type' value='biMasterThesis'>Master Thesis</label></div><div class='radio'><label><input type='radio' name='type' value='biBachelorThesis'>Bachelor Thesis</label></div><div class='radio'><label><input type='radio' name='type'' value='biPostdocThesis'>Postdoc Thesis/Habilitation</label></div></div></div>");
 	            form.appendChild(type);
-	            
+
 	            var author = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Author<span class='starMandatory'></span></label><div class='col-sm-5'><input type='text' name='author.first_name' class='form-control' placeholder='First Name' required /></div><div class='col-sm-5'><input type='text' name='author.last_name' class='form-control' placeholder='Last Name' /></div></div>");
 	            form.appendChild(author);
-	            
+
 	            var email = Dropzone.createElement("<div class='form-group'><label for='id_email' class='col-sm-2 control-label'>Email<span class='starMandatory'></span></label><div class='col-sm-10'><input type='email' class='form-control' id='id_email' placeholder='Email' name='email' required /></div></div>");
 	            form.appendChild(email);
 
 	            var title = Dropzone.createElement("<div class='form-group'><label for='id_title' class='col-sm-2 control-label'>Title<span class='starMandatory'></span></label><div class='col-sm-10'><input type='text' name='title' class='form-control' id='id_title' placeholder='Title (of your thesis)' required /></div></div>");
 	            form.appendChild(title);
-	            
+
 	            var ddc_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>DDC<span class='starMandatory'></span></label><div class='col-sm-10'><input type='text' name='ddc' class='form-control' placeholder='e.g. 006 (please check the DDC list above for the correct number)' required /></div></div>");
 	            form.appendChild(ddc_field);
 

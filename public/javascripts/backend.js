@@ -541,6 +541,9 @@ function add_field(name, placeholder){
 	case "data_manager":
 		enable_autocomplete("dm", index)
 		break;
+	case "project_reviewer":
+	    enable_autocomplete("pm", index)
+		break;
 	case "reviewer":
 		enable_autocomplete("rv", index)
 		break;
@@ -634,6 +637,9 @@ function enable_autocomplete(field, index){
 	switch(field) {
 	case "pj":
 		type = "project"
+		break;
+	case "pm":
+	    type = "project";
 		break;
 	case "rg":
 		type = "research_group"
