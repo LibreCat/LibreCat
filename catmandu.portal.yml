@@ -646,6 +646,32 @@ pubikgde:
   ttyp: pubikg
   fmt: html
 
+pubikzww:
+  q:
+    -
+      param: department
+      op: '='
+      or:
+        - 10059
+        - 8102709
+        - 23677355
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biBachelorThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'biMasterThesis'
+    -
+      param: documenttype
+      op: '<>'
+      or: 'researchData'
+  lang: de
+  limit: 10
+  ttyp: pubikzww
+  fmt: html
+
 pubimw:
   q:
     -
