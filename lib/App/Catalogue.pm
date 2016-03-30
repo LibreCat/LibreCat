@@ -62,6 +62,7 @@ get '/librecat/change_role/:role' => needs login => sub {
     }
     elsif ( params->{role} eq "project_reviewer" and $user->{project_reviewer} ) {
         session role => "project_reviewer";
+    }
     elsif ( params->{role} eq "award_admin" and $user->{award_admin} ) {
         session role => "award_admin";
     }
