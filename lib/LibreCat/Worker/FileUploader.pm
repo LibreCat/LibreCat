@@ -21,13 +21,12 @@ sub _build_file_store {
     $pkg->new(%$file_opts);
 }
 
-# TODO: Need to change request and session to the actual paramters to use
 sub do_work {
-    my ($self, $request, $session) = @_;
-
-    my $key = $request->params->{'key'};
+    my ($self, $key, $filename, $path) = @_;
 
     return -1 unless defined $key && $key =~ /^\d{9}$/;
+    return -1 unless defined $filename;
+    return -1 unless defined $path && -f $path && -r $path;
 
     my $container = $self->file_store->get($key);
 
@@ -36,13 +35,7 @@ sub do_work {
     }
 
     if ($container) {
-        my $file    = $request->upload('file');
-
-        unless ($file) {
-            return -1;
-        }
-
-        $container->add($file->{filename}, IO::File->new($file->{tempname}));
+        $container->add($filename, IO::File->new($path));
 
         $container->commit;
 
@@ -75,7 +68,7 @@ LibreCat::Worker::FileUploader - a worker for uploading files into the repostito
                         root => '/data2/librecat/file_uploads'
                     });
 
-    $uploader->do_work(<Dancer::Request>,<Dancer::Session>);
+    $uploader->do_work($key,$filename,$filepath);
 
 =head2 CONFIGURATION
 

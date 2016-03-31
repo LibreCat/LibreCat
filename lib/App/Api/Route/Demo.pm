@@ -65,7 +65,10 @@ Return a HTML page with demonstrators for file upload, file access , etc.
         my $res = {};
         
         if ($action eq 'upload') {
-            my $file    = request->upload('file');
+            my $file      = request->upload('file');
+            my $key       = param('key');
+            my $filename  = $file->{filename};
+            my $filepath  = $file->{tempname};
 
             my $uploader_package = h->config->{filestore_uploader}->{package};
             my $uploader_options = h->config->{filestore_uploader}->{options};
@@ -73,10 +76,7 @@ Return a HTML page with demonstrators for file upload, file access , etc.
             my $pkg = Catmandu::Util::require_package($uploader_package);
             my $worker = $pkg->new(%$uploader_options);
 
-            my $response = $worker->do_work(
-                request ,
-                session 
-            );
+            my $response = $worker->do_work($key,$filename,$filepath);
 
             $res->{upload_message} = $response == 1 ? 'done' : 'error';
         }
