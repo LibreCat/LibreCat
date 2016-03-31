@@ -12,6 +12,7 @@ use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::StreamData;
 use App::Helper;
 use IO::File;
+use namespace::clean;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -48,6 +49,14 @@ sub ip_match {
 sub file_store {
     my $file_store = h->config->{filestore}->{package};
     my $file_opts  = h->config->{filestore}->{options} // {};
+
+    my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
+    $pkg->new(%$file_opts);
+}
+
+sub access_store {
+    my $file_store = h->config->{accessstore}->{package};
+    my $file_opts  = h->config->{accessstore}->{options} // {};
 
     my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
     $pkg->new(%$file_opts);
@@ -98,7 +107,7 @@ Return the content of a container in JSON format
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X GET  "http://localhost:5001/librecat/api/filestore/000000008"
+    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/librecat/api/filestore/000000008"
     {
        "files" : [
           {
@@ -157,7 +166,7 @@ Return the binary content of a file in a container
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X GET  "http://localhost:5001/librecat/api/filestore/000000008/rprogramming.pdf"
+    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/librecat/api/filestore/000000008/rprogramming.pdf"
     <... binary data ...>
 
 =cut
@@ -204,7 +213,7 @@ Delete a container from the repository
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X DEL  "http://localhost:5001/librecat/api/filestore/000000008"
+    $ curl -H "Content-Type: application/json" -X DELETE "http://localhost:5001/librecat/api/filestore/000000008"
     { "ok": "1"}
 
 =cut
@@ -231,11 +240,10 @@ Delete a file in a container from the repository
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X DEL  "http://localhost:5001/librecat/api/filestore/000000008/rprogramming.pdf"
+    $ curl -H "Content-Type: application/json" -X DELETE "http://localhost:5001/librecat/api/filestore/000000008/rprogramming.pdf"
     { "ok": "1"}
 
 =cut
-
     del '/filestore/:key/:filename' => needs role => 'api_access' => sub {
         my $key       = param('key');
         my $filename  = param('filename');
@@ -300,6 +308,114 @@ E.g.
         }
         else {
             return do_error('SERVER_ERROR','failed to update container',500);
+        }
+    };
+
+=head2 GET /librecat/api/access/:key/:filename/thumbnail
+
+Return the binary thumbail content of a file in a container 
+
+E.g.
+
+    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/librecat/api/access/000000008/rprogramming.pdf/thumbail"
+    <... binary data ...>
+
+=cut
+    get '/access/:key/:filename/thumbail' => needs role => 'api_access' => sub {
+        my $key       = param('key');
+        my $filename  = param('filename') . '.thumb.png';
+
+        my $container = access_store()->get($key);
+
+        if (defined $container) {
+            
+            my $file = $container->get($filename);
+
+            if (defined $file) {
+                my $io = $file->fh;
+
+                return stream_data($io, sub {
+                        my ($data,$writer) = @_;
+
+                        my $buffer_size = h->config->{filestore_api}->{buffer_size} // 1024;
+
+                        while (! $data->eof) {
+                            my $buffer;
+                            my $len = $data->read($buffer,$buffer_size);
+                            $writer->write($buffer);
+                        }
+
+                        $writer->close();
+                        $data->close();
+                });
+            }
+            else {
+                return do_error('NOT_FOUND','no thumbnail for this file',404);
+            }
+        }
+        else {
+            return do_error('NOT_FOUND','no thumbnails for this key',404);
+        }
+    };
+
+=head2 POST /librecat/api/access/:key/:filename/thumbnail
+
+Create a thumbail for a file in a container 
+
+E.g.
+
+    $ curl -H "Content-Type: application/json" -X POST "http://localhost:5001/librecat/api/access/000000008/rprogramming.pdf/thumbnail"
+
+=cut
+    post '/access/:key/:filename/thumbnail' => needs role => 'api_access' => sub {
+        my $key       = param('key');
+        my $filename  = param('filename');
+
+        my $thumbnailer_package = h->config->{accessstore_thumbnailer}->{package};
+        my $thumbnailer_options = h->config->{accessstore_thumbnailer}->{options};
+
+        my $pkg = Catmandu::Util::require_package($thumbnailer_package);
+        my $worker = $pkg->new(%$thumbnailer_options);
+
+        my $response = $worker->do_work($key,$filename);
+
+        $response;
+    };
+
+=head2 DEL /librecat/api/access/:key/:filename/thumbnail
+
+Delete a thumbnail in a container
+
+E.g.
+
+    $ curl -H "Content-Type: application/json" -X DELETE "http://localhost:5001/librecat/api/access/000000008/rprogramming.pdf/thumbnail"
+    { "ok": "1"}
+
+=cut
+    del '/access/:key/:filename/thumbnail' => needs role => 'api_access' => sub {
+        my $key       = param('key');
+        my $filename  = param('filename') . '.thumb.png';
+
+        content_type 'application/json';
+
+        my $container = access_store()->get($key);
+
+        if (defined $container) {
+            
+            my $file = $container->get($filename);
+
+            if (defined $file) {
+                $container->delete($filename);
+                $container->commit;
+
+                return { ok => 1 };
+            }
+            else {
+                return do_error('NOT_FOUND','no thumbail for this file',404);
+            }
+        }
+        else {
+            return do_error('NOT_FOUND','no thumbnails in this countainer',404);
         }
     };
 };

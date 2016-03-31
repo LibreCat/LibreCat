@@ -7,15 +7,14 @@ use namespace::clean;
 
 with 'LibreCat::Worker';
 
-has package    => (is => 'ro' , required => 1);
-has options    => (is => 'ro');
+has files      => (is => 'ro' , required => 1);
 has file_store => (is => 'lazy');
 
 sub _build_file_store {
     my ($self) = @_;
 
-    my $file_store = $self->package;
-    my $file_opts  = $self->options // {};
+    my $file_store = $self->files->{package};
+    my $file_opts  = $self->files->{options} // {};
 
     my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
     $pkg->new(%$file_opts);
@@ -50,8 +49,6 @@ sub do_work {
 
 __END__
 
-__END__
-
 =pod
 
 =head1 NAME
@@ -63,10 +60,12 @@ LibreCat::Worker::FileUploader - a worker for uploading files into the repostito
     use LibreCat::Worker::FileUploader;
 
     my $uploader = LibreCat::Worker::FileUploader->new(
-                    package => 'Simple', 
-                    options => {
-                        root => '/data2/librecat/file_uploads'
-                    });
+                    files => {
+                        package => 'Simple', 
+                            options => {
+                                root => '/data2/librecat/file_uploads'
+                            }
+                   );
 
     $uploader->do_work($key,$filename,$filepath);
 

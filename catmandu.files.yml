@@ -13,4 +13,16 @@ filestore_api:
 
 filestore_uploader:
     package: 'LibreCat::Worker::FileUploader'
-    options: *filestore_settings
+    options: 
+        files: *filestore_settings
+
+accessstore: &accessstore_settings
+    package: Simple
+    options:
+        root: /data2/librecat/access_uploads
+
+accessstore_thumbnailer:
+    package: 'LibreCat::Worker::ImageResizer'
+    options: 
+        files: *filestore_settings
+        access: *accessstore_settings

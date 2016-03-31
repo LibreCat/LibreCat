@@ -4,9 +4,9 @@ requires 'Business::ISBN', 0;
 requires 'Search::Elasticsearch', '==1.19';
 
 # Catmandu
-requires 'Catmandu', '>=0.9505';
+requires 'Catmandu', '>=1.0001';
 requires 'Catmandu::Store::ElasticSearch';
-requires 'Catmandu::Store::MongoDB';
+requires 'Catmandu::Store::MongoDB', '>=0.0403';
 requires 'Catmandu::Store::DBI';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::Importer::XML';
@@ -72,6 +72,8 @@ requires 'Term::ReadKey';
 requires 'Net::LDAP';
 requires 'Net::LDAPS';
 requires 'Email::Sender::Simple';
+requires 'REST::Client';
+requires 'Data::Uniqid';
 
 requires 'Catmandu::BagIt' , '>=0.08';
 requires 'Catmandu::Store::FedoraCommons';

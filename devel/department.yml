@@ -58,3 +58,11 @@ layer: 1
 tree:
   - _id: 10085
 ...
+---
+_id: 2685177
+name: "Fakultät für Biologie"
+display: "Fakultät für Biologie"
+layer: 1
+tree:
+  - _id: 2685177
+...

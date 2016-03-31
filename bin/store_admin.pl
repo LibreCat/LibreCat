@@ -157,7 +157,7 @@ sub cmd_fetch {
     while (! $io->eof) {
         my $buffer;
         my $len = $io->read($buffer,1024);
-        syswrite(STDOUT,$buffer,1024);
+        syswrite(STDOUT,$buffer,$len);
     }
 }
 

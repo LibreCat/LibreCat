@@ -1,16 +1,62 @@
 <html>
+<head>
+	 <script src="/javascripts/jquery.min.js"></script>
+	 <script>
+$(document).ready(function() {
+
+	$('#dolist').submit('click', function () {
+		var key = $('#dolist input[name=key]').val();
+		var url = "/librecat/api/filestore/" + key;
+		
+		$('#dolist_result').empty();
+		$('#dolist_result').append("<pre>GET " + url + "</pre>");
+		$.getJSON(url, function(data) {
+			var items = [];
+
+			$('#dolist_result').append("<ul>");
+			for (var i in data.files) {
+				var filename  = data.files[i].key;
+				var filesize  = data.files[i]['size'];
+				var geturl    = "/librecat/api/filestore/" + key + "/" + filename;
+
+				$('#dolist_result').append(
+					"<li><a target=new href=\"" +  geturl + "\">" +
+					filename +
+					"</a>" +
+					" (" + filesize + " bytes )</li>"
+				);
+			}
+			$('#dolist_result').append("</ul>");
+		});
+
+		return false;
+	});
+
+});
+	 </script>
+</head>
 <body>
 
 <h1>API</h1>
 
 <h2>FileStore</h2>
 
+<h3>List</h3>
+<p style="font-weight: bold; color: #f00">[% upload_message %]</p>
+<form id="dolist" method="post" enctype="multipart/form-data" onSubmit="do_list();">
+ 	<input type="hidden" name="action" value="list">
+    Select container key:
+    <input type="text" name="key" size="10" value="000000008"><br>
+    <input type="submit" name="submit" value="Submit">
+</form>
+<div id="dolist_result"></div>
+
 <h3>Upload</h3>
-<p>[% upload_message %]</p>
+<p style="font-weight: bold; color: #f00">[% upload_message %]</p>
 <form method="post" enctype="multipart/form-data">
  	<input type="hidden" name="action" value="upload">
     Select container key:
-    <input type="text" name="key" size="9"><br>
+    <input type="text" name="key" size="10" value="000000008"><br>
     Select file to upload:
     <input type="file" name="file"><br>
     <input type="submit" name="submit" value="Upload">
