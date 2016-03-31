@@ -88,6 +88,7 @@ Return a HTML page with demonstrators for file upload, file access , etc.
     };
 };
 
+# Execute a worker to upload a file to the files repository
 sub do_file_upload {
     my ($key,$filename,$filepath) = @_;
     my $uploader_package = h->config->{filestore_uploader}->{package};
@@ -99,6 +100,7 @@ sub do_file_upload {
     $worker->do_work($key,$filename,$filepath);
 }
 
+# Execute a worker to generate a thumbnail to the access repository
 sub do_create_thumbnail {
     my ($key,$filename) = @_;
     my $thumbnailer_package = h->config->{accessstore_thumbnailer}->{package};

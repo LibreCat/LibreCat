@@ -3,6 +3,7 @@
 use lib qw(./lib);
 use Catmandu::Sane;
 use Catmandu::Util;
+use Catmandu;
 use Log::Log4perl;
 use Log::Any::Adapter;
 use Getopt::Long;
@@ -11,6 +12,8 @@ use File::Basename;
 use File::Path;
 use File::Spec;
 use Data::Dumper;
+use REST::Client;
+use URI::Escape;
 use POSIX qw(strftime);
 use namespace::clean;
 
@@ -19,17 +22,25 @@ Log::Any::Adapter->set('Log4perl');
 
 my $logger     = Log::Log4perl->get_logger('store_admin');
 
-my $file_store = 'Simple';
-my $file_opt   = { root => '/data2/librecat/file_uploads' };
+my $conf       = Catmandu->config;
+my $file_store = $conf->{filestore}->{package};
+my $file_opt   = $conf->{filestore}->{options};
 my $zipper     = '/usr/bin/zip';
 my $unzipper   = '/usr/bin/unzip';
 my $tmp_dir    = $ENV{TMPDIR} || '/tmp';
+my $storename;
 
 GetOptions(
     "file_store|f=s" => \$file_store ,
     "file_opt|o=s%"  => \$file_opt ,
     "tmp_dir|t=s%"   => \$tmp_dir ,
+    "F=s" => \$storename
 );
+
+if (defined $storename && exists $conf->{"${storename}store"}) {
+    $file_store = $conf->{"${storename}store"}->{package};
+    $file_opt   = $conf->{"${storename}store"}->{options};
+}
 
 my $cmd = shift;
 
@@ -68,6 +79,10 @@ elsif ($cmd eq 'export') {
 elsif ($cmd eq 'import') {
     my ($key,$file) = @ARGV;
     cmd_import($key,$file);
+}
+elsif ($cmd eq 'thumbnail') {
+    my ($key,$file) = @ARGV;
+    cmd_thumbnail($key,$file);
 }
 else {
     print STDERR "unknown command - $cmd\n";
@@ -345,6 +360,26 @@ sub cmd_import {
     1;
 }
 
+sub cmd_thumbnail {
+    my ($key,$filename) = @_;
+
+    croak "get - need a key" unless defined($key);
+    croak "get - need a file" unless defined($filename);
+
+    my $client = REST::Client->new();
+    my $url = sprintf "%s/librecat/api/access/%s/%s/thumbnail" 
+                    , $conf->{host}
+                    , uri_escape($key)
+                    , uri_escape($filename);
+    $client->POST($url);
+
+    unless ($client->responseCode() eq '200') {
+        print STDERR "Failed to create a thumbail for $key $filename\n";
+        print STDERR $client->responseContent();
+        exit(2);
+    }
+}
+
 sub find_subdirectory {
     my ($directory) = @_;
     my $has_files = 0;
@@ -376,8 +411,10 @@ cmds:
     purge <key>
     export <key> <zip>
     import <key> <zip>
+    thumbnail <key> <file>
 
 options:
+    -F storename
     --file_store=... | -f=...
     --file_opt=...   | -o=...
     --tmp_dir=...    | -t=...
