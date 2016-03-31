@@ -74,15 +74,10 @@ Return a HTML page with demonstrators for file upload, file access , etc.
             my $filepath  = $file->{tempname};
 
             if (defined $key && defined $filepath) {
-                my $uploader_package = h->config->{filestore_uploader}->{package};
-                my $uploader_options = h->config->{filestore_uploader}->{options};
+                do_file_upload($key,$filename,$filepath);
+                do_create_thumbnail($key,$filename);
 
-                my $pkg = Catmandu::Util::require_package($uploader_package);
-                my $worker = $pkg->new(%$uploader_options);
-
-                my $response = $worker->do_work($key,$filename,$filepath);
-
-                $res->{upload_message} = $response == 1 ? 'done' : 'error';
+                $res->{upload_message} = "done";
             }
             else {
                 $res->{upload_message} = "Need a key and a file";
@@ -92,5 +87,27 @@ Return a HTML page with demonstrators for file upload, file access , etc.
         template 'api/filestore' , $res;
     };
 };
+
+sub do_file_upload {
+    my ($key,$filename,$filepath) = @_;
+    my $uploader_package = h->config->{filestore_uploader}->{package};
+    my $uploader_options = h->config->{filestore_uploader}->{options};
+
+    my $pkg = Catmandu::Util::require_package($uploader_package);
+    my $worker = $pkg->new(%$uploader_options);
+
+    $worker->do_work($key,$filename,$filepath);
+}
+
+sub do_create_thumbnail {
+    my ($key,$filename) = @_;
+    my $thumbnailer_package = h->config->{accessstore_thumbnailer}->{package};
+    my $thumbnailer_options = h->config->{accessstore_thumbnailer}->{options};
+
+    my $pkg = Catmandu::Util::require_package($thumbnailer_package);
+    my $worker = $pkg->new(%$thumbnailer_options);
+
+    $worker->do_work($key,$filename);
+}
 
 1;

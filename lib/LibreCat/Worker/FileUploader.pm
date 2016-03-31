@@ -27,20 +27,25 @@ sub do_work {
     return -1 unless defined $filename;
     return -1 unless defined $path && -f $path && -r $path;
 
+    $self->log->info("loading container $key");
     my $container = $self->file_store->get($key);
 
     unless ($container) {
+        $self->log->info("$key not found");
+        $self->log->info("creating a new container $key");
         $container = $self->file_store->add($key);
     }
 
     if ($container) {
-        $container->add($filename, IO::File->new($path));
+        $self->log->info("storeing $filename in container $key");
 
+        $container->add($filename, IO::File->new($path));
         $container->commit;
 
         return 1;
     }
     else {
+        $self->log->error("failed to create container $key");
         return -1;
     }
 }
@@ -62,10 +67,10 @@ LibreCat::Worker::FileUploader - a worker for uploading files into the repostito
     my $uploader = LibreCat::Worker::FileUploader->new(
                     files => {
                         package => 'Simple', 
-                            options => {
-                                root => '/data2/librecat/file_uploads'
-                            }
-                   );
+                        options => {
+                            root => '/data2/librecat/file_uploads'
+                        }
+                   });
 
     $uploader->do_work($key,$filename,$filepath);
 
@@ -73,13 +78,9 @@ LibreCat::Worker::FileUploader - a worker for uploading files into the repostito
 
 =over
 
-=item package
+=item files
 
 Required. The LibreCat::FileStore implementation to use.
-
-=item options
-
-Optional. Any LibreCat::FileStore options to use.
 
 =back
 

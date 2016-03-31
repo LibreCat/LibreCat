@@ -40,33 +40,51 @@ sub do_work {
     my ($self,$key,$filename) = @_;
 
     # Retrieve the file
+    $self->log->info("loading container $key");
     my $container = $self->file_store->get($key);
 
-    return { error => 'no such container' } unless defined $container;
+    unless (defined $container) {
+        $self->log->error("no container $key found");
+        return { error => 'no such container' };
+    }
 
     my $file = $container->get($filename);
 
-    return { error => 'no such file' } unless defined $file;
+    unless (defined $file) {
+        $self->log->error("no file $filename in container $key found");
+        return { error => 'no such file' };
+    }
 
     my ($tmpdir,$tmpfile) = $self->extract_to_tmpdir($file);
 
-    return { error => 'internal error' } unless defined $tmpfile && -r $tmpfile;
+    unless (defined $tmpfile && -r $tmpfile) {
+        $self->log->error("failed to extract $filename from container $key to a temporary directory");
+        return { error => 'internal error' };
+    }
 
     # Calculate the thumbnail
     my $max_size  = $self->thumbnail_size;
     my $exit_code = system "convert -resize x${max_size} ${tmpfile}[0] $tmpdir/thumb.png";
 
-    return { error => 'failed to create thumbail'} unless $exit_code == 0 && -r "$tmpdir/thumb.png";
+    unless ($exit_code == 0 && -r "$tmpdir/thumb.png") {
+        $self->log->error("failed to generate a thumbnail for $filename from container $key");
+        return { error => 'failed to create thumbail'} ;
+    }
 
     # store the results
+    $self->log->info("loading access container $key");
     $container = $self->access_store->get($key);
 
     unless (defined $container) {
+        $self->log->info("$key not found");
+        $self->log->info("creating a new access container $key");
         $container = $self->access_store->add($key);
     }
 
+    $self->log->info("storeing ${filename}.thub.png in access container $key");
     $container->add("${filename}.thumb.png", IO::File->new("$tmpdir/thumb.png"));
     
+    $self->log->info("cleaning tmpdir $tmpdir");
     system("rm $tmpdir/*");
     system("rmdir $tmpdir");
 
@@ -101,3 +119,62 @@ sub extract_to_tmpdir {
 1;
 
 __END__
+
+pod
+
+=head1 NAME
+
+LibreCat::Worker::ImageResizer - a worker for creating thumbnails
+
+=head2 SYNOPSIS
+
+    use LibreCat::Worker::ImageResizer;
+
+    my $resizer = LibreCat::Worker::FileUploader->new(
+                    files => {
+                        package => 'Simple', 
+                        options => {
+                            root => '/data2/librecat/file_uploads'
+                        } ,
+                    access => {
+                        package => 'Simple', 
+                        options => {
+                            root => '/data2/librecat/access_uploads'
+                        }
+                    });
+
+    $resizer->do_work($key,$filename);
+
+=head2 CONFIGURATION
+
+=over
+
+=item files
+
+Required. The LibreCat::FileStore implementation to use for files
+
+=item access
+
+=item files
+
+Required. The LibreCat::FileStore implementation to use for access files.
+
+=item tmpdir
+
+Optional. The temporary directory. Default /tmp
+
+=item buffer_size
+
+Optional. The buffer_size used for downloading files. Defautlt 8192.
+
+=item thumbnail_size
+
+Optiona. The size of the thumbnails. Default 200.
+
+=back
+
+=head2 SEE ALSO
+
+L<LibreCat::Worker>
+
+=cut

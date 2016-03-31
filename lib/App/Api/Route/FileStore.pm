@@ -317,11 +317,11 @@ Return the binary thumbail content of a file in a container
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/librecat/api/access/000000008/rprogramming.pdf/thumbail"
+    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/librecat/api/access/000000008/rprogramming.pdf/thumbnail"
     <... binary data ...>
 
 =cut
-    get '/access/:key/:filename/thumbail' => needs role => 'api_access' => sub {
+    get '/access/:key/:filename/thumbnail' => needs role => 'api_access' => sub {
         my $key       = param('key');
         my $filename  = param('filename') . '.thumb.png';
 

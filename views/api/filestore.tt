@@ -13,20 +13,21 @@ $(document).ready(function() {
 		$.getJSON(url, function(data) {
 			var items = [];
 
-			$('#dolist_result').append("<ul>");
 			for (var i in data.files) {
 				var filename  = data.files[i].key;
 				var filesize  = data.files[i]['size'];
 				var geturl    = "/librecat/api/filestore/" + key + "/" + filename;
+				var imgurl    = "/librecat/api/access/" + key + "/" + filename + "/thumbnail";
 
 				$('#dolist_result').append(
-					"<li><a target=new href=\"" +  geturl + "\">" +
+					"<div>" + 
+					"<img src=\"" + imgurl + "\">" +
+					"<a target=new href=\"" +  geturl + "\">" +
 					filename +
 					"</a>" +
-					" (" + filesize + " bytes )</li>"
+					" (" + filesize + " bytes )</div>"
 				);
 			}
-			$('#dolist_result').append("</ul>");
 		});
 
 		return false;
@@ -42,7 +43,6 @@ $(document).ready(function() {
 <h2>FileStore</h2>
 
 <h3>List</h3>
-<p style="font-weight: bold; color: #f00">[% upload_message %]</p>
 <form id="dolist" method="post" enctype="multipart/form-data" onSubmit="do_list();">
  	<input type="hidden" name="action" value="list">
     Select container key:
