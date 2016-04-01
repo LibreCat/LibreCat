@@ -17,8 +17,6 @@ sub can_edit {
 
     if ($user_role eq 'super_admin') {
         return 1;
-    } elsif ($user_role eq 'user') {
-        $cql .= " OR creator=$user->{_id})";
     } elsif ($user_role eq 'reviewer') {
         my @deps = map {"department=$_->{_id}"} @{$user->{reviewer}};
         $cql .= " OR " .join(' OR ', @deps) .")";
@@ -32,6 +30,9 @@ sub can_edit {
     } elsif ($user_role eq 'delegate') {
         my @delegate = map {"person=$_"} @{$user->{delegate}};
         $cql .= " OR " .join(' OR ', @delegate) .")";
+    }
+    else {
+        $cql .= " OR creator=$user->{_id})";
     }
     if($user_role ne 'super_admin'){
         $cql .= " AND type<>bidissertation AND type<>bimasterthesis AND type<>bibachelorthesis AND type<>bipostdocthesis AND locked<>1";
