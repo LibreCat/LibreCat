@@ -10,7 +10,7 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="/javascripts/bootstrap.min.js"></script>
 
-[% persId = honoree._id %]
+[% persId = honoree.0._id ? honoree.0._id : honoree.0.id %]
 [% IF persId %]
   [% person = h.get_person(persId) %]
 [% END %]
@@ -51,8 +51,8 @@
         ehemals
         [% END %]
         [% FOREACH dep IN department %]
-          [% IF dep.id != "" %]
-            <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/EinrichtungDetail.jsp?orgId=[% dep.id %]">[% dep.name %]</a><br />
+          [% IF dep._id != "" %]
+            <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/EinrichtungDetail.jsp?orgId=[% dep._id %]">[% h.get_department(dep._id).display %]</a><br />
           [% ELSE %]
             [% dep.name %]<br />
           [% END %]
@@ -63,10 +63,10 @@
 
     <div class="span6">
 
-      [% IF organization %][% lang ? "Honored by" : "Verliehen von" %]: [% organization %]<br />[% END %]
+      [% IF organization %][% lang ? "Honoured by" : "Verliehen von" %]: [% organization %]<br />[% END %]
       [% IF year %][% lang ? "Year of Honour" : "Jahr der Ehrung" %]: [% year %]<br />[% END %]
-      [% IF extern %]([% lang ? "Honored before coming to Bielefeld University" : "Ehrung erhalten vor T&auml;tigkeit an der Universit&auml;t Bielefeld" %])<br /><br />[% END %]
-      [% IF description %][% description %]<br />[% END %]
+      [% IF extern %]([% lang ? "Honoured before coming to Bielefeld University" : "Ehrung erhalten vor T&auml;tigkeit an der Universit&auml;t Bielefeld" %])<br /><br />[% END %]
+      [% IF description %][% IF lang AND lang == "en" %][% description_en %][% ELSE %][% description %][% END %]<br />[% END %]
       [% IF proof %]<a href="[% proof %]" title="[% proof %]" target="_blank">[% lang ? "Documentation" : "Nachweis" %]</a><br />[% END %]
 
       </div>
