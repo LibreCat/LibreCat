@@ -13,6 +13,7 @@ use Dancer ':syntax';
 use App::Helper;
 use App::Catalogue::Controller::Importer;
 use Dancer::Plugin::Auth::Tiny;
+use Syntax::Keyword::Junction 'any' => { -as => 'any_of' };
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -24,7 +25,20 @@ Dancer::Plugin::Auth::Tiny->extend(
             else {
                 redirect '/access_denied';
             }
-        }
+        };
+    },
+
+    any_role => sub {
+        my $coderef = pop;
+        my @requested_roles = @_;
+        return sub {
+            if ( any_of(@requested_roles) eq session->{role}) {
+                goto $coderef;
+            }
+            else {
+                redirect '/access_denied';
+            }
+        };
     }
 );
 
@@ -218,7 +232,7 @@ Input is person id. Returns warning if person is already in the database.
 
 
 
-    get '/award' => needs role => 'award_admin' => sub {
+    get '/award' => needs any_role => qw/award_admin super_admin/ => sub {
         my $hits = h->search_award({q => "rectype=record", limit => 1000});
         my $preis = h->search_award({q => "rectype=preis", limit => 1000});
         my $auszeichnung = h->search_award({q => "rectype=auszeichnung", limit => 1000});
@@ -231,7 +245,7 @@ Input is person id. Returns warning if person is already in the database.
         template 'admin/award', $hits;
     };
 
-    get '/award/edit/:id' => needs role => 'award_admin' => sub {
+    get '/award/edit/:id' => needs any_role => qw/award_admin super_admin/ => sub {
         my $id = param 'id';
         my $hits = h->get_award($id);
         my $award = h->search_award({q => "rectype<>record", limit => 1000});
@@ -240,7 +254,7 @@ Input is person id. Returns warning if person is already in the database.
         template 'admin/forms/edit_award', $hits;
     };
 
-    get '/award/new/record' => needs role => 'award_admin' => sub {
+    get '/award/new/record' => needs any_role => qw/award_admin super_admin/ => sub {
         my $hits;
         my $award = h->search_award({q => "rectype<>record", limit => 1000});
         my $ids = h->award->to_array;
@@ -262,7 +276,7 @@ Input is person id. Returns warning if person is already in the database.
         template 'admin/forms/edit_award', $hits;
     };
 
-    get '/award/new/award' => needs role => 'award_admin' => sub {
+    get '/award/new/award' => needs any_role => qw/award_admin super_admin/ => sub {
         my $hits;
         my $ids = h->award->to_array;
         my @newIds;
@@ -282,7 +296,7 @@ Input is person id. Returns warning if person is already in the database.
         template 'admin/forms/edit_award', $hits;
     };
 
-    post '/award/update' => needs role => 'award_admin' => sub {
+    post '/award/update' => needs any_role => qw/award_admin super_admin/ => sub {
         my $p = h->nested_params();
         my $return = h->update_record('award', $p);
         return to_dumper $return;
