@@ -299,7 +299,8 @@ Input is person id. Returns warning if person is already in the database.
     post '/award/update' => needs any_role => qw/award_admin super_admin/ => sub {
         my $p = h->nested_params();
         my $return = h->update_record('award', $p);
-        return to_dumper $return;
+        redirect '/librecat/admin/award';
+        #return to_dumper $return;
     };
 
 };
