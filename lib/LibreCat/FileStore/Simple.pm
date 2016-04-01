@@ -14,6 +14,12 @@ sub list {
     my ($self,$callback) = @_;
     my $root = $self->root;
         
+    unless (-d $root) {
+        $self->log->error("no root $root found");
+        return sub { undef };
+    }
+
+    $self->log->debug("creating generator for root: $root");
     return sub {
         state $io;
 

@@ -33,7 +33,9 @@ sub _build_fedora {
 sub list {
     my ($self,$callback) = @_;
     my $fedora = $self->fedora;
-        
+      
+    $self->log->debug("creating generator for Fedora @ " . $self->url);
+       
     return sub {
         state $hits;
         state $row;
@@ -42,7 +44,7 @@ sub list {
         if( ! defined $hits) {
             my $res = $fedora->findObjects( query => "pid~${ns_prefix}* state=A" );
             unless ($res->is_ok) {
-                warn $res->error;
+                $self->log->error($res->error);
                 return undef;
             }
             $row  = 0;

@@ -13,7 +13,8 @@ has root => (is => 'ro' , required => '1') ;
 sub list {
     my ($self,$callback) = @_;
     my $root = $self->root;
-        
+    
+    $self->log->debug("creating generator for root: $root");
     return sub {
         state $io;
 

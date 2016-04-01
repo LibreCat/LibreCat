@@ -26,3 +26,22 @@ accessstore_thumbnailer:
     options: 
         files: *filestore_settings
         access: *accessstore_settings
+
+# Demo
+fedorastore:
+    package: FedoraCommons
+    options:
+        url: http://localhost:8080/fedora
+        user: fedoraAdmin
+        password: fedoraAdmin
+        namespace: demo
+        dsnamespace: DS
+        md5enabled: 1
+        versionable: 0
+        purge: 0
+
+# Demo
+bagitstore:
+    package: BagIt
+    options:
+        root: /data2/librecat/bag_uploads
