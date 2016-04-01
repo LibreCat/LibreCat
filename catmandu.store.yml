@@ -264,7 +264,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-                'exact': {field: honoree.full_name.exact}
+                'exact': {field: 'honoree.full_name.exact'}
               field: 'honoree.full_name'
             department:
               op:
@@ -1031,7 +1031,7 @@ search:
           proof: {type: string, index: not_analyzed}
           title: {type: string}
           organization: {type: string}
-          year: {type: string, analyzer: tag}
+          year: {type: date, format: year}
           honoree:
             properties:
               first_name: {type: string}

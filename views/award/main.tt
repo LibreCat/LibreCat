@@ -1,6 +1,7 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
+[%- USE date(format => '%Y') -%]
 
 [% IF lang %]
   [% INCLUDE award/header_en.tt %]
@@ -150,7 +151,9 @@
         <div class="facettecollapse">
         <ul id="year" class="collapse[% IF qp.year %] in[% END %]">
           [% FOREACH yr IN facets.year.terms %]
-          <li style="padding-bottom:2px;"><a href="[% h.newuri_for("$path", qp, year="$yr.term") %]">[% yr.term %]</a></li>
+          [%- year = (yr.term) / 1000; -%]
+          [%- IF year == '0' -%][%- yf = '1970' -%][%- ELSE -%][%- yf = date.format(year); -%][%- END -%]
+          <li style="padding-bottom:2px;"><a href="[% h.newuri_for("$path", qp, year="$yf") %]">[% yf %]</a></li>
           [% END %]
         </ul>
         </div>
