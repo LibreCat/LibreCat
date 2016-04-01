@@ -538,6 +538,9 @@ function add_field(name, placeholder){
 	case "affiliation":
 		enable_autocomplete("aff", index)
 		break;
+	case "einrichtung":
+	    enable_autocomplete("ein", index)
+		break;
 	case "data_manager":
 		enable_autocomplete("dm", index)
 		break;
