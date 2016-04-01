@@ -272,14 +272,14 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: ['department.name', 'department.id']
+              field: 'department._id'
             einrichtung:
               op:
                 'any': true
                 'all': true
                 '=': true
                 '<>': true
-              field: ['einrichtung.name', 'einrichtung.id']
+              field: 'einrichtung._id'
             otheruniversity:
               op:
                 'any': true
@@ -1045,22 +1045,10 @@ search:
               id: {type: string, analyzer: tag}
           department:
             properties:
-              name:
-                type: multi_field
-                fields:
-                  name: {type: string}
-                  exact: {type: string, analyzer: tag}
-              id: {type: string, analyzer: tag}
-              tree: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
           einrichtung:
             properties:
-              name:
-               type: multi_field
-               fields:
-                 name: {type: string}
-                 exact: {type: string, analyzer: tag}
-              id: {type: string, analyzer: tag}
-              tree: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
           uni_member: {type: byte}
           former_member: {type: string, analyzer: tag}
           other_university: {type: string}
