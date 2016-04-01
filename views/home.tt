@@ -52,7 +52,7 @@
 	[% IF backend AND session.role == 'super_admin' %]
 	  <li class="helpme[% IF backend AND modus == "admin" %] active[% END %]" title="[% lf.help.publication_admin %]"><a href="/librecat/search/admin">[% lf.tabs.all_publications %]</a></li>
     [% END %]
-    [% IF session.role == 'user' OR !backend %]
+    [% IF session.role == 'user' OR session.role == 'award_admin' OR !backend %]
 	  <li class="helpme[% IF modus == "user" %] active[% END %]" title="[% lf.help.publication_user %]"><a href="[% IF backend %]/librecat/search[% ELSE %]/person/[% id %][% END %]">[% lf.tabs.publications %]</a></li>
 	  [% IF researchhits AND researchhits.total != 0 %]
 	    <li class="helpme[% IF modus == "data" %] active[% END %]" title="[% lf.help.publication_user_rd %]"><a href="[% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% lf.tabs.data_publications %]</a></li>
@@ -95,7 +95,6 @@
 	  <!-- backend + superadmin -->
 	  <div class="tab-pane[% IF modus == 'admin' %] active[% END %]" id="publ-admin">
 	    <div class="col-sm-8">
-          [% h.search_publication({q => ["person=${session.personNumber}"]}).total %]
 	      [% tabmodus = 'admin' %]
 	      [% INCLUDE hits.tt %]
 	    </div>
@@ -104,7 +103,7 @@
 	    </div>
 	  </div>
       [% END %]
-      [% IF !backend OR session.role == 'user' %]
+      [% IF !backend OR session.role == 'user' OR session.role == "award_admin" %]
       <!-- frontend or user -->
       <div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ-user">
       <!-- publication -->
