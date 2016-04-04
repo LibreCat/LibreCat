@@ -37,7 +37,7 @@ h1,.h1,h2,.h2,h3,.h3{margin-top:31px;}
 .panel-title h2,.panel-body h3:first-child{margin-top:8px;}
 .panel-title h2{margin-bottom:8px;}
 .title h1{font-size:22px;margin-top:0;}
-.publication h1{padding-bottom:8px;border-bottom:1px solid #eee;}
+.pubtheses, .publication h1{padding-bottom:8px;border-bottom:1px solid #eee;}
 h3 a{font-size:inherit;}
 .h3 a,h4 a{font-weight:normal;}
 h3.expert{border-bottom:1px dashed #b6c828;}
