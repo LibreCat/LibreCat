@@ -1552,7 +1552,7 @@ forms:
       link: *link
   workingpaper: *workingpaper
   biDissertation: &bidissertation
-    label: "Bielefeld Thesis"
+    label: "Bielefeld Dissertation"
     tab: *tab
     field: &field
       bi_doctype:
