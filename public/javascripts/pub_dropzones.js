@@ -171,7 +171,7 @@ $(document).ready(function(){
 	            var ddc_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>DDC<span class='starMandatory'></span></label><div class='col-sm-10'><input type='text' name='ddc' class='form-control' placeholder='e.g. 006 (please check the DDC list above for the correct number)' required /></div></div>");
 	            form.appendChild(ddc_field);
 
-	            var abstract_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Abstract</label><div class='col-sm-10'><textarea class='form-control' name='abstract'></textarea></div></div>");
+	            var abstract_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Abstract</label><div class='col-sm-10'><textarea class='form-control' name='abstract'></textarea><span class='text-muted'>You can use <a href='/docs/howto/markdown' target='_blank'>Markdown</a> in the abstract field for text styling.</span></div></div>");
 	            form.appendChild(abstract_field);
 
 	            var hidden = Dropzone.createElement("<input type='hidden' name='file_name' value='" + resp.file_name + "' />");
