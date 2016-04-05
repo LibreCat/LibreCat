@@ -82,6 +82,7 @@ tabs:
   faq: "FAQ"
   contact: "Contact"
   policy: "Policy"
+  login: "How to log in?"
 hits:
   author: "Author"
   authors: "Authors"
@@ -513,7 +514,7 @@ forms:
         label: "Abstract"
         label2: "Language"
         placeholder: "Abstract Text (you can use Markdown for styling)"
-        explain: "Use <a href='http://spec.commonmark.org/0.22/#preliminaries' target='_blank'>Markdown</a> for text styling. After saving click on the link 'PUB' to get a preview and check text styling."
+        explain: "Use <a href='/docs/howto/markdown' target='_blank'>Markdown</a> for text styling. After saving click on the link 'PUB' to get a preview and check text styling."
       keyword: &keyword
         label: "Keywords"
         placeholder: "Keywords (multiple entries separated by semicolon, e.g. Keyword1 ; Keyword2 ; Keyword3)"
