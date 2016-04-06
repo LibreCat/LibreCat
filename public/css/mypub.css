@@ -33,15 +33,15 @@ main{padding-top:30px;}
 
 /* headlines */
 h1,.h1,h2,.h2,h3,.h3{margin-top:31px;}
-[class^='col']>h2{margin-top:0;}
 .panel-title h2,.panel-body h3:first-child{margin-top:8px;}
 .panel-title h2{margin-bottom:8px;}
 .title h1{font-size:22px;margin-top:0;}
-.pubtheses, .publication h1{padding-bottom:8px;border-bottom:1px solid #eee;}
+.pubtheses,.publication h1{padding-bottom:8px;border-bottom:1px solid #eee;}
 h3 a{font-size:inherit;}
 .h3 a,h4 a{font-weight:normal;}
 h3.expert{border-bottom:1px dashed #b6c828;}
 .howto-overview h3{display:none;}
+.abstract h3{margin-top:21px;}
 
 /* fonts */
 .smaller-xs{font-size:70%;}
@@ -58,6 +58,7 @@ a .total-marked{margin-right:5px;}
 .dropdown.active a{cursor:pointer!important;}
 .long{display:inline-block;line-height:1.4;margin-bottom:6px;/* department display on frontdoor */}
 .long:last-child{margin-bottom:0;}
+a.anchor{display: block;position: relative;top: -140px;visibility: hidden;}
 
 /*Some margin for row'ed paragraphs*/
 .row>p{margin-top:10px;}
