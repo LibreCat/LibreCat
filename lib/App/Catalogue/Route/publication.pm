@@ -312,30 +312,31 @@ Publishes private records, returns to the list.
         my $basic_fields = h->config->{forms}->{publicationTypes}->{$publtype}->{fields}->{basic_fields};
         my $field_check = 1;
 
-        foreach my $key ( keys %$basic_fields ) {
-            next if $key eq "tab_name";
-            next if $key eq "bi_doctype";
-            if($key =~ /author|editor|translator|supervisor/){
-                if($basic_fields->{$key} and $basic_fields->{$key}->{mandatory}){
-                    if(!$record->{$key}){
+        foreach my $conf_key ( keys %$basic_fields ) {
+            next if $conf_key eq "tab_name";
+            next if $conf_key eq "bi_doctype";
+            if($conf_key =~ /(author|editor|translator|supervisor)/){ # also matches author_solo
+                my $rec_key = $1; # contains only "author", not "author_solo", so that it will match the key in the record
+                if($basic_fields->{$conf_key} and $basic_fields->{$conf_key}->{mandatory}){
+                    if(!$record->{$rec_key}){
                         $field_check = 0;
                     }
-                    elsif($basic_fields->{$key}->{multiple}){
-                        foreach my $entry (@{$record->{$key}}){
+                    elsif($basic_fields->{$conf_key}->{multiple}){
+                        foreach my $entry (@{$record->{$rec_key}}){
                             unless ($entry->{first_name} and $entry->{last_name}){
                                 $field_check = 0;
                             }
                         }
                     }
                     else{
-                        unless ($record->{$key}->{first_name} and $record->{$key}->{last_name}){
+                        unless ($record->{$rec_key}->{first_name} and $record->{$rec_key}->{last_name}){
                             $field_check = 0;
                         }
                     }
                 }
             }
-            elsif ( $basic_fields->{$key}->{mandatory} and $basic_fields->{$key}->{mandatory} eq "1"
-                and ( !$record->{$key} || $record->{$key} eq "" ) )
+            elsif ( $basic_fields->{$conf_key}->{mandatory} and $basic_fields->{$conf_key}->{mandatory} eq "1"
+                and ( !$record->{$conf_key} || $record->{$conf_key} eq "" ) )
             {
                 $field_check = 0;
             }
