@@ -186,13 +186,13 @@ $('.change_tab').click(function(e){
         check_license = 0;
         e.preventDefault();
       }
-      else {
-        if($('.dropzone').first().children().length == 1){
-          if($('#select_ddc_0').val() && $('#select_ddc_0').val() != ""){
-            $('#select_ddc_0').val("");
-          }
-        }
-      }
+//      else {
+//        if($('.dropzone').first().children().length == 1){
+//          if($('#select_ddc_0').val() && $('#select_ddc_0').val() != ""){
+//            $('#select_ddc_0').val("");
+//          }
+//        }
+//      }
     }
   }
 
