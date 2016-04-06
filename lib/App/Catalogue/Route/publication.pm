@@ -64,6 +64,26 @@ Some fields are pre-filled.
             },
         };
 
+        if(session->{role} eq "user"){
+            my $person = {
+                first_name => $user->{first_name},
+                last_name => $user->{last_name},
+                full_name => $user->{full_name},
+                id => session->{personNumber},
+            };
+            $person->{orcid} = $user->{orcid} if $user->{orcid};
+
+            if( $type eq "bookEditor" or $type eq "conferenceEditor" or $type eq "journalEditor"){
+                $data->{editor}->[0] = $person;
+            }
+            elsif ($type eq "translation" or $type eq "translationChapter"){
+                $data->{translator}->[0] = $person;
+            }
+            else {
+                $data->{author}->[0] = $person;
+            }
+        }
+
         if ( $type eq "researchData" ) {
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
         }
