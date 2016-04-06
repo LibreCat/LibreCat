@@ -598,6 +598,24 @@ forms:
       series_title_volume: *series_title_volume
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
+      conference.divider: &conference_divider
+        label: "Conference Details"
+      conference.name: &conference_name
+        label: "Conference"
+        label_short: "Name"
+        placeholder: "e.g. 3rd Conference on Nano-Physics"
+      conference.location: &conference_location
+        label: "Conference Location"
+        label_short: "Location"
+        placeholder: "e.g. Berlin"
+      conference.date: &conference_date
+        label: "Conference Date"
+        label_start: "Conference Start"
+        label_start_short: "Start"
+        label_end: "Conference End"
+        label_end_short: "End"
+        placeholder_start: "YYYY-MM-DD"
+        placeholder_end: "YYYY-MM-DD"
       edition: *edition
       dropzone: *dropzone
       license: *license
@@ -659,24 +677,10 @@ forms:
         placeholder: "e.g. Handbook of eBook Publishing"
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
-      conference.divider: &conference_divider
-        label: "Conference Details"
-      conference.name: &conference_name
-        label: "Conference"
-        label_short: "Name"
-        placeholder: "e.g. 3rd Conference on Nano-Physics"
-      conference.location: &conference_location
-        label: "Conference Location"
-        label_short: "Location"
-        placeholder: "e.g. Berlin"
-      conference.date: &conference_date
-        label: "Conference Date"
-        label_start: "Conference Start"
-        label_start_short: "Start"
-        label_end: "Conference End"
-        label_end_short: "End"
-        placeholder_start: "YYYY-MM-DD"
-        placeholder_end: "YYYY-MM-DD"
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
       dropzone: *dropzone
       license: *license
       urn: *urn
