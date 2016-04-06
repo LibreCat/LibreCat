@@ -197,7 +197,7 @@ publicationTypes:
             mandatory: 0
             readonly: admin
           ddc:
-            multiple: 0
+            multiple: 1
             mandatory: oa_file
       supplementary_fields:
         abstract: &abstract
