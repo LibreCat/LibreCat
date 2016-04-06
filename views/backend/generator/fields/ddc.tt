@@ -3,7 +3,7 @@
     <label for="select_ddc_0">
       [% lf.$type.field.ddc.label %]
     </label>
-    {% IF fields.file_upload.license.ddc.mandatory == "file" %}
+    {% IF fields.file_upload.license.ddc.mandatory == "oa_file" %}
     [% IF file AND file.0 %]<span class="starMandatory"></span>[% END %]
     {% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -12,9 +12,9 @@
     [% IF !ddc %]
     <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky{% IF fields.file_upload.license.ddc.mandatory == "file" %}[% IF file AND file.0 %] mandatory[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.file_upload.license.ddc.mandatory == "oa_file" %}[% IF file AND file.0 %] mandatory[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.ddc.label %]</div>
-          <select name="ddc.0" class="sticky form-control{% IF fields.file_upload.license.ddc.mandatory == "file" %}[% IF file AND file.0 %] required[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} required{% END %}" id="select_ddc_0">
+          <select name="ddc.0" class="sticky form-control{% IF fields.file_upload.license.ddc.mandatory == "oa_file" %}[% IF file AND file.0 %] required[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} required{% END %}" id="select_ddc_0">
             <option value=""[% IF !ddc %] selected="selected"[% END %]>--- [% lf.$type.field.ddc.select_ddc %] ---</option>
             [% FOREACH group IN h.get_list('ddc').keys.sort %]
               <optgroup label="[% h.get_list('ddc').$group.optgroup %]">
@@ -34,9 +34,9 @@
       [% FOREACH d IN ddc %]
       <div class="row innerrow multirow">
         <div class="form-group col-md-10 col-xs-11">
-          <div class="input-group sticky{% IF fields.file_upload.license.ddc.mandatory == "file" %}[% IF file AND file.0 %] mandatory[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
+          <div class="input-group sticky{% IF fields.file_upload.license.ddc.mandatory == "oa_file" %}[% IF file AND file.0 %] mandatory[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.ddc.label %]</div>
-            <select name="ddc.[% loop.index %]" class="sticky form-control{% IF fields.file_upload.license.ddc.mandatory == "file" %}[% IF file AND file.0 AND loop.first %] required[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_ddc_[% loop.index %]">
+            <select name="ddc.[% loop.index %]" class="sticky form-control{% IF fields.file_upload.license.ddc.mandatory == "oa_file" %}[% IF file AND file.0 AND loop.first %] required[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_ddc_[% loop.index %]">
               <option value="">--- [% lf.$type.field.ddc.select_ddc %] ---</option>
               [% FOREACH group IN h.get_list('ddc').keys.sort %]
                 <optgroup label="[% h.get_list('ddc').$group.optgroup %]">
@@ -57,9 +57,9 @@
     {% ELSE %}
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky{% IF fields.file_upload.license.ddc.mandatory == "file" %}[% IF file AND file.0 %] mandatory[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.file_upload.license.ddc.mandatory == "oa_file" %}[% IF file AND file.0 %] mandatory[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.ddc.label %]</div>
-          <select name="ddc.0" class="sticky form-control{% IF fields.file_upload.license.ddc.mandatory == "file" %}[% IF file AND file.0 %] required[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} required{% END %}" id="select_ddc_0">
+          <select name="ddc.0" class="sticky form-control{% IF fields.file_upload.license.ddc.mandatory == "oa_file" %}[% IF file AND file.0 %] required[% END %]{% ELSIF fields.basic_fields.ddc.mandatory OR fields.file_upload.license.ddc.mandatory OR fields.supplementary_fields.ddc.mandatory %} required{% END %}" id="select_ddc_0">
             <option value=""[% IF !ddc %] selected="selected"[% END %]>--- [% lf.$type.field.ddc.select_ddc %] ---</option>
             [% FOREACH group IN h.get_list('ddc').keys.sort %]
               <optgroup label="[% h.get_list('ddc').$group.optgroup %]">
