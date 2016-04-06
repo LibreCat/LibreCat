@@ -90,6 +90,7 @@ else {
 }
 
 sub cmd_list {
+    my (@args) = @_;
     my $gen = $store->list;
 
     while (my $key = $gen->()) {
@@ -105,12 +106,19 @@ sub cmd_list {
             $size += $_->size;
         }
 
-        printf "%-40.40s %4d %9d %-20.20s %-20.20s\n"
+        if ($args[0] && $args[0] eq 'recursive') {
+            for (@files) {
+                printf "%s %s\n" , $key , $_->key;
+            }
+        }
+        else {
+            printf "%-40.40s %4d %9d %-20.20s %-20.20s\n"
                 , $key
                 , int(@files)
                 , $size
                 , strftime("%Y-%m-%dT%H:%M:%S", localtime($modified))
                 , strftime("%Y-%m-%dT%H:%M:%S", localtime($created));
+        }
     }
 }
 
@@ -404,13 +412,16 @@ sub usage {
 usage: $0 [options] cmd
 
 cmds:
-    list
+  {lowlevel}
+    list [recursive]
     get <key> [<file>]
     add <key> <file>
     delete <key> <file>
     purge <key>
     export <key> <zip>
     import <key> <zip>
+
+  {using the REST api}
     thumbnail <key> <file>
 
 options:

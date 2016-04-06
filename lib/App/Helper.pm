@@ -416,11 +416,11 @@ sub new_record {
     }
     else {
         # TODO race condition!
-        #Catmandu->store->transaction( sub{
+        Catmandu->store->transaction( sub{
           my $rec = $self->bag->get_or_add('1', {latest => '0'});
           $id = ++$rec->{latest};
           $self->bag->add($rec);
-        #});
+        });
     }
 
     return $id;

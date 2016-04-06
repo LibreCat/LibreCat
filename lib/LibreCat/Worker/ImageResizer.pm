@@ -81,7 +81,7 @@ sub do_work {
         $container = $self->access_store->add($key);
     }
 
-    $self->log->info("storeing ${filename}.thub.png in access container $key");
+    $self->log->info("storing ${filename}.thumb.png in access container $key");
     $container->add("${filename}.thumb.png", IO::File->new("$tmpdir/thumb.png"));
     
     $self->log->info("cleaning tmpdir $tmpdir");
