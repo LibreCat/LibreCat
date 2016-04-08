@@ -42,7 +42,7 @@ fedora:
         dsnamespace: DS
         md5enabled: 1
         versionable: 0
-        purge: 0
+        purge: 1
 
 # Demo
 bagit:

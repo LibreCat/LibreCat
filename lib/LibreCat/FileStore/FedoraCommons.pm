@@ -2,7 +2,6 @@ package LibreCat::FileStore::FedoraCommons;
 
 use Moo;
 use Carp;
-use Catmandu;
 use Catmandu::FedoraCommons;
 use LibreCat::FileStore::Container::FedoraCommons;
 use feature 'state';

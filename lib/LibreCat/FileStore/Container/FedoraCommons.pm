@@ -6,6 +6,7 @@ use File::Temp;
 use File::Copy;
 use Date::Parse;
 use Digest::MD5;
+use Catmandu::Util;
 use Catmandu::Store::FedoraCommons::FOXML;
 use LibreCat::FileStore::File::FedoraCommons;
 
@@ -214,9 +215,16 @@ sub _add_stream {
 
     my ($fh,$filename) = File::Temp::tempfile("librecat-filestore-container-fedoracommons-XXXX", UNLINK => 1);
 
-    File::Copy::cp($io,$filename);
+    if (Catmandu::Util::is_invocant($io)) {
+        # We got a IO::Handle
+        File::Copy::cp($io,$filename);
+        $io->close;
+    }
+    else {
+        # We got a string
+        Catmandu::Util::write_file($filename,$io);
+    }
 
-    $io->close;
     $fh->close;
 
     my %options = ( 'versionable' => $versionable );
@@ -279,6 +287,8 @@ sub _next_dsid {
 
 sub _io_filename {
     my ($self,$data) = @_;
+
+    return undef unless Catmandu::Util::is_invocant($data);
 
     my $inode = [$data->stat]->[1];
     my $ls  = `ls -i | grep $inode`;
