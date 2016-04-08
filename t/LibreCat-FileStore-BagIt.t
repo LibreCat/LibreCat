@@ -114,7 +114,7 @@ note("delete container");
 
 note("open existing container");
 {
-	my $store = $pkg->new(root => 't/local-store');
+	my $store = $pkg->new(root => 't/local-store/bagit');
 
 	ok $store , 'new';
 

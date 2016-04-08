@@ -21,7 +21,6 @@ public/images/dummy.jpg
 sessions/
 views/backend/forms/
 views/admin/forms/
-data/
 logs/
 local/
 profiledata/
