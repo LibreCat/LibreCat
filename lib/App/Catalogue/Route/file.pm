@@ -221,8 +221,6 @@ and user rights will be checked before.
 
 =cut
 get qr{/download/(\d+)/(\d+)} => sub {
-
-# todo: send 404 if file does not exist!!!
     my ($id, $file_id) = splat;
 
     my ($ok, $file_name) = p->can_download(
@@ -248,7 +246,11 @@ get qr{/download/(\d+)/(\d+)} => sub {
     }
 };
 
-# the route
+=head2 GET /thumbnail/:id
+
+Download the thumbnail of the document
+
+=cut
 get '/thumbnail/:id' => sub {
     my $key = params->{id};
     

@@ -8,7 +8,7 @@ use Encode qw(decode encode);
 use JSON::MaybeXS qw(decode_json encode_json);
 use Exporter qw/import/;
 
-our @EXPORT = qw/make_thumbnail delete_file update_file handle_file /;
+our @EXPORT = qw/make_thumbnail delete_file update_file handle_file/;
 
 sub make_thumbnail {
     my ($key,$filename) = @_;
