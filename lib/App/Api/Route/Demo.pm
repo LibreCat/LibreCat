@@ -91,8 +91,8 @@ Return a HTML page with demonstrators for file upload, file access , etc.
 # Execute a worker to upload a file to the files repository
 sub do_file_upload {
     my ($key,$filename,$filepath) = @_;
-    my $uploader_package = h->config->{filestore_uploader}->{package};
-    my $uploader_options = h->config->{filestore_uploader}->{options};
+    my $uploader_package = h->config->{filestore}->{uploader}->{package};
+    my $uploader_options = h->config->{filestore}->{uploader}->{options};
 
     my $pkg = Catmandu::Util::require_package($uploader_package);
     my $worker = $pkg->new(%$uploader_options);
@@ -103,8 +103,8 @@ sub do_file_upload {
 # Execute a worker to generate a thumbnail to the access repository
 sub do_create_thumbnail {
     my ($key,$filename) = @_;
-    my $thumbnailer_package = h->config->{accessstore_thumbnailer}->{package};
-    my $thumbnailer_options = h->config->{accessstore_thumbnailer}->{options};
+    my $thumbnailer_package = h->config->{filestore}->{accesss_thumbnailer}->{package};
+    my $thumbnailer_options = h->config->{filestore}->{accesss_thumbnailer}->{options};
 
     my $pkg = Catmandu::Util::require_package($thumbnailer_package);
     my $worker = $pkg->new(%$thumbnailer_options);
