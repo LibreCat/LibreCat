@@ -10,6 +10,11 @@ $(document).ready(function() {
 		
 		$('#dolist_result').empty();
 		$('#dolist_result').append("<pre>GET " + url + "</pre>");
+
+		var imgurl    = "/librecat/api/access/" + key + "/x/thumbnail";
+	
+		$('#dolist_result').append("<img src=\"" + imgurl + "\">");
+
 		$.getJSON(url, function(data) {
 			var items = [];
 
@@ -17,11 +22,9 @@ $(document).ready(function() {
 				var filename  = data.files[i].key;
 				var filesize  = data.files[i]['size'];
 				var geturl    = "/librecat/api/filestore/" + key + "/" + filename;
-				var imgurl    = "/librecat/api/access/" + key + "/" + filename + "/thumbnail";
-
+				
 				$('#dolist_result').append(
 					"<div>" + 
-					"<img src=\"" + imgurl + "\">" +
 					"<a target=new href=\"" +  geturl + "\">" +
 					filename +
 					"</a>" +

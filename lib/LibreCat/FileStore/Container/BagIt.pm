@@ -4,6 +4,7 @@ use Moo;
 use Carp;
 use File::Path;
 use Catmandu::BagIt;
+use URI::Escape;
 use LibreCat::FileStore::File::BagIt;
 
 use namespace::clean;
@@ -20,7 +21,8 @@ sub list {
     my @result = ();
 
     for my $file ($bagit->list_files) {
-        push @result , $self->get($file->filename);
+        my $unpacked_key = $self->unpack_key($file->filename);
+        push @result , $self->get($unpacked_key);
     }
 
     return @result;
@@ -37,13 +39,15 @@ sub get {
     my ($self,$key) = @_;
     my $bagit  = $self->_bagit;
 
-    my $file = $bagit->get_file($key);
+    my $packed_key = $self->pack_key($key);
+
+    my $file = $bagit->get_file($packed_key);
 
     return undef unless $file;
 
-    my $data = $file->fh;
-    my $md5  = $bagit->get_checksum($key);
-    my $stat = [$file->fh->stat];
+    my $data     = $file->fh;
+    my $md5      = $bagit->get_checksum($key);
+    my $stat     = [$file->fh->stat];
 
     my $size     = $stat->[7];
     my $modified = $stat->[9];
@@ -63,14 +67,18 @@ sub add {
     my ($self,$key,$data) = @_;
     my $bagit  = $self->_bagit; 
 
-    $bagit->add_file($key,$data);
+    my $packed_key = $self->pack_key($key);
+
+    $bagit->add_file($packed_key,$data);
 }
 
 sub delete {
     my ($self,$key) = @_;
     my $bagit  = $self->_bagit; 
 
-    $bagit->remove_file($key);
+    my $packed_key = $self->pack_key($key);
+
+    $bagit->remove_file($packed_key);
 }
 
 sub commit {
@@ -128,6 +136,18 @@ sub delete_container {
     return undef unless -d $path;
 
     File::Path::remove_tree($path);
+}
+
+sub pack_key {
+    my $self = shift;
+    my $key  = shift;
+    uri_escape($key);
+}
+
+sub unpack_key {
+    my $self = shift;
+    my $key  = shift;
+    uri_unescape($key);
 }
 
 1;

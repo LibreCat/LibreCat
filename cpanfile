@@ -75,6 +75,6 @@ requires 'Email::Sender::Simple';
 requires 'REST::Client';
 requires 'Data::Uniqid';
 
-requires 'Catmandu::BagIt' , '>=0.08';
+requires 'Catmandu::BagIt' , '>=0.12';
 requires 'Catmandu::Store::FedoraCommons';
 requires 'IO::All';

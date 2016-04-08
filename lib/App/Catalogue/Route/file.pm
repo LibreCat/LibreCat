@@ -13,21 +13,49 @@ use Catmandu qw(export_to_string);
 use Dancer ':syntax';
 use Dancer::Plugin::Email;
 use Dancer::Plugin::Auth::Tiny;
+use Dancer::Plugin::StreamData;
 use App::Helper;
 use App::Catalogue::Controller::Permission;
 use DateTime;
 use Try::Tiny;
 
 sub _send_it {
-    my ($id, $file_name) = @_;
-    my $dest_dir = h->get_file_path($id);
-    my $path_to_file = path($dest_dir, $file_name);
-    if(-e $path_to_file){
-        return Dancer::send_file($path_to_file, system_path => 1, filename => $file_name);
+    my ($key, $filename) = @_;
+
+    my $container = h->get_file_store()->get($key);
+
+    if (defined $container) {
+        
+        my $file = $container->get($filename);
+
+        if (defined $file) {
+            my $io = $file->fh;
+
+            return stream_data($io, sub {
+                    my ($data,$writer) = @_;
+
+                    my $buffer_size = h->config->{filestore_api}->{buffer_size} // 1024;
+
+                    while (! $data->eof) {
+                        my $buffer;
+                        my $len = $data->read($buffer,$buffer_size);
+                        $writer->write($buffer);
+                    }
+
+                    $writer->close();
+                    $data->close();
+            });
+        }
+        else {
+            template 'websites/error', {
+                message => "The file does not exist anymore. We're sorry."
+            };
+        }
     }
     else {
-        template 'websites/error',
-            {message => "The file does not exist anymore. We're sorry."};
+        template 'websites/error', { 
+                message => "The file does not exist anymore. We're sorry." 
+        };
     }
 }
 
@@ -198,7 +226,7 @@ and user rights will be checked before.
 
 =cut
 get qr{/download/(\d+)/(\d+)} => sub {
-#get '/download/:id/:file_id' => sub {
+
 # todo: send 404 if file does not exist!!!
     my ($id, $file_id) = splat;
     my ($ok, $file_name) = p->can_download(
@@ -207,6 +235,7 @@ get qr{/download/(\d+)/(\d+)} => sub {
                 session->{user},
                 session->{role},
                 request->address);
+
     unless ($ok) {
         status 403;
         return template 'websites/403',{path =>request->path};
@@ -217,15 +246,9 @@ get qr{/download/(\d+)/(\d+)} => sub {
 
 # the route
 get '/thumbnail/:id' => sub {
-    my $id = params->{id};
+    my $key = params->{id};
     
-    my $path = h->get_file_path($id);
-    if (-e path($path, "thumbnail.png")){
-        _send_it($id, "thumbnail.png");
-    } else {
-        return Dancer::send_file('public/images/thumbnail_dummy.png', system_path => 1, filename => 'thumbnail_dummy.png');
-    }
-
+    redirect "/librecat/api/access/$key/x/thumbnail";
 };
 
 1;

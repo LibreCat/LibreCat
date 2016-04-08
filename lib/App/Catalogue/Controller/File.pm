@@ -1,44 +1,68 @@
 package App::Catalogue::Controller::File;
 
 use Catmandu::Sane;
-use Catmandu::Util qw(join_path segmented_path);
+use Catmandu::Util;
 use App::Helper;
 use Dancer::FileUtils qw/path dirname/;
 use Encode qw(decode encode);
 use JSON::MaybeXS qw(decode_json encode_json);
-use File::Copy;
-use File::Path qw/rmtree/;
-use File::Basename;
 use Exporter qw/import/;
 
-our @EXPORT = qw/update_file delete_file handle_file make_thumbnail/;
-
-my $upload_dir = h->config->{upload_dir};
+our @EXPORT = qw/make_thumbnail delete_file update_file handle_file /;
 
 sub make_thumbnail {
-    my ($id, $file_name) = @_;
+    my ($key,$filename) = @_;
 
-    my $file_path = path(h->get_file_path($id), $file_name);
-    my $thumbnail = path(dirname($file_path), "thumbnail.png");
-    unless (-e $thumbnail) {
-        system "convert -resize x200 ${file_path}[0] $thumbnail";
-    }
+    my $thumbnailer_package = h->config->{filestore}->{accesss_thumbnailer}->{package};
+    my $thumbnailer_options = h->config->{filestore}->{accesss_thumbnailer}->{options};
+
+    my $pkg = Catmandu::Util::require_package($thumbnailer_package);
+    my $worker = $pkg->new(%$thumbnailer_options);
+
+    $worker->do_work($key,$filename);
+}
+
+sub update_file {
+    my ($key,$filename,$path) = @_;
+
+    my $uploader_package = h->config->{filestore}->{uploader}->{package};
+    my $uploader_options = h->config->{filestore}->{uploader}->{options};
+
+    my $pkg = Catmandu::Util::require_package($uploader_package);
+    my $worker = $pkg->new(%$uploader_options);
+
+    $worker->do_work($key, $filename, $path);
+}
+
+sub delete_file {
+    my ($key,$filename) = @_;
+
+    my $uploader_package = h->config->{filestore}->{uploader}->{package};
+    my $uploader_options = h->config->{filestore}->{uploader}->{options};
+
+    my $pkg = Catmandu::Util::require_package($uploader_package);
+    my $worker = $pkg->new(%$uploader_options);
+
+    $worker->do_work($key, $filename, undef, delete => 1);
 }
 
 sub handle_file {
     my $pub = shift;
+    my $key = $pub->{_id};
+
     $pub->{file} = [$pub->{file}] if ref $pub->{file} ne "ARRAY";
     $pub->{file_order} = [$pub->{file_order}] if ref $pub->{file_order} ne "ARRAY";
 
-    my $previous_pub = h->publication->get($pub->{_id});
-    my $dest_dir = h->get_file_path($pub->{_id});
+    my $previous_pub = h->publication->get($key);
 
     if(!$previous_pub){
         foreach my $fi (@{$pub->{file}}){
             $fi = encode("utf8",$fi);
             $fi = decode_json($fi);
             $fi->{file_id} = h->new_record('publication') if !$fi->{file_id};
+            
             my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
+            
             if(defined $index){
                 $pub->{file_order}->[$index] = $fi->{file_id};
             }
@@ -46,42 +70,45 @@ sub handle_file {
                 push @{$pub->{file_order}}, $fi->{file_id};
             }
 
-            my $filepath = path(h->config->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
-            system "mkdir -p $dest_dir" unless -d $dest_dir;
+            my $filename = $fi->{file_name};
+            my $path     = path(h->config->{tmp_dir}, $fi->{tempid}, $filename);
 
-            move($filepath,$dest_dir);
+            update_file($key,$filename,$path);
+
             $fi->{open_access} = $fi->{access_level} eq "open_access" ? 1 : 0;
 
-            delete $fi->{tempid} if $fi->{tempid};
-            delete $fi->{tempname} if $fi->{tempname};
+            delete $fi->{tempid}        if $fi->{tempid};
+            delete $fi->{tempname}      if $fi->{tempname};
             delete $fi->{old_file_name} if $fi->{old_file_name};
-            delete $fi->{file_json} if $fi->{file_json};
+            delete $fi->{file_json}     if $fi->{file_json};
         }
     }
     else{
         foreach my $fi (@{$pub->{file}}){
+            
             if(ref $fi ne "HASH"){
                 $fi = encode("utf8", $fi);
                 $fi = decode_json($fi);
             }
 
-            #update of existing file
+            # update of existing file
             if($fi->{file_id}){
                 $fi->{date_updated} = h->now();
                 #get index of $fi in $previous_pub->{file}
-                my $previous_file;
+  
                 my( $index )= grep { $previous_pub->{file}->[$_]->{file_id} eq $fi->{file_id} } 0..$#{$previous_pub->{file}};
+                
                 if(defined $index and $fi->{tempid}){
-                    $previous_file = $previous_pub->{file}->[$index];
-                    #unlink previous file
-                    my $file = "$dest_dir/$previous_file->{file_name}";
-                    unlink($file);
-                    #copy new file to previous file's folder
-                    my $filepath = path(h->config->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
-                    move($filepath, $dest_dir);
-
-                    #my $path = path(h->config->{upload_dir}, $fi->{tempid});
-                    #system "rm -r $path" if -d $path;
+                    my $previous_file = $previous_pub->{file}->[$index];
+                    
+                    # delete previous file
+                    my $old_name = $previous_file->{file_name};
+                    delete_file($key,$old_name);
+                    
+                    # upload the new file
+                    my $new_name = $fi->{file_name};
+                    my $path     = path(h->config->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
+                    update_file($key,$new_name,$path);
 
                     $fi->{open_access} = $fi->{access_level} eq "open_access" ? 1 : 0;
 
@@ -111,12 +138,10 @@ sub handle_file {
                     push @{$pub->{file_order}}, $fi->{file_id};
                 }
 
-                system "mkdir -p $dest_dir" unless -d $dest_dir;
-                my $filepath = path(h->config->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
-                move($filepath, $dest_dir);
+                my $filename = $fi->{file_name};
+                my $path     = path(h->config->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
+                update_file($key,$filename,$path);
 
-                #my $path = path(h->config->{upload_dir}, $fi->{tempid});
-                #system "rm -r $path" if -d $path;
 
                 $fi->{open_access} = $fi->{access_level} eq "open_access" ? 1 : 0;
 
@@ -149,21 +174,6 @@ sub handle_file {
     }
 
     return $pub->{file};
-}
-
-sub delete_file {
-    my $pub_id = shift;
-    my $file_name = shift;
-    my $dest_dir = h->get_file_path($pub_id);
-    my $status;
-    if($file_name){
-        my $file = path($dest_dir, $file_name);
-        $status = unlink($file);
-    }
-    else {
-        $status = rmtree [$dest_dir] if -e $dest_dir || 0;
-    }
-    return $status;
 }
 
 1;
