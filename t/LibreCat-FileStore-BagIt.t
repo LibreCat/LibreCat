@@ -6,8 +6,6 @@ use Test::More;
 use Test::Exception;
 use IO::File;
 use File::Path qw(remove_tree);
-use Catmandu::Store::Hash;
-
 use Data::Dumper;
 
 my $pkg;

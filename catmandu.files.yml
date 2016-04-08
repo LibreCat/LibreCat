@@ -1,34 +1,38 @@
 ---
-filestore: &filestore_settings
+_prefix:
+  filestore:
+
+default: &filestore_settings
     package: Simple
     options:
         root: /data2/librecat/file_uploads
 
-filestore_api:
+api:
     buffer_size: 8192
     access:
         ip_ranges: 
             - 127.0.0.1
             - 10.*.*.*
 
-filestore_uploader:
+uploader:
     package: 'LibreCat::Worker::FileUploader'
     options: 
         files: *filestore_settings
 
-accessstore: &accessstore_settings
+# Thumbnails
+access: &accessstore_settings
     package: Simple
     options:
         root: /data2/librecat/access_uploads
 
-accessstore_thumbnailer:
+accesss_thumbnailer:
     package: 'LibreCat::Worker::ImageResizer'
     options: 
         files: *filestore_settings
         access: *accessstore_settings
 
 # Demo
-fedorastore:
+fedora:
     package: FedoraCommons
     options:
         url: http://localhost:8080/fedora
@@ -41,7 +45,7 @@ fedorastore:
         purge: 0
 
 # Demo
-bagitstore:
+bagit:
     package: BagIt
     options:
         root: /data2/librecat/bag_uploads

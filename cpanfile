@@ -4,7 +4,7 @@ requires 'Business::ISBN', 0;
 requires 'Search::Elasticsearch', '==1.19';
 
 # Catmandu
-requires 'Catmandu', '>=1.0001';
+requires 'Catmandu', '>=1.0002';
 requires 'Catmandu::Store::ElasticSearch';
 requires 'Catmandu::Store::MongoDB', '>=0.0403';
 requires 'Catmandu::Store::DBI';

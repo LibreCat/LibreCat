@@ -34,7 +34,7 @@ set serializer => 'JSON';
 
 sub ip_match {
     my $ip = shift;
-    my $access    = h->config->{filestore_api}->{access} // {};
+    my $access    = h->config->{filestore}->{api}->{access} // {};
     my $ip_ranges = $access->{ip_ranges} // [];
 
     for my $range (@$ip_ranges) {

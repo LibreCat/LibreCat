@@ -35,7 +35,7 @@ set serializer => 'JSON';
 
 sub ip_match {
     my $ip = shift;
-    my $access    = h->config->{filestore_api}->{access} // {};
+    my $access    = h->config->{filestore}->{api}->{access} // {};
     my $ip_ranges = $access->{ip_ranges} // [];
 
     for my $range (@$ip_ranges) {
@@ -47,16 +47,16 @@ sub ip_match {
 }
 
 sub file_store {
-    my $file_store = h->config->{filestore}->{package};
-    my $file_opts  = h->config->{filestore}->{options} // {};
+    my $file_store = h->config->{filestore}->{default}->{package};
+    my $file_opts  = h->config->{filestore}->{default}->{options} // {};
 
     my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
     $pkg->new(%$file_opts);
 }
 
 sub access_store {
-    my $file_store = h->config->{accessstore}->{package};
-    my $file_opts  = h->config->{accessstore}->{options} // {};
+    my $file_store = h->config->{filestore}->{access}->{package};
+    my $file_opts  = h->config->{filestore}->{access}->{options} // {};
 
     my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
     $pkg->new(%$file_opts);

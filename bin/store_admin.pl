@@ -23,8 +23,8 @@ Log::Any::Adapter->set('Log4perl');
 my $logger     = Log::Log4perl->get_logger('store_admin');
 
 my $conf       = Catmandu->config;
-my $file_store = $conf->{filestore}->{package};
-my $file_opt   = $conf->{filestore}->{options};
+my $file_store = $conf->{filestore}->{default}->{package};
+my $file_opt   = $conf->{filestore}->{default}->{options};
 my $zipper     = '/usr/bin/zip';
 my $unzipper   = '/usr/bin/unzip';
 my $tmp_dir    = $ENV{TMPDIR} || '/tmp';
@@ -37,9 +37,9 @@ GetOptions(
     "F=s" => \$storename
 );
 
-if (defined $storename && exists $conf->{"${storename}store"}) {
-    $file_store = $conf->{"${storename}store"}->{package};
-    $file_opt   = $conf->{"${storename}store"}->{options};
+if (defined $storename && exists $conf->{filestore}->{"${storename}"}) {
+    $file_store = $conf->{filestore}->{"${storename}"}->{package};
+    $file_opt   = $conf->{filestore}->{"${storename}"}->{options};
 }
 
 my $cmd = shift;
