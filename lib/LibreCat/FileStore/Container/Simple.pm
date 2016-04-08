@@ -6,6 +6,7 @@ use IO::File;
 use File::Path;
 use File::Copy;
 use LibreCat::FileStore::File::Simple;
+use Catmandu::Util;
 use namespace::clean;
 
 with 'LibreCat::FileStore::Container';
@@ -65,7 +66,12 @@ sub add {
 
     return undef if ($key =~ m/^\.|[\/]|\s/);
 
-    copy($data, "$path/$key");
+    if (Catmandu::Util::is_invocant($data)) {
+        return copy($data, "$path/$key");
+    }
+    else {
+        return Catmandu::Util::write_file("$path/$key", $data);
+    }
 }
 
 sub delete {
@@ -77,7 +83,9 @@ sub delete {
     unlink "$path/$key";
 }
 
-sub commit {}
+sub commit {
+    return 1;
+}
 
 sub read_container {
     my ($class,$path) = @_;
@@ -86,6 +94,7 @@ sub read_container {
     my $key;
     if ($path =~ m{\/(\d{3})\/(\d{3})\/(\d{3})}) {
         $key = "$1$2$3";
+        $key =~ s{^0+}{};
     }
     else {
         croak "illegal path $path";
