@@ -834,13 +834,6 @@ sub get_access_store {
     $pkg->new(%$file_opts);
 }
 
-sub get_file_path {
-    my ($self, $id) = @_;
-
-    $id = sprintf("%09d", $id);
-    segmented_path($id, segment_size => 3, base_path => $self->config->{upload_dir});
-}
-
 sub uri_for {
     my ($self, $path, $uri_params) = @_;
     $uri_params ||= {};

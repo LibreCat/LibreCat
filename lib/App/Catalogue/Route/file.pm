@@ -19,44 +19,39 @@ use App::Catalogue::Controller::Permission;
 use DateTime;
 use Try::Tiny;
 
-sub _send_it {
+sub _file_exists {
     my ($key, $filename) = @_;
 
     my $container = h->get_file_store()->get($key);
 
     if (defined $container) {
-        
         my $file = $container->get($filename);
-
-        if (defined $file) {
-            my $io = $file->fh;
-
-            return stream_data($io, sub {
-                    my ($data,$writer) = @_;
-
-                    my $buffer_size = h->config->{filestore_api}->{buffer_size} // 1024;
-
-                    while (! $data->eof) {
-                        my $buffer;
-                        my $len = $data->read($buffer,$buffer_size);
-                        $writer->write($buffer);
-                    }
-
-                    $writer->close();
-                    $data->close();
-            });
-        }
-        else {
-            template 'websites/error', {
-                message => "The file does not exist anymore. We're sorry."
-            };
-        }
+        return $file;
     }
     else {
-        template 'websites/error', { 
-                message => "The file does not exist anymore. We're sorry." 
-        };
+        return undef;
     }
+}
+
+sub _send_it {
+    my ($file) = @_;
+
+    my $io = $file->fh;
+
+    return stream_data($io, sub {
+        my ($data,$writer) = @_;
+
+        my $buffer_size = h->config->{filestore_api}->{buffer_size} // 1024;
+
+        while (! $data->eof) {
+            my $buffer;
+            my $len = $data->read($buffer,$buffer_size);
+            $writer->write($buffer);
+        }
+
+        $writer->close();
+        $data->close();
+    });
 }
 
 sub _calc_date {
@@ -229,6 +224,7 @@ get qr{/download/(\d+)/(\d+)} => sub {
 
 # todo: send 404 if file does not exist!!!
     my ($id, $file_id) = splat;
+
     my ($ok, $file_name) = p->can_download(
                 $id,
                 $file_id,
@@ -241,7 +237,15 @@ get qr{/download/(\d+)/(\d+)} => sub {
         return template 'websites/403',{path =>request->path};
     }
 
-    _send_it($id, $file_name);
+    if (my $file = _file_exists($id,$file_name)) {
+        _send_it($file);
+    }
+    else {
+        status 404;
+        template 'websites/error', {
+            message => "The file does not exist anymore. We're sorry."
+        };
+    }
 };
 
 # the route
