@@ -18,11 +18,13 @@ Project splash page for :id.
 
 # /en/award/ID/
 get qr{/en/award/(AW\d+)/*} => sub {
-    my $servername = request->uri_base;
-    my $ip = request->address;
-    #if ($servername =~ /pub2\.ub/ or $servername =~ /pub\.uni-bielefeld/){
-    unless($ip and ($ip eq "10.0.2.2" or $ip eq "129.70.11.105")){
-        forward '/';
+    if(!h->config->{award_status} or h->config->{award_status} ne "live"){
+        my $servername = request->uri_base;
+        my $ip = request->address;
+        #if ($servername =~ /pub\.uni-bielefeld/){
+        unless($ip and ($ip eq "10.0.2.2" or $ip eq "129.70.11.105")){
+            forward '/';
+        }
     }
 
     my ($id) = splat;
@@ -33,11 +35,13 @@ get qr{/en/award/(AW\d+)/*} => sub {
 
 # /award/ID/
 get qr{/award/(AW\d+)/*} => sub {
-    my $servername = request->uri_base;
-    my $ip = request->address;
-    #if ($servername =~ /pub\.uni-bielefeld/){
-    unless($ip and ($ip eq "10.0.2.2" or $ip eq "129.70.11.105")){
-        forward '/';
+    if(!h->config->{award_status} or h->config->{award_status} ne "live"){
+        my $servername = request->uri_base;
+        my $ip = request->address;
+        #if ($servername =~ /pub\.uni-bielefeld/){
+        unless($ip and ($ip eq "10.0.2.2" or $ip eq "129.70.11.105")){
+            forward '/';
+        }
     }
 
     my ($id) = splat;
@@ -49,11 +53,13 @@ get qr{/award/(AW\d+)/*} => sub {
 
 # /en/award
 get qr{/en/award/*} => sub {
-    my $servername = request->uri_base;
-    my $ip = request->address;
-    #if ($servername =~ /pub\.uni-bielefeld/){
-    unless($ip and ($ip eq "10.0.2.2" or $ip eq "129.70.11.105")){
-        forward '/';
+    if(!h->config->{award_status} or h->config->{award_status} ne "live"){
+        my $servername = request->uri_base;
+        my $ip = request->address;
+        #if ($servername =~ /pub\.uni-bielefeld/){
+        unless($ip and ($ip eq "10.0.2.2" or $ip eq "129.70.11.105")){
+            forward '/';
+        }
     }
 
     forward '/award', {lang => "en"};
@@ -62,11 +68,13 @@ get qr{/en/award/*} => sub {
 
 # /award (main function, handling everything)
 get qr{/award/*} => sub {
-    my $servername = request->uri_base;
-    my $ip = request->address;
-    #if ($servername =~ /pub\.uni-bielefeld/){
-    unless($ip and ($ip eq "10.0.2.2" or $ip eq "129.70.11.105")){
-        forward '/';
+    if(!h->config->{award_status} or h->config->{award_status} ne "live"){
+        my $servername = request->uri_base;
+        my $ip = request->address;
+        #if ($servername =~ /pub\.uni-bielefeld/){
+        unless($ip and ($ip eq "10.0.2.2" or $ip eq "129.70.11.105")){
+            forward '/';
+        }
     }
 
     my $store = h->award;#Catmandu::Store::MongoDB->new(database_name => 'PUBAwards');
