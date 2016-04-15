@@ -18,7 +18,7 @@ store:
           password: '$2a$08$p1zhJInkNqy9nvMFsEPde./hU4ERNQuX2UQUjZA/ddrp1uUXikn/6'
           _id: 1234
           super_admin: 1
-	# LDAP authentication
+        # LDAP authentication
         - login: nsteenla
           _id: 4321
 
