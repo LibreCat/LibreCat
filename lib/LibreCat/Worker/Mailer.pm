@@ -24,7 +24,7 @@ use Moo;
 use Email::Sender::Simple qw(sendmail);
 use Try::Tiny;
 
-with 'LibreCat::Worker';
+#with 'LibreCat::Worker';
 
 has to => (is => 'ro', required => 1);
 has from => (is => 'ro', required => 1);

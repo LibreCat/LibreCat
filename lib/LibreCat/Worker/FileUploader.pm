@@ -5,7 +5,7 @@ use Catmandu::Util;
 use IO::File;
 use namespace::clean;
 
-with 'LibreCat::Worker';
+#with 'LibreCat::Worker';
 
 has files      => (is => 'ro' , required => 1);
 has file_store => (is => 'lazy');

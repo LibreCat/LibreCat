@@ -9,7 +9,7 @@ use URI::Escape;
 use Encode qw( encode_utf8 );
 use namespace::clean;
 
-with 'LibreCat::Worker';
+#with 'LibreCat::Worker';
 
 has base_url => (is => 'ro', default => sub {'https://mds.datacite.org'});
 has user => (is => 'ro', required => 1);

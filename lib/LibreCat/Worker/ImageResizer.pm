@@ -6,7 +6,7 @@ use Data::Uniqid;
 use File::Spec;
 use namespace::clean;
 
-with 'LibreCat::Worker';
+#with 'LibreCat::Worker';
 
 has files          => (is => 'ro' , required => 1);
 has access         => (is => 'ro' , requires => 1);
