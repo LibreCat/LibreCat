@@ -3,6 +3,7 @@ package LibreCat::Queue;
 use Catmandu::Sane;
 use Gearman::XS qw(:constants);
 use Gearman::XS::Client;
+use JSON::MaybeXS;
 use Moo;
 
 has gearman => (is => 'lazy');
@@ -14,8 +15,9 @@ sub _build_gearman {
 }
 
 sub add_job {
-    my ($self, @args) = @_;
-    my ($ret, $job_handle) = $self->gearman->do_background(@args);
+    my ($self, $func, $workload) = @_;
+    my ($ret, $job_handle) =
+        $self->gearman->do_background($func, encode_json($workload));
     if ($ret != GEARMAN_SUCCESS) {
         Catmandu::Error->throw($self->gearman->error);
     }

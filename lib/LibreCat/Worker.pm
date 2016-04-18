@@ -2,6 +2,7 @@ package LibreCat::Worker;
 
 use Catmandu::Sane;
 use Gearman::XS::Worker;
+use JSON::MaybeXS;
 
 use parent 'LibreCat::Daemon';
 
@@ -10,7 +11,17 @@ sub daemon {
     sub {
         my $worker = Gearman::XS::Worker->new;
         $worker->add_server('127.0.0.1', 4730);
-        $worker->add_function(@$_) for $self->function_spec;
+        for ($self->function_spec) {
+            my @spec = @$_;
+            my $func = $spec[2];
+            $spec[2] = sub {
+                my ($job) = @_;
+                my $workload = decode_json($job->workload);
+                my $res = $func->($job, $workload);
+                encode_json($res);
+            };
+            $worker->add_function(@spec);
+        }
         $worker->work while 1;
     };
 }

@@ -5,15 +5,16 @@ use Catmandu::Sane;
 use parent 'LibreCat::Worker';
 
 sub function_spec {
-    my ($self) = @_;
+    my ($class) = @_;
     (
         ['send_mail', 0, \&do_send_mail, {}],
     );
 }
 
 sub do_send_mail {
-    system 'echo "mailing ... " >> /tmp/librecat-mail.log';
-    sleep 5;
+    my ($job, $workload) = @_;
+    system 'echo "'.ref($workload).'" >> /tmp/librecat-mail.log';
+    sleep 1;
 }
 
 1;
