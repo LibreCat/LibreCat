@@ -5,6 +5,7 @@ use Gearman::XS qw(:constants);
 use Gearman::XS::Client;
 use JSON::MaybeXS;
 use Moo;
+use namespace::clean;
 
 has gearman => (is => 'lazy');
 

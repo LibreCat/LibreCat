@@ -9,5 +9,11 @@ BEGIN {
 
 use Catmandu::Sane;
 use LibreCat::CLI;
+use Log::Any::Adapter;
+use Log::Log4perl;
+use Path::Tiny;
 
+Log::Log4perl->init(path(Catmandu->root)->child('log4perl.conf')->canonpath);
+Log::Any::Adapter->set('Log4perl');
 LibreCat::CLI->run;
+

@@ -5,23 +5,40 @@ use Proc::Launcher;
 use Proc::Launcher::Manager;
 use File::Spec;
 use Cwd ();
+use namespace::clean;
 
 use parent qw(LibreCat::Cmd);
 
 sub command_opt_spec {
     my ($class) = @_;
     (
-        [ "daemon-name=s", "", { default => $class->daemon_name } ],
         [ "pid-dir=s", "",     { default => $class->pid_dir } ],
         [ "workers=i", "",     { default => 1 } ],
         [ "supervise", "" ],
     );
 }
 
+sub pid_dir {
+    my ($class) = @_;
+    my $path = '/var/run';
+    $path = Cwd::getcwd unless -d -w $path;
+    $path;
+}
+
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $cmd = @$args ? shift @$args : 'status';
+    my $commands = qr/start|stop|restart|status/;
+
+    unless (@$args) {
+        $self->usage_error("should be one of $commands");
+    }
+
+    my $cmd = $args->[-1];
+
+    unless ($cmd =~ /^$commands$/) {
+        $self->usage_error("should be one of $commands");
+    }
 
     my $workers = $opts->workers;
 
@@ -29,9 +46,11 @@ sub command {
 
     my $supervisor;
 
+    my $daemon_name = $self->daemon_name($opts, $args);
+
     if ($opts->supervise) {
         $supervisor = $manager->supervisor(Proc::Launcher->new(
-            daemon_name  => $opts->daemon_name.'.supervisor',
+            daemon_name  => $daemon_name.'.supervisor',
             pid_dir      => $opts->pid_dir,
             start_method => sub {
                 Proc::Launcher::Supervisor->new(manager => $manager)->monitor;
@@ -42,14 +61,14 @@ sub command {
     if ($workers > 1) {
         for (my $i = 1; $i <= $workers; $i++) {
             $manager->register(
-                daemon_name  => $opts->daemon_name.'.'.$i,
-                start_method => $self->daemon,
+                daemon_name  => $daemon_name.'.'.$i,
+                start_method => $self->daemon($opts, $args),
             );
         }
     } else {
         $manager->register(
-            daemon_name  => $opts->daemon_name,
-            start_method => $self->daemon,
+            daemon_name  => $daemon_name,
+            start_method => $self->daemon($opts, $args),
         );
     }
 
@@ -96,9 +115,6 @@ sub command {
             say $status;
         }
     }
-    else {
-        $self->usage_error("should be one of start|stop|restart|status");
-    }
 }
 
 sub daemon {
@@ -108,17 +124,11 @@ sub daemon {
 }
 
 sub daemon_name {
-    my ($class) = @_;
+    my ($self, $opts, $args) = @_;
+    my $class = ref $self;
     my $name = lc $class;
     $name =~ s/:+/-/g;
     $name;
-}
-
-sub pid_dir {
-    my ($class) = @_;
-    my $path = '/var/run';
-    $path = Cwd::getcwd unless -d -w $path;
-    $path;
 }
 
 1;
@@ -133,17 +143,17 @@ LibreCat::Daemon - base class for librecat daemons
 
 =head1 SYNOPSIS
 
-    package LibreCat::Cmd::mydaemon
+    package LibreCat::Cmd::mydaemon;
+
     use parent 'LibreCat::Daemon';
 
     sub daemon {
         sub {
             while (1) {
-                print "hard at work\n";
+                log "hard at work... ";
                 sleep 5;
             }
         };
-    }
 
     1;
 
