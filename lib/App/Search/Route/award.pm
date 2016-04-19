@@ -65,7 +65,9 @@ get qr{/en/award/*} => sub {
     forward '/award', {lang => "en"};
 };
 
-
+#get qr{/award_iframe/*} => sub {
+#      template 'award/main_with_iframe';
+#};
 # /award (main function, handling everything)
 get qr{/award/*} => sub {
     if(!h->config->{award_status} or h->config->{award_status} ne "live"){
@@ -233,7 +235,14 @@ get qr{/award/*} => sub {
 
         $hits->{formreturn} = $returnhash if $returnhash;
 
-        $tmpl = "award/main";
+        if(params->{ftyp} and params->{ftyp} eq "iframe"){
+            $tmpl = "award/main_iframe.tt";
+            $hits->{ftyp} = params->{ftyp};
+        }
+        else {
+            $tmpl = "award/main";
+        }
+
         #$tmpl .= "_$lang" if $lang;
         $hits->{lang} = "en" if $lang;
 
@@ -258,7 +267,14 @@ get qr{/award/*} => sub {
             );
             $hit->{people} = $awardhits if $awardhits->{total};
 
-            $tmpl = "award/awardRecord";
+            if(params->{ftyp} and params->{ftyp} eq "iframe"){
+                $tmpl = "award/awardRecord_iframe";
+                $hit->{ftyp} = params->{ftyp};
+            }
+            else {
+                $tmpl = "award/awardRecord";
+            }
+
             #$tmpl .= "_$lang" if $lang;
             $hit->{lang} = "en" if $lang;
 
@@ -282,9 +298,17 @@ get qr{/award/*} => sub {
             #return to_dumper $hit->{otheraward};
         }
 
-        $tmpl = "award/preisRecord";
+        if(params->{ftyp} and params->{ftyp} eq "iframe"){
+            $tmpl = "award/preisRecord_iframe";
+            $hit->{ftyp} = params->{ftyp};
+        }
+        else {
+            $tmpl = "award/preisRecord";
+        }
+
         #$tmpl .= "_$lang" if $lang;
         $hit->{lang} = "en" if $lang;
+        $hit->{ftyp} = params->{ftyp} if params->{ftyp};
         #return to_dumper $hit;
         template $tmpl, $hit;
     }
