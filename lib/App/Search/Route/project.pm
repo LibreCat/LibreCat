@@ -20,7 +20,7 @@ get qr{/project/(P\d+)/*} => sub {
     my $proj = h->project->get($id);
 
     my $pub = h->publication->search(cql_query => "project=$id AND status=public", limit => 100);
-    $proj->{project_publication} = $pub;
+    $proj->{project_publication} = $pub if $pub->{total} > 0;
 
     template 'project/project', $proj;
 };
@@ -28,7 +28,7 @@ get qr{/project/(P\d+)/*} => sub {
 get qr{/project/*} => sub {
     if(params->{ttyp} and params->{ttyp} eq "hist_proj"){
         my $hits;
-        my $limit = params->{limit} ||= h->config->{store}->{default_searchpage_size};
+        my $limit = params->{limit} ||= h->config->{default_searchpage_size};
         my $p = {
             limit => $limit,
             start => params->{start} ||= 0,

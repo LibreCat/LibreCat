@@ -1,6 +1,35 @@
 # publication type
 # set default type
 add_field(_r.type,journalArticle)
+if all_match(DT,'Book Review')
+  set_field(_r.type,review)
+end
+if all_match(DT,'Meeting Abstract')
+  set_field(_r.type,conferenceAbstract)
+end
+if all_match(DT,'Review; Book Chapter')
+  set_field(_r.type,review)
+end
+if all_match(DT,'Proceedings Paper')
+  set_field(_r.type,conference)
+end
+if all_match(DT,'Book Chapter')
+  set_field(_r.type,bookChapter)
+end
+
+if all_match(DT,'Article')
+  set_field(_r.article_type,original)
+end
+if all_match(DT,'Letter')
+  set_field(_r.article_type,letter_note)
+end
+if all_match(DT,'Review')
+  set_field(_r.article_type,review)
+end
+if all_match(DT,'Editorial Material')
+  set_field(_r.article_type,letter_note)
+end
+
 add_field(_r.isi,1)
 add_field(_r.quality_controlled,1)
 add_field(_r.publication_status,published)
@@ -31,15 +60,16 @@ end
 
 move_field(TI,_r.title)
 join_field(_r.title,' ')
-capitalize(_r.title)
+#capitalize(_r.title)
 
 #abstract
 if exists (AB)
-  move_field('AB','_r.abstract.0.text')
-  add_field('_r.abstract.0.lang','eng')
+  join_field(AB,' ')
+  move_field(AB,_r.abstract.0.text)
+  add_field(_r.abstract.0.lang,eng)
 end
 
-move_field('DE','_r.keyword')
+move_field(DE,_r.keyword)
 split_field(_r.keyword.*, ';')
 flatten(_r.keyword)
 trim(_r.keyword.*)
@@ -48,25 +78,32 @@ move_field('DI','_r.doi')
 
 # use maybe lookup via issn in crossref journal list
 move_field('SO','_r.publication')
-capitalize(_r.publication)
+join_field(_r.publication,' ')
+#split_field(_r.publication,' ')
+#capitalize(_r.publication.*)
+#join_field(_r.publication,' ')
 
 move_field(SN,'_r.publication_identifier.issn.0')
 move_field(EI,'_r.publication_identifier.eissn.0')
 replace_all(UT,'^WOS:','')
 move_field(UT,_r.external_id.isi)
-move_field(PM,_r.external_id.pmid)
+if exists(PM)
+  move_field(PM,_r.external_id.pmid)
+  add_field(_r.pmid,1)
+end
 move_field(VL,_r.volume)
 move_field(IS,_r.issue)
 move_field(SE,_r.series_title)
 move_field(PY,_r.year)
 
-if exists(PG)
-  move_field(PG, _r.page)
-end
+#if exists(PG)
+#  move_field(PG, _r.page)
+#end
 if exists(BP)
-  move_field(BP,'_r.page.$append')
-  move_field(EP,'_r.page.$append')
-  join_field(page, '-')
+  move_field(BP,_r.page.$append)
+  move_field(EP,_r.page.$append)
+  uniq(_r.page)
+  join_field(_r.page, -)
 end
 
 move_field(AR,_r.article_number)
@@ -74,7 +111,9 @@ move_field(AR,_r.article_number)
 split_field(BN,'; ')
 move_field(BN.*,'_r.publication_identifier.isbn.$append')
 move_field(PU,_r.publisher)
-capitalize(_r.publisher)
+split_field(_r.publisher,' ')
+capitalize(_r.publisher.*)
+join_field(_r.publisher,' ')
 move_field(PI,_r.place)
 capitalize(_r.place)
 
@@ -89,7 +128,16 @@ timestamp(timestamp)
 datetime_format(timestamp, source_pattern: '%s', destination_pattern:    '%Y-%m-%d',)
 move_field(timestamp, _r.message.$append)
 prepend(_r.message.0, 'WoS Import ')
-move_field(LA, _r.message.$append)
+#move_field(LA, _r.message.$append)
+if any_match(LA,'German')
+  add_field(tmp.iso,'ger')
+  move_field(tmp,_r.language.$append)
+  remove_field(tmp)
+else
+  add_field(tmp.iso,'eng')
+  move_field(tmp,_r.language.$append)
+  remove_field(tmp)
+end
 if exists(FU)
   move_field(FU, _r.message.$append)
   prepend(_r.message.$last, 'Funder: ')
@@ -98,6 +146,6 @@ join_field(_r.message, ' / ')
 
 retain_field(_r)
 move_field(_r, .)
-add_citation()
+#add_citation()
 
 vacuum()
