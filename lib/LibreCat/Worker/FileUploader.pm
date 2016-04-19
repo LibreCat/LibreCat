@@ -1,13 +1,14 @@
 package LibreCat::Worker::FileUploader;
 
-use Moo;
+use Catmandu::Sane;
 use Catmandu::Util;
 use IO::File;
+use Moo;
 use namespace::clean;
 
-#with 'LibreCat::Worker';
+with 'LibreCat::Worker';
 
-has files      => (is => 'ro' , required => 1);
+has files      => (is => 'ro', required => 1);
 has file_store => (is => 'lazy');
 
 sub _build_file_store {
@@ -20,12 +21,18 @@ sub _build_file_store {
     $pkg->new(%$file_opts);
 }
 
-sub do_work {
-    my ($self, $key, $filename, $path) = @_;
+# TODO return values
+sub work {
+    my ($self, $opts) = @_;
 
-    return -1 unless defined $key && $key =~ /^\d{9}$/;
-    return -1 unless defined $filename;
-    return -1 unless defined $path && -f $path && -r $path;
+    my $key = $opts->{key};
+    my $filename = $opts->{filename};
+    my $path = $opts->{path};
+
+    # TODO
+    #return -1 unless defined $key && $key =~ /^\d{9}$/;
+    #return -1 unless defined $filename;
+    #return -1 unless defined $path && -f $path && -r $path;
 
     $self->log->info("loading container $key");
     my $container = $self->file_store->get($key);
@@ -42,12 +49,18 @@ sub do_work {
         $container->add($filename, IO::File->new($path));
         $container->commit;
 
-        return 1;
+        # TODO
+        #return 1;
     }
     else {
         $self->log->error("failed to create container $key");
-        return -1;
+
+        # TODO
+        #return -1;
     }
+
+    # TODO
+    return;
 }
 
 1;

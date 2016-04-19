@@ -2,6 +2,7 @@ package LibreCat::Cmd::worker;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(require_package);
+use Catmandu;
 use Gearman::XS::Worker;
 use JSON::MaybeXS;
 
@@ -33,7 +34,7 @@ sub daemon {
     my $worker_pkg = require_package($worker_name, 'LibreCat::Worker');
 
     sub {
-        my $worker = $worker_pkg->new;
+        my $worker = $worker_pkg->new(Catmandu->config->{worker}{$worker_name} || {});
         my $fn = sub {
             my ($job) = @_;
             my $workload = decode_json($job->workload);

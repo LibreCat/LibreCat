@@ -7,6 +7,7 @@ use namespace::clean;
 
 with 'LibreCat::Worker';
 
+# TODO return values
 sub work {
     my ($self, $opts) = @_;
 

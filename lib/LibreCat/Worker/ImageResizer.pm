@@ -1,12 +1,13 @@
 package LibreCat::Worker::ImageResizer;
 
-use Moo;
+use Catmandu::Sane;
 use Catmandu::Util;
 use Data::Uniqid;
 use File::Spec;
+use Moo;
 use namespace::clean;
 
-#with 'LibreCat::Worker';
+with 'LibreCat::Worker';
 
 has files          => (is => 'ro' , required => 1);
 has access         => (is => 'ro' , requires => 1);
@@ -36,8 +37,12 @@ sub _build_access_store {
     $pkg->new(%$file_opts);
 }
 
-sub do_work {
-    my ($self,$key,$filename) = @_;
+# TODO return values
+sub work {
+    my ($self, $opts) = @_;
+
+    my $key = $opts->{key};
+    my $filename = $opts->{filename};
 
     # Retrieve the file
     $self->log->info("loading container $key");
