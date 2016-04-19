@@ -56,7 +56,7 @@ sub get {
             md5      => '' ,
             created  => $created ,
             modified => $modified ,
-            data     => $data 
+            data     => $data
     );
 }
 
@@ -139,13 +139,13 @@ __END__;
 
 =head1 NAME
 
-LibreCat::FileStore::Container::BagIt - A BagIt implementation of a file storage container
+LibreCat::FileStore::Container::Simple - A default implementation of a file storage container
 
 =head1 SYNOPSIS
 
-    use LibreCat::FileStore::BagIt;
+    use LibreCat::FileStore::Simple;
 
-    my $filestore => LibreCat::FileStore::BagIt->new(%options);
+    my $filestore = LibreCat::FileStore::Simple->new(%options);
 
     my $container = $filestore->get('1234');
 
