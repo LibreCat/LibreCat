@@ -54,16 +54,16 @@ Author approves the request. Email will be sent to user.
 get '/rc/approve/:key' => sub {
     require Dancer::Plugin::Email;
 
-    my $bag = Catmandu->store('reqcopy')->bag;
+    my $bag = Catmandu->store->bag('reqcopy');
     my $data = $bag->get(params->{key});
     return "Nothing to approve." unless $data;
 
     $data->{approved} = 1;
     $bag->add($data);
-    
+
     my $body = export_to_string({ key => params->{key}, host => h->host }, 'Template',
         template => 'views/email/req_copy_approve.tt');
-    
+
     try {
         email {
             to => $data->{user_email},
@@ -71,7 +71,7 @@ get '/rc/approve/:key' => sub {
             body => $body,
         };
         return "Thank you for your approval. The user will be notified to download the file.";
-        
+
     } catch {
         return "Could not send email: $_";
     }
@@ -86,7 +86,7 @@ to user. Delete request key from database.
 get '/rc/deny/:key' => sub {
     require Dancer::Plugin::Email;
 
-    my $bag = Catmandu->store('reqcopy')->bag;
+    my $bag = Catmandu->store->bag('reqcopy');
     my $data = $bag->get(params->{key});
     return "Nothing to deny." unless $data;
 
@@ -113,7 +113,7 @@ Now get the document if time has not expired yet.
 
 =cut
 get '/rc/:key' => sub {
-    my $check = Catmandu->store('reqcopy')->bag->get(params->{key});
+    my $check = Catmandu->store->bag('reqcopy')->get(params->{key});
     if ($check and $check->{approved} == 1) {
         _send_it($check->{record_id}, $check->{file_name});
     } else {
@@ -130,7 +130,7 @@ Request a copy of the publication. Email will be sent to the author.
 any '/rc/:id/:file_id' => sub {
     require Dancer::Plugin::Email;
 
-    my $bag = Catmandu->store('reqcopy')->bag;
+    my $bag = Catmandu->store->bag('reqcopy');
     my $file = _get_file_info(params->{id}, params->{file_id});
     unless ($file->{request_a_copy}) {
         forward '/publication/'.params->{id}, {method => 'GET'};
@@ -150,7 +150,7 @@ any '/rc/:id/:file_id' => sub {
         query => $query,
         limit => 1
     );
-    
+
     my $stored = $bag->add({
         record_id => params->{id},
         file_id => params->{file_id},
@@ -218,7 +218,7 @@ get qr{/download/(\d+)/(\d+)} => sub {
 # the route
 get '/thumbnail/:id' => sub {
     my $id = params->{id};
-    
+
     my $path = h->get_file_path($id);
     if (-e path($path, "thumbnail.png")){
         _send_it($id, "thumbnail.png");
