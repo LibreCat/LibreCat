@@ -1,6 +1,5 @@
 # fix publication data at update
 
-#vacuum()
 compact_array('department')
 compact_array('project')
 delete_empty()
@@ -9,7 +8,6 @@ page_range_number()
 join_field(keyword, ';') #needs to stay here so that hash_array won't kill keywords when using publish button on frontdoor
 hash_array()
 clean_preselects()
-#language()
 maybe_add_urn()
 person()
 volume_sort()
@@ -26,11 +24,22 @@ if exists(department)
 end
 fix_too_many_departments()
 
-copy_field(bi_doctype,type)
+if exists(project)
+  do list(path:project, var:loop)
+    do identity()
+      copy_field(loop._id,loop.tmp)
+      lookup_in_store(loop.tmp, search, bag:project)
+      move_field(loop.tmp.funding_program,loop.funding_program)
+      move_field(loop.tmp.grant_number,loop.grant_number)
+      remove_field(loop.tmp)
+      if all_match(loop.funding_program,'FP7|H2020')
+        add_field(ec_funded,1)
+      end
+    end
+  end
+end
 
-#isbn13(publication_identifier.isbn.*)
-#issn(publication_identifier.issn.*)
-#issn(publication_identifier.eissn.*)
+copy_field(bi_doctype,type)
 
 split_field(nasc, ';|,')
 trim(nasc.*)
@@ -52,7 +61,6 @@ if all_match(status, returned)
 end
 
 remove_field('finalSubmit')
-#vacuum()
 delete_empty()
 
 add_citation()
