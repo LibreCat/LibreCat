@@ -23,7 +23,7 @@ uploader:
 access: &accessstore_settings
     package: Simple
     options:
-        root: /data2/librecat/access_uploads
+        root: /data2/librecat/file_uploads
 
 accesss_thumbnailer:
     package: 'LibreCat::Worker::ImageResizer'

@@ -46,22 +46,6 @@ sub ip_match {
     return 0;
 }
 
-sub file_store {
-    my $file_store = h->config->{filestore}->{default}->{package};
-    my $file_opts  = h->config->{filestore}->{default}->{options} // {};
-
-    my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
-    $pkg->new(%$file_opts);
-}
-
-sub access_store {
-    my $file_store = h->config->{filestore}->{access}->{package};
-    my $file_opts  = h->config->{filestore}->{access}->{options} // {};
-
-    my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
-    $pkg->new(%$file_opts);
-}
-
 sub do_error {
     my ($code,$msg,$http_code) = @_;
     $http_code = 500 unless defined $http_code;
@@ -86,7 +70,7 @@ E.g.
 =cut
 
 	get '/filestore' => needs role => 'api_access' => sub {
-        my $gen = file_store()->list;
+        my $gen = h->get_file_store()->list;
 
         content_type 'text/plain';
 
@@ -126,7 +110,7 @@ E.g.
 
     get '/filestore/:key' => needs role => 'api_access' => sub {
         my $key = param('key');
-        my $container = file_store()->get($key);
+        my $container = h->get_file_store()->get($key);
 
         content_type 'application/json';
 
@@ -174,7 +158,7 @@ E.g.
         my $key       = param('key');
         my $filename  = param('filename');
 
-        my $container = file_store()->get($key);
+        my $container = h->get_file_store()->get($key);
 
         if (defined $container) {
             
@@ -223,10 +207,10 @@ E.g.
 
         content_type 'application/json';
         
-        my $container = file_store()->get($key);
+        my $container = h->get_file_store()->get($key);
 
         if (defined $container) {
-            file_store()->delete($key);
+            h->get_file_store()->delete($key);
             return { ok => 1 };
         }
         else {
@@ -250,7 +234,7 @@ E.g.
 
         content_type 'application/json';
 
-        my $container = file_store()->get($key);
+        my $container = h->get_file_store()->get($key);
 
         if (defined $container) {
             
@@ -287,10 +271,10 @@ E.g.
 
         content_type 'application/json';
 
-        my $container = file_store()->get($key);
+        my $container = h->get_file_store()->get($key);
 
         unless ($container) {
-            $container = file_store()->add($key);
+            $container = h->get_file_store()->add($key);
         }
 
         if ($container) {
@@ -323,9 +307,11 @@ E.g.
 =cut
     get '/access/:key/:filename/thumbnail' => needs role => 'api_access' => sub {
         my $key       = param('key');
-        my $filename  = param('filename') . '.thumb.png';
 
-        my $container = access_store()->get($key);
+        # For now stay backwards compatible and keep one thumbnail per container...
+        my $filename  = 'thumbnail.png';
+
+        my $container = h->get_access_store()->get($key);
 
         if (defined $container) {
             
@@ -350,7 +336,7 @@ E.g.
                 });
             }
             else {
-                return do_error('NOT_FOUND','no thumbnail for this file',404);
+                return Dancer::send_file('public/images/thumbnail_dummy.png', system_path => 1, filename => 'thumbnail_dummy.png');
             }
         }
         else {
@@ -394,11 +380,13 @@ E.g.
 =cut
     del '/access/:key/:filename/thumbnail' => needs role => 'api_access' => sub {
         my $key       = param('key');
-        my $filename  = param('filename') . '.thumb.png';
+        
+        # For now stay backwards compatible and keep one thumbnail per container...
+        my $filename  = 'thumbnail.png';
 
         content_type 'application/json';
 
-        my $container = access_store()->get($key);
+        my $container = h->get_access_store()->get($key);
 
         if (defined $container) {
             

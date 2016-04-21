@@ -7,6 +7,7 @@ use File::Path;
 use File::Copy;
 use LibreCat::FileStore::File::Simple;
 use Catmandu::Util;
+use URI::Escape;
 use namespace::clean;
 
 with 'LibreCat::FileStore::Container';
@@ -22,7 +23,10 @@ sub list {
     for my $file (glob("$path/*")) {
         $file =~ s/^.*\///;
         next if index($file,".") == 0;
-        push @result , $self->get($file);
+
+        my $unpacked_key = $self->unpack_key($file);
+
+        push @result , $self->get($unpacked_key);
     }
 
     return @result;
@@ -39,7 +43,9 @@ sub get {
     my ($self,$key) = @_;
     my $path = $self->_path;
 
-    my $file = "$path/$key";
+    my $packed_key = $self->pack_key($key);
+
+    my $file = "$path/$packed_key";
 
     return undef unless -f $file;
 
@@ -64,13 +70,13 @@ sub add {
     my ($self,$key,$data) = @_;
     my $path = $self->_path;
 
-    return undef if ($key =~ m/^\.|[\/]|\s/);
+    my $packed_key = $self->pack_key($key);
 
     if (Catmandu::Util::is_invocant($data)) {
-        return copy($data, "$path/$key");
+        return copy($data, "$path/$packed_key");
     }
     else {
-        return Catmandu::Util::write_file("$path/$key", $data);
+        return Catmandu::Util::write_file("$path/$packed_key", $data);
     }
 }
 
@@ -78,9 +84,10 @@ sub delete {
     my ($self,$key) = @_;
     my $path = $self->_path;
 
-    return undef if ($key =~ m/^\.|[\/]|\s/);
-    return undef unless -f "$path/$key";
-    unlink "$path/$key";
+    my $packed_key = $self->pack_key($key);
+
+    return undef unless -f "$path/$packed_key";
+    unlink "$path/$packed_key";
 }
 
 sub commit {
@@ -129,6 +136,18 @@ sub delete_container {
     return undef unless -d $path;
 
     File::Path::remove_tree($path);
+}
+
+sub pack_key {
+    my $self = shift;
+    my $key  = shift;
+    uri_escape($key);
+}
+
+sub unpack_key {
+    my $self = shift;
+    my $key  = shift;
+    uri_unescape($key);
 }
 
 1;
