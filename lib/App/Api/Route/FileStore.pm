@@ -161,25 +161,25 @@ E.g.
         my $container = h->get_file_store()->get($key);
 
         if (defined $container) {
-            
-            my $file = $container->get($filename);
-
-            if (defined $file) {
-                my $io = $file->fh;
-
-                return stream_data($io, sub {
+            if ($container->exists($filename)) {
+                # Do to inlining of code by Plack no blessed code
+                # Can be send to stream_data. We retrieve the file
+                # from the container inside the stream_data method.
+                return stream_data(undef, sub {
                         my ($data,$writer) = @_;
+                        
+                        my $io = $container->get($filename)->fh;
 
-                        my $buffer_size = h->config->{filestore_api}->{buffer_size} // 1024;
+                        my $buffer_size = h->config->{filestore}->{api}->{buffer_size} // 1024;
 
-                        while (! $data->eof) {
+                        while (! $io->eof) {
                             my $buffer;
-                            my $len = $data->read($buffer,$buffer_size);
+                            my $len = $io->read($buffer,$buffer_size);
                             $writer->write($buffer);
                         }
 
                         $writer->close();
-                        $data->close();
+                        $io->close();
                 });
             }
             else {
