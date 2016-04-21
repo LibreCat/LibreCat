@@ -138,7 +138,8 @@ Now get the document if time has not expired yet.
 get '/rc/:key' => sub {
     my $check = Catmandu->store->bag('reqcopy')->get(params->{key});
     if ($check and $check->{approved} == 1) {
-        _send_it($check->{record_id}, $check->{file_name});
+        my $file = _file_exists($check->{record_id}, $check->{file_name});
+        _send_it($file);
     } else {
         template 'websites/error',
             {message => "The time slot has expired. You can't download the document anymore."};
