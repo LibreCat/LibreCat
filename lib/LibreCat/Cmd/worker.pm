@@ -1,7 +1,7 @@
 package LibreCat::Cmd::worker;
 
 use Catmandu::Sane;
-use Catmandu::Util qw(require_package);
+use Catmandu::Util qw(require_package check_maybe_hash_ref);
 use Catmandu;
 use Gearman::XS::Worker;
 use JSON::MaybeXS;
@@ -38,7 +38,7 @@ sub daemon {
         my $fn = sub {
             my ($job) = @_;
             my $workload = decode_json($job->workload);
-            my $res = $worker->work($workload);
+            check_maybe_hash_ref(my $res = $worker->work($workload));
             encode_json($res // {});
         };
         my $gm_worker = Gearman::XS::Worker->new;
@@ -57,5 +57,13 @@ __END__
 =head1 NAME
 
 LibreCat::Cmd::worker - manage librecat worker processes
+
+=head1 SYNOPSIS
+
+    # this will start 2 LibreCat::Worker::Mailer worker processes
+    # and 1 supervising process
+    librecat worker mailer start --workers 2 --supervise
+    # stop them again
+    librecat worker mailer stop --workers 2 --supervise
 
 =cut
