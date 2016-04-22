@@ -13,22 +13,46 @@ use Catmandu qw(export_to_string);
 use Dancer ':syntax';
 use Dancer::Plugin::Email;
 use Dancer::Plugin::Auth::Tiny;
+use Dancer::Plugin::StreamData;
 use App::Helper;
 use App::Catalogue::Controller::Permission;
 use DateTime;
 use Try::Tiny;
 
-sub _send_it {
-    my ($id, $file_name) = @_;
-    my $dest_dir = h->get_file_path($id);
-    my $path_to_file = path($dest_dir, $file_name);
-    if(-e $path_to_file){
-        return Dancer::send_file($path_to_file, system_path => 1, filename => $file_name);
+sub _file_exists {
+    my ($key, $filename) = @_;
+
+    my $container = h->get_file_store()->get($key);
+
+    if (defined $container) {
+        my $file = $container->get($filename);
+        return $file;
     }
     else {
-        template 'websites/error',
-            {message => "The file does not exist anymore. We're sorry."};
+        return undef;
     }
+}
+
+sub _send_it {
+    my ($key, $filename) = @_;
+
+    my $container = h->get_file_store()->get($key);
+
+    return stream_data(undef, sub {
+        my ($data,$writer) = @_;
+
+        my $io = $container->get($filename)->fh;
+        my $buffer_size = h->config->{filestore}->{api}->{buffer_size} // 1024;
+
+        while (! $io->eof) {
+            my $buffer;
+            my $len = $io->read($buffer,$buffer_size);
+            $writer->write($buffer);
+        }
+
+        $writer->close();
+        $io->close();
+    });
 }
 
 sub _calc_date {
@@ -54,16 +78,16 @@ Author approves the request. Email will be sent to user.
 get '/rc/approve/:key' => sub {
     require Dancer::Plugin::Email;
 
-    my $bag = Catmandu->store('reqcopy')->bag;
+    my $bag = Catmandu->store->bag('reqcopy');
     my $data = $bag->get(params->{key});
     return "Nothing to approve." unless $data;
 
     $data->{approved} = 1;
     $bag->add($data);
-    
+
     my $body = export_to_string({ key => params->{key}, host => h->host }, 'Template',
         template => 'views/email/req_copy_approve.tt');
-    
+
     try {
         email {
             to => $data->{user_email},
@@ -71,7 +95,7 @@ get '/rc/approve/:key' => sub {
             body => $body,
         };
         return "Thank you for your approval. The user will be notified to download the file.";
-        
+
     } catch {
         return "Could not send email: $_";
     }
@@ -86,7 +110,7 @@ to user. Delete request key from database.
 get '/rc/deny/:key' => sub {
     require Dancer::Plugin::Email;
 
-    my $bag = Catmandu->store('reqcopy')->bag;
+    my $bag = Catmandu->store->bag('reqcopy');
     my $data = $bag->get(params->{key});
     return "Nothing to deny." unless $data;
 
@@ -113,7 +137,7 @@ Now get the document if time has not expired yet.
 
 =cut
 get '/rc/:key' => sub {
-    my $check = Catmandu->store('reqcopy')->bag->get(params->{key});
+    my $check = Catmandu->store->bag('reqcopy')->get(params->{key});
     if ($check and $check->{approved} == 1) {
         _send_it($check->{record_id}, $check->{file_name});
     } else {
@@ -130,7 +154,7 @@ Request a copy of the publication. Email will be sent to the author.
 any '/rc/:id/:file_id' => sub {
     require Dancer::Plugin::Email;
 
-    my $bag = Catmandu->store('reqcopy')->bag;
+    my $bag = Catmandu->store->bag('reqcopy');
     my $file = _get_file_info(params->{id}, params->{file_id});
     unless ($file->{request_a_copy}) {
         forward '/publication/'.params->{id}, {method => 'GET'};
@@ -150,7 +174,7 @@ any '/rc/:id/:file_id' => sub {
         query => $query,
         limit => 1
     );
-    
+
     my $stored = $bag->add({
         record_id => params->{id},
         file_id => params->{file_id},
@@ -198,34 +222,40 @@ and user rights will be checked before.
 
 =cut
 get qr{/download/(\d+)/(\d+)} => sub {
-#get '/download/:id/:file_id' => sub {
-# todo: send 404 if file does not exist!!!
     my ($id, $file_id) = splat;
+
     my ($ok, $file_name) = p->can_download(
                 $id,
                 $file_id,
                 session->{user},
                 session->{role},
                 request->address);
+
     unless ($ok) {
         status 403;
         return template 'websites/403',{path =>request->path};
     }
 
-    _send_it($id, $file_name);
+    if (_file_exists($id,$file_name)) {
+        _send_it($id,$file_name);
+    }
+    else {
+        status 404;
+        template 'websites/error', {
+            message => "The file does not exist anymore. We're sorry."
+        };
+    }
 };
 
-# the route
-get '/thumbnail/:id' => sub {
-    my $id = params->{id};
-    
-    my $path = h->get_file_path($id);
-    if (-e path($path, "thumbnail.png")){
-        _send_it($id, "thumbnail.png");
-    } else {
-        return Dancer::send_file('public/images/thumbnail_dummy.png', system_path => 1, filename => 'thumbnail_dummy.png');
-    }
+=head2 GET /thumbnail/:id
 
+Download the thumbnail of the document
+
+=cut
+get '/thumbnail/:id' => sub {
+    my $key = params->{id};
+    
+    redirect "/librecat/api/access/$key/x/thumbnail";
 };
 
 1;

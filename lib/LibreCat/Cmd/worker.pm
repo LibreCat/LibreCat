@@ -38,8 +38,7 @@ sub daemon {
         my $fn = sub {
             my ($job) = @_;
             my $workload = decode_json($job->workload);
-            check_maybe_hash_ref(my $res = $worker->work($workload));
-            encode_json($res // {});
+            $worker->work($workload);
         };
         my $gm_worker = Gearman::XS::Worker->new;
         $gm_worker->add_server('127.0.0.1', 4730);

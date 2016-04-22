@@ -814,19 +814,24 @@ sub search_award {
     return $hits;
 }
 
-sub get_file_path {
-    my ($self, $id) = @_;
+sub get_file_store {
+    my ($self) = @_;
 
-    $id = sprintf("%09d", $id);
-    segmented_path($id, segment_size => 3, base_path => $self->config->{upload_dir});
+    my $file_store = $self->config->{filestore}->{default}->{package};
+    my $file_opts  = $self->config->{filestore}->{default}->{options} // {};
+
+    my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
+    $pkg->new(%$file_opts);
 }
 
-sub thumbnail_url {
-    my ($self, $id) = @_;
-    my $thumbnail = path($self->get_file_path($id), "thumbnail.png");
-    if (-e $thumbnail){
-        return path($self->get_file_path($id), "thumbnail.png");
-    }
+sub get_access_store {
+    my ($self) = @_;
+
+    my $file_store = $self->config->{filestore}->{access}->{package};
+    my $file_opts  = $self->config->{filestore}->{access}->{options} // {};
+
+    my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
+    $pkg->new(%$file_opts);
 }
 
 sub uri_for {

@@ -21,18 +21,57 @@ sub _build_file_store {
     $pkg->new(%$file_opts);
 }
 
-# TODO return values
 sub work {
     my ($self, $opts) = @_;
 
     my $key = $opts->{key};
     my $filename = $opts->{filename};
     my $path = $opts->{path};
+    $key       = '' unless $key;
+    $filename  = '' unless $filename;
+    $path      = '' unless $path;
+    my $delete = exists $opts->{delete} && $opts->{delete} == 1 ? "Y" : "N";
 
-    # TODO
-    #return -1 unless defined $key && $key =~ /^\d{9}$/;
-    #return -1 unless defined $filename;
-    #return -1 unless defined $path && -f $path && -r $path;
+    $self->log->debug("key: $key ; filename: $filename ; path: $path ; delete: $delete");
+
+    if ($delete eq 'Y') {
+        return $self->do_delete($key,$filename,$path,%$opts);
+    }
+    else {
+        return $self->do_upload($key,$filename,$path,%$opts);
+    }
+}
+
+sub do_delete {
+    my ($self, $key, $filename, $path, %opts) = @_;
+
+    return -1 unless length $key && $key =~ /^\d+$/;
+
+    $self->log->info("loading container $key");
+    my $container = $self->file_store->get($key);
+
+    unless ($container) {
+        $self->log->error("$key not found");
+        return -1;
+    }
+
+    if (defined $filename) {
+        $self->log->info("deleting $filename from container $key");
+        return $container->delete($filename);
+    }
+    else {
+        $self->log->info("deleting container $key");
+        return $self->file_store->delete($key);
+    }
+}
+
+sub do_upload {
+    my ($self, $key, $filename, $path, %opts) = @_;
+
+    return -1 unless length $key && $key =~ /^\d+$/;
+    return -1 unless length $filename;
+    return -1 unless length $path && -f $path && -r $path;
+>>>>>>> dev
 
     $self->log->info("loading container $key");
     my $container = $self->file_store->get($key);
@@ -44,6 +83,7 @@ sub work {
     }
 
     if ($container) {
+<<<<<<< HEAD
         $self->log->info("storeing $filename in container $key");
 
         $container->add($filename, IO::File->new($path));
@@ -51,6 +91,20 @@ sub work {
 
         # TODO
         #return 1;
+=======
+        $self->log->info("storing $filename in container $key");
+
+        my $ret = $container->add($filename, IO::File->new($path));
+
+        if ($ret) {
+            $container->commit;
+            return 1;
+        }
+        else {
+            $self->log->error("failed to store $filename in container $key");
+            return -1;
+        }
+>>>>>>> dev
     }
     else {
         $self->log->error("failed to create container $key");
@@ -85,7 +139,7 @@ LibreCat::Worker::FileUploader - a worker for uploading files into the repostito
                         }
                    });
 
-    $uploader->do_work($key,$filename,$filepath);
+    $uploader->do_work($key,$filename,$filepath,[ delete => 1]);
 
 =head2 CONFIGURATION
 

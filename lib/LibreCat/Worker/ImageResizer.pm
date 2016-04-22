@@ -44,6 +44,8 @@ sub work {
     my $key = $opts->{key};
     my $filename = $opts->{filename};
 
+    my $thumbnail_name = 'thumbnail.png';
+
     # Retrieve the file
     $self->log->info("loading container $key");
     my $container = $self->file_store->get($key);
@@ -86,14 +88,18 @@ sub work {
         $container = $self->access_store->add($key);
     }
 
-    $self->log->info("storing ${filename}.thumb.png in access container $key");
-    $container->add("${filename}.thumb.png", IO::File->new("$tmpdir/thumb.png"));
+    $self->log->info("storing $thumbnail_name in access container $key");
+    my $ret = $container->add($thumbnail_name, IO::File->new("$tmpdir/thumb.png"));
     
+    unless ($ret) {
+        $self->log->error("failed to create a thumbail for $filename in container $key");
+    }
+
     $self->log->info("cleaning tmpdir $tmpdir");
     system("rm $tmpdir/*");
     system("rmdir $tmpdir");
 
-    return { ok => 1 };
+    return $ret ? { ok => 1 } : { error => 'failed to create thumbnail' };
 }
 
 sub extract_to_tmpdir {
@@ -136,19 +142,19 @@ LibreCat::Worker::ImageResizer - a worker for creating thumbnails
     use LibreCat::Worker::ImageResizer;
 
     my $resizer = LibreCat::Worker::FileUploader->new(
-                    files => {
-                        package => 'Simple', 
-                        options => {
-                            root => '/data2/librecat/file_uploads'
-                        } ,
-                    access => {
-                        package => 'Simple', 
-                        options => {
-                            root => '/data2/librecat/access_uploads'
-                        }
-                    });
+        files => {
+            package => 'Simple', 
+            options => {
+                root => '/data2/librecat/file_uploads'
+            } ,
+        access => {
+            package => 'Simple', 
+            options => {
+                root => '/data2/librecat/access_uploads'
+            }
+        });
 
-    $resizer->do_work($key,$filename);
+    $resizer->work({key => $key, filename => $filename});
 
 =head2 CONFIGURATION
 

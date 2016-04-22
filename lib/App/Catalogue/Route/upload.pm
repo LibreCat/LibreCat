@@ -9,7 +9,7 @@ Route handler for uploading files.
 use Catmandu::Sane;
 use Catmandu qw/export_to_string/;
 use App::Helper;
-use App::Catalogue::Controller::File qw/delete_file/;
+use App::Catalogue::Controller::File qw/update_file delete_file/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;
 use Dancer::Plugin::Email;
@@ -120,12 +120,11 @@ prefix '/librecat' => sub {
       my $now = h->now();
       $file_data->{saved} = 1;
 
-      my $path = h->get_file_path($id);
-      system "mkdir -p $path" unless -d $path;
-      my $result = move( path(h->config->{tmp_dir}, params->{tempid}, $file_name), $path ) || die $!;
+      my $path = path(h->config->{tmp_dir}, params->{tempid}, $file_name);
+      update_file($id,$file_name,$path);
 
       my $d = Crypt::Digest::MD5->new;
-      $d->addfile(encode_utf8($path."/".$file_name));
+      $d->addfile(encode_utf8($path));
       my $digest = $d->hexdigest; # hexadecimal form
 
       my $record = {
@@ -185,12 +184,11 @@ prefix '/librecat' => sub {
             my $now = h->now();
             $file_data->{saved} = 1;
             
-            my $path = h->get_file_path($id);
-            system "mkdir -p $path" unless -d $path;
-            my $result = move( path(h->config->{tmp_dir}, params->{tempid}, $file_name), $path ) || die $!;
+            my $path = path(h->config->{tmp_dir}, params->{tempid}, $file_name);
+            update_file($id,$file_name,$path);
             
             my $d = Crypt::Digest::MD5->new;
-            $d->addfile(encode_utf8($path."/".$file_name));
+            $d->addfile(encode_utf8($path));
             my $digest = $d->hexdigest; # hexadecimal form
             
             my $record = {
@@ -233,7 +231,7 @@ prefix '/librecat' => sub {
             
             my $response = h->update_record('publication', $record);
             
-            # send mail to librarian
+            #send mail to librarian
             my $mail_body = export_to_string({
                 title => $record->{title},
                 author => $record->{author}->[0]->{full_name},

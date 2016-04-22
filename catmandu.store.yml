@@ -26,13 +26,6 @@ backup:
       department: *backup_settings
       research_group: *backup_settings
 
-reqcopy:
-  package: DBI
-  options:
-    data_source: "DBI:mysql:database=librecat_requestcopy"
-    username: librecat
-    password: librecat
-
 metrics:
   package: DBI
   options:
