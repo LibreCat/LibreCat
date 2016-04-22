@@ -14,7 +14,7 @@ angularController.controller('angularSearch', function ($scope) {
 	                 {text:'Non-UniBi publication',value:'extern=1'},
 	                 {text:'Person',value:'person='},
 	                 {text:'PUB-ID',value:'id='},
-	                 {text:'Publication is popluar science',value:'popularscience=1'},
+	                 {text:'Publication is popular science',value:'popularscience=1'},
 	                 {text:'Publication Status',value:'publicationstatus='},
 	                 {text:'Publications with fulltext',value:'fulltext=1'},
                      {text:'Publishing year',value:'publishingyear='},
