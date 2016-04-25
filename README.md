@@ -23,6 +23,9 @@ Install the following packages with 'yum install':
 - mysql-server 
 - mysql-devel 
 - mysql-libs
+- libgearman
+- libgearman-devel
+- gearmand
 
 Install the MySQL database:
 
