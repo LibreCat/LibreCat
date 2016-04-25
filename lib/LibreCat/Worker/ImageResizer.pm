@@ -1,9 +1,10 @@
 package LibreCat::Worker::ImageResizer;
 
-use Moo;
+use Catmandu::Sane;
 use Catmandu::Util;
 use Data::Uniqid;
 use File::Spec;
+use Moo;
 use namespace::clean;
 
 with 'LibreCat::Worker';
@@ -36,8 +37,12 @@ sub _build_access_store {
     $pkg->new(%$file_opts);
 }
 
-sub do_work {
-    my ($self,$key,$filename) = @_;
+# TODO return values
+sub work {
+    my ($self, $opts) = @_;
+
+    my $key = $opts->{key};
+    my $filename = $opts->{filename};
 
     my $thumbnail_name = 'thumbnail.png';
 
@@ -137,19 +142,19 @@ LibreCat::Worker::ImageResizer - a worker for creating thumbnails
     use LibreCat::Worker::ImageResizer;
 
     my $resizer = LibreCat::Worker::FileUploader->new(
-                    files => {
-                        package => 'Simple', 
-                        options => {
-                            root => '/data2/librecat/file_uploads'
-                        } ,
-                    access => {
-                        package => 'Simple', 
-                        options => {
-                            root => '/data2/librecat/access_uploads'
-                        }
-                    });
+        files => {
+            package => 'Simple', 
+            options => {
+                root => '/data2/librecat/file_uploads'
+            } ,
+        access => {
+            package => 'Simple', 
+            options => {
+                root => '/data2/librecat/access_uploads'
+            }
+        });
 
-    $resizer->do_work($key,$filename);
+    $resizer->work({key => $key, filename => $filename});
 
 =head2 CONFIGURATION
 

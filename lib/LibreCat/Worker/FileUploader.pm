@@ -1,13 +1,14 @@
 package LibreCat::Worker::FileUploader;
 
-use Moo;
+use Catmandu::Sane;
 use Catmandu::Util;
 use IO::File;
+use Moo;
 use namespace::clean;
 
 with 'LibreCat::Worker';
 
-has files      => (is => 'ro' , required => 1);
+has files      => (is => 'ro', required => 1);
 has file_store => (is => 'lazy');
 
 sub _build_file_store {
@@ -20,20 +21,24 @@ sub _build_file_store {
     $pkg->new(%$file_opts);
 }
 
-sub do_work {
-    my ($self, $key, $filename, $path, %opts) = @_;
+sub work {
+    my ($self, $opts) = @_;
+
+    my $key = $opts->{key};
+    my $filename = $opts->{filename};
+    my $path = $opts->{path};
     $key       = '' unless $key;
     $filename  = '' unless $filename;
     $path      = '' unless $path;
-    my $delete = exists $opts{delete} && $opts{delete} == 1 ? "Y" : "N";
+    my $delete = exists $opts->{delete} && $opts->{delete} == 1 ? "Y" : "N";
 
     $self->log->debug("key: $key ; filename: $filename ; path: $path ; delete: $delete");
 
     if ($delete eq 'Y') {
-        return $self->do_delete($key,$filename,$path,%opts);
+        return $self->do_delete($key,$filename,$path,%$opts);
     }
     else {
-        return $self->do_upload($key,$filename,$path,%opts);
+        return $self->do_upload($key,$filename,$path,%$opts);
     }
 }
 
@@ -66,6 +71,7 @@ sub do_upload {
     return -1 unless length $key && $key =~ /^\d+$/;
     return -1 unless length $filename;
     return -1 unless length $path && -f $path && -r $path;
+>>>>>>> dev
 
     $self->log->info("loading container $key");
     my $container = $self->file_store->get($key);
@@ -77,6 +83,15 @@ sub do_upload {
     }
 
     if ($container) {
+<<<<<<< HEAD
+        $self->log->info("storeing $filename in container $key");
+
+        $container->add($filename, IO::File->new($path));
+        $container->commit;
+
+        # TODO
+        #return 1;
+=======
         $self->log->info("storing $filename in container $key");
 
         my $ret = $container->add($filename, IO::File->new($path));
@@ -89,11 +104,17 @@ sub do_upload {
             $self->log->error("failed to store $filename in container $key");
             return -1;
         }
+>>>>>>> dev
     }
     else {
         $self->log->error("failed to create container $key");
-        return -1;
+
+        # TODO
+        #return -1;
     }
+
+    # TODO
+    return;
 }
 
 1;

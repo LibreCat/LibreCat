@@ -75,6 +75,12 @@ requires 'Email::Sender::Simple';
 requires 'REST::Client';
 requires 'Data::Uniqid';
 
+requires 'Module::Install';
+requires 'Gearman::XS', '0.15';
+requires 'Proc::Launcher', '0.0.35';
+requires 'Path::Tiny', '0.052';
+
 requires 'Catmandu::BagIt' , '>=0.12';
+
 requires 'Catmandu::Store::FedoraCommons';
 requires 'IO::All';
