@@ -23,6 +23,9 @@ Install the following packages with 'yum install':
 - mysql-server 
 - mysql-devel 
 - mysql-libs
+- libgearman
+- libgearman-devel
+- gearmand
 
 Install the MySQL database:
 
@@ -31,6 +34,13 @@ chkconfig --level 2345 mysqld on
 service mysqld start
 /usr/bin/mysqladmin -u root password '<NEWPASSWORD>'
 ``` 
+
+Install the Gearman daemon:
+
+```
+chkconfig --level 2345 gearmand on
+service gearmand start
+```
 
 Install a 1.4.X version of ElasticSearh
 
@@ -56,7 +66,7 @@ Edit your .profle and specify the path to your LibreCat installation:
 # export LIBRECATHOME=~/LibreCat
 # export PERLHOME=/usr
 # export PATH=${LIBRECATHOME}/local/bin:${PERLHOME}/bin:${PATH}
-# export PERL5LIB=${LIBRECATHOME}/local/lib/perl5
+# export PERL5LIB=${LIBRECATHOME}/local/lib/perl5:${LIBRECATHOME}/lib
 source ~/.profile
 ```
 
