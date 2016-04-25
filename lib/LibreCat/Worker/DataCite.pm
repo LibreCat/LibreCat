@@ -23,7 +23,7 @@ sub work {
 
     my $doi = $opts->{doi};
     my $landing_url = $opts->{landing_url};
-    my $datacite_url = $opts->{datacite_xml};
+    my $datacite_xml = $opts->{datacite_xml};
 
     $self->metadata($doi, $datacite_xml);
     $self->mint($doi, $landing_url);
@@ -99,7 +99,11 @@ LibreCat::Worker::DataCite - a worker for registering and minting at DataCite
 
     my $registry = LibreCat::Worker::DataCite->new(user => 'me', password => 'secret');
 
-    $registry->do_work()
+    $registry->work({
+        doi          => '...' ,
+        landing_url  => '...' ,
+        datacite_xml => '...' ,
+    })
 
     # or
     $registry->metadata()
