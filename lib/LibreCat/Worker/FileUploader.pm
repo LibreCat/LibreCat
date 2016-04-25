@@ -123,7 +123,12 @@ LibreCat::Worker::FileUploader - a worker for uploading files into the repostito
                         }
                    });
 
-    $uploader->do_work($key,$filename,$filepath,[ delete => 1]);
+    $uploader->work({
+        key      => $key,
+        filename => $filename,
+        filepath => $filepath,
+        [ delete => 1]
+        });
 
 =head2 CONFIGURATION
 

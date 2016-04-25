@@ -19,7 +19,10 @@ sub make_thumbnail {
     my $pkg = Catmandu::Util::require_package($thumbnailer_package);
     my $worker = $pkg->new(%$thumbnailer_options);
 
-    $worker->do_work($key,$filename);
+    $worker->work({
+        key      => $key,
+        filename => $filename
+    });
 }
 
 sub update_file {
@@ -31,7 +34,11 @@ sub update_file {
     my $pkg = Catmandu::Util::require_package($uploader_package);
     my $worker = $pkg->new(%$uploader_options);
 
-    $worker->do_work($key, $filename, $path);
+    $worker->work({
+        key      => $key, 
+        filename => $filename, 
+        path     => $path,
+    });
 }
 
 sub delete_file {
@@ -43,7 +50,11 @@ sub delete_file {
     my $pkg = Catmandu::Util::require_package($uploader_package);
     my $worker = $pkg->new(%$uploader_options);
 
-    $worker->do_work($key, $filename, undef, delete => 1);
+    $worker->work({
+        key      => $key, 
+        filename => $filename, 
+        delete   => 1
+    });
 }
 
 sub handle_file {
