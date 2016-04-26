@@ -7,6 +7,18 @@ use App::Validator::Publication;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
+sub description { 
+	return <<EOF;
+Usage:
+
+librecat publication [options] list
+librecat publication [options] get <id>
+librecat publication [options] add <FILE>
+librecat publication [options] delete <id>
+
+EOF
+}
+
 sub command_opt_spec {
     my ($class) = @_;
     (

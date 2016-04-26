@@ -15,6 +15,22 @@ use URI::Escape;
 use POSIX qw(strftime);
 use parent qw(LibreCat::Cmd);
 
+sub description { 
+	return <<EOF;
+Usage:
+
+librecat store [options] list [recursive]
+librecat store [options] get <key> [<file>]
+librecat store [options] add <key> <file>
+librecat store [options] delete <key> <file>
+librecat store [options] purge <key>
+librecat store [options] export <key> <zip>
+librecat store [options] import <key> <zip>
+
+librecat store [options] thumbnail <key> <file>
+EOF
+}
+
 sub command_opt_spec {
     my ($class) = @_;
     (
