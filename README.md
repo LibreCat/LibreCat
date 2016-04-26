@@ -62,11 +62,14 @@ service elasticsearch start
 Edit your .profle and specify the path to your LibreCat installation:
 
 ```
-#Edit .profile add 
-# export LIBRECATHOME=~/LibreCat
-# export PERLHOME=/usr
-# export PATH=${LIBRECATHOME}/local/bin:${PERLHOME}/bin:${PATH}
-# export PERL5LIB=${LIBRECATHOME}/local/lib/perl5:${LIBRECATHOME}/lib
+# Edit .profile add :
+# BEGIN TEXT vvvvvvvvvvvvvvv
+   export LIBRECATHOME=~/LibreCat
+   export PERLHOME=/usr
+   export PATH=${LIBRECATHOME}/local/bin:${PERLHOME}/bin:${PATH}
+   export PERL5LIB=${LIBRECATHOME}/local/lib/perl5:${LIBRECATHOME}/lib
+# END TEXT ^^^^^^^^^^^^^^^
+# Reload the .profile file
 source ~/.profile
 ```
 
