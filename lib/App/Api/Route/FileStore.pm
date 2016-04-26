@@ -363,7 +363,10 @@ E.g.
         my $pkg = Catmandu::Util::require_package($thumbnailer_package);
         my $worker = $pkg->new(%$thumbnailer_options);
 
-        my $response = $worker->do_work($key,$filename);
+        my $response = $worker->work({
+            key      => $key,
+            filename => $filename,
+        });
 
         $response;
     };

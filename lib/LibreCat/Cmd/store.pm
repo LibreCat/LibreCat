@@ -1,13 +1,11 @@
-#!/usr/bin/env perl
+package LibreCat::Cmd::store;
 
-use lib qw(./lib);
 use Catmandu::Sane;
-use Catmandu::Util;
 use Catmandu;
-use Log::Log4perl;
-use Log::Any::Adapter;
-use Getopt::Long;
+use App::Helper;
+use App::Validator::Publication;
 use Carp;
+use IO::File;
 use File::Basename;
 use File::Path;
 use File::Spec;
@@ -15,82 +13,110 @@ use Data::Dumper;
 use REST::Client;
 use URI::Escape;
 use POSIX qw(strftime);
-use namespace::clean;
+use parent qw(LibreCat::Cmd);
 
-Log::Log4perl::init('log4perl.conf');
-Log::Any::Adapter->set('Log4perl');
+sub description { 
+	return <<EOF;
+Usage:
 
-my $logger     = Log::Log4perl->get_logger('store_admin');
+librecat store [options] list [recursive]
+librecat store [options] get <key> [<file>]
+librecat store [options] add <key> <file>
+librecat store [options] delete <key> <file>
+librecat store [options] purge <key>
+librecat store [options] export <key> <zip>
+librecat store [options] import <key> <zip>
 
-my $conf       = Catmandu->config;
-my $file_store = $conf->{filestore}->{default}->{package};
-my $file_opt   = $conf->{filestore}->{default}->{options};
-my $zipper     = '/usr/bin/zip';
-my $unzipper   = '/usr/bin/unzip';
-my $tmp_dir    = $ENV{TMPDIR} || '/tmp';
-my $storename;
-
-GetOptions(
-    "file_store|f=s" => \$file_store ,
-    "file_opt|o=s%"  => \$file_opt ,
-    "tmp_dir|t=s%"   => \$tmp_dir ,
-    "F=s" => \$storename
-);
-
-if (defined $storename && exists $conf->{filestore}->{"${storename}"}) {
-    $file_store = $conf->{filestore}->{"${storename}"}->{package};
-    $file_opt   = $conf->{filestore}->{"${storename}"}->{options};
+librecat store [options] thumbnail <key> <file>
+EOF
 }
 
-my $cmd = shift;
-
-usage() unless $cmd;
-
-my $store = load($file_store,$file_opt);
-
-if ($cmd eq 'list') {
-    cmd_list(@ARGV);
+sub command_opt_spec {
+    my ($class) = @_;
+    (
+        [ "F=s", "store name",  ],
+        [ "file_store=s", "store class",  { default => $class->file_store } ],
+        [ "file_opt=s%", "store options",  { default => $class->file_opt }  ],
+        [ "tmp_dir=s", "temporary directory" , { default => $ENV{TMPDIR} || '/tmp' } ],
+        [ "zip=s" , "zipper" , { default => '/usr/bin/zip' }],
+        [ "unzip=s" , "unzipper" , { default => '/usr/bin/unzip' }],
+    );
 }
-elsif ($cmd eq 'exists') {
-    cmd_exists(@ARGV);
+
+sub file_store {
+	Catmandu->config->{filestore}->{default}->{package};
 }
-elsif ($cmd eq 'add') {
-    cmd_add(@ARGV);
+
+sub file_opt {
+	Catmandu->config->{filestore}->{default}->{options};
 }
-elsif ($cmd eq 'get') {
-    my ($key,$file) = @ARGV;
-    if (defined($file)) {
-        cmd_fetch($key,$file);
-    } 
-    else {
-        cmd_get($key);
+
+sub load {
+    my ($self,$file_store,$file_opt) = @_;
+    my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
+    $pkg->new(%$file_opt);
+}
+
+sub command {
+    my ($self, $opts, $args) = @_;
+
+    my $commands = qr/list|exists|get|add|delete|purge|export|import/;
+
+    unless (@$args) {
+        $self->usage_error("should be one of $commands");
+    }
+
+    my $cmd = shift @$args;
+
+    unless ($cmd =~ /^$commands$/) {
+        $self->usage_error("should be one of $commands");
+    }
+
+    $self->app->set_global_options({
+    		store    => $self->load($opts->file_store,$opts->file_opt) ,
+    		tmp_dir  => $opts->tmp_dir ,
+    		zipper   => $opts->zip ,
+    		unzipper => $opts->unzip , 
+    });
+
+    if ($cmd eq 'list') {
+    	return $self->_list(@$args);
+    }
+    elsif ($cmd eq 'exists') {
+    	return $self->_exists(@$args);
+    }
+    elsif ($cmd eq 'get') {
+	   	my ($key,$file) = @$args;
+	    if (defined($file)) {
+	        return $self->_fetch($key,$file);
+	    } 
+	    else {
+	        return $self->_get($key);
+	    }
+    }
+    elsif ($cmd eq 'add') {
+    	return $self->_add(@$args);
+    }
+    elsif ($cmd eq 'delete') {
+    	return $self->_delete(@$args);
+    }
+	elsif ($cmd eq 'purge') {
+    	return $self->_purge(@$args);
+    }
+    elsif ($cmd eq 'export') {
+    	return $self->_export(@$args);
+    }
+    elsif ($cmd eq 'import') {
+    	return $self->_import(@$args);
+    }
+    elsif ($cmd eq 'thumbnail') {
+    	return $self->_thumbnail(@$args);
     }
 }
-elsif ($cmd eq 'delete') {
-    cmd_delete(@ARGV);
-}
-elsif ($cmd eq 'purge') {
-    cmd_purge(@ARGV);
-}
-elsif ($cmd eq 'export') {
-    my ($key,$file) = @ARGV;
-    cmd_export($key,$file);
-}
-elsif ($cmd eq 'import') {
-    my ($key,$file) = @ARGV;
-    cmd_import($key,$file);
-}
-elsif ($cmd eq 'thumbnail') {
-    my ($key,$file) = @ARGV;
-    cmd_thumbnail($key,$file);
-}
-else {
-    print STDERR "unknown command - $cmd\n";
-    exit(1);
-}
 
-sub cmd_list {
-    my (@args) = @_;
+sub _list {
+    my ($self,@args) = @_;
+    my $store = $self->app->global_options->{store};
     my $gen = $store->list;
 
     while (my $key = $gen->()) {
@@ -122,11 +148,12 @@ sub cmd_list {
     }
 }
 
-sub cmd_exists {
-    my ($key) = @_;
+sub _exists {
+    my ($self,$key) = @_;
 
     croak "exists - need a key" unless defined($key);
 
+	my $store = $self->app->global_options->{store};
     my $ans = $store->exists($key);
 
     printf "$key %s\n" , $ans ? "EXISTS" : "NOT_FOUND";
@@ -134,11 +161,12 @@ sub cmd_exists {
     exit($ans ? 0 : 2);
 }
 
-sub cmd_get {
-    my ($key) = @_;
+sub _get {
+    my ($self,$key) = @_;
 
     croak "get - need a key" unless defined($key);
 
+	my $store = $self->app->global_options->{store};
     my $container = $store->get($key);
 
     croak "get - failed to load $key" unless $container;
@@ -163,12 +191,13 @@ sub cmd_get {
     }
 }
 
-sub cmd_fetch {
-    my ($key,$filename) = @_;
+sub _fetch {
+    my ($self,$key,$filename) = @_;
 
     croak "get - need a key" unless defined($key);
     croak "get - need a file" unless defined($filename);
 
+	my $store = $self->app->global_options->{store};
     my $container = $store->get($key);
 
     croak "get - failed to load $key" unless $container;
@@ -184,10 +213,12 @@ sub cmd_fetch {
     }
 }
 
-sub cmd_add {
-    my ($key,$file) = @_;
+sub _add {
+    my ($self,$key,$file) = @_;
+
     croak "add - need a key and a file" unless defined($key) && defined($file) && -r $file;
 
+	my $store = $self->app->global_options->{store};
     my $container = $store->get($key);
 
     unless ($container) {
@@ -202,13 +233,15 @@ sub cmd_add {
 
     $container->commit;
 
-    cmd_get($key);
+    return $self->_get($key);
 }
 
-sub cmd_delete {
-    my ($key,$name) = @_;
+sub _delete {
+    my ($self,$key,$name) = @_;
+    
     croak "delete - need a key and a file" unless defined($key) && defined($name);
 
+	my $store = $self->app->global_options->{store};
     my $container = $store->get($key);
 
     croak "delete - failed to find $key" unless $container;
@@ -217,13 +250,15 @@ sub cmd_delete {
 
     $container->commit;
 
-    cmd_get($key);
+    return $self->_get($key);
 }
 
-sub cmd_purge {
-    my ($key) = @_;
+sub _purge {
+    my ($self,$key) = @_;
+    
     croak "delete - need a key" unless defined($key);
 
+	my $store = $self->app->global_options->{store};
     my $container = $store->get($key);
 
     croak "delete - failed to find $key" unless $container;
@@ -231,14 +266,15 @@ sub cmd_purge {
     $store->delete($key);
 }
 
-sub cmd_export {
-    my ($key,$zip_file) = @_;
+sub _export {
+    my ($self,$key,$zip_file) = @_;
 
-    my $workdir = sprintf "%s/.%s" , $tmp_dir , $$;
+    my $workdir = sprintf "%s/.%s" , $self->app->global_options->{tmp_dir} , $$;
 
     croak "export - need a key" unless defined($key);
     croak "export - need a zip file name" unless defined($zip_file);
 
+	my $store = $self->app->global_options->{store};
     my $container = $store->get($key);
 
     croak "export - failed to find $key" unless $container;
@@ -246,10 +282,7 @@ sub cmd_export {
     my $export_name = $container->key;
     my $export_dir  = sprintf "%s/%s" , $workdir , $export_name;
 
-    $logger->info("Creating export directory $export_dir...");
-
     unless ( mkpath($export_dir) ) {
-        $logger->error("Failed to create $export_dir");
         croak "export - failed to create $export_dir";
     }
 
@@ -260,12 +293,8 @@ sub cmd_export {
     for my $file (@files) {
         my $key = $file->key;
 
-        $logger->info("Retrieving $key from store...");
-
         my $obj = $container->get($key);
         my $io  = $obj->fh;
-
-        $logger->error("Writing $export_dir/$key");
 
         open(OUT,"> $export_dir/$key");
         binmode(OUT,':raw');
@@ -279,39 +308,36 @@ sub cmd_export {
         close (OUT);
     }
 
-    $logger->info("Zipping $export_dir into $zip_file...");
+    my $zipper = $self->app->global_options->{zipper};
+
     system("cd $workdir && $zipper -r $zip_file $export_name/*");
 
     if ($? == -1) {
-        $logger->error("Failed to execute $zipper");
         croak "Failed to execute $zipper";
     }
     elsif ($? & 127) { 
-        $logger->error("Zipper $zipper died, core dumped");
         croak "Zipper $zipper died, core dumped";
     }
     elsif ($? != 0) {
         my $val = $? >> 8;
-        $logger->error("Zipper $zipper died, exit code $val");
         croak "Zipper $zipper died, exit code $val";
     }
 
-    $logger->info("Removing work directory $workdir");
-
     unless (File::Path::remove_tree($workdir) > 0) {
-        $logger->error("Failed to remove $workdir");
         croak "Failed to remove $workdir";
     }
 
     1;
 }
 
-sub cmd_import {
-    my ($key,$zip_file) = @_;
+sub _import {
+    my ($self,$key,$zip_file) = @_;
+
+	my $store = $self->app->global_options->{store};
 
     $zip_file = File::Spec->rel2abs($zip_file);
 
-    my $workdir = sprintf "%s/.%s" , $tmp_dir , $$;
+    my $workdir = sprintf "%s/.%s" , $self->app->global_options->{tmp_dir} , $$;
 
     croak "import - need a key" unless defined($key);
     croak "import - need a zip file name" unless defined($zip_file);
@@ -320,63 +346,52 @@ sub cmd_import {
 
     croak "import - container $key already exists" if $container;
 
-    $logger->info("Creating import directory $workdir...");
-
     unless ( mkpath($workdir) ) {
-        $logger->error("Failed to create $workdir");
         croak "export - failed to create $workdir";
     }
 
-    $logger->info("Extracting files from $zip_file");
+    my $unzipper = $self->app->global_options->{unzipper};
+
     system("cd $workdir && $unzipper $zip_file");
 
     if ($? == -1) {
-        $logger->error("Failed to execute $unzipper");
         croak "Failed to execute $unzipper";
     }
     elsif ($? & 127) { 
-        $logger->error("Zipper $unzipper died, core dumped");
         croak "Zipper $unzipper died, core dumped";
     }
     elsif ($? != 0) {
         my $val = $? >> 8;
-        $logger->error("Zipper $unzipper died, exit code $val");
         croak "Zipper $unzipper died, exit code $val";
     }
 
     my $zip_directory = find_subdirectory($workdir);
 
     unless ($zip_directory) {
-        $logger->error("Can't find a zip_directory");
         croak "Can't find a zip_directory";
     }
 
-    $logger->info("Zip dirctory for import $zip_directory...");
-
     for my $file (glob("$zip_directory/*")) {
-        $logger->info("Adding $file to container $key...");
-        cmd_add($key,$file);
+        $self->_add($key,$file);
     }
-
-    $logger->info("Removing work directory $workdir");
     
     unless (File::Path::remove_tree($workdir) > 0) {
-        $logger->error("Failed to remove $workdir");
         croak "Failed to remove $workdir";
     }
 
     1;
 }
 
-sub cmd_thumbnail {
-    my ($key,$filename) = @_;
+sub _thumbnail {
+    my ($self,$key,$filename) = @_;
 
     croak "get - need a key" unless defined($key);
     croak "get - need a file" unless defined($filename);
 
+	my $store = $self->app->global_options->{store};
     my $client = REST::Client->new();
     my $url = sprintf "%s/librecat/api/access/%s/%s/thumbnail" 
-                    , $conf->{host}
+                    , Catmandu->config->{host}
                     , uri_escape($key)
                     , uri_escape($filename);
     $client->POST($url);
@@ -401,35 +416,27 @@ sub find_subdirectory {
     return $has_files ? $directory : undef;
 }
 
-sub load {
-    my ($file_store,$file_opt) = @_;
-    my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
-    $pkg->new(%$file_opt);
-}
 
-sub usage {
-    print STDERR <<EOF;
-usage: $0 [options] cmd
+1;
 
-cmds:
-  {lowlevel}
-    list [recursive]
-    get <key> [<file>]
-    add <key> <file>
-    delete <key> <file>
-    purge <key>
-    export <key> <zip>
-    import <key> <zip>
+__END__
 
-  {using the REST api}
-    thumbnail <key> <file>
+=pod
 
-options:
-    -F storename
-    --file_store=... | -f=...
-    --file_opt=...   | -o=...
-    --tmp_dir=...    | -t=...
+=head1 NAME
 
-EOF
-    exit 1;
-}
+LibreCat::Cmd::store - manage librecat stores
+
+=head1 SYNOPSIS
+  
+    librecat store list [recursive]
+    librecat store get <key> [<file>]
+    librecat store add <key> <file>
+    librecat store delete <key> <file>
+    librecat store purge <key>
+    librecat store export <key> <zip>
+    librecat store import <key> <zip>
+
+    librecat store thumbnail <key> <file>
+
+=cut

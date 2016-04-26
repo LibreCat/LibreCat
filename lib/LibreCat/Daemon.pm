@@ -159,8 +159,8 @@ LibreCat::Daemon - base class for librecat daemons
 
 =head1 COMMAND LINE USAGE
 
-    catmandu mydaemon start --workers 10 --supervise
-    catmandu mydaemon stop --workers 10
+    librecat mydaemon start --workers 10 --supervise
+    librecat mydaemon stop --workers 10
 
 =head1 SEE ALSO
 

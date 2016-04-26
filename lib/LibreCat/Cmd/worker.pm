@@ -8,6 +8,18 @@ use JSON::MaybeXS;
 
 use parent 'LibreCat::Daemon';
 
+sub description { 
+    return <<EOF;
+Usage:
+
+librecat worker [options] <worker> 'start'|'stop'
+
+librecat worker mailer start --workers 2 --supervise
+librecat worker mailer stop --workers 2 --supervise
+
+EOF
+}
+
 sub daemon_name {
     my ($self, $opts, $args) = @_;
 

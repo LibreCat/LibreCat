@@ -1,48 +1,62 @@
-#!/usr/bin/env perl
+package LibreCat::Cmd::user;
 
-use lib qw(./lib);
-use Catmandu::Util;
+use Catmandu::Sane;
 use App::Helper;
 use App::Validator::Researcher;
-use Log::Log4perl;
-use Log::Any::Adapter;
-use Getopt::Long;
 use Carp;
-use namespace::clean;
+use parent qw(LibreCat::Cmd);
 
-Log::Log4perl::init('log4perl.conf');
-Log::Any::Adapter->set('Log4perl');
+sub description { 
+	return <<EOF;
+Usage:
 
-my $logger = Log::Log4perl->get_logger('user_admin');
-my $h      = App::Helper::Helpers->new;
+librecat user [options] list
+librecat user [options] add <FILE>
+librecat user [options] get <id>
+librecat user [options] delete <id>
 
-my $cmd = shift;
-
-usage() unless $cmd;
-
-my $ret;
-
-if ($cmd eq 'list') {
-    $ret = cmd_list(@ARGV);
-}
-elsif ($cmd eq 'add') {
-    $ret = cmd_add(@ARGV);
-}
-elsif ($cmd eq 'get') {
-    $ret = cmd_get(@ARGV);
-}
-elsif ($cmd eq 'delete') {
-    $ret = cmd_delete(@ARGV);
-}
-else {
-    print STDERR "unknown command - $cmd\n";
-    usage();
+EOF
 }
 
-exit($ret);
+sub command_opt_spec {
+    my ($class) = @_;
+    (
+    );
+}
 
-sub cmd_list {
-    my $count = $h->researcher->each(sub {
+sub command {
+    my ($self, $opts, $args) = @_;
+
+    my $commands = qr/list|get|add|delete/;
+
+    unless (@$args) {
+        $self->usage_error("should be one of $commands");
+    }
+
+    my $cmd = shift @$args;
+
+    unless ($cmd =~ /^$commands$/) {
+        $self->usage_error("should be one of $commands");
+    }
+
+    binmode(STDOUT,":encoding(utf-8)");
+
+    if ($cmd eq 'list') {
+        return $self->_list(@$args);
+    }
+    elsif ($cmd eq 'get') {
+        return $self->_get(@$args);
+    }
+    elsif ($cmd eq 'add') {
+        return $self->_add(@$args);
+    }
+    elsif ($cmd eq 'delete') {
+        return $self->_delete(@$args);
+    }
+}
+
+sub _list {
+    my $count = App::Helper::Helpers->new->researcher->each(sub {
         my ($item) = @_;
         my $id       = $item->{_id};
         my $login    = $item->{login};
@@ -64,20 +78,20 @@ sub cmd_list {
     return 0;
 }
 
-sub cmd_get {
-    my ($id) = @_;
+sub _get {
+    my ($seld,$id) = @_;
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = $h->get_person($id);
+    my $data = App::Helper::Helpers->new->get_person($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
     return $data ? 0 : 2;
 }
 
-sub cmd_add {
-    my ($file) = @_;
+sub _add {
+    my ($self,$file) = @_;
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
@@ -85,19 +99,19 @@ sub cmd_add {
 
     Catmandu->importer('YAML', file => $file)->each( sub {
         my $item = $_[0];
-        $ret += _cmd_add($item);        
+        $ret += $self->_adder($item);        
     });
 
     return $ret == 0;
 }
 
-sub _cmd_add {
-    my ($data) = @_;
+sub _adder {
+    my ($self,$data) = @_;
     
     my $validator = App::Validator::Researcher->new;
 
     if ($validator->is_valid($data)) {
-        my $result = $h->update_record('researcher', $data);
+        my $result = App::Helper::Helpers->new->update_record('researcher', $data);
         if ($result) {
             print "added " . $data->{_id} . "\n";
             return 0;
@@ -114,11 +128,12 @@ sub _cmd_add {
     }
 }
 
-sub cmd_delete {
-    my ($id) = @_;
+sub _delete {
+    my ($self,$id) = @_;
 
     croak "usage: $0 delete <id>" unless defined($id);
 
+    my $h = App::Helper::Helpers->new;
     my $result = $h->researcher->delete($id);
 
     if ($h->researcher->commit) {
@@ -131,18 +146,21 @@ sub cmd_delete {
     }
 }
 
-sub usage {
-    print STDERR <<EOF;
-usage: $0 [options] cmd
+1;
 
-cmds:
-    list
-    get <id>
-    add <FILE>
-    delete <id>
+__END__
 
-options:
+=pod
 
-EOF
-    exit 1;
-}
+=head1 NAME
+
+LibreCat::Cmd::user - manage librecat users
+
+=head1 SYNOPSIS
+
+    librecat user list
+    librecat user add <FILE>
+    librecat user get <id>
+    librecat user delete <id>
+
+=cut

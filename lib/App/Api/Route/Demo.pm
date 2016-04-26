@@ -97,7 +97,11 @@ sub do_file_upload {
     my $pkg = Catmandu::Util::require_package($uploader_package);
     my $worker = $pkg->new(%$uploader_options);
 
-    $worker->do_work($key,$filename,$filepath);
+    $worker->work({
+        key => $key,
+        filename => $filename,
+        filepath => $filepath
+    });
 }
 
 # Execute a worker to generate a thumbnail to the access repository
@@ -109,7 +113,10 @@ sub do_create_thumbnail {
     my $pkg = Catmandu::Util::require_package($thumbnailer_package);
     my $worker = $pkg->new(%$thumbnailer_options);
 
-    $worker->do_work($key,$filename);
+    $worker->work({
+        key => $key,
+        filename => $filename
+    });
 }
 
 1;

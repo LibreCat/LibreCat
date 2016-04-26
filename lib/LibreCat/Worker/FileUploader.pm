@@ -71,7 +71,6 @@ sub do_upload {
     return -1 unless length $key && $key =~ /^\d+$/;
     return -1 unless length $filename;
     return -1 unless length $path && -f $path && -r $path;
->>>>>>> dev
 
     $self->log->info("loading container $key");
     my $container = $self->file_store->get($key);
@@ -83,15 +82,6 @@ sub do_upload {
     }
 
     if ($container) {
-<<<<<<< HEAD
-        $self->log->info("storeing $filename in container $key");
-
-        $container->add($filename, IO::File->new($path));
-        $container->commit;
-
-        # TODO
-        #return 1;
-=======
         $self->log->info("storing $filename in container $key");
 
         my $ret = $container->add($filename, IO::File->new($path));
@@ -104,17 +94,11 @@ sub do_upload {
             $self->log->error("failed to store $filename in container $key");
             return -1;
         }
->>>>>>> dev
     }
     else {
         $self->log->error("failed to create container $key");
-
-        # TODO
-        #return -1;
+        return -1;
     }
-
-    # TODO
-    return;
 }
 
 1;
@@ -139,7 +123,12 @@ LibreCat::Worker::FileUploader - a worker for uploading files into the repostito
                         }
                    });
 
-    $uploader->do_work($key,$filename,$filepath,[ delete => 1]);
+    $uploader->work({
+        key      => $key,
+        filename => $filename,
+        filepath => $filepath,
+        [ delete => 1]
+        });
 
 =head2 CONFIGURATION
 
