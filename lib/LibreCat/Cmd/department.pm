@@ -1,8 +1,8 @@
-package LibreCat::Cmd::user;
+package LibreCat::Cmd::department;
 
 use Catmandu::Sane;
 use App::Helper;
-use App::Validator::Researcher;
+use App::Validator::Department;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -10,10 +10,10 @@ sub description {
 	return <<EOF;
 Usage:
 
-librecat user [options] list
-librecat user [options] add <FILE>
-librecat user [options] get <id>
-librecat user [options] delete <id>
+librecat department [options] list
+librecat department [options] add <FILE>
+librecat department [options] get <id>
+librecat department [options] delete <id>
 
 EOF
 }
@@ -56,22 +56,18 @@ sub command {
 }
 
 sub _list {
-    my $count = App::Helper::Helpers->new->researcher->each(sub {
+    my $count = App::Helper::Helpers->new->department->each(sub {
         my ($item) = @_;
         my $id       = $item->{_id};
-        my $login    = $item->{login};
-        my $name     = $item->{full_name};
-        my $status   = $item->{account_status};
-        my $type     = $item->{account_type};
-        my $is_admin = $item->{super_admin};
+        my $name     = $item->{name};
+        my $display  = $item->{display};
+        my $layer    = $item->{layer};
 
-        printf "%-2.2s %5d %-20.20s %-40.40s %-10.10s %s\n" 
-                    , $is_admin ? "*" : " "
+        printf "%-2.2d %9d %-40.40s %s\n" 
+                    , $layer
                     , $id
-                    , $login
                     , $name
-                    , $status
-                    , $type; 
+                    , $display; 
     });
     print "count: $count\n";
     
@@ -79,11 +75,11 @@ sub _list {
 }
 
 sub _get {
-    my ($seld,$id) = @_;
+    my ($self,$id) = @_;
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = App::Helper::Helpers->new->get_person($id);
+    my $data = App::Helper::Helpers->new->get_department($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -108,10 +104,10 @@ sub _add {
 sub _adder {
     my ($self,$data) = @_;
     
-    my $validator = App::Validator::Researcher->new;
+    my $validator = App::Validator::Department->new;
 
     if ($validator->is_valid($data)) {
-        my $result = App::Helper::Helpers->new->update_record('researcher', $data);
+        my $result = App::Helper::Helpers->new->update_record('department', $data);
         if ($result) {
             print "added " . $data->{_id} . "\n";
             return 0;
@@ -134,9 +130,10 @@ sub _delete {
     croak "usage: $0 delete <id>" unless defined($id);
 
     my $h = App::Helper::Helpers->new;
-    my $result = $h->researcher->delete($id);
 
-    if ($h->researcher->commit) {
+    my $result = $h->department->delete($id);
+
+    if ($h->department->commit) {
         print "deleted $id\n";
         return 0;
     }
@@ -154,13 +151,13 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::user - manage librecat users
+LibreCat::Cmd::department - manage librecat departments
 
 =head1 SYNOPSIS
 
-    librecat user list
-    librecat user add <FILE>
-    librecat user get <id>
-    librecat user delete <id>
+    librecat department list
+    librecat department add <FILE>
+    librecat department get <id>
+    librecat department delete <id>
 
 =cut
