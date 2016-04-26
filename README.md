@@ -42,7 +42,10 @@ chkconfig --level 2345 gearmand on
 service gearmand start
 ```
 
+
 Install a 1.4.X version of ElasticSearh
+!!!! Older 0.9 versions of ElasticSearch shipped !!!!
+!!!! by CentOS for example will not work         !!!!
 
 ```
 cat > /etc/yum.repos.d/elasticsearch-1.4.repo <<EOF
@@ -88,7 +91,6 @@ Create the MySQL databases and tables:
 mysql -u root -p < devel/mysql.sql
 mysql -u root -p librecat_system < devel/librecat_system.sql
 mysql -u root -p librecat_backup < devel/librecat_backup.sql
-mysql -u root -p librecat_requestcopy < devel/librecat_requestcopy.sql
 mysql -u root -p librecat_metrics < devel/librecat_metrics.sql
 ```
 
