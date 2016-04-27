@@ -42,7 +42,6 @@ chkconfig --level 2345 gearmand on
 service gearmand start
 ```
 
-
 Install a 1.4.X version of ElasticSearh
 !!!! Older 0.9 versions of ElasticSearch shipped !!!!
 !!!! by CentOS for example will not work         !!!!
