@@ -81,7 +81,7 @@ E.g.
                 my $len = $writer->write("$key\n") // -1;
 
                 # Check if the client is still listening to our stream
-                last unless ($len > 0);
+                last if ($len == -1);
             }
 
             $writer->close();
@@ -180,12 +180,12 @@ E.g.
                             my $len = $io->read($buffer,$buffer_size) // -1;
 
                             # Check if reader is still streaming...
-                            last unless ($len > 0);
+                            last if ($len == -1);
 
                             $len = $writer->write($buffer) // -1;
 
                             # Check if the client is still listening...
-                            last unless ($len > 0);
+                            last if ($len == -1);
                         }
 
                         $writer->close();
@@ -340,12 +340,12 @@ E.g.
                             my $len = $data->read($buffer,$buffer_size) // -1;
 
                             # Check if reader is still streaming...
-                            last unless ($len > 0);
+                            last if ($len == -1);
 
                             $len = $writer->write($buffer) // -1;
 
                             # Check if the client is still listening...
-                            last unless ($len > 0);
+                            last if ($len == -1);
                         }
 
                         $writer->close();
