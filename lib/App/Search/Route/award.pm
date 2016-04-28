@@ -284,7 +284,7 @@ get qr{/award/*} => sub {
         elsif($hit->{rec_type} eq "record"){
             $hit->{award_data} = h->award->get($hit->{award_id});
 
-            my $name = $hit->{honoree}->[0]->{first_name} . " AND honoree=" . $hit->{honoree}->[0]->{last_name};
+            my $name = "\"" . $hit->{honoree}->[0]->{first_name} . "\" AND honoree=\"" . $hit->{honoree}->[0]->{last_name} . "\"";
             $name =~ tr/äöüß/aous/;
 
             my $otherHits = h->award->search(
