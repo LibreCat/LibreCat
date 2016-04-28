@@ -22,8 +22,9 @@ sub command {
         Host => '127.0.0.1',
         Port => 4730,
     );
-    my $status = "";
-    $status .= "Server version: ".$gm->version."\n";
+    my $version = $gm->version;
+    $version =~ s/^OK //;
+    my $status = "Server version: $version\n";
     $status .= "Workers:\n";
     $status .= Catmandu->export_to_string(
         [map { +{
