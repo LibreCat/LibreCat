@@ -65,9 +65,9 @@ get qr{/en/award/*} => sub {
     forward '/award', {lang => "en"};
 };
 
-#get qr{/award_iframe/*} => sub {
-#      template 'award/main_with_iframe';
-#};
+get qr{/award_iframe/*} => sub {
+      template 'award/main_with_iframe';
+};
 # /award (main function, handling everything)
 get qr{/award/*} => sub {
     if(!h->config->{award_status} or h->config->{award_status} ne "live"){
@@ -284,7 +284,7 @@ get qr{/award/*} => sub {
         elsif($hit->{rec_type} eq "record"){
             $hit->{award_data} = h->award->get($hit->{award_id});
 
-            my $name = $hit->{honoree}->[0]->{first_name} . " AND honoree=" . $hit->{honoree}->[0]->{last_name};
+            my $name = "\"" . $hit->{honoree}->[0]->{first_name} . "\" AND honoree=\"" . $hit->{honoree}->[0]->{last_name} . "\"";
             $name =~ tr/äöüß/aous/;
 
             my $otherHits = h->award->search(
