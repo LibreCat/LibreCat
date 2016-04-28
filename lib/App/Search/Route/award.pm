@@ -65,9 +65,9 @@ get qr{/en/award/*} => sub {
     forward '/award', {lang => "en"};
 };
 
-#get qr{/award_iframe/*} => sub {
-#      template 'award/main_with_iframe';
-#};
+get qr{/award_iframe/*} => sub {
+      template 'award/main_with_iframe';
+};
 # /award (main function, handling everything)
 get qr{/award/*} => sub {
     if(!h->config->{award_status} or h->config->{award_status} ne "live"){
