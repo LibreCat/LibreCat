@@ -1,5 +1,17 @@
 requires 'perl', 'v5.10.1';
 
+on 'test' => sub {
+    requires 'Test::Lib';
+    requires 'Test::More';
+    requires 'Test::TCP';
+    requires 'Test::Exception';
+    requires 'Test::WWW::Mechanize';
+    requires 'Dancer::Test';
+    requires 'File::Slurp';
+    requires 'IO::File';
+    requires 'File::Path';
+};
+
 requires 'Business::ISBN', 0;
 requires 'Search::Elasticsearch', '==1.19';
 
@@ -30,7 +42,6 @@ requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Plugin::DirectoryView';
 requires 'Dancer::Plugin::StreamData';
 requires 'Dancer::Session::Catmandu';
-requires 'Dancer::Test';
 requires 'Template';
 requires 'Template::Plugin::Date';
 requires 'Template::Plugin::JSON';
