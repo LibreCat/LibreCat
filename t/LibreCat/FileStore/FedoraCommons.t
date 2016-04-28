@@ -1,12 +1,5 @@
-#!/usr/bin/env perl
-
-use strict;
-use warnings;
-use Test::More;
-use Test::Exception;
-use IO::File;
-use Catmandu;
-use Data::Dumper;
+use Test::Lib;
+use LibreCatTest;
 
 Catmandu->load('.');
 
@@ -43,7 +36,7 @@ SKIP: {
 
 	    is $container->key , '999000999' , 'container->key';
 	    ok $container->modified     , 'container->modified';
-	    ok $container->created      , 'container->created'; 
+	    ok $container->created      , 'container->created';
 	}
 
 	note("exists container");

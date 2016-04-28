@@ -10,7 +10,7 @@ use namespace::clean;
 with 'LibreCat::Worker';
 
 has files          => (is => 'ro' , required => 1);
-has access         => (is => 'ro' , requires => 1);
+has access         => (is => 'ro' , required => 1);
 has tmpdir         => (is => 'ro' , default => sub { '/tmp' });
 has buffer_size    => (is => 'ro' , default => sub { 8192 });
 has thumbnail_size => (is => 'ro' , default => sub { 200 });
@@ -90,7 +90,7 @@ sub work {
 
     $self->log->info("storing $thumbnail_name in access container $key");
     my $ret = $container->add($thumbnail_name, IO::File->new("$tmpdir/thumb.png"));
-    
+
     unless ($ret) {
         $self->log->error("failed to create a thumbail for $filename in container $key");
     }
@@ -141,14 +141,14 @@ LibreCat::Worker::ImageResizer - a worker for creating thumbnails
 
     use LibreCat::Worker::ImageResizer;
 
-    my $resizer = LibreCat::Worker::FileUploader->new(
+    my $resizer = LibreCat::Worker::ImageResizer->new(
         files => {
-            package => 'Simple', 
+            package => 'Simple',
             options => {
                 root => '/data2/librecat/file_uploads'
             } ,
         access => {
-            package => 'Simple', 
+            package => 'Simple',
             options => {
                 root => '/data2/librecat/access_uploads'
             }
