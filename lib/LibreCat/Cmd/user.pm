@@ -2,11 +2,11 @@ package LibreCat::Cmd::user;
 
 use Catmandu::Sane;
 use App::Helper;
-use App::Validator::Researcher;
+use LibreCat::Validator::Researcher;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
-sub description { 
+sub description {
 	return <<EOF;
 Usage:
 
@@ -65,16 +65,16 @@ sub _list {
         my $type     = $item->{account_type};
         my $is_admin = $item->{super_admin};
 
-        printf "%-2.2s %5d %-20.20s %-40.40s %-10.10s %s\n" 
+        printf "%-2.2s %5d %-20.20s %-40.40s %-10.10s %s\n"
                     , $is_admin ? "*" : " "
                     , $id
                     , $login
                     , $name
                     , $status
-                    , $type; 
+                    , $type;
     });
     print "count: $count\n";
-    
+
     return 0;
 }
 
@@ -99,7 +99,7 @@ sub _add {
 
     Catmandu->importer('YAML', file => $file)->each( sub {
         my $item = $_[0];
-        $ret += $self->_adder($item);        
+        $ret += $self->_adder($item);
     });
 
     return $ret == 0;
@@ -107,8 +107,8 @@ sub _add {
 
 sub _adder {
     my ($self,$data) = @_;
-    
-    my $validator = App::Validator::Researcher->new;
+
+    my $validator = LibreCat::Validator::Researcher->new;
 
     if ($validator->is_valid($data)) {
         my $result = App::Helper::Helpers->new->update_record('researcher', $data);
@@ -118,7 +118,7 @@ sub _adder {
         }
         else {
             print "ERROR: add " . $data->{_id} . " failed\n";
-            return 2; 
+            return 2;
         }
     }
     else {

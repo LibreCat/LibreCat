@@ -2,7 +2,7 @@ package LibreCat::Cmd::department;
 
 use Catmandu::Sane;
 use App::Helper;
-use App::Validator::Department;
+use LibreCat::Validator::Department;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -104,7 +104,7 @@ sub _add {
 sub _adder {
     my ($self,$data) = @_;
 
-    my $validator = App::Validator::Department->new;
+    my $validator = LibreCat::Validator::Department->new;
 
     if ($validator->is_valid($data)) {
         my $result = App::Helper::Helpers->new->update_record('department', $data);

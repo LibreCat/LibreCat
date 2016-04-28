@@ -2,7 +2,7 @@ package LibreCat::Cmd::project;
 
 use Catmandu::Sane;
 use App::Helper;
-use App::Validator::Project;
+use LibreCat::Validator::Project;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -104,7 +104,7 @@ sub _add {
 sub _adder {
     my ($self,$data) = @_;
 
-    my $validator = App::Validator::Project->new;
+    my $validator = LibreCat::Validator::Project->new;
 
     if ($validator->is_valid($data)) {
         my $result = App::Helper::Helpers->new->update_record('project', $data);
