@@ -32,7 +32,7 @@
 
     <div class="span2" style="padding-bottom:10px;">
     [% IF person.photo %]
-      <object data="[% person.photo %]" class="img-polaroid" style="max-width:120px;" itemprop="image">
+      <object data="[% person.photo.replace('http','https') %]" class="img-polaroid" style="max-width:120px;" itemprop="image">
         <img src="/images/dummy.png" style="width:10px;" class="img-polaroid">
       </object>
 	[% ELSE %]
@@ -42,12 +42,7 @@
 
 	<div class="span3">
       <div style="font-weight:bold;padding-bottom:10px;">
-      [% IF former_member != "ja" && persId %]<a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% persId %]&lang=de" target="_blank">
-      [% END %]
       [% honoree.0.title %] [% honoree.0.first_name %] [% honoree.0.last_name %][% IF former_member == "verstorben" %] &dagger; [% END %]
-      [% IF former_member != "ja" && persId %]
-      </a>
-      [% END %]
       </div>
       <p>
 
