@@ -1,6 +1,7 @@
 package LibreCat::Daemon;
 
 use Catmandu::Sane;
+use Catmandu;
 use Proc::Launcher;
 use Proc::Launcher::Manager;
 use File::Spec;
@@ -107,13 +108,7 @@ sub command {
         $start->();
     }
     elsif ($cmd eq 'status') {
-        my @daemons = $manager->daemons;
-        unshift @daemons, $supervisor if $supervisor;
-        for my $daemon (@daemons) {
-            my $status = $daemon->daemon_name;
-            $status .= ' ('.$daemon->pid.')' if $daemon->is_running;
-            say $status;
-        }
+        say $self->daemon_status($manager, $supervisor);
     }
 }
 
@@ -121,6 +116,20 @@ sub daemon {
     sub {
         while (1) { sleep 1 }
     };
+}
+
+sub daemon_status {
+    my ($self, $manager, $supervisor) = @_;
+    my @daemons = $manager->daemons;
+    unshift @daemons, $supervisor if $supervisor;
+    Catmandu->export_to_string(
+        [map { +{
+            daemon => $_->daemon_name,
+            pid    => $_->is_running ? $_->pid : "",
+        } } @daemons],
+        'Table',
+        fields => 'daemon,pid',
+    );
 }
 
 sub daemon_name {

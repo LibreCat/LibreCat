@@ -23,9 +23,6 @@ sub work {
 
     $self->metadata($opts->{doi}, $opts->{datacite_xml});
     $self->mint($opts->{doi}, $opts->{landing_url});
-
-    # TODO
-    return;
 }
 
 sub mint {
