@@ -46,8 +46,15 @@ sub _send_it {
 
         while (! $io->eof) {
             my $buffer;
-            my $len = $io->read($buffer,$buffer_size);
-            $writer->write($buffer);
+            my $len = $io->read($buffer,$buffer_size) // -1;
+
+            # Check if the reader is stills streaming...
+            last if ($len == -1);
+
+            $len = $writer->write($buffer) // -1;
+
+            # Check if the client is still listening...
+            last if ($len == -1);
         }
 
         $writer->close();

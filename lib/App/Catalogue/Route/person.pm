@@ -12,6 +12,20 @@ use Dancer qw(:syntax);
 use App::Helper;
 use Dancer::Plugin::Auth::Tiny;
 
+Dancer::Plugin::Auth::Tiny->extend(
+    role => sub {
+        my ($role, $coderef) = @_;
+          return sub {
+            if ( session->{role} && $role eq session->{role} ) {
+                goto $coderef;
+            }
+            else {
+                redirect '/access_denied';
+            }
+          }
+        }
+);
+
 =head1 PREFIX /librecat/person
 
 All person settings are handled within the prefix '/person'.

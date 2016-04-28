@@ -43,6 +43,8 @@ service gearmand start
 ```
 
 Install a 1.4.X version of ElasticSearh
+!!!! Older 0.9 versions of ElasticSearch shipped !!!!
+!!!! by CentOS for example will not work         !!!!
 
 ```
 cat > /etc/yum.repos.d/elasticsearch-1.4.repo <<EOF
@@ -62,11 +64,14 @@ service elasticsearch start
 Edit your .profle and specify the path to your LibreCat installation:
 
 ```
-#Edit .profile add 
-# export LIBRECATHOME=~/LibreCat
-# export PERLHOME=/usr
-# export PATH=${LIBRECATHOME}/local/bin:${PERLHOME}/bin:${PATH}
-# export PERL5LIB=${LIBRECATHOME}/local/lib/perl5:${LIBRECATHOME}/lib
+# Edit .profile add :
+# BEGIN TEXT vvvvvvvvvvvvvvv
+   export LIBRECATHOME=~/LibreCat
+   export PERLHOME=/usr
+   export PATH=${LIBRECATHOME}/local/bin:${PERLHOME}/bin:${PATH}
+   export PERL5LIB=${LIBRECATHOME}/local/lib/perl5:${LIBRECATHOME}/lib
+# END TEXT ^^^^^^^^^^^^^^^
+# Reload the .profile file
 source ~/.profile
 ```
 
@@ -85,7 +90,6 @@ Create the MySQL databases and tables:
 mysql -u root -p < devel/mysql.sql
 mysql -u root -p librecat_system < devel/librecat_system.sql
 mysql -u root -p librecat_backup < devel/librecat_backup.sql
-mysql -u root -p librecat_requestcopy < devel/librecat_requestcopy.sql
 mysql -u root -p librecat_metrics < devel/librecat_metrics.sql
 ```
 

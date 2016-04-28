@@ -78,7 +78,10 @@ E.g.
             my ($data,$writer) = @_;
 
             while (my $key = $data->()) {
-                $writer->write("$key\n");
+                my $len = $writer->write("$key\n") // -1;
+
+                # Check if the client is still listening to our stream
+                last if ($len == -1);
             }
 
             $writer->close();
@@ -174,8 +177,15 @@ E.g.
 
                         while (! $io->eof) {
                             my $buffer;
-                            my $len = $io->read($buffer,$buffer_size);
-                            $writer->write($buffer);
+                            my $len = $io->read($buffer,$buffer_size) // -1;
+
+                            # Check if reader is still streaming...
+                            last if ($len == -1);
+
+                            $len = $writer->write($buffer) // -1;
+
+                            # Check if the client is still listening...
+                            last if ($len == -1);
                         }
 
                         $writer->close();
@@ -327,8 +337,15 @@ E.g.
 
                         while (! $data->eof) {
                             my $buffer;
-                            my $len = $data->read($buffer,$buffer_size);
-                            $writer->write($buffer);
+                            my $len = $data->read($buffer,$buffer_size) // -1;
+
+                            # Check if reader is still streaming...
+                            last if ($len == -1);
+
+                            $len = $writer->write($buffer) // -1;
+
+                            # Check if the client is still listening...
+                            last if ($len == -1);
                         }
 
                         $writer->close();

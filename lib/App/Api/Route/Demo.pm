@@ -11,7 +11,6 @@ use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
 use App::Helper;
 use REST::Client;
-use JSON;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
