@@ -5,6 +5,7 @@ requires 'Search::Elasticsearch', '==1.19';
 
 # Catmandu
 requires 'Catmandu', '>=1.0002';
+requires 'Catmandu::Exporter::Table';
 requires 'Catmandu::Store::ElasticSearch';
 requires 'Catmandu::Store::MongoDB', '>=0.0403';
 requires 'Catmandu::DBI';
@@ -77,6 +78,7 @@ requires 'Data::Uniqid';
 
 requires 'Module::Install';
 requires 'Gearman::XS', '0.15';
+requires 'Net::Telnet::Gearman';
 requires 'Proc::Launcher', '0.0.35';
 requires 'Path::Tiny', '0.052';
 

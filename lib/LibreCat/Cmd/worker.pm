@@ -12,7 +12,9 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat worker [options] <worker> 'start'|'stop'
+librecat worker [options] <worker> start|stop|restart|status
+
+Examples:
 
 librecat worker mailer start --workers 2 --supervise
 librecat worker mailer stop --workers 2 --supervise
