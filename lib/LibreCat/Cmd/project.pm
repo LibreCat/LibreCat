@@ -1,8 +1,8 @@
-package LibreCat::Cmd::department;
+package LibreCat::Cmd::project;
 
 use Catmandu::Sane;
 use App::Helper;
-use App::Validator::Department;
+use App::Validator::Project;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -10,10 +10,10 @@ sub description {
 	return <<EOF;
 Usage:
 
-librecat department [options] list
-librecat department [options] add <FILE>
-librecat department [options] get <id>
-librecat department [options] delete <id>
+librecat roject [options] list
+librecat project [options] add <FILE>
+librecat project [options] get <id>
+librecat project [options] delete <id>
 
 EOF
 }
@@ -56,7 +56,7 @@ sub command {
 }
 
 sub _list {
-    my $count = App::Helper::Helpers->new->department->each(sub {
+    my $count = App::Helper::Helpers->new->project->each(sub {
         my ($item) = @_;
         my $id       = $item->{_id};
         my $name     = $item->{name};
@@ -79,7 +79,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = App::Helper::Helpers->new->get_department($id);
+    my $data = App::Helper::Helpers->new->get_project($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -104,10 +104,10 @@ sub _add {
 sub _adder {
     my ($self,$data) = @_;
 
-    my $validator = App::Validator::Department->new;
+    my $validator = App::Validator::Project->new;
 
     if ($validator->is_valid($data)) {
-        my $result = App::Helper::Helpers->new->update_record('department', $data);
+        my $result = App::Helper::Helpers->new->update_record('project', $data);
         if ($result) {
             print "added " . $data->{_id} . "\n";
             return 0;
@@ -118,7 +118,7 @@ sub _adder {
         }
     }
     else {
-        print STDERR "ERROR: not a valid department\n";
+        print STDERR "ERROR: not a valid project\n";
         print STDERR join("\n",@{$validator->last_errors}) , "\n";
         return 2;
     }
@@ -131,9 +131,9 @@ sub _delete {
 
     my $h = App::Helper::Helpers->new;
 
-    my $result = $h->department->delete($id);
+    my $result = $h->project->delete($id);
 
-    if ($h->department->commit) {
+    if ($h->project->commit) {
         print "deleted $id\n";
         return 0;
     }
@@ -151,13 +151,13 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::department - manage librecat departments
+LibreCat::Cmd::project - manage librecat projects
 
 =head1 SYNOPSIS
 
-    librecat department list
-    librecat department add <FILE>
-    librecat department get <id>
-    librecat department delete <id>
+    librecat project list
+    librecat project add <FILE>
+    librecat project get <id>
+    librecat project delete <id>
 
 =cut
