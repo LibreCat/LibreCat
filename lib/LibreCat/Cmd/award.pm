@@ -2,11 +2,11 @@ package LibreCat::Cmd::award;
 
 use Catmandu::Sane;
 use App::Helper;
-use App::Validator::Researcher;
+use LibreCat::Validator::Researcher;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
-sub description { 
+sub description {
 	return <<EOF;
 Usage:
 
@@ -63,14 +63,14 @@ sub _list {
         my $title    = $item->{title};
         my $type     = $item->{rec_type};
 
-        printf "%-2.2s %5.5s %-40.40s %s\n" 
+        printf "%-2.2s %5.5s %-40.40s %s\n"
                     , " " # not used
                     , $id
                     , $title
-                    , $type; 
+                    , $type;
     });
     print "count: $count\n";
-    
+
     return 0;
 }
 
@@ -78,7 +78,7 @@ sub _get {
     my ($self,$id) = @_;
 
     croak "usage: $0 get <id>" unless defined($id);
- 
+
     my $h = App::Helper::Helpers->new;
     my $data = $h->get_award($id);
 
@@ -96,7 +96,7 @@ sub _add {
 
     Catmandu->importer('YAML', file => $file)->each( sub {
         my $item = $_[0];
-        $ret += $self->_adder($item);        
+        $ret += $self->_adder($item);
     });
 
     return $ret == 0;
@@ -104,9 +104,9 @@ sub _add {
 
 sub _adder {
     my ($self,$data) = @_;
-    
+
     my $h = App::Helper::Helpers->new;
-    my $validator = App::Validator::Award->new;
+    my $validator = LibreCat::Validator::Award->new;
 
     if ($validator->is_valid($data)) {
         my $result = $h->update_record('award', $data);
@@ -116,7 +116,7 @@ sub _adder {
         }
         else {
             print "ERROR: add " . $data->{_id} . " failed\n";
-            return 2; 
+            return 2;
         }
     }
     else {

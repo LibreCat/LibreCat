@@ -3,11 +3,11 @@ package LibreCat::Cmd::publication;
 use Catmandu::Sane;
 use Catmandu;
 use App::Helper;
-use App::Validator::Publication;
+use LibreCat::Validator::Publication;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
-sub description { 
+sub description {
 	return <<EOF;
 Usage:
 
@@ -64,16 +64,16 @@ sub _list {
         my $status   = $item->{status};
         my $type     = $item->{type} // '---';
 
-        printf "%-2.2s %9d %-10.10s %-60.60s %-10.10s %s\n" 
+        printf "%-2.2s %9d %-10.10s %-60.60s %-10.10s %s\n"
                     , " " # not use
                     , $id
                     , $creator
                     , $title
                     , $status
-                    , $type; 
+                    , $type;
     });
     print "count: $count\n";
-    
+
     return 0;
 }
 
@@ -98,7 +98,7 @@ sub _add {
 
     Catmandu->importer('YAML', file => $file)->each( sub {
         my $item = $_[0];
-        $ret += $self->_adder($item);        
+        $ret += $self->_adder($item);
     });
 
     return $ret == 0;
@@ -107,7 +107,7 @@ sub _add {
 sub _adder {
     my ($self,$data) = @_;
 
-    my $validator = App::Validator::Publication->new;
+    my $validator = LibreCat::Validator::Publication->new;
 
     if ($validator->is_valid($data)) {
          my $result = App::Helper::Helpers->new->update_record('publication', $data);
@@ -117,7 +117,7 @@ sub _adder {
          }
          else {
              print "ERROR: add " . $data->{_id} . " failed\n";
-             return 2; 
+             return 2;
          }
     }
     else {

@@ -1,16 +1,9 @@
-#!/usr/bin/env perl
-
-use strict;
-use warnings;
-use Test::More;
-use Test::Exception;
-use IO::File;
-use File::Path qw(remove_tree);
-use Data::Dumper;
+use Test::Lib;
+use LibreCatTest;
 
 my $pkg;
 BEGIN {
-    $pkg = 'LibreCat::FileStore::BagIt';
+    $pkg = 'LibreCat::FileStore::Simple';
     use_ok $pkg;
 }
 require_ok $pkg;
@@ -25,7 +18,7 @@ note("add container");
 
     ok $container , 'filestore->add';
 
-    ok -r 't/test-store/000/000/001/235' , 'found a new bag';
+    ok -r 't/test-store/000/001/235' , 'found a new container';
 }
 
 note("get container");
@@ -36,7 +29,7 @@ note("get container");
 
     is $container->key , '1235' , 'container->key';
     ok $container->modified     , 'container->modified';
-    ok $container->created      , 'container->created'; 
+    ok $container->created      , 'container->created';
 }
 
 note("exists container");
@@ -58,18 +51,14 @@ note("update container with files");
 
 	my $file = $list[0];
 
-	is ref($file) , 'LibreCat::FileStore::File::BagIt' , 'item is a FileStore::File';
+	is ref($file) , 'LibreCat::FileStore::File::Simple' , 'item is a FileStore::File';
 
 	is $file->key  , 'poem.txt' , 'file->key';
 	is $file->size , length(poem()) , 'file->size';
 
-	# Not yet created anything on disk
-	ok ! $file->created , '! file->created';
-	ok ! $file->modified , '! file->modified';
-
 	ok $container->commit , 'container->commit';
 
-	ok -r 't/test-store/000/000/001/235/data/poem.txt' , 'found a poem.txt on disk';
+	ok -r 't/test-store/000/001/235/poem.txt' , 'found a poem.txt on disk';
 
 	$file = $container->get("poem.txt");
 
@@ -90,8 +79,8 @@ note("update container with files");
 
 	ok $container->commit , 'container->commit';
 
-	ok -r 't/test-store/000/000/001/235/data/poem.txt' , 'found a poem.txt on disk';
-	ok -r 't/test-store/000/000/001/235/data/poem2.txt' , 'found a poem2.txt on disk';
+	ok -r 't/test-store/000/001/235/poem.txt' , 'found a poem.txt on disk';
+	ok -r 't/test-store/000/001/235/poem2.txt' , 'found a poem2.txt on disk';
 
 	$file = $container->get("poem2.txt");
 
@@ -112,7 +101,7 @@ note("delete container");
 
 note("open existing container");
 {
-	my $store = $pkg->new(root => 't/local-store/bagit');
+	my $store = $pkg->new(root => 't/local-store/simple');
 
 	ok $store , 'new';
 
@@ -126,7 +115,7 @@ note("open existing container");
 
 	my $file = $list[0];
 
-	is ref($file) , 'LibreCat::FileStore::File::BagIt' , 'item is a FileStore::File';
+	is ref($file) , 'LibreCat::FileStore::File::Simple' , 'item is a FileStore::File';
 
 	is $file->key  , 'poem.txt' , 'file->key';
 	is $file->size , length(poem()) , 'file->size';

@@ -3,7 +3,7 @@ package LibreCat::Cmd::store;
 use Catmandu::Sane;
 use Catmandu;
 use App::Helper;
-use App::Validator::Publication;
+use LibreCat::Validator::Publication;
 use Carp;
 use IO::File;
 use File::Basename;
@@ -15,7 +15,7 @@ use URI::Escape;
 use POSIX qw(strftime);
 use parent qw(LibreCat::Cmd);
 
-sub description { 
+sub description {
 	return <<EOF;
 Usage:
 
@@ -96,7 +96,7 @@ sub command {
     		store    => $self->load($file_store,$file_opt) ,
     		tmp_dir  => $opts->tmp_dir ,
     		zipper   => $opts->zip ,
-    		unzipper => $opts->unzip , 
+    		unzipper => $opts->unzip ,
     });
 
     if ($cmd eq 'list') {
@@ -109,7 +109,7 @@ sub command {
 	   	my ($key,$file) = @$args;
 	    if (defined($file)) {
 	        return $self->_fetch($key,$file);
-	    } 
+	    }
 	    else {
 	        return $self->_get($key);
 	    }
@@ -206,8 +206,7 @@ sub _get {
         my $modified = $file->modified;
         my $content_type = $file->content_type // '???';
 
-        printf "$md5 %-30.30s %9d %s %s\n"
-                , $content_type
+        printf "%-40.40s %9d $md5 %s\n"
                 , $size
                 , strftime("%Y-%m-%dT%H:%M:%S", localtime($modified))
                 , $key;
@@ -261,7 +260,7 @@ sub _add {
 
 sub _delete {
     my ($self,$key,$name) = @_;
-    
+
     croak "delete - need a key and a file" unless defined($key) && defined($name);
 
 	my $store = $self->app->global_options->{store};
@@ -278,7 +277,7 @@ sub _delete {
 
 sub _purge {
     my ($self,$key) = @_;
-    
+
     croak "delete - need a key" unless defined($key);
 
 	my $store = $self->app->global_options->{store};
@@ -338,7 +337,7 @@ sub _export {
     if ($? == -1) {
         croak "Failed to execute $zipper";
     }
-    elsif ($? & 127) { 
+    elsif ($? & 127) {
         croak "Zipper $zipper died, core dumped";
     }
     elsif ($? != 0) {
@@ -380,7 +379,7 @@ sub _import {
     if ($? == -1) {
         croak "Failed to execute $unzipper";
     }
-    elsif ($? & 127) { 
+    elsif ($? & 127) {
         croak "Zipper $unzipper died, core dumped";
     }
     elsif ($? != 0) {
@@ -397,7 +396,7 @@ sub _import {
     for my $file (glob("$zip_directory/*")) {
         $self->_add($key,$file);
     }
-    
+
     unless (File::Path::remove_tree($workdir) > 0) {
         croak "Failed to remove $workdir";
     }
@@ -413,7 +412,7 @@ sub _thumbnail {
 
 	my $store = $self->app->global_options->{store};
     my $client = REST::Client->new();
-    my $url = sprintf "%s/librecat/api/access/%s/%s/thumbnail" 
+    my $url = sprintf "%s/librecat/api/access/%s/%s/thumbnail"
                     , Catmandu->config->{host}
                     , uri_escape($key)
                     , uri_escape($filename);
@@ -451,7 +450,7 @@ __END__
 LibreCat::Cmd::store - manage librecat stores
 
 =head1 SYNOPSIS
-  
+
     librecat store list [recursive]
     librecat store get <key> [<file>]
     librecat store add <key> <file>

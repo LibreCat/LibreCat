@@ -2,11 +2,11 @@ package LibreCat::Cmd::department;
 
 use Catmandu::Sane;
 use App::Helper;
-use App::Validator::Department;
+use LibreCat::Validator::Department;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
-sub description { 
+sub description {
 	return <<EOF;
 Usage:
 
@@ -63,14 +63,14 @@ sub _list {
         my $display  = $item->{display};
         my $layer    = $item->{layer};
 
-        printf "%-2.2d %9d %-40.40s %s\n" 
+        printf "%-2.2d %9d %-40.40s %s\n"
                     , $layer
                     , $id
                     , $name
-                    , $display; 
+                    , $display;
     });
     print "count: $count\n";
-    
+
     return 0;
 }
 
@@ -95,7 +95,7 @@ sub _add {
 
     Catmandu->importer('YAML', file => $file)->each( sub {
         my $item = $_[0];
-        $ret += $self->_adder($item);        
+        $ret += $self->_adder($item);
     });
 
     return $ret == 0;
@@ -103,8 +103,8 @@ sub _add {
 
 sub _adder {
     my ($self,$data) = @_;
-    
-    my $validator = App::Validator::Department->new;
+
+    my $validator = LibreCat::Validator::Department->new;
 
     if ($validator->is_valid($data)) {
         my $result = App::Helper::Helpers->new->update_record('department', $data);
@@ -114,11 +114,11 @@ sub _adder {
         }
         else {
             print "ERROR: add " . $data->{_id} . " failed\n";
-            return 2; 
+            return 2;
         }
     }
     else {
-        print STDERR "ERROR: not a valid researcher\n";
+        print STDERR "ERROR: not a valid department\n";
         print STDERR join("\n",@{$validator->last_errors}) , "\n";
         return 2;
     }

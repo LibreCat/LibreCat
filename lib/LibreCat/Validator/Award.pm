@@ -1,9 +1,9 @@
-package App::Validator::Award;
+package LibreCat::Validator::Award;
 
-use Catmandu::Sane; 
+use Catmandu::Sane;
 use Moo;
 use namespace::clean;
- 
+
 with 'Catmandu::Validator';
 
 sub validate_data {
@@ -11,13 +11,13 @@ sub validate_data {
 
     my @errors = ();
 
-    push @errors , 'id error' 
+    push @errors , 'id error'
                 unless defined($data->{_id}) && $data->{_id} =~ /^AW\d+/;
-    
+
     ##
     # TODO add validator code
     ##
-           
+
     return @errors ? \@errors : undef;
 }
 

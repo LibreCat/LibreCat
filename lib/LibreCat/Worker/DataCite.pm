@@ -21,15 +21,8 @@ has test_mode => (is => 'ro');
 sub work {
     my ($self, $opts) = @_;
 
-    my $doi = $opts->{doi};
-    my $landing_url = $opts->{landing_url};
-    my $datacite_xml = $opts->{datacite_xml};
-
-    $self->metadata($doi, $datacite_xml);
-    $self->mint($doi, $landing_url);
-
-    # TODO
-    return;
+    $self->metadata($opts->{doi}, $opts->{datacite_xml});
+    $self->mint($opts->{doi}, $opts->{landing_url});
 }
 
 sub mint {
@@ -105,7 +98,7 @@ LibreCat::Worker::DataCite - a worker for registering and minting at DataCite
         datacite_xml => '...' ,
     })
 
-    # or
+    # or call them separately
     $registry->metadata()
     $registry->mint('')
 

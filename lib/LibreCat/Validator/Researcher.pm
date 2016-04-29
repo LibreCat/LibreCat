@@ -1,9 +1,9 @@
-package App::Validator::Researcher;
+package LibreCat::Validator::Researcher;
 
 use Catmandu::Sane; 
 use Moo;
 use namespace::clean;
- 
+
 with 'Catmandu::Validator';
 
 sub validate_data {
@@ -11,7 +11,7 @@ sub validate_data {
 
     my @errors = ();
 
-    push @errors , 'id error' 
+    push @errors , 'id error'
                 unless defined($data->{_id}) && $data->{_id} =~ /^\d+/;
     push @errors , 'account_status error'
                 unless defined($data->{account_status}) && $data->{account_status} =~ /^(in)?active$/;
@@ -26,12 +26,12 @@ sub validate_data {
     push @errors , 'email error'
                 unless defined($data->{email}) && $data->{email} =~ /^\S+$/;
     push @errors , 'first_name error'
-                unless defined($data->{first_name}); 
+                unless defined($data->{first_name});
     push @errors , 'last_name error'
                 unless defined($data->{last_name});
     push @errors , 'full_name error'
                 unless defined($data->{full_name});
-                                  
+
     return @errors ? \@errors : undef;
 }
 

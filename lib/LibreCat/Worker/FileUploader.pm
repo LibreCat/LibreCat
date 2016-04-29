@@ -128,7 +128,7 @@ LibreCat::Worker::FileUploader - a worker for uploading files into the repostito
         filename => $filename,
         filepath => $filepath,
         [ delete => 1]
-        });
+    });
 
 =head2 CONFIGURATION
 
