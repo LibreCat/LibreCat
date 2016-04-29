@@ -206,7 +206,8 @@ sub _get {
         my $modified = $file->modified;
         my $content_type = $file->content_type // '???';
 
-        printf "%-40.40s %9d $md5 %s\n"
+        printf "%-40.40s %9d $md5 %s %s\n"
+                , $content_type
                 , $size
                 , strftime("%Y-%m-%dT%H:%M:%S", localtime($modified))
                 , $key;
