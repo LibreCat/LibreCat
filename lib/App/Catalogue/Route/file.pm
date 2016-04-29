@@ -34,14 +34,18 @@ sub _file_exists {
 }
 
 sub _send_it {
-    my ($key, $filename) = @_;
+    my ($key, $filename, $content_type) = @_;
 
     my $container = h->get_file_store()->get($key);
+
+    content_type $content_type if $content_type;
 
     return stream_data(undef, sub {
         my ($data,$writer) = @_;
 
-        my $io = $container->get($filename)->fh;
+        my $file = $container->get($filename);
+
+        my $io   = $file->fh;
         my $buffer_size = h->config->{filestore}->{api}->{buffer_size} // 1024;
 
         while (! $io->eof) {
@@ -146,7 +150,15 @@ Now get the document if time has not expired yet.
 get '/rc/:key' => sub {
     my $check = Catmandu->store->bag('reqcopy')->get(params->{key});
     if ($check and $check->{approved} == 1) {
-        _send_it($check->{record_id}, $check->{file_name});
+        if (my $file = _file_exists($check->{record_id}, $check->{file_name})) {
+            _send_it($check->{record_id}, $file->key, $file->content_type);
+        }
+        else {
+            status 404;
+            template 'websites/error', {
+                message => "The file does not exist anymore. We're sorry."
+            };
+        }
     } else {
         template 'websites/error',
             {message => "The time slot has expired. You can't download the document anymore."};
@@ -243,8 +255,8 @@ get qr{/download/(\d+)/(\d+)} => sub {
         return template 'websites/403',{path =>request->path};
     }
 
-    if (_file_exists($id,$file_name)) {
-        _send_it($id,$file_name);
+    if (my $file = _file_exists($id,$file_name)) {
+        _send_it($id,$file->key,$file->content_type);
     }
     else {
         status 404;
