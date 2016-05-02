@@ -1,0 +1,100 @@
+#!/bin/sh
+#
+# chkconfig: 345 99 01
+# description: Librecat application
+# pidfile: /var/run/plackup.librecat.pid
+#
+
+. /etc/rc.d/init.d/functions
+. /etc/sysconfig/network
+
+[ "$NETWORKING" = "no" ] && exit 0
+
+SCRIPT="$(basename $0)"
+
+PID=/var/run/plackup.librecat.pid
+CARTON=/opt/perl-5.22.0-x86_64-linux-thread-multi/bin/carton
+SERVER_PORT=5000
+SERVER_WORKERS=15
+SERVER_USER="biblio"
+SERVER_GROUP="biblio"
+DANCER_DIR="/opt/librecat"
+DANCER_APP="$DANCER_DIR/bin/app.pl"
+PLACK_ENV="development"
+ACCESS_LOG="/var/log/librecat/access.log"
+ERROR_LOG="/var/log/librecat/error.log"
+
+starman_args="--pid $PID --workers $SERVER_WORKERS --user $SERVER_USER --group $SERVER_GROUP --error-log $ERROR_LOG --max-requests 20"
+plackup_args="-E $PLACK_ENV -p $SERVER_PORT --access-log $ACCESS_LOG -s Starman $starman_args -D"
+
+lock_file=/var/lock/subsys/plackup.librecat
+
+do_start()
+{
+        if [ ! -f "$lock_file" ] ; then
+                cd $DANCER_DIR
+                echo -n $"Starting $webapp: "
+                $CARTON exec plackup $plackup_args -a $DANCER_APP #> /dev/null 2>&1
+                RETVAL=$?
+                if [ $RETVAL -eq 0 ]; then
+                    touch $lock_file
+                    echo_success
+                else
+                    echo_failure
+                fi
+                echo
+        else
+                echo "$SCRIPT is locked."
+                RETVAL=1
+        fi
+}
+
+do_stop()
+{
+        echo -n $"Stopping $SCRIPT: "
+        if [ -f $PID ]; then
+          kill `cat $PID` > /dev/null 2>&1
+          RETVAL=$?
+          if [ $RETVAL -eq 0 ]; then
+            rm -f $lock_file
+            echo_success
+          else
+            echo_failure
+          fi
+        else
+          echo_failure
+        fi
+        echo
+}
+
+do_status()
+{
+        kill -0 `cat $PID` > /dev/null 2>&1
+        RETVAL=$?
+        if [ $RETVAL -eq 0 ]; then
+          echo "$SCRIPT is running"
+        else
+          echo "$SCRIPT is not running"
+        fi
+}
+
+case "$1" in
+        start)
+                do_start
+                ;;
+        stop)
+                do_stop
+                ;;
+        restart)
+                do_stop
+                do_start
+                ;;
+        status)
+                do_status
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart|status}"
+                RETVAL=1
+esac
+
+exit $RETVAL

@@ -1,0 +1,6 @@
+<VirtualHost *:80>
+  ServerName eliot1.ugent.be
+  RewriteEngine On
+  ProxyPass / http://localhost:5000/
+  ProxyPassReverse / http://localhost:5000/
+</VirtualHost>
