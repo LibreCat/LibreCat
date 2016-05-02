@@ -34,36 +34,46 @@ sub _file_exists {
 }
 
 sub _send_it {
-    my ($key, $filename, $content_type) = @_;
+    my ($key, $filename) = @_;
 
     my $container = h->get_file_store()->get($key);
 
-    content_type $content_type if $content_type;
+    send_file(
+        \"dummy", # anything, as long as it's a scalar-ref
+        streaming => 1, # enable streaming
+        callbacks => {
+            override => sub {
+                my ( $respond, $response ) = @_;
+                my $file = $container->get($filename);
+                my $content_type = $file->content_type;
 
-    return stream_data(undef, sub {
-        my ($data,$writer) = @_;
+                my $http_status_code = 200 ;
+                # Tech.note: This is a hash of HTTP header/values, but the
+                #            function below requires an even-numbered array-ref.
+                my @http_headers = ( 
+                    'Content-Type' => $content_type,
+                    'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+                    'Pragma' => 'no-cache' 
+                );
 
-        my $file = $container->get($filename);
-
-        my $io   = $file->fh;
-        my $buffer_size = h->config->{filestore}->{api}->{buffer_size} // 1024;
-
-        while (! $io->eof) {
-            my $buffer;
-            my $len = $io->read($buffer,$buffer_size) // -1;
-
-            # Check if the reader is stills streaming...
-            last if ($len == -1);
-
-            $len = $writer->write($buffer) // -1;
-
-            # Check if the client is still listening...
-            last if ($len == -1);
-        }
-
-        $writer->close();
-        $io->close();
-    });
+                # Send the HTTP headers
+                # (back to either the user or the upstream HTTP web-server front-end)
+                my $writer = $respond->( [ $http_status_code, \@http_headers ] );
+           
+                my $io   = $file->fh;
+                my $buffer_size = h->config->{filestore}->{api}->{buffer_size} // 1024;
+                 
+                while (! $io->eof) {
+                    my $buffer;
+                    $io->read($buffer,$buffer_size);
+                    $writer->write($buffer);
+                }
+                  
+                $writer->close();
+                $io->close();
+            },
+        },
+    );
 }
 
 sub _calc_date {
@@ -151,7 +161,7 @@ get '/rc/:key' => sub {
     my $check = Catmandu->store->bag('reqcopy')->get(params->{key});
     if ($check and $check->{approved} == 1) {
         if (my $file = _file_exists($check->{record_id}, $check->{file_name})) {
-            _send_it($check->{record_id}, $file->key, $file->content_type);
+            _send_it($check->{record_id}, $file->key);
         }
         else {
             status 404;
@@ -256,7 +266,7 @@ get qr{/download/(\d+)/(\d+)} => sub {
     }
 
     if (my $file = _file_exists($id,$file_name)) {
-        _send_it($id,$file->key,$file->content_type);
+        _send_it($id,$file->key);
     }
     else {
         status 404;

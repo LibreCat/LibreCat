@@ -71,21 +71,33 @@ E.g.
 
 	get '/filestore' => needs role => 'api_access' => sub {
         my $gen = h->get_file_store()->list;
+        send_file(
+                    \"dummy", # anything, as long as it's a scalar-ref
+                    streaming => 1, # enable streaming
+                    callbacks => {
+                        override => sub {
+                            my ( $respond, $response ) = @_;
+                            my $http_status_code = 200 ;
+                            # Tech.note: This is a hash of HTTP header/values, but the
+                            #            function below requires an even-numbered array-ref.
+                            my @http_headers = ( 
+                                'Content-Type' => 'text/plain',
+                                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+                                'Pragma' => 'no-cache' 
+                            );
 
-        content_type 'text/plain';
-
-        return stream_data($gen, sub {
-            my ($data,$writer) = @_;
-
-            while (my $key = $data->()) {
-                my $len = $writer->write("$key\n") // -1;
-
-                # Check if the client is still listening to our stream
-                last if ($len == -1);
-            }
-
-            $writer->close();
-        });
+                            # Send the HTTP headers
+                            # (back to either the user or the upstream HTTP web-server front-end)
+                            my $writer = $respond->( [ $http_status_code, \@http_headers ] );
+                        
+                            while (my $key = $gen->()) {
+                                $writer->write("$key\n");
+                            }
+                              
+                            $writer->close();
+                        },
+                    },
+                );
     };
 
 =head2 GET /librecat/api/filestore/:key
@@ -165,32 +177,41 @@ E.g.
 
         if (defined $container) {
             if ($container->exists($filename)) {
-                # Do to inlining of code by Plack no blessed code
-                # Can be send to stream_data. We retrieve the file
-                # from the container inside the stream_data method.
-                return stream_data(undef, sub {
-                        my ($data,$writer) = @_;
-                        
-                        my $io = $container->get($filename)->fh;
+                send_file(
+                    \"dummy", # anything, as long as it's a scalar-ref
+                    streaming => 1, # enable streaming
+                    callbacks => {
+                        override => sub {
+                            my ( $respond, $response ) = @_;
+                            my $file = $container->get($filename);
+                            my $content_type = $file->content_type;
 
-                        my $buffer_size = h->config->{filestore}->{api}->{buffer_size} // 1024;
+                            my $http_status_code = 200 ;
+                            # Tech.note: This is a hash of HTTP header/values, but the
+                            #            function below requires an even-numbered array-ref.
+                            my @http_headers = ( 
+                                'Content-Type' => $content_type,
+                                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+                                'Pragma' => 'no-cache' 
+                            );
 
-                        while (! $io->eof) {
-                            my $buffer;
-                            my $len = $io->read($buffer,$buffer_size) // -1;
-
-                            # Check if reader is still streaming...
-                            last if ($len == -1);
-
-                            $len = $writer->write($buffer) // -1;
-
-                            # Check if the client is still listening...
-                            last if ($len == -1);
-                        }
-
-                        $writer->close();
-                        $io->close();
-                });
+                            # Send the HTTP headers
+                            # (back to either the user or the upstream HTTP web-server front-end)
+                            my $writer = $respond->( [ $http_status_code, \@http_headers ] );
+                            my $io   = $file->fh;
+                            my $buffer_size = h->config->{filestore}->{api}->{buffer_size} // 1024;
+                             
+                            while (! $io->eof) {
+                                my $buffer;
+                                $io->read($buffer,$buffer_size);
+                                $writer->write($buffer);
+                            }
+                              
+                            $writer->close();
+                            $io->close();
+                        },
+                    },
+                );
             }
             else {
                 return do_error('NOT_FOUND','no such file',404);
@@ -328,29 +349,41 @@ E.g.
             my $file = $container->get($filename);
 
             if (defined $file) {
-                my $io = $file->fh;
+                send_file(
+                    \"dummy", # anything, as long as it's a scalar-ref
+                    streaming => 1, # enable streaming
+                    callbacks => {
+                        override => sub {
+                            my ( $respond, $response ) = @_;
+                            my $file = $container->get($filename);
+                            my $content_type = $file->content_type;
 
-                return stream_data($io, sub {
-                        my ($data,$writer) = @_;
+                            my $http_status_code = 200 ;
+                            # Tech.note: This is a hash of HTTP header/values, but the
+                            #            function below requires an even-numbered array-ref.
+                            my @http_headers = ( 
+                                'Content-Type' => $content_type,
+                                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+                                'Pragma' => 'no-cache' 
+                            );
 
-                        my $buffer_size = h->config->{filestore_api}->{buffer_size} // 1024;
-
-                        while (! $data->eof) {
-                            my $buffer;
-                            my $len = $data->read($buffer,$buffer_size) // -1;
-
-                            # Check if reader is still streaming...
-                            last if ($len == -1);
-
-                            $len = $writer->write($buffer) // -1;
-
-                            # Check if the client is still listening...
-                            last if ($len == -1);
-                        }
-
-                        $writer->close();
-                        $data->close();
-                });
+                            # Send the HTTP headers
+                            # (back to either the user or the upstream HTTP web-server front-end)
+                            my $writer = $respond->( [ $http_status_code, \@http_headers ] );
+                            my $io   = $file->fh;
+                            my $buffer_size = h->config->{filestore}->{api}->{buffer_size} // 1024;
+                             
+                            while (! $io->eof) {
+                                my $buffer;
+                                $io->read($buffer,$buffer_size);
+                                $writer->write($buffer);
+                            }
+                              
+                            $writer->close();
+                            $io->close();
+                        },
+                    },
+                );
             }
             else {
                 return Dancer::send_file('public/images/thumbnail_dummy.png', system_path => 1, filename => 'thumbnail_dummy.png');
