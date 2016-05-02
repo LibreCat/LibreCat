@@ -36,6 +36,15 @@ else
 end
 remove_field(res.tmp_status)
 
+if exists(publication_date)
+  split_field(publication_date, '-')
+  move_field(publication_date.2, 'res.publication_date.$append')
+  move_field(publication_date.1, 'res.publication_date.$append')
+  move_field(publication_date.0, 'res.publication_date.$append')
+  join_field(res.publication_date, '.')
+#move_field(publication_date, res.publication_date)
+end
+
 move_field(place, res.publisher-place)
 move_field(edition, res.edition)
 
