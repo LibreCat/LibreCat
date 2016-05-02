@@ -71,21 +71,33 @@ E.g.
 
 	get '/filestore' => needs role => 'api_access' => sub {
         my $gen = h->get_file_store()->list;
+        send_file(
+                    \"dummy", # anything, as long as it's a scalar-ref
+                    streaming => 1, # enable streaming
+                    callbacks => {
+                        override => sub {
+                            my ( $respond, $response ) = @_;
+                            my $http_status_code = 200 ;
+                            # Tech.note: This is a hash of HTTP header/values, but the
+                            #            function below requires an even-numbered array-ref.
+                            my @http_headers = ( 
+                                'Content-Type' => 'text/plain',
+                                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+                                'Pragma' => 'no-cache' 
+                            );
 
-        content_type 'text/plain';
-
-        return stream_data($gen, sub {
-            my ($data,$writer) = @_;
-
-            while (my $key = $data->()) {
-                my $len = $writer->write("$key\n") // -1;
-
-                # Check if the client is still listening to our stream
-                last if ($len == -1);
-            }
-
-            $writer->close();
-        });
+                            # Send the HTTP headers
+                            # (back to either the user or the upstream HTTP web-server front-end)
+                            my $writer = $respond->( [ $http_status_code, \@http_headers ] );
+                        
+                            while (my $key = $gen->()) {
+                                $writer->write("$key\n");
+                            }
+                              
+                            $writer->close();
+                        },
+                    },
+                );
     };
 
 =head2 GET /librecat/api/filestore/:key
