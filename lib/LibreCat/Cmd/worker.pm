@@ -49,15 +49,15 @@ sub daemon {
         $gm_worker->add_server('127.0.0.1', 4730);
         my $worker = $worker_class->new(Catmandu->config->{worker}{$worker_name} || {});
         for my $func_name (@{$worker->worker_functions}) {
-            $method_name = $func_name;
+            my $method_name = $func_name;
             if (ref $func_name) {
-                ($func_name) = keys %{$functions->{$func_name}};
-                ($method_name) = values %{$functions->{$func_name}};
+                ($method_name) = values %$func_name;
+                ($func_name) = keys %$func_name;
             }
             my $func = sub {
                 my ($job) = @_;
                 my $workload = decode_json($job->workload);
-                $worker->$method($workload);
+                $worker->$method_name($workload);
             };
             $gm_worker->add_function($func_name, 0, $func, {});
         }
