@@ -8,11 +8,17 @@ use File::Copy;
 use LibreCat::FileStore::File::Simple;
 use Catmandu::Util;
 use URI::Escape;
+use LibreCat::MimeType;
 use namespace::clean;
 
 with 'LibreCat::FileStore::Container';
 
 has _path => (is => 'ro');
+has _mimeType => (is => 'lazy');
+
+sub _build__mimeType {
+    LibreCat::MimeType->new;
+}
 
 sub list {
     my ($self) = @_;
@@ -56,13 +62,16 @@ sub get {
     my $modified = $stat->[9];
     my $created  = $stat->[10]; # no real creation time exists on Unix
 
+    my $content_type = $self->_mimeType->content_type($key);
+
     LibreCat::FileStore::File::Simple->new(
-            key      => $key ,
-            size     => $size ,
-            md5      => '' ,
-            created  => $created ,
-            modified => $modified ,
-            data     => $data
+            key          => $key ,
+            size         => $size ,
+            md5          => '' ,
+            content_type => $content_type ,
+            created      => $created ,
+            modified     => $modified ,
+            data         => $data
     );
 }
 

@@ -124,6 +124,7 @@ sub _get {
     my $key      = $first->{dsLabel};
     my $size     = $first->{dsSize};
     my $md5      = $first->{dsChecksum};
+    my $content_type = $first->{dsMIME};
     my $created  = str2time($last->{dsCreateDate});
     my $modified = str2time($first->{dsCreateDate});
 
@@ -144,6 +145,7 @@ sub _get {
             md5      => $md5  eq 'none' ? '' : $md5,
             created  => $created ,
             modified => $modified ,
+            content_type => $content_type ,
             data     => $data 
     );
 }

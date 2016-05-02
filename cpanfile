@@ -94,6 +94,7 @@ requires 'Proc::Launcher', '0.0.35';
 requires 'Path::Tiny', '0.052';
 requires 'String::CamelCase';
 
+requires 'MIME::Types','0';
 requires 'Catmandu::BagIt' , '>=0.12';
 
 requires 'Catmandu::Store::FedoraCommons';

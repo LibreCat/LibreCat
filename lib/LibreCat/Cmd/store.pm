@@ -34,9 +34,9 @@ EOF
 sub command_opt_spec {
     my ($class) = @_;
     (
-        [ "F=s", "store name",  ],
-        [ "file_store=s", "store class",  { default => $class->file_store } ],
-        [ "file_opt=s%", "store options",  { default => $class->file_opt }  ],
+        [ "store=s", "store name" ],
+        [ "file_store=s", "store class" ],
+        [ "file_opt=s%", "store options" ],
         [ "tmp_dir=s", "temporary directory" , { default => $ENV{TMPDIR} || '/tmp' } ],
         [ "zip=s" , "zipper" , { default => '/usr/bin/zip' }],
         [ "unzip=s" , "unzipper" , { default => '/usr/bin/unzip' }],
@@ -44,11 +44,15 @@ sub command_opt_spec {
 }
 
 sub file_store {
-	Catmandu->config->{filestore}->{default}->{package};
+    my $self = shift;
+    my $name = shift // 'default';
+	Catmandu->config->{filestore}->{$name}->{package};
 }
 
 sub file_opt {
-	Catmandu->config->{filestore}->{default}->{options};
+    my $self = shift;
+    my $name = shift // 'default';
+	Catmandu->config->{filestore}->{$name}->{options};
 }
 
 sub load {
@@ -72,8 +76,24 @@ sub command {
         $self->usage_error("should be one of $commands");
     }
 
+    my $file_store = $opts->file_store;
+    my $file_opt   = $opts->file_opt;
+
+    if (my $file_store_name = $opts->store) {
+        $file_store = $self->file_store($file_store_name);
+        $file_opt   = $self->file_opt($file_store_name);
+    }
+
+    unless ($file_store) {
+        $file_store = $self->file_store;
+    }
+
+    unless ($file_opt) {
+        $file_opt = $self->file_opt;
+    }
+
     $self->app->set_global_options({
-    		store    => $self->load($opts->file_store,$opts->file_opt) ,
+    		store    => $self->load($file_store,$file_opt) ,
     		tmp_dir  => $opts->tmp_dir ,
     		zipper   => $opts->zip ,
     		unzipper => $opts->unzip ,
@@ -184,10 +204,13 @@ sub _get {
         my $size     = $file->size;
         my $md5      = $file->md5;
         my $modified = $file->modified;
-        printf "%-40.40s %9d $md5 %s\n"
-                , $key
+        my $content_type = $file->content_type // '???';
+
+        printf "%-40.40s %9d $md5 %s %s\n"
+                , $content_type
                 , $size
-                , strftime("%Y-%m-%dT%H:%M:%S", localtime($modified));
+                , strftime("%Y-%m-%dT%H:%M:%S", localtime($modified))
+                , $key;
     }
 }
 
