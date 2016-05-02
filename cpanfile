@@ -92,6 +92,7 @@ requires 'Gearman::XS', '0.15';
 requires 'Net::Telnet::Gearman';
 requires 'Proc::Launcher', '0.0.35';
 requires 'Path::Tiny', '0.052';
+requires 'String::CamelCase';
 
 requires 'Catmandu::BagIt' , '>=0.12';
 

@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(require_package check_maybe_hash_ref);
 use Catmandu;
 use Gearman::XS::Worker;
+use String::CamelCase qw(camelize);
 use JSON::MaybeXS;
 
 use parent 'LibreCat::Daemon';
@@ -30,8 +31,7 @@ sub daemon_name {
     }
 
     my $base_name = $self->SUPER::daemon_name();
-    my $fn_name = $args->[0];
-    "$base_name-$fn_name";
+    "$base_name-$args->[0]";
 }
 
 sub daemon {
@@ -41,22 +41,26 @@ sub daemon {
         $self->usage_error("worker name missing");
     }
 
-    my $fn_name = $args->[0];
-    my $worker_name = $args->[0];
-    # camelize name
-    $worker_name =~ s/(_|\b)([a-z])/\u$2/g;
-    my $worker_pkg = require_package($worker_name, 'LibreCat::Worker');
+    my $worker_name = camelize($args->[0]);
+    my $worker_class = require_package($worker_name, 'LibreCat::Worker');
 
     sub {
-        my $worker = $worker_pkg->new(Catmandu->config->{worker}{$worker_name} || {});
-        my $fn = sub {
-            my ($job) = @_;
-            my $workload = decode_json($job->workload);
-            $worker->work($workload);
-        };
         my $gm_worker = Gearman::XS::Worker->new;
         $gm_worker->add_server('127.0.0.1', 4730);
-        $gm_worker->add_function($fn_name, 0, $fn, {});
+        my $worker = $worker_class->new(Catmandu->config->{worker}{$worker_name} || {});
+        for my $func_name (@{$worker->worker_functions}) {
+            $method_name = $func_name;
+            if (ref $func_name) {
+                ($func_name) = keys %{$functions->{$func_name}};
+                ($method_name) = values %{$functions->{$func_name}};
+            }
+            my $func = sub {
+                my ($job) = @_;
+                my $workload = decode_json($job->workload);
+                $worker->$method($workload);
+            };
+            $gm_worker->add_function($func_name, 0, $func, {});
+        }
         $gm_worker->work while 1;
     };
 }
