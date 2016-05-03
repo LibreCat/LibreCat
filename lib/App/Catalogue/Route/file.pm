@@ -283,8 +283,14 @@ Download the thumbnail of the document
 =cut
 get '/thumbnail/:id' => sub {
     my $key = params->{id};
-    
-    redirect "/librecat/api/access/$key/x/thumbnail";
+    my $thumbnail_name = 'thumbnail.png';
+
+    if (my $file = _file_exists($key,$thumbnail_name)) {
+        _send_it($key,$file->key);
+    }
+    else {
+        redirect '/images/thumbnail_dummy.png';
+    }
 };
 
 1;
