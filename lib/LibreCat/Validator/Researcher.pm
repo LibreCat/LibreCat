@@ -6,9 +6,9 @@ use Catmandu::Validator::JSONSchema;
 use Catmandu;
 use namespace::clean;
 
-with 'Catmandu::Validator';
+with 'LibreCat::Validator::JSONSchema';
 
-sub _schema_validator {
+sub schema_validator {
 
     state $s = Catmandu::Validator::JSONSchema->new(
 
@@ -16,18 +16,6 @@ sub _schema_validator {
 
     );
 
-}
-
-sub validate_data {
-    my ($self,$data) = @_;
-
-    _schema_validator->validate($data);
-
-    my $errors = _schema_validator->last_errors();
-
-    return unless defined $errors;
-
-    [ map { $_->{property}.": ".$_->{message} } @$errors ];
 }
 
 1;
