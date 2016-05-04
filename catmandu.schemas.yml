@@ -1,0 +1,73 @@
+_prefix:
+  schemas:
+
+#used in LibreCat::Validator::Researcher
+researcher:
+  "$schema": "http://json-schema.org/draft-04/schema#"
+  title: "librecat researcher"
+  type: "object"
+  definitions:
+    department:
+      type: object
+      properties:
+        #TODO: _id must refer to valid department? Possible in JSON-Schema?
+        _id:
+          #in perl, its hard to distinguish between integer and string that look like an integer
+          oneOf:
+            - type: string
+              pattern: "^[0-9]+$"
+              minLength: 1
+            - type: integer
+              minimum: 0
+        name:
+          type: string
+          minLength: 1
+
+      required: ["_id","name"]
+      additionalProperties: false
+
+  properties:
+    _id:
+      #in perl, its hard to distinguish between integer and string that look like an integer
+      oneOf:
+        - type: string
+          pattern: "^[0-9]+$"
+          minLength: 1
+        - type: integer
+          minimum: 0
+    account_status:
+      type: string
+      enum: ["active","inactive"]
+    account_type:
+      type: string
+      minLength: 1
+      pattern: '^\S+$'
+    password:
+      type: string
+      minLength: 1
+      pattern: '^\S+$'
+    login:
+      type: string
+      minLength: 1
+      pattern: '^\S+$'
+    #TODO
+    email:
+      type: string
+      minLength: 1
+      pattern: '^\S+$'
+    first_name:
+      type: string
+      minLength: 0
+    last_name:
+      type: string
+      minLength: 0
+    full_name:
+      type: string
+      minLength: 0
+    department:
+      type: array
+      items:
+        "$ref": "#/definitions/department"
+
+  required: ["_id","account_status","account_type","password","login","email","first_name","last_name","full_name","department"]
+  additionalProperties: true

@@ -99,3 +99,4 @@ requires 'Catmandu::BagIt' , '>=0.12';
 
 requires 'Catmandu::Store::FedoraCommons';
 requires 'IO::All';
+requires 'Catmandu::Validator::JSONSchema','0.11';
