@@ -237,7 +237,7 @@ body.embed{padding:0;margin:0;width:100%;}
 .embed .hidden-embed{display:none;}
 .embed .embed-only{display:inline;}
 /* dont display first filter (filter to create iframe) in iframes */
-.embed h3.filters+p:first-of-type{display:none;}  
+/*.embed h3.filters+p:first-of-type{display:none;}*/
   
 /* special styles for screens */
 /* general */
