@@ -521,7 +521,7 @@ forms:
       external_id: &external_id
         label: "Externer Identifier"
         label_short: "Ext. Id."
-        placeholder: "W&auml;hlen Sie einen Identifier aus (z.B. eine PMID) und geben Sie ihn hier ein"
+        placeholder: "W&auml;hlen Sie einen Identifier und geben Sie ihn hier ein (nur die Nummer, ohne Teile der URL)"
         select: "W&auml;hlen"
       message: &message
         label: "Kommentare"
