@@ -956,7 +956,7 @@ publicationTypes:
          label: "Year"
          mandatory: 1
         defense_date: &defense_date
-          mandatory: 1
+          mandatory: 0
         publisher: &publisher_diss
           mandatory: 1
         place: &place_diss

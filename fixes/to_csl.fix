@@ -1,7 +1,18 @@
 # map fields to csl
 
 copy_field(type, res.type)
-lookup(res.type, fixes/lookup/csl_types.csv, default:'book')
+#lookup(res.type, fixes/lookup/csl_types.csv, default:'book')
+set_field(res.type, book)
+if any_match(type, 'bookChapter|conferenceAbstract|conference|encyclopediaArticle|translationChapter')
+  set_field(res.type, chapter)
+end
+if any_match(type, 'conferenceEditor')
+  set_field(res.type, book)
+end
+if any_match(type, 'default|review|journalArticle|journalEditor|newspaperArticle|patent|preprint')
+  set_field(res.type, article)
+end
+
 move_field(title, res.title)
 move_field(alternative_title.0, res.originalTitle)
 move_field(publication, res.container-title)
@@ -28,13 +39,42 @@ move_field(publication_status, res.status)
 copy_field(res.status, res.publstatus)
 add_field(res.tmp_status, '0000')
 copy_field(res.status, res.tmp_status)
-lookup(res.tmp_status, fixes/lookup/csl_status.csv, default:'0000')
-if any_match(res.tmp_status, '0000')
-  copy_field(res.sort-year, res.issued.date-parts.0.0)
+#lookup(res.tmp_status, fixes/lookup/csl_status.csv, default:'0000')
+#if any_match(res.tmp_status, '0000')
+#  copy_field(res.sort-year, res.issued.date-parts.0.0)
+#else
+#  copy_field(res.tmp_status,res.issued.date-parts.0.0)
+#end
+if any_match(res.tmp_status, 'submitted|accepted|inpress|unpublished')
+  if any_match(res.tmp_status, 'submitted')
+    set_field(res.tmp_status, 'Submitted')
+    move_field(res.tmp_status, res.issued.date-parts.0.0)
+  end
+  if any_match(res.tmp_status, 'accepted')
+    set_field(res.tmp_status, 'Accepted')
+    move_field(res.tmp_status, res.issued.date-parts.0.0)
+  end
+  if any_match(res.tmp_status, 'inpress')
+    set_field(res.tmp_status, 'In Press')
+    move_field(res.tmp_status, res.issued.date-parts.0.0)
+  end
+  if any_match(res.tmp_status, 'unpublished')
+    set_field(res.tmp_status, 'Unpublished')
+    move_field(res.tmp_status, res.issued.date-parts.0.0)
+  end
 else
-  copy_field(res.tmp_status,res.issued.date-parts.0.0)
+  copy_field(res.sort-year, res.issued.date-parts.0.0)
 end
 remove_field(res.tmp_status)
+
+if exists(publication_date)
+  split_field(publication_date, '-')
+  move_field(publication_date.2, 'res.publication_date.$append')
+  move_field(publication_date.1, 'res.publication_date.$append')
+  move_field(publication_date.0, 'res.publication_date.$append')
+  join_field(res.publication_date, '.')
+#move_field(publication_date, res.publication_date)
+end
 
 move_field(place, res.publisher-place)
 move_field(edition, res.edition)

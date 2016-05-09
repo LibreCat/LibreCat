@@ -135,6 +135,7 @@ a.anchor{display: block;position: relative;top: -140px;visibility: hidden;}
 .fw5{width:5em;/*not in use yet*/}
 .fw6{width:150px;/*fits publ-type-dropdown*/}
 .fw7{width:175px;/*fits change-edit-form-button, must be +25px than .fw6 */}
+.fw8{width:190px;/*fits for new change-edit-form-button on test-system, can replace fw7 when going live  */}
 a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 
 /* frontdoor */
@@ -235,6 +236,8 @@ body.embed{padding:0;margin:0;width:100%;}
 .embed .pagination{margin:11px 0;}
 .embed .hidden-embed{display:none;}
 .embed .embed-only{display:inline;}
+/* dont display first filter (filter to create iframe) in iframes */
+/*.embed h3.filters+p:first-of-type{display:none;}*/
   
 /* special styles for screens */
 /* general */

@@ -521,7 +521,7 @@ forms:
       external_id: &external_id
         label: "Externer Identifier"
         label_short: "Ext. Id."
-        placeholder: "W&auml;hlen Sie einen Identifier aus (z.B. eine PMID) und geben Sie ihn hier ein"
+        placeholder: "W&auml;hlen Sie einen Identifier und geben Sie ihn hier ein (nur die Nummer, ohne URL)"
         select: "W&auml;hlen"
       message: &message
         label: "Kommentare"
@@ -1820,7 +1820,7 @@ help:
   help: "Die Funktionen von PUB im &Uuml;berblick."
   howto: "PUB Howto"
   change_language: "Sprache wechseln"
-  user_settings: "Rolle, >Fakult&auml;t,<br>Editiermodus,<br>Standardsprache<br>&auml;ndern"
+  user_settings: "Rolle, Fakult&auml;t,<br>Editiermodus,<br>Standardsprache<br>&auml;ndern"
   role: "Ihre Rolle<br>im System<br>Ggf. wechseln und mit Publikationen arbeiten, f&uuml;r die Sie z.B. Reviewer-Rechte haben."
   photo: "Ihr Foto. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp' target='_blank'>&Auml;ndern?</a>"
   email_encoded: "Ihre E-Mail-Adresse aus dem BIS/PEVZ."

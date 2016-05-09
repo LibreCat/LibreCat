@@ -24,7 +24,7 @@
 [% END %]
 
 [%- IF (qp.q.size > 0 AND !qp.embed) OR pd.delete_them %]
-  <h3 class="margin-top0">[% lf.facets.filters_and_searchterms %]</h3>
+  <h3 class="filters margin-top0">[% lf.facets.filters_and_searchterms %]</h3>
   [% other = {} %]
   [% CALL other.import(qp) %]
   [% CALL other.delete('q') %]
