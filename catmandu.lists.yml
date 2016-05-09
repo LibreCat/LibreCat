@@ -118,7 +118,7 @@ external_identifier:
     name: "PhilLister"
     prefix: "PhilLister:"
   opac:
-    name: "OPAC"
+    name: "Katalog.plus!"
     prefix: "UB-OPAC:"
   fp7:
     name: "FP7"
