@@ -60,6 +60,19 @@ publication:
         display:
           type: string
 
+        tree:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                oneOf:
+                  - type: string
+                    pattern: "^[0-9]+$"
+                    minLength: 1
+                  - type: integer
+                    minimum: 0
+
       required: ["_id","name"]
       additionalProperties: false
 
@@ -328,3 +341,5 @@ researcher:
 
   required: ["_id","account_status","account_type","password","login","email","first_name","last_name","full_name","department"]
   additionalProperties: true
+
+department: *department
