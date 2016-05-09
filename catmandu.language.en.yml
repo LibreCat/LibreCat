@@ -1074,7 +1074,7 @@ forms:
         label: "Publication Date"
         label_short: "Publ. Date"
         placeholder: "YYYY-MM-DD"
-      page: *page_range
+      volume_issue_page: *volume_issue_page
       publication:
         label: "Newspaper Title"
         label_short: "News. Title"

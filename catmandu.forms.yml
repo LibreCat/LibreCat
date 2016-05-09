@@ -615,7 +615,7 @@ publicationTypes:
         year_extern: *year_extern
         publication_date: &publication_date
           mandatory: 1
-        page: *page_range
+        volume_issue_page: *volume_issue_page
         publication:
           mandatory: 1
         alternative_title: *alternative_title

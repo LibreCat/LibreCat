@@ -1073,7 +1073,7 @@ forms:
         label: "Ver&ouml;ffentlichungsdatum"
         label_short: "Ver&ouml;ff.datum"
         placeholder: "YYYY-MM-DD"
-      page: *page_range
+      volume_issue_page: *volume_issue_page
       publication:
         label: "Zeitungstitel"
         label_short: "Zeit.titel"
