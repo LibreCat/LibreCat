@@ -343,3 +343,155 @@ researcher:
   additionalProperties: true
 
 department: *department
+
+project:
+  "$schema": "http://json-schema.org/draft-04/schema#"
+  title: "librecat project"
+  type: "object"
+  properties:
+    _id:
+      type: string
+      pattern: "^P[0-9]+$"
+    name:
+      type: string
+      minLength: 1
+    acronym:
+      type: string
+    alternative_name:
+      type: string
+    url:
+      type: string
+      format: uri
+    grant_number:
+      type: string
+    psp_element:
+      type: string
+    description:
+      type: string
+    start_date:
+      type: string
+      format: date
+    end_date:
+      type: string
+      format: date
+    date_created:
+      type: string
+      format: date-time
+    date_updated:
+      type: string
+      format: date-time
+    #not defined in elasticsearch?
+    affiliation:
+      type: string
+    #'coordinator' in the web interface
+    owner:
+      type: array
+      items:
+        type: object
+        properties:
+          first_name:
+            type: string
+            minLength: 1
+          last_name:
+            type: string
+            minLength: 1
+    designated_editor:
+      type: array
+      items:
+        type: object
+        properties:
+          first_name:
+            type: string
+            minLength: 1
+          last_name:
+            type: string
+            minLength: 1
+    principal_investigator:
+      type: array
+      items:
+        type: object
+        properties:
+          first_name:
+            type: string
+            minLength: 1
+          last_name:
+            type: string
+            minLength: 1
+    member:
+      type: array
+      items:
+        type: object
+        properties:
+          first_name:
+            type: string
+            minLength: 1
+          last_name:
+            type: string
+            minLength: 1
+    cooperator:
+      type: array
+      items:
+        type: string
+        minLength: 1
+    funder:
+      type: array
+      items:
+        type: string
+        minLength: 1
+    call_identifier:
+      type: string
+    funded:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - type: string
+          enum: ["0","1"]
+
+  required: ["_id","name"]
+  additionalProperties: true
+
+research_group:
+  "$schema": "http://json-schema.org/draft-04/schema#"
+  title: "librecat research group"
+  type: "object"
+  properties:
+    _id:
+      type: string
+      pattern: "^RG[0-9]+$"
+    name:
+      type: string
+      minLength: 1
+    acronym:
+      type: string
+      minLength: 1
+    start_date:
+      type: string
+      format: date
+    end_date:
+      type: string
+      format: date
+    date_created:
+      type: string
+      format: date-time
+    date_updated:
+      type: string
+      format: date-time
+    affiliation:
+      type: string 
+    department:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            oneOf:
+              - type: string
+                pattern: "^[0-9]+$"
+                minLength: 1
+              - type: integer
+                minimum: 0
+
+  required: ["_id","name"]
+  additionalProperties: true
