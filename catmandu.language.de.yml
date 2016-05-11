@@ -1637,11 +1637,11 @@ forms:
     tab: *tab
     field: *field
   bibachelorthesis: *bibachelorthesis
-  to_sp_form: "Zum Gesamtformular wechseln"
-  sp_form: "Gesamtformular"
-  to_tab_form: "Zur Tab-Navigation wechseln"
+  to_sp_form: "Gesamtsicht"
+  sp_form: "Gesamtsicht"
+  to_tab_form: "Gegliederte Sicht"
+  tab_form: "Gegliederte Sicht"
   toggle_dropdown: "Men&uuml; aufklappen"
-  tab_form: "Tab-Navigation"
   mandatory: "Pflichtfeld"
   mandatory_error: "Sie haben Pflichtfelder &uuml;bersehen oder es sind andere Probleme aufgetreten! Bitte &uuml;berpr&uuml;fen Sie ihre Daten."
   form_change_form: "Editiermodus &auml;ndern"

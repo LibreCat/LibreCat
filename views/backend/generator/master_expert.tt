@@ -13,7 +13,7 @@
 <!-- changes here must be generated -->
 
 <div class="col-md-11 col-md-offset-1">
-  
+
   <div class="page-header" id="banner">
     <div class="row">
       <div class="col-sm-8">
@@ -24,7 +24,6 @@
       [% END%]
       </div>
       <div class="col-sm-4 text-right">
-	<button type="button" class="btn btn-xs hidden-xs change_mode margin-bottom1-2 fw7 helpme" data-placement="left" title="[% lf.form_change_form %]"><span class="glyphicon glyphicon-option-horizontal"></span> [% lf.to_tab_form %]</button>
 	  [% INCLUDE backend/change_type_menu.tt %]
       </div>
     </div>
@@ -43,12 +42,12 @@
     <input type="hidden" name="edit_mode" id="edit_mode" value="expert" />
 
     <div class="tab tab-content edit-form">
-    
+
       {% INCLUDE fields/buttonrow_tab1.tt %}
 
       <!-- STEP 1 -->
       <div id="basic_fields" class="tab_section">
-      
+
       <div class="hidden bg-danger" id="mandatory-field-error">
         <p>[% lf.mandatory_error %]</p>
       </div>

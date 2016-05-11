@@ -1641,9 +1641,9 @@ forms:
     tab: *tab
     field: *field
   bibachelorthesis: *bibachelorthesis
-  to_sp_form: "Change to single page form"
+  to_sp_form: "Single Page Form"
   sp_form: "Single Page Form"
-  to_tab_form: "Change to tabbed form"
+  to_tab_form: "Tabbed Form"
   tab_form: "Tabbed Form"
   toggle_dropdown: "Toggle dropdown"
   mandatory: "Mandatory field"
