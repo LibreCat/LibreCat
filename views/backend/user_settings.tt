@@ -100,24 +100,6 @@
 
 <hr />
 
-<form id="id_save_lang" action="/librecat/person/set_language" method="GET">
-  <div class="row innerrow">
-    <div class="col-md-12">
-      <h4>[% lf.header.default_language %]</h4>
-    </div>
-  </div>
-  <div class="row innerrow">
-    <div class="col-md-7">
-      <select id="lang_select" name="lang" class="form-control">
-        <option value="en"[% IF (thisPerson.lang AND thisPerson.lang == "en") OR !thisPerson.lang %] selected="selected"[% END %]>[% lf.header.lang_select.eng %]</option>
-        <option value="de"[% IF (thisPerson.lang AND thisPerson.lang == "de") %] selected="selected"[% END %]>[% lf.header.lang_select.ger %]</option>
-      </select>
-    </div>
-  </div>
-</form>
-
-<hr />
-
 <script>
 
 $(function(){
