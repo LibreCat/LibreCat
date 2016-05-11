@@ -614,8 +614,8 @@ forms:
         label_start_short: "Beginn"
         label_end: "Konferenz Ende"
         label_end_short: "Ende"
-        placeholder_start: "YYYY-MM-DD"
-        placeholder_end: "YYYY-MM-DD"
+        placeholder_start: "JJJJ-MM-TT"
+        placeholder_end: "JJJJ-MM-TT"
       edition: *edition
       dropzone: *dropzone
       license: *license
@@ -1072,7 +1072,7 @@ forms:
       publication_date: &publication_date
         label: "Ver&ouml;ffentlichungsdatum"
         label_short: "Ver&ouml;ff.datum"
-        placeholder: "YYYY-MM-DD"
+        placeholder: "JJJJ-MM-TT"
       volume_issue_page: *volume_issue_page
       publication:
         label: "Zeitungstitel"
@@ -1127,13 +1127,13 @@ forms:
       publication_date_number:
         label: "Ver&ouml;ffentlichungsdatum/-nr."
         label_pd: "V&ouml;.datum"
-        placeholder_pd: "YYYY-MM-DD"
+        placeholder_pd: "JJJJ-MM-TT"
         label_pn: "Pat.nr."
         placeholder_pn: "Internationale Patentnummer"
       application_date_number:
         label: "Antragsdatum/-nummer"
         label_ad: "Antr.datum"
-        placeholder_ad: "YYYY-MM-DD"
+        placeholder_ad: "JJJJ-MM-TT"
         label_an: "Antr.Nr."
         placeholder_an: "Antragsnummer"
       ipc:
@@ -1585,7 +1585,7 @@ forms:
         tooltip: "Autor arbeitet an der Uni Bielefeld."
       year:
         label: "Jahr"
-        placeholder: "YYYY"
+        placeholder: "JJJJ"
       defense_date: &defense_date
         label: "Verteidigungsdatum"
         label_short: "Verteid.datum"
