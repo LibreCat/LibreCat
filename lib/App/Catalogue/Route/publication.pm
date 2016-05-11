@@ -439,6 +439,12 @@ Changes the layout of the edit form.
             'delete_empty()',
         ])->fix($params);
 
+        my $person = h->get_person( session('personNumber') );
+        if($mode eq "normal" or $mode eq "expert"){
+            $person->{edit_mode} = $mode;
+            h->update_record('researcher', $person);
+        }
+
         my $path = "backend/forms/";
         $path .= "expert/" if $mode eq "expert";
         $path .= params->{type} . ".tt";

@@ -80,26 +80,6 @@
   </div>
 </form>
 
-<hr />
-
-<form id="id_save_mode" action="/librecat/person/edit_mode" method="POST">
-  <div class="row innerrow">
-    <div class="col-md-12">
-      <h4>[% lf.header.default_edit_mode %]</h4>
-    </div>
-  </div>
-  <div class="row innerrow">
-    <div class="col-md-7">
-	  <select id="edit_mode_select" name="edit_mode" class="form-control">
-	    <option value="normal"[% IF (thisPerson.edit_mode AND thisPerson.edit_mode == "normal") OR (!thisPerson.edit_mode AND session.role != "super_admin") %] selected="selected"[% END %]>[% lf.forms.tab_form %]</option>
-	    <option value="expert"[% IF (thisPerson.edit_mode AND thisPerson.edit_mode == "expert") OR (!thisPerson.edit_mode AND session.role == "super_admin") %] selected="selected"[% END %]>[% lf.forms.sp_form %]</option>
-	  </select>
-    </div>
-  </div>
-</form>
-
-<hr />
-
 <script>
 
 $(function(){
