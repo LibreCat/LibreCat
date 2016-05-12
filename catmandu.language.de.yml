@@ -371,6 +371,8 @@ forms:
       supplementary_fields: "Weitere Angaben"
       related_material: "Verkn&uuml;pfungen"
     field:
+      document_type: &document_type
+        label: "Publikationstyp"
       doi: &doi
         label: "DOI"
         placeholder: "z.B. 10.4119/unibi/2695161"
@@ -570,6 +572,7 @@ forms:
     label: "Herausgeber Sammelwerk"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *booktitle
       editor_solo: &editor_solo
@@ -615,8 +618,8 @@ forms:
         label_start_short: "Beginn"
         label_end: "Konferenz Ende"
         label_end_short: "Ende"
-        placeholder_start: "YYYY-MM-DD"
-        placeholder_end: "YYYY-MM-DD"
+        placeholder_start: "JJJJ-MM-TT"
+        placeholder_end: "JJJJ-MM-TT"
       edition: *edition
       dropzone: *dropzone
       license: *license
@@ -639,6 +642,7 @@ forms:
     label: "Sammelwerksbeitrag"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -703,6 +707,7 @@ forms:
     label: "Kurzbeitrag Konferenz"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: &title
         label: "Titel"
@@ -776,6 +781,7 @@ forms:
     label: "Konferenzband"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *booktitle
       editor_solo: *editor_solo
@@ -816,6 +822,7 @@ forms:
     label: "Konferenzbeitrag"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -862,6 +869,7 @@ forms:
     label: "Dissertation"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -905,6 +913,7 @@ forms:
     label: "Lexikoneintrag"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -948,6 +957,7 @@ forms:
     label: "Zeitschriftenaufsatz"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -1005,6 +1015,7 @@ forms:
     label: "Sonderausgabe Zeitschrift"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -1060,6 +1071,7 @@ forms:
     label: "Zeitungsartikel"
     tab: *tab
     field:
+      document_type: *document_type
       title:
         label: "Titel"
         label_short: "Titel"
@@ -1073,7 +1085,7 @@ forms:
       publication_date: &publication_date
         label: "Ver&ouml;ffentlichungsdatum"
         label_short: "Ver&ouml;ff.datum"
-        placeholder: "YYYY-MM-DD"
+        placeholder: "JJJJ-MM-TT"
       volume_issue_page: *volume_issue_page
       publication:
         label: "Zeitungstitel"
@@ -1103,6 +1115,7 @@ forms:
     label: "Patent"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -1128,13 +1141,13 @@ forms:
       publication_date_number:
         label: "Ver&ouml;ffentlichungsdatum/-nr."
         label_pd: "V&ouml;.datum"
-        placeholder_pd: "YYYY-MM-DD"
+        placeholder_pd: "JJJJ-MM-TT"
         label_pn: "Pat.nr."
         placeholder_pn: "Internationale Patentnummer"
       application_date_number:
         label: "Antragsdatum/-nummer"
         label_ad: "Antr.datum"
-        placeholder_ad: "YYYY-MM-DD"
+        placeholder_ad: "JJJJ-MM-TT"
         label_an: "Antr.Nr."
         placeholder_an: "Antragsnummer"
       ipc:
@@ -1163,6 +1176,7 @@ forms:
     label: "Preprint"
     tab: *tab
     field:
+      document_type: *document_type
       title:
         label: "Titel"
         label_short: "Titel"
@@ -1196,6 +1210,7 @@ forms:
     label: "Report"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -1235,6 +1250,7 @@ forms:
     label: "Rezension"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -1280,6 +1296,7 @@ forms:
       supplementary_fields: "Weitere Angaben"
       related_material: "Verkn&uuml;pfungen"
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       author:
@@ -1380,6 +1397,7 @@ forms:
     label: "&Uuml;bersetzung"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel (&Uuml;bersetzung)"
@@ -1449,6 +1467,7 @@ forms:
     label: "&Uuml;bersetzung (Aufsatz)"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       editor: *editor_only
       title:
@@ -1522,6 +1541,7 @@ forms:
     label: "Diskussionspapier"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -1559,8 +1579,9 @@ forms:
     label: "Bielefelder E-Dissertation"
     tab: *tab
     field: &field
+      document_type: *document_type
       bi_doctype:
-        label: "Documenttyp"
+        label: "bi*-Typ"
       email: &email
         label: "E-Mail-Adresse"
         label_short: "E-Mail"
@@ -1586,7 +1607,7 @@ forms:
         tooltip: "Autor arbeitet an der Uni Bielefeld."
       year:
         label: "Jahr"
-        placeholder: "YYYY"
+        placeholder: "JJJJ"
       defense_date: &defense_date
         label: "Verteidigungsdatum"
         label_short: "Verteid.datum"
@@ -1638,11 +1659,11 @@ forms:
     tab: *tab
     field: *field
   bibachelorthesis: *bibachelorthesis
-  to_sp_form: "Zum Gesamtformular wechseln"
-  sp_form: "Gesamtformular"
-  to_tab_form: "Zur Tab-Navigation wechseln"
+  to_sp_form: "Gesamtsicht"
+  sp_form: "Gesamtsicht"
+  to_tab_form: "Gegliederte Sicht"
+  tab_form: "Gegliederte Sicht"
   toggle_dropdown: "Men&uuml; aufklappen"
-  tab_form: "Tab-Navigation"
   mandatory: "Pflichtfeld"
   mandatory_error: "Sie haben Pflichtfelder &uuml;bersehen oder es sind andere Probleme aufgetreten! Bitte &uuml;berpr&uuml;fen Sie ihre Daten."
   form_change_form: "Editiermodus &auml;ndern"

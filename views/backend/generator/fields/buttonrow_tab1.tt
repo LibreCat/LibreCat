@@ -30,5 +30,10 @@
         [% END %]
       </div>
     </div>
+    [% IF edit_mode != "normal" %]
+    <div class="col-md-2 col-xs-2 text-right">
+      <a class="btn btn-default change_mode hidden-xs">[% lf.tab_form %]</a>
+    </div>
+    [% END %]
   </div>
 </div>

@@ -24,8 +24,6 @@
       [% END%]
       </div>
       <div class="col-sm-4 text-right">
-	<button type="button" class="btn btn-xs change_mode hidden-xs margin-bottom1-2 fw7 helpme" data-placement="left" title="[% lf.form_change_form %]"><span class="glyphicon glyphicon-option-vertical"></span> [% lf.to_sp_form %]</button>
-	[% INCLUDE backend/change_type_menu.tt %]
 	  </div>
     </div>
   </div>
@@ -51,6 +49,10 @@
       <a class="change_tab" href="#related_material">[% lf.$type.tab.related_material %]</a>
     </li>
     {% END %}
+
+    <li class="navbar-right">
+      <a class="btn btn-default change_mode hidden-xs">[% lf.sp_form %]</a>
+    </li>
   </ul>
 
   <div class="clearfix"></div>
@@ -69,7 +71,7 @@
 
       <!-- STEP 1 -->
       <div class="tab-pane active" id="basic_fields">
-      
+
       <div class="hidden bg-danger" id="mandatory-field-error">
         <p>[% lf.mandatory_error %]</p>
       </div>

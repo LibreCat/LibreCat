@@ -32,7 +32,7 @@ for his own publication list.
         $params->{'sort'} = params->{'sort'} if params->{'sort'};
         forward '/librecat/person/preference', $params;
     };
-    
+
     get '/preference' => needs login => sub {
         my $person = h->get_person( params->{delegate_id} || session('personNumber') );
         my $sort; my $tmp;
@@ -95,18 +95,18 @@ User can choose default edit mode for editing publications.
 "expert" -> one long edit form
 
 =cut
-    post '/edit_mode' => needs login => sub {
-
-        my $person = h->get_person( session('personNumber') );
-        my $mode = params->{edit_mode};
-        if($mode eq "normal" or $mode eq "expert"){
-            $person->{edit_mode} = $mode;
-            h->update_record('researcher', $person);
-        }
-
-        redirect '/librecat';
-
-    };
+    # post '/edit_mode' => needs login => sub {
+    #
+    #     my $person = h->get_person( session('personNumber') );
+    #     my $mode = params->{edit_mode};
+    #     if($mode eq "normal" or $mode eq "expert"){
+    #         $person->{edit_mode} = $mode;
+    #         h->update_record('researcher', $person);
+    #     }
+    #
+    #     redirect '/librecat';
+    #
+    # };
 
 =head2 POST /set_language
 

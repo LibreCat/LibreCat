@@ -372,6 +372,8 @@ forms:
       supplementary_fields: "Additional Information"
       related_material: "Links"
     field:
+      document_type: &document_type
+        label: "Publication Type"
       doi: &doi
         label: "DOI"
         placeholder: "e.g. 10.4119/unibi/2695161"
@@ -571,6 +573,7 @@ forms:
     label: "Book (Editor)"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *booktitle
       editor_solo: &editor_solo
@@ -640,6 +643,7 @@ forms:
     label: "Book Chapter"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -704,6 +708,7 @@ forms:
     label: "Conference Abstract"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: &title
         label: "Title"
@@ -777,6 +782,7 @@ forms:
     label: "Conference (Editor)"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *booktitle
       editor_solo: *editor_solo
@@ -817,6 +823,7 @@ forms:
     label: "Conference Paper"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -863,6 +870,7 @@ forms:
     label: "Dissertation"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -906,6 +914,7 @@ forms:
     label: "Encyclopedia Article"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -949,6 +958,7 @@ forms:
     label: "Journal Article"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -1006,6 +1016,7 @@ forms:
     label: "Special Issue"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -1061,6 +1072,7 @@ forms:
     label: "Newspaper Article"
     tab: *tab
     field:
+      document_type: *document_type
       title:
         label: "Title"
         label_short: "Title"
@@ -1104,6 +1116,7 @@ forms:
     label: "Patent"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -1164,6 +1177,7 @@ forms:
     label: "Preprint"
     tab: *tab
     field:
+      document_type: *document_type
       title:
         label: "Title"
         label_short: "Titel"
@@ -1197,6 +1211,7 @@ forms:
     label: "Report"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -1236,6 +1251,7 @@ forms:
     label: "Book Review"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -1281,6 +1297,7 @@ forms:
       supplementary_fields: "Additional Information"
       related_material: "Links"
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       author:
@@ -1381,6 +1398,7 @@ forms:
     label: "Translation"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title (Translation)"
@@ -1451,6 +1469,7 @@ forms:
     label: "Translation (Section)"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       editor: *editor_only
       title:
@@ -1524,6 +1543,7 @@ forms:
     label: "Working Paper"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -1561,9 +1581,10 @@ forms:
     label: "Bielefeld Dissertation"
     tab: *tab
     field: &field
+      document_type: *document_type
       bi_doctype:
-        label: "Documenttype"
-        label_short: "Doc.type"
+        label: "bi*-type"
+        label_short: "bi*-type"
       email: &email
         label: "Email address"
         label_short: "Email"
@@ -1642,9 +1663,9 @@ forms:
     tab: *tab
     field: *field
   bibachelorthesis: *bibachelorthesis
-  to_sp_form: "Change to single page form"
+  to_sp_form: "Single Page Form"
   sp_form: "Single Page Form"
-  to_tab_form: "Change to tabbed form"
+  to_tab_form: "Tabbed Form"
   tab_form: "Tabbed Form"
   toggle_dropdown: "Toggle dropdown"
   mandatory: "Mandatory field"

@@ -32,6 +32,7 @@ publication_type_order:
     - researchdata
 field_order:
   basic_fields:
+    - document_type
     - bi_doctype
     - doi
     - translator
@@ -131,6 +132,8 @@ publicationTypes:
     tmpl: book
     fields:
       basic_fields:
+        document_type: &document_type
+          multiple: 0
         doi: &doi
           mandatory: 0
           multiple: 0
@@ -229,6 +232,7 @@ publicationTypes:
     tmpl: bookEditor
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         editor_solo: &editor_solo
@@ -278,6 +282,7 @@ publicationTypes:
     tmpl: bookChapter
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         alternative_title: *alternative_title
@@ -325,6 +330,7 @@ publicationTypes:
     tmpl: conferenceAbstract
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         author: *author_translator
@@ -374,6 +380,7 @@ publicationTypes:
     tmpl: conferenceEditor
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         editor_solo: *editor_solo
@@ -413,6 +420,7 @@ publicationTypes:
     tmpl: conference
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         alternative_title: *alternative_title
@@ -455,6 +463,7 @@ publicationTypes:
     tmpl: dissertation
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         author:
@@ -492,6 +501,7 @@ publicationTypes:
     tmpl: encyclopediaArticle
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         author: *author_translator
@@ -527,6 +537,7 @@ publicationTypes:
     tmpl: journalArticle
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         alternative_title: *alternative_title
@@ -570,6 +581,7 @@ publicationTypes:
     tmpl: journalEditor
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         editor_solo: *editor_solo
@@ -607,6 +619,7 @@ publicationTypes:
     tmpl: newspaperArticle
     fields:
       basic_fields:
+        document_type: *document_type
         author: *author_translator
         title: *title
         department: *department
@@ -638,6 +651,7 @@ publicationTypes:
     tmpl: patent
     fields:
       basic_fields:
+        document_type: *document_type
         title: *title
         alternative_title: *alternative_title
         author:
@@ -672,6 +686,7 @@ publicationTypes:
     tmpl: preprint
     fields:
       basic_fields:
+        document_type: *document_type
         title: *title
         publication:
           mandatory: 0
@@ -700,6 +715,7 @@ publicationTypes:
     tmpl: report
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         author: *author_translator
@@ -732,6 +748,7 @@ publicationTypes:
     tmpl: review
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         author: *author_translator
@@ -767,6 +784,7 @@ publicationTypes:
     tmpl: researchData
     fields:
       basic_fields:
+        document_type: *document_type
         doi:
           readonly: 1
         title: *title
@@ -809,6 +827,7 @@ publicationTypes:
     tmpl: translation
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         alternative_title:
@@ -856,6 +875,7 @@ publicationTypes:
     tmpl: translationChapter
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         alternative_title:
@@ -902,6 +922,7 @@ publicationTypes:
     tmpl: workingPaper
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         alternative_title: *alternative_title
@@ -933,6 +954,7 @@ publicationTypes:
     tmpl: biDissertation
     fields:
       basic_fields:
+        document_type: *document_type
         bi_doctype:
           label: "Documenttype"
           mandatory: 1
