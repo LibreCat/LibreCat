@@ -143,6 +143,7 @@ main_page:
     details: "Details"
     view_details: "Show complete bibliographic information and access options."
     files: "Files available"
+    file: "File"
     internal_view: "Internal View"
     request_a_copy: "Request a Copy"
     request_a_copy_title: "Generate sharable links for files with 'Request a copy' status"

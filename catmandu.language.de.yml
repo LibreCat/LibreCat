@@ -143,6 +143,7 @@ main_page:
     details: "Details"
     view_details: "Publikationsseite in PUB anzeigen (Frontdoor)"
     files: "Dateien verf&uuml;gbar"
+    file: "Datei"
     internal_view: "Interne Sicht"
     request_a_copy: "Exemplar anfordern"
     request_a_copy_title: "Generiert teilbare Links zu Dateien mit Status 'Request a copy'"
@@ -1018,7 +1019,7 @@ forms:
       publisher: *publisher
       publication: *publication_jtitle
       volume_issue_page: &volume_issue_page
-        label: "Band / Ausgab / Seite(n)"
+        label: "Band / Ausgabe / Seite(n)"
         volume:
           placeholder: "z.B. 3"
           label: "Band"
