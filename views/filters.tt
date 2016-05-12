@@ -53,7 +53,13 @@
   [% FOREACH key IN qp.keys %]
     [% NEXT IF key == "q" %]
     [% NEXT IF key == "start" %]
+    [% NEXT IF key == "sort" %]
     <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
+  [% END %]
+  [% IF qp.item('sort') %]
+    [% FOREACH sorting IN qp.item('sort') %]
+    <input type="hidden" name="sort" value="[% sorting %]" />
+    [% END %]
   [% END %]
 </form>
 [% END %]
