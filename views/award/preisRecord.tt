@@ -63,6 +63,7 @@
       [% IF extern %]([% lang ? "Honoured before coming to Bielefeld University" : "Ehrung erhalten vor T&auml;tigkeit an der Universit&auml;t Bielefeld" %])<br /><br />[% END %]
       [% IF description %][% IF lang AND lang == "en" %][% description_en %][% ELSE %][% description %][% END %]<br />[% END %]
       [% IF proof %]<a href="[% proof %]" title="[% proof %]" target="_blank">[% lang ? "Documentation" : "Nachweis" %]</a><br />[% END %]
+      [% IF url %]<a href="[% url %]" title="[% url %]" target="_blank">URL<a><br />[% END %]
 
       </div>
 
