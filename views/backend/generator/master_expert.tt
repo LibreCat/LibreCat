@@ -24,7 +24,6 @@
       [% END%]
       </div>
       <div class="col-sm-4 text-right">
-	  [% INCLUDE backend/change_type_menu.tt %]
       </div>
     </div>
   </div>

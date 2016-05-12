@@ -370,6 +370,8 @@ forms:
       supplementary_fields: "Weitere Angaben"
       related_material: "Verkn&uuml;pfungen"
     field:
+      document_type: &document_type
+        label: "Publikationstyp"
       doi: &doi
         label: "DOI"
         placeholder: "z.B. 10.4119/unibi/2695161"
@@ -569,6 +571,7 @@ forms:
     label: "Herausgeber Sammelwerk"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *booktitle
       editor_solo: &editor_solo
@@ -638,6 +641,7 @@ forms:
     label: "Sammelwerksbeitrag"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -702,6 +706,7 @@ forms:
     label: "Kurzbeitrag Konferenz"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: &title
         label: "Titel"
@@ -775,6 +780,7 @@ forms:
     label: "Konferenzband"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *booktitle
       editor_solo: *editor_solo
@@ -815,6 +821,7 @@ forms:
     label: "Konferenzbeitrag"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -861,6 +868,7 @@ forms:
     label: "Dissertation"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -904,6 +912,7 @@ forms:
     label: "Lexikoneintrag"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -947,6 +956,7 @@ forms:
     label: "Zeitschriftenaufsatz"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -1004,6 +1014,7 @@ forms:
     label: "Sonderausgabe Zeitschrift"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -1059,6 +1070,7 @@ forms:
     label: "Zeitungsartikel"
     tab: *tab
     field:
+      document_type: *document_type
       title:
         label: "Titel"
         label_short: "Titel"
@@ -1102,6 +1114,7 @@ forms:
     label: "Patent"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -1162,6 +1175,7 @@ forms:
     label: "Preprint"
     tab: *tab
     field:
+      document_type: *document_type
       title:
         label: "Titel"
         label_short: "Titel"
@@ -1195,6 +1209,7 @@ forms:
     label: "Report"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -1234,6 +1249,7 @@ forms:
     label: "Rezension"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -1279,6 +1295,7 @@ forms:
       supplementary_fields: "Weitere Angaben"
       related_material: "Verkn&uuml;pfungen"
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       author:
@@ -1379,6 +1396,7 @@ forms:
     label: "&Uuml;bersetzung"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel (&Uuml;bersetzung)"
@@ -1448,6 +1466,7 @@ forms:
     label: "&Uuml;bersetzung (Aufsatz)"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       editor: *editor_only
       title:
@@ -1521,6 +1540,7 @@ forms:
     label: "Diskussionspapier"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -1558,8 +1578,9 @@ forms:
     label: "Bielefelder E-Dissertation"
     tab: *tab
     field: &field
+      document_type: *document_type
       bi_doctype:
-        label: "Documenttyp"
+        label: "bi*-Typ"
       email: &email
         label: "E-Mail-Adresse"
         label_short: "E-Mail"
