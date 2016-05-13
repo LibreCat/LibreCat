@@ -6,6 +6,7 @@ use File::Temp;
 use File::Copy;
 use Date::Parse;
 use Digest::MD5;
+use LibreCat::MimeType;
 use Catmandu::Util;
 use Catmandu::Store::FedoraCommons::FOXML;
 use LibreCat::FileStore::File::FedoraCommons;
@@ -15,6 +16,11 @@ use namespace::clean;
 with 'LibreCat::FileStore::Container';
 
 has _fedora => (is => 'ro');
+has _mimeType => (is => 'lazy');
+
+sub _build__mimeType {
+    LibreCat::MimeType->new;
+}
 
 sub list {
     my ($self) = @_;
@@ -179,6 +185,8 @@ sub _add_filename {
         $options{checksumType} = 'MD5';
     }
 
+    my $mimeType = $self->_mimeType->content_type($filename);
+
     my ($operation,$dsid) = $self->_next_dsid($key);
 
     my $response;
@@ -189,6 +197,7 @@ sub _add_filename {
                         dsID => $dsid , 
                         file => $filename, 
                         dsLabel => $key,
+                        mimeType => $mimeType,
                         %options
                         );
     } 
@@ -198,6 +207,7 @@ sub _add_filename {
                         dsID => $dsid , 
                         file => $filename, 
                         dsLabel => $key,
+                        mimeType => $mimeType,
                         %options
                         ); 
     }
@@ -240,6 +250,8 @@ sub _add_stream {
         $data->close();
     }
 
+    my $mimeType = $self->_mimeType->content_type($filename);
+
     my ($operation,$dsid) = $self->_next_dsid($key);
 
     my $response;
@@ -250,6 +262,7 @@ sub _add_stream {
                         dsID => $dsid , 
                         file => $filename, 
                         dsLabel => $key ,
+                        mimeType => $mimeType,
                         %options
                         );
     }
@@ -259,6 +272,7 @@ sub _add_stream {
                         dsID => $dsid , 
                         file => $filename, 
                         dsLabel => $key ,
+                        mimeType => $mimeType,
                         %options
                         );
     }

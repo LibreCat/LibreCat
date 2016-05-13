@@ -87,7 +87,7 @@ sub exists {
 
     $self->log->debug("Checking exists $key");
 
-    my $long_key = sprintf "%-9.9d", $key;
+    my $long_key = $self->_long_key($key);
 
     my $obj = $self->fedora->getObjectProfile(pid => "$ns_prefix:$long_key");
 
@@ -101,7 +101,7 @@ sub add {
 
     $self->log->debug("Generating path container for key $key");
 
-    my $long_key = sprintf "%-9.9d", $key;
+    my $long_key = $self->_long_key($key);
 
     LibreCat::FileStore::Container::FedoraCommons->create_container($self->fedora,$long_key);
 }
@@ -113,7 +113,7 @@ sub get {
 
     $self->log->debug("Loading container for $key");
 
-    my $long_key = sprintf "%-9.9d", $key;
+    my $long_key = $self->_long_key($key);
 
     LibreCat::FileStore::Container::FedoraCommons->read_container($self->fedora,$long_key);
 }
@@ -123,11 +123,20 @@ sub delete {
 
     croak "Need a key" unless defined $key;
 
-    my $long_key = sprintf "%-9.9d", $key;
+    my $long_key = $self->_long_key($key);
 
     LibreCat::FileStore::Container::FedoraCommons->delete_container($self->fedora,$long_key);
 }
 
+sub _long_key {
+    my ($selk,$key) = @_;
+    if ($key =~ /^\d+$/) {
+        return sprintf "%-12.12d", $key;
+    }
+    else {
+        return $key;
+    }
+}
 1;
 
 __END__
