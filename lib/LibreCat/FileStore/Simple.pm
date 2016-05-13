@@ -37,7 +37,6 @@ sub list {
         chop($line);
         $line =~ s/$root//;
         $line =~ s/\///g;
-        $line =~ s/^0+//;
         $line;
     };
 }
