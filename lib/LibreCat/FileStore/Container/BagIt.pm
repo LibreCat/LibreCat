@@ -43,6 +43,7 @@ sub exists {
 
 sub get {
     my ($self,$key) = @_;
+
     my $bagit  = $self->_bagit;
 
     my $packed_key = $self->pack_key($key);

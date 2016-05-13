@@ -82,14 +82,11 @@ sub command {
     if (my $file_store_name = $opts->store) {
         $file_store = $self->file_store($file_store_name);
         $file_opt   = $self->file_opt($file_store_name);
-    }
 
-    unless ($file_store) {
-        $file_store = $self->file_store;
-    }
-
-    unless ($file_opt) {
-        $file_opt = $self->file_opt;
+        unless ($file_store) {
+            print STDERR "no such store '$file_store_name'\n";
+            exit(2);
+        }
     }
 
     $self->app->set_global_options({

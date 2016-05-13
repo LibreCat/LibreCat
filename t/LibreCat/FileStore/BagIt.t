@@ -45,6 +45,8 @@ note("update container with files");
 
 	ok $container->add("poem.txt",poem()) , 'container->add';
 
+	$container->commit;
+
 	my @list = $container->list;
 
 	ok @list == 1 , 'got one item in the container';
