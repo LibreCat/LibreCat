@@ -1170,8 +1170,6 @@ search:
               scoap3: {type: string}
               phillister: {type: string}
               opac: {type: string}
-              fp7: {type: string}
-              fp6: {type: string}
           isi: {type: byte}
           arxiv: {type: byte}
           pubmed: {type: byte}
