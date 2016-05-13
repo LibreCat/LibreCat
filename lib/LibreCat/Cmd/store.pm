@@ -89,6 +89,14 @@ sub command {
         }
     }
 
+    unless ($file_store) {
+        $file_store = $self->file_store;
+    }
+
+    unless ($file_opt) {
+        $file_opt = $self->file_opt;
+    }
+
     $self->app->set_global_options({
     		store    => $self->load($file_store,$file_opt) ,
     		tmp_dir  => $opts->tmp_dir ,
