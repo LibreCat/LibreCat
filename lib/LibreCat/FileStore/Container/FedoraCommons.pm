@@ -185,7 +185,7 @@ sub _add_filename {
         $options{checksumType} = 'MD5';
     }
 
-    my $mimeType = $self->_mimeType->content_type($filename);
+    my $mimeType = $self->_mimeType->content_type($key);
 
     my ($operation,$dsid) = $self->_next_dsid($key);
 
@@ -250,7 +250,7 @@ sub _add_stream {
         $data->close();
     }
 
-    my $mimeType = $self->_mimeType->content_type($filename);
+    my $mimeType = $self->_mimeType->content_type($key);
 
     my ($operation,$dsid) = $self->_next_dsid($key);
 
