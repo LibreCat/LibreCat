@@ -29,10 +29,10 @@ if exists(project)
     do identity()
       copy_field(loop._id,loop.tmp)
       lookup_in_store(loop.tmp, search, bag:project)
-      move_field(loop.tmp.funding_program,loop.funding_program)
+      move_field(loop.tmp.call_identifier,loop.call_identifier)
       move_field(loop.tmp.grant_number,loop.grant_number)
       remove_field(loop.tmp)
-      if all_match(loop.funding_program,'FP7|H2020')
+      if all_match(loop.call_identifier,'FP7|H2020')
         add_field(ec_funded,1)
       end
     end
