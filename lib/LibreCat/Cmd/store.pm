@@ -338,6 +338,10 @@ sub _export {
 
     my $zipper = $self->app->global_options->{zipper};
 
+    if (-r $zip_file && ! unlink $zip_file) {
+        croak "Failed to remove existing $zip_file";
+    }
+    
     system("cd $workdir && $zipper -r $zip_file $export_name/*");
 
     if ($? == -1) {
