@@ -482,17 +482,19 @@ $(function () {
 	});
 
 	$(".creator").sortable({
-		containerSelector: 'div.row.multirow',
-	    itemSelector: 'div.sortitem',
 	    update: function (event, ui) {
 		    $('.creator').find('div.row.multirow').each(function(index){
-		    	var myitem = $(this);
-		    	myitem.find('input[name]').each(function(){
-		    		var myRegexp = /(.*\.)\d{1,}(\..*)/g;
-		    		var myString = $(this).attr('name');
-		    		var match = myRegexp.exec(myString);
-		    		$(this).attr('name', match[1] + index + match[2]);
-		    	});
+				var myitem = $(this);
+			    myitem.find('input, textarea, img, button, select, span').each(function(){
+					if($(this).attr('id')){
+						var newid = $(this).attr('id').replace(/\d+/g,index);
+						$(this).attr('id', newid);
+					}
+					if($(this).attr('name')){
+						var newname = $(this).attr('name').replace(/\d+/g,index);
+						$(this).attr('name', newname);
+					}
+				});
 		    });
 	    	ui.item.removeClass("dragged").removeAttr("style");
 	    	$("body").removeClass("dragging");
