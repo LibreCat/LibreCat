@@ -996,6 +996,7 @@ publicationTypes:
             mandatory: 1
           ddc:
             mandatory: 1
+            multiple: 1
       supplementary_fields:
         abstract: *abstract
         keyword: *keyword

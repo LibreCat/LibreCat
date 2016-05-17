@@ -33,7 +33,10 @@ oai_provider '/oai',
     set_specs_for => sub {
         my $pub = $_[0];
 
-        my $specs = [$pub->{type}, $pub->{dini_type}];
+        #my $specs = [$pub->{type}, $pub->{dini_type}];
+        my $specs;
+        push @$specs, $pub->{type} if $pub->{type};
+        push @$specs, $pub->{dini_type} if $pub->{dini_type};
 
         push @$specs, "ddc:$_" for @{$pub->{ddc}};
 
