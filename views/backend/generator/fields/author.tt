@@ -17,7 +17,7 @@
         <input type="hidden" id="orig_last_name_0" value="" />
 
 	<!-- 1 -->
-        <div class="form-group col-md-4 col-xs-11">
+        <div class="form-group col-md-3 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
               <span class="hidden-xs hidden-sm">[% lf.$type.field.author.first_name.label || lf.$type.field.author_secondary.first_name.label %]</span>
@@ -30,19 +30,27 @@
           </div>
         </div>
 	<!-- 2 -->
-        <div class="form-group col-md-6 col-xs-11">
+        <div class="form-group col-md-7 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
               <span class="hidden-xs hidden-sm">[% lf.$type.field.author.last_name.label || lf.$type.field.author_secondary.last_name.label %]</span>
               <span class="hidden-lg hidden-md">[% lf.$type.field.author.last_name.label_short || lf.$type.field.author_secondary.last_name.label_short %]</span>
             </div>
             <input type="text" id="last_name_0" name="author.0.last_name" placeholder="[% lf.$type.field.author.last_name.placeholder || lf.$type.field.author_secondary.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon hidden-xs hidden-sm[% IF loop.index == '0' %] helpme" data-placement="top" title="[% lf.form_add_field %][% END %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
-            <div class="input-group-addon"><span id="link_person_0" onclick="link_person(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" class="helpme" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" /></span></div>
+            <div class="input-group-addon">
+              <span id="link_person_0" onclick="link_person(this);" data-type="">
+              <label class="radio-inline">
+                <input type="radio" name="idm.0" id="idm_extern_0" checked="checked"> [% lf.$type.field.author.idm_extern || lf.$type.field.author_secondary.idm_extern %]
+              </label>
+              <label class="radio-inline">
+                <input type="radio" style="margin-top:5px;" name="idm.0" id="idm_intern_0"> <img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" />
+              </label>
+              </span>
+            </div>
             {% END %}
-            <div class="input-group-addon sortitem[% IF loop.index == '0' %] helpme" data-placement="right" title="[% lf.form_sort_item %][% END %]"><span class="glyphicon glyphicon-move"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm helpme" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </div>
         {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
@@ -59,7 +67,7 @@
         <input type="hidden" id="orig_first_name_[% loop.index %]" value="[% name.first_name | html %]" />
         <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% name.last_name | html %]" />
 	<!-- 3 -->
-        <div class="form-group col-md-4 col-xs-11">
+        <div class="form-group col-md-3 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
               <span class="hidden-xs hidden-sm">[% lf.$type.field.author.first_name.label || lf.$type.field.author_secondary.first_name.label %]</span>
@@ -72,19 +80,27 @@
           </div>
         </div>
 	<!-- 4 -->
-        <div class="form-group col-md-6 col-xs-11">
+        <div class="form-group col-md-7 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
               <span class="hidden-xs hidden-sm">[% lf.$type.field.author.last_name.label || lf.$type.field.author_secondary.last_name.label %]</span>
               <span class="hidden-lg hidden-md">[% lf.$type.field.author.last_name.label_short || lf.$type.field.author_secondary.last_name.label_short %]</span>
             </div>
             <input type="text" id="last_name_[% loop.index %]" name="author.[% loop.index %].last_name" placeholder="[% lf.$type.field.author.last_name.placeholder || lf.$type.field.author_secondary.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon hidden-xs hidden-sm[% IF loop.index == '0' %] helpme" data-placement="top" title="[% lf.form_add_field %][% END %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
-            <div class="input-group-addon"><span id="link_person_[% loop.index %]" onclick="link_person(this);" data-type=""><img id="Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" /></span></div>
+            <div class="input-group-addon">
+              <span id="link_person_[% loop.index %]" onclick="link_person(this);" data-type="">
+              <label class="radio-inline">
+                <input type="radio" name="idm.[% loop.index %]" id="idm_extern_[% loop.index %]"[% IF !name.id %] checked="checked"[% END %]> [% lf.$type.field.author.idm_extern || lf.$type.field.author_secondary.idm_extern %]
+              </label>
+              <label class="radio-inline">
+                <input type="radio" style="margin-top:5px;" name="idm.[% loop.index %]" id="idm_intern_[% loop.index %]"[% IF name.id %] checked="checked"[% END %]> <img id="Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" />
+              </label>
+              </span>
+            </div>
             {% END %}
-            <div class="input-group-addon sortitem[% IF loop.index == '0' %] helpme" data-placement="right" title="[% lf.form_sort_item %][% END %]"><span class="glyphicon glyphicon-move"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm[% IF loop.first %] helpme" data-placement="top" title="[% lf.form_add_field %][% END %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </div>
         {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
@@ -102,20 +118,20 @@
         <input type="hidden" id="orig_first_name_0" value="" />
         <input type="hidden" id="orig_last_name_0" value="" />
 	<!-- 5 -->
-        <div class="form-group col-md-4 col-xs-11">
+        <div class="form-group col-md-3 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
               <span class="hidden-xs hidden-sm">[% lf.$type.field.author.first_name.label || lf.$type.field.author_secondary.first_name.label %]</span>
               <span class="hidden-lg hidden-md">[% lf.$type.field.author.first_name.label_short || lf.$type.field.author_secondary.first_name.label_short %]</span>
             </div>
             <input type="text" id="first_name_0" name="author.0.first_name" placeholder="[% lf.$type.field.author.first_name.placeholder || lf.$type.field.author_secondary.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="[% author.0.first_name %]" />
-            <div class="input-group-addon hidden-lg hidden-md[% IF loop.index == '0' %] helpme" data-placement="top" title="[% lf.form_add_field %][% END %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md helpme" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
 	<!-- 6 -->
-        <div class="form-group col-md-6 col-xs-11">
+        <div class="form-group col-md-7 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
               <span class="hidden-xs hidden-sm">[% lf.$type.field.author.last_name.label || lf.$type.field.author_secondary.last_name.label %]</span>
@@ -123,7 +139,16 @@
             </div>
             <input type="text" id="last_name_0" name="author.0.last_name" placeholder="{% fields.basic_fields.author.last_name.placeholder || fields.basic_fields.author_secondary.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="[% author.0.last_name %]" />
             {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
-            <div class="input-group-addon"><span id="link_person_0" onclick="link_person(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" /></span></div>
+            <div class="input-group-addon">
+              <span id="link_person_0" onclick="link_person(this);" data-type="">
+              <label class="radio-inline">
+                <input type="radio" name="idm.0" id="idm_extern_0" checked="checked"> [% lf.$type.field.author.idm_extern || lf.$type.field.author_secondary.idm_extern %]
+              </label>
+              <label class="radio-inline">
+                <input type="radio" style="margin-top:5px;" name="idm.0" id="idm_intern_0"> <img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" />
+              </label>
+              </span>
+            </div>
             {% ELSE %}
             <div class="input-group-addon"></div>
             {% END %}
@@ -145,7 +170,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
 	<div class="modal-header">
-	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	  <button type="button" class="close" id="link_person_modal_dismiss" data-dismiss="modal" aria-hidden="true">&times;</button>
 	  <h4 class="modal-title">&hellip;</h4>
 	</div>
 	<div class="modal-body">

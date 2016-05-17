@@ -388,6 +388,7 @@ forms:
       author: &author_translator
         label: "Author"
         tooltip: "Activate if UniBi author."
+        idm_extern: "extern"
         first_name:
           label: "First Name"
           label_short: "Auth. First"
@@ -587,6 +588,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Editor"
         label_short: "Ed."
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       corporate_editor_solo: &corporate_editor_solo
         label: "Corporate Editor"
@@ -662,6 +664,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Book Editor"
         label_short: "Ed."
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       corporate_editor: &corporate_editor
         label: "Corporate Editor"
@@ -726,6 +729,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Editor"
         label_short: "Ed."
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       corporate_editor: *corporate_editor
       department: *department
@@ -885,6 +889,7 @@ forms:
           label_short: "Superv. Last"
           placeholder: "e.g. Appleseed"
         label: "Supervisor"
+        idm_extern: "extern"
       department: *department
       project: *project
       research_group: *research_group
@@ -1130,6 +1135,7 @@ forms:
           label_short: "Inv. Last"
           placeholder: "e.g. Appleseed"
         label: "Inventor"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       applicant:
         label: "Applicant"
@@ -1310,6 +1316,7 @@ forms:
           label_short: "Crea. Last"
           placeholder: "e.g. Appleseed"
         label: "Creator"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       department: *department
       project: *project
@@ -1418,6 +1425,7 @@ forms:
           label_short: "Trans. Last"
           placeholder: "e.g. Appleseed"
         label: "Translator"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       author_secondary:
         first_name:
@@ -1429,6 +1437,7 @@ forms:
           label_short: "Auth. Last"
           placeholder: "e.g. Appleseed"
         label: "Author (Original)"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       edition: *edition
       department: *department
@@ -1486,6 +1495,7 @@ forms:
           label_short: "Trans. Last"
           placeholder: "e.g. Appleseed"
         label: "Translator"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       author_secondary:
         first_name:
@@ -1497,6 +1507,7 @@ forms:
           label_short: "Auth. Last"
           placeholder: "e.g. Appleseed"
         label: "Author"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       alternative_title:
         label: "Title (Original)"
@@ -1608,6 +1619,7 @@ forms:
           label_short: "Superv. Last"
           placeholder: "e.g. Appleseed"
         label: "Supervisor"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       year:
         label: "Year"

@@ -52,6 +52,10 @@ if all_match(status, returned)
 end
 
 remove_field('finalSubmit')
+remove_field('idm')
+remove_field('editor_idm')
+remove_field('translator_idm')
+remove_field('supervisor_idm')
 #vacuum()
 delete_empty()
 

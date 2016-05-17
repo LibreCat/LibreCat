@@ -119,7 +119,17 @@ function link_person(element){
 	type = $(element).attr('data-type');
 	var lineId = $(element).attr('id').replace(type + 'link_person_','');
 
-	if($('#' + type + 'Authorized' + lineId).attr('alt') == "Not Authorized"){
+	if(!$('#' + type + 'first_name_' + lineId).val() && !$('#' + type + 'last_name_' + lineId).val()){
+		$('#' + type + 'idm_intern_' + lineId).prop("checked", false);
+		$('#' + type + 'idm_extern_' + lineId).prop("checked", true);
+		return;
+	}
+	if($('#' + type + 'idm_intern_' + lineId).is(':checked') && $('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
+		return;
+	}
+
+    if($('#' + type + 'idm_intern_' + lineId).is(':checked')){
+	//if($('#' + type + 'Authorized' + lineId).attr('alt') == "Not Authorized"){
 		var puburl = '/search_researcher?term=';
 		var narrowurl = "";
 		var longurl = "";
@@ -320,6 +330,11 @@ function link_person(element){
 					$('#' + type + 'link_person_modal').find('.modal-body').first().html('');
 				});
 
+				$('#' + type + 'link_person_modal_dismiss').bind("click", function() {
+					$('#' + type + 'idm_intern_' + lineId).prop("checked", false);
+					$('#' + type + 'idm_extern_' + lineId).prop("checked", true);
+				});
+
 				$('#' + type + 'link_person_modal').modal("show");
 			}
 
@@ -333,6 +348,8 @@ function link_person(element){
 				container.append('<p class="has-error">No matching entry in staff directory (PEVZ) found. Please check, if first and last name of the author are entered correctly. You can omit letters (e.g. just enter the last name, or the last name and first letter of first name).</p>');
 				container_title.append(title);
 				$('#' + type + 'link_person_modal').modal("show");
+				$('#' + type + 'idm_intern_' + lineId).prop("checked", false);
+				$('#' + type + 'idm_extern_' + lineId).prop("checked", true);
 			}
 		}, "json");
 	}
@@ -342,18 +359,17 @@ function link_person(element){
 		var orig_last_name = "";
 		orig_last_name = $('#' + type + 'orig_last_name_' + lineId).val();
 
-		if($('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
+        if($('#' + type + 'idm_extern_' + lineId).is(':checked') && $('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
 			// Uncheck, release input fields and change img back to gray
 			$('#' + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
 			$('#' + type + 'Authorized' + lineId).attr('alt','Not Authorized');
 			$('#' + type + 'id_' + lineId).val("");
 			$('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
+			$('#' + type + 'first_name_' + lineId).val(orig_first_name);
+			$('#' + type + 'orig_first_name_' + lineId).val("");
+			$('#' + type + 'last_name_' + lineId).val(orig_last_name);
+			$('#' + type + 'orig_last_name_' + lineId).val("");
 		}
-
-		$('#' + type + 'first_name_' + lineId).val(orig_first_name);
-		$('#' + type + 'orig_first_name_' + lineId).val("");
-		$('#' + type + 'last_name_' + lineId).val(orig_last_name);
-		$('#' + type + 'orig_last_name_' + lineId).val("");
 	}
 }
 
@@ -515,6 +531,13 @@ function add_field(name, placeholder){
 		$(this).removeAttr('autocomplete');
 		$(this).removeAttr('onfocus');
 
+		if($(this).attr('id') && $(this).attr('id').match(/idm_intern/)){
+			$(this).removeAttr('checked');
+		}
+		if($(this).attr('id') && $(this).attr('id').match(/idm_extern/)){
+			$(this).prop('checked', true);
+		}
+
 		if(placeholder){
 			$(this).attr('placeholder', placeholder);
 		}
@@ -598,6 +621,12 @@ function remove_field(object){
 			$(this).attr('disabled',false);
 			$(this).attr('readonly',false);
 			$(this).removeAttr('autocomplete');
+			if($(this).attr('id') && $(this).attr('id').match(/idm_intern/)){
+				$(this).removeAttr('checked');
+			}
+			if($(this).attr('id') && $(this).attr('id').match(/idm_extern/)){
+				$(this).prop('checked', true);
+			}
 			if($(this).prop('tagName') == "IMG"){
 				$(this).attr('src','/images/biNotAuthorized.png');
 				$(this).attr('alt', 'Not Authorized');
