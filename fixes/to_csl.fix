@@ -45,7 +45,7 @@ copy_field(res.status, res.tmp_status)
 #else
 #  copy_field(res.tmp_status,res.issued.date-parts.0.0)
 #end
-if any_match(res.tmp_status, 'submitted|accepted|inpress|unpublished')
+if any_match(res.tmp_status, 'submitted|accepted|inpress|unpublished|draft')
   if any_match(res.tmp_status, 'submitted')
     set_field(res.tmp_status, 'Submitted')
     move_field(res.tmp_status, res.issued.date-parts.0.0)
@@ -60,6 +60,10 @@ if any_match(res.tmp_status, 'submitted|accepted|inpress|unpublished')
   end
   if any_match(res.tmp_status, 'unpublished')
     set_field(res.tmp_status, 'Unpublished')
+    move_field(res.tmp_status, res.issued.date-parts.0.0)
+  end
+  if any_match(res.tmp_status, 'draft')
+    set_field(res.tmp_status, 'Draft')
     move_field(res.tmp_status, res.issued.date-parts.0.0)
   end
 else
