@@ -1719,6 +1719,7 @@ forms:
     inpress: "Im Druck"
     epub_ahead: "Elektronische Ver&ouml;ffentlichung vor dem Druck"
     published: "Ver&ouml;ffentlicht"
+    unpublished: "Unver&ouml;ffentlicht"
   article_type:
     original: "Forschungsartikel"
     review: "Review"

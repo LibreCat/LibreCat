@@ -140,6 +140,7 @@ publication_status:
   - inpress
   - epub_ahead
   - published
+  - unpublished
 
 article_type:
   - original
