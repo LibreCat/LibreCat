@@ -2,7 +2,7 @@ package LibreCat::Cmd::award;
 
 use Catmandu::Sane;
 use App::Helper;
-use LibreCat::Validator::Researcher;
+use LibreCat::Validator::Award;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -127,7 +127,7 @@ sub _adder {
 }
 
 sub _delete {
-    my ($id) = @_;
+    my ($self,$id) = @_;
 
     croak "usage: $0 delete <id>" unless defined($id);
 

@@ -1,6 +1,126 @@
 _prefix:
   schemas:
 
+#used in LibreCat::Validator::Award
+award:
+  "$schema": "http://json-schema.org/draft-04/schema#"
+  title: "librecat award"
+  type: "object"
+  properties:
+    _id:
+      type: string
+      pattern: "^AW[0-9]+$"
+      minLength: 1
+    _version:
+      oneOf:
+        - type: string
+          minLength: 1
+        - type: integer
+    sort_id:
+      type: string
+    oldid:
+      type: string
+      minLength: 1
+    award_id:
+      type: string
+      pattern: "^AW[0-9]+$"
+    rec_type:
+      type: string
+      enum: [preis,auszeichnung,akademie,record]
+    date_created: &dt
+      type: string
+      format: date-time
+    date_updated: *dt
+    title:
+      type: string
+      minLength: 1
+    title_en:
+      type: string
+    norm_title:
+      type: string
+    description:
+      type: string
+    description_en:
+      type: string
+    url:
+      type: string
+      format: uri
+    proof:
+      type: string
+    year:
+      type: string
+      pattern: "^[0-9]{4}$"
+    comment:
+      type: string
+    department:
+      type: array
+      items:
+        additionalProperties: false
+        required: [_id]
+        properties:
+          _id:
+            oneOf:
+              - type: string
+                pattern: "^[0-9]+$"
+                minLength: 1
+              - type: integer
+                minimum: 0
+          name:
+            type: string
+    einrichtung:
+      type: array
+      items:
+        additionalProperties: false
+        properties:
+          name:
+            type: string
+            minLength: 1
+          _id:
+            type: string
+    other_university:
+      type: string
+    uni_member:
+      oneOf:
+        - type: string
+          enum: [0,1]
+        - type: integer
+          minimum: 0
+          maximum: 1
+    former_member:
+      type: string
+      enum: ["ja","nein","emeritiert","in Rente"]
+    extern:
+      oneOf:
+        - type: string
+          enum: [0,1]
+        - type: integer
+          minimum: 0
+          maximum: 1
+    organization:
+      type: string
+    honoree:
+      type: array
+      items:
+        type: object
+        required: [first_name,last_name,full_name]
+        additionProperties: false
+        properties:
+          first_name:
+            type: string
+            minLength: 1
+          last_name:
+            type: string
+            minLength: 1
+          full_name:
+            type: string
+            minLength: 1
+          title:
+            type: string
+     
+
+  required: ["_id","rec_type","title"]
+  additionalProperties: false
+
 #used in LibreCat::Validator::Publication
 publication:
   "$schema": "http://json-schema.org/draft-04/schema#"
@@ -417,7 +537,7 @@ project:
           last_name:
             type: string
             minLength: 1
-    member:
+    uni_member:
       type: array
       items:
         type: object
