@@ -326,7 +326,6 @@ publication:
       type: array
       items:
         '$ref': '#/definitions/iso_language'
-
   required: ["_id","type","author","first_author","title","year"]
   additionalProperties: true
 
