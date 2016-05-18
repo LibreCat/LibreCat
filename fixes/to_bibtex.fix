@@ -36,7 +36,7 @@ else
   move_field(publication, r.booktitle)
 end
 
-move_field(pages, r.pages)
+move_field(page, r.pages)
 replace_all(r.pages, '-', '--')
 
 retain_field(r)
