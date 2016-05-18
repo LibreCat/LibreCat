@@ -116,8 +116,6 @@ award:
             minLength: 1
           title:
             type: string
-     
-
   required: ["_id","rec_type","title"]
   additionalProperties: false
 
