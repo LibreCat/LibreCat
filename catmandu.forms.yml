@@ -752,8 +752,6 @@ publicationTypes:
         doi: *doi
         title: *title
         author: *author_translator
-        editor: *editor_only
-        corporate_editor: *corporate_editor
         department: *department
         project: *project
         research_group: *research_group
@@ -762,8 +760,6 @@ publicationTypes:
         alternative_title: *alternative_title
         place: *place
         publication:
-          mandatory: 0
-        series_title:
           mandatory: 0
         volume_issue_page: *volume_issue_page_number
         publication_identifier: *publication_identifier

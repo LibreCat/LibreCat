@@ -1262,8 +1262,6 @@ forms:
       title: *title
       alternative_title: *alternative_title
       author: *author_translator
-      editor: *editor_only
-      corporate_editor: *corporate_editor
       department: *department
       project: *project
       research_group: *research_group
@@ -1271,11 +1269,7 @@ forms:
       publisher: *publisher
       year_extern: *year_extern
       publication:
-        label: "Book Title"
-        placeholder: "e.g. Handbook of eBook Publishing"
-      series_title:
-        label: "Series or Journal Title"
-        label_short: "Series/Journal Title"
+        label: "Journal Title"
         placeholder: "e.g. Nature Genetics"
       volume_issue_page: *volume_issue_page
       publication_identifier: *publication_identifier
