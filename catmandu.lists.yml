@@ -134,13 +134,13 @@ publication_identifier:
   eisbn: "eISBN"
 
 publication_status:
+  - unpublished
   - draft
   - submitted
   - accepted
   - inpress
   - epub_ahead
   - published
-  - unpublished
 
 article_type:
   - original
