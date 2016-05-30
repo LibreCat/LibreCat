@@ -1,0 +1,50 @@
+---
+_id: P1
+_version: 8
+acronym: Librecat
+alternative_name: Catmandu
+call_identifier: tag1,tag2,tag3
+cooperator:
+- Myself
+date_created: 2016-05-09T11:23:14Z
+date_updated: 2016-05-09T12:17:13Z
+department:
+- _id: '10085'
+description: Librecat project. What else?
+designated_editor:
+- first_name: Nicolas
+  last_name: Franck
+end_date: 2016-09-08
+funded: '1'
+funder:
+- UGent
+grant_number: '101'
+member:
+- first_name: Nicolas
+  last_name: Franck
+name: Librecat Project
+owner:
+- first_name: Nicolas
+  last_name: Franck
+principal_investigator:
+- first_name: Nicolas
+  last_name: Franck
+psp_element: '1222144'
+sc39: '1'
+start_date: 2016-05-11
+url: http://librecat.org/
+...
+---
+_id: P2
+_version: 1
+acronym: Librecat updates
+alternative_name: Librecat updates
+date_created: 2016-05-09T12:18:42Z
+date_updated: 2016-05-09T12:18:42Z
+description: Updates necessary for the next release of Catmandu
+end_date: 2016-12-22
+grant_number: '102'
+name: Librecat updates
+start_date: 2016-05-28
+url: http://librecat.org/
+...

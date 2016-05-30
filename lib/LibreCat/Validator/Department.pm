@@ -1,24 +1,21 @@
 package LibreCat::Validator::Department;
 
-use Catmandu::Sane;
+use Catmandu::Sane; 
 use Moo;
+use Catmandu::Validator::JSONSchema;
+use Catmandu;
 use namespace::clean;
 
-with 'Catmandu::Validator';
+with 'LibreCat::Validator::JSONSchema';
 
-sub validate_data {
-    my ($self,$data) = @_;
+sub schema_validator {
 
-    my @errors = ();
+    state $s = Catmandu::Validator::JSONSchema->new(
 
-    push @errors , 'id error'
-                unless defined($data->{_id}) && $data->{_id} =~ /^\d+/;
+        schema => Catmandu->config->{schemas}->{department}
 
-    ##
-    # TODO add validator code
-    ##
+    );
 
-    return @errors ? \@errors : undef;
 }
 
 1;
