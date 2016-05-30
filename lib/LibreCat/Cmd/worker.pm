@@ -54,12 +54,16 @@ sub daemon {
                 ($method_name) = values %$func_name;
                 ($func_name) = keys %$func_name;
             }
+
             my $func = sub {
                 my ($job) = @_;
-                my $workload = decode_json($job->workload);
-                $worker->$method_name($workload);
+                $worker->$method_name(decode_json($job->workload), $job);
+                return;
             };
             $gm_worker->add_function($func_name, 0, $func, {});
+            $gm_worker->set_log_fn(sub {
+                $worker->log->info(@_);
+            }, 1);
         }
         $gm_worker->work while 1;
     };
