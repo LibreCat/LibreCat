@@ -10,10 +10,12 @@ sub description {
 	return <<EOF;
 Usage:
 
-librecat roject [options] list
+librecat project [options] list
+librecat project [options] export
 librecat project [options] add <FILE>
 librecat project [options] get <id>
 librecat project [options] delete <id>
+librecat project [options] valid <FILE>
 
 EOF
 }
@@ -27,7 +29,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|get|add|delete/;
+    my $commands = qr/list|export|get|add|delete|valid/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -44,6 +46,9 @@ sub command {
     if ($cmd eq 'list') {
         return $self->_list(@$args);
     }
+    elsif ($cmd eq 'export') {
+        return $self->_export;
+    }
     elsif ($cmd eq 'get') {
         return $self->_get(@$args);
     }
@@ -52,6 +57,9 @@ sub command {
     }
     elsif ($cmd eq 'delete') {
         return $self->_delete(@$args);
+    }
+    elsif ($cmd eq 'valid') {
+        return $self->_valid(@$args);
     }
 }
 
@@ -70,6 +78,16 @@ sub _list {
                     , $display;
     });
     print "count: $count\n";
+
+    return 0;
+}
+
+sub _export {
+    my $h = App::Helper::Helpers->new;
+
+    my $exporter = Catmandu->exporter('YAML');
+    $exporter->add_many($h->project);
+    $exporter->commit;
 
     return 0;
 }
@@ -143,6 +161,37 @@ sub _delete {
     }
 }
 
+sub _valid {
+    my ($self,$file) = @_;
+
+    croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
+
+    my $validator = LibreCat::Validator::Project->new;
+
+    my $ret = 0;
+
+    Catmandu->importer('YAML', file => $file)->each( sub {
+        my $item = $_[0];
+       
+        unless ($validator->is_valid($item)) {
+            my $errors = $validator->last_errors();
+            my $id     = $item->{_id};
+            if ($errors) {
+                for my $err (@$errors) {
+                    print STDERR "ERROR $id: $err\n";
+                }
+            }
+            else {
+                print STDERR "ERROR $id: not valid\n";
+            }
+        }
+
+        $ret = -1;
+    });
+
+    return $ret == 0;
+}
+
 1;
 
 __END__
@@ -156,8 +205,10 @@ LibreCat::Cmd::project - manage librecat projects
 =head1 SYNOPSIS
 
     librecat project list
+    librecat project export
     librecat project add <FILE>
     librecat project get <id>
     librecat project delete <id>
+    librecat project valid <FILE>
 
 =cut

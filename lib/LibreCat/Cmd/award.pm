@@ -11,6 +11,7 @@ sub description {
 Usage:
 
 librecat award [options] list
+librecat award [options] export
 librecat award [options] add <FILE>
 librecat award [options] get <id>
 librecat award [options] delete <id>
@@ -28,7 +29,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|get|add|delete|valid/;
+    my $commands = qr/list|export|get|add|delete|valid/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -44,6 +45,9 @@ sub command {
 
     if ($cmd eq 'list') {
         return $self->_list(@$args);
+    }
+    elsif ($cmd eq 'export') {
+        return $self->_export();
     }
     elsif ($cmd eq 'get') {
         return $self->_get(@$args);
@@ -74,6 +78,16 @@ sub _list {
                     , $type;
     });
     print "count: $count\n";
+
+    return 0;
+}
+
+sub _export {
+    my $h = App::Helper::Helpers->new;
+
+    my $exporter = Catmandu->exporter('YAML');
+    $exporter->add_many($h->award);
+    $exporter->commit;
 
     return 0;
 }
@@ -192,8 +206,10 @@ LibreCat::Cmd::award - manage librecat users
 =head1 SYNOPSIS
 
     librecat award list
+    librecat award export
     librecat award add <FILE>
     librecat award get <id>
     librecat award delete <id>
+    librecat award valid <FILE>
 
 =cut
