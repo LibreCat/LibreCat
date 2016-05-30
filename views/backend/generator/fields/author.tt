@@ -12,7 +12,7 @@
     <div class="col-md-10 creator" id="creator">
       {% IF fields.basic_fields.author.multiple OR fields.basic_fields.author_secondary.multiple %}
       [% IF !author %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" id="orig_first_name_0" value="" />
         <input type="hidden" id="orig_last_name_0" value="" />
 
@@ -39,13 +39,13 @@
             <input type="text" id="last_name_0" name="author.0.last_name" placeholder="[% lf.$type.field.author.last_name.placeholder || lf.$type.field.author_secondary.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="" />
             <div class="input-group-addon hidden-xs hidden-sm helpme" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
-            {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
-            <div class="input-group-addon"><span id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" class="helpme" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.pevz_tooltip || lf.$type.field.author_secondary.pevz_tooltip %]" /></span></div>
+            {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
+            <div class="input-group-addon"><span id="link_person_0" onclick="link_person(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" class="helpme" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem helpme" data-placement="right" title="[% lf.form_sort_item %]"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </div>
-        {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
+        {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
         <script>
           $('#Authorized0').tooltip();
         </script>
@@ -55,7 +55,7 @@
       </div>
       [% ELSE %]
       [% FOREACH name IN author %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <input type="hidden" id="orig_first_name_[% loop.index %]" value="[% name.first_name | html %]" />
         <input type="hidden" id="orig_last_name_[% loop.index %]" value="[% name.last_name | html %]" />
 	<!-- 3 -->
@@ -81,13 +81,13 @@
             <input type="text" id="last_name_[% loop.index %]" name="author.[% loop.index %].last_name" placeholder="[% lf.$type.field.author.last_name.placeholder || lf.$type.field.author_secondary.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.last_name %]" [% IF name.id %]readonly="readonly"[% END %] />
             <div class="input-group-addon hidden-xs hidden-sm" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
-            {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
-            <div class="input-group-addon"><span id="link_pevz_[% loop.index %]" onclick="linkPevz(this);" data-type=""><img id="Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.pevz_tooltip || lf.$type.field.author_secondary.pevz_tooltip %]" /></span></div>
+            {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
+            <div class="input-group-addon"><span id="link_person_[% loop.index %]" onclick="link_person(this);" data-type=""><img id="Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem helpme" data-placement="right" title="[% lf.form_sort_item %]"><span class="glyphicon glyphicon-move"></span></div>
           </div>
         </div>
-        {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
+        {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
         <script>
           $('#Authorized[% loop.index %]').tooltip();
         </script>
@@ -122,14 +122,14 @@
               <span class="hidden-lg hidden-md">[% lf.$type.field.author.last_name.label_short || lf.$type.field.author_secondary.last_name.label_short %]</span>
             </div>
             <input type="text" id="last_name_0" name="author.0.last_name" placeholder="{% fields.basic_fields.author.last_name.placeholder || fields.basic_fields.author_secondary.last_name.placeholder %}" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="[% author.0.last_name %]" />
-            {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
-            <div class="input-group-addon"><span id="link_pevz_0" onclick="linkPevz(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.pevz_tooltip || lf.$type.field.author_secondary.pevz_tooltip %]" /></span></div>
+            {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
+            <div class="input-group-addon"><span id="link_person_0" onclick="link_person(this);" data-type=""><img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" /></span></div>
             {% ELSE %}
             <div class="input-group-addon"></div>
             {% END %}
           </div>
         </div>
-        {% IF fields.basic_fields.author.pevz OR fields.basic_fields.author_secondary.pevz OR fields.supplementary_fields.author.pevz OR fields.supplementary_fields.author_secondary.pevz %}
+        {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
         <script>
           $('#Authorized0').tooltip();
         </script>
@@ -141,7 +141,7 @@
     </div>
   </div>
 
-  <div class="modal" id="linkPevzModal">
+  <div class="modal" id="link_person_modal">
     <div class="modal-dialog">
       <div class="modal-content">
 	<div class="modal-header">

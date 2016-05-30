@@ -18,7 +18,7 @@
 	  [% INCLUDE hits.tt %]
 	</div>
 	<div class="col-xs-4 col-md-3 col-md-offset-1">
-	  [% INCLUDE facets.tt %]
+	  [% INCLUDE filters.tt %]
 	</div>
       </div>
     </div>

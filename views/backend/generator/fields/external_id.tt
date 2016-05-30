@@ -9,7 +9,7 @@
   <div class="col-md-10" id="extId">
     {% IF fields.basic_fields.external_id.multiple OR fields.supplementary_fields.external_id.multiple %}
     [% IF !external_id %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.external_id.label_short || lf.$type.field.external_id.label %]</div>
@@ -29,7 +29,7 @@
     </div>
     [% ELSE %]
       [% FOREACH ext_id IN external_id.keys %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.external_id.label_short || lf.$type.field.external_id.label %]</div>

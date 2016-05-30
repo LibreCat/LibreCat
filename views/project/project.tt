@@ -1,30 +1,36 @@
 [% INCLUDE header.tt %]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lf = h.config.language.$lang -%]
 
 <!-- BEGIN project/project.tt -->
 
 <div class="row" itemscope itemtype="http://schema.org/webpage" itemid="project/[% _id %]"><!-- outer border -->
   <div class="col-md-11 col-sm-12">
+
     <div class="page-header" id="banner">
+      <ul class="breadcrumb">
+        <li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>[% lf.frontdoor.crumb_back %]</a></li>
+        <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% lf.main_page.logout %]</span></a>[% ELSE %]<a href="/login" title="[% lf.main_page.login %]"><span class="glyphicon glyphicon-log-in fw"></span>[% lf.main_page.login %]</a>[% END %]</li>
+        [% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
+      </ul>
 
-      <ol class="breadcrumb">
-	   <li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>Back to previous page</a></li>
-      </ol>
-
-      [% IF name %]
-      <h1 itemprop="name">[% name %]</h1>
-      [% ELSE %]
-      <h1>No project found!</h1>
-      [% STOP %]
+      [% UNLESS name %]
+        <h1>[% lf.frontdoor.no_record %]</h1>
       [% END %]
     </div>
 
     <div class="row margin-bottom1">
 
-      <div class="col-md-8"><!-- begin left col -->
-    [% IF start_date %]
+      <div class="col-md-8 col-xs-10"><!-- begin left col -->
+
+      [% IF name %]
+      <h1 itemprop="name">[% name %] ([% lf.hits.project %])</h1>
+      [% END %]
+
+      [% IF start_date %]
 	<div class="row">
 	  <div class="col-md-12">
-	    Project Period: [% start_date %][% IF end_date %] - [% end_date %][% END %]
+	    [% lf.project.period %]: [% start_date %][% IF end_date %] &ndash; [% end_date %][% END %]
 	  </div>
 	</div>
 	[% END %]
@@ -39,7 +45,7 @@
 	    [% IF funded %]|[% END %]
 	  [% END %]
 	  [% IF funded %]
-	    <em>Externally Funded</em>
+	    <em>[% lf.project.funded_ext %]</em>
 	  [% END %]
 	  </div>
 	</div>
@@ -49,8 +55,8 @@
     <div class="row">
       <div class="col-md-12">
 	    <ul class="nav nav-tabs">
-	      <li class="active"><a href="#project_details" data-toggle="tab">Details</a></li>
-          [% IF project_publication %]<li><a href="#project_publications" data-toggle="tab">Publications</a></li>[% END %]
+	      <li class="active"><a href="#project_details" data-toggle="tab">[% lf.frontdoor.tabs.details.label %]</a></li>
+          [% IF project_publication %]<li><a href="#project_publications" data-toggle="tab">[% lf.tabs.publications %]</a></li>[% END %]
         </ul>
       </div>
     </div>

@@ -46,7 +46,7 @@ $('.change_tab').click(function(e){
       $(this).find('input[type!="hidden"]').removeClass("has-error");
       $(this).find('input[type!="hidden"]').closest('div.input-group.mandatory').removeClass("has-error");
     }
-    
+
     if($(this).find('input[type!="hidden"]').eq(0).val() && $(this).find('input[type!="hidden"]').eq(1).val()){
       oneauthor=1;
     }
@@ -65,6 +65,9 @@ $('.change_tab').click(function(e){
   }
 
   $('.required').each(function(){
+    if($(this).attr('name').match('ddc')){
+      return;
+    }
     if(!$(this).val()){
       $(this).addClass('has-error');
       $(this).closest('div.input-group.mandatory').addClass("has-error");
@@ -105,13 +108,13 @@ $('.change_tab').click(function(e){
         if($('#id_data_reuse_license').val() == ''){
           $('#id_data_reuse_license').parent().removeClass('alert-info');
           $('#id_data_reuse_license').parent().addClass('alert-danger');
-          alert('{% fields.file_upload.license.data_reuse_license.alert %}');
+          alert('[% lf.$type.field.license.data_reuse_license.alert %]');
           e.stopImmediatePropagation();
         }
         if(!$('#id_open_data_release').is(':checked')) {
           $('#odralert').removeClass('alert-info');
           $('#odralert').addClass('alert-danger');
-          alert('{% fields.file_upload.license.open_data_release.alert %}');
+          alert('[% lf.$type.field.license.open_data_release.alert %]');
           check_license = 0;
           e.stopImmediatePropagation();
         }
@@ -120,13 +123,13 @@ $('.change_tab').click(function(e){
         if($('#id_data_reuse_license').val() == ''){
           $('#id_data_reuse_license').parent().removeClass('alert-info');
           $('#id_data_reuse_license').parent().addClass('alert-danger');
-          alert('{% fields.file_upload.license.data_reuse_license.alert %}');
+          alert('[% lf.$type.field.license.data_reuse_license.alert %]');
           e.stopImmediatePropagation();
         }
         if(!$('#id_open_data_release').is(':checked')) {
           $('#odralert').removeClass('alert-info');
           $('#odralert').addClass('alert-danger');
-          alert('{% fields.file_upload.license.open_data_release.alert %}');
+          alert('[% lf.$type.field.license.open_data_release.alert %]');
           check_license = 0;
           e.stopImmediatePropagation();
         }
@@ -146,14 +149,14 @@ $('.change_tab').click(function(e){
       if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && !$('#id_pub_license').is(':checked')){
         $('#pub_license_alert').removeClass('alert-info');
         $('#pub_license_alert').addClass('alert-danger');
-        alert('{% fields.file_upload.license.pub_license.alert %}');
+        alert('[% lf.$type.field.license.pub_license.alert %]');
         check_license = 0;
         e.preventDefault();
       }
       else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && !$('#id_pub_license').is(':checked')){
         $('#pub_license_alert').removeClass('alert-info');
         $('#pub_license_alert').addClass('alert-danger');
-        alert('{% fields.file_upload.license.pub_license.alert %}');
+        alert('[% lf.$type.field.license.pub_license.alert %]');
         check_license = 0;
         e.preventDefault();
       }
@@ -166,7 +169,7 @@ $('.change_tab').click(function(e){
       }
     }
 
-    if($('#ddc').length){
+    if($('#ddc').length && $('#ddc').find('select').hasClass('required')){
       if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#select_ddc_0').val() || $('#select_ddc_0').val() == "")){
         $('#select_ddc_0').addClass('has-error');
         $('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
@@ -194,7 +197,7 @@ $('.change_tab').click(function(e){
     $('#file_upload, #li_file_upload').removeClass('active');
     $('#supplementary_fields, #li_supplementary_fields').removeClass('active');
     $('#related_material, #li_related_material').removeClass('active');
-    
+
     if(!check){
       $('#basic_fields, #li_basic_fields').addClass('active');
     }
@@ -207,7 +210,7 @@ $('.change_tab').click(function(e){
     e.preventDefault(); // prevents submission of form
   }
   else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish")){
-    window.scrollTo(0, 0);
+    //window.scrollTo(0, 0);
     //e.preventDefault();
   }
   else {
@@ -221,10 +224,10 @@ $('.change_tab').click(function(e){
         $('#file_upload, #li_file_upload').removeClass('active');
         $('#supplementary_fields, #li_supplementary_fields').removeClass('active');
         $('#related_material, #li_related_material').removeClass('active');
-        
+
         $('#' + next_tab).addClass('active');
         $('#li_' + next_tab).addClass('active');
-        
+
         e.preventDefault();
       }
     }
@@ -239,9 +242,9 @@ $('#authedtrans_0').change(function() {
 });
 
 // minus
-$(document).on('click', '.inner_row', function(){
-  $(this).closest('div.innerrow').remove();
-});
+//$(document).on('click', '.multirow', function(){
+//  $(this).closest('div.multirow').remove();
+//});
 $(document).on('click', '.fullrow', function(){
   //var index = $(this).parent().parent().parent().parent().index();
   var index = $(this).closest('.row.authorspan').index();
@@ -264,7 +267,7 @@ $(document).on('click', '.author', function(){
   container.find('img').each(function(){
     this.title = "";
     this.src = "/images/biNotAuthorized.png";
-  });  
+  });
 });
 $(document).on('click', '.connect', function(){
   var index = $(this).parent().parent().parent().index();
@@ -280,58 +283,8 @@ function selectAuthedtrans(element){
 }
 
 
-// Select button (dept, proj, rg)
-function selectButton(element){
-	var type = $(element).attr('class').replace('btn select_button', '').trim();
-	var type_short;
-	var type_name;
-	
-	var index = $(element).attr('id').replace(type + '_select_','').trim();
-	var modal = $('#' + type + '_select_modal');
-	var container = $('#' + type + '_select_modal').find('.modal-body').first();
-	container.html("");
-	if(type == "department"){
-	    container.append('[% INCLUDE backend/generator/fields/subfields/department_select.tt %]');
-	    type_short = "dp";
-	    type_name = "Department";
-	}
-	else if(type == "project"){
-	    container.append('[% INCLUDE backend/generator/fields/subfields/project_select.tt %]');
-	    type_short = "pj";
-	    type_name = "Project";
-	}
-	else if(type == "research_group"){
-	    container.append('[% INCLUDE backend/generator/fields/subfields/research_group_select.tt %]');
-	    type_short = "rg";
-	    type_name = "Research Group";
-	}
-	var heading = modal.find('h4').first();
-	heading.html("");
-	heading.append('Choose a ' + type_name);
-	$('.selectme').bind("click", function(){
-		var id = $(this).attr('id');
-	    var name = $(this).html();
-	    var index = $(this).attr('data-index');
-	    var display = $(this).attr('data-label');
-	    $('#' + type_short + '_nameautocomplete_' + index ).val(name);
-	    $('#' + type_short + '_idautocomplete_' + index).val(id);
-	    if(display){
-	        $('#' + type_short + '_autocomplete_' + index).val(name + ' (' + display + ')');
-	        $('#' + type_short + '_autocomplete_' + index).attr('title', display);
-	    }
-	    else{
-	        $('#' + type_short + '_autocomplete_' + index).val(name);
-	    }
-	    $('#' + type_short + '_autocomplete_' + index ).attr('disabled', 'disabled');
-	    $('#' + type + '_select_modal').modal('hide');
-	    $('input.sticky').blur();
-	});
-	modal.modal('show');
-}
-
-
 $('button.cancel-button').click(function() {
-  window.location.href = '/librecat';
+  window.location.href = '[% return_url || "/librecat" %]';
 });
 
 
@@ -406,10 +359,10 @@ $(function() {
   [% ELSE %]
     puburl = '/librecat/search?fmt=autocomplete';
   [% END %]
-  
+
   $( "#connect_autocomplete" ).autocomplete({
     source: puburl,
-    minLength: 2,
+    minLength: 0,
     messages: {
 	    noResults: '',
 	    results: function() {}
@@ -423,40 +376,40 @@ $(function() {
       else{
         index = 0;
       }
-      $('#relatesTo').append('<div class="col-md-10 col-xs-12 col-md-offset-2"><div class="row innerrow"><div class="col-xs-3"><select class="relmat form-control" name="related_material.record.' + index + '.relation">[% FOREACH key IN h.config.lists.relations_record %]<option value="[% key.relation %]"[% IF key.relation == "earlier_version" %] selected="selected"[% END %]>[% key.link_text %]</option>[% END %]</select></div><div class="col-md-7 col-xs-9"><div class="form-group col-xs-9"><span class="glyphicon glyphicon-file"></span> <a href="/publication/' + ui.item.id + '" target="_blank">' + ui.item.title + '</a><input type="hidden" id="related_material_id_' + index +'" name="related_material.record.' + index + '.id" value="' + ui.item.id + '" /></div><div class="col-xs-1"><button role="button" class="btn btn-default connect"><span class="glyphicon glyphicon-minus"></span></button></div></div></div>');
+      [% IF type == "researchData" %][% relations = h.config.lists.relations_rd %][% END %]
+      $('#relatesTo').append('<div class="col-md-10 col-xs-12 col-md-offset-2 multirow"><div class="row innerrow"><div class="col-xs-3"><select class="relmat form-control" name="related_material.record.' + index + '.relation">[% IF relations %][% FOREACH key IN relations %]<option value="[% key.relation %]"[% IF key.relation == "is_cited_by" %] selected="selected"[% END %]>[% key.link_text %]</option>[% END %][% END %][% FOREACH key IN h.config.lists.relations_record %]<option value="[% key.relation %]">[% key.link_text %]</option>[% END %]</select></div><div class="col-md-7 col-xs-9"><div class="form-group col-xs-9"><span class="glyphicon glyphicon-file"></span> <a href="/publication/' + ui.item.id + '" target="_blank">' + ui.item.title + '</a><input type="hidden" id="related_material_id_' + index +'" name="related_material.record.' + index + '.id" value="' + ui.item.id + '" /></div><div class="col-xs-1"><button class="btn btn-default remove_rel_rec"><span class="glyphicon glyphicon-minus"></span></button></div></div></div>');
+      $('.remove_rel_rec').bind("click",function(e){
+        full_remove_field($(this));
+        e.preventDefault();
+      });
     },
     close: function(){
       $("#connect_autocomplete").val("");
     },
   });
 });
-      
+
 $('#add_relurl').click(function(){
   var url = $('#relurl_url').val();
   var title = $('#relurl_title').val();
   var description = $('#relurl_description').val();
-  
+
   if(!url){
     $('#relurl_url').parent().addClass('has-error');
   }
   if(!title){
     $('#relurl_title').parent().addClass('has-error');
   }
-  
+
   if(url && title){
     $('#relurl_title').parent().removeClass('has-error');
     $('#relurl_url').parent().removeClass('has-error');
-    
+
     var index = $('#url div.innerrow').length;
-    
+
     $('#url').append('<div class="col-md-10 col-xs-12 col-md-offset-2"><div class="row innerrow"><div class="col-xs-3"><select class="relurl form-control" name="related_material.link.' + index + '.relation">[% FOREACH key IN h.config.lists.relations_link %]<option value="[% key.relation %]">[% key.link_text %]</option>[% END %]</select></div><div class="col-md-7 col-xs-9"><div class="form-group col-xs-9"><span class="glyphicon glyphicon-link"></span> <a href="' + url + '" target="_blank">' + title + '</a><br /><span class="text-muted">' + description + '</span><input type="hidden" name="related_material.link.' + index + '.url" value="' + $('#relurl_url').val() + '" /><input type="hidden" name="related_material.link.' + index + '.title" value="' + $('#relurl_title').val() + '" /><input type="hidden" name="related_material.link.' + index + '.description" value="' + $('#relurl_description').val() + '" /></div><div class="col-xs-1"><button role="button" class="btn btn-default"><span class="glyphicon glyphicon-minus connect"></span></button></div></div></div>');
     $('#relurl_url').val('');
     $('#relurl_title').val('');
     $('#relurl_description').val('');
   }
-});
-
-
-$('.sure').click(function(){
-  return confirm('{% fields.related_material.publish_button.alert %}');
 });

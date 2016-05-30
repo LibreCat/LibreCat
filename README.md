@@ -4,57 +4,116 @@
 
 ### Prereqs
 
-- Install OS packages as described here: https://github.com/LibreCat/Catmandu/wiki/Installation,
+These are the installation instructions to install LibreCat on 6.X
 
-e.g. on debian
+Install the following packages with 'yum install':
 
-```
-$ sudo apt-get install build-essential libexpat1-dev \
-libssl-dev libxml2-dev libxslt1-dev libgdbm-dev cpanminus
-```
-- Get and install [Elasticsearch](https://www.elastic.co/downloads/elasticsearch) and [MongoDB](https://www.mongodb.org/downloads) for your distribution (preferably from your package manager),
+- expat-devel 
+- expat 
+- openssl-devel 
+- openssl 
+- libxml2 
+- libxml2-devel 
+- libxslt 
+- libxslt-devel 
+- gdbm 
+- gdbm-devel 
+- ImageMagick 
+- mysql 
+- mysql-server 
+- mysql-devel 
+- mysql-libs
+- libgearman
+- libgearman-devel
+- gearmand
 
-e.g. on debian
-
-```
-$ sudo apt-get install elasticsearch mongodb
-```
-
-- Get the sources
-
-```
-# you need the recursive flag to get the git submodules
-$ git clone --recursive https://github.com/LibreCat/LibreCat.git
-$ cd LibreCat
-$ cpanm --notest --installdeps .
-```
-
-- Generate the forms
+Install the MySQL database:
 
 ```
-$ perl bin/generate_forms.pl
+chkconfig --level 2345 mysqld on
+service mysqld start
+/usr/bin/mysqladmin -u root password '<NEWPASSWORD>'
+``` 
+
+Install the Gearman daemon:
+
+```
+chkconfig --level 2345 gearmand on
+service gearmand start
 ```
 
-- Start the webserver
+Install a 1.4.X version of ElasticSearh
+!!!! Older 0.9 versions of ElasticSearch shipped !!!!
+!!!! by CentOS for example will not work         !!!!
 
 ```
-$ starman bin/app.pl
+cat > /etc/yum.repos.d/elasticsearch-1.4.repo <<EOF
+[elasticsearch-1.4]
+name=Elasticsearch repository for 1.4.x packages
+gpgkey=http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+enabled=1
+baseurl=http://packages.elasticsearch.org/elasticsearch/1.4/centos
+gpgcheck=1
+EOF
+
+sudo yum install -y java-1.7.0-openjdk elasticsearch
+chkconfig --add elasticsearch
+service elasticsearch start
 ```
 
-and point your browser to http://localhost:5000/.
+Edit your .profle and specify the path to your LibreCat installation:
 
-## Configuration
+```
+# Edit .profile add :
+# BEGIN TEXT vvvvvvvvvvvvvvv
+   export LIBRECATHOME=~/LibreCat
+   export PERLHOME=/usr
+   export PATH=${LIBRECATHOME}/local/bin:${PERLHOME}/bin:${PATH}
+   export PERL5LIB=${LIBRECATHOME}/local/lib/perl5:${LIBRECATHOME}/lib
+# END TEXT ^^^^^^^^^^^^^^^
+# Reload the .profile file
+source ~/.profile
+```
 
+Go into the LibreCat directory and install all packages with Carton:
 
+```
+cd $LIBRECATHOME
+cpan App::cpanminus
+cpanm Carton
+carton install
+```
 
-## Running with Docker
+Create the MySQL databases and tables:
 
-This would be a nice feature. docker/docker-compose setup is still under development.
+```
+mysql -u root -p < devel/mysql.sql
+mysql -u root -p librecat_system < devel/librecat_system.sql
+mysql -u root -p librecat_backup < devel/librecat_backup.sql
+mysql -u root -p librecat_metrics < devel/librecat_metrics.sql
+```
 
-# TODO
+Generate the GUI forms:
 
-- [ ] How to set up a demo version
-- [ ] Provide a Docker container
-- [ ] Choose a License
-- [ ] Write tests
-- [ ] Improve code quality
+```
+bin/generate_forms.pl
+```
+
+Create a basic setup of the database:
+
+```
+./index.sh drop
+./index.sh create
+```
+
+Create a copy of the local settings and change it as needed:
+
+```
+cp catmandu.local.yml-example catmandu.local.yml
+```
+
+Boot the development server
+Your application is now running on http://localhost:5001
+```
+./boot.sh
+```

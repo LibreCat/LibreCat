@@ -9,11 +9,13 @@
     <![endif]-->
     <link rel="stylesheet" href="/css/bootstrap.min.css"><!-- main bootstrap file (customized) -->
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"><!-- 3d-buttons -->
+    <link rel="stylesheet" href="/css/bootstrap-select.min.css"><!-- dropdown-like selects -->
     <link rel="stylesheet" href="/css/font-awesome.min.css"><!-- font for icons -->
     <link rel="stylesheet" href="/css/mypub.css"><!-- some more customizing bootstrap -->
     <script src="/javascripts/jquery.min.js"></script>
     <script src="/javascripts/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="/javascripts/bootstrap.min.js"></script><!-- main bootstrap file -->
+    <script src="/javascripts/bootstrap-select.min.js"></script><!-- dropdown-like selects -->
     <script src="/javascripts/[% IF backend %]backend[% ELSE %]frontend[% END %].js"></script>
     [% IF backend OR bag == 'pubtheses' %]
     <script src="/javascripts/dropzone.min.js"></script>

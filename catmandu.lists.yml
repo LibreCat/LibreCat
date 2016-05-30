@@ -11,9 +11,10 @@ author_id:
   orcid:
     label: ORCID
     url: "http://orcid.org/"
+    icon: " <sup><img src='/images/orcid_icon_16x16.png' /></sup>"
   googleScholar:
     label: Google Scholar Profile
-    url: "http://http://scholar.google.de/citations?user="
+    url: "http://scholar.google.de/citations?user="
   github:
     label: GitHub
     url: "http://github.com/"
@@ -29,38 +30,6 @@ author_id:
   alias:
     label: Alias
     url: "/person/"
-
-styles_public:
-  - ama
-  - apa
-  - apa_indent
-  - bio1
-  - ewi
-  - frontiers
-  - harvard1
-  - ieee
-  - lncs
-  - mla
-  - wels
-  - angewandte-chemie
-
-styles:
-  - ama
-  - apa
-  - apa_indent
-  - aps
-  - bio1
-  - ewi
-  - frontiers
-  - default
-  - harvard1
-  - ieee
-  - lncs
-  - mla
-  - pub
-  - wels
-  - sfb882
-  - angewandte-chemie
 
 language_preselect:
 # English
@@ -151,9 +120,9 @@ external_identifier:
   opac:
     name: "OPAC"
     prefix: "UB-OPAC:"
-#  fp7:
-#    name: "FP7"
-#    prefix: "fp7/"
+  fp7:
+    name: "FP7"
+    prefix: "fp7/"
 #  fp6:
 #    name: "FP6"
 #    prefix: "fp6/"
@@ -204,11 +173,11 @@ gs_doc_type:
   dara: 'Da|Ra'
 
 relations_rd:
-  -
-    relation: "cites"
-    relation_text: "This publication cites the following data publications:"
-    link_text: "Cites"
-    opposite: "is_cited_by"
+#  -
+#    relation: "cites"
+#    relation_text: "This publication cites the following data publications:"
+#    link_text: "Cites"
+#    opposite: "is_cited_by"
   -
     relation: "is_cited_by"
     relation_text: "This data publication is cited in the following publications:"
@@ -238,7 +207,7 @@ relations_file:
     link_text: "Other Relation"
   -
     relation: "hidden"
-    relation_text: "Suppl. Mat. for embedding only (hidden on frontdoor)"
+    relation_text: "Supplementary Material (for embedding only, hidden on frontdoor)"
     link_text: "Hidden Supplementary Material"
 
 relations_link:
@@ -414,6 +383,7 @@ relations_record:
     link_text: "Original of Translation"
   -
     relation: "other"
+    opposite: "other"
     relation_text: "In other relation (to PUB record)"
     link_text: "Other Relation"
 

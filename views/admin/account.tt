@@ -1,6 +1,8 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lf = h.config.language.$lang -%]
 [% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
@@ -34,19 +36,19 @@
     <form role="form" action="/librecat/admin/account/import" method="GET" class="margin-top1">
       <div class="row">
       <div class="col-md-5">
-	<label for="id_id"><span class="glyphicon glyphicon-download"></span> Import by PEVZ-ID</label>
+	<label for="id_id"><span class="glyphicon glyphicon-upload"></span> Import by PEVZ-ID</label>
 	<div class="input-group">
 	  <input type="text" class="form-control" name="id" id="id_id" placeholder="12345" value="[% qp.id %]" required>
 	  <span class="input-group-btn">
-	    <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-download"></span> </i>Import</button>
+	    <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-upload"></span> </i>Import</button>
 	  </span>
 	</div><!-- /input-group -->
       </div>
       </div>
     </form>
-    
+
     [% IF error %]
-    <p class="text-danger">[% error %] <i> <span class="glyphicon glyphicon-pencil"></span></i><a href="/librecat/admin/account/edit/[% qp.id %]">Edit</a></p>
+    <p class="text-danger">[% error %] <a href="/librecat/admin/account/edit/[% qp.id %]"><span class="glyphicon glyphicon-pencil fw"></span>Edit</a></p>
     [% END %]
 
     <div class="row col-md-12 margin-top1 margin-bottom2">
@@ -70,11 +72,10 @@
 	<dt>
 	<a href="/librecat/admin/account/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% p.full_name %]</a>
 	<span [% IF p.account_status == 'active' %]class="label label-success"[% ELSE %]class="label label-danger"[% END %]>
-	[% p.account_status || 'inactive' %]</span>
+	[% p.account_status || 'inactive' %]</span> | <span class="text-muted">BIS-ID: <a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% p._id %]">[% p._id %]</a></span> | <span class="text-muted">Publications: </span><span data-id="[% p._id %]" class="num_publ"></span><br />
 	</dt>
 	<dd>
-	<span class="text-muted">BIS-ID: [% p._id %]</span>
-	<span class="text-muted">| [% FOREACH dep IN p.department %][% dep.name %] | [% END %]</span>
+	<span class="text-muted">[% FOREACH dep IN p.department %][% h.get_department(dep._id).display %][% UNLESS loop.last %] | [% END %][% END %]</span>
 	</dd>
     [% END %]
     </dl>
@@ -88,6 +89,18 @@
   </div><!-- main content (left) -->
 
 </div><!-- outer row -->
+
+<script>
+$(document).ready(function(){
+  $('.num_publ').each(function(){
+    var element = this;
+    var id = $(this).data('id');
+    $.getJSON("/num_of_publ/" + id).done(function( res ) {
+      $(element).html(res.total);
+    });
+  });
+});
+</script>
 
 <!-- END admin/account.tt -->
 

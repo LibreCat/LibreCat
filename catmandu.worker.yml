@@ -1,0 +1,25 @@
+_prefix:
+  worker:
+
+DataCite:
+  base_url: 'https://mds.datacite.org'
+  user: ''
+  password: ''
+  test_mode: ''
+
+FileUploader:
+  files:
+    package: 'Simple'
+    options:
+      root: '/data2/librecat/file_uploads'
+
+ImageResizer:
+  files:
+    package: 'Simple'
+    options:
+      root: '/data2/librecat/file_uploads'
+  access:
+    package: 'Simple'
+    options:
+      root: '/data2/librecat/access_uploads'
+

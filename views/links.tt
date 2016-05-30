@@ -1,9 +1,24 @@
 <!-- BEGIN links.tt -->
 
 [% bag = entry.type == "researchData" ? "data" : "publication" %]
-<a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="[% lf.main_page.links.view_details %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>PUB</a>
-  [% IF entry.file || entry.related_material || entry.externalFiles == "1" %]
+<a href="[% h.host %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="[% lf.main_page.links.view_details %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>PUB</a>
+  [% IF entry.type == "researchData" AND (entry.file || entry.related_material || entry.externalFiles == "1") %]
   | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% lf.main_page.links.files %]</a>
+  [% ELSIF entry.type != "researchData" AND entry.file AND entry.file.size > 1 %]
+    [% display_file = [] %]
+    [% counter = 0 %]
+    [% FOREACH fi IN entry.file %]
+    [% IF fi.open_access %][% counter = counter + 1 %][% display_file.push(fi) %][% END %]
+    [% END %]
+    [% IF counter > 1 %]
+      | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% lf.main_page.links.files %]</a>
+    [% ELSIF counter == 1 %]
+      | <a href="/download/[% entry._id %]/[% display_file.0.file_id %]">[% display_file.0.file_name.match("(?i).pdf$") ? "PDF" : "File" %]</a>
+    [% END %]
+  [% ELSIF entry.type != "researchData" AND entry.file AND entry.file.size == 1 %]
+    [% IF entry.file.0.open_access %]
+    | <a href="/download/[% entry._id %]/[% entry.file.0.file_id %]">[% entry.file.0.file_name.match("(?i).pdf$") ? "PDF" : "File" %]</a>
+    [% END %]
   [% END %]
 
   [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="/download/[% entry._id  %]/[% supp.file.file_id %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
@@ -23,11 +38,11 @@
 <!--
     [% IF bag == "data" %]
   	[% IF entry.externalFiles == "1" %]
-	  | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
+	  | <a href="/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
 	[% ELSE %]
 	  [% FOREACH file IN entry.file %]
 	    [% IF file.open_access == 1 %]
-	      | <a href="[% h.host %]/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
+	      | <a href="/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% lf.main_page.links.files %]</a>
 	      [% LAST %]
 	    [% END %]
 	  [% END %]
@@ -37,7 +52,10 @@
 
 [% IF backend %]
   <br />
-  <a href="/librecat/record/edit/[% entry._id %]">[% lf.main_page.links.edit %]</a>
+  [% IF (!entry.locked AND !entry.type.match("^bi")) OR session.role == "super_admin" %]<a href="/librecat/record/edit/[% entry._id %]">[% lf.main_page.links.edit %]</a>
+  [% ELSE %]
+  <strong>[% lf.main_page.links.edit %]</strong>
+  [% END %]
   | <a data-toggle="collapse" href="#[% tabmodus %]_[% entry._id %]">[% lf.main_page.links.details %]</a>
 
   [% IF session.role == "super_admin" %]
@@ -49,12 +67,15 @@
     [% LAST %]
     [% END %]
   [% END %]
-  [% IF (entry.status != "public" AND entry.status != "submitted") OR (entry.status == "submitted" AND session.role == "super_admin") %]
+  [% IF (entry.status != "public" AND entry.status != "submitted" AND entry.status != "new" AND entry.type != "researchData") OR ((entry.status == "submitted" OR entry.status == "new") AND session.role == "super_admin") %]
   | <a href="/librecat/record/publish/[% entry._id %]">[% lf.main_page.links.publish %]</a>
-  [% ELSIF entry.status == "public" %]
+  [% ELSIF entry.status == "public" AND entry.type != "researchData" %]
   | <a href="/librecat/record/return/[% entry._id %]">[% lf.main_page.links.return %]</a>
   [% END %]
-  <span class="pull-right">[% entry.date_updated.replace('(T|Z)',' ') %]</span>
+  [% IF session.role == "super_admin" %]
+  | <a href='/librecat/search/admin/similar_search?q="[% entry.title.replace("[\'\"\,\;\:\.]+","") %]"'>[% lf.main_page.links.search_similar %]</a>
+  [% END %]
+  <span class="pull-right">[% entry.date_updated.replace('(T|Z)',' ') %] (GMT)</span>
 [% END %]
 
 <!-- END links.tt -->

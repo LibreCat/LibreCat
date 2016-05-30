@@ -1,0 +1,51 @@
+---
+_prefix:
+  filestore:
+
+default: &filestore_settings
+    package: Simple
+    options:
+        root: /data2/librecat/file_uploads
+
+api:
+    buffer_size: 8192
+    access:
+        ip_ranges: 
+            - 127.0.0.1
+            - 10.*.*.*
+
+uploader:
+    package: 'LibreCat::Worker::FileUploader'
+    options: 
+        files: *filestore_settings
+
+# Thumbnails
+access: &accessstore_settings
+    package: Simple
+    options:
+        root: /data2/librecat/file_uploads
+
+accesss_thumbnailer:
+    package: 'LibreCat::Worker::ImageResizer'
+    options: 
+        files: *filestore_settings
+        access: *accessstore_settings
+
+# Demo
+fedora:
+    package: FedoraCommons
+    options:
+        url: http://localhost:8080/fedora
+        user: fedoraAdmin
+        password: fedoraAdmin
+        namespace: demo
+        dsnamespace: DS
+        md5enabled: 1
+        versionable: 0
+        purge: 1
+
+# Demo
+bagit:
+    package: BagIt
+    options:
+        root: /data2/librecat/bag_uploads

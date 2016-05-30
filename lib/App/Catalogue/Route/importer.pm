@@ -11,6 +11,7 @@ use Try::Tiny;
 use Dancer::Plugin::Auth::Tiny;
 use App::Helper;
 use App::Catalogue::Controller::Importer;
+use Catmandu::Fix::trim as => 'trim';
 
 =head2 POST /librecat/record/import
 
@@ -18,31 +19,31 @@ Returns a form with imported data.
 
 =cut
 post '/librecat/record/import' => needs login => sub {
-	my $p = params;
-
-    my $pub;
-	my $user = h->get_person( session->{personNumber} );
-	my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
+    my $p = params;
+    trim($p,'id','whitespace');
+        my $pub;
+    my $user = h->get_person( session->{personNumber} );
+    my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
     try {
-		$pub = App::Catalogue::Controller::Importer->new(
-			id => $p->{id} || $p->{bibtex_input},
-			source => $p->{source},
-			)->fetch;
+        $pub = App::Catalogue::Controller::Importer->new(
+            id => $p->{id} || $p->{bibtex_input},
+            source => $p->{source},
+            )->fetch;
 
         if ($pub) {
-			$pub->{_id} = h->new_record('publication');
-			my $type = $pub->{type} || 'journalArticle';
-			my $templatepath = "backend/forms";
-			$pub->{department} = $user->{department};
+            $pub->{_id} = h->new_record('publication');
+            my $type = $pub->{type} || 'journalArticle';
+            my $templatepath = "backend/forms";
+            $pub->{department} = $user->{department};
 
-			if (($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
-				$templatepath .= "/expert";
-			}
+            if (($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
+                $templatepath .= "/expert";
+            }
 
-			$pub->{new_record} = 1;
+            $pub->{new_record} = 1;
 
-			return template $templatepath . "/$type", $pub;
+            return template $templatepath . "/$type", $pub;
         } else {
             return template "backend/add_new",
                 {error => "No record found with ID $p->{id} in $p->{source}."};

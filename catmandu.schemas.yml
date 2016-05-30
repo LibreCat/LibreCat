@@ -1,0 +1,614 @@
+_prefix:
+  schemas:
+
+#used in LibreCat::Validator::Award
+award:
+  "$schema": "http://json-schema.org/draft-04/schema#"
+  title: "librecat award"
+  type: "object"
+  properties:
+    _id:
+      type: string
+      pattern: "^AW[0-9]+$"
+      minLength: 1
+    _version:
+      oneOf:
+        - type: string
+          minLength: 1
+        - type: integer
+    sort_id:
+      type: string
+    oldid:
+      type: string
+      minLength: 1
+    award_id:
+      type: string
+      pattern: "^AW[0-9]+$"
+    rec_type:
+      type: string
+      enum: [preis,auszeichnung,akademie,record]
+    date_created: &dt
+      type: string
+      format: date-time
+    date_updated: *dt
+    title:
+      type: string
+      minLength: 1
+    title_en:
+      type: string
+    norm_title:
+      type: string
+    description:
+      type: string
+    description_en:
+      type: string
+    url:
+      type: string
+      format: uri
+    proof:
+      type: string
+    year:
+      type: string
+      pattern: "^[0-9]{4}$"
+    comment:
+      type: string
+    department:
+      type: array
+      items:
+        additionalProperties: false
+        required: [_id]
+        properties:
+          _id:
+            oneOf:
+              - type: string
+                pattern: "^[0-9]+$"
+                minLength: 1
+              - type: integer
+                minimum: 0
+          name:
+            type: string
+    einrichtung:
+      type: array
+      items:
+        additionalProperties: false
+        properties:
+          name:
+            type: string
+            minLength: 1
+          _id:
+            type: string
+    other_university:
+      type: string
+    uni_member:
+      oneOf:
+        - type: string
+          enum: [0,1]
+        - type: integer
+          minimum: 0
+          maximum: 1
+    former_member:
+      type: string
+      enum: ["ja","nein","emeritiert","in Rente"]
+    extern:
+      oneOf:
+        - type: string
+          enum: [0,1]
+        - type: integer
+          minimum: 0
+          maximum: 1
+    organization:
+      type: string
+    honoree:
+      type: array
+      items:
+        type: object
+        required: [first_name,last_name,full_name]
+        additionProperties: false
+        properties:
+          first_name:
+            type: string
+            minLength: 1
+          last_name:
+            type: string
+            minLength: 1
+          full_name:
+            type: string
+            minLength: 1
+          title:
+            type: string
+  required: ["_id","rec_type","title"]
+  additionalProperties: false
+
+#used in LibreCat::Validator::Publication
+publication:
+  "$schema": "http://json-schema.org/draft-04/schema#"
+  title: "librecat publication"
+  type: "object"
+  definitions:
+    issn: &issn
+      type: string
+      pattern: '^[0-9]{4}-[0-9]{3}[0-9Xx]$'
+    #see 'status/language' on page http://localhost:5001/librecat/record/new?type=journalArticle for full list
+    iso_language: &isolang
+      type: object
+      enum:
+        - iso: nl
+          name: Dutch
+        - iso: eng
+          name: English
+        - iso: fr
+          name: French
+        - iso: de
+          name: German
+
+    abstract: &abstract
+      type: object
+      properties:
+        lang:
+          type: string
+          enum: [nl,eng,fr,de]
+        text:
+          type: string
+          minLength: 1
+      additionalProperties: false
+    department: &department
+      type: object
+      properties:
+        #TODO: _id must refer to valid department? Possible in JSON-Schema?
+        _id:
+          #in perl, its hard to distinguish between integer and string that look like an integer
+          oneOf:
+            - type: string
+              pattern: "^[0-9]+$"
+              minLength: 1
+            - type: integer
+              minimum: 0
+        name:
+          type: string
+          minLength: 1
+
+        layer:
+          oneOf:
+            - type: string
+              pattern: "^[0-9]+$"
+              minLength: 1
+            - type: integer
+              minimum: 0
+
+        display:
+          type: string
+
+        tree:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                oneOf:
+                  - type: string
+                    pattern: "^[0-9]+$"
+                    minLength: 1
+                  - type: integer
+                    minimum: 0
+
+      required: ["_id","name"]
+      additionalProperties: false
+
+    author:
+      type: object
+      properties:
+        first_name: &hn
+          type: string
+          minLength: 1
+        last_name: *hn
+        full_name: *hn
+
+  properties:
+    _id:
+      oneOf: 
+        - type: string
+          pattern: "^[0-9]+$"
+          minLength: 1
+        - type: integer
+          minimum: 0
+    type:
+      type: string
+      enum:
+        - original
+        - book
+        - bookEditor
+        - bookChapter
+        - review
+        - conferenceAbstract
+        - conferenceEditor
+        - conference
+        - dissertation
+        - encyclopediaArticle
+        - journalArticle
+        - journalEditor
+        - newspaperArticle
+        - patent
+        - preprint
+        - report
+        - translation
+        - translationChapter
+        - workingPaper
+        - biDissertation
+        - researchData
+
+    date_created: &dt
+      type: string
+      format: date-time
+
+    date_submitted: *dt
+
+    date_updated: *dt
+
+    doi:
+      type: string
+      #stolen from http://www.regexpal.com/93795
+      pattern: ^10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&'<>])\S)+$
+
+    author:
+      type: array
+      minItems: 1
+      uniqueItems: true
+      items:
+        '$ref': '#/definitions/author'
+
+    first_author:
+      type: string
+      minLength: 1
+
+    title:
+      type: string
+      minLength: 1
+
+    alternativeTitle:
+      type: array
+      items:
+        type: string
+
+    #required when type = 'journalArticle'
+    publication:
+      type: string
+    publication_identifier:
+      type: object
+      properties:
+        issn:
+          type: array
+          items:
+            '$ref': '#/definitions/issn'
+
+    publication_status:
+      type: string
+      enum: [draft,submitted,accepted,inpress,epub_ahead,published]
+
+    pubmedID:
+      oneOf:
+        - type: string
+          pattern: '^[0-9]+$'
+        - type: integer
+          minimum: 0
+
+    quality_controlled:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - type: string
+          enum: ["0","1"]
+
+    status:
+      type: string
+      enum: [submitted,public,returned]
+
+    department:
+      type: array
+      items:
+        '$ref': '#/definitions/department'
+
+    year:
+      oneOf:
+        - type: string
+          pattern: "^[0-9]+$"
+          minLength: 1
+        - type: integer
+          minimum: 0
+
+    abtract:
+      type: array
+      items:
+        '$ref': '#/definitions/abstract'
+
+    language:
+      type: array
+      items:
+        '$ref': '#/definitions/iso_language'
+  required: ["_id","type","author","first_author","title","year"]
+  additionalProperties: true
+
+#used in LibreCat::Validator::Researcher
+researcher:
+  "$schema": "http://json-schema.org/draft-04/schema#"
+  title: "librecat researcher"
+  type: "object"
+  definitions:
+    department: *department
+
+  properties:
+    _id:
+      #in perl, its hard to distinguish between integer and string that look like an integer
+      oneOf:
+        - type: string
+          pattern: "^[0-9]+$"
+          minLength: 1
+        - type: integer
+          minimum: 0
+    account_status:
+      type: string
+      enum: ["active","inactive"]
+    account_type:
+      type: string
+      minLength: 1
+      pattern: '^\S+$'
+    password:
+      type: string
+      minLength: 1
+      pattern: '^\S+$'
+    login:
+      type: string
+      minLength: 1
+      pattern: '^\S+$'
+    #TODO
+    email:
+      type: string
+      format: email
+    first_name:
+      type: string
+      minLength: 0
+    last_name:
+      type: string
+      minLength: 0
+    full_name:
+      type: string
+      minLength: 0
+    department:
+      type: array
+      items:
+        "$ref": "#/definitions/department"
+    citation:
+      type: object
+      properties:
+        ama:
+          type: string
+        apa:
+          type: string
+        apa_indent:
+          type: string
+        aps:
+          type: string
+        bio1:
+          type: string
+        default:
+          type: string
+        dgps:
+          type: string
+        ewi:
+          type: string
+        frontShortTitle:
+          type: string
+        frontiers:
+          type: string
+        harvard1:
+          type: string
+        ieee:
+          type: string
+        lncs:
+          type: string
+        mla:
+          type: string
+        pub:
+          type: string
+        sfb882:
+          type: string
+        wels:
+          type: string
+
+    creator:
+      type: object
+      properties:
+        login:
+          type: string
+    external_id:
+      type: object
+      properties:
+        isi:
+          type: string
+          pattern: '^[0-9]+$'
+        pmid:
+          oneOf:
+            - type: string
+              pattern: '^[0-9]+$'
+            - type: integer
+    intvolume:
+      type: string
+    isi:
+      type: string
+    issue:
+      type: string
+    marked:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - type: string
+          enum: ["0","1"]
+    page:
+      type: string
+      pattern: '^[0-9]+(-[0-9]+)?$'
+    pmid:
+      oneOf:
+        - type: string
+          pattern: '^[0-9]+$'
+        - type: integer
+        
+
+  required: ["_id","account_status","account_type","password","login","email","first_name","last_name","full_name","department"]
+  additionalProperties: true
+
+department: *department
+
+project:
+  "$schema": "http://json-schema.org/draft-04/schema#"
+  title: "librecat project"
+  type: "object"
+  properties:
+    _id:
+      type: string
+      pattern: "^P[0-9]+$"
+    name:
+      type: string
+      minLength: 1
+    acronym:
+      type: string
+    alternative_name:
+      type: string
+    url:
+      type: string
+      format: uri
+    grant_number:
+      type: string
+    psp_element:
+      type: string
+    description:
+      type: string
+    start_date:
+      type: string
+      format: date
+    end_date:
+      type: string
+      format: date
+    date_created:
+      type: string
+      format: date-time
+    date_updated:
+      type: string
+      format: date-time
+    #not defined in elasticsearch?
+    affiliation:
+      type: string
+    #'coordinator' in the web interface
+    owner:
+      type: array
+      items:
+        type: object
+        properties:
+          first_name:
+            type: string
+            minLength: 1
+          last_name:
+            type: string
+            minLength: 1
+    designated_editor:
+      type: array
+      items:
+        type: object
+        properties:
+          first_name:
+            type: string
+            minLength: 1
+          last_name:
+            type: string
+            minLength: 1
+    principal_investigator:
+      type: array
+      items:
+        type: object
+        properties:
+          first_name:
+            type: string
+            minLength: 1
+          last_name:
+            type: string
+            minLength: 1
+    uni_member:
+      type: array
+      items:
+        type: object
+        properties:
+          first_name:
+            type: string
+            minLength: 1
+          last_name:
+            type: string
+            minLength: 1
+    cooperator:
+      type: array
+      items:
+        type: string
+        minLength: 1
+    funder:
+      type: array
+      items:
+        type: string
+        minLength: 1
+    call_identifier:
+      type: string
+    funded:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - type: string
+          enum: ["0","1"]
+
+  required: ["_id","name"]
+  additionalProperties: true
+
+research_group:
+  "$schema": "http://json-schema.org/draft-04/schema#"
+  title: "librecat research group"
+  type: "object"
+  properties:
+    _id:
+      type: string
+      pattern: "^RG[0-9]+$"
+    name:
+      type: string
+      minLength: 1
+    acronym:
+      type: string
+      minLength: 1
+    start_date:
+      type: string
+      format: date
+    end_date:
+      type: string
+      format: date
+    date_created:
+      type: string
+      format: date-time
+    date_updated:
+      type: string
+      format: date-time
+    affiliation:
+      type: string 
+    department:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            oneOf:
+              - type: string
+                pattern: "^[0-9]+$"
+                minLength: 1
+              - type: integer
+                minimum: 0
+
+  required: ["_id","name"]
+  additionalProperties: true

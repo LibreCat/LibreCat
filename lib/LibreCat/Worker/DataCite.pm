@@ -1,12 +1,13 @@
 package LibreCat::Worker::DataCite;
 
-use Moo;
+use Catmandu::Sane;
 use LWP;
 use Crypt::SSLeay;
 use Term::ReadKey;
 use URI;
 use URI::Escape;
-use Encode qw( encode_utf8 );
+use Encode qw(encode_utf8);
+use Moo;
 use namespace::clean;
 
 with 'LibreCat::Worker';
@@ -16,11 +17,12 @@ has user => (is => 'ro', required => 1);
 has password => (is => 'ro', required => 1);
 has test_mode => (is => 'ro');
 
-sub do_work {
-    my ($self, $doi, $landing_url, $datacite_xml) = @_;
+# TODO return values
+sub work {
+    my ($self, $opts) = @_;
 
-    $self->metadata($doi, $datacite_xml);
-    $self->mint($doi, $landing_url);
+    $self->metadata($opts->{doi}, $opts->{datacite_xml});
+    $self->mint($opts->{doi}, $opts->{landing_url});
 }
 
 sub mint {
@@ -90,9 +92,13 @@ LibreCat::Worker::DataCite - a worker for registering and minting at DataCite
 
     my $registry = LibreCat::Worker::DataCite->new(user => 'me', password => 'secret');
 
-    $registry->do_work()
+    $registry->work({
+        doi          => '...' ,
+        landing_url  => '...' ,
+        datacite_xml => '...' ,
+    })
 
-    # or
+    # or call them separately
     $registry->metadata()
     $registry->mint('')
 

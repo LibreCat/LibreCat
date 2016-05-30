@@ -8,7 +8,7 @@
   <div class="col-md-10" id="applicant">
       {% IF fields.basic_fields.applicant.multiple OR fields.supplementary_fields.applicant.multiple %}
       [% IF !applicant %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.applicant.label %]</div>
@@ -20,7 +20,7 @@
       </div>
       [% ELSE %]
       [% FOREACH cored IN applicant %]
-      <div class="row innerrow">
+      <div class="row innerrow multirow">
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.applicant.label %]</div>

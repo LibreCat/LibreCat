@@ -2,6 +2,9 @@ _prefix:
   language:
     en:
 
+general:
+  plural: "s"
+  where: "in"
 login:
   login_heading: "Login"
   username: "Username"
@@ -17,6 +20,9 @@ header:
   title_person: "PUB  &ndash; Publication list of"
   my_author_page: "My Publication List"
   brand: "Home"
+  role_label: "Role"
+  role_change: "Change role:"
+  settings: "Settings"
   role:
     user: "User"
     delegate: "Delegate"
@@ -33,12 +39,15 @@ header:
     manage_awards: "Manage Awards"
     manage_department: "Manage Departments"
   lang: "Deutsch"
+  lang_short: "DE"
   lang_select:
     eng: "English"
     ger: "German"
   department_affiliation: "Department Affiliation"
+  logged_in_as: "Logged in as"
   default_edit_mode: "Default Edit Mode"
   default_language: "Default Language"
+  beta: "The new backend of PUB is in open beta phase"
 footer:
   this_is_us: "Bielefeld University Library"
   language_url: "english/"
@@ -65,11 +74,23 @@ tabs:
   projects: "Projects"
   authors: "Authors"
   authors_title: "Authors"
-  about: "Features"
+  start: "What is PUB?"
+  about: "About PUB"
+  features: "Features"
   documentation: "API Documentation"
   faq: "FAQ"
   contact: "Contact"
   policy: "Policy"
+hits:
+  author: "Author"
+  authors: "Authors"
+  publication: "Publication"
+  publications: "Publications"
+  data_publication: "Data Publication"
+  data_publications: "Data Publications"
+  project: "Project"
+  projects: "Projects"
+  links_pub: "Show complete bibliographic and access information"
 home:
   search_placeholder: "Search Publications in PUB"
   fields: "Fields"
@@ -95,9 +116,11 @@ main_page:
   add_new_button: "Add new Publication"
   capital_or: "OR"
   qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Drop Open Access fulltext (PDF)<br>here and we'll do the rest."
-  theses_drop_text: "<spab ckass='fa fa-hand-o-right fa-2x'></span><span class='fa fa-file-pdf-o fa-3x'></span><br>Drop your thesis here."
-  theses_success_text: "You have successfully submitted your thesis. We will contact you with further information.<br>Thank you!<br>Back to <a href='/pubtheses'>PUBTheses</a>"
+  theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Drop your thesis here &hellip; or click."
+  theses_success_text: "You have successfully submitted your thesis!<br />All that's left to do is print and fill out this form: <a href='/pdf/revers_hochschulschriften.pdf'>Statement on the Granting of Exploitation Rights (PDF, only in German)</a> and send it to us. And we will contact you with further information.<br>Thank you!<br>Back to <a href='/pubtheses'>PUBTheses</a>"
   theses_explain: "Please upload only ONE file (preferably .pdf). If you want to submit a document that consists of several parts (e.g. chapters) you need to put the files into an archive file (.zip or .gz)."
+  depositpolicy: "PUB Deposity Policy"
+  ddc: "DDC list"
   heading_admin: "Admin"
   heading_user: "User"
   heading_reviewer: "Reviewer"
@@ -119,20 +142,28 @@ main_page:
     internal_view: "Internal View"
     request_a_copy: "Request a Copy"
     request_a_copy_title: "Generate sharable links for files with 'Request a copy' status"
+    request_a_copy_not_public: "Only pulic records can be shared! Click \"Make public\" and try again."
     publish: "Make public"
     return: "Return"
+    search_similar: "Search similar titles"
 person_profile:
   id_not_found: "Person ID not found."
   former_researcher: "Former Bielefeld University Researcher"
   view: "View "
   view_in: "View in"
   directory_of_staff: "PEVZ-ID"
-  sfb_profile: "SFB882-GK Profile"
+  other_profile: "SFB882-GK Profile"
+  other_profile_url: "http://www.sfb882.uni-bielefeld.de/en/staff/"
   no_author_ids: "No Author IDs set."
   person_id_title: "These IDs will be visible on your public person page immediately after saving."
 project:
   heading: "Projects"
+  not_found: "Project ID not found"
+  funded_ext: "Externally Funded"
+  period: "Project Period"
   filter: "Filter"
+  filter_remove: "Remove Current Filters"
+  filter_help: "You can combine search and filter options"
   start_year: "Start Year"
   end_year: "End Year"
   funder: "Funding Organisation"
@@ -195,6 +226,10 @@ facets:
     "type.desc": "Publication Type descending"
     "publication.asc": "Publ./ Series/ Journal ascending"
     "publication.desc": "Publ./ Series/ Journal descending"
+    "publcount.asc": "Number of publications ascending"
+    "publcount.desc": "Number of publications descending"
+    "fullname.asc": "Alphabetically ascending"
+    "fullname.desc": "Alphabetically descending"
 frontdoor:
   preview: "Preview"
   crumb_back: "Back"
@@ -206,14 +241,22 @@ frontdoor:
   export: "Export"
   marked: "Marked Publications"
   cite_this: "Cite this"
+  citation: "Citation"
+  citation_found: "found citing this article"
+  display_10: "of which 10 are displayed"
   supplements: "Supplements"
   show_all: "All"
+  view_wos: "View record in Web of Science"
+  sources: "Sources"
   search_this: "Search this title in"
   isbn_search: "ISBN Search"
   catalogue: "Catalogue.<em>plus!</em>"
+  item: "Item"
+  items: "Items"
   tabs:
     details:
       label: "Details"
+      department: "Department(s)"
       reviewed_work: "Reviewed Work"
       isbn: "ISBN"
       issn: "ISSN"
@@ -224,6 +267,14 @@ frontdoor:
       financial_disclosure: "Financial disclosure"
       ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href='http://oa.uni-bielefeld.de/publikationsfonds.html'>Open Access Publication Fund</a> of Bielefeld University."
       scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University."
+      grantnumber: "Grant Number"
+      alt_name: "Alternative Name"
+      acronym: "Acronym"
+      coordinator: "Coordinator"
+      investigator: "Principal Investigator"
+      member: "Member"
+      funder: "Funder"
+      cooperator: "Cooperator"
     file_details:
       label: "Files"
       name: "File Name"
@@ -264,7 +315,7 @@ frontdoor:
     export_search: "Export / Search"
   fulltext:
     view: "View fulltext"
-    not_available: "No fulltext in PUB available"
+    not_available: "No fulltext has been uploaded"
   id_title: "Link to this page, e.g. for bookmarking"
   license_heading: "All files available under the following license(s):"
 mark:
@@ -299,6 +350,7 @@ add_new:
   do_it_yourself: "Option 2:<br />Select a type and fill out the form"
   drop_oa: "Option 3:<br />Drop your Open Access fulltext here"
   paste_bibtex: "Option 4:<br />Paste your BibTex record here"
+  paste_bibtex_placeholder: "Please paste only one record at a time"
 forms:
   book:
     label: "Book"
@@ -321,7 +373,7 @@ forms:
         placeholder: "e.g. Handbuch der eBook-Veröffentlichung"
       author: &author_translator
         label: "Author"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
         first_name:
           label: "First Name"
           label_short: "Auth. First"
@@ -336,14 +388,14 @@ forms:
       department: &department
         label: "Department"
         label_short: "Dept."
-        placeholder: "e.g. Fakult&auml;t f&uuml;r Physik"
+        placeholder: "Start typing, or use (arrow down) to choose a department from the list."
       project: &project
         label: "Project"
-        placeholder: "e.g. 2nd-Generation Open Access Infrastructure for Research in Europe"
+        placeholder: "Start typing, or use (arrow down) to choose a project from the list."
       research_group: &research_group
         label: "Research Group"
         label_short: "Res. Gr."
-        placeholder: "e.g. Social Motorics"
+        placeholder: "Start typing, or use (arrow down) to choose a research group from the list."
       place: &place
         label: "Place of Publication"
         label_short: "Place"
@@ -384,16 +436,18 @@ forms:
           label: "Status"
           label_short: "Status"
       dropzone: &dropzone
-        label: "<strong>Upload Main File and Supplementary Material</strong> (max. 1000MB per file)"
+        label: "<strong>Upload Main File and Supplementary Material</strong> (max. 500MB per file)"
         dropzone_text: "Drop files here to upload ... or click!"
         access_level: "Access Level:"
         upload_date: "Upload Date:"
         user: "User:"
         relation: "Relation:"
+        copy_link: "Copy file URL"
+        copy_link_popup: "Copy file URL to clipboard: Ctrl+C, Enter"
         access:
           closed: "Author/Reviewer"
           until: "until"
-          request_a_copy: "<br>(Request a Copy)"
+          request_a_copy: "Request a Copy"
           local: "UniBi Only"
           open_access: "Open Access"
         edit_modal:
@@ -415,7 +469,7 @@ forms:
         heading: "Copyright and Licenses"
         pub_license:
           label: "Copyright Disclaimer"
-          disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><a href='http://pub.uni-bielefeld.de/policy.html#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
+          disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
           accept_text: "I accept"
           alert: "You need to accept the Copyright Disclaimer because you have attached files to this record."
         info:
@@ -449,7 +503,8 @@ forms:
       abstract: &abstract
         label: "Abstract"
         label2: "Language"
-        placeholder: "Abstract Text (you can use Markdown or MathJax for styling)"
+        placeholder: "Abstract Text (you can use Markdown for styling)"
+        explain: "Use <a href='http://spec.commonmark.org/0.22/#preliminaries' target='_blank'>Markdown</a> for text styling. After saving click on the link 'PUB' to get a preview and check text styling."
       keyword: &keyword
         label: "Keywords"
         placeholder: "Keywords (multiple entries separated by semicolon, e.g. Keyword1 ; Keyword2 ; Keyword3)"
@@ -497,8 +552,11 @@ forms:
           placeholder: "Description of external link"
         button:
           label: "Add"
-      publish_button:
-        alert: "Are you sure you want to publish this record? You cannot undo this yourself and any attached file(s) will be published according to the access level specified."
+      locked: &locked
+        label: "Locked for editing (except for admins)"
+        label_short: "Locked"
+      link: &link
+        label: "URL"
   bookEditor: &bookeditor
     label: "Book (Editor)"
     tab: *tab
@@ -516,7 +574,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Editor"
         label_short: "Ed."
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       corporate_editor_solo: &corporate_editor_solo
         label: "Corporate Editor"
         label_short: "Copr. Ed."
@@ -547,6 +605,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   bookeditor: *bookeditor
   bookChapter: &bookchapter
     label: "Book Chapter"
@@ -570,7 +630,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Book Editor"
         label_short: "Ed."
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       corporate_editor: &corporate_editor
         label: "Corporate Editor"
         label_short: "Corp. Ed."
@@ -623,6 +683,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   bookchapter: *bookchapter
   conferenceAbstract: &conferenceabstract
     label: "Conference Abstract"
@@ -645,7 +707,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Editor"
         label_short: "Ed."
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       corporate_editor: *corporate_editor
       department: *department
       project: *project
@@ -694,6 +756,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   conferenceabstract: *conferenceabstract
   conferenceEditor: &conferenceeditor
     label: "Conference (Editor)"
@@ -732,6 +796,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   conferenceeditor: *conferenceeditor
   conference:
     label: "Conference Paper"
@@ -777,6 +843,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   dissertation:
     label: "Dissertation"
     tab: *tab
@@ -818,6 +886,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   encyclopediaArticle: &encyclopediaarticle
     label: "Encyclopedia Article"
     tab: *tab
@@ -858,6 +928,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   encyclopediaarticle: *encyclopediaarticle
   journalArticle: &journalarticle
     label: "Journal Article"
@@ -913,6 +985,8 @@ forms:
         placeholder: "APC co-financed by DFG"
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   journalarticle: *journalarticle
   journalEditor: &journaleditor
     label: "Special Issue"
@@ -966,6 +1040,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   journaleditor: *journaleditor
   newspaperArticle: &newspaperarticle
     label: "Newspaper Article"
@@ -991,6 +1067,7 @@ forms:
         label_short: "News. Title"
         placeholder: "e.g. The New York Times"
       publication_status_language: *publication_status_language
+      publication_identifier: *publication_identifier
       dropzone: *dropzone
       license: *license
       urn: *urn
@@ -1006,6 +1083,8 @@ forms:
         label_short: "Pop.Sci."
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   newspaperarticle: *newspaperarticle
   patent:
     label: "Patent"
@@ -1024,7 +1103,7 @@ forms:
           label_short: "Inv. Last"
           placeholder: "e.g. Appleseed"
         label: "Inventor"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       applicant:
         label: "Applicant"
         label_short: "Appl."
@@ -1065,6 +1144,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   preprint:
     label: "Preprint"
     tab: *tab
@@ -1096,6 +1177,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   report:
     label: "Report"
     tab: *tab
@@ -1133,6 +1216,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   review:
     label: "Book Review"
     tab: *tab
@@ -1172,13 +1257,15 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   researchData: &researchdata
     label: "Research Data"
     tab:
-      basic_fields: "Basic Fields"
+      basic_fields: "Details"
       file_upload: "Research data upload"
-      supplementary_fields: "Supplementary fields"
-      related_material: "Related Material"
+      supplementary_fields: "Additional Information"
+      related_material: "Links"
     field:
       doi: *doi
       title: *title
@@ -1192,7 +1279,7 @@ forms:
           label_short: "Crea. Last"
           placeholder: "e.g. Appleseed"
         label: "Creator"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       department: *department
       project: *project
       research_group: *research_group
@@ -1201,19 +1288,39 @@ forms:
         placeholder: "Publisher"
         defaultvalue: "Bielefeld University"
       year_extern: *year_extern
-      dropzone: &dropzone
-        label: "<strong>Upload File(s)</strong> (max. 1000MB per file)"
+      external_file:
+        label: "External File(s)"
+        checkbox: "Files available at"
+      dropzone:
+        label: "<strong>Upload File(s)</strong> (max. 500MB per file)"
         dropzone_text: "Drop files here to upload ... or click!"
         access_level: "Access Level:"
         upload_date: "Upload Date:"
         user: "User:"
         relation: "Relation:"
+        copy_link: "Copy file URL"
+        copy_link_popup: "Copy file URL to clipboard: Ctrl+C, Enter"
         access:
           closed: "Author/Reviewer"
           until: "until"
-          request_a_copy: "<br>(Request a Copy)"
+          request_a_copy: "Request a Copy"
           local: "UniBi Only"
           open_access: "Open Access"
+        edit_modal:
+          heading: "Edit Uploaded File"
+          heading_file: "File"
+          current_file: "Current file:"
+          relation: "Relation (\"Uploaded document is...\")"
+          access:
+            open_access: "Open Access (File is freely available, effective immediately)"
+            local: "Local Access (UniBi only)"
+            closed: "Closed Access (Author/Reviewer only)"
+            request_a_copy: "Request a Copy (Closed Access except upon request)"
+            embargo: "Switch to Open Access on:"
+          additional_information:
+            heading: "Additional Information"
+            title: "Title"
+            description: "Description"
       license:
         heading: "Copyright and Licenses"
         data_reuse_license:
@@ -1244,15 +1351,17 @@ forms:
         info:
           text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br>"
           contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
-      external_file:
-        label: "Files available at"
       abstract: *abstract
       keyword: *keyword
       jel: *jel
       alternative_id: *alternative_id
       ddc: *ddc
       related_material.rd:
-        label: "Related Material"
+        label: "Link to PUB record"
+        label_short: "PUB-Rec."
+        placeholder: "Start typing to search your publications."
+      related_material.link: *related_material_link
+      locked: *locked
   researchdata: *researchdata
   translation:
     label: "Translation"
@@ -1277,7 +1386,7 @@ forms:
           label_short: "Trans. Last"
           placeholder: "e.g. Appleseed"
         label: "Translator"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       author_secondary:
         first_name:
           label: "First Name"
@@ -1288,7 +1397,7 @@ forms:
           label_short: "Auth. Last"
           placeholder: "e.g. Appleseed"
         label: "Author (Original)"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       edition: *edition
       department: *department
       project: *project
@@ -1322,6 +1431,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   translationChapter: &translationchapter
     label: "Translation (Section)"
     tab: *tab
@@ -1342,7 +1453,7 @@ forms:
           label_short: "Trans. Last"
           placeholder: "e.g. Appleseed"
         label: "Translator"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       author_secondary:
         first_name:
           label: "First Name"
@@ -1353,7 +1464,7 @@ forms:
           label_short: "Auth. Last"
           placeholder: "e.g. Appleseed"
         label: "Author"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       alternative_title:
         label: "Title (Original)"
         label_short: "Title (Orig)"
@@ -1392,6 +1503,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   translationchapter: *translationchapter
   workingPaper: &workingpaper
     label: "Working Paper"
@@ -1427,6 +1540,8 @@ forms:
       alternative_id: *alternative_id
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   workingpaper: *workingpaper
   biDissertation: &bidissertation
     label: "Bielefeld Thesis"
@@ -1458,7 +1573,7 @@ forms:
           label_short: "Superv. Last"
           placeholder: "e.g. Appleseed"
         label: "Supervisor"
-        pevz_tooltip: "Link to / Withdraw from publication list."
+        tooltip: "Activate if UniBi author."
       year:
         label: "Year"
         placeholder: "YYYY"
@@ -1495,6 +1610,8 @@ forms:
         placeholder: "Computing Classification System, e.g. Data Mining"
       related_material.record: *related_material_record
       related_material.link: *related_material_link
+      locked: *locked
+      link: *link
   bidissertation: *bidissertation
   biMasterThesis: &bimasterthesis
     label: "Bielefeld Master Thesis"
@@ -1516,9 +1633,6 @@ forms:
   to_tab_form: "Change to tabbed form"
   tab_form: "Tabbed Form"
   toggle_dropdown: "Toggle dropdown"
-  title_new_n: "Add new "
-  title_new_m: "Add new "
-  title_new_f: "Add new "
   mandatory: "Mandatory field"
   mandatory_error: "You missed some mandatory fields or there are other errors! Please check your data."
   form_change_form: "Change edit mode"
@@ -1527,15 +1641,34 @@ forms:
   form_add_field: "Add a field (+) or Remove this field (-)"
   form_relmat_record: "Link one of your own publication from PUB to this record."
   form_relmat_link: "Link a publication from an external website to this record."
+  confirm_return: "Are you sure you want to return this record from public view?"
+  confirm_delete: "Are you sure you want to delete this record?"
+  confirm_submit: "You are submitting your data. Once we have checked it, we will make it public."
   button:
     back: "Back"
-    save: "Save"
     cancel: "Cancel"
-    publish: "Make Public"
-    return: "Return"
+    close: "Close"
     delete: "Delete"
+    import: "Import"
     next: "Next"
+    publish: "Make Public"
+    submitted: "Submit"
+    return: "Return"
+    save: "Save"
     select: "Select"
+    send: "Send Request"
+    submit: "Submit"
+  general:
+    field:
+      email:
+        label: "E-Mail-Adresse"
+        placeholder: "Ihre E-Mail-Adresse"
+      message:
+        label: "Message"
+        placeholder: "Message"
+      message_author:
+        label: "Message"
+        placeholder: "Message to the author"
   publication_status:
     draft: "Draft"
     submitted: "Submitted"
@@ -1551,7 +1684,7 @@ forms:
     page: "Page"
     pages: "Pages"
     page_range: "Page(-Range)"
-    article_number: "Article Number"
+    article_number: "Art. Number"
   language:
     ara: "Arabic"
     chi: "Chinese"
@@ -1583,29 +1716,31 @@ forms:
     swe: "Swedish"
     tur: "Turkish"
     other: "Other"
-418:
-  heading: "I'm a teapot (418)"
-  text: "You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br><br><a href='https://en.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
-  link_back: "Back"
-404:
-  heading: "Page not found (404)"
-  text: "The page you requested couldn't be found."
-  link_back: "Back"
 403:
   heading: "Access denied (403)"
   text: "You don't have access to this file / folder."
-  link_back: "Back"
+404:
+  heading: "Page not found (404)"
+  text: "The page you requested couldn't be found."
+418:
+  heading: "I'm a teapot (418)"
+  text: "You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br><br><a href='https://en.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
+500:
+  heading: "A problem occured (500)"
+  text: "Uuuppps - this shouldn't happen, but it did."
 help:
   home: "PUB home"
-  brand: "Personal<br>home page"
+  brand: "Backend<br>start page"
   my_author_page: "Your publication list<br>(public records only)"
-  help: "More help necessary? Contact our support: Phone 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
+  help: "How to use PUB."
+  howto: "PUB How-to"
   change_language: "Change language"
-  user_settings: "Change<br>department,<br>edit mode<br>default language."
+  user_settings: "Change role,<br>department,<br>edit mode<br>default language."
   role: "Your user role<br>If you are reviewer/delegate you can change your role here to work with publications allocated for that role."
-  pevz_photo: "Your photo. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp?lang=en' target='_blank'>Change it?</a>"
-  pevz_email: "Your Email address from BIS/PEVZ."
-  author_id: "Name, by which your public author page will also be accessible.<br>Add/Edit author IDs (e.g. ORCID)."
+  photo: "Your photo. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp?lang=en' target='_blank'>Change it?</a>"
+  email_encoded: "Your Email address from BIS/PEVZ."
+  author_id: "Enter alias (for your public author page), or author IDs (e.g. ORCID)."
+  author_id_edit: "Edit ID, add more IDs."
   add_new_button: "Create a new record in PUB: Import existing data e.g. via DOI or enter data via a form."
   quick_and_easy: "Got an Open Access fulltext (PDF)? Drop it here and submit the form. A new, non-pubic record will be created. We will complete it for you and make it publicly visible."
   publication_user: "Your personal publication list. If all of your publications have been made public, this list will look exactly like the list on your public author's page."

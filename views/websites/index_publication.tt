@@ -35,10 +35,11 @@
           <li[% IF bag == 'person' %] class="active"[% END %]><a href="/person[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.authors %]</a></li>
           <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' || bag == 'policy' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lf.tabs.about %] <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li[% IF bag == 'about' %] class="active"[% END %]><a href="/about">[% lf.tabs.about %]</a></li>
-              <li><a href="[% h.host %]/doc/api">[% lf.tabs.documentation %]</a></li>
-              <li[% IF bag == 'contact' %] class="active"[% END %]><a href="/contact">[% lf.tabs.contact %]</a></li>
-              <li[% IF bag == 'policy' %] class="active"[% END %]><a href="/policy">[% lf.tabs.policy %]</a></li>
+              <li><a href="/docs/howto/start">[% lf.tabs.start %]</a></li>
+              <li><a href="/docs/howto/features">[% lf.tabs.features %]</a></li>
+              <li><a href="/docs/howto/policy">[% lf.tabs.policy %]</a></li>
+              <li><a href="/docs/howto/contact">[% lf.tabs.contact %]</a></li>
+              <li><a href="/docs/api">[% lf.tabs.documentation %]</a></li>
             </ul>
           </li>
           <li><a href="/policy" data-toggle="tab" style="display:none;">[% lf.tabs.policy %]</a></li>
@@ -64,7 +65,7 @@
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-sm-4 col-md-3 col-md-offset-1 facets">
-              [% INCLUDE facets.tt %]
+              [% INCLUDE filters.tt %]
             </div>
           </div>
           [% END %]
@@ -77,7 +78,7 @@
               [% INCLUDE hits.tt %]
             </div>
             <div class="col-sm-4 col-md-3 col-md-offset-1 facets">
-              [% INCLUDE facets.tt %]
+              [% INCLUDE filters.tt %]
             </div>
           </div>
           [% END %]
@@ -96,32 +97,37 @@
         <div class="tab-pane[% bag == 'person' ? ' active' : '' %]" id="people">
           [% IF bag == 'person' %]
           <div class="row">
-            [% INCLUDE person/hits.tt %]
+            <div class="col-sm-8">
+              [% INCLUDE person/hits.tt %]
+            </div>
+            <div class="col-sm-4 col-md-3 col-md-offset-1 facets">
+              [% INCLUDE filters.tt %]
+            </div>
           </div>
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'about' ? ' active' : '' %]" id="about">
           [% IF bag == 'about' %]
-            [% INCLUDE websites/tab_about.tt %]
+            [% INCLUDE docs/howto.tt %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'policy' ? ' active' : '' %]" id="policy">
           [% IF bag == 'policy' %]
-            [% INCLUDE websites/tab_policy.tt %]
+            [% INCLUDE docs/howto/policy.tt %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'faq' ? ' active ' : '' %]" id="faq">
           [% IF bag == 'faq' %]
-            [% INCLUDE websites/tab_faq.tt %]
+            [% INCLUDE docs/howto.tt %]
           [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'contact' ? ' active' : '' %]" id="contact">
           [% IF bag == 'contact' %]
-            [% INCLUDE websites/tab_contact.tt %]
+            [% INCLUDE docs/howto/contact.tt %]
           [% END %]
         </div>
 

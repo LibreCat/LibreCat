@@ -1,42 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<!-- BEGIN header_hist.tmpl -->
+<!-- BEGIN header_hist_proj.tt -->
 
 <html>
-
-<meta name="keywords" content="Department of History">
-
-<meta name="description" content="Project List of the Department of History">
-
 <title>Department of History: Project List</title>
-<link rel="meta" href="http://www.uni-bielefeld.de/geschichte/index.html?__xsl=/templates/dcrdf.xsl"><link rel="icon" href="http://www.uni-bielefeld.de/icons/uni-logo-icon-16.png" type="image/png"><link rel="search" href="http://search.uni-bielefeld.de/cgi-bin/search.cgi" type="text/html"><link rel="help" href="http://www.uni-bielefeld.de/help.html" type="text/html"><link rel="copyright" href="http://www.uni-bielefeld.de/Universitaet/impressum.html" type="text/html"><link rel="stylesheet" href="http://www.uni-bielefeld.de/(en)/css/unistandard_2009.css" type="text/css"><script defer src="/javascript/CrossPlatform.js" language="javascript" type="text/javascript"></script><script defer src="/javascript/Popup.js" language="javascript" type="text/javascript"></script><link rel="apple-touch-icon" href="http://www.uni-bielefeld.de/images/touch-icon-iphone.png"><link rel="stylesheet" href="http://www.uni-bielefeld.de/geschichte/geschichte_start3.css" type="text/css">
-
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta http-equiv="content-language" content="de,en" />
-<meta http-equiv="language" content="de,en" />
-<meta name="language" content="deutsch, de, english, en" />
-<meta name="robots" content="noimageindex" />
-
-<style type="text/css">
-<!--
-body {
-margin:1px 0 0 -9px;
-}
--->
-</style>
-
-[%  INCLUDE hist_proj/bup_css.tt %]
-
-<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-<script src="/javascripts/jquery-latest.js"></script>
-<script src="/javascripts/bootstrap.min.js"></script>
-
+<link rel="icon" href="/images/icon_uni.png" type="image/png">
+[% INCLUDE head_meta.tt %]
 </head>
-<body>
 
-<div id="LeftCol">
-<!--
-<h1 style="border-bottom-width: 4px; border-bottom-style: solid; border-bottom-color: #7EA2D5; padding-top:0px;  padding-bottom:4px; margin-top:-3px;margin-bottom:5px;"><img height="18" alt="Publications " style="border: none;" width="77" src="[% h.host %]/images/text_publications.gif" /> </h1>
--->
+<body class="embed">
 
-<!-- END header_hist.tmpl -->
+<div class="row" style="margin-right:0;">
+  <div class="col-sm-11">
+    <div class="row">
+      <div class="col-xs-8">
+
+<!-- END header_hist_proj.tt -->

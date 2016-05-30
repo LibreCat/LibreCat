@@ -17,12 +17,13 @@
 	    <li><a href="http://www.openaire.eu/"><img src="/images/logo_openaire_val.png" alt="[% lf.footer.openaire_alt %]" title="[% lf.footer.openaire_title %]" /></a></li>
 	    <li><a href="http://www.openarchives.org/Register/BrowseSites"><img src="/images/logo_oai.gif" alt="[% lf.footer.openarchives_alt %] " title="[% lf.footer.openarchives_title %]" style="height:40px;"/></a></li>
 	    <li><a href="http://www.datacite.org/"><img src="/images/logo_datacite.png" alt="[% lf.footer.datacite_alt %]" title="[% lf.footer.datacite_title %]" style="height:40px;"/></a></li>
+	    <li><a href="http://service.re3data.org/repository/r3d100010750"><img src="/images/logo_re3data.png" alt="[% lf.footer.re3data_alt %]" title="[% lf.footer.re3data_title %]" style="height:40px;"/></a></li>
 	  </ul>
 	</div>
 	<div class="col-sm-4">
 	  <ul class="list-inline margin0-sm">
-	    <li><a href="/contact">[% lf.footer.contact %]</a></li>
-	    <li><a href="/policy">[% lf.footer.policy %]</a></li>
+	    <li><a href="/docs/howto/contact">[% lf.footer.contact %]</a></li>
+	    <li><a href="/docs/howto/policy">[% lf.footer.policy %]</a></li>
 	    <li><a href="http://www.ub.uni-bielefeld.de/[% lf.footer.language_url %]biblio/kontakt/impressum/">[% lf.footer.imprint %]</a></li>
 	  </ul>
 	  <ul class="list-inline">
@@ -37,7 +38,7 @@
   </div>
 </footer>
 
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/commonmark/0.22.0/commonmark.min.js"></script>
+<script src="/javascripts/commonmarkjs/dist/commonmark.min.js"></script>
 <script>
 var reader = new commonmark.Parser();
 var writer = new commonmark.HtmlRenderer();
@@ -56,7 +57,7 @@ $(document).ready(function () {
     tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
   });
 </script>
-<script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script async src="/javascripts/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 </body>
 

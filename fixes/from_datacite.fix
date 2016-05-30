@@ -9,10 +9,9 @@ move_field('publicationYear','year')
 move_field('titles.title','title')
 remove_field('titles')
 
-#todo author....
-move_field('creators.creator.*.creatorName','author.')
+move_field('creators.creator.*.creatorName','author.$appenbd')
 remove_field('creators')
-#split_author('inspire')
+split_author()
 
 # other fields
 #move_field('descriptions.description.*.content','abstract.$append.text')
