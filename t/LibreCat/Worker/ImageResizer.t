@@ -1,5 +1,5 @@
 use Test::Lib;
-use LibreCatTest;
+use TestHeader;
 
 my $pkg;
 BEGIN {
@@ -10,16 +10,16 @@ require_ok $pkg;
 
 my $opts = {package => 'Simple', options => {root => './t'}};
 
-dies_ok { $pkg->new() };
-dies_ok { $pkg->new(files => $opts) };
-dies_ok { $pkg->new(access => $opts) };
-lives_ok {$pkg->new(files => $opts, access => $opts)};
+dies_ok { $pkg->new() } 'die ok: no args';
+dies_ok { $pkg->new(files => $opts) } 'die ok: missing args';
+dies_ok { $pkg->new(access => $opts) } 'die ok: missing args';
+lives_ok {$pkg->new(files => $opts, access => $opts)} 'lives ok: required args';
 
-my $reziser = $pkg->new();
+my $resizer = $pkg->new(files => $opts, access => $opts);
 can_ok $resizer, 'work';
 
 lives_ok {
-    $reziser->work({from => "me@example.com", to => "you@example.com", subject => "Mail!"})
+    $resizer->work({key => 1})
 } "Calling work is safe.";
 
 done_testing;
