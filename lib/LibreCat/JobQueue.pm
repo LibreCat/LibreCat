@@ -1,4 +1,4 @@
-package LibreCat::Queue;
+package LibreCat::JobQueue;
 
 use Catmandu::Sane;
 use Gearman::XS qw(:constants);
