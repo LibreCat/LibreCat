@@ -1,5 +1,5 @@
-use lib qw(./t/lib);
-use LibreCatTest;
+use Test::Lib;
+use TestHeader;
 
 my $pkg;
 BEGIN {
