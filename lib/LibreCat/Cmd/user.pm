@@ -14,6 +14,7 @@ librecat user [options] list
 librecat user [options] add <FILE>
 librecat user [options] get <id>
 librecat user [options] delete <id>
+librecat user [options] valid <FILE>
 
 EOF
 }
@@ -27,7 +28,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|get|add|delete/;
+    my $commands = qr/list|export|get|add|delete|valid/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -44,6 +45,9 @@ sub command {
     if ($cmd eq 'list') {
         return $self->_list(@$args);
     }
+    elsif ($cmd eq 'publication') {
+        return $self->_export;
+    }
     elsif ($cmd eq 'get') {
         return $self->_get(@$args);
     }
@@ -52,6 +56,9 @@ sub command {
     }
     elsif ($cmd eq 'delete') {
         return $self->_delete(@$args);
+    }
+    elsif ($cmd eq 'valid') {
+        return $self->_valid(@$args);
     }
 }
 
@@ -74,6 +81,16 @@ sub _list {
                     , $type;
     });
     print "count: $count\n";
+
+    return 0;
+}
+
+sub _export {
+    my $h = App::Helper::Helpers->new;
+
+    my $exporter = Catmandu->exporter('YAML');
+    $exporter->add_many($h->researcher);
+    $exporter->commit;
 
     return 0;
 }
@@ -146,6 +163,37 @@ sub _delete {
     }
 }
 
+sub _valid {
+    my ($self,$file) = @_;
+
+    croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
+
+    my $validator = LibreCat::Validator::Researcher->new;
+
+    my $ret = 0;
+
+    Catmandu->importer('YAML', file => $file)->each( sub {
+        my $item = $_[0];
+       
+        unless ($validator->is_valid($item)) {
+            my $errors = $validator->last_errors();
+            my $id     = $item->{_id};
+            if ($errors) {
+                for my $err (@$errors) {
+                    print STDERR "ERROR $id: $err\n";
+                }
+            }
+            else {
+                print STDERR "ERROR $id: not valid\n";
+            }
+        }
+
+        $ret = -1;
+    });
+
+    return $ret == 0;
+}
+
 1;
 
 __END__
@@ -159,8 +207,10 @@ LibreCat::Cmd::user - manage librecat users
 =head1 SYNOPSIS
 
     librecat user list
+    librecat user export
     librecat user add <FILE>
     librecat user get <id>
     librecat user delete <id>
+    librecat user valud <FILE>
 
 =cut

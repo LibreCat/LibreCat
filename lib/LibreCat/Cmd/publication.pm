@@ -12,9 +12,11 @@ sub description {
 Usage:
 
 librecat publication [options] list
+librecat publication [options] export
 librecat publication [options] get <id>
 librecat publication [options] add <FILE>
 librecat publication [options] delete <id>
+librecat publication [options] valid <FILE>
 
 EOF
 }
@@ -28,7 +30,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|get|add|delete/;
+    my $commands = qr/list|export|get|add|delete|valid/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -43,6 +45,9 @@ sub command {
     if ($cmd eq 'list') {
     	return $self->_list;
     }
+    elsif ($cmd eq 'export') {
+        return $self->_export;
+    }
     elsif ($cmd eq 'get') {
     	return $self->_get(@$args);
     }
@@ -51,6 +56,9 @@ sub command {
     }
     elsif ($cmd eq 'delete') {
     	return $self->_delete(@$args);
+    }
+    elsif ($cmd eq 'valid') {
+        return $self->_valid(@$args);
     }
 }
 
@@ -73,6 +81,16 @@ sub _list {
                     , $type;
     });
     print "count: $count\n";
+
+    return 0;
+}
+
+sub _export {
+    my $h = App::Helper::Helpers->new;
+
+    my $exporter = Catmandu->exporter('YAML');
+    $exporter->add_many($h->publication);
+    $exporter->commit;
 
     return 0;
 }
@@ -144,6 +162,37 @@ sub _delete {
     }
 }
 
+sub _valid {
+    my ($self,$file) = @_;
+
+    croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
+
+    my $validator = LibreCat::Validator::Publication->new;
+
+    my $ret = 0;
+
+    Catmandu->importer('YAML', file => $file)->each( sub {
+        my $item = $_[0];
+       
+        unless ($validator->is_valid($item)) {
+            my $errors = $validator->last_errors();
+            my $id     = $item->{_id};
+            if ($errors) {
+                for my $err (@$errors) {
+                    print STDERR "ERROR $id: $err\n";
+                }
+            }
+            else {
+                print STDERR "ERROR $id: not valid\n";
+            }
+        }
+
+        $ret = -1;
+    });
+
+    return $ret == 0;
+}
+
 1;
 
 __END__
@@ -157,8 +206,10 @@ LibreCat::Cmd::publication - manage librecat publications
 =head1 SYNOPSIS
 
     librecat publication list
+    librecat publication export
 	librecat publication get <id>
 	librecat publication add <FILE>
 	librecat publication delete <id>
+    librecat publication valid <FILE>
 
 =cut
