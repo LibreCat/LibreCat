@@ -20,8 +20,8 @@ sub _build_gearman {
 
 sub add_job {
     my ($self, $func, $workload) = @_;
-    my ($ret, $job_id) =
-        $self->gearman->do_background($func, encode_json($workload));
+    my ($ret, $job_id)
+        = $self->gearman->do_background($func, encode_json($workload));
     if ($ret != GEARMAN_SUCCESS) {
         Catmandu::Error->throw($self->gearman->error);
     }
@@ -30,7 +30,7 @@ sub add_job {
 
 sub job_status {
     my ($self, $job_id) = @_;
-    my ($ret, @status) = $self->gearman->job_status($job_id);
+    my ($ret,  @status) = $self->gearman->job_status($job_id);
     if ($ret != GEARMAN_SUCCESS) {
         Catmandu::Error->throw($self->gearman->error);
     }

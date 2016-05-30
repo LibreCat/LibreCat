@@ -10,6 +10,7 @@ on 'test' => sub {
     requires 'File::Slurp';
     requires 'IO::File';
     requires 'File::Path';
+    requires 'Test::Code::TidyAll', '0.20';
 };
 
 requires 'Business::ISBN', 0;
@@ -100,3 +101,4 @@ requires 'Catmandu::BagIt' , '>=0.12';
 requires 'Catmandu::Store::FedoraCommons';
 requires 'IO::All';
 requires 'Catmandu::Validator::JSONSchema','0.11';
+requires 'Code::TidyAll', 0;

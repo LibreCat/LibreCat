@@ -13,7 +13,7 @@ use namespace::clean;
 with 'LibreCat::Worker';
 
 has base_url => (is => 'ro', default => sub {'https://mds.datacite.org'});
-has user => (is => 'ro', required => 1);
+has user     => (is => 'ro', required => 1);
 has password => (is => 'ro', required => 1);
 has test_mode => (is => 'ro');
 
@@ -30,12 +30,8 @@ sub mint {
 
     $self->log->debug("Minting $doi to $landing_url.");
 
-    $self->_do_request(
-        'POST',
-        $self->base_url ."/doi",
-        "doi=$doi\nurl=$landing_url",
-        'text/plain;charset=UTF-8',
-    );
+    $self->_do_request('POST', $self->base_url . "/doi",
+        "doi=$doi\nurl=$landing_url", 'text/plain;charset=UTF-8',);
 }
 
 sub metadata {
@@ -44,10 +40,8 @@ sub metadata {
     $self->log->debug("Register metadata for $doi. XML: $datacite_xml.");
 
     $self->_do_request(
-        'POST',
-        $self->base_url ."/metadata",
-        $datacite_xml,
-        'application/xml;charset=UTF-8',
+        'POST',        $self->base_url . "/metadata",
+        $datacite_xml, 'application/xml;charset=UTF-8',
     );
 }
 
@@ -56,19 +50,17 @@ sub _do_request {
 
     $content .= "\ntestMode=true" if $self->test_mode;
     my $headers = HTTP::Headers->new(
-        Accept => 'application/xml',
+        Accept         => 'application/xml',
         'Content-Type' => $content_type,
     );
 
-    my $req = HTTP::Request->new(
-        $method => $url,
-        $headers, encode_utf8($content)
-    );
+    my $req = HTTP::Request->new($method => $url, $headers,
+        encode_utf8($content));
 
     $self->log->debug("Sending $method request to $url.");
 
-    $req->authorization_basic( $self->user, $self->password );
-    my $ua = LWP::UserAgent->new;
+    $req->authorization_basic($self->user, $self->password);
+    my $ua  = LWP::UserAgent->new;
     my $res = $ua->request($req);
 
     my $status = $res->code();

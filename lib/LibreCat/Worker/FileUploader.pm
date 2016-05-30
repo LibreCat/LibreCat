@@ -8,37 +8,39 @@ use namespace::clean;
 
 with 'LibreCat::Worker';
 
-has files      => (is => 'ro', required => 1);
+has files => (is => 'ro', required => 1);
 has file_store => (is => 'lazy');
 
 sub _build_file_store {
     my ($self) = @_;
 
     my $file_store = $self->files->{package};
-    my $file_opts  = $self->files->{options} // {};
+    my $file_opts = $self->files->{options} // {};
 
-    my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
+    my $pkg
+        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
     $pkg->new(%$file_opts);
 }
 
 sub work {
     my ($self, $opts) = @_;
 
-    my $key = $opts->{key};
+    my $key      = $opts->{key};
     my $filename = $opts->{filename};
-    my $path = $opts->{path};
-    $key       = '' unless $key;
-    $filename  = '' unless $filename;
-    $path      = '' unless $path;
+    my $path     = $opts->{path};
+    $key      = '' unless $key;
+    $filename = '' unless $filename;
+    $path     = '' unless $path;
     my $delete = exists $opts->{delete} && $opts->{delete} == 1 ? "Y" : "N";
 
-    $self->log->debug("key: $key ; filename: $filename ; path: $path ; delete: $delete");
+    $self->log->debug(
+        "key: $key ; filename: $filename ; path: $path ; delete: $delete");
 
     if ($delete eq 'Y') {
-        return $self->do_delete($key,$filename,$path,%$opts);
+        return $self->do_delete($key, $filename, $path, %$opts);
     }
     else {
-        return $self->do_upload($key,$filename,$path,%$opts);
+        return $self->do_upload($key, $filename, $path, %$opts);
     }
 }
 

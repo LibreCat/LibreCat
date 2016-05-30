@@ -9,21 +9,22 @@ use namespace::clean;
 
 with 'LibreCat::Worker';
 
-has files          => (is => 'ro' , required => 1);
-has access         => (is => 'ro' , required => 1);
-has tmpdir         => (is => 'ro' , default => sub { '/tmp' });
-has buffer_size    => (is => 'ro' , default => sub { 8192 });
-has thumbnail_size => (is => 'ro' , default => sub { 200 });
-has file_store     => (is => 'lazy');
-has access_store   => (is => 'lazy');
+has files          => (is => 'ro', required => 1);
+has access         => (is => 'ro', required => 1);
+has tmpdir         => (is => 'ro', default  => sub {'/tmp'});
+has buffer_size    => (is => 'ro', default  => sub {8192});
+has thumbnail_size => (is => 'ro', default  => sub {200});
+has file_store   => (is => 'lazy');
+has access_store => (is => 'lazy');
 
 sub _build_file_store {
     my ($self) = @_;
 
     my $file_store = $self->files->{package};
-    my $file_opts  = $self->files->{options} // {};
+    my $file_opts = $self->files->{options} // {};
 
-    my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
+    my $pkg
+        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
     $pkg->new(%$file_opts);
 }
 
@@ -31,9 +32,10 @@ sub _build_access_store {
     my ($self) = @_;
 
     my $file_store = $self->access->{package};
-    my $file_opts  = $self->access->{options} // {};
+    my $file_opts = $self->access->{options} // {};
 
-    my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
+    my $pkg
+        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
     $pkg->new(%$file_opts);
 }
 
@@ -41,7 +43,7 @@ sub _build_access_store {
 sub work {
     my ($self, $opts) = @_;
 
-    my $key = $opts->{key};
+    my $key      = $opts->{key};
     my $filename = $opts->{filename};
 
     my $thumbnail_name = 'thumbnail.png';
@@ -52,30 +54,35 @@ sub work {
 
     unless (defined $container) {
         $self->log->error("no container $key found");
-        return { error => 'no such container' };
+        return {error => 'no such container'};
     }
 
     my $file = $container->get($filename);
 
     unless (defined $file) {
         $self->log->error("no file $filename in container $key found");
-        return { error => 'no such file' };
+        return {error => 'no such file'};
     }
 
-    my ($tmpdir,$tmpfile) = $self->extract_to_tmpdir($file);
+    my ($tmpdir, $tmpfile) = $self->extract_to_tmpdir($file);
 
     unless (defined $tmpfile && -r $tmpfile) {
-        $self->log->error("failed to extract $filename from container $key to a temporary directory");
-        return { error => 'internal error' };
+        $self->log->error(
+            "failed to extract $filename from container $key to a temporary directory"
+        );
+        return {error => 'internal error'};
     }
 
     # Calculate the thumbnail
     my $max_size  = $self->thumbnail_size;
-    my $exit_code = system "convert -resize x${max_size} ${tmpfile}[0] $tmpdir/thumb.png";
+    my $exit_code = system
+        "convert -resize x${max_size} ${tmpfile}[0] $tmpdir/thumb.png";
 
     unless ($exit_code == 0 && -r "$tmpdir/thumb.png") {
-        $self->log->error("failed to generate a thumbnail for $filename from container $key");
-        return { error => 'failed to create thumbail'} ;
+        $self->log->error(
+            "failed to generate a thumbnail for $filename from container $key"
+        );
+        return {error => 'failed to create thumbail'};
     }
 
     # store the results
@@ -89,43 +96,44 @@ sub work {
     }
 
     $self->log->info("storing $thumbnail_name in access container $key");
-    my $ret = $container->add($thumbnail_name, IO::File->new("$tmpdir/thumb.png"));
+    my $ret = $container->add($thumbnail_name,
+        IO::File->new("$tmpdir/thumb.png"));
 
     unless ($ret) {
-        $self->log->error("failed to create a thumbail for $filename in container $key");
+        $self->log->error(
+            "failed to create a thumbail for $filename in container $key");
     }
 
     $self->log->info("cleaning tmpdir $tmpdir");
     system("rm $tmpdir/*");
     system("rmdir $tmpdir");
 
-    return $ret ? { ok => 1 } : { error => 'failed to create thumbnail' };
+    return $ret ? {ok => 1} : {error => 'failed to create thumbnail'};
 }
 
 sub extract_to_tmpdir {
-    my ($self,$file) = @_;
+    my ($self, $file) = @_;
 
     my $tmpdir = $self->tmpdir . '/' . Data::Uniqid::suniqid;
 
     unless (mkdir $tmpdir) {
-        return (undef,undef);
+        return (undef, undef);
     }
 
     my $tmpfile = "$tmpdir/" . Data::Uniqid::suniqid;
 
-    open(my $out, '>:raw' , $tmpfile);
+    open(my $out, '>:raw', $tmpfile);
 
     my $io = $file->fh;
 
-    while (! $io->eof) {
+    while (!$io->eof) {
         my $buffer;
         my $len = $io->read($buffer, $self->buffer_size);
         syswrite($out, $buffer, $len);
     }
 
-    return ($tmpdir,$tmpfile);
+    return ($tmpdir, $tmpfile);
 }
-
 
 1;
 

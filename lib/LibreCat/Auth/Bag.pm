@@ -8,19 +8,20 @@ use namespace::clean;
 
 with 'LibreCat::Auth';
 
-has store => (is => 'ro');
-has bag => (is => 'ro');
-has username_attr => (is => 'ro', default => sub { 'username' });
-has password_attr => (is => 'ro', default => sub { 'password' });
+has store         => (is => 'ro');
+has bag           => (is => 'ro');
+has username_attr => (is => 'ro', default => sub {'username'});
+has password_attr => (is => 'ro', default => sub {'password'});
 
 sub _authenticate {
     my ($self, $params) = @_;
     my $username = $params->{username} // return 0;
     my $password = $params->{password} // return 0;
-    my $bag = Catmandu->store($self->store)->bag($self->bag);
+    my $bag      = Catmandu->store($self->store)->bag($self->bag);
     my $user = $bag->detect($self->username_attr => $username) // return 0;
-    if (exists $user->{$self->password_attr} &&
-            passwdcmp($password, $user->{$self->password_attr})) {
+    if (exists $user->{$self->password_attr}
+        && passwdcmp($password, $user->{$self->password_attr}))
+    {
         return 1;
     }
     0;

@@ -13,9 +13,9 @@ use parent qw(LibreCat::Cmd);
 sub command_opt_spec {
     my ($class) = @_;
     (
-        [ "pid-dir=s", "",     { default => $class->pid_dir } ],
-        [ "workers=i", "",     { default => 1 } ],
-        [ "supervise", "" ],
+        ["pid-dir=s", "", {default => $class->pid_dir}],
+        ["workers=i", "", {default => 1}],
+        ["supervise", ""],
     );
 }
 
@@ -50,23 +50,27 @@ sub command {
     my $daemon_name = $self->daemon_name($opts, $args);
 
     if ($opts->supervise) {
-        $supervisor = $manager->supervisor(Proc::Launcher->new(
-            daemon_name  => $daemon_name.'.supervisor',
-            pid_dir      => $opts->pid_dir,
-            start_method => sub {
-                Proc::Launcher::Supervisor->new(manager => $manager)->monitor;
-            },
-        ));
+        $supervisor = $manager->supervisor(
+            Proc::Launcher->new(
+                daemon_name  => $daemon_name . '.supervisor',
+                pid_dir      => $opts->pid_dir,
+                start_method => sub {
+                    Proc::Launcher::Supervisor->new(manager => $manager)
+                        ->monitor;
+                },
+            )
+        );
     }
 
     if ($workers > 1) {
         for (my $i = 1; $i <= $workers; $i++) {
             $manager->register(
-                daemon_name  => $daemon_name.'.'.$i,
+                daemon_name  => $daemon_name . '.' . $i,
                 start_method => $self->daemon($opts, $args),
             );
         }
-    } else {
+    }
+    else {
         $manager->register(
             daemon_name  => $daemon_name,
             start_method => $self->daemon($opts, $args),
@@ -88,11 +92,13 @@ sub command {
         if ($supervisor) {
             $supervisor->stop;
             while ($supervisor->is_running) {
+
                 # kill zombies
             }
         }
         $manager->stop;
         while ($manager->is_running) {
+
             # kill zombies
         }
     };
@@ -114,7 +120,7 @@ sub command {
 
 sub daemon {
     sub {
-        while (1) { sleep 1 }
+        while (1) {sleep 1}
     };
 }
 
@@ -123,10 +129,14 @@ sub daemon_status {
     my @daemons = $manager->daemons;
     unshift @daemons, $supervisor if $supervisor;
     Catmandu->export_to_string(
-        [map { +{
-            daemon => $_->daemon_name,
-            pid    => $_->is_running ? $_->pid : "",
-        } } @daemons],
+        [
+            map {
+                +{
+                    daemon => $_->daemon_name,
+                    pid => $_->is_running ? $_->pid : "",
+                    }
+            } @daemons
+        ],
         'Table',
         fields => 'daemon,pid',
     );
@@ -135,7 +145,7 @@ sub daemon_status {
 sub daemon_name {
     my ($self, $opts, $args) = @_;
     my $class = ref $self;
-    my $name = lc $class;
+    my $name  = lc $class;
     $name =~ s/:+/-/g;
     $name;
 }

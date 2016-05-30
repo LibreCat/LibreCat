@@ -8,15 +8,15 @@ use namespace::clean;
 
 with 'LibreCat::FileStore';
 
-has root => (is => 'ro' , required => '1') ;
+has root => (is => 'ro', required => '1');
 
 sub list {
-    my ($self,$callback) = @_;
+    my ($self, $callback) = @_;
     my $root = $self->root;
-        
+
     unless (-d $root) {
         $self->log->error("no root $root found");
-        return sub { undef };
+        return sub {undef};
     }
 
     $self->log->debug("creating generator for root: $root");
@@ -24,9 +24,9 @@ sub list {
         state $io;
 
         unless (defined($io)) {
-            open($io,"find $root -mindepth 3 -maxdepth 4 -type d|");
+            open($io, "find $root -mindepth 3 -maxdepth 4 -type d|");
         }
-        
+
         my $line = <$io>;
 
         unless (defined($line)) {
@@ -42,23 +42,23 @@ sub list {
 }
 
 sub exists {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
 
     croak "Need a key" unless defined $key;
 
     $self->log->debug("Checking exists $key");
-    
-    my $path = path_string($self->root,$key);
+
+    my $path = path_string($self->root, $key);
 
     -d $path;
 }
 
 sub add {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
 
     croak "Need a key" unless defined $key;
 
-    my $path = path_string($self->root,$key);
+    my $path = path_string($self->root, $key);
 
     unless ($path) {
         $self->log->error("Failed to create path from $key");
@@ -67,15 +67,15 @@ sub add {
 
     $self->log->debug("Generating path $path for key $key");
 
-    LibreCat::FileStore::Container::Simple->create_container($path,$key);
+    LibreCat::FileStore::Container::Simple->create_container($path, $key);
 }
 
 sub get {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
 
     croak "Need a key" unless defined $key;
 
-    my $path = path_string($self->root,$key);
+    my $path = path_string($self->root, $key);
 
     unless ($path) {
         $self->log->error("Failed to create path from $key");
@@ -88,11 +88,11 @@ sub get {
 }
 
 sub delete {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
 
     croak "Need a key" unless defined $key;
 
-    my $path = path_string($self->root,$key);
+    my $path = path_string($self->root, $key);
 
     unless ($path) {
         $self->log->error("Failed to create path from $key");
@@ -105,14 +105,14 @@ sub delete {
 }
 
 sub path_string {
-    my ($root,$key) = @_;
+    my ($root, $key) = @_;
 
     unless ($key =~ /^\d{1,9}$/) {
         return undef;
     }
 
     my $long_key = sprintf "%-9.9d", $key;
-    my $path = $root . "/" . join("/",unpack('(A3)*',$long_key));
+    my $path = $root . "/" . join("/", unpack('(A3)*', $long_key));
 
     $path;
 }

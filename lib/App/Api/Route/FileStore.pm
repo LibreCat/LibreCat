@@ -21,35 +21,35 @@ Dancer::Plugin::Auth::Tiny->extend(
             if ($role eq 'api_access' && ip_match(request->address)) {
                 goto $coderef;
             }
-            elsif ( session->{role} && $role eq session->{role} ) {
+            elsif (session->{role} && $role eq session->{role}) {
                 goto $coderef;
             }
             else {
-                return do_error('NOT_ALLOWED','access denied',404);
+                return do_error('NOT_ALLOWED', 'access denied', 404);
             }
-        }
+            }
     }
 );
 
 set serializer => 'JSON';
 
 sub ip_match {
-    my $ip = shift;
+    my $ip        = shift;
     my $access    = h->config->{filestore}->{api}->{access} // {};
     my $ip_ranges = $access->{ip_ranges} // [];
 
     for my $range (@$ip_ranges) {
         $range =~ s{\*}{\\w+}g;
         return 1 if ($ip =~ /^$range$/);
-    } 
+    }
 
     return 0;
 }
 
 sub do_error {
-    my ($code,$msg,$http_code) = @_;
+    my ($code, $msg, $http_code) = @_;
     $http_code = 500 unless defined $http_code;
-    send_error({ code => , $code , error => $msg },$http_code);
+    send_error({code =>, $code, error => $msg}, $http_code);
 }
 
 prefix '/librecat/api' => sub {
@@ -69,35 +69,38 @@ E.g.
 
 =cut
 
-	get '/filestore' => needs role => 'api_access' => sub {
+    get '/filestore' => needs role => 'api_access' => sub {
         my $gen = h->get_file_store()->list;
         send_file(
-                    \"dummy", # anything, as long as it's a scalar-ref
-                    streaming => 1, # enable streaming
-                    callbacks => {
-                        override => sub {
-                            my ( $respond, $response ) = @_;
-                            my $http_status_code = 200 ;
-                            # Tech.note: This is a hash of HTTP header/values, but the
-                            #            function below requires an even-numbered array-ref.
-                            my @http_headers = ( 
-                                'Content-Type' => 'text/plain',
-                                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
-                                'Pragma' => 'no-cache' 
-                            );
+            \"dummy",    # anything, as long as it's a scalar-ref
+            streaming => 1,    # enable streaming
+            callbacks => {
+                override => sub {
+                    my ($respond, $response) = @_;
+                    my $http_status_code = 200;
 
-                            # Send the HTTP headers
-                            # (back to either the user or the upstream HTTP web-server front-end)
-                            my $writer = $respond->( [ $http_status_code, \@http_headers ] );
-                        
-                            while (my $key = $gen->()) {
-                                $writer->write("$key\n");
-                            }
-                              
-                            $writer->close();
-                        },
-                    },
-                );
+              # Tech.note: This is a hash of HTTP header/values, but the
+              #            function below requires an even-numbered array-ref.
+                    my @http_headers = (
+                        'Content-Type' => 'text/plain',
+                        'Cache-Control' =>
+                            'no-store, no-cache, must-revalidate, max-age=0',
+                        'Pragma' => 'no-cache'
+                    );
+
+         # Send the HTTP headers
+         # (back to either the user or the upstream HTTP web-server front-end)
+                    my $writer
+                        = $respond->([$http_status_code, \@http_headers]);
+
+                    while (my $key = $gen->()) {
+                        $writer->write("$key\n");
+                    }
+
+                    $writer->close();
+                },
+            },
+        );
     };
 
 =head2 GET /librecat/api/filestore/:key
@@ -124,16 +127,16 @@ E.g.
 =cut
 
     get '/filestore/:key' => needs role => 'api_access' => sub {
-        my $key = param('key');
+        my $key       = param('key');
         my $container = h->get_file_store()->get($key);
 
         content_type 'application/json';
 
         if (defined $container) {
             my $doc = {
-                key      => $container->key ,
-                created  => $container->created ,
-                modified => $container->modified ,
+                key      => $container->key,
+                created  => $container->created,
+                modified => $container->modified,
             };
 
             my @files = $container->list;
@@ -144,18 +147,19 @@ E.g.
                 my $md5      = $file->md5;
                 my $modified = $file->modified;
 
-                push @{$doc->{files}} , {
-                    key  => $key ,
-                    size => $size ,
-                    md5  => $md5 ,
-                    modified => $modified 
-                };
+                push @{$doc->{files}},
+                    {
+                    key      => $key,
+                    size     => $size,
+                    md5      => $md5,
+                    modified => $modified
+                    };
             }
 
             return $doc;
         }
         else {
-            return do_error('NOT_FOUND','no such container',404);
+            return do_error('NOT_FOUND', 'no such container', 404);
         }
     };
 
@@ -169,44 +173,50 @@ E.g.
     <... binary data ...>
 
 =cut
+
     get '/filestore/:key/:filename' => needs role => 'api_access' => sub {
-        my $key       = param('key');
-        my $filename  = param('filename');
+        my $key      = param('key');
+        my $filename = param('filename');
 
         my $container = h->get_file_store()->get($key);
 
         if (defined $container) {
             if ($container->exists($filename)) {
                 send_file(
-                    \"dummy", # anything, as long as it's a scalar-ref
-                    streaming => 1, # enable streaming
+                    \"dummy",    # anything, as long as it's a scalar-ref
+                    streaming => 1,    # enable streaming
                     callbacks => {
                         override => sub {
-                            my ( $respond, $response ) = @_;
-                            my $file = $container->get($filename);
+                            my ($respond, $response) = @_;
+                            my $file         = $container->get($filename);
                             my $content_type = $file->content_type;
 
-                            my $http_status_code = 200 ;
-                            # Tech.note: This is a hash of HTTP header/values, but the
-                            #            function below requires an even-numbered array-ref.
-                            my @http_headers = ( 
+                            my $http_status_code = 200;
+
+              # Tech.note: This is a hash of HTTP header/values, but the
+              #            function below requires an even-numbered array-ref.
+                            my @http_headers = (
                                 'Content-Type' => $content_type,
-                                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
-                                'Pragma' => 'no-cache' 
+                                'Cache-Control' =>
+                                    'no-store, no-cache, must-revalidate, max-age=0',
+                                'Pragma' => 'no-cache'
                             );
 
-                            # Send the HTTP headers
-                            # (back to either the user or the upstream HTTP web-server front-end)
-                            my $writer = $respond->( [ $http_status_code, \@http_headers ] );
-                            my $io   = $file->fh;
-                            my $buffer_size = h->config->{filestore}->{api}->{buffer_size} // 1024;
-                             
-                            while (! $io->eof) {
+         # Send the HTTP headers
+         # (back to either the user or the upstream HTTP web-server front-end)
+                            my $writer = $respond->(
+                                [$http_status_code, \@http_headers]);
+                            my $io = $file->fh;
+                            my $buffer_size
+                                = h->config->{filestore}->{api}->{buffer_size}
+                                // 1024;
+
+                            while (!$io->eof) {
                                 my $buffer;
-                                $io->read($buffer,$buffer_size);
+                                $io->read($buffer, $buffer_size);
                                 $writer->write($buffer);
                             }
-                              
+
                             $writer->close();
                             $io->close();
                         },
@@ -214,11 +224,11 @@ E.g.
                 );
             }
             else {
-                return do_error('NOT_FOUND','no such file',404);
+                return do_error('NOT_FOUND', 'no such file', 404);
             }
         }
         else {
-            return do_error('NOT_FOUND','no such container',404);
+            return do_error('NOT_FOUND', 'no such container', 404);
         }
     };
 
@@ -234,18 +244,18 @@ E.g.
 =cut
 
     del '/filestore/:key' => needs role => 'api_access' => sub {
-        my $key       = param('key');
+        my $key = param('key');
 
         content_type 'application/json';
-        
+
         my $container = h->get_file_store()->get($key);
 
         if (defined $container) {
             h->get_file_store()->delete($key);
-            return { ok => 1 };
+            return {ok => 1};
         }
         else {
-            return do_error('NOT_FOUND','no such container',404);
+            return do_error('NOT_FOUND', 'no such container', 404);
         }
     };
 
@@ -259,30 +269,31 @@ E.g.
     { "ok": "1"}
 
 =cut
+
     del '/filestore/:key/:filename' => needs role => 'api_access' => sub {
-        my $key       = param('key');
-        my $filename  = param('filename');
+        my $key      = param('key');
+        my $filename = param('filename');
 
         content_type 'application/json';
 
         my $container = h->get_file_store()->get($key);
 
         if (defined $container) {
-            
+
             my $file = $container->get($filename);
 
             if (defined $file) {
                 $container->delete($filename);
                 $container->commit;
 
-                return { ok => 1 };
+                return {ok => 1};
             }
             else {
-                return do_error('NOT_FOUND','no such file',404);
+                return do_error('NOT_FOUND', 'no such file', 404);
             }
         }
         else {
-            return do_error('NOT_FOUND','no such container',404);
+            return do_error('NOT_FOUND', 'no such container', 404);
         }
     };
 
@@ -298,7 +309,7 @@ E.g.
 =cut
 
     post '/filestore/:key' => needs role => 'api_access' => sub {
-        my $key       = param('key');
+        my $key = param('key');
 
         content_type 'application/json';
 
@@ -309,20 +320,22 @@ E.g.
         }
 
         if ($container) {
-            my $file    = request->upload('file');
+            my $file = request->upload('file');
 
             unless ($file) {
-                return do_error('ILLEGAL_INPUT','need a file',400);
+                return do_error('ILLEGAL_INPUT', 'need a file', 400);
             }
 
-            $container->add($file->{filename}, IO::File->new($file->{tempname}));
+            $container->add($file->{filename},
+                IO::File->new($file->{tempname}));
 
             $container->commit;
 
-            return { ok => 1 };
+            return {ok => 1};
         }
         else {
-            return do_error('SERVER_ERROR','failed to update container',500);
+            return do_error('SERVER_ERROR', 'failed to update container',
+                500);
         }
     };
 
@@ -336,49 +349,56 @@ E.g.
     <... binary data ...>
 
 =cut
-    get '/access/:key/:filename/thumbnail' => needs role => 'api_access' => sub {
-        my $key       = param('key');
 
-        # For now stay backwards compatible and keep one thumbnail per container...
-        my $filename  = 'thumbnail.png';
+    get '/access/:key/:filename/thumbnail' => needs role => 'api_access' =>
+        sub {
+        my $key = param('key');
+
+   # For now stay backwards compatible and keep one thumbnail per container...
+        my $filename = 'thumbnail.png';
 
         my $container = h->get_access_store()->get($key);
 
         if (defined $container) {
-            
+
             my $file = $container->get($filename);
 
             if (defined $file) {
                 send_file(
-                    \"dummy", # anything, as long as it's a scalar-ref
-                    streaming => 1, # enable streaming
+                    \"dummy",    # anything, as long as it's a scalar-ref
+                    streaming => 1,    # enable streaming
                     callbacks => {
                         override => sub {
-                            my ( $respond, $response ) = @_;
-                            my $file = $container->get($filename);
+                            my ($respond, $response) = @_;
+                            my $file         = $container->get($filename);
                             my $content_type = $file->content_type;
 
-                            my $http_status_code = 200 ;
-                            # Tech.note: This is a hash of HTTP header/values, but the
-                            #            function below requires an even-numbered array-ref.
-                            my @http_headers = ( 
+                            my $http_status_code = 200;
+
+              # Tech.note: This is a hash of HTTP header/values, but the
+              #            function below requires an even-numbered array-ref.
+                            my @http_headers = (
                                 'Content-Type' => $content_type,
-                                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
-                                'Pragma' => 'no-cache' 
+                                'Cache-Control' =>
+                                    'no-store, no-cache, must-revalidate, max-age=0',
+                                'Pragma' => 'no-cache'
                             );
 
-                            # Send the HTTP headers
-                            # (back to either the user or the upstream HTTP web-server front-end)
-                            my $writer = $respond->( [ $http_status_code, \@http_headers ] );
-                            my $io   = $file->fh;
-                            my $buffer_size = h->config->{filestore}->{api}->{buffer_size} // 1024;
-                             
-                            while (! $io->eof) {
+         # Send the HTTP headers
+         # (back to either the user or the upstream HTTP web-server front-end)
+                            my $writer = $respond->(
+                                [$http_status_code, \@http_headers]);
+                            my $io = $file->fh;
+                            my $buffer_size
+                                = h->config->{filestore}->{api}->{buffer_size}
+                                // 1024;
+
+                            while (!$io->eof) {
                                 my $buffer;
-                                $io->read($buffer,$buffer_size);
+                                $io->read($buffer, $buffer_size);
                                 $writer->write($buffer);
                             }
-                              
+
                             $writer->close();
                             $io->close();
                         },
@@ -386,13 +406,17 @@ E.g.
                 );
             }
             else {
-                return Dancer::send_file('public/images/thumbnail_dummy.png', system_path => 1, filename => 'thumbnail_dummy.png');
+                return Dancer::send_file(
+                    'public/images/thumbnail_dummy.png',
+                    system_path => 1,
+                    filename    => 'thumbnail_dummy.png'
+                );
             }
         }
         else {
-            return do_error('NOT_FOUND','no thumbnails for this key',404);
+            return do_error('NOT_FOUND', 'no thumbnails for this key', 404);
         }
-    };
+        };
 
 =head2 POST /librecat/api/access/:key/:filename/thumbnail
 
@@ -403,23 +427,24 @@ E.g.
     $ curl -H "Content-Type: application/json" -X POST "http://localhost:5001/librecat/api/access/000000008/rprogramming.pdf/thumbnail"
 
 =cut
-    post '/access/:key/:filename/thumbnail' => needs role => 'api_access' => sub {
-        my $key       = param('key');
-        my $filename  = param('filename');
 
-        my $thumbnailer_package = h->config->{accessstore_thumbnailer}->{package};
-        my $thumbnailer_options = h->config->{accessstore_thumbnailer}->{options};
+    post '/access/:key/:filename/thumbnail' => needs role => 'api_access' =>
+        sub {
+        my $key      = param('key');
+        my $filename = param('filename');
 
-        my $pkg = Catmandu::Util::require_package($thumbnailer_package);
+        my $thumbnailer_package
+            = h->config->{accessstore_thumbnailer}->{package};
+        my $thumbnailer_options
+            = h->config->{accessstore_thumbnailer}->{options};
+
+        my $pkg    = Catmandu::Util::require_package($thumbnailer_package);
         my $worker = $pkg->new(%$thumbnailer_options);
 
-        my $response = $worker->work({
-            key      => $key,
-            filename => $filename,
-        });
+        my $response = $worker->work({key => $key, filename => $filename,});
 
         $response;
-    };
+        };
 
 =head2 DEL /librecat/api/access/:key/:filename/thumbnail
 
@@ -431,34 +456,38 @@ E.g.
     { "ok": "1"}
 
 =cut
-    del '/access/:key/:filename/thumbnail' => needs role => 'api_access' => sub {
-        my $key       = param('key');
-        
-        # For now stay backwards compatible and keep one thumbnail per container...
-        my $filename  = 'thumbnail.png';
+
+    del '/access/:key/:filename/thumbnail' => needs role => 'api_access' =>
+        sub {
+        my $key = param('key');
+
+   # For now stay backwards compatible and keep one thumbnail per container...
+        my $filename = 'thumbnail.png';
 
         content_type 'application/json';
 
         my $container = h->get_access_store()->get($key);
 
         if (defined $container) {
-            
+
             my $file = $container->get($filename);
 
             if (defined $file) {
                 $container->delete($filename);
                 $container->commit;
 
-                return { ok => 1 };
+                return {ok => 1};
             }
             else {
-                return do_error('NOT_FOUND','no thumbail for this file',404);
+                return do_error('NOT_FOUND', 'no thumbail for this file',
+                    404);
             }
         }
         else {
-            return do_error('NOT_FOUND','no thumbnails in this countainer',404);
+            return do_error('NOT_FOUND', 'no thumbnails in this countainer',
+                404);
         }
-    };
+        };
 };
 
 1;

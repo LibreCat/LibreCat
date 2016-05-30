@@ -6,11 +6,7 @@ use parent qw(LibreCat::Cmd);
 
 sub command_opt_spec {
     my ($class) = @_;
-    (
-        ['background|bg', ""],
-        ['bag=s', "", {required => 1}],
-        ['id=s', ""],
-    );
+    (['background|bg', ""], ['bag=s', "", {required => 1}], ['id=s', ""],);
 }
 
 sub command {
@@ -27,7 +23,8 @@ sub command {
 
     if ($opts->background) {
         say $job_id;
-    } else {
+    }
+    else {
         say "job $job_id";
 
         my $job;
@@ -36,13 +33,15 @@ sub command {
             $job = $queue->job_status($job_id);
             if ($job->queued) {
                 say 'waiting for worker';
-            } elsif ($job->running) {
+            }
+            elsif ($job->running) {
                 my ($n, $total) = $job->progress;
                 if ($n > $prev_n) {
                     say "indexing $n/$total";
                     $prev_n = $n;
                 }
-            } else {
+            }
+            else {
                 say 'done';
                 return;
             }

@@ -13,17 +13,17 @@ use Dancer::Plugin::Ajax;
 use HTML::Entities;
 use App::Helper;
 
-
 =head2 AJAX /metrics/:id
 
 Web of Science 'Times Cited' information
 
 =cut
+
 ajax '/metrics/:id' => sub {
     my $metrics = h->get_metrics('wos', params->{id});
     return to_json {
         times_cited => $metrics->{times_cited},
-        citing_url => $metrics->{citing_url},
+        citing_url  => $metrics->{citing_url},
     };
 };
 
@@ -38,14 +38,13 @@ ajax '/ris/:id' => sub {
     my $pub = h->publication->get(params->{id});
     my $ris = h->export_publication($pub, 'ris', 1);
     utf8::decode($ris);
-    return to_json {
-        ris => encode_entities($ris),
-    };
+    return to_json {ris => encode_entities($ris),};
 };
 
 =head2 AJAX /search_researcher
 
 =cut
+
 ajax '/search_researcher' => sub {
     my $q;
     push @$q, params->{'term'};
@@ -55,6 +54,7 @@ ajax '/search_researcher' => sub {
 
 =head2 AJAX /get_person
 =cut
+
 ajax '/authority_user/:id' => sub {
     my $person = h->get_person(params->{id}) || {error => "No user found."};
     to_json $person;
@@ -69,10 +69,11 @@ ajax '/num_of_publ/:id' => sub {
 =head2 AJAX /get_alias/:id/:alias
 
 =cut
+
 ajax '/get_alias/:id/:alias' => sub {
     my $term = params->{'alias'} || "";
-    my $id = params->{'id'};
-    my $hits = h->search_researcher( {q => ["alias=$term", "id<>$id"]});
+    my $id   = params->{'id'};
+    my $hits = h->search_researcher({q => ["alias=$term", "id<>$id"]});
 
     return to_json {ok => $hits->{total} ? 0 : 1};
 };
@@ -80,6 +81,7 @@ ajax '/get_alias/:id/:alias' => sub {
 =head2 AJAX /get_project
 
 =cut
+
 ajax '/get_project' => sub {
     my $q;
     @$q = map {
@@ -89,11 +91,10 @@ ajax '/get_project' => sub {
 
     my $hits = h->search_project({q => $q, limit => 100});
 
-    if($hits->{total}){
+    if ($hits->{total}) {
         my $map;
-        @$map = map {
-            { id => $_->{_id}, label => $_->{name} };
-        } @{$hits->{hits}};
+        @$map
+            = map {{id => $_->{_id}, label => $_->{name}};} @{$hits->{hits}};
         return to_json $map;
     }
     else {
@@ -105,6 +106,7 @@ ajax '/get_project' => sub {
 =head2 AJAX /get_department
 
 =cut
+
 ajax '/get_department' => sub {
     my $q;
     @$q = map {
@@ -116,11 +118,10 @@ ajax '/get_department' => sub {
 
     my $hits = h->search_department({q => $q, limit => 100});
 
-    if($hits->{total}){
+    if ($hits->{total}) {
         my $map;
-        @$map = map {
-            { id => $_->{_id}, label => $_->{display} };
-        } @{$hits->{hits}};
+        @$map = map {{id => $_->{_id}, label => $_->{display}};}
+            @{$hits->{hits}};
         return to_json $map;
     }
     else {
@@ -131,6 +132,7 @@ ajax '/get_department' => sub {
 =head2 AJAX /get_research_group
 
 =cut
+
 ajax '/get_research_group' => sub {
     my $q;
     @$q = map {
@@ -140,11 +142,10 @@ ajax '/get_research_group' => sub {
 
     my $hits = h->search_research_group({q => $q, limit => 100});
 
-    if($hits->{total}){
+    if ($hits->{total}) {
         my $map;
-        @$map = map {
-            { id => $_->{_id}, label => $_->{name} };
-        } @{$hits->{hits}};
+        @$map
+            = map {{id => $_->{_id}, label => $_->{name}};} @{$hits->{hits}};
         return to_json $map;
     }
     else {

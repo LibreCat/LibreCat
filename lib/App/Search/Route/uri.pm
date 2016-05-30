@@ -14,9 +14,9 @@ get '/pln/:year' => sub {
     my $y = param 'year';
     forward '/publication',
         {
-            q => "fulltext exact 1 AND yearlastuploaded=$y",
-            ftyp => "pln",
-            limit => 1000,
+        q     => "fulltext exact 1 AND yearlastuploaded=$y",
+        ftyp  => "pln",
+        limit => 1000,
         };
 };
 
@@ -24,9 +24,9 @@ get '/pln_data/:year' => sub {
     my $y = param 'year';
     forward '/data',
         {
-            q => "fulltext exact 1 AND yearlastuploaded=$y",
-            ftyp => "pln",
-            limit => 1000,
+        q     => "fulltext exact 1 AND yearlastuploaded=$y",
+        ftyp  => "pln",
+        limit => 1000,
         };
 };
 

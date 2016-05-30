@@ -12,7 +12,7 @@ use namespace::clean;
 
 with 'LibreCat::FileStore::Container';
 
-has _bagit => (is => 'ro');
+has _bagit    => (is => 'ro');
 has _mimeType => (is => 'lazy');
 
 sub _build__mimeType {
@@ -22,29 +22,29 @@ sub _build__mimeType {
 sub list {
     my ($self) = @_;
     my $bagit  = $self->_bagit;
-    my $path = $bagit->path;
+    my $path   = $bagit->path;
 
     my @result = ();
 
     for my $file ($bagit->list_files) {
         my $unpacked_key = $self->unpack_key($file->filename);
-        push @result , $self->get($unpacked_key);
+        push @result, $self->get($unpacked_key);
     }
 
     return @result;
 }
 
 sub exists {
-    my ($self,$key) = @_;
-    my $bagit  = $self->_bagit;
+    my ($self, $key) = @_;
+    my $bagit = $self->_bagit;
 
     defined $bagit->get_file($key);
 }
 
 sub get {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
 
-    my $bagit  = $self->_bagit;
+    my $bagit = $self->_bagit;
 
     my $packed_key = $self->pack_key($key);
 
@@ -52,38 +52,38 @@ sub get {
 
     return undef unless $file;
 
-    my $data     = $file->fh;
-    my $md5      = $bagit->get_checksum($key);
-    my $stat     = [$file->fh->stat];
+    my $data = $file->fh;
+    my $md5  = $bagit->get_checksum($key);
+    my $stat = [$file->fh->stat];
 
     my $size     = $stat->[7];
     my $modified = $stat->[9];
-    my $created  = $stat->[10]; # no real creation time exists on Unix
+    my $created  = $stat->[10];    # no real creation time exists on Unix
     my $content_type = $self->_mimeType->content_type($key);
 
     LibreCat::FileStore::File::BagIt->new(
-            key      => $key ,
-            size     => $size ,
-            md5      => $md5 ,
-            content_type => $content_type ,
-            created  => $created ,
-            modified => $modified ,
-            data     => $data 
+        key          => $key,
+        size         => $size,
+        md5          => $md5,
+        content_type => $content_type,
+        created      => $created,
+        modified     => $modified,
+        data         => $data
     );
 }
 
 sub add {
-    my ($self,$key,$data) = @_;
-    my $bagit  = $self->_bagit; 
+    my ($self, $key, $data) = @_;
+    my $bagit = $self->_bagit;
 
     my $packed_key = $self->pack_key($key);
 
-    $bagit->add_file($packed_key,$data);
+    $bagit->add_file($packed_key, $data);
 }
 
 sub delete {
-    my ($self,$key) = @_;
-    my $bagit  = $self->_bagit; 
+    my ($self, $key) = @_;
+    my $bagit = $self->_bagit;
 
     my $packed_key = $self->pack_key($key);
 
@@ -92,7 +92,7 @@ sub delete {
 
 sub commit {
     my ($self) = @_;
-    my $bagit  = $self->_bagit; 
+    my $bagit  = $self->_bagit;
     my $path   = $bagit->path;
 
     $bagit->write($path, overwrite => 1);
@@ -101,7 +101,7 @@ sub commit {
 }
 
 sub read_container {
-    my ($class,$path) = @_;
+    my ($class, $path) = @_;
     croak "Need a path" unless $path;
 
     my $bagit = Catmandu::BagIt->read($path);
@@ -112,7 +112,7 @@ sub read_container {
 
     return undef unless $key;
 
-    my $inst = $class->new(key  => $key);
+    my $inst = $class->new(key => $key);
 
     $inst->{created}  = $bagit->get_info('Unix-Creation-Time');
     $inst->{modified} = $bagit->get_info('Unix-Modification-Time');
@@ -122,23 +122,23 @@ sub read_container {
 }
 
 sub create_container {
-    my ($class,$path,$key) = @_;
+    my ($class, $path, $key) = @_;
 
     croak "Need a path and a key" unless $path && $key;
 
     my $bagit = Catmandu::BagIt->new();
 
-    $bagit->add_info('Archive-Id' => $key);
-    $bagit->add_info('Unix-Creation-Time' => time);
+    $bagit->add_info('Archive-Id'             => $key);
+    $bagit->add_info('Unix-Creation-Time'     => time);
     $bagit->add_info('Unix-Modification-Time' => time);
 
-    $bagit->write($path , overwrite => 1);
+    $bagit->write($path, overwrite => 1);
 
     $class->read_container($path);
 }
 
 sub delete_container {
-    my ($class,$path) = @_;
+    my ($class, $path) = @_;
 
     croak "Need a path" unless $path;
 

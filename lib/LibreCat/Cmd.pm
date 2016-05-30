@@ -10,8 +10,7 @@ sub opt_spec {
     my ($class, $cli) = @_;
     (
         ['help|h|?', "print this usage screen"],
-        $cli->global_opt_spec,
-        $class->command_opt_spec($cli),
+        $cli->global_opt_spec, $class->command_opt_spec($cli),
     );
 }
 
@@ -31,8 +30,8 @@ sub execute {
 }
 
 # these should be implemented by the LibreCat::Cmd's
-sub command_opt_spec {}
-sub command {}
+sub command_opt_spec { }
+sub command          { }
 
 1;
 

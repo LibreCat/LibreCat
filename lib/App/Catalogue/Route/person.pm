@@ -15,15 +15,15 @@ use Dancer::Plugin::Auth::Tiny;
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
         my ($role, $coderef) = @_;
-          return sub {
-            if ( session->{role} && $role eq session->{role} ) {
+        return sub {
+            if (session->{role} && $role eq session->{role}) {
                 goto $coderef;
             }
             else {
                 redirect '/access_denied';
             }
-          }
-        }
+            }
+    }
 );
 
 =head1 PREFIX /librecat/person
@@ -31,6 +31,7 @@ Dancer::Plugin::Auth::Tiny->extend(
 All person settings are handled within the prefix '/person'.
 
 =cut
+
 prefix '/librecat/person' => sub {
 
 =head2 GET /preference
@@ -39,6 +40,7 @@ User edits the preferred citation style and sorting
 for his own publication list.
 
 =cut
+
     get '/preference/:delegate_id' => needs role => 'delegate' => sub {
         my $params;
         $params->{delegate_id} = params->{delegate_id};
@@ -46,20 +48,22 @@ for his own publication list.
         $params->{'sort'} = params->{'sort'} if params->{'sort'};
         forward '/librecat/person/preference', $params;
     };
-    
+
     get '/preference' => needs login => sub {
-        my $person = h->get_person( params->{delegate_id} || session('personNumber') );
-        my $sort; my $tmp;
-        if(params->{'sort'}){
-            if(ref params->{'sort'} ne "ARRAY"){
+        my $person
+            = h->get_person(params->{delegate_id} || session('personNumber'));
+        my $sort;
+        my $tmp;
+        if (params->{'sort'}) {
+            if (ref params->{'sort'} ne "ARRAY") {
                 $sort = [params->{sort}];
             }
-            else{
+            else {
                 $sort = params->{sort};
             }
 
-            foreach my $s (@$sort){
-                if($s =~ /(\w{1,})\.(asc|desc)/){
+            foreach my $s (@$sort) {
+                if ($s =~ /(\w{1,})\.(asc|desc)/) {
                     push @{$tmp->{'sort'}}, $s;
                 }
             }
@@ -69,8 +73,10 @@ for his own publication list.
             $person->{'sort'} = undef;
         }
 
-        if(params->{style}){
-            $person->{style} = params->{style} if array_includes(h->config->{citation}->{csl}->{styles},params->{style});
+        if (params->{style}) {
+            $person->{style} = params->{style}
+                if array_includes(h->config->{citation}->{csl}->{styles},
+                params->{style});
         }
         else {
             $person->{style} = undef;
@@ -87,13 +93,14 @@ User adds author identifiers to db (e.g. ORCID). These will
 be displayed on author's profile page.
 
 =cut
+
     post '/author_id' => needs login => sub {
 
-        my $id = params->{_id};
-        my $person = h->get_person( $id ) || {_id => $id};
+        my $id         = params->{_id};
+        my $person     = h->get_person($id) || {_id => $id};
         my @identifier = keys %{h->config->{lists}->{author_id}};
 
-        map { $person->{$_} = params->{$_} ? params->{$_} : "" } @identifier;
+        map {$person->{$_} = params->{$_} ? params->{$_} : ""} @identifier;
         redirect '/librecat' if keys %{$person} > 1;
 
         my $result = h->update_record('researcher', $person);
@@ -109,11 +116,12 @@ User can choose default edit mode for editing publications.
 "expert" -> one long edit form
 
 =cut
+
     post '/edit_mode' => needs login => sub {
 
-        my $person = h->get_person( session('personNumber') );
-        my $mode = params->{edit_mode};
-        if($mode eq "normal" or $mode eq "expert"){
+        my $person = h->get_person(session('personNumber'));
+        my $mode   = params->{edit_mode};
+        if ($mode eq "normal" or $mode eq "expert") {
             $person->{edit_mode} = $mode;
             h->update_record('researcher', $person);
         }
@@ -129,11 +137,12 @@ User can choose default language for the librecat backend
 "de" -> German
 
 =cut
+
     get '/set_language' => needs login => sub {
 
-        my $person = h->get_person( session('personNumber') );
-        my $lang = params->{lang};
-        if($lang eq "en" or $lang eq "de"){
+        my $person = h->get_person(session('personNumber'));
+        my $lang   = params->{lang};
+        if ($lang eq "en" or $lang eq "de") {
             $person->{lang} = $lang;
             h->update_record('researcher', $person);
             session lang => $lang;
@@ -149,16 +158,16 @@ User edits his affiliation. Will be displayed if you opens
 new publication form.
 
 =cut
+
     post '/affiliation' => needs login => sub {
 
-        my $fix = Catmandu::Fix->new(
-          fixes => [ 'compact_array("department")']
-        );
+        my $fix
+            = Catmandu::Fix->new(fixes => ['compact_array("department")']);
 
         my $p = params;
         $p = h->nested_params($p);
         $fix->fix($p);
-        my $person = h->get_person( session('personNumber') );
+        my $person = h->get_person(session('personNumber'));
         $person->{department} = $p->{department};
         h->update_record('researcher', $person);
 

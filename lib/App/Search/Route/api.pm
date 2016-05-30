@@ -19,6 +19,7 @@ use LibreCat::Citation;
 Endpoint of the SRU interface.
 
 =cut
+
 sru_provider '/sru';
 
 =head2 GET/POST /oai
@@ -26,49 +27,58 @@ sru_provider '/sru';
 Endpoint of the OAI interface.
 
 =cut
-oai_provider '/oai',
-    deleted => sub {
-        defined $_[0]->{oai_deleted};
+
+oai_provider '/oai', deleted => sub {
+    defined $_[0]->{oai_deleted};
     },
     set_specs_for => sub {
-        my $pub = $_[0];
+    my $pub = $_[0];
 
-        my $specs = [$pub->{type}, $pub->{dini_type}];
+    my $specs = [$pub->{type}, $pub->{dini_type}];
 
-        push @$specs, "ddc:$_" for @{$pub->{ddc}};
+    push @$specs, "ddc:$_" for @{$pub->{ddc}};
 
-        if ($pub->{ec_funded} && $pub->{ec_funded} eq '1') {
-            if ($pub->{type} eq 'researchData') {
-                push @$specs, "openaire_data";
-            } else {
-                push @$specs, "openaire";
-            }
+    if ($pub->{ec_funded} && $pub->{ec_funded} eq '1') {
+        if ($pub->{type} eq 'researchData') {
+            push @$specs, "openaire_data";
         }
-
-        if ($pub->{file}->[0]->{open_access} && $pub->{file}->[0]->{open_access} eq '1') {
-            push @$specs, "$pub->{type}Ftxt", "driver", "open_access";
+        else {
+            push @$specs, "openaire";
         }
-        $specs;
+    }
+
+    if (   $pub->{file}->[0]->{open_access}
+        && $pub->{file}->[0]->{open_access} eq '1')
+    {
+        push @$specs, "$pub->{type}Ftxt", "driver", "open_access";
+    }
+    $specs;
     };
 
 get '/livecitation' => sub {
     my $params = params;
     my $debug = $params->{debug} ? 1 : 0;
-    unless (($params->{id} and $params->{style}) or $params->{info} or $params->{styles}) {
+    unless (($params->{id} and $params->{style})
+        or $params->{info}
+        or $params->{styles})
+    {
         return "Required parameters are 'id' and 'style'.";
     }
-    if($params->{styles}){
+    if ($params->{styles}) {
         return to_json h->config->{citation}->{csl}->{styles};
     }
 
     my $pub = h->publication->get($params->{id});
 
-    my $response = LibreCat::Citation->new(styles => [$params->{style}], debug => $debug)
-        ->create($pub)->{$params->{style}};
+    my $response = LibreCat::Citation->new(
+        styles => [$params->{style}],
+        debug  => $debug
+    )->create($pub)->{$params->{style}};
 
-    if($debug){
+    if ($debug) {
         return to_dumper $response;
-    } else {
+    }
+    else {
         utf8::decode($response);
         template "websites/livecitation", {citation => $response};
     }

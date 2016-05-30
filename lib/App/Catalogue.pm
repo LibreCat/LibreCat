@@ -21,19 +21,20 @@ The default route after logging in. Will be forwarded
 to default search page for current role.
 
 =cut
+
 get '/librecat' => needs login => sub {
     my $params = params;
 
-    if ( session->{role} eq "super_admin" ) {
+    if (session->{role} eq "super_admin") {
         forward '/librecat/search/admin', $params;
     }
-    elsif ( session->{role} eq "reviewer" ) {
+    elsif (session->{role} eq "reviewer") {
         forward '/librecat/search/reviewer', $params;
     }
-    elsif ( session->{role} eq "data_manager" ) {
+    elsif (session->{role} eq "data_manager") {
         forward '/librecat/search/data_manager', $params;
     }
-    elsif ( session->{role} eq "delegate" ) {
+    elsif (session->{role} eq "delegate") {
         forward '/librecat/search/delegate', $params;
     }
     else {
@@ -46,21 +47,22 @@ get '/librecat' => needs login => sub {
 Let the user change his role.
 
 =cut
+
 get '/librecat/change_role/:role' => needs login => sub {
-    my $user = h->get_person( session->{user} );
+    my $user = h->get_person(session->{user});
 
     # is user allowed to take this role?
 
-    if ( params->{role} eq "delegate" and $user->{delegate} ) {
+    if (params->{role} eq "delegate" and $user->{delegate}) {
         session role => "delegate";
     }
-    elsif ( params->{role} eq "reviewer" and $user->{reviewer} ) {
+    elsif (params->{role} eq "reviewer" and $user->{reviewer}) {
         session role => "reviewer";
     }
-    elsif ( params->{role} eq "data_manager" and $user->{data_manager} ) {
+    elsif (params->{role} eq "data_manager" and $user->{data_manager}) {
         session role => "data_manager";
     }
-    elsif ( params->{role} eq "admin" and $user->{super_admin} ) {
+    elsif (params->{role} eq "admin" and $user->{super_admin}) {
         session role => "super_admin";
     }
     else {

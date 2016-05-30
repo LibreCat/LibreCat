@@ -4,12 +4,12 @@ use Catmandu::Sane;
 use Moo;
 
 sub fix {
-    my ($self, $pub) =@_;
+    my ($self, $pub) = @_;
 
-    if($pub->{abstract}){
+    if ($pub->{abstract}) {
         my $i = 0;
-        foreach my $ab (@{$pub->{abstract}}){
-            if($ab->{lang} and !$ab->{text}){
+        foreach my $ab (@{$pub->{abstract}}) {
+            if ($ab->{lang} and !$ab->{text}) {
                 splice @{$pub->{abstract}}, $i, 1;
             }
             $i++;
