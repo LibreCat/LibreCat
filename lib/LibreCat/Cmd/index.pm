@@ -1,9 +1,8 @@
 package LibreCat::Cmd::index;
 
 use Catmandu::Sane;
-use LibreCat::Queue;
+use LibreCat::JobQueue;
 use parent qw(LibreCat::Cmd);
-use Data::Dumper;
 
 sub command_opt_spec {
     my ($class) = @_;
@@ -17,7 +16,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $queue = LibreCat::Queue->new;
+    my $queue = LibreCat::JobQueue->new;
     if ($opts->id) {
         my $job_id = $queue->add_job('index_record',
             {bag => $opts->bag, id => $opts->bag});
