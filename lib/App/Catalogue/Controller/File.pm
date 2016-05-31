@@ -5,11 +5,56 @@ use Catmandu::Util;
 use App::Helper;
 use Dancer::FileUtils qw/path dirname/;
 use Dancer ':syntax';
+use File::Copy;
+use Carp;
 use Encode qw(decode encode);
 use JSON::MaybeXS qw(decode_json encode_json);
 use Exporter qw/import/;
 
-our @EXPORT = qw/make_thumbnail delete_file update_file handle_file/;
+our @EXPORT = qw/make_thumbnail delete_file update_file handle_file upload_temp_file create_file_metadata/;
+
+sub upload_temp_file {
+    my ($file,$creator) = @_;
+
+    unless ($file) {
+        return {
+            success => 0, 
+            error_message => 'Sorry! The file upload failed.'
+        } 
+    };
+
+    my $now = h->now;
+    my $tempid = $file->{tempname};
+    
+    $tempid =~ s/.*\/([^\/\.]*)\.*.*/$1/g;
+    
+    my $file_data = {
+        file_name          => $file->{filename},
+        file_size          => $file->{size},
+        tempname           => $file->{tempname},
+        tempid             => $tempid,
+        content_type       => $file->{headers}->{"Content-Type"},
+        access_level       => "open_access",
+        open_access        => 1,
+        relation           => "main_file",
+        creator            => $creator,
+        date_updated       => $now,
+        date_created       => $now,
+    };
+
+    my $filedir   = path(h->config->{filestore}->{tmp_dir}, $tempid);
+    mkdir $filedir || croak "Could not create dir $filedir: $!";
+    
+    my $filepath  = path(h->config->{filestore}->{tmp_dir}, $tempid, $file->{filename});
+    copy($file->{tempname}, $filepath);
+
+    unlink $file->{tempname};
+ 
+ debug "upload_temp_file";
+ debug $file_data;
+
+    return $file_data;
+}
 
 sub make_thumbnail {
     my ($key,$filename) = @_;
@@ -42,6 +87,35 @@ sub update_file {
     });
 }
 
+sub create_file_metadata {
+    my ($key,$file_id,%attrib) = @_;
+
+    my $open_access = $attrib{access_level} && $attrib{access_level} eq "open_access" ? 1 : 0;
+
+    my $now = h->now;
+    my $file_data = {
+            file_name      => $attrib{file_name},
+            file_size      => $attrib{file_size},
+            creator        => $attrib{creator},
+            date_created   => $now,
+            date_updated   => $now,
+            access_level   => $attrib{access_level} || "open_access",
+            open_access    => $open_access,
+            content_type   => $attrib{content_type},
+            title          => $attrib{title},
+            description    => $attrib{description},
+            request_a_copy => $attrib{request_a_copy} || 0,
+            relation       => $attrib{relation} || 'main_file',
+          };
+
+    $file_data->{embargo}    = $attrib{embargo}    if exists $attrib{embargo};
+    $file_data->{file_id}    = $file_id            if $file_id;
+    $file_data->{tempid}     = $attrib{tempid}     if exists $attrib{tempid};
+    $file_data->{file_order} = $attrib{file_order} if exists $attrib{file_order};
+
+    return $file_data;
+}
+
 sub delete_file {
     my ($key,$filename) = @_;
 
@@ -62,18 +136,22 @@ sub handle_file {
     my $pub = shift;
     my $key = $pub->{_id};
 
+debug "handle_file";
+debug $pub;
+
     $pub->{file} = [$pub->{file}] if ref $pub->{file} ne "ARRAY";
     $pub->{file_order} = [$pub->{file_order}] if ref $pub->{file_order} ne "ARRAY";
 
     my $previous_pub = h->publication->get($key);
 
-debug "in handle_file";
-
     if(!$previous_pub){
         debug "in no prev pub";
+
         foreach my $fi (@{$pub->{file}}){
             $fi = encode("utf8",$fi);
             $fi = decode_json($fi);
+
+            # Generate a new file_id if not one existed
             $fi->{file_id} = h->new_record('publication') if !$fi->{file_id};
             
             my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{tempid} } 0..$#{$pub->{file_order}};
@@ -99,6 +177,7 @@ debug "in handle_file";
         }
     }
     else{
+        debug "in has prev pub";
         foreach my $fi (@{$pub->{file}}){
             
             if(ref $fi ne "HASH"){

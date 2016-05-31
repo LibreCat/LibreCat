@@ -9,7 +9,7 @@ Route handler for uploading files.
 use Catmandu::Sane;
 use Catmandu qw/export_to_string/;
 use App::Helper;
-use App::Catalogue::Controller::File qw/update_file delete_file/;
+use App::Catalogue::Controller::File qw/update_file delete_file upload_temp_file create_file_metadata/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;
 use Dancer::Plugin::Email;
@@ -25,47 +25,83 @@ use Encode qw(encode_utf8);
 Section, where all uploads are handled.
 
 =cut
+
 prefix '/librecat' => sub {
 
-  # receives file and places it in tmp
-  # copies it to file with real filename (instead of tmp name)
-  # returns json with filename (TODO: or status msg)
+=head2 POST /librecat/upload?file=[FILE_UPLOAD]
+
+Needs a login session.
+
+Upload a File to temporary storage. Returns a JSON document containing
+the upload details on success or a JSON error document on failure:
+
+  # success
+  {
+    'file_name'    => '183589768.pdf',
+    'file_size'    => '1174241',
+    'tempid'       => 'sK_QXY7vmd',
+    'tempname'     => '/tmp/sK_QXY7vmd.pdf',
+    'content_type' => 'application/pdf',
+    'access_level' => 'open_access',
+    'open_access'  => 1,
+    'relation'     => 'main_file',
+    'creator'      => 'einstein',
+    'date_created' => '2016-05-30T11:20:34Z',
+    'date_updated' => '2016-05-30T11:20:34Z',
+  }
+
+  # failure
+  {
+    success        => 0,
+    error_message  => 'Sorry! The file upload failed.'
+  }
+
+=cut
   post '/upload' => needs login =>  sub {
       my $file    = request->upload('file');
-      my $file_data;
+      my $creator = session->{user};
+      return to_json( upload_temp_file($file,$creator) );
+  };
 
-      if($file){
-          my $now = h->now;
-          my $tempid = $file->{tempname};
-          $tempid =~ s/.*\/([^\/\.]*)\.*.*/$1/g;
-          $file_data = {
-            success => 1,
-            file_name => $file->{filename},
-            creator => session->{user},
-            file_size => $file->{size},
-            date_updated => $now,
-            date_created => $now,
-            access_level => "open_access",
-            open_access => 1,
-            content_type => $file->{headers}->{"Content-Type"},
-            relation => "main_file",
-            year_last_uploaded => substr($now,0,4),
-            tempname => $file->{tempname},
-            tempid => $tempid,
-          };
-          my $filedir = path(h->config->{filestore}->{tmp_dir}, $tempid);
-          mkdir $filedir || croak "Could not create dir $filedir: $!";
-          my $filepath = path(h->config->{filestore}->{tmp_dir}, $tempid, $file->{filename});
-          copy($file->{tempname}, $filepath);
+=head2 POST /librecat/upload/update?%PARAMS
 
-          #$file_data->{file_json} = to_json($file_data);
-          my $status = unlink $file->{tempname};
-      }
-      else{
-        $file_data = {success => 0, error_message => 'Sorry! The file upload failed.'}
-      }
+With %params:
 
-      return to_json($file_data);
+ id
+ file_id
+ title
+ access_level
+ request_a_copy
+ embargo
+ description
+ relation
+ file_name
+
+=cut
+  post '/upload/update' => needs login =>  sub {
+      my $key           = params->{id};
+      my $file_id       = params->{file_id};
+
+      return to_json( 
+          create_file_metadata(
+              $key,
+              $file_id,
+              file_name      => params->{file_name},
+              access_level   => params->{access_level},
+              title          => params->{title},
+              description    => params->{description},
+              request_a_copy => params->{request_a_copy},
+              relation       => params->{relation},
+              embargo        => params->{embargo}, 
+              tempid         => params->{tempid},
+          ) 
+      );
+  };
+
+  post '/upload/delete' => needs login => sub {
+      my $pub_id = params->{id};
+      my $file_name = params->{file_name};
+      delete_file($pub_id, $file_name);
   };
 
   post '/upload/qae/submit' => needs login => sub {
@@ -132,61 +168,6 @@ prefix '/librecat' => sub {
     redirect request->{referer};
   };
 
-  post '/upload/update' => needs login =>  sub {
-      my $file          = request->upload('file');
-      my $old_file_name = params->{old_file_name} || params->{file_name};
-      my $id            = params->{id};
-      my $file_id       = params->{file_id};
-      my $tempid        = params->{tempid};
-      my $success       = 1;
-
-      if ($file) {
-          my $filepath = path(h->config->{filestore}->{tmp_dir}, $file->{filename});
-          copy($file->{tempname}, $filepath);
-          my $status = unlink $file->{tempname};
-      }
-      my $open_access = params->{access_level} && params->{access_level} eq "open_access" ? 1 : 0;
-
-      # then return data of updated file
-      my $file_data;
-      if ($success) {
-          my $now = h->now;
-          $file_data = {
-            success => 1,
-            file_name => $file ? $file->{filename} : $old_file_name,
-            creator => params->{creator} || session->{user},
-            file_size => $file ? $file->{size} : '',
-            date_updated => $now,
-            date_created => $now,
-            access_level => params->{access_level} || "open_access",
-            open_access => $open_access,
-            content_type => $file ? $file->{headers}->{"Content-Type"} : '',
-            title => params->{title} || '',
-            description => params->{description} || '',
-            request_a_copy => params->{request_a_copy} ||= 0,
-            relation => params->{relation} || 'main_file',
-            old_file_name => $old_file_name,
-          };
-          $file_data->{embargo} = params->{embargo} if params->{embargo};
-          $file_data->{file_id} = $file_id if $file_id;
-          $file_data->{tempid} = $tempid if $tempid;
-          #$file_data->{file_json} = to_json($file_data);
-      }
-      else {
-          $file_data = {
-            success => 0,
-            error => "There was an error while uploading your file.",
-          };
-      }
-
-      return to_json($file_data);
-  };
-
-  post '/upload/delete' => needs login => sub {
-      my $pub_id = params->{id};
-      my $file_name = params->{file_name};
-      delete_file($pub_id, $file_name);
-  };
 
 };
 
