@@ -1,16 +1,25 @@
 #!/usr/bin/env perl
 
-use Dancer;
-use FindBin qw($Bin);
+use Dancer qw(:syntax);
+#use FindBin qw($Bin);
+use LibreCat::Layers;
 use App;
 use Log::Log4perl;
 use Log::Any::Adapter;
 use Plack::Builder;
 
+my $layers = LibreCat::Layers->new->load;
+
+setting apphandler => 'PSGI';
+
+Dancer::Config->load;
+
+config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->{template_paths};
+
 my $app = sub {
     my $env = shift;
-    my $request = Dancer::Request->new( env => $env );
-    Dancer->dance($request);
+    my $req = Dancer::Request->new(env => $env);
+    Dancer->dance($req);
 };
 
 Log::Log4perl::init('log4perl.conf');

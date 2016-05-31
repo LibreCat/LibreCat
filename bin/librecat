@@ -8,11 +8,13 @@ BEGIN {
 }
 
 use Catmandu::Sane;
+use LibreCat::Layers;
 use LibreCat::CLI;
+use Path::Tiny;
 use Log::Any::Adapter;
 use Log::Log4perl;
-use Path::Tiny;
 
+LibreCat::Layers->new->load;
 Log::Log4perl->init(path(Catmandu->root)->child('log4perl.conf')->canonpath);
 Log::Any::Adapter->set('Log4perl');
 LibreCat::CLI->run;
