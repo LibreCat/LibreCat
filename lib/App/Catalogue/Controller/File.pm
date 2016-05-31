@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use Catmandu::Util;
 use App::Helper;
 use Dancer::FileUtils qw/path dirname/;
+use Dancer ':syntax';
 use Encode qw(decode encode);
 use JSON::MaybeXS qw(decode_json encode_json);
 use Exporter qw/import/;
@@ -66,7 +67,10 @@ sub handle_file {
 
     my $previous_pub = h->publication->get($key);
 
+debug "in handle_file";
+
     if(!$previous_pub){
+        debug "in no prev pub";
         foreach my $fi (@{$pub->{file}}){
             $fi = encode("utf8",$fi);
             $fi = decode_json($fi);
@@ -82,7 +86,7 @@ sub handle_file {
             }
 
             my $filename = $fi->{file_name};
-            my $path     = path(h->config->{tmp_dir}, $fi->{tempid}, $filename);
+            my $path     = path(h->config->{filestore}->{tmp_dir}, $fi->{tempid}, $filename);
 
             update_file($key,$filename,$path);
 
@@ -118,7 +122,7 @@ sub handle_file {
                     
                     # upload the new file
                     my $new_name = $fi->{file_name};
-                    my $path     = path(h->config->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
+                    my $path     = path(h->config->{filestore}->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
                     update_file($key,$new_name,$path);
 
                     $fi->{open_access} = $fi->{access_level} eq "open_access" ? 1 : 0;
@@ -150,7 +154,7 @@ sub handle_file {
                 }
 
                 my $filename = $fi->{file_name};
-                my $path     = path(h->config->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
+                my $path     = path(h->config->{filestore}->{tmp_dir}, $fi->{tempid}, $fi->{file_name});
                 update_file($key,$filename,$path);
 
 

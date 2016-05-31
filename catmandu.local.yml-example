@@ -1,8 +1,5 @@
 host: "http://localhost:5001"
 
-tmp_dir: '/data2/tmp'
-upload_dir: '/data2/librecat/file_uploads'
-
 thesis:
     urn_prefix: 'urn:thesis-'
 
