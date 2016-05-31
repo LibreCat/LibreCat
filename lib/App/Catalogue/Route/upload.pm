@@ -67,7 +67,7 @@ prefix '/librecat' => sub {
             $file_data = {
                 success       => 0,
                 error_message => 'Sorry! The file upload failed.'
-                };
+            };
         }
 
         return to_json($file_data);
@@ -110,7 +110,7 @@ prefix '/librecat' => sub {
             $file_data = {
                 success       => 0,
                 error_message => 'Sorry! The file upload failed.'
-                };
+            };
         }
 
         return to_json($file_data);

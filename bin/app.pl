@@ -1,29 +1,37 @@
 #!/usr/bin/env perl
 
-use Dancer qw(:syntax);
-#use FindBin qw($Bin);
+BEGIN {
+    use Catmandu::Sane;
+    use Catmandu;
+    use Path::Tiny;
+    Catmandu->load(path(__FILE__)->parent->parent);
+}
+
+use Catmandu::Sane;
+use Dancer;
 use LibreCat::Layers;
 use App;
+use Plack::Builder;
+use Plack::App::File;
+use Plack::App::Cascade;
 use Log::Log4perl;
 use Log::Any::Adapter;
-use Plack::Builder;
+use Path::Tiny;
 
-my $layers = LibreCat::Layers->new->load;
-
-setting apphandler => 'PSGI';
-
-Dancer::Config->load;
-
-config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->{template_paths};
-
-my $app = sub {
-    my $env = shift;
-    my $req = Dancer::Request->new(env => $env);
-    Dancer->dance($req);
-};
-
-Log::Log4perl::init('log4perl.conf');
+Log::Log4perl->init(path(Catmandu->root)->child('log4perl.conf')->canonpath);
 Log::Any::Adapter->set('Log4perl');
+
+my $layers = LibreCat::Layers->new;
+
+config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->template_paths;
+
+my $app = Plack::App::Cascade->new;
+
+$app->add(map {Plack::App::File->new(root => $_)->to_app} @{$layers->public_paths});
+
+$app->add(sub {
+    Dancer->dance(Dancer::Request->new(env => $_[0]));
+});
 
 builder {
     enable "ReverseProxy";
