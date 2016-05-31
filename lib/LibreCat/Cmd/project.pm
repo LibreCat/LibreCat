@@ -7,7 +7,7 @@ use Carp;
 use parent qw(LibreCat::Cmd);
 
 sub description {
-	return <<EOF;
+    return <<EOF;
 Usage:
 
 librecat project [options] list
@@ -22,8 +22,7 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    (
-    );
+    ();
 }
 
 sub command {
@@ -41,7 +40,7 @@ sub command {
         $self->usage_error("should be one of $commands");
     }
 
-    binmode(STDOUT,":encoding(utf-8)");
+    binmode(STDOUT, ":encoding(utf-8)");
 
     if ($cmd eq 'list') {
         return $self->_list(@$args);
@@ -64,19 +63,17 @@ sub command {
 }
 
 sub _list {
-    my $count = App::Helper::Helpers->new->project->each(sub {
-        my ($item) = @_;
-        my $id       = $item->{_id};
-        my $name     = $item->{name};
-        my $display  = $item->{display};
-        my $layer    = $item->{layer};
+    my $count = App::Helper::Helpers->new->project->each(
+        sub {
+            my ($item)  = @_;
+            my $id      = $item->{_id};
+            my $name    = $item->{name};
+            my $display = $item->{display};
+            my $layer   = $item->{layer};
 
-        printf "%-2.2d %9d %-40.40s %s\n"
-                    , $layer
-                    , $id
-                    , $name
-                    , $display;
-    });
+            printf "%-2.2d %9d %-40.40s %s\n", $layer, $id, $name, $display;
+        }
+    );
     print "count: $count\n";
 
     return 0;
@@ -93,7 +90,7 @@ sub _export {
 }
 
 sub _get {
-    my ($self,$id) = @_;
+    my ($self, $id) = @_;
 
     croak "usage: $0 get <id>" unless defined($id);
 
@@ -105,27 +102,30 @@ sub _get {
 }
 
 sub _add {
-    my ($self,$file) = @_;
+    my ($self, $file) = @_;
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
     my $ret = 0;
 
-    Catmandu->importer('YAML', file => $file)->each( sub {
-        my $item = $_[0];
-        $ret += $self->_adder($item);
-    });
+    Catmandu->importer('YAML', file => $file)->each(
+        sub {
+            my $item = $_[0];
+            $ret += $self->_adder($item);
+        }
+    );
 
     return $ret == 0;
 }
 
 sub _adder {
-    my ($self,$data) = @_;
+    my ($self, $data) = @_;
 
     my $validator = LibreCat::Validator::Project->new;
 
     if ($validator->is_valid($data)) {
-        my $result = App::Helper::Helpers->new->update_record('project', $data);
+        my $result
+            = App::Helper::Helpers->new->update_record('project', $data);
         if ($result) {
             print "added " . $data->{_id} . "\n";
             return 0;
@@ -137,13 +137,13 @@ sub _adder {
     }
     else {
         print STDERR "ERROR: not a valid project\n";
-        print STDERR join("\n",@{$validator->last_errors}) , "\n";
+        print STDERR join("\n", @{$validator->last_errors}), "\n";
         return 2;
     }
 }
 
 sub _delete {
-    my ($self,$id) = @_;
+    my ($self, $id) = @_;
 
     croak "usage: $0 delete <id>" unless defined($id);
 
@@ -162,7 +162,7 @@ sub _delete {
 }
 
 sub _valid {
-    my ($self,$file) = @_;
+    my ($self, $file) = @_;
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
@@ -170,24 +170,26 @@ sub _valid {
 
     my $ret = 0;
 
-    Catmandu->importer('YAML', file => $file)->each( sub {
-        my $item = $_[0];
-       
-        unless ($validator->is_valid($item)) {
-            my $errors = $validator->last_errors();
-            my $id     = $item->{_id};
-            if ($errors) {
-                for my $err (@$errors) {
-                    print STDERR "ERROR $id: $err\n";
+    Catmandu->importer('YAML', file => $file)->each(
+        sub {
+            my $item = $_[0];
+
+            unless ($validator->is_valid($item)) {
+                my $errors = $validator->last_errors();
+                my $id     = $item->{_id};
+                if ($errors) {
+                    for my $err (@$errors) {
+                        print STDERR "ERROR $id: $err\n";
+                    }
+                }
+                else {
+                    print STDERR "ERROR $id: not valid\n";
                 }
             }
-            else {
-                print STDERR "ERROR $id: not valid\n";
-            }
-        }
 
-        $ret = -1;
-    });
+            $ret = -1;
+        }
+    );
 
     return $ret == 0;
 }

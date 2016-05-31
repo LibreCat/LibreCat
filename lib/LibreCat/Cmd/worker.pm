@@ -9,7 +9,7 @@ use JSON::MaybeXS;
 
 use parent 'LibreCat::Daemon';
 
-sub description { 
+sub description {
     return <<EOF;
 Usage:
 
@@ -47,12 +47,14 @@ sub daemon {
     sub {
         my $gm_worker = Gearman::XS::Worker->new;
         $gm_worker->add_server('127.0.0.1', 4730);
-        my $worker = $worker_class->new(Catmandu->config->{worker}{$worker_name} || {});
+        my $worker
+            = $worker_class->new(Catmandu->config->{worker}{$worker_name}
+                || {});
         for my $func_name (@{$worker->worker_functions}) {
             my $method_name = $func_name;
             if (ref $func_name) {
                 ($method_name) = values %$func_name;
-                ($func_name) = keys %$func_name;
+                ($func_name)   = keys %$func_name;
             }
 
             my $func = sub {
@@ -61,9 +63,12 @@ sub daemon {
                 return;
             };
             $gm_worker->add_function($func_name, 0, $func, {});
-            $gm_worker->set_log_fn(sub {
-                $worker->log->info(@_);
-            }, 1);
+            $gm_worker->set_log_fn(
+                sub {
+                    $worker->log->info(@_);
+                },
+                1
+            );
         }
         $gm_worker->work while 1;
     };

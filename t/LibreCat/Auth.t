@@ -4,12 +4,13 @@ use Role::Tiny;
 
 my $pkg;
 my @worker_pkg;
+
 BEGIN {
     $pkg = 'LibreCat::Auth';
     use_ok $pkg;
     @worker_pkg = map {
         $_ =~ s/\.pm$//;
-        'LibreCat::Auth::'. $_;
+        'LibreCat::Auth::' . $_;
     } read_dir('lib/LibreCat/Auth/');
 
     use_ok $_ for @worker_pkg;
@@ -27,8 +28,9 @@ require_ok $_ for @worker_pkg;
     package T::Auth::X;
     use Moo;
     with $pkg;
+
     sub _authenticate {
-        my ($self,$params) = @_;
+        my ($self, $params) = @_;
         return 1;
     }
 }
@@ -36,6 +38,7 @@ require_ok $_ for @worker_pkg;
 my $a = T::Auth::X->new();
 can_ok $a, 'authenticate';
 can_ok $a, 'obfuscate_params';
+
 #dies_ok { T::Auth->new() };
 #can_ok $s, 'bags';
 #can_ok $s, 'bag';

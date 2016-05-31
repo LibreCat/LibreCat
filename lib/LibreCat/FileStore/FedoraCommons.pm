@@ -9,19 +9,20 @@ use namespace::clean;
 
 with 'LibreCat::FileStore';
 
-has url         => (is => 'ro' , default => sub { 'http://localhost:8080/fedora' }) ;
-has user        => (is => 'ro' , default => sub { 'fedoraAdmin'} ) ;
-has password    => (is => 'ro' , default => sub { 'fedoraAdmin'} ) ;
-has namespace   => (is => 'ro' , default => sub { 'demo' });
-has dsnamespace => (is => 'ro' , default => sub { 'DS' } );
-has md5enabled  => (is => 'ro' , default => sub { '1'} );
-has versionable => (is => 'ro' , default => sub { '0'} );
-has purge       => (is => 'ro' , default => sub { '0'} );
-has fedora      => (is => 'lazy') ;
+has url      => (is => 'ro', default => sub {'http://localhost:8080/fedora'});
+has user     => (is => 'ro', default => sub {'fedoraAdmin'});
+has password => (is => 'ro', default => sub {'fedoraAdmin'});
+has namespace   => (is => 'ro', default => sub {'demo'});
+has dsnamespace => (is => 'ro', default => sub {'DS'});
+has md5enabled  => (is => 'ro', default => sub {'1'});
+has versionable => (is => 'ro', default => sub {'0'});
+has purge       => (is => 'ro', default => sub {'0'});
+has fedora      => (is => 'lazy');
 
 sub _build_fedora {
     my ($self) = @_;
-    my $fedora = Catmandu::FedoraCommons->new($self->url,$self->user,$self->password);
+    my $fedora = Catmandu::FedoraCommons->new($self->url, $self->user,
+        $self->password);
     $fedora->{namespace}   = $self->namespace;
     $fedora->{dsnamespace} = $self->dsnamespace;
     $fedora->{md5enabled}  = $self->md5enabled;
@@ -31,18 +32,19 @@ sub _build_fedora {
 }
 
 sub list {
-    my ($self,$callback) = @_;
+    my ($self, $callback) = @_;
     my $fedora = $self->fedora;
-      
+
     $self->log->debug("creating generator for Fedora @ " . $self->url);
-       
+
     return sub {
         state $hits;
         state $row;
         state $ns_prefix = $self->namespace;
-         
-        if( ! defined $hits) {
-            my $res = $fedora->findObjects( query => "pid~${ns_prefix}* state=A" );
+
+        if (!defined $hits) {
+            my $res
+                = $fedora->findObjects(query => "pid~${ns_prefix}* state=A");
             unless ($res->is_ok) {
                 $self->log->error($res->error);
                 return undef;
@@ -50,37 +52,37 @@ sub list {
             $row  = 0;
             $hits = $res->parse_content;
         }
-        if ($row + 1 == @{ $hits->{results} } && defined $hits->{token}) {
-            my $result = $hits->{results}->[ $row ];
-             
+        if ($row + 1 == @{$hits->{results}} && defined $hits->{token}) {
+            my $result = $hits->{results}->[$row];
+
             my $res = $fedora->findObjects(sessionToken => $hits->{token});
-             
+
             unless ($res->is_ok) {
                 warn $res->error;
                 return undef;
             }
-             
+
             $row  = 0;
             $hits = $res->parse_content;
-            
+
             my $pid = $result->{pid};
             $pid =~ s{^$ns_prefix:}{} if $pid;
 
             return $pid;
-        }  
+        }
         else {
-            my $result = $hits->{results}->[ $row++ ];
+            my $result = $hits->{results}->[$row++];
 
             my $pid = $result->{pid};
             $pid =~ s{^$ns_prefix:}{} if $pid;
-            
+
             return $pid;
         }
     };
 }
 
 sub exists {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
     my $ns_prefix = $self->namespace;
 
     croak "Need a key" unless defined $key;
@@ -95,7 +97,7 @@ sub exists {
 }
 
 sub add {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
 
     croak "Need a key" unless defined $key;
 
@@ -103,11 +105,12 @@ sub add {
 
     my $long_key = $self->_long_key($key);
 
-    LibreCat::FileStore::Container::FedoraCommons->create_container($self->fedora,$long_key);
+    LibreCat::FileStore::Container::FedoraCommons->create_container(
+        $self->fedora, $long_key);
 }
 
 sub get {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
 
     croak "Need a key" unless defined $key;
 
@@ -115,21 +118,23 @@ sub get {
 
     my $long_key = $self->_long_key($key);
 
-    LibreCat::FileStore::Container::FedoraCommons->read_container($self->fedora,$long_key);
+    LibreCat::FileStore::Container::FedoraCommons->read_container(
+        $self->fedora, $long_key);
 }
 
 sub delete {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
 
     croak "Need a key" unless defined $key;
 
     my $long_key = $self->_long_key($key);
 
-    LibreCat::FileStore::Container::FedoraCommons->delete_container($self->fedora,$long_key);
+    LibreCat::FileStore::Container::FedoraCommons->delete_container(
+        $self->fedora, $long_key);
 }
 
 sub _long_key {
-    my ($selk,$key) = @_;
+    my ($selk, $key) = @_;
     if ($key =~ /^\d+$/) {
         return sprintf "%-12.12d", $key;
     }

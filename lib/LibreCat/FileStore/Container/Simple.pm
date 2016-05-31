@@ -13,7 +13,7 @@ use namespace::clean;
 
 with 'LibreCat::FileStore::Container';
 
-has _path => (is => 'ro');
+has _path     => (is => 'ro');
 has _mimeType => (is => 'lazy');
 
 sub _build__mimeType {
@@ -28,25 +28,25 @@ sub list {
 
     for my $file (glob("$path/*")) {
         $file =~ s/^.*\///;
-        next if index($file,".") == 0;
+        next if index($file, ".") == 0;
 
         my $unpacked_key = $self->unpack_key($file);
 
-        push @result , $self->get($unpacked_key);
+        push @result, $self->get($unpacked_key);
     }
 
     return @result;
 }
 
 sub exists {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
     my $path = $self->_path;
 
     -f "$path/$key";
 }
 
 sub get {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
     my $path = $self->_path;
 
     my $packed_key = $self->pack_key($key);
@@ -60,23 +60,23 @@ sub get {
 
     my $size     = $stat->[7];
     my $modified = $stat->[9];
-    my $created  = $stat->[10]; # no real creation time exists on Unix
+    my $created  = $stat->[10];    # no real creation time exists on Unix
 
     my $content_type = $self->_mimeType->content_type($key);
 
     LibreCat::FileStore::File::Simple->new(
-            key          => $key ,
-            size         => $size ,
-            md5          => '' ,
-            content_type => $content_type ,
-            created      => $created ,
-            modified     => $modified ,
-            data         => $data
+        key          => $key,
+        size         => $size,
+        md5          => '',
+        content_type => $content_type,
+        created      => $created,
+        modified     => $modified,
+        data         => $data
     );
 }
 
 sub add {
-    my ($self,$key,$data) = @_;
+    my ($self, $key, $data) = @_;
     my $path = $self->_path;
 
     my $packed_key = $self->pack_key($key);
@@ -90,7 +90,7 @@ sub add {
 }
 
 sub delete {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
     my $path = $self->_path;
 
     my $packed_key = $self->pack_key($key);
@@ -104,7 +104,7 @@ sub commit {
 }
 
 sub read_container {
-    my ($class,$path) = @_;
+    my ($class, $path) = @_;
     croak "Need a path" unless $path;
 
     my $key;
@@ -120,7 +120,7 @@ sub read_container {
 
     my @stat = stat $path;
 
-    my $inst = $class->new(key  => $key);
+    my $inst = $class->new(key => $key);
     $inst->{created}  = $stat[10];
     $inst->{modified} = $stat[9];
     $inst->{_path}    = $path;
@@ -128,7 +128,7 @@ sub read_container {
 }
 
 sub create_container {
-    my ($class,$path,$key) = @_;
+    my ($class, $path, $key) = @_;
 
     croak "Need a path and a key" unless $path && $key;
 
@@ -138,7 +138,7 @@ sub create_container {
 }
 
 sub delete_container {
-    my ($class,$path) = @_;
+    my ($class, $path) = @_;
 
     croak "Need a path" unless $path;
 

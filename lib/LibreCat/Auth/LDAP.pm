@@ -8,8 +8,8 @@ use namespace::clean;
 
 with 'LibreCat::Auth';
 
-has host          => (is => 'ro', required => 1);
-has base          => (is => 'ro');
+has host => (is => 'ro', required => 1);
+has base => (is => 'ro');
 has password      => (is => 'ro');
 has auth_base     => (is => 'ro', required => 1);
 has search_filter => (is => 'ro');
@@ -31,7 +31,7 @@ sub _build_ldap {
 
     if ($self->base) {
         $self->log->debug("binding to " . $self->base);
-        my $bind = $ldap->bind($self->base , password => $self->password);
+        my $bind = $ldap->bind($self->base, password => $self->password);
 
         $self->log->debug("...code " . $bind->code);
 
@@ -52,13 +52,14 @@ sub _authenticate {
     # Check if we need to translate the username
     $username = $self->search($username) if $self->search_filter;
 
-    $self->log->debug("username: $username ; password: " . length($password) . " bytes");
+    $self->log->debug(
+        "username: $username ; password: " . length($password) . " bytes");
     return 0 unless defined($username) & defined($password);
 
     my $base = sprintf($self->auth_base, $username);
 
     $self->log->debug("binding to $base");
-    my $bind = $self->ldap->bind( $base, password => $password);
+    my $bind = $self->ldap->bind($base, password => $password);
 
     $self->log->error("...bind failed") unless $bind;
 
@@ -77,8 +78,8 @@ sub search {
     my ($self, $username) = @_;
 
     croak "need search_filter" unless $self->search_filter;
-    croak "need search_base" unless $self->search_base;
-    croak "need search_attr" unless $self->search_attr;
+    croak "need search_base"   unless $self->search_base;
+    croak "need search_attr"   unless $self->search_attr;
 
     $self->log->debug("searching $username");
 
