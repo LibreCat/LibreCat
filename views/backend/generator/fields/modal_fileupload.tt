@@ -14,6 +14,8 @@
         <input type="hidden" name="tempid" id="id_temp_id" value="" />
         <input type="hidden" name="record_id" id="id_record_id" value="" />
         <input type="hidden" name="creator" id="id_creator" value="" />
+        <input type="hidden" name="file_size" id="id_fileSize" value="" />
+        <input type="hidden" name="content_type" id="id_contentType" value="" />
         <input type="hidden" name="cancel" value="" />
 
         <h4>[% lf.$type.field.dropzone.edit_modal.heading_file %]</h4>

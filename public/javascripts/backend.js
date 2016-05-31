@@ -370,6 +370,7 @@ function link_person(element){
  */
 function edit_file(fileId, id){
 	var json = jQuery.parseJSON($('#file_' + fileId).val());
+	alert(json.content_type);
 	if(json.file_id){
 		$('#id_file_id').val(json.file_id);
 	}
@@ -379,6 +380,8 @@ function edit_file(fileId, id){
 	$('#id_record_id').val(id);
 	$('#id_fileName').val(json.file_name);
 	$('#id_creator').val(json.creator);
+	$('#id_fileSize').val(json.file_size);
+	$('#id_contentType').val(json.content_type); 
 
 	if(json.title){
 		$('#id_fileTitle').val(json.title);
