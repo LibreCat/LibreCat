@@ -93,110 +93,97 @@
 
 <script>
 
-//if(navigator.userAgent.indexOf('MSIE') == -1){
-  //$("#id_file").change(function (){
-    //var fileName = $(this).val().replace(/C:\\fakepath\\/,"");
-    //$("#id_fileName").val(fileName);
-  //});
+$('#fileSubmit').click( function() {
+  var file_id = $('#id_file_id').val();
+  var tempid = $('#id_temp_id').val();
 
-  $('#fileSubmit').click( function() {
-    //var inputs = $(":file");
-    var file_id = $('#id_file_id').val();
-    var tempid = $('#id_temp_id').val();
+  var formData = new FormData();
+  formData.append("id", "[% _id %]");
+  if(file_id){
+    formData.append("file_id", file_id);
+  }
+  if(tempid){
+    formData.append("tempid", tempid);
+  }
+  formData.append("file_name", $('#id_fileName').val());
+  formData.append("creator", $('#id_creator').val());
+  formData.append("file_size", $('#id_fileSize').val());
+  formData.append("content_type",$('#id_contentType').val());
+  formData.append("relation", $('#id_select_relation').val());
 
-    var formData = new FormData();
-    //if(inputs.eq(0)){
-      //formData.append("file", inputs.eq(0).prop("files")[0]);
-    //}
-    formData.append("id", "[% _id %]");
-    if(file_id){
-      formData.append("file_id", file_id);
-    }
-    if(tempid){
-      formData.append("tempid", tempid);
-    }
-    formData.append("file_name", $('#id_fileName').val());
-    formData.append("creator", $('#id_creator').val());
-    formData.append("relation", $('#id_select_relation').val());
+  if($('#id_accessLevel_openAccess').is(':checked')){
+    formData.append("access_level", "open_access");
+  }
+  else if($('#id_accessLevel_local').is(':checked')){
+    formData.append("access_level", "local");
+  }
+  else if($('#id_accessLevel_admin').is(':checked')){
+    formData.append("access_level", "closed");
+  }
+  else if($('#id_accessLevel_request').is(':checked')){
+    formData.append("access_level", "closed");
+    formData.append("request_a_copy", "1");
+  }
 
-    if($('#id_accessLevel_openAccess').is(':checked')){
-      formData.append("access_level", "open_access");
-    }
-    else if($('#id_accessLevel_local').is(':checked')){
-      formData.append("access_level", "local");
-    }
-    else if($('#id_accessLevel_admin').is(':checked')){
-      formData.append("access_level", "closed");
-    }
-    else if($('#id_accessLevel_request').is(':checked')){
-      formData.append("access_level", "closed");
-      formData.append("request_a_copy", "1");
-    }
+  if($('#id_embargo').val() && $('#id_accessEmbargo').is(':checked')){
+    formData.append("embargo", $('#id_embargo').val());
+  }
 
-    if($('#id_embargo').val() && $('#id_accessEmbargo').is(':checked')){
-      formData.append("embargo", $('#id_embargo').val());
-    }
+  if($('#id_fileTitle').val()){
+    formData.append("title", $('#id_fileTitle').val());
+  }
 
-    if($('#id_fileTitle').val()){
-      formData.append("title", $('#id_fileTitle').val());
-    }
+  if($('#id_fileDescription').val()){
+    formData.append("description", $('#id_fileDescription').val());
+  }
 
-    if($('#id_fileDescription').val()){
-      formData.append("description", $('#id_fileDescription').val());
-    }
-
-    $.ajax({
-      url: '/librecat/upload/update',
-      data: formData,
-      processData: false,
-      contentType: false,
-      type: 'POST',
-      dataType: "json",
-      success: function(data){
-        var accessLevel;
-        if(data.access_level == "open_access"){
-          accessLevel = "[% lf.$type.field.dropzone.access.open_access %]";
-        }
-        else if(data.access_level == "local"){
-          accessLevel = "[% lf.$type.field.dropzone.access.local %]";
-          if(data.embargo){
-            accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " + data.embargo + ")";
-          }
-        }
-        else if(data.access_level == "closed"){
-          accessLevel = "[% lf.$type.field.dropzone.access.closed %]";
-          if(data.embargo){
-            accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " + data.embargo + ")";
-          }
-          if(data.request_a_copy){
-            accessLevel += "<br />([% lf.$type.field.dropzone.access.request_a_copy %])";
-          }
-        }
-
-        var use_file_id;
-        use_file_id = data.file_id ? data.file_id : data.tempid;
-
-        var namediv = $('#' + use_file_id + ' div.padded');
-        namediv.html('');
-        namediv.html('<span class="glyphicon glyphicon-file text-muted"></span> <span class="text-muted"><strong>' + data.file_name + '</strong></span>');
-
-        $('#access_' + use_file_id).html(accessLevel);
-        $('#updated_' + use_file_id).html(data.date_updated);
-        $('#creator_' + use_file_id).html(data.creator);
-        $('#relation_' + use_file_id).html(data.relation);
-        $('#file_' + use_file_id).val(JSON.stringify(data));
-
-        $('#upLoad')[0].reset();
-        $('#upLoad').find('input[type="hidden"]').val('');
-        $('#upload_file').modal('hide');
+  $.ajax({
+    url: '/librecat/upload/update',
+    data: formData,
+    processData: false,
+    contentType: false,
+    type: 'POST',
+    dataType: "json",
+    success: function(data){
+      var accessLevel;
+      if(data.access_level == "open_access"){
+        accessLevel = "[% lf.$type.field.dropzone.access.open_access %]";
       }
-    });
-  });
+      else if(data.access_level == "local"){
+        accessLevel = "[% lf.$type.field.dropzone.access.local %]";
+        if(data.embargo){
+          accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " + data.embargo + ")";
+        }
+      }
+      else if(data.access_level == "closed"){
+        accessLevel = "[% lf.$type.field.dropzone.access.closed %]";
+        if(data.embargo){
+          accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " + data.embargo + ")";
+        }
+        if(data.request_a_copy){
+          accessLevel += "<br />([% lf.$type.field.dropzone.access.request_a_copy %])";
+        }
+      }
 
-//}
-//else {
-  // Add IE8 fallback??? ... or not???
-//}
+      var use_file_id;
+      use_file_id = data.file_id ? data.file_id : data.tempid;
+
+      var namediv = $('#' + use_file_id + ' div.padded');
+      namediv.html('');
+      namediv.html('<span class="glyphicon glyphicon-file text-muted"></span> <span class="text-muted"><strong>' + data.file_name + '</strong></span>');
+
+      $('#access_' + use_file_id).html(accessLevel);
+      $('#updated_' + use_file_id).html(data.date_updated);
+      $('#creator_' + use_file_id).html(data.creator);
+      $('#relation_' + use_file_id).html(data.relation);
+      $('#file_' + use_file_id).val(JSON.stringify(data));
+
+      $('#upLoad')[0].reset();
+      $('#upLoad').find('input[type="hidden"]').val('');
+      $('#upload_file').modal('hide');
+    }
+  });
+});
 
 $('#id_accessEmbargo').bind('change', function(){
   if($(this).is(':checked')){

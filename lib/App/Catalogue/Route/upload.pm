@@ -54,61 +54,9 @@ post '/librecat/upload' => needs login =>  sub {
     return to_json( upload_temp_file($file,$creator) );
 };
 
-=head2 POST /librecat/upload/update?%PARAMS
-
-With %params:
-
- id
- file_id
- title
- access_level
- request_a_copy
- embargo
- description
- relation
-
-Return a JSON document with updated file metadata:
-
-  {
-    'file_id'        => '13',
-    'access_level'   => 'open_access',
-    'open_access'    => 1,
-    'relation'       => 'main_file',
-    'title'          => 'blabla',
-    'description'    => 'test' ,
-    'request_a_copy' => '0' ,
-    'embargo'        => '' ,
-  }
-
-=cut
 post '/librecat/upload/update' => needs login =>  sub {
-    my $key           = params->{id};
-    my $file_id       = params->{file_id};
-
-    my @important_fields  = qw(
-            file_id file_order file_name file_size content_type 
-            creator date_created
-            );
-    
-    my @changeable_fields = qw(
-            title description access_level request_a_copy 
-            open_access embargo relation
-            );
-
-    my $file_data = {};
-
-    for my $name (@changeable_fields) {
-        $file_data->{$name} = params->{$name};
-    }
-
-    for my $name (@important_fields) {
-        $file_data->{$name} = params->{$name} if is_string(params->{$name});
-    }
-
-    $file_data->{tempid}      = params->{tempid} if is_string(params->{tempid});
-    $file_data->{open_access} = params->{access_level} && params->{access_level} eq "open_access" ? 1 : 0;
-
-    return to_json($file_data);
+    my $vals = params;
+    return to_json($vals);
 };
 
 1;

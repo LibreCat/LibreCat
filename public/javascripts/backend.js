@@ -370,7 +370,6 @@ function link_person(element){
  */
 function edit_file(fileId, id){
 	var json = jQuery.parseJSON($('#file_' + fileId).val());
-	alert(json.content_type);
 	if(json.file_id){
 		$('#id_file_id').val(json.file_id);
 	}

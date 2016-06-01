@@ -157,6 +157,7 @@ sub handle_file {
     my $prev_pub = h->publication->get($key);
 
     for my $fi (@{$pub->{file}}) {
+debug $fi;
         # Generate a new file_id if not one existed
         $fi->{file_id} = h->new_record('publication') if ! $fi->{file_id};
 
@@ -260,6 +261,8 @@ sub _update_keys {
             $fi->{$name} = $prev_fi->{$name};
         }
     }
+
+    $fi->{open_access}  = $fi->{access_level} eq 'open_access' ? 1 : 0;
 
     $fi->{date_created} = h->now unless $fi->{date_created};
 
