@@ -24,7 +24,8 @@ Section, where all uploads are handled.
 Needs a login session.
 
 Upload a File to temporary storage. Returns a JSON document containing
-the upload details on success or a JSON error document on failure:
+the upload details and desfault metadata on success or a JSON error 
+document on failure:
 
   # success
   {
@@ -52,11 +53,6 @@ post '/librecat/upload' => needs login =>  sub {
     my $file    = request->upload('file');
     my $creator = session->{user};
     return to_json( upload_temp_file($file,$creator) );
-};
-
-post '/librecat/upload/update' => needs login =>  sub {
-    my $vals = params;
-    return to_json($vals);
 };
 
 1;
