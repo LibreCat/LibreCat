@@ -91,7 +91,7 @@ Checks if the user has permission the see/edit this record.
 =cut
     get '/edit/:id' => needs login => sub {
         my $id = param 'id';
-
+        
         unless (p->can_edit($id, session->{user}, session->{role})) {
             status '403';
             forward '/access_denied', {referer => request->{referer}};

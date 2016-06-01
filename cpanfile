@@ -42,6 +42,7 @@ requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Plugin::DirectoryView';
 requires 'Dancer::Plugin::StreamData';
 requires 'Dancer::Session::Catmandu';
+requires 'Dancer::Logger::Log4perl';
 requires 'Template';
 requires 'Template::Plugin::Date';
 requires 'Template::Plugin::JSON';

@@ -8,8 +8,7 @@ Route handler for uploading files.
 
 use Catmandu::Sane;
 use Catmandu::Util qw(:is);
-use App::Helper;
-use App::Catalogue::Controller::File qw/update_file delete_file upload_temp_file/;
+use App::Catalogue::Controller::File qw/upload_temp_file/;
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
 

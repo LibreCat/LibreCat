@@ -11,7 +11,15 @@ use Dancer::FileUtils qw(path);
 use Hash::Merge::Simple qw(merge);
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
+use Log::Log4perl ();
 use Moo;
+use Log::Log4perl ();
+
+sub log {
+    my ($self) = @_;
+    my ($package, $filename, $line) = caller;
+    Log::Log4perl::get_logger($package);
+}
 
 sub config {
     state $config;
@@ -435,14 +443,11 @@ sub update_record {
 
         require App::Catalogue::Controller::File;
         require App::Catalogue::Controller::Material;
-        ($rec->{file}) && ($rec->{file} = App::Catalogue::Controller::File::handle_file($rec));
-
-        foreach my $f (@{$rec->{file}}) {
-            if ($f->{access_level} eq 'open_access' && lc $f->{file_name} =~ /\.pdf$|\.ps$/) {
-                App::Catalogue::Controller::File::make_thumbnail($rec->{_id}, $f->{file_name});
-                last;
-            }
+        
+        if ($rec->{file}) {
+            App::Catalogue::Controller::File::handle_file($rec);
         }
+
         if ($rec->{related_material}) {
             App::Catalogue::Controller::Material::update_related_material($rec);
         }
