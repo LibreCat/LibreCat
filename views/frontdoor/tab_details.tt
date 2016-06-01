@@ -33,7 +33,6 @@
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
-[% first_author = '' %]
 [% FOREACH au IN author %]
   [% IF loop.first %]
   <div class="row">

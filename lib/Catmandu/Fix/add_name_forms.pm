@@ -1,4 +1,4 @@
-package Catmandu::Fix::add_autorenansetzung;
+package Catmandu::Fix::add_name_forms;
 
 use Catmandu::Sane;
 use Moo;
@@ -6,11 +6,10 @@ use Moo;
 sub fix {
     my ($self, $pub) = @_;
 
-    if (    $pub->{author}
+    if ( $pub->{author}
         and ref $pub->{author} eq "ARRAY"
-        and $pub->{author}->[0])
+        and $pub->{author}->[0] )
     {
-        $pub->{first_author} = $pub->{author}->[0]->{full_name};
 
         foreach my $author (@{$pub->{author}}) {
             if (    !$author->{last_name}
@@ -48,21 +47,19 @@ sub fix {
                 $_ =~ s/^([a-zA-Z])[a-zA-Z]+$/$1./g;
             }
 
-            $author->{autoren_ansetzung} = ();
-
             # "Kaufmann, Sabine-Marie Ann-Katrin"
             # "Müller, Karl Heinz"
-            push @{$author->{autoren_ansetzung}}, "$author->{full_name}"
+            push @{$author->{name_forms}}, "$author->{full_name}"
                 if $author->{full_name};
 
             # "Kaufmann"
             # "Müller"
-            push @{$author->{autoren_ansetzung}}, "$author->{last_name}"
+            push @{$author->{name_forms}}, "$author->{last_name}"
                 if $author->{last_name};
 
             # "Sabine-Marie Ann-Katrin Kaufmann"
             # "Karl Heinz Müller"
-            push @{$author->{autoren_ansetzung}},
+            push @{$author->{name_forms}},
                 "$author->{first_name} $author->{last_name}"
                 if ($author->{first_name} and $author->{last_name});
 
@@ -70,22 +67,22 @@ sub fix {
 
                 # "Kaufmann, S"
                 # "Müller, K"
-                push @{$author->{autoren_ansetzung}},
+                push @{$author->{name_forms}},
                     "$author->{last_name}, $first_initial";
 
                 # "Kaufmann, S."
                 # "Müller, K."
-                push @{$author->{autoren_ansetzung}},
+                push @{$author->{name_forms}},
                     "$author->{last_name}, $first_initial.";
 
                 # "S Kaufmann"
                 # "K Müller"
-                push @{$author->{autoren_ansetzung}},
+                push @{$author->{name_forms}},
                     "$first_initial $author->{last_name}";
 
                 # "S. Kaufmann"
                 # "K. Müller"
-                push @{$author->{autoren_ansetzung}},
+                push @{$author->{name_forms}},
                     "$first_initial. $author->{last_name}";
             }
 
@@ -95,12 +92,12 @@ sub fix {
 
                 # "Kaufmann S-MA-K"
                 # "Müller KH"
-                push @{$author->{autoren_ansetzung}},
+                push @{$author->{name_forms}},
                     "$author->{last_name} $string";
 
                 # "Kaufmann, S-MA-K"
                 # "Müller, KH"
-                push @{$author->{autoren_ansetzung}},
+                push @{$author->{name_forms}},
                     "$author->{last_name}, $string";
 
                 $string = "";
@@ -108,12 +105,12 @@ sub fix {
 
                 # "Kaufmann S-M A-K"
                 # "Müller K H"
-                push @{$author->{autoren_ansetzung}},
+                push @{$author->{name_forms}},
                     "$author->{last_name} $string";
 
                 # "Kaufmann, S-M A-K"
                 # "Müller, K H"
-                push @{$author->{autoren_ansetzung}},
+                push @{$author->{name_forms}},
                     "$author->{last_name}, $string";
             }
 
@@ -123,12 +120,12 @@ sub fix {
 
                 # "Kaufmann S.-M.A.-K."
                 # "Müller K.H."
-                push @{$author->{autoren_ansetzung}},
+                push @{$author->{name_forms}},
                     "$author->{last_name} $string";
 
                 # "Kaufmann, S.-M.A.-K."
                 # "Müller, K.H."
-                push @{$author->{autoren_ansetzung}},
+                push @{$author->{name_forms}},
                     "$author->{last_name}, $string";
 
                 $string = "";
@@ -136,12 +133,12 @@ sub fix {
 
                 # "Kaufmann S.-M. A.-K."
                 # "Müller K. H."
-                push @{$author->{autoren_ansetzung}},
+                push @{$author->{name_forms}},
                     "$author->{last_name} $string";
 
                 # "Kaufmann, S.-M. A.-K."
                 # "Müller, K. H."
-                push @{$author->{autoren_ansetzung}},
+                push @{$author->{name_forms}},
                     "$author->{last_name}, $string";
             }
         }
