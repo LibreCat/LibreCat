@@ -216,25 +216,25 @@ publication:
       enum:
         - original
         - book
-        - bookEditor
-        - bookChapter
+        - book_editor
+        - book_chapter
         - review
-        - conferenceAbstract
-        - conferenceEditor
+        - conference_abstract
+        - conference_editor
         - conference
         - dissertation
-        - encyclopediaArticle
-        - journalArticle
-        - journalEditor
-        - newspaperArticle
+        - encyclopedia_article
+        - journal_article
+        - journal_editor
+        - newspaper_article
         - patent
         - preprint
         - report
         - translation
-        - translationChapter
-        - workingPaper
-        - biDissertation
-        - researchData
+        - translation_chapter
+        - working_paper
+        - bi_dissertation
+        - research_data
 
     date_created: &dt
       type: string

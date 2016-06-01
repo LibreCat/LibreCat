@@ -51,7 +51,8 @@ sub update_related_material {
                 and $opposite->{related_material}->{record})
             {
                 my ($ref) = grep {
-                    $_->{relation} eq $op_relation and $_->{id} eq $pub->{_id}
+                            $_->{relation} eq $op_relation
+                        and $_->{id} eq $pub->{_id}
                 } @{$opposite->{related_material}->{record}};
                 if (!$ref) {
                     push @{$opposite->{related_material}->{record}},

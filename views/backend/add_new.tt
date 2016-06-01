@@ -51,32 +51,27 @@
     <div class="row">
 
       <div class="col-sm-4">
-        [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_l %]
-        [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
-          <a href="/librecat/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
-        [% END %]
+        [%- FOREACH type IN h.config.forms.publication_type_order.column_left -%]
+          <a href="/librecat/record/new?type=[% type %]">[% lf.forms.$type.label %]</a><br />
+        [%- END -%]
       </div>
       <div class="col-sm-4">
-        [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_m %]
-        [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
-          <a href="/librecat/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
-        [% END %]
+        [%- FOREACH type IN h.config.forms.publication_type_order.column_middle -%]
+          <a href="/librecat/record/new?type=[% type %]">[% lf.forms.$type.label %]</a><br />
+        [%- END -%]
       </div>
       <div class="col-sm-4">
-        [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_r %]
-        [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
-          <a href="/librecat/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
-        [% END %]
-        [% IF session.role == "super_admin" %]
-          [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_admin %]
-          [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
-          <a href="/librecat/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
-          [% END %]
-        [% END %]
-        [% FOREACH doctype IN h.config.forms.publication_type_order.tabelle_rd %]
-        [% tmpl = h.config.forms.publicationTypes.$doctype.tmpl %]
-          <a href="/librecat/record/new?type=[% tmpl %]">[% h.config.language.$lang.forms.$tmpl.label %]</a><br />
-        [% END %]
+        [%- FOREACH type IN h.config.forms.publication_type_order.column_right -%]
+          <a href="/librecat/record/new?type=[% type %]">[% lf.forms.$type.label %]</a><br />
+        [%- END -%]
+        [%- IF session.role == "super_admin" -%]
+          [%- FOREACH type IN h.config.forms.publication_type_order.column_admin -%]
+          <a href="/librecat/record/new?type=[% type %]">[% lf.forms.$type.label %]</a><br />
+          [%- END -%]
+        [%- END -%]
+        [%- FOREACH type IN h.config.forms.publication_type_order.column_rd -%]
+          <a href="/librecat/record/new?type=[% type %]">[% lf.forms.$type.label %]</a><br />
+        [%- END -%]
       </div>
     </div>
 

@@ -6,9 +6,9 @@ use Moo;
 sub fix {
     my ($self, $pub) = @_;
 
-    if ( $pub->{author}
+    if (    $pub->{author}
         and ref $pub->{author} eq "ARRAY"
-        and $pub->{author}->[0] )
+        and $pub->{author}->[0])
     {
 
         foreach my $author (@{$pub->{author}}) {
@@ -92,8 +92,7 @@ sub fix {
 
                 # "Kaufmann S-MA-K"
                 # "Müller KH"
-                push @{$author->{name_forms}},
-                    "$author->{last_name} $string";
+                push @{$author->{name_forms}}, "$author->{last_name} $string";
 
                 # "Kaufmann, S-MA-K"
                 # "Müller, KH"
@@ -105,8 +104,7 @@ sub fix {
 
                 # "Kaufmann S-M A-K"
                 # "Müller K H"
-                push @{$author->{name_forms}},
-                    "$author->{last_name} $string";
+                push @{$author->{name_forms}}, "$author->{last_name} $string";
 
                 # "Kaufmann, S-M A-K"
                 # "Müller, K H"
@@ -120,8 +118,7 @@ sub fix {
 
                 # "Kaufmann S.-M.A.-K."
                 # "Müller K.H."
-                push @{$author->{name_forms}},
-                    "$author->{last_name} $string";
+                push @{$author->{name_forms}}, "$author->{last_name} $string";
 
                 # "Kaufmann, S.-M.A.-K."
                 # "Müller, K.H."
@@ -133,8 +130,7 @@ sub fix {
 
                 # "Kaufmann S.-M. A.-K."
                 # "Müller K. H."
-                push @{$author->{name_forms}},
-                    "$author->{last_name} $string";
+                push @{$author->{name_forms}}, "$author->{last_name} $string";
 
                 # "Kaufmann, S.-M. A.-K."
                 # "Müller, K. H."
