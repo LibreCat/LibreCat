@@ -18,7 +18,7 @@ use Encode qw(decode encode);
 use JSON::MaybeXS qw(decode_json encode_json);
 use Exporter qw/import/;
 
-our @EXPORT = qw/make_thumbnail delete_file update_file handle_file upload_temp_file/;
+our @EXPORT = qw/handle_file upload_temp_file/;
 
 =head1 METHODS
 
