@@ -64,6 +64,7 @@ requires 'all';
 requires 'Business::ISBN10';
 requires 'Business::ISBN13';
 requires 'App::bmkpasswd', '2.010001';
+requires 'Clone';
 requires 'DateTime';
 requires 'DBD::mysql';
 requires 'Hash::Merge';
