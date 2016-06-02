@@ -1,3 +1,6 @@
+_prefix:
+  dancer:
+
 # main configuration file for Dancer
 appname: "PUB - Publications at Bielefeld University"
 charset: "UTF-8"

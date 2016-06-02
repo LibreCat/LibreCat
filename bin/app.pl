@@ -18,17 +18,23 @@ use Log::Log4perl;
 use Log::Any::Adapter;
 use Path::Tiny;
 
+my $layers = LibreCat::Layers->new;
+
+# setup logging
 Log::Log4perl->init(path(Catmandu->root)->child('log4perl.conf')->canonpath);
 Log::Any::Adapter->set('Log4perl');
 
-my $layers = LibreCat::Layers->new;
+# configure dancer
+my $dancer_config = Catmandu->config->{dancer};
+# setup template paths
+$dancer_config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->template_paths;
+set $_ => $dancer_config->{$_} for keys %$dancer_config;
+Dancer::Config->load;
 
-config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->template_paths;
-
+# setup static file serving
 my $app = Plack::App::Cascade->new;
-
 $app->add(map {Plack::App::File->new(root => $_)->to_app} @{$layers->public_paths});
-
+# dancer app
 $app->add(sub {
     Dancer->dance(Dancer::Request->new(env => $_[0]));
 });
