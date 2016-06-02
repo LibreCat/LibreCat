@@ -27,15 +27,15 @@ sub BUILD {
         my $public_path   = $path->child('public');
 
         if ($template_path->is_dir) {
-            unshift @{$self->template_paths}, $template_path;
+            unshift @{$self->template_paths}, $template_path->stringify;
         }
 
         if ($view_path->is_dir) {
-            unshift @{$self->template_paths}, $view_path;
+            unshift @{$self->template_paths}, $view_path->stringify;
         }
 
         if ($public_path->is_dir) {
-            unshift @{$self->public_paths}, $public_path;
+            unshift @{$self->public_paths}, $public_path->stringify;
         }
     }
 

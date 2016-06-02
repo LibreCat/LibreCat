@@ -8,15 +8,16 @@ BEGIN {
 }
 
 use Catmandu::Sane;
-use Dancer;
+use Dancer qw(:syntax);
+use Dancer::Config;
 use LibreCat::Layers;
-use App;
 use Plack::Builder;
 use Plack::App::File;
 use Plack::App::Cascade;
 use Log::Log4perl;
 use Log::Any::Adapter;
 use Path::Tiny;
+use Clone qw(clone);
 
 my $layers = LibreCat::Layers->new;
 
@@ -25,11 +26,26 @@ Log::Log4perl->init(path(Catmandu->root)->child('log4perl.conf')->canonpath);
 Log::Any::Adapter->set('Log4perl');
 
 # configure dancer
-my $dancer_config = Catmandu->config->{dancer};
-# setup template paths
-$dancer_config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->template_paths;
-set $_ => $dancer_config->{$_} for keys %$dancer_config;
-Dancer::Config->load;
+{
+    # mimic dancer config loading
+    my $config = clone(Catmandu->config->{dancer});
+    my $env = setting('environment');
+    my $env_config = (delete($config->{_environments}) || {})->{$env} || {};
+    my %mergeable = (plugins => 1, handlers => 1);
+    for my $key (keys %$env_config) {
+        if ($mergeable{$key}) {
+            $config->{$key}{$_} = $env_config->{$key}{$_} for keys %{$env_config->{$key}};
+        } else {
+            $config->{$key} = $env_config->{$key};
+        }
+    }
+    $config->{apphandler} = 'PSGI';
+    $config->{appdir} //= Catmandu->root;
+    $config->{engines}{template_toolkit}{INCLUDE_PATH} //= $layers->template_paths;
+    set %$config;
+    Dancer::Config->load;
+    load_app 'App';
+}
 
 # setup static file serving
 my $app = Plack::App::Cascade->new;
