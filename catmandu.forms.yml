@@ -995,7 +995,7 @@ array_field:
   - link
 
 other_items:
-  user_account:
+  account:
     account_field_order:
       - id
       - account_type
