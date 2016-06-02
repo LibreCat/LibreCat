@@ -35,7 +35,7 @@ sub can_edit {
     }
     if ($user_role ne 'super_admin') {
         $cql
-            .= " AND type<>bidissertation AND type<>bimasterthesis AND type<>bibachelorthesis AND type<>bipostdocthesis AND locked<>1";
+            .= " AND type<>bi_dissertation AND type<>bi_master_thesis AND type<>bi_bachelor_thesis AND type<>bi_postdoc_thesis AND locked<>1";
     }
 
     my $hits = h->publication->search(cql_query => $cql, limit => 1);

@@ -556,7 +556,7 @@ forms:
         label_short: "Locked"
       link: &link
         label: "URL"
-  bookEditor: &bookeditor
+  book_editor:
     label: "Herausgeber Sammelwerk"
     tab: *tab
     field:
@@ -606,8 +606,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  bookeditor: *bookeditor
-  bookChapter: &bookchapter
+  book_chapter:
     label: "Sammelwerksbeitrag"
     tab: *tab
     field:
@@ -684,8 +683,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  bookchapter: *bookchapter
-  conferenceAbstract: &conferenceabstract
+  conference_abstract:
     label: "Kurzbeitrag Konferenz"
     tab: *tab
     field:
@@ -757,8 +755,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  conferenceabstract: *conferenceabstract
-  conferenceEditor: &conferenceeditor
+  conference_editor:
     label: "Konferenzband"
     tab: *tab
     field:
@@ -797,7 +794,6 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  conferenceeditor: *conferenceeditor
   conference:
     label: "Konferenzbeitrag"
     tab: *tab
@@ -887,7 +883,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  encyclopediaArticle: &encyclopediaarticle
+  encyclopedia_article:
     label: "Lexikoneintrag"
     tab: *tab
     field:
@@ -929,8 +925,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  encyclopediaarticle: *encyclopediaarticle
-  journalArticle: &journalarticle
+  journal_article:
     label: "Zeitschriftenaufsatz"
     tab: *tab
     field:
@@ -986,8 +981,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  journalarticle: *journalarticle
-  journalEditor: &journaleditor
+  journal_editor:
     label: "Sonderausgabe Zeitschrift"
     tab: *tab
     field:
@@ -1041,8 +1035,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  journaleditor: *journaleditor
-  newspaperArticle: &newspaperarticle
+  newspaper_article:
     label: "Zeitungsartikel"
     tab: *tab
     field:
@@ -1084,7 +1077,6 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  newspaperarticle: *newspaperarticle
   patent:
     label: "Patent"
     tab: *tab
@@ -1258,7 +1250,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  researchData: &researchdata
+  research_data:
     label: "Datenpublikation"
     tab:
       basic_fields: "Details"
@@ -1361,7 +1353,6 @@ forms:
         placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
       related_material.link: *related_material_link
       locked: *locked
-  researchdata: *researchdata
   translation:
     label: "Übersetzung"
     tab: *tab
@@ -1431,7 +1422,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  translationChapter: &translationchapter
+  translation_chapter:
     label: "Übersetzung (Aufsatz)"
     tab: *tab
     field:
@@ -1503,8 +1494,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  translationchapter: *translationchapter
-  workingPaper: &workingpaper
+  working_paper:
     label: "Diskussionspapier"
     tab: *tab
     field:
@@ -1540,8 +1530,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  workingpaper: *workingpaper
-  biDissertation: &bidissertation
+  bi_dissertation:
     label: "Bielefelder E-Dissertation"
     tab: *tab
     field: &field
@@ -1608,22 +1597,18 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  bidissertation: *bidissertation
-  biMasterThesis: &bimasterthesis
+  bi_master_thesis:
     label: "Bielefelder Masterarbeit"
     tab: *tab
     field: *field
-  bimasterthesis: *bimasterthesis
-  biPostdocThesis: &bipostdocthesis
+  bi_postdoc_thesis:
     label: "Bielefelder E-Habilitation"
     tab: *tab
     field: *field
-  bipostdocthesis: *bipostdocthesis
-  biBachelorThesis: &bibachelorthesis
+  bi_bachelor_thesis:
     label: "Bielefelder Bachelorarbeit"
     tab: *tab
     field: *field
-  bibachelorthesis: *bibachelorthesis
   to_sp_form: "Zum Gesamtformular wechseln"
   sp_form: "Gesamtformular"
   to_tab_form: "Zur Tab-Navigation wechseln"

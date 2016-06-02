@@ -120,9 +120,9 @@ external_identifier:
   opac:
     name: "OPAC"
     prefix: "UB-OPAC:"
-  fp7:
-    name: "FP7"
-    prefix: "fp7/"
+#  fp7:
+#    name: "FP7"
+#    prefix: "fp7/"
 #  fp6:
 #    name: "FP6"
 #    prefix: "fp6/"
@@ -148,29 +148,27 @@ article_type:
 
 gs_doc_type:
   book: 'book'
-  bookeditor: 'book'
-  bookchapter: 'book chapter'
+  book_editor: 'book'
+  book_chapter: 'book chapter'
   review: 'review'
-  casestudy: 'case study'
-  conferenceabstract: 'conference abstract'
-  conferenceeditor: 'conference publication'
+  conference_abstract: 'conference abstract'
+  conference_editor: 'conference publication'
   conference: 'conference paper'
   dissertation: 'thesis'
-  encyclopediaarticle: 'encyclopedia article'
-  journalarticle: 'article'
-  journaleditor: 'journal editor'
-  newspaperarticle: 'newspaper article'
+  encyclopedia_article: 'encyclopedia article'
+  journal_article: 'article'
+  journal_editor: 'journal editor'
+  newspaper_article: 'newspaper article'
   patent: 'patent'
   preprint: 'preprint'
   report: 'report'
   translation: 'translation'
-  workingpaper: 'working Paper'
-  bidissertation: 'Bi Dissertation'
-  bibachelorthesis: 'Bi BachelorThesis'
-  bimasterthesis: 'Bi MasterThesis'
-  bipostdocthesis: 'Bi PostdocThesis'
-  researchdata: 'Research Data'
-  dara: 'Da|Ra'
+  working_paper: 'working Paper'
+  bi_dissertation: 'Bi Dissertation'
+  bi_bachelor_thesis: 'Bi BachelorThesis'
+  bi_master_thesis: 'Bi MasterThesis'
+  bi_postdoc_thesis: 'Bi PostdocThesis'
+  research_data: 'Research Data'
 
 relations_rd:
 #  -
