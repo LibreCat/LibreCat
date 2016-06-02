@@ -17,7 +17,7 @@
     </div>
 
     [% IF file %]
-    [% FOREACH fi IN file.nsort('file_order') %]
+    [% FOREACH fi IN file %]
       <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.file_id %]">
         <div class="row">
           <div class="col-md-12 col-xs-10 padded">
@@ -72,14 +72,6 @@
       </div>
     [% END %]
     [% END %]
-  </div>
-
-  <div class="col-md-2">
-    <span id="sortFilesInput">
-    [% FOREACH fi IN file.nsort('file_order') %]
-      <input type="hidden" name="file_order" id="file_order_[% fi.file_id %]" value="[% fi.file_id %]" />
-    [% END %]
-    </span>
   </div>
 </div>
 

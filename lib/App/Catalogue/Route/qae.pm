@@ -7,12 +7,10 @@ Route handler for uploading the Quick and Easy upload.
 =cut
 
 use Catmandu::Sane;
-use Catmandu qw/export_to_string/;
 use App::Helper;
-use App::Catalogue::Controller::File qw/update_file upload_temp_file/;
+use App::Catalogue::Controller::File qw/update_file/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;
-use Dancer::Plugin::Email;
 use Try::Tiny;
 use File::Copy;
 use Carp;
@@ -72,7 +70,6 @@ post '/librecat/upload/qae/submit' => needs login => sub {
       relation => "main_file",
       checksum => $digest,
     });
-    push @{$record->{file_order}}, $file_id;
 
     my $response = h->update_record('publication', $record);
 

@@ -12,9 +12,9 @@ use App::Catalogue::Controller::File qw/upload_temp_file/;
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
 
-=head1 PREFIX /librecat
+=head1 REST METHODS
 
-Section, where all uploads are handled.
+All methods for file uploads
 
 =cut
 
@@ -23,7 +23,7 @@ Section, where all uploads are handled.
 Needs a login session.
 
 Upload a File to temporary storage. Returns a JSON document containing
-the upload details and desfault metadata on success or a JSON error 
+the upload details and default metadata on success or a JSON error 
 document on failure:
 
   # success

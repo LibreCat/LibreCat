@@ -83,7 +83,6 @@ post '/librecat/thesesupload/submit' => sub {
               relation => "main_file",
               checksum => $digest,
           });
-          push @{$record->{file_order}}, $file_id;
           
           my $response = h->update_record('publication', $record);
           

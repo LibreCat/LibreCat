@@ -62,7 +62,6 @@ field_order:
     - series_title
     - issue
     - page
-#    - page_range
     - volume_issue_page
     - report_number
     - publication_identifier
@@ -1005,7 +1004,6 @@ array_field:
   - editor
   - editor_solo
   - file
-  - file_order
   - language
   - msc_class
   - original_language

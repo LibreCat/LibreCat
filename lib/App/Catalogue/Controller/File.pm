@@ -1,5 +1,11 @@
 package App::Catalogue::Controller::File;
 
+=head1 NAME App::Catalogue::Controller::File
+
+Helper methods for handling file uploads.
+
+=cut
+
 use Catmandu::Sane;
 use Catmandu::Util;
 use App::Helper;
@@ -13,6 +19,8 @@ use JSON::MaybeXS qw(decode_json encode_json);
 use Exporter qw/import/;
 
 our @EXPORT = qw/make_thumbnail delete_file update_file handle_file upload_temp_file/;
+
+=head1 METHODS
 
 =head2 upload_temp_file(params->{file},$creator)
 
@@ -167,8 +175,8 @@ sub delete_file {
 
 =head2 handle_file($pub)
 
-For the given publication HASH update the file section (upload files, reorder files) 
-when required. Return an update publication HASH with the file changes in place.
+For the given publication HASH update the file section (upload files, 
+generate thumbnails) when required.
 
 =cut
 sub handle_file {
@@ -179,8 +187,7 @@ sub handle_file {
 
     h->log->info("updating file metadata for record $key");
 
-    $pub->{file}       = _decode_file($pub->{file});
-    $pub->{file_order} = _decode_fileorder($pub->{file_order});
+    $pub->{file} = _decode_file($pub->{file});
 
     my $prev_pub = h->publication->get($key);
 
@@ -200,9 +207,6 @@ sub handle_file {
             h->log->debug("new upload with temp-id -> $path/$filename");
 
             update_file($key,$filename,$path);
-
-            # Calculate the new file order
-            _update_fileorder($pub, $fi->{tempid}, $fi->{file_id});
         }
 
         # Regenerate the first thumbnail...
@@ -213,20 +217,9 @@ sub handle_file {
         # Update the stored metadata fields with the new ones
         _update_keys($fi,$prev_pub);
 
-        delete $fi->{tempid}        if $fi->{tempid};
+        delete $fi->{tempid} if $fi->{tempid};
 
         $count++;
-    }
-
-    # Recalculate the file order
-    foreach my $fi (@{$pub->{file}}){
-        my( $index )= grep { $pub->{file_order}->[$_] eq $fi->{file_id} } 0..$#{$pub->{file_order}};
-        if(defined $index){
-            $fi->{file_order} = sprintf("%03d", $index);
-        }
-        else {
-            $fi->{file_order} = sprintf("%03d", $#{$pub->{file_order}});
-        }
     }
 }
 
@@ -242,25 +235,6 @@ sub _decode_file {
     $file;
 }
 
-sub _decode_fileorder {
-    my $file_order = shift;
-    $file_order = [$file_order] unless ref $file_order eq 'ARRAY'; 
-    $file_order;
-}
-
-sub _update_fileorder {
-    my ($pub,$tempid,$file_id) = @_;
-
-    my ($index) = grep { $pub->{file_order}->[$_] eq $tempid } 0..$#{$pub->{file_order}};
-
-    if(defined $index){
-        $pub->{file_order}->[$index] = $file_id;
-    }
-    else {
-        push @{$pub->{file_order}}, $file_id;
-    }
-}
-
 sub _update_keys {
     my ($fi,$pub) = @_;
 
@@ -270,7 +244,7 @@ sub _update_keys {
     my ($prev_fi) = grep { $_->{file_id} eq $fi->{file_id} } @{$pub->{file}};
 
     my @important_fields  = qw(
-            file_id file_order file_name file_size content_type 
+            file_id file_name file_size content_type 
             creator date_created
             );
 

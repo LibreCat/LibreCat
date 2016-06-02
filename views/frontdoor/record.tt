@@ -109,7 +109,7 @@
         [% END %]
 
         <!-- fulltext -->
-        [% FOREACH fi IN mainFile.nsort('file_order') %]
+        [% FOREACH fi IN mainFile %]
           [% IF fi.file_name %]
             [% IF loop.first %]
             <div class="row">
