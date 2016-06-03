@@ -19,7 +19,7 @@ sub command {
             {bag => $opts->bag, id => $opts->bag});
         return $job_id if $opts->background;
         while (1) {
-            $job = $queue->job_status($job_id);
+            my $job = $queue->job_status($job_id);
             last if $job->done;
         }
         return;
