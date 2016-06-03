@@ -5,9 +5,31 @@ use Test::More tests => 24;
 
 use Dancer ':syntax';
 use Dancer::Test;
-use Data::Dumper;
+use Path::Tiny;
+use Clone qw(clone);
+use Catmandu;
 
-load_app 'App';
+Catmandu->load(path(__FILE__)->parent->parent);
+
+{
+    # mimic dancer config loading
+    my $config = clone(Catmandu->config->{dancer});
+    my $env = setting('environment');
+    my $env_config = (delete($config->{_environments}) || {})->{$env} || {};
+    my %mergeable = (plugins => 1, handlers => 1);
+    for my $key (keys %$env_config) {
+        if ($mergeable{$key}) {
+            $config->{$key}{$_} = $env_config->{$key}{$_} for keys %{$env_config->{$key}};
+        } else {
+            $config->{$key} = $env_config->{$key};
+        }
+    }
+    $config->{apphandler} = 'PSGI';
+    $config->{appdir} //= Catmandu->root;
+    set %$config;
+    Dancer::Config->load;
+    load_app 'App';
+}
 
 use App::Helper;
 
