@@ -16,7 +16,7 @@ sub fix {
     else {
         $tmp_type = lc($data->{type});
     }
-    my $fields = $conf->{forms}->{publicationTypes}->{$tmp_type}->{fields};
+    my $fields = $conf->{forms}->{publication_types}->{$tmp_type}->{fields};
 
     foreach my $key (keys %$data) {
         my $ref         = ref $data->{$key};

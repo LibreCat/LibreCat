@@ -1,4 +1,3 @@
-[% l_type = type.lower %]
 <!-- BEGIN backend/change_type_menu.tt -->
 
 <div class="dropdown">
@@ -11,49 +10,14 @@
     <ul class="dropdown-menu" role="menu">
       <li class="disabled"><a href="#">Change Type</a></li>
       <li class="divider"></li>
-      [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_l %]
-        [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
-        [% IF pubtype != type %]
-          <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.language.$lang.forms.$pubtype.label %]</a></li>
-        [% ELSE %]
+      [%- FOREACH pubtype IN h.config.forms.publication_types.keys.sort %]
+        [%- IF type.match('^bi')  AND session.role != "super_admin" %][% NEXT %][% END %]
+        [%- IF pubtype != type %]
+          <li><a href="#" class="change_type" data-val="[% h.config.forms.publication_types.$pubtype %]">[% h.config.language.$lang.forms.$pubtype.label %]</a></li>
+        [%- ELSE %]
           <li class="dropdown-header">[% h.config.language.$lang.forms.$pubtype.label %]</li>
-        [% END %]
-      [% END %]
-      [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_m %]
-        [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
-        [% IF pubtype != type %]
-          <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.language.$lang.forms.$pubtype.label %]</a></li>
-        [% ELSE %]
-          <li class="dropdown-header">[% h.config.language.$lang.forms.$pubtype.label %]</li>
-        [% END %]
-      [% END %]
-      [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_r %]
-        [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
-        [% IF pubtype != type %]
-          <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.language.$lang.forms.$pubtype.label %]</a></li>
-        [% ELSE %]
-          <li class="dropdown-header">[% h.config.language.$lang.forms.$pubtype.label %]</li>
-        [% END %]
-      [% END %]
-      [% IF session.role == "super_admin" %]
-      <li class="divider"></li>
-      [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_admin %]
-        [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
-        [% IF pubtype != type %]
-          <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.language.$lang.forms.$pubtype.label %]</a></li>
-        [% ELSE %]
-          <li class="dropdown-header">[% h.config.language.$lang.forms.$pubtype.label %]</li>
-        [% END %]
-      [% END %]
-      [% END %]
-      [% FOREACH ptype IN h.config.forms.publication_type_order.tabelle_rd %]
-        [% pubtype = h.config.forms.publicationTypes.$ptype.tmpl %]
-        [% IF pubtype != type %]
-          <li><a href="#" class="change_type" data-val="[% h.config.forms.publicationTypes.$ptype.tmpl %]">[% h.config.language.$lang.forms.$pubtype.label %]</a></li>
-        [% ELSE %]
-          <li class="dropdown-header">[% h.config.language.$lang.forms.$pubtype.label %]</li>
-        [% END %]
-      [% END %]
+        [%- END %]
+      [%- END %]
     </ul>
   </div>
 </div>

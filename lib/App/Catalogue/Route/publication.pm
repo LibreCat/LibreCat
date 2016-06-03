@@ -104,7 +104,7 @@ Checks if the user has permission the see/edit this record.
         my $rec = h->publication->get($id);
 
         my $templatepath = "backend/forms";
-        my $template = h->config->{forms}->{publicationTypes}->{lc $rec->{type}}->{tmpl} . ".tt";
+        my $template = h->config->{forms}->{publication_types} . ".tt";
         if(($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
             $templatepath .= "/expert";
             $edit_mode = "expert";
@@ -252,7 +252,7 @@ For admins only!
     get qr{/internal_view/(\w{1,})/*} => needs role => 'super_admin' => sub {
         my ($id) = splat;
 
-        return template 'backend/internal_view', 
+        return template 'backend/internal_view',
             {data => to_yaml h->publication->get($id)};
     };
 
@@ -280,7 +280,7 @@ Publishes private records, returns to the list.
             $publtype = lc($record->{type});
         }
 
-        my $basic_fields = h->config->{forms}->{publicationTypes}->{$publtype}->{fields}->{basic_fields};
+        my $basic_fields = h->config->{forms}->{publication_types}->{$publtype}->{fields}->{basic_fields};
         my $field_check = 1;
 
         foreach my $key ( keys %$basic_fields ) {

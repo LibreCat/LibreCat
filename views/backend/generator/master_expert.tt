@@ -13,7 +13,7 @@
 <!-- changes here must be generated -->
 
 <div class="col-md-11 col-md-offset-1">
-  
+
   <div class="page-header" id="banner">
     <div class="row">
       <div class="col-sm-8">
@@ -33,7 +33,7 @@
   <div class="row"></div>
 
   <form action="/librecat/record/update" method="POST" id="edit_form">
-    <input type="hidden" name="type" value="{% tmpl %}" id="id_type"/>
+    <input type="hidden" name="type" value="[% type %]" id="id_type"/>
     <input type="hidden" name="_id" value="[% _id %]"/>
     <input type="hidden" name="status" value="[% IF !status OR status == "new" %]private[% ELSE %][% status %][% END %]"/>
     <input type="hidden" name="new_record" value="[% new_record %]"/>
@@ -43,12 +43,12 @@
     <input type="hidden" name="edit_mode" id="edit_mode" value="expert" />
 
     <div class="tab tab-content edit-form">
-    
+
       {% INCLUDE fields/buttonrow_tab1.tt %}
 
       <!-- STEP 1 -->
       <div id="basic_fields" class="tab_section">
-      
+
       <div class="hidden bg-danger" id="mandatory-field-error">
         <p>[% lf.mandatory_error %]</p>
       </div>
