@@ -1,5 +1,6 @@
 package LibreCat::FileStore::Container::BagIt;
 
+use Catmandu::Sane;
 use Moo;
 use Carp;
 use File::Path;
@@ -7,7 +8,6 @@ use Catmandu::BagIt;
 use URI::Escape;
 use LibreCat::MimeType;
 use LibreCat::FileStore::File::BagIt;
-
 use namespace::clean;
 
 with 'LibreCat::FileStore::Container';

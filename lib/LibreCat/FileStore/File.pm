@@ -1,8 +1,10 @@
 package LibreCat::FileStore::File;
 
+use Catmandu::Sane;
 use Moo::Role;
 use IO::String;
 use IO::Pipe;
+use namespace::clean;
 
 has key => (is => 'ro', required => 1);
 has content_type => (is => 'ro');

@@ -3,6 +3,7 @@ package LibreCat::User;
 use Catmandu::Sane;
 use Catmandu;
 use Moo;
+use namespace::clean;
 
 has sources => (is => 'ro', default => sub {[]},);
 

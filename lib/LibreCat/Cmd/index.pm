@@ -13,9 +13,15 @@ sub command {
     my ($self, $opts, $args) = @_;
 
     my $queue = LibreCat::JobQueue->new;
+
     if ($opts->id) {
         my $job_id = $queue->add_job('index_record',
             {bag => $opts->bag, id => $opts->bag});
+        return $job_id if $opts->background;
+        while (1) {
+            $job = $queue->job_status($job_id);
+            last if $job->done;
+        }
         return;
     }
 

@@ -1,10 +1,10 @@
 package LibreCat::FileStore::FedoraCommons;
 
+use Catmandu::Sane;
 use Moo;
 use Carp;
 use Catmandu::FedoraCommons;
 use LibreCat::FileStore::Container::FedoraCommons;
-use feature 'state';
 use namespace::clean;
 
 with 'LibreCat::FileStore';

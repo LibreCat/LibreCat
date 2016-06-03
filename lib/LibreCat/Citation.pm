@@ -32,6 +32,7 @@ use Catmandu::Error;
 use JSON::MaybeXS qw(decode_json);
 use LWP::UserAgent;
 use Moo;
+use namespace::clean;
 
 Catmandu->load(':up');
 my $conf = Catmandu->config->{citation};

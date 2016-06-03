@@ -1,7 +1,9 @@
 package LibreCat::MimeType;
 
+use Castmandu::Sane;
 use Moo;
 use MIME::Types;
+use namespace::clean;
 
 has 'types' => (is => 'lazy');
 

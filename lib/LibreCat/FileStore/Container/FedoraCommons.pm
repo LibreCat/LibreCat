@@ -1,5 +1,6 @@
 package LibreCat::FileStore::Container::FedoraCommons;
 
+use Catmandu::Sane;
 use Moo;
 use Carp;
 use File::Temp;
@@ -10,7 +11,6 @@ use LibreCat::MimeType;
 use Catmandu::Util;
 use Catmandu::Store::FedoraCommons::FOXML;
 use LibreCat::FileStore::File::FedoraCommons;
-
 use namespace::clean;
 
 with 'LibreCat::FileStore::Container';

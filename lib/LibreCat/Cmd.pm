@@ -1,6 +1,7 @@
 package LibreCat::Cmd;
 
 use Catmandu::Sane;
+use namespace::clean;
 
 our $VERSION = '0.01';
 

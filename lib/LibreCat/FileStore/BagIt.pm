@@ -1,9 +1,9 @@
 package LibreCat::FileStore::BagIt;
 
+use Catmandu::Sane;
 use Moo;
 use Carp;
 use LibreCat::FileStore::Container::BagIt;
-use feature 'state';
 use namespace::clean;
 
 with 'LibreCat::FileStore';

@@ -1,6 +1,8 @@
 package LibreCat::FileStore::Container;
 
+use Catmandu::Sane;
 use Moo::Role;
+use namespace::clean;
 
 with 'Catmandu::Logger';
 

@@ -1,6 +1,8 @@
 package LibreCat::FileStore::File::BagIt;
 
+use Catmandu::Sane;
 use Moo;
+use namespace::clean;
 
 with 'LibreCat::FileStore::File';
 

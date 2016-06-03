@@ -1,6 +1,7 @@
 package LibreCat::CLI;
 
 use Catmandu::Sane;
+use namespace::clean;
 
 use parent 'App::Cmd';
 

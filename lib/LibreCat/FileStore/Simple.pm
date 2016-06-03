@@ -1,9 +1,9 @@
 package LibreCat::FileStore::Simple;
 
+use Catmandu::Sane;
 use Moo;
 use Carp;
 use LibreCat::FileStore::Container::Simple;
-use feature 'state';
 use namespace::clean;
 
 with 'LibreCat::FileStore';

@@ -1,5 +1,6 @@
 package LibreCat::FileStore::Container::Simple;
 
+use Catmandu::Sane;
 use Moo;
 use Carp;
 use IO::File;
