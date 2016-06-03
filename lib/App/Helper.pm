@@ -443,10 +443,8 @@ sub update_record {
 
         require App::Catalogue::Controller::File;
         require App::Catalogue::Controller::Material;
-        
-        if ($rec->{file}) {
-            App::Catalogue::Controller::File::handle_file($rec);
-        }
+
+        App::Catalogue::Controller::File::handle_file($rec);
 
         if ($rec->{related_material}) {
             App::Catalogue::Controller::Material::update_related_material($rec);
@@ -482,7 +480,7 @@ sub delete_record {
         require App::Catalogue::Controller::File;
         require App::Catalogue::Controller::Material;
         App::Catalogue::Controller::Material::update_related_material($del);
-        App::Catalogue::Controller::File::delete_file($id);
+        App::Catalogue::Controller::File::handle_file($del);
         delete $del->{related_material};
     }
 

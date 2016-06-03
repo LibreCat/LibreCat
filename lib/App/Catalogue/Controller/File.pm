@@ -126,12 +126,12 @@ sub make_thumbnail {
     });
 }
 
-=head2 update_file($key,$filename,$path)
+=head2 make_file($key,$filename,$path)
 
 Import for publication $key a file with name $filename as found in the path $path
 
 =cut
-sub update_file {
+sub make_file {
     my ($key,$filename,$path) = @_;
 
     h->log->info("moving $path/$filename to filestore for record $key");
@@ -150,21 +150,44 @@ sub update_file {
 }
 
 
-=head2 delete_file($key,$filename)
+=head2 remove_file($key,$filename)
 
 Delete for publication $key the file $filename from permanent storage
 
 =cut
-sub delete_file {
+sub remove_file {
     my ($key,$filename) = @_;
 
     h->log->info("deleting $filename for record $key");
 
-    my $uploader_package = h->config->{filestore}->{uploader}->{package};
-    my $uploader_options = h->config->{filestore}->{uploader}->{options};
+    my $uploader_package = h->config->{filestore}->{accesss_thumbnailer}->{package};
+    my $uploader_options = h->config->{filestore}->{accesss_thumbnailer}->{options};
 
     my $pkg = Catmandu::Util::require_package($uploader_package);
     my $worker = $pkg->new(%$uploader_options);
+
+    $worker->work({
+        key      => $key, 
+        filename => $filename, 
+        delete   => 1
+    });
+}
+
+=head2 remove_thumbnail($key,$filename)
+
+Delete for publication $key the thumbnail from permanent storage
+
+=cut
+sub remove_thumbnail {
+    my ($key,$filename) = @_;
+
+    h->log->info("deleting $filename thumbnail for record $key");
+
+    my $thumbnailer_package = h->config->{filestore}->{uploader}->{package};
+    my $thumbnailer_options = h->config->{filestore}->{uploader}->{options};
+
+    my $pkg = Catmandu::Util::require_package($thumbnailer_package);
+    my $worker = $pkg->new(%$thumbnailer_options);
 
     $worker->work({
         key      => $key, 
@@ -183,13 +206,18 @@ sub handle_file {
     my $pub = shift;
     my $key = $pub->{_id};
 
-    return unless $pub->{file};
-
     h->log->info("updating file metadata for record $key");
 
     $pub->{file} = _decode_file($pub->{file});
 
     my $prev_pub = h->publication->get($key);
+
+    # Delete files that are not needed
+    for my $fi (_find_deleted_files($prev_pub,$pub)) {
+        h->log->debug("deleted " . $fi->{file_name});
+        remove_file($key, $fi->{file_name});
+        remove_thumbnail($key, $fi->{file_name});
+    }
 
     my $count = 0;
 
@@ -206,7 +234,7 @@ sub handle_file {
             
             h->log->debug("new upload with temp-id -> $path/$filename");
 
-            update_file($key,$filename,$path);
+            make_file($key,$filename,$path);
         }
 
         # Regenerate the first thumbnail...
@@ -221,11 +249,13 @@ sub handle_file {
 
         $count++;
     }
+
 }
 
 sub _decode_file {
     my $file = shift;
-    $file = [$file] unless ref $file eq 'ARRAY';
+    $file = [] unless defined $file;
+    $file = [$file] unless ref($file) eq 'ARRAY';
     for my $fi (@$file) {
         if (ref $fi ne 'HASH') {
             $fi = encode("utf8", $fi);
@@ -278,6 +308,19 @@ sub _update_keys {
     $fi->{date_created} = h->now unless $fi->{date_created};
 
     $fi->{date_updated} = h->now;
+}
+
+sub _find_deleted_files {
+    my ($prev,$curr) = @_;
+
+    my %curr_ids = map { $_->{file_id} => 1 } @{$curr->{file}};
+    my @deleted_files = ();
+
+    for my $fi (@{$prev->{file}}) {
+        push @deleted_files , $fi unless exists $curr_ids{ $fi->{file_id} }; 
+    }
+
+    return @deleted_files;
 }
 
 1;
