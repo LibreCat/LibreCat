@@ -13,7 +13,7 @@
       [%- FOREACH pubtype IN h.config.forms.publication_types.keys.sort %]
         [%- IF type.match('^bi')  AND session.role != "super_admin" %][% NEXT %][% END %]
         [%- IF pubtype != type %]
-          <li><a href="#" class="change_type" data-val="[% h.config.forms.publication_types.$pubtype %]">[% h.config.language.$lang.forms.$pubtype.label %]</a></li>
+          <li><a href="#" class="change_type" data-val="[% pubtype %]">[% h.config.language.$lang.forms.$pubtype.label %]</a></li>
         [%- ELSE %]
           <li class="dropdown-header">[% h.config.language.$lang.forms.$pubtype.label %]</li>
         [%- END %]

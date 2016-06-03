@@ -104,7 +104,7 @@ Checks if the user has permission the see/edit this record.
         my $rec = h->publication->get($id);
 
         my $templatepath = "backend/forms";
-        my $template = $rec->{type} . ".tt";
+        my $template = $rec->{type}. ".tt";
         if(($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
             $templatepath .= "/expert";
             $edit_mode = "expert";
