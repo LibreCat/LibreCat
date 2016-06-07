@@ -103,3 +103,4 @@ requires 'Catmandu::Store::FedoraCommons';
 requires 'IO::All';
 requires 'Catmandu::Validator::JSONSchema','0.11';
 requires 'Code::TidyAll', 0;
+requires 'Authen::CAS::Client','0.06';
