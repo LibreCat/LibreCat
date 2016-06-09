@@ -44,7 +44,7 @@ sub to_app {
         #already got here before
         if ( is_hash_ref($auth_sso) ){
 
-            return [302,[Location => $self->redirect_url],[]];
+            return [302,[Location => $self->authorization_url],[]];
 
         }
 
@@ -64,11 +64,9 @@ sub to_app {
                 my $doc = $r->doc();
                 $doc = $doc->toString();
 
-                say "self: $self";
-
                 $self->set_auth_sso($session,{ type => "CAS", response => $doc });
 
-                return [302,[Location => $self->redirect_url],[]];
+                return [302,[Location => $self->authorization_url],[]];
 
             }
 
@@ -98,7 +96,7 @@ LibreCat::Auth::SSO::CAS - implementation of LibreCat::Auth::SSO for CAS
         mount '/auth/cas' => LibreCat::Auth::SSO::CAS->new(
 
             session_key => "auth_sso",
-            redirect_url => "/auth/cas/callback"
+            authorization_url => "/auth/cas/callback"
 
         )->to_app;
 
