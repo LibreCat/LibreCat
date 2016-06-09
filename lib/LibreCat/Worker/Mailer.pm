@@ -7,7 +7,6 @@ use namespace::clean;
 
 with 'LibreCat::Worker';
 
-# TODO return values
 sub work {
     my ($self, $opts) = @_;
 
@@ -28,8 +27,6 @@ sub work {
     catch {
         $self->log->error("send mail error: $_");
     };
-
-    return;
 }
 
 1;
