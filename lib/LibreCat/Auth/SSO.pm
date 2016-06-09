@@ -2,6 +2,7 @@ package LibreCat::Auth::SSO;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(check_string);
+use Carp;
 use Moo::Role;
 use namespace::clean;
 
@@ -23,12 +24,19 @@ has authorization_url => (
 );
 requires 'to_app';
 
+#check if $env->{psgix.session} is stored Plack::Session->session
+sub _check_plack_session {
+    defined($_[0]->session) or die("LibreCat::Auth::SSO uses Plack::Session");
+}
+
 sub get_auth_sso {
     my ( $self, $session ) = @_;
+    _check_plack_session( $session );
     $session->get( $self->session_key );
 }
 sub set_auth_sso {
     my ( $self, $session, $value ) = @_;
+    _check_plack_session( $session );
     $session->set( $self->session_key, $value );
 }
 
