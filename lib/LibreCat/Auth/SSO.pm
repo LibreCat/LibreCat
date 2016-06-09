@@ -14,7 +14,7 @@ has session_key => (
     default => sub { 'auth_sso' },
     required => 1
 );
-has redirect_url => (
+has authorization_url => (
     is => 'ro',
     isa => sub { check_string($_[0]); },
     lazy => 1,
@@ -64,7 +64,7 @@ LibreCat::Auth::SSO - LibreCat role for Single Sign On (SSO) authentication
             #already authenticated: what are you doing here?
             if( is_hash_ref($auth_sso)){
 
-                return [302,[Location => $self->redirect_url],[]];
+                return [302,[Location => $self->authorization_url],[]];
 
             }
 
@@ -75,7 +75,7 @@ LibreCat::Auth::SSO - LibreCat role for Single Sign On (SSO) authentication
             $self->set_auth_sso( $session, { type => "MySSOAuth", response => "Long response from external SSO application" }
 
             #redirect to other application for authorization:
-            return [302,[Location => $self->redirect_url],[]];
+            return [302,[Location => $self->authorization_url],[]];
 
         };
     }
@@ -90,7 +90,7 @@ LibreCat::Auth::SSO - LibreCat role for Single Sign On (SSO) authentication
         mount '/auth/myssoauth' => MySSOAuth->new(
 
             session_key => "auth_sso",
-            redirect_url => "/auth/myssoauth/callback"
+            authorization_url => "/auth/myssoauth/callback"
 
         )->to_app;
 
@@ -150,7 +150,7 @@ This is usefull for two reasons:
 
     * the authorization application can pick up the saved response from the session
 
-=item redirect_url
+=item authorization_url
 
 URL of the authorization route.
 
@@ -163,6 +163,8 @@ When authentication succeeds, this application should redirect you here
 =head2 to_app
 
 returns a Plack application
+
+This must be implemented by subclasses
 
 =head2 get_auth_sso($plack_session)
 
