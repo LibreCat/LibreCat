@@ -39,8 +39,8 @@ Log::Any::Adapter->set('Log4perl');
             $config->{$key} = $env_config->{$key};
         }
     }
-    $config->{apphandler} = 'PSGI';
-    $config->{appdir} //= Catmandu->root;
+    setting apphandler => 'PSGI';
+    setting appdir     => Catmandu->root;
     $config->{engines}{template_toolkit}{INCLUDE_PATH} //= $layers->template_paths;
     set %$config;
     Dancer::Config->load;
