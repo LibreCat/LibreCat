@@ -67,8 +67,6 @@ requires 'App::bmkpasswd', '2.010001';
 requires 'Clone';
 requires 'DateTime';
 requires 'DBD::mysql';
-requires 'Hash::Merge';
-requires 'Try::Tiny';
 requires 'Crypt::Digest::MD5';
 requires 'Crypt::SSLeay';
 requires 'File::Basename';

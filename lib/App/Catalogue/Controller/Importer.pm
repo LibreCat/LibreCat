@@ -2,9 +2,8 @@ package App::Catalogue::Controller::Importer;
 
 use Catmandu::Sane;
 use Catmandu;
-use Catmandu::Util qw(:io);
+use Catmandu::Util qw(:io :hash);
 use Furl;
-use Hash::Merge qw(merge);
 use Moo;
 use URL::Encode qw(url_decode);
 
@@ -119,9 +118,7 @@ sub bis {
         fix  => [join_path('fixes', 'pevz_mapping.fix')],
     )->first;
 
-    my $merger = Hash::Merge->new();
-
-    return $merger->merge($p1, $p2);
+    hash_merge($p1, $p2);
 }
 
 1;

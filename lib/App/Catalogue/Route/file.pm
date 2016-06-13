@@ -17,7 +17,6 @@ use Dancer::Plugin::StreamData;
 use App::Helper;
 use App::Catalogue::Controller::Permission;
 use DateTime;
-use Try::Tiny;
 
 sub _file_exists {
     my ($key, $filename) = @_;

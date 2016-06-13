@@ -3,23 +3,23 @@ package App::Helper::Helpers;
 use FindBin;
 use Catmandu::Sane;
 use Catmandu qw(:load export_to_string);
-use Catmandu::Util qw(:io :is :array :human trim);
+use Catmandu::Util qw(:io :is :array :hash :human trim);
 use Catmandu::Fix qw(expand);
 use Catmandu::Store::DBI;
 use Dancer qw(:syntax vars params request);
 use Dancer::FileUtils qw(path);
-use Hash::Merge::Simple qw(merge);
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
 use Moo;
 
+# TODO is this needed anymore?
 sub config {
     state $config;
 
     # Required to load Catmandu at run time to for the Dancer::Test framework
     unless ($config) {
         Catmandu->load("$FindBin::Bin/..");
-        $config = merge(Catmandu->config, Dancer::config);
+        $config = hash_merge(Catmandu->config, Dancer::config);
     }
     $config;
 }

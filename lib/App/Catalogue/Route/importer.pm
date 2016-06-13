@@ -6,8 +6,8 @@ App::Catalogue::Route::importer - central handler for import routes
 
 =cut
 
+use Catmandu::Sane;
 use Dancer ':syntax';
-use Try::Tiny;
 use Dancer::Plugin::Auth::Tiny;
 use App::Helper;
 use App::Catalogue::Controller::Importer;
