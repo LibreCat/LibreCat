@@ -1172,6 +1172,14 @@ sub is_portal_default {
     return $return_hash;
 }
 
+sub loc {
+    my ($self, $str, $loc) = @_;
+    state $locales = {};
+    $loc //= vars->{locale} //= params->{locale} // $self->config->{default_locale};
+    my $i18n = $locales->{$loc} //= LibreCat::I18n->new(locale => $loc);
+    $i18n->localize($str);
+}
+
 package App::Helper;
 
 my $h = App::Helper::Helpers->new;

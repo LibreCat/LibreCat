@@ -1,0 +1,14 @@
+_prefix:
+  i18n:
+
+lexicon:
+  en:
+    - Catmandu::Config
+    - en
+
+default_locale: en
+
+locale:
+  en:
+    login_heading: "Login"
+
