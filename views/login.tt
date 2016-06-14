@@ -7,7 +7,7 @@
   <div class="col-md-6 col-md-offset-2 well loginframe">
 
     <form action="/login" method="post" class="form-horizontal">
-      <h2 class="margin-top0">[% lf.login.login_heading %] </h2>
+      <h2 class="margin-top0">[% h.loc('login_heading') %] </h2>
       <input type="hidden" name="return_url" value="[% return_url %]">
 
       [% IF error_message %]

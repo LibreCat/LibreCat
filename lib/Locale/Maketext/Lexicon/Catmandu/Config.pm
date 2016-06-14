@@ -4,7 +4,7 @@ use Catmandu::Sane;
 
 sub parse {
     my ($self, $key) = @_;
-    Catmandu->config->{i18n}{$key};
+    Catmandu->config->{i18n}{locale}{$key};
 }
 
 1;
