@@ -13,7 +13,6 @@ use App::Catalogue::Controller::File qw/update_file delete_file/;
 use Dancer ':syntax';
 use Dancer::FileUtils qw/path dirname/;
 use Dancer::Plugin::Email;
-use Try::Tiny;
 use File::Copy;
 use Carp;
 use Dancer::Plugin::Auth::Tiny;
