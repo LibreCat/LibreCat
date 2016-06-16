@@ -12,7 +12,6 @@ use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
 use Log::Log4perl ();
 use Moo;
-use Log::Log4perl ();
 
 sub log {
     my ($self) = @_;

@@ -303,7 +303,10 @@ sub _update_keys {
 sub _find_deleted_files {
     my ($prev,$curr) = @_;
 
-    my %curr_ids = map { $_->{file_id} => 1 } @{$curr->{file}};
+    my %curr_ids = map { 
+        $_->{file_id} // 'undef' => 1 
+    } @{$curr->{file}};
+
     my @deleted_files = ();
 
     for my $fi (@{$prev->{file}}) {
