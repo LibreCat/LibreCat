@@ -1,6 +1,6 @@
 package LibreCat::MimeType;
 
-use Castmandu::Sane;
+use Catmandu::Sane;
 use Moo;
 use MIME::Types;
 use namespace::clean;
