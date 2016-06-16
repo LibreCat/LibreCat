@@ -26,7 +26,7 @@ post '/librecat/upload/qae/submit' => needs login => sub {
         accept      => 1,
         title       => "New Quick And Easy Publication - Will be edited by PUB-Team",
         publication => "Quick And Easy Journal Title",
-        type        => "journalArticle",
+        type        => "journal_article",
         message     => params->{description},
         author => [{
           first_name => $person->{first_name},
