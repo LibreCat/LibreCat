@@ -56,7 +56,7 @@
   <div class="clearfix"></div>
 
   <form action="/librecat/record/update" method="POST" id="edit_form">
-    <input type="hidden" name="type" value="{% tmpl %}" id="id_type"/>
+    <input type="hidden" name="type" value="[% type %]" id="id_type"/>
     <input type="hidden" name="_id" value="[% _id %]"/>
     <input type="hidden" name="status" value="[% IF !status OR status == "new" %]private[% ELSE %][% status %][% END %]"/>
     <input type="hidden" name="new_record" value="[% new_record %]"/>
@@ -69,7 +69,7 @@
 
       <!-- STEP 1 -->
       <div class="tab-pane active" id="basic_fields">
-      
+
       <div class="hidden bg-danger" id="mandatory-field-error">
         <p>[% lf.mandatory_error %]</p>
       </div>

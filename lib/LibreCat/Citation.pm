@@ -32,6 +32,7 @@ use Catmandu::Error;
 use JSON::MaybeXS qw(decode_json);
 use LWP::UserAgent;
 use Moo;
+use namespace::clean;
 
 Catmandu->load(':up');
 my $conf = Catmandu->config->{citation};
@@ -39,16 +40,18 @@ my $conf = Catmandu->config->{citation};
 has style => (is => 'ro');
 has styles => (is => 'ro', lazy => 1, builder => '_build_styles');
 has locale => (is => 'ro', default => sub {'en'});
-has all => (is => 'ro');
-has debug => (is => 'ro');
+has all    => (is => 'ro');
+has debug  => (is => 'ro');
 
 sub _build_styles {
     my ($self) = @_;
     if ($self->all) {
         return $conf->{csl}->{styles};
-    } elsif ($self->style) {
+    }
+    elsif ($self->style) {
         return [$self->style];
-    } else {
+    }
+    else {
         return ['default'];
     }
 }
@@ -64,7 +67,8 @@ sub _request {
     if ($res->{_rc} eq '200') {
         my $obj = decode_json($res->{_content});
         return $obj->[0]->{citation};
-    } else {
+    }
+    else {
         return '';
     }
 }
@@ -79,12 +83,26 @@ sub create {
     my $cite;
 
     if ($conf->{engine} eq 'template') {
-        return { default => export_to_string($data, 'Template', { template => $conf->{template}->{template_path} }) };
-    } else {
-        my $csl_json = export_to_string($data, 'JSON', { array => 1, fix => 'fixes/to_csl.fix' });
+        return {
+            default => export_to_string(
+                $data, 'Template',
+                {template => $conf->{template}->{template_path}}
+            )
+        };
+    }
+    else {
+        my $csl_json = export_to_string($data, 'JSON',
+            {array => 1, fix => 'fixes/to_csl.fix'});
         foreach my $s (@{$self->styles}) {
             my $locale = ($s eq 'dgps') ? 'de' : $self->locale;
-            $cite->{$s} = $self->_request([locale => $locale, style => $s, format => 'html', input => $csl_json]);
+            $cite->{$s} = $self->_request(
+                [
+                    locale => $locale,
+                    style  => $s,
+                    format => 'html',
+                    input  => $csl_json
+                ]
+            );
 
         }
 

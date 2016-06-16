@@ -10,6 +10,7 @@ on 'test' => sub {
     requires 'File::Slurp';
     requires 'IO::File';
     requires 'File::Path';
+    requires 'Test::Code::TidyAll', '0.20';
 };
 
 requires 'Business::ISBN', 0;
@@ -64,10 +65,9 @@ requires 'all';
 requires 'Business::ISBN10';
 requires 'Business::ISBN13';
 requires 'App::bmkpasswd', '2.010001';
+requires 'Clone';
 requires 'DateTime';
 requires 'DBD::mysql';
-requires 'Hash::Merge';
-requires 'Try::Tiny';
 requires 'Crypt::Digest::MD5';
 requires 'Crypt::SSLeay';
 requires 'File::Basename';
@@ -101,3 +101,4 @@ requires 'Catmandu::BagIt' , '>=0.12';
 requires 'Catmandu::Store::FedoraCommons';
 requires 'IO::All';
 requires 'Catmandu::Validator::JSONSchema','0.11';
+requires 'Code::TidyAll', 0;

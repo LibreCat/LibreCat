@@ -1,7 +1,0 @@
-# configuration for development environment
-logger: log4perl
-log4perl:
-   config_file: log4perl.conf
-show_errors: 1
-warnings: 1
-traces: 1

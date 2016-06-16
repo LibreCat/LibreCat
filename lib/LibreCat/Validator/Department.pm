@@ -1,6 +1,6 @@
 package LibreCat::Validator::Department;
 
-use Catmandu::Sane; 
+use Catmandu::Sane;
 use Moo;
 use Catmandu::Validator::JSONSchema;
 use Catmandu;

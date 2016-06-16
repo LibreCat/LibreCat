@@ -3,7 +3,6 @@ package App::Search::Route::directoryindex;
 use Catmandu::Sane;
 use Dancer qw(:syntax);
 use App::Helper;
-use Try::Tiny;
 
 #redirect for old websites
 get qr{/\(en\)/*} => sub {

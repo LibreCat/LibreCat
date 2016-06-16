@@ -17,20 +17,25 @@ sub can_edit {
 
     if ($user_role eq 'super_admin') {
         return 1;
-    } elsif ($user_role eq 'user') {
-        $cql .= " OR creator=$user->{_id})";
-    } elsif ($user_role eq 'reviewer') {
-        my @deps = map {"department=$_->{_id}"} @{$user->{reviewer}};
-        $cql .= " OR " .join(' OR ', @deps) .")";
-    } elsif ($user_role eq 'data_manager') {
-        my @deps = map {"department=$_->{_id}"} @{$user->{data_manager}};
-        $cql .= " OR " .join(' OR ', @deps) .")";
-    } elsif ($user_role eq 'delegate') {
-        my @delegate = map {"person=$_"} @{$user->{delegate}};
-        $cql .= " OR " .join(' OR ', @delegate) .")";
     }
-    if($user_role ne 'super_admin'){
-        $cql .= " AND type<>bidissertation AND type<>bimasterthesis AND type<>bibachelorthesis AND type<>bipostdocthesis AND locked<>1";
+    elsif ($user_role eq 'user') {
+        $cql .= " OR creator=$user->{_id})";
+    }
+    elsif ($user_role eq 'reviewer') {
+        my @deps = map {"department=$_->{_id}"} @{$user->{reviewer}};
+        $cql .= " OR " . join(' OR ', @deps) . ")";
+    }
+    elsif ($user_role eq 'data_manager') {
+        my @deps = map {"department=$_->{_id}"} @{$user->{data_manager}};
+        $cql .= " OR " . join(' OR ', @deps) . ")";
+    }
+    elsif ($user_role eq 'delegate') {
+        my @delegate = map {"person=$_"} @{$user->{delegate}};
+        $cql .= " OR " . join(' OR ', @delegate) . ")";
+    }
+    if ($user_role ne 'super_admin') {
+        $cql
+            .= " AND type<>bi_dissertation AND type<>bi_master_thesis AND type<>bi_bachelor_thesis AND type<>bi_postdoc_thesis AND locked<>1";
     }
 
     my $hits = h->publication->search(cql_query => $cql, limit => 1);
@@ -53,31 +58,34 @@ sub can_download {
     my ($self, $id, $file_id, $login, $role, $ip) = @_;
 
     my $ip_range = h->config->{ip_range};
-    my $pub = h->publication->get($id);
-    my $access = "";
+    my $pub      = h->publication->get($id);
+    my $access   = "";
     my $file_name;
     map {
         if ($_->{file_id} == $file_id) {
-            $access = $_->{access_level};
+            $access    = $_->{access_level};
             $file_name = $_->{file_name};
         }
     } @{$pub->{file}};
 
     if ($access eq 'open_access') {
         return (1, $file_name);
-    } elsif ($access eq 'local' && $ip =~ /$ip_range/) {
+    }
+    elsif ($access eq 'local' && $ip =~ /$ip_range/) {
         return (1, $file_name);
-    } elsif ($access eq 'closed') {
+    }
+    elsif ($access eq 'closed') {
+
         # closed documents can be downloaded by user
         #if and only if the user can edit the record
         return (0, '') unless $login;
         return ($self->can_edit($id, $login, $role), $file_name);
-    } else {
+    }
+    else {
         return (0, '');
     }
 
 }
-
 
 package App::Catalogue::Controller::Permission;
 
@@ -87,7 +95,7 @@ use Catmandu::Sane;
 use Dancer qw(:syntax hook);
 use Dancer::Plugin;
 
-register p => sub { $p };
+register p => sub {$p};
 
 hook before_template => sub {
 

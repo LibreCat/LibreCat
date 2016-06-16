@@ -4,32 +4,34 @@ _prefix:
 input_path: "views/backend"
 output_path: "views/backend/forms"
 
+# display publication types in columns on "add new" page
 publication_type_order:
-  tabelle_l:
+  column_left:
     - book
-    - bookeditor
-    - bookchapter
+    - book_editor
+    - book_chapter
     - review
-    - conferenceabstract
-    - conferenceeditor
+    - conference_abstract
+    - conference_editor
     - conference
-  tabelle_m:
+  column_middle:
     - dissertation
-    - encyclopediaarticle
-    - journalarticle
-    - journaleditor
-    - newspaperarticle
+    - encyclopedia_article
+    - journal_article
+    - journal_editor
+    - newspaper_article
     - patent
     - preprint
-  tabelle_r:
+  column_right:
     - report
     - translation
-    - translationchapter
-    - workingpaper
-  tabelle_admin:
-    - bithesis
-  tabelle_rd:
-    - researchdata
+    - translation_chapter
+    - working_paper
+  column_admin:
+    - bi_dissertation
+  column_rd:
+    - research_data
+# sort order of fields for all types
 field_order:
   basic_fields:
     - bi_doctype
@@ -125,9 +127,10 @@ field_order:
     - related_material.record
     - related_material.rd
     - related_material.link
-publicationTypes:
+
+# form definitions for every publication type
+publication_types:
   book:
-    tmpl: book
     fields:
       basic_fields:
         doi: &doi
@@ -223,8 +226,7 @@ publicationTypes:
           mandatory: 0
         related_material.link:
           mandatory: 0
-  bookeditor:
-    tmpl: bookEditor
+  book_editor:
     fields:
       basic_fields:
         doi: *doi
@@ -261,8 +263,7 @@ publicationTypes:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-  bookchapter:
-    tmpl: bookChapter
+  book_chapter:
     fields:
       basic_fields:
         doi: *doi
@@ -315,8 +316,7 @@ publicationTypes:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-  conferenceabstract:
-    tmpl: conferenceAbstract
+  conference_abstract:
     fields:
       basic_fields:
         doi: *doi
@@ -364,8 +364,7 @@ publicationTypes:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-  conferenceeditor:
-    tmpl: conferenceEditor
+  conference_editor:
     fields:
       basic_fields:
         doi: *doi
@@ -404,7 +403,6 @@ publicationTypes:
         link: *link
       related_material: *related_material
   conference:
-    tmpl: conference
     fields:
       basic_fields:
         doi: *doi
@@ -446,7 +444,6 @@ publicationTypes:
         link: *link
       related_material: *related_material
   dissertation:
-    tmpl: dissertation
     fields:
       basic_fields:
         doi: *doi
@@ -482,8 +479,7 @@ publicationTypes:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-  encyclopediaarticle:
-    tmpl: encyclopediaArticle
+  encyclopedia_article:
     fields:
       basic_fields:
         doi: *doi
@@ -517,8 +513,7 @@ publicationTypes:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-  journalarticle:
-    tmpl: journalArticle
+  journal_article:
     fields:
       basic_fields:
         doi: *doi
@@ -560,8 +555,7 @@ publicationTypes:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-  journaleditor:
-    tmpl: journalEditor
+  journal_editor:
     fields:
       basic_fields:
         doi: *doi
@@ -597,8 +591,7 @@ publicationTypes:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-  newspaperarticle:
-    tmpl: newspaperArticle
+  newspaper_article:
     fields:
       basic_fields:
         author: *author_translator
@@ -629,7 +622,6 @@ publicationTypes:
         link: *link
       related_material: *related_material
   patent:
-    tmpl: patent
     fields:
       basic_fields:
         title: *title
@@ -663,7 +655,6 @@ publicationTypes:
         link: *link
       related_material: *related_material
   preprint:
-    tmpl: preprint
     fields:
       basic_fields:
         title: *title
@@ -691,7 +682,6 @@ publicationTypes:
         link: *link
       related_material: *related_material
   report:
-    tmpl: report
     fields:
       basic_fields:
         doi: *doi
@@ -723,7 +713,6 @@ publicationTypes:
         link: *link
       related_material: *related_material
   review:
-    tmpl: review
     fields:
       basic_fields:
         doi: *doi
@@ -757,8 +746,7 @@ publicationTypes:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-  researchdata:
-    tmpl: researchData
+  research_data:
     fields:
       basic_fields:
         doi:
@@ -800,7 +788,6 @@ publicationTypes:
         related_material.link:
           mandatory: 0
   translation:
-    tmpl: translation
     fields:
       basic_fields:
         doi: *doi
@@ -846,8 +833,7 @@ publicationTypes:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-  translationchapter:
-    tmpl: translationChapter
+  translation_chapter:
     fields:
       basic_fields:
         doi: *doi
@@ -892,8 +878,7 @@ publicationTypes:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-  workingpaper:
-    tmpl: workingPaper
+  working_paper:
     fields:
       basic_fields:
         doi: *doi
@@ -923,8 +908,7 @@ publicationTypes:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-  bithesis:
-    tmpl: biDissertation
+  bi_dissertation:
     fields:
       basic_fields:
         bi_doctype:
@@ -982,14 +966,6 @@ publicationTypes:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-  bidissertation:
-    tmpl: biDissertation
-  bimasterthesis:
-    tmpl: biMasterThesis
-  bipostdocthesis:
-    tmpl: biPostDocThesis
-  bibachelorthesis:
-    tmpl: biBachelorThesis
 array_field:
   - abstract
   - alternative_title
@@ -1017,8 +993,8 @@ array_field:
   - jel
   - link
 
-otherItems:
-  user_account:
+other_items:
+  account:
     account_field_order:
       - id
       - account_type

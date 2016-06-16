@@ -7,9 +7,10 @@ use HTML::Entities qw/decode_entities/;
 
 extends 'Catmandu::Exporter::Cite';
 
-around _cite => sub { # strip tags
+around _cite => sub {    # strip tags
     my ($orig, $self, $pub) = @_;
-    if (my $cite = $orig->($self, $pub)) { # strip tags, decode entites and trim
+    if (my $cite = $orig->($self, $pub))
+    {                    # strip tags, decode entites and trim
         $cite =~ s!<[^>]+>!!go;
         return trim(decode_entities($cite));
     }

@@ -131,22 +131,19 @@ date_submitted: 2015-05-22T08:36:49Z
 date_updated: 2015-09-10T13:35:40Z
 department:
 - _id: '2685177'
-  display: Fakultät für Biologie 
+  display: Fakultät für Biologie
   layer: 2
   name: Biochemie und Physiologie der Pflanzen
 doi: 10.1093/jxb/erv066
 external_id:
   isi: '000356223900015'
   pmid: '25740929'
-first_author: Matamoros, Manuel A.
-id: '2737383'
 intvolume: '        66'
 isi: 1
 issue: '10'
 language:
 - iso: eng
   name: English
-marked: 0
 page: 2979-2990
 pmid: 1
 publication: Journal of Experimental Botany
@@ -154,11 +151,10 @@ publication_identifier:
   issn:
   - 1460-2431
 publication_status: published
-pubmedID: '25740929'
 quality_controlled: '1'
 status: public
 title: Function of glutathione peroxidases in legume root nodules
-type: journalArticle
+type: journal_article
 volume: 66
 year: '2015'
 ...

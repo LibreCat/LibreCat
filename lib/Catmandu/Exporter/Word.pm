@@ -90,7 +90,7 @@ my $HTML_FOOTER = <<EOF;
 
 EOF
 
-sub encoding { ':crlf' }
+sub encoding {':crlf'}
 
 sub BUILD {
     $_[0]->{_buf} = $HTML_HEADER;
@@ -98,7 +98,7 @@ sub BUILD {
 
 sub _add_cite {
     my ($self, $cite) = @_;
-    $cite =~ s!</?div[^>]*>!!g; # strip div tags
+    $cite =~ s!</?div[^>]*>!!g;    # strip div tags
     $self->{_buf} .= encode_utf8("<p class=MsoNormal>$cite</p>");
 }
 

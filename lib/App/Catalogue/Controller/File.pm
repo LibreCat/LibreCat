@@ -110,20 +110,17 @@ Generate a thumbnail for the publication $key with filename $filename.
 
 =cut
 sub make_thumbnail {
-    my ($key,$filename) = @_;
+    my ($key, $filename) = @_;
 
     h->log->info("creating thumbnail for $filename in record $key");
 
     my $thumbnailer_package = h->config->{filestore}->{accesss_thumbnailer}->{package};
     my $thumbnailer_options = h->config->{filestore}->{accesss_thumbnailer}->{options};
 
-    my $pkg = Catmandu::Util::require_package($thumbnailer_package);
+    my $pkg    = Catmandu::Util::require_package($thumbnailer_package);
     my $worker = $pkg->new(%$thumbnailer_options);
 
-    $worker->work({
-        key      => $key,
-        filename => $filename
-    });
+    $worker->work({key => $key, filename => $filename});
 }
 
 =head2 make_file($key,$filename,$path)
@@ -139,16 +136,11 @@ sub make_file {
     my $uploader_package = h->config->{filestore}->{uploader}->{package};
     my $uploader_options = h->config->{filestore}->{uploader}->{options};
 
-    my $pkg = Catmandu::Util::require_package($uploader_package);
+    my $pkg    = Catmandu::Util::require_package($uploader_package);
     my $worker = $pkg->new(%$uploader_options);
 
-    $worker->work({
-        key      => $key, 
-        filename => $filename, 
-        path     => $path,
-    });
+    $worker->work({key => $key, filename => $filename, path => $path,});
 }
-
 
 =head2 remove_file($key,$filename)
 
@@ -163,14 +155,10 @@ sub remove_file {
     my $uploader_package = h->config->{filestore}->{accesss_thumbnailer}->{package};
     my $uploader_options = h->config->{filestore}->{accesss_thumbnailer}->{options};
 
-    my $pkg = Catmandu::Util::require_package($uploader_package);
+    my $pkg    = Catmandu::Util::require_package($uploader_package);
     my $worker = $pkg->new(%$uploader_options);
 
-    $worker->work({
-        key      => $key, 
-        filename => $filename, 
-        delete   => 1
-    });
+    $worker->work({key => $key, filename => $filename, delete => 1});
 }
 
 =head2 remove_thumbnail($key,$filename)
@@ -221,6 +209,7 @@ sub handle_file {
 
     my $count = 0;
 
+
     for my $fi (@{$pub->{file}}) {
         # Generate a new file_id if not one existed
         $fi->{file_id} = h->new_record('publication') if ! $fi->{file_id};
@@ -261,6 +250,7 @@ sub _decode_file {
             $fi = encode("utf8", $fi);
             $fi = decode_json($fi);
         }
+
     }
     $file;
 }

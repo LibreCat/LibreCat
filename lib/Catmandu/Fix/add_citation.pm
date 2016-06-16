@@ -6,7 +6,6 @@ use Catmandu::Fix::clone as => 'clone';
 use LibreCat::Citation;
 use Moo;
 
-
 sub fix {
     my ($self, $data) = @_;
 

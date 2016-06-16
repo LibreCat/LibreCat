@@ -10,10 +10,10 @@
         <div class="input-group sticky mandatory">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.bi_doctype.label_short || lf.$type.field.bi_doctype.label %]</div>
           <select id="id_select_bi_doctype" name="bi_doctype" class="sticky form-control">
-            <option value="biDissertation"[% IF type == 'biDissertation' || !type %] selected="selected"[% END %]>biDissertation</option>
-            <option value="biBachelorThesis"[% IF type == 'biBachelorThesis' %] selected="selected"[% END %]>biBachelorThesis</option>
-            <option value="biMasterThesis"[% IF type == 'biMasterThesis' %] selected="selected"[% END %]>biMasterThesis</option>
-            <option value="biPostdocThesis"[% IF type == 'biPostdocThesis' %] selected="selected"[% END %]>biPostdocthesis</option>
+            <option value="bi_dissertation"[% IF type == 'bi_dissertation' || !type %] selected="selected"[% END %]>biDissertation</option>
+            <option value="bi_bachelor_thesis"[% IF type == 'bi_bachelor_thesis' %] selected="selected"[% END %]>biBachelorThesis</option>
+            <option value="bi_master_thesis"[% IF type == 'bi_master_thesis' %] selected="selected"[% END %]>biMasterThesis</option>
+            <option value="bi_postdoc_thesis"[% IF type == 'bi_postdoc_thesis' %] selected="selected"[% END %]>biPostdocthesis</option>
           </select>
           <div class="input-group-addon"></div>
         </div>

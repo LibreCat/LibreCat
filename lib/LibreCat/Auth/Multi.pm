@@ -7,23 +7,19 @@ use namespace::clean;
 
 with 'LibreCat::Auth';
 
-has methods => (
-    is => 'ro',
-    required => 1,
-);
+has methods => (is => 'ro', required => 1,);
 
-has _auths => (
-    is => 'lazy',
-    builder => '_build_auths',
-);
+has _auths => (is => 'lazy', builder => '_build_auths',);
 
 sub _build_auths {
     my ($self) = @_;
-    [map {
-        is_instance($_)
-            ? $_
-            : require_package($_->{package})->new($_->{options});
-    } @{$self->methods}];
+    [
+        map {
+            is_instance($_)
+                ? $_
+                : require_package($_->{package})->new($_->{options});
+        } @{$self->methods}
+    ];
 }
 
 sub _authenticate {

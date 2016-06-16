@@ -1,16 +1,18 @@
 package LibreCat::FileStore::File;
 
+use Catmandu::Sane;
 use Moo::Role;
 use IO::String;
 use IO::Pipe;
+use namespace::clean;
 
-has key           => (is => 'ro' , required => 1);
-has content_type  => (is => 'ro');
-has size          => (is => 'ro');
-has md5           => (is => 'ro');
-has created       => (is => 'ro');
-has modified      => (is => 'ro');
-has data          => (is => 'ro');
+has key => (is => 'ro', required => 1);
+has content_type => (is => 'ro');
+has size         => (is => 'ro');
+has md5          => (is => 'ro');
+has created      => (is => 'ro');
+has modified     => (is => 'ro');
+has data         => (is => 'ro');
 
 sub fh {
     my $self = shift;
@@ -32,22 +34,22 @@ sub fh {
 sub io_from_url {
     my $self = shift;
     my $url  = shift;
-  
+
     IO::Pipe->reader("curl -s \"$url\"");
 }
 
 sub io_from_callback {
-    my $self = shift;
+    my $self     = shift;
     my $callback = shift;
 
     my $pid;
     my $pipe = new IO::Pipe;
 
-    if ($pid = fork()) { # parent
+    if ($pid = fork()) {    # parent
         $pipe->reader();
         return $pipe;
     }
-    elsif (defined($pid)) { # child
+    elsif (defined($pid)) {    # child
         $pipe->writer;
         $callback->($pipe);
     }

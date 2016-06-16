@@ -54,6 +54,7 @@ Some fields are pre-filled.
         return template 'backend/add_new' unless $type;
 
         my $id = h->new_record('publication');
+        # set some basic values
         my $data = {
             _id => $id,
             type => $type,
@@ -64,7 +65,7 @@ Some fields are pre-filled.
             },
         };
 
-        if ( $type eq "researchData" ) {
+        if ( $type eq "research_data" ) {
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
         }
         if(params->{lang}){
@@ -103,7 +104,7 @@ Checks if the user has permission the see/edit this record.
         my $rec = h->publication->get($id);
 
         my $templatepath = "backend/forms";
-        my $template = h->config->{forms}->{publicationTypes}->{lc $rec->{type}}->{tmpl} . ".tt";
+        my $template = $rec->{type}. ".tt";
         if(($edit_mode and $edit_mode eq "expert") or (!$edit_mode and session->{role} eq "super_admin")){
             $templatepath .= "/expert";
             $edit_mode = "expert";
@@ -139,11 +140,6 @@ Checks if the user has the rights to update this record.
 
         my $old_status = $p->{status};
 
-#        my $ip = request->address;
-#        if($ip and $ip eq "129.70.11.105"){
-#            return to_dumper $p;
-#        }
-
         my $result = h->update_record('publication', $p);
         #return to_dumper $result; # leave this here to make debugging easier
 
@@ -163,7 +159,7 @@ Checks if the user has the rights to update this record.
             }
         }
 
-        if ($result->{type} eq "researchData") {
+        if ($result->{type} eq "research_data") {
             if ($result->{status} eq "submitted") {
                 $result->{host} = h->host;
                 my $mail_body = export_to_string($result, 'Template', template => 'views/email/rd_submitted.tt');
@@ -185,11 +181,10 @@ Checks if the user has the rights to update this record.
                     $result->{host} = h->host;
                     my $datacite_xml = export_to_string($result, 'Template', template => 'views/export/datacite.tt');
                     $registry->work({
-                        doi          => $result->{doi}, 
-                        landing_url  => h->host ."/data/$result->{_id}", 
+                        doi          => $result->{doi},
+                        landing_url  => h->host ."/data/$result->{_id}",
                         datacite_xml => $datacite_xml
                     });
-                    #$registry->metadata($result->{doi}, $datacite_xml);
                 } catch {
                     error "Could not register DOI: $_ -- $result->{_id}";
                 }
@@ -254,16 +249,11 @@ Prints internal view, optionally as data dumper.
 For admins only!
 
 =cut
-    get qr{/internal_view/(\w{1,})/*(\w{1,})*} => needs role => 'super_admin' => sub {
-        my ($id, $dumper) = splat;
-        my $pub = h->publication->get($id);
+    get qr{/internal_view/(\w{1,})/*} => needs role => 'super_admin' => sub {
+        my ($id) = splat;
 
-        if($dumper and $dumper eq "dumper"){
-            return template 'backend/internal_view', {data => to_dumper($pub)};
-        } else {
-            return template 'backend/internal_view', {data => to_yaml($pub)};
-        }
-
+        return template 'backend/internal_view',
+            {data => to_yaml h->publication->get($id)};
     };
 
 =head2 GET /publish/:id
@@ -290,7 +280,7 @@ Publishes private records, returns to the list.
             $publtype = lc($record->{type});
         }
 
-        my $basic_fields = h->config->{forms}->{publicationTypes}->{$publtype}->{fields}->{basic_fields};
+        my $basic_fields = h->config->{forms}->{publication_types}->{$publtype}->{fields}->{basic_fields};
         my $field_check = 1;
 
         foreach my $key ( keys %$basic_fields ) {

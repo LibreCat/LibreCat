@@ -16,7 +16,7 @@ use POSIX qw(strftime);
 use parent qw(LibreCat::Cmd);
 
 sub description {
-	return <<EOF;
+    return <<EOF;
 Usage:
 
 librecat store [options] list [recursive]
@@ -34,30 +34,35 @@ EOF
 sub command_opt_spec {
     my ($class) = @_;
     (
-        [ "store=s", "store name" ],
-        [ "file_store=s", "store class" ],
-        [ "file_opt=s%", "store options" ],
-        [ "tmp_dir=s", "temporary directory" , { default => $ENV{TMPDIR} || '/tmp' } ],
-        [ "zip=s" , "zipper" , { default => '/usr/bin/zip' }],
-        [ "unzip=s" , "unzipper" , { default => '/usr/bin/unzip' }],
+        ["store=s",      "store name"],
+        ["file_store=s", "store class"],
+        ["file_opt=s%",  "store options"],
+        [
+            "tmp_dir=s",
+            "temporary directory",
+            {default => $ENV{TMPDIR} || '/tmp'}
+        ],
+        ["zip=s",   "zipper",   {default => '/usr/bin/zip'}],
+        ["unzip=s", "unzipper", {default => '/usr/bin/unzip'}],
     );
 }
 
 sub file_store {
     my $self = shift;
     my $name = shift // 'default';
-	Catmandu->config->{filestore}->{$name}->{package};
+    Catmandu->config->{filestore}->{$name}->{package};
 }
 
 sub file_opt {
     my $self = shift;
     my $name = shift // 'default';
-	Catmandu->config->{filestore}->{$name}->{options};
+    Catmandu->config->{filestore}->{$name}->{options};
 }
 
 sub load {
-    my ($self,$file_store,$file_opt) = @_;
-    my $pkg = Catmandu::Util::require_package($file_store,'LibreCat::FileStore');
+    my ($self, $file_store, $file_opt) = @_;
+    my $pkg
+        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
     $pkg->new(%$file_opt);
 }
 
@@ -97,52 +102,54 @@ sub command {
         $file_opt = $self->file_opt;
     }
 
-    $self->app->set_global_options({
-    		store    => $self->load($file_store,$file_opt) ,
-    		tmp_dir  => $opts->tmp_dir ,
-    		zipper   => $opts->zip ,
-    		unzipper => $opts->unzip ,
-    });
+    $self->app->set_global_options(
+        {
+            store    => $self->load($file_store, $file_opt),
+            tmp_dir  => $opts->tmp_dir,
+            zipper   => $opts->zip,
+            unzipper => $opts->unzip,
+        }
+    );
 
     if ($cmd eq 'list') {
-    	return $self->_list(@$args);
+        return $self->_list(@$args);
     }
     elsif ($cmd eq 'exists') {
-    	return $self->_exists(@$args);
+        return $self->_exists(@$args);
     }
     elsif ($cmd eq 'get') {
-	   	my ($key,$file) = @$args;
-	    if (defined($file)) {
-	        return $self->_fetch($key,$file);
-	    }
-	    else {
-	        return $self->_get($key);
-	    }
+        my ($key, $file) = @$args;
+        if (defined($file)) {
+            return $self->_fetch($key, $file);
+        }
+        else {
+            return $self->_get($key);
+        }
     }
     elsif ($cmd eq 'add') {
-    	return $self->_add(@$args);
+        return $self->_add(@$args);
     }
     elsif ($cmd eq 'delete') {
-    	return $self->_delete(@$args);
+        return $self->_delete(@$args);
     }
-	elsif ($cmd eq 'purge') {
-    	return $self->_purge(@$args);
+    elsif ($cmd eq 'purge') {
+        return $self->_purge(@$args);
     }
     elsif ($cmd eq 'export') {
-    	return $self->_export(@$args);
+        return $self->_export(@$args);
     }
     elsif ($cmd eq 'import') {
-    	return $self->_import(@$args);
+        return $self->_import(@$args);
     }
     elsif ($cmd eq 'thumbnail') {
-    	return $self->_thumbnail(@$args);
+        return $self->_thumbnail(@$args);
     }
 }
 
 sub _list {
-    my ($self,@args) = @_;
+    my ($self, @args) = @_;
     my $store = $self->app->global_options->{store};
-    my $gen = $store->list;
+    my $gen   = $store->list;
 
     while (my $key = $gen->()) {
         my $container = $store->get($key);
@@ -159,73 +166,67 @@ sub _list {
 
         if ($args[0] && $args[0] eq 'recursive') {
             for (@files) {
-                printf "%s %s\n" , $key , $_->key;
+                printf "%s %s\n", $key, $_->key;
             }
         }
         else {
-            printf "%-40.40s %4d %9d %-20.20s %-20.20s\n"
-                , $key
-                , int(@files)
-                , $size
-                , strftime("%Y-%m-%dT%H:%M:%S", localtime($modified))
-                , strftime("%Y-%m-%dT%H:%M:%S", localtime($created));
+            printf "%-40.40s %4d %9d %-20.20s %-20.20s\n", $key, int(@files),
+                $size, strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)),
+                strftime("%Y-%m-%dT%H:%M:%S", localtime($created));
         }
     }
 }
 
 sub _exists {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
 
     croak "exists - need a key" unless defined($key);
 
-	my $store = $self->app->global_options->{store};
-    my $ans = $store->exists($key);
+    my $store = $self->app->global_options->{store};
+    my $ans   = $store->exists($key);
 
-    printf "$key %s\n" , $ans ? "EXISTS" : "NOT_FOUND";
+    printf "$key %s\n", $ans ? "EXISTS" : "NOT_FOUND";
 
     exit($ans ? 0 : 2);
 }
 
 sub _get {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
 
     croak "get - need a key" unless defined($key);
 
-	my $store = $self->app->global_options->{store};
+    my $store     = $self->app->global_options->{store};
     my $container = $store->get($key);
 
     croak "get - failed to load $key" unless $container;
 
-    printf "key: %s\n" , $container->key;
-    printf "created: %s\n", scalar localtime($container->created);
+    printf "key: %s\n",      $container->key;
+    printf "created: %s\n",  scalar localtime($container->created);
     printf "modified: %s\n", scalar localtime($container->modified);
 
     my @files = $container->list;
 
-    printf "#files: %d\n" , int(@files);
+    printf "#files: %d\n", int(@files);
 
     for my $file (@files) {
-        my $key      = $file->key;
-        my $size     = $file->size;
-        my $md5      = $file->md5;
-        my $modified = $file->modified;
+        my $key          = $file->key;
+        my $size         = $file->size;
+        my $md5          = $file->md5;
+        my $modified     = $file->modified;
         my $content_type = $file->content_type // '???';
 
-        printf "%-40.40s %9d $md5 %s %s\n"
-                , $content_type
-                , $size
-                , strftime("%Y-%m-%dT%H:%M:%S", localtime($modified))
-                , $key;
+        printf "%-40.40s %9d $md5 %s %s\n", $content_type, $size,
+            strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)), $key;
     }
 }
 
 sub _fetch {
-    my ($self,$key,$filename) = @_;
+    my ($self, $key, $filename) = @_;
 
-    croak "get - need a key" unless defined($key);
+    croak "get - need a key"  unless defined($key);
     croak "get - need a file" unless defined($filename);
 
-	my $store = $self->app->global_options->{store};
+    my $store     = $self->app->global_options->{store};
     my $container = $store->get($key);
 
     croak "get - failed to load $key" unless $container;
@@ -234,19 +235,20 @@ sub _fetch {
 
     my $io = $file->fh;
 
-    while (! $io->eof) {
+    while (!$io->eof) {
         my $buffer;
-        my $len = $io->read($buffer,1024);
-        syswrite(STDOUT,$buffer,$len);
+        my $len = $io->read($buffer, 1024);
+        syswrite(STDOUT, $buffer, $len);
     }
 }
 
 sub _add {
-    my ($self,$key,$file) = @_;
+    my ($self, $key, $file) = @_;
 
-    croak "add - need a key and a file" unless defined($key) && defined($file) && -r $file;
+    croak "add - need a key and a file"
+        unless defined($key) && defined($file) && -r $file;
 
-	my $store = $self->app->global_options->{store};
+    my $store     = $self->app->global_options->{store};
     my $container = $store->get($key);
 
     unless ($container) {
@@ -255,7 +257,7 @@ sub _add {
 
     croak "add - failed to find or create $key" unless $container;
 
-    my ($name,$path,$suffix) = fileparse($file);
+    my ($name, $path, $suffix) = fileparse($file);
 
     $container->add($name, IO::File->new("$path/$name"));
 
@@ -265,11 +267,12 @@ sub _add {
 }
 
 sub _delete {
-    my ($self,$key,$name) = @_;
+    my ($self, $key, $name) = @_;
 
-    croak "delete - need a key and a file" unless defined($key) && defined($name);
+    croak "delete - need a key and a file"
+        unless defined($key) && defined($name);
 
-	my $store = $self->app->global_options->{store};
+    my $store     = $self->app->global_options->{store};
     my $container = $store->get($key);
 
     croak "delete - failed to find $key" unless $container;
@@ -282,11 +285,11 @@ sub _delete {
 }
 
 sub _purge {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
 
     croak "delete - need a key" unless defined($key);
 
-	my $store = $self->app->global_options->{store};
+    my $store     = $self->app->global_options->{store};
     my $container = $store->get($key);
 
     croak "delete - failed to find $key" unless $container;
@@ -295,28 +298,28 @@ sub _purge {
 }
 
 sub _export {
-    my ($self,$key,$zip_file) = @_;
+    my ($self, $key, $zip_file) = @_;
 
-    my $workdir = sprintf "%s/.%s" , $self->app->global_options->{tmp_dir} , $$;
+    my $workdir = sprintf "%s/.%s", $self->app->global_options->{tmp_dir}, $$;
 
-    croak "export - need a key" unless defined($key);
+    croak "export - need a key"           unless defined($key);
     croak "export - need a zip file name" unless defined($zip_file);
 
-	my $store = $self->app->global_options->{store};
+    my $store     = $self->app->global_options->{store};
     my $container = $store->get($key);
 
     croak "export - failed to find $key" unless $container;
 
     my $export_name = $container->key;
-    my $export_dir  = sprintf "%s/%s" , $workdir , $export_name;
+    my $export_dir = sprintf "%s/%s", $workdir, $export_name;
 
-    unless ( mkpath($export_dir) ) {
+    unless (mkpath($export_dir)) {
         croak "export - failed to create $export_dir";
     }
 
     my @files = $container->list;
 
-    local(*OUT);
+    local (*OUT);
 
     for my $file (@files) {
         my $key = $file->key;
@@ -324,24 +327,24 @@ sub _export {
         my $obj = $container->get($key);
         my $io  = $obj->fh;
 
-        open(OUT,"> $export_dir/$key");
-        binmode(OUT,':raw');
+        open(OUT, "> $export_dir/$key");
+        binmode(OUT, ':raw');
 
-        while (! $io->eof) {
+        while (!$io->eof) {
             my $buffer;
-            my $len = $io->read($buffer,1024);
-            syswrite(OUT,$buffer,1024);
+            my $len = $io->read($buffer, 1024);
+            syswrite(OUT, $buffer, 1024);
         }
 
-        close (OUT);
+        close(OUT);
     }
 
     my $zipper = $self->app->global_options->{zipper};
 
-    if (-r $zip_file && ! unlink $zip_file) {
+    if (-r $zip_file && !unlink $zip_file) {
         croak "Failed to remove existing $zip_file";
     }
-    
+
     system("cd $workdir && $zipper -r $zip_file $export_name/*");
 
     if ($? == -1) {
@@ -363,22 +366,22 @@ sub _export {
 }
 
 sub _import {
-    my ($self,$key,$zip_file) = @_;
+    my ($self, $key, $zip_file) = @_;
 
-	my $store = $self->app->global_options->{store};
+    my $store = $self->app->global_options->{store};
 
     $zip_file = File::Spec->rel2abs($zip_file);
 
-    my $workdir = sprintf "%s/.%s" , $self->app->global_options->{tmp_dir} , $$;
+    my $workdir = sprintf "%s/.%s", $self->app->global_options->{tmp_dir}, $$;
 
-    croak "import - need a key" unless defined($key);
+    croak "import - need a key"           unless defined($key);
     croak "import - need a zip file name" unless defined($zip_file);
 
     my $container = $store->get($key);
 
     croak "import - container $key already exists" if $container;
 
-    unless ( mkpath($workdir) ) {
+    unless (mkpath($workdir)) {
         croak "export - failed to create $workdir";
     }
 
@@ -404,7 +407,7 @@ sub _import {
     }
 
     for my $file (glob("$zip_directory/*")) {
-        $self->_add($key,$file);
+        $self->_add($key, $file);
     }
 
     unless (File::Path::remove_tree($workdir) > 0) {
@@ -415,17 +418,15 @@ sub _import {
 }
 
 sub _thumbnail {
-    my ($self,$key,$filename) = @_;
+    my ($self, $key, $filename) = @_;
 
-    croak "get - need a key" unless defined($key);
+    croak "get - need a key"  unless defined($key);
     croak "get - need a file" unless defined($filename);
 
-	my $store = $self->app->global_options->{store};
+    my $store  = $self->app->global_options->{store};
     my $client = REST::Client->new();
-    my $url = sprintf "%s/librecat/api/access/%s/%s/thumbnail"
-                    , Catmandu->config->{host}
-                    , uri_escape($key)
-                    , uri_escape($filename);
+    my $url    = sprintf "%s/librecat/api/access/%s/%s/thumbnail",
+        Catmandu->config->{host}, uri_escape($key), uri_escape($filename);
     $client->POST($url);
 
     unless ($client->responseCode() eq '200') {
@@ -440,14 +441,13 @@ sub find_subdirectory {
     my $has_files = 0;
 
     for my $f (glob("$directory/*")) {
-        next if index($f,".") == 0;
+        next if index($f, ".") == 0;
         return $f if -d $f;
         $has_files = 1;
     }
 
     return $has_files ? $directory : undef;
 }
-
 
 1;
 

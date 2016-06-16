@@ -2,9 +2,8 @@ package App::Catalogue::Controller::Importer;
 
 use Catmandu::Sane;
 use Catmandu;
-use Catmandu::Util qw(:io);
+use Catmandu::Util qw(:io :hash);
 use Furl;
-use Hash::Merge qw(merge);
 use Moo;
 use URL::Encode qw(url_decode);
 
@@ -14,7 +13,7 @@ has source => (is => 'ro', default => sub {'crossref'});
 sub fetch {
     my ($self) = @_;
 
-    my $s = $self->source;
+    my $s  = $self->source;
     my $id = $self->id;
     $self->$s($id);
 }
@@ -25,8 +24,8 @@ sub arxiv {
     Catmandu->importer(
         'ArXiv',
         query => $id,
-        fix => [join_path('fixes','arxiv_mapping.fix')],
-        )->first;
+        fix   => [join_path('fixes', 'arxiv_mapping.fix')],
+    )->first;
 }
 
 sub inspire {
@@ -34,9 +33,9 @@ sub inspire {
 
     Catmandu->importer(
         'Inspire',
-        id => $id,
-        fix => [join_path('fixes','inspire_mapping.fix')],
-        )->first;
+        id  => $id,
+        fix => [join_path('fixes', 'inspire_mapping.fix')],
+    )->first;
 }
 
 sub crossref {
@@ -44,13 +43,13 @@ sub crossref {
 
     my $data = Catmandu->importer(
         'getJSON',
-        from => url_decode ("http://api.crossref.org/works/$id"),
-        fix => [join_path('fixes','crossref_mapping.fix')],
+        from    => url_decode("http://api.crossref.org/works/$id"),
+        fix     => [join_path('fixes', 'crossref_mapping.fix')],
         timeout => 10,
-        )->first;
+    )->first;
 
     # try @datacite if crossref has no data
-    if(!$data or lc $data->{doi} ne lc $id) {
+    if (!$data or lc $data->{doi} ne lc $id) {
         $data = $self->datacite($id);
     }
 
@@ -61,17 +60,17 @@ sub datacite {
     my ($self, $id) = @_;
 
     my $furl = Furl->new(
-        agent => "Chrome 35.1",
+        agent   => "Chrome 35.1",
         timeout => 10,
         headers => [Accept => 'application/x-datacite+xml'],
-        );
+    );
 
-    my $res = $furl->get('http://data.datacite.org/'. $id);
+    my $res = $furl->get('http://data.datacite.org/' . $id);
     Catmandu->importer(
         'XML',
         file => $res->content,
-        fix => [join_path('fixes','from_datacite.fix')],
-        )->first;
+        fix  => [join_path('fixes', 'from_datacite.fix')],
+    )->first;
 }
 
 sub epmc {
@@ -81,8 +80,8 @@ sub epmc {
     Catmandu->importer(
         'EuropePMC',
         query => $id,
-        fix => [join_path('fixes','epmc_mapping.fix')],
-        )->first;
+        fix   => [join_path('fixes', 'epmc_mapping.fix')],
+    )->first;
 }
 
 sub bibtex {
@@ -91,37 +90,35 @@ sub bibtex {
     Catmandu->importer(
         'BibTeX',
         file => \$bibtex,
-        fix => [join_path('fixes','bibtex_mapping.fix')],
-        )->first;
+        fix  => [join_path('fixes', 'bibtex_mapping.fix')],
+    )->first;
 }
 
 # Bielefeld specific, bis=bielefeld information system!
 sub bis {
     my ($self, $id) = @_;
 
-    my $furl = Furl->new( agent => "Chrome 35.1", timeout => 10 );
+    my $furl = Furl->new(agent => "Chrome 35.1", timeout => 10);
 
     my $base_url = 'http://ekvv.uni-bielefeld.de/ws/pevz';
     my $url      = $base_url . "/PersonKerndaten.xml?persId=$id";
     my $url2     = $base_url . "/PersonKontaktdaten.xml?persId=$id";
 
     my $res = $furl->get($url);
-    my $p1 = Catmandu->importer(
+    my $p1  = Catmandu->importer(
         'XML',
         file => $res->content,
-        fix => [join_path('fixes','pevz_mapping.fix')],
-        )->first;
+        fix  => [join_path('fixes', 'pevz_mapping.fix')],
+    )->first;
 
     $res = $furl->get($url2);
     my $p2 = Catmandu->importer(
         'XML',
         file => $res->content,
-        fix => [join_path('fixes','pevz_mapping.fix')],
-        )->first;
+        fix  => [join_path('fixes', 'pevz_mapping.fix')],
+    )->first;
 
-    my $merger = Hash::Merge->new();
-
-    return $merger->merge( $p1, $p2 );
+    hash_merge($p1, $p2);
 }
 
 1;

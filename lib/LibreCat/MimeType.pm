@@ -1,22 +1,24 @@
 package LibreCat::MimeType;
 
+use Catmandu::Sane;
 use Moo;
 use MIME::Types;
+use namespace::clean;
 
 has 'types' => (is => 'lazy');
 
 sub _build_types {
-	MIME::Types->new( only_complete => 1 );
+    MIME::Types->new(only_complete => 1);
 }
 
 sub content_type {
-	my ($self,$filename) = @_;
+    my ($self, $filename) = @_;
 
-	return undef unless $filename;
+    return undef unless $filename;
 
-	my ($ext) = $filename =~ /\.(.+?)$/;
+    my ($ext) = $filename =~ /\.(.+?)$/;
 
-	return $self->types->mimeTypeOf($ext) // 'application/octet-stream';
+    return $self->types->mimeTypeOf($ext) // 'application/octet-stream';
 }
 
 1;

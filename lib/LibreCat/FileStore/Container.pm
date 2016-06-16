@@ -1,12 +1,14 @@
 package LibreCat::FileStore::Container;
 
+use Catmandu::Sane;
 use Moo::Role;
+use namespace::clean;
 
 with 'Catmandu::Logger';
 
-has key        => (is => 'ro' , required => 1);
-has created    => (is => 'ro');
-has modified   => (is => 'ro');
+has key => (is => 'ro', required => 1);
+has created  => (is => 'ro');
+has modified => (is => 'ro');
 
 requires 'list';
 requires 'exists';

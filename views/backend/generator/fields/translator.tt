@@ -1,5 +1,3 @@
-[% lowtype = type.lower.match('^bi') ? 'bithesis' : type.lower %]
-[% confpath = h.config.forms.publicationTypes.$lowtype %]
 [% USE JSON %]
 <div id="authorEditorTranslator">
   <div class="row authorspan innerrow">

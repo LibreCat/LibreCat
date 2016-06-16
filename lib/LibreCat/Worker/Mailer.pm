@@ -7,15 +7,14 @@ use namespace::clean;
 
 with 'LibreCat::Worker';
 
-# TODO return values
 sub work {
     my ($self, $opts) = @_;
 
     $self->log->debugf("sending mail to: %s", $opts);
     my $mail = Email::Simple->create(
         header => [
-            To => $opts->{to},
-            From => $opts->{from},
+            To      => $opts->{to},
+            From    => $opts->{from},
             Subject => $opts->{subject},
         ],
         body => $opts->{body},
@@ -24,11 +23,10 @@ sub work {
     try {
         sendmail($mail);
         $self->log->debug("send mail successfully to $opts->{to}");
-    } catch {
+    }
+    catch {
         $self->log->error("send mail error: $_");
     };
-
-    return;
 }
 
 1;

@@ -205,7 +205,7 @@ publication:
 
   properties:
     _id:
-      oneOf: 
+      oneOf:
         - type: string
           pattern: "^[0-9]+$"
           minLength: 1
@@ -216,25 +216,25 @@ publication:
       enum:
         - original
         - book
-        - bookEditor
-        - bookChapter
+        - book_editor
+        - book_chapter
         - review
-        - conferenceAbstract
-        - conferenceEditor
+        - conference_abstract
+        - conference_editor
         - conference
         - dissertation
-        - encyclopediaArticle
-        - journalArticle
-        - journalEditor
-        - newspaperArticle
+        - encyclopedia_article
+        - journal_article
+        - journal_editor
+        - newspaper_article
         - patent
         - preprint
         - report
         - translation
-        - translationChapter
-        - workingPaper
-        - biDissertation
-        - researchData
+        - translation_chapter
+        - working_paper
+        - bi_dissertation
+        - research_data
 
     date_created: &dt
       type: string
@@ -255,10 +255,6 @@ publication:
       uniqueItems: true
       items:
         '$ref': '#/definitions/author'
-
-    first_author:
-      type: string
-      minLength: 1
 
     title:
       type: string
@@ -326,7 +322,7 @@ publication:
       type: array
       items:
         '$ref': '#/definitions/iso_language'
-  required: ["_id","type","author","first_author","title","year"]
+  required: ["_id","type","author","title","year"]
   additionalProperties: true
 
 #used in LibreCat::Validator::Researcher
@@ -454,7 +450,7 @@ researcher:
         - type: string
           pattern: '^[0-9]+$'
         - type: integer
-        
+
 
   required: ["_id","account_status","account_type","password","login","email","first_name","last_name","full_name","department"]
   additionalProperties: true
@@ -596,7 +592,7 @@ research_group:
       type: string
       format: date-time
     affiliation:
-      type: string 
+      type: string
     department:
       type: array
       items:
