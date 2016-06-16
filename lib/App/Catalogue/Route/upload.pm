@@ -39,6 +39,7 @@ document on failure:
     'creator'      => 'einstein',
     'date_created' => '2016-05-30T11:20:34Z',
     'date_updated' => '2016-05-30T11:20:34Z',
+    'success'      => 1
   }
 
   # failure

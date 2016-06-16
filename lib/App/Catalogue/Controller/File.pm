@@ -83,7 +83,10 @@ sub upload_temp_file {
 
     unless (mkdir $filedir) {
         h->log->error("creating $filedir failed : $!");
-        croak "failed to create $filedir";
+        return {
+            success => 0, 
+            error_message => 'Sorry! The file upload failed.'
+        } 
     }
     
     my $filepath  = path(h->config->{filestore}->{tmp_dir}, $tempid, $file->{filename});
@@ -96,6 +99,10 @@ sub upload_temp_file {
     }
     else {
         h->log->error("failed to copy $temp_file to $filepath");
+        return {
+            success => 0, 
+            error_message => 'Sorry! The file upload failed.'
+        } 
     }
 
     h->log->debug("deleting $temp_file");
@@ -209,7 +216,6 @@ sub handle_file {
 
     my $count = 0;
 
-
     for my $fi (@{$pub->{file}}) {
         # Generate a new file_id if not one existed
         $fi->{file_id} = h->new_record('publication') if ! $fi->{file_id};
@@ -238,7 +244,6 @@ sub handle_file {
 
         $count++;
     }
-
 }
 
 sub _decode_file {
@@ -300,6 +305,8 @@ sub _update_keys {
     $fi->{date_updated} = h->now;
 }
 
+# Find deleted files. Filter out the ones where more than one pub->file
+# points to the same file.
 sub _find_deleted_files {
     my ($prev,$curr) = @_;
 
@@ -309,11 +316,30 @@ sub _find_deleted_files {
 
     my @deleted_files = ();
 
+    my %prev_names = map { 
+        $_->{file_name} => 0 
+    } @{$prev->{file}};
+
     for my $fi (@{$prev->{file}}) {
-        push @deleted_files , $fi unless exists $curr_ids{ $fi->{file_id} }; 
+        my $name = $fi->{file_name};
+        my $id   = $fi->{file_id};
+
+        $prev_names{ $name } += 1;
+
+        unless ( exists $curr_ids{ $id } ) {
+            push @deleted_files , $fi;
+            $prev_names{ $name } -= 1;
+        } 
     }
 
-    return @deleted_files;
+    my @filtered_files = ();
+
+    for my $fi (@deleted_files) {
+        my $name = $fi->{file_name};
+        push @filtered_files , $fi if $prev_names{ $name } == 0;
+    }
+
+    return @filtered_files;
 }
 
 1;
