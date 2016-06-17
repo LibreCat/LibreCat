@@ -483,7 +483,7 @@ $(function () {
 
 	$(".creator").sortable({
 	    update: function (event, ui) {
-		    $('.creator').find('div.row.multirow').each(function(index){
+			ui.item.closest('.creator').find('div.row.multirow').each(function(index){
 				var myitem = $(this);
 			    myitem.find('input, textarea, img, button, select, span').each(function(){
 					if($(this).attr('id')){
