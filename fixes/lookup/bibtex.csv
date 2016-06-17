@@ -1,13 +1,13 @@
 bibtex,pub
-article,journalArticle
+article,journal_article
 book,book
-inbook,bookChapter
+inbook,book_chapter
 conference,conference
 phdthesis,dissertation
 unpublished,preprint
 techreport,report
 booklet,book
-incollection,bookChapter
+incollection,book_chapter
 inproceedings,conference
 masterthesis,dissertation
-proceedings,conferenceEditor
+proceedings,conference_editor

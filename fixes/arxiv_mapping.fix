@@ -32,7 +32,7 @@ end
 
 # maybe journal article with doi
 if exists ('arxiv:journal_ref')
-	set_field('type','journalArticle')
+	set_field('type','journal_article')
 	move_field('arxiv:journal_ref.content', 'publication')
 end
 remove_field('arxiv:journal_ref')

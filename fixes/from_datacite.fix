@@ -2,7 +2,7 @@
 # import data from http://data.datacite.org
 
 # map mandatory fields
-set_field(type,researchData)
+set_field(type,research_data)
 move_field('identifier.content','doi')
 remove_field('identifier')
 move_field('publicationYear','year')

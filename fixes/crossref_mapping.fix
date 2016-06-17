@@ -34,7 +34,7 @@ add_field(publication_status, published)
 
 # type mapping
 if all_match('type','journal-article')
-    set_field('type','journalArticle')
+    set_field('type','journal_article')
     move_field('container-title.0','publication')
     if any_match(page, '-')
       nothing()
@@ -44,7 +44,7 @@ if all_match('type','journal-article')
 end
 
 if all_match('type','book-chapter')
-    set_field('type','bookChapter')
+    set_field('type','book_chapter')
     move_field('container-title.0','book_title')
     move_field('container-title.0','series_title')
 end

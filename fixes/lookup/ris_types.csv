@@ -1,9 +1,9 @@
 type,ris_type
 book,BOOK
-bookChapter,CHAP
-bookEditor,BOOK
+book_chapter,CHAP
+book_editor,BOOK
 conference,CONF
 dissertation,THES
-journalArticle,JOUR
-licentiateThesis,THES
-researchData,DATA
+journal_article,JOUR
+bi_disseration,THES
+research_data,DATA
