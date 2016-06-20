@@ -13,14 +13,16 @@ Catmandu->load(path(__FILE__)->parent->parent);
 
 {
     # mimic dancer config loading
-    my $config = clone(Catmandu->config->{dancer});
-    my $env = setting('environment');
+    my $config     = clone(Catmandu->config->{dancer});
+    my $env        = setting('environment');
     my $env_config = (delete($config->{_environments}) || {})->{$env} || {};
-    my %mergeable = (plugins => 1, handlers => 1);
+    my %mergeable  = (plugins => 1, handlers => 1);
     for my $key (keys %$env_config) {
         if ($mergeable{$key}) {
-            $config->{$key}{$_} = $env_config->{$key}{$_} for keys %{$env_config->{$key}};
-        } else {
+            $config->{$key}{$_} = $env_config->{$key}{$_}
+                for keys %{$env_config->{$key}};
+        }
+        else {
             $config->{$key} = $env_config->{$key};
         }
     }

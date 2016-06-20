@@ -104,3 +104,4 @@ requires 'Code::TidyAll', 0;
 
 requires 'Locale::Maketext';
 requires 'Locale::Maketext::Lexicon';
+

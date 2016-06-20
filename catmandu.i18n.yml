@@ -2,9 +2,8 @@ _prefix:
   i18n:
 
 lexicon:
-  en:
-    - Catmandu::Config
-    - en
+  en: ['CatmanduConfig', ['en']]
+  de: ['CatmanduConfig', ['de']]
 
 default_locale: en
 
@@ -14,3 +13,4 @@ locale:
 
   de:
     login_heading: "Anmelden"
+

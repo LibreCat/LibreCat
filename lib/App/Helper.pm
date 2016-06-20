@@ -10,6 +10,7 @@ use Dancer qw(:syntax vars params request);
 use Dancer::FileUtils qw(path);
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
+use LibreCat::I18N;
 use Moo;
 
 # TODO is this needed anymore?
@@ -1175,8 +1176,9 @@ sub is_portal_default {
 sub loc {
     my ($self, $str, $loc) = @_;
     state $locales = {};
-    $loc //= vars->{locale} //= params->{locale} // $self->config->{default_locale};
-    my $i18n = $locales->{$loc} //= LibreCat::I18n->new(locale => $loc);
+    $loc //= vars->{locale} //= params->{locale}
+        // $self->config->{default_locale};
+    my $i18n = $locales->{$loc} //= LibreCat::I18N->new(locale => $loc);
     $i18n->localize($str);
 }
 

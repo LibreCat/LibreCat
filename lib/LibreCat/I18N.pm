@@ -1,4 +1,4 @@
-package LibreCat::I18N::Handle;
+package LibreCat::I18N::_Handle;
 
 use Catmandu::Sane;
 use Catmandu;
@@ -11,16 +11,11 @@ use Catmandu::Sane;
 use Moo;
 
 has locale => (is => 'ro', required => 1);
-has handle => (is => 'lazy');
+has _handle => (is => 'lazy', handles => {localize => 'maketext'});
 
-sub _build_handle {
-    my ($self, $loc) = @_;
-    LibreCat::I18N::Handle->get_handle($loc);
-}
-
-sub localize {
-    my ($self, $str) = @_;
-    $self->handle->maketext($str);
+sub _build__handle {
+    my ($self) = @_;
+    LibreCat::I18N::_Handle->get_handle($self->locale);
 }
 
 1;
