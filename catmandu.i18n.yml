@@ -5,5 +5,3 @@ lexicon:
   en: ['CatmanduConfig', ['en']]
   de: ['CatmanduConfig', ['de']]
 
-default_locale: en
-
