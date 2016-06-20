@@ -1,7 +1,7 @@
 [% path = request.path %]
 [% backend = path.match('librecat') ? 1 : 0 %]
 [% lang = session.lang %]
-[% lf = h.config.language.$lang %]
+[% lf = h.config.locale.$lang %]
 
 [% INCLUDE header.tt %]
 

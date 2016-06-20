@@ -6,7 +6,7 @@ use Catmandu qw(:load export_to_string);
 use Catmandu::Util qw(:io :is :array :hash :human trim);
 use Catmandu::Fix qw(expand);
 use Catmandu::Store::DBI;
-use Dancer qw(:syntax vars params request);
+use Dancer qw(:syntax params request session vars);
 use Dancer::FileUtils qw(path);
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
@@ -1173,14 +1173,20 @@ sub is_portal_default {
     return $return_hash;
 }
 
-sub loc {
+# TODO don't store in session, make it a param
+sub locale {
+    session('lang') // $_[0]->config->{default_lang};
+}
+
+sub localize {
     my ($self, $str, $loc) = @_;
+    $loc //= $self->locale;
     state $locales = {};
-    $loc //= vars->{locale} //= params->{locale}
-        // $self->config->{default_locale};
     my $i18n = $locales->{$loc} //= LibreCat::I18N->new(locale => $loc);
     $i18n->localize($str);
 }
+
+*loc = \&localize;
 
 package App::Helper;
 

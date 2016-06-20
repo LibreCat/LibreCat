@@ -2,13 +2,12 @@ package Locale::Maketext::Lexicon::CatmanduConfig;
 
 use Catmandu::Sane;
 use Catmandu;
+use Catmandu::Expander;
 
 sub parse {
     my ($self, $key) = @_;
-    my $hash = Catmandu->config->{i18n}{locale}{$key};
-    use Data::Dumper;
-    say Dumper({$key => $hash});
-    $hash;
+    my $hash = Catmandu->config->{locale}{$key};
+    Catmandu::Expander->collapse_hash($hash);
 }
 
 1;

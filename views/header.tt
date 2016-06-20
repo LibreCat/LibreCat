@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html[% IF bag == 'home' %] ng-app="angularController"[% END %]>
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
-[% lf = h.config.language.$lang -%]
+[% lf = h.config.locale.$lang -%]
 
 <!-- BEGIN header.tt -->
 

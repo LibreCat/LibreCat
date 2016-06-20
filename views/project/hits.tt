@@ -2,7 +2,7 @@
 
 [% lang = session.lang ? session.lang : h.config.default_lang %]
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
-[% lf = h.config.language.$lang -%]
+[% lf = h.config.locale.$lang -%]
 
 <div class="col-md-9">
   <div class="row">

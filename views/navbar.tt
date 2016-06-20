@@ -3,7 +3,7 @@
 [% qp = request.params.hash -%]
 [% qp.delete('splat') -%]
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
-[% lf = h.config.language.$lang -%]
+[% lf = h.config.locale.$lang -%]
 [% style = qp.style || 'default' -%]
 
 <!-- BEGIN navbar.tt -->

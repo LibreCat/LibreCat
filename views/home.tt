@@ -5,7 +5,7 @@
 [% thisPerson = backend ? h.get_person(session.personNumber) : h.get_person(id) -%]
 [% menu = "" -%]
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
-[% lf = h.config.language.$lang -%]
+[% lf = h.config.locale.$lang -%]
 
 [% INCLUDE header.tt %]
 

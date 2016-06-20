@@ -7,10 +7,3 @@ lexicon:
 
 default_locale: en
 
-locale:
-  en:
-    login_heading: "Login"
-
-  de:
-    login_heading: "Anmelden"
-

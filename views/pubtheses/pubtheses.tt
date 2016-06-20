@@ -3,7 +3,7 @@
 [% qp.delete('splat') %]
 [% thisq = h.extract_params.q %]
 [% lang = session.lang ? session.lang : h.config.default_lang %]
-[% lf = h.config.language.$lang %]
+[% lf = h.config.locale.$lang %]
 [% style = qp.style || 'default' %]
 
 [% INCLUDE header.tt %]

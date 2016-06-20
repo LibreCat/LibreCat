@@ -6,7 +6,7 @@
 [% ELSE %]
   [% lang = session.lang ? session.lang : h.config.default_lang -%]
 [% END %]
-[% lf = h.config.language.$lang -%]
+[% lf = h.config.locale.$lang -%]
 
 <!-- BEGIN filters.tt -->
 

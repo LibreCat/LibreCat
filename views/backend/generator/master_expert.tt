@@ -4,7 +4,7 @@
 [% thisPerson = h.get_person(session.personNumber) -%]
 [% edit_mode = "expert" -%]
 [% lang = session.lang -%]
-[% lf = h.config.language.$lang.forms -%]
+[% lf = h.config.locale.$lang.forms -%]
 
 [% INCLUDE header.tt %]
 
@@ -126,5 +126,5 @@
 
 <!-- END backend/generator/master_expert.tt -->
 [% lang = session.lang %]
-[% lf = h.config.language.$lang %]
+[% lf = h.config.locale.$lang %]
 [% INCLUDE footer.tt %]
