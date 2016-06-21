@@ -2,7 +2,7 @@
 <!-- BEGIN frontdoor/tab_relresdata.tt -->
 
 <div class="tab-pane" id="relResData">
-  [% lf.frontdoor.tabs.data_publication.cites %]<br />
+  [% h.loc("frontdoor.tabs.data_publication.cites") %]<br />
   [% FOREACH resDat IN relResData %]
     [% rec = h.get_publication(resDat.id) %]
     [% NEXT IF rec.status != "public" %]
