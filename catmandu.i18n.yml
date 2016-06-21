@@ -4,4 +4,5 @@ _prefix:
 lexicon:
   en: ['CatmanduConfig', ['en']]
   de: ['CatmanduConfig', ['de']]
+  _auto: 1
 
