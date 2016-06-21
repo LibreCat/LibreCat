@@ -12,7 +12,7 @@
 [% curr_year = year.format %] 
 [% last_year = curr_year - 1 %]
 
-      <h3>[% total %] [% lf.project.heading %]</h3>
+      <h3>[% total %] [% h.loc("project.heading") %]</h3>
 
       [% INCLUDE hist_proj/pagination.tt %]
       <div class="row" style="padding-left:13px;">

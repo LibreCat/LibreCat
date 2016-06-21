@@ -1,9 +1,9 @@
 <!-- BEGIN footer_hist_proj.tt -->
 
-<h3>[% lf.facets.search_filter %]</h3>
+<h3>[% h.loc("facets.search_filter") %]</h3>
 
 [% IF qp.department %]
-<p class="text-alert"><strong><a href="/project?ttyp=hist_proj"><span class="glyphicon glyphicon-remove"></span>[% lf.project.filter_remove %]</a></strong></p>
+<p class="text-alert"><strong><a href="/project?ttyp=hist_proj"><span class="glyphicon glyphicon-remove"></span>[% h.loc("project.filter_remove") %]</a></strong></p>
 [% END %]
 
 
@@ -24,13 +24,13 @@
     [% END %]
   [% END %]
   <span class="input-group">
-    <input type="text" name="ftext" id="q_id" value="[% qp.ftext | replace('"', '&quot;') %]"' class="form-control input-sm" placeholder="[% lf.facets.search %]" />
+    <input type="text" name="ftext" id="q_id" value="[% qp.ftext | replace('"', '&quot;') %]"' class="form-control input-sm" placeholder="[% h.loc("facets.search") %]" />
     <span class="input-group-btn">
-    <button type="submit" class="btn btn-sm btn-default">[% lf.facets.go_button %]</button>
+    <button type="submit" class="btn btn-sm btn-default">[% h.loc("facets.go_button") %]</button>
     </span>
   </span>
   [% IF qp.q %]
-    <p class="text-muted"><a href="[% h.newuri_for("$data", qp, q="") %]" rel="nofollow"><span class="fa fa-times"></span></a> [% lf.facets.search %]: [% qp.q %]</p>
+    <p class="text-muted"><a href="[% h.newuri_for("$data", qp, q="") %]" rel="nofollow"><span class="fa fa-times"></span></a> [% h.loc("facets.search") %]: [% qp.q %]</p>
   [% END %]
 </form>
 
@@ -139,6 +139,6 @@
 <input type="hidden" name="ttyp" value="hist_proj" />
 </form>
 
-<p class="text-muted"><em>[% lf.project.filter_help %]</em></p>
+<p class="text-muted"><em>[% h.loc("project.filter_help") %]</em></p>
 
 <!-- END footer_hist_proj.tt -->
