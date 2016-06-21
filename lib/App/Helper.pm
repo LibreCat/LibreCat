@@ -1179,9 +1179,9 @@ sub locale {
 }
 
 sub localize {
-    my ($self, $str, $loc) = @_;
-    $loc //= $self->locale;
+    my ($self, $str) = @_;
     state $locales = {};
+    my $loc = $self->locale;
     my $i18n = $locales->{$loc} //= LibreCat::I18N->new(locale => $loc);
     $i18n->localize($str);
 }
