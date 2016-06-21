@@ -2,14 +2,14 @@
 
 <div class="tab-pane" id="ebi_dblinks">
 
-  <p>[% lf.frontdoor.tabs.ebi_links.data_by %]</p>
+  <p>[% h.loc("frontdoor.tabs.ebi_links.data_by") %]</p>
 
   [% FOREACH db IN ebi_data.db.keys %]
   <div class="row margin-top1">
     <div class="col-md-2 text-muted">[% db %]</div>
     <div class="col-md-10">
     [% total = ebi_data.db.$db.total %]
-      [% IF db == 'EMBL' %]<a href="http://www.ebi.ac.uk/ena/data/search?query=[% external_id.pmid %]">[% total %]</a>[% ELSE %]<strong>[% total %]</strong>[% END %] [% IF total == "1" %][% lf.frontdoor.item %][% ELSE %][% lf.frontdoor.items %][% END %] [% lf.frontdoor.citation_found %][% IF total > 10 %] [% lf.frontdoor.display_10 %][% END %]
+      [% IF db == 'EMBL' %]<a href="http://www.ebi.ac.uk/ena/data/search?query=[% external_id.pmid %]">[% total %]</a>[% ELSE %]<strong>[% total %]</strong>[% END %] [% IF total == "1" %][% h.loc("frontdoor.item") %][% ELSE %][% h.loc("frontdoor.items") %][% END %] [% h.loc("frontdoor.citation_found") %][% IF total > 10 %] [% h.loc("frontdoor.display_10") %][% END %]
       [% max = (total - 1 > 9) ? 9 : (total - 1)  %]
       [% FOREACH i IN [0..max] %]
 	<div class="row margin-top1-2">

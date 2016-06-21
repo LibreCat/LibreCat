@@ -2,7 +2,7 @@
 <div class="tab-pane" id="ebi_references">
 
   <h3 class="margin-top0">[% epmc_ref.total %] Reference[% IF epmc_ref.total != "1" %]s[% END %]</h3>
-  <p>[% lf.frontdoor.tabs.epmc_references.data_by %]</p>
+  <p>[% h.loc("frontdoor.tabs.epmc_references.data_by") %]</p>
   [% FOREACH reference IN epmc_ref.entries.nsort('citedOrder') %]
   <div class="row[% UNLESS loop.first %] margin-top1[% END %]">
     <div class="col-md-12">

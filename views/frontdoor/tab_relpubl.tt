@@ -2,7 +2,7 @@
 <!-- BEGIN frontdoor/tab_relpubl.tt -->
 
 <div class="tab-pane" id="relPubl">
-  [% lf.frontdoor.tabs.publication.cited_by %]<br />
+  [% h.loc("frontdoor.tabs.publication.cited_by") %]<br />
   [% FOREACH resDat IN relPubl %]
     [% rec = h.get_publication(resDat.id) %]
     [% NEXT IF rec.status != "public" %]
