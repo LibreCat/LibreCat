@@ -33,8 +33,8 @@
       <div class="row innerrow"><!-- button -->
         <div class="col-md-12 buttonrow">
           <span class="form-group col-md-10 col-md-offset-2">
-	  <button type="submit" id="id_do_nothing" class="btn btn-success change_tab"><span class="glyphicon glyphicon-ok"></span> [% lf.forms.button.save %]</button>
-	  <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> [% lf.forms.button.cancel %]</button>
+	  <button type="submit" id="id_do_nothing" class="btn btn-success change_tab"><span class="glyphicon glyphicon-ok"></span> [% h.loc("forms.button.save") %]</button>
+	  <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> [% h.loc("forms.button.cancel") %]</button>
           </span>
         </div>
       </div>

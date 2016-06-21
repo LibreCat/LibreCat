@@ -17,42 +17,42 @@
 	  <span class="icon-bar"></span>
 	  <span class="icon-bar"></span>
 	</button>
-	<a class="navbar-brand helpme" data-placement="bottom" title="[% lf.help.home %]" href="/"><img src="/images/publogo.gif" style="height:30px" alt="" /></a>
+	<a class="navbar-brand helpme" data-placement="bottom" title="[% h.loc("help.home") %]" href="/"><img src="/images/publogo.gif" style="height:30px" alt="" /></a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
 	[% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
-	  <li class="helpme" data-placement="bottom" title="[% lf.help.brand %]"><a href="/[% IF session.user %]librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span>[% IF session.role == 'super_admin' %]<span class="hidden-sm">[% END %][% lf.header.brand %][% IF session.role == 'super_admin' %]</span>[% END %]</a></li>
-	  <li class="helpme" data-placement="bottom" title="[% lf.help.my_author_page %]"><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span>[% lf.header.my_author_page %]</a></li>
+	  <li class="helpme" data-placement="bottom" title="[% h.loc("help.brand") %]"><a href="/[% IF session.user %]librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span>[% IF session.role == 'super_admin' %]<span class="hidden-sm">[% END %][% h.loc("header.brand") %][% IF session.role == 'super_admin' %]</span>[% END %]</a></li>
+	  <li class="helpme" data-placement="bottom" title="[% h.loc("help.my_author_page") %]"><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span>[% h.loc("header.my_author_page") %]</a></li>
 	[% IF session.role == 'super_admin' %]
-	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% lf.header.admin_menu.admin %] <span class="glyphicon glyphicon-chevron-down"></span></a>
+	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% h.loc("header.admin_menu.admin") %] <span class="glyphicon glyphicon-chevron-down"></span></a>
 	  <ul class="dropdown-menu" role="menu">
-	    <li><a href="/librecat/admin/account"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_accounts %]</a></li>
-	    <!--<li><a href="/librecat/admin/import"><span class="glyphicon glyphicon-import"></span>[% lf.header.admin_menu.import %]</a></li>-->
-	    <li><a href="/librecat/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% lf.header.admin_menu.manage_projects %]</a></li>
-	    <li><a href="/librecat/admin/research_group"><span class="fa fa-group fw"></span>[% lf.header.admin_menu.manage_research_groups %]</a></li>
-	    <!--<li><a href="/librecat/admin/department"><span class="glyphicon glyphicon-home"></span>[% lf.header.admin_menu.manage_department %]</a></li>-->
-	    <!--<li><a href="/librecat/admin/journal"><span class="glyphicon glyphicon-user"></span>[% lf.header.admin_menu.manage_journals %]</a></li>-->
-	    <li><a href="/librecat/admin/award"><span class="glyphicon glyphicon-star"></span>[% lf.header.admin_menu.manage_awards %]</a></li>
+	    <li><a href="/librecat/admin/account"><span class="glyphicon glyphicon-user"></span>[% h.loc("header.admin_menu.manage_accounts") %]</a></li>
+	    <!--<li><a href="/librecat/admin/import"><span class="glyphicon glyphicon-import"></span>[% h.loc("header.admin_menu.import") %]</a></li>-->
+	    <li><a href="/librecat/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% h.loc("header.admin_menu.manage_projects") %]</a></li>
+	    <li><a href="/librecat/admin/research_group"><span class="fa fa-group fw"></span>[% h.loc("header.admin_menu.manage_research_groups") %]</a></li>
+	    <!--<li><a href="/librecat/admin/department"><span class="glyphicon glyphicon-home"></span>[% h.loc("header.admin_menu.manage_department") %]</a></li>-->
+	    <!--<li><a href="/librecat/admin/journal"><span class="glyphicon glyphicon-user"></span>[% h.loc("header.admin_menu.manage_journals") %]</a></li>-->
+	    <li><a href="/librecat/admin/award"><span class="glyphicon glyphicon-star"></span>[% h.loc("header.admin_menu.manage_awards") %]</a></li>
 	  </ul>
 	  </li>
 	[% END %]
 	  <li class="hidden-xs"><a href="#" class="toggle_help"><span class="glyphicon glyphicon-question-sign"></span></a></li>
-	  <li class="helpme helpme-md" data-placement="right" title="[% lf.help.help %]"><a href="/docs/howto"><span class="fa fa-lightbulb-o fa-lg"></span><span class="hidden-sm"> [% lf.help.howto %]</span></a></li>
+	  <li class="helpme helpme-md" data-placement="right" title="[% h.loc("help.help") %]"><a href="/docs/howto"><span class="fa fa-lightbulb-o fa-lg"></span><span class="hidden-sm"> [% h.loc("help.howto") %]</span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-	<li class="helpme helpme-md" data-placement="left" title="[% lf.help.change_language %]">
-	  <a href="/librecat/person/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]"><span class="glyphicon glyphicon-flag"></span><span class="hidden-sm">[% lf.header.lang %]</span><span class="hidden-md hidden-xs hidden-lg">[% lf.header.lang_short %]</span></a>
+	<li class="helpme helpme-md" data-placement="left" title="[% h.loc("help.change_language") %]">
+	  <a href="/librecat/person/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]"><span class="glyphicon glyphicon-flag"></span><span class="hidden-sm">[% h.loc("header.lang") %]</span><span class="hidden-md hidden-xs hidden-lg">[% h.loc("header.lang_short") %]</span></a>
 	</li>
-	<li class="dropdown"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% lf.help.user_settings %]" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> [% lf.header.settings %] <span class="glyphicon glyphicon-chevron-down"></span></a>
+	<li class="dropdown"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% h.loc("help.user_settings") %]" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> [% h.loc("header.settings") %] <span class="glyphicon glyphicon-chevron-down"></span></a>
 	  <div class="dropdown-menu" style="width:550px">
 	    [% INCLUDE backend/user_settings.tt %]
 	  </div>
 	</li>
-	<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% lf.main_page.logout %]</span></a></li>
-	<li><img src="/images/beta_left.png" alt="Beta" style="height:50px;padding-right:5px;" title="[% lf.header.beta %]"></li>
+	<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% h.loc("main_page.logout") %]</span></a></li>
+	<li><img src="/images/beta_left.png" alt="Beta" style="height:50px;padding-right:5px;" title="[% h.loc("header.beta") %]"></li>
       </ul>
       </div><!-- /.navbar-collapse -->
       [% ELSE %]
@@ -61,18 +61,18 @@
 	  <div class="col-xs-11 hidden-sm hidden-lg hidden-md">
 	    <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" height="43" alt="" /></a>
 	    <span class="navbar-title"><a href="/"><span class="xxs-only"><img src="/images/publogo.gif" height="30" alt="PUB Bielefeld" /></span><span class="hidden-xxs">
-	      [% lf.header.title_long %]
+	      [% h.loc("header.title_long") %]
 	    </span></a></span>
 	  </div>
 	  <div class="col-md-8 col-sm-10 hidden-xs">
 	    <a class="navbar-brand" href="http://www.uni-bielefeld.de/"><img src="/images/unilogo.jpg" alt="" /></a>
 	      <span class="navbar-title"><a href="/">
-	      [% lf.header.title_long %]
+	      [% h.loc("header.title_long") %]
 	      </a></span>
 	  </div>
 	  <div class="col-xs-1 col-sm-2 col-md-offset-1">
 	    [% thisLang = session.lang ? session.lang : h.config.default_lang %]
-	    <span class="select-language pull-right"><a href="/set_language?[% thisLang == "en" ? "lang=de" : "lang=en" %]"><span class="glyphicon glyphicon-flag hidden-xs"></span>[% lf.header.lang %]</a></span>
+	    <span class="select-language pull-right"><a href="/set_language?[% thisLang == "en" ? "lang=de" : "lang=en" %]"><span class="glyphicon glyphicon-flag hidden-xs"></span>[% h.loc("header.lang") %]</a></span>
 	  </div>
 	</div>
 	<div class="row innerrow">
