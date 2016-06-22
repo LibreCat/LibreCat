@@ -452,7 +452,7 @@ researcher:
         - type: integer
 
 
-  required: ["_id","account_status","account_type","password","login","email","first_name","last_name","full_name","department"]
+  required: ["_id","account_status","account_type","first_name","last_name","full_name"]
   additionalProperties: true
 
 department: *department
