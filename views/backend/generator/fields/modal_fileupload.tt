@@ -12,10 +12,6 @@
       <div class="modal-body">
         <input type="hidden" name="file_id" id="id_file_id" value="" />
         <input type="hidden" name="tempid" id="id_temp_id" value="" />
-        <input type="hidden" name="record_id" id="id_record_id" value="" />
-        <input type="hidden" name="creator" id="id_creator" value="" />
-        <input type="hidden" name="file_size" id="id_fileSize" value="" />
-        <input type="hidden" name="content_type" id="id_contentType" value="" />
         <input type="hidden" name="cancel" value="" />
 
         <h4>[% lf.$type.field.dropzone.edit_modal.heading_file %]</h4>
@@ -24,7 +20,6 @@
             [% lf.$type.field.dropzone.edit_modal.current_file %]
             <input type="text" name="fileName" id="id_fileName" value="" readonly="readonly" class="form-control"/>
           </label>
-          <!-- <input type="file" name="file" id="id_file" size="40" /> -->
         </div>
 
         <div class="form-group">
@@ -99,9 +94,6 @@ $('#fileSubmit').click( function() {
   data.file_id        = $('#id_file_id').val();
   data.tempid         = $('#id_temp_id').val();
   data.file_name      = $('#id_fileName').val();
-  data.creator        = $('#id_creator').val();
-  data.file_size      = $('#id_fileName').val();
-  data.content_type   = $('#id_contentType').val();
   data.relation       = $('#id_select_relation').val();
   data.title          = $('#id_fileTitle').val();
   data.description    = $('#id_fileDescription').val();
@@ -137,10 +129,10 @@ $('#fileSubmit').click( function() {
 
   var use_file_id = data.file_id ? data.file_id : data.tempid;
   var namediv     = $('#' + use_file_id + ' div.padded');
-  
+
   namediv.html('');
   namediv.html('<span class="glyphicon glyphicon-file text-muted"></span> <span class="text-muted"><strong>' + data.file_name + '</strong></span>');
-  
+
   var accessLevel;
 
   // Open access
@@ -152,8 +144,8 @@ $('#fileSubmit').click( function() {
     accessLevel = "[% lf.$type.field.dropzone.access.local %]";
 
     if (data.embargo) {
-      accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " + 
-                     data.embargo + 
+      accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " +
+                     data.embargo +
                      ")";
     }
   }
@@ -162,8 +154,8 @@ $('#fileSubmit').click( function() {
     accessLevel = "[% lf.$type.field.dropzone.access.closed %]";
 
     if (data.embargo) {
-      accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " + 
-                     data.embargo + 
+      accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " +
+                     data.embargo +
                      ")";
     }
     if (data.request_a_copy) {
