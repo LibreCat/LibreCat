@@ -90,7 +90,6 @@
 
 $('#fileSubmit').click( function() {
   var data            = Object();
-  data.id             = "[% _id %]";
   data.file_id        = $('#id_file_id').val();
   data.tempid         = $('#id_temp_id').val();
   data.file_name      = $('#id_fileName').val();
