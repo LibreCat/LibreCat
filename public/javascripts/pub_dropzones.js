@@ -35,8 +35,6 @@ $(document).ready(function(){
 "<input type='hidden' name='delegate' value='" + $('#qaeUpload').data('delegate') + "'/>" +
 "<input type='hidden' name='file_name' value='" + resp.file_name + "' />" +
 "<input type='hidden' name='tempid' value='" + resp.tempid + "' />" +
-"<input type='hidden' name='content_type' value='" + resp.content_type + "' />" +
-"<input type='hidden' name='file_size' value='" + resp.file_size + "' />" +
 "<div class='checkbox'>" +
 "<label>" +
 "<input type='checkbox' required> I have read and accept the <a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>" +

@@ -37,23 +37,23 @@ post '/librecat/upload/qae/submit' => needs login => sub {
         year        => substr($now, 0, 4),
         department  => $department || $person->{department},
         creator     => {
-          id         => session->{personNumber}, 
+          id         => session->{personNumber},
           login      => session->{user}
         },
         file        => [{
-          access_level  => 'open_access' ,
-          content_type  => params->{content_type} ,
+          # Required for managing the upload
           file_name     => params->{file_name} ,
-          file_size     => params->{file_size} ,
-          open_access   => 1 ,
-          creator       => session->{user} ,
-          relation      => 'main_file' ,
           tempid        => params->{tempid} ,
+
+          # Extra metadata fields
+          access_level  => 'open_access' ,
+          open_access   => 1 ,
+          relation      => 'main_file' ,
         }]
       };
 
       my $response = h->update_record('publication', $record);
-  } 
+  }
 
   redirect request->{referer};
 };
