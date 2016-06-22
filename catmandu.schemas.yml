@@ -163,20 +163,6 @@ publication:
               minLength: 1
             - type: integer
               minimum: 0
-        name:
-          type: string
-          minLength: 1
-
-        layer:
-          oneOf:
-            - type: string
-              pattern: "^[0-9]+$"
-              minLength: 1
-            - type: integer
-              minimum: 0
-
-        display:
-          type: string
 
         tree:
           type: array
@@ -191,7 +177,7 @@ publication:
                   - type: integer
                     minimum: 0
 
-      required: ["_id","name"]
+      required: ["_id","tree"]
       additionalProperties: false
 
     author:
@@ -298,7 +284,7 @@ publication:
 
     status:
       type: string
-      enum: [submitted,public,returned]
+      enum: [submitted,public,returned,private]
 
     department:
       type: array
