@@ -9,12 +9,12 @@ authentication_test.pl - Test your authentication settings
 	Password: *****
 	OK
 
-	$ perl bin/authentication_test.pl 
+	$ perl bin/authentication_test.pl
 	           --package=Authentication::Test
 	           --param foo=bar
 	           --param test=ok  mylogin -p
 	Password: *****
-	OK	           
+	OK
 
 =head1 SEE ALSO
 
@@ -29,7 +29,7 @@ use Log::Log4perl;
 use Log::Any::Adapter;
 
 my $package  = Catmandu->config->{authentication}->{package};
-my $param    = Catmandu->config->{authentication}->{param} // {};
+my $param    = Catmandu->config->{authentication}->{options} // {};
 my $password;
 
 Log::Log4perl::init('log4perl.conf');
@@ -47,13 +47,16 @@ if ($password) {
 	print "Password: ";
 	system('/bin/stty', '-echo');
 	$password = <>; chop($password);
-	system('/bin/stty', 'echo'); 
+	system('/bin/stty', 'echo');
+}
+else {
+    die "need a password";
 }
 
 my $pkg    = Catmandu::Util::require_package($package);
 my $auth   = $pkg->new(%$param);
 
-my $verify = $auth->authenticate( $user , $password );
+my $verify = $auth->authenticate( { username => $user , password => $password });
 
 if ($verify) {
 	print "OK\n";

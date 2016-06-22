@@ -30,17 +30,24 @@ temporary storage file for the upload. Returns a JSON document containing the
 file details:
 
     {
+        # Fields needed for managing the upload
+        'tempid'       => 'LJCyFMzwjN',
+        'file_name'    => 'find.gif',
+
+        # Metadata fields that can be overwritten by the user
         'access_level' => 'open_access',
+        'open_access'  => 1,
+        'relation'     => 'main_file',
+
+        # Read-only fields
         'content_type' => 'image/gif',
         'creator'      => 'einstein',
         'date_created' => '2016-05-31T11:05:22Z',
         'date_updated' => '2016-05-31T11:05:22Z',
-        'file_name'    => 'find.gif',
         'file_size'    => '66658',
-        'open_access'  => 1,
-        'relation'     => 'main_file',
+
+        # Success/failure indicator
         'success'      => 1,
-        'tempid'       => 'LJCyFMzwjN',
     }
 
 =cut
@@ -127,7 +134,9 @@ sub upload_temp_file {
 =head2 handle_file($pub)
 
 For the given publication HASH update the file section (upload files,
-generate thumbnails) when required.
+generate thumbnails) when required. Metadata (but not the technical
+metadata) of existing files will be changed when required. New
+files should at least contain 'tempid' and 'file_name'
 
 =cut
 sub handle_file {

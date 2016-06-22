@@ -31,6 +31,7 @@ authentication:
       # password auth against database users
       - package: LibreCat::Auth::Bag
         options:
+          store: backup
           bag: researcher
           username_attr: login
       # LDAP auth
@@ -48,6 +49,6 @@ user:
   sources:
     - store: builtin_users
       username_attr: login
-    - bag: researcher
+    - store: backup
+      bag: researcher
       username_attr: login
-

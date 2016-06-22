@@ -50,7 +50,9 @@ sub _authenticate {
     return 0 unless defined $self->ldap;
 
     # Check if we need to translate the username
-    $username = $self->search($username) if $self->search_filter;
+    if ($self->search_filter && (my $res = $self->search($username))) {
+        $username = $res;
+    }
 
     $self->log->debug(
         "username: $username ; password: " . length($password) . " bytes");

@@ -17,14 +17,24 @@ sub _authenticate {
     my ($self, $params) = @_;
     my $username = $params->{username} // return 0;
     my $password = $params->{password} // return 0;
+
+    $self->log->debugf("authenticating: %s", $username);
+
     my $bag      = Catmandu->store($self->store)->bag($self->bag);
-    my $user = $bag->detect($self->username_attr => $username) // return 0;
-    if (exists $user->{$self->password_attr}
-        && passwdcmp($password, $user->{$self->password_attr}))
-    {
-        return 1;
+    my $user     = $bag->detect($self->username_attr => $username) ;
+
+    unless ($user) {
+        $self->log->debug("$username not found");
+        return 0;
     }
-    0;
+
+    if (exists $user->{$self->password_attr}
+        && passwdcmp($password, $user->{$self->password_attr})) {
+        return 1;
+    } else {
+        $self->log->debug("$username password doesn't match");
+        return 0;
+    }
 }
 
 1;
