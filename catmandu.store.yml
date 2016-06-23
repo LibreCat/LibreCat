@@ -1148,6 +1148,7 @@ search:
             fields:
               publication: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
+          publication_date: {type: string, index: no}
           series_title:
             type: multi_field
             fields:
