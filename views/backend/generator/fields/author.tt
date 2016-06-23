@@ -76,7 +76,7 @@
             <input type="text" id="first_name_[% loop.index %]" name="author.[% loop.index %].first_name" placeholder="[% lf.$type.field.author.first_name.placeholder || lf.$type.field.author_secondary.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
             <div class="input-group-addon hidden-lg hidden-md[% IF loop.index == '0' %] helpme" data-placement="top" title="[% lf.form_add_field %][% END %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
-            <div class="intpu-group-addon hidden-xs hidden-sm"></div>
+            <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
 	<!-- 4 -->
