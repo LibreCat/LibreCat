@@ -1,7 +1,7 @@
 <!-- BEGIN backend/add_new_button.tt -->
 
 <div id="add_new_button">
-    <a href="/librecat/record/new" class="btn btn-primary btn-block helpme" data-placement="left" title="[% lf.help.add_new_button %]"><span class="glyphicon glyphicon-plus"></span> [% lf.main_page.add_new_button %]</a>
+    <a href="/librecat/record/new" class="btn btn-primary btn-block helpme" data-placement="left" title="[% h.loc("help.add_new_button") %]"><span class="glyphicon glyphicon-plus"></span> [% h.loc("main_page.add_new_button") %]</a>
 </div>
 
 <!-- END backend/add_new_button.tt -->

@@ -20,11 +20,11 @@
       [% IF title %]
 	<h1>[% title %]</h1>
       [% ELSE %]
-	<h1 class="margin-top0">[% lf.$type.label %]</h1>
+	<h1 class="margin-top0">[% h.loc("${type}.label") %]</h1>
       [% END%]
       </div>
       <div class="col-sm-4 text-right">
-	<button type="button" class="btn btn-xs change_mode hidden-xs margin-bottom1-2 fw7 helpme" data-placement="left" title="[% lf.form_change_form %]"><span class="glyphicon glyphicon-option-vertical"></span> [% lf.to_sp_form %]</button>
+	<button type="button" class="btn btn-xs change_mode hidden-xs margin-bottom1-2 fw7 helpme" data-placement="left" title="[% h.loc("form_change_form") %]"><span class="glyphicon glyphicon-option-vertical"></span> [% h.loc("to_sp_form") %]</button>
 	[% INCLUDE backend/change_type_menu.tt %]
 	  </div>
     </div>
@@ -34,21 +34,21 @@
 
   <ul class="nav nav-tabs" id="tabs-left">
     <li id="li_basic_fields" class="active">
-      <a class="change_tab" href="#basic_fields">[% lf.$type.tab.basic_fields %]</a>
+      <a class="change_tab" href="#basic_fields">[% h.loc("${type}.tab.basic_fields") %]</a>
     </li>
     {% IF fields.file_upload %}
     <li id="li_file_upload">
-      <a class="change_tab" href="#file_upload">[% lf.$type.tab.file_upload %]</a>
+      <a class="change_tab" href="#file_upload">[% h.loc("${type}.tab.file_upload") %]</a>
     </li>
     {% END %}
     {% IF fields.supplementary_fields %}
     <li id="li_supplementary_fields">
-      <a class="change_tab" href="#supplementary_fields">[% lf.$type.tab.supplementary_fields %]</a>
+      <a class="change_tab" href="#supplementary_fields">[% h.loc("${type}.tab.supplementary_fields") %]</a>
     </li>
     {% END %}
     {% IF fields.related_material %}
     <li id="li_related_material">
-      <a class="change_tab" href="#related_material">[% lf.$type.tab.related_material %]</a>
+      <a class="change_tab" href="#related_material">[% h.loc("${type}.tab.related_material") %]</a>
     </li>
     {% END %}
   </ul>
@@ -71,7 +71,7 @@
       <div class="tab-pane active" id="basic_fields">
 
       <div class="hidden bg-danger" id="mandatory-field-error">
-        <p>[% lf.mandatory_error %]</p>
+        <p>[% h.loc("mandatory_error") %]</p>
       </div>
 
 {% IF fields.basic_fields %}

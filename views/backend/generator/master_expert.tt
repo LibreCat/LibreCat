@@ -20,11 +20,11 @@
       [% IF title %]
 	<h1>[% title %]</h1>
       [% ELSE %]
-	<h1 class="margin-top0">[% lf.$type.label %]</h1>
+	<h1 class="margin-top0">[% h.loc("${type}.label") %]</h1>
       [% END%]
       </div>
       <div class="col-sm-4 text-right">
-	<button type="button" class="btn btn-xs hidden-xs change_mode margin-bottom1-2 fw7 helpme" data-placement="left" title="[% lf.form_change_form %]"><span class="glyphicon glyphicon-option-horizontal"></span> [% lf.to_tab_form %]</button>
+	<button type="button" class="btn btn-xs hidden-xs change_mode margin-bottom1-2 fw7 helpme" data-placement="left" title="[% h.loc("form_change_form") %]"><span class="glyphicon glyphicon-option-horizontal"></span> [% h.loc("to_tab_form") %]</button>
 	  [% INCLUDE backend/change_type_menu.tt %]
       </div>
     </div>
@@ -50,11 +50,11 @@
       <div id="basic_fields" class="tab_section">
 
       <div class="hidden bg-danger" id="mandatory-field-error">
-        <p>[% lf.mandatory_error %]</p>
+        <p>[% h.loc("mandatory_error") %]</p>
       </div>
 
 {% IF fields.basic_fields %}
-  <h3>[% lf.$type.tab.basic_fields %]</h3>
+  <h3>[% h.loc("${type}.tab.basic_fields") %]</h3>
   {% FOREACH key IN field_order.basic_fields %}
     {% IF fields.basic_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -68,7 +68,7 @@
       <div id="file_upload" class="tab_section">
 
 {% IF fields.file_upload %}
-  <h3>[% lf.$type.tab.file_upload %]</h3>
+  <h3>[% h.loc("${type}.tab.file_upload") %]</h3>
   {% FOREACH key IN field_order.file_upload %}
     {% IF fields.file_upload.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -83,7 +83,7 @@
       <div id="supplementary_fields" class="tab_section">
 
 {% IF fields.supplementary_fields %}
-  <h3>[% lf.$type.tab.supplementary_fields %]</h3>
+  <h3>[% h.loc("${type}.tab.supplementary_fields") %]</h3>
   {% FOREACH key IN field_order.supplementary_fields %}
     {% IF fields.supplementary_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
@@ -98,7 +98,7 @@
       <div id="related_material" class="tab_section">
 
 {% IF fields.related_material %}
-  <h3>[% lf.$type.tab.related_material %]</h3>
+  <h3>[% h.loc("${type}.tab.related_material") %]</h3>
   {% FOREACH key IN field_order.related_material %}
     {% IF fields.related_material.$key %}
     {% template = "fields/" _ key _ ".tt" %}

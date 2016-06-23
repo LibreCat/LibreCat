@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="dp_autocomplete_0">
-      [% lf.$type.field.department.label %]
+      [% h.loc("${type}.field.department.label") %]
     </label>
     {% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -14,8 +14,8 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.department.label_short || lf.$type.field.department.label %]</div>
-          <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control" placeholder="[% lf.$type.field.department.placeholder %]" id="dp_autocomplete_0" value=""{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
-          <div class="input-group-addon" onclick="add_field('department'[% IF lf.$type.field.department.placeholder %],'[% lf.$type.field.department.placeholder %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
+          <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control" placeholder="[% h.loc("${type}.field.department.placeholder") %]" id="dp_autocomplete_0" value=""{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
+          <div class="input-group-addon" onclick="add_field('department'[% IF lf.$type.field.department.placeholder %],'[% h.loc("${type}.field.department.placeholder") %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
@@ -28,8 +28,8 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.department.label_short || lf.$type.field.department.label %]</div>
-          <input type="text" onfocus="enable_autocomplete('dp',[% loop.index %]);" class="sticky form-control" placeholder="[% lf.$type.field.department.placeholder %]" id="dp_autocomplete_[% loop.index %]" value="[% h.get_department(dept._id).display %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} disabled="disabled" />
-          <div class="input-group-addon" onclick="add_field('department'[% IF lf.$type.field.department.placeholder %],'[% lf.$type.field.department.placeholder %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
+          <input type="text" onfocus="enable_autocomplete('dp',[% loop.index %]);" class="sticky form-control" placeholder="[% h.loc("${type}.field.department.placeholder") %]" id="dp_autocomplete_[% loop.index %]" value="[% h.get_department(dept._id).display %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} disabled="disabled" />
+          <div class="input-group-addon" onclick="add_field('department'[% IF lf.$type.field.department.placeholder %],'[% h.loc("${type}.field.department.placeholder") %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
@@ -43,7 +43,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.department.label_short || lf.$type.field.department.label %]</div>
-          <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control" placeholder="[% lf.$type.field.department.placeholder %]" id="dp_autocomplete_0" value="[% department.0.display %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
+          <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control" placeholder="[% h.loc("${type}.field.department.placeholder") %]" id="dp_autocomplete_0" value="[% department.0.display %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>

@@ -2,7 +2,7 @@
   [% external_identifier_list = h.get_list('external_identifier') %]
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="select_external_id">
-      [% lf.$type.field.external_id.label %]
+      [% h.loc("${type}.field.external_id.label") %]
     </label>
     {% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}<span class="starMandatory"></span>&nbsp;{% END %}
   </div>
@@ -15,13 +15,13 @@
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.external_id.label_short || lf.$type.field.external_id.label %]</div>
           <span class="input-group-btn">
             <select class="btn btn-default" name="external_id.0.type" id="select_external_id">
-              <option value="">-- [% lf.$type.field.external_id.select %] --</option>
+              <option value="">-- [% h.loc("${type}.field.external_id.select") %] --</option>
               [% FOREACH extid IN external_identifier_list.keys %]
               <option value="[% extid %]">[% external_identifier_list.$extid.name %]</option>
               [% END %]
             </select>
           </span>
-          <input type="text" value="" placeholder="[% lf.$type.field.external_id.placeholder %]" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} required{% END %}" name="external_id.0.value" id="external_id_0"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonly="readonly"{% END %} />
+          <input type="text" value="" placeholder="[% h.loc("${type}.field.external_id.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} required{% END %}" name="external_id.0.value" id="external_id_0"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon" onclick="add_field('extId');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %}></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
@@ -35,13 +35,13 @@
             <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.external_id.label_short || lf.$type.field.external_id.label %]</div>
             <span class="input-group-btn">
               <select class="btn btn-default" name="external_id.[% loop.index %].type">
-                <option value="">-- [% lf.$type.field.external_id.select %] --</option>
+                <option value="">-- [% h.loc("${type}.field.external_id.select") %] --</option>
                 [% FOREACH extid IN external_identifier_list.keys %]
                 <option value="[% extid %]"[% IF extid == ext_id %] selected="selected"[% END %]>[% external_identifier_list.$extid.name %]</option>
                 [% END %]
               </select>
             </span>
-            <input type="text" value="[% external_id.$ext_id %]" placeholder="[% lf.$type.field.external_id.placeholder %]" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF loop.first %] required[% END %]{% END %}" name="external_id.[% loop.index %].value" id="external_id_[% loop.index %]"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonyl="readonly"{% END %} />
+            <input type="text" value="[% external_id.$ext_id %]" placeholder="[% h.loc("${type}.field.external_id.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF loop.first %] required[% END %]{% END %}" name="external_id.[% loop.index %].value" id="external_id_[% loop.index %]"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonyl="readonly"{% END %} />
             <div class="input-group-addon" onclick="add_field('extId');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %}></span></div>
             <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
@@ -56,13 +56,13 @@
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.external_id.label_short || lf.$type.field.external_id.label %]</div>
           <span class="input-group-btn">
             <select class="btn btn-default" name="external_id.0.type">
-              <option value="">-- [% lf.$type.field.external_id.select %] --</option>
+              <option value="">-- [% h.loc("${type}.field.external_id.select") %] --</option>
               [% FOREACH extid IN external_identifier_list.keys %]
               <option value="[% extid %]">[% external_identifier_list.$extid.name %]</option>
               [% END %]
             </select>
           </span>
-          <input type="text" value="" placeholder="[% lf.$type.field.external_id.placeholder %]" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} required{% END %}" name="external_id.0.value" id="external_id_0"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonly="readonly"{% END %} />
+          <input type="text" value="" placeholder="[% h.loc("${type}.field.external_id.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} required{% END %}" name="external_id.0.value" id="external_id_0"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonly="readonly"{% END %} />
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_series_title">
-      [% lf.$type.field.series_title_volume.label %]
+      [% h.loc("${type}.field.series_title_volume.label") %]
     </label>
     {% IF fields.basic_fields.series_title_volume.mandatory OR fields.supplementary_fields.series_title_volume.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -10,15 +10,15 @@
       <div class="form-group col-md-6 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.series_title_volume.mandatory OR fields.supplementary_fields.series_title.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.series_title_volume.series_title.label_short || lf.$type.field.series_title_volume.series_title.label %]</div>
-          <input type="text" name="series_title" id="id_series_title" value="[% series_title | html %]" placeholder="[% lf.$type.field.series_title_volume.series_title.placeholder %]" class="sticky form-control{% IF fields.basic_fields.series_title_volume.mandatory OR fields.supplementary_fields.series_title_volume.mandatory %} required{% END %}"{% IF fields.basic_fields.series_title_volume.readonly OR fields.supplementary_fields.series_title_volume.readonly %} readonly="readonly"{% END %}>
+          <input type="text" name="series_title" id="id_series_title" value="[% series_title | html %]" placeholder="[% h.loc("${type}.field.series_title_volume.series_title.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.series_title_volume.mandatory OR fields.supplementary_fields.series_title_volume.mandatory %} required{% END %}"{% IF fields.basic_fields.series_title_volume.readonly OR fields.supplementary_fields.series_title_volume.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>
 
       <div class="form-group col-md-4 col-xs-11">
         <div class="input-group sticky">
-          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.series_title_volume.volume.label %]</div>
-          <input type="text" name="volume" id="id_volume" value="[% volume | html %]" placeholder="[% lf.$type.field.series_title_volume.volume.placeholder %]" class="sticky form-control{% IF fields.basic_fields.series_title_volume.mandatory OR fields.supplementary_fields.series_title_volume.mandatory %} required{% END %}"{% IF fields.basic_fields.series_title_volume.readonly OR fields.supplementary_fields.series_title_volume.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("${type}.field.series_title_volume.volume.label") %]</div>
+          <input type="text" name="volume" id="id_volume" value="[% volume | html %]" placeholder="[% h.loc("${type}.field.series_title_volume.volume.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.series_title_volume.mandatory OR fields.supplementary_fields.series_title_volume.mandatory %} required{% END %}"{% IF fields.basic_fields.series_title_volume.readonly OR fields.supplementary_fields.series_title_volume.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

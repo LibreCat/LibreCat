@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_publication">
-      [% lf.$type.field.publication.label %]
+      [% h.loc("${type}.field.publication.label") %]
     </label>
     {% IF fields.basic_fields.publication.mandatory OR fields.supplementary_fields.publication.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -10,7 +10,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.publication.mandatory OR fields.supplementary_fields.publication.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.publication.label_short || lf.$type.field.publication.label %]</div>
-          <input type="text" name="publication" id="id_publication" value="[% publication || lf.$type.field.publication.defaultvalue | html %]" placeholder="[% lf.$type.field.publication.placeholder %]" class="sticky form-control{% IF fields.basic_fields.publication.mandatory OR fields.supplementary_fields.publication.mandatory %} required{% END %}"{% IF fields.basic_fields.publication.readonly OR fields.supplementary_fields.publication.readonly %} readonly="readonly"{% END %}>
+          <input type="text" name="publication" id="id_publication" value="[% publication || lf.$type.field.publication.defaultvalue | html %]" placeholder="[% h.loc("${type}.field.publication.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.publication.mandatory OR fields.supplementary_fields.publication.mandatory %} required{% END %}"{% IF fields.basic_fields.publication.readonly OR fields.supplementary_fields.publication.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_popular_science">
-      [% lf.$type.field.popular_science_quality_controlled.label %]
+      [% h.loc("${type}.field.popular_science_quality_controlled.label") %]
     </label>
   </div>
   <div class="col-md-3 col-xs-11">
@@ -10,7 +10,7 @@
         <div class="checkbox">
           <label class="checkbox-inline">
             <input type="checkbox" name="popular_science" id="id_popular_science" value="1"[% IF popular_science %] checked="checked"[% END %]>
-            [% lf.$type.field.popular_science_quality_controlled.popular_science.label %]
+            [% h.loc("${type}.field.popular_science_quality_controlled.popular_science.label") %]
           </label>
         </div>
       </div>
@@ -22,7 +22,7 @@
         <div class="checkbox">
           <label class="checkbox-inline">
             <input type="checkbox" name="quality_controlled" id="id_quality_controlled" value="1"[% IF quality_controlled %] checked="checked"[% END %]>
-            [% lf.$type.field.popular_science_quality_controlled.quality_controlled.label %]
+            [% h.loc("${type}.field.popular_science_quality_controlled.quality_controlled.label") %]
           </label>
         </div>
       </div>

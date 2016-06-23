@@ -10,7 +10,7 @@
         <div class="checkbox">
           <label class="checkbox-inline">
             <input type="checkbox" name="quality_controlled" id="id_quality_controlled" value="1"[% IF quality_controlled %] checked="checked"[% END %]>
-            [% lf.$type.field.quality_controlled.label %]
+            [% h.loc("${type}.field.quality_controlled.label") %]
           </label>
         </div>
       </div>
