@@ -1267,6 +1267,10 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
+      publication_date:
+        label: "Ver&ouml;ffentlichungsdatum"
+        label_short: "Ver&ouml;ff.datum"
+        placeholder: "JJJJ-MM-TT" 
       publication:
         label: "Zeitschriftentitel"
         placeholder: "z.B. Nature Genetics"

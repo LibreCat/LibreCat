@@ -1268,6 +1268,9 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
+      publication_date:
+        label: "Publication Date"
+        placeholder: "YYYY-MM-DD"
       publication:
         label: "Journal Title"
         placeholder: "e.g. Nature Genetics"

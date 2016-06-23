@@ -757,6 +757,8 @@ publicationTypes:
         research_group: *research_group
         publisher: *publisher
         year_extern: *year_extern
+        publication_date:
+          mandatory: 0
         alternative_title: *alternative_title
         place: *place
         publication:
