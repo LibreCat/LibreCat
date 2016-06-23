@@ -665,6 +665,13 @@ search:
               field: 'status'
               sort: true
             submissionstatus: *status
+            articletype: &articletype
+              op:
+                '=': true
+                'exact': true
+                '<>': true
+              field: 'article_type'
+            article_type: *articletype
             accesslevel:
               op:
                 '=': true
@@ -1099,6 +1106,7 @@ search:
           volume: {type: string, analyzer: tag}
           intvolume: {type: string, analyzer: tag}
           issue: {type: string}
+          article_type: {type: string}
           article_number: {type: string, analyzer: tag}
           thematic_area: {type: string, analyzer: tag}
           publication_identifier:
