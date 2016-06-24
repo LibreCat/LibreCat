@@ -19,7 +19,6 @@ sub log {
     Log::Log4perl::get_logger($package);
 }
 
-# TODO is this needed anymore?
 sub config {
     state $config;
 
