@@ -159,7 +159,6 @@ volume: 66
 year: '2015'
 ---
 _id: '2737384'
-_version: 1
 abstract:
 - lang: eng
   text: In 1716, as a result of the War of the Spanish Succession, Emperor Charles
@@ -225,7 +224,6 @@ volume: 29
 year: '2016'
 ---
 _id: '2737385'
-_version: 1
 citation:
   default: |
     <!-- simple example for a citation template -->
@@ -266,7 +264,6 @@ type: book_editor
 year: '2016'
 ---
 _id: '2737386'
-_version: 3
 abstract:
 - lang: eng
   text: In order to protect minors from the risks associated with exposure to content
@@ -330,7 +327,6 @@ type: book_chapter
 year: '2016'
 ---
 _id: '2737387'
-_version: 5
 author:
 - first_name: Michael
   full_name: Schaub, Michael
@@ -364,7 +360,6 @@ type: review
 year: '2016'
 ---
 _id: '2737388'
-_version: 7
 author:
 - first_name: Jonas
   full_name: Billet, Jonas
@@ -402,7 +397,6 @@ type: conference_abstract
 year: '2016'
 ---
 _id: '2737389'
-_version: 9
 citation:
   default: |
     <!-- simple example for a citation template -->
@@ -436,7 +430,6 @@ type: conference_editor
 year: '2016'
 ---
 _id: '2737390'
-_version: 11
 author:
 - first_name: Stefanie
   full_name: Krijger, Stefanie
@@ -473,7 +466,6 @@ type: conference
 year: '2016'
 ---
 _id: '2737391'
-_version: 13
 author:
 - first_name: Milad
   full_name: El Haddad, Milad
@@ -502,7 +494,6 @@ type: dissertation
 year: '2014'
 ---
 _id: '2737392'
-_version: 15
 author:
 - first_name: Eva
   full_name: Lievens, Eva
@@ -532,7 +523,6 @@ type: encyclopedia_article
 year: '2016'
 ---
 _id: '2737393'
-_version: 17
 citation:
   default: |
     <!-- simple example for a citation template -->
@@ -562,7 +552,6 @@ type: journal_editor
 year: '2016'
 ---
 _id: '2737394'
-_version: 19
 author:
 - first_name: Alan
   full_name: Smith, Alan
@@ -592,7 +581,6 @@ type: newspaper_article
 year: '2016'
 ---
 _id: '2737395'
-_version: 20
 author:
 - first_name: Y
   full_name: Donderlinger, Y
@@ -622,7 +610,6 @@ type: patent
 year: '2014'
 ---
 _id: '2737395'
-_version: 24
 author:
 - first_name: Dida
   full_name: Markovic, Dida
@@ -649,7 +636,6 @@ type: preprint
 year: '2016'
 ---
 _id: '2737396'
-_version: 26
 author:
 - first_name: Hense
   full_name: Gebel, Hense
@@ -678,7 +664,6 @@ type: report
 year: '2016'
 ---
 _id: '2737397'
-_version: 28
 citation:
   default: |
     <!-- simple example for a citation template -->
@@ -708,7 +693,6 @@ type: translation
 year: '2012'
 ---
 _id: '2737398'
-_version: 29
 citation:
   default: |
     <!-- simple example for a citation template -->
@@ -738,7 +722,6 @@ type: translation_chapter
 year: '2010'
 ---
 _id: '2737399'
-_version: 30
 author:
 - first_name: Keller W
   full_name: Utar H, Keller W
@@ -749,8 +732,7 @@ citation:
     Utar H, Keller W, <em>INTERNATIONAL TRADE AND JOB POLARIZATION: EVIDENCE AT THE WORKER-LEVEL</em>.  <strong></strong> ().
     , 2016
 creator:
-  id: '1234'
-  login: einstein
+  login: riedel
 date_created: 2016-06-24T09:13:11Z
 date_updated: 2016-06-24T09:13:11Z
 department:
@@ -767,7 +749,6 @@ type: working_paper
 year: '2016'
 ---
 _id: '2737400'
-_version: 31
 author:
 - first_name: T
   full_name: Kluth, T
@@ -778,8 +759,7 @@ citation:
     Kluth, T, <em>A C++ Implementation of the reversed Attentional Vector Sum (rAVS) model</em>.  <strong></strong> ().
     , 2016
 creator:
-  id: '1234'
-  login: einstein
+  login: riedel
 date_created: 2016-06-24T09:16:02Z
 date_updated: 2016-06-24T09:16:02Z
 department:

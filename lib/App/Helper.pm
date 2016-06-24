@@ -505,7 +505,7 @@ sub new_record {
 sub update_record {
     my ($self, $bag, $rec) = @_;
 
-    $self->log->debug("updating record in $bag");
+    $self->log->info("updating $bag");
     $self->log->debug(Dancer::to_json($rec));
 
     # don't know where to put it, should find better place to handle this
