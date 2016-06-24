@@ -3,7 +3,7 @@
 <div class="row innerrow">
   <div class="col-md-2 form-group hidden-xs hidden-sm">
     <label for="id_abstract_0">
-      [% h.loc("${type}.field.abstract.label") %]
+      [% h.loc("forms.${type}.field.abstract.label") %]
     </label>
     {% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}<span class="starMandatory"></span>&nbsp;{% END %}
   </div>
@@ -13,14 +13,14 @@
     <div class="row innerrow multirow">
       <div class="form-group sticky_top col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon">[% h.loc("${type}.field.abstract.label2") %]</div>
+          <div class="input-group-addon">[% h.loc("forms.${type}.field.abstract.label2") %]</div>
           <select name="abstract.0.lang" id="id_abstract_language_0" class="sticky form-control">
           [% FOREACH lang IN language_preselect %]
-          <option value="[% lang %]" [% IF lang == "eng" %]selected="selected"[% END %]>[% h.loc("language.${lang}") %]</option>
+          <option value="[% lang %]" [% IF lang == "eng" %]selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
           [% END %]
           <option value="2436687"></option>
           [% FOREACH lang IN language_list.sort %]
-          <option value="[% lang %]" [% IF abLanguageOId == lang %]selected="selected"[% END %]>[% h.loc("language.${lang}") %]</option>
+          <option value="[% lang %]" [% IF abLanguageOId == lang %]selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
           [% END %]
           </select>
           <div class="input-group-addon" onclick="add_field('abstract');"><span class="glyphicon glyphicon-plus"></span></div>
@@ -29,9 +29,9 @@
       </div>
       <div class="form-group sticky_bottom col-md-10 col-xs-11">
         <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-          <textarea rows="6" name="abstract.0.text" id="id_abstract_0" placeholder="[% h.loc("${type}.field.abstract.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
+          <textarea rows="6" name="abstract.0.text" id="id_abstract_0" placeholder="[% h.loc("forms.${type}.field.abstract.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
         </div>
-        <span class="text-muted">[% h.loc("${type}.field.abstract.explain") %]</span>
+        <span class="text-muted">[% h.loc("forms.${type}.field.abstract.explain") %]</span>
       </div>
     </div>
     [% ELSE %]
@@ -39,14 +39,14 @@
       <div class="row innerrow multirow">
         <div class="form-group sticky_top col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-            <div class="input-group-addon">[% h.loc("${type}.field.abstract.label2") %]</div>
+            <div class="input-group-addon">[% h.loc("forms.${type}.field.abstract.label2") %]</div>
             <select name="abstract.[% loop.index %].lang" id="id_abstract_language_[% loop.index %]" class="sticky form-control">
             [% FOREACH lang IN language_preselect %]
-            <option value="[% lang %]" [% IF lang == "eng" %]selected="selected"[% END %]>[% h.loc("language.${lang}") %]</option>
+            <option value="[% lang %]" [% IF lang == "eng" %]selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
             [% END %]
             <option value="2436687"></option>
             [% FOREACH lang IN language_list.sort %]
-            <option value="[% lang %]" [% IF abLanguageOId == lang %]selected="selected"[% END %]>[% h.loc("language.${lang}") %]</option>
+            <option value="[% lang %]" [% IF abLanguageOId == lang %]selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
             [% END %]
             </select>
             <div class="input-group-addon" onclick="add_field('abstract');"><span class="glyphicon glyphicon-plus"></span></div>
@@ -55,9 +55,9 @@
         </div>
         <div class="form-group sticky_bottom col-md-10 col-xs-11">
           <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-            <textarea rows="6" name="abstract.[% loop.index %].text" id="id_abstract_[% loop.index %]" placeholder="[% h.loc("${type}.field.abstract.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}>[% ab.text | html %]</textarea>
+            <textarea rows="6" name="abstract.[% loop.index %].text" id="id_abstract_[% loop.index %]" placeholder="[% h.loc("forms.${type}.field.abstract.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}>[% ab.text | html %]</textarea>
           </div>
-          <span class="text-muted">[% h.loc("${type}.field.abstract.explain") %]</span>
+          <span class="text-muted">[% h.loc("forms.${type}.field.abstract.explain") %]</span>
         </div>
       </div>
       [% END %]
@@ -66,14 +66,14 @@
     <div class="row innerrow">
       <div class="form-group sticky_top col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon">[% h.loc("${type}.field.abstract.label2") %]</div>
+          <div class="input-group-addon">[% h.loc("forms.${type}.field.abstract.label2") %]</div>
           <select name="abstract.0.lang" id="id_abstract_language_0" class="sticky form-control">
           [% FOREACH lang IN language_preselect %]
-          <option value="[% lang %]" [% IF lang == "eng" %]selected="selected"[% END %]>[% h.loc("language.${lang}") %]</option>
+          <option value="[% lang %]" [% IF lang == "eng" %]selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
           [% END %]
           <option value="2436687"></option>
           [% FOREACH lang IN language_list.sort %]
-          <option value="[% lang %]" [% IF abLanguageOId == lang %]selected="selected"[% END %]>[% h.loc("language.${lang}") %]</option>
+          <option value="[% lang %]" [% IF abLanguageOId == lang %]selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
           [% END %]
           </select>
           <div class="input-group-addon" onclick="add_field('abstract');"><span class="glyphicon glyphicon-plus"></span></div>
@@ -82,9 +82,9 @@
       </div>
       <div class="form-group sticky_bottom col-md-10 col-xs-11">
         <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
-          <textarea rows="6" name="abstract.0.text" id="id_abstract_0" placeholder="[% h.loc("${type}.field.abstract.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
+          <textarea rows="6" name="abstract.0.text" id="id_abstract_0" placeholder="[% h.loc("forms.${type}.field.abstract.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
         </div>
-        <span class="text-muted">[% h.loc("${type}.field.abstract.explain") %]</span>
+        <span class="text-muted">[% h.loc("forms.${type}.field.abstract.explain") %]</span>
       </div>
     </div>
     {% END %}

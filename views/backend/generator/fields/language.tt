@@ -3,7 +3,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="select_language_0">
-      [% h.loc("${type}.field.language.label") %]
+      [% h.loc("forms.${type}.field.language.label") %]
     </label>
     {% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -16,11 +16,11 @@
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.language.label_short || lf.$type.field.language.label %]</div>
           <select name="language.0.iso" class="sticky form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} required{% END %}" id="select_language_0">
             [% FOREACH lang IN language_preselect %]
-            <option value="[% lang %]"[% IF lang == language.iso || (!language AND lang=="eng") %] selected="selected"[% END %]>[% h.loc("language.${lang}") %]</option>
+            <option value="[% lang %]"[% IF lang == language.iso || (!language AND lang=="eng") %] selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
             [% END %]
             <option value="2436687"></option>
             [% FOREACH lang IN language_list.sort %]
-            <option value="[% lang %]"[% IF lang == language.iso %] selected="selected"[% END %]>[% h.loc("language.${lang}") %]</option>
+            <option value="[% lang %]"[% IF lang == language.iso %] selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
             [% END %]
           </select>
           <div class="input-group-addon" onclick="add_field('language');"><span class="glyphicon glyphicon-plus"></span></div>
@@ -36,11 +36,11 @@
             <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.language.label_short || lf.$type.field.language.label %]</div>
             <select name="language.[% loop.index %].iso" class="sticky form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_language_[% loop.index %]">
               [% FOREACH lang IN language_preselect %]
-              <option value="[% lang %]"[% IF lang == lan.iso %] selected="selected"[% END %]>[% h.loc("language.${lang}") %]</option>
+              <option value="[% lang %]"[% IF lang == lan.iso %] selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
               [% END %]
               <option value="2436687"></option>
               [% FOREACH lang IN language_list.sort %]
-              <option value="[% lang %]"[% IF lang == lan.iso %] selected="selected"[% END %]>[% h.loc("language.${lang}") %]</option>
+              <option value="[% lang %]"[% IF lang == lan.iso %] selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
               [% END %]
             </select>
             <div class="input-group-addon" onclick="add_field('language');"><span class="glyphicon glyphicon-plus"></span></div>
@@ -57,11 +57,11 @@
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.language.label_short || lf.$type.field.language.label %]</div>
           <select name="language.0.iso" class="sticky form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} required{% END %}" id="select_language_0">
             [% FOREACH lang IN language_preselect %]
-            <option value="[% lang %]"[% IF lang == language.0.iso %] selected="selected"[% END %]>[% h.loc("language.${lang}") %]</option>
+            <option value="[% lang %]"[% IF lang == language.0.iso %] selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
             [% END %]
             <option value="2436687"></option>
             [% FOREACH lang IN language_list.sort %]
-            <option value="[% lang %]"[% IF lang == language.0.iso %] selected="selected"[% END %]>[% h.loc("language.${lang}") %]</option>
+            <option value="[% lang %]"[% IF lang == language.0.iso %] selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
             [% END %]
           </select>
           <div class="input-group-addon"></div>

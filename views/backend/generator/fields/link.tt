@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_link_0">
-      [% h.loc("${type}.field.link.label") %]
+      [% h.loc("forms.${type}.field.link.label") %]
     </label>
     {% IF fields.basic_fields.link.mandatory OR fields.supplementary_fields.link.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -12,7 +12,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.link.mandatory OR fields.supplementary_fields.link.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.link.label_short || lf.$type.field.link.label %]</div>
-          <input type="text" name="link.0" id="id_link_0" value="" placeholder="[% h.loc("${type}.field.link.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.link.mandatory OR fields.supplementary_fields.link.mandatory %} required{% END %}"{% IF fields.basic_fields.link.readonly OR fields.supplementary_fields.link.readonly %} readonly="readonly"{% END %} />
+          <input type="text" name="link.0" id="id_link_0" value="" placeholder="[% h.loc("forms.${type}.field.link.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.link.mandatory OR fields.supplementary_fields.link.mandatory %} required{% END %}"{% IF fields.basic_fields.link.readonly OR fields.supplementary_fields.link.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon" onclick="add_field('link');"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
@@ -24,7 +24,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.link.mandatory OR fields.supplementary_fields.link.mandatory %}[% IF loop.first %] mandatory[% END %]{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.link.label_short || lf.$type.field.link.label %]</div>
-          <input type="text" name="link.[% loop.index %]" id="id_link_[% loop.index %]" value="[% alttitle | html %]" placeholder="[% h.loc("${type}.field.link.placeholder") %]" class="form-control{% IF fields.basic_fields.link.mandatory OR fields.supplementary_fields.link.mandatory %} required{% END %}"{% IF fields.basic_fields.link.readonly OR fields.supplementary_fields.link.readonly %} readonly="readonly"{% END %}>
+          <input type="text" name="link.[% loop.index %]" id="id_link_[% loop.index %]" value="[% alttitle | html %]" placeholder="[% h.loc("forms.${type}.field.link.placeholder") %]" class="form-control{% IF fields.basic_fields.link.mandatory OR fields.supplementary_fields.link.mandatory %} required{% END %}"{% IF fields.basic_fields.link.readonly OR fields.supplementary_fields.link.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon" onclick="add_field('link');"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
@@ -37,7 +37,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.link.mandatory OR fields.supplementary_fields.link.mandatory %} mandatory{% END %}">
           <div class="hidden-lg hidden-md input-group-addon">[% lf.$type.field.link.label_short || lf.$type.field.link.label %]</div>
-          <input type="text" name="link.0" id="id_link_0" value="[% link.0 | html %]" placeholder="[% h.loc("${type}.field.link.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.link.mandatory OR fields.supplementary_fields.link.mandatory %} required{% END %}"{% IF fields.basic_fields.link.readonly OR fields.supplementary_fields.link.readonly %} readonly="readonly"{% END %}>
+          <input type="text" name="link.0" id="id_link_0" value="[% link.0 | html %]" placeholder="[% h.loc("forms.${type}.field.link.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.link.mandatory OR fields.supplementary_fields.link.mandatory %} required{% END %}"{% IF fields.basic_fields.link.readonly OR fields.supplementary_fields.link.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

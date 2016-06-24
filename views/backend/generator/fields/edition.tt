@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_edition">
-      [% h.loc("${type}.field.edition.label") %]
+      [% h.loc("forms.${type}.field.edition.label") %]
     </label>
     {% IF fields.basic_fields.edition.mandatory OR fields.supplementary_fields.edition.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -9,8 +9,8 @@
     <div class="row innerrow">
       <div class="form-group col-md-3 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.edition.mandatory OR fields.supplementary_fields.edition.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("${type}.field.edition.label") %]</div>
-          <input type="text" name="edition" id="id_edition" value="[% edition | html %]" placeholder="[% h.loc("${type}.field.edition.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.edition.mandatory OR fields.supplementary_fields.edition.mandatory %} required{% END %}"{% IF fields.basic_fields.edition.readonly OR fields.supplementary_fields.edition.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.edition.label") %]</div>
+          <input type="text" name="edition" id="id_edition" value="[% edition | html %]" placeholder="[% h.loc("forms.${type}.field.edition.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.edition.mandatory OR fields.supplementary_fields.edition.mandatory %} required{% END %}"{% IF fields.basic_fields.edition.readonly OR fields.supplementary_fields.edition.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

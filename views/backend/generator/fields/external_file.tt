@@ -2,7 +2,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_external_file">
-      [% h.loc("${type}.field.external_file.label") %]
+      [% h.loc("forms.${type}.field.external_file.label") %]
     </label>
   </div>
   <div class="col-md-10">
@@ -11,7 +11,7 @@
         <div class="checkbox">
           <label class="checkbox-inline">
             <input type="checkbox" value="1" name="external_file"[% IF external_file == "1" %] checked="checked"[% END %] />
-            [% h.loc("${type}.field.external_file.checkbox") %] <strong><a href="http://doi.org/[% doi %]" target="_blank">[% doi %]</a></strong>
+            [% h.loc("forms.${type}.field.external_file.checkbox") %] <strong><a href="http://doi.org/[% doi %]" target="_blank">[% doi %]</a></strong>
           </label>
         </div>
       </div>

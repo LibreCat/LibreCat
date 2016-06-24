@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="keyword_0">
-      [% h.loc("${type}.field.keyword.label") %]
+      [% h.loc("forms.${type}.field.keyword.label") %]
     </label>
     {% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -9,8 +9,8 @@
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("${type}.field.keyword.label") %]</div>
-          <input type="text" name="keyword" id="keyword_0" value="[% keyword.join(' ; ') %]" class="sticky form-control{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %} required{% END %}" placeholder="[% h.loc("${type}.field.keyword.placeholder") %]"{% IF fields.basic_fields.keyword.readonly OR fields.supplementary_fields.keyword.readonly %} readonly="readonly"{% END %}/>
+          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.keyword.label") %]</div>
+          <input type="text" name="keyword" id="keyword_0" value="[% keyword.join(' ; ') %]" class="sticky form-control{% IF fields.basic_fields.keyword.mandatory OR fields.supplementary_fields.keyword.mandatory %} required{% END %}" placeholder="[% h.loc("forms.${type}.field.keyword.placeholder") %]"{% IF fields.basic_fields.keyword.readonly OR fields.supplementary_fields.keyword.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon"></div>
         </div>
       </div>

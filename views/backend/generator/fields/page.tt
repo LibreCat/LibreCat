@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_page">
-      [% h.loc("${type}.field.page.label") %]
+      [% h.loc("forms.${type}.field.page.label") %]
     </label>
     {% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -12,7 +12,7 @@
           {% IF fields.basic_fields.page.options %}
           <span class="input-group-btn">
             <select class="btn btn-default" name="page_range_number.type" id="select_page_range_number">
-              <option value="">-- [% h.loc("button.select") %] --</option>
+              <option value="">-- [% h.loc("forms.button.select") %] --</option>
               {% FOREACH prn IN fields.basic_fields.page.options %}
               <option value="{% prn %}"[% IF (article_number AND "{% prn %}" == "article_number") OR (page AND "{% prn %}" == "page_range") %] selected="selected"[% END %]>[% lf.page_range_number.{% prn %} %]</option>
               {% END %}
@@ -21,7 +21,7 @@
           {% ELSE %}
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.page.label_short || lf.$type.field.page.label %]</div>
           {% END %}
-          <input type="text" name="page" id="id_page" value="[% page | html %]" placeholder="[% h.loc("${type}.field.page.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %} required{% END %}"{% IF fields.basic_fields.page.readonly OR fields.supplementary_fields.page.readonly %} readonly="readonly"{% END %}>
+          <input type="text" name="page" id="id_page" value="[% page | html %]" placeholder="[% h.loc("forms.${type}.field.page.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %} required{% END %}"{% IF fields.basic_fields.page.readonly OR fields.supplementary_fields.page.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

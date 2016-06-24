@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="ccs_class_0">
-      [% h.loc("${type}.field.ccs_class.label") %]
+      [% h.loc("forms.${type}.field.ccs_class.label") %]
     </label>
     {% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -11,9 +11,9 @@
     <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("${type}.field.ccs_class.label") %]</div>
-          <input type="text" name="ccs_class" id="ccs_class_0" value="" class="sticky form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} required{% END %}" placeholder="[% h.loc("${type}.field.ccs_class.placeholder") %]"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
-          <div class="input-group-addon" onclick="add_field('ccs_class'[% IF lf.$type.field.ccs_class.placeholder %], '[% h.loc("${type}.field.ccs_class.placeholder") %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.ccs_class.label") %]</div>
+          <input type="text" name="ccs_class" id="ccs_class_0" value="" class="sticky form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} required{% END %}" placeholder="[% h.loc("forms.${type}.field.ccs_class.placeholder") %]"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
+          <div class="input-group-addon" onclick="add_field('ccs_class'[% IF lf.$type.field.ccs_class.placeholder %], '[% h.loc("forms.${type}.field.ccs_class.placeholder") %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
@@ -23,9 +23,9 @@
     <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon">[% h.loc("${type}.field.ccs_class.label") %]</div>
+          <div class="input-group-addon">[% h.loc("forms.${type}.field.ccs_class.label") %]</div>
           <input type="text" name="ccs_class" id="ccs_class_[% loop.index %]" value="[% keyw | html %]" class="sticky form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
-          <div class="input-group-addon" onclick="add_field('ccs_class'[% IF lf.$type.field.ccs_class.placeholder %], '[% h.loc("${type}.field.ccs_class.placeholder") %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="add_field('ccs_class'[% IF lf.$type.field.ccs_class.placeholder %], '[% h.loc("forms.${type}.field.ccs_class.placeholder") %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
@@ -36,8 +36,8 @@
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon">[% h.loc("${type}.field.ccs_class.label") %]</div>
-          <input type="text" name="ccs_class" id="ccs_class_0" value="" class="sticky form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} required{% END %}" placeholder="[% h.loc("${type}.field.ccs_class.placeholder") %]"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
+          <div class="input-group-addon">[% h.loc("forms.${type}.field.ccs_class.label") %]</div>
+          <input type="text" name="ccs_class" id="ccs_class_0" value="" class="sticky form-control{% IF fields.basic_fields.ccs_class.mandatory OR fields.supplementary_fields.ccs_class.mandatory %} required{% END %}" placeholder="[% h.loc("forms.${type}.field.ccs_class.placeholder") %]"{% IF fields.basic_fields.ccs_class.readonly OR fields.supplementary_fields.ccs_class.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon"></div>
         </div>
       </div>

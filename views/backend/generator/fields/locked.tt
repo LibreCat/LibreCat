@@ -11,7 +11,7 @@
         <div class="checkbox">
           <label class="checkbox-inline">
             <input type="checkbox" name="locked" id="id_locked" value="1"[% IF locked OR type.match('^bi') %] checked="checked"[% END %]>
-            [% h.loc("${type}.field.locked.label") %]
+            [% h.loc("forms.${type}.field.locked.label") %]
           </label>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_applicant_0">
-      [% h.loc("${type}.field.applicant.label") %]
+      [% h.loc("forms.${type}.field.applicant.label") %]
     </label>
     {% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -11,8 +11,8 @@
       <div class="row innerrow multirow">
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} mandatory{% END %}">
-            <div class="input-group-addon hidden-lg hidden-md">[% h.loc("${type}.field.applicant.label") %]</div>
-            <input type="text" name="applicant.0" id="id_applicant_0" value="" class="sticky form-control{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} required{% END %}" placeholder="[% h.loc("${type}.field.applicant.placeholder") %]"{% IF fields.basic_fields.applicant.readonly OR fields.supplementary_fields.applicant.readonly %} readonly="readonly"{% END %} />
+            <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.applicant.label") %]</div>
+            <input type="text" name="applicant.0" id="id_applicant_0" value="" class="sticky form-control{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} required{% END %}" placeholder="[% h.loc("forms.${type}.field.applicant.placeholder") %]"{% IF fields.basic_fields.applicant.readonly OR fields.supplementary_fields.applicant.readonly %} readonly="readonly"{% END %} />
             <div class="input-group-addon" onclick="add_field('applicant');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
@@ -23,7 +23,7 @@
       <div class="row innerrow multirow">
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} mandatory{% END %}">
-            <div class="input-group-addon hidden-lg hidden-md">[% h.loc("${type}.field.applicant.label") %]</div>
+            <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.applicant.label") %]</div>
             <input type="text" name="applicant.[% loop.index %]" id="applicant_[% loop.index %]" value="[% cored | html %]" class="sticky form-control{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.applicant.readonly OR fields.supplementary_fields.applicant.readonly %} readonly="readonly"{% END %} />
             <div class="input-group-addon" onclick="add_field('applicant');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
@@ -36,8 +36,8 @@
       <div class="row innerrow">
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} mandatory{% END %}">
-            <div class="input-group-addon hidden-lg hidden-md">[% h.loc("${type}.field.applicant.label") %]</div>
-            <input type="text" name="applicant.0" id="id_applicant_0" value="" class="sticky form-control{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} required{% END %}" placeholder="[% h.loc("${type}.field.applicant.placeholder") %]"{% IF fields.basic_fields.applicant.readonly OR fields.supplementary_fields.applicant.readonly %} readonly="readonly"{% END %} />
+            <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.applicant.label") %]</div>
+            <input type="text" name="applicant.0" id="id_applicant_0" value="" class="sticky form-control{% IF fields.basic_fields.applicant.mandatory OR fields.supplementary_fields.applicant.mandatory %} required{% END %}" placeholder="[% h.loc("forms.${type}.field.applicant.placeholder") %]"{% IF fields.basic_fields.applicant.readonly OR fields.supplementary_fields.applicant.readonly %} readonly="readonly"{% END %} />
             <div class="input-group-addon" onclick="add_field('applicant');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>

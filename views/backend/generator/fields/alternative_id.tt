@@ -2,7 +2,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_alternative_id_0">
-      [% h.loc("${type}.field.alternative_id.label") %]
+      [% h.loc("forms.${type}.field.alternative_id.label") %]
     </label>
     {% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -12,8 +12,8 @@
     <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("${type}.field.alternative_id.label") %]</div>
-          <input type="text" name="alternative_id.0" id="id_alternative_id_0" value="" placeholder="[% h.loc("${type}.field.alternative_id.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_id.readonly OR fields.supplementary_fields.alternative_id.readonly %} readonly="readonly"{% END %} />
+          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.alternative_id.label") %]</div>
+          <input type="text" name="alternative_id.0" id="id_alternative_id_0" value="" placeholder="[% h.loc("forms.${type}.field.alternative_id.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_id.readonly OR fields.supplementary_fields.alternative_id.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon" onclick="add_field('alternative_id');"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
@@ -24,8 +24,8 @@
     <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %}[% IF loop.first %] mandatory[% END %]{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("${type}.field.alternative_id.label") %]</div>
-          <input type="text" name="alternative_id.[% loop.index %]" id="id_alternative_id_[% loop.index %]" value="[% altid %]" placeholder="[% h.loc("${type}.field.alternative_id.placeholder") %]" class="form-control{% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_title.readonly OR fields.supplementary_fields.alternative_title.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.alternative_id.label") %]</div>
+          <input type="text" name="alternative_id.[% loop.index %]" id="id_alternative_id_[% loop.index %]" value="[% altid %]" placeholder="[% h.loc("forms.${type}.field.alternative_id.placeholder") %]" class="form-control{% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_title.readonly OR fields.supplementary_fields.alternative_title.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon" onclick="add_field('alternative_id');"><span class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
@@ -37,8 +37,8 @@
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %} mandatory{% END %}">
-          <div class="hidden-lg hidden-md input-group-addon">[% h.loc("${type}.field.alternative_id.label") %]</div>
-          <input type="text" name="alternative_id.0" id="id_alternative_id_0" value="[% alternative_id.0 %]" placeholder="[% h.loc("${type}.field.alternative_id.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_id.readonly OR fields.supplementary_fields.alternative_id.readonly %} readonly="readonly"{% END %}>
+          <div class="hidden-lg hidden-md input-group-addon">[% h.loc("forms.${type}.field.alternative_id.label") %]</div>
+          <input type="text" name="alternative_id.0" id="id_alternative_id_0" value="[% alternative_id.0 %]" placeholder="[% h.loc("forms.${type}.field.alternative_id.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_id.readonly OR fields.supplementary_fields.alternative_id.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

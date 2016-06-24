@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>[% h.loc("${type}.field.dropzone.edit_modal.heading") %]</h3>
+        <h3>[% h.loc("forms.${type}.field.dropzone.edit_modal.heading") %]</h3>
       </div>
 
       <form enctype="multipart/form-data" name="upLoad" id="upLoad">
@@ -14,16 +14,16 @@
         <input type="hidden" name="tempid" id="id_temp_id" value="" />
         <input type="hidden" name="cancel" value="" />
 
-        <h4>[% h.loc("${type}.field.dropzone.edit_modal.heading_file") %]</h4>
+        <h4>[% h.loc("forms.${type}.field.dropzone.edit_modal.heading_file") %]</h4>
         <div class="form-group">
           <label class="text" id="fileNameTag" style="display:none">
-            [% h.loc("${type}.field.dropzone.edit_modal.current_file") %]
+            [% h.loc("forms.${type}.field.dropzone.edit_modal.current_file") %]
             <input type="text" name="fileName" id="id_fileName" value="" readonly="readonly" class="form-control"/>
           </label>
         </div>
 
         <div class="form-group">
-          <strong>[% h.loc("${type}.field.dropzone.edit_modal.relation") %]</strong><br />
+          <strong>[% h.loc("forms.${type}.field.dropzone.edit_modal.relation") %]</strong><br />
           <select name="relation" class="form-control" id="id_select_relation">
             <option value="main_file"[% IF !relation %] selected="selected"[% END %]>Main File</option>
             [% FOREACH rel IN h.config.lists.relations_file %]
@@ -49,37 +49,37 @@
           </script>
 
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="open_access" onclick="oamode(this.form, true);"/> [% h.loc("${type}.field.dropzone.edit_modal.access.open_access") %]
+            <input type="radio" name="accessLevel" id="id_accessLevel_openAccess" value="open_access" onclick="oamode(this.form, true);"/> [% h.loc("forms.${type}.field.dropzone.edit_modal.access.open_access") %]
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_local" value="local" onclick="oamode(this.form,false);" /> [% h.loc("${type}.field.dropzone.edit_modal.access.local") %]
+            <input type="radio" name="accessLevel" id="id_accessLevel_local" value="local" onclick="oamode(this.form,false);" /> [% h.loc("forms.${type}.field.dropzone.edit_modal.access.local") %]
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="closed" onclick="oamode(this.form,false);" /> [% h.loc("${type}.field.dropzone.edit_modal.access.closed") %]
+            <input type="radio" name="accessLevel" id="id_accessLevel_admin" value="closed" onclick="oamode(this.form,false);" /> [% h.loc("forms.${type}.field.dropzone.edit_modal.access.closed") %]
           </label>
           <label class="radio">
-            <input type="radio" name="accessLevel" id="id_accessLevel_request" value="request" onclick="oamode(this.form,false);" /> [% h.loc("${type}.field.dropzone.edit_modal.access.request_a_copy") %]
+            <input type="radio" name="accessLevel" id="id_accessLevel_request" value="request" onclick="oamode(this.form,false);" /> [% h.loc("forms.${type}.field.dropzone.edit_modal.access.request_a_copy") %]
           </label>
           <label class="checkbox control-label">
-            <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />[% h.loc("${type}.field.dropzone.edit_modal.access.embargo") %]<br />
+            <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />[% h.loc("forms.${type}.field.dropzone.edit_modal.access.embargo") %]<br />
           </label>
           <input type="text" class="form-control" name="embargo" id="id_embargo" placeholder="YYYY-MM-DD" value="">
         </div>
 
-        <h4>[% h.loc("${type}.field.dropzone.edit_modal.additional_information.heading") %]</h4>
+        <h4>[% h.loc("forms.${type}.field.dropzone.edit_modal.additional_information.heading") %]</h4>
         <div class="form-group">
-          <strong>[% h.loc("${type}.field.dropzone.edit_modal.additional_information.title") %]</strong><br />
+          <strong>[% h.loc("forms.${type}.field.dropzone.edit_modal.additional_information.title") %]</strong><br />
           <input type="text" name="title" id="id_fileTitle" value="" class="form-control" />
         </div>
 
         <div class="form-group">
-          <strong>[% h.loc("${type}.field.dropzone.edit_modal.additional_information.description") %]</strong><br />
+          <strong>[% h.loc("forms.${type}.field.dropzone.edit_modal.additional_information.description") %]</strong><br />
           <textarea name="description" id="id_fileDescription" class="form-control" rows="3">[% description %]</textarea>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" name="finalSubmit" id="fileSubmit"><span class="glyphicon glyphicon-ok"></span> [% h.loc("button.save") %]</button>
-        <button type="button" class="btn btn-warning" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span> [% h.loc("button.cancel") %]</button>
+        <button type="button" class="btn btn-success" name="finalSubmit" id="fileSubmit"><span class="glyphicon glyphicon-ok"></span> [% h.loc("forms.button.save") %]</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span> [% h.loc("forms.button.cancel") %]</button>
       </div>
       </form>
     </div>

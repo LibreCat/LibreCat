@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_doi">
-      [% h.loc("${type}.field.doi.label") %]
+      [% h.loc("forms.${type}.field.doi.label") %]
     </label>
     {% IF fields.basic_fields.doi.mandatory OR fields.supplementary_fields.doi.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -9,8 +9,8 @@
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.doi.mandatory OR fields.supplementary_fields.doi.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("${type}.field.doi.label") %]</div>
-          <input type="text" name="doi" id="id_doi" value="[% doi | html %]" placeholder="[% h.loc("$type.field.doi.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.doi.mandatory OR fields.supplementary_fields.doi.mandatory %} required{% END %}"{% IF fields.basic_fields.doi.readonly OR fields.supplementary_fields.doi.readonly %} readonly="readonly" title="[% h.loc("${type}.field.doi.title") %]"{% END %}>
+          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.doi.label") %]</div>
+          <input type="text" name="doi" id="id_doi" value="[% doi | html %]" placeholder="[% h.loc("forms.$type.field.doi.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.doi.mandatory OR fields.supplementary_fields.doi.mandatory %} required{% END %}"{% IF fields.basic_fields.doi.readonly OR fields.supplementary_fields.doi.readonly %} readonly="readonly" title="[% h.loc("forms.${type}.field.doi.title") %]"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

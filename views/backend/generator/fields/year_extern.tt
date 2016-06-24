@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_year">
-      [% h.loc("${type}.field.year_extern.label") %]
+      [% h.loc("forms.${type}.field.year_extern.label") %]
     </label>
     {% IF fields.basic_fields.year_extern.year.mandatory OR fields.supplementary_fields.year_extern.year.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -10,7 +10,7 @@
       <div class="col-md-10 col-xs-11 form-group">
         <div class="input-group sticky{% IF fields.basic_fields.year_extern.year.mandatory OR fields.supplementary_fields.year_extern.year.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.year_extern.year.label_short || lf.$type.field.year_extern.year.label %]</div>
-          <input type="text" name="year" id="id_year" value="[% year | html %]" maxlength="4" placeholder="[% h.loc("${type}.field.year_extern.year.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.year_extern.year.mandatory OR fields.supplementary_fields.year_extern.year.mandatory %} required{% END %}"{% IF fields.basic_fields.year_extern.year.readonly OR fields.supplementary_fields.year_extern.year.readonly %} readonly="readonly"{% END %}>
+          <input type="text" name="year" id="id_year" value="[% year | html %]" maxlength="4" placeholder="[% h.loc("forms.${type}.field.year_extern.year.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.year_extern.year.mandatory OR fields.supplementary_fields.year_extern.year.mandatory %} required{% END %}"{% IF fields.basic_fields.year_extern.year.readonly OR fields.supplementary_fields.year_extern.year.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>
@@ -23,7 +23,7 @@
         <div class="checkbox">
           <label class="checkbox-inline">
             <input type="checkbox" name="extern" id="id_extern" value="1"[% IF extern %] checked="checked"[% END %]>
-            [% h.loc("${type}.field.year_extern.extern.placeholder") %]
+            [% h.loc("forms.${type}.field.year_extern.extern.placeholder") %]
           </label>
         </div>
       </div>

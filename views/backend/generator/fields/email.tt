@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_email">
-      [% h.loc("${type}.field.email.label") %]
+      [% h.loc("forms.${type}.field.email.label") %]
     </label>
     {% IF fields.basic_fields.email.mandatory OR fields.supplementary_fields.email.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -10,7 +10,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.email.mandatory OR fields.supplementary_fields.email.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.email.label_short || lf.$type.field.email.label %]</div>
-          <input type="text" name="email" id="id_email" value="[% email | html %]" placeholder="[% h.loc("${type}.field.email.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.email.mandatory OR fields.supplementary_fields.email.mandatory %} required{% END %}"{% IF fields.basic_fields.email.readonly OR fields.supplementary_fields.email.readonly %} readonly="readonly"{% END %}>
+          <input type="text" name="email" id="id_email" value="[% email | html %]" placeholder="[% h.loc("forms.${type}.field.email.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.email.mandatory OR fields.supplementary_fields.email.mandatory %} required{% END %}"{% IF fields.basic_fields.email.readonly OR fields.supplementary_fields.email.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

@@ -108,13 +108,13 @@ $('.change_tab').click(function(e){
         if($('#id_data_reuse_license').val() == ''){
           $('#id_data_reuse_license').parent().removeClass('alert-info');
           $('#id_data_reuse_license').parent().addClass('alert-danger');
-          alert('[% h.loc("${type}.field.license.data_reuse_license.alert") %]');
+          alert('[% h.loc("forms.${type}.field.license.data_reuse_license.alert") %]');
           e.stopImmediatePropagation();
         }
         if(!$('#id_open_data_release').is(':checked')) {
           $('#odralert').removeClass('alert-info');
           $('#odralert').addClass('alert-danger');
-          alert('[% h.loc("${type}.field.license.open_data_release.alert") %]');
+          alert('[% h.loc("forms.${type}.field.license.open_data_release.alert") %]');
           check_license = 0;
           e.stopImmediatePropagation();
         }
@@ -123,13 +123,13 @@ $('.change_tab').click(function(e){
         if($('#id_data_reuse_license').val() == ''){
           $('#id_data_reuse_license').parent().removeClass('alert-info');
           $('#id_data_reuse_license').parent().addClass('alert-danger');
-          alert('[% h.loc("${type}.field.license.data_reuse_license.alert") %]');
+          alert('[% h.loc("forms.${type}.field.license.data_reuse_license.alert") %]');
           e.stopImmediatePropagation();
         }
         if(!$('#id_open_data_release').is(':checked')) {
           $('#odralert').removeClass('alert-info');
           $('#odralert').addClass('alert-danger');
-          alert('[% h.loc("${type}.field.license.open_data_release.alert") %]');
+          alert('[% h.loc("forms.${type}.field.license.open_data_release.alert") %]');
           check_license = 0;
           e.stopImmediatePropagation();
         }
@@ -149,14 +149,14 @@ $('.change_tab').click(function(e){
       if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && !$('#id_pub_license').is(':checked')){
         $('#pub_license_alert').removeClass('alert-info');
         $('#pub_license_alert').addClass('alert-danger');
-        alert('[% h.loc("${type}.field.license.pub_license.alert") %]');
+        alert('[% h.loc("forms.${type}.field.license.pub_license.alert") %]');
         check_license = 0;
         e.preventDefault();
       }
       else if ($('.dropzone').first().children().length > 2 && $($('.dropzone').first().children()[1]).attr('class') == "fallback" && !$('#id_pub_license').is(':checked')){
         $('#pub_license_alert').removeClass('alert-info');
         $('#pub_license_alert').addClass('alert-danger');
-        alert('[% h.loc("${type}.field.license.pub_license.alert") %]');
+        alert('[% h.loc("forms.${type}.field.license.pub_license.alert") %]');
         check_license = 0;
         e.preventDefault();
       }

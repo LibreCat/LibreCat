@@ -1,7 +1,7 @@
 [% USE JSON %]
 <div class="row innerrow">
   <div class="col-xs-10">
-    [% h.loc("${type}.field.dropzone.label") %]
+    [% h.loc("forms.${type}.field.dropzone.label") %]
   </div>
 </div>
 
@@ -21,35 +21,35 @@
       <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.file_id %]">
         <div class="row">
           <div class="col-md-12 col-xs-10 padded">
-            <span class="glyphicon glyphicon-file text-muted"></span> <a href="[% h.host %]/download/[% _id %]/[% fi.file_id %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a> ([% h.loc("${type}.field.dropzone.copy_link") %] <a href="#" onclick="copyToClipboard('[% h.host %]/download/[% _id %]/[% fi.file_id %]');"><span class="glyphicon glyphicon-copy"></span></a>)
+            <span class="glyphicon glyphicon-file text-muted"></span> <a href="[% h.host %]/download/[% _id %]/[% fi.file_id %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a> ([% h.loc("forms.${type}.field.dropzone.copy_link") %] <a href="#" onclick="copyToClipboard('[% h.host %]/download/[% _id %]/[% fi.file_id %]');"><span class="glyphicon glyphicon-copy"></span></a>)
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-2 text-muted">[% h.loc("${type}.field.dropzone.access_level") %]</div>
-          <div class="col-xs-3 text-muted">[% h.loc("${type}.field.dropzone.upload_date") %]</div>
-          <div class="col-xs-3 text-muted">[% h.loc("${type}.field.dropzone.user") %]</div>
-          <div class="col-xs-4 text-muted">[% h.loc("${type}.field.dropzone.relation") %]</div>
+          <div class="col-xs-2 text-muted">[% h.loc("forms.${type}.field.dropzone.access_level") %]</div>
+          <div class="col-xs-3 text-muted">[% h.loc("forms.${type}.field.dropzone.upload_date") %]</div>
+          <div class="col-xs-3 text-muted">[% h.loc("forms.${type}.field.dropzone.user") %]</div>
+          <div class="col-xs-4 text-muted">[% h.loc("forms.${type}.field.dropzone.relation") %]</div>
         </div>
         <div class="row">
           <div class="col-xs-2" id="access_[% fi.file_id %]">
             [% SWITCH fi.access_level %]
             [% CASE "closed" %]
-            [% h.loc("${type}.field.dropzone.access.closed") %]
+            [% h.loc("forms.${type}.field.dropzone.access.closed") %]
             [% IF fi.embargo %]
-            <br />([% h.loc("${type}.field.dropzone.access.until") %] [% fi.embargo %])
+            <br />([% h.loc("forms.${type}.field.dropzone.access.until") %] [% fi.embargo %])
             [% END %]
             [% IF fi.request_a_copy %]
-            [% h.loc("${type}.field.dropzone.access.request_a_copy") %]
+            [% h.loc("forms.${type}.field.dropzone.access.request_a_copy") %]
             [% END %]
 
             [% CASE "local" %]
-            [% h.loc("${type}.field.dropzone.access.local") %]
+            [% h.loc("forms.${type}.field.dropzone.access.local") %]
             [% IF fi.embargo %]
-            <br />([% h.loc("${type}.field.dropzone.access.until") %] [% fi.embargo %])
+            <br />([% h.loc("forms.${type}.field.dropzone.access.until") %] [% fi.embargo %])
             [% END %]
 
             [% CASE "open_access" %]
-            [% h.loc("${type}.field.dropzone.access.open_access") %]
+            [% h.loc("forms.${type}.field.dropzone.access.open_access") %]
 
             [% END %]
           </div>
@@ -77,10 +77,10 @@
 
 <script>
 $(document).ready(function(){
-	Dropzone.options.uploadFiles.dictDefaultMessage = "[% h.loc("${type}.field.dropzone.dropzone_text") %]";
+	Dropzone.options.uploadFiles.dictDefaultMessage = "[% h.loc("forms.${type}.field.dropzone.dropzone_text") %]";
 });
 
 function copyToClipboard(text){
-    window.prompt("[% h.loc("${type}.field.dropzone.copy_link_popup") %]", text);
+    window.prompt("[% h.loc("forms.${type}.field.dropzone.copy_link_popup") %]", text);
 }
 </script>

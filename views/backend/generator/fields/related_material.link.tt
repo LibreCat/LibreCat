@@ -2,7 +2,7 @@
 
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    <label for="relurl_url" class="helpme" data-placement="bottom" title="[% h.loc("form_relmat_link") %]">
+    <label for="relurl_url" class="helpme" data-placement="bottom" title="[% h.loc("forms.form_relmat_link") %]">
     [% lf.$type.field.item('related_material.link').label %]
     </label>
     {% IF fields.related_material.item('related_material.link').mandatory %}<span class="starMandatory"></span>{% END %}

@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_ubi_funded">
-      [% h.loc("${type}.field.ubi_funded.label") %]
+      [% h.loc("forms.${type}.field.ubi_funded.label") %]
     </label>
   </div>
   <div class="col-md-10">
@@ -10,7 +10,7 @@
         <div class="checkbox">
           <label class="checkbox-inline">
             <input type="checkbox" name="ubi_funded" id="id_ubi_funded" value="1"[% IF session.role != super_admin %] readonly="readonly"[% END %][% IF ubi_funded %] checked="checked"[% END %]>
-            [% h.loc("${type}.field.ubi_funded.placeholder") %]
+            [% h.loc("forms.${type}.field.ubi_funded.placeholder") %]
           </label>
         </div>
       </div>

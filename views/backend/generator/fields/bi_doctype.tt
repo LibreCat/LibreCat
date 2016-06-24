@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_select_bi_doctype">
-      [% h.loc("${type}.field.bi_doctype.label") %]
+      [% h.loc("forms.${type}.field.bi_doctype.label") %]
     </label>
   </div>
   <div class="col-md-10">

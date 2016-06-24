@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_issue">
-      [% h.loc("${type}.field.issue.label") %]
+      [% h.loc("forms.${type}.field.issue.label") %]
     </label>
     {% IF fields.basic_fields.issue.mandatory OR fields.supplementary_fields.issue.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -9,8 +9,8 @@
     <div class="row innerrow">
       <div class="form-group col-md-3 col-xs-11">
         <div class="input-group sticky">
-          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("${type}.field.issue.label") %]</div>
-          <input type="text" name="issue" id="id_issue" value="[% issue | html %]" placeholder="[% h.loc("${type}.field.issue.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.issue.mandatory OR fields.supplementary_fields.issue.mandatory %} required{% END %}"{% IF fields.basic_fields.issue.readonly OR fields.supplementary_fields.issue.readonly %} readonly="readonly"{% END %}/>
+          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.issue.label") %]</div>
+          <input type="text" name="issue" id="id_issue" value="[% issue | html %]" placeholder="[% h.loc("forms.${type}.field.issue.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.issue.mandatory OR fields.supplementary_fields.issue.mandatory %} required{% END %}"{% IF fields.basic_fields.issue.readonly OR fields.supplementary_fields.issue.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon"></div>
         </div>
       </div>
