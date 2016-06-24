@@ -11,3 +11,25 @@ sub parse {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Locale::Maketext::Lexicon::CatmanduConfig - Use Catmandu config files as a Maketext lexicon
+
+=head1 SYNOPSIS
+
+    Catmandu->{config}{locale}{en} = {
+        hello => "Hello",
+    };
+
+    package MyI18N;
+    use parent 'Locale::Maketext';
+    use Locale::Maketext::Lexicon {
+        en => [ CatmanduConfig => ['en'] ],
+    };
+
+=cut
