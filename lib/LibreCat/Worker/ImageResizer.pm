@@ -42,8 +42,8 @@ sub _build_access_store {
 sub work {
     my ($self, $opts) = @_;
 
-    my $key            = $opts->{key};
-    my $filename       = $opts->{filename};
+    my $key      = $opts->{key};
+    my $filename = $opts->{filename};
 
     my $thumbnail_name = 'thumbnail.png';
     my $delete = exists $opts->{delete} && $opts->{delete} == 1 ? "Y" : "N";
@@ -130,7 +130,8 @@ sub do_upload {
     }
 
     $self->log->info("storing $filename in access container $key");
-    my $ret = $container->add($thumbnail_name, IO::File->new("$tmpdir/thumb.png"));
+    my $ret = $container->add($thumbnail_name,
+        IO::File->new("$tmpdir/thumb.png"));
 
     unless ($ret) {
         $self->log->error(

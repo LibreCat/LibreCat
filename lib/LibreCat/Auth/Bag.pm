@@ -20,8 +20,8 @@ sub _authenticate {
 
     $self->log->debugf("authenticating: %s", $username);
 
-    my $bag      = Catmandu->store($self->store)->bag($self->bag);
-    my $user     = $bag->detect($self->username_attr => $username) ;
+    my $bag = Catmandu->store($self->store)->bag($self->bag);
+    my $user = $bag->detect($self->username_attr => $username);
 
     unless ($user) {
         $self->log->debug("$username not found");
@@ -29,9 +29,11 @@ sub _authenticate {
     }
 
     if (exists $user->{$self->password_attr}
-        && passwdcmp($password, $user->{$self->password_attr})) {
+        && passwdcmp($password, $user->{$self->password_attr}))
+    {
         return 1;
-    } else {
+    }
+    else {
         $self->log->debug("$username password doesn't match");
         return 0;
     }

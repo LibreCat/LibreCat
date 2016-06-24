@@ -65,9 +65,9 @@ sub command {
 sub _list {
     my $count = App::Helper::Helpers->new->project->each(
         sub {
-            my ($item)  = @_;
-            my $id      = $item->{_id};
-            my $name    = $item->{name};
+            my ($item) = @_;
+            my $id     = $item->{_id};
+            my $name   = $item->{name};
 
             printf "%-2.2s %s\n", $id, $name;
         }
