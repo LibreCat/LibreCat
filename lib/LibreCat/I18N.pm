@@ -19,3 +19,18 @@ sub _build__handle {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::I18N - localizaton class
+
+=head1 SYNOPSIS
+
+    my $i18n = LibreCat::I18N->new(locale => 'de');
+    my $hallo = $18n->localize('hello');
+
+=cut
