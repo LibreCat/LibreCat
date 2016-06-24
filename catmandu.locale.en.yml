@@ -534,6 +534,7 @@ forms:
       alternative_id: &alternative_id
         label: "Returned Record Ids"
         label_short: "Ret. Rec. Ids"
+        placeholder: ""
       related_material.record: &related_material_record
         label: "Link to PUB record"
         label_short: "PUB-Rec."
