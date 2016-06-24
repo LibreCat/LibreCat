@@ -533,6 +533,7 @@ forms:
       alternative_id: &alternative_id
         label: "Returned Record IDs"
         label_short: "Ret. Rec. IDs"
+        placeholder: ""
       related_material.record: &related_material_record
         label: "Link zu PUB-Eintrag"
         label_short: "PUB-Eintr."
@@ -557,6 +558,7 @@ forms:
         label_short: "Locked"
       link: &link
         label: "URL"
+        placeholder: ""
   book_editor:
     label: "Herausgeber Sammelwerk"
     tab: *tab
