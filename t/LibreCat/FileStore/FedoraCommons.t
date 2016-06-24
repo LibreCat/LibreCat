@@ -1,5 +1,5 @@
 use Test::Lib;
-use LibreCatTest;
+use TestHeader;
 
 Catmandu->load('.');
 

@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use lib qw(./lib);
-use Test::More tests => 24;
+use Test::More tests => 21;
 
 use Dancer ':syntax';
 use Dancer::Test;
@@ -55,11 +55,6 @@ route_exists          [GET => '/data'], "GET /data is handled";
 response_status_is    [GET => '/data'], 200, 'GET /data status is ok';
 response_content_like [GET => '/data'], qr/Data Publications/,
     "content looks good for /data";
-
-route_exists          [GET => '/contact'], "GET /contact is handled";
-response_status_is    [GET => '/contact'], 200, 'GET /contact status is ok';
-response_content_like [GET => '/contact'], qr/Contact/,
-    "content looks good for /contact";
 
 route_exists          [GET => '/oai'], "GET /oai is handled";
 response_status_is    [GET => '/oai'], 200, 'GET /oai status is ok';

@@ -1,5 +1,5 @@
 use Test::Lib;
-use LibreCatTest;
+use TestHeader;
 
 my $pkg;
 
@@ -59,10 +59,6 @@ note("update container with files");
 
     is $file->key, 'poem.txt', 'file->key';
     is $file->size, length(poem()), 'file->size';
-
-    # Not yet created anything on disk
-    ok !$file->created,  '! file->created';
-    ok !$file->modified, '! file->modified';
 
     ok $container->commit, 'container->commit';
 
