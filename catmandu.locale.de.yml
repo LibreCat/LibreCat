@@ -1621,7 +1621,7 @@ forms:
   form_sort_item: "Drag & drop, um die Position des Autors in der Autorenliste zu ändern"
   form_add_field: "Feld hinzufügen (+) or dieses Feld löschen (-)"
   form_relmat_record: "Eigene Publikation aus PUB mit dieser verbinden. Nach Auswahl wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
-  form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf [+] wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
+  form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf ~[+~] wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
   confirm_return: "Möchten Sie diesen Datensatz wirklich zurückstellen und damit von öffentlichen Publikationsliste entfernen?"
   confirm_delete: "Möchten Sie diesen Datensatz wirklich löschen?"
   confirm_submit: "Sie senden Ihre Daten jetzt an uns. Nachdem wir die Metadaten überprüft haben, werden wir den Datensatz public stellen."
