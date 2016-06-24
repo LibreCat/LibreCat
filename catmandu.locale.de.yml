@@ -516,6 +516,7 @@ forms:
         label: "Kommentare"
         placeholder: "Anmerkungen für Reviewer/ Admins eintragen"
       popular_science_quality_controlled: &popular_science_quality_controlled
+        label: "Peer Review"
         popular_science:
           label: "Populärwissenschaftliche Veröffentlichung"
           label_short: "Pop.wiss. Veröff."

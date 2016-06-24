@@ -517,6 +517,7 @@ forms:
         label: "Comments"
         placeholder: "Enter some comments for reviewer / admin"
       popular_science_quality_controlled: &popular_science_quality_controlled
+        label: "Peer Review"
         popular_science:
           label: "Popular Science"
           label_short: "Pop.Sci."
