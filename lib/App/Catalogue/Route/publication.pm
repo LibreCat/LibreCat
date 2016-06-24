@@ -92,7 +92,7 @@ Checks if the user has permission the see/edit this record.
 =cut
     get '/edit/:id' => needs login => sub {
         my $id = param 'id';
-
+        
         unless (p->can_edit($id, session->{user}, session->{role})) {
             status '403';
             forward '/access_denied', {referer => request->{referer}};
@@ -344,7 +344,6 @@ Changes the layout of the edit form.
         my $params = params;
 
         $params->{file} = [$params->{file}] if ($params->{file} and ref $params->{file} ne "ARRAY");
-        $params->{file_order} = [$params->{file_order}] if ($params->{file_order} and ref $params->{file_order} ne "ARRAY");
 
         $params = h->nested_params($params);
         if($params->{file}){

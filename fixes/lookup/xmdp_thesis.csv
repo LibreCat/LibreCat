@@ -1,5 +1,5 @@
 type,xmpd_thesis
-biBachelorThesis,bachelor
-biMasterThesis,master
-biDissertation,thesis.doctoral
-biPostdocThesis,thesis.habilitation
+bi_bachelor_thesis,bachelor
+bi_master_thesis,master
+bi_dissertation,thesis.doctoral
+bi_postdoc_thesis,thesis.habilitation

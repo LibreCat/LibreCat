@@ -1,20 +1,3 @@
-_prefix:
-  dancer:
-
-_environments:
-  development:
-    log: debug
-    logger: console
-    show_errors: 1
-    warnings: 1
-    #traces: 1
-  deployment:
-    log: error
-    logger: file
-    warnings: 0
-    show_errors: 0
-    route_cache: 1
-
 # main configuration file for Dancer
 appname: "PUB - Publications at Bielefeld University"
 charset: "UTF-8"

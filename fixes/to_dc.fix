@@ -1,7 +1,7 @@
 # mapping pub data to dublic core (dc)
 
 add_field(tmp_id.$append, 'https://pub.uni-bielefeld.de')
-if any_match(type, researchData)
+if any_match(type, research_data)
   add_field(tmp_id.$append, data)
 else
   add_field(tmp_id.$append, publication)

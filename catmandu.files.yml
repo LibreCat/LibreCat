@@ -2,6 +2,8 @@
 _prefix:
   filestore:
 
+tmp_dir: /data2/librecat/temp_uploads
+
 default: &filestore_settings
     package: Simple
     options:

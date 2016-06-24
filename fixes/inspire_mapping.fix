@@ -2,7 +2,7 @@
 
 move_field('record','rec')
 # default type
-add_field(rec.type,journalArticle)
+add_field(rec.type,journal_article)
 move_field('rec.titles.title','rec.title')
 trim('rec.title')
 move_field('rec.titles.secondary-title','rec.publication')

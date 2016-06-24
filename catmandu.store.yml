@@ -677,18 +677,6 @@ search:
                 'exact': true
                 '<>': true
               field: 'file.open_access'
-#            yearlastuploaded:
-#              op:
-#                '=': true
-#                'exact': true
-#                '<>': true
-#              field: 'file.year_last_uploaded'
-#            yearcreated:
-#              op:
-#                '=': true
-#                'exact': true
-#                '<>': true
-#              field: 'file.yearCreated'
             publication:
               op:
                 'any': true

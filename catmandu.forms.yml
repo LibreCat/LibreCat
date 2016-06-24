@@ -980,7 +980,6 @@ array_field:
   - editor
   - editor_solo
   - file
-  - file_order
   - language
   - msc_class
   - original_language

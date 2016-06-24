@@ -1,6 +1,6 @@
 # publication type
 # set default type
-add_field(_r.type,journalArticle)
+add_field(_r.type,journal_article)
 add_field(_r.isi,1)
 add_field(_r.quality_controlled,1)
 add_field(_r.publication_status,published)

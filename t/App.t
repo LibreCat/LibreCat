@@ -1,38 +1,11 @@
 use strict;
 use warnings;
 use lib qw(./lib);
-use Test::More tests => 24;
+use Test::More tests => 21;
 
 use Dancer ':syntax';
 use Dancer::Test;
-use Path::Tiny;
-use Clone qw(clone);
-use Catmandu;
-
-Catmandu->load(path(__FILE__)->parent->parent);
-
-{
-    # mimic dancer config loading
-    my $config     = clone(Catmandu->config->{dancer});
-    my $env        = setting('environment');
-    my $env_config = (delete($config->{_environments}) || {})->{$env} || {};
-    my %mergeable  = (plugins => 1, handlers => 1);
-    for my $key (keys %$env_config) {
-        if ($mergeable{$key}) {
-            $config->{$key}{$_} = $env_config->{$key}{$_}
-                for keys %{$env_config->{$key}};
-        }
-        else {
-            $config->{$key} = $env_config->{$key};
-        }
-    }
-    $config->{apphandler} = 'PSGI';
-    $config->{appdir} //= Catmandu->root;
-    set %$config;
-    Dancer::Config->load;
-    load_app 'App';
-}
-
+use App;
 use App::Helper;
 
 h->config->{default_lang} = 'en';
@@ -57,11 +30,6 @@ route_exists          [GET => '/data'], "GET /data is handled";
 response_status_is    [GET => '/data'], 200, 'GET /data status is ok';
 response_content_like [GET => '/data'], qr/Data Publications/,
     "content looks good for /data";
-
-route_exists          [GET => '/contact'], "GET /contact is handled";
-response_status_is    [GET => '/contact'], 200, 'GET /contact status is ok';
-response_content_like [GET => '/contact'], qr/Contact/,
-    "content looks good for /contact";
 
 route_exists          [GET => '/oai'], "GET /oai is handled";
 response_status_is    [GET => '/oai'], 200, 'GET /oai status is ok';

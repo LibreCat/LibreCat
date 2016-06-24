@@ -27,7 +27,7 @@
     [% END %]
     </div>
 
-  [% FOREACH fi IN file.nsort('file_order') %]
+  [% FOREACH fi IN file %]
   [% NEXT IF fi.relation != "main_file" %]
   <div class="row[% UNLESS loop.first %] margin-top1[% END %]">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.name") %]</div>

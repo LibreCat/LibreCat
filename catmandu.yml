@@ -2,10 +2,6 @@ time_format: "%Y-%m-%dT%H:%M:%SZ"
 
 ip_range: '8.8'
 
-# directory for file storage
-upload_dir: '/tmp'
-tmp_dir: '/tmp/pub'
-
 urn_prefix: 'urn:whatever-'
 
 thesis:

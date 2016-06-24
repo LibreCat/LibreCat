@@ -1,8 +1,5 @@
 host: "http://localhost:5001"
 
-tmp_dir: '/data2/tmp'
-upload_dir: '/data2/librecat/file_uploads'
-
 thesis:
     urn_prefix: 'urn:thesis-'
 
@@ -34,6 +31,7 @@ authentication:
       # password auth against database users
       - package: LibreCat::Auth::Bag
         options:
+          store: backup
           bag: researcher
           username_attr: login
       # LDAP auth
@@ -51,6 +49,6 @@ user:
   sources:
     - store: builtin_users
       username_attr: login
-    - bag: researcher
+    - store: backup
+      bag: researcher
       username_attr: login
-

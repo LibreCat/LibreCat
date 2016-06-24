@@ -39,14 +39,48 @@ sub _build_access_store {
     $pkg->new(%$file_opts);
 }
 
-# TODO return values
 sub work {
     my ($self, $opts) = @_;
 
-    my $key      = $opts->{key};
-    my $filename = $opts->{filename};
+    my $key            = $opts->{key};
+    my $filename       = $opts->{filename};
 
     my $thumbnail_name = 'thumbnail.png';
+    my $delete = exists $opts->{delete} && $opts->{delete} == 1 ? "Y" : "N";
+
+    if ($delete eq 'Y') {
+        return $self->do_delete($key, $filename, $thumbnail_name, %$opts);
+    }
+    else {
+        return $self->do_upload($key, $filename, $thumbnail_name, %$opts);
+    }
+}
+
+sub do_delete {
+    my ($self, $key, $filename, $thumbnail_name, %opts) = @_;
+
+    return -1 unless length $key && $key =~ /^\d+$/;
+
+    $self->log->info("loading container $key");
+    my $container = $self->file_store->get($key);
+
+    unless ($container) {
+        $self->log->error("$key not found");
+        return -1;
+    }
+
+    if (defined $thumbnail_name) {
+        $self->log->info("deleting $thumbnail_name from container $key");
+        return $container->delete($thumbnail_name);
+    }
+    else {
+        $self->log->info("deleting container $key");
+        return $self->file_store->delete($key);
+    }
+}
+
+sub do_upload {
+    my ($self, $key, $filename, $thumbnail_name, %opts) = @_;
 
     # Retrieve the file
     $self->log->info("loading container $key");
@@ -95,9 +129,8 @@ sub work {
         $container = $self->access_store->add($key);
     }
 
-    $self->log->info("storing $thumbnail_name in access container $key");
-    my $ret = $container->add($thumbnail_name,
-        IO::File->new("$tmpdir/thumb.png"));
+    $self->log->info("storing $filename in access container $key");
+    my $ret = $container->add($thumbnail_name, IO::File->new("$tmpdir/thumb.png"));
 
     unless ($ret) {
         $self->log->error(

@@ -11,9 +11,15 @@ use Dancer::FileUtils qw(path);
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
 use LibreCat::I18N;
+use Log::Log4perl ();
 use Moo;
 
-# TODO is this needed anymore?
+sub log {
+    my ($self) = @_;
+    my ($package, $filename, $line) = caller;
+    Log::Log4perl::get_logger($package);
+}
+
 sub config {
     state $config;
 
@@ -505,19 +511,9 @@ sub update_record {
 
         require App::Catalogue::Controller::File;
         require App::Catalogue::Controller::Material;
-        ($rec->{file})
-            && ($rec->{file}
-            = App::Catalogue::Controller::File::handle_file($rec));
 
-        foreach my $f (@{$rec->{file}}) {
-            if ($f->{access_level} eq 'open_access'
-                && lc $f->{file_name} =~ /\.pdf$|\.ps$/)
-            {
-                App::Catalogue::Controller::File::make_thumbnail($rec->{_id},
-                    $f->{file_name});
-                last;
-            }
-        }
+        App::Catalogue::Controller::File::handle_file($rec);
+
         if ($rec->{related_material}) {
             App::Catalogue::Controller::Material::update_related_material(
                 $rec);
@@ -551,7 +547,7 @@ sub delete_record {
         require App::Catalogue::Controller::File;
         require App::Catalogue::Controller::Material;
         App::Catalogue::Controller::Material::update_related_material($del);
-        App::Catalogue::Controller::File::delete_file($id);
+        App::Catalogue::Controller::File::handle_file($del);
         delete $del->{related_material};
     }
 

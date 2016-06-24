@@ -379,6 +379,8 @@ function edit_file(fileId, id){
 	$('#id_record_id').val(id);
 	$('#id_fileName').val(json.file_name);
 	$('#id_creator').val(json.creator);
+	$('#id_fileSize').val(json.file_size);
+	$('#id_contentType').val(json.content_type); 
 
 	if(json.title){
 		$('#id_fileTitle').val(json.title);
@@ -434,7 +436,6 @@ function edit_file(fileId, id){
 function delete_file(fileId){
 	if (confirm("Are you sure you want to delete this uploaded document? Any external links will be broken!\nIf you need to update an existing file to a new version you should edit the corresponding entry in the list and re-upload the file.\n\nDelete this file?")) {
 		$('#' + fileId).remove();
-	    $('#file_order_' + fileId).remove();
 	    if($('#uploadFiles').children('.dz-file-preview').length == 0){
 	    	$('#ddc').find('div.mandatory').removeClass('mandatory');
 	    	$('#ddc').find('select.required').removeClass('required');
@@ -452,14 +453,6 @@ $(function () {
 	    itemSelector: 'div.dz-preview',
 	    update: function (event, ui) {
 	    	var id = ui.item.attr('id');
-	    	$('#sortFilesInput input[value="' + id + '"]').remove();
-	    	if(ui.item.index() == 1){
-	    		$('#sortFilesInput').prepend('<input type="hidden" name="file_order" id="file_order_' + id + '" value="' + id + '"/>');
-	    	}
-	    	else {
-	    		var itemindex = ui.item.index() - 1;
-	    		$('#sortFilesInput input:nth-child(' + itemindex + ')').after('<input type="hidden" name="file_order" id="file_order_' + id + '" value="' + id + '"/>');
-	    	}
 	    	ui.item.removeClass("dragged").removeAttr("style");
 	    	$("body").removeClass("dragging");
 	    }

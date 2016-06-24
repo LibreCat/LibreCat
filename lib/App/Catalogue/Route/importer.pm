@@ -33,7 +33,7 @@ post '/librecat/record/import' => needs login => sub {
 
         if ($pub) {
             $pub->{_id} = h->new_record('publication');
-            my $type = $pub->{type} || 'journalArticle';
+            my $type = $pub->{type} || 'journal_article';
             my $templatepath = "backend/forms";
             $pub->{department} = $user->{department};
 

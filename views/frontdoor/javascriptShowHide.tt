@@ -35,7 +35,7 @@ function ReduceFiles (){
 function ShowFiles (){
   var str = "" ;
   [% index = 0 %]
-  [% FOREACH fi IN file.nsort('file_order') %]
+  [% FOREACH fi IN file %]
     [% NEXT IF fi.relation != "main_file" %]
     [% index = index + 1 %]
     [% IF index > 3 %]
