@@ -6,13 +6,18 @@ CMD=$1
 case "${CMD}" in
    create)
 	echo "Creating index..."
+    echo "researcher..."
 	carton exec catmandu import YAML to search --bag researcher < devel/researcher.yml
+    echo "publication..."
 	carton exec catmandu import YAML to search --bag publication < devel/publications.yml
+    echo "department..."
 	carton exec catmandu import YAML to search --bag department < devel/department.yml
 	echo "Done"
 	;;
    drop)
 	echo "Dropping index.."
+    echo "ids..."
+    carton exec catmandu delete default --bag data
 	echo "researcher..."
 	carton exec catmandu delete search --bag researcher
 	echo "publication..."
@@ -56,7 +61,7 @@ case "${CMD}" in
     fi
 
 	mkdir -p ${TMPDIR}
-	
+
 	cd ${TMPDIR}
 
 	unzip ${FILE}

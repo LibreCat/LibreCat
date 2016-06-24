@@ -157,4 +157,641 @@ title: Function of glutathione peroxidases in legume root nodules
 type: journal_article
 volume: 66
 year: '2015'
+---
+_id: '2737384'
+_version: 1
+abstract:
+- lang: eng
+  text: In 1716, as a result of the War of the Spanish Succession, Emperor Charles
+    VI assumed power in the Southern Netherlands. This book is the first to trace
+    the difficult early years of Austrian rule in these war-torn territories. A new
+    government apparatus had to be established, a modus vivendi reached with the highly
+    combative estates, and the public finances reconstructed. On top of which, the
+    new prince had to win the hearts and minds of his subjects in order to legitimize
+    his rule. The absence of Governor-General Eugene of Savoy and the hesitant attitude
+    of his representative, the Marquis of Prié, did not aid in overcoming these challenges,
+    which were further complicated by Dutch and English interference and the distance
+    between Brussels and the court in Vienna. This prize-winning book carefully analyzes
+    the intricate interplay of all these factors, thus illustrating the many problems
+    accompanying Early Modern regime changes.
+author:
+- first_name: Klaas
+  full_name: Van Gelder, Klaas
+  last_name: Van Gelder
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Van Gelder, Klaas, <em>Regime change at a distance: Austria and the Southern Netherlands following the war of the Spanish succession, 1716-1725</em>.  <strong>29</strong> ().
+    Louvain, 2016
+creator:
+  login: riedel
+date_created: 2016-06-24T07:40:34Z
+date_updated: 2016-06-24T07:40:34Z
+department:
+- _id: '10085'
+  tree:
+  - _id: 10085
+doi: 1854/LU-5964365
+edit_mode: expert
+extern: '1'
+intvolume: '        29'
+jel:
+- B19
+keyword:
+- Austrian Regime
+- Regime Change
+- Early Modern political history
+- Southern Netherlands
+- Eighteenth Century
+- Emperor Charles VI
+- Eugene of Savoy
+- Marquis of Prié
+language:
+- iso: eng
+link:
+- https://biblio.ugent.be/publication/5964365
+page: '449'
+place: Louvain
+publication_status: published
+publisher: Peeters Publishers/KVAB Press
+quality_controlled: '1'
+series_title: ' Verhandelingen van de Koninklijke Vlaamse Academie van België voor
+  wetenschappen en kunsten : Nieuwe reeks 29'
+status: public
+title: 'Regime change at a distance: Austria and the Southern Netherlands following
+  the war of the Spanish succession, 1716-1725'
+type: book
+volume: 29
+year: '2016'
+---
+_id: '2737385'
+_version: 1
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Brisard, Frank, <em>Bibliography of pragmatics online: 13th release, updated and expanded</em>.  <strong></strong> ().
+     Amsterdam, The Netherlands, 2016
+creator:
+  login: riedel
+date_created: 2016-06-24T07:48:53Z
+date_updated: 2016-06-24T07:48:53Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+doi: 1854/LU-7221224
+edit_mode: expert
+editor:
+- first_name: Frank
+  full_name: Brisard, Frank
+  last_name: Brisard
+- first_name: Michael
+  full_name: Meeuwis, Michael
+  last_name: Meeuwis
+jel:
+- D2
+keyword:
+- Pragmatics
+language:
+- iso: eng
+link:
+- https://biblio.ugent.be/publication/7221224
+place: ' Amsterdam, The Netherlands'
+publication_status: published
+publisher: ' John Benjamins'
+status: public
+title: 'Bibliography of pragmatics online: 13th release, updated and expanded'
+type: book_editor
+year: '2016'
+---
+_id: '2737386'
+_version: 3
+abstract:
+- lang: eng
+  text: In order to protect minors from the risks associated with exposure to content
+    which is deemed unsuitable (e.g. sexually implicit images, violence, offensive
+    language) and potentially harmful, many countries have adopted systems of labelling
+    or content classification. The purpose is to provide parents and carers with reliable
+    and useful information so that they can make informed and well-balanced decisions
+    about which content is appropriate for their children. This chapter identifies
+    a number of key issues related to the development of labelling systems for the
+    online and social networking environment, such as the rationale behind labelling,
+    the object of the labelling systems and the types of labelling that could be used.
+    Focusing mainly on policy documents and proposals at the European level (European
+    Union and Council of Europe), references are made to specific national systems
+    to illustrate good practices or recently developed schemes.
+author:
+- first_name: Ellen
+  full_name: Wauters, Ellen
+  last_name: Wauters
+- first_name: Peggy
+  full_name: Valcke, Peggy
+  last_name: Valcke
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Wauters, Ellen, <em>Empowering children through labelling in social networks: illusion or solution?</em>.  Youth 2.0 : social media and adolescence : connecting, sharing and empowering <strong></strong> ().
+    , 2016
+creator:
+  login: riedel
+date_created: 2016-06-24T07:59:19Z
+date_updated: 2016-06-24T07:59:56Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+editor:
+- first_name: Michel
+  full_name: Walrave, Michel
+  last_name: Walrave
+- first_name: Koen
+  full_name: Ponnet, Koen
+  last_name: Ponnet
+- first_name: Ellen
+  full_name: Vanderhoven, Ellen
+  last_name: Vanderhoven
+- first_name: Jacques
+  full_name: Haers, Jacques
+  last_name: Haers
+language:
+- iso: eng
+link:
+- https://biblio.ugent.be/publication/7215119
+page: ' 227 - 247'
+publication: ' Youth 2.0 : social media and adolescence : connecting, sharing and
+  empowering'
+publisher: Springer
+status: public
+title: 'Empowering children through labelling in social networks: illusion or solution?'
+type: book_chapter
+year: '2016'
+---
+_id: '2737387'
+_version: 5
+author:
+- first_name: Michael
+  full_name: Schaub, Michael
+  last_name: Schaub
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Schaub, Michael, <em>'Good As Gone' Doesn't Quite Get To Greatness</em>. As Good As Gone <strong></strong> ().
+    , 2016
+creator:
+  login: riedel
+date_created: 2016-06-24T08:07:32Z
+date_updated: 2016-06-24T08:08:16Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+editor:
+- first_name: Larry
+  full_name: Watson, Larry
+  last_name: Watson
+language:
+- iso: eng
+publication: As Good As Gone
+publisher: ' Algonquin Books'
+status: public
+title: '''Good As Gone'' Doesn''t Quite Get To Greatness'
+type: review
+year: '2016'
+---
+_id: '2737388'
+_version: 7
+author:
+- first_name: Jonas
+  full_name: Billet, Jonas
+  last_name: Billet
+- first_name: Filip
+  full_name: Du Prez, Filip
+  last_name: Du Prez
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Billet, Jonas, <em>Ordering of TiO2 (nanoparticles) to mesoporous structures</em>. ChemCYS book of abstracts <strong></strong> ().
+    , 2016
+conference:
+  end_date: ' 2016-03-18'
+  location: ' Blankenberge, Belgium'
+  name: ' 13th Chemistry conference for Young Scientists (ChemCYS 2016)'
+  start_date: ' 2016-03-16'
+creator:
+  login: riedel
+date_created: 2016-06-24T08:15:11Z
+date_updated: 2016-06-24T08:15:22Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+language:
+- iso: eng
+publication: ChemCYS book of abstracts
+publication_status: published
+status: public
+title: Ordering of TiO2 (nanoparticles) to mesoporous structures
+type: conference_abstract
+year: '2016'
+---
+_id: '2737389'
+_version: 9
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Poelman, Dirk, <em>Rare earths for phosphor development: the final frontier?</em>.  <strong></strong> ().
+    , 2016
+conference:
+  end_date: ' 2016-06-10'
+  location: ' Sapporo, Japan'
+  name: Rare Earths 2016
+  start_date: 2016-06-05
+creator:
+  login: riedel
+date_created: 2016-06-24T08:19:16Z
+date_updated: 2016-06-24T08:19:27Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+editor:
+- first_name: Dirk
+  full_name: Poelman, Dirk
+  last_name: Poelman
+language:
+- iso: eng
+series_title: Rare Earths 2016, Abstracts
+status: public
+title: 'Rare earths for phosphor development: the final frontier?'
+type: conference_editor
+year: '2016'
+---
+_id: '2737390'
+_version: 11
+author:
+- first_name: Stefanie
+  full_name: Krijger, Stefanie
+  last_name: Krijger
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Krijger, Stefanie, <em>Listening challenges for children with cochlear implants in mainstream education</em>. Royal Belgian Society for Ear, Nose, Throat, Head and Neck Surgery, Spring meeting, Abstracts <strong></strong> ().
+    , 2016
+conference:
+  end_date: 2016-03-05
+  location: ' Leuven, Belgium'
+  name: ' 2016 Spring meeting of Royal Belgian Society for Ear, Nose, Throat, Head
+    and Neck Surgery'
+  start_date: 2016-03-05
+creator:
+  login: riedel
+date_created: 2016-06-24T08:22:52Z
+date_updated: 2016-06-24T08:22:57Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+language:
+- iso: eng
+publication: Royal Belgian Society for Ear, Nose, Throat, Head and Neck Surgery, Spring
+  meeting, Abstracts
+publication_status: published
+status: public
+title: Listening challenges for children with cochlear implants in mainstream education
+type: conference
+year: '2016'
+---
+_id: '2737391'
+_version: 13
+author:
+- first_name: Milad
+  full_name: El Haddad, Milad
+  last_name: El Haddad
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    El Haddad, Milad, <em>Signal processing of intracardiac electrograms : optimization of mapping and ablation in tachyarrhythmias</em>.  <strong></strong> ().
+    , 2014
+creator:
+  login: riedel
+date_created: 2016-06-24T08:26:46Z
+date_updated: 2016-06-24T08:26:59Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+language:
+- iso: eng
+status: public
+title: 'Signal processing of intracardiac electrograms : optimization of mapping and
+  ablation in tachyarrhythmias'
+type: dissertation
+year: '2014'
+---
+_id: '2737392'
+_version: 15
+author:
+- first_name: Eva
+  full_name: Lievens, Eva
+  last_name: Lievens
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Lievens, Eva, <em>Young users, social media and the legal framework: match or mismatch?</em>.  Law and Political Science <strong></strong> ().
+    , 2016
+creator:
+  login: riedel
+date_created: 2016-06-24T08:30:38Z
+date_updated: 2016-06-24T08:31:43Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+language:
+- iso: eng
+publication: ' Law and Political Science'
+publication_status: published
+status: public
+title: 'Young users, social media and the legal framework: match or mismatch?'
+type: encyclopedia_article
+year: '2016'
+---
+_id: '2737393'
+_version: 17
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Van Hauwermeiren, Filip, <em>The NEK-sus of the NLRP3 inflammasome</em>. NATURE IMMUNOLOGY <strong></strong> ().
+    , 2016
+creator:
+  login: riedel
+date_created: 2016-06-24T08:37:29Z
+date_updated: 2016-06-24T08:37:50Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+editor:
+- first_name: Filip
+  full_name: Van Hauwermeiren, Filip
+  last_name: Van Hauwermeiren
+language:
+- iso: eng
+publication: NATURE IMMUNOLOGY
+publication_status: published
+status: public
+title: The NEK-sus of the NLRP3 inflammasome
+type: journal_editor
+year: '2016'
+---
+_id: '2737394'
+_version: 19
+author:
+- first_name: Alan
+  full_name: Smith, Alan
+  last_name: Smith
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Smith, Alan, <em>Euro 2016 power rankings: Croatia go top but problems for France</em>. The Guardian <strong></strong> ().
+    , 2016
+creator:
+  login: riedel
+date_created: 2016-06-24T08:45:19Z
+date_updated: 2016-06-24T08:45:22Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+language:
+- iso: eng
+publication: The Guardian
+publication_date: 2916-09-23
+status: public
+title: 'Euro 2016 power rankings: Croatia go top but problems for France'
+type: newspaper_article
+year: '2016'
+---
+_id: '2737395'
+_version: 20
+author:
+- first_name: Y
+  full_name: Donderlinger, Y
+  last_name: Donderlinger
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Donderlinger, Y, <em>Necroptosis inducing MLKL fragment and inhibitors thereof.</em>.  <strong></strong> ().
+    , 2014
+creator:
+  login: riedel
+date_created: 2016-06-24T08:51:04Z
+date_updated: 2016-06-24T08:51:04Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+ipc: B25TEST
+ipn: WO2015/140313 (24.09.2015)
+page: '1'
+publication_date: 2014-03-20
+status: private
+title: Necroptosis inducing MLKL fragment and inhibitors thereof.
+type: patent
+year: '2014'
+---
+_id: '2737395'
+_version: 24
+author:
+- first_name: Dida
+  full_name: Markovic, Dida
+  last_name: Markovic
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Markovic, Dida, <em>Large-scale retrospective relative spectro-photometric self-calibration in space</em>.  <strong></strong> (). , 2016
+creator:
+  login: riedel
+date_created: 2016-06-24T09:00:01Z
+date_updated: 2016-06-24T09:00:05Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+language:
+- iso: eng
+status: public
+title: Large-scale retrospective relative spectro-photometric self-calibration in space
+type: preprint
+year: '2016'
+---
+_id: '2737396'
+_version: 26
+author:
+- first_name: Hense
+  full_name: Gebel, Hense
+  last_name: Gebel
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Gebel, Hense, <em>Personaleinsatz aktiv gestalten. Methodendokumentation der deutschlandweiten Betriebsbefragung</em>.  <strong></strong> ().
+    , 2016
+creator:
+  login: riedel
+date_created: 2016-06-24T09:05:37Z
+date_updated: 2016-06-24T09:05:40Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+language:
+- iso: eng
+status: public
+title: Personaleinsatz aktiv gestalten. Methodendokumentation der deutschlandweiten
+  Betriebsbefragung
+type: report
+year: '2016'
+---
+_id: '2737397'
+_version: 28
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    , <em>Die Interaktionsgeschichte einer Deutung</em>.  <strong></strong> ().
+    , 2012
+creator:
+  login: riedel
+date_created: 2016-06-24T09:07:59Z
+date_updated: 2016-06-24T09:08:18Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+language:
+- iso: eng
+original_language:
+- iso: eng
+status: public
+title: Die Interaktionsgeschichte einer Deutung
+translator:
+- first_name: A
+  full_name: Peräkylä, A
+  last_name: Peräkylä
+type: translation
+year: '2012'
+---
+_id: '2737398'
+_version: 29
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    , <em>Gesten der Macht und die Macht der Gesten.</em>.  <strong></strong> ().
+    , 2010
+creator:
+  login: riedel
+date_created: 2016-06-24T09:10:25Z
+date_updated: 2016-06-24T09:10:25Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+language:
+- iso: eng
+original_language:
+- iso: eng
+status: public
+title: Gesten der Macht und die Macht der Gesten.
+translator:
+- first_name: D
+  full_name: McNeill, D
+  last_name: McNeill
+type: translation_chapter
+year: '2010'
+---
+_id: '2737399'
+_version: 30
+author:
+- first_name: Keller W
+  full_name: Utar H, Keller W
+  last_name: Utar H
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Utar H, Keller W, <em>INTERNATIONAL TRADE AND JOB POLARIZATION: EVIDENCE AT THE WORKER-LEVEL</em>.  <strong></strong> ().
+    , 2016
+creator:
+  id: '1234'
+  login: einstein
+date_created: 2016-06-24T09:13:11Z
+date_updated: 2016-06-24T09:13:11Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+edit_mode: expert
+language:
+- iso: eng
+status: public
+title: 'INTERNATIONAL TRADE AND JOB POLARIZATION: EVIDENCE AT THE WORKER-LEVEL'
+type: working_paper
+year: '2016'
+---
+_id: '2737400'
+_version: 31
+author:
+- first_name: T
+  full_name: Kluth, T
+  last_name: Kluth
+citation:
+  default: |
+    <!-- simple example for a citation template -->
+    Kluth, T, <em>A C++ Implementation of the reversed Attentional Vector Sum (rAVS) model</em>.  <strong></strong> ().
+    , 2016
+creator:
+  id: '1234'
+  login: einstein
+date_created: 2016-06-24T09:16:02Z
+date_updated: 2016-06-24T09:16:02Z
+department:
+- _id: '9996'
+  tree:
+  - _id: 9997
+  - _id: 9996
+doi: 10.5072/test/1
+edit_mode: expert
+publisher: Bielefeld University
+status: public
+title: A C++ Implementation of the reversed Attentional Vector Sum (rAVS) model
+type: research_data
+year: '2016'
 ...
