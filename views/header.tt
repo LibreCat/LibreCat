@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html[% IF bag == 'home' %] ng-app="angularController"[% END %]>
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
-[% lf = h.config.language.$lang -%]
+[% lf = h.config.locale.$lang -%]
 
 <!-- BEGIN header.tt -->
 
   <head>
     <title>
       [% IF title %][% title %]
-      [% ELSIF request.path.match("publication") %]PUB &ndash; [% lf.tabs.publications %]
-      [% ELSIF request.path.match("data") %][% lf.tabs.data_publications %] ([% lf.header.title_long %])
-      [% ELSIF request.path.match("person/") %][% lf.header.title_person %] [% thisPerson.first_name %] [% thisPerson.last_name %]
-      [% ELSIF request.path.match("person") %][% lf.tabs.authors %] ([% lf.header.title_long %])
-      [% ELSIF request.path.match("about") %][% lf.tabs.about %] ([% lf.header.title_long %])
-      [% ELSIF request.path.match("faq") %][% lf.tabs.faq %] ([% lf.header.title_long %])
-      [% ELSIF request.path.match("contact") %][% lf.tabs.contact %] ([% lf.header.title_long %])
-      [% ELSIF request.path.match("policy") %][% lf.tabs.policy %] ([% lf.header.title_long %])
-      [% ELSIF request.path.match("pubtheses") %]PUB Theses ([% lf.header.title %])
-      [% ELSE %][% lf.header.title_long %]
+      [% ELSIF request.path.match("publication") %]PUB &ndash; [% h.loc("tabs.publications") %]
+      [% ELSIF request.path.match("data") %][% h.loc("tabs.data_publications") %] ([% h.loc("header.title_long") %])
+      [% ELSIF request.path.match("person/") %][% h.loc("header.title_person") %] [% thisPerson.first_name %] [% thisPerson.last_name %]
+      [% ELSIF request.path.match("person") %][% h.loc("tabs.authors") %] ([% h.loc("header.title_long") %])
+      [% ELSIF request.path.match("about") %][% h.loc("tabs.about") %] ([% h.loc("header.title_long") %])
+      [% ELSIF request.path.match("faq") %][% h.loc("tabs.faq") %] ([% h.loc("header.title_long") %])
+      [% ELSIF request.path.match("contact") %][% h.loc("tabs.contact") %] ([% h.loc("header.title_long") %])
+      [% ELSIF request.path.match("policy") %][% h.loc("tabs.policy") %] ([% h.loc("header.title_long") %])
+      [% ELSIF request.path.match("pubtheses") %]PUB Theses ([% h.loc("header.title") %])
+      [% ELSE %][% h.loc("header.title_long") %]
       [% END %]
     </title>
 

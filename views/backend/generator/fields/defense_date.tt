@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_defense_date">
-      [% lf.$type.field.defense_date.label %]
+      [% h.loc("${type}.field.defense_date.label") %]
     </label>
     {% IF fields.basic_fields.defense_date.mandatory OR fields.supplementary_fields.defense_date.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -10,7 +10,7 @@
       <div class="form-group col-md-3 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.defense_date.mandatory OR fields.supplementary_fields.defense_date.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.defense_date.label_short || lf.$type.field.defense_date.label %]</div>
-          <input type="text" name="defense_date" id="id_defense_date" value="[% defense_date %]" placeholder="[% lf.$type.field.defense_date.placeholder %]" class="sticky form-control{% IF fields.basic_fields.defense_date.mandatory OR fields.supplementary_fields.defense_date.mandatory %} required{% END %}">
+          <input type="text" name="defense_date" id="id_defense_date" value="[% defense_date %]" placeholder="[% h.loc("${type}.field.defense_date.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.defense_date.mandatory OR fields.supplementary_fields.defense_date.mandatory %} required{% END %}">
           <div class="input-group-addon"></div>
         </div>
       </div>

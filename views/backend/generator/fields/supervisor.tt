@@ -3,7 +3,7 @@
   <div class="row authorspan innerrow">
     <div class="col-md-2 form-group hidden-xs hidden-sm">
       <label for="supervisor_first_name_0">
-        [% lf.$type.field.supervisor.label %]
+        [% h.loc("${type}.field.supervisor.label") %]
       </label>
       {% IF fields.basic_fields.supervisor.mandatory OR fields.supplementary_fields.supervisor.mandatory %}<span class="starMandatory"></span>{% END %}
     </div>
@@ -17,10 +17,10 @@
         <span class="form-group col-md-4 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.supervisor.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
-              <span class="hidden-xs hidden-sm">[% lf.$type.field.supervisor.first_name.label %]</span>
-              <span class="hidden-lg hidden-md">[% lf.$type.field.supervisor.first_name.label_short %]</span>
+              <span class="hidden-xs hidden-sm">[% h.loc("${type}.field.supervisor.first_name.label") %]</span>
+              <span class="hidden-lg hidden-md">[% h.loc("${type}.field.supervisor.first_name.label_short") %]</span>
             </div>
-            <input type="text" id="supervisor_first_name_0" name="supervisor.0.first_name" placeholder="[% lf.$type.field.supervisor.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="" />
+            <input type="text" id="supervisor_first_name_0" name="supervisor.0.first_name" placeholder="[% h.loc("${type}.field.supervisor.first_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="" />
             <div class="input-group-addon hidden-lg hidden-md" onclick="add_field('supervisor');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             <div class="input-group-addon hiddn-xs hidden-sm"></div>
@@ -29,14 +29,14 @@
         <span class="form-group col-md-6 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.supervisor.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
-              <span class="hidden-xs hidden-sm">[% lf.$type.field.supervisor.last_name.label %]</span>
-              <span class="hidden-lg hidden-md">[% lf.$type.field.supervisor.last_name.label_short %]</span>
+              <span class="hidden-xs hidden-sm">[% h.loc("${type}.field.supervisor.last_name.label") %]</span>
+              <span class="hidden-lg hidden-md">[% h.loc("${type}.field.supervisor.last_name.label_short") %]</span>
             </div>
-            <input type="text" id="supervisor_last_name_0" name="supervisor.0.last_name" placeholder="[% lf.$type.field.supervisor.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="" />
+            <input type="text" id="supervisor_last_name_0" name="supervisor.0.last_name" placeholder="[% h.loc("${type}.field.supervisor.last_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="" />
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('supervisor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.supervisor.idm OR fields.supplementary_fields.supervisor.idm %}
-            <div class="input-group-addon"><span id="supervisor_link_person_0" onclick="link_person(this);" data-type="supervisor_"><img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.supervisor.tooltip %]" /></span></div>
+            <div class="input-group-addon"><span id="supervisor_link_person_0" onclick="link_person(this);" data-type="supervisor_"><img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% h.loc("${type}.field.supervisor.tooltip") %]" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
@@ -58,10 +58,10 @@
         <span class="form-group col-md-4 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.supervisor.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
-              <span class="hidden-xs hidden-sm">[% lf.$type.field.supervisor.first_name.label %]</span>
-              <span class="hidden-lg hidden-md">[% lf.$type.field.supervisor.first_name.label_short %]</span>
+              <span class="hidden-xs hidden-sm">[% h.loc("${type}.field.supervisor.first_name.label") %]</span>
+              <span class="hidden-lg hidden-md">[% h.loc("${type}.field.supervisor.first_name.label_short") %]</span>
             </div>
-            <input type="text" id="supervisor_first_name_[% loop.index %]" name="supervisor.[% loop.index %].first_name" placeholder="[% lf.$type.field.supervisor.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% name.first_name | html %]" [% IF name.id %]readonly="readonly"[% END %]/>
+            <input type="text" id="supervisor_first_name_[% loop.index %]" name="supervisor.[% loop.index %].first_name" placeholder="[% h.loc("${type}.field.supervisor.first_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% name.first_name | html %]" [% IF name.id %]readonly="readonly"[% END %]/>
             <div class="input-group-addon hidden-lg hidden-md" onclick="add_field('supervisor');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
@@ -70,14 +70,14 @@
         <span class="form-group col-md-6 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.supervisor.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
-              <span class="hidden-xs hidden-sm">[% lf.$type.field.supervisor.last_name.label %]</span>
-              <span class="hidden-lg hidden-md">[% lf.$type.field.supervisor.last_name.label_short %]</span>
+              <span class="hidden-xs hidden-sm">[% h.loc("${type}.field.supervisor.last_name.label") %]</span>
+              <span class="hidden-lg hidden-md">[% h.loc("${type}.field.supervisor.last_name.label_short") %]</span>
             </div>
-            <input type="text" id="supervisor_last_name_[% loop.index %]" name="supervisor.[% loop.index %].last_name" placeholder="[% lf.$type.field.supervisor.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% name.last_name | html %]" [% IF name.id %]readonly="readonly"[% END %]/>
+            <input type="text" id="supervisor_last_name_[% loop.index %]" name="supervisor.[% loop.index %].last_name" placeholder="[% h.loc("${type}.field.supervisor.last_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% name.last_name | html %]" [% IF name.id %]readonly="readonly"[% END %]/>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('supervisor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.supervisor.idm OR fields.supplementary_fields.supervisor.idm %}
-            <div class="input-group-addon"><span id="supervisor_link_person_[% loop.index %]" onclick="link_person(this);" data-type="supervisor_"><img id="supervisor_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.supervisor.tooltip %]" /></span></div>
+            <div class="input-group-addon"><span id="supervisor_link_person_[% loop.index %]" onclick="link_person(this);" data-type="supervisor_"><img id="supervisor_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="[% h.loc("${type}.field.supervisor.tooltip") %]" /></span></div>
             {% END %}
             <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
           </div>
@@ -100,22 +100,22 @@
         <span class="form-group col-md-4 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.supervisor.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
-              <span class="hidden-xs hidden-sm">[% lf.$type.field.supervisor.first_name.label %]</span>
-              <span class="hidden-lg hidden-md">[% lf.$type.field.supervisor.first_name.label_short %]</span>
+              <span class="hidden-xs hidden-sm">[% h.loc("${type}.field.supervisor.first_name.label") %]</span>
+              <span class="hidden-lg hidden-md">[% h.loc("${type}.field.supervisor.first_name.label_short") %]</span>
             </div>
-            <input type="text" id="supervisor_first_name_0" name="supervisor.0.first_name" placeholder="[% lf.$type.field.supervisor.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% supervisor.0.first_name | html %]" [% IF supervisor.0.id %]readonly="readonly"[% END %]/>
+            <input type="text" id="supervisor_first_name_0" name="supervisor.0.first_name" placeholder="[% h.loc("${type}.field.supervisor.first_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% supervisor.0.first_name | html %]" [% IF supervisor.0.id %]readonly="readonly"[% END %]/>
             <div class="input-group-addon"></div>
           </div>
         </span>
         <span class="form-group col-md-6 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.supervisor.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
-              <span class="hidden-xs hidden-sm">[% lf.$type.field.supervisor.last_name.label %]</span>
-              <span class="hidden-lg hidden-md">[% lf.$type.field.supervisor.last_name.label_short %]</span>
+              <span class="hidden-xs hidden-sm">[% h.loc("${type}.field.supervisor.last_name.label") %]</span>
+              <span class="hidden-lg hidden-md">[% h.loc("${type}.field.supervisor.last_name.label_short") %]</span>
             </div>
-            <input type="text" id="supervisor_last_name_0" name="supervisor.0.last_name" placeholder="[% lf.$type.field.supervisor.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% supervisor.0.last_name | html %]" [% IF supervisor.0.id %]readonly="readonly"[% END %]/>
+            <input type="text" id="supervisor_last_name_0" name="supervisor.0.last_name" placeholder="[% h.loc("${type}.field.supervisor.last_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% supervisor.0.last_name | html %]" [% IF supervisor.0.id %]readonly="readonly"[% END %]/>
             {% IF fields.basic_fields.supervisor.idm OR fields.supplementary_fields.supervisor.idm %}
-            <div class="input-group-addon"><span id="supervisor_link_person_0" onclick="link_person(this);" data-type="supervisor_"><img id="supervisor_Authorized0" [% IF supervisor.0.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF supervisor.0.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="[% lf.$type.field.supervisor.tooltip %]" /></span></div>
+            <div class="input-group-addon"><span id="supervisor_link_person_0" onclick="link_person(this);" data-type="supervisor_"><img id="supervisor_Authorized0" [% IF supervisor.0.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF supervisor.0.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="[% h.loc("${type}.field.supervisor.tooltip") %]" /></span></div>
             {% ELSE %}
             <div class="input-group-addon"></div>
             {% END %}

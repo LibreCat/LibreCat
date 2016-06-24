@@ -2,7 +2,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="select_publication_status">
-      [% lf.$type.field.publication_status.label %]
+      [% h.loc("${type}.field.publication_status.label") %]
     </label>
     {% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -10,11 +10,11 @@
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %} mandatory{% END %}">
-          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.publication_status.label_short %]</div>
+          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("${type}.field.publication_status.label_short") %]</div>
           <select name="publication_status" class="sticky form-control{% IF fields.basic_fields.publication_status.mandatory OR fields.supplementary_fields.publication_status.mandatory %} required{% END %}" id="select_publication_status">
             <option value=""[% IF !publication_status %] selected="selected"[% END %]>--- Select ---</option>
             [% FOREACH pi IN publ_status %]
-              <option value="[% pi %]"[% IF publication_status == pi %] selected="selected"[% END %]>[% lf.publication_status.$pi %]</option>
+              <option value="[% pi %]"[% IF publication_status == pi %] selected="selected"[% END %]>[% h.loc("publication_status.${pi}") %]</option>
             [% END %]
           </select>
           <div class="input-group-addon"></div>

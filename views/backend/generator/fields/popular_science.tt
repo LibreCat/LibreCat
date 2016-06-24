@@ -10,7 +10,7 @@
         <div class="checkbox">
           <label class="checkbox-inline">
             <input type="checkbox" name="popular_science" id="id_popular_science" value="1"[% IF popular_science %] checked="checked"[% END %]>
-            [% lf.$type.field.popular_science.label %]
+            [% h.loc("${type}.field.popular_science.label") %]
           </label>
         </div>
       </div>

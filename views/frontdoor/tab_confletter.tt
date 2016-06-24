@@ -5,11 +5,11 @@
   <div class="row">
     [% IF confLetter.size %]
       <div class="col-md-2 text-muted">
-        [% lf.frontdoor.tabs.confirmation_letter.confirmation %]
+        [% h.loc("frontdoor.tabs.confirmation_letter.confirmation") %]
       </div>
       <div class="col-md-10">
         [% FOREACH conf IN confLetter %]
-          <a href="/download/[% _id %]/[% conf.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF conf.description %]<i>Description:</i><br />[% conf.description %]<br /><br />[% END %]<i>Filename:</i><br />[% conf.file_name %]">[% lf.frontdoor.tabs.confirmation_letter.label %]</a><br />
+          <a href="/download/[% _id %]/[% conf.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF conf.description %]<i>Description:</i><br />[% conf.description %]<br /><br />[% END %]<i>Filename:</i><br />[% conf.file_name %]">[% h.loc("frontdoor.tabs.confirmation_letter.label") %]</a><br />
           <script>
             $('a.description').tooltip();
           </script>

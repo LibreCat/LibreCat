@@ -4,7 +4,7 @@ _prefix:
 _environments:
   development:
     log: debug
-    logger: file
+    logger: console
     show_errors: 1
     warnings: 1
     #traces: 1

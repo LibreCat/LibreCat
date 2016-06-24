@@ -1,7 +1,7 @@
 [% path = request.path %]
 [% backend = path.match('librecat') ? 1 : 0 %]
 [% lang = session.lang %]
-[% lf = h.config.language.$lang %]
+[% lf = h.config.locale.$lang %]
 
 [% INCLUDE header.tt %]
 
@@ -10,28 +10,28 @@
 <div class="col-md-9 col-md-offset-1"> <!-- main content (left) -->
 
   <div class="page-header" id="banner">
-    <h1>[% lf.add_new.heading %]</h1>
+    <h1>[% h.loc("add_new.heading") %]</h1>
   </div>
 
   <div class="col-md-12">
 
     <div class="row">
-      <h3>[% lf.add_new.import %]</h3>
+      <h3>[% h.loc("add_new.import") %]</h3>
       <div class="row">
         <form role="form" action="/librecat/record/import" method="POST">
 	      <div class="col-xs-3 col-md-2">
 	        <select class="selectpicker form-control" id="select_source">
-	          <option value="crossref" selected="selected">[% lf.add_new.ids.doi %]</option>
-	          <option value="epmc">[% lf.add_new.ids.pmid %]</option>
-	          <option value="arxiv">[% lf.add_new.ids.arxiv %]</option>
-	         <!-- <option value="inspire">[% lf.add_new.ids.inspire %]</option> -->
+	          <option value="crossref" selected="selected">[% h.loc("add_new.ids.doi") %]</option>
+	          <option value="epmc">[% h.loc("add_new.ids.pmid") %]</option>
+	          <option value="arxiv">[% h.loc("add_new.ids.arxiv") %]</option>
+	         <!-- <option value="inspire">[% h.loc("add_new.ids.inspire") %]</option> -->
 	        </select>
 	      </div>
 	      <input type="hidden" id="input_source" name="source">
 	      <div class="input-group col-md-5 col-xs-8">
 	        <input type="text" value="" class="form-control" id="input_id" name="id" placeholder="10.324/JHEP287432" required/>
 	        <span class="input-group-btn">
-	          <button type="submit" class="btn btn-default">[% lf.facets.go_button %]</button>
+	          <button type="submit" class="btn btn-default">[% h.loc("facets.go_button") %]</button>
 	        </span>
 	      </div>
 	    </form>
@@ -46,31 +46,31 @@
     </div>
 
     <div class="row">
-      <h3 class="margin-top0">[% lf.add_new.do_it_yourself %]</h3>
+      <h3 class="margin-top0">[% h.loc("add_new.do_it_yourself") %]</h3>
     </div>
     <div class="row">
 
       <div class="col-sm-4">
         [%- FOREACH type IN h.config.forms.publication_type_order.column_left -%]
-          <a href="/librecat/record/new?type=[% type %]">[% lf.forms.$type.label %]</a><br />
+          <a href="/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
         [%- END -%]
       </div>
       <div class="col-sm-4">
         [%- FOREACH type IN h.config.forms.publication_type_order.column_middle -%]
-          <a href="/librecat/record/new?type=[% type %]">[% lf.forms.$type.label %]</a><br />
+          <a href="/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
         [%- END -%]
       </div>
       <div class="col-sm-4">
         [%- FOREACH type IN h.config.forms.publication_type_order.column_right -%]
-          <a href="/librecat/record/new?type=[% type %]">[% lf.forms.$type.label %]</a><br />
+          <a href="/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
         [%- END -%]
         [%- IF session.role == "super_admin" -%]
           [%- FOREACH type IN h.config.forms.publication_type_order.column_admin -%]
-          <a href="/librecat/record/new?type=[% type %]">[% lf.forms.$type.label %]</a><br />
+          <a href="/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
           [%- END -%]
         [%- END -%]
         [%- FOREACH type IN h.config.forms.publication_type_order.column_rd -%]
-          <a href="/librecat/record/new?type=[% type %]">[% lf.forms.$type.label %]</a><br />
+          <a href="/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
         [%- END -%]
       </div>
     </div>
@@ -83,7 +83,7 @@
 
     <div class="row">
       <div class="col-md-5">
-        <h3 class="margin-top0">[% lf.add_new.drop_oa %]</h3>
+        <h3 class="margin-top0">[% h.loc("add_new.drop_oa") %]</h3>
 	    <div class="well">
 	    [% INCLUDE backend/qae.tt %]
 	    </div>
@@ -92,12 +92,12 @@
         &nbsp;
       </div>
       <div class="col-md-5">
-        <h3 class="margin-top0">[% lf.add_new.paste_bibtex %]</h3>
+        <h3 class="margin-top0">[% h.loc("add_new.paste_bibtex") %]</h3>
         <form role="form" action="/librecat/record/import" method="POST">
 	  <div class="well col-xs-11 col-md-12">
-            <textarea class="form-control" rows="3" name="bibtex_input" placeholder="[% lf.add_new.paste_bibtex_placeholder %]"></textarea>
+            <textarea class="form-control" rows="3" name="bibtex_input" placeholder="[% h.loc("add_new.paste_bibtex_placeholder") %]"></textarea>
             <input type="hidden" id="bibtex_source" name="source" value="bibtex">
-            <button type="submit" class="btn btn-default margin-top1-2"><span class="glyphicon glyphicon-upload"></span> [% lf.forms.button.import %]</button>
+            <button type="submit" class="btn btn-default margin-top1-2"><span class="glyphicon glyphicon-upload"></span> [% h.loc("forms.button.import") %]</button>
           </div>
         </form>
       </div>

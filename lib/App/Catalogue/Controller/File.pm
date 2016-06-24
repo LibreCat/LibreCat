@@ -51,17 +51,18 @@ file details:
     }
 
 =cut
+
 sub upload_temp_file {
-    my ($file,$creator) = @_;
+    my ($file, $creator) = @_;
 
     h->log->debug("new upload by: $creator");
 
     unless ($file && $creator) {
         return {
-            success => 0,
+            success       => 0,
             error_message => 'Sorry! The file upload failed.'
-        }
-    };
+            };
+    }
 
     # Gather all file metadata...
     my $now          = h->now;
@@ -71,49 +72,52 @@ sub upload_temp_file {
     my $file_size    = $file->{size};
     my $content_type = $file->{headers}->{"Content-Type"};
 
-    h->log->info("upload: $file_name ($content_type: $file_size bytes) by $creator");
+    h->log->info(
+        "upload: $file_name ($content_type: $file_size bytes) by $creator");
 
     my $file_data = {
-        file_name          => $file_name,
-        file_size          => $file_size,
-        tempid             => $tempid,
-        content_type       => $content_type,
-        access_level       => "open_access",
-        open_access        => 1,
-        relation           => "main_file",
-        creator            => $creator,
-        date_updated       => $now,
-        date_created       => $now,
+        file_name    => $file_name,
+        file_size    => $file_size,
+        tempid       => $tempid,
+        content_type => $content_type,
+        access_level => "open_access",
+        open_access  => 1,
+        relation     => "main_file",
+        creator      => $creator,
+        date_updated => $now,
+        date_created => $now,
     };
 
     # Creating a new temporary storage for the upload files...
-    my $filedir   = path(h->config->{filestore}->{tmp_dir}, $tempid);
+    my $filedir = path(h->config->{filestore}->{tmp_dir}, $tempid);
 
     h->log->info("creating $filedir");
 
     unless (mkdir $filedir) {
         h->log->error("creating $filedir failed : $!");
         return {
-            success => 0,
+            success       => 0,
             error_message => 'Sorry! The file upload failed.'
-        }
+            };
     }
 
     # Copy the upload into the new temporary storage...
-    my $filepath  = path(h->config->{filestore}->{tmp_dir}, $tempid, $file->{filename});
+    my $filepath
+        = path(h->config->{filestore}->{tmp_dir}, $tempid, $file->{filename});
 
     h->log->info("copy $temp_file to $filepath");
 
     if (copy($temp_file, $filepath)) {
+
         # Required for showing a success upload in the web interface
-        $file_data->{success} = 1
+        $file_data->{success} = 1;
     }
     else {
         h->log->error("failed to copy $temp_file to $filepath");
         return {
-            success => 0,
+            success       => 0,
             error_message => 'Sorry! The file upload failed.'
-        }
+            };
     }
 
     # Store a copy of the file metadata next to the upload file...
@@ -121,7 +125,7 @@ sub upload_temp_file {
 
     h->log->info("storing file metadata to $config_file");
 
-    my $exporter    = Catmandu->exporter('JSON', file => $config_file);
+    my $exporter = Catmandu->exporter('JSON', file => $config_file);
     $exporter->add($file_data);
     $exporter->commit;
 
@@ -139,6 +143,7 @@ metadata) of existing files will be changed when required. New
 files should at least contain 'tempid' and 'file_name'
 
 =cut
+
 sub handle_file {
     my $pub = shift;
     my $key = $pub->{_id};
@@ -150,7 +155,7 @@ sub handle_file {
     my $prev_pub = h->publication->get($key);
 
     # Delete files that are not needed
-    for my $fi (_find_deleted_files($prev_pub,$pub)) {
+    for my $fi (_find_deleted_files($prev_pub, $pub)) {
         h->log->debug("deleted " . $fi->{file_name});
         _remove_file($key, $fi->{file_name});
         _remove_thumbnail($key, $fi->{file_name});
@@ -159,30 +164,33 @@ sub handle_file {
     my $count = 0;
 
     for my $fi (@{$pub->{file}}) {
+
         # Generate a new file_id if not one existed
-        $fi->{file_id} = h->new_record('publication') if ! $fi->{file_id};
+        $fi->{file_id} = h->new_record('publication') if !$fi->{file_id};
 
         h->log->debug("processing file-id: " . $fi->{file_id});
 
         # If we have a tempid, then there is a file upload waiting...
         if ($fi->{tempid}) {
             my $filename = $fi->{file_name};
-            my $path     = path(h->config->{filestore}->{tmp_dir}, $fi->{tempid}, $filename);
+            my $path     = path(h->config->{filestore}->{tmp_dir},
+                $fi->{tempid}, $filename);
 
             h->log->info("new upload with temp-id -> $path");
-            _make_file($key,$filename,$path);
+            _make_file($key, $filename, $path);
 
-            h->log->debug("retrieving and updating technical metadata from cache");
-            _update_tech_metadata($fi,$filename,$path);
+            h->log->debug(
+                "retrieving and updating technical metadata from cache");
+            _update_tech_metadata($fi, $filename, $path);
         }
 
         # Regenerate the first thumbnail...
         if ($count == 0) {
-            _make_thumbnail($key,$fi->{file_name});
+            _make_thumbnail($key, $fi->{file_name});
         }
 
         # Update the stored metadata fields with the new ones
-        _update_file_metadata($fi,$prev_pub);
+        _update_file_metadata($fi, $prev_pub);
 
         delete $fi->{tempid} if $fi->{tempid};
 
@@ -195,8 +203,10 @@ sub _make_thumbnail {
 
     h->log->info("creating thumbnail for $filename in record $key");
 
-    my $thumbnailer_package = h->config->{filestore}->{accesss_thumbnailer}->{package};
-    my $thumbnailer_options = h->config->{filestore}->{accesss_thumbnailer}->{options};
+    my $thumbnailer_package
+        = h->config->{filestore}->{accesss_thumbnailer}->{package};
+    my $thumbnailer_options
+        = h->config->{filestore}->{accesss_thumbnailer}->{options};
 
     my $pkg    = Catmandu::Util::require_package($thumbnailer_package);
     my $worker = $pkg->new(%$thumbnailer_options);
@@ -205,7 +215,7 @@ sub _make_thumbnail {
 }
 
 sub _make_file {
-    my ($key,$filename,$path) = @_;
+    my ($key, $filename, $path) = @_;
 
     h->log->info("moving $path/$filename to filestore for record $key");
 
@@ -219,12 +229,14 @@ sub _make_file {
 }
 
 sub _remove_file {
-    my ($key,$filename) = @_;
+    my ($key, $filename) = @_;
 
     h->log->info("deleting $filename for record $key");
 
-    my $uploader_package = h->config->{filestore}->{accesss_thumbnailer}->{package};
-    my $uploader_options = h->config->{filestore}->{accesss_thumbnailer}->{options};
+    my $uploader_package
+        = h->config->{filestore}->{accesss_thumbnailer}->{package};
+    my $uploader_options
+        = h->config->{filestore}->{accesss_thumbnailer}->{options};
 
     my $pkg    = Catmandu::Util::require_package($uploader_package);
     my $worker = $pkg->new(%$uploader_options);
@@ -233,26 +245,22 @@ sub _remove_file {
 }
 
 sub _remove_thumbnail {
-    my ($key,$filename) = @_;
+    my ($key, $filename) = @_;
 
     h->log->info("deleting $filename thumbnail for record $key");
 
     my $thumbnailer_package = h->config->{filestore}->{uploader}->{package};
     my $thumbnailer_options = h->config->{filestore}->{uploader}->{options};
 
-    my $pkg = Catmandu::Util::require_package($thumbnailer_package);
+    my $pkg    = Catmandu::Util::require_package($thumbnailer_package);
     my $worker = $pkg->new(%$thumbnailer_options);
 
-    $worker->work({
-        key      => $key,
-        filename => $filename,
-        delete   => 1
-    });
+    $worker->work({key => $key, filename => $filename, delete => 1});
 }
 
 sub _decode_file {
     my $file = shift;
-    $file = [] unless defined $file;
+    $file = []      unless defined $file;
     $file = [$file] unless ref($file) eq 'ARRAY';
     for my $fi (@$file) {
         if (ref $fi ne 'HASH') {
@@ -265,7 +273,7 @@ sub _decode_file {
 }
 
 sub _update_tech_metadata {
-    my ($fi,$filename,$path) = @_;
+    my ($fi, $filename, $path) = @_;
 
     my $config_file = "$path.json";
 
@@ -275,11 +283,11 @@ sub _update_tech_metadata {
     }
 
     my $importer = Catmandu->importer('JSON', file => $config_file);
-    my $data  = $importer->first;
+    my $data = $importer->first;
 
     my @tech_fields = qw(
-            content_type creator date_created date_updated
-            file_name file_size
+        content_type creator date_created date_updated
+        file_name file_size
     );
 
     for my $name (@tech_fields) {
@@ -292,32 +300,33 @@ sub _update_tech_metadata {
 }
 
 sub _update_file_metadata {
-    my ($fi,$pub) = @_;
+    my ($fi, $pub) = @_;
 
     return unless $fi;
     return unless $pub;
 
-    my ($prev_fi) = grep { $_->{file_id} eq $fi->{file_id} } @{$pub->{file}};
+    my ($prev_fi) = grep {$_->{file_id} eq $fi->{file_id}} @{$pub->{file}};
 
-    my @important_fields  = qw(
-            file_id file_name file_size content_type
-            creator date_created
-            );
+    my @important_fields = qw(
+        file_id file_name file_size content_type
+        creator date_created
+    );
 
     my @changeable_fields = qw(
-            title description access_level request_a_copy
-            open_access embargo relation
-            );
+        title description access_level request_a_copy
+        open_access embargo relation
+    );
 
     # Throw away the unimportant stuff
     for my $name (keys %$fi) {
-        if (grep(/^$name$/,@important_fields)) {
+        if (grep(/^$name$/, @important_fields)) {
+
             # do nothing
         }
-        elsif (! grep(/^$name$/,@changeable_fields)) {
+        elsif (!grep(/^$name$/, @changeable_fields)) {
             delete $fi->{$name};
         }
-        elsif (! defined $fi->{$name}) {
+        elsif (!defined $fi->{$name}) {
             delete $fi->{$name};
         }
     }
@@ -329,7 +338,7 @@ sub _update_file_metadata {
         }
     }
 
-    $fi->{open_access}  = $fi->{access_level} eq 'open_access' ? 1 : 0;
+    $fi->{open_access} = $fi->{access_level} eq 'open_access' ? 1 : 0;
     $fi->{date_created} = h->now unless $fi->{date_created};
     $fi->{date_updated} = h->now;
 }
@@ -337,27 +346,23 @@ sub _update_file_metadata {
 # Find deleted files. Filter out the ones where more than one pub->file
 # points to the same file.
 sub _find_deleted_files {
-    my ($prev,$curr) = @_;
+    my ($prev, $curr) = @_;
 
-    my %curr_ids = map {
-        $_->{file_id} // 'undef' => 1
-    } @{$curr->{file}};
+    my %curr_ids = map {$_->{file_id} // 'undef' => 1} @{$curr->{file}};
 
     my @deleted_files = ();
 
-    my %prev_names = map {
-        $_->{file_name} => 0
-    } @{$prev->{file}};
+    my %prev_names = map {$_->{file_name} => 0} @{$prev->{file}};
 
     for my $fi (@{$prev->{file}}) {
         my $name = $fi->{file_name};
         my $id   = $fi->{file_id};
 
-        $prev_names{ $name } += 1;
+        $prev_names{$name} += 1;
 
-        unless ( exists $curr_ids{ $id } ) {
-            push @deleted_files , $fi;
-            $prev_names{ $name } -= 1;
+        unless (exists $curr_ids{$id}) {
+            push @deleted_files, $fi;
+            $prev_names{$name} -= 1;
         }
     }
 
@@ -365,7 +370,7 @@ sub _find_deleted_files {
 
     for my $fi (@deleted_files) {
         my $name = $fi->{file_name};
-        push @filtered_files , $fi if $prev_names{ $name } == 0;
+        push @filtered_files, $fi if $prev_names{$name} == 0;
     }
 
     return @filtered_files;

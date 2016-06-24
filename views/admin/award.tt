@@ -2,7 +2,7 @@
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
-[% lf = h.config.language.$lang -%]
+[% lf = h.config.locale.$lang -%]
 [% backend = path.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]

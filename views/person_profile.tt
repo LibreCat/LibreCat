@@ -2,26 +2,26 @@
 <!-- BEGIN person_profile.tt -->
 
 [% IF thisPerson.email_encoded || thisPerson.email %]
-<a class="helpme helpme-md" data-placement="top" title="[% lf.help.pevz_email %]" href="mailto:[% thisPerson.email_encoded || thisPerson.email %]" itemprop="email">[% thisPerson.email_encoded.replace('@|&#64;', ' [at] ') || thisPerson.email %]</a><br>
+<a class="helpme helpme-md" data-placement="top" title="[% h.loc("help.pevz_email") %]" href="mailto:[% thisPerson.email_encoded || thisPerson.email %]" itemprop="email">[% thisPerson.email_encoded.replace('@|&#64;', ' [at] ') || thisPerson.email %]</a><br>
 [% END %]
 
 [% IF !thisPerson %]
-  <p>[% lf.person_profile.id_not_found %]</p>
+  <p>[% h.loc("person_profile.id_not_found") %]</p>
 [% ELSE %]
   [% IF thisPerson.former == "1" %]
-    <p>[% lf.person_profile.former_researcher %]</p>
+    <p>[% h.loc("person_profile.former_researcher") %]</p>
   [% ELSE %]
     <div class="col-md-12 row">
       <div class="row">
-	<div class="col-md-4">[% lf.person_profile.directory_of_staff %]</div>
+	<div class="col-md-4">[% h.loc("person_profile.directory_of_staff") %]</div>
 	<div class="col-md-6"><a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% thisPerson._id %]">[% thisPerson._id %]</a></div>
       </div>
     </div>
     [% IF thisPerson.other_profile %]
     <div class="col-md-12 row">
       <div class="row">
-	<div class="col-md-4">[% lf.person_profile.other_profile %]</div>
-	<div class="col-md-6"><a href="[% lf.person_profile.other_profile_url %][% thisPerson._id %]">[% lf.person_profile.other_profile_url %][% thisPerson._id %]</a></div>
+	<div class="col-md-4">[% h.loc("person_profile.other_profile") %]</div>
+	<div class="col-md-6"><a href="[% h.loc("person_profile.other_profile_url") %][% thisPerson._id %]">[% h.loc("person_profile.other_profile_url") %][% thisPerson._id %]</a></div>
       </div>
     </div>
     [% END %]
@@ -31,8 +31,8 @@
     <input type="hidden" name="_id" value="[% session.personNumber %]" />
     [% IF backend AND !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire OR thisPerson.alias) %]
     <div class="row col-md-12">
-      <span class="text-muted">[% lf.person_profile.no_author_ids %]</span>
-      <a href="#" class="helpme helpme-md" data-placement="right" title="[% lf.help.author_id %]" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
+      <span class="text-muted">[% h.loc("person_profile.no_author_ids") %]</span>
+      <a href="#" class="helpme helpme-md" data-placement="right" title="[% h.loc("help.author_id") %]" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
     </div>
     [% END %]
 
@@ -44,7 +44,7 @@
       [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]">[% thisPerson.$k %][% h.config.lists.author_id.$k.icon %]</a>
       [% ELSE %][% thisPerson.$k %][% END %]
       [% IF backend %]
-      <a href="#" class="helpme helpme-md" data-placement="right" title="[% lf.help.author_id_edit %]" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
+      <a href="#" class="helpme helpme-md" data-placement="right" title="[% h.loc("help.author_id_edit") %]" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
       [% END %]
       </div>
     </div>
@@ -57,14 +57,14 @@
 
     <div class="row authorIds_input" style="display:none;">
       <div class="col-md-4">
-	<span class="glyphicon glyphicon-question-sign" id="authorid_help" data-toggle="tooltip" data-placement="right" title="[% lf.person_profile.person_id_title %]"></span>
+	<span class="glyphicon glyphicon-question-sign" id="authorid_help" data-toggle="tooltip" data-placement="right" title="[% h.loc("person_profile.person_id_title") %]"></span>
 	<script>
 	  $('#authorid_help').tooltip();
 	</script>
       </div>
       <div class="col-md-6">
-	<button type="button" id="saveAuthorIds" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> [% lf.forms.button.save %]</button>
-	<button type="button" onclick="editAuthorIds('cancel');" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> [% lf.forms.button.cancel %]</button>
+	<button type="button" id="saveAuthorIds" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> [% h.loc("forms.button.save") %]</button>
+	<button type="button" onclick="editAuthorIds('cancel');" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> [% h.loc("forms.button.cancel") %]</button>
       </div>
     </div>
     </form>

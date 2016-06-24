@@ -1,12 +1,12 @@
 <!-- BEGIN backend/qae.tt -->
 
-<div id="dropzone_row" class="helpme" data-placement="left" title="[% lf.help.quick_and_easy %]">
+<div id="dropzone_row" class="helpme" data-placement="left" title="[% h.loc("help.quick_and_easy") %]">
    <div class="dropzone" id="qaeUpload" data-reviewer="[% department_id %]" data-delegate="[% delegate_id %]"></div>
 </div>
 
 <script>
 $(document).ready(function(){
-	Dropzone.options.qaeUpload.dictDefaultMessage = "[% lf.main_page.qae_drop_text %]";
+	Dropzone.options.qaeUpload.dictDefaultMessage = "[% h.loc("main_page.qae_drop_text") %]";
 });
 </script>
 

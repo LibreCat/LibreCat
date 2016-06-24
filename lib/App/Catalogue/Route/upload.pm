@@ -49,10 +49,11 @@ document on failure:
   }
 
 =cut
-post '/librecat/upload' => needs login =>  sub {
+
+post '/librecat/upload' => needs login => sub {
     my $file    = request->upload('file');
     my $creator = session->{user};
-    return to_json( upload_temp_file($file,$creator) );
+    return to_json(upload_temp_file($file, $creator));
 };
 
 1;

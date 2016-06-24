@@ -3,49 +3,32 @@
 BEGIN {
     use Catmandu::Sane;
     use Catmandu;
+    use Log::Log4perl;
+    use Log::Any::Adapter;
     use Path::Tiny;
+
+    # load catmandu config
     Catmandu->load(path(__FILE__)->parent->parent);
+
+    # setup logging
+    Log::Log4perl->init(path(Catmandu->root)->child('log4perl.conf')->canonpath);
+    Log::Any::Adapter->set('Log4perl');
 }
 
 use Catmandu::Sane;
-use Dancer qw(:syntax);
-use Dancer::Config;
+use Catmandu;
 use LibreCat::Layers;
 use Plack::Builder;
 use Plack::App::File;
 use Plack::App::Cascade;
-use Log::Log4perl;
-use Log::Any::Adapter;
-use Path::Tiny;
-use Clone qw(clone);
+use Dancer;
+use App;
 
 my $layers = LibreCat::Layers->new;
 
-# setup logging
-Log::Log4perl->init(path(Catmandu->root)->child('log4perl.conf')->canonpath);
-Log::Any::Adapter->set('Log4perl');
-
-# configure dancer
-{
-    # mimic dancer config loading
-    my $config = clone(Catmandu->config->{dancer});
-    my $env = setting('environment');
-    my $env_config = (delete($config->{_environments}) || {})->{$env} || {};
-    my %mergeable = (plugins => 1, handlers => 1);
-    for my $key (keys %$env_config) {
-        if ($mergeable{$key}) {
-            $config->{$key}{$_} = $env_config->{$key}{$_} for keys %{$env_config->{$key}};
-        } else {
-            $config->{$key} = $env_config->{$key};
-        }
-    }
-    setting apphandler => 'PSGI';
-    setting appdir     => Catmandu->root;
-    $config->{engines}{template_toolkit}{INCLUDE_PATH} //= $layers->template_paths;
-    set %$config;
-    Dancer::Config->load;
-    load_app 'App';
-}
+# setup template paths
+config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->template_paths;
+config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{log} eq 'core' || config->{log} eq 'debug';
 
 # setup static file serving
 my $app = Plack::App::Cascade->new;

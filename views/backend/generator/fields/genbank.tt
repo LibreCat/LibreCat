@@ -1,7 +1,7 @@
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_genbank">
-      [% lf.$type.field.genbank.label %]
+      [% h.loc("${type}.field.genbank.label") %]
     </label>
     {% IF fields.basic_fields.genbank.mandatory OR fields.supplementary_fields.genbank.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
@@ -10,7 +10,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.genbank.mandatory OR fields.supplementary_fields.genbank.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.genbank.label_short || lf.$type.field.genbank.label %]</div>
-          <input type="text" id="id_genbank" name="genbank" value="[% genbank.join(' ; ') %]" placeholder="[% lf.$type.field.genbank.placeholder %]" class="sticky form-control{% IF fields.basic_fields.genbank.mandatory OR fields.supplementary_fields.genbank.mandatory %} required{% END %}"{% IF fields.basic_fields.genbank.readonly OR fields.supplementary_fields.genbank.readonly %} readonly="readonly"{% END %} />
+          <input type="text" id="id_genbank" name="genbank" value="[% genbank.join(' ; ') %]" placeholder="[% h.loc("${type}.field.genbank.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.genbank.mandatory OR fields.supplementary_fields.genbank.mandatory %} required{% END %}"{% IF fields.basic_fields.genbank.readonly OR fields.supplementary_fields.genbank.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon"></div>
         </div>
       </div>

@@ -2,8 +2,8 @@
 
 <div class="tab-pane" id="ebi_citations">
 
-<h3 class="margin-top0">[% epmc_cit.total %] [% lf.frontdoor.citation %][% IF epmc_cit.total != "1" %][% lf.general.plural %][% END %] [% lf.general.where %] Europe PMC</h3>
-<p>[% lf.frontdoor.tabs.epmc_citation.data_by %]</p>
+<h3 class="margin-top0">[% epmc_cit.total %] [% h.loc("frontdoor.citation") %][% IF epmc_cit.total != "1" %][% h.loc("general.plural") %][% END %] [% h.loc("general.where") %] Europe PMC</h3>
+<p>[% h.loc("frontdoor.tabs.epmc_citation.data_by") %]</p>
 [% FOREACH cite IN epmc_cit.entries.nsort('pubYear').reverse %]
 <div class="row">
   <div class="col-md-12[% UNLESS loop.first %] margin-top1[% END %]">
