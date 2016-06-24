@@ -30,7 +30,17 @@ LibreCat::I18N - localizaton class
 
 =head1 SYNOPSIS
 
+    # lexicon entries can be any that Locale::Maketext::Lexicon understands
+    Catmandu->config->{i18n}{lexicon} = {
+        de => ['CatmanduConfig', ['de']],
+        fr => [
+            Gettext => 'hello_fr.po',
+            Gettext => 'local/hello/fr.po',
+        ],
+        en => ['CSV', 'en.csv'],
+    };
+
     my $i18n = LibreCat::I18N->new(locale => 'de');
-    my $hallo = $18n->localize('hello');
+    my $hallo = $i18n->localize('hello');
 
 =cut
