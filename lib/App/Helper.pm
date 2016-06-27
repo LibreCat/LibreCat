@@ -308,11 +308,9 @@ sub get_publication {
 
 sub get_person {
     my $hits;
-    if ( $_[1] and is_integer $_[1] ) {
+    if ( $_[1] ) {
         $hits = $_[0]->search_researcher({q => ["id=$_[1]"]});
-    }
-    elsif ( $_[1] and is_string $_[1] ) {
-        $hits = $_[0]->search_researcher({q => ["login=$_[1]"]});
+        $hits = $_[0]->search_researcher({q => ["login=$_[1]"]}) if !$hits->{total};
     }
     return $hits->{hits}->[0] if $hits->{hits};
     return {error => "something went wrong"} if !$hits->{hits};
