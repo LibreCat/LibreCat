@@ -49,6 +49,7 @@ requires 'Template::Plugin::Date';
 requires 'Template::Plugin::JSON';
 requires 'Furl';
 requires 'HTML::Entities';
+requires 'Syntax::Keyword::Junction';
 
 #Plack
 requires 'Plack';

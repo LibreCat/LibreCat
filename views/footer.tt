@@ -47,8 +47,9 @@ $(document).ready(function () {
     var text = $(this).html();
     parsed = reader.parse(text);
     var result = writer.render(parsed); // result is a String
+    var r = result.replace(/<p>(.*?)<\/p>/g,"$1");
     $(this).html("");
-    $(this).html(result);
+    $(this).html(r);
   });
 });
 </script>

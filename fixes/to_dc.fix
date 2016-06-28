@@ -61,12 +61,18 @@ move_field(external_id.pmid, dc.relation.$append)
 
 prepend(dc.relation.*, 'info:eu-repo/semantics/altIdentifier/')
 
-prepend(external_id.fp6, 'info:eu-repo/grantAgreement/EC/')
-move_field(external_id.fp6, dc.relation.$append)
-
-prepend(external_id.fp7, 'info:eu-repo/grantAgreement/EC/')
-move_field(external_id.fp7, dc.relation.$append)
-#H2020 missing
+if exists(project)
+  do list(path:project, var:loop)
+    if any_match(loop.call_identifier, 'FP7')
+      prepend(loop.grant_number, 'FP7/')
+    end
+    if any_match(loop.call_identifier, 'H2020')
+      prepend(loop.grant_number, 'H2020/')
+    end
+    prepend(loop.grant_number, 'info:eu-repo/grantAgreement/EC/')
+    move_field(loop.grant_number, dc.relation.$append)
+  end
+end
 
 if exists(cc_license)
   lookup(cc_license, fixes/lookup/licenses.csv)

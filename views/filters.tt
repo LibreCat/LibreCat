@@ -24,7 +24,7 @@
 [% END %]
 
 [%- IF (qp.q.size > 0 AND !qp.embed) OR pd.delete_them %]
-  <h3 class="margin-top0">[% h.loc("facets.filters_and_searchterms") %]</h3>
+  <h3 class="filters margin-top0">[% h.loc("facets.filters_and_searchterms") %]</h3>
   [% other = {} %]
   [% CALL other.import(qp) %]
   [% CALL other.delete('q') %]
@@ -53,7 +53,13 @@
   [% FOREACH key IN qp.keys %]
     [% NEXT IF key == "q" %]
     [% NEXT IF key == "start" %]
+    [% NEXT IF key == "sort" %]
     <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
+  [% END %]
+  [% IF qp.item('sort') %]
+    [% FOREACH sorting IN qp.item('sort') %]
+    <input type="hidden" name="sort" value="[% sorting %]" />
+    [% END %]
   [% END %]
 </form>
 [% END %]
@@ -225,7 +231,7 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     if(match){
       embed_link = embed_link.replace(/\/person\/\d{1,}\/data\.*/,"/data?");
       embed_link = embed_link.replace(/\/person\/\d{1,}.*/,"/publication?");
-      embed_link = embed_link + $.param($.extend({}, searchParams), true); 
+      embed_link = embed_link + $.param($.extend({}, searchParams), true);
     }
     if ( !embed_link.match(/\?/) ) { embed_link += '?';}
     var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ embed_link +'&ftyp=js"><\/script><noscript><a href="'+ embed_link +'" target="_blank">[% h.loc("facets.embed_linktext") %]</a></noscript></div>';

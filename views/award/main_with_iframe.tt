@@ -1,0 +1,22 @@
+[% path = request.path %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+[%- USE date(format => '%Y') -%]
+
+[% IF lang %]
+  [% INCLUDE award/header_en.tt %]
+[% ELSE %]
+  [% INCLUDE award/header.tt %]
+[% END %]
+
+<link rel="stylesheet" type="text/css" href="/css/bootstrapAwards.css" />
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="/javascripts/award_bootstrap.min.js"></script>
+
+<iframe src="https://pub.uni-bielefeld.de/award?ftyp=iframe" style="width: 100%; height: 1371px;"></iframe>
+
+[% IF lang %]
+  [% INCLUDE award/footer_en.tt %]
+[% ELSE %]
+  [% INCLUDE award/footer.tt %]
+[% END %]

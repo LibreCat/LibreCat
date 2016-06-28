@@ -32,14 +32,15 @@ $(document).ready(function(){
 "<textarea class='form-control' placeholder='Type details about your publication here' name='description'>" +
 "</textarea>" +
 "<input type='hidden' name='reviewer' value='" + $('#qaeUpload').data('reviewer') + "' />" +
+"<input type='hidden' name='project_reviewer' value='" + $('#qaeUpload').data('project_reviewer') + "' />" +
 "<input type='hidden' name='delegate' value='" + $('#qaeUpload').data('delegate') + "'/>" +
 "<input type='hidden' name='file_name' value='" + resp.file_name + "' />" +
-"<input type='hidden' name='tempid' value='" + resp.tempid + "' />" +
 "<div class='checkbox'>" +
 "<label>" +
 "<input type='checkbox' required> I have read and accept the <a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>" +
 "</label>" +
 "</div>" +
+"<input type='hidden' name='tempid' value='" + resp.tempid + "' />" +
 "<input type='submit' class='btn btn-success' name='submit_or_cancel' value='Submit'/>" +
 "<input type='reset' class='btn btn-warning' onclick='location.reload()' name='submit_or_cancel' value='Cancel' />" +
 "</form></div>"
@@ -187,7 +188,7 @@ $(document).ready(function(){
 	            var ddc_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>DDC<span class='starMandatory'></span></label><div class='col-sm-10'><input type='text' name='ddc' class='form-control' placeholder='e.g. 006 (please check the DDC list above for the correct number)' required /></div></div>");
 	            form.appendChild(ddc_field);
 
-	            var abstract_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Abstract</label><div class='col-sm-10'><textarea class='form-control' name='abstract'></textarea></div></div>");
+	            var abstract_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Abstract</label><div class='col-sm-10'><textarea class='form-control' name='abstract'></textarea><span class='text-muted'>You can use <a href='/docs/howto/markdown' target='_blank'>Markdown</a> in the abstract field for text styling.</span></div></div>");
 	            form.appendChild(abstract_field);
 
 	            var hidden = Dropzone.createElement(

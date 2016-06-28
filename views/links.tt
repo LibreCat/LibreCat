@@ -8,16 +8,16 @@
     [% display_file = [] %]
     [% counter = 0 %]
     [% FOREACH fi IN entry.file %]
-    [% IF fi.open_access %][% counter = counter + 1 %][% display_file.push(fi) %][% END %]
+    [% IF fi.open_access AND fi.relation != "hidden" %][% counter = counter + 1 %][% display_file.push(fi) %][% END %]
     [% END %]
     [% IF counter > 1 %]
       | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% h.loc("main_page.links.files") %]</a>
     [% ELSIF counter == 1 %]
-      | <a href="/download/[% entry._id %]/[% display_file.0.file_id %]">[% display_file.0.file_name.match("(?i).pdf$") ? "PDF" : "File" %]</a>
+      | <a href="/download/[% entry._id %]/[% display_file.0.file_id %]">[% display_file.0.file_name.match("(?i).pdf$") ? "PDF" : lf.main_page.links.file %]</a>
     [% END %]
   [% ELSIF entry.type != "researchData" AND entry.file AND entry.file.size == 1 %]
     [% IF entry.file.0.open_access %]
-    | <a href="/download/[% entry._id %]/[% entry.file.0.file_id %]">[% entry.file.0.file_name.match("(?i).pdf$") ? "PDF" : "File" %]</a>
+    | <a href="/download/[% entry._id %]/[% entry.file.0.file_id %]">[% entry.file.0.file_name.match("(?i).pdf$") ? "PDF" : lf.main_page.links.file %]</a>
     [% END %]
   [% END %]
 
