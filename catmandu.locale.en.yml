@@ -1574,8 +1574,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  workingpaper: *workingpaper
-  biDissertation: &bidissertation
+  bi_dissertation:
     label: "Bielefeld Dissertation"
     tab: *tab
     field: &field
@@ -1650,15 +1649,14 @@ forms:
     label: "Bielefeld Master Thesis"
     tab: *tab
     field: *field
-  bi_postdoc_thesis: &bipostdocthesis
+  bi_postdoc_thesis:
     label: "Bielefeld Post-Doctoral Habilitation"
     tab: *tab
     field: *field
-  bi_bachelor_thesis: &bibachelorthesis
+  bi_bachelor_thesis:
     label: "Bielefeld Bachelor Thesis"
     tab: *tab
     field: *field
-  bibachelorthesis: *bibachelorthesis
   to_sp_form: "Single Page Form"
   sp_form: "Single Page Form"
   to_tab_form: "Tabbed Form"

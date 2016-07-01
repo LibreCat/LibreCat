@@ -291,10 +291,10 @@
         [% IF session.user AND session.role AND p.can_edit(_id, session.user, session.role) %]
         <h3 id="edit">Editing Options</h3>
         <a href="/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> &nbsp;Edit this record</a><br />
-        [% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "researchData" OR session.role == "super_admin") %]
+        [% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "research_data" OR session.role == "super_admin") %]
           <a href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> Make this record public</a><br />
         [% END %]
-        [% IF type == "researchData" AND status != "public" AND status != "submitted" AND session.role != "super_admin" %]
+        [% IF type == "research_data" AND status != "public" AND status != "submitted" AND session.role != "super_admin" %]
           <a href="/librecat/record/publish/[% _id %]">Submit this record</a>
         [% END %]
         [% END %]
@@ -433,8 +433,8 @@
           [% END %]
           [% IF localUser && !external_id.opac %]
             [% SWITCH type %]
-            [% CASE ['book', 'bookChapter', 'dissertation', 'bookEditor', 'workingPaper', 'conferenceAbstract', 'conferenceEditor', 'journalArticle' ] %]
-              <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% IF type == 'bookChapter' %][% publication %][% ELSE %][% title | uri %][% END %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=[% IF type == 'journalArticle' OR type == 'conferenceAbstract' %]ext[% ELSE %]lok[% END %]&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="/images/icon_ub.png" alt="" class="img-thumbnail">[% h.loc("frontdoor.catalogue") %]</a>
+            [% CASE ['book', 'book_chapter', 'dissertation', 'book_editor', 'working_paper', 'conference_abstract', 'conference_editor', 'journal_article' ] %]
+              <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% IF type == 'book_chapter' %][% publication %][% ELSE %][% title | uri %][% END %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=[% IF type == 'journal_article' OR type == 'conference_abstract' %]ext[% ELSE %]lok[% END %]&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="/images/icon_ub.png" alt="" class="img-thumbnail">[% h.loc("frontdoor.catalogue") %]</a>
             [% END %]
           [% END %]
         </p>

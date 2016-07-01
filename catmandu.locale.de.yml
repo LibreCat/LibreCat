@@ -1460,7 +1460,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-  translationChapter: &translationchapter
+  translation_chapter:
     label: "&Uuml;bersetzung (Aufsatz)"
     tab: *tab
     field:
@@ -1653,7 +1653,6 @@ forms:
     label: "Bielefelder Bachelorarbeit"
     tab: *tab
     field: *field
-  bibachelorthesis: *bibachelorthesis
   to_sp_form: "Gesamtsicht"
   sp_form: "Gesamtsicht"
   to_tab_form: "Gegliederte Sicht"
