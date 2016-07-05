@@ -51,6 +51,6 @@ user:
   sources:
     - store: builtin_users
       username_attr: login
-    - store: backup
+    - store: search
       bag: researcher
       username_attr: login

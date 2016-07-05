@@ -10,7 +10,6 @@
 [% INCLUDE header.tt %]
 
 <!-- BEGIN home.tt -->
-
 <div class="row" itemscope itemtype="http://schema.org/Person"><!-- outer border -->
 
   <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
@@ -28,7 +27,23 @@
 	</div>
 
 	<div class="col-md-6 col-sm-5 col-xs-12">
-	  <h3 class="margin-top0">[% UNLESS !thisPerson %][% IF thisPerson.idm_title %]<span itemprop="honorificPrefix">[% thisPerson.idm_title %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span>[% IF backend %] ([% IF session.role == 'super_admin' %]Admin[% END %][% IF session.role == 'user' %]User[% END %][% IF session.role == 'reviewer' %]Reviewer[% END %][% IF session.role == "delegate" %]Delegate[% END %][% IF session.role == "data_manager" %]Data Manager[% END %])[% END %][% ELSE %][% h.loc("person_profile.id_not_found") %][% END %]</h3>
+	  <h3 class="margin-top0">
+      [% UNLESS ! thisPerson %]
+        [% IF thisPerson.idm_title %]
+            <span itemprop="honorificPrefix">[% thisPerson.idm_title %]</span>
+        [% END %]
+        <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span>
+        [% IF backend %] (
+            [% IF session.role == 'super_admin' %]Admin[% END %]
+            [% IF session.role == 'user' %]User[% END %]
+            [% IF session.role == 'reviewer' %]Reviewer[% END %]
+            [% IF session.role == 'delegate' %]Delegate[% END %]
+            [% IF session.role == 'data_manager' %]Data Manager[% END %])
+        [% END %]
+      [% ELSE %]
+        [% h.loc("person_profile.id_not_found") %]
+      [% END %]
+      </h3>
 	[% INCLUDE person_profile.tt %]
 	</div>
 
@@ -41,9 +56,9 @@
 	[% END %]
 
       </div>
-    
+
     </div>
-    
+
     [% UNLESS !thisPerson %]
 
     <div class="row margin-xs-top"> <!-- row span11 publications, projects, departments -->

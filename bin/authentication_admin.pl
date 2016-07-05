@@ -21,9 +21,10 @@ authentication_test.pl - Test your authentication settings
 L<log4perl.conf>
 
 =cut
-use lib qw(../lib);
+use lib qw(./lib);
 use Catmandu;
 use Catmandu::Util;
+use LibreCat::User;
 use Getopt::Long;
 use Log::Log4perl;
 use Log::Any::Adapter;
@@ -56,10 +57,16 @@ else {
 my $pkg    = Catmandu::Util::require_package($package);
 my $auth   = $pkg->new(%$param);
 
-my $verify = $auth->authenticate( { username => $user , password => $password });
+my $users   = LibreCat::User->new(Catmandu->config->{user});
+my $userobj = $users->find_by_username($user);
+my $verify  = $auth->authenticate( { username => $user , password => $password });
+
+my $exporter = Catmandu->exporter('YAML');
 
 if ($verify) {
 	print "OK\n";
+    $exporter->add($userobj);
+    $exporter->commit;
 	exit(0);
 }
 else {
