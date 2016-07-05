@@ -1,7 +1,11 @@
 # LibreCat - an institutional repository
 
-LibreCat is a new institutional repository system developed by Catmandu group
-(University of Bielefeld, Ghent University and Lund University).
+LibreCat is a new institutional repository system developed by [LibreCat Group](http://librecat.org) which has as its key features:
+
+* institutional repository
+* publication list manager for reseachers
+* institutional research data archive.
+
 The development started in 2013 in Bielefeld and was made available on GitHub
 from the start. Since 2015 the code is in production at Bielefeld and is currently
 being in heavy development to allow for local adaptations.
@@ -24,7 +28,8 @@ Project, Award, Research Group
 * Pluggable file store backend
 * Command line support using 'Catmandu'
 * OAI-PMH and SRU
-* The LibreCat is open source and shipped with the same license as the Perl language: http://dev.perl.org/licenses/ 
+* REST / content negotiation
+* The LibreCat is open source and shipped with the same license as the Perl language: http://dev.perl.org/licenses/
 
 ## Install
 

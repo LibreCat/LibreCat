@@ -31,6 +31,7 @@ requires 'Catmandu::CrossRef';
 requires 'Catmandu::Importer::getJSON';
 requires 'Catmandu::Identifier', '>=0.05';
 requires 'Catmandu::RIS', '>=0.04';
+requires 'Catmandu::Fix::Date';
 
 #Dancer
 requires 'Dancer';
