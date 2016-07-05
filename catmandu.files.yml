@@ -12,13 +12,13 @@ default: &filestore_settings
 api:
     buffer_size: 8192
     access:
-        ip_ranges: 
+        ip_ranges:
             - 127.0.0.1
             - 10.*.*.*
 
 uploader:
     package: 'LibreCat::Worker::FileUploader'
-    options: 
+    options:
         files: *filestore_settings
 
 # Thumbnails
@@ -29,7 +29,7 @@ access: &accessstore_settings
 
 accesss_thumbnailer:
     package: 'LibreCat::Worker::ImageResizer'
-    options: 
+    options:
         files: *filestore_settings
         access: *accessstore_settings
 
