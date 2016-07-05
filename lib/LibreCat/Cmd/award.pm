@@ -122,12 +122,19 @@ sub _add {
 
 sub _adder {
     my ($self, $data) = @_;
+    my $is_new = 0;
 
-    my $h         = App::Helper::Helpers->new;
+    my $helper = App::Helper::Helpers->new;
+
+    unless (exists $data->{_id} && defined $data->{_id}) {
+        $is_new = 1;
+        $data->{_id} = $helper->new_record('award');
+    }
+
     my $validator = LibreCat::Validator::Award->new;
 
     if ($validator->is_valid($data)) {
-        my $result = $h->update_record('award', $data);
+        my $result = $helper->update_record('award', $data);
         if ($result) {
             print "added " . $data->{_id} . "\n";
             return 0;

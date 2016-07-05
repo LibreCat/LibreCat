@@ -122,12 +122,20 @@ sub _add {
 
 sub _adder {
     my ($self, $data) = @_;
+    my $is_new = 0;
+
+    my $helper = App::Helper::Helpers->new;
+
+    unless (exists $data->{_id} && defined $data->{_id}) {
+        $is_new = 1;
+        $data->{_id} = $helper->new_record('publication');
+    }
 
     my $validator = LibreCat::Validator::Publication->new;
 
     if ($validator->is_valid($data)) {
-        my $result
-            = App::Helper::Helpers->new->update_record('publication', $data);
+        my $result = $helper->update_record('publication', $data);
+
         if ($result) {
             print "added " . $data->{_id} . "\n";
             return 0;
@@ -138,7 +146,7 @@ sub _adder {
         }
     }
     else {
-        print STDERR "ERROR: not a valid researcher\n";
+        print STDERR "ERROR: not a valid publication\n";
         print STDERR join("\n", @{$validator->last_errors}), "\n";
         return 2;
     }

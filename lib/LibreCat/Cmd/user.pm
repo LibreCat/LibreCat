@@ -2,6 +2,7 @@ package LibreCat::Cmd::user;
 
 use Catmandu::Sane;
 use App::Helper;
+use App::bmkpasswd qw(mkpasswd);
 use LibreCat::Validator::Researcher;
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -122,12 +123,21 @@ sub _add {
 
 sub _adder {
     my ($self, $data) = @_;
+    my $is_new = 0;
+
+    my $helper = App::Helper::Helpers->new;
+
+    unless (exists $data->{_id} && defined $data->{_id}) {
+        $is_new = 1;
+        $data->{_id} = $helper->new_record('researcher');
+        $data->{password} = mkpasswd($data->{password}) if exists $data->{password};
+    }
 
     my $validator = LibreCat::Validator::Researcher->new;
 
     if ($validator->is_valid($data)) {
-        my $result
-            = App::Helper::Helpers->new->update_record('researcher', $data);
+        my $result = $helper->update_record('researcher', $data);
+
         if ($result) {
             print "added " . $data->{_id} . "\n";
             return 0;

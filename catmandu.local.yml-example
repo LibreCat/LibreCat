@@ -33,7 +33,7 @@ authentication:
       # password auth against database users
       - package: LibreCat::Auth::Bag
         options:
-          store: backup
+          store: search
           bag: researcher
           username_attr: login
       # LDAP auth
