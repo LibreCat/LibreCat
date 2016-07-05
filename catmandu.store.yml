@@ -625,7 +625,7 @@ search:
                 'exact': true
                 '<>': true
                 'any' : true
-              field: 'type'
+              field: ['type','type_old']
               sort: true
               values: "see the list of publication types"
             documenttype: *type
@@ -1079,6 +1079,7 @@ search:
               id: {type: string, analyzer: tag}
               login: {type: string, analyzer: tag}
           type: {type: string, analyzer: tag}
+          type_old: {type: string, analyzer: tag}
           research_data: {type: byte}
           year: {type: date, format: year, include_in_all: true}
           language:
