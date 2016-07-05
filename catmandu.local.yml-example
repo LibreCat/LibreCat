@@ -5,31 +5,6 @@ host: "http://localhost:5001"
 thesis:
     urn_prefix: 'urn:thesis-'
 
-filestore:
-    tmp_dir: /data/librecat/temp_uploads
-
-    default: &filestore_settings
-        package: Simple
-        options:
-            root: /data/librecat/file_uploads
-
-    uploader:
-        package: 'LibreCat::Worker::FileUploader'
-        options:
-            files: *filestore_settings
-
-    # Thumbnails
-    access: &accessstore_settings
-        package: Simple
-        options:
-            root: /data/librecat/file_uploads
-
-    accesss_thumbnailer:
-        package: 'LibreCat::Worker::ImageResizer'
-        options:
-            files: *filestore_settings
-            access: *accessstore_settings
-
 store:
   builtin_users:
     package: Hash
