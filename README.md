@@ -23,6 +23,7 @@ Project, Award, Research Group
 * Citation Styles for  AMA, APA, Frontiers, Harvard, IEEE, LNCS, MLA, BibTeX, RIS
 * Full MathJAX Latex support to add mathematical formulas in abstracts and titles
 * Pluggable authentication modules
+* Delegate input and management to user others
 * Multilingual support
 * ElasticSearch indexing
 * Pluggable file store backend
