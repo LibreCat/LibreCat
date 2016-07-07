@@ -299,7 +299,7 @@ publication:
         - type: integer
           minimum: 0
 
-    abtract:
+    abstract:
       type: array
       items:
         '$ref': '#/definitions/abstract'
