@@ -259,6 +259,12 @@ publication:
         - bi_dissertation
         - research_data
 
+    creator:
+      type: object
+      properties:
+        login:
+          type: string
+
     date_created: &dt
       type: string
       format: date-time
@@ -366,7 +372,7 @@ publication:
 
     volume:
       type: string
-      
+
     intvolume:
       type: string
 
@@ -482,11 +488,6 @@ researcher:
         wels:
           type: string
 
-    creator:
-      type: object
-      properties:
-        login:
-          type: string
     external_id:
       type: object
       properties:
