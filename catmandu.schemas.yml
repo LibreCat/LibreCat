@@ -364,6 +364,19 @@ publication:
     place:
       type: string
 
+    volume:
+      type: string
+      
+    intvolume:
+      type: string
+
+    issue:
+      type: string
+
+    page:
+      type: string
+      pattern: '^[0-9]+(-[0-9]+)?$'
+
     file:
       type: array
       minItems: 0
@@ -485,14 +498,10 @@ researcher:
             - type: string
               pattern: '^[0-9]+$'
             - type: integer
-    volume:
-      type: string
-    intvolume:
-      type: string
+
     isi:
       type: string
-    issue:
-      type: string
+
     marked:
       oneOf:
         - type: boolean
@@ -501,15 +510,12 @@ researcher:
           maximum: 1
         - type: string
           enum: ["0","1"]
-    page:
-      type: string
-      pattern: '^[0-9]+(-[0-9]+)?$'
+
     pmid:
       oneOf:
         - type: string
           pattern: '^[0-9]+$'
         - type: integer
-
 
   required: ["_id","account_status","account_type","first_name","last_name","full_name"]
   additionalProperties: true
