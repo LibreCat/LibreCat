@@ -283,7 +283,7 @@ publication:
       type: string
       minLength: 1
 
-    alternativeTitle:
+    alternative_title:
       type: array
       items:
         type: string
