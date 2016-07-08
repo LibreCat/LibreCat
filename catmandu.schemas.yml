@@ -274,7 +274,7 @@ publication:
 
     author:
       type: array
-      minItems: 1
+      minItems: 0
       uniqueItems: true
       items:
         '$ref': '#/definitions/author'
@@ -285,6 +285,11 @@ publication:
       uniqueItems: true
       items:
         '$ref': '#/definitions/author'
+
+    corporate_editor:
+      type: array
+      items:
+        type: string
 
     title:
       type: string
@@ -359,7 +364,8 @@ publication:
       items:
         '$ref': '#/definitions/file'
 
-  required: ["_id","type","author","title","year"]
+  # A author|editor is required..can this be expressed in JSONSchema?
+  required: ["_id","type","title","year"]
   additionalProperties: true
 
 #used in LibreCat::Validator::Researcher
