@@ -279,6 +279,13 @@ publication:
       items:
         '$ref': '#/definitions/author'
 
+    editor:
+      type: array
+      minItems: 0
+      uniqueItems: true
+      items:
+        '$ref': '#/definitions/author'
+
     title:
       type: string
       minLength: 1
