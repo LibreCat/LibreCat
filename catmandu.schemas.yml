@@ -358,6 +358,12 @@ publication:
       items:
         '$ref': '#/definitions/iso_language'
 
+    publisher:
+      type: string
+
+    place:
+      type: string
+      
     file:
       type: array
       minItems: 0
