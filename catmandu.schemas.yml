@@ -189,6 +189,43 @@ publication:
         last_name: *hn
         full_name: *hn
 
+    file:
+        type: object
+        access_level:
+            type: string
+            enum:
+               - open_access
+               - local
+               - closed
+               - request
+        content_type:
+            type: string
+        creator:
+            type: string
+        date_created:
+            type: string
+            format: date-time
+        date_updated:
+            type: string
+            format: date-time
+        file_id:
+            type: integer
+        file_size:
+            type: integer
+        open_access:
+            type: integer
+        relation:
+            type: string
+            enum:
+                - main_file
+                - confirmation
+                - table_of_contents
+                - erratum
+                - supplementary_material
+                - other
+                - hidden
+        required: ["access_level","content_type","creator","date_created","date_updated","file_id","open_access","relation"]
+
   properties:
     _id:
       oneOf:
@@ -308,6 +345,13 @@ publication:
       type: array
       items:
         '$ref': '#/definitions/iso_language'
+
+    file:
+      type: array
+      minItems: 0
+      items:
+        '$ref': '#/definitions/file'
+
   required: ["_id","type","author","title","year"]
   additionalProperties: true
 
