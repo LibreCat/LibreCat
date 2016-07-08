@@ -383,11 +383,69 @@ publication:
       type: string
       pattern: '^[0-9]+(-[0-9]+)?$'
 
+    external_id:
+      type: object
+      properties:
+        unknown:
+          type: string
+        isi:
+          type: string
+        pmid:
+          type: string
+        inspire:
+          type: string
+        arxiv:
+          type: string
+        ahf:
+          type: string
+        opac:
+          type: string
+        scoap3:
+          type: string
+
     file:
       type: array
       minItems: 0
       items:
         '$ref': '#/definitions/file'
+
+    citation:
+      type: object
+      properties:
+        ama:
+          type: string
+        apa:
+          type: string
+        apa_indent:
+          type: string
+        aps:
+          type: string
+        bio1:
+          type: string
+        default:
+          type: string
+        dgps:
+          type: string
+        ewi:
+          type: string
+        frontShortTitle:
+          type: string
+        frontiers:
+          type: string
+        harvard1:
+          type: string
+        ieee:
+          type: string
+        lncs:
+          type: string
+        mla:
+          type: string
+        pub:
+          type: string
+        sfb882:
+          type: string
+        wels:
+          type: string
 
   # A author|editor is required..can this be expressed in JSONSchema?
   required: ["_id","type","title","year"]
@@ -450,73 +508,6 @@ researcher:
                 minLength: 1
               - type: integer
                 minimum: 0
-    citation:
-      type: object
-      properties:
-        ama:
-          type: string
-        apa:
-          type: string
-        apa_indent:
-          type: string
-        aps:
-          type: string
-        bio1:
-          type: string
-        default:
-          type: string
-        dgps:
-          type: string
-        ewi:
-          type: string
-        frontShortTitle:
-          type: string
-        frontiers:
-          type: string
-        harvard1:
-          type: string
-        ieee:
-          type: string
-        lncs:
-          type: string
-        mla:
-          type: string
-        pub:
-          type: string
-        sfb882:
-          type: string
-        wels:
-          type: string
-
-    external_id:
-      type: object
-      properties:
-        isi:
-          type: string
-          pattern: '^[0-9]+$'
-        pmid:
-          oneOf:
-            - type: string
-              pattern: '^[0-9]+$'
-            - type: integer
-
-    isi:
-      type: string
-
-    marked:
-      oneOf:
-        - type: boolean
-        - type: integer
-          minimum: 0
-          maximum: 1
-        - type: string
-          enum: ["0","1"]
-
-    pmid:
-      oneOf:
-        - type: string
-          pattern: '^[0-9]+$'
-        - type: integer
 
   required: ["_id","account_status","account_type","first_name","last_name","full_name"]
   additionalProperties: true
