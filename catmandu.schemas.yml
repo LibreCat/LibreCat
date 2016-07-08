@@ -363,7 +363,7 @@ publication:
 
     place:
       type: string
-      
+
     file:
       type: array
       minItems: 0
@@ -485,6 +485,8 @@ researcher:
             - type: string
               pattern: '^[0-9]+$'
             - type: integer
+    volume:
+      type: string
     intvolume:
       type: string
     isi:
