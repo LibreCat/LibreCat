@@ -97,7 +97,7 @@ get qr{/award/*} => sub {
         my $message = params->{ftext};
         my $path = params->{lasturl};
 
-        my $receiver = ['nora.frei@uni-bielefeld.de','pressestelle@uni-bielefeld.de','petra.kohorst@uni-bielefeld.de'];
+        my $receiver = ['pressestelle@uni-bielefeld.de','petra.kohorst@uni-bielefeld.de'];
 
         $returnhash = {lasturl => $path};
         $returnhash->{formname} = params->{name} if params->{name};
@@ -322,7 +322,7 @@ post '/en/awardemail' => sub {
     my $message = params->{ftext};
     my $path = params->{lasturl};
 
-    my $receiver = ['nora.frei@uni-bielefeld.de','pressestelle@uni-bielefeld.de','petra.kohorst@uni-bielefeld.de'];
+    my $receiver = ['pressestelle@uni-bielefeld.de','petra.kohorst@uni-bielefeld.de'];
     my $returnmessage = "";
 
     if($email and $message){
