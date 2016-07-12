@@ -1511,6 +1511,7 @@ forms:
         placeholder: "z.B. Handbook of eBook Publishing"
       edition: *edition
       editor: *editor_only
+      corporate_editor: *corporate_editor
       department: *department
       project: *project
       research_group: *research_group

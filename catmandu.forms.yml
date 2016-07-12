@@ -891,6 +891,7 @@ publicationTypes:
         research_group: *research_group
         edition: *edition
         editor: *editor_only
+        corporate_editor: *corporate_editor
         place: *place
         publisher: *publisher
         publication:
