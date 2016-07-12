@@ -9,6 +9,7 @@ award:
   properties:
     _id:
       type: string
+      description: "Award identifier"
       pattern: "^AW[0-9]+$"
       minLength: 1
     _version:
@@ -16,42 +17,57 @@ award:
         - type: string
           minLength: 1
         - type: integer
+      description: "Award version"
     sort_id:
       type: string
+      description: "Sortable identifier"
     oldid:
       type: string
       minLength: 1
+      description: "Old identifier"
     award_id:
       type: string
       pattern: "^AW[0-9]+$"
+      description: "Award identifier"
     rec_type:
       type: string
       enum: [preis,auszeichnung,akademie,record]
+      description: "Record type"
     date_created: &dt
       type: string
       format: date-time
+      description: "Record creation time"
     date_updated: *dt
     title:
       type: string
       minLength: 1
+      description: "Award title"
     title_en:
       type: string
+      description: "Award title in English"
     norm_title:
       type: string
+      description: "Normalized title"
     description:
       type: string
+      description: "Description"
     description_en:
       type: string
+      description: "Description in English"
     url:
       type: string
       format: uri
+      description: "URL"
     proof:
       type: string
+      description: "???"
     year:
       type: string
       pattern: "^[0-9]{4}$"
+      description: "Year of award"
     comment:
       type: string
+      description: "Comment"
     department:
       type: array
       items:
@@ -65,8 +81,11 @@ award:
                 minLength: 1
               - type: integer
                 minimum: 0
+            description: "Department name"
           name:
             type: string
+            description: "Department identifier"
+        description: "Department"
     einrichtung:
       type: array
       items:
@@ -77,8 +96,10 @@ award:
             minLength: 1
           _id:
             type: string
+      description: "???"
     other_university:
       type: string
+      description: "Name of another university involved in the award"
     uni_member:
       oneOf:
         - type: string
@@ -86,9 +107,11 @@ award:
         - type: integer
           minimum: 0
           maximum: 1
+      description: "???"
     former_member:
       type: string
       enum: ["ja","nein","emeritiert","in Rente"]
+      description: "Former member"
     extern:
       oneOf:
         - type: string
@@ -96,8 +119,10 @@ award:
         - type: integer
           minimum: 0
           maximum: 1
+      description: "???"
     organization:
       type: string
+      description: "Organization involved in the award"
     honoree:
       type: array
       items:
@@ -116,6 +141,7 @@ award:
             minLength: 1
           title:
             type: string
+      description: "???"
   required: ["_id","rec_type","title"]
   additionalProperties: false
 
@@ -524,12 +550,16 @@ department:
           minLength: 1
         - type: integer
           minimum: 0
+      description: "Department identifier"
     display:
       type: string
+      description: "Displayed name"
     layer:
       type: integer
+      description: "???"
     name:
       type: string
+      description: "Department name"
     tree:
       type: array
       items:
@@ -542,6 +572,8 @@ department:
                 minLength: 1
               - type: integer
                 minimum: 0
+            description: "Parent department"
+      description: "Hierarchical structure"
 
   required: ["_id","tree"]
   additionalProperties: false
@@ -554,38 +586,49 @@ project:
     _id:
       type: string
       pattern: "^P[0-9]+$"
+      description: "Project identifier"
     name:
       type: string
       minLength: 1
+      description: "Project name"
     acronym:
       type: string
+      description: "Project acronym"
     alternative_name:
       type: string
+      description: "Project's alternative name"
     url:
       type: string
       format: uri
+      description: "Project's URL"
     grant_number:
       type: string
+      description: "Grant number"
     psp_element:
       type: string
+      description: "???"
     description:
       type: string
+      description: "Description of the project"
     start_date:
       type: string
       format: date
+      description: "Starting date"
     end_date:
       type: string
       format: date
+      description: "Ending date"
     date_created:
       type: string
       format: date-time
+      description: "The record creation date"
     date_updated:
       type: string
       format: date-time
-    #not defined in elasticsearch?
+      description: "The record's last modification date"
     affiliation:
       type: string
-    #'coordinator' in the web interface
+      description: "Project's affiliation"
     owner:
       type: array
       items:
@@ -597,6 +640,7 @@ project:
           last_name:
             type: string
             minLength: 1
+        description: "Project's owners"
     designated_editor:
       type: array
       items:
@@ -608,6 +652,7 @@ project:
           last_name:
             type: string
             minLength: 1
+      description: "Designated editor"
     principal_investigator:
       type: array
       items:
@@ -619,6 +664,7 @@ project:
           last_name:
             type: string
             minLength: 1
+      description: "Principal investigators"
     uni_member:
       type: array
       items:
@@ -630,18 +676,22 @@ project:
           last_name:
             type: string
             minLength: 1
+      description: "Participating university members"
     cooperator:
       type: array
       items:
         type: string
         minLength: 1
+      description: "Cooperating partner"
     funder:
       type: array
       items:
         type: string
         minLength: 1
+      description: "Funding agency"
     call_identifier:
       type: string
+      description: "Identifier of the call"
     funded:
       oneOf:
         - type: boolean
@@ -650,6 +700,7 @@ project:
           maximum: 1
         - type: string
           enum: ["0","1"]
+      description: "Flag of funding status"
 
   required: ["_id","name"]
   additionalProperties: true
