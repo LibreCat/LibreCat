@@ -7,7 +7,7 @@
   </div>
   <div class="col-md-10" id="cooperator">
     [% IF !cooperator %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF cooperator.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% cooperator.label %}</div>
@@ -19,7 +19,7 @@
 	</div>
 	[% ELSE %]
 	[% FOREACH pi IN cooperator %]
-	<div class="row innerrow">
+	<div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
 	    <div class="input-group sticky{% IF cooperator.mandatory %} mandatory{% END %}">
 	      <div class="input-group-addon hidden-lg hidden-md">{% cooperator.label %}</div>

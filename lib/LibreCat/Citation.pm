@@ -36,6 +36,7 @@ use namespace::clean;
 
 Catmandu->load(':up');
 my $conf = Catmandu->config->{citation};
+my $cat = Catmandu->default_load_path;
 
 has style => (is => 'ro');
 has styles => (is => 'ro', lazy => 1, builder => '_build_styles');
@@ -92,7 +93,7 @@ sub create {
     }
     else {
         my $csl_json = export_to_string($data, 'JSON',
-            {array => 1, fix => 'fixes/to_csl.fix'});
+            {array => 1, fix => "$cat/fixes/to_csl.fix"});
         foreach my $s (@{$self->styles}) {
             my $locale = ($s eq 'dgps') ? 'de' : $self->locale;
             $cite->{$s} = $self->_request(

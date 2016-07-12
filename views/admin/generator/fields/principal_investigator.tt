@@ -7,7 +7,7 @@
   </div>
   <div class="col-md-10" id="principal_investigator">
     [% IF !principal_investigator %]
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" id="principal_investigator_orig_first_name_0" value="" />
       <input type="hidden" id="principal_investigator_orig_last_name_0" value="" />
       <div class="form-group col-md-4 col-xs-11">
@@ -25,14 +25,12 @@
 	      <input type="text" name="principal_investigator.0.last_name" id="principal_investigator_last_name_0" value="[% principal_investigator.0.last_name %]" class="form-control sticky"{% IF principal_investigator.mandatory %} required{% END %}>
 	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('principal_investigator');" class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
-          <div class="input-group-addon"><span id="principal_investigator_link_person_0" onclick="link_person(this);" data-type="principal_investigator_"><img id="principal_investigator_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" /></span></div>
-          <div class="input-group-addon"><span id="principal_investigator_revert_0" data-type="principal_investigator_" onclick="revert_name(this);"><span class="fa fa-undo"></span></span></div>
 	    </div>
 	  </div>
 	</div>
 	[% ELSE %]
 	[% FOREACH pi IN principal_investigator %]
-	<div class="row innerrow">
+	<div class="row innerrow multirow">
       <input type="hidden" id="principal_investigator_orig_first_name_[% loop.index %]" value="" />
       <input type="hidden" id="principal_investigator_orig_last_name_[% loop.index %]" value="" />
       <div class="form-group col-md-4 col-xs-11">
@@ -50,8 +48,6 @@
 	      <input type="text" name="principal_investigator.[% loop.index %].last_name" id="principal_investigator_last_name_[% loop.index %]" value="[% pi.last_name %]" class="form-control sticky"{% IF principal_investigator.mandatory %} required{% END %}>
 	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('principal_investigator');" class="glyphicon glyphicon-plus"></span></div>
           <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
-          <div class="input-group-addon"><span id="principal_investigator_link_person_[% loop.index %]" onclick="link_person(this);" data-type="principal_investigator_"><img id="principal_investigator_Authorized[% loop.index %]" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" /></span></div>
-          <div class="input-group-addon"><span id="principal_investigator_revert_[% loop.index %]" data-type="principal_investigator_" onclick="revert_name(this);"><span class="fa fa-undo"></span></span></div>
 	    </div>
 	  </div>
 	</div>

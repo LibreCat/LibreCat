@@ -10,13 +10,13 @@ login:
   username: "Benutzername"
   username_placeholder: "HRZ Benutzername"
   password: "Passwort"
-  password_placeholder: "HRZ Passwort (wie z.B. für den Webmailer und Stud.IP)"
+  password_placeholder: "HRZ Passwort (wie z.B. f&uuml;r den Webmailer und Stud.IP)"
   login_button: "Anmelden"
-  login_help: "HRZ Benutzername und Passwort (wie z.B. für den Webmailer und Stud.IP)"
-  contact_us: "<strong>Login fehlgeschlagen?</strong><br>Falls Sie der Universität Bielefeld angehören, sich aber trotzdem nicht in PUB einloggen können, <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>schreiben Sie uns</a></strong> oder rufen Sie uns an unter 106-4058."
+  login_help: "HRZ Benutzername und Passwort (wie z.B. f&uuml;r den Webmailer und Stud.IP)"
+  contact_us: "<strong>Login fehlgeschlagen?</strong><br>Falls Sie der Universit&auml;t Bielefeld angeh&ouml;ren, sich aber trotzdem nicht in PUB einloggen k&ouml;nnen, <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>schreiben Sie uns</a></strong> oder rufen Sie uns an unter 106-4058."
 header:
-  title: "Publikationen an der Universität Bielefeld"
-  title_long: "PUB &ndash; Publikationen an der Universität Bielefeld"
+  title: "Publikationen an der Universit&auml;t Bielefeld"
+  title_long: "PUB &ndash; Publikationen an der Universit&auml;t Bielefeld"
   title_person: "PUB  &ndash; Publikationsliste von"
   my_author_page: "Meine Publikationsliste"
   brand: "Start"
@@ -27,6 +27,8 @@ header:
     user: "User"
     delegate: "Delegate"
     reviewer: "Reviewer"
+    project_reviewer: "Projekt Reviewer"
+    award_admin: "Award Admin"
     data_manager: "Data Manager"
     super_admin: "Admin"
   admin_menu:
@@ -43,13 +45,13 @@ header:
   lang_select:
     eng: "Englisch"
     ger: "Deutsch"
-  department_affiliation: "Fakultät/ Zugehörigkeit"
+  department_affiliation: "Fakult&auml;t/ Zugeh&ouml;rigkeit"
   logged_in_as: "Eingeloggt als"
   default_edit_mode: "Standard Editiermodus"
   default_language: "Standardsprache"
   beta: "Das neue Backend von PUB befindet sich noch im Beta-Stadium"
 footer:
-  this_is_us: "Universitätsbibliothek Bielefeld"
+  this_is_us: "Universit&auml;tsbibliothek Bielefeld"
   language_url: ""
   dini_alt: "DINI-Zertifikat 2010"
   dini_title: "PUB ist mit dem DINI-Zertifikat 2010 ausgezeichnet"
@@ -75,12 +77,13 @@ tabs:
   authors: "Autoren"
   authors_title: "Autorinnen und Autoren"
   start: "Was ist PUB?"
-  about: "Über PUB"
+  about: "&Uuml;ber PUB"
   features: "Features"
   documentation: "API Dokumentation"
   faq: "FAQ"
   contact: "Kontakt"
   policy: "Leitlinien"
+  login: "Wie logge ich mich ein?"
 hits:
   author: "Autorin / Autor"
   authors: "Autorinnen / Autoren"
@@ -97,15 +100,15 @@ home:
   help: "Hilfe"
   stats:
     publications: "Publikationen"
-    authors: "Pers<span class='xxs-only'>.</span><span class='hidden-xxs'>önliche</span> Publikationslisten"
+    authors: "Pers<span class='xxs-only'>.</span><span class='hidden-xxs'>&ouml;nliche</span> Publikationslisten"
     data_publications: "Datenpublikationen"
     oa_publications: "Open-Access-Publikationen"
     theses: "Hochschulschriften"
   logos:
-    oa: "Open Access an der<br>Universität Bielefeld"
+    oa: "Open Access an der<br>Universit&auml;t Bielefeld"
     rd_management: "Forschungsdaten&shy;management"
     brand: "PUB"
-    brand_long: "PUB &ndash; Publikationen an der Universität Bielefeld"
+    brand_long: "PUB &ndash; Publikationen an der Universit&auml;t Bielefeld"
     theses: "PUB Theses"
   you_have_no_photo: "Sie haben kein Bild im PEVZ hinterlegt."
   they_have_no_photo: "Diese Person hat kein Bild im PEVZ hinterlegt."
@@ -115,15 +118,16 @@ main_page:
   add_new_button: "Neue Publikation"
   capital_or: "ODER"
   qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Open-Access-Volltext (PDF)<br>hier her ziehen und wir machen den Rest"
-  theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Prüfungsarbeit hier her ziehen &hellip; oder klicken."
+  theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Pr&uuml;fungsarbeit hier her ziehen &hellip; oder klicken."
   theses_success_text: "You have successfully submitted your thesis!<br />All that's left to do is print and fill out this form: <a href='/pdf/revers_hochschulschriften.pdf'>Statement on the Granting of Exploitation Rights (PDF, only in German)</a> and send it to us. And we will contact you with further information.<br>Thank you!<br>Back to <a href='/pubtheses'>PUBTheses</a>"
-  theses_success_text: "Sie haben Ihre Prüfungsschrift erfolgreich hochgeladen.<br />Füllen Sie bitte noch dieses Formular aus: <a href='/pdf/revers_hochschulschriften.pdf'>Schriftliche Erklärung zur Einräumung von Nutzungsrechten (PDF-Formular)</a> und senden Sie es an uns. Wir kontaktieren Sie mit weiteren Informationen.<br>Vielen Dank!<br>Zurück zu <a href='/pubtheses'>PUBTheses</a>"
-  theses_explain: "Bitte laden Sie EINE Datei (bevorzugt .pdf) hoch. Wenn Sie ein Dokument einbringen wollen, das aus mehreren Teildokumenten (z.B. Kapitel) besteht, müssen die Dateien in eine Archivdatei gepackt werden (.zip oder .gz)."
+  theses_success_text: "Sie haben Ihre Pr&uuml;fungsschrift erfolgreich hochgeladen.<br />F&uuml;llen Sie bitte noch dieses Formular aus: <a href='/pdf/revers_hochschulschriften.pdf'>Schriftliche Erkl&auml;rung zur Einr&auml;umung von Nutzungsrechten (PDF-Formular)</a> und senden Sie es an uns. Wir kontaktieren Sie mit weiteren Informationen.<br>Vielen Dank!<br>Zur&uuml;ck zu <a href='/pubtheses'>PUBTheses</a>"
+  theses_explain: "Bitte laden Sie EINE Datei (bevorzugt .pdf) hoch. Wenn Sie ein Dokument einbringen wollen, das aus mehreren Teildokumenten (z.B. Kapitel) besteht, m&uuml;ssen die Dateien in eine Archivdatei gepackt werden (.zip oder .gz)."
   depositpolicy: "Rechtliche Rahmenbedingungen (PUB Deposity Policy)"
   ddc: "Liste der DDC-Klassen"
   heading_admin: "Admin"
   heading_user: "User"
   heading_reviewer: "Reviewer"
+  heading_project_reviewer: "Projekt Reviewer"
   heading_delegate: "Delegate"
   logged_in_as: "Angemeldet als"
   by: "von"
@@ -138,14 +142,15 @@ main_page:
     edit: "Editieren"
     details: "Details"
     view_details: "Publikationsseite in PUB anzeigen (Frontdoor)"
-    files: "Dateien verfügbar"
+    files: "Dateien verf&uuml;gbar"
+    file: "Datei"
     internal_view: "Interne Sicht"
     request_a_copy: "Exemplar anfordern"
     request_a_copy_title: "Generiert teilbare Links zu Dateien mit Status 'Request a copy'"
-    request_a_copy_not_public: "Nur Datensätze mit Status 'public' können geteilt werden! Klicken Sie auf \"Public stellen\" und versuchen Sie es erneut."
+    request_a_copy_not_public: "Nur Datens&auml;tze mit Status 'public' k&ouml;nnen geteilt werden! Klicken Sie auf \"Public stellen\" und versuchen Sie es erneut."
     publish: "Public stellen"
-    return: "Zurückstellen"
-    search_similar: "Nach ähnlichen Titeln suchen"
+    return: "Zur&uuml;ckstellen"
+    search_similar: "Nach &auml;hnlichen Titeln suchen"
 person_profile:
   id_not_found: "PEVZ-ID nicht gefunden."
   former_researcher: "Ehemaliger Bielefelder Forscher"
@@ -163,10 +168,10 @@ project:
   period: "Projektzeitraum"
   filter: "Filtern"
   filter_remove: "Filteroptionen entfernen"
-  filter_help: "Sie können Suche und Filteroptionen kombinieren"
+  filter_help: "Sie k&ouml;nnen Suche und Filteroptionen kombinieren"
   start_year: "Startjahr"
   end_year: "Endjahr"
-  funder: "Förderer"
+  funder: "F&ouml;rderer"
 facets:
   filters_and_searchterms: "Filter und Suchbegriffe"
   search_filter: "Suche / Filtern"
@@ -186,8 +191,8 @@ facets:
   all_external_publication: "Alle Publikationen sind externe Publikationen"
   fulltext: "OA Volltext(e)"
   all_fulltext: "Alle Publikationen sind OA Volltexte"
-  popular_science: "Populärwiss. Publikation(en)"
-  all_popular_science: "Alle Publikationen sind populärwissenschaftlich"
+  popular_science: "Popul&auml;rwiss. Publikation(en)"
+  all_popular_science: "Alle Publikationen sind popul&auml;rwissenschaftlich"
   indexed_in: "Indexiert in"
   all_isi: "Alle Publikationen haben eine ISI-Id"
   all_arxiv: "Alle Publikationen haben eine arXiv-Id"
@@ -216,8 +221,8 @@ facets:
   sort_text:
     "year.asc": "Jahr aufsteigend"
     "year.desc": "Jahr absteigend"
-    "date_updated.asc": "Änderungsdatum aufsteigend"
-    "date_updated.desc": "Änderungsdatum absteigend"
+    "date_updated.asc": "&Auml;nderungsdatum aufsteigend"
+    "date_updated.desc": "&Auml;nderungsdatum absteigend"
     "title.asc": "Titel aufsteigend"
     "title.desc": "Titel absteigend"
     "author.asc": "Erstautor aufsteigend"
@@ -232,8 +237,8 @@ facets:
     "fullname.desc": "Alphabetisch absteigend"
 frontdoor:
   preview: "Vorschau"
-  crumb_back: "Zurück"
-  no_record: "Dieser Eintrag exisitert nicht oder wurde gelöscht"
+  crumb_back: "Zur&uuml;ck"
+  no_record: "Dieser Eintrag exisitert nicht oder wurde gel&ouml;scht"
   download: "Download"
   cc_license: "Creative Commons Lizenz"
   show_all: "Alle"
@@ -252,7 +257,7 @@ frontdoor:
   isbn_search: "ISBN Suche"
   catalogue: "Katalog.<em>plus!</em>"
   item: "Eintrag"
-  items: "Einträge"
+  items: "Eintr&auml;ge"
   tabs:
     details:
       label: "Details"
@@ -276,9 +281,13 @@ frontdoor:
       cooperator: "Mitwirkende"
     file_details:
       label: "Dateien"
+      external_material: "Externes Material:"
+      internal_material: "Material in PUB:"
       name: "Name"
+      relation: "Relation (zum PUB-Eintrag)"
       title: "Titel"
       description: "Beschreibung"
+      url: "URL"
       access_level:
         label: "Access Level"
         open_access: "Open Access"
@@ -286,7 +295,7 @@ frontdoor:
         request_a_copy: "Request a Copy"
         closed: "Closed Access"
       last_uploaded: "Zuletzt Hochgeladen"
-      md5: "MD5 Prüfsumme"
+      md5: "MD5 Pr&uuml;fsumme"
     publication:
       label: "Publikationen"
       cited_by: "Diese Datenpublikation wird von folgenden Publikationen zitiert:"
@@ -306,25 +315,28 @@ frontdoor:
       label: "Referenzen"
       data_by: "Daten bereitgestellt von <a href='http://europepmc.org/'>Europe PubMed Central</a>."
     confirmation_letter:
-      label: "Bestätigungsschreiben"
-      confirmation: "Bestätigung"
-    related_material: "Zusatzmaterial"
-    external_data: "Externe Daten"
+      label: "Best&auml;tigungsschreiben"
+      confirmation: "Best&auml;tigung"
+    related_material: "Links"
+    external_data:
+      label: "Software/ Ext. Daten"
+      research_data: "Externe Forschungsdaten:"
+      software: "Software:"
     cite_this: "Zitieren"
     export_search: "Export / Suche"
   fulltext:
-    view: "Volltext öffnen"
+    view: "Volltext &ouml;ffnen"
     not_available: "Kein Volltext in PUB hochgeladen"
-  id_title: "Auf diese Seite verlinken, z.B. für Bookmarks"
-  license_heading: "Alle Dateien verfügbar unter der/den folgenden Lizenz(en):"
+  id_title: "Auf diese Seite verlinken, z.B. f&uuml;r Bookmarks"
+  license_heading: "Alle Dateien verf&uuml;gbar unter der/den folgenden Lizenz(en):"
 mark:
   marked_publication: "Markierte Publikation(en)"
-  no_marked_publication: "Sie haben noch keine Publikation 'markiert'. Wenn Sie Publikationen zu dieser Seite hinzufügen möchten, klicken Sie auf den Link <em>Markieren</em> neben einer Publikation. Sie finden diesen Link auf Personenseiten, Publikationslisten oder Publikationsseiten. Anschließend können Sie markierte Publikationen in verschiedenen Formaten xportieren (z.B. BibTex, RIS oder RTF)."
+  no_marked_publication: "Sie haben noch keine Publikation 'markiert'. Wenn Sie Publikationen zu dieser Seite hinzuf&uuml;gen m&ouml;chten, klicken Sie auf den Link <em>Markieren</em> neben einer Publikation. Sie finden diesen Link auf Personenseiten, Publikationslisten oder Publikationsseiten. Anschlie&szlig;end k&ouml;nnen Sie markierte Publikationen in verschiedenen Formaten exportieren (z.B. BibTex, RIS oder RTF)."
   mark_all: "Alle markieren"
-  unmark_all: "Alle Markierungen löschen"
-  mark_unmark: "Markieren/ Markierung löschen"
-  back_general: "Zurück"
-  back_person: "Zurück zur Personenseite"
+  unmark_all: "Alle Markierungen l&ouml;schen"
+  mark_unmark: "Markieren/ Markierung l&ouml;schen"
+  back_general: "Zur&uuml;ck"
+  back_person: "Zur&uuml;ck zur Personenseite"
   display_export: "Darstellung / Sortierung"
 sort_options:
   year: "Publikationsjahr"
@@ -346,10 +358,10 @@ add_new:
     pmid: "PMID"
     arxiv: "ArXiv ID"
     inspire: "Inspire ID"
-  do_it_yourself: "Option 2:<br />Wählen Sie einen Typ und füllen Sie das Formular aus"
+  do_it_yourself: "Option 2:<br />W&auml;hlen Sie einen Typ und f&uuml;llen Sie das Formular aus"
   drop_oa: "Option 3:<br />Ziehen Sie Ihren Open-Access-Volltext hier her"
-  paste_bibtex: "Option 4:<br />Fügen Sie Ihren BibTex Eintrag hier ein"
-  paste_bibtex_placeholder: "Bitte fügen Sie nur jeweils einen Datensatz ein"
+  paste_bibtex: "Option 4:<br />F&uuml;gen Sie Ihren BibTex Eintrag hier ein"
+  paste_bibtex_placeholder: "Bitte f&uuml;gen Sie nur jeweils einen Datensatz ein"
 forms:
   book:
     label: "Monographie"
@@ -357,15 +369,17 @@ forms:
       basic_fields: "Details"
       file_upload: "Upload"
       supplementary_fields: "Weitere Angaben"
-      related_material: "Verknüpfungen"
+      related_material: "Verkn&uuml;pfungen"
     field:
+      document_type: &document_type
+        label: "Publikationstyp"
       doi: &doi
         label: "DOI"
         placeholder: "z.B. 10.4119/unibi/2695161"
-        title: "Der DOI wird automatisch generiert und kann nicht verändert werden."
+        title: "Der DOI wird automatisch generiert und kann nicht ver&auml;ndert werden."
       title: &booktitle
         label: "Titel"
-        placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
+        placeholder: "z.B. Handbuch der eBook-Ver&ouml;ffentlichung"
       alternative_title: &alternative_title
         label: "Alternativer Titel"
         label_short: "Alt. Titel"
@@ -373,6 +387,7 @@ forms:
       author: &author_translator
         label: "Autor"
         tooltip: "Autor arbeitet an der Uni Bielefeld."
+        idm_extern: "extern"
         first_name:
           label: "Vorname"
           label_short: "Autor Vorn."
@@ -380,21 +395,21 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Autor Nachn."
-          placeholder: "z.B. Müller"
+          placeholder: "z.B. M&uuml;ller"
       edition: &edition
         label: "Auflage"
         placeholder: "z.B. 2"
       department: &department
         label: "Einrichtung"
         label_short: "Einr."
-        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um eine Einrichtungen auszuwählen."
+        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um eine Einrichtungen auszuw&auml;hlen."
       project: &project
         label: "Projekt"
-        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um ein Projekt auszuwählen."
+        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um ein Projekt auszuw&auml;hlen."
       research_group: &research_group
         label: "Forschungsgruppe"
         label_short: "Forsch.gr."
-        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um eine Forschungsgruppe auszuwählen."
+        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um eine Forschungsgruppe auszuw&auml;hlen."
       place: &place
         label: "Verlagsort"
         label_short: "Ort"
@@ -409,7 +424,7 @@ forms:
           placeholder: "z.B. 2015"
         extern:
           label_short: "Extern"
-          placeholder: "Veröffentlicht vor/nach Beschäftigung an der UniBi"
+          placeholder: "Ver&ouml;ffentlicht vor/nach Besch&auml;ftigung an der UniBi"
       page: &pages
         label_short: "Seiten"
         label: "Anzahl Seiten"
@@ -425,7 +440,7 @@ forms:
       publication_identifier: &publication_identifier
         label: "ISSN / ISBN"
         label_short: "ISSN/ISBN"
-        placeholder: "z.B. (e)ISBN oder (e)ISSN auswählen und eintragen"
+        placeholder: "z.B. (e)ISBN oder (e)ISSN ausw&auml;hlen und eintragen"
       publication_status_language: &publication_status_language
         label: "Status / Sprache"
         language:
@@ -435,7 +450,7 @@ forms:
           label: "Status"
           label_short: "Status"
       dropzone: &dropzone
-        label: "<strong>Upload für Volltext und Anhänge/ Zusatzmaterialien</strong> (max. 500MB pro Datei)"
+        label: "<strong>Upload f&uuml;r Volltext und Anh&auml;nge/ Zusatzmaterialien</strong> (max. 500MB pro Datei)"
         dropzone_text: "Datei hier her ziehen... oder klicken!"
         access_level: "Access Level:"
         upload_date: "Upload Datum:"
@@ -455,13 +470,13 @@ forms:
           current_file: "Aktuelle Datei:"
           relation: "Relation (\"Hochgeladenes Dokument ist...\")"
           access:
-            open_access: "Open Access (Datei ist frei verfügbar, ab sofort)"
+            open_access: "Open Access (Datei ist frei verf&uuml;gbar, ab sofort)"
             local: "Local Access (Nur UniBi)"
             closed: "Closed Access (Nur Autor/Reviewer)"
-            request_a_copy: "Request a Copy (Closed Access außer auf Anfrage)"
+            request_a_copy: "Request a Copy (Closed Access au&szlig;er auf Anfrage)"
             embargo: "Zu Open Access wechseln am:"
           additional_information:
-            heading: "Zusätzliche Informationen"
+            heading: "Zus&auml;tzliche Informationen"
             title: "Titel"
             description: "Beschreibung"
       license: &license
@@ -470,14 +485,14 @@ forms:
           label: "Hinweise zum Urheberrecht"
           disclaimer_text: "Hiermit stelle ich der Universit&auml;t Bielefeld dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf PUB, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r PUB dargestellt sind, zur Verf&uuml;gung.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy / Rechtliche Rahmenbedingungen</a>"
           accept_text: "Ich stimme zu"
-          alert: "Sie müssen den Hinweisen zum Urheberrecht zustimmen, wenn Sie eine Datei angehängt haben."
+          alert: "Sie m&uuml;ssen den Hinweisen zum Urheberrecht zustimmen, wenn Sie eine Datei angeh&auml;ngt haben."
         info:
           text: "Fragen zur Policy / Lizenz?"
           contact: "Support Publikationsdienste, Tel.: 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
         cc_license:
           label: "Creative Commons Lizenzen"
-          select_text: "Falls Ihr hochgeladenes Dokument unter einer Creative Commons Lizenz steht, können Sie diese hier auswählen:<br>"
-          select_a_license: "Lizenz wählen"
+          select_text: "Falls Ihr hochgeladenes Dokument unter einer Creative Commons Lizenz steht, k&ouml;nnen Sie diese hier ausw&auml;hlen:<br>"
+          select_a_license: "Lizenz w&auml;hlen"
           license_deed: "Lizenzvertrag"
           cc_0:
             name: "Creative Commons Public Domain Dedication (CC0 1.0)"
@@ -495,41 +510,41 @@ forms:
         label: "URN"
         placeholder: "z.B. urn:nbn:de:0070-pub-12345678"
         explain: "(Wenn Sie eine Datei hochladen, wird automatisch eine URN generiert!)"
-        title: "Die URN wurde automatisch generiert und kann nicht geändert werden."
+        title: "Die URN wurde automatisch generiert und kann nicht ge&auml;ndert werden."
       ddc: &ddc
         label: "DDC"
-        select_ddc: "DDC wählen"
+        select_ddc: "DDC w&auml;hlen"
       abstract: &abstract
         label: "Abstract"
         label2: "Sprache"
-        placeholder: "Abstract Text (Sie können Markdown für Formatierungen verwenden)"
-        explain: "Verwenden Sie <a href='http://spec.commonmark.org/0.22/#preliminaries' target='_blank'>Markdown</a> für Formatierungen. Klicken Sie nach dem Speichern auf den Link 'PUB', um sich eine Vorschau anzuzeigen und die Formatierungen zu prüfen."
+        placeholder: "Abstract Text (Sie k&ouml;nnen Markdown f&uuml;r Formatierungen verwenden)"
+        explain: "Verwenden Sie <a href='/docs/howto/markdown' target='_blank'>Markdown</a> f&uuml;r Formatierungen. Klicken Sie nach dem Speichern auf den Link 'PUB', um sich eine Vorschau anzuzeigen und die Formatierungen zu pr&uuml;fen."
       keyword: &keyword
         label: "Stichworte"
-        placeholder: "Stichworte (mehrere Einträge durch Semikolon trennen, z.B. Stichwort1 ; Stichwort 2 ; Stichwort3)"
+        placeholder: "Stichworte (mehrere Eintr&auml;ge durch Semikolon trennen, z.B. Stichwort1 ; Stichwort 2 ; Stichwort3)"
       external_id: &external_id
         label: "Externer Identifier"
         label_short: "Ext. Id."
-        placeholder: "Wählen Sie einen Identifier aus (z.B. eine PMID) und geben Sie ihn hier ein"
-        select: "Wählen"
+        placeholder: "W&auml;hlen Sie einen Identifier und geben Sie ihn hier ein (nur die Nummer, ohne URL)"
+        select: "W&auml;hlen"
       message: &message
         label: "Kommentare"
-        placeholder: "Anmerkungen für Reviewer/ Admins eintragen"
+        placeholder: "Anmerkungen f&uuml;r Reviewer/ Admins eintragen"
       popular_science_quality_controlled: &popular_science_quality_controlled
         label: "Peer Review"
         popular_science:
-          label: "Populärwissenschaftliche Veröffentlichung"
-          label_short: "Pop.wiss. Veröff."
+          label: "Popul&auml;rwissenschaftliche Ver&ouml;ffentlichung"
+          label_short: "Pop.wiss. Ver&ouml;ff."
         quality_controlled:
           label: "Peer Review"
       jel: &jel
         label: "JEL Klassifikation"
         label_short: "JEL"
-        select_jel: "--- JEL wählen ---"
+        select_jel: "--- JEL w&auml;hlen ---"
       thematic_area: &thematic_area
         label: "Themengebiet"
         label_short: "Them.geb."
-        select_thematic_area: "--- Themengebiet wählen ---"
+        select_thematic_area: "--- Themengebiet w&auml;hlen ---"
       alternative_id: &alternative_id
         label: "Returned Record IDs"
         label_short: "Ret. Rec. IDs"
@@ -538,21 +553,19 @@ forms:
         label: "Link zu PUB-Eintrag"
         label_short: "PUB-Eintr."
         placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
-      related_material.select: "Art des Zusatzmaterials wählen &hellip;"
+      related_material.select: "Art des Zusatzmaterials w&auml;hlen &hellip;"
       related_material.link: &related_material_link
-        label: "Link zu externer Quelle"
-        label_short: "Ext. Link"
+        label: "Link und Relation<br />zu externer Quelle"
+        label_short: "Externe Quelle"
         url:
           label_short: "URL"
-          placeholder: "URL der Quelle (Eingabe mit http://)"
+          placeholder: "URL der externen Quelle (Eingabe mit http://)"
         title:
           label_short: "Titel"
-          placeholder: "Titel der Quelle"
-        description:
-          label_short: "Beschreibung"
-          placeholder: "Beschreibung"
-        button:
-          label: "Hinzufügen"
+          placeholder: "Titel der externen Quelle"
+        relation:
+          label_short: "Quelle ist"
+          label: "Externe Quelle ist"
       locked: &locked
         label: "Locked for editing (except for admins)"
         label_short: "Locked"
@@ -563,6 +576,7 @@ forms:
     label: "Herausgeber Sammelwerk"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *booktitle
       editor_solo: &editor_solo
@@ -573,13 +587,14 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
-          placeholder: "z.B. Müller"
+          placeholder: "z.B. M&uuml;ller"
         label: "Herausgeber"
         label_short: "Hrsg."
+        idm_extern: "extern"
         tooltip: "Autor arbeitet an der Uni Bielefeld."
       corporate_editor_solo: &corporate_editor_solo
-        label: "Körperschaftlicher Herausgeber"
-        label_short: "Körp. Hrsg."
+        label: "K&ouml;rperschaftlicher Herausgeber"
+        label_short: "K&ouml;rp. Hrsg."
         placeholder: "z.B. World Health Organization - Regional Office for Europe (WHO-Europe)"
       alternative_title: *alternative_title
       department: *department
@@ -592,6 +607,24 @@ forms:
       series_title_volume: *series_title_volume
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
+      conference.divider: &conference_divider
+        label: "Konferenzangaben"
+      conference.name: &conference_name
+        label: "Konferenz"
+        label_short: "Konf."
+        placeholder: "z.B. 3. Konferenz &uuml;ber Nano-Physik"
+      conference.location: &conference_location
+        label: "Konferenzort"
+        label_short: "Ort"
+        placeholder: "z.B. Berlin"
+      conference.date: &conference_date
+        label: "Konferenzdatum"
+        label_start: "Konferenz Beginn"
+        label_start_short: "Beginn"
+        label_end: "Konferenz Ende"
+        label_end_short: "Ende"
+        placeholder_start: "JJJJ-MM-TT"
+        placeholder_end: "JJJJ-MM-TT"
       edition: *edition
       dropzone: *dropzone
       license: *license
@@ -613,11 +646,12 @@ forms:
     label: "Sammelwerksbeitrag"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
         label_short: "Titel"
-        placeholder: "z.B. Wie man ein eBook veröffentlicht"
+        placeholder: "z.B. Wie man ein eBook ver&ouml;ffentlicht"
       alternative_title: *alternative_title
       author: *author_translator
       editor: &editor_only
@@ -628,13 +662,14 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
-          placeholder: "z.B. Müller"
+          placeholder: "z.B. M&uuml;ller"
         label: "Herausgeber"
         label_short: "Hrsg."
+        idm_extern: "extern"
         tooltip: "Autor arbeitet an der Uni Bielefeld."
       corporate_editor: &corporate_editor
-        label: "Körperschaftlicher Herausgeber"
-        label_short: "Körp. Hrsg."
+        label: "K&ouml;rperschaftlicher Herausgeber"
+        label_short: "K&ouml;rp. Hrsg."
         placeholder: "z.B. World Health Organization - Regional Office for Europe (WHO-Europe)"
       edition: *edition
       department: *department
@@ -649,27 +684,13 @@ forms:
       series_title_volume: *series_title_volume
       publication:
         label: "Buchtitel"
-        placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
+        placeholder: "z.B. Handbuch der eBook-Ver&ouml;ffentlichung"
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
-      conference.divider: &conference_divider
-        label: "Konferenzangaben"
-      conference.name: &conference_name
-        label: "Konferenz"
-        label_short: "Konf."
-        placeholder: "z.B. 3. Konferenz über Nano-Physik"
-      conference.location: &conference_location
-        label: "Konferenzort"
-        label_short: "Ort"
-        placeholder: "z.B. Berlin"
-      conference.date: &conference_date
-        label: "Konferenzdatum"
-        label_start: "Konferenz Beginn"
-        label_start_short: "Beginn"
-        label_end: "Konferenz Ende"
-        label_end_short: "Ende"
-        placeholder_start: "YYYY-MM-DD"
-        placeholder_end: "YYYY-MM-DD"
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
       dropzone: *dropzone
       license: *license
       urn: *urn
@@ -690,10 +711,11 @@ forms:
     label: "Kurzbeitrag Konferenz"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: &title
         label: "Titel"
-        placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
+        placeholder: "z.B. Handbuch der eBook-Ver&ouml;ffentlichung"
       alternative_title: *alternative_title
       author: *author_translator
       editor: &editor
@@ -704,9 +726,10 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
-          placeholder: "z.B. Müller"
+          placeholder: "z.B. M&uuml;ller"
         label: "Herausgeber"
         label_short: "Hrsg."
+        idm_extern: "extern"
         tooltip: "Autor arbeitet an der Uni Bielefeld."
       corporate_editor: *corporate_editor
       department: *department
@@ -715,7 +738,7 @@ forms:
       publication:
         label: "Titel des Konferenzbandes"
         label_short: "Konf.band Titel"
-        placeholder: "z.B. Berichtsband der 3. Konferenz über Nanophysik"
+        placeholder: "z.B. Berichtsband der 3. Konferenz &uuml;ber Nanophysik"
       place: *place
       publisher: *publisher
       year_extern: *year_extern
@@ -762,6 +785,7 @@ forms:
     label: "Konferenzband"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *booktitle
       editor_solo: *editor_solo
@@ -801,10 +825,11 @@ forms:
     label: "Konferenzbeitrag"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
-        placeholder: "z.B. eBook Veröffentlichung"
+        placeholder: "z.B. eBook Ver&ouml;ffentlichung"
       alternative_title: *alternative_title
       author: *author_translator
       editor: *editor
@@ -816,7 +841,7 @@ forms:
       publication:
         label: "Titel des Konferenzbandes"
         label_short: "Konf.band Titel"
-        placeholder: "z.B. Berichtsband der 3. Konferenz über Nanophysik"
+        placeholder: "z.B. Berichtsband der 3. Konferenz &uuml;ber Nanophysik"
       series_title: *series_title
       place: *place
       publisher: *publisher
@@ -847,6 +872,7 @@ forms:
     label: "Dissertation"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -859,8 +885,9 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Betr. Nachn."
-          placeholder: "z.B. Müller"
+          placeholder: "z.B. M&uuml;ller"
         label: "Betreuer"
+        idm_extern: "extern"
       department: *department
       project: *project
       research_group: *research_group
@@ -890,11 +917,12 @@ forms:
     label: "Lexikoneintrag"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
         label_short: "Titel"
-        placeholder: "z.B. Das Online-Veröffentlichen"
+        placeholder: "z.B. Das Online-Ver&ouml;ffentlichen"
       alternative_title: *alternative_title
       author: *author_translator
       editor: *editor_only
@@ -905,11 +933,11 @@ forms:
       research_group: *research_group
       publication:
         label: "Lexikontitel"
-        placeholder: "z.B. Enzyklopädie des Veröffentlichens"
+        placeholder: "z.B. Enzyklop&auml;die des Ver&ouml;ffentlichens"
       place: *place
       publisher: *publisher
       year_extern: *year_extern
-      page: *pages
+      page: *page_range
       series_title_volume: *series_title_volume
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
@@ -932,11 +960,12 @@ forms:
     label: "Zeitschriftenaufsatz"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
         label_short: "Titel"
-        placeholder: "z.B. Die Folgen der eBook-Veröffentlichung"
+        placeholder: "z.B. Die Folgen der eBook-Ver&ouml;ffentlichung"
       alternative_title: *alternative_title
       author: *author_translator
       department: *department
@@ -972,14 +1001,14 @@ forms:
       nasc: &nasc
         label: "NASC Seed Stock ID"
         label_short: "NASC"
-        placeholder: "NASC IDs (mehrere Einträge durch Semikolon trennen, z.B. N406423 ; N412826 ; N420684)"
+        placeholder: "NASC IDs (mehrere Eintr&auml;ge durch Semikolon trennen, z.B. N406423 ; N412826 ; N420684)"
       genbank: &genbank
         label: "GenBank ID"
         label_short: "GenBank"
-        placeholder: "GenBank IDs (mehrere Einträge durch Semikolon trennen, z.B. AY323492 ; AY333421 ; AY323491)"
+        placeholder: "GenBank IDs (mehrere Eintr&auml;ge durch Semikolon trennen, z.B. AY323492 ; AY333421 ; AY323491)"
       ubi_funded:
         label: "Finanzierung"
-        placeholder: "Artikelgebühren co-finanziert von der DFG"
+        placeholder: "Artikelgeb&uuml;hren co-finanziert von der DFG"
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
@@ -988,6 +1017,7 @@ forms:
     label: "Sonderausgabe Zeitschrift"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -1002,7 +1032,7 @@ forms:
       publisher: *publisher
       publication: *publication_jtitle
       volume_issue_page: &volume_issue_page
-        label: "Band / Ausgab / Seite(n)"
+        label: "Band / Ausgabe / Seite(n)"
         volume:
           placeholder: "z.B. 3"
           label: "Band"
@@ -1042,10 +1072,11 @@ forms:
     label: "Zeitungsartikel"
     tab: *tab
     field:
+      document_type: *document_type
       title:
         label: "Titel"
         label_short: "Titel"
-        placeholder: "z.B. Die Folgen des eBook-Veröffentlichens"
+        placeholder: "z.B. Die Folgen des eBook-Ver&ouml;ffentlichens"
       alternative_title: *alternative_title
       author: *author_translator
       department: *department
@@ -1053,10 +1084,10 @@ forms:
       research_group: *research_group
       year_extern: *year_extern
       publication_date: &publication_date
-        label: "Veröffentlichungsdatum"
-        label_short: "Veröff.datum"
-        placeholder: "YYYY-MM-DD"
-      page: *page_range
+        label: "Ver&ouml;ffentlichungsdatum"
+        label_short: "Ver&ouml;ff.datum"
+        placeholder: "JJJJ-MM-TT"
+      volume_issue_page: *volume_issue_page
       publication:
         label: "Zeitungstitel"
         label_short: "Zeit.titel"
@@ -1074,7 +1105,7 @@ forms:
       thematic_area: *thematic_area
       alternative_id: *alternative_id
       popular_science: &popular_science
-        label: "Populärwissenschaftliche Publikation"
+        label: "Popul&auml;rwissenschaftliche Publikation"
         label_short: "Pop.wiss. Publ."
       related_material.record: *related_material_record
       related_material.link: *related_material_link
@@ -1084,6 +1115,7 @@ forms:
     label: "Patent"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -1095,27 +1127,28 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Erfinder Nachn."
-          placeholder: "z.B. Müller"
+          placeholder: "z.B. M&uuml;ller"
         label: "Erfinder"
+        idm_extern: "extern"
         tooltip: "Autor arbeitet an der Uni Bielefeld."
       applicant:
         label: "Antragsteller"
         label_short: "Antr.steller"
-        placeholder: "z.B. Hans Müller"
+        placeholder: "z.B. Hans M&uuml;ller"
       department: *department
       project: *project
       research_group: *research_group
       year_extern: *year_extern
       publication_date_number:
-        label: "Veröffentlichungsdatum/-nr."
-        label_pd: "Vö.datum"
-        placeholder_pd: "YYYY-MM-DD"
+        label: "Ver&ouml;ffentlichungsdatum/-nr."
+        label_pd: "V&ouml;.datum"
+        placeholder_pd: "JJJJ-MM-TT"
         label_pn: "Pat.nr."
         placeholder_pn: "Internationale Patentnummer"
       application_date_number:
         label: "Antragsdatum/-nummer"
         label_ad: "Antr.datum"
-        placeholder_ad: "YYYY-MM-DD"
+        placeholder_ad: "JJJJ-MM-TT"
         label_an: "Antr.Nr."
         placeholder_an: "Antragsnummer"
       ipc:
@@ -1144,10 +1177,11 @@ forms:
     label: "Preprint"
     tab: *tab
     field:
+      document_type: *document_type
       title:
         label: "Titel"
         label_short: "Titel"
-        placeholder: "z.B. Die Folgen der eBook-Veröffentlichung"
+        placeholder: "z.B. Die Folgen der eBook-Ver&ouml;ffentlichung"
       publication: *publication_jtitle
       author: *author_translator
       department: *department
@@ -1177,6 +1211,7 @@ forms:
     label: "Report"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
@@ -1216,12 +1251,11 @@ forms:
     label: "Rezension"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
       author: *author_translator
-      editor: *editor_only
-      corporate_editor: *corporate_editor
       department: *department
       project: *project
       research_group: *research_group
@@ -1229,11 +1263,7 @@ forms:
       publisher: *publisher
       year_extern: *year_extern
       publication:
-        label: "Buchtitel"
-        placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
-      series_title:
-        label: "Serien- oder Zeitschriftentitel"
-        label_short: "Serien-/Zeitschr.titel"
+        label: "Zeitschriftentitel"
         placeholder: "z.B. Nature Genetics"
       volume_issue_page: *volume_issue_page
       publication_identifier: *publication_identifier
@@ -1259,8 +1289,9 @@ forms:
       basic_fields: "Details"
       file_upload: "Forschungsdatenupload"
       supplementary_fields: "Weitere Angaben"
-      related_material: "Verknüpfungen"
+      related_material: "Verkn&uuml;pfungen"
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       author:
@@ -1271,8 +1302,9 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Nachn."
-          placeholder: "z.B. Müller"
+          placeholder: "z.B. M&uuml;ller"
         label: "Creator"
+        idm_extern: "extern"
         tooltip: "Autor arbeitet an der Uni Bielefeld."
       department: *department
       project: *project
@@ -1284,7 +1316,7 @@ forms:
       year_extern: *year_extern
       external_file:
         label: "Externe Datei(en)"
-        checkbox: "Dateien verfügbar unter"
+        checkbox: "Dateien verf&uuml;gbar unter"
       dropzone:
         label: "<strong>Datei(en) hochladen</strong> (max. 500MB per file)"
         dropzone_text: "Datei hier her ziehen... oder klicken!"
@@ -1306,22 +1338,22 @@ forms:
           current_file: "Aktuelle Datei:"
           relation: "Relation (\"Hochgeladenes Dokument ist...\")"
           access:
-            open_access: "Open Access (Datei ist frei verfügbar, ab sofort)"
+            open_access: "Open Access (Datei ist frei verf&uuml;gbar, ab sofort)"
             local: "Local Access (Nur UniBi)"
             closed: "Closed Access (Nur Autor/Reviewer)"
-            request_a_copy: "Request a Copy (Closed Access außer auf Anfrage)"
+            request_a_copy: "Request a Copy (Closed Access au&szlig;er auf Anfrage)"
             embargo: "Zu Open Access wechseln am:"
           additional_information:
-            heading: "Zusätzliche Informationen"
+            heading: "Zus&auml;tzliche Informationen"
             title: "Titel"
             description: "Beschreibung"
       license:
         heading: "Copyright und Lizenzen"
         data_reuse_license:
           label: "Data Re-Use License"
-          select_license: "Wählen Sie eine Lizenz aus unter der Ihre Daten verfügbar sein sollen:<br>"
-          select_a_license: "Lizenz wählen"
-          alert: "Sie müssen eine Data Re-Use License auswählen, wenn Sie Dateien angehängt haben."
+          select_license: "W&auml;hlen Sie eine Lizenz aus unter der Ihre Daten verf&uuml;gbar sein sollen:<br>"
+          select_a_license: "Lizenz w&auml;hlen"
+          alert: "Sie m&uuml;ssen eine Data Re-Use License ausw&auml;hlen, wenn Sie Dateien angeh&auml;ngt haben."
           pddl:
             select_text: "No restrictions - PDDL"
             name: "The Open Data Commons Public Domain Dedication and License (PDDL) v1.0"
@@ -1338,9 +1370,9 @@ forms:
           label: "Open Data Release - Declaration"
           disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
           accept_text: "I have read and agree with the information above about releasing data under the selected license."
-          alert: "Sie müssen dem Open Data Release Statement zustimmen, da Sie Dateien angehängt haben."
+          alert: "Sie m&uuml;ssen dem Open Data Release Statement zustimmen, da Sie Dateien angeh&auml;ngt haben."
         other_data_license:
-          warning: "Sichtbar/Editierbar nur für Admins"
+          warning: "Sichtbar/Editierbar nur f&uuml;r Admins"
           label: "Andere Lizenz"
         info:
           text: "Wenn keine der oben genannten Lizenzen zu Ihren Daten passt oder wenn Sie andere Fragen haben, kontaktieren Sie bitte:<br>"
@@ -1357,14 +1389,15 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
   translation:
-    label: "Übersetzung"
+    label: "&Uuml;bersetzung"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
-        label: "Titel (Übersetzung)"
-        label_short: "Titel (Übers.)"
-        placeholder: "z.B. Handbuch des eBook Veröffentlichens"
+        label: "Titel (&Uuml;bersetzung)"
+        label_short: "Titel (&Uuml;bers.)"
+        placeholder: "z.B. Handbuch des eBook Ver&ouml;ffentlichens"
       alternative_title:
         label: "Titel (Original)"
         label_short: "Titel (Orig)"
@@ -1377,8 +1410,9 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Trans. Nachn."
-          placeholder: "z.B. Müller"
-        label: "Übersetzer"
+          placeholder: "z.B. M&uuml;ller"
+        label: "&Uuml;bersetzer"
+        idm_extern: "extern"
         tooltip: "Autor arbeitet an der Uni Bielefeld."
       author_secondary:
         first_name:
@@ -1388,8 +1422,9 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Autor Nachn."
-          placeholder: "z.B. Müller"
+          placeholder: "z.B. M&uuml;ller"
         label: "Autor (Original)"
+        idm_extern: "extern"
         tooltip: "Autor arbeitet an der Uni Bielefeld."
       edition: *edition
       department: *department
@@ -1426,15 +1461,16 @@ forms:
       locked: *locked
       link: *link
   translation_chapter:
-    label: "Übersetzung (Aufsatz)"
+    label: "&Uuml;bersetzung (Aufsatz)"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       editor: *editor_only
       title:
-        label: "Titel (Übersetzung)"
-        label_short: "Titel (Übers.)"
-        placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
+        label: "Titel (&Uuml;bersetzung)"
+        label_short: "Titel (&Uuml;bers.)"
+        placeholder: "z.B. Handbuch der eBook-Ver&ouml;ffentlichung"
       translator:
         first_name:
           label: "Vorname"
@@ -1443,8 +1479,9 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Trans. Nachn."
-          placeholder: "z.B. Müller"
-        label: "Übersetzer"
+          placeholder: "z.B. M&uuml;ller"
+        label: "&Uuml;bersetzer"
+        idm_extern: "extern"
         tooltip: "Autor arbeitet an der Uni Bielefeld."
       author_secondary:
         first_name:
@@ -1454,8 +1491,9 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Autor Nachn."
-          placeholder: "z.B. Müller"
+          placeholder: "z.B. M&uuml;ller"
         label: "Autor"
+        idm_extern: "extern"
         tooltip: "Autor arbeitet an der Uni Bielefeld."
       alternative_title:
         label: "Titel (Original)"
@@ -1501,10 +1539,11 @@ forms:
     label: "Diskussionspapier"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Titel"
-        placeholder: "z.B. Diskussionspapier über die eBook-Veröffentlichung"
+        placeholder: "z.B. Diskussionspapier &uuml;ber die eBook-Ver&ouml;ffentlichung"
       alternative_title: *alternative_title
       author: *author_translator
       edition: *edition
@@ -1537,15 +1576,16 @@ forms:
     label: "Bielefelder E-Dissertation"
     tab: *tab
     field: &field
+      document_type: *document_type
       bi_doctype:
-        label: "Documenttyp"
+        label: "bi*-Typ"
       email: &email
         label: "E-Mail-Adresse"
         label_short: "E-Mail"
         placeholder: "z.B. ich@beispiel.de"
       title:
         label: "Titel"
-        placeholder: "z.B. Strategische Aspekte der eBook-Veröffentlichung in den Biowissenschaften"
+        placeholder: "z.B. Strategische Aspekte der eBook-Ver&ouml;ffentlichung in den Biowissenschaften"
       language: &language_diss
         label: "Sprache"
         default: "eng"
@@ -1559,19 +1599,20 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Betr. Nachn."
-          placeholder: "z.B. Müller"
+          placeholder: "z.B. M&uuml;ller"
         label: "Betreuer"
+        idm_extern: "extern"
         tooltip: "Autor arbeitet an der Uni Bielefeld."
       year:
         label: "Jahr"
-        placeholder: "YYYY"
+        placeholder: "JJJJ"
       defense_date: &defense_date
         label: "Verteidigungsdatum"
         label_short: "Verteid.datum"
         placbuttoneholder: "YYYY-MM-DD"
       department: *department
       place: &place_diss
-        label: "Ort<br>(der Veröffentlichung)"
+        label: "Ort<br>(der Ver&ouml;ffentlichung)"
         label_short: "Ort"
         placeholder: "z.B. Berlin"
       publisher: &publisher_diss
@@ -1612,34 +1653,34 @@ forms:
     label: "Bielefelder Bachelorarbeit"
     tab: *tab
     field: *field
-  to_sp_form: "Zum Gesamtformular wechseln"
-  sp_form: "Gesamtformular"
-  to_tab_form: "Zur Tab-Navigation wechseln"
-  toggle_dropdown: "Menü aufklappen"
-  tab_form: "Tab-Navigation"
+  to_sp_form: "Gesamtsicht"
+  sp_form: "Gesamtsicht"
+  to_tab_form: "Gegliederte Sicht"
+  tab_form: "Gegliederte Sicht"
+  toggle_dropdown: "Men&uuml; aufklappen"
   mandatory: "Pflichtfeld"
-  mandatory_error: "Sie haben Pflichtfelder übersehen oder es sind andere Probleme aufgetreten! Bitte überprüfen Sie ihre Daten."
-  form_change_form: "Editiermodus ändern"
-  form_change_type: "Publikationstyp ändern"
-  form_sort_item: "Drag & drop, um die Position des Autors in der Autorenliste zu ändern"
-  form_add_field: "Feld hinzufügen (+) or dieses Feld löschen (-)"
-  form_relmat_record: "Eigene Publikation aus PUB mit dieser verbinden. Nach Auswahl wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
-  form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf ~[+~] wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
-  confirm_return: "Möchten Sie diesen Datensatz wirklich zurückstellen und damit von öffentlichen Publikationsliste entfernen?"
-  confirm_delete: "Möchten Sie diesen Datensatz wirklich löschen?"
-  confirm_submit: "Sie senden Ihre Daten jetzt an uns. Nachdem wir die Metadaten überprüft haben, werden wir den Datensatz public stellen."
+  mandatory_error: "Sie haben Pflichtfelder &uuml;bersehen oder es sind andere Probleme aufgetreten! Bitte &uuml;berpr&uuml;fen Sie ihre Daten."
+  form_change_form: "Editiermodus &auml;ndern"
+  form_change_type: "Publikationstyp &auml;ndern"
+  form_sort_item: "Drag & drop, um die Position des Autors in der Autorenliste zu &auml;ndern"
+  form_add_field: "Feld hinzuf&uuml;gen (+) or dieses Feld l&ouml;schen (-)"
+  form_relmat_record: "Eigene Publikation aus PUB mit dieser verbinden. Nach Auswahl w&auml;hlen Sie die Art der Verbindung (z.B. fr&uuml;here Version). Der Link erscheint unter Zusatzmaterial."
+  form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf [+] w&auml;hlen Sie die Art der Verbindung (z.B. fr&uuml;here Version). Der Link erscheint unter Zusatzmaterial."
+  confirm_return: "M&ouml;chten Sie diesen Datensatz wirklich zur&uuml;ckstellen und damit von &ouml;ffentlichen Publikationsliste entfernen?"
+  confirm_delete: "M&ouml;chten Sie diesen Datensatz wirklich l&ouml;schen?"
+  confirm_submit: "Sie senden Ihre Daten jetzt an uns. Nachdem wir die Metadaten &uuml;berpr&uuml;ft haben, werden wir den Datensatz public stellen."
   button:
-    back: "Zurück"
+    back: "Zur&uuml;ck"
     cancel: "Abbrechen"
-    close: "Schließen"
-    delete: "Löschen"
+    close: "Schlie&szlig;en"
+    delete: "L&ouml;schen"
     import: "Importieren"
     next: "Weiter"
     publish: "Public stellen"
     submitted: "Absenden"
-    return: "Zurückstellen"
+    return: "Zur&uuml;ckstellen"
     save: "Speichern"
-    select: "Wählen"
+    select: "W&auml;hlen"
     send: "Abschicken"
     submit: "Hochladen"
   general:
@@ -1658,8 +1699,9 @@ forms:
     submitted: "Eingereicht"
     accepted: "Angenommen"
     inpress: "Im Druck"
-    epub_ahead: "Elektronische Veröffentlichung vor dem Druck"
-    published: "Veröffentlicht"
+    epub_ahead: "Elektronische Ver&ouml;ffentlichung vor dem Druck"
+    published: "Ver&ouml;ffentlicht"
+    unpublished: "Unver&ouml;ffentlicht"
   article_type:
     original: "Forschungsartikel"
     review: "Review"
@@ -1674,16 +1716,16 @@ forms:
     chi: "Chinesisch"
     hrv: "Kroatisch"
     cze: "Tschechisch"
-    dan: "Dänish"
-    dut: "Niederländisch"
+    dan: "D&auml;nisch"
+    dut: "Niederl&auml;ndisch"
     eng: "Englisch"
     fin: "Finnisch"
-    fre: "Französisch"
+    fre: "Franz&ouml;sisch"
     ger: "Deutsch"
     gre: "Griechisch"
-    heb: "Hebräisch"
+    heb: "Hebr&auml;isch"
     hun: "Ungarisch"
-    ice: "Isländisch"
+    ice: "Isl&auml;ndisch"
     ita: "Italienisch"
     jpn: "Japanisch"
     kor: "Koreanisch"
@@ -1693,13 +1735,89 @@ forms:
     nor: "Norwegisch"
     pol: "Polnisch"
     por: "Portugiesisch"
-    rum: "Rumänisch"
+    rum: "Rum&auml;nisch"
     rus: "Russisch"
     srp: "Serbisch"
     spa: "Spanisch"
     swe: "Schwedisch"
-    tur: "Türkisch"
+    tur: "T&uuml;rkisch"
     other: "Andere"
+  relation:
+    main_file:
+      display: "Volltext(e)"
+      select: "Volltext / Hauptdokument"
+    table_of_contents:
+      display: "Inhaltsverzeichnis"
+      select: "Inhaltsverzeichnis"
+    erratum:
+      display: "Erratum"
+      select: "Erratum"
+    supplementary_material:
+      display: "Zusatzmaterial"
+      select: "Zusatzmaterial"
+    research_data:
+      display: "Forschungsdaten"
+      select: "Forschungsdaten"
+    software:
+      display: "Software"
+      select: "Software"
+    earlier_version:
+      display: "Fr&uuml;here Version"
+      select: "Fr&uuml;here Version"
+    later_version:
+      display: "Sp&auml;tere Version"
+      select: "Sp&auml;tere Version"
+    contains:
+      display: "Publikation, die diesen PUB Eintrag enth&auml;lt"
+      select: "Publikation, die diesen PUB Eintrag enth&auml;lt"
+    published_in:
+      display: "Teil von PUB Eintrag"
+      select: "Teil von PUB Eintrag"
+    dissertation_contains:
+      display: "Dissertation, die diesen PUB Eintrag enth&auml;lt"
+      select: "Dissertation, die diesen PUB Eintrag enth&auml;lt"
+    part_of_dissertation:
+      display: "Teil dieser Dissertation"
+      select: "Teil dieser Dissertation"
+    old_edition:
+      display: "Alte Ausgabe"
+      select: "Alte Ausgabe"
+    new_edition:
+      display: "Neue Ausgabe"
+      select: "Neue Ausgabe"
+    continues:
+      display: "Fortsetzung"
+      select: "Fortsetzung"
+    is_continued_by:
+      display: "Vorheriger Teil"
+      select: "Vorheriger Teil"
+    popular_science:
+      display: "Popul&auml;rwissenschaftliche Version"
+      select: "Popul&auml;rwissenschaftliche Version"
+    research_paper:
+      display: "Wissenschaftliche Version"
+      select: "Wissenschaftliche Version"
+    translation:
+      display: "&Uuml;bersetzter Text"
+      select: "&Uuml;bersetzter Text"
+    original:
+      display: "Originaltext"
+      select: "Originaltext"
+    other:
+      display: "In sonstiger Relation"
+      select: "In sonstiger Relation"
+    cites:
+      display: "Zitiert"
+      select: "Zitiert"
+    is_cited_by:
+      display: "Wird zitiert von"
+      select: "Wird zitiert von"
+    confirmation:
+      display: "Best&auml;tigungsschreiben"
+      select: "Best&auml;tigungsschreiben"
+    hidden:
+      display: ""
+      select: "Zusatzmaterial (nur zur Einbettung, keine Anzeige auf Frontdoor)"
 403:
   heading: "Kein Zugriff (403)"
   text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis."
@@ -1711,32 +1829,33 @@ forms:
   text: "Sie haben Kaffee von diesem Server angefordert. Die Antwort des Servers war: <strong>I'm a teapot</strong><br><br><a href='https://de.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
 500:
   heading: "Fehler beim Aufruf (500)"
-  text: "Huch - das hätte nicht passieren sollen. Leider ist bei Ihrer Anfrage ein Problem aufgetreten."
+  text: "Huch - das h&auml;tte nicht passieren sollen. Leider ist bei Ihrer Anfrage ein Problem aufgetreten."
 help:
   home: "Startseite"
   brand: "Backend<br>Startseite"
-  my_author_page: "Ihre öffentliche<br>Publikationsliste"
-  help: "Die Funktionen von PUB im Überblick."
+  my_author_page: "Ihre &ouml;ffentliche<br>Publikationsliste"
+  help: "Die Funktionen von PUB im &Uuml;berblick."
   howto: "PUB Howto"
   change_language: "Sprache wechseln"
-  user_settings: "Rolle, >Fakultät,<br>Editiermodus,<br>Standardsprache<br>ändern"
-  role: "Ihre Rolle<br>im System<br>Ggf. wechseln und mit Publikationen arbeiten, für die Sie z.B. Reviewer-Rechte haben."
-  photo: "Ihr Foto. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp' target='_blank'>Ändern?</a>"
+  user_settings: "Rolle, Fakult&auml;t,<br>Editiermodus,<br>Standardsprache<br>&auml;ndern"
+  role: "Ihre Rolle<br>im System<br>Ggf. wechseln und mit Publikationen arbeiten, f&uuml;r die Sie z.B. Reviewer-Rechte haben."
+  photo: "Ihr Foto. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp' target='_blank'>&Auml;ndern?</a>"
   email_encoded: "Ihre E-Mail-Adresse aus dem BIS/PEVZ."
-  author_id: "Alias (zusätzlicher Name) und Autoren IDs (ORIC etc.) eintragen."
-  author_id_edit: "ID ändern / IDs ergänzen."
-  add_new_button: "Neuen Eintrag in PUB anlegen: Bestehende Daten z.B. via DOI importieren oder über Formular selbst eintragen."
-  quick_and_easy: "Sie haben einen Open-Access-Volltext (PDF-Datei)? Ziehen Sie in hier her und senden Sie das Formular ab. Wir vervollständigen den Eintrag für Sie und machen ihn öffentlich sichtbar."
-  publication_user: "Ihre persönliche Publikationsliste. Wenn alle Ihre Publikationen öffentlich sichtbar sind, sieht diese Liste genau so aus, wie Ihre öffentliche Publikationsliste."
-  publication_user_rd: "Ihre persönliche Publikationsliste - Forschungsdaten."
-  publication_delegate: "Jeder dieser Tabs zeigt Ihnen die Publikationsliste einer bestimmten Person, zu der Ihnen Zugriff gewährt wurde. Die Publikationen wurden nach Personen gruppiert, um Ihnen einen besseren Überblick über Ihren Arbeitsbereich in PUB zu geben."
-  publication_reviewer: "Diese Liste zeigt Ihnen alle Publikationen der Einrichtung für die Sie die Reviewer-Rechte erhalten haben."
-  publication_data_manager: "Diese Liste zeigt Ihnen alle Datenpublikationen der Einrichtung für die Sie die Reviewer-Rechte erhalten haben."
+  author_id: "Alias (zus&auml;tzlicher Name) und Autoren IDs (ORIC etc.) eintragen."
+  author_id_edit: "ID &auml;ndern / IDs erg&auml;nzen."
+  add_new_button: "Neuen Eintrag in PUB anlegen: Bestehende Daten z.B. via DOI importieren oder &uuml;ber Formular selbst eintragen."
+  quick_and_easy: "Sie haben einen Open-Access-Volltext (PDF-Datei)? Ziehen Sie in hier her und senden Sie das Formular ab. Wir vervollst&auml;ndigen den Eintrag f&uuml;r Sie und machen ihn &ouml;ffentlich sichtbar."
+  publication_user: "Ihre pers&ouml;nliche Publikationsliste. Wenn alle Ihre Publikationen &ouml;ffentlich sichtbar sind, sieht diese Liste genau so aus, wie Ihre &ouml;ffentliche Publikationsliste."
+  publication_user_rd: "Ihre pers&ouml;nliche Publikationsliste - Forschungsdaten."
+  publication_delegate: "Jeder dieser Tabs zeigt Ihnen die Publikationsliste einer bestimmten Person, zu der Ihnen Zugriff gew&auml;hrt wurde. Die Publikationen wurden nach Personen gruppiert, um Ihnen einen besseren &Uuml;berblick &uuml;ber Ihren Arbeitsbereich in PUB zu geben."
+  publication_reviewer: "Diese Liste zeigt Ihnen alle Publikationen der Einrichtung f&uuml;r die Sie die Reviewer-Rechte erhalten haben."
+  publication_project_reviewer: "Diese Liste zeigt Ihnen alle Publikationen des Projektes, für das Sie die Reviewer-Rechte erhalten haben."
+  publication_data_manager: "Diese Liste zeigt Ihnen alle Datenpublikationen der Einrichtung f&uuml;r die Sie die Reviewer-Rechte erhalten haben."
   publication_admin: "Diese Liste zeigt Ihnen alle Publikationen in PUB."
-  statuses: "Sichtbarkeitsstatus<br> der Publikation.<br>Änderung über den Link 'Editieren'."
-  citation: "Publikationsdaten im ausgewählten Zitationsstil."
+  statuses: "Sichtbarkeitsstatus<br> der Publikation.<br>&Auml;nderung &uuml;ber den Link 'Editieren'."
+  citation: "Publikationsdaten im ausgew&auml;hlten Zitationsstil."
   search: "In dieser Publikationsliste suchen."
-  visibility_status: "Auf Publikationen mit bestimmten Status einschränken, z.B. 'public' oder 'private'."
-  author_block: "Auf Publikationstyp, Autor oder Jahr einschränken. Autoren/Herausgeber können Sie mehrfach auswählen und so Co-Autorenschafts-Listen erstellen."
-  fulltext_block: "Auf Publikations-/Zugangsart einschränken, z.B. Open-Access-Volltexte."
-  display_block: "Darstellung der Publikationsliste ändern (Treffer pro Seite, Sortierung, Zitationsstil)."
+  visibility_status: "Auf Publikationen mit bestimmten Status einschr&auml;nken, z.B. 'public' oder 'private'."
+  author_block: "Auf Publikationstyp, Autor oder Jahr einschr&auml;nken. Autoren/Herausgeber k&ouml;nnen Sie mehrfach ausw&auml;hlen und so Co-Autorenschafts-Listen erstellen."
+  fulltext_block: "Auf Publikations-/Zugangsart einschr&auml;nken, z.B. Open-Access-Volltexte."
+  display_block: "Darstellung der Publikationsliste &auml;ndern (Treffer pro Seite, Sortierung, Zitationsstil)."

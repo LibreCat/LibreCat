@@ -33,15 +33,15 @@ main{padding-top:30px;}
 
 /* headlines */
 h1,.h1,h2,.h2,h3,.h3{margin-top:31px;}
-[class^='col']>h2{margin-top:0;}
 .panel-title h2,.panel-body h3:first-child{margin-top:8px;}
 .panel-title h2{margin-bottom:8px;}
 .title h1{font-size:22px;margin-top:0;}
-.publication h1{padding-bottom:8px;border-bottom:1px solid #eee;}
+.pubtheses,.publication h1{padding-bottom:8px;border-bottom:1px solid #eee;}
 h3 a{font-size:inherit;}
 .h3 a,h4 a{font-weight:normal;}
 h3.expert{border-bottom:1px dashed #b6c828;}
 .howto-overview h3{display:none;}
+.abstract h3{margin-top:21px;}
 
 /* fonts */
 .smaller-xs{font-size:70%;}
@@ -58,6 +58,7 @@ a .total-marked{margin-right:5px;}
 .dropdown.active a{cursor:pointer!important;}
 .long{display:inline-block;line-height:1.4;margin-bottom:6px;/* department display on frontdoor */}
 .long:last-child{margin-bottom:0;}
+a.anchor{display: block;position: relative;top: -140px;visibility: hidden;}
 
 /*Some margin for row'ed paragraphs*/
 .row>p{margin-top:10px;}
@@ -134,6 +135,7 @@ a .total-marked{margin-right:5px;}
 .fw5{width:5em;/*not in use yet*/}
 .fw6{width:150px;/*fits publ-type-dropdown*/}
 .fw7{width:175px;/*fits change-edit-form-button, must be +25px than .fw6 */}
+.fw8{width:190px;/*fits for new change-edit-form-button on test-system, can replace fw7 when going live  */}
 a span[class^='fa fa-arrow']{margin-left:5px;width:.8em;}
 
 /* frontdoor */
@@ -234,6 +236,8 @@ body.embed{padding:0;margin:0;width:100%;}
 .embed .pagination{margin:11px 0;}
 .embed .hidden-embed{display:none;}
 .embed .embed-only{display:inline;}
+/* dont display first filter (filter to create iframe) in iframes */
+/*.embed h3.filters+p:first-of-type{display:none;}*/
   
 /* special styles for screens */
 /* general */
@@ -335,7 +339,7 @@ main.front div#home{background:url(/images/pub_425px.jpg) 400px 100px no-repeat;
 footer,ul.nav-tabs li,.breadcrumb,.caret,.col-sm-2.col-sm-offset-1,.col-md-3.col-md-offset-1,.col-xs-2.col-sm-3.col-sm-offset-1.text-sm-right,a.fulltext[href^="/"]:after,.list-inline,.mark,.mark_all{display:none;}
 main{padding:0!important;}
 a{color:#000;font-weight:normal;}
-a[href^="/"]:after{content:" (http://pub.uni-bielefeld.de" attr(href) ") ";}
+a[href^="/"]:after{content:" (https://pub.uni-bielefeld.de" attr(href) ") ";}
 a[href].label.label-primary:after,.citation-block-div a[href]:after,#details a[href]:after,.nav-tabs a[href]:after,.pagination a[href]:after{content:"";}
 .nav-tabs,.nav-tabs li.active,.nav-tabs li.active a{border:0;padding:0;}
 .nav-tabs li.active{display:inline;}

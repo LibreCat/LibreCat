@@ -24,8 +24,6 @@
       [% END%]
       </div>
       <div class="col-sm-4 text-right">
-	<button type="button" class="btn btn-xs hidden-xs change_mode margin-bottom1-2 fw7 helpme" data-placement="left" title="[% h.loc("forms.form_change_form") %]"><span class="glyphicon glyphicon-option-horizontal"></span> [% h.loc("forms.to_tab_form") %]</button>
-	  [% INCLUDE backend/change_type_menu.tt %]
       </div>
     </div>
   </div>

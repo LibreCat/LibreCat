@@ -22,8 +22,7 @@
 	      <div class="input-group-addon hidden-xs hidden-sm">{% designated_editor.last_name.label %}</div>
 	      <div class="input-group-addon hidden-lg hidden-md">{% designated_editor.last_name.label_short %}</div>
 	      <input type="text" name="designated_editor.0.last_name" id="designated_editor_last_name_0" value="[% designated_editor.0.last_name %]" class="form-control sticky"{% IF designated_editor.mandatory %} required{% END %}>
-	      <div class="input-group-addon"><span id="designated_editor_link_person_0" onclick="link_person(this);" data-type="designated_editor_"><img id="designated_editor_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" /></span></div>
-          <div class="input-group-addon"><span id="designated_editor_revert_0" data-type="designated_editor_" onclick="revert_name(this);"><span class="fa fa-undo"></span></span></div>
+          <div class="input-group-addon"></div>
 	    </div>
 	  </div>
 	</div>

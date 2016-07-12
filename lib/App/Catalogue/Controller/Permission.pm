@@ -17,15 +17,14 @@ sub can_edit {
 
     if ($user_role eq 'super_admin') {
         return 1;
-    }
-    elsif ($user_role eq 'user') {
-        $cql .= " OR creator=$user->{_id})";
-    }
-    elsif ($user_role eq 'reviewer') {
+    } elsif ($user_role eq 'reviewer') {
         my @deps = map {"department=$_->{_id}"} @{$user->{reviewer}};
-        $cql .= " OR " . join(' OR ', @deps) . ")";
-    }
-    elsif ($user_role eq 'data_manager') {
+        $cql .= " OR " .join(' OR ', @deps) .")";
+    } elsif ($user_role eq 'project_reviewer') {
+        my @projs = map {"project=$_->{_id}"} @{$user->{project_reviewer}};
+        $cql .= " OR " . join(' OR ', @projs) . ")";
+    } elsif ($user_role eq 'data_manager') {
+        # not yet correct/enough!!!
         my @deps = map {"department=$_->{_id}"} @{$user->{data_manager}};
         $cql .= " OR " . join(' OR ', @deps) . ")";
     }
@@ -33,9 +32,11 @@ sub can_edit {
         my @delegate = map {"person=$_"} @{$user->{delegate}};
         $cql .= " OR " . join(' OR ', @delegate) . ")";
     }
-    if ($user_role ne 'super_admin') {
-        $cql
-            .= " AND type<>bi_dissertation AND type<>bi_master_thesis AND type<>bi_bachelor_thesis AND type<>bi_postdoc_thesis AND locked<>1";
+    else {
+        $cql .= " OR creator=$user->{_id})";
+    }
+    if($user_role ne 'super_admin'){
+        $cql .= " AND type<>bidissertation AND type<>bimasterthesis AND type<>bibachelorthesis AND type<>bipostdocthesis AND locked<>1";
     }
 
     my $hits = h->publication->search(cql_query => $cql, limit => 1);

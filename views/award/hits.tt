@@ -1,17 +1,18 @@
 <!-- BEGIN award/hits.tt -->
 
 <span id="innerContent">
-[% IF total and total != "0" %]
+[% IF total %]
 
 <ul class="unstyled" style="margin-top:-10px;">
 [% FOREACH award IN otherpeople %]
-<li><img src="/images/person.png" /> <a href="[% award._id %]">[% award.honoree.0.title %] [% award.honoree.0.first_name %] [% award.honoree.0.last_name %][% IF award.former_member == "verstorben" %] &dagger;[% END %][% IF award.year %] ([% award.year %])[% END %]</a><br />
+<li><img src="/images/person.png" /> <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% award._id %][% IF qp.ftyp %]?ftyp=[% qp.ftyp %][% END %]">[% award.honoree.0.title %] [% award.honoree.0.first_name %] [% award.honoree.0.last_name %][% IF award.former_member == "verstorben" %] &dagger;[% END %][% IF award.year %] ([% award.year %])[% END %]</a><br />
 </li>
 [% END %]
 
 [% FOREACH award IN otherawards %]
-[% NEXT IF award.id == id %]
-<li style="padding-left:18px;text-indent:-18px;"><img src="/images/preis.png" /> <a href="[% award._id %]">[% award.awardData.title %][% award.academyData.title %] [% IF award.year %]([% award.year %])[% END %]</a><br />
+[% NEXT IF award._id == _id %]
+[% award_data = h.award.get(award.award_id) %]
+<li style="padding-left:18px;text-indent:-18px;"><img src="/images/preis.png" /> <a href="[% h.host %][% lang ? "/en" : "" %]/award/[% award._id %][% IF qp.ftyp %]?ftyp=[% qp.ftyp %][% END %]">[% award_data.title %] [% IF award.year %]([% award.year %])[% END %]</a><br />
 </li>
 [% END %]
 </ul>

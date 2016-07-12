@@ -140,7 +140,7 @@
 [% IF abstract %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.abstract.label") %]</div>
-    <div class="col-lg-10 col-md-9 cmark" itemprop="about">
+    <div class="col-lg-10 col-md-9 cmark abstract" itemprop="about">
     [% FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><hr>[% END %]
 [% ab.text %]
     [% END %]

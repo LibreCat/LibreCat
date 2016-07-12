@@ -1,50 +1,51 @@
 #!/usr/bin/env perl
 
-use lib qw(../lib /srv/www/pub/lib);
+use lib qw(../lib /srv/www/pub/lib ../fixes /srv/www/pub/fixes);
 
 use Catmandu::Sane;
 use Catmandu -all;
-use Getopt::Long;
-use Citation;
+#use Getopt::Long;
+use LibreCat::Citation;
 use Catmandu::Fix::clone as => 'clone';
 use Catmandu::Importer::JSON;
-use Catmandu::Exporter::JSON;
-use Catmandu::Exporter::JSON;
+#use Catmandu::Exporter::JSON;
+use App::Helper;
 use Data::Dumper;
 
-Catmandu->load(':up');
+Catmandu->load('/srv/www/pub');
 
 
-my ($q, $style, $missing, $verbose, $dry, $file);
+#my ($q, $style, $missing, $verbose, $dry, $file);
 
-GetOptions ("q=s" => \$q,
-            "style=s" => \$style,
-            "missing" => \$missing,
-            "verbose" => \$verbose,
-            "dry" => \$dry,
-	    "file=s" => \$file
-            ) or die ("Error in command line arguments\n");
+#GetOptions ("q=s" => \$q,
+#            "style=s" => \$style,
+#            "missing" => \$missing,
+#            "verbose" => \$verbose,
+#            "dry" => \$dry,
+#	    "file=s" => \$file
+#            ) or die ("Error in command line arguments\n");
 
-my $imp = Catmandu::Importer::JSON->new(file => $file);
-my $exp = Catmandu::Exporter::JSON->new(file => "pub_backup_cit.json");
+my $imp = Catmandu::Importer::JSON->new(file => 'publs2.json');#$file);
+#my $exp = Catmandu::Exporter::JSON->new(file => "pub_backup_cit.json");
 
-my $cite_obj = $style ? Citation->new(style => $style) : Citation->new(all => 1);
+#my $cite_obj = $style ? Citation->new(style => $style) : Citation->new(all => 1);
 
 $imp->each(sub {
-    my $rec = $_[0];
-    my $d = clone $rec;
-    say "processing $rec->{_id}";
-    if ($missing and $rec->{citation}) {
-        say "Skipping $rec->{_id}";
-        next;
-    }
-    say "processing $rec->{_id} and $style..." if $verbose;
-    $style ? ( $rec->{citation}->{$style} = $cite_obj->create($d)->{$style} )
-        : ( $rec->{citation} = $cite_obj->create($d) );
-    $exp->add($rec);
+    my $id = $_[0]->{_id};
+    my $rec = h->backup_publication->get($id);
+    next if $rec->{status} eq "deleted";
+    #my $d = clone $rec;
+    #$rec->{citation} = LibreCat::Citation->new(all => 1)->create($d);
+    my $fixer = Catmandu::Fix->new(fixes => ["add_citation()"]);
+    $fixer->fix($rec);
+    #print Dumper $rec;
+    my $saved = h->backup_publication_static->add($rec);
+
+    #h->publication->add($saved);
+    #h->publication->commit;
 });
 
-$exp->commit;
+#$exp->commit;
 
 #if (!$dry) {
 #    my $saved = $backup->add_many($hits);
