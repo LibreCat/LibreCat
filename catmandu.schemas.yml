@@ -494,34 +494,42 @@ researcher:
           minLength: 1
         - type: integer
           minimum: 0
+      description: "Researcher identifier"
     account_status:
       type: string
       enum: ["active","inactive"]
+      description: "Account status"
     account_type:
       type: string
       minLength: 1
       pattern: '^\S+$'
+      description: "Account type"
     password:
       type: string
       minLength: 1
       pattern: '^\S+$'
+      description: "Password"
     login:
       type: string
       minLength: 1
       pattern: '^\S+$'
-    #TODO
+      description: "Login name"
     email:
       type: string
       format: email
+      description: "Email address"
     first_name:
       type: string
       minLength: 0
+      description: "First name"
     last_name:
       type: string
       minLength: 0
+      description: "Last name"
     full_name:
       type: string
       minLength: 0
+      description: "Full name"
     department:
       type: array
       items:
@@ -534,6 +542,8 @@ researcher:
                 minLength: 1
               - type: integer
                 minimum: 0
+            description: "Department identifier"
+      description: "Department"
 
   required: ["_id","account_status","account_type","first_name","last_name","full_name"]
   additionalProperties: true
@@ -713,26 +723,34 @@ research_group:
     _id:
       type: string
       pattern: "^RG[0-9]+$"
+      description: "Research group identifier"
     name:
       type: string
       minLength: 1
+      description: "Name of research group"
     acronym:
       type: string
       minLength: 1
+      description: "Acronym"
     start_date:
       type: string
       format: date
+      description: "The research group's starting date"
     end_date:
       type: string
       format: date
+      description: "The research group's ending date"
     date_created:
       type: string
       format: date-time
+      description: "The research group's ending date"
     date_updated:
       type: string
       format: date-time
+      description: "The record's last modification date"
     affiliation:
       type: string
+      description: "Affiliation of the research group"
     department:
       type: array
       items:
@@ -745,6 +763,8 @@ research_group:
                 minLength: 1
               - type: integer
                 minimum: 0
+            description: "The department identifier"
+      description: "Departments involved"
 
   required: ["_id","name"]
   additionalProperties: true
