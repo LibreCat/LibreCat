@@ -215,15 +215,15 @@ publication:
         first_name: &hn
           type: string
           minLength: 1
-          description: "Author first name"
+          description: "Person first name"
         last_name:
           type: string
           minLength: 1
-          description: "Author last name"
+          description: "Person last name"
         full_name:
           type: string
           minLength: 1
-          description: "Author full name"
+          description: "Person full name"
 
     file:
         type: object
@@ -274,6 +274,19 @@ publication:
                     - hidden
                 description: "Relation upload to main record"
         required: ["access_level","content_type","creator","date_created","date_updated","file_id","open_access","relation"]
+
+    project: &project
+      type: object
+      properties:
+        _id:
+          type: string
+          pattern: "^P[0-9]+$"
+          minLength: 1
+          description: "Project identifier"
+        name:
+          type: string
+          description: "Project name"
+      required: ["_id"]
 
   properties:
     _id:
@@ -370,6 +383,13 @@ publication:
       items:
         '$ref': '#/definitions/author'
       description: "Editor"
+    translator:
+      type: array
+      minItems: 0
+      uniqueItems: true
+      items:
+        '$ref': '#/definitions/author'
+      description: "Translator"
     corporate_editor:
       type: array
       items:
@@ -441,6 +461,12 @@ publication:
       items:
         '$ref': '#/definitions/department'
       description: "Department"
+    project:
+      type: array
+      minItems: 0
+      items:
+        '$ref': '#/definitions/project'
+      description: "Related projects"
     year:
       oneOf:
         - type: string
