@@ -59,8 +59,12 @@ footer:
   openaire_title: "PUB ist 100% OpenAIRE-valide"
   openarchives_alt: "Open Archives Data Provider"
   openarchives_title: "PUB ist registrierter Daten-Provider der Open Archives Initiative"
+  dci_alt: "Data Citation Index"
+  dci_title: "PUB ist im Thomson Reuters Data Citation Index enthalten"
   datacite_alt: "DataCite"
   datacite_title: "PUB registriert Forschungsdaten bei DataCite"
+  re3data_alt: "re3data.org"
+  re3data_title: "PUB ist in Re3Data (Registry of Research Data Repositories) enthalten"
   faq: "FAQ"
   contact: "Kontakt"
   policy: "Leitlinien"
@@ -1262,6 +1266,10 @@ forms:
       place: *place
       publisher: *publisher
       year_extern: *year_extern
+      publication_date:
+        label: "Ver&ouml;ffentlichungsdatum"
+        label_short: "Ver&ouml;ff.datum"
+        placeholder: "JJJJ-MM-TT" 
       publication:
         label: "Zeitschriftentitel"
         placeholder: "z.B. Nature Genetics"
@@ -1501,6 +1509,7 @@ forms:
         placeholder: "z.B. Handbook of eBook Publishing"
       edition: *edition
       editor: *editor_only
+      corporate_editor: *corporate_editor
       department: *department
       project: *project
       research_group: *research_group
