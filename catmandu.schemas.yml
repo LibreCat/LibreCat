@@ -316,20 +316,41 @@ publication:
           type: string
           description: "Creator user name"
       description: "Creator"
-    date_created: &dt
+    date_created:
       type: string
       format: date-time
       description: "Record creation date"
     date_submitted:
-      date_created: &dt
       type: string
       format: date-time
       description: "?not in use?"
     date_updated:
-      date_created: &dt
       type: string
       format: date-time
       description: "Record last update date"
+    document_type:
+      type: string
+      enum:
+        - bi_dissertation
+        - book
+        - book_chapter
+        - book_editor
+        - conference
+        - conference_abstract
+        - conference_editor
+        - dissertation
+        - encyclopedia_article
+        - journal_article
+        - journal_editor
+        - newspaper_article
+        - patent
+        - preprint
+        - report
+        - research_data
+        - review
+        - translation
+        - translation_chapter
+        - working_paper
     doi:
       type: string
       #stolen from http://www.regexpal.com/93795
