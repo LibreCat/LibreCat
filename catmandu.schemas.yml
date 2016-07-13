@@ -460,6 +460,14 @@ publication:
         - type: integer
           minimum: 0
       description: "PubMed identifier"
+    popular_science:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
+      description: "Flag of popular science"
     quality_controlled:
       oneOf:
         - type: boolean
@@ -468,9 +476,25 @@ publication:
           maximum: 1
         - enum: ["0","1"]
       description: "Flag of quality control"
+    ubi_funded:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
+      description: "Flag of APC co-financed by DFG"
     status:
       enum: ["new","submitted","public","returned","private"]
       description: "Record status"
+    locked:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
+      description: "Flag of locked for editing (except for admins)"
     department:
       type: array
       items:
@@ -634,12 +658,41 @@ publication:
       items:
          type: string
       description: "Computing Classification System"
+    nasc:
+      type: array
+      items:
+         type: string
+      description: "NASC Seed Stock ID"
+    genbank:
+      type: array
+      items:
+         type: string
+      description: "GenBank ID"
     urn:
       type: string
       description: "Universal Resource Name"
     cc_license:
       enum: ["cc_0","cc_by","cc_by_sa"]
       description: "Files copyright"
+    conference:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "Conference name"
+        location:
+          type: string
+          description: "Conference location"
+        start_date:
+          type: string
+          description: "Conference start date"
+        end_date:
+          type: string
+          description: "Conference end date"
+      description: "Conference details"
+    message:
+      type: string
+      description: "Notes, comments about this record"
     citation:
       type: object
       properties:
