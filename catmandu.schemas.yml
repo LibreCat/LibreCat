@@ -288,6 +288,19 @@ publication:
           description: "Project name"
       required: ["_id"]
 
+    research_group: &research_group
+      type: object
+      properties:
+        _id:
+          type: string
+          pattern: "^RG[0-9]+$"
+          minLength: 1
+          description: "Research group identifier"
+        name:
+          type: string
+          description: "Research group name"
+      required: ["_id"]
+
   properties:
     _id:
       oneOf:
@@ -467,6 +480,12 @@ publication:
       items:
         '$ref': '#/definitions/project'
       description: "Related projects"
+    research_group:
+      type: array
+      minItems: 0
+      items:
+        '$ref': '#/definitions/research_group'
+      description: "Research group"
     year:
       oneOf:
         - type: string
