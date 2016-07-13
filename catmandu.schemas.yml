@@ -157,24 +157,20 @@ publication:
   title: "librecat publication"
   type: "object"
   definitions:
-    iso_language: &isolang
+    iso_language: &iso_language
       type: object
-      enum:
-        - iso: nl
-          name: Dutch
-        - iso: eng
-          name: English
-        - iso: fr
-          name: French
-        - iso: de
-          name: German
+      properties:
+         iso:
+             type: string
+             enum: [ara,chi,cze,dan,dut,eng,fin,fre,ger,gre,heb,hrv,hun,ice,ita,jpn,kor,lat,lav,mon,nor,other,pol,por,rum,rus,spa,srp,swe,tur]
+             description: "ISO language code"
 
     abstract: &abstract
       type: object
       properties:
         lang:
           type: string
-          enum: [nl,eng,fr,de]
+          enum: [ara,chi,cze,dan,dut,eng,fin,fre,ger,gre,heb,hrv,hun,ice,ita,jpn,kor,lat,lav,mon,nor,other,pol,por,rum,rus,spa,srp,swe,tur]
           description: "Abstract used language"
         text:
           type: string
