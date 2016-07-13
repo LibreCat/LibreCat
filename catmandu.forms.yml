@@ -745,6 +745,8 @@ publication_types:
         research_group: *research_group
         publisher: *publisher
         year_extern: *year_extern
+        publication_date:
+          mandatory: 0
         alternative_title: *alternative_title
         place: *place
         publication:
@@ -874,6 +876,7 @@ publication_types:
         research_group: *research_group
         edition: *edition
         editor: *editor_only
+        corporate_editor: *corporate_editor
         place: *place
         publisher: *publisher
         publication:
