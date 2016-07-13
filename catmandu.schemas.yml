@@ -85,7 +85,7 @@ award:
           name:
             type: string
             description: "Department identifier"
-        description: "Department"
+      description: "Department"
     einrichtung:
       type: array
       items:
@@ -94,8 +94,10 @@ award:
           name:
             type: string
             minLength: 1
+            description: "???"
           _id:
             type: string
+            description: "???"
       description: "???"
     other_university:
       type: string
@@ -133,14 +135,18 @@ award:
           first_name:
             type: string
             minLength: 1
+            description: "???"
           last_name:
             type: string
             minLength: 1
+            description: "???"
           full_name:
             type: string
             minLength: 1
+            description: "???"
           title:
             type: string
+            description: "???"
       description: "???"
   required: ["_id","rec_type","title"]
   additionalProperties: false
@@ -151,10 +157,6 @@ publication:
   title: "librecat publication"
   type: "object"
   definitions:
-    issn: &issn
-      type: string
-      pattern: '^[0-9]{4}-[0-9]{3}[0-9Xx]$'
-    #see 'status/language' on page http://localhost:5001/librecat/record/new?type=journalArticle for full list
     iso_language: &isolang
       type: object
       enum:
@@ -173,10 +175,13 @@ publication:
         lang:
           type: string
           enum: [nl,eng,fr,de]
+          description: "Abstract used language"
         text:
           type: string
           minLength: 1
+          description: "Abstract content"
       additionalProperties: false
+
     department: &department
       type: object
       properties:
@@ -189,7 +194,7 @@ publication:
               minLength: 1
             - type: integer
               minimum: 0
-
+          description: "Department identifier"
         tree:
           type: array
           items:
@@ -202,6 +207,8 @@ publication:
                     minLength: 1
                   - type: integer
                     minimum: 0
+                description: "Parent department"
+          description: "Hierarchical structure"
 
       required: ["_id","tree"]
       additionalProperties: false
@@ -212,44 +219,64 @@ publication:
         first_name: &hn
           type: string
           minLength: 1
-        last_name: *hn
-        full_name: *hn
+          description: "Author first name"
+        last_name:
+          type: string
+          minLength: 1
+          description: "Author last name"
+        full_name:
+          type: string
+          minLength: 1
+          description: "Author full name"
 
     file:
         type: object
-        access_level:
-            type: string
-            enum:
-               - open_access
-               - local
-               - closed
-               - request
-        content_type:
-            type: string
-        creator:
-            type: string
-        date_created:
-            type: string
-            format: date-time
-        date_updated:
-            type: string
-            format: date-time
-        file_id:
-            type: integer
-        file_size:
-            type: integer
-        open_access:
-            type: integer
-        relation:
-            type: string
-            enum:
-                - main_file
-                - confirmation
-                - table_of_contents
-                - erratum
-                - supplementary_material
-                - other
-                - hidden
+        properties:
+            access_level:
+                type: string
+                enum:
+                   - open_access
+                   - local
+                   - closed
+                   - request
+                description: "Access level"
+            content_type:
+                type: string
+                description: "MIME Type"
+            creator:
+                type: string
+                description: "User name"
+            date_created:
+                type: string
+                format: date-time
+                description: "Upload date"
+            date_updated:
+                type: string
+                format: date-time
+                description: "Last modification date"
+            file_id:
+                type: integer
+                description: "Persistent File Id"
+            file_name:
+                type: string
+                description: "File name"
+            file_size:
+                type: integer
+                description: "File size"
+            open_access:
+                type: integer
+                description: "???"
+            relation:
+                type: string
+                enum:
+                    - main_file
+                    - confirmation
+                    - table_of_contents
+                    - erratum
+                    - supplementary_material
+                    - other
+                    - hidden
+                description: "Relation upload to main record"
         required: ["access_level","content_type","creator","date_created","date_updated","file_id","open_access","relation"]
 
   properties:
@@ -260,6 +287,7 @@ publication:
           minLength: 1
         - type: integer
           minimum: 0
+      description: "Publication identifier"
     type:
       type: string
       enum:
@@ -284,76 +312,100 @@ publication:
         - working_paper
         - bi_dissertation
         - research_data
-
+      description: "Publication type"
     creator:
       type: object
       properties:
         login:
           type: string
-
+          description: "Creator user name"
+      description: "Creator"
     date_created: &dt
       type: string
       format: date-time
-
-    date_submitted: *dt
-
-    date_updated: *dt
-
+      description: "Record creation date"
+    date_submitted:
+      date_created: &dt
+      type: string
+      format: date-time
+      description: "?not in use?"
+    date_updated:
+      date_created: &dt
+      type: string
+      format: date-time
+      description: "Record last update date"
     doi:
       type: string
       #stolen from http://www.regexpal.com/93795
       pattern: ^10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&'<>])\S)+$
-
+      description: "DOI"
     author:
       type: array
       minItems: 0
       uniqueItems: true
       items:
         '$ref': '#/definitions/author'
-
+      description: "Author"
     editor:
       type: array
       minItems: 0
       uniqueItems: true
       items:
         '$ref': '#/definitions/author'
-
+      description: "Editor"
     corporate_editor:
       type: array
       items:
         type: string
-
+      description: "Corporate editors"
     title:
       type: string
       minLength: 1
-
+      description: "Publication title"
     alternative_title:
       type: array
       items:
         type: string
-
+      description: "Alternative title"
     #required when type = 'journalArticle'
     publication:
       type: string
+      description: "Title of host publication"
     publication_identifier:
       type: object
       properties:
         issn:
           type: array
           items:
-            '$ref': '#/definitions/issn'
-
+            type : string
+          description: "ISSN number"
+        isbn:
+          type: array
+          items:
+            type : string
+          description: "ISBN number"
+        eissn:
+          type: array
+          items:
+            type : string
+          description: "electonic ISSN number"
+        eisbn:
+          type: array
+          items:
+            type : string
+          description: "electronic ISBN number"
+      description: "Publication identifier"
     publication_status:
       type: string
       enum: [draft,submitted,accepted,inpress,epub_ahead,published]
-
+      description: "Publication status"
     pubmedID:
       oneOf:
         - type: string
           pattern: '^[0-9]+$'
         - type: integer
           minimum: 0
-
+      description: "PubMed identifier"
     quality_controlled:
       oneOf:
         - type: boolean
@@ -362,16 +414,16 @@ publication:
           maximum: 1
         - type: string
           enum: ["0","1"]
-
+      description: "Flag of quality control"
     status:
       type: string
       enum: [new,submitted,public,returned,private]
-
+      description: "Record status"
     department:
       type: array
       items:
         '$ref': '#/definitions/department'
-
+      description: "Department"
     year:
       oneOf:
         - type: string
@@ -379,99 +431,125 @@ publication:
           minLength: 1
         - type: integer
           minimum: 0
-
+      description: "Publication year"
     abstract:
       type: array
       items:
         '$ref': '#/definitions/abstract'
-
+      description: "Abstract"
     language:
       type: array
       items:
         '$ref': '#/definitions/iso_language'
-
+      description: "Language of publication"
     publisher:
       type: string
-
+      description: "Publisher"
     place:
       type: string
-
+      description: "Place of publication"
     volume:
       type: string
-
+      description: "Volume"
     intvolume:
       type: string
-
+      description: "???"
     issue:
       type: string
-
+      description: "Issue number"
     page:
       type: string
       pattern: '^[0-9]+(-[0-9]+)?$'
-
+      description: "Page number"
     external_id:
       type: object
+      description: "External identifier"
       properties:
         unknown:
           type: string
+          description: "Unknown source identifier"
         isi:
           type: string
+          description: "Web of Science identifier"
         pmid:
           type: string
+          description: "PubMed identifier"
         inspire:
           type: string
+          description: "Inspire identifier"
         arxiv:
           type: string
+          description: "Arxiv identifier"
         ahf:
           type: string
+          description: "???"
         opac:
           type: string
+          description: "Opac identifier"
         scoap3:
           type: string
-
+          description: "???"
     file:
       type: array
       minItems: 0
       items:
         '$ref': '#/definitions/file'
-
+      description: "File uploads"
     citation:
       type: object
       properties:
         ama:
           type: string
+          description: "Citation in AMA (American Medical Association) style"
         apa:
           type: string
+          description: "Citation in APA (American Psychological Association) style"
         apa_indent:
           type: string
+          description: "Citation in indented APA style"
         aps:
           type: string
+          description: "Citation in APA (American Psychological Society) style"
         bio1:
           type: string
+          description: "???"
         default:
           type: string
+          description: "???"
         dgps:
           type: string
+          description: "Citation in DGPS (Deutsche Gesellschaft fur Psychologie) style"
         ewi:
           type: string
+          description: "???"
         frontShortTitle:
           type: string
+          description: "???"
         frontiers:
           type: string
+          description: "Citation in Frontiers journals style"
         harvard1:
           type: string
+          description: "Citation in 'Harvard Reference format 1' style"
         ieee:
           type: string
+          description: "Citation in IEEE (Institute of Electrical and Electronics Engineers) style"
         lncs:
           type: string
+          description: "???"
         mla:
           type: string
+          description: "Citation in MLA (Modern Language Association) style"
         pub:
           type: string
+          description: "???"
         sfb882:
           type: string
+          description: "???"
         wels:
           type: string
+          description: "???"
+      description: "Citation"
 
   # A author|editor is required..can this be expressed in JSONSchema?
   required: ["_id","type","title","year"]
@@ -647,10 +725,12 @@ project:
           first_name:
             type: string
             minLength: 1
+            description: "Project's owners first name"
           last_name:
             type: string
             minLength: 1
-        description: "Project's owners"
+            description: "Project's owners last name"
+      description: "Project's owners"
     designated_editor:
       type: array
       items:
@@ -659,9 +739,11 @@ project:
           first_name:
             type: string
             minLength: 1
+            description: "Designated editor first name"
           last_name:
             type: string
             minLength: 1
+            description: "Designated editor last name"
       description: "Designated editor"
     principal_investigator:
       type: array
@@ -671,9 +753,11 @@ project:
           first_name:
             type: string
             minLength: 1
+            description: "Principal investigators first name"
           last_name:
             type: string
             minLength: 1
+            description: "Principal investigators last name"
       description: "Principal investigators"
     uni_member:
       type: array
@@ -683,9 +767,11 @@ project:
           first_name:
             type: string
             minLength: 1
+            description: "Participating university members first name"
           last_name:
             type: string
             minLength: 1
+            description: "Participating university members last name"
       description: "Participating university members"
     cooperator:
       type: array
