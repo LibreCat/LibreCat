@@ -55,7 +55,7 @@ sub print_properties {
                 my $def = $prop->{items}->{'$ref'};
                 $def =~ s/.*\///;
                 die "can't find $def" unless $definitions->{$def};
-                print_properties($definitions->{$def},"-$name.");
+                print_properties($definitions->{$def},"-$prefix$name.");
             }
         }
         elsif ($prop->{properties}) {
