@@ -11,8 +11,7 @@ my @fields = ('machine name' , 'data type' , 'description' , 'mandatory');
 for my $section (sort keys %$schemas) {
     print "## $section\n\n";
 
-    table_row(@fields);
-
+    table_header(@fields);
     print_proterties($schemas->{$section});
 
     print "\n";
@@ -57,6 +56,13 @@ sub print_proterties {
             print_proterties($prop,"-$name.");
         }
     }
+}
+
+sub table_header {
+    my (@data) = @_;
+
+    print "| " . join(" | ", @data) . " |\n";
+    print "| " . join(" | ", map( '---', @data)) . " |\n";
 }
 
 sub table_row {
