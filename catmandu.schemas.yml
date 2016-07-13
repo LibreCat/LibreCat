@@ -202,7 +202,7 @@ publication:
       required: ["_id","tree"]
       additionalProperties: false
 
-    author:
+    author: &author
       type: object
       properties:
         first_name: &hn
@@ -217,6 +217,83 @@ publication:
           type: string
           minLength: 1
           description: "Person full name"
+
+    related_link: &related_link
+        type: object
+        properties:
+            url:
+                type: string
+                description: "URL to related document"
+            relation:
+                enum:
+                  - main_file
+                  - table_of_contents
+                  - erratum
+                  - supplementary_material
+                  - research_data
+                  - software
+                  - earlier_version
+                  - later_version
+                  - contains
+                  - published_in
+                  - dissertation_contains
+                  - part_of_dissertation
+                  - old_edition
+                  - new_edition
+                  - continues
+                  - is_continued_by
+                  - popular_science
+                  - research_paper
+                  - translation
+                  - original
+                  - other
+                  - cites
+                  - is_cited_by
+                  - confirmation
+                  - hidden
+            description:
+                type: string
+
+    related_record:
+        type: object
+        properties:
+            id:
+              oneOf:
+                - type: string
+                  pattern: "^[0-9]+$"
+                  minLength: 1
+                - type: integer
+                  minimum: 0
+              description: "Identifier of related document"
+            relation:
+                enum:
+                  - main_file
+                  - table_of_contents
+                  - erratum
+                  - supplementary_material
+                  - research_data
+                  - software
+                  - earlier_version
+                  - later_version
+                  - contains
+                  - published_in
+                  - dissertation_contains
+                  - part_of_dissertation
+                  - old_edition
+                  - new_edition
+                  - continues
+                  - is_continued_by
+                  - popular_science
+                  - research_paper
+                  - translation
+                  - original
+                  - other
+                  - cites
+                  - is_cited_by
+                  - confirmation
+                  - hidden
+            status:
+                enum: ["draft","submitted","accepted","inpress","epub_ahead","published"]
 
     file:
         type: object
@@ -621,6 +698,22 @@ publication:
       items:
         '$ref': '#/definitions/file'
       description: "File uploads"
+    related_material:
+      type: object
+      properties:
+         link:
+             type: array
+             minItems: 0
+             items:
+               '$ref': '#/definitions/related_link'
+             description: "Related external links"
+         record:
+             type: array
+             minItems: 0
+             items:
+                '$ref': '#/definitions/related_record'
+             description: "Related records"
+      description: "Links to related materials"
     ddc:
       type: array
       items:
@@ -693,6 +786,17 @@ publication:
     message:
       type: string
       description: "Notes, comments about this record"
+    alternative_id:
+      type: array
+      item:
+          properties:
+              oneOf:
+                - type: string
+                  pattern: "^[0-9]+$"
+                  minLength: 1
+                - type: integer
+                  minimum: 0
+      description: "Returned Record Ids"
     citation:
       type: object
       properties:

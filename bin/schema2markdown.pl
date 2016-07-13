@@ -10,21 +10,24 @@ my @fields  = ('machine name' , 'data type' , 'description' , 'mandatory');
 
 print "{*Generated on $date  by  $0*}\n";
 
+my $definitions = {};
+
 for my $section (sort keys %$schemas) {
     print "## $section\n\n";
 
+    $definitions = $schemas->{$section}->{'definitions'} // {};
+
     table_header(@fields);
-    print_proterties($schemas->{$section});
+    print_properties($schemas->{$section});
 
     print "\n";
 }
 
-sub print_proterties {
+sub print_properties {
     my ($section,$prefix) = @_;
 
     $prefix = '' unless $prefix;
 
-    my $definitions = $section->{'definitions'} // {};
     my $properties  = $section->{'properties'} // {};
     my $required    = $section->{'required'} // [];
 
@@ -46,16 +49,17 @@ sub print_proterties {
 
         if ($prop->{items}) {
             if ($prop->{items}->{properties}) {
-                print_proterties($prop->{items},"-$name.");
+                print_properties($prop->{items},"-$name.");
             }
             elsif ($prop->{items}->{'$ref'}) {
                 my $def = $prop->{items}->{'$ref'};
                 $def =~ s/.*\///;
-                print_proterties($definitions->{$def},"-$name.");
+                die "can't find $def" unless $definitions->{$def};
+                print_properties($definitions->{$def},"-$name.");
             }
         }
         elsif ($prop->{properties}) {
-            print_proterties($prop,"-$name.");
+            print_properties($prop,"-$name.");
         }
     }
 }
