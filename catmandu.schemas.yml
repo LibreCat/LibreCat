@@ -30,8 +30,7 @@ award:
       pattern: "^AW[0-9]+$"
       description: "Award identifier"
     rec_type:
-      type: string
-      enum: [preis,auszeichnung,akademie,record]
+      enum: ["preis","auszeichnung","akademie","record"]
       description: "Record type"
     date_created: &dt
       type: string
@@ -104,20 +103,17 @@ award:
       description: "Name of another university involved in the award"
     uni_member:
       oneOf:
-        - type: string
-          enum: [0,1]
+        - enum: [0,1]
         - type: integer
           minimum: 0
           maximum: 1
       description: "???"
     former_member:
-      type: string
       enum: ["ja","nein","emeritiert","in Rente"]
       description: "Former member"
     extern:
       oneOf:
-        - type: string
-          enum: [0,1]
+        - enum: [0,1]
         - type: integer
           minimum: 0
           maximum: 1
@@ -161,16 +157,13 @@ publication:
       type: object
       properties:
          iso:
-             type: string
-             enum: [ara,chi,cze,dan,dut,eng,fin,fre,ger,gre,heb,hrv,hun,ice,ita,jpn,kor,lat,lav,mon,nor,other,pol,por,rum,rus,spa,srp,swe,tur]
-             description: "ISO language code"
+             enum: ["ara","chi","cze","dan","dut","eng","fin","fre","ger","gre","heb","hrv","hun","ice","ita","jpn","kor","lat","lav","mon","nor","other","pol","por","rum","rus","spa","srp","swe","tur"]
 
     abstract: &abstract
       type: object
       properties:
         lang:
-          type: string
-          enum: [ara,chi,cze,dan,dut,eng,fin,fre,ger,gre,heb,hrv,hun,ice,ita,jpn,kor,lat,lav,mon,nor,other,pol,por,rum,rus,spa,srp,swe,tur]
+          enum: ["ara","chi","cze","dan","dut","eng","fin","fre","ger","gre","heb","hrv","hun","ice","ita","jpn","kor","lat","lav","mon","nor","other","pol","por","rum","rus","spa","srp","swe","tur"]
           description: "Abstract used language"
         text:
           type: string
@@ -229,7 +222,6 @@ publication:
         type: object
         properties:
             access_level:
-                type: string
                 enum:
                    - open_access
                    - local
@@ -251,19 +243,22 @@ publication:
                 format: date-time
                 description: "Last modification date"
             file_id:
-                type: integer
+                oneOf:
+                  - type: string
+                  - type: integer
                 description: "Persistent File Id"
             file_name:
                 type: string
                 description: "File name"
             file_size:
-                type: integer
+                oneOf:
+                  - type: string
+                  - type: integer
                 description: "File size"
             open_access:
                 type: integer
                 description: "???"
             relation:
-                type: string
                 enum:
                     - main_file
                     - confirmation
@@ -311,7 +306,6 @@ publication:
           minimum: 0
       description: "Publication identifier"
     type:
-      type: string
       enum:
         - original
         - book
@@ -355,7 +349,6 @@ publication:
       format: date-time
       description: "Record last update date"
     document_type:
-      type: string
       enum:
         - bi_dissertation
         - book
@@ -415,6 +408,11 @@ publication:
       items:
         type: string
       description: "Corporate editors"
+    applicant:
+      type: array
+      items:
+        type: string
+      description: "Patent applicant"
     title:
       type: string
       minLength: 1
@@ -453,8 +451,7 @@ publication:
           description: "electronic ISBN number"
       description: "Publication identifier"
     publication_status:
-      type: string
-      enum: [draft,submitted,accepted,inpress,epub_ahead,published]
+      enum: ["draft","submitted","accepted","inpress","epub_ahead","published"]
       description: "Publication status"
     pubmedID:
       oneOf:
@@ -469,12 +466,10 @@ publication:
         - type: integer
           minimum: 0
           maximum: 1
-        - type: string
-          enum: ["0","1"]
+        - enum: ["0","1"]
       description: "Flag of quality control"
     status:
-      type: string
-      enum: [new,submitted,public,returned,private]
+      enum: ["new","submitted","public","returned","private"]
       description: "Record status"
     department:
       type: array
@@ -493,14 +488,6 @@ publication:
       items:
         '$ref': '#/definitions/research_group'
       description: "Research group"
-    year:
-      oneOf:
-        - type: string
-          pattern: "^[0-9]+$"
-          minLength: 1
-        - type: integer
-          minimum: 0
-      description: "Publication year"
     abstract:
       type: array
       items:
@@ -511,12 +498,31 @@ publication:
       items:
         '$ref': '#/definitions/iso_language'
       description: "Language of publication"
+    original_language:
+      type: array
+      items:
+        '$ref': '#/definitions/iso_language'
+      description: "Language of original publication"
     publisher:
       type: string
       description: "Publisher"
+    year:
+      oneOf:
+        - type: string
+          pattern: "^[0-9]+$"
+          minLength: 1
+        - type: integer
+          minimum: 0
+      description: "Publication year"
+    extern:
+      type: integer
+      description: "Published while at external organization"
     place:
       type: string
       description: "Place of publication"
+    edition:
+      type: string
+      description: "Edition"
     volume:
       type: string
       description: "Volume"
@@ -526,10 +532,37 @@ publication:
     issue:
       type: string
       description: "Issue number"
+    series_title:
+      type: string
+      description: "Title of (book) series"
+    report_number:
+      type: string
+      description: "Report number"
+    publication_date:
+      type: string
+      description: "Date of publication (patent/newpaper)"
+    defense_date:
+      type: string
+      description: "Date of dissertation defense"
     page:
       type: string
       pattern: '^[0-9]+(-[0-9]+)?$'
       description: "Page number"
+    email:
+      type: string
+      description: "Email address (of dissertation student)"
+    application_date:
+      type: string
+      description: "Patent application date"
+    application_number:
+      type: string
+      description: "Patent application number"
+    ipn:
+      type: string
+      description: "Patent publication number"
+    ipc:
+      type: string
+      description: "International patent classification"
     external_id:
       type: object
       description: "External identifier"
@@ -564,6 +597,49 @@ publication:
       items:
         '$ref': '#/definitions/file'
       description: "File uploads"
+    ddc:
+      type: array
+      items:
+         type: string
+         pattern: "^[0-9]{3}$"
+      description: "Dewey Decimal Classification"
+    keyword:
+      type: array
+      items:
+         type: string
+      description: "Keywords"
+    thematic_area:
+      type: array
+      items:
+         enum:
+             - diversity
+      description: "Thematic publication area"
+    jel:
+      type: array
+      items:
+         type: string
+      description: "Journal of Economic Literature Classification"
+    pacs_class:
+      type: array
+      items:
+         type: string
+      description: "Physics and Astronomy Classification Scheme"
+    msc_class:
+      type: array
+      items:
+         type: string
+      description: "Mathematics Subject Classification"
+    ccs_class:
+      type: array
+      items:
+         type: string
+      description: "Computing Classification System"
+    urn:
+      type: string
+      description: "Universal Resource Name"
+    cc_license:
+      enum: ["cc_0","cc_by","cc_by_sa"]
+      description: "Files copyright"
     citation:
       type: object
       properties:
@@ -643,7 +719,6 @@ researcher:
           minimum: 0
       description: "Researcher identifier"
     account_status:
-      type: string
       enum: ["active","inactive"]
       description: "Account status"
     account_type:
@@ -863,8 +938,7 @@ project:
         - type: integer
           minimum: 0
           maximum: 1
-        - type: string
-          enum: ["0","1"]
+        - enum: ["0","1"]
       description: "Flag of funding status"
 
   required: ["_id","name"]
