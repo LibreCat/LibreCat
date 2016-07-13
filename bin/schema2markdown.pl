@@ -4,9 +4,11 @@ use Catmandu;
 
 Catmandu->load('.');
 
+my $date    = localtime time;
 my $schemas = Catmandu->config->{schemas};
+my @fields  = ('machine name' , 'data type' , 'description' , 'mandatory');
 
-my @fields = ('machine name' , 'data type' , 'description' , 'mandatory');
+print "{*Generated on $date  by  $0*}\n";
 
 for my $section (sort keys %$schemas) {
     print "## $section\n\n";
