@@ -403,6 +403,13 @@ publication:
       items:
         '$ref': '#/definitions/author'
       description: "Translator"
+    supervisor:
+      type: array
+      minItems: 0
+      uniqueItems: true
+      items:
+        '$ref': '#/definitions/author'
+      description: "Supervisor"
     corporate_editor:
       type: array
       items:
