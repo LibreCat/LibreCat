@@ -79,10 +79,6 @@ if exists(cc_license)
   move_field(cc_license, dc.rights.$append)
 end
 
-# files
-unless exists(file)
-  add_field(dc.rights.$append, 'info:eu-repo/semantics/closedAccess')
-end
 
 do list(path: file,var:loop)
   do identity()
@@ -103,7 +99,19 @@ if any_match(file.*.access_level, open_access)
 else
   if any_match(file.*.embargo, '^\d{4}')
     add_field(dc.rights.$append, 'info:eu-repo/semantics/embargoedAccess')
-  else
-    add_field(dc.rights.$append, 'info:eu-repo/semantics/closedAccess')
   end
+end
+
+unless exists(dc.rights)
+  if exists(link)
+    add_field(dc.rights.$append, 'info:eu-repo/semantics/restrictedAccess')
+  else
+    if any_match(file.*.access_level, local)
+      add_field(dc.rights.$append, 'info:eu-repo/semantics/restrictedAccess')
+    end
+  end
+end
+
+unless exists(dc.rights)
+  add_field(dc.rights.$append, 'info:eu-repo/semantics/closedAccess')
 end
