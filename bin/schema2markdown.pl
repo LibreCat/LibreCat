@@ -80,7 +80,14 @@ sub prop_type {
         return $prop->{type};
     }
     elsif ($prop->{oneOf}) {
-        my @types = map { $_->{type} }  @{$prop->{oneOf}};
+        my @types = map {
+            if ($_->{type}) {
+                prop_type($_);
+            }
+            elsif ($_->{enum}) {
+                prop_enumeration($_);
+            }
+        }  @{$prop->{oneOf}};
         return join(" or ", @types);
     }
 }
