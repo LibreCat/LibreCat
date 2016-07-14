@@ -879,9 +879,7 @@ researcher:
       enum: ["active","inactive"]
       description: "Account status"
     account_type:
-      type: string
-      minLength: 1
-      pattern: '^\S+$'
+      enum: ["external","unib"]
       description: "Account type"
     password:
       type: string
@@ -909,6 +907,83 @@ researcher:
       type: string
       minLength: 0
       description: "Full name"
+    old_first_name:
+      type: string
+      minLength: 0
+      description: "Older First name"
+    old_last_name:
+      type: string
+      minLength: 0
+      description: "Older Last name"
+    old_full_name:
+      type: string
+      minLength: 0
+      description: "Older Full name"
+    award_admin:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
+      description: "Is this user an award admin?"
+    super_admin:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
+      description: "Is this user a super admin?"
+    data_manager:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            oneOf:
+              - type: string
+                pattern: "^[0-9]+$"
+                minLength: 1
+              - type: integer
+                minimum: 0
+            description: "Department identifier"
+      description: "Data manager for departments"
+    reviewer:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            oneOf:
+              - type: string
+                pattern: "^[0-9]+$"
+                minLength: 1
+              - type: integer
+                minimum: 0
+            description: "Department identifier"
+      description: "Reviewer for departments"
+    project_reviewer:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            type: string
+            pattern: "^P[0-9]+$"
+            description: "Project identifier"
+      description: "Reviewer for departments"
+    delegate:
+      type: array
+      items:
+        oneOf:
+          - type: string
+            pattern: "^[0-9]+$"
+            minLength: 1
+          - type: integer
+            minimum: 0
+        description: "Researcher identifier"
+      description: "Delegate for researchers"
     department:
       type: array
       items:
@@ -923,6 +998,62 @@ researcher:
                 minimum: 0
             description: "Department identifier"
       description: "Department"
+    edit_mode:
+       enum: ["normal","expert"]
+       description: "Preferred web form edit mode"
+    style:
+       enum:
+           - ama
+           - angewandte-chemie
+           - apa
+           - apa_indent
+           - aps
+           - bio1
+           - chicago
+           - default
+           - dgps
+           - frontiers
+           - harvard1
+           - ieee
+           - lncs
+           - mla
+           - wels
+       description: "Preferred citation style"
+    alias:
+      type: string
+      description: "Researcher alias name"
+    arxiv:
+      type: string
+      description: "Researcher arXiv identifier"
+    authorClaim:
+      type: string
+      description: "Researcher authorClaim identifier"
+    googleScholar:
+      type: string
+      description: "Researcher Google Scholar identifier"
+    inspire:
+      type: string
+      description: "Researcher Inspire identifier"
+    orcid:
+      type: string
+      description: "Researcher ORCID identifier"
+    photo:
+      type: string
+      description: "Researcher photo URL"
+    researcherId:
+      type: string
+      description: "Researcher Researcher Id identifier"
+    scopusId:
+      type: string
+      description: "Researcher Scopus identifier"
+    date_created:
+      type: string
+      format: date-time
+      description: "The record creation date"
+    date_updated:
+      type: string
+      format: date-time
+      description: "The record's last modification date"
 
   required: ["_id","account_status","account_type","first_name","last_name","full_name"]
   additionalProperties: true
