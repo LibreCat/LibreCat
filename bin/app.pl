@@ -17,6 +17,7 @@ BEGIN {
 
 use Catmandu::Sane;
 use Catmandu;
+use Catmandu::Util qw(require_package :is);
 use LibreCat::Layers;
 use Plack::Builder;
 use Plack::App::File;
@@ -33,31 +34,37 @@ config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{log} eq 'c
 # setup static file serving
 my $app = Plack::App::Cascade->new;
 $app->add(map {Plack::App::File->new(root => $_)->to_app} @{$layers->public_paths});
+
 # dancer app
 $app->add(sub {
     Dancer->dance(Dancer::Request->new(env => $_[0]));
 });
 
+# setup sessions
+my $config = config;
+my $session_store_package = is_string($config->{session_store}->{package}) ?
+    $config->{session_store}->{package} : "Plack::Session::Store";
+my $session_store_options = is_hash_ref($config->{session_store}->{options}) ?
+    $config->{session_store}->{options} : {};
+my $session_state_package = is_string($config->{session_state}->{package}) ?
+    $config->{session_state}->{package} : "Plack::Session::State::Cookie";
+my $session_state_options = is_hash_ref($config->{session_state}->{options}) ?
+    $config->{session_state}->{options} : {};
+
 builder {
-    enable "ReverseProxy";
-    enable "Deflater";
-#    enable "Negotiate",
-#        formats => {
-#            html => { type => 'text/html', language => 'en' },
-#            yaml => { type => 'text/x-yaml' },
-#            json => { type => 'application/json' },
-#            bibtex => { type => 'text/x-bibtex' },
-#            ris => { type => 'application/x-research-info-systems' },
-#            dc => { type => 'application/oaidc+xml' },
-#            mods => { type => 'application/mods+xml' },
-#            dc_json => { type => 'application/oaidc+json' },
-#            csl_json => { type => 'application/vnd.citationstyles.csl+json' },
-#            _ => {
-#                #size => 0,
-#                charset => 'utf-8',
-#                }  # default values for all formats
-#        },
-#        parameter => 'fmt', # e.g. http://example.org/foo?format=xml
-#        extension => 'strip';  # e.g. http://example.org/foo.xml
+    enable 'ReverseProxy';
+    enable 'Deflater';
+    enable 'Session',
+        store => require_package( $session_store_package )->new( %$session_store_options ),
+        state => require_package( $session_state_package )->new( %$session_state_options );
+    enable 'CSRFBlock',
+        parameter_name => "csrf_token",
+        meta_tag => "csrf_token",
+        header_name => "X-CSRF-Token",
+        token_length => 16,
+        session_key => "csrf_token",
+        blocked => sub {
+            [301,["Location" => "/access_denied" ],["action forbidden"]];
+        };
     $app;
 };
