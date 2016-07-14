@@ -1265,9 +1265,6 @@ research_group:
       type: string
       format: date-time
       description: "The record's last modification date"
-    affiliation:
-      type: string
-      description: "Affiliation of the research group"
     department:
       type: array
       items:
@@ -1281,7 +1278,7 @@ research_group:
               - type: integer
                 minimum: 0
             description: "The department identifier"
-      description: "Departments involved"
+      description: "Affiliation of the research group"
 
   required: ["_id","name"]
   additionalProperties: true
