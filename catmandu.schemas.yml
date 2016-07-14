@@ -81,9 +81,6 @@ award:
               - type: integer
                 minimum: 0
             description: "Department name"
-          name:
-            type: string
-            description: "Department identifier"
       description: "Department"
     einrichtung:
       type: array
@@ -109,14 +106,15 @@ award:
           maximum: 1
       description: "???"
     former_member:
-      enum: ["ja","nein","emeritiert","in Rente"]
+      type: string
       description: "Former member"
     extern:
       oneOf:
-        - enum: [0,1]
+        - type: boolean
         - type: integer
           minimum: 0
           maximum: 1
+        - enum: ["0","1"]
       description: "???"
     organization:
       type: string
@@ -198,8 +196,7 @@ publication:
                     minimum: 0
                 description: "Parent department"
           description: "Hierarchical structure"
-
-      required: ["_id","tree"]
+      required: ["_id"]
       additionalProperties: false
 
     author: &author
@@ -325,7 +322,9 @@ publication:
                   - type: integer
                 description: "Persistent File Id"
             file_name:
-                type: string
+                oneOf:
+                  - type: string
+                  - type: integer
                 description: "File name"
             file_size:
                 oneOf:
@@ -448,9 +447,9 @@ publication:
         - translation_chapter
         - working_paper
     doi:
-      type: string
-      #stolen from http://www.regexpal.com/93795
-      pattern: ^10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&'<>])\S)+$
+      oneOf:
+        - type: string
+        - type: integer
       description: "DOI"
     author:
       type: array
@@ -509,22 +508,30 @@ publication:
         issn:
           type: array
           items:
-            type : string
+              oneOf:
+                - type: string
+                - type: integer
           description: "ISSN number"
         isbn:
           type: array
           items:
-            type : string
+              oneOf:
+                - type: string
+                - type: integer
           description: "ISBN number"
         eissn:
           type: array
           items:
-            type : string
+              oneOf:
+                - type: string
+                - type: integer
           description: "electonic ISSN number"
         eisbn:
           type: array
           items:
-            type : string
+              oneOf:
+                - type: string
+                - type: integer
           description: "electronic ISBN number"
       description: "Publication identifier"
     publication_status:
@@ -533,9 +540,7 @@ publication:
     pubmedID:
       oneOf:
         - type: string
-          pattern: '^[0-9]+$'
         - type: integer
-          minimum: 0
       description: "PubMed identifier"
     popular_science:
       oneOf:
@@ -610,44 +615,57 @@ publication:
     year:
       oneOf:
         - type: string
-          pattern: "^[0-9]+$"
-          minLength: 1
         - type: integer
-          minimum: 0
       description: "Publication year"
     extern:
-      type: integer
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
       description: "Published while at external organization"
     place:
       type: string
       description: "Place of publication"
     edition:
-      type: string
+      oneOf:
+        - type: string
+        - type: integer
       description: "Edition"
     volume:
-      type: string
+      oneOf:
+        - type: string
+        - type: integer
       description: "Volume"
     intvolume:
       type: string
       description: "???"
     issue:
-      type: string
+      oneOf:
+        - type: string
+        - type: integer
       description: "Issue number"
     series_title:
       type: string
       description: "Title of (book) series"
     report_number:
-      type: string
+      oneOf:
+        - type: string
+        - type: integer
       description: "Report number"
     publication_date:
-      type: string
+      oneOf:
+        - type: string
+        - type: integer
       description: "Date of publication (patent/newpaper)"
     defense_date:
       type: string
       description: "Date of dissertation defense"
     page:
-      type: string
-      pattern: '^[0-9]+(-[0-9]+)?$'
+      oneOf:
+        - type: string
+        - type: integer
       description: "Page number"
     email:
       type: string
@@ -656,41 +674,63 @@ publication:
       type: string
       description: "Patent application date"
     application_number:
-      type: string
+      oneOf:
+        - type: string
+        - type: integer
       description: "Patent application number"
     ipn:
-      type: string
+      oneOf:
+        - type: string
+        - type: integer
       description: "Patent publication number"
     ipc:
-      type: string
+      oneOf:
+        - type: string
+        - type: integer
       description: "International patent classification"
     external_id:
       type: object
       description: "External identifier"
       properties:
         unknown:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
           description: "Unknown source identifier"
         isi:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
           description: "Web of Science identifier"
         pmid:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
           description: "PubMed identifier"
         inspire:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
           description: "Inspire identifier"
         arxiv:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
           description: "Arxiv identifier"
         ahf:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
           description: "???"
         opac:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
           description: "Opac identifier"
         scoap3:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
           description: "???"
     file:
       type: array
@@ -723,7 +763,9 @@ publication:
     keyword:
       type: array
       items:
-         type: string
+          oneOf:
+            - type: string
+            - type: integer
       description: "Keywords"
     thematic_area:
       type: array
@@ -734,35 +776,49 @@ publication:
     jel:
       type: array
       items:
-         type: string
+          oneOf:
+            - type: string
+            - type: integer
       description: "Journal of Economic Literature Classification"
     pacs_class:
       type: array
       items:
-         type: string
+          oneOf:
+            - type: string
+            - type: integer
       description: "Physics and Astronomy Classification Scheme"
     msc_class:
       type: array
       items:
-         type: string
+          oneOf:
+            - type: string
+            - type: integer
       description: "Mathematics Subject Classification"
     ccs_class:
       type: array
       items:
-         type: string
+          oneOf:
+            - type: string
+            - type: integer
       description: "Computing Classification System"
     nasc:
       type: array
       items:
-         type: string
+         oneOf:
+            - type: string
+            - type: integer
       description: "NASC Seed Stock ID"
     genbank:
       type: array
       items:
-         type: string
+          oneOf:
+            - type: string
+            - type: integer
       description: "GenBank ID"
     urn:
-      type: string
+      oneOf:
+        - type: string
+        - type: integer
       description: "Universal Resource Name"
     cc_license:
       enum: ["cc_0","cc_by","cc_by_sa"]
@@ -784,7 +840,9 @@ publication:
           description: "Conference end date"
       description: "Conference details"
     message:
-      type: string
+      oneOf:
+        - type: string
+        - type: integer
       description: "Notes, comments about this record"
     alternative_id:
       type: array
@@ -792,10 +850,7 @@ publication:
           properties:
               oneOf:
                 - type: string
-                  pattern: "^[0-9]+$"
-                  minLength: 1
                 - type: integer
-                  minimum: 0
       description: "Returned Record Ids"
     citation:
       type: object
@@ -1094,7 +1149,6 @@ department:
                 minimum: 0
             description: "Parent department"
       description: "Hierarchical structure"
-
   required: ["_id","tree"]
   additionalProperties: false
 
@@ -1126,6 +1180,14 @@ project:
       description: "Grant number"
     psp_element:
       type: string
+      description: "???"
+    sc39:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
       description: "???"
     description:
       type: string
@@ -1191,7 +1253,7 @@ project:
             minLength: 1
             description: "Principal investigators last name"
       description: "Principal investigators"
-    uni_member:
+    member:
       type: array
       items:
         type: object
@@ -1265,9 +1327,6 @@ research_group:
       type: string
       format: date-time
       description: "The record's last modification date"
-    affiliation:
-      type: string
-      description: "Affiliation of the research group"
     department:
       type: array
       items:
@@ -1281,7 +1340,7 @@ research_group:
               - type: integer
                 minimum: 0
             description: "The department identifier"
-      description: "Departments involved"
+      description: "Affiliation of the research group"
 
   required: ["_id","name"]
   additionalProperties: true
