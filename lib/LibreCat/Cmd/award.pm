@@ -68,7 +68,7 @@ sub _list {
         sub {
             my ($item) = @_;
             my $id     = $item->{_id};
-            my $title  = $item->{title};
+            my $title  = $item->{title} // '';
             my $type   = $item->{rec_type};
 
             printf "%-2.2s %5.5s %-40.40s %s\n", " "    # not used

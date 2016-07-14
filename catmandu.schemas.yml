@@ -81,9 +81,6 @@ award:
               - type: integer
                 minimum: 0
             description: "Department name"
-          name:
-            type: string
-            description: "Department identifier"
       description: "Department"
     einrichtung:
       type: array
@@ -109,7 +106,7 @@ award:
           maximum: 1
       description: "???"
     former_member:
-      enum: ["ja","nein","emeritiert","in Rente"]
+      type: string
       description: "Former member"
     extern:
       oneOf:
@@ -1094,7 +1091,6 @@ department:
                 minimum: 0
             description: "Parent department"
       description: "Hierarchical structure"
-
   required: ["_id","tree"]
   additionalProperties: false
 
