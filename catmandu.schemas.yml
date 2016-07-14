@@ -1127,6 +1127,14 @@ project:
     psp_element:
       type: string
       description: "???"
+    sc39:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
+      description: "???"
     description:
       type: string
       description: "Description of the project"
@@ -1191,7 +1199,7 @@ project:
             minLength: 1
             description: "Principal investigators last name"
       description: "Principal investigators"
-    uni_member:
+    member:
       type: array
       items:
         type: object
