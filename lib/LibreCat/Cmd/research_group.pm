@@ -1,9 +1,8 @@
-package LibreCat::Cmd::user;
+package LibreCat::Cmd::research_group;
 
 use Catmandu::Sane;
 use App::Helper;
-use App::bmkpasswd qw(mkpasswd);
-use LibreCat::Validator::Researcher;
+use LibreCat::Validator::ResearchGroup;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -11,11 +10,12 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat user [options] list
-librecat user [options] add <FILE>
-librecat user [options] get <id>
-librecat user [options] delete <id>
-librecat user [options] valid <FILE>
+librecat research_group [options] list
+librecat research_group [options] export
+librecat research_group [options] add <FILE>
+librecat research_group [options] get <id>
+librecat research_group [options] delete <id>
+librecat research_group [options] valid <FILE>
 
 EOF
 }
@@ -45,8 +45,8 @@ sub command {
     if ($cmd eq 'list') {
         return $self->_list(@$args);
     }
-    elsif ($cmd eq 'publication') {
-        return $self->_export;
+    elsif ($cmd eq 'export') {
+        return $self->_export();
     }
     elsif ($cmd eq 'get') {
         return $self->_get(@$args);
@@ -63,18 +63,16 @@ sub command {
 }
 
 sub _list {
-    my $count = App::Helper::Helpers->new->researcher->each(
+    my $h     = App::Helper::Helpers->new;
+    my $count = $h->research_group->each(
         sub {
-            my ($item)   = @_;
-            my $id       = $item->{_id};
-            my $login    = $item->{login};
-            my $name     = $item->{full_name};
-            my $status   = $item->{account_status};
-            my $type     = $item->{account_type};
-            my $is_admin = $item->{super_admin};
+            my ($item) = @_;
+            my $id      = $item->{_id};
+            my $name    = $item->{name};
+            my $acronym = $item->{acronym};
 
-            printf "%-2.2s %5d %-20.20s %-40.40s %-10.10s %s\n",
-                $is_admin ? "*" : " ", $id, $login, $name, $status, $type;
+            printf "%-2.2s %5.5s %-40.40s %s\n", " "    # not used
+                , $id, $acronym, $name;
         }
     );
     print "count: $count\n";
@@ -86,18 +84,19 @@ sub _export {
     my $h = App::Helper::Helpers->new;
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many($h->researcher);
+    $exporter->add_many($h->award);
     $exporter->commit;
 
     return 0;
 }
 
 sub _get {
-    my ($seld, $id) = @_;
+    my ($self, $id) = @_;
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = App::Helper::Helpers->new->get_person($id);
+    my $h    = App::Helper::Helpers->new;
+    my $data = $h->get_research_group($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -129,15 +128,13 @@ sub _adder {
 
     unless (exists $data->{_id} && defined $data->{_id}) {
         $is_new = 1;
-        $data->{_id} = $helper->new_record('researcher');
-        $data->{password} = mkpasswd($data->{password}) if exists $data->{password};
+        $data->{_id} = $helper->new_record('research_group');
     }
 
-    my $validator = LibreCat::Validator::Researcher->new;
+    my $validator = LibreCat::Validator::ResearchGroup->new;
 
     if ($validator->is_valid($data)) {
-        my $result = $helper->update_record('researcher', $data);
-
+        my $result = $helper->update_record('research_group', $data);
         if ($result) {
             print "added " . $data->{_id} . "\n";
             return 0;
@@ -148,7 +145,7 @@ sub _adder {
         }
     }
     else {
-        print STDERR "ERROR: not a valid researcher\n";
+        print STDERR "ERROR: not a valid research_group\n";
         print STDERR join("\n", @{$validator->last_errors}), "\n";
         return 2;
     }
@@ -160,9 +157,9 @@ sub _delete {
     croak "usage: $0 delete <id>" unless defined($id);
 
     my $h      = App::Helper::Helpers->new;
-    my $result = $h->researcher->delete($id);
+    my $result = $h->research_group->delete($id);
 
-    if ($h->researcher->commit) {
+    if ($h->research_group->commit) {
         print "deleted $id\n";
         return 0;
     }
@@ -177,7 +174,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::Researcher->new;
+    my $validator = LibreCat::Validator::ResearchGroup->new;
 
     my $ret = 0;
 
@@ -213,15 +210,15 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::user - manage librecat users
+LibreCat::Cmd::research_group - manage librecat research_group-s
 
 =head1 SYNOPSIS
 
-    librecat user list
-    librecat user export
-    librecat user add <FILE>
-    librecat user get <id>
-    librecat user delete <id>
-    librecat user valud <FILE>
+    librecat research_group list
+    librecat research_group export
+    librecat research_group add <FILE>
+    librecat research_group get <id>
+    librecat research_group delete <id>
+    librecat research_group valid <FILE>
 
 =cut

@@ -184,7 +184,7 @@ sub _valid {
 
             unless ($validator->is_valid($item)) {
                 my $errors = $validator->last_errors();
-                my $id     = $item->{_id};
+                my $id     = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
                         print STDERR "ERROR $id: $err\n";
@@ -210,7 +210,7 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::award - manage librecat users
+LibreCat::Cmd::award - manage librecat awards
 
 =head1 SYNOPSIS
 
