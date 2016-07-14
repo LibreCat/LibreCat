@@ -70,8 +70,6 @@ award:
     department:
       type: array
       items:
-        additionalProperties: false
-        required: [_id]
         properties:
           _id:
             oneOf:
@@ -81,17 +79,20 @@ award:
               - type: integer
                 minimum: 0
             description: "Department name"
+        required: [_id]
+        additionalProperties: false
       description: "Department"
     einrichtung:
       type: array
       items:
         additionalProperties: false
         properties:
-          name:
-            type: string
-            minLength: 1
-            description: "???"
           _id:
+            oneOf:
+              - type: string
+              - type: integer
+            description: "???"
+          name:
             type: string
             description: "???"
       description: "???"
@@ -1078,28 +1079,42 @@ researcher:
       type: string
       description: "Researcher alias name"
     arxiv:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
       description: "Researcher arXiv identifier"
     authorClaim:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
       description: "Researcher authorClaim identifier"
     googleScholar:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
       description: "Researcher Google Scholar identifier"
     inspire:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
       description: "Researcher Inspire identifier"
     orcid:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
       description: "Researcher ORCID identifier"
     photo:
       type: string
       description: "Researcher photo URL"
     researcherId:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
       description: "Researcher Researcher Id identifier"
     scopusId:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
       description: "Researcher Scopus identifier"
     date_created:
       type: string
@@ -1130,7 +1145,9 @@ department:
       type: string
       description: "Displayed name"
     layer:
-      type: integer
+      oneOf:
+       - type: string
+       - type: integer
       description: "???"
     name:
       type: string
@@ -1176,10 +1193,14 @@ project:
       format: uri
       description: "Project's URL"
     grant_number:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
       description: "Grant number"
     psp_element:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
       description: "???"
     sc39:
       oneOf:
@@ -1280,7 +1301,9 @@ project:
         minLength: 1
       description: "Funding agency"
     call_identifier:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
       description: "Identifier of the call"
     funded:
       oneOf:
