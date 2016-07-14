@@ -131,9 +131,6 @@ date_submitted: 2015-05-22T08:36:49Z
 date_updated: 2015-09-10T13:35:40Z
 department:
 - _id: '2685177'
-  display: Fakultät für Biologie
-  layer: 2
-  name: Biochemie und Physiologie der Pflanzen
 doi: 10.1093/jxb/erv066
 external_id:
   isi: '000356223900015'
