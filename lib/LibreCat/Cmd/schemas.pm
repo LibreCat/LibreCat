@@ -213,4 +213,19 @@ LibreCat::Cmd::schemas - manage librecat schemas
     librecat schemas [options] get SCHEMA
     librecat schemas [options] markdown
 
+=head1 commands
+
+=head2 list
+
+List all configured JSON schemas
+
+=head2 get SCHEMA
+
+Display the JSON for a SCHEMA name
+
+=head2 markdown
+
+Transform the schema definitions in Markdown documentation.
+
+
 =cut
