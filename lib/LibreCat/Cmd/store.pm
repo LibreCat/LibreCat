@@ -162,6 +162,10 @@ sub _list {
     my $store = $self->app->global_options->{store};
     my $gen   = $store->list;
 
+    if ($self->app->global_options->{csv}) {
+        printf join("\t",qw(id file_name access_level relation embargo)) . "\n";
+    }
+
     while (my $key = $gen->()) {
         my $container = $store->get($key);
         my $created   = $container->created;
@@ -175,15 +179,22 @@ sub _list {
             $size += $_->size;
         }
 
-        if ($args[0] && $args[0] eq 'recursive') {
+        if ($self->app->global_options->{csv}) {
             for (@files) {
-                printf "%s %s\n", $key, $_->key;
+                printf join("\t",$key, $_->key,'','','') . "\n";
             }
         }
         else {
-            printf "%-40.40s %4d %9d %-20.20s %-20.20s\n", $key, int(@files),
-                $size, strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)),
-                strftime("%Y-%m-%dT%H:%M:%S", localtime($created));
+            if ($args[0] && $args[0] eq 'recursive') {
+                for (@files) {
+                    printf "%s %s\n", $key, $_->key;
+                }
+            }
+            else {
+                printf "%-40.40s %4d %9d %-20.20s %-20.20s\n", $key, int(@files),
+                    $size, strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)),
+                    strftime("%Y-%m-%dT%H:%M:%S", localtime($created));
+            }
         }
     }
 }
