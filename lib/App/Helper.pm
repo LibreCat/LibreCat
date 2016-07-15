@@ -305,7 +305,8 @@ sub get_sort_style {
 }
 
 sub now {
-    my $now = strftime($_[0]->config->{time_format}, gmtime(time));
+    my $time = $_[1] // time;
+    my $now  = strftime($_[0]->config->{time_format}, gmtime($time));
     return $now;
 }
 
