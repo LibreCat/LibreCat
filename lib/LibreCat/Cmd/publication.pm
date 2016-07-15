@@ -18,7 +18,7 @@ librecat publication [options] get <id>
 librecat publication [options] add <FILE>
 librecat publication [options] delete <id>
 librecat publication [options] valid <FILE>
-librecat publication [options] files [<FILE>]
+librecat publication [options] files [ID]|[<FILE>]
 
 EOF
 }
@@ -210,7 +210,10 @@ sub _valid {
 sub _files {
     my ($self,$file) = @_;
 
-    if ($file) {
+    if ($file && $file =~ /^\d+$/) {
+        $self->_files_list($file);
+    }
+    elsif ($file && -r $file) {
         $self->_files_load($file);
     }
     else {
@@ -221,11 +224,11 @@ sub _files {
 }
 
 sub _files_list {
+    my ($self,$id) = @_;
     printf "%-9s\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n"
         , qw(id access_level relation embargo file_name);
 
-    my $count = App::Helper::Helpers->new->publication->each(
-        sub {
+    my $printer = sub {
             my ($item) = @_;
             return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
 
@@ -237,8 +240,15 @@ sub _files_list {
                             , $file->{embargo} // 'NA'
                             , $file->{file_name};
             }
-        }
-    );
+    };
+
+    if ($id) {
+        my $data = App::Helper::Helpers->new->get_publication($id);
+        $printer->($data);
+    }
+    else {
+        App::Helper::Helpers->new->publication->each($printer);
+    }
 }
 
 sub _files_load {
@@ -363,6 +373,6 @@ LibreCat::Cmd::publication - manage librecat publications
 	librecat publication add <FILE>
 	librecat publication delete <id>
     librecat publication valid <FILE>
-    librecat publication files [<FILE>]
+    librecat publication files [ID]|[<FILE>]
 
 =cut

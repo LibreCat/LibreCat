@@ -28,6 +28,15 @@ librecat store [options] export <key> <zip>
 librecat store [options] import <key> <zip>
 
 librecat store [options] thumbnail <key> <file>
+
+options:
+    --store=...       - Store name
+    --file_store=...  - LibreCat::FileStore class
+    --file_opt=...    - LibreCat::FileStore option
+    --tmp_dir=...     - Temporary directory
+    --zip=...         - Zip program
+    --unzip=...       - Unzip program
+
 EOF
 }
 
@@ -44,6 +53,7 @@ sub command_opt_spec {
         ],
         ["zip=s",   "zipper",   {default => '/usr/bin/zip'}],
         ["unzip=s", "unzipper", {default => '/usr/bin/unzip'}],
+        ["csv" ,        "to CSV (get)"] ,
     );
 }
 
@@ -108,6 +118,7 @@ sub command {
             tmp_dir  => $opts->tmp_dir,
             zipper   => $opts->zip,
             unzipper => $opts->unzip,
+            csv      => $opts->csv,
         }
     );
 
@@ -200,23 +211,31 @@ sub _get {
 
     croak "get - failed to load $key" unless $container;
 
-    printf "key: %s\n",      $container->key;
-    printf "created: %s\n",  scalar localtime($container->created);
-    printf "modified: %s\n", scalar localtime($container->modified);
-
     my @files = $container->list;
 
-    printf "#files: %d\n", int(@files);
+    if ($self->app->global_options->{csv}) {
+        printf join("\t",qw(id file_name access_level relation embargo)) . "\n";
 
-    for my $file (@files) {
-        my $key          = $file->key;
-        my $size         = $file->size;
-        my $md5          = $file->md5;
-        my $modified     = $file->modified;
-        my $content_type = $file->content_type // '???';
+        for my $file (@files) {
+            printf join("\t",$key,$file->key,'','','') . "\n";
+        }
+    }
+    else {
+        printf "key: %s\n",      $container->key;
+        printf "created: %s\n",  scalar localtime($container->created);
+        printf "modified: %s\n", scalar localtime($container->modified);
+        printf "#files: %d\n",   int(@files);
 
-        printf "%-40.40s %9d $md5 %s %s\n", $content_type, $size,
-            strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)), $key;
+        for my $file (@files) {
+            my $key          = $file->key;
+            my $size         = $file->size;
+            my $md5          = $file->md5;
+            my $modified     = $file->modified;
+            my $content_type = $file->content_type // '???';
+
+            printf "%-40.40s %9d $md5 %s %s\n", $content_type, $size,
+                strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)), $key;
+        }
     }
 }
 
@@ -471,4 +490,11 @@ LibreCat::Cmd::store - manage librecat stores
 
     librecat store thumbnail <key> <file>
 
+    options:
+        --store=...       - Store name
+        --file_store=...  - LibreCat::FileStore class
+        --file_opt=...    - LibreCat::FileStore option
+        --tmp_dir=...     - Temporary directory
+        --zip=...         - Zip program
+        --unzip=...       - Unzip program
 =cut
