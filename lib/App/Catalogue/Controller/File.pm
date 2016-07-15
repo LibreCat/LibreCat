@@ -70,7 +70,7 @@ sub upload_temp_file {
     my $tempid       = Data::Uniqid::uniqid;
     my $temp_file    = $file->{tempname};
     my $file_name    = $file->{filename};
-    my $file_size    = $file->{size};
+    my $file_size    = int($file->{size});
     my $content_type = $file->{headers}->{"Content-Type"};
 
     h->log->info(
@@ -240,7 +240,7 @@ sub update_file {
         return undef;
     }
 
-    $file->{file_size}     = $res->{size};
+    $file->{file_size}     = int($res->{size});
     $file->{content_type}  = $res->{content_type};
     $file->{date_created}  = h->now($res->{created});
     $file->{date_updated}  = h->now($res->{modified});
