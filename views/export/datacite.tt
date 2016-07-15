@@ -45,9 +45,11 @@
 [%- END %]
 </relatedIdentifiers>
 [%- END %]
-[%- IF file.0 %]
+[%- IF file.0.content_type %]
 <formats>
-[%- FOREACH fi IN file %]<format>[% fi.content_type | xml_strict %]</format>[% END %]
+[%- FOREACH fi IN file %]
+[%- IF fi.content_type %]<format>[% fi.content_type | xml_strict %]</format>[% END %]
+[%- END %]
 </formats>
 [%- END %]
 [%- IF data_reuse_license %]

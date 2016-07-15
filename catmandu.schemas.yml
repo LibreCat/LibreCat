@@ -30,8 +30,7 @@ award:
       pattern: "^AW[0-9]+$"
       description: "Award identifier"
     rec_type:
-      type: string
-      enum: [preis,auszeichnung,akademie,record]
+      enum: ["preis","auszeichnung","akademie","record"]
       description: "Record type"
     date_created: &dt
       type: string
@@ -71,8 +70,6 @@ award:
     department:
       type: array
       items:
-        additionalProperties: false
-        required: [_id]
         properties:
           _id:
             oneOf:
@@ -82,43 +79,43 @@ award:
               - type: integer
                 minimum: 0
             description: "Department name"
-          name:
-            type: string
-            description: "Department identifier"
-        description: "Department"
+        required: [_id]
+        additionalProperties: false
+      description: "Department"
     einrichtung:
       type: array
       items:
         additionalProperties: false
         properties:
+          _id:
+            oneOf:
+              - type: string
+              - type: integer
+            description: "???"
           name:
             type: string
-            minLength: 1
-          _id:
-            type: string
+            description: "???"
       description: "???"
     other_university:
       type: string
       description: "Name of another university involved in the award"
     uni_member:
       oneOf:
-        - type: string
-          enum: [0,1]
+        - enum: [0,1]
         - type: integer
           minimum: 0
           maximum: 1
       description: "???"
     former_member:
       type: string
-      enum: ["ja","nein","emeritiert","in Rente"]
       description: "Former member"
     extern:
       oneOf:
-        - type: string
-          enum: [0,1]
+        - type: boolean
         - type: integer
           minimum: 0
           maximum: 1
+        - enum: ["0","1"]
       description: "???"
     organization:
       type: string
@@ -133,14 +130,18 @@ award:
           first_name:
             type: string
             minLength: 1
+            description: "???"
           last_name:
             type: string
             minLength: 1
+            description: "???"
           full_name:
             type: string
             minLength: 1
+            description: "???"
           title:
             type: string
+            description: "???"
       description: "???"
   required: ["_id","rec_type","title"]
   additionalProperties: false
@@ -151,32 +152,24 @@ publication:
   title: "librecat publication"
   type: "object"
   definitions:
-    issn: &issn
-      type: string
-      pattern: '^[0-9]{4}-[0-9]{3}[0-9Xx]$'
-    #see 'status/language' on page http://localhost:5001/librecat/record/new?type=journalArticle for full list
-    iso_language: &isolang
+    iso_language: &iso_language
       type: object
-      enum:
-        - iso: nl
-          name: Dutch
-        - iso: eng
-          name: English
-        - iso: fr
-          name: French
-        - iso: de
-          name: German
+      properties:
+         iso:
+             enum: ["ara","chi","cze","dan","dut","eng","fin","fre","ger","gre","heb","hrv","hun","ice","ita","jpn","kor","lat","lav","mon","nor","other","pol","por","rum","rus","spa","srp","swe","tur"]
 
     abstract: &abstract
       type: object
       properties:
         lang:
-          type: string
-          enum: [nl,eng,fr,de]
+          enum: ["ara","chi","cze","dan","dut","eng","fin","fre","ger","gre","heb","hrv","hun","ice","ita","jpn","kor","lat","lav","mon","nor","other","pol","por","rum","rus","spa","srp","swe","tur"]
+          description: "Abstract used language"
         text:
           type: string
           minLength: 1
+          description: "Abstract content"
       additionalProperties: false
+
     department: &department
       type: object
       properties:
@@ -189,7 +182,7 @@ publication:
               minLength: 1
             - type: integer
               minimum: 0
-
+          description: "Department identifier"
         tree:
           type: array
           items:
@@ -202,55 +195,183 @@ publication:
                     minLength: 1
                   - type: integer
                     minimum: 0
-
-      required: ["_id","tree"]
+                description: "Parent department"
+          description: "Hierarchical structure"
+      required: ["_id"]
       additionalProperties: false
 
-    author:
+    author: &author
       type: object
       properties:
         first_name: &hn
           type: string
           minLength: 1
-        last_name: *hn
-        full_name: *hn
+          description: "Person first name"
+        last_name:
+          type: string
+          minLength: 1
+          description: "Person last name"
+        full_name:
+          type: string
+          minLength: 1
+          description: "Person full name"
+
+    related_link: &related_link
+        type: object
+        properties:
+            url:
+                type: string
+                description: "URL to related document"
+            relation:
+                enum:
+                  - main_file
+                  - table_of_contents
+                  - erratum
+                  - supplementary_material
+                  - research_data
+                  - software
+                  - earlier_version
+                  - later_version
+                  - contains
+                  - published_in
+                  - dissertation_contains
+                  - part_of_dissertation
+                  - old_edition
+                  - new_edition
+                  - continues
+                  - is_continued_by
+                  - popular_science
+                  - research_paper
+                  - translation
+                  - original
+                  - other
+                  - cites
+                  - is_cited_by
+                  - confirmation
+                  - hidden
+            description:
+                type: string
+
+    related_record:
+        type: object
+        properties:
+            id:
+              oneOf:
+                - type: string
+                  pattern: "^[0-9]+$"
+                  minLength: 1
+                - type: integer
+                  minimum: 0
+              description: "Identifier of related document"
+            relation:
+                enum:
+                  - main_file
+                  - table_of_contents
+                  - erratum
+                  - supplementary_material
+                  - research_data
+                  - software
+                  - earlier_version
+                  - later_version
+                  - contains
+                  - published_in
+                  - dissertation_contains
+                  - part_of_dissertation
+                  - old_edition
+                  - new_edition
+                  - continues
+                  - is_continued_by
+                  - popular_science
+                  - research_paper
+                  - translation
+                  - original
+                  - other
+                  - cites
+                  - is_cited_by
+                  - confirmation
+                  - hidden
+            status:
+                enum: ["draft","submitted","accepted","inpress","epub_ahead","published"]
 
     file:
         type: object
-        access_level:
-            type: string
-            enum:
-               - open_access
-               - local
-               - closed
-               - request
-        content_type:
-            type: string
-        creator:
-            type: string
-        date_created:
-            type: string
-            format: date-time
-        date_updated:
-            type: string
-            format: date-time
-        file_id:
-            type: integer
-        file_size:
-            type: integer
-        open_access:
-            type: integer
-        relation:
-            type: string
-            enum:
-                - main_file
-                - confirmation
-                - table_of_contents
-                - erratum
-                - supplementary_material
-                - other
-                - hidden
+        properties:
+            access_level:
+                enum:
+                   - open_access
+                   - local
+                   - closed
+                   - request
+                description: "Access level"
+            content_type:
+                type: string
+                description: "MIME Type"
+            creator:
+                type: string
+                description: "User name"
+            date_created:
+                type: string
+                format: date-time
+                description: "Upload date"
+            date_updated:
+                type: string
+                format: date-time
+                description: "Last modification date"
+            file_id:
+                oneOf:
+                  - type: string
+                  - type: integer
+                description: "Persistent File Id"
+            file_name:
+                oneOf:
+                  - type: string
+                  - type: integer
+                description: "File name"
+            file_size:
+                oneOf:
+                  - type: string
+                  - type: integer
+                description: "File size"
+            open_access:
+                type: integer
+                description: "???"
+            relation:
+                enum:
+                    - main_file
+                    - confirmation
+                    - table_of_contents
+                    - erratum
+                    - supplementary_material
+                    - other
+                    - hidden
+                description: "Relation upload to main record"
         required: ["access_level","content_type","creator","date_created","date_updated","file_id","open_access","relation"]
+
+    project: &project
+      type: object
+      properties:
+        _id:
+          type: string
+          pattern: "^P[0-9]+$"
+          minLength: 1
+          description: "Project identifier"
+        name:
+          type: string
+          description: "Project name"
+      required: ["_id"]
+
+    research_group: &research_group
+      type: object
+      properties:
+        _id:
+          type: string
+          pattern: "^RG[0-9]+$"
+          minLength: 1
+          description: "Research group identifier"
+        name:
+          type: string
+          description: "Research group name"
+      required: ["_id"]
 
   properties:
     _id:
@@ -260,8 +381,8 @@ publication:
           minLength: 1
         - type: integer
           minimum: 0
+      description: "Publication identifier"
     type:
-      type: string
       enum:
         - original
         - book
@@ -284,194 +405,509 @@ publication:
         - working_paper
         - bi_dissertation
         - research_data
-
+      description: "Publication type"
     creator:
       type: object
       properties:
         login:
           type: string
-
-    date_created: &dt
+          description: "Creator user name"
+      description: "Creator"
+    date_created:
       type: string
       format: date-time
-
-    date_submitted: *dt
-
-    date_updated: *dt
-
-    doi:
+      description: "Record creation date"
+    date_submitted:
       type: string
-      #stolen from http://www.regexpal.com/93795
-      pattern: ^10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&'<>])\S)+$
-
+      format: date-time
+      description: "?not in use?"
+    date_updated:
+      type: string
+      format: date-time
+      description: "Record last update date"
+    document_type:
+      enum:
+        - bi_dissertation
+        - book
+        - book_chapter
+        - book_editor
+        - conference
+        - conference_abstract
+        - conference_editor
+        - dissertation
+        - encyclopedia_article
+        - journal_article
+        - journal_editor
+        - newspaper_article
+        - patent
+        - preprint
+        - report
+        - research_data
+        - review
+        - translation
+        - translation_chapter
+        - working_paper
+    doi:
+      oneOf:
+        - type: string
+        - type: integer
+      description: "DOI"
     author:
       type: array
       minItems: 0
       uniqueItems: true
       items:
         '$ref': '#/definitions/author'
-
+      description: "Author"
     editor:
       type: array
       minItems: 0
       uniqueItems: true
       items:
         '$ref': '#/definitions/author'
-
+      description: "Editor"
+    translator:
+      type: array
+      minItems: 0
+      uniqueItems: true
+      items:
+        '$ref': '#/definitions/author'
+      description: "Translator"
+    supervisor:
+      type: array
+      minItems: 0
+      uniqueItems: true
+      items:
+        '$ref': '#/definitions/author'
+      description: "Supervisor"
     corporate_editor:
       type: array
       items:
         type: string
-
+      description: "Corporate editors"
+    applicant:
+      type: array
+      items:
+        type: string
+      description: "Patent applicant"
     title:
       type: string
       minLength: 1
-
+      description: "Publication title"
     alternative_title:
       type: array
       items:
         type: string
-
+      description: "Alternative title"
     #required when type = 'journalArticle'
     publication:
       type: string
+      description: "Title of host publication"
     publication_identifier:
       type: object
       properties:
         issn:
           type: array
           items:
-            '$ref': '#/definitions/issn'
-
+              oneOf:
+                - type: string
+                - type: integer
+          description: "ISSN number"
+        isbn:
+          type: array
+          items:
+              oneOf:
+                - type: string
+                - type: integer
+          description: "ISBN number"
+        eissn:
+          type: array
+          items:
+              oneOf:
+                - type: string
+                - type: integer
+          description: "electonic ISSN number"
+        eisbn:
+          type: array
+          items:
+              oneOf:
+                - type: string
+                - type: integer
+          description: "electronic ISBN number"
+      description: "Publication identifier"
     publication_status:
-      type: string
-      enum: [draft,submitted,accepted,inpress,epub_ahead,published]
-
+      enum: ["draft","submitted","accepted","inpress","epub_ahead","published"]
+      description: "Publication status"
     pubmedID:
       oneOf:
         - type: string
-          pattern: '^[0-9]+$'
+        - type: integer
+      description: "PubMed identifier"
+    popular_science:
+      oneOf:
+        - type: boolean
         - type: integer
           minimum: 0
-
+          maximum: 1
+        - enum: ["0","1"]
+      description: "Flag of popular science"
     quality_controlled:
       oneOf:
         - type: boolean
         - type: integer
           minimum: 0
           maximum: 1
-        - type: string
-          enum: ["0","1"]
-
+        - enum: ["0","1"]
+      description: "Flag of quality control"
+    ubi_funded:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
+      description: "Flag of APC co-financed by DFG"
     status:
-      type: string
-      enum: [new,submitted,public,returned,private]
-
+      enum: ["new","submitted","public","returned","private"]
+      description: "Record status"
+    locked:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
+      description: "Flag of locked for editing (except for admins)"
     department:
       type: array
       items:
         '$ref': '#/definitions/department'
-
-    year:
-      oneOf:
-        - type: string
-          pattern: "^[0-9]+$"
-          minLength: 1
-        - type: integer
-          minimum: 0
-
+      description: "Department"
+    project:
+      type: array
+      minItems: 0
+      items:
+        '$ref': '#/definitions/project'
+      description: "Related projects"
+    research_group:
+      type: array
+      minItems: 0
+      items:
+        '$ref': '#/definitions/research_group'
+      description: "Research group"
     abstract:
       type: array
       items:
         '$ref': '#/definitions/abstract'
-
+      description: "Abstract"
     language:
       type: array
       items:
         '$ref': '#/definitions/iso_language'
-
+      description: "Language of publication"
+    original_language:
+      type: array
+      items:
+        '$ref': '#/definitions/iso_language'
+      description: "Language of original publication"
     publisher:
       type: string
-
+      description: "Publisher"
+    year:
+      oneOf:
+        - type: string
+        - type: integer
+      description: "Publication year"
+    extern:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
+      description: "Published while at external organization"
     place:
       type: string
-
+      description: "Place of publication"
+    edition:
+      oneOf:
+        - type: string
+        - type: integer
+      description: "Edition"
     volume:
-      type: string
-
+      oneOf:
+        - type: string
+        - type: integer
+      description: "Volume"
     intvolume:
       type: string
-
+      description: "???"
     issue:
+      oneOf:
+        - type: string
+        - type: integer
+      description: "Issue number"
+    series_title:
       type: string
-
+      description: "Title of (book) series"
+    report_number:
+      oneOf:
+        - type: string
+        - type: integer
+      description: "Report number"
+    publication_date:
+      oneOf:
+        - type: string
+        - type: integer
+      description: "Date of publication (patent/newpaper)"
+    defense_date:
+      type: string
+      description: "Date of dissertation defense"
     page:
+      oneOf:
+        - type: string
+        - type: integer
+      description: "Page number"
+    email:
       type: string
-      pattern: '^[0-9]+(-[0-9]+)?$'
-
+      description: "Email address (of dissertation student)"
+    application_date:
+      type: string
+      description: "Patent application date"
+    application_number:
+      oneOf:
+        - type: string
+        - type: integer
+      description: "Patent application number"
+    ipn:
+      oneOf:
+        - type: string
+        - type: integer
+      description: "Patent publication number"
+    ipc:
+      oneOf:
+        - type: string
+        - type: integer
+      description: "International patent classification"
     external_id:
       type: object
+      description: "External identifier"
       properties:
         unknown:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
+          description: "Unknown source identifier"
         isi:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
+          description: "Web of Science identifier"
         pmid:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
+          description: "PubMed identifier"
         inspire:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
+          description: "Inspire identifier"
         arxiv:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
+          description: "Arxiv identifier"
         ahf:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
+          description: "???"
         opac:
-          type: string
+          oneOf:
+            - type: string
+            - type: integer
+          description: "Opac identifier"
         scoap3:
-          type: string
-
+          oneOf:
+            - type: string
+            - type: integer
+          description: "???"
     file:
       type: array
       minItems: 0
       items:
         '$ref': '#/definitions/file'
-
+      description: "File uploads"
+    related_material:
+      type: object
+      properties:
+         link:
+             type: array
+             minItems: 0
+             items:
+               '$ref': '#/definitions/related_link'
+             description: "Related external links"
+         record:
+             type: array
+             minItems: 0
+             items:
+                '$ref': '#/definitions/related_record'
+             description: "Related records"
+      description: "Links to related materials"
+    ddc:
+      type: array
+      items:
+         type: string
+         pattern: "^[0-9]{3}$"
+      description: "Dewey Decimal Classification"
+    keyword:
+      type: array
+      items:
+          oneOf:
+            - type: string
+            - type: integer
+      description: "Keywords"
+    thematic_area:
+      type: array
+      items:
+         enum:
+             - diversity
+      description: "Thematic publication area"
+    jel:
+      type: array
+      items:
+          oneOf:
+            - type: string
+            - type: integer
+      description: "Journal of Economic Literature Classification"
+    pacs_class:
+      type: array
+      items:
+          oneOf:
+            - type: string
+            - type: integer
+      description: "Physics and Astronomy Classification Scheme"
+    msc_class:
+      type: array
+      items:
+          oneOf:
+            - type: string
+            - type: integer
+      description: "Mathematics Subject Classification"
+    ccs_class:
+      type: array
+      items:
+          oneOf:
+            - type: string
+            - type: integer
+      description: "Computing Classification System"
+    nasc:
+      type: array
+      items:
+         oneOf:
+            - type: string
+            - type: integer
+      description: "NASC Seed Stock ID"
+    genbank:
+      type: array
+      items:
+          oneOf:
+            - type: string
+            - type: integer
+      description: "GenBank ID"
+    urn:
+      oneOf:
+        - type: string
+        - type: integer
+      description: "Universal Resource Name"
+    cc_license:
+      enum: ["cc_0","cc_by","cc_by_sa"]
+      description: "Files copyright"
+    conference:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "Conference name"
+        location:
+          type: string
+          description: "Conference location"
+        start_date:
+          type: string
+          description: "Conference start date"
+        end_date:
+          type: string
+          description: "Conference end date"
+      description: "Conference details"
+    message:
+      oneOf:
+        - type: string
+        - type: integer
+      description: "Notes, comments about this record"
+    alternative_id:
+      type: array
+      item:
+          properties:
+              oneOf:
+                - type: string
+                - type: integer
+      description: "Returned Record Ids"
     citation:
       type: object
       properties:
         ama:
           type: string
+          description: "Citation in AMA (American Medical Association) style"
         apa:
           type: string
+          description: "Citation in APA (American Psychological Association) style"
         apa_indent:
           type: string
+          description: "Citation in indented APA style"
         aps:
           type: string
+          description: "Citation in APA (American Psychological Society) style"
         bio1:
           type: string
+          description: "???"
         default:
           type: string
+          description: "???"
         dgps:
           type: string
+          description: "Citation in DGPS (Deutsche Gesellschaft fur Psychologie) style"
         ewi:
           type: string
+          description: "???"
         frontShortTitle:
           type: string
+          description: "???"
         frontiers:
           type: string
+          description: "Citation in Frontiers journals style"
         harvard1:
           type: string
+          description: "Citation in 'Harvard Reference format 1' style"
         ieee:
           type: string
+          description: "Citation in IEEE (Institute of Electrical and Electronics Engineers) style"
         lncs:
           type: string
+          description: "???"
         mla:
           type: string
+          description: "Citation in MLA (Modern Language Association) style"
         pub:
           type: string
+          description: "???"
         sfb882:
           type: string
+          description: "???"
         wels:
           type: string
+          description: "???"
+      description: "Citation"
 
   # A author|editor is required..can this be expressed in JSONSchema?
   required: ["_id","type","title","year"]
@@ -496,13 +932,10 @@ researcher:
           minimum: 0
       description: "Researcher identifier"
     account_status:
-      type: string
       enum: ["active","inactive"]
       description: "Account status"
     account_type:
-      type: string
-      minLength: 1
-      pattern: '^\S+$'
+      enum: ["external","unib"]
       description: "Account type"
     password:
       type: string
@@ -530,6 +963,83 @@ researcher:
       type: string
       minLength: 0
       description: "Full name"
+    old_first_name:
+      type: string
+      minLength: 0
+      description: "Older First name"
+    old_last_name:
+      type: string
+      minLength: 0
+      description: "Older Last name"
+    old_full_name:
+      type: string
+      minLength: 0
+      description: "Older Full name"
+    award_admin:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
+      description: "Is this user an award admin?"
+    super_admin:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
+      description: "Is this user a super admin?"
+    data_manager:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            oneOf:
+              - type: string
+                pattern: "^[0-9]+$"
+                minLength: 1
+              - type: integer
+                minimum: 0
+            description: "Department identifier"
+      description: "Data manager for departments"
+    reviewer:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            oneOf:
+              - type: string
+                pattern: "^[0-9]+$"
+                minLength: 1
+              - type: integer
+                minimum: 0
+            description: "Department identifier"
+      description: "Reviewer for departments"
+    project_reviewer:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            type: string
+            pattern: "^P[0-9]+$"
+            description: "Project identifier"
+      description: "Reviewer for departments"
+    delegate:
+      type: array
+      items:
+        oneOf:
+          - type: string
+            pattern: "^[0-9]+$"
+            minLength: 1
+          - type: integer
+            minimum: 0
+        description: "Researcher identifier"
+      description: "Delegate for researchers"
     department:
       type: array
       items:
@@ -544,6 +1054,76 @@ researcher:
                 minimum: 0
             description: "Department identifier"
       description: "Department"
+    edit_mode:
+       enum: ["normal","expert"]
+       description: "Preferred web form edit mode"
+    style:
+       enum:
+           - ama
+           - angewandte-chemie
+           - apa
+           - apa_indent
+           - aps
+           - bio1
+           - chicago
+           - default
+           - dgps
+           - frontiers
+           - harvard1
+           - ieee
+           - lncs
+           - mla
+           - wels
+       description: "Preferred citation style"
+    alias:
+      type: string
+      description: "Researcher alias name"
+    arxiv:
+      oneOf:
+       - type: string
+       - type: integer
+      description: "Researcher arXiv identifier"
+    authorClaim:
+      oneOf:
+       - type: string
+       - type: integer
+      description: "Researcher authorClaim identifier"
+    googleScholar:
+      oneOf:
+       - type: string
+       - type: integer
+      description: "Researcher Google Scholar identifier"
+    inspire:
+      oneOf:
+       - type: string
+       - type: integer
+      description: "Researcher Inspire identifier"
+    orcid:
+      oneOf:
+       - type: string
+       - type: integer
+      description: "Researcher ORCID identifier"
+    photo:
+      type: string
+      description: "Researcher photo URL"
+    researcherId:
+      oneOf:
+       - type: string
+       - type: integer
+      description: "Researcher Researcher Id identifier"
+    scopusId:
+      oneOf:
+       - type: string
+       - type: integer
+      description: "Researcher Scopus identifier"
+    date_created:
+      type: string
+      format: date-time
+      description: "The record creation date"
+    date_updated:
+      type: string
+      format: date-time
+      description: "The record's last modification date"
 
   required: ["_id","account_status","account_type","first_name","last_name","full_name"]
   additionalProperties: true
@@ -565,7 +1145,9 @@ department:
       type: string
       description: "Displayed name"
     layer:
-      type: integer
+      oneOf:
+       - type: string
+       - type: integer
       description: "???"
     name:
       type: string
@@ -584,7 +1166,6 @@ department:
                 minimum: 0
             description: "Parent department"
       description: "Hierarchical structure"
-
   required: ["_id","tree"]
   additionalProperties: false
 
@@ -612,10 +1193,22 @@ project:
       format: uri
       description: "Project's URL"
     grant_number:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
       description: "Grant number"
     psp_element:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
+      description: "???"
+    sc39:
+      oneOf:
+        - type: boolean
+        - type: integer
+          minimum: 0
+          maximum: 1
+        - enum: ["0","1"]
       description: "???"
     description:
       type: string
@@ -647,10 +1240,12 @@ project:
           first_name:
             type: string
             minLength: 1
+            description: "Project's owners first name"
           last_name:
             type: string
             minLength: 1
-        description: "Project's owners"
+            description: "Project's owners last name"
+      description: "Project's owners"
     designated_editor:
       type: array
       items:
@@ -659,9 +1254,11 @@ project:
           first_name:
             type: string
             minLength: 1
+            description: "Designated editor first name"
           last_name:
             type: string
             minLength: 1
+            description: "Designated editor last name"
       description: "Designated editor"
     principal_investigator:
       type: array
@@ -671,11 +1268,13 @@ project:
           first_name:
             type: string
             minLength: 1
+            description: "Principal investigators first name"
           last_name:
             type: string
             minLength: 1
+            description: "Principal investigators last name"
       description: "Principal investigators"
-    uni_member:
+    member:
       type: array
       items:
         type: object
@@ -683,9 +1282,11 @@ project:
           first_name:
             type: string
             minLength: 1
+            description: "Participating university members first name"
           last_name:
             type: string
             minLength: 1
+            description: "Participating university members last name"
       description: "Participating university members"
     cooperator:
       type: array
@@ -700,7 +1301,9 @@ project:
         minLength: 1
       description: "Funding agency"
     call_identifier:
-      type: string
+      oneOf:
+       - type: string
+       - type: integer
       description: "Identifier of the call"
     funded:
       oneOf:
@@ -708,8 +1311,7 @@ project:
         - type: integer
           minimum: 0
           maximum: 1
-        - type: string
-          enum: ["0","1"]
+        - enum: ["0","1"]
       description: "Flag of funding status"
 
   required: ["_id","name"]
@@ -748,9 +1350,6 @@ research_group:
       type: string
       format: date-time
       description: "The record's last modification date"
-    affiliation:
-      type: string
-      description: "Affiliation of the research group"
     department:
       type: array
       items:
@@ -764,7 +1363,7 @@ research_group:
               - type: integer
                 minimum: 0
             description: "The department identifier"
-      description: "Departments involved"
+      description: "Affiliation of the research group"
 
   required: ["_id","name"]
   additionalProperties: true

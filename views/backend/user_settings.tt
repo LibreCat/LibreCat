@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.project_reviewer OR thisPerson.data_manager OR thisPerson.award_admin %]
+  [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.project_reviewer OR thisPerson.data_manager OR thisPerson.award_admin OR thisPerson.delegate %]
   <div class="row innerrow">
     <div class="col-md-11">
       <h5>[% h.loc("header.role_label") %]: <em><strong>[% lf.header.role.item(session.role) %]</strong></em></h5>

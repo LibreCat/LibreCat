@@ -1,8 +1,8 @@
-package LibreCat::Cmd::award;
+package LibreCat::Cmd::research_group;
 
 use Catmandu::Sane;
 use App::Helper;
-use LibreCat::Validator::Award;
+use LibreCat::Validator::ResearchGroup;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -10,12 +10,12 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat award [options] list
-librecat award [options] export
-librecat award [options] add <FILE>
-librecat award [options] get <id>
-librecat award [options] delete <id>
-librecat award [options] valid <FILE>
+librecat research_group [options] list
+librecat research_group [options] export
+librecat research_group [options] add <FILE>
+librecat research_group [options] get <id>
+librecat research_group [options] delete <id>
+librecat research_group [options] valid <FILE>
 
 EOF
 }
@@ -64,15 +64,15 @@ sub command {
 
 sub _list {
     my $h     = App::Helper::Helpers->new;
-    my $count = $h->award->each(
+    my $count = $h->research_group->each(
         sub {
             my ($item) = @_;
-            my $id     = $item->{_id};
-            my $title  = $item->{title} // '';
-            my $type   = $item->{rec_type};
+            my $id      = $item->{_id};
+            my $name    = $item->{name};
+            my $acronym = $item->{acronym};
 
             printf "%-2.2s %5.5s %-40.40s %s\n", " "    # not used
-                , $id, $title, $type;
+                , $id, $acronym, $name;
         }
     );
     print "count: $count\n";
@@ -96,7 +96,7 @@ sub _get {
     croak "usage: $0 get <id>" unless defined($id);
 
     my $h    = App::Helper::Helpers->new;
-    my $data = $h->get_award($id);
+    my $data = $h->get_research_group($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -128,13 +128,13 @@ sub _adder {
 
     unless (exists $data->{_id} && defined $data->{_id}) {
         $is_new = 1;
-        $data->{_id} = $helper->new_record('award');
+        $data->{_id} = $helper->new_record('research_group');
     }
 
-    my $validator = LibreCat::Validator::Award->new;
+    my $validator = LibreCat::Validator::ResearchGroup->new;
 
     if ($validator->is_valid($data)) {
-        my $result = $helper->update_record('award', $data);
+        my $result = $helper->update_record('research_group', $data);
         if ($result) {
             print "added " . $data->{_id} . "\n";
             return 0;
@@ -145,7 +145,7 @@ sub _adder {
         }
     }
     else {
-        print STDERR "ERROR: not a valid award\n";
+        print STDERR "ERROR: not a valid research_group\n";
         print STDERR join("\n", @{$validator->last_errors}), "\n";
         return 2;
     }
@@ -157,9 +157,9 @@ sub _delete {
     croak "usage: $0 delete <id>" unless defined($id);
 
     my $h      = App::Helper::Helpers->new;
-    my $result = $h->award->delete($id);
+    my $result = $h->research_group->delete($id);
 
-    if ($h->award->commit) {
+    if ($h->research_group->commit) {
         print "deleted $id\n";
         return 0;
     }
@@ -174,7 +174,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::Award->new;
+    my $validator = LibreCat::Validator::ResearchGroup->new;
 
     my $ret = 0;
 
@@ -210,15 +210,15 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::award - manage librecat awards
+LibreCat::Cmd::research_group - manage librecat research_group-s
 
 =head1 SYNOPSIS
 
-    librecat award list
-    librecat award export
-    librecat award add <FILE>
-    librecat award get <id>
-    librecat award delete <id>
-    librecat award valid <FILE>
+    librecat research_group list
+    librecat research_group export
+    librecat research_group add <FILE>
+    librecat research_group get <id>
+    librecat research_group delete <id>
+    librecat research_group valid <FILE>
 
 =cut

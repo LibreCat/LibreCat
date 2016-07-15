@@ -10,10 +10,17 @@ engines:
     start_tag: '[%'
     end_tag:   '%]'
 
-# session handling
-# use default store
-session: "Catmandu"
-session_expires: 2 hr
+session: "PSGI"
+session_state:
+  package: "Plack::Session::State::Cookie"
+  options:
+    path: "/"
+    expires: 7200
+session_store:
+  package: "Plack::Session::Store::Catmandu"
+  options:
+    store: default
+    bag: session
 
 plugins:
   'Auth::Tiny':
