@@ -181,6 +181,7 @@ sub _list {
 
         if ($self->app->global_options->{csv}) {
             for (@files) {
+                next if $_->key eq 'thumbnail.png';
                 printf join("\t",$key, $_->key,'','','') . "\n";
             }
         }
@@ -228,6 +229,7 @@ sub _get {
         printf join("\t",qw(id file_name access_level relation embargo)) . "\n";
 
         for my $file (@files) {
+            next if $file->key eq 'thumbnail.png';
             printf join("\t",$key,$file->key,'','','') . "\n";
         }
     }
