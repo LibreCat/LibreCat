@@ -16,6 +16,7 @@ use Data::Uniqid;
 use File::Copy;
 use Carp;
 use Encode qw(decode encode);
+use Clone 'clone';
 use JSON::MaybeXS qw(decode_json encode_json);
 use Exporter qw/import/;
 
@@ -198,6 +199,61 @@ sub handle_file {
     }
 }
 
+=head2 update_file($file)
+
+Update one $pub->{file}->[<item>] with technical metadata found in
+the file store. Returns the updated file on success or undef on
+failure.
+
+=cut
+
+sub update_file {
+    my ($key,$data) = @_;
+    my $file     = clone($data);
+    my $filename = $file->{file_name};
+
+    unless ($filename) {
+        h->log->error("need a filename for update_file for record $key");
+        return undef;
+    }
+
+    h->log->info("updating $filename for record $key");
+
+    my $file_store = h->config->{filestore}->{default}->{package};
+    my $file_opt   = h->config->{filestore}->{default}->{options};
+
+    my $pkg    = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+    my $store  = $pkg->new(%$file_opt);
+
+    h->log->info("loading container $key");
+    my $container = $store->get($key);
+
+    unless ($container) {
+        h->log->error("container $key not found");
+        return undef;
+    }
+
+    my $res = $container->get($filename);
+
+    unless ($res) {
+        h->log->error("file $filename not found in container $key");
+        return undef;
+    }
+
+    $file->{file_size}     = $res->{size};
+    $file->{content_type}  = $res->{content_type};
+    $file->{date_created}  = h->now($res->{created});
+    $file->{date_updated}  = h->now($res->{modified});
+    $file->{creator}       //= 'system';
+    $file->{file_id}       //= h->new_record('publication');
+
+    $file->{access_level}  //= 'open_access';
+    $file->{open_access}   //= 1;
+    $file->{relation}      //= 'main_file';
+
+    return $file;
+}
+
 sub _make_thumbnail {
     my ($key, $filename) = @_;
 
@@ -228,32 +284,32 @@ sub _make_file {
     $worker->work({key => $key, filename => $filename, path => $path,});
 }
 
-sub _remove_file {
-    my ($key, $filename) = @_;
-
-    h->log->info("deleting $filename for record $key");
-
-    my $uploader_package
-        = h->config->{filestore}->{accesss_thumbnailer}->{package};
-    my $uploader_options
-        = h->config->{filestore}->{accesss_thumbnailer}->{options};
-
-    my $pkg    = Catmandu::Util::require_package($uploader_package);
-    my $worker = $pkg->new(%$uploader_options);
-
-    $worker->work({key => $key, filename => $filename, delete => 1});
-}
-
 sub _remove_thumbnail {
     my ($key, $filename) = @_;
 
     h->log->info("deleting $filename thumbnail for record $key");
 
-    my $thumbnailer_package = h->config->{filestore}->{uploader}->{package};
-    my $thumbnailer_options = h->config->{filestore}->{uploader}->{options};
+    my $thumbnailer_package
+        = h->config->{filestore}->{accesss_thumbnailer}->{package};
+    my $thumbnailer_options
+        = h->config->{filestore}->{accesss_thumbnailer}->{options};
 
     my $pkg    = Catmandu::Util::require_package($thumbnailer_package);
     my $worker = $pkg->new(%$thumbnailer_options);
+
+    $worker->work({key => $key, filename => $filename, delete => 1});
+}
+
+sub _remove_file {
+    my ($key, $filename) = @_;
+
+    h->log->info("deleting $filename for record $key");
+
+    my $uploader_package = h->config->{filestore}->{uploader}->{package};
+    my $uploader_options = h->config->{filestore}->{uploader}->{options};
+
+    my $pkg    = Catmandu::Util::require_package($uploader_package);
+    my $worker = $pkg->new(%$uploader_options);
 
     $worker->work({key => $key, filename => $filename, delete => 1});
 }

@@ -111,11 +111,9 @@ award:
       description: "Former member"
     extern:
       oneOf:
-        - type: boolean
+        - type: string
+          pattern: "^[01]$"
         - type: integer
-          minimum: 0
-          maximum: 1
-        - enum: ["0","1"]
       description: "???"
     organization:
       type: string
@@ -333,8 +331,17 @@ publication:
                   - type: integer
                 description: "File size"
             open_access:
-                type: integer
-                description: "???"
+                oneOf:
+                  - type: string
+                    pattern: "^[01]$"
+                  - type: integer
+                description: "Flag when file is open_access"
+            title:
+                type: string
+                description: "File title"
+            description:
+                type: string
+                description: "File description"
             relation:
                 enum:
                     - main_file
@@ -545,38 +552,30 @@ publication:
       description: "PubMed identifier"
     popular_science:
       oneOf:
-        - type: boolean
+        - type: string
+          pattern: "^[01]$"
         - type: integer
-          minimum: 0
-          maximum: 1
-        - enum: ["0","1"]
       description: "Flag of popular science"
     quality_controlled:
       oneOf:
-        - type: boolean
+        - type: string
+          pattern: "^[01]$"
         - type: integer
-          minimum: 0
-          maximum: 1
-        - enum: ["0","1"]
       description: "Flag of quality control"
     ubi_funded:
       oneOf:
-        - type: boolean
+        - type: string
+          pattern: "^[01]$"
         - type: integer
-          minimum: 0
-          maximum: 1
-        - enum: ["0","1"]
       description: "Flag of APC co-financed by DFG"
     status:
       enum: ["new","submitted","public","returned","private"]
       description: "Record status"
     locked:
       oneOf:
-        - type: boolean
+        - type: string
+          pattern: "^[01]$"
         - type: integer
-          minimum: 0
-          maximum: 1
-        - enum: ["0","1"]
       description: "Flag of locked for editing (except for admins)"
     department:
       type: array
@@ -620,11 +619,9 @@ publication:
       description: "Publication year"
     extern:
       oneOf:
-        - type: boolean
+        - type: string
+          pattern: "^[01]$"
         - type: integer
-          minimum: 0
-          maximum: 1
-        - enum: ["0","1"]
       description: "Published while at external organization"
     place:
       type: string
@@ -977,19 +974,15 @@ researcher:
       description: "Older Full name"
     award_admin:
       oneOf:
-        - type: boolean
+        - type: string
+          pattern: "^[01]$"
         - type: integer
-          minimum: 0
-          maximum: 1
-        - enum: ["0","1"]
       description: "Is this user an award admin?"
     super_admin:
       oneOf:
-        - type: boolean
+        - type: string
+          pattern: "^[01]$"
         - type: integer
-          minimum: 0
-          maximum: 1
-        - enum: ["0","1"]
       description: "Is this user a super admin?"
     data_manager:
       type: array
@@ -1204,11 +1197,9 @@ project:
       description: "???"
     sc39:
       oneOf:
-        - type: boolean
+        - type: string
+          pattern: "^[01]$"
         - type: integer
-          minimum: 0
-          maximum: 1
-        - enum: ["0","1"]
       description: "???"
     description:
       type: string
@@ -1307,11 +1298,9 @@ project:
       description: "Identifier of the call"
     funded:
       oneOf:
-        - type: boolean
+        - type: string
+          pattern: "^[01]$"
         - type: integer
-          minimum: 0
-          maximum: 1
-        - enum: ["0","1"]
       description: "Flag of funding status"
 
   required: ["_id","name"]
