@@ -2,7 +2,7 @@ package App::Helper::Helpers;
 
 use FindBin;
 use Catmandu::Sane;
-use Catmandu qw(:load export_to_string);
+use Catmandu qw(export_to_string);
 use Catmandu::Util qw(:io :is :array :hash :human trim);
 use Catmandu::Fix qw(expand);
 use Catmandu::Store::DBI;
@@ -25,7 +25,7 @@ sub config {
 
     # Required to load Catmandu at run time to for the Dancer::Test framework
     unless ($config) {
-        Catmandu->load("$FindBin::Bin/..");
+        #Catmandu->load("$FindBin::Bin/..");
         $config = hash_merge(Catmandu->config, Dancer::config);
     }
     $config;

@@ -1,10 +1,8 @@
 package Catmandu::Fix::add_num_of_publs;
 
 use Catmandu::Sane;
-use Catmandu -load;
+use Catmandu;
 use Moo;
-
-Catmandu->load(':up');
 
 sub fix {
     my ($self, $rec) = @_;
