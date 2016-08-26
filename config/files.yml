@@ -2,34 +2,34 @@
 _prefix:
   filestore:
 
-tmp_dir: /data2/librecat/temp_uploads
+tmp_dir: data/temp_uploads
 
 default: &filestore_settings
     package: Simple
     options:
-        root: /data2/librecat/file_uploads
+        root: data/file_uploads
 
 api:
     buffer_size: 8192
     access:
-        ip_ranges: 
+        ip_ranges:
             - 127.0.0.1
             - 10.*.*.*
 
 uploader:
     package: 'LibreCat::Worker::FileUploader'
-    options: 
+    options:
         files: *filestore_settings
 
 # Thumbnails
 access: &accessstore_settings
     package: Simple
     options:
-        root: /data2/librecat/file_uploads
+        root: data/file_uploads
 
 accesss_thumbnailer:
     package: 'LibreCat::Worker::ImageResizer'
-    options: 
+    options:
         files: *filestore_settings
         access: *accessstore_settings
 
@@ -50,4 +50,4 @@ fedora:
 bagit:
     package: BagIt
     options:
-        root: /data2/librecat/bag_uploads
+        root: data/bag_uploads

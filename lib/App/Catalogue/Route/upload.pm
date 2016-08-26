@@ -23,7 +23,7 @@ All methods for file uploads
 Needs a login session.
 
 Upload a File to temporary storage. Returns a JSON document containing
-the upload details and default metadata on success or a JSON error 
+the upload details and default metadata on success or a JSON error
 document on failure:
 
   # success

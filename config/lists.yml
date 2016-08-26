@@ -118,7 +118,7 @@ external_identifier:
     name: "PhilLister"
     prefix: "PhilLister:"
   opac:
-    name: "OPAC"
+    name: "Katalog.plus!"
     prefix: "UB-OPAC:"
 #  fp7:
 #    name: "FP7"
@@ -134,6 +134,7 @@ publication_identifier:
   eisbn: "eISBN"
 
 publication_status:
+  - unpublished
   - draft
   - submitted
   - accepted
@@ -173,217 +174,129 @@ gs_doc_type:
 relations_rd:
 #  -
 #    relation: "cites"
-#    relation_text: "This publication cites the following data publications:"
-#    link_text: "Cites"
 #    opposite: "is_cited_by"
   -
     relation: "is_cited_by"
-    relation_text: "This data publication is cited in the following publications:"
-    link_text: "Is cited by"
     opposite: "cites"
 
 relations_file:
   -
     relation: "confirmation"
-    relation_text: "Confirmation Letter (for PUB record)"
-    link_text: "Conf. Letter"
   -
     relation: "table_of_contents"
-    relation_text: "Table of contents (of PUB record)"
-    link_text: "Table of Contents"
   -
     relation: "erratum"
-    relation_text: "Erratum (of PUB record)"
-    link_text: "Erratum"
   -
     relation: "supplementary_material"
-    relation_text: "Supplementary Material (of PUB record)"
-    link_text: "Suppl. Material"
   -
     relation: "other"
-    relation_text: "In other relation (to PUB record)"
-    link_text: "Other Relation"
   -
     relation: "hidden"
-    relation_text: "Supplementary Material (for embedding only, hidden on frontdoor)"
-    link_text: "Hidden Supplementary Material"
 
 relations_link:
   -
     relation: "confirmation"
-    relation_text: "Confirmation Letter (for PUB record)"
-    link_text: "Confirmation Letter"
   -
     relation: "table_of_contents"
-    relation_text: "Table of contents (of PUB record)"
-    link_text: "Table of Contents"
   -
     relation: "erratum"
-    relation_text: "Erratum (of PUB record)"
-    link_text: "Erratum"
   -
     relation: "supplementary_material"
-    relation_text: "Supplementary Material (of PUB record)"
-    link_text: "Suppl. Material"
   -
     relation: "research_data"
-    relation_text: "Research Data (of PUB record)"
-    link_text: "Research Data"
   -
     relation: "software"
-    relation_text: "Software (for PUB record)"
-    link_text: "Software"
-  -
-    relation: "other"
-    relation_text: "In other relation (to PUB record)"
-    link_text: "In other Relation"
   -
     relation: "earlier_version"
     opposite: "later_version"
-    relation_text: "Earlier Version (of PUB record)"
-    link_text: "Earlier Version"
   -
     relation: "later_version"
     opposite: "earlier_version"
-    relation_text: "Later Version (of PUB record)"
-    link_text: "Later Version"
   -
     relation: "contains"
     opposite: "published_in"
-    relation_text: "Contains (PUB record)"
-    link_text: "Container of PUB Record"
   -
     relation: "published_in"
     opposite: "contains"
-    relation_text: "Published in (PUB record)"
-    link_text: "Published in PUB record"
-  -
-    relation: "part_of_dissertation"
-    opposite: "dissertation_contains"
-    relation_text: "Part of dissertation (PUB record)"
-    link_text: "Part of dissertation/PUB record"
   -
     relation: "dissertation_contains"
     opposite: "part_of_dissertation"
-    relation_text: "Dissertation containing (PUB record)"
-    link_text: "Article in this dissertation/PUB record"
+  -
+    relation: "part_of_dissertation"
+    opposite: "dissertation_contains"
   -
     relation: "old_edition"
     opposite: "new_edition"
-    relation_text: "Old Edition (of PUB record)"
-    link_text: "Old Edition"
   -
     relation: "new_edition"
     opposite: "old_edition"
-    relation_text: "New Edition (of PUB record)"
-    link_text: "New Edition"
   -
     relation: "continues"
     opposite: "is_continued_by"
-    relation_text: "Continues (PUB record)"
-    link_text: "Continuation"
   -
     relation: "is_continued_by"
     opposite: "continues"
-    relation_text: "Continued by (PUB record)"
-    link_text: "Previous Object"
   -
     relation: "popular_science"
     opposite: "research_paper"
-    relation_text: "Popular science of (PUB record)"
-    link_text: "Popular Science"
   -
     relation: "research_paper"
     opposite: "popular_science"
-    relation_text: "Research paper of (popular science PUB record)"
-    link_text: "Research Paper"
   -
     relation: "translation"
     opposite: "original"
-    relation_text: "Translation of (original PUB record)"
-    link_text: "Translation"
   -
     relation: "original"
     opposite: "translation"
-    relation_text: "Original of (translation in PUB)"
-    link_text: "Original of Translation"
+  -
+    relation: "other"
 
 relations_record:
   -
     relation: "earlier_version"
     opposite: "later_version"
-    relation_text: "Earlier Version (of PUB record)"
-    link_text: "Earlier Version"
   -
     relation: "later_version"
     opposite: "earlier_version"
-    relation_text: "Later Version (of PUB record)"
-    link_text: "Later Version"
   -
     relation: "contains"
     opposite: "published_in"
-    relation_text: "Contains (PUB record)"
-    link_text: "Contains Document"
   -
     relation: "published_in"
     opposite: "contains"
-    relation_text: "Published in (PUB record)"
-    link_text: "Published in"
-  -
-    relation: "part_of_dissertation"
-    opposite: "dissertation_contains"
-    relation_text: "Part of dissertation (PUB record)"
-    link_text: "Published in Diss."
   -
     relation: "dissertation_contains"
     opposite: "part_of_dissertation"
-    relation_text: "Dissertation containing (PUB record)"
-    link_text: "Article in Dissertation"
+  -
+    relation: "part_of_dissertation"
+    opposite: "dissertation_contains"
   -
     relation: "old_edition"
     opposite: "new_edition"
-    relation_text: "Old Edition (of PUB record)"
-    link_text: "Old Edition"
   -
     relation: "new_edition"
     opposite: "old_edition"
-    relation_text: "New Edition (of PUB record)"
-    link_text: "New Edition"
   -
     relation: "continues"
     opposite: "is_continued_by"
-    relation_text: "Continues (PUB record)"
-    link_text: "Continuation"
   -
     relation: "is_continued_by"
     opposite: "continues"
-    relation_text: "Continued by (PUB record)"
-    link_text: "Previous Object"
   -
     relation: "popular_science"
     opposite: "research_paper"
-    relation_text: "Popular science of (PUB record)"
-    link_text: "Popular Science"
   -
     relation: "research_paper"
     opposite: "popular_science"
-    relation_text: "Research paper of (popular science PUB record)"
-    link_text: "Research Paper"
   -
     relation: "translation"
     opposite: "original"
-    relation_text: "Translation of (original PUB record)"
-    link_text: "Translation"
   -
     relation: "original"
     opposite: "translation"
-    relation_text: "Original of (translation in PUB)"
-    link_text: "Original of Translation"
   -
     relation: "other"
     opposite: "other"
-    relation_text: "In other relation (to PUB record)"
-    link_text: "Other Relation"
 
 thematic_area:
   diversity: Diversity

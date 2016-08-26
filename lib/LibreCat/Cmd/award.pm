@@ -68,7 +68,7 @@ sub _list {
         sub {
             my ($item) = @_;
             my $id     = $item->{_id};
-            my $title  = $item->{title};
+            my $title  = $item->{title} // '';
             my $type   = $item->{rec_type};
 
             printf "%-2.2s %5.5s %-40.40s %s\n", " "    # not used
@@ -122,12 +122,19 @@ sub _add {
 
 sub _adder {
     my ($self, $data) = @_;
+    my $is_new = 0;
 
-    my $h         = App::Helper::Helpers->new;
+    my $helper = App::Helper::Helpers->new;
+
+    unless (exists $data->{_id} && defined $data->{_id}) {
+        $is_new = 1;
+        $data->{_id} = $helper->new_record('award');
+    }
+
     my $validator = LibreCat::Validator::Award->new;
 
     if ($validator->is_valid($data)) {
-        my $result = $h->update_record('award', $data);
+        my $result = $helper->update_record('award', $data);
         if ($result) {
             print "added " . $data->{_id} . "\n";
             return 0;
@@ -177,7 +184,7 @@ sub _valid {
 
             unless ($validator->is_valid($item)) {
                 my $errors = $validator->last_errors();
-                my $id     = $item->{_id};
+                my $id     = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
                         print STDERR "ERROR $id: $err\n";
@@ -203,7 +210,7 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::award - manage librecat users
+LibreCat::Cmd::award - manage librecat awards
 
 =head1 SYNOPSIS
 

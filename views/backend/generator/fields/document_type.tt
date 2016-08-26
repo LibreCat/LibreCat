@@ -1,0 +1,49 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_select_document_type">
+      [% lf.$type.field.document_type.label %]
+    </label>
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky mandatory">
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.document_type.label_short || lf.$type.field.document_type.label %]</div>
+          <select id="id_select_document_type" name="document_type" class="sticky form-control">
+            [% FOREACH ptype IN h.config.forms.publication_type_order.column_left %]
+              <option value="[% ptype %]"[% IF ptype == type %] selected="selected"[% END %]>[% h.config.locale.$lang.forms.$ptype.label %]</option>
+            [% END %]
+            [% FOREACH ptype IN h.config.forms.publication_type_order.column_middle %]
+              <option value="[% ptype %]"[% IF ptype == type %] selected="selected"[% END %]>[% h.config.locale.$lang.forms.$ptype.label %]</option>
+            [% END %]
+            [% FOREACH ptype IN h.config.forms.publication_type_order.column_right %]
+              <option value="[% ptype %]"[% IF ptype == type %] selected="selected"[% END %]>[% h.config.locale.$lang.forms.$ptype.label %]</option>
+            [% END %]
+            [% IF session.role == "super_admin" %]
+            [% FOREACH ptype IN h.config.forms.publication_type_order.column_admin %]
+              <option value="[% ptype %]"[% IF ptype == type %] selected="selected"[% END %]>[% h.config.locale.$lang.forms.$ptype.label %]</option>
+            [% END %]
+            [% END %]
+            [% FOREACH ptype IN h.config.forms.publication_type_order.column_rd %]
+              <option value="[% ptype %]"[% IF ptype == type %] selected="selected"[% END %]>[% h.config.locale.$lang.forms.$ptype.label %]</option>
+            [% END %]
+          </select>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$('#id_select_document_type').on('change', function() {
+  var sure = confirm("Changing the publication type may result in loss of data if the new type uses different fields from the previous one! Proceed with caution.");
+  if(sure){
+    var newtype = $(this).val();
+    $('#id_type').val(newtype);
+    $('#id_select_document_type').remove();
+    $('#edit_form').attr('action','/librecat/record/change_mode');
+    $('#edit_form').submit();
+  }
+});
+</script>

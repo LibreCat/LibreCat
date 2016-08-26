@@ -18,12 +18,13 @@ Project splash page for :id.
 
 # /en/award/ID/
 get qr{/en/award/(AW\d+)/*} => sub {
-    my $servername = request->uri_base;
-    my $ip         = request->address;
-
-    #if ($servername =~ /pub2\.ub/ or $servername =~ /pub\.uni-bielefeld/){
-    if (!$ip or $ip and $ip ne "129.70.11.105") {
-        forward '/';
+    if(!h->config->{award_status} or h->config->{award_status} ne "live"){
+        my $servername = request->uri_base;
+        my $ip = request->address;
+        #if ($servername =~ /pub\.uni-bielefeld/){
+        unless($ip and ($ip eq "10.0.2.2" or $ip eq "129.70.11.105")){
+            forward '/';
+        }
     }
 
     my ($id) = splat;
@@ -34,12 +35,13 @@ get qr{/en/award/(AW\d+)/*} => sub {
 
 # /award/ID/
 get qr{/award/(AW\d+)/*} => sub {
-    my $servername = request->uri_base;
-    my $ip         = request->address;
-
-    #if ($servername =~ /pub\.uni-bielefeld/){
-    if (!$ip or $ip and $ip ne "129.70.11.105") {
-        forward '/';
+    if(!h->config->{award_status} or h->config->{award_status} ne "live"){
+        my $servername = request->uri_base;
+        my $ip = request->address;
+        #if ($servername =~ /pub\.uni-bielefeld/){
+        unless($ip and ($ip eq "10.0.2.2" or $ip eq "129.70.11.105")){
+            forward '/';
+        }
     }
 
     my ($id) = splat;
@@ -51,34 +53,38 @@ get qr{/award/(AW\d+)/*} => sub {
 
 # /en/award
 get qr{/en/award/*} => sub {
-    my $servername = request->uri_base;
-    my $ip         = request->address;
-
-    #if ($servername =~ /pub\.uni-bielefeld/){
-    if (!$ip or $ip and $ip ne "129.70.11.105") {
-        forward '/';
+    if(!h->config->{award_status} or h->config->{award_status} ne "live"){
+        my $servername = request->uri_base;
+        my $ip = request->address;
+        #if ($servername =~ /pub\.uni-bielefeld/){
+        unless($ip and ($ip eq "10.0.2.2" or $ip eq "129.70.11.105")){
+            forward '/';
+        }
     }
 
     forward '/award', {lang => "en"};
 };
 
+get qr{/award_iframe/*} => sub {
+      template 'award/main_with_iframe';
+};
 # /award (main function, handling everything)
 get qr{/award/*} => sub {
-    my $servername = request->uri_base;
-    my $ip         = request->address;
-
-    #if ($servername =~ /pub\.uni-bielefeld/){
-    if (!$ip or $ip and $ip ne "129.70.11.105") {
-        forward '/';
+    if(!h->config->{award_status} or h->config->{award_status} ne "live"){
+        my $servername = request->uri_base;
+        my $ip = request->address;
+        #if ($servername =~ /pub\.uni-bielefeld/){
+        unless($ip and ($ip eq "10.0.2.2" or $ip eq "129.70.11.105")){
+            forward '/';
+        }
     }
 
-    my $store = h
-        ->award; #Catmandu::Store::MongoDB->new(database_name => 'PUBAwards');
-                 #my $awardBag = $store->bag('awards');
-                 #my $academyBag = $store->bag('academy');
+    my $store = h->award;#Catmandu::Store::MongoDB->new(database_name => 'PUBAwards');
+    #my $awardBag = $store->bag('awards');
+    #my $academyBag = $store->bag('academy');
 
-    my $id       = params->{id}       if params->{id};
-    my $lang     = params->{lang}     if params->{lang};
+    my $id = params->{id} if params->{id};
+    my $lang = params->{lang} if params->{lang};
     my $mailform = params->{mailform} if params->{mailform};
     my $returnhash;
     my $tmpl;
@@ -91,10 +97,7 @@ get qr{/award/*} => sub {
         my $message = params->{ftext};
         my $path    = params->{lasturl};
 
-        my $receiver = [
-            'pressestelle@uni-bielefeld.de',
-            'petra.kohorst@uni-bielefeld.de'
-        ];
+        my $receiver = ['pressestelle@uni-bielefeld.de','petra.kohorst@uni-bielefeld.de'];
 
         $returnhash = {lasturl => $path};
         $returnhash->{formname}  = params->{name}      if params->{name};
@@ -189,18 +192,18 @@ get qr{/award/*} => sub {
             limit     => h->config->{maximum_page_size},
             facets    => {
                 year => {
-                    terms => {field => 'year', size => 100, order => 'term'}
+                    terms => {field => 'year', size => 100, order => 'reverse_term'}
                 },
                 department => {
                     terms => {
-                        field => 'department.name.exact',
+                        field => 'department._id',
                         size  => 100,
                         order => 'term'
                     }
                 },
                 einrichtung => {
                     terms => {
-                        field => 'einrichtung.name.exact',
+                        field => 'einrichtung._id',
                         size  => 100,
                         order => 'term'
                     }
@@ -216,24 +219,25 @@ get qr{/award/*} => sub {
             sru_sortkeys => "year,,0",
         );
 
-        $preishits->{facets}->{year}
-            = group_year_facet($preishits->{facets}->{year})
-            if $preishits and $preishits->{facets}->{year};
+        #return to_dumper $cql;
 
-        foreach my $hit (@{$preishits->{hits}}) {
+        #$preishits->{facets}->{year} = group_year_facet($preishits->{facets}->{year}) if $preishits and $preishits->{facets}->{year};
 
-            #my $id = "";
-            my $honoree;
-            $honoree->{full_name}     = $hit->{honoree}->[0]->{full_name};
-            $honoree->{first_name}    = $hit->{honoree}->[0]->{first_name};
-            $honoree->{last_name}     = $hit->{honoree}->[0]->{last_name};
-            $honoree->{title}         = $hit->{honoree}->[0]->{title};
-            $honoree->{former_member} = $hit->{former_member} ||= "";
-            $honoree->{id}            = $hit->{honoree}->[0]->{id} ||= "";
-            $honoree->{preis}         = $hit->{_id};
+        foreach my $hit (@{$preishits->{hits}}){
+            my $id = "";
+            my $honoree =
+                {
+                    'full_name' => $hit->{honoree}->[0]->{full_name},
+                    'first_name' => $hit->{honoree}->[0]->{first_name},
+                    'last_name' => $hit->{honoree}->[0]->{last_name},
+                    'title' => $hit->{honoree}->[0]->{title},
+                    'former_member' => $hit->{former_member} ||= "",
+                    'id' => $hit->{honoree}->[0]->{_id} ||= "",
+                    'preis' => $hit->{_id}
+                };
 
-            #$id = $hit->{academyId} if $hit->{academyId};
-            #$id = $hit->{awardId} if $hit->{awardId};
+            #$id = $hit->{academy_id} if $hit->{academy_id};
+            #$id = $hit->{award_id} if $hit->{award_id};
             my $awardemy = $store->get($hit->{award_id});
 
         #$awardemy = $academyBag->get($hit->{academyId}) if $hit->{academyId};
@@ -251,36 +255,34 @@ get qr{/award/*} => sub {
                 $displayname .= $honoree->{full_name};
             }
 
-            push @{$hits->{lists}->{person}->{"$honoree->{full_name}"}},
-                {
-                personNumber => $honoree->{id},
-                name         => $displayname,
-                awardId      => $id,
-                };
+            #push @{$hits->{lists}->{person}->{"$honoree->{full_name}"}}, {personNumber => $honoree->{id},
+            #                                             name => $displayname,
+            #                                             award_id => $id,
+            #                                             };
 
-            $hits->{lists}->{awardemy}->{$id} = $name;
-            $hits->{lists}->{auszeichnungen}->{$hit->{award_id}} = $name
-                if ($hit->{award_id}
-                and $awardemy->{rec_type} eq "auszeichnung");
-            $hits->{lists}->{awards}->{$hit->{award_id}} = $name
-                if ($hit->{award_id} and $awardemy->{rec_type} eq "preis");
-            $hits->{lists}->{academys}->{$hit->{award_id}} = $name
-                if ($hit->{award_id} and $awardemy->{rec_type} eq "akademie");
+            #$hits->{lists}->{awardemy}->{$id} = $name;
+            $hits->{lists}->{auszeichnungen}->{$hit->{award_id}} = $name if ($hit->{award_id} and $awardemy->{rec_type} eq "auszeichnung");
+            $hits->{lists}->{awards}->{$hit->{award_id}} = $name if ($hit->{award_id} and $awardemy->{rec_type} eq "preis");
+            $hits->{lists}->{academys}->{$hit->{award_id}} = $name if ($hit->{award_id} and $awardemy->{rec_type} eq "akademie");
         }
 
-        $hits->{lists}->{total} = keys %{$hits->{lists}->{awardemy}} || 0;
-        $hits->{lists}->{auszeichnungentotal}
-            = keys %{$hits->{lists}->{auszeichnungen}} || 0;
+        #$hits->{lists}->{total} = keys %{$hits->{lists}->{awardemy}} || 0;
+        $hits->{lists}->{auszeichnungentotal} = keys %{$hits->{lists}->{auszeichnungen}} || 0;
         $hits->{lists}->{awardstotal} = keys %{$hits->{lists}->{awards}} || 0;
-        $hits->{lists}->{academystotal}
-            = keys %{$hits->{lists}->{academys}} || 0;
+        $hits->{lists}->{academystotal} = keys %{$hits->{lists}->{academys}} || 0;
 
         $hits->{facets} = $preishits->{facets};
-        $hits->{lists}->{persontotal} = keys %{$hits->{lists}->{person}};
+        #$hits->{lists}->{persontotal} = keys %{$hits->{lists}->{person}};
 
         $hits->{formreturn} = $returnhash if $returnhash;
 
-        $tmpl = "award/main";
+        if(params->{ftyp} and params->{ftyp} eq "iframe"){
+            $tmpl = "award/main_iframe.tt";
+            $hits->{ftyp} = params->{ftyp};
+        }
+        else {
+            $tmpl = "award/main";
+        }
 
         #$tmpl .= "_$lang" if $lang;
         $hits->{lang} = "en" if $lang;
@@ -292,11 +294,11 @@ get qr{/award/*} => sub {
     # Award details page
     else {
 
-        my $hits;
-        $hits = $store->get($id);
-        $id   = uc $id;
+        my $hit;
+        $hit = $store->get($id);
+        $id = uc $id;
 
-        if ($hits->{rec_type} ne "record") {
+        if($hit->{rec_type} ne "record"){
 
             my $awardhits = h->award->search(
                 cql_query => "awardid exact $id",
@@ -305,38 +307,52 @@ get qr{/award/*} => sub {
                 start => params->{start} ||= 0,
                 sru_sortkeys => "year,,0",
             );
-            $hits->{people} = $awardhits if $awardhits->{total};
+            $hit->{people} = $awardhits if $awardhits->{total};
 
-            $tmpl = "award/awardRecord";
+            if(params->{ftyp} and params->{ftyp} eq "iframe"){
+                $tmpl = "award/awardRecord_iframe";
+                $hit->{ftyp} = params->{ftyp};
+            }
+            else {
+                $tmpl = "award/awardRecord";
+            }
 
             #$tmpl .= "_$lang" if $lang;
-            $hits->{lang} = "en" if $lang;
+            $hit->{lang} = "en" if $lang;
 
-            $hits->{id} = $id;
-            return template $tmpl, $hits;
+            $hit->{id} = $id;
+            return template $tmpl, $hit;
         }
-        elsif ($hits->{rec_type} eq "record") {
-            $hits->{award_data} = h->award->get($hits->{award_id});
+        elsif($hit->{rec_type} eq "record"){
+            $hit->{award_data} = h->award->get($hit->{award_id});
 
-            my $name = $hits->{honoree}->[0]->{full_name};
+            my $name = "\"" . $hit->{honoree}->[0]->{first_name} . "\" AND honoree=\"" . $hit->{honoree}->[0]->{last_name} . "\"";
+            $name =~ tr/äöüß/aous/;
 
             my $otherHits = h->award->search(
-                cql_query    => "honoree exact \"$name\"",
-                limit        => h->config->{default_searchpage_size},
-                start        => 0,
+                cql_query => "honoree=$name",
+                limit => h->config->{default_searchpage_size},
+                start => 0,
                 sru_sortkeys => "year,,0",
             );
 
-            $hits->{otheraward} = $otherHits if $otherHits->{total} != 0;
+            $hit->{otheraward} = $otherHits if $otherHits->{total};
+            #return to_dumper $hit->{otheraward};
         }
 
-        $tmpl = "award/preisRecord";
+        if(params->{ftyp} and params->{ftyp} eq "iframe"){
+            $tmpl = "award/preisRecord_iframe";
+            $hit->{ftyp} = params->{ftyp};
+        }
+        else {
+            $tmpl = "award/preisRecord";
+        }
 
         #$tmpl .= "_$lang" if $lang;
-        $hits->{lang} = "en" if $lang;
-
-        #return to_dumper $hits;
-        template $tmpl, $hits;
+        $hit->{lang} = "en" if $lang;
+        $hit->{ftyp} = params->{ftyp} if params->{ftyp};
+        #return to_dumper $hit;
+        template $tmpl, $hit;
     }
 
 };
@@ -346,14 +362,13 @@ post '/en/awardemail' => sub {
     my $email   = params->{email};
     my $preis   = params->{awardname};
     my $message = params->{ftext};
-    my $path    = params->{lasturl};
+    my $path = params->{lasturl};
 
-    my $receiver
-        = ['pressestelle@uni-bielefeld.de', 'petra.kohorst@uni-bielefeld.de'];
+    my $receiver = ['pressestelle@uni-bielefeld.de','petra.kohorst@uni-bielefeld.de'];
     my $returnmessage = "";
 
-    if ($email and $message) {
-        foreach my $recipient (@$receiver) {
+    if($email and $message){
+        foreach my $recipient (@$receiver){
             open(MAIL, "|/usr/lib/sendmail -ti");
             print MAIL "To: $recipient\n";
             print MAIL "From: $email\n";
@@ -374,55 +389,40 @@ post '/en/awardemail' => sub {
 
 ############################
 
-sub group_year_facet() {
-    my $years = shift;
-    my $groups;
-    my ($sec, $min, $hour, $day, $mon, $year) = localtime(time);
-    my $now = sprintf("%04d", 1900 + $year);
-    foreach my $term (@{$years->{terms}}) {
-
-# the first if can be removed as soon as the import routine has been optimized to reduce several years to the first one
-        my $termterm
-            = $groups->{$term->{term}} ? int($groups->{$term->{term}}) : 0;
-        my $termcount = $term->{count} ? int($term->{count}) : 0;
-        if ($term->{term} =~ /(\d{4})-\d{4}/) {
-            my $tempyear = $1;
-            if ($tempyear =~ /(\d{3})[0-4]$/) {
-                $term->{term}
-                    = int($1 . "4") > $now
-                    ? $1 . "0 - " . $now
-                    : $1 . "0 - " . $1 . "4";
-                $groups->{$term->{term}} = $termterm + $termcount;
-            }
-            elsif ($tempyear =~ /(\d{3})[5-9]$/) {
-                $term->{term}
-                    = int($1 . "9") > $now
-                    ? $1 . "5 - " . $now
-                    : $1 . "5 - " . $1 . "9";
-                $groups->{$term->{term}} = $termterm + $termcount;
-            }
-        }
-        elsif ($term->{term} =~ /(\d{3})[0-4]$/) {
-            $term->{term}
-                = int($1 . "4") > $now
-                ? $1 . "0 - " . $now
-                : $1 . "0 - " . $1 . "4";
-            $groups->{$term->{term}} = $termterm + $termcount;
-        }
-        elsif ($term->{term} =~ /(\d{3})[5-9]$/) {
-            $term->{term}
-                = int($1 . "9") > $now
-                ? $1 . "5 - " . $now
-                : $1 . "5 - " . $1 . "9";
-            $groups->{$term->{term}} = $termterm + $termcount;
-        }
-    }
-    $years->{terms} = [];
-
-    foreach my $key (sort {$b cmp $a} keys %$groups) {
-        push @{$years->{terms}}, {term => $key, count => $groups->{$key}};
-    }
-    return $years;
-}
+# sub group_year_facet(){
+#     my $years = shift;
+#     my $groups;
+#     my ($sec,$min,$hour,$day,$mon,$year) = localtime(time); my $now = sprintf("%04d", 1900+$year);
+#     foreach my $term (@{$years->{terms}}){
+#         # the first if can be removed as soon as the import routine has been optimized to reduce several years to the first one
+#         my $termterm = $groups->{$term->{term}} ? int($groups->{$term->{term}}) : 0;
+#         my $termcount = $term->{count} ? int($term->{count}) : 0;
+#         if($term->{term} =~ /(\d{4})-\d{4}/){
+#             my $tempyear = $1;
+#             if($tempyear =~ /(\d{3})[0-4]$/){
+#                 $term->{term} = int($1."4") > $now ? $1."0 - ".$now : $1."0 - ".$1."4";
+#                 $groups->{$term->{term}} =  $termterm + $termcount;
+#             }
+#             elsif($tempyear =~ /(\d{3})[5-9]$/){
+#                 $term->{term} = int($1."9") > $now ? $1."5 - ".$now : $1."5 - ".$1."9";
+#                 $groups->{$term->{term}} = $termterm + $termcount;
+#             }
+#         }
+#         elsif($term->{term} =~ /(\d{3})[0-4]$/){
+#             $term->{term} = int($1."4") > $now ? $1."0 - ".$now : $1."0 - ".$1."4";
+#             $groups->{$term->{term}} = $termterm + $termcount;
+#         }
+#         elsif($term->{term} =~ /(\d{3})[5-9]$/){
+#             $term->{term} = int($1."9") > $now ? $1."5 - ".$now : $1."5 - ".$1."9";
+#             $groups->{$term->{term}} = $termterm + $termcount;
+#         }
+#     }
+#     $years->{terms} = [];
+#
+#     foreach my $key (sort {$b cmp $a} keys %$groups){
+#         push @{$years->{terms}}, {term => $key, count => $groups->{$key}};
+#     }
+#     return $years;
+# }
 
 1;

@@ -34,6 +34,7 @@ publication_type_order:
 # sort order of fields for all types
 field_order:
   basic_fields:
+    - document_type
     - bi_doctype
     - doi
     - translator
@@ -133,6 +134,8 @@ publication_types:
   book:
     fields:
       basic_fields:
+        document_type: &document_type
+          multiple: 0
         doi: &doi
           mandatory: 0
           multiple: 0
@@ -199,7 +202,7 @@ publication_types:
             mandatory: 0
             readonly: admin
           ddc:
-            multiple: 0
+            multiple: 1
             mandatory: oa_file
       supplementary_fields:
         abstract: &abstract
@@ -225,10 +228,12 @@ publication_types:
         related_material.record:
           mandatory: 0
         related_material.link:
+          multiple: 1
           mandatory: 0
   book_editor:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         editor_solo: &editor_solo
@@ -250,6 +255,17 @@ publication_types:
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
         edition: *edition
+        conference.divider: &conference_divider
+          mandatory: 0
+        conference.name: &conference_name
+          mandatory: 0
+          multiple: 0
+        conference.location: &conference_location
+          mandatory: 0
+          multiple: 0
+        conference.date: &conference_date
+          placeholder_start: "YYYY-MM-DD"
+          placeholder_end: "YYYY-MM-DD"
         locked: *locked
       file_upload: *file_upload
       supplementary_fields:
@@ -266,6 +282,7 @@ publication_types:
   book_chapter:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         alternative_title: *alternative_title
@@ -292,17 +309,10 @@ publication_types:
         year_extern: *year_extern
         publication_identifier: *publication_identifier
         publication_status_language: *publication_status_language
-        conference.divider: &conference_divider
-          mandatory: 0
-        conference.name: &conference_name
-          mandatory: 0
-          multiple: 0
-        conference.location: &conference_location
-          mandatory: 0
-          multiple: 0
-        conference.date: &conference_date
-          placeholder_start: "YYYY-MM-DD"
-          placeholder_end: "YYYY-MM-DD"
+        conference.divider: *conference_divider
+        conference.name: *conference_name
+        conference.location: *conference_location
+        conference.date: *conference_date
         locked: *locked
       file_upload: *file_upload
       supplementary_fields:
@@ -319,6 +329,7 @@ publication_types:
   conference_abstract:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         author: *author_translator
@@ -367,6 +378,7 @@ publication_types:
   conference_editor:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         editor_solo: *editor_solo
@@ -405,6 +417,7 @@ publication_types:
   conference:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         alternative_title: *alternative_title
@@ -446,6 +459,7 @@ publication_types:
   dissertation:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         author:
@@ -482,6 +496,7 @@ publication_types:
   encyclopedia_article:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         author: *author_translator
@@ -516,6 +531,7 @@ publication_types:
   journal_article:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         alternative_title: *alternative_title
@@ -558,6 +574,7 @@ publication_types:
   journal_editor:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         editor_solo: *editor_solo
@@ -594,6 +611,7 @@ publication_types:
   newspaper_article:
     fields:
       basic_fields:
+        document_type: *document_type
         author: *author_translator
         title: *title
         department: *department
@@ -602,7 +620,7 @@ publication_types:
         year_extern: *year_extern
         publication_date: &publication_date
           mandatory: 1
-        page: *page_range
+        volume_issue_page: *volume_issue_page
         publication:
           mandatory: 1
         alternative_title: *alternative_title
@@ -624,6 +642,7 @@ publication_types:
   patent:
     fields:
       basic_fields:
+        document_type: *document_type
         title: *title
         alternative_title: *alternative_title
         author:
@@ -657,6 +676,7 @@ publication_types:
   preprint:
     fields:
       basic_fields:
+        document_type: *document_type
         title: *title
         publication:
           mandatory: 0
@@ -684,6 +704,7 @@ publication_types:
   report:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         author: *author_translator
@@ -715,21 +736,20 @@ publication_types:
   review:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         author: *author_translator
-        editor: *editor_only
-        corporate_editor: *corporate_editor
         department: *department
         project: *project
         research_group: *research_group
         publisher: *publisher
         year_extern: *year_extern
+        publication_date:
+          mandatory: 0
         alternative_title: *alternative_title
         place: *place
         publication:
-          mandatory: 0
-        series_title:
           mandatory: 0
         volume_issue_page: *volume_issue_page_number
         publication_identifier: *publication_identifier
@@ -749,6 +769,7 @@ publication_types:
   research_data:
     fields:
       basic_fields:
+        document_type: *document_type
         doi:
           readonly: 1
         title: *title
@@ -790,6 +811,7 @@ publication_types:
   translation:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         alternative_title:
@@ -836,6 +858,7 @@ publication_types:
   translation_chapter:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         alternative_title:
@@ -853,6 +876,7 @@ publication_types:
         research_group: *research_group
         edition: *edition
         editor: *editor_only
+        corporate_editor: *corporate_editor
         place: *place
         publisher: *publisher
         publication:
@@ -881,6 +905,7 @@ publication_types:
   working_paper:
     fields:
       basic_fields:
+        document_type: *document_type
         doi: *doi
         title: *title
         alternative_title: *alternative_title
@@ -911,6 +936,7 @@ publication_types:
   bi_dissertation:
     fields:
       basic_fields:
+        document_type: *document_type
         bi_doctype:
           label: "Documenttype"
           mandatory: 1
@@ -934,7 +960,7 @@ publication_types:
          label: "Year"
          mandatory: 1
         defense_date: &defense_date
-          mandatory: 1
+          mandatory: 0
         publisher: &publisher_diss
           mandatory: 1
         place: &place_diss
@@ -952,6 +978,7 @@ publication_types:
             mandatory: 1
           ddc:
             mandatory: 1
+            multiple: 1
       supplementary_fields:
         abstract: *abstract
         keyword: *keyword
@@ -992,6 +1019,7 @@ array_field:
   - alternative_id
   - jel
   - link
+  - related_material.link
 
 other_items:
   account:
@@ -1007,8 +1035,10 @@ other_items:
       - department
       - account_status
       - super_admin
+      - award_admin
       - delegate
       - data_manager
+      - project_reviewer
       - reviewer
       - edit_mode
       - author_ids
@@ -1058,11 +1088,16 @@ other_items:
       label: "Active"
     super_admin:
       label: "Library Admin"
+    award_admin:
+      label: "Award Admin"
     delegate:
       label: "Manage publications for"
       multiple: 1
     data_manager:
       label: "Data Manager"
+      multiple: 1
+    project_reviewer:
+      label: "Project Reviewer"
       multiple: 1
     reviewer:
       label: "Reviewer"

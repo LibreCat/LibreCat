@@ -1,3 +1,5 @@
+default_lang: en
+
 host: "http://localhost:5001"
 
 thesis:
@@ -31,7 +33,7 @@ authentication:
       # password auth against database users
       - package: LibreCat::Auth::Bag
         options:
-          store: backup
+          store: search
           bag: researcher
           username_attr: login
       # LDAP auth
@@ -49,6 +51,6 @@ user:
   sources:
     - store: builtin_users
       username_attr: login
-    - store: backup
+    - store: search
       bag: researcher
       username_attr: login

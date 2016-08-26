@@ -146,12 +146,12 @@ sub extract_params {
         if (
             @$deletedq = (
                 $cql
-                    =~ /((?=AND |OR |NOT )?[0-9a-zA-Z]+\=\s|(?=AND |OR |NOT )?[0-9a-zA-Z]+\=$)/g
+                    =~ /((?=AND |OR |NOT )?[0-9a-zA-Zäöüß]+\=\s|(?=AND |OR |NOT )?[0-9a-zA-Zäöüß]+\=$)/g
             )
             )
         {
             $cql
-                =~ s/((AND |OR |NOT )?[0-9a-zA-Z]+\=\s|(AND |OR |NOT )?[0-9a-zA-Z]+\=$)/ /g;
+                =~ s/((AND |OR |NOT )?[0-9a-zA-Zäöüß]+\=\s|(AND |OR |NOT )?[0-9a-zA-Zäöüß]+\=$)/ /g;
         }
         $cql =~ s/^\s*(AND|OR)//g;
         $cql =~ s/,//g;
@@ -165,15 +165,15 @@ sub extract_params {
         $cql =~ s/\s{2,}/ /;
 
         if ($cql
-            !~ /^("[^"]*"|'[^']*'|[0-9a-zA-Z]+(=| ANY | ALL | EXACT )"[^"]*")$/
+            !~ /^("[^"]*"|'[^']*'|[0-9a-zA-Zäöüß]+(=| ANY | ALL | EXACT )"[^"]*")$/
             and $cql
-            !~ /^(([0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)(?<!ANY)(?<!ALL)(?<!EXACT)|"[^"]*"|'[^']*') (AND|OR) ([0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))$/
+            !~ /^(([0-9a-zA-Zäöüß]+\=(?:[0-9a-zA-Zäöüß\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)(?<!ANY)(?<!ALL)(?<!EXACT)|"[^"]*"|'[^']*') (AND|OR) ([0-9a-zA-Zäöüß]+\=(?:[0-9a-zA-Zäöüß\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))$/
             and $cql
-            !~ /^(([0-9a-zA-Z]+( ANY | ALL | EXACT )"[^"]*"|"[^"]*"|'[^']*'|[0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR))( (AND|OR) (([0-9a-zA-Z]+( ANY | ALL | EXACT )"[^"]*")|"[^"]*"|'[^']*'|[0-9a-zA-Z]+\=(?:[0-9a-zA-Z\-\*]+|"[^"]*"|'[^']*')+\**))*)$/
+            !~ /^(([0-9a-zA-Zäöüß]+( ANY | ALL | EXACT )"[^"]*"|"[^"]*"|'[^']*'|[0-9a-zA-Zäöüß]+\=(?:[0-9a-zA-Zäöüß\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR))( (AND|OR) (([0-9a-zA-Zäöüß]+( ANY | ALL | EXACT )"[^"]*")|"[^"]*"|'[^']*'|[0-9a-zA-Zäöüß]+\=(?:[0-9a-zA-Zäöüß\-\*]+|"[^"]*"|'[^']*')+\**))*)$/
             )
         {
             $cql
-                =~ s/((?:(?:(?:[0-9a-zA-Z\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*') (?:AND|OR) )+(?:[0-9a-zA-Z\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))|[0-9a-zA-Z\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*')\s(?!AND )(?!OR )("[^"]*"|'[^']*'|.*?)/$1 AND $2/g;
+                =~ s/((?:(?:(?:[0-9a-zA-Zäöüß\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*') (?:AND|OR) )+(?:[0-9a-zA-Zäöüß\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))|[0-9a-zA-Zäöüß\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*')\s(?!AND )(?!OR )("[^"]*"|'[^']*'|.*?)/$1 AND $2/g;
         }
         push @{$p->{q}}, lc $cql;
     }
@@ -305,7 +305,8 @@ sub get_sort_style {
 }
 
 sub now {
-    my $now = strftime($_[0]->config->{time_format}, gmtime(time));
+    my $time = $_[1] // time;
+    my $now  = strftime($_[0]->config->{time_format}, gmtime($time));
     return $now;
 }
 
@@ -369,11 +370,9 @@ sub get_publication {
 
 sub get_person {
     my $hits;
-    if ($_[1] and is_integer $_[1]) {
+    if ( $_[1] ) {
         $hits = $_[0]->search_researcher({q => ["id=$_[1]"]});
-    }
-    elsif ($_[1] and is_string $_[1]) {
-        $hits = $_[0]->search_researcher({q => ["login=$_[1]"]});
+        $hits = $_[0]->search_researcher({q => ["login=$_[1]"]}) if !$hits->{total};
     }
     return $hits->{hits}->[0] if $hits->{hits};
     return {error => "something went wrong"} if !$hits->{hits};
@@ -638,7 +637,7 @@ sub search_publication {
     }
 
     my $hits;
-    $cql =~ tr/äöüß/aous/;
+    #$cql =~ tr/äöüß/aous/;
 
     try {
         $hits = publication->search(

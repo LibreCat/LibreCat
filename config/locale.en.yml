@@ -27,6 +27,8 @@ header:
     user: "User"
     delegate: "Delegate"
     reviewer: "Reviewer"
+    project_reviewer: "Project Reviewer"
+    award_admin: "Award Admin"
     data_manager: "Data Manager"
     super_admin: "Admin"
   admin_menu:
@@ -57,8 +59,12 @@ footer:
   openaire_title: "PUB is 100% OpenAIRE valid"
   openarchives_alt: "Open Archives Data Provider"
   openarchives_title: "PUB is registered Data Provider of the Open Archives Initiative"
+  dci_alt: "Data Citation Index"
+  dci_title: "PUB is included in the Thomson Reuters Data Citation Index"
   datacite_alt: "DataCite"
   datacite_title: "PUB registers Research Data with DataCite"
+  re3data_alt: "re3data.org"
+  re3data_title: "PUB is included in Re3Data (Registry of Research Data Repositories)"
   faq: "FAQ"
   contact: "Contact"
   policy: "Policy"
@@ -81,6 +87,7 @@ tabs:
   faq: "FAQ"
   contact: "Contact"
   policy: "Policy"
+  login: "How to log in?"
 hits:
   author: "Author"
   authors: "Authors"
@@ -124,6 +131,7 @@ main_page:
   heading_admin: "Admin"
   heading_user: "User"
   heading_reviewer: "Reviewer"
+  heading_project_reviewer: "Project Reviewer"
   heading_delegate: "Delegate"
   logged_in_as: "Logged in as"
   by: "by"
@@ -137,8 +145,9 @@ main_page:
   links:
     edit: "Edit"
     details: "Details"
-    view_details: "Vollständige bibliographische Angaben und Zugriffsinformationen anzeigen"
+    view_details: "Show complete bibliographic information and access options."
     files: "Files available"
+    file: "File"
     internal_view: "Internal View"
     request_a_copy: "Request a Copy"
     request_a_copy_title: "Generate sharable links for files with 'Request a copy' status"
@@ -277,9 +286,13 @@ frontdoor:
       cooperator: "Cooperator"
     file_details:
       label: "Files"
+      external_material: "External material:"
+      internal_material: "Material in PUB:"
       name: "File Name"
+      relation: "Relation (to PUB document)"
       title: "File Title"
       description: "Description"
+      url: "URL"
       access_level:
         label: "Access Level"
         open_access: "Open Access"
@@ -309,8 +322,11 @@ frontdoor:
     confirmation_letter:
       label: "Letter of Confirmation"
       confirmation: "Confirmation"
-    related_material: "Related Material"
-    external_data: "External Data"
+    related_material: "Links"
+    external_data:
+      label: "Software/ Ext. Data"
+      research_data: "External Research Data:"
+      software: "Software:"
     cite_this: "Cite This"
     export_search: "Export / Search"
   fulltext:
@@ -320,7 +336,7 @@ frontdoor:
   license_heading: "All files available under the following license(s):"
 mark:
   marked_publication: "Marked Publication(s)"
-  no_marked_publication: "You don't have any publications 'marked' yet. If you want to add a publication to this page, please click on the link <em>Mark</em> next to the publication data. You can find this links on publication lists or on a publication page. You can export marked publicatoins in several bibligraphic formats, like BibTex, RIS or RTF."
+  no_marked_publication: "You don't have any publications 'marked' yet. If you want to add a publication to this page, please click on the link <em>Mark</em> next to the publication data. You can find this links on publication lists or on a publication page. You can export marked publications in several bibligraphic formats, like BibTex, RIS or RTF."
   mark_all: "Mark all"
   unmark_all: "Unmark all"
   mark_unmark: "Mark/Unmark publication"
@@ -360,6 +376,8 @@ forms:
       supplementary_fields: "Additional Information"
       related_material: "Links"
     field:
+      document_type: &document_type
+        label: "Publication Type"
       doi: &doi
         label: "DOI"
         placeholder: "e.g. 10.4119/unibi/2695161"
@@ -370,10 +388,11 @@ forms:
       alternative_title: &alternative_title
         label: "Alternative Title"
         label_short: "Alt. Title"
-        placeholder: "e.g. Handbuch der eBook-Veröffentlichung"
+        placeholder: "e.g. Handbuch der eBook-Ver&ouml;ffentlichung"
       author: &author_translator
         label: "Author"
         tooltip: "Activate if UniBi author."
+        idm_extern: "extern"
         first_name:
           label: "First Name"
           label_short: "Auth. First"
@@ -504,14 +523,14 @@ forms:
         label: "Abstract"
         label2: "Language"
         placeholder: "Abstract Text (you can use Markdown for styling)"
-        explain: "Use <a href='http://spec.commonmark.org/0.22/#preliminaries' target='_blank'>Markdown</a> for text styling. After saving click on the link 'PUB' to get a preview and check text styling."
+        explain: "Use <a href='/docs/howto/markdown' target='_blank'>Markdown</a> for text styling. After saving click on the link 'PUB' to get a preview and check text styling."
       keyword: &keyword
         label: "Keywords"
         placeholder: "Keywords (multiple entries separated by semicolon, e.g. Keyword1 ; Keyword2 ; Keyword3)"
       external_id: &external_id
         label: "External Identifier"
         label_short: "Ext. Id."
-        placeholder: "Select an Identifier (e.g. a PMID) and enter it here"
+        placeholder: "Select an Identifier and enter it here (simple numbers only, no parts of URL)"
         select: "Select"
       message: &message
         label: "Comments"
@@ -541,19 +560,17 @@ forms:
         placeholder: "Start typing to search your publications."
       related_material.select: "Select type of related material"
       related_material.link: &related_material_link
-        label: "Link to external source"
-        label_short: "Ext. Link"
+        label: "Link and relation<br />to external material"
+        label_short: "External Material"
         url:
           label_short: "URL"
-          placeholder: "URL of external link (enter with http://)"
+          placeholder: "URL of external source (enter with http://)"
         title:
           label_short: "Title"
-          placeholder: "Title of external link"
-        description:
-          label_short: "Description"
-          placeholder: "Description of external link"
-        button:
-          label: "Add"
+          placeholder: "Title of external source"
+        relation:
+          label_short: "Material is"
+          label: "External material is"
       locked: &locked
         label: "Locked for editing (except for admins)"
         label_short: "Locked"
@@ -564,6 +581,7 @@ forms:
     label: "Book (Editor)"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *booktitle
       editor_solo: &editor_solo
@@ -577,6 +595,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Editor"
         label_short: "Ed."
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       corporate_editor_solo: &corporate_editor_solo
         label: "Corporate Editor"
@@ -593,6 +612,24 @@ forms:
       series_title_volume: *series_title_volume
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
+      conference.divider: &conference_divider
+        label: "Conference Details"
+      conference.name: &conference_name
+        label: "Conference"
+        label_short: "Name"
+        placeholder: "e.g. 3rd Conference on Nano-Physics"
+      conference.location: &conference_location
+        label: "Conference Location"
+        label_short: "Location"
+        placeholder: "e.g. Berlin"
+      conference.date: &conference_date
+        label: "Conference Date"
+        label_start: "Conference Start"
+        label_start_short: "Start"
+        label_end: "Conference End"
+        label_end_short: "End"
+        placeholder_start: "YYYY-MM-DD"
+        placeholder_end: "YYYY-MM-DD"
       edition: *edition
       dropzone: *dropzone
       license: *license
@@ -614,6 +651,7 @@ forms:
     label: "Book Chapter"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -632,6 +670,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Book Editor"
         label_short: "Ed."
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       corporate_editor: &corporate_editor
         label: "Corporate Editor"
@@ -653,24 +692,10 @@ forms:
         placeholder: "e.g. Handbook of eBook Publishing"
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
-      conference.divider: &conference_divider
-        label: "Conference Details"
-      conference.name: &conference_name
-        label: "Conference"
-        label_short: "Name"
-        placeholder: "e.g. 3rd Conference on Nano-Physics"
-      conference.location: &conference_location
-        label: "Conference Location"
-        label_short: "Location"
-        placeholder: "e.g. Berlin"
-      conference.date: &conference_date
-        label: "Conference Date"
-        label_start: "Conference Start"
-        label_start_short: "Start"
-        label_end: "Conference End"
-        label_end_short: "End"
-        placeholder_start: "YYYY-MM-DD"
-        placeholder_end: "YYYY-MM-DD"
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
       dropzone: *dropzone
       license: *license
       urn: *urn
@@ -691,6 +716,7 @@ forms:
     label: "Conference Abstract"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: &title
         label: "Title"
@@ -708,6 +734,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Editor"
         label_short: "Ed."
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       corporate_editor: *corporate_editor
       department: *department
@@ -763,6 +790,7 @@ forms:
     label: "Conference (Editor)"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *booktitle
       editor_solo: *editor_solo
@@ -802,6 +830,7 @@ forms:
     label: "Conference Paper"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -848,6 +877,7 @@ forms:
     label: "Dissertation"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -862,6 +892,7 @@ forms:
           label_short: "Superv. Last"
           placeholder: "e.g. Appleseed"
         label: "Supervisor"
+        idm_extern: "extern"
       department: *department
       project: *project
       research_group: *research_group
@@ -891,6 +922,7 @@ forms:
     label: "Encyclopedia Article"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -933,6 +965,7 @@ forms:
     label: "Journal Article"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -989,6 +1022,7 @@ forms:
     label: "Special Issue"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -1043,6 +1077,7 @@ forms:
     label: "Newspaper Article"
     tab: *tab
     field:
+      document_type: *document_type
       title:
         label: "Title"
         label_short: "Title"
@@ -1057,7 +1092,7 @@ forms:
         label: "Publication Date"
         label_short: "Publ. Date"
         placeholder: "YYYY-MM-DD"
-      page: *page_range
+      volume_issue_page: *volume_issue_page
       publication:
         label: "Newspaper Title"
         label_short: "News. Title"
@@ -1085,6 +1120,7 @@ forms:
     label: "Patent"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
@@ -1098,6 +1134,7 @@ forms:
           label_short: "Inv. Last"
           placeholder: "e.g. Appleseed"
         label: "Inventor"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       applicant:
         label: "Applicant"
@@ -1145,6 +1182,7 @@ forms:
     label: "Preprint"
     tab: *tab
     field:
+      document_type: *document_type
       title:
         label: "Title"
         label_short: "Titel"
@@ -1178,6 +1216,7 @@ forms:
     label: "Report"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -1217,24 +1256,22 @@ forms:
     label: "Book Review"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       alternative_title: *alternative_title
       author: *author_translator
-      editor: *editor_only
-      corporate_editor: *corporate_editor
       department: *department
       project: *project
       research_group: *research_group
       place: *place
       publisher: *publisher
       year_extern: *year_extern
+      publication_date:
+        label: "Publication Date"
+        placeholder: "YYYY-MM-DD"
       publication:
-        label: "Book Title"
-        placeholder: "e.g. Handbook of eBook Publishing"
-      series_title:
-        label: "Series or Journal Title"
-        label_short: "Series/Journal Title"
+        label: "Journal Title"
         placeholder: "e.g. Nature Genetics"
       volume_issue_page: *volume_issue_page
       publication_identifier: *publication_identifier
@@ -1262,6 +1299,7 @@ forms:
       supplementary_fields: "Additional Information"
       related_material: "Links"
     field:
+      document_type: *document_type
       doi: *doi
       title: *title
       author:
@@ -1274,6 +1312,7 @@ forms:
           label_short: "Crea. Last"
           placeholder: "e.g. Appleseed"
         label: "Creator"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       department: *department
       project: *project
@@ -1361,6 +1400,7 @@ forms:
     label: "Translation"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title (Translation)"
@@ -1380,6 +1420,7 @@ forms:
           label_short: "Trans. Last"
           placeholder: "e.g. Appleseed"
         label: "Translator"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       author_secondary:
         first_name:
@@ -1391,6 +1432,7 @@ forms:
           label_short: "Auth. Last"
           placeholder: "e.g. Appleseed"
         label: "Author (Original)"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       edition: *edition
       department: *department
@@ -1431,6 +1473,7 @@ forms:
     label: "Translation (Section)"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       editor: *editor_only
       title:
@@ -1447,6 +1490,7 @@ forms:
           label_short: "Trans. Last"
           placeholder: "e.g. Appleseed"
         label: "Translator"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       author_secondary:
         first_name:
@@ -1458,6 +1502,7 @@ forms:
           label_short: "Auth. Last"
           placeholder: "e.g. Appleseed"
         label: "Author"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       alternative_title:
         label: "Title (Original)"
@@ -1465,6 +1510,7 @@ forms:
         placeholder: "e.g. Handbook of eBook Publishing"
       edition: *edition
       editor: *editor_only
+      corporate_editor: *corporate_editor
       department: *department
       project: *project
       research_group: *research_group
@@ -1503,6 +1549,7 @@ forms:
     label: "Working Paper"
     tab: *tab
     field:
+      document_type: *document_type
       doi: *doi
       title:
         label: "Title"
@@ -1536,12 +1583,13 @@ forms:
       locked: *locked
       link: *link
   bi_dissertation:
-    label: "Bielefeld Thesis"
+    label: "Bielefeld Dissertation"
     tab: *tab
     field: &field
+      document_type: *document_type
       bi_doctype:
-        label: "Documenttype"
-        label_short: "Doc.type"
+        label: "bi*-type"
+        label_short: "bi*-type"
       email: &email
         label: "Email address"
         label_short: "Email"
@@ -1565,6 +1613,7 @@ forms:
           label_short: "Superv. Last"
           placeholder: "e.g. Appleseed"
         label: "Supervisor"
+        idm_extern: "extern"
         tooltip: "Activate if UniBi author."
       year:
         label: "Year"
@@ -1608,17 +1657,17 @@ forms:
     label: "Bielefeld Master Thesis"
     tab: *tab
     field: *field
-  bi_postdoc_thesis: &bipostdocthesis
+  bi_postdoc_thesis:
     label: "Bielefeld Post-Doctoral Habilitation"
     tab: *tab
     field: *field
-  bi_bachelor_thesis: &bibachelorthesis
+  bi_bachelor_thesis:
     label: "Bielefeld Bachelor Thesis"
     tab: *tab
     field: *field
-  to_sp_form: "Change to single page form"
+  to_sp_form: "Single Page Form"
   sp_form: "Single Page Form"
-  to_tab_form: "Change to tabbed form"
+  to_tab_form: "Tabbed Form"
   tab_form: "Tabbed Form"
   toggle_dropdown: "Toggle dropdown"
   mandatory: "Mandatory field"
@@ -1664,6 +1713,7 @@ forms:
     inpress: "In Press"
     epub_ahead: "Epub ahead of print"
     published: "Published"
+    unpublished: "Unpublished"
   article_type:
     original: "Original Article"
     review: "Review"
@@ -1704,6 +1754,82 @@ forms:
     swe: "Swedish"
     tur: "Turkish"
     other: "Other"
+  relation:
+    main_file:
+      display: "Main File(s)"
+      select: "Main File"
+    table_of_contents:
+      display: "Table of Contents"
+      select: "Table of Contents"
+    erratum:
+      display: "Erratum"
+      select: "Erratum"
+    supplementary_material:
+      display: "Supplementary Material"
+      select: "Supplementary Material"
+    research_data:
+      display: "Research Data"
+      select: "Research Data"
+    software:
+      display: "Software"
+      select: "Software"
+    earlier_version:
+      display: "Earlier Version"
+      select: "Earlier Version"
+    later_version:
+      display: "Later Version"
+      select: "Later Version"
+    contains:
+      display: "Publication containing PUB record"
+      select: "Publication containing PUB record"
+    published_in:
+      display: "Part of PUB record"
+      select: "Part of PUB record"
+    dissertation_contains:
+      display: "Dissertation containing PUB record"
+      select: "Dissertation containing PUB record"
+    part_of_dissertation:
+      display: "Part of this Dissertation"
+      select: "Part of this Dissertation"
+    old_edition:
+      display: "Old Edition"
+      select: "Old Edition"
+    new_edition:
+      display: "New Edition"
+      select: "New Edition"
+    continues:
+      display: "Continuation"
+      select: "Continuation"
+    is_continued_by:
+      display: "Previous Item"
+      select: "Previous Item"
+    popular_science:
+      display: "Popular Science"
+      select: "Popular Science"
+    research_paper:
+      display: "Research Paper"
+      select: "Research Paper"
+    translation:
+      display: "Translation"
+      select: "Translation"
+    original:
+      display: "Original of Translation"
+      select: "Original of Translation"
+    other:
+      display: "In other Relation"
+      select: "In other Relation"
+    cites:
+      display: "Cites"
+      select: "Cites"
+    is_cited_by:
+      display: "Is cited by"
+      select: "Is cited by"
+    confirmation:
+      display: "Confirmation Letter"
+      select: "Confirmation Letter"
+    hidden:
+      display: ""
+      select: "Supplementary Material (for embedding only, hidden on frontdoor)"
 403:
   heading: "Access denied (403)"
   text: "You don't have access to this file / folder."
@@ -1735,6 +1861,7 @@ help:
   publication_user_rd: "Your personal publication list - research data."
   publication_delegate: "Each of these tabs shows the publication list of a person, you have been granted access to. The lists have been grouped by person to give you a better overview of your work area."
   publication_reviewer: "All publications of the department you have been granted access to."
+  publication_project_reviewer: "All publications of the project you have been granted access to."
   publication_data_manager: "All data publications of the department you have been granted access to."
   publication_admin: "All publications in PUB."
   statuses: "Visibility  status<br>of publication.<br>To change it, click on 'Edit'."

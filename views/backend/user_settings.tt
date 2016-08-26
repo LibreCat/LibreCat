@@ -7,8 +7,8 @@
       <h5>[% h.loc("header.logged_in_as") %] <em><strong>[% session.user %]</strong></em></h5>
     </div>
   </div>
-  
-  [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.data_manager %]
+
+  [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.project_reviewer OR thisPerson.data_manager OR thisPerson.award_admin OR thisPerson.delegate %]
   <div class="row innerrow">
     <div class="col-md-11">
       <h5>[% h.loc("header.role_label") %]: <em><strong>[% lf.header.role.item(session.role) %]</strong></em></h5>
@@ -22,6 +22,12 @@
 	  [% IF thisPerson.reviewer AND session.role != "reviewer" %]
 	  | <a href="/librecat/change_role/reviewer">[% h.loc("header.role.reviewer") %]</a>
 	  [% END %]
+      [% IF thisPerson.project_reviewer AND session.role != "project_reviewer" %]
+      | <a href="/librecat/change_role/project_reviewer">[% lf.header.role.project_reviewer %]</a>
+      [% END %]
+      [% IF thisPerson.award_admin AND session.role != "award_admin" %]
+      | <a href="/librecat/change_role/award_admin">[% lf.header.role.award_admin %]</a>
+      [% END %]
 	  [% IF thisPerson.data_manager AND session.role != "data_manager" %]
 	  | <a href="/librecat/change_role/data_manager">[% h.loc("header.role.data_manager") %]</a>
 	  [% END %]
@@ -32,7 +38,7 @@
     </div>
   </div>
   [% END %]
-  
+
   <hr />
 
 <form id="id_save_aff" action="/librecat/person/affiliation" method="POST">
@@ -46,7 +52,7 @@
     [% IF !department %]
     <div class="row innerrow multirow">
       <input type="hidden" name="department.0._id" id="person_aff_idautocomplete_0" value="" />
-    
+
       <div class="form-group col-md-11">
         <div class="input-group sticky">
           <input type="text" onfocus="enable_autocomplete('person_aff',0);" class="sticky form-control" id="person_aff_autocomplete_0" value="" />
@@ -59,7 +65,7 @@
       [% FOREACH dept IN department %]
       <div class="row innerrow multirow">
         <input type="hidden" name="department.[% loop.index %]._id" id="person_aff_idautocomplete_[% loop.index %]" value="[% dept._id %]" />
-          
+
         <div class="form-group col-md-11">
           <div class="input-group sticky">
             <input type="text" onfocus="enable_autocomplete('person_aff',[% loop.index %]);" class="sticky form-control" id="person_aff_autocomplete_[% loop.index %]" value="[% h.get_department(dept._id).display %]" disabled="disabled" />
@@ -73,44 +79,6 @@
     </div>
   </div>
 </form>
-
-<hr />
-
-<form id="id_save_mode" action="/librecat/person/edit_mode" method="POST">
-  <div class="row innerrow">
-    <div class="col-md-12">
-      <h4>[% h.loc("header.default_edit_mode") %]</h4>
-    </div>
-  </div>
-  <div class="row innerrow">
-    <div class="col-md-7">
-	  <select id="edit_mode_select" name="edit_mode" class="form-control">
-	    <option value="normal"[% IF (thisPerson.edit_mode AND thisPerson.edit_mode == "normal") OR (!thisPerson.edit_mode AND session.role != "super_admin") %] selected="selected"[% END %]>[% h.loc("forms.tab_form") %]</option>
-	    <option value="expert"[% IF (thisPerson.edit_mode AND thisPerson.edit_mode == "expert") OR (!thisPerson.edit_mode AND session.role == "super_admin") %] selected="selected"[% END %]>[% h.loc("forms.sp_form") %]</option>
-	  </select>
-    </div>
-  </div>
-</form>
-
-<hr />
-
-<form id="id_save_lang" action="/librecat/person/set_language" method="GET">
-  <div class="row innerrow">
-    <div class="col-md-12">
-      <h4>[% h.loc("header.default_language") %]</h4>
-    </div>
-  </div>
-  <div class="row innerrow">
-    <div class="col-md-7">
-      <select id="lang_select" name="lang" class="form-control">
-        <option value="en"[% IF (thisPerson.lang AND thisPerson.lang == "en") OR !thisPerson.lang %] selected="selected"[% END %]>[% h.loc("header.lang_select.eng") %]</option>
-        <option value="de"[% IF (thisPerson.lang AND thisPerson.lang == "de") %] selected="selected"[% END %]>[% h.loc("header.lang_select.ger") %]</option>
-      </select>
-    </div>
-  </div>
-</form>
-
-<hr />
 
 <script>
 

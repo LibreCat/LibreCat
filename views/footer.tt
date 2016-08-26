@@ -16,11 +16,12 @@
 	    <li><a href="http://www.dini.de/dini-zertifikat/"><img src="/images/logo_dini_2010.png" alt="[% h.loc("footer.dini_alt") %]" title="[% h.loc("footer.dini_title") %]" style="height:40px;"/></a></li>
 	    <li><a href="http://www.openaire.eu/"><img src="/images/logo_openaire_val.png" alt="[% h.loc("footer.openaire_alt") %]" title="[% h.loc("footer.openaire_title") %]" /></a></li>
 	    <li><a href="http://www.openarchives.org/Register/BrowseSites"><img src="/images/logo_oai.gif" alt="[% h.loc("footer.openarchives_alt") %] " title="[% h.loc("footer.openarchives_title") %]" style="height:40px;"/></a></li>
+        <li><a href="http://wokinfo.com/products_tools/multidisciplinary/dci/"><img src="/images/logo_dci.png" alt="[% lf.footer.dci_alt %]" title="[% h.loc("footer.dci_title") %]" style="height:40px;"/></a></li>
 	    <li><a href="http://www.datacite.org/"><img src="/images/logo_datacite.png" alt="[% h.loc("footer.datacite_alt") %]" title="[% h.loc("footer.datacite_title") %]" style="height:40px;"/></a></li>
 	    <li><a href="http://service.re3data.org/repository/r3d100010750"><img src="/images/logo_re3data.png" alt="[% h.loc("footer.re3data_alt") %]" title="[% h.loc("footer.re3data_title") %]" style="height:40px;"/></a></li>
 	  </ul>
 	</div>
-	<div class="col-sm-4">
+	<div class="col-lg-offset-1 col-lg-4 col-sm-4">
 	  <ul class="list-inline margin0-sm">
 	    <li><a href="/docs/howto/contact">[% h.loc("footer.contact") %]</a></li>
 	    <li><a href="/docs/howto/policy">[% h.loc("footer.policy") %]</a></li>
@@ -47,8 +48,9 @@ $(document).ready(function () {
     var text = $(this).html();
     parsed = reader.parse(text);
     var result = writer.render(parsed); // result is a String
+    var r = result.replace(/<p>(.*?)<\/p>/g,"$1");
     $(this).html("");
-    $(this).html(result);
+    $(this).html(r);
   });
 });
 </script>

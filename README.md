@@ -1,119 +1,37 @@
-# LibreCat - the new repository software powered by Catmandu
+# LibreCat - an institutional repository
 
-## This software is under heavy development.
+LibreCat is a new institutional repository system developed by [LibreCat Group](http://librecat.org) which has as its key features:
 
-### Prereqs
+* institutional repository
+* publication list manager for reseachers
+* institutional research data archive.
 
-These are the installation instructions to install LibreCat on 6.X
+The development started in 2013 in Bielefeld and was made available on GitHub
+from the start. Since 2015 the code is in production at Bielefeld and is currently
+being in heavy development to allow for local adaptations.
 
-Install the following packages with 'yum install':
+## Features
 
-- expat-devel 
-- expat 
-- openssl-devel 
-- openssl 
-- libxml2 
-- libxml2-devel 
-- libxslt 
-- libxslt-devel 
-- gdbm 
-- gdbm-devel 
-- ImageMagick 
-- mysql 
-- mysql-server 
-- mysql-devel 
-- mysql-libs
-- libgearman
-- libgearman-devel
-- gearmand
+* Cataloging of many record types: Book, Book (Editor), Book Chapter, Book Review,
+Conference Abstract, Conference (Editor), Conference Paper, Dissertation,
+Encyclopedia Article, Journal Article, Special Issue, Newspaper Article, Preprint,
+Report, Translation, Translation (Section), Working Paper, Thesis, Research Data,
+Project, Award, Research Group
+* Drag and drop upload of full-text publications
+* Copycat from DOI, PubMED, Arxiv and Web of Science
+* Google Scholar indexation support
+* Citation Styles for  AMA, APA, Frontiers, Harvard, IEEE, LNCS, MLA, BibTeX, RIS
+* Full MathJAX Latex support to add mathematical formulas in abstracts and titles
+* Pluggable authentication modules
+* Delegate input and management to user others
+* Multilingual support
+* ElasticSearch indexing
+* Pluggable file store backend
+* Command line support using 'Catmandu'
+* OAI-PMH and SRU
+* REST / content negotiation
+* The LibreCat is open source and shipped with the same license as the Perl language: http://dev.perl.org/licenses/
 
-Install the MySQL database:
+## Install
 
-```
-chkconfig --level 2345 mysqld on
-service mysqld start
-/usr/bin/mysqladmin -u root password '<NEWPASSWORD>'
-``` 
-
-Install the Gearman daemon:
-
-```
-chkconfig --level 2345 gearmand on
-service gearmand start
-```
-
-Install a 1.4.X version of ElasticSearh
-!!!! Older 0.9 versions of ElasticSearch shipped !!!!
-!!!! by CentOS for example will not work         !!!!
-
-```
-cat > /etc/yum.repos.d/elasticsearch-1.4.repo <<EOF
-[elasticsearch-1.4]
-name=Elasticsearch repository for 1.4.x packages
-gpgkey=http://packages.elasticsearch.org/GPG-KEY-elasticsearch
-enabled=1
-baseurl=http://packages.elasticsearch.org/elasticsearch/1.4/centos
-gpgcheck=1
-EOF
-
-sudo yum install -y java-1.7.0-openjdk elasticsearch
-chkconfig --add elasticsearch
-service elasticsearch start
-```
-
-Edit your .profle and specify the path to your LibreCat installation:
-
-```
-# Edit .profile add :
-# BEGIN TEXT vvvvvvvvvvvvvvv
-   export LIBRECATHOME=~/LibreCat
-   export PERLHOME=/usr
-   export PATH=${LIBRECATHOME}/local/bin:${PERLHOME}/bin:${PATH}
-   export PERL5LIB=${LIBRECATHOME}/local/lib/perl5:${LIBRECATHOME}/lib
-# END TEXT ^^^^^^^^^^^^^^^
-# Reload the .profile file
-source ~/.profile
-```
-
-Go into the LibreCat directory and install all packages with Carton:
-
-```
-cd $LIBRECATHOME
-cpan App::cpanminus
-cpanm Carton
-carton install
-```
-
-Create the MySQL databases and tables:
-
-```
-mysql -u root -p < devel/mysql.sql
-mysql -u root -p librecat_system < devel/librecat_system.sql
-mysql -u root -p librecat_backup < devel/librecat_backup.sql
-mysql -u root -p librecat_metrics < devel/librecat_metrics.sql
-```
-
-Generate the GUI forms:
-
-```
-bin/generate_forms.pl
-```
-
-Create a basic setup of the database:
-
-```
-./index.sh drop
-./index.sh create
-```
-
-Create a copy of the local settings and change it as needed:
-
-```
-cp catmandu.local.yml-example catmandu.local.yml
-```
-
-Boot the development server
-Your application is now running on http://localhost:5001
-```
-./boot.sh
-```
+See our Wiki at: https://github.com/LibreCat/LibreCat/wiki

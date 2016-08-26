@@ -12,7 +12,7 @@
 
 <genre
 [%- SWITCH type -%]
-  [%- CASE 'journalArticle' -%]
+  [%- CASE 'journal_article' -%]
     [%- SWITCH article_type -%]
       [%- CASE 'letterNote' -%]
   type="letter"

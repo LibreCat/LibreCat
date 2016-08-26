@@ -1,6 +1,7 @@
 [% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
+[%- USE date(format => '%Y') -%]
 
 [% IF lang %]
   [% INCLUDE award/header_en.tt %]
@@ -138,7 +139,7 @@
             [% FOREACH match IN matched.split(' ') %]
               [% newmatched = newmatched _ ' ' _ match.ucfirst %]
             [% END %]
-            <li style="padding-bottom:2px;"><a href="[% h.newuri_for("$path", qp, q="honoree=$per.term") %]">[% newmatched.trim %]</a></li>
+            <li style="padding-bottom:2px;"><a href="[% h.newuri_for("$path", qp, honoree="$per.term") %]">[% newmatched.trim %]</a></li>
             [% newmatched = '' %]
             [% matched = '' %]
           [% END %]
@@ -150,7 +151,9 @@
         <div class="facettecollapse">
         <ul id="year" class="collapse[% IF qp.year %] in[% END %]">
           [% FOREACH yr IN facets.year.terms %]
-          <li style="padding-bottom:2px;"><a href="[% h.newuri_for("$path", qp, year="$yr.term") %]">[% yr.term %]</a></li>
+          [%- year = (yr.term) / 1000; -%]
+          [%- IF year == '0' -%][%- yf = '1970' -%][%- ELSE -%][%- yf = date.format(year); -%][%- END -%]
+          <li style="padding-bottom:2px;"><a href="[% h.newuri_for("$path", qp, year="$yf") %]">[% yf %]</a></li>
           [% END %]
         </ul>
         </div>
@@ -161,7 +164,7 @@
         <ul id="department" class="collapse[% IF qp.department %] in[% END %]">
           [% FOREACH dep IN facets.department.terms %]
           [% department = h.get_department(dep.term) %]
-          <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, q="department=$department._id") %]">[% department.name %]</a></li>
+          <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, department="$department._id") %]">[% department.name %]</a></li>
           [% END %]
         </ul>
         </div>
@@ -172,7 +175,7 @@
         <ul id="einrichtung" class="collapse[% IF qp.einrichtung %] in[% END %]">
           [% FOREACH einr IN facets.einrichtung.terms %]
           [% einrichtung = h.get_department(einr.term) %]
-          <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, q="einrichtung=$einrichtung._id") %]">[% einrichtung.name %]</a></li>
+          <li style="padding-bottom:5px;"><a href="[% h.newuri_for("$path", qp, einrichtung="$einrichtung._id") %]">[% einrichtung.name %]</a></li>
           [% END %]
         </ul>
         </div>

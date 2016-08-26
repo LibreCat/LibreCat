@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use Catmandu;
 use App::Helper;
 use LibreCat::Validator::Publication;
+use App::Catalogue::Controller::File;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -17,6 +18,7 @@ librecat publication [options] get <id>
 librecat publication [options] add <FILE>
 librecat publication [options] delete <id>
 librecat publication [options] valid <FILE>
+librecat publication [options] files [ID]|[<FILE>]
 
 EOF
 }
@@ -29,7 +31,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|export|get|add|delete|valid/;
+    my $commands = qr/list|export|get|add|delete|valid|files/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -58,6 +60,9 @@ sub command {
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
+    }
+    elsif ($cmd eq 'files') {
+        return $self->_files(@$args);
     }
 }
 
@@ -122,12 +127,20 @@ sub _add {
 
 sub _adder {
     my ($self, $data) = @_;
+    my $is_new = 0;
+
+    my $helper = App::Helper::Helpers->new;
+
+    unless (exists $data->{_id} && defined $data->{_id}) {
+        $is_new = 1;
+        $data->{_id} = $helper->new_record('publication');
+    }
 
     my $validator = LibreCat::Validator::Publication->new;
 
     if ($validator->is_valid($data)) {
-        my $result
-            = App::Helper::Helpers->new->update_record('publication', $data);
+        my $result = $helper->update_record('publication', $data);
+
         if ($result) {
             print "added " . $data->{_id} . "\n";
             return 0;
@@ -138,7 +151,7 @@ sub _adder {
         }
     }
     else {
-        print STDERR "ERROR: not a valid researcher\n";
+        print STDERR "ERROR: not a valid publication\n";
         print STDERR join("\n", @{$validator->last_errors}), "\n";
         return 2;
     }
@@ -176,7 +189,7 @@ sub _valid {
 
             unless ($validator->is_valid($item)) {
                 my $errors = $validator->last_errors();
-                my $id     = $item->{_id};
+                my $id     = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
                         print STDERR "ERROR $id: $err\n";
@@ -192,6 +205,154 @@ sub _valid {
     );
 
     return $ret == 0;
+}
+
+sub _files {
+    my ($self,$file) = @_;
+
+    if ($file && $file =~ /^\d+$/) {
+        $self->_files_list($file);
+    }
+    elsif ($file && -r $file) {
+        $self->_files_load($file);
+    }
+    else {
+        $self->_files_list;
+    }
+
+    return 0;
+}
+
+sub _files_list {
+    my ($self,$id) = @_;
+    printf "%-9s\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n"
+        , qw(id access_level relation embargo file_name);
+
+    my $printer = sub {
+            my ($item) = @_;
+            return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
+
+            for my $file (@{$item->{file}}) {
+                printf "%-9d\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n"
+                            , $item->{_id}
+                            , $file->{access_level}
+                            , $file->{relation}
+                            , $file->{embargo} // 'NA'
+                            , $file->{file_name};
+            }
+    };
+
+    if ($id) {
+        my $data = App::Helper::Helpers->new->get_publication($id);
+        $printer->($data);
+    }
+    else {
+        App::Helper::Helpers->new->publication->each($printer);
+    }
+}
+
+sub _files_load {
+    my ($self,$filename) = @_;
+    $filename = '/dev/stdin' if $filename eq '-';
+
+    croak "list - can't open $filename for reading" unless -r $filename;
+    local(*FH);
+
+    my $importer = Catmandu->importer('TSV', file => $filename);
+
+    my $prev_id = undef;
+    my $files  = [];
+
+    my @allowed_fields = qw(
+        id
+        access_level creator content_type
+        date_created date_updated file_id
+        file_name file_size open_access
+        relation title description embargo
+    );
+
+    my $checked = 0;
+
+    $importer->each(sub {
+        my $record = $_[0];
+
+        my $file = {};
+
+        for my $key (keys %$record) {
+            my $new_key = $key;
+            $new_key =~ s{^\s*|\s*$}{}g;
+            $file->{$new_key} = $record->{$key};
+            $file->{$new_key} =~ s{^\s*|\s*$}{}g;
+            croak "file - field '$new_key' not allowed in file"
+                    unless $checked || grep {/^$new_key$/} @allowed_fields;
+        }
+
+        $checked = 1;
+
+        my $id = $file->{id};
+
+        croak "file - no id column found?" unless defined($id);
+
+        delete $file->{id};
+
+        if ($prev_id && $prev_id ne $id) {
+            $self->_file_process($prev_id,$files);
+            $files = [];
+        }
+
+        push @$files , $file;
+
+        $prev_id = $id;
+    });
+
+    $self->_file_process($prev_id,$files) if $files;
+}
+
+sub _file_process {
+    my ($self,$id,$files) = @_;
+
+    my $data = App::Helper::Helpers->new->get_publication($id);
+
+    unless ($data) {
+        warn "$id - no such publication";
+        return;
+    }
+
+    my %file_map = map  { $_->{file_name} => $_ } @{$data->{file}};
+
+    # Update the files with stored data
+    my $nr = 0;
+    for my $file (@$files) {
+        $nr++;
+
+        my $name = $file->{file_name};
+        my $old  = $file_map{$name};
+
+        # Copy the old metadata if available
+        if ($old) {
+            for my $key (keys %$old) {
+                if (! exists $file->{$key} || ! length $file->{$key}) {
+                    $file->{$key} = $old->{$key};
+                }
+            }
+        }
+
+        # Delete the keys that are set to 'NA'
+        for my $key (keys %$file) {
+            delete $file->{$key} if $file->{$key} eq 'NA';
+        }
+
+        unless (
+            $file->{file_id} && $file->{date_created} && $file->{date_updated} &&
+            $file->{content_type} && $file->{creator}
+        ) {
+            $file = App::Catalogue::Controller::File::update_file($id,$file);
+        }
+    }
+
+    $data->{file} = $files;
+
+    $self->_adder($data);
 }
 
 1;
@@ -212,5 +373,6 @@ LibreCat::Cmd::publication - manage librecat publications
 	librecat publication add <FILE>
 	librecat publication delete <id>
     librecat publication valid <FILE>
+    librecat publication files [ID]|[<FILE>]
 
 =cut

@@ -109,27 +109,6 @@ be displayed on author's profile page.
 
     };
 
-=head2 POST /edit_mode
-
-User can choose default edit mode for editing publications.
-"normal" -> edit form with tabs
-"expert" -> one long edit form
-
-=cut
-
-    post '/edit_mode' => needs login => sub {
-
-        my $person = h->get_person(session('personNumber'));
-        my $mode   = params->{edit_mode};
-        if ($mode eq "normal" or $mode eq "expert") {
-            $person->{edit_mode} = $mode;
-            h->update_record('researcher', $person);
-        }
-
-        redirect '/librecat';
-
-    };
-
 =head2 POST /set_language
 
 User can choose default language for the librecat backend

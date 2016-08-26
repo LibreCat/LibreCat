@@ -265,7 +265,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-                'exact': {field: honoree.full_name.exact}
+                'exact': {field: 'honoree.full_name.exact'}
               field: 'honoree.full_name'
             department:
               op:
@@ -273,14 +273,14 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: ['department.name', 'department.id']
+              field: 'department._id'
             einrichtung:
               op:
                 'any': true
                 'all': true
                 '=': true
                 '<>': true
-              field: ['einrichtung.name', 'einrichtung.id']
+              field: 'einrichtung._id'
             otheruniversity:
               op:
                 'any': true
@@ -625,7 +625,7 @@ search:
                 'exact': true
                 '<>': true
                 'any' : true
-              field: 'type'
+              field: ['type','type_old']
               sort: true
               values: "see the list of publication types"
             documenttype: *type
@@ -665,6 +665,13 @@ search:
               field: 'status'
               sort: true
             submissionstatus: *status
+            articletype: &articletype
+              op:
+                '=': true
+                'exact': true
+                '<>': true
+              field: 'article_type'
+            article_type: *articletype
             accesslevel:
               op:
                 '=': true
@@ -1019,7 +1026,7 @@ search:
           proof: {type: string, index: not_analyzed}
           title: {type: string}
           organization: {type: string}
-          year: {type: string, analyzer: tag}
+          year: {type: date, format: year}
           honoree:
             properties:
               first_name: {type: string}
@@ -1033,22 +1040,10 @@ search:
               id: {type: string, analyzer: tag}
           department:
             properties:
-              name:
-                type: multi_field
-                fields:
-                  name: {type: string}
-                  exact: {type: string, analyzer: tag}
-              id: {type: string, analyzer: tag}
-              tree: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
           einrichtung:
             properties:
-              name:
-               type: multi_field
-               fields:
-                 name: {type: string}
-                 exact: {type: string, analyzer: tag}
-              id: {type: string, analyzer: tag}
-              tree: {type: string, analyzer: tag}
+              _id: {type: string, analyzer: tag}
           uni_member: {type: byte}
           former_member: {type: string, analyzer: tag}
           other_university: {type: string}
@@ -1084,6 +1079,7 @@ search:
               id: {type: string, analyzer: tag}
               login: {type: string, analyzer: tag}
           type: {type: string, analyzer: tag}
+          type_old: {type: string, analyzer: tag}
           research_data: {type: byte}
           year: {type: date, format: year, include_in_all: true}
           language:
@@ -1097,6 +1093,7 @@ search:
           volume: {type: string, analyzer: tag}
           intvolume: {type: string, analyzer: tag}
           issue: {type: string}
+          article_type: {type: string}
           article_number: {type: string, analyzer: tag}
           thematic_area: {type: string, analyzer: tag}
           publication_identifier:
@@ -1146,6 +1143,7 @@ search:
             fields:
               publication: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
+          publication_date: {type: string, index: no}
           series_title:
             type: multi_field
             fields:
@@ -1168,8 +1166,6 @@ search:
               scoap3: {type: string}
               phillister: {type: string}
               opac: {type: string}
-              fp7: {type: string}
-              fp6: {type: string}
           isi: {type: byte}
           arxiv: {type: byte}
           pubmed: {type: byte}
@@ -1221,6 +1217,9 @@ search:
             properties:
               _id: {type: string, analyzer: tag}
           reviewer:
+            properties:
+              _id: {type: string, analyzer: tag}
+          project_reviewer:
             properties:
               _id: {type: string, analyzer: tag}
           access:

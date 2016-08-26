@@ -14,31 +14,39 @@
         <input type="hidden" id="translator_orig_first_name_0" value="" />
         <input type="hidden" id="translator_orig_last_name_0" value="" />
 
-        <div class="form-group col-md-4 col-xs-11">
+        <div class="form-group col-md-3 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
               <span class="hidden-xs hidden-sm">[% h.loc("forms.${type}.field.translator.first_name.label") %]</span>
               <span class="hidden-lg hidden-md">[% h.loc("forms.${type}.field.translator.first_name.label_short") %]</span>
             </div>
             <input type="text" id="translator_first_name_0" name="translator.0.first_name" placeholder="[% h.loc("forms.${type}.field.translator.first_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon hidden-lg hidden-md" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %] helpme" data-placement="top" title="[% h.loc("form_add_field") %][% END %]" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
-        <div class="form-group col-md-6 col-xs-11">
+        <div class="form-group col-md-7 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
               <span class="hidden-xs hidden-sm">[% h.loc("forms.${type}.field.translator.last_name.label") %]</span>
               <span class="hidden-lg hidden-md">[% h.loc("forms.${type}.field.translator.last_name.label_short") %]</span>
             </div>
             <input type="text" id="translator_last_name_0" name="translator.0.last_name" placeholder="[% h.loc("forms.${type}.field.translator.last_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}
-            <div class="input-group-addon"><span id="translator_link_person_0" onclick="link_person(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% h.loc("forms.${type}.field.translator.tooltip") %]" /></span></div>
+            <div class="input-group-addon">
+              <span id="translator_link_person_0" onclick="link_person(this);" data-type="translator_">
+              <label class="radio-inline">
+                <input type="radio" name="translator_idm.0" id="translator_idm_extern_0" checked="checked"> [% h.loc("forms.${type}.field.translator.idm_extern") %]
+              </label>
+              <label class="radio-inline">
+                <input type="radio" style="margin-top:5px;" name="translator_idm.0" id="translator_idm_intern_0"> <img id="translator_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% h.loc("forms.${type}.field.translator.tooltip") %]" />
+              </label>
+              </span>
+            </div>
             {% END %}
-            <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm helpme" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </div>
         {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}
@@ -55,31 +63,39 @@
         <input type="hidden" id="translator_orig_first_name_[% loop.index %]" value="[% name.first_name | html %]" />
         <input type="hidden" id="translator_orig_last_name_[% loop.index %]" value="[% name.last_name | html %]" />
 
-        <div class="form-group col-md-4 col-xs-11">
+        <div class="form-group col-md-3 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
               <span class="hidden-xs hidden-sm">[% h.loc("forms.${type}.field.translator.first_name.label") %]</span>
               <span class="hidden-lg hidden-md">[% h.loc("forms.${type}.field.translator.first_name.label_short") %]</span>
             </div>
             <input type="text" id="translator_first_name_[% loop.index %]" name="translator.[% loop.index %].first_name" placeholder="[% h.loc("forms.${type}.field.translator.first_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name | html %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon hidden-lg hidden-md" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %] helpme" data-placement="top" title="[% h.loc("form_add_field") %][% END %]" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
-        <div class="form-group col-md-6 col-xs-11">
+        <div class="form-group col-md-7 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
               <span class="hidden-xs hidden-sm">[% h.loc("forms.${type}.field.translator.last_name.label") %]</span>
               <span class="hidden-lg hidden-md">[% h.loc("forms.${type}.field.translator.last_name.label_short") %]</span>
             </div>
             <input type="text" id="translator_last_name_[% loop.index %]" name="translator.[% loop.index %].last_name" placeholder="[% h.loc("forms.${type}.field.translator.last_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.last_name | html %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
             {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}
-            <div class="input-group-addon"><span id="translator_link_person_[% loop.index %]" onclick="link_person(this);" data-type="translator_"><img id="translator_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="[% h.loc("forms.${type}.field.translator.tooltip") %]" /></span></div>
+            <div class="input-group-addon">
+              <span id="translator_link_person_0" onclick="link_person(this);" data-type="translator_">
+              <label class="radio-inline">
+                <input type="radio" name="translator_idm.[% loop.index %]" id="translator_idm_extern_[% loop.index %]"[% IF !name.id %] checked="checked"[% END %]> [% h.loc("forms.${type}.field.translator.idm_extern") %]
+              </label>
+              <label class="radio-inline">
+                <input type="radio" style="margin-top:5px;" name="translator_idm.[% loop.index %]" id="translator_idm_intern_[% loop.index %]"[% IF name.id %] checked="checked"[% END %]> <img id="translator_Authorized[% loop.index %]" [% IF name.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% h.loc("forms.${type}.field.translator.tooltip") %]" />
+              </label>
+              </span>
+            </div>
             {% END %}
-            <div class="input-group-addon sortitem"><span class="glyphicon glyphicon-move"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm[% IF loop.index == '0' %] helpme" data-placement="top" title="[% lf.form_add_field %][% END %]" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
           </div>
         </div>
         {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}
@@ -97,7 +113,7 @@
         <input type="hidden" id="translator_orig_first_name_0" value="" />
         <input type="hidden" id="translator_orig_last_name_0" value="" />
 
-        <div class="form-group col-md-4 col-xs-11">
+        <div class="form-group col-md-3 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
               <span class="hidden-xs hidden-sm">[% h.loc("forms.${type}.field.translator.first_name.label") %]</span>
@@ -107,7 +123,7 @@
             <div class="input-group-addon"></div>
           </div>
         </div>
-        <div class="form-group col-md-6 col-xs-11">
+        <div class="form-group col-md-7 col-xs-11">
           <div class="input-group sticky{% IF fields.basic_fields.translator.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">
               <span class="hidden-xs hidden-sm">[% h.loc("forms.${type}.field.translator.last_name.label") %]</span>
@@ -115,7 +131,16 @@
             </div>
             <input type="text" id="translator_last_name_0" name="translator.0.last_name" placeholder="[% h.loc("forms.${type}.field.translator.last_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="[% translator.0.last_name | html %]" />
             {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}
-            <div class="input-group-addon"><span id="translator_link_person_0" onclick="link_person(this);" data-type="translator_"><img id="translator_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="left" title="[% h.loc("forms.${type}.field.translator.tooltip") %]" /></span></div>
+            <div class="input-group-addon">
+              <span id="translator_link_person_0" onclick="link_person(this);" data-type="translator_">
+              <label class="radio-inline">
+                <input type="radio" name="translator_idm.0" id="translator_idm_extern_0"[% IF !translator.0.id %] checked="checked"[% END %]> [% h.loc("forms.${type}.field.translator.idm_extern") %]
+              </label>
+              <label class="radio-inline">
+                <input type="radio" style="margin-top:5px;" name="translator_idm.0" id="translator_idm_intern_0"[% IF translator.0.id %] checked="checked"[% END %]> <img id="translator_Authorized0" [% IF translator.0.id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF translator.0.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% h.loc("forms.${type}.field.translator.tooltip") %]" />
+              </label>
+              </span>
+            </div>
             {% ELSE %}
             <div class="input-group-addon"></div>
             {% END %}
@@ -137,7 +162,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
 	<div class="modal-header">
-	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	  <button type="button" class="close" id="translator_link_person_modal_dismiss" data-dismiss="modal" aria-hidden="true">&times;</button>
 	  <h4 class="modal-title">&hellip;</h4>
 	</div>
 	<div class="modal-body">

@@ -2,7 +2,11 @@
 <resource xmlns="http://datacite.org/schema/kernel-3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-3 http://schema.datacite.org/meta/kernel-3/metadata.xsd">
 [%- IF doi %]<identifier identifierType="DOI">[% doi | xml_strict %]</identifier>[% END -%]
 <creators>
-[% FOREACH au IN author %]<creator><creatorName>[% au.full_name | xml_strict %]</creatorName></creator>[% END %]
+[%- FOREACH au IN author -%]
+<creator><creatorName>[% au.full_name | xml_strict %]</creatorName>
+[%- IF au.orcid %]<nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://orcid.org">[% au.orcid %]</nameIdentifier>[% END -%]
+</creator>
+[%- END -%]
 </creators>
 <titles>
 	<title>[% title | xml_strict %]</title>
@@ -41,9 +45,11 @@
 [%- END %]
 </relatedIdentifiers>
 [%- END %]
-[%- IF file.0 %]
+[%- IF file.0.content_type %]
 <formats>
-[%- FOREACH fi IN file %]<format>[% fi.content_type | xml_strict %]</format>[% END %]
+[%- FOREACH fi IN file %]
+[%- IF fi.content_type %]<format>[% fi.content_type | xml_strict %]</format>[% END %]
+[%- END %]
 </formats>
 [%- END %]
 [%- IF data_reuse_license %]

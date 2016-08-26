@@ -23,7 +23,6 @@
 [% relLinkRd = [] %]
 [% relLinkSw = [] %]
 [% relFile = [] %]
-[% relToc = [] %]
 [% IF external_id.pmid %]
   [% epmc_cit = h.get_metrics('epmc_citations',external_id.pmid) %]
   [% epmc_ref = h.get_metrics('epmc_references',external_id.pmid) %]
@@ -60,8 +59,6 @@
   [% SWITCH fi.relation %]
     [% CASE "confirmation" %]
     [% confLetter.push(fi) %]
-    [% CASE "table_of_contents" %]
-    [% relToc.push(fi) %]
     [% CASE "main_file" %]
     [% mainFile.push(fi) %]
     [% CASE "hidden" %]
@@ -200,7 +197,7 @@
       <div class="col-md-12">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#details" data-toggle="tab">[% h.loc("frontdoor.tabs.details.label") %]</a></li>
-          [% IF mainFile AND mainFile.0.file_name %]
+          [% IF (mainFile AND mainFile.size) OR (relFile AND relFile.size) %]
           <li><a href="#fileDetails" data-toggle="tab">[% h.loc("frontdoor.tabs.file_details.label") %]</a></li>
           [% END %]
 
@@ -232,12 +229,12 @@
           <li><a href="#confletter" data-toggle="tab">[% h.loc("frontdoor.tabs.confirmation_letter.label") %]</a>
           [% END %]
 
-          [% IF relMat.size OR relLink.size OR relFile.size OR relToc.size %]
+          [% IF relMat.size OR relLink.size %]
           <li><a href="#relMat" data-toggle="tab">[% h.loc("frontdoor.tabs.related_material") %]</a></li>
           [% END %]
 
           [% IF relLinkRd.size OR relLinkSw.size %]
-          <li><a href="#relLinkRd" data-toggle="tab">[% h.loc("frontdoor.tabs.external_data") %]</a></li>
+          <li><a href="#relLinkRd" data-toggle="tab">[% h.loc("frontdoor.tabs.external_data.label") %]</a></li>
           [% END %]
 
           <li class="hidden-md hidden-lg hidden-sm"><a href="#citethis">[% h.loc("frontdoor.tabs.cite_this") %]</a></li>
@@ -258,7 +255,7 @@
 
           [% PROCESS frontdoor/tab_details.tt %]
 
-          [% IF mainFile AND mainFile.0.file_name %] [% PROCESS frontdoor/tab_filedetails.tt %] [% END %]
+          [% IF file AND file.size %] [% PROCESS frontdoor/tab_filedetails.tt %] [% END %]
 
           [% IF relPubl %] [% PROCESS frontdoor/tab_relpubl.tt %] [% END %]
 
@@ -272,7 +269,7 @@
 
           [% IF epmc_ref %] [% PROCESS frontdoor/tab_ebi_ref.tt %] [% END %]
 
-          [% IF relMat.size OR relLink.size OR relFile.size OR relToc.size %]
+          [% IF relMat.size OR relLink.size %]
             [% PROCESS frontdoor/tab_relmat.tt %]
           [% END %]
 
@@ -294,8 +291,11 @@
         [% IF session.user AND session.role AND p.can_edit(_id, session.user, session.role) %]
         <h3 id="edit">Editing Options</h3>
         <a href="/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> &nbsp;Edit this record</a><br />
-        [% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "researchData" OR session.role == "super_admin") %]
-          <a href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> Make this record public</a>
+        [% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "research_data" OR session.role == "super_admin") %]
+          <a href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> Make this record public</a><br />
+        [% END %]
+        [% IF type == "research_data" AND status != "public" AND status != "submitted" AND session.role != "super_admin" %]
+          <a href="/librecat/record/publish/[% _id %]">Submit this record</a>
         [% END %]
         [% END %]
 
@@ -433,8 +433,8 @@
           [% END %]
           [% IF localUser && !external_id.opac %]
             [% SWITCH type %]
-            [% CASE ['book', 'bookChapter', 'dissertation', 'bookEditor', 'workingPaper', 'conferenceAbstract', 'conferenceEditor', 'journalArticle' ] %]
-              <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% IF type == 'bookChapter' %][% publication %][% ELSE %][% title | uri %][% END %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=[% IF type == 'journalArticle' OR type == 'conferenceAbstract' %]ext[% ELSE %]lok[% END %]&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="/images/icon_ub.png" alt="" class="img-thumbnail">[% h.loc("frontdoor.catalogue") %]</a>
+            [% CASE ['book', 'book_chapter', 'dissertation', 'book_editor', 'working_paper', 'conference_abstract', 'conference_editor', 'journal_article' ] %]
+              <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% IF type == 'book_chapter' %][% publication %][% ELSE %][% title | uri %][% END %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=[% IF type == 'journal_article' OR type == 'conference_abstract' %]ext[% ELSE %]lok[% END %]&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="/images/icon_ub.png" alt="" class="img-thumbnail">[% h.loc("frontdoor.catalogue") %]</a>
             [% END %]
           [% END %]
         </p>

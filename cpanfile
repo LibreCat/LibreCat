@@ -27,10 +27,10 @@ requires 'Catmandu::XML';
 requires 'Catmandu::ArXiv';
 requires 'Catmandu::Inspire';
 requires 'Catmandu::EuropePMC';
-requires 'Catmandu::CrossRef';
 requires 'Catmandu::Importer::getJSON';
 requires 'Catmandu::Identifier', '>=0.05';
 requires 'Catmandu::RIS', '>=0.04';
+requires 'Catmandu::Fix::Date';
 
 #Dancer
 requires 'Dancer';
@@ -42,13 +42,14 @@ requires 'Dancer::Plugin::Email';
 requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Plugin::DirectoryView';
 requires 'Dancer::Plugin::StreamData';
-requires 'Dancer::Session::Catmandu';
 requires 'Dancer::Logger::Log4perl';
+requires 'Dancer::Session::PSGI';
 requires 'Template';
 requires 'Template::Plugin::Date';
 requires 'Template::Plugin::JSON';
 requires 'Furl';
 requires 'HTML::Entities';
+requires 'Syntax::Keyword::Junction';
 
 #Plack
 requires 'Plack';
@@ -58,6 +59,9 @@ requires 'Plack::Middleware::Deflater';
 requires 'Plack::Middleware::Negotiate', '>= 0.20';
 requires 'Plack::Middleware::Debug';
 requires 'Plack::Middleware::Debug::Dancer::Settings';
+requires 'Plack::Middleware::Session';
+requires 'Plack::Middleware::CSRFBlock';
+requires 'Plack::Session::Store::Catmandu';
 requires 'Starman';
 
 # others
@@ -105,4 +109,3 @@ requires 'Code::TidyAll', 0;
 
 requires 'Locale::Maketext';
 requires 'Locale::Maketext::Lexicon';
-

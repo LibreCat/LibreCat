@@ -10,8 +10,8 @@
 
 <title>Wissenschaftspreise und Auszeichnungen</title>
 <link href="//www.uni-bielefeld.de/Universitaet/Einrichtungen/index.html?__xsl=//www.uni-bielefeld.de/templates/dcrdf.xsl" rel="meta"><link rel="icon" href="//www.uni-bielefeld.de/icons/uni-logo-icon-16.png" type="image/png"><link rel="search" href="//search.uni-bielefeld.de/cgi-bin/search.cgi" type="text/html"><link rel="help" href="//www.uni-bielefeld.de/help.html" type="text/html"><link href="//www.uni-bielefeld.de/Universitaet/impressum.html" rel="copyright" type="text/html"><link rel="stylesheet" href="//www.uni-bielefeld.de/(de)/css/unistandard_2009.css" type="text/css"><script defer src="//www.uni-bielefeld.de/javascript/CrossPlatform.js" language="javascript" type="text/javascript"></script><script defer src="//www.uni-bielefeld.de/javascript/Popup.js" language="javascript" type="text/javascript"></script> <meta name="viewport" content="user-scalable=yes, width=device-width" />
- <link rel="stylesheet" type="text/css" href="//www.uni-bielefeld.de/css/media_queries/smartphone.css" media="only screen and (max-device-width: 399px)" /> 
- <link rel="stylesheet" type="text/css" href="//www.uni-bielefeld.de/css/media_queries/ipad_uni.css" media="only screen and (min-width: 400px) and (max-device-width: 769px)" /> 
+ <link rel="stylesheet" type="text/css" href="//www.uni-bielefeld.de/css/media_queries/smartphone.css" media="only screen and (max-device-width: 399px)" />
+ <link rel="stylesheet" type="text/css" href="//www.uni-bielefeld.de/css/media_queries/ipad_uni.css" media="only screen and (min-width: 400px) and (max-device-width: 769px)" />
  <link rel="stylesheet" type="text/css" href="//www.uni-bielefeld.de/css/unistandard_2009.css" media="screen and (min-device-width: 770px)" />
 
 <script type="text/javascript">
@@ -161,8 +161,8 @@ ul#Navigation a:hover {
       </ul>
     </li>
   </ul>
-</div></div><div id="language"><a href="/en[% request.env.REQUEST_URI %]" class="select-language">
-                   
+</div></div><div id="language"><a href="/en/award" class="select-language">
+
                   <img src="//www.uni-bielefeld.de/icons/en.gif" alt="Flagge" border="0">
                       English
                     </a></div><div id="history">
@@ -192,7 +192,7 @@ ul#Navigation a:hover {
 </ul>
 
 <ul class="menu-left">
-<li><a href="/Universitaet/Einrichtungen/Fakultaeten/index.html">Fakultäten</a></li>
+<li><a href="//Universitaet/Einrichtungen/Fakultaeten/index.html">Fakultäten</a></li>
 <li><a href="//ekvv.uni-bielefeld.de/pers_publ/publ/Home.jsp">Personen-  und Einrichtungssuche</a></li>
 </ul>
 <br>

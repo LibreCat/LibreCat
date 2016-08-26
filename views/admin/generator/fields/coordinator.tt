@@ -22,8 +22,7 @@
 	      <div class="input-group-addon hidden-xs hidden-sm">{% coordinator.last_name.label %}</div>
 	      <div class="input-group-addon hidden-lg hidden-md">{% coordinator.last_name.label_short %}</div>
 	      <input type="text" name="owner.0.last_name" id="owner_last_name_0" value="[% owner.0.last_name %]" class="form-control sticky"{% IF coordinator.mandatory %} required{% END %}>
-	      <div class="input-group-addon"><span id="owner_link_person_0" onclick="link_person(this);" data-type="owner_"><img id="owner_Authorized0" src="/images/biNotAuthorized.png" border="0" height="20" alt="Not Authorized" /></span></div>
-          <div class="input-group-addon"><span id="owner_revert_0" data-type="owner_" onclick="revert_name(this);"><span class="fa fa-undo"></span></span></div>
+          <div class="input-group-addon"></div>
         </div>
 	  </div>
 	</div>

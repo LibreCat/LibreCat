@@ -54,9 +54,9 @@
   </ul>
 [% END %]
 
-[% IF backend AND session.role == "super_admin" OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR  facets.year.terms.size > 1 %]
+[% IF backend AND (session.role == "super_admin" OR session.role == "reviewer") OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR  facets.year.terms.size > 1 %]
 <ul class="nav nav-tabs nav-stacked ul1 helpme" data-placement="left">
-  [% IF backend AND session.role == "super_admin" %]
+  [% IF backend AND (session.role == "super_admin" OR session.role == "reviewer") %]
   <li>
     <button data-toggle="collapse" data-target="#department_new_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.department") %]</button>
     <div class="facettecollapse normal">

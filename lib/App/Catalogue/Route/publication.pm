@@ -65,7 +65,27 @@ Some fields are pre-filled.
             },
         };
 
-        if ( $type eq "research_data" ) {
+        if(session->{role} eq "user"){
+            my $person = {
+                first_name => $user->{first_name},
+                last_name => $user->{last_name},
+                full_name => $user->{full_name},
+                id => session->{personNumber},
+            };
+            $person->{orcid} = $user->{orcid} if $user->{orcid};
+
+            if( $type eq "bookEditor" or $type eq "conferenceEditor" or $type eq "journalEditor"){
+                $data->{editor}->[0] = $person;
+            }
+            elsif ($type eq "translation" or $type eq "translationChapter"){
+                $data->{translator}->[0] = $person;
+            }
+            else {
+                $data->{author}->[0] = $person;
+            }
+        }
+
+        if ( $type eq "researchData" ) {
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
         }
         if(params->{lang}){
@@ -139,6 +159,10 @@ Checks if the user has the rights to update this record.
         $p = h->nested_params($p);
 
         my $old_status = $p->{status};
+
+	if ( $p->{type} eq "researchData" && !$p->{doi}) {
+            $p->{doi} = h->config->{doi}->{prefix} . "/" . $p->{_id};
+        }
 
         my $result = h->update_record('publication', $p);
         #return to_dumper $result; # leave this here to make debugging easier
@@ -283,51 +307,96 @@ Publishes private records, returns to the list.
         my $basic_fields = h->config->{forms}->{publication_types}->{$publtype}->{fields}->{basic_fields};
         my $field_check = 1;
 
-        foreach my $key ( keys %$basic_fields ) {
-            next if $key eq "tab_name";
-            next if $key eq "bi_doctype";
-            if($key =~ /author|editor|translator|supervisor/){
-                if($basic_fields->{$key} and $basic_fields->{$key}->{mandatory}){
-                    if(!$record->{$key}){
+        foreach my $conf_key ( keys %$basic_fields ) {
+            next if $conf_key eq "tab_name";
+            next if $conf_key eq "bi_doctype";
+            if($conf_key =~ /(author|editor|translator|supervisor)/){ # also matches author_solo
+                my $rec_key = $1; # contains only "author", not "author_solo", so that it will match the key in the record
+                if($basic_fields->{$conf_key} and $basic_fields->{$conf_key}->{mandatory}){
+                    if(!$record->{$rec_key}){
                         $field_check = 0;
                     }
-                    elsif($basic_fields->{$key}->{multiple}){
-                        foreach my $entry (@{$record->{$key}}){
+                    elsif($basic_fields->{$conf_key}->{multiple}){
+                        foreach my $entry (@{$record->{$rec_key}}){
                             unless ($entry->{first_name} and $entry->{last_name}){
                                 $field_check = 0;
                             }
                         }
                     }
                     else{
-                        unless ($record->{$key}->{first_name} and $record->{$key}->{last_name}){
+                        unless ($record->{$rec_key}->{first_name} and $record->{$rec_key}->{last_name}){
                             $field_check = 0;
                         }
                     }
                 }
             }
-            elsif ( $basic_fields->{$key}->{mandatory} and $basic_fields->{$key}->{mandatory} eq "1"
-                and ( !$record->{$key} || $record->{$key} eq "" ) )
+            elsif ( $basic_fields->{$conf_key}->{mandatory} and $basic_fields->{$conf_key}->{mandatory} eq "1"
+                and ( !$record->{$conf_key} || $record->{$conf_key} eq "" ) )
             {
                 $field_check = 0;
             }
         }
 
-        $record->{status} = "public" if $field_check;
-        h->update_record('publication', $record);
+        if($field_check){
+            if(session->{role} eq "super_admin"){
+                $record->{status} = "public";
+            }
+            else {
+                if ($record->{type} eq "researchData"){
+                    $record->{status} = "submitted" if $old_status eq "private";
+                }
+                else {
+                    $record->{status} = "public";
+                }
+            }
 
-        if ($record->{type} =~ /^bi/ and $record->{status} eq "public" and $old_status ne "public") {
-            $record->{host} = h->host;
-            my $mail_body = export_to_string($record, 'Template', template => 'views/email/thesis_published.tt');
+            if($record->{status} ne $old_status){
+                h->update_record('publication', $record);
 
-            try {
-                email {
-                    to => $record->{email},
-                    subject => h->config->{thesis}->{subject},
-                    body => $mail_body,
-                    reply_to => h->config->{thesis}->{to},
-                };
-            } catch {
-                error "Could not send email: $_";
+                if ($record->{type} =~ /^bi/ and $record->{status} eq "public" and $old_status ne "public") {
+                	$record->{host} = h->host;
+                    my $mail_body = export_to_string($record, 'Template', template => 'views/email/thesis_published.tt');
+
+                    try {
+                        email {
+                            to => $record->{email},
+                            subject => h->config->{thesis}->{subject},
+                            body => $mail_body,
+                            reply_to => h->config->{thesis}->{to},
+                        };
+                    } catch {
+                        error "Could not send email: $_";
+                    }
+                }
+
+                if ($record->{type} eq "researchData") {
+                    if ($record->{status} eq "submitted") {
+                        $record->{host} = h->host;
+                        my $mail_body = export_to_string($record, 'Template', template => 'views/email/rd_submitted.tt');
+
+                        try {
+                            email {
+                                to => h->config->{research_data}->{to},
+                                subject => h->config->{research_data}->{subject},
+                                body => $mail_body,
+                                reply_to => h->config->{research_data}->{to},
+                            };
+                        } catch {
+                            error "Could not send email: $_";
+                        }
+                    }
+                    elsif ($record->{status} eq 'public' and $record->{doi} =~ /unibi\/\d+$/) {
+                        try {
+                            my $registry = LibreCat::Worker::DataCite->new(user => h->config->{doi}->{user}, password => h->config->{doi}->{passwd});
+                            $record->{host} = h->host;
+                            my $datacite_xml = export_to_string($record, 'Template', template => 'views/export/datacite.tt');
+                            $registry->do_work($record->{doi}, h->host ."/data/$record->{_id}", $datacite_xml);
+                            #$registry->metadata($result->{doi}, $datacite_xml);
+                        } catch {
+                            error "Could not register DOI: $_ -- $record->{_id}";
+                        }
+                    }
+                }
             }
         }
 
@@ -364,6 +433,12 @@ Changes the layout of the edit form.
             'split_field(keyword, " ; ")',
             'delete_empty()',
         ])->fix($params);
+
+        my $person = h->get_person( session('personNumber') );
+        if($mode eq "normal" or $mode eq "expert"){
+            $person->{edit_mode} = $mode;
+            h->update_record('researcher', $person);
+        }
 
         my $path = "backend/forms/";
         $path .= "expert/" if $mode eq "expert";
