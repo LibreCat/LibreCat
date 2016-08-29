@@ -105,3 +105,87 @@ sub _build_config {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Layers - A mechanism to load custom config, templates, assets and code on top of LibreCat
+
+=head1 SYNOPSIS
+
+    use LibreCat::Layers;
+    my $layers = LibreCat::Layers->new;
+    my $config = $layers->config;
+    $layers->load;
+
+The L<LibreCat> web application, commandline tool and tests are already layers aware.
+
+=head1 DESCRIPTION
+
+This module provides a mechanism to load configuration, templates, static
+assets and code to customize the stock L<LibreCat> application. All you need to
+do is write a C<layers.yml> configuration file at the root of the application
+listing the directories where L<LibreCat> can find your customizations.
+
+This is a sample C<layers.yml> file with 2 customization layers:
+
+    - /path/to/layer2
+    - /path/to/layer1
+
+C<layer2> will override C<layer1> which will in turn override the stock
+application.
+
+Relative paths to layers are searched from the root of the application.
+
+=head1 LAYER STRUCTURE
+
+Custom YAML configuration files can be placed in a B<config> directory.
+
+Custom templates can be placed in either a B<views> or B<templates> directory.
+
+Custom static assets can be placed in a B<public> directory.
+
+Custom code can be placed in a B<lib> directory.
+
+=head1 ENVIRONMENT VARIABLES
+
+You can also configure layers through the C<LIBRECAT_LAYERS> environment
+variable, in which case the C<layers.yml> file will be ignored.
+
+    LIBRECAT_LAYERS=/path/to/layer2,/path/to/layer1 bin/librecat
+
+=head1 METHODS
+
+=head2 new
+
+=head3 PARAMETERS
+
+=over
+
+=item root_path
+
+=item layer_paths
+
+=back
+
+=head2 root_path
+
+=head2 layer_paths
+
+=head2 paths
+
+=head2 lib_paths
+
+=head2 config_paths
+
+=head2 public_paths
+
+=head2 template_paths
+
+=head2 config
+
+=cut
+
