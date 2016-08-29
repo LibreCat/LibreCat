@@ -1,3 +1,10 @@
+BEGIN {
+    use Catmandu::Sane;
+    use Path::Tiny;
+    use LibreCat::Layers;
+    LibreCat::Layers->new->load;
+};
+
 use strict;
 use warnings;
 use lib qw(./lib);

@@ -1,11 +1,9 @@
 package Catmandu::Fix::add_orcid_to_pub;
 
 use Catmandu::Sane;
-use Catmandu -load;
+use Catmandu;
 use App::Helper;
 use Moo;
-
-Catmandu->load(':up');
 
 sub fix {
     my ($self, $data) = @_;

@@ -7,7 +7,7 @@ Route handler for publications.
 =cut
 
 use Catmandu::Sane;
-use Catmandu qw(:load export_to_string);
+use Catmandu qw(export_to_string);
 use Catmandu::Fix qw(expand);
 use App::Helper;
 use App::Catalogue::Controller::Permission;

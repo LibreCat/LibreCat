@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
 use Catmandu::Sane;
-use Catmandu -load;
+use Catmandu;
 use Search::Elasticsearch;
 use Catmandu::Importer::JSON;
 use Data::Dumper;

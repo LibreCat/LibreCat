@@ -26,7 +26,7 @@ LibreCat::Citation - creates citations via a CSL engine or template
 =cut
 
 use Catmandu::Sane;
-use Catmandu qw(:load export_to_string);
+use Catmandu qw(export_to_string);
 use Catmandu::Util qw(:array);
 use Catmandu::Error;
 use JSON::MaybeXS qw(decode_json);
@@ -34,7 +34,6 @@ use LWP::UserAgent;
 use Moo;
 use namespace::clean;
 
-Catmandu->load(':up');
 my $conf = Catmandu->config->{citation};
 my $cat = Catmandu->default_load_path;
 
