@@ -16,12 +16,6 @@ doi:
   user: user
   passwd: secret
 
-# authentication
-authentication:
-  param:
-    host: 'yourldaphost'
-    auth_base: 'uid=%s,ou=People,o=elearning-user,o=Uni-Bi'
-
 # default settings
 default_lang: en
 default_page_size: 20

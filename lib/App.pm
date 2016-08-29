@@ -52,8 +52,6 @@ use Dancer::Plugin::DirectoryView;
 # otherwise they are considered private
 $Template::Stash::PRIVATE = 0;
 
-directory_view '/RePEc';
-
 # custom authenticate routine
 sub _authenticate {
     my ($username, $password) = @_;
@@ -138,10 +136,12 @@ The logout route. Destroys session.
 
 any '/logout' => sub {
 
-    # preserves language setting only
-    my $lang = session->{lang};
+    # Temporary fix to invalidate a user session
+    session role => undef;
+    session user => undef;
+    session personNumber => undef;
+    #....
     session->destroy;
-    session lang => $lang;
 
     redirect '/';
 };

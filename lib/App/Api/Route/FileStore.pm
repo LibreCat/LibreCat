@@ -27,7 +27,7 @@ Dancer::Plugin::Auth::Tiny->extend(
             else {
                 return do_error('NOT_ALLOWED', 'access denied', 404);
             }
-            }
+        };
     }
 );
 
@@ -165,7 +165,7 @@ E.g.
 
 =head2 GET /librecat/api/filestore/:key/:filename
 
-Return the binary content of a file in a container 
+Return the binary content of a file in a container
 
 E.g.
 
@@ -341,7 +341,7 @@ E.g.
 
 =head2 GET /librecat/api/access/:key/:filename/thumbnail
 
-Return the binary thumbail content of a file in a container 
+Return the binary thumbail content of a file in a container
 
 E.g.
 
@@ -420,7 +420,7 @@ E.g.
 
 =head2 POST /librecat/api/access/:key/:filename/thumbnail
 
-Create a thumbail for a file in a container 
+Create a thumbail for a file in a container
 
 E.g.
 
