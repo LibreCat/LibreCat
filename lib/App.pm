@@ -11,7 +11,6 @@ use Catmandu::Sane;
 our $VERSION = '0.01';
 
 use Catmandu::Util;
-use Plack::Session;
 use LibreCat::User;
 
 use Dancer qw(:syntax);
@@ -111,8 +110,10 @@ The logout route. Destroys session.
 =cut
 
 any '/logout' => sub {
-    my $session = Plack::Session->new(request->env);
-    $session->expire;
+
+    session role => undef;
+    session user => undef;
+    session personNumber => undef;
 
     redirect '/';
 };
