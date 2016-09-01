@@ -19,13 +19,12 @@ Makefile.old
 Vagrantfile
 _build/
 blib/
-catmandu.local.yml
+config/catmandu.local.yml
 cover_db/
 cpanfile.snapshot
 inc/
 local
 local/
-log4perl.conf
 logs/
 nytprof.out
 pm_to_blib
