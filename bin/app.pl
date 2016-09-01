@@ -1,31 +1,23 @@
 #!/usr/bin/env perl
 
+my $layers;
+
 BEGIN {
     use Catmandu::Sane;
-    use Catmandu;
-    use Log::Log4perl;
-    use Log::Any::Adapter;
     use Path::Tiny;
+    use lib path(__FILE__)->parent->parent->child('lib')->stringify;
+    use LibreCat::Layers;
 
-    # load catmandu config
-    Catmandu->load(path(__FILE__)->parent->parent);
-
-    # setup logging
-    Log::Log4perl->init(path(Catmandu->root)->child('log4perl.conf')->canonpath);
-    Log::Any::Adapter->set('Log4perl');
-}
+    $layers = LibreCat::Layers->new->load;
+};
 
 use Catmandu::Sane;
-use Catmandu;
 use Catmandu::Util qw(require_package :is);
-use LibreCat::Layers;
 use Plack::Builder;
 use Plack::App::File;
 use Plack::App::Cascade;
 use Dancer;
 use App;
-
-my $layers = LibreCat::Layers->new;
 
 # setup template paths
 config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->template_paths;

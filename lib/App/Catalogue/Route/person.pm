@@ -103,9 +103,7 @@ be displayed on author's profile page.
         map {$person->{$_} = params->{$_} ? params->{$_} : ""} @identifier;
         redirect '/librecat' if keys %{$person} > 1;
 
-        my $result = h->update_record('researcher', $person);
-
-        redirect '/librecat';
+        h->update_record('researcher', $person);
 
     };
 

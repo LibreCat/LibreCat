@@ -6,31 +6,6 @@ App - a webapp that runs an awesome institutional repository.
 
 =cut
 
-#BEGIN {
-#use Catmandu::Sane;
-#use Catmandu;
-#use LibreCat::Layers;
-#use Dancer qw(:syntax setting set);
-#use Clone qw(clone);
-
-#my $layers = LibreCat::Layers->new;
-#my $config = clone(Catmandu->config->{dancer});
-#my $env = setting('environment');
-#my $env_config = (delete($config->{_environments}) || {})->{$env} || {};
-#my %mergeable = (plugins => 1, handlers => 1);
-#for my $key (keys %$env_config) {
-#if ($mergeable{$key}) {
-#$config->{$key}{$_} = $env_config->{$key}{$_} for keys %{$env_config->{$key}};
-#} else {
-#$config->{$key} = $env_config->{$key};
-#}
-#}
-#$config->{engines}{template_toolkit}{INCLUDE_PATH} //= $layers->template_paths;
-## TODO only if log level is debug
-#$config->{engines}{template_toolkit}{DEBUG} //= 'provider' if $env eq 'development';
-#set %$config;
-#}
-
 use Catmandu::Sane;
 
 our $VERSION = '0.01';
@@ -136,12 +111,9 @@ The logout route. Destroys session.
 
 any '/logout' => sub {
 
-    # Temporary fix to invalidate a user session
     session role => undef;
     session user => undef;
     session personNumber => undef;
-    #....
-    session->destroy;
 
     redirect '/';
 };

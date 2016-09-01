@@ -8,7 +8,7 @@ This is stored in the session.
 =cut
 
 use Catmandu::Sane;
-use Catmandu qw(:load store export_to_string);
+use Catmandu qw(store export_to_string);
 use Catmandu::Util qw(:is :array);
 use Dancer qw(:syntax);
 use Catmandu::Util;
