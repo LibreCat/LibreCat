@@ -11,7 +11,6 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::count - count the number of objects in a store with catmandu
+LibreCat::Cmd::count - count the number of objects in a metadata store with catmandu
 
 =cut
-

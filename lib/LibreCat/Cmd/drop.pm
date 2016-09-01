@@ -11,7 +11,6 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::drop - drop a store or one of its bags with catmandu
+LibreCat::Cmd::drop - drop a metadata store or one of its bags with catmandu
 
 =cut
-

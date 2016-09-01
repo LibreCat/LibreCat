@@ -11,7 +11,6 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::copy - copy objects from one store to another with catmandu
+LibreCat::Cmd::copy - copy objects from one metadata store to another with catmandu
 
 =cut
-

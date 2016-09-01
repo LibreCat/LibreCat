@@ -11,7 +11,6 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::delete - delete objects from a store with catmandu
+LibreCat::Cmd::delete - delete objects from a metadata store with catmandu
 
 =cut
-

@@ -11,7 +11,6 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::import - import objects into a store with catmandu
+LibreCat::Cmd::import - import objects into a metadata store with catmandu
 
 =cut
-

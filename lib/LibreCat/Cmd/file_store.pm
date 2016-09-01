@@ -1,4 +1,4 @@
-package LibreCat::Cmd::store;
+package LibreCat::Cmd::file_store;
 
 use Catmandu::Sane;
 use Catmandu;
@@ -19,15 +19,15 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat store [options] list [recursive]
-librecat store [options] get <key> [<file>]
-librecat store [options] add <key> <file>
-librecat store [options] delete <key> <file>
-librecat store [options] purge <key>
-librecat store [options] export <key> <zip>
-librecat store [options] import <key> <zip>
+librecat file_store [options] list [recursive]
+librecat file_store [options] get <key> [<file>]
+librecat file_store [options] add <key> <file>
+librecat file_store [options] delete <key> <file>
+librecat file_store [options] purge <key>
+librecat file_store [options] export <key> <zip>
+librecat file_store [options] import <key> <zip>
 
-librecat store [options] thumbnail <key> <file>
+librecat file_store [options] thumbnail <key> <file>
 
 options:
     --store=...       - Store name
@@ -489,17 +489,17 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::store - manage librecat stores
+LibreCat::Cmd::file_store - manage librecat file stores
 
 =head1 SYNOPSIS
 
-    librecat store list [recursive]
-    librecat store get <key> [<file>]
-    librecat store add <key> <file>
-    librecat store delete <key> <file>
-    librecat store purge <key>
-    librecat store export <key> <zip>
-    librecat store import <key> <zip>
+    librecat file_store list [recursive]
+    librecat file_store get <key> [<file>]
+    librecat file_store add <key> <file>
+    librecat file_store delete <key> <file>
+    librecat file_store purge <key>
+    librecat file_store export <key> <zip>
+    librecat file_store import <key> <zip>
 
     librecat store thumbnail <key> <file>
 
