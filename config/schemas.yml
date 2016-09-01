@@ -78,7 +78,7 @@ award:
                 minLength: 1
               - type: integer
                 minimum: 0
-            description: "Department name"
+            description: "Department identifier"
         required: [_id]
         additionalProperties: false
       description: "Department"
