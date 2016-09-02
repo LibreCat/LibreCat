@@ -22,7 +22,7 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
     my $altid;
     push @{$p->{q}}, ("status=public", "id=$id");
     push @{$p->{q}},
-        ($bag eq 'data') ? "type=researchData" : "type<>researchData";
+        ($bag eq 'data') ? "type=research_data" : "type<>research_data";
 
     my $hits = h->search_publication($p);
 
@@ -30,16 +30,14 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
         $p->{q} = [];
         push @{$p->{q}}, ("status=public", "altid=$id");
         push @{$p->{q}},
-            ($bag eq 'data') ? "type=researchData" : "type<>researchData";
+            ($bag eq 'data') ? "type=research_data" : "type<>research_data";
         $hits = h->search_publication($p);
         $altid = 1 if $hits->{total};
     }
 
     $hits->{bag} = $bag;
 
-    my $marked = session 'marked';
-    $marked ||= [];
-    $hits->{hits}->[0]->{marked} = @$marked;
+    $hits->{hits}->[0]->{marked} = session 'marked' // [];
 
     if ($p->{fmt} ne 'html') {
         h->export_publication($hits, $p->{fmt});
@@ -67,9 +65,9 @@ get qr{/(data|publication)/*} => sub {
 
     ($bag eq 'data')
         ? push @{$p->{q}},
-        ("status=public", "(type=researchData OR type=dara)")
+        ("status=public", "type=research_data")
         : push @{$p->{q}},
-        ("status=public", "type<>researchData", "type<>dara");
+        ("status=public", "type<>research_data");
 
     my $hits = h->search_publication($p);
 
@@ -88,13 +86,12 @@ get qr{/(data|publication)/*} => sub {
         template "iframe", $hits;
     }
     else {
-        my $template = "websites/index_publication";
-        if ($p->{ftyp} and $p->{ftyp} =~ /ajx|js|pln/) {
-            $template .= "_" . $p->{ftyp};
-            $template .= "_num" if ($p->{enum} and $p->{enum} eq "1");
-            $template .= "_numasc" if ($p->{enum} and $p->{enum} eq "2");
-            header("Content-Type" => "text/plain")
-                unless ($p->{ftyp} eq 'iframe' || $p->{ftyp} eq 'pln');
+        my $template = 'publication/index';
+        if ($p->{ftyp} and $p->{ftyp} =~ /js/) {
+        $template .= "_" . $p->{ftyp};
+        $template .= "_num" if ($p->{enum} and $p->{enum} eq "1");
+        $template .= "_numasc" if ($p->{enum} and $p->{enum} eq "2");
+        header("Content-Type" => "text/plain")
         }
         template $template, $hits;
     }
@@ -141,8 +138,8 @@ get qr{/embed/*} => sub {
     $hits->{bag}   = "publication";
     $hits->{embed} = 1;
     $hits->{ttyp}  = $p->{ttyp} if $p->{ttyp};
-    $hits->{style} = $sort_style->{style}
-        ;    #$p->{style} ? $p->{style} : h->config->{default_style};
+    $hits->{style} = $sort_style->{style};
+    
     my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
     $hits->{lang} = $lang;
     template "iframe", $hits;

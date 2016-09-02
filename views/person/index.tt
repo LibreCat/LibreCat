@@ -4,7 +4,7 @@
 
 [% PROCESS header.tt %]
 
-<!-- BEGIN websites/index_publication.tt -->
+<!-- BEGIN person/index.tt -->
 
 <span id="language_id" style="display:none;">[% lang %]</span>
 
@@ -26,13 +26,13 @@
     <div class="row margin-top1">
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
-          <li[% IF bag == 'home' %] class="active"[% END %]><a href="/">[% lf.tabs.home %]</a></li>
-          <li[% IF bag == 'publication' %] class="active"[% END %]><a href="/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.publications %]</a></li>
-          <li[% IF bag == 'data' %] class="active"[% END %]><a href="/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.data_publications %]</a></li>
+          <li><a href="/">[% lf.tabs.home %]</a></li>
+          <li><a href="/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.publications %]</a></li>
+          <li><a href="/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.data_publications %]</a></li>
           <!--
-          <li[% IF bag == 'project' %] class="active"[% END %]><a href="/project[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.projects %]</a></li>
+          <li><a href="/project[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.projects %]</a></li>
           -->
-          <li[% IF bag == 'person' %] class="active"[% END %]><a href="/person[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.authors %]</a></li>
+          <li class="active"><a href="/person[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.authors %]</a></li>
           <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' || bag == 'policy' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lf.tabs.about %] <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="/docs/howto/start">[% lf.tabs.start %]</a></li>
@@ -53,56 +53,15 @@
     <div class="row">
       <div class="col-md-12 tab-content">
 
-        <div class="tab-pane[% IF !bag || bag == 'home' %] active[% END %]" id="home">
-          [% IF bag == 'home' || !bag %]
-            [% INCLUDE websites/tab_home.tt %]
-          [% END %]
-        </div>
-
-        <div class="tab-pane[% bag == 'publication' ? ' active' : '' %]" id="publ">
-          [% IF bag == "publication" %]
-          <div class="row">
-            <div class="col-sm-8 col-md-8">
-              [% INCLUDE hits.tt %]
-            </div>
-            <div class="col-sm-4 col-md-3 col-md-offset-1 facets">
-              [% INCLUDE filters.tt %]
-            </div>
-          </div>
-          [% END %]
-        </div>
-
-        <div class="tab-pane[% bag == 'data' ? ' active' : '' %]" id="research">
-          [% IF bag == "data" %]
-          <div class="row">
-            <div class="col-sm-8">
-              [% INCLUDE hits.tt %]
-            </div>
-            <div class="col-sm-4 col-md-3 col-md-offset-1 facets">
-              [% INCLUDE filters.tt %]
-            </div>
-          </div>
-          [% END %]
-        </div>
-
-        <!--
-        <div class="tab-pane[% bag == 'project' ? ' active' : '' %]" id="project">
-          [% IF bag == "project" %]
-          <div class="row">
-            INCLUDE project/hits.tt
-          </div>
-          [% END %]
-        </div>
-        -->
-
-        <div class="tab-pane[% bag == 'person' ? ' active' : '' %]" id="people">
-          [% IF bag == 'person' %]
+        <div class="tab-pane active" id="people">
           <div class="row">
             <div class="col-sm-8">
               [% INCLUDE person/hits.tt %]
             </div>
+            <div class="col-sm-4 col-md-3 col-md-offset-1 facets">
+              [% INCLUDE filters.tt %]
+            </div>
           </div>
-          [% END %]
         </div>
 
         <div class="tab-pane[% bag == 'about' ? ' active' : '' %]" id="about">
@@ -136,6 +95,6 @@
 
 </div><!-- outer border -->
 
-<!-- END websites/index_publication.tt -->
+<!-- END person/index.tt -->
 
 [% INCLUDE footer.tt %]

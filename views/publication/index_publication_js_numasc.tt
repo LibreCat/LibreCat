@@ -1,0 +1,25 @@
+<!-- BEGIN websites/index_publication_js_numasc.tt -->
+
+[% qp = request.params.hash %]
+
+[% n = 1 %]
+document.write ('<!-- Citations in this list are displayed in "[% style %]" style. -->');
+
+[% FOREACH entry IN hits %]
+document.write ('<div style="padding-left:1em;float:left;">');
+document.write ('[[% n %]]');
+[% n = n +1 %]
+document.write ('</div>');
+document.write ('<div style="padding-left:4em;">');
+document.write ('<i>[% entry.year %] | [% h.display_doctypes(entry.type) %] | PUB-ID: [% entry._id %]</i><br />');
+[% IF style == 'default' %]
+[% title = entry.title.replace("'", "&apos;") %]
+document.write ('<a href="[% h.host %]/[% bag %]/[% entry._id %]">[% title %]</a><br />');
+[% END %]
+[% string = entry.citation.$style %]
+[% string2 = string.replace("'", "&apos;") %]
+document.write ('[%- string2 -%][% IF style != "apa_indent" AND style != "dgps" %]<br />[% END %] [% INCLUDE links_js.tt %]</li>');
+document.write ('</div>');
+[% END %]
+
+<!-- END websites/index_publication_js_numasc.tt -->

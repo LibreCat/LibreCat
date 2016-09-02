@@ -24,6 +24,10 @@ sub config {
     state $config = hash_merge(Catmandu->config, Dancer::config);
 }
 
+sub alphabet {
+    return ['A'..'Z'];
+}
+
 sub bag {
     state $bag = Catmandu->store->bag;
 }
@@ -423,14 +427,12 @@ sub get_statistics {
     );
     my $disshits
         = $self->search_publication({q => ["status=public", "type=bi*"]});
-    my $people = $self->search_researcher({q => ["publcount>0"]});
 
     return {
         publications => $hits->{total},
         researchdata => $reshits->{total},
         oahits       => $oahits->{total},
         theseshits   => $disshits->{total},
-        pubpeople    => $people->{total},
     };
 
 }
@@ -721,17 +723,13 @@ sub search_researcher {
         sru_sortkeys => $p->{'sort'} || "fullname,,1",
     );
 
-    foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-        $hits->{$_} = $hits->$_;
-    }
-
-    if ($p->{get_person}) {
-        my $personlist;
-        foreach my $hit (@{$hits->{hits}}) {
-            $personlist->{$hit->{_id}} = $hit->{full_name};
-        }
-        return $personlist;
-    }
+    # if ($p->{get_person}) {
+    #     my $personlist;
+    #     foreach my $hit (@{$hits->{hits}}) {
+    #         $personlist->{$hit->{_id}} = $hit->{full_name};
+    #     }
+    #     return $personlist;
+    # }
 
     return $hits;
 }
