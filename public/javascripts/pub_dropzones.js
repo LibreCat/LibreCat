@@ -2,12 +2,13 @@
  * Dropzones
  */
 $(document).ready(function(){
+        var csrfToken = $("meta[name='csrf_token']").attr("content");
         Dropzone.options.qaeUpload = {
                 url: '/librecat/upload',
                 maxFilesize: 500,
                 maxFiles: 1,
                 previewTemplate: "<span></span>",
-            params: {access_level: "open_access", accept: 1, quickandeasy: 1},
+            params: {access_level: "open_access", accept: 1, quickandeasy: 1, csrf_token: csrfToken},
             createImageThumbnails: false,
             dictMaxFilesExceeded: "Please submit or cancel your upload first before uploading more files.",
             init: function(){
@@ -25,7 +26,6 @@ $(document).ready(function(){
                     var progresselement = progressbar.parentNode.parentNode;
                     $(progresselement).remove();
                     var resp = response;//JSON.parse(response);
-                    var csrfToken = $("meta[name='csrf_token']").attr("content");
                     var modal = Dropzone.createElement(
 "<div class='well' id='" + resp.tempname + "'>" +
 "<form id='form_" + resp.tempname + "' action='/librecat/upload/qae/submit' method='post'>" +
@@ -150,7 +150,7 @@ $(document).ready(function(){
                 maxFiles: 1,
                 previewTemplate: "<span></span>",
                 previewsContainer: '#theses_dz_preview',
-                params: {access_level: "open_access", accept: 1, quickandeasy: 1},
+                params: {access_level: "open_access", accept: 1, quickandeasy: 1, csrf_token: csrfToken},
                 createImageThumbnails: false,
                 dictMaxFilesExceeded: "Please submit or cancel your upload first before uploading more files.",
                 init: function(){
@@ -168,7 +168,6 @@ $(document).ready(function(){
                     var progresselement = progressbar.parentNode.parentNode;
                     $(progresselement).remove();
                     var resp = response;//JSON.parse(response);
-                    var csrfToken = $("meta[name='csrf_token']").attr("content");
                     var well = Dropzone.createElement("<div class='well' id='" + resp.tempid + "'></div>");
 
                     var form = Dropzone.createElement("<form class='form-horizontal' id='form_" + resp.tempid + "' action='/librecat/thesesupload/submit' method='post'></form>");
