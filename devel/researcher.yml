@@ -7,7 +7,6 @@ login: einstein
 super_admin: 1
 department:
 - _id: 9996
-  name: 'Relativistic Theory Group'
 email: einstein@physics.com
 first_name: Albert
 full_name: Einstein, Albert
@@ -23,7 +22,6 @@ login: test
 super_admin: 1
 department:
 - _id: 9996
-  name: 'Relativistic Theory Group'
 email: test.user@physics.com
 first_name: Test
 full_name: User, Test
