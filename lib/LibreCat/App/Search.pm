@@ -12,7 +12,7 @@ get qr{/en/*} => sub {
 };
 
 get '/' => sub {
-    template '/websites/index_publication.tt', {bag => "home"};
+    template 'index', {bag => "home"};
 };
 
 1;
