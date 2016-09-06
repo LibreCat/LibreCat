@@ -92,6 +92,7 @@ requires 'Email::Sender::Simple';
 requires 'REST::Client';
 requires 'Data::Uniqid';
 
+requires 'Authen::CAS::Client','0.06';
 requires 'Module::Install';
 requires 'Gearman::XS', '0.15';
 requires 'Net::Telnet::Gearman';
