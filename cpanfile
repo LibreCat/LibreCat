@@ -93,7 +93,6 @@ requires 'REST::Client';
 requires 'Data::Uniqid';
 
 requires 'Authen::CAS::Client','0.06';
-requires 'WWW::ORCID';
 requires 'Module::Install';
 requires 'Gearman::XS', '0.15';
 requires 'Net::Telnet::Gearman';
