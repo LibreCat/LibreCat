@@ -15,8 +15,8 @@ use Template;
 
 my $conf = Catmandu->config;
 
-my $forms = $conf->{forms}->{publication_types};
-my $other_items = $conf->{forms}->{other_items};
+my $forms = $conf->{forms}{publication_types};
+my $other_items = $conf->{forms}{other_items};
 
 my $tt = Template->new(
     START_TAG  => '{%',
@@ -29,7 +29,7 @@ my $tt = Template->new(
 foreach my $type ( keys %$forms ) {
 
     my $type_hash = $forms->{$type};
-    $type_hash->{field_order} = $conf->{forms}->{field_order};
+    $type_hash->{field_order} = $conf->{forms}{field_order};
     if($type_hash->{fields}){
         print "Generating $type.tt\n";
         $tt->process( "master.tt", $type_hash, "$type.tt" ) || die $tt->error(), "\n";
