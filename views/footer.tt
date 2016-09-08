@@ -42,7 +42,7 @@
 <script src="/javascripts/commonmarkjs/dist/commonmark.min.js"></script>
 <script>
 var reader = new commonmark.Parser();
-var writer = new commonmark.HtmlRenderer();
+var writer = new commonmark.HtmlRenderer({safe:true});
 $(document).ready(function () {
     $('.cmark').each(function () {
     var text = $(this).html();
