@@ -2,7 +2,7 @@ package Catmandu::Fix::add_orcid_to_pub;
 
 use Catmandu::Sane;
 use Catmandu;
-use App::Helper;
+use LibreCat::App::Helper;
 use Moo;
 
 sub fix {

@@ -2,9 +2,9 @@ package LibreCat::Cmd::publication;
 
 use Catmandu::Sane;
 use Catmandu;
-use App::Helper;
+use LibreCat::App::Helper;
 use LibreCat::Validator::Publication;
-use App::Catalogue::Controller::File;
+use LibreCat::App::Catalogue::Controller::File;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -68,7 +68,7 @@ sub command {
 
 sub _list {
     my ($self) = @_;
-    my $count = App::Helper::Helpers->new->publication->each(
+    my $count = LibreCat::App::Helper::Helpers->new->publication->each(
         sub {
             my ($item) = @_;
             my $id = $item->{_id};
@@ -87,7 +87,7 @@ sub _list {
 }
 
 sub _export {
-    my $h = App::Helper::Helpers->new;
+    my $h = LibreCat::App::Helper::Helpers->new;
 
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($h->publication);
@@ -101,7 +101,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = App::Helper::Helpers->new->get_publication($id);
+    my $data = LibreCat::App::Helper::Helpers->new->get_publication($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -129,7 +129,7 @@ sub _adder {
     my ($self, $data) = @_;
     my $is_new = 0;
 
-    my $helper = App::Helper::Helpers->new;
+    my $helper = LibreCat::App::Helper::Helpers->new;
 
     unless (exists $data->{_id} && defined $data->{_id}) {
         $is_new = 1;
@@ -162,7 +162,7 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result = App::Helper::Helpers->new->delete_record('publication', $id);
+    my $result = LibreCat::App::Helper::Helpers->new->delete_record('publication', $id);
 
     if ($result) {
         print "deleted $id\n";
@@ -243,11 +243,11 @@ sub _files_list {
     };
 
     if ($id) {
-        my $data = App::Helper::Helpers->new->get_publication($id);
+        my $data = LibreCat::App::Helper::Helpers->new->get_publication($id);
         $printer->($data);
     }
     else {
-        App::Helper::Helpers->new->publication->each($printer);
+        LibreCat::App::Helper::Helpers->new->publication->each($printer);
     }
 }
 
@@ -311,7 +311,7 @@ sub _files_load {
 sub _file_process {
     my ($self,$id,$files) = @_;
 
-    my $data = App::Helper::Helpers->new->get_publication($id);
+    my $data = LibreCat::App::Helper::Helpers->new->get_publication($id);
 
     unless ($data) {
         warn "$id - no such publication";
@@ -346,7 +346,7 @@ sub _file_process {
             $file->{file_id} && $file->{date_created} && $file->{date_updated} &&
             $file->{content_type} && $file->{creator}
         ) {
-            $file = App::Catalogue::Controller::File::update_file($id,$file);
+            $file = LibreCat::App::Catalogue::Controller::File::update_file($id,$file);
         }
     }
 

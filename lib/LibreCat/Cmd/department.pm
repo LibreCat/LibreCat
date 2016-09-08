@@ -1,7 +1,7 @@
 package LibreCat::Cmd::department;
 
 use Catmandu::Sane;
-use App::Helper;
+use LibreCat::App::Helper;
 use LibreCat::Validator::Department;
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -63,7 +63,7 @@ sub command {
 }
 
 sub _list {
-    my $count = App::Helper::Helpers->new->department->each(
+    my $count = LibreCat::App::Helper::Helpers->new->department->each(
         sub {
             my ($item)  = @_;
             my $id      = $item->{_id};
@@ -80,7 +80,7 @@ sub _list {
 }
 
 sub _export {
-    my $h = App::Helper::Helpers->new;
+    my $h = LibreCat::App::Helper::Helpers->new;
 
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($h->department);
@@ -94,7 +94,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = App::Helper::Helpers->new->get_department($id);
+    my $data = LibreCat::App::Helper::Helpers->new->get_department($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -122,7 +122,7 @@ sub _adder {
     my ($self, $data) = @_;
     my $is_new = 0;
 
-    my $helper = App::Helper::Helpers->new;
+    my $helper = LibreCat::App::Helper::Helpers->new;
 
     unless (exists $data->{_id} && defined $data->{_id}) {
         $is_new = 1;
@@ -154,7 +154,7 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $h = App::Helper::Helpers->new;
+    my $h = LibreCat::App::Helper::Helpers->new;
 
     my $result = $h->department->delete($id);
 

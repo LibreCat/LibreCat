@@ -2,7 +2,7 @@ package Catmandu::Fix::hash_array;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(:array);
-use App::Helper;
+use LibreCat::App::Helper;
 use Moo;
 
 sub fix {

@@ -2,7 +2,7 @@ package Catmandu::Fix::add_department_tree;
 
 use Catmandu::Sane;
 use Moo;
-use App::Helper;
+use LibreCat::App::Helper;
 use Dancer qw(:syntax session);
 
 sub fix {
