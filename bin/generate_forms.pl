@@ -1,7 +1,5 @@
 #!/usr/bin/env perl
 
-my $layers;
-
 BEGIN {
     use Catmandu::Sane;
     use Path::Tiny;
