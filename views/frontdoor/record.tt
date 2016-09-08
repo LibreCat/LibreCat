@@ -94,7 +94,7 @@
 
       <div class="col-xs-10 col-sm-8"><!-- begin left col -->
 
-        <h1 class="cmark" itemprop="name">[% title %]</h1>
+        <h1 class="cmark" itemprop="name">[% title  | html %]</h1>
 
         [% IF citation %]
         <div class="row">
@@ -112,12 +112,12 @@
             <div class="row">
               <div class="col-xs-2 text-muted">[% h.loc("frontdoor.download") %]</div>
               <div class="col-xs-10">
-                  [% PROCESS frontdoor/oa_lock.tt %] <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a>
+                  [% PROCESS frontdoor/oa_lock.tt %] <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
                   <span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
                   [% PROCESS frontdoor/modal_requestcopy.tt %]
             [% END %]
             [% IF loop.count > 1 %]
-                  <br>[% PROCESS frontdoor/oa_lock.tt %] <a href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a>
+                  <br>[% PROCESS frontdoor/oa_lock.tt %] <a href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
                   <span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
                   [% PROCESS frontdoor/modal_requestcopy.tt %]
             [% END %]
@@ -139,14 +139,14 @@
         [% IF doi %]
         <div class="row">
           <div class="col-xs-2 text-muted">[% h.loc("forms.${type}.field.doi.label") %]</div>
-          <div class="col-xs-10"><a itemprop="url" href="http://doi.org/[% doi %]" title="[% doi %]">[% doi %]</a></div>
+          <div class="col-xs-10"><a itemprop="url" href="http://doi.org/[% doi %]" title="[% doi %]">[% doi | html %]</a></div>
         </div>
         [% END %]
 
         [% IF urn %]
         <div class="row">
           <div class="col-xs-2 text-muted">[% h.loc("forms.${type}.field.urn.label") %]</div>
-          <div class="col-xs-10"><a href="http://nbn-resolving.de/[% urn %]">[% urn %]</a></div>
+          <div class="col-xs-10"><a href="http://nbn-resolving.de/[% urn %]">[% urn | html %]</a></div>
         </div>
         [% END %]
 

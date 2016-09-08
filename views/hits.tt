@@ -82,7 +82,7 @@
     <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% lf.forms.item(entry.type).label %] | PUB-ID: <span class="pubid">[% entry._id %]</span> </em>
     <div class="citation-block-div">
     [% IF style == 'default' %]
-	<a href="[% h.host %]/[% IF backend %]librecat/record/edit[% ELSE %][% bag %][% END %]/[% entry._id %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title %]</strong></a><br>
+	<a href="[% h.host %]/[% IF backend %]librecat/record/edit[% ELSE %][% bag %][% END %]/[% entry._id %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title | html %]</strong></a><br>
     [% END %]
     [% IF backend AND ((!entry.locked AND !entry.type.match("^bi")) OR session.role == "super_admin") %]
       <a href="/librecat/record/edit/[% entry._id %]" onclick="window.top.location='/librecat/record/edit/[% entry._id %]'" class="citation-block-link"></a>

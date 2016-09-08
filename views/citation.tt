@@ -1,3 +1,4 @@
 <!-- simple example for a citation template -->
-[% author.0.full_name || editor.0.full_name %], <em>[% title %]</em>. [% publication %] <strong>[% volume %]</strong> ([% issue %]).
-[% place %], [% year %]
+[% author.0.full_name || editor.0.full_name | html %], <em>[% title | html %]</em>.
+[% publication | html %] <strong>[% volume | html %]</strong> ([% issue | html %]).
+[% place | html %], [% year | html %]

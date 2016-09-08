@@ -13,14 +13,14 @@
   <div class="row">
     <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.url %]</div>
     <div class="col-md-9">
-      <a href="[% li.url %]">[% li.url %]</a>
+      <a href="[% li.url | html %]">[% li.url | html %]</a>
     </div>
   </div>
   [% IF li.description %]
   <div class="row">
     <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.description %]</div>
     <div class="col-md-9">
-      [% li.description %]
+      [% li.description | html %]
     </div>
   </div>
   [% END %]<!-- IF description -->
@@ -45,14 +45,14 @@
   <div class="row">
     <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.url %]</div>
     <div class="col-md-9">
-      <a href="[% fi.url %]">[% fi.url %]</a>
+      <a href="[% fi.url | html %]">[% fi.url | html %]</a>
     </div>
   </div>
   [% IF fi.description %]
   <div class="row">
     <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.description %]</div>
     <div class="col-md-9">
-      [% fi.description %]
+      [% fi.description | html %]
     </div>
   </div>
   [% END %]

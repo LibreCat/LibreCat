@@ -47,14 +47,14 @@
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.url") %]</div>
     <div class="col-md-9">
-      <a href="[% li.url %]">[% li.url %]</a>
+      <a href="[% li.url | html %]">[% li.url | html %]</a>
     </div>
   </div>
   [% IF li.description %]
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.description") %]</div>
     <div class="col-md-9">
-      [% li.description %]
+      [% li.description | html %]
     </div>
   </div>
   [% END %]

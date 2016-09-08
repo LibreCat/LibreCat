@@ -7,11 +7,11 @@
   <div class="row[% UNLESS loop.first %] margin-top1[% END %]">
     <div class="col-md-12">
     [% IF reference.id %]
-    <a href="http://europepmc.org/abstract/MED/[% reference.id %]"><span class="fa fa-share-square-o"></span>[% reference.title %]</a><br />
+    <a href="http://europepmc.org/abstract/MED/[% reference.id %]"><span class="fa fa-share-square-o"></span>[% reference.title | html %]</a><br />
     [% ELSE %]
-    [% reference.title %]<br />
+    [% reference.title | html %]<br />
     [% END %]
-    [% reference.authorString %], [% IF reference.journalAbbreviation %] <em>[% reference.journalAbbreviation %]</em> [% reference.volume %]([% reference.issue %]),[% END %] [% reference.pubYear %]
+    [% reference.authorString | html %], [% IF reference.journalAbbreviation %] <em>[% reference.journalAbbreviation | html  %]</em> [% reference.volume | html %]([% reference.issue | html %]),[% END %] [% reference.pubYear | html %]
     [% IF reference.id %]<br />PMID: <a href="http://europepmc.org/abstract/MED/[% reference.id %]">[% reference.id %]</a>[% END %]
     </div>
   </div>

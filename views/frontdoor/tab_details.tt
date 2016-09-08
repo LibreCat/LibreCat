@@ -17,9 +17,9 @@
     <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
   [% IF tr.id %]
-  <a itemprop="author" href="/person/[% tr.id %]">[% tr.full_name %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
+  <a itemprop="author" href="/person/[% tr.id %]">[% tr.full_name | html %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
   [% ELSE %]
-  <span itemprop="author">[% tr.full_name %]</span>
+  <span itemprop="author">[% tr.full_name | html %]</span>
   [% END %]
   [% IF tr.orcid %]<a href="http://orcid.org/[% tr.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %]
   [% IF loop.count > 11 %]
@@ -42,7 +42,7 @@
   [% IF au.id %]
   <a itemprop="author" href="/person/[% au.id %]">[% au.full_name %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
   [% ELSE %]
-  <span itemprop="author">[% au.full_name %]</span>
+  <span itemprop="author">[% au.full_name | html %]</span>
   [% END %]
   [% IF au.orcid %]<a href="http://orcid.org/[% au.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %]
   [% IF loop.count > 11 %]
@@ -66,7 +66,7 @@
   [% IF sup.id %]
   <a href="/person/[% sup.id %]">[% sup.full_name %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
   [% ELSE %]
-  <span>[% sup.full_name %]</span>
+  <span>[% sup.full_name | html %]</span>
   [% END %]
   [% IF sup.orcid %]<a href="http://orcid.org/[% sup.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %]
   [% IF loop.last %]</div></div>[% END %]
@@ -81,7 +81,7 @@
   [% IF ed.id %]
   <a itemprop="editor" href="/person/[% ed.id %]">[% ed.full_name %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
   [% ELSE %]
-  <span itemprop="editor">[% ed.full_name %]</span>
+  <span itemprop="editor">[% ed.full_name | html %]</span>
   [% END %]
   [% IF ed.orcid %]<a href="http://orcid.org/[% ed.orcid %]"><sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %]
   [% IF loop.last %]</div></div>[% END %]
@@ -93,7 +93,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.corporate_editor.label || lf.forms.$type.field.corporate_editor_solo.label %]</div>
     <div class="col-lg-10 col-md-9">
   [% ELSE %];[% END %]
-  [% ed %]
+  [% ed | html %]
   [% IF loop.last %]</div></div>[% END %]
 [% END %]
 
@@ -113,7 +113,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.project.label") %]</div>
     <div class="col-lg-10 col-md-9">
   [%- ELSE -%]<br />[% END %]
-  <a href="/project/[% proj._id %]">[% proj.name %]</a>
+  <a href="/project/[% proj._id %]">[% proj.name | html %]</a>
   [%- IF loop.last %]</div></div>[% END -%]
 [%- END -%]
 
@@ -123,7 +123,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.research_group.label") %]</div>
     <div class="col-lg-10 col-md-9">
   [%- ELSE -%]<br />[% END %]
-  [% rg.name %]
+  [% rg.name | html %]
   [% IF loop.last %]</div></div>[% END %]
 [%- END -%]
 
@@ -133,7 +133,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.alternative_title.label") %]</div>
     <div class="col-lg-10 col-md-9" itemprop="alternativeHeadline">
     [%- ELSE  -%]<br />[% END %]
-    [% at %]
+    [% at | html %]
   [%- IF loop.last -%]</div></div>[% END %]
 [%- END -%]
 
@@ -142,7 +142,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.abstract.label") %]</div>
     <div class="col-lg-10 col-md-9 cmark abstract" itemprop="about">
     [% FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><hr>[% END %]
-[% ab.text %]
+[% ab.text | html %]
     [% END %]
     </div>
   </div>
@@ -153,7 +153,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.keyword.label") %]</div>
     <div class="col-lg-10 col-md-9" itemprop="keywords">
     [% FOREACH kw IN keyword %]
-        <a href='/[% bag %]?q=keyword="[% kw %]"'>[% kw %]</a>
+        <a href='/[% bag %]?q=keyword="[% kw %]"'>[% kw | html %]</a>
       [% UNLESS loop.last %]; [% END %]
     [% END %]
     </div>
@@ -170,9 +170,9 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.license.data_reuse_license.label") %]</div>
     <div class="col-lg-10 col-md-9">
     [% SWITCH data_reuse_license %]
-    [% CASE 'PDDL' %] This <em>[% title %]</em> is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: <a href="http://opendatacommons.org/licenses/pddl/1.0">http://opendatacommons.org/licenses/pddl/1.0</a>
-    [% CASE 'ODC-By' %] This <em>[% title %]</em> is made available under the Open Data Commons Attribution License: <a href="http://opendatacommons.org/licenses/by/1.0">http://opendatacommons.org/licenses/by/1.0</a>
-    [% CASE 'ODbL' %] This <em>[% title %]</em> is made available under the Open Database License: <a href="http://opendatacommons.org/licenses/odbl/1.0">http://opendatacommons.org/licenses/odbl/1.0</a>. Any rights in individual contents of the database are licensed under the Database Contents License: <a href="http://opendatacommons.org/licenses/dbcl/1.0/" target="_blank">http://opendatacommons.org/licenses/dbcl/1.0/</a>
+    [% CASE 'PDDL' %] This <em>[% title | html %]</em> is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: <a href="http://opendatacommons.org/licenses/pddl/1.0">http://opendatacommons.org/licenses/pddl/1.0</a>
+    [% CASE 'ODC-By' %] This <em>[% title | html%]</em> is made available under the Open Data Commons Attribution License: <a href="http://opendatacommons.org/licenses/by/1.0">http://opendatacommons.org/licenses/by/1.0</a>
+    [% CASE 'ODbL' %] This <em>[% title | html %]</em> is made available under the Open Database License: <a href="http://opendatacommons.org/licenses/odbl/1.0">http://opendatacommons.org/licenses/odbl/1.0</a>. Any rights in individual contents of the database are licensed under the Database Contents License: <a href="http://opendatacommons.org/licenses/dbcl/1.0/" target="_blank">http://opendatacommons.org/licenses/dbcl/1.0/</a>
     [% END %]
     </div>
   </div>
@@ -182,7 +182,7 @@
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.item('conference.name').label %]</div>
     <div class="col-lg-10 col-md-9">
-      [% conference.name %]
+      [% conference.name | html %]
     </div>
   </div>
 [% END %]
@@ -191,7 +191,7 @@
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.item('conference.location').label_short %]</div>
     <div class="col-lg-10 col-md-9">
-      [% conference.location %]
+      [% conference.location | html %]
     </div>
   </div>
 [% END %]
@@ -200,7 +200,7 @@
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.$type.field.item('conference.date').label %]</div>
     <div class="col-lg-10 col-md-9">
-      [% conference.start_date %][% IF conference.end_date %] &ndash; [% conference.end_date %][% END %]
+      [% conference.start_date | html %][% IF conference.end_date %] &ndash; [% conference.end_date | html %][% END %]
     </div>
   </div>
 [% END %]
@@ -210,7 +210,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.isbn") %]</div>
     <div class="col-lg-10 col-md-9" itemprop="isbn">
     [% FOREACH ib IN publication_identifier.isbn %]
-      <a href='/publication?q=isbn=[% ib %]'>[% ib %]</a>
+      <a href='/publication?q=isbn=[% ib | uri %]'>[% ib | html %]</a>
       [% UNLESS loop.last %], [% END %]
     [% END %]
     </div>
@@ -220,28 +220,28 @@
 [% IF publication_identifier.issn %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.issn") %]</div>
-    <div class="col-lg-10 col-md-9">[% FOREACH is IN publication_identifier.issn %]<a href="/publication?q=issn=[% is %]">[% is %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
+    <div class="col-lg-10 col-md-9">[% FOREACH is IN publication_identifier.issn %]<a href="/publication?q=issn=[% is | uri %]">[% is | html %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
 [% IF publication_identifier.eissn %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.eissn") %]</div>
-    <div class="col-lg-10 col-md-9">[% FOREACH es IN publication_identifier.eissn %]<a href="/publication?q=eissn=[% es %]">[% es %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
+    <div class="col-lg-10 col-md-9">[% FOREACH es IN publication_identifier.eissn %]<a href="/publication?q=eissn=[% es | uri %]">[% es | html %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [% END %]
 
 [% IF ipn %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.ipn") %]</div>
-    <div class="col-lg-10 col-md-9">[% ipn %]</div>
+    <div class="col-lg-10 col-md-9">[% ipn | html %]</div>
   </div>
 [% END %]
 
 [% IF ipc %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.ipc") %]</div>
-    <div class="col-lg-10 col-md-9">[% ipc %]</div>
+    <div class="col-lg-10 col-md-9">[% ipc | html %]</div>
   </div>
 [% END %]
 

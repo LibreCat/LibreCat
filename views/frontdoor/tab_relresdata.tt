@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-md-2 text-muted">[% resDat.id %]</div>
       <div class="col-md-10">
-	<a href="/data/[% resDat.id %]">[% rec.title %]</a><br />
+	<a href="/data/[% resDat.id %]">[% rec.title | html %]</a><br />
 	[% rec.citation.default %]<br />
       </div>
     </div>
