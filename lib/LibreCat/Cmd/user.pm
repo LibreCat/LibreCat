@@ -1,7 +1,7 @@
 package LibreCat::Cmd::user;
 
 use Catmandu::Sane;
-use App::Helper;
+use LibreCat::App::Helper;
 use App::bmkpasswd qw(mkpasswd);
 use LibreCat::Validator::Researcher;
 use Carp;
@@ -63,7 +63,7 @@ sub command {
 }
 
 sub _list {
-    my $count = App::Helper::Helpers->new->researcher->each(
+    my $count = LibreCat::App::Helper::Helpers->new->researcher->each(
         sub {
             my ($item)   = @_;
             my $id       = $item->{_id};
@@ -83,7 +83,7 @@ sub _list {
 }
 
 sub _export {
-    my $h = App::Helper::Helpers->new;
+    my $h = LibreCat::App::Helper::Helpers->new;
 
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($h->researcher);
@@ -97,7 +97,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = App::Helper::Helpers->new->get_person($id);
+    my $data = LibreCat::App::Helper::Helpers->new->get_person($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -125,7 +125,7 @@ sub _adder {
     my ($self, $data) = @_;
     my $is_new = 0;
 
-    my $helper = App::Helper::Helpers->new;
+    my $helper = LibreCat::App::Helper::Helpers->new;
 
     unless (exists $data->{_id} && defined $data->{_id}) {
         $is_new = 1;
@@ -159,7 +159,7 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $h      = App::Helper::Helpers->new;
+    my $h      = LibreCat::App::Helper::Helpers->new;
     my $result = $h->researcher->delete($id);
 
     if ($h->researcher->commit) {

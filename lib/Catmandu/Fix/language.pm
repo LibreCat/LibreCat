@@ -1,7 +1,7 @@
 package Catmandu::Fix::language;
 
 use Catmandu::Sane;
-use App::Helper;
+use LibreCat::App::Helper;
 use Moo;
 
 sub fix {

@@ -2,7 +2,7 @@ package LibreCat::Cmd::schemas;
 
 use Catmandu::Sane;
 use Catmandu;
-use App::Helper;
+use LibreCat::App::Helper;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -52,7 +52,7 @@ sub command {
 }
 
 sub _list {
-    my $h     = App::Helper::Helpers->new;
+    my $h     = LibreCat::App::Helper::Helpers->new;
 
     my $schemas = $h->config->{schemas};
 
@@ -68,7 +68,7 @@ sub _get {
 
     croak "get - need a schema name" unless $name;
 
-    my $h     = App::Helper::Helpers->new;
+    my $h     = LibreCat::App::Helper::Helpers->new;
 
     my $schema = $h->config->{schemas}->{$name};
 
@@ -82,7 +82,7 @@ sub _get {
 }
 
 sub _markdown {
-    my $h     = App::Helper::Helpers->new;
+    my $h     = LibreCat::App::Helper::Helpers->new;
 
     my $schemas = $h->config->{schemas};
     my $date    = localtime time;

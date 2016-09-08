@@ -3,7 +3,7 @@ package Catmandu::Fix::fix_too_many_departments;
 use Catmandu::Sane;
 use Catmandu::Util qw(:array);
 use Moo;
-use App::Helper;
+use LibreCat::App::Helper;
 use Dancer qw(:syntax session);
 
 sub fix {

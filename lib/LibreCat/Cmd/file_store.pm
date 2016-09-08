@@ -2,7 +2,7 @@ package LibreCat::Cmd::file_store;
 
 use Catmandu::Sane;
 use Catmandu;
-use App::Helper;
+use LibreCat::App::Helper;
 use LibreCat::Validator::Publication;
 use Carp;
 use IO::File;

@@ -1,9 +1,8 @@
 package Catmandu::Fix::maybe_add_urn;
 
 use Catmandu::Sane;
+use LibreCat::App::Helper;
 use Moo;
-
-use App::Helper;
 
 sub fix {
     my ($self, $pub) = @_;

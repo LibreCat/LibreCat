@@ -1,8 +1,8 @@
 package Catmandu::Fix::page_range_number;
 
 use Catmandu::Sane;
+use LibreCat::App::Helper;
 use Moo;
-use App::Helper;
 
 sub fix {
     my ($self, $data) = @_;
