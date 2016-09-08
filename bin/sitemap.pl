@@ -1,11 +1,18 @@
 #!/usr/bin/env perl
 
+BEGIN {
+    use Catmandu::Sane;
+    use Path::Tiny;
+    use lib path(__FILE__)->parent->parent->child('lib')->stringify;
+    use LibreCat::Layers;
+
+    LibreCat::Layers->new->load;
+};
+
 use Catmandu::Sane;
 use Catmandu;
 
-Catmandu->load;
 my $conf = Catmandu->config;
-
 my $bag = Catmandu->store('search')->bag('publication');
 
 $bag->each( sub {
@@ -13,8 +20,8 @@ $bag->each( sub {
     next unless $rec->{status} && $rec->{status} eq 'public';
 
     my $type = ($rec->{type} eq 'researchData') ? 'data' : 'publication';
-	say "$conf->{host}/$type/$rec->{_id}";
-    });
+    say "$conf->{host}/$type/$rec->{_id}";
+});
 
 #TODO: add person profile pages
 
