@@ -96,7 +96,7 @@
     [% INCLUDE links.tt %]
     [% IF backend %]
     [% INCLUDE backend/rec_details.tt %]
-    [% IF session.role == 'super_admin' %][% IF entry.message %]<p class="bg-success"><em>[% entry.message %]</em></p>[% END %][% END %]
+    [% IF session.role == 'super_admin' %][% IF entry.message %]<p class="bg-success"><em>[% entry.message | html %]</em></p>[% END %][% END %]
     [% END %]
   </div>
 </div>
