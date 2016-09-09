@@ -3,6 +3,14 @@
  */
 $(document).ready(function(){
         var csrfToken = $("meta[name='csrf_token']").attr("content");
+        var htmlEscape = function(str) {
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        };
 
         Dropzone.options.qaeUpload = {
                 url: '/librecat/upload',
@@ -78,7 +86,7 @@ $(document).ready(function(){
                     var progresselement = progressbar.parentNode.parentNode;
                     $(progresselement).remove();
                     var resp = response;//JSON.parse(response);
-                    console.log(response);
+                    //console.log(response);
                     if(resp.success){
                       $(file.previewElement).addClass("alert alert-success");
 
@@ -135,8 +143,7 @@ $(document).ready(function(){
 
                       file.previewElement.setAttribute("id", resp.tempid);
                       var input_element = Dropzone.createElement(
-                        '<input type="hidden" name="csrf_token" value="' + csrfToken + '"/>' +
-                        '<input type="hidden" id="file_' + resp.tempid + '" name="file" value="' + JSON.stringify(resp) + '" />'
+                        '<input type="hidden" id="file_' + resp.tempid + '" name="file" value="' + htmlEscape(JSON.stringify(resp)) + '" />'
                       );
                       file.previewElement.appendChild(input_element);
                     }
