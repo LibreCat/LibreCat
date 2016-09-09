@@ -7,35 +7,54 @@ searchParams.q.push('person=[% id %]');
 var url = '/marked?'+ $.param($.extend({}, searchParams), true);
 
 $(function () {
-	$('.mark_all').click(function(evt){
-		evt.preventDefault();
-		var a = $(this);
-		var marked_all = a.data('marked');
-		if(marked_all == 0){
-			$.post(url, function(res) {
-				$('.total-marked').text(res.total);
-				$('.mark').html('<span class="fa fa-check-square-o fa-lg"></span>');
-				$('.mark').data('marked', 1);
-				a.html('<span class="fa fa-check-square-o fa-lg"></span> Unmark all');
-				a.data('marked', 1);
-			}, 'json');
-		}
-		else {
-		    prev = "[% IF qp.person AND qp.person != "" %][% h.newuri_for("/person/$qp.person", qp, person="") %][% ELSIF qp.department AND qp.department != "" %][% h.newuri_for("/department/$qp.department", qp, department="") %][% ELSIF qp.publication AND qp.publication != "" %][% h.newuri_for("/publication/$qp.publication", qp, publication="") %][% END %]";
-			$.post('/marked?x-tunneled-method=DELETE', function(res) {
-			    if(prev){
-			        window.location.replace(prev);
-			    }
-			    else {
-			        $('.total-marked').text(res.total);
-				    $('.mark').html('<span class="fa fa-square-o fa-lg"></span>');
-				    $('.mark').data('marked', 0);
-				    a.html('<span class="fa fa-square-o fa-lg"></span> Mark all');
-				    a.data('marked', 0);
-				}
-			}, 'json');
-		}
-	});
+    $('.mark_all').click(function(evt){
+        evt.preventDefault();
+        var a = $(this);
+        var csrfToken = $("meta[name='csrf_token']").attr("content");
+        var marked_all = a.data('marked');
+
+        if(marked_all == 0){
+            $.ajax({
+                type: 'POST',
+                url: url,
+                headers: {
+                   "X-CSRF-Token": csrfToken
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('.total-marked').text(res.total);
+                    $('.mark').html('<span class="fa fa-check-square-o fa-lg"></span>');
+                    $('.mark').data('marked', 1);
+                    a.html('<span class="fa fa-check-square-o fa-lg"></span> Unmark all');
+                    a.data('marked', 1);
+                }
+            });
+        }
+        else {
+            prev = "[% IF qp.person AND qp.person != "" %][% h.newuri_for("/person/$qp.person", qp, person="") %][% ELSIF qp.department AND qp.department != "" %][% h.newuri_for("/department/$qp.department", qp, department="") %][% ELSIF qp.publication AND qp.publication != "" %][% h.newuri_for("/publication/$qp.publication", qp, publication="") %][% END %]";
+            // TODO post requests shouldn't contain url params
+            $.ajax({
+                type: '/marked?x-tunneled-method=DELETE',
+                url: url,
+                headers: {
+                   "X-CSRF-Token": csrfToken
+                },
+                dataType: 'json',
+                success: function(res) {
+                    if(prev){
+                        window.location.replace(prev);
+                    }
+                    else {
+                        $('.total-marked').text(res.total);
+                        $('.mark').html('<span class="fa fa-square-o fa-lg"></span>');
+                        $('.mark').data('marked', 0);
+                        a.html('<span class="fa fa-square-o fa-lg"></span> Mark all');
+                        a.data('marked', 0);
+                    }
+                }
+            });
+        }
+    });
 });
 
 </script>

@@ -12,7 +12,16 @@
   $(function() {
     $( "#sortable" ).sortable({
       onDrop: function($item) {
-        $.post('[% h.host %]/reorder/' + $item.find('span.pubid').text() + '/' + $item.index(), function(){},'json');
+        var csrfToken = $("meta[name='csrf_token']").attr("content");
+        $.ajax({
+            type: 'POST',
+            url: '[% h.host %]/reorder/' + $item.find('span.pubid').text() + '/' + $item.index(),
+            headers: {
+               "X-CSRF-Token": csrfToken
+            },
+            dataType: 'json',
+            success: function(res) {}
+        });
         $item.removeClass("dragged").removeAttr("style");
         $("body").removeClass("dragging");
       }
