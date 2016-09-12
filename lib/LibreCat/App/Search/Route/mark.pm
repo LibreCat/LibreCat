@@ -31,6 +31,7 @@ get '/marked' => sub {
     my ($hits, @tmp_hits, @result_hits);
 
     if ($marked and ref $marked eq "ARRAY") {
+        $marked = [@$marked];
         while (my @chunks = splice(@$marked, 0, 100)) {
             $p->{q}     = ["(id=" . join(' OR id=', @chunks) . ")"];
             $p->{limit} = 100;
