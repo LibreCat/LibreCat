@@ -48,13 +48,9 @@ $(function () {
 $(document).ready(function() {
     var totalMarked = $('.total-marked');
     if (totalMarked.length) {
-        var csrfToken = $("meta[name='csrf_token']").attr("content");
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: '/marked_total',
-            headers: {
-               "X-CSRF-Token": csrfToken
-            },
             dataType: 'json',
             success: function(res) {
                totalMarked.text(res.total);
