@@ -60,9 +60,9 @@
     [% personid = reqpath.search('person/(\d{1,})') -%]
     [% query = qp.q | replace('"', '&quot;') -%]
     [% IF request.path.match("person/") %]
-      <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/daily', qp, q="person=$personid") %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (today)">
-      <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/weekly', qp, q="person=$personid") %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last week)">
-      <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/monthly', qp, q="person=$personid") %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last month)">
+      <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/daily', qp, q="person%2D$personid") %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (today)">
+      <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/weekly', qp, q="person%2D$personid") %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last week)">
+      <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/monthly', qp, q="person%2D$personid") %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last month)">
     [% ELSIF request.path.match("text") %]
       <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/monthly', qp, q="$query") %]" title="Publications last month">
     [% END %]

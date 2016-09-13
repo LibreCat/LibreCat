@@ -9,6 +9,7 @@ use Encode;
 use LibreCat::App::Helper;
 
 sub feed {
+    my $q      = shift // [];
     my $period = shift // 'weekly';
 
     my $fixer = Catmandu::Fix->new(fixes => ['fixes/to_dc.fix']);
@@ -30,6 +31,7 @@ sub feed {
     }
 
     my $query = [
+        @$q,
         "status exact public",
         "date_updated>" . $now->strftime('"%FT%H:%M:00Z"')
     ];
@@ -66,12 +68,14 @@ sub feed {
 }
 
 get '/feed' => sub {
-    return feed();
+    my $param = h->extract_params;
+    return feed($param->{q});
 };
 
 get '/feed/:period' => sub {
+    my $param = h->extract_params;
     my $period = param('period');
-    return feed($period);
+    return feed($param->{q},$period);
 };
 
 1;
