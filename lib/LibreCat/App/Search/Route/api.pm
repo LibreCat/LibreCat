@@ -29,37 +29,38 @@ Endpoint of the OAI interface.
 
 =cut
 
-oai_provider '/oai', deleted => sub {
-    defined $_[0]->{oai_deleted};
+oai_provider '/oai',
+    deleted => sub {
+        defined $_[0]->{oai_deleted};
     },
     set_specs_for => sub {
-    my $pub = $_[0];
+        my $pub = $_[0];
 
-    my $specs;
-    push @$specs, $pub->{type} if $pub->{type};
-    push @$specs, $pub->{dini_type} if $pub->{dini_type};
+        my $specs;
+        push @$specs, $pub->{type} if $pub->{type};
+        push @$specs, $pub->{dini_type} if $pub->{dini_type};
 
-    push @$specs, "ddc:$_" for @{$pub->{ddc}};
+        push @$specs, "ddc:$_" for @{$pub->{ddc}};
 
-    if ($pub->{ec_funded} && $pub->{ec_funded} eq '1') {
-        if ($pub->{type} eq 'researchData') {
-            push @$specs, "openaire_data";
+        if ($pub->{ec_funded} && $pub->{ec_funded} eq '1') {
+            if ($pub->{type} eq 'researchData') {
+                push @$specs, "openaire_data";
+            }
+            else {
+                push @$specs, "openaire";
+            }
         }
-        else {
-            push @$specs, "openaire";
+
+        if (  $pub->{type} &&
+              is_array_ref($pub->{file}) &&
+              @{$pub->{file}} > 0 &&
+              $pub->{file}->[0]->{open_access} &&
+              $pub->{file}->[0]->{open_access} eq '1') {
+            push @$specs, "$pub->{type}Ftxt", "driver", "open_access";
         }
-    }
 
-    if (  $pub->{type} &&
-          is_array_ref($pub->{file}) &&
-          @{$pub->{file}} > 0 &&
-          $pub->{file}->[0]->{open_access} &&
-          $pub->{file}->[0]->{open_access} eq '1') {
-        push @$specs, "$pub->{type}Ftxt", "driver", "open_access";
-    }
-
-    $specs;
-};
+        $specs;
+    };
 
 get '/livecitation' => sub {
     my $params = params;
@@ -69,7 +70,7 @@ get '/livecitation' => sub {
         or $params->{styles}) {
         return "Required parameters are 'id' and 'style'.";
     }
-    
+
     if ($params->{styles}) {
         return to_json h->config->{citation}->{csl}->{styles};
     }
