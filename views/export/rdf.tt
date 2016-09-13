@@ -74,7 +74,7 @@
         <ore:similarTo rdf:resource="info:doi/[% doi || doiInfo.doi | xml_strict %]"/>
         [%- END %]
         [%- IF pmid %]
-        <fabio:hasPubMedId>[% pmid %]</fabio>
+        <fabio:hasPubMedId>[% pmid %]</fabio:hasPubMedId>
         [% END %]
     </rdf:Description>
 </rdf:RDF>
