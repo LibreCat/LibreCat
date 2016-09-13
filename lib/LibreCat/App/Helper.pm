@@ -505,12 +505,24 @@ sub update_record {
     my ($self, $bag, $rec) = @_;
 
     $self->log->info("updating $bag");
-    $self->log->debug(Dancer::to_json($rec));
+    if ($self->log->is_debug) {
+        $self->log->debug(Dancer::to_json($rec));
+    }
+
+    $rec = $self->store_record($bag, $rec);
+    $self->index_record($bag, $rec);
+
+    sleep 1; # bad hack!
+
+    $rec;
+}
+
+sub store_record {
+    my ($self, $bag, $rec) = @_;
 
     # don't know where to put it, should find better place to handle this
     # especially the async stuff
     if ($bag eq 'publication') {
-
         require LibreCat::App::Catalogue::Controller::File;
         require LibreCat::App::Catalogue::Controller::Material;
 
@@ -522,18 +534,23 @@ sub update_record {
         }
     }
 
-    Catmandu::Fix->new(fixes => [join_path('fixes', "update_$bag.fix")])
-        ->fix($rec);
+    # memoize fixes
+    state $fixes = {};
+    my $fix = $fixes->{$bag} //= Catmandu::Fix->new(fixes => [join_path('fixes', "update_$bag.fix")]);
+    $fix->fix($rec);
+
     my $bagname = "backup_$bag";
-    my $saved   = $self->$bagname->add($rec);
+
+    $self->$bagname->add($rec);
+}
+
+sub index_record {
+    my ($self, $bag, $rec) = @_;
 
     #compare version! through _version or through date_updated
-    $self->$bag->add($saved);
+    $self->$bag->add($rec);
     $self->$bag->commit;
-
-    sleep 1;    #bad hack!
-
-    return $saved;
+    $rec;
 }
 
 sub delete_record {
