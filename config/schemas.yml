@@ -10,7 +10,7 @@ award:
     _id:
       type: string
       description: "Award identifier"
-      pattern: "^AW[0-9]+$"
+      #pattern: "^AW[0-9]+$"
       minLength: 1
     _version:
       oneOf:
@@ -27,7 +27,7 @@ award:
       description: "Old identifier"
     award_id:
       type: string
-      pattern: "^AW[0-9]+$"
+      #pattern: "^AW[0-9]+$"
       description: "Award identifier"
     rec_type:
       enum: ["preis","auszeichnung","akademie","record"]
@@ -74,7 +74,7 @@ award:
           _id:
             oneOf:
               - type: string
-                pattern: "^[0-9]+$"
+                #pattern: "^[0-9]+$"
                 minLength: 1
               - type: integer
                 minimum: 0
@@ -154,13 +154,15 @@ publication:
       type: object
       properties:
          iso:
-             enum: ["ara","chi","cze","dan","dut","eng","fin","fre","ger","gre","heb","hrv","hun","ice","ita","jpn","kor","lat","lav","mon","nor","other","pol","por","rum","rus","spa","srp","swe","tur"]
+             type: string
+             #enum: ["ara","chi","cze","dan","dut","eng","fin","fre","ger","gre","heb","hrv","hun","ice","ita","jpn","kor","lat","lav","mon","nor","other","pol","por","rum","rus","spa","srp","swe","tur"]
 
     abstract: &abstract
       type: object
       properties:
         lang:
-          enum: ["ara","chi","cze","dan","dut","eng","fin","fre","ger","gre","heb","hrv","hun","ice","ita","jpn","kor","lat","lav","mon","nor","other","pol","por","rum","rus","spa","srp","swe","tur"]
+          type: string
+          #enum: ["ara","chi","cze","dan","dut","eng","fin","fre","ger","gre","heb","hrv","hun","ice","ita","jpn","kor","lat","lav","mon","nor","other","pol","por","rum","rus","spa","srp","swe","tur"]
           description: "Abstract used language"
         text:
           type: string
@@ -176,7 +178,7 @@ publication:
           #in perl, its hard to distinguish between integer and string that look like an integer
           oneOf:
             - type: string
-              pattern: "^[0-9]+$"
+              #pattern: "^[0-9]+$"
               minLength: 1
             - type: integer
               minimum: 0
@@ -189,7 +191,7 @@ publication:
               _id:
                 oneOf:
                   - type: string
-                    pattern: "^[0-9]+$"
+                    #pattern: "^[0-9]+$"
                     minLength: 1
                   - type: integer
                     minimum: 0
@@ -256,7 +258,7 @@ publication:
             id:
               oneOf:
                 - type: string
-                  pattern: "^[0-9]+$"
+                  #pattern: "^[0-9]+$"
                   minLength: 1
                 - type: integer
                   minimum: 0
@@ -359,7 +361,7 @@ publication:
       properties:
         _id:
           type: string
-          pattern: "^P[0-9]+$"
+          #pattern: "^P[0-9]+$"
           minLength: 1
           description: "Project identifier"
         name:
@@ -372,7 +374,7 @@ publication:
       properties:
         _id:
           type: string
-          pattern: "^RG[0-9]+$"
+          #pattern: "^RG[0-9]+$"
           minLength: 1
           description: "Research group identifier"
         name:
@@ -384,7 +386,7 @@ publication:
     _id:
       oneOf:
         - type: string
-          pattern: "^[0-9]+$"
+          #pattern: "^[0-9]+$"
           minLength: 1
         - type: integer
           minimum: 0
@@ -462,28 +464,28 @@ publication:
     author:
       type: array
       minItems: 0
-      uniqueItems: true
+      #uniqueItems: true
       items:
         '$ref': '#/definitions/author'
       description: "Author"
     editor:
       type: array
       minItems: 0
-      uniqueItems: true
+      #uniqueItems: true
       items:
         '$ref': '#/definitions/author'
       description: "Editor"
     translator:
       type: array
       minItems: 0
-      uniqueItems: true
+      #uniqueItems: true
       items:
         '$ref': '#/definitions/author'
       description: "Translator"
     supervisor:
       type: array
       minItems: 0
-      uniqueItems: true
+      #uniqueItems: true
       items:
         '$ref': '#/definitions/author'
       description: "Supervisor"
@@ -923,7 +925,7 @@ researcher:
       #in perl, its hard to distinguish between integer and string that look like an integer
       oneOf:
         - type: string
-          pattern: "^[0-9]+$"
+          #pattern: "^[0-9]+$"
           minLength: 1
         - type: integer
           minimum: 0
@@ -992,7 +994,7 @@ researcher:
           _id:
             oneOf:
               - type: string
-                pattern: "^[0-9]+$"
+                #pattern: "^[0-9]+$"
                 minLength: 1
               - type: integer
                 minimum: 0
@@ -1006,7 +1008,7 @@ researcher:
           _id:
             oneOf:
               - type: string
-                pattern: "^[0-9]+$"
+                #pattern: "^[0-9]+$"
                 minLength: 1
               - type: integer
                 minimum: 0
@@ -1019,7 +1021,7 @@ researcher:
         properties:
           _id:
             type: string
-            pattern: "^P[0-9]+$"
+            #pattern: "^P[0-9]+$"
             description: "Project identifier"
       description: "Reviewer for departments"
     delegate:
@@ -1027,7 +1029,7 @@ researcher:
       items:
         oneOf:
           - type: string
-            pattern: "^[0-9]+$"
+            #pattern: "^[0-9]+$"
             minLength: 1
           - type: integer
             minimum: 0
@@ -1041,7 +1043,7 @@ researcher:
           _id:
             oneOf:
               - type: string
-                pattern: "^[0-9]+$"
+                #pattern: "^[0-9]+$"
                 minLength: 1
               - type: integer
                 minimum: 0
@@ -1129,7 +1131,7 @@ department:
       #in perl, its hard to distinguish between integer and string that look like an integer
       oneOf:
         - type: string
-          pattern: "^[0-9]+$"
+          #pattern: "^[0-9]+$"
           minLength: 1
         - type: integer
           minimum: 0
@@ -1153,7 +1155,7 @@ department:
           _id:
             oneOf:
               - type: string
-                pattern: "^[0-9]+$"
+                #pattern: "^[0-9]+$"
                 minLength: 1
               - type: integer
                 minimum: 0
@@ -1169,7 +1171,7 @@ project:
   properties:
     _id:
       type: string
-      pattern: "^P[0-9]+$"
+      #pattern: "^P[0-9]+$"
       description: "Project identifier"
     name:
       type: string
@@ -1313,7 +1315,7 @@ research_group:
   properties:
     _id:
       type: string
-      pattern: "^RG[0-9]+$"
+      #pattern: "^RG[0-9]+$"
       description: "Research group identifier"
     name:
       type: string
@@ -1347,7 +1349,7 @@ research_group:
           _id:
             oneOf:
               - type: string
-                pattern: "^[0-9]+$"
+                #pattern: "^[0-9]+$"
                 minLength: 1
               - type: integer
                 minimum: 0
