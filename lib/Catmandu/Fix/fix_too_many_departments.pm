@@ -13,10 +13,10 @@ sub fix {
         my $delete_em;
         foreach my $d (@{$data->{department}}) {
             my $full_dep = h->get_department($d->{_id});
-            if ($full_dep->{layer} eq "2" or $full_dep->{layer} eq "3") {
+            if ($full_dep->{layer} && $full_dep->{layer} eq "2" or $full_dep->{layer} eq "3") {
                 push @$delete_em, $full_dep->{tree}->[0]->{_id};
             }
-            if ($full_dep->{layer} eq "3") {
+            if ($full_dep->{layer} && $full_dep->{layer} eq "3") {
                 push @$delete_em, $full_dep->{tree}->[1]->{_id};
             }
         }
