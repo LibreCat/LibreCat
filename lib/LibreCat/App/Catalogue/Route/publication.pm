@@ -160,7 +160,7 @@ Checks if the user has the rights to update this record.
 
         my $old_status = $p->{status};
 
-	if ( $p->{type} eq "researchData" && !$p->{doi}) {
+	    if ( $p->{type} eq "researchData" && !$p->{doi}) {
             $p->{doi} = h->config->{doi}->{prefix} . "/" . $p->{_id};
         }
 
