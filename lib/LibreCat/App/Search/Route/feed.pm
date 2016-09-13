@@ -27,7 +27,7 @@ sub feed {
     }
     else {
         $period = 'weekly';
-        $now = DateTime->now->truncate(to => 'weekly');
+        $now = DateTime->now->truncate(to => 'week');
     }
 
     my $query = [
