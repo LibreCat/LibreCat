@@ -26,7 +26,7 @@ sub feed {
     }
     else {
         $period = 'weekly';
-        $now = DateTime->now->truncate(to => 'week');
+        $now = DateTime->now->truncate(to => 'weekly');
     }
 
     my $query = [
@@ -47,17 +47,17 @@ sub feed {
     );
 
     my $hits = h->search_publication({ q => $query });
+
     $hits->each(
         sub {
             my $hit = $_[0];
+            my $title = $hit->{title} // 'no title';
 
-            if ($hit->{_id} && $hit->{citation}->{apa}) {
-                $rss->add_item(
-                    link  => h->host . "/publication/$hit->{_id}",
-                    title => $hit->{citation}->{apa},
-                    dc    => $fixer->fix($hit)->{dc},
-                );
-            }
+            $rss->add_item(
+                link  => h->host . "/publication/$hit->{_id}",
+                title => $title,
+                dc    => $fixer->fix($hit)->{dc},
+            );
         }
     );
 

@@ -26,7 +26,7 @@ move_field(alternative_title.0,dc.title.$append)
 
 move_field(author.*.full_name,dc.creator.$append)
 move_field(editor.*.full_name,dc.creator.$append)
-move_field(corporate_editor,dc.creator.$append)
+move_field(corporate_editor.*,dc.creator.$append)
 
 move_field(year, dc.date.$append)
 move_field(publisher, dc.publisher.$append)
