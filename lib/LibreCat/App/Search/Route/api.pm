@@ -10,6 +10,7 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use Dancer::Plugin::Catmandu::OAI;
 use Dancer::Plugin::Catmandu::SRU;
+use Catmandu::Util qw(:is);
 use Catmandu::Fix;
 use LibreCat::App::Helper;
 use LibreCat::Citation;
@@ -28,34 +29,37 @@ Endpoint of the OAI interface.
 
 =cut
 
-oai_provider '/oai', deleted => sub {
-    defined $_[0]->{oai_deleted};
+oai_provider '/oai',
+    deleted => sub {
+        defined $_[0]->{oai_deleted};
     },
     set_specs_for => sub {
-    my $pub = $_[0];
+        my $pub = $_[0];
 
-        #my $specs = [$pub->{type}, $pub->{dini_type}];
         my $specs;
         push @$specs, $pub->{type} if $pub->{type};
         push @$specs, $pub->{dini_type} if $pub->{dini_type};
 
-    push @$specs, "ddc:$_" for @{$pub->{ddc}};
+        push @$specs, "ddc:$_" for @{$pub->{ddc}};
 
-    if ($pub->{ec_funded} && $pub->{ec_funded} eq '1') {
-        if ($pub->{type} eq 'researchData') {
-            push @$specs, "openaire_data";
+        if ($pub->{ec_funded} && $pub->{ec_funded} eq '1') {
+            if ($pub->{type} eq 'researchData') {
+                push @$specs, "openaire_data";
+            }
+            else {
+                push @$specs, "openaire";
+            }
         }
-        else {
-            push @$specs, "openaire";
-        }
-    }
 
-    if (   $pub->{file}->[0]->{open_access}
-        && $pub->{file}->[0]->{open_access} eq '1')
-    {
-        push @$specs, "$pub->{type}Ftxt", "driver", "open_access";
-    }
-    $specs;
+        if (  $pub->{type} &&
+              is_array_ref($pub->{file}) &&
+              @{$pub->{file}} > 0 &&
+              $pub->{file}->[0]->{open_access} &&
+              $pub->{file}->[0]->{open_access} eq '1') {
+            push @$specs, "$pub->{type}Ftxt", "driver", "open_access";
+        }
+
+        $specs;
     };
 
 get '/livecitation' => sub {
@@ -63,10 +67,10 @@ get '/livecitation' => sub {
     my $debug = $params->{debug} ? 1 : 0;
     unless (($params->{id} and $params->{style})
         or $params->{info}
-        or $params->{styles})
-    {
+        or $params->{styles}) {
         return "Required parameters are 'id' and 'style'.";
     }
+
     if ($params->{styles}) {
         return to_json h->config->{citation}->{csl}->{styles};
     }

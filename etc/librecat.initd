@@ -13,12 +13,12 @@
 SCRIPT="$(basename $0)"
 
 PID=/var/run/plackup.librecat.pid
-CARTON=/opt/perl-5.22.0-x86_64-linux-thread-multi/bin/carton
+CARTON=/home/biblio/.plenv/shims/carton
 SERVER_PORT=5000
 SERVER_WORKERS=15
 SERVER_USER="biblio"
 SERVER_GROUP="biblio"
-DANCER_DIR="/opt/librecat"
+DANCER_DIR="/home/biblio/LibreCat"
 DANCER_APP="$DANCER_DIR/bin/app.pl"
 PLACK_ENV="development"
 ACCESS_LOG="/var/log/librecat/access.log"
