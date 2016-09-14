@@ -1,0 +1,13 @@
+# Use the layers configuration file to add local configuration directories
+# for configurations files, templates, static files and Perl modules
+#
+# See also: https://github.com/LibreCat/LibreCat/wiki/Layers
+#
+# E.g.
+#   mkdir -p /opt/librecat-myorg/config
+#   mkdir -p /opt/librecat-myorg/views
+#   mkdir -p /opt/librecat-myorg/public
+#   mkdir -p /opt/librecat-myorg/lib
+#
+# The YAML below should evaluate to an ARRAY of local configuration directories
+- /opt/librecat-myorg
