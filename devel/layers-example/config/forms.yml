@@ -1,0 +1,77 @@
+_prefix:
+  forms:
+
+field_order:
+  basic_fields:
+    - document_type
+    - bi_doctype
+    - doi
+    - translator
+    - author
+    - editor_solo
+    - corporate_editor_solo
+    - department
+    - project
+    - research_group
+    - supervisor
+    - applicant
+    - author_secondary
+    - title
+    - alternative_title
+    - publication
+    - foobar
+    - editor
+    - corporate_editor
+    - edition
+    - place
+    - publisher
+    - year
+    - year_extern
+    - publication_date
+    - application_date_number
+    - publication_date_number
+    - defense_date
+    - series_title_volume
+    - series_title
+    - issue
+    - page
+    - volume_issue_page
+    - report_number
+    - publication_identifier
+    - urn
+    - publication_status
+    - publication_status_language
+    - email
+    - abstract
+    - language
+    - original_language
+    - ddc
+    - jel
+    - keyword
+    - pacs_class
+    - msc_class
+    - ccs_class
+    - conference.divider
+    - conference.name
+    - conference.location
+    - conference.start_date
+    - conference.end_date
+    - conference.date
+    - ipc
+    - external_id
+    - link
+    - nasc
+    - genbank
+    - popular_science
+    - quality_controlled
+    - popular_science_quality_controlled
+    - ubi_funded
+    - message
+    - locked
+
+publication_types:
+    journal_article:
+        fields:
+            basic_fields:
+                foobar:
+                    label: "Foobar"

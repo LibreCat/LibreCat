@@ -1,0 +1,11 @@
+_prefix:
+  locale:
+    de:
+
+forms:
+    journal_article:
+        field:
+            foobar:
+                label: "Foo bar"
+                label_short: "F.B."
+                placeholder: "Bla bla bla field"

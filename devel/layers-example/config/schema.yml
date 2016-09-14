@@ -1,0 +1,9 @@
+_prefix:
+  schemas:
+
+publication:
+    properties:
+        foobar:
+          type: string
+          minItems: 0
+          description: "foobar"
