@@ -56,7 +56,7 @@ sub _authenticate {
 
     $self->log->debug(
         "username: $username ; password: " . length($password) . " bytes");
-    return 0 unless defined($username) & defined($password);
+    return undef unless defined($username) & defined($password);
 
     my $base = sprintf($self->auth_base, $username);
 
@@ -65,14 +65,15 @@ sub _authenticate {
 
     $self->log->error("...bind failed") unless $bind;
 
-    return 0 unless $bind;
+    return undef unless $bind;
 
     $self->log->debug("...code " . $bind->code . ": error: " . $bind->error);
 
     $self->log->debug("unbind");
     $self->ldap->unbind;
 
-    $bind->code == Net::LDAP::LDAP_SUCCESS ? 1 : 0;
+    $bind->code == Net::LDAP::LDAP_SUCCESS ?
+        +{ uid => $username, package => __PACKAGE__, package_id => $self->id } : undef;
 }
 
 # TODO use exception objects

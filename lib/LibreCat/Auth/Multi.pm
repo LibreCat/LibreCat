@@ -25,9 +25,10 @@ sub _build_auths {
 sub _authenticate {
     my ($self, $params) = @_;
     for my $auth (@{$self->_auths}) {
-        $auth->authenticate($params) && return 1;
+        my $res = $auth->authenticate($params);
+        return $res if $res;
     }
-    0;
+    undef;
 }
 
 1;
