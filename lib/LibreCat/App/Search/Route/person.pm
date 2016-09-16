@@ -54,7 +54,7 @@ research data and author IDs.
 
 =cut
 
-get qr{/person/(\d{1,})/*(\w+)*/*} => sub {
+get qr{/person/(\d+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+)*/*} => sub {
     my ($id, $modus) = splat;
     my $p = h->extract_params();
 
