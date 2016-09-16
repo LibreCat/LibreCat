@@ -107,46 +107,30 @@ sub _add {
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
     my $ret = 0;
-
-    Catmandu->importer('YAML', file => $file)->each(
-        sub {
-            my $item = $_[0];
-            $ret += $self->_adder($item);
-        }
-    );
-
-    return $ret == 0;
-}
-
-sub _adder {
-    my ($self, $data) = @_;
-    my $is_new = 0;
-
+    my $importer = Catmandu->importer('YAML', file => $file);
     my $helper = LibreCat::App::Helper::Helpers->new;
-
-    unless (exists $data->{_id} && defined $data->{_id}) {
-        $is_new = 1;
-        $data->{_id} = $helper->new_record('department');
-    }
-
     my $validator = LibreCat::Validator::Department->new;
 
-    if ($validator->is_valid($data)) {
-        my $result = $helper->update_record('department', $data);
-        if ($result) {
-            print "added " . $data->{_id} . "\n";
-            return 0;
+    my $records = $importer->select(sub {
+        my $rec = $_[0];
+
+        $rec->{_id} //= $helper->new_record('department');
+
+        if ($validator->is_valid($rec)) {
+            $helper->store_record('department', $rec);
+            print "added $rec->{_id}\n";
+            return 1;
         }
-        else {
-            print "ERROR: add " . $data->{_id} . " failed\n";
-            return 2;
-        }
-    }
-    else {
-        print STDERR "ERROR: not a valid department\n";
-        print STDERR join("\n", @{$validator->last_errors}), "\n";
-        return 2;
-    }
+
+        print STDERR join("\n", "ERROR: not a valid department", @{$validator->last_errors}), "\n";
+        return 0;
+    });
+
+    my $index = $helper->department;
+    $index->add_many($records);
+    $index->commit;
+
+    $ret;
 }
 
 sub _delete {
