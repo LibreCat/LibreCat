@@ -18,4 +18,10 @@ sub schema_validator {
 
 }
 
+sub white_list {
+    state $properties = Catmandu->config->{schemas}->{publication}->{properties} // {};
+    return sort keys %$properties;
+}
+
+
 1;

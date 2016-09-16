@@ -31,6 +31,9 @@ $Template::Stash::PRIVATE = 0;
 sub _authenticate {
     my ($username, $password) = @_;
 
+    # Clean dirties .. in loginname
+    $username =~ s{[^a-zA-Z0-9_]*}{}mg;
+
     my $users = LibreCat::User->new(Catmandu->config->{user});
 
     my $auth = do {

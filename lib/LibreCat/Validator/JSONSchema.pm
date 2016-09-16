@@ -20,4 +20,8 @@ sub validate_data {
     [map {$_->{property} . ": " . $_->{message}} @$errors];
 }
 
+sub white_list {
+    return ();
+}
+
 1;

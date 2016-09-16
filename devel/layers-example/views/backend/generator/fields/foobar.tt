@@ -1,0 +1,19 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_foobar">
+      [% h.loc("forms.${type}.field.foobar.label") %]
+    </label>
+    {% IF fields.basic_fields.foobar.mandatory OR fields.supplementary_fields.foobar.mandatory %}<span class="starMandatory"></span>{% END %}
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky{% IF fields.basic_fields.foobar.mandatory OR fields.supplementary_fields.foobar.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.foobar.label_short || lf.$type.field.foobar.label %]</div>
+          <input type="text" name="foobar" id="id_foobar" value="[% foobar || lf.$type.field.foobar.defaultvalue | html %]" placeholder="[% h.loc("forms.${type}.field.foobar.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.foobar.mandatory OR fields.supplementary_fields.foobar.mandatory %} required{% END %}"{% IF fields.basic_fields.foobar.readonly OR fields.supplementary_fields.foobar.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

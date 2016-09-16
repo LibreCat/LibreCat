@@ -1,12 +1,14 @@
 #!/usr/bin/env perl
 
+my $layers;
+
 BEGIN {
     use Catmandu::Sane;
     use Path::Tiny;
     use lib path(__FILE__)->parent->parent->child('lib')->stringify;
     use LibreCat::Layers;
 
-    LibreCat::Layers->new->load;
+    $layers = LibreCat::Layers->new->load;
 };
 
 use Catmandu::Sane;
@@ -22,7 +24,7 @@ my $tt = Template->new(
     START_TAG  => '{%',
     END_TAG    => '%}',
     ENCODING     => 'utf8',
-    INCLUDE_PATH => Catmandu->root.'/views/backend/generator',
+    INCLUDE_PATH => [ map { "$_/backend/generator" } @{$layers->template_paths} ],
     OUTPUT_PATH  => Catmandu->root.'/views/backend/forms',
 );
 

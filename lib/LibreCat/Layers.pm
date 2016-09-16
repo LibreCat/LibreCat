@@ -90,7 +90,7 @@ sub _build_layer_paths {
     if ($ENV{LIBRECAT_LAYERS}) {
         [split ',', $ENV{LIBRECAT_LAYERS}];
     } elsif (path($self->root_path, 'layers.yml')->is_file) {
-        read_yaml(path($self->root_path, 'layers.yml')->stringify);
+        read_yaml(path($self->root_path, 'layers.yml')->stringify) // [];
     } else {
         [];
     }
@@ -188,4 +188,3 @@ variable, in which case the C<layers.yml> file will be ignored.
 =head2 config
 
 =cut
-

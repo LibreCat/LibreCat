@@ -1,0 +1,15 @@
+_prefix:
+  store:
+
+search:
+    options:
+        bags:
+          publication:
+            cql_mapping:
+                indexes:
+                    foobar:
+                      op:
+                        '=': true
+                        '<>': true
+                      field: 'foobar'
+                      description: "foobar index"

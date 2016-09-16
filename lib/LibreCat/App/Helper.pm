@@ -505,8 +505,19 @@ sub update_record {
     my ($self, $bag, $rec) = @_;
 
     $self->log->info("updating $bag");
+
     if ($self->log->is_debug) {
         $self->log->debug(Dancer::to_json($rec));
+    }
+
+    my $validator_pkg
+        = Catmandu::Util::require_package(ucfirst($bag), 'LibreCat::Validator');
+
+    if ($validator_pkg) {
+        my @white_list = $validator_pkg->new->white_list;
+        for my $key (keys %$rec) {
+            delete $rec->{$key} unless grep(/^$key$/,@white_list);
+        }
     }
 
     $rec = $self->store_record($bag, $rec);
