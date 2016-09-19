@@ -15,13 +15,20 @@ LibreCat::Citation - creates citations via a CSL engine or template
 
 =head1 CONFIGURATION
 
-    # catmandu.yml
-    citation:
-      engine: template
-      template:
-        template_path: views/citation.tt
-      csl:
-        url: ...
+    # config/citation.yml
+    prefix:
+      _citation:
+
+    engine: {template|csl}
+    template:
+      template_path: views/citation.tt
+    csl:
+      url: 'http://localhost:8085'
+      default_style: chicago
+      styles:
+        - modern-language-association
+        - chicago
+        - ...
 
 =cut
 
@@ -29,13 +36,16 @@ use Catmandu::Sane;
 use Catmandu qw(export_to_string);
 use Catmandu::Util qw(:array);
 use Catmandu::Error;
-use JSON::MaybeXS qw(decode_json);
 use LWP::UserAgent;
+use Encode qw(encode_utf8);
+use URI ();
 use Moo;
 use namespace::clean;
 
+with 'Catmandu::Logger';
+
 my $conf = Catmandu->config->{citation};
-my $cat = Catmandu->default_load_path;
+my $load_path = Catmandu->default_load_path;
 
 has style => (is => 'ro');
 has styles => (is => 'ro', lazy => 1, builder => '_build_styles');
@@ -52,25 +62,25 @@ sub _build_styles {
         return [$self->style];
     }
     else {
-        return ['default'];
+        return [$conf->{csl}->{default_style}];
     }
 }
 
 sub _request {
-    my ($self, $content) = @_;
+    my ($self, $data) = @_;
 
     my $ua = LWP::UserAgent->new();
-    my $res = $ua->post($conf->{csl}->{url}, Content => $content);
+    my $uri = URI->new($conf->{csl}->{url});
+    $uri->query_form({responseformat => 'html', style => $data->{style}});
+    my $res = $ua->post(
+        $uri->as_string(),
+        Content => encode_utf8($data->{content}),
+    );
 
     return $res if $self->debug;
 
-    if ($res->{_rc} eq '200') {
-        my $obj = decode_json($res->{_content});
-        return $obj->[0]->{citation};
-    }
-    else {
-        return '';
-    }
+    ($res->{_rc} eq '200') ? return $res->{_content} : return '';
+
 }
 
 sub create {
@@ -92,17 +102,14 @@ sub create {
     }
     else {
         my $csl_json = export_to_string($data, 'JSON',
-            {array => 1, fix => "$cat/fixes/to_csl.fix"});
+            {line_delimited => 1, fix => "$load_path/fixes/to_csl.fix"});
         foreach my $s (@{$self->styles}) {
             my $locale = ($s eq 'dgps') ? 'de' : $self->locale;
-            $cite->{$s} = $self->_request(
-                [
-                    locale => $locale,
-                    style  => $s,
-                    format => 'html',
-                    input  => $csl_json
-                ]
-            );
+            $cite->{$s} = $self->_request({
+                locale => $locale,
+                style  => $s,
+                content  => $csl_json,
+                });
 
         }
 

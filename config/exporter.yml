@@ -88,8 +88,8 @@ publication:
     package: 'JSON'
     options:
       fix: ["fixes/to_csl.fix"]
-      pretty: 1
-      array: 1
+      #pretty: 1
+      #array: 1
     content_type: 'application/vnd.citationstyles.csl+json'
     extension: json
     label: 'CSL JSON'

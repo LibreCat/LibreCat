@@ -15,6 +15,7 @@ on 'test' => sub {
 
 requires 'Business::ISBN', 0;
 requires 'Search::Elasticsearch', '==1.19';
+requires 'Module::Install', '1.16';
 
 # Catmandu
 requires 'Catmandu', '>=1.03';
