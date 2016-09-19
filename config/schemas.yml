@@ -215,6 +215,14 @@ publication:
           type: string
           minLength: 1
           description: "Person full name"
+        id:
+          oneOf:
+            - type: string
+              #pattern: "^[0-9]+$"
+              minLength: 1
+            - type: integer
+              minimum: 0
+          description: "Identifier of person"
 
     related_link: &related_link
         type: object

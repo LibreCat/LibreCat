@@ -64,7 +64,7 @@ sub to_app {
                 my $doc = $r->doc();
                 $doc = $doc->toString();
 
-                $self->set_auth_sso($session,{ type => "CAS", response => $doc });
+                $self->set_auth_sso($session,{ package => __PACKAGE__, package_id => $self->id, response => $doc });
 
                 return [302,[Location => $self->authorization_url],[]];
 

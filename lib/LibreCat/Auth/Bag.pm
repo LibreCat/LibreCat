@@ -25,17 +25,21 @@ sub _authenticate {
 
     unless ($user) {
         $self->log->debug("$username not found");
-        return 0;
+        return undef;
     }
 
     if (exists $user->{$self->password_attr}
         && passwdcmp($password, $user->{$self->password_attr}))
     {
-        return 1;
+        return +{
+            uid => $username,
+            package => __PACKAGE__,
+            package_id => $self->id
+        };
     }
     else {
         $self->log->debug("$username password doesn't match");
-        return 0;
+        return undef;
     }
 }
 
