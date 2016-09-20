@@ -7,3 +7,26 @@ publication:
           type: string
           minItems: 0
           description: "foobar"
+        foobar_list:
+          type:
+            enum:
+              - Agriculture and Food Sciences
+              - Arts and Architecture
+              - Biology and Life Sciences
+              - Business and Economics
+              - Chemistry
+              - Cultural Sciences
+              - Earth and Environmental Sciences
+              - General Works
+              - History and Archaeology
+              - Languages and Literatures
+              - Law and Political Science
+              - Mathematics and Statistics
+              - Medicine and Health Sciences
+              - Performing Arts
+              - Philosophy and Religion
+              - Science General
+              - Social Sciences
+              - Technology and Engineering
+              - Veterinary Sciences
+          description: "foobar list"

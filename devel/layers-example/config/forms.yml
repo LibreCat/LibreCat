@@ -68,10 +68,35 @@ field_order:
     - ubi_funded
     - message
     - locked
+  supplementary_fields:
+    - article_type
+    - abstract
+    - foobar_list
+    - keyword
+    - pacs_class
+    - msc_class
+    - ccs_class
+    - genbank
+    - nasc
+    - ddc
+    - jel
+    - thematic_area
+    - popular_science
+    - quality_controlled
+    - popular_science_quality_controlled
+    - external_id
+    - link
+    - message
+    - ubi_funded
+    - alternative_id
 
 publication_types:
     journal_article:
         fields:
             basic_fields:
                 foobar:
-                    label: "Foobar"
+                    multiple: 0
+                    supplementary_fields:
+            supplementary_fields:
+                foobar_list:
+                    multiple: 0

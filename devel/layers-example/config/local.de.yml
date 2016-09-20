@@ -9,3 +9,7 @@ forms:
                 label: "Foo bar"
                 label_short: "F.B."
                 placeholder: "Bla bla bla field"
+            foobar_list:
+                label: "Foo bar list"
+                label_short: "F.B.L"
+                placeholder: "Foo bar list"

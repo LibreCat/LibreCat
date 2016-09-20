@@ -13,3 +13,9 @@ search:
                         '<>': true
                       field: 'foobar'
                       description: "foobar index"
+                    foobar_list:
+                      op:
+                        '=': true
+                        '<>': true
+                      field: 'foobar_list'
+                      description: "foobar_list index"

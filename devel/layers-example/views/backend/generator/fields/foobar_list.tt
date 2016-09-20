@@ -1,0 +1,24 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="select_foobar_list">
+      [% h.loc("forms.${type}.field.foobar_list.label") %]
+    </label>
+    {% IF fields.basic_fields.foobar_list.mandatory OR fields.supplementary_fields.foobar_list.mandatory %}<span class="starMandatory"></span>{% END %}
+  </div>
+  <div class="col-md-10 col-xs-12">
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky{% IF fields.basic_fields.foobar_list.mandatory OR fields.supplementary_fields.foobar_list.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.foobar_list.label_short || lf.$type.field.foobar_list.label %]</div>
+          <select name="foobar_list" class="sticky form-control{% IF fields.basic_fields.foobar_list.mandatory OR fields.supplementary_fields.foobar_list.mandatory %} required{% END %}" id="select_foobar_list">
+            <option value=""[% IF !foobar_list %] selected="selected"[% END %]>--- [% h.loc("forms.button.select") %] ---</option>
+            [% FOREACH at IN h.get_list('foobar_list') %]
+              <option value="[% at %]"[% IF at == foobar_list %] selected="selected"[% END %]>[% at %]</option>
+            [% END %]
+          </select>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
