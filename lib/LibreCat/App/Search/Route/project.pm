@@ -16,7 +16,7 @@ Project splash page for :id.
 
 =cut
 
-get qr{/project/(P\d+)/*} => sub {
+get qr{/project/([^/]+)/*} => sub {
     my ($id) = splat;
     my $proj = h->project->get($id);
 
