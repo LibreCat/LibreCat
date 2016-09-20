@@ -71,7 +71,11 @@ sub _request {
 
     my $ua = LWP::UserAgent->new();
     my $uri = URI->new($conf->{csl}->{url});
-    $uri->query_form({responseformat => 'html', style => $data->{style}});
+    $uri->query_form({
+        responseformat => 'html',
+        linkwrap => 1,
+        style => $data->{style},
+    });
     my $res = $ua->post(
         $uri->as_string(),
         Content => encode_utf8($data->{content}),
