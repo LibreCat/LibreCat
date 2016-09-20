@@ -59,6 +59,9 @@ builder {
     $app;
 };
 
+# Overwrite the default Dancer template for finding the
+# template file for a view. The views_dir can be an array
+# instead of a single location.
 sub Dancer::Template::Abstract::view {
     my ($self, $view) = @_;
 
