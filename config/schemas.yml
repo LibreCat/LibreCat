@@ -1150,7 +1150,9 @@ department:
     layer:
       oneOf:
        - type: string
+         minLength: 1
        - type: integer
+         minimum: 0
       description: "???"
     name:
       type: string
@@ -1169,7 +1171,7 @@ department:
                 minimum: 0
             description: "Parent department"
       description: "Hierarchical structure"
-  required: ["_id","tree"]
+  required: ["_id","tree","layer"]
   additionalProperties: false
 
 project:
