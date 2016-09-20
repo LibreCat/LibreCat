@@ -1,9 +1,6 @@
 _prefix:
   forms:
 
-input_path: "views/backend"
-output_path: "views/backend/forms"
-
 # display publication types in columns on "add new" page
 publication_type_order:
   column_left:

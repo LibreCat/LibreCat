@@ -85,7 +85,7 @@ sub to_app {
 
             }
 
-            $self->set_auth_sso($session,{ type => "ORCID", response => $res->content });
+            $self->set_auth_sso($session,{ package => __PACKAGE__, package_id => $self->id, response => $res->content });
 
             return [302,[Location => $self->authorization_url],[]];
         }

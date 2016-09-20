@@ -22,6 +22,12 @@ has authorization_url => (
     default => sub { '/' },
     required => 1
 );
+has id => (
+    is => 'ro',
+    lazy => 1,
+    required => 1,
+    default => sub{ __PACKAGE__ }
+);
 requires 'to_app';
 
 #check if $env->{psgix.session} is stored Plack::Session->session
@@ -80,7 +86,7 @@ LibreCat::Auth::SSO - LibreCat role for Single Sign On (SSO) authentication
             #..
 
             #everything ok: set auth_sso
-            $self->set_auth_sso( $session, { type => "MySSOAuth", response => "Long response from external SSO application" }
+            $self->set_auth_sso( $session, { package => __PACKAGE__, package_id => $self->id, response => "Long response from external SSO application" } );
 
             #redirect to other application for authorization:
             return [302,[Location => $self->authorization_url],[]];
@@ -148,7 +154,8 @@ from the SSO application in this session key.
 The response should look like this:
 
     {
-        type => "<impl>",
+        package => "<package-name>",
+        package_id => "<package-id>",
         response => "Long response from external SSO application like CAS"
     }
 
@@ -163,6 +170,12 @@ This is usefull for two reasons:
 URL of the authorization route.
 
 When authentication succeeds, this application should redirect you here
+
+=item id
+
+identifier of the authentication module. Defaults to the package name.
+This is handy when using multiple SSO instances, and you need to known
+exactly which package authenticated the user.
 
 =back
 
@@ -185,7 +198,7 @@ save SSO response to your session
 $hash should be a hash ref, and look like this:
 
 
-    { type => "$type", response => "Long response from external SSO application like CAS" }
+    { package => __PACKAGE__, package_id => __PACKAGE__ , response => "Long response from external SSO application like CAS" }
 
 =head1 SEE ALSO
 

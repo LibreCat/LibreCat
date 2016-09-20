@@ -9,6 +9,12 @@ with 'Catmandu::Logger';
 requires '_authenticate';
 
 has obfuscate_params => (is => 'lazy');
+has id => (
+    is => 'ro',
+    lazy => 1,
+    required => 1,
+    default => sub{ __PACKAGE__ }
+);
 
 sub _build_obfuscate_params {
     [qw(password)];
@@ -46,7 +52,11 @@ LibreCat::Auth - LibreCat authentication role
 
     sub authenticate {
         my ($self, $params) = @_;
-        $params->{password} eq 'secret';
+        my $authenticated = $params->{password} eq 'secret';
+
+        $authenticated ?
+            +{ uid => $params->{username}, package => __PACKAGE__, package_id => $self->id } :
+            undef;
     }
 
     1;
@@ -65,6 +75,13 @@ C<authenticate> method.
 An array ref of params to obfuscate in logging or error reporting with
 '********'. The default obfuscates 'password'.
 
+=item id
+
+identifier of the authentication module. Defaults to the package name.
+This is handy when using LibreCat::Auth::Multi ( where multiple versions
+of the same authentication package can be used ) and you need to known
+exactly which package authenticated the user.
+
 =back
 
 =head1 METHODS
@@ -72,7 +89,14 @@ An array ref of params to obfuscate in logging or error reporting with
 =head2 authenticate(\%params)
 
 All authentication packages need to implement this method.
-Returns 1 on success, 0 on failure.
+Returns a hash on success, undef on failure.
+
+This hash contains information about the user, and the module
+that authenticated:
+
+    { uid => "njfranck", package => "LibreCat::Auth::Bag", package_id => "LibreCat::Auth::Bag" }
+
+This "package_id" is used to distinguish between instances of the same package.
 
 =head1 SEE ALSO
 
