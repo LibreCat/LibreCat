@@ -18,6 +18,7 @@ use Plack::App::File;
 use Plack::App::Cascade;
 use Dancer;
 use LibreCat::App;
+use Data::Dumper;
 
 # setup template paths
 config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->template_paths;
@@ -57,3 +58,25 @@ builder {
          session_key => "csrf_token";
     $app;
 };
+
+sub Dancer::Template::Abstract::view {
+    my ($self, $view) = @_;
+
+    my $views_dir = $layers->template_paths;
+
+    for my $template ($self->_template_name($view)) {
+        if (is_array_ref($views_dir)) {
+            for my $dir (@$views_dir) {
+                my $view_path = path($dir, $template);
+                return $view_path if -f $view_path;
+            }
+        }
+        else {
+            my $view_path = path($views_dir, $template);
+            return $view_path if -f $view_path;
+        }
+    }
+
+    # No matching view path was found
+    return;
+}
