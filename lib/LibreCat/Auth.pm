@@ -9,15 +9,14 @@ with 'Catmandu::Logger';
 requires '_authenticate';
 
 has obfuscate_params => (is => 'lazy');
-has id => (
-    is => 'ro',
-    lazy => 1,
-    required => 1,
-    default => sub{ __PACKAGE__ }
-);
+has id => (is => 'lazy');
 
 sub _build_obfuscate_params {
     [qw(password)];
+}
+
+sub _build_id {
+    ref($_[0]);
 }
 
 sub authenticate {
