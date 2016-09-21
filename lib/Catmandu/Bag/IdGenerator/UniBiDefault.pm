@@ -11,7 +11,7 @@ sub generate {
     $bag->store->transaction(sub {
         my $rec = $bag->get_or_add('1', {latest => '0'});
         my $id = ++$rec->{latest};
-        $self->bag->add($rec);
+        $bag->add($rec);
         $id;
     });
 }
