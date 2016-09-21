@@ -83,7 +83,17 @@ sub _request {
 
     return $res if $self->debug;
 
-    ($res->{_rc} eq '200') ? return $res->{_content} : return '';
+    if ($res->{_rc} eq '200') {
+        $self->log->debug("200 OK for " . $uri->as_string());
+        my $cont = $res->{_content};
+        $cont =~ s/<div class="csl-left-margin">.*?<\/div>//g;
+        $cont =~ s/<div.*?>|<\/div>//g;
+        return $cont;
+    }
+    else {
+        $self->log->error("Error: " . $res->{_rc});
+        return 0;
+    };
 
 }
 
