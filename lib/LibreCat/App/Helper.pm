@@ -21,14 +21,7 @@ sub log {
 }
 
 sub config {
-    state $config;
-
-    # Required to load Catmandu at run time to for the Dancer::Test framework
-    unless ($config) {
-        #Catmandu->load("$FindBin::Bin/..");
-        $config = hash_merge(Catmandu->config, Dancer::config);
-    }
-    $config;
+    state $config = hash_merge(Catmandu->config, Dancer::config);
 }
 
 sub bag {
