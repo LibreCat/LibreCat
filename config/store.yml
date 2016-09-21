@@ -20,11 +20,16 @@ backup:
     bags:
       publication: &backup_settings
         plugins: ['Datestamps', 'Versioning']
+        id_generator: UniBiDefault
       award: *backup_settings
-      project: *backup_settings
+      project:
+        plugins: ['Datestamps', 'Versioning']
+        id_generator: UniBiProject
       researcher: *backup_settings
       department: *backup_settings
-      research_group: *backup_settings
+      research_group:
+        plugins: ['Datestamps', 'Versioning']
+        id_generator: UniBiResearchGroup
 
 metrics:
   package: DBI

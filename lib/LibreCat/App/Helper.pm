@@ -454,53 +454,10 @@ sub get_metrics {
     return Catmandu->store('metrics')->bag($bag)->get($id);
 }
 
+# TODO Race conditions! This should only be called inside a transaction.
 sub new_record {
     my ($self, $bag) = @_;
-
-    my $id = "";
-
-    if ($bag eq "project") {
-        my $arr_ref;
-        @$arr_ref
-            = sort {$b->{_id} cmp $a->{_id}} @{$self->project->to_array()};
-
-        if (@$arr_ref > 0) {
-            $id = $arr_ref->[0]->{_id};
-            $id =~ s/^P//g;
-            $id++;
-            $id = "P" . $id;
-        }
-        else {
-            $id = "P1";
-        }
-    }
-    elsif ($bag eq "research_group") {
-        my $arr_ref;
-        @$arr_ref = sort {$b->{_id} cmp $a->{_id}}
-            @{$self->research_group->to_array()};
-
-        if (@$arr_ref > 0) {
-            $id = $arr_ref->[0]->{_id};
-            $id =~ s/^RG//g;
-            $id++;
-            $id = "RG" . $id;
-        }
-        else {
-            $id = "RG1";
-        }
-    }
-    else {
-        # TODO race condition!
-        Catmandu->store->transaction(
-            sub {
-                my $rec = $self->bag->get_or_add('1', {latest => '0'});
-                $id = ++$rec->{latest};
-                $self->bag->add($rec);
-            }
-        );
-    }
-
-    return $id;
+    Catmandu->store('backup')->bag($bag)->generate_id;
 }
 
 sub update_record {
