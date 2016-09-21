@@ -1153,7 +1153,7 @@ department:
          minLength: 1
        - type: integer
          minimum: 0
-      description: "???"
+      description: "Depth in the organizational tree"
     name:
       type: string
       description: "Department name"
