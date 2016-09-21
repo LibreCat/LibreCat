@@ -1,4 +1,4 @@
-package Catmandu::Bag::IdGenerator::UniBiDefault;
+package Catmandu::Bag::IdGenerator::UniResearchGroup;
 
 use Catmandu::Sane;
 use Moo;
@@ -8,12 +8,16 @@ with 'Catmandu::Bag::IdGenerator';
 sub generate {
     my ($self, $bag) = @_;
 
-    $bag->store->transaction(sub {
-        my $rec = $bag->get_or_add('1', {latest => '0'});
-        my $id = ++$rec->{latest};
-        $self->bag->add($rec);
-        $id;
-    });
+    my $all = sort { $b->{_id} cmp $a->{_id} } @{$bag->to_array};
+
+    if (@$all > 0) {
+        my $id = $all->[0]->{_id};
+        $id =~ s/^RG//g;
+        $id++;
+        return "RG$id";
+    }
+
+    "RG1";
 }
 
 1;
