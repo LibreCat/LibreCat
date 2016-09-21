@@ -105,6 +105,8 @@ sub string_array {
 sub nested_params {
     my ($self, $params) = @_;
 
+    state $fixer = Catmandu::Fix->new(fixes => ["expand()"]);
+
     $params ||= params;
     foreach my $k (keys %$params) {
         unless (defined $params->{$k}) {
@@ -113,8 +115,8 @@ sub nested_params {
         }
         delete $params->{$k} if ($params->{$k} =~ /^$/);
     }
-    my $fixer = Catmandu::Fix->new(fixes => ["expand()"]);
-    return $fixer->fix($params);
+
+    $fixer->fix($params);
 }
 
 sub extract_params {
