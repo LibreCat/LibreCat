@@ -21,14 +21,7 @@ sub log {
 }
 
 sub config {
-    state $config;
-
-    # Required to load Catmandu at run time to for the Dancer::Test framework
-    unless ($config) {
-        #Catmandu->load("$FindBin::Bin/..");
-        $config = hash_merge(Catmandu->config, Dancer::config);
-    }
-    $config;
+    state $config = hash_merge(Catmandu->config, Dancer::config);
 }
 
 sub bag {
@@ -105,6 +98,8 @@ sub string_array {
 sub nested_params {
     my ($self, $params) = @_;
 
+    state $fixer = Catmandu::Fix->new(fixes => ["expand()"]);
+
     $params ||= params;
     foreach my $k (keys %$params) {
         unless (defined $params->{$k}) {
@@ -113,8 +108,8 @@ sub nested_params {
         }
         delete $params->{$k} if ($params->{$k} =~ /^$/);
     }
-    my $fixer = Catmandu::Fix->new(fixes => ["expand()"]);
-    return $fixer->fix($params);
+
+    $fixer->fix($params);
 }
 
 sub extract_params {
@@ -452,53 +447,10 @@ sub get_metrics {
     return Catmandu->store('metrics')->bag($bag)->get($id);
 }
 
+# TODO Race conditions! This should only be called inside a transaction.
 sub new_record {
     my ($self, $bag) = @_;
-
-    my $id = "";
-
-    if ($bag eq "project") {
-        my $arr_ref;
-        @$arr_ref
-            = sort {$b->{_id} cmp $a->{_id}} @{$self->project->to_array()};
-
-        if (@$arr_ref > 0) {
-            $id = $arr_ref->[0]->{_id};
-            $id =~ s/^P//g;
-            $id++;
-            $id = "P" . $id;
-        }
-        else {
-            $id = "P1";
-        }
-    }
-    elsif ($bag eq "research_group") {
-        my $arr_ref;
-        @$arr_ref = sort {$b->{_id} cmp $a->{_id}}
-            @{$self->research_group->to_array()};
-
-        if (@$arr_ref > 0) {
-            $id = $arr_ref->[0]->{_id};
-            $id =~ s/^RG//g;
-            $id++;
-            $id = "RG" . $id;
-        }
-        else {
-            $id = "RG1";
-        }
-    }
-    else {
-        # TODO race condition!
-        Catmandu->store->transaction(
-            sub {
-                my $rec = $self->bag->get_or_add('1', {latest => '0'});
-                $id = ++$rec->{latest};
-                $self->bag->add($rec);
-            }
-        );
-    }
-
-    return $id;
+    Catmandu->store('backup')->bag($bag)->generate_id;
 }
 
 sub update_record {

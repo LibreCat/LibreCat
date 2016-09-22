@@ -24,6 +24,36 @@ use Data::Dumper;
 config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->template_paths;
 config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{log} eq 'core' || config->{log} eq 'debug';
 
+# Overwrite the default Dancer template for finding the
+# template file for a view. The views_dir can be an array
+# instead of a single location.
+# TODO make a Dancer template engine package
+{
+    no warnings 'redefine';
+
+    sub Dancer::Template::Abstract::view {
+        my ($self, $view) = @_;
+
+        my $views_dir = $layers->template_paths;
+
+        for my $template ($self->_template_name($view)) {
+            if (is_array_ref($views_dir)) {
+                for my $dir (@$views_dir) {
+                    my $view_path = path($dir, $template);
+                    return $view_path if -f $view_path;
+                }
+            }
+            else {
+                my $view_path = path($views_dir, $template);
+                return $view_path if -f $view_path;
+            }
+        }
+
+        # No matching view path was found
+        return;
+    }
+}
+
 # setup static file serving
 my $app = Plack::App::Cascade->new;
 $app->add(map {Plack::App::File->new(root => $_)->to_app} @{$layers->public_paths});
@@ -59,27 +89,3 @@ builder {
     $app;
 };
 
-# Overwrite the default Dancer template for finding the
-# template file for a view. The views_dir can be an array
-# instead of a single location.
-sub Dancer::Template::Abstract::view {
-    my ($self, $view) = @_;
-
-    my $views_dir = $layers->template_paths;
-
-    for my $template ($self->_template_name($view)) {
-        if (is_array_ref($views_dir)) {
-            for my $dir (@$views_dir) {
-                my $view_path = path($dir, $template);
-                return $view_path if -f $view_path;
-            }
-        }
-        else {
-            my $view_path = path($views_dir, $template);
-            return $view_path if -f $view_path;
-        }
-    }
-
-    # No matching view path was found
-    return;
-}
