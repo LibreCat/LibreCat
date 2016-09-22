@@ -89,6 +89,7 @@ tabs:
   policy: "Leitlinien"
   login: "Wie logge ich mich ein?"
 hits:
+  id: "PUB-ID"
   author: "Autorin / Autor"
   authors: "Autorinnen / Autoren"
   publication: "Publikation"

@@ -89,6 +89,7 @@ tabs:
   policy: "Policy"
   login: "How to log in?"
 hits:
+  id: "PUB-ID"
   author: "Author"
   authors: "Authors"
   publication: "Publication"
