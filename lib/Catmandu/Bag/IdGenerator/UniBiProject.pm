@@ -5,19 +5,24 @@ use Moo;
 
 with 'Catmandu::Bag::IdGenerator';
 
+has id_bag => (is => 'lazy');
+
+sub _build_id_bag {
+    Catmandu->store('default')->bag;
+}
+
 sub generate {
     my ($self, $bag) = @_;
 
-    my $all = [sort { $b->{_id} cmp $a->{_id} } @{$bag->to_array}];
+    my $id = undef;
 
-    if (@$all > 0) {
-        my $id = $all->[0]->{_id};
-        $id =~ s/^P//g;
-        $id++;
-        return "P$id";
-    }
+    $bag->store->transaction(sub {
+        my $rec = $self->id_bag->get_or_add('1', {latest => '0'});
+        $id = ++$rec->{latest};
+        $self->id_bag->add($rec);
+    });
 
-    "P1";
+    "P$id";
 }
 
 1;
