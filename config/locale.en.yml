@@ -1357,6 +1357,8 @@ forms:
             description: "Description"
       license:
         heading: "Copyright and Licenses"
+        pub_license:
+          label: "Copyright Disclaimer"
         data_reuse_license:
           label: "Data Re-Use License"
           select_license: "Select a license under which your uploaded data will be available:<br>"
