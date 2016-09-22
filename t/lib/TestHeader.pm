@@ -7,6 +7,7 @@ use Test::More;
 use Test::TCP;
 use Test::Exception;
 use Test::WWW::Mechanize;
+use App::Cmd::Tester;
 
 use File::Slurp;
 use IO::File;
