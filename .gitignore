@@ -23,6 +23,8 @@ layers.yml
 config/catmandu.local.yml
 cover_db/
 cpanfile.snapshot
+data/temp_uploads/**
+data/file_uploads/**
 inc/
 local
 local/
