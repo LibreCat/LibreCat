@@ -1,15 +1,18 @@
 #!/usr/bin/env perl
 
+my $layers;
+
 BEGIN {
     use Catmandu::Sane;
     use Path::Tiny;
     use lib path(__FILE__)->parent->parent->child('lib')->stringify;
     use LibreCat::Layers;
 
-    LibreCat::Layers->new->load;
+    $layers = LibreCat::Layers->new->load;
 }
 
 use Catmandu::Sane;
 use LibreCat::CLI;
 
+LibreCat::CLI->set_layers($layers);
 LibreCat::CLI->run;
