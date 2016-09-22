@@ -1,3 +1,39 @@
 _prefix:
   roles:
 
+guest:
+  rules:
+    - can view public publication
+
+user:
+  inherits: guest
+  rules:
+    - can add publication
+    - can view own publication
+    - can edit own publication
+    - cannot edit locked publication
+
+delegate:
+  inherits: guest
+  params:
+    - owner
+  rules:
+    - can view publication owned_by owner
+    - can edit publication owned_by owner
+
+reviewer:
+  inherits: guest
+  params:
+    - department
+  rules:
+    - can view publication affiliated_with department
+    - can edit publication affiliated_with department
+
+project_reviewer:
+
+award_admin:
+
+data_manager:
+
+super_admin:
+
