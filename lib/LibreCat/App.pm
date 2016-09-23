@@ -34,7 +34,14 @@ sub _authenticate {
     # Clean dirties .. in loginname
     $username =~ s{[^a-zA-Z0-9_]*}{}mg;
 
-    my $users = LibreCat::User->new(Catmandu->config->{user});
+    my $user_config = Catmandu->config->{user};
+
+    unless ($user_config) {
+        warning "No user_config found. Did you configure catmandu.local.yml?";
+        return undef;
+    }
+
+    my $users = LibreCat::User->new($user_config);
 
     my $auth = do {
         my $pkg = Catmandu::Util::require_package(
@@ -46,6 +53,7 @@ sub _authenticate {
     my $user = $users->find_by_username($username) || return;
     $auth->authenticate({username => $username, password => $password})
         || return;
+
     $user;
 }
 

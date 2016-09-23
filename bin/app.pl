@@ -22,7 +22,7 @@ use Data::Dumper;
 
 # setup template paths
 config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->template_paths;
-config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{log} eq 'core' || config->{log} eq 'debug';
+config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{template_debug};
 
 # Overwrite the default Dancer template for finding the
 # template file for a view. The views_dir can be an array
@@ -88,4 +88,3 @@ builder {
          session_key => "csrf_token";
     $app;
 };
-
