@@ -1,5 +1,4 @@
 !Build/
-*.json
 *.log
 *.pid
 *.swp
@@ -29,7 +28,9 @@ inc/
 local
 local/
 logs/
+node_modules/
 nytprof.out
+package.json
 pm_to_blib
 profiledata/
 public/RePEc/*
