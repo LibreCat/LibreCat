@@ -36,7 +36,7 @@
     <form role="form" action="/librecat/admin/account/import" method="GET" class="margin-top1">
       <div class="row">
       <div class="col-md-5">
-	<label for="id_id"><span class="glyphicon glyphicon-upload"></span> Import by PEVZ-ID</label>
+	<label for="id_id"><span class="glyphicon glyphicon-upload"></span> Import by ID</label>
 	<div class="input-group">
 	  <input type="text" class="form-control" name="id" id="id_id" placeholder="12345" value="[% qp.id %]" required>
 	  <span class="input-group-btn">
@@ -72,7 +72,7 @@
 	<dt>
 	<a href="/librecat/admin/account/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% p.full_name %]</a>
 	<span [% IF p.account_status == 'active' %]class="label label-success"[% ELSE %]class="label label-danger"[% END %]>
-	[% p.account_status || 'inactive' %]</span> | <span class="text-muted">BIS-ID: <a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% p._id %]">[% p._id %]</a></span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="http://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: </span><span data-id="[% p._id %]" class="num_publ"></span><br />
+	[% p.account_status || 'inactive' %]</span> | <span class="text-muted">ID: <a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% p._id %]">[% p._id %]</a></span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="http://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: </span><span data-id="[% p._id %]" class="num_publ"></span><br />
 	</dt>
 	<dd>
 	<span class="text-muted">[% FOREACH dep IN p.department %][% IF dep._id %][% h.get_department(dep._id).display %][% END %][% UNLESS loop.last %] | [% END %][% END %]</span>

@@ -21,7 +21,6 @@ backup:
       publication: &backup_settings
         plugins: ['Datestamps', 'Versioning']
         id_generator: UniBiDefault
-      award: *backup_settings
       project:
         plugins: ['Datestamps', 'Versioning']
         id_generator: UniBiProject
@@ -200,106 +199,6 @@ search:
                 'all': true
                 '=': true
               field: 'project_type'
-
-      award:
-        cql_mapping:
-          default_index: basic
-          indexes:
-            basic:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-              field: '_all'
-              description: "index with common fields..."
-            _basic:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-              field: '_all'
-              description: "index with common fields..."
-            id:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                'exact': true
-              field: '_id'
-              sort: {field: 'sort_id'}
-            awardid:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                'exact': true
-              field: 'award_id'
-            rectype:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                'exact': true
-                '<>': true
-              field: rec_type
-            organization:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-              field: 'organization'
-            year:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-                '>': true
-                '<': true
-                '>=': true
-                '<=': true
-                'exact': true
-              field: 'year'
-              sort: 'true'
-            honoree:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-                'exact': {field: 'honoree.full_name.exact'}
-              field: 'honoree.full_name'
-            department:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-              field: 'department._id'
-            einrichtung:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-              field: 'einrichtung._id'
-            otheruniversity:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-              field: 'other_university'
-            comment:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-              field: 'comment'
 
       publication:
         cql_mapping:
@@ -746,10 +645,6 @@ search:
               op:
                 '=': true
               field: alternative_id
-            foda:
-              op:
-                '=': true
-              field: foda
             locked:
               op:
                 '=': true
@@ -1018,47 +913,8 @@ search:
           member: *personField2
           project_type: {type: string}
 
-      award:
-        include_in_all: false
-        properties:
-          rec_type: {type: string, analyzer: tag}
-          date_updated: {type: date}
-          _id: {type: string, include_in_all: true}
-          sort_id: {type: integer}
-          award_id: {type: string}
-          description: {type: string}
-          description_en: {type: string}
-          proof: {type: string, index: not_analyzed}
-          title: {type: string}
-          organization: {type: string}
-          year: {type: date, format: year}
-          honoree:
-            properties:
-              first_name: {type: string}
-              last_name: {type: string}
-              full_name:
-                type: multi_field
-                fields:
-                  full_name: {type: string}
-                  exact: {type: string, analyzer: tag}
-              title: {type: string}
-              id: {type: string, analyzer: tag}
-          department:
-            properties:
-              _id: {type: string, analyzer: tag}
-          einrichtung:
-            properties:
-              _id: {type: string, analyzer: tag}
-          uni_member: {type: byte}
-          former_member: {type: string, analyzer: tag}
-          other_university: {type: string}
-          url: {type: string, index: not_analyzed}
-          extern: {type: byte}
-          comment: {type: string}
-
       publication:
         include_in_all: false
-#        ignore_malformed: true
         properties:
           _id: {type: string, include_in_all: true}
           title: &titleField
@@ -1167,26 +1023,18 @@ search:
               arxiv: {type: string}
               pubmed: {type: string}
               inspire: {type: string}
-              ahf: {type: string}
               scoap3: {type: string}
-              phillister: {type: string}
-              opac: {type: string}
           isi: {type: byte}
           arxiv: {type: byte}
           pubmed: {type: byte}
           inspire: {type: byte}
-          ahf: {type: byte}
           scoap3: {type: byte}
-          phillister: {type: byte}
-          opac: {type: byte}
-          foda: {type: byte}
           date_updated: {type: date, format: date_time_no_millis}
           file:
             properties:
               access_level: {type: string, analyzer: tag}
               year_last_uploaded: {type: date, format: "yyyy"}
               date_updated: {type: string}
-#              yearCreated: {type: date, format: "yyyy"}
           alternative_id: {type: string, analyzer: tag}
           defense_date: {type: date, index: no}
           locked: {type: byte}
@@ -1243,9 +1091,6 @@ search:
           account_type: {type: string}
           ext_institution: {type: string}
           password: {type: string}
-          other_profile: {type: byte}
-#          email: {type: string, analyzer: tag}
-#          sort: {type: string}
           orcid: {type: string, analyzer: tag}
           inspire: {type: string, analyzer: tag}
           arxiv: {type: string, analyzer: tag}

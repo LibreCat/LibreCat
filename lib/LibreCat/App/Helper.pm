@@ -52,10 +52,6 @@ sub backup_project {
     state $bag = Catmandu->store('backup')->bag('project');
 }
 
-sub backup_award {
-    state $bag = Catmandu->store('backup')->bag('award');
-}
-
 sub backup_researcher {
     state $bag = Catmandu->store('backup')->bag('researcher');
 }
@@ -74,10 +70,6 @@ sub publication {
 
 sub project {
     state $bag = Catmandu->store('search')->bag('project');
-}
-
-sub award {
-    state $bag = Catmandu->store('search')->bag('award');
 }
 
 sub researcher {
@@ -375,10 +367,6 @@ sub get_person {
     }
     return $hits->{hits}->[0] if $hits->{hits};
     return {error => "something went wrong"} if !$hits->{hits};
-}
-
-sub get_award {
-    $_[0]->award->get($_[1]);
 }
 
 sub get_project {
@@ -876,19 +864,6 @@ sub search_research_group {
         return $hits;
     }
 
-}
-
-sub search_award {
-    my ($self, $p) = @_;
-
-    my $hits = award->search(
-        cql_query => $p->{q},
-        limit     => $p->{limit} ||= config->{default_page_size},
-        facets    => $p->{facets} ||= {},
-        start     => $p->{start} ||= 0,
-    );
-
-    return $hits;
 }
 
 sub get_file_store {

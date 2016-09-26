@@ -28,7 +28,6 @@ header:
     delegate: "Delegate"
     reviewer: "Reviewer"
     project_reviewer: "Project Reviewer"
-    award_admin: "Award Admin"
     data_manager: "Data Manager"
     super_admin: "Admin"
   admin_menu:
@@ -38,7 +37,6 @@ header:
     manage_projects: "Manage Projects"
     manage_research_groups: "Manage Research Groups"
     manage_journals: "Manage Journals"
-    manage_awards: "Manage Awards"
     manage_department: "Manage Departments"
   lang: "Deutsch"
   lang_short: "DE"
@@ -161,9 +159,7 @@ person_profile:
   former_researcher: "Former Bielefeld University Researcher"
   view: "View "
   view_in: "View in"
-  directory_of_staff: "PEVZ-ID"
-  other_profile: "SFB882-GK Profile"
-  other_profile_url: "http://www.sfb882.uni-bielefeld.de/en/staff/"
+  local_id: "ID"
   no_author_ids: "No Author IDs set."
   person_id_title: "These IDs will be visible on your public person page immediately after saving."
 project:

@@ -35,7 +35,7 @@ sub _do_switch {
     print "Index $new does not exist yet, new index will be $new.\n";
 
     my $store = Catmandu->store('search', index_name => $new);
-    my @bags = qw(publication project award researcher department research_group);
+    my @bags = qw(publication project researcher department research_group);
     foreach my $b (@bags) {
         my $bag = $store->bag($b);
         $bag->add_many($backup_store->bag($b));
@@ -45,10 +45,10 @@ sub _do_switch {
     print "New index is $new. Testing...\n";
     my $checkForIndex = $e->indices->exists(index => $new);
     my $checkForAlias = $e->indices->exists(index => $ind_name);
-    
+
     if($checkForIndex){
         print "Index $new exists. Setting index alias $ind_name to $new and testing again.\n";
-        
+
         if(!$checkForAlias){
             # First run, no alias present
             $e->indices->update_aliases(

@@ -84,7 +84,7 @@ sub _export {
     my $h = LibreCat::App::Helper::Helpers->new;
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many($h->award);
+    $exporter->add_many($h->research_group);
     $exporter->commit;
 
     return 0;
