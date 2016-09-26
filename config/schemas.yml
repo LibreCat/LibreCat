@@ -516,6 +516,16 @@ publication:
       items:
         type: string
       description: "Alternative title"
+    data_reuse_license:
+       type: string
+       description: "Data re-use license"
+    open_data_release:
+      oneOf:
+        - type: string
+          minLength: 1
+        - type: integer
+          minimum: 0
+      description: "Flag agree with the copyright and license"
     #required when type = 'journalArticle'
     publication:
       type: string
@@ -917,7 +927,7 @@ publication:
       description: "Citation"
 
   # A author|editor is required..can this be expressed in JSONSchema?
-  required: ["_id","type","title","year"]
+  required: ["_id","type","title","year","status"]
   additionalProperties: true
 
 #used in LibreCat::Validator::Researcher

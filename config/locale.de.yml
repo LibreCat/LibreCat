@@ -89,6 +89,7 @@ tabs:
   policy: "Leitlinien"
   login: "Wie logge ich mich ein?"
 hits:
+  id: "PUB-ID"
   author: "Autorin / Autor"
   authors: "Autorinnen / Autoren"
   publication: "Publikation"
@@ -1269,7 +1270,7 @@ forms:
       publication_date:
         label: "Ver&ouml;ffentlichungsdatum"
         label_short: "Ver&ouml;ff.datum"
-        placeholder: "JJJJ-MM-TT" 
+        placeholder: "JJJJ-MM-TT"
       publication:
         label: "Zeitschriftentitel"
         placeholder: "z.B. Nature Genetics"
@@ -1357,6 +1358,8 @@ forms:
             description: "Beschreibung"
       license:
         heading: "Copyright und Lizenzen"
+        pub_license:
+            label: "Copyright Disclaimer"
         data_reuse_license:
           label: "Data Re-Use License"
           select_license: "W&auml;hlen Sie eine Lizenz aus unter der Ihre Daten verf&uuml;gbar sein sollen:<br>"

@@ -45,7 +45,7 @@
       {% END %}
 
       {% IF fields.file_upload.license.open_data_release || fields.file_upload.license.pub_license %}
-      <strong>[% h.loc("forms.$type.field.license.open_data_release.label") %][% h.loc("forms.${type}.field.license.pub_license.label") %]</strong>[% IF file %]<span class="starMandatory"></span>[% END %]<br />
+      <strong>[% h.loc("forms.${type}.field.license.pub_license.label") %]</strong>[% IF file %]<span class="starMandatory"></span>[% END %]<br />
 
       <div class="row innerrow">
         <div class="col-md-12 alert alert-info{% IF fields.file_upload.license.open_data_release.mandatory OR fields.file_upload.license.pub_license.mandatory %} mandatory{% END %}"{% IF fields.file_upload.license.open_data_release %} id="odralert"{% ELSIF fields.file_upload.license.pub_license %} id="pub_license_alert"{% END %}>
@@ -63,7 +63,7 @@
           {% END %}
           </label>
         </div>
-        <p class="text-body">[% h.loc("forms.$type.field.license.info.text") %] [% h.loc("forms.${type}.field.license.info.contact") %]</p>
+        <p class="text-body">[% h.loc("forms.${type}.field.license.info.text") %] [% h.loc("forms.${type}.field.license.info.contact") %]</p>
         </div>
       </div>
       {% END %}

@@ -257,7 +257,7 @@
 [% END %]
 
   <div class="row">
-    <div class="col-lg-2 col-md-3 text-muted">PUB-ID</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% h.loc("hits.id") %]</div>
     <div class="col-lg-10 col-md-9">
     <a itemprop="url" href="[% request.uri %]" title="[% h.loc("frontdoor.id_title") %]">[% _id %]</a>
     </div>

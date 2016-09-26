@@ -66,6 +66,7 @@ requires 'Starman';
 
 # others
 requires 'all';
+requires 'App::Cmd::Tester';
 requires 'Business::ISBN10';
 requires 'Business::ISBN13';
 requires 'App::bmkpasswd', '2.010001';

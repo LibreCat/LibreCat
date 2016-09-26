@@ -79,7 +79,7 @@
 [% ELSE %]
     <div class="col-md-12">
 [% END %]
-    <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% lf.forms.item(entry.type).label %] | PUB-ID: <span class="pubid">[% entry._id %]</span> </em>
+    <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% lf.forms.item(entry.type).label %] | [% h.loc("hits.id") %]: <span class="pubid">[% entry._id %]</span> </em>
     <div class="citation-block-div">
     [% IF style == 'default' %]
 	<a href="[% h.host %]/[% IF backend %]librecat/record/edit[% ELSE %][% bag %][% END %]/[% entry._id %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title | html %]</strong></a><br>
