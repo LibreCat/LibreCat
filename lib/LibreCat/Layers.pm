@@ -10,10 +10,12 @@ use Path::Tiny;
 use Moo;
 use namespace::clean;
 
+has loaded => (is => 'rwp', default => sub {0});
 has root_path => (is => 'lazy');
 has layer_paths => (is => 'lazy');
 has config => (is => 'lazy', init_arg => undef);
-for (qw(paths lib_paths config_paths public_paths template_paths)) {
+has css_paths => (is => 'lazy', init_arg => undef);
+for (qw(paths lib_paths config_paths public_paths scss_paths template_paths)) {
     has $_ => (is => 'ro', init_arg => undef, default => sub {[]});
 }
 
@@ -30,21 +32,12 @@ sub BUILD {
 
         unshift @{$self->paths}, $path->stringify;
 
-        my $view_path     = $path->child('views');
-        my $template_path = $path->child('templates');
-        my $public_path   = $path->child('public');
         my $config_path   = $path->child('config');
         my $lib_path      = $path->child('lib');
-
-        if ($view_path->is_dir) {
-            unshift @{$self->template_paths}, $view_path->stringify;
-        } elsif ($template_path->is_dir) {
-            unshift @{$self->template_paths}, $template_path->stringify;
-        }
-
-        if ($public_path->is_dir) {
-            unshift @{$self->public_paths}, $public_path->stringify;
-        }
+        my $public_path   = $path->child('public');
+        my $scss_path     = $path->child('scss');
+        my $template_path = $path->child('templates');
+        my $view_path     = $path->child('views');
 
         if ($config_path->is_dir) {
             unshift @{$self->config_paths}, $config_path->stringify;
@@ -53,11 +46,27 @@ sub BUILD {
         if ($lib_path->is_dir) {
             unshift @{$self->lib_paths}, $lib_path->stringify;
         }
+
+        if ($public_path->is_dir) {
+            unshift @{$self->public_paths}, $public_path->stringify;
+        }
+
+        if ($scss_path->is_dir) {
+            unshift @{$self->scss_paths}, $scss_path->stringify;
+        }
+
+        if ($view_path->is_dir) {
+            unshift @{$self->template_paths}, $view_path->stringify;
+        } elsif ($template_path->is_dir) {
+            unshift @{$self->template_paths}, $template_path->stringify;
+        }
     }
 }
 
 sub load {
     my ($self) = @_;
+
+    return $self if $self->loaded;
 
     my $config = $self->config;
     my $lib_paths = $self->lib_paths;
@@ -77,6 +86,8 @@ sub load {
         use_lib @$lib_paths;
     }
 
+    $self->_set_loaded(1);
+
     $self;
 }
 
@@ -94,6 +105,12 @@ sub _build_layer_paths {
     } else {
         [];
     }
+}
+
+sub _build_css_paths {
+    my ($self) = @_;
+
+    [map { $_->stringify} grep { $_->is_dir } map { path($_)->child('css') } @{$self->public_paths}];
 }
 
 sub _build_config {
@@ -171,20 +188,24 @@ variable, in which case the C<layers.yml> file will be ignored.
 
 =back
 
-=head2 root_path
+=head2 css_paths
+
+=head2 config
+
+=head2 config_paths
+
+=head2 lib_paths
 
 =head2 layer_paths
 
 =head2 paths
 
-=head2 lib_paths
-
-=head2 config_paths
-
 =head2 public_paths
 
-=head2 template_paths
+=head2 root_path
 
-=head2 config
+=head2 scss_paths
+
+=head2 template_paths
 
 =cut
