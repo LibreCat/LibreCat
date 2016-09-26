@@ -17,7 +17,7 @@ sub global_opt_spec {
 
     sub set_layers {
         $layers && die 'layers already set';
-        $layers = check_instance($_[1], 'Catmandu::Layers');
+        $layers = check_instance(pop, 'LibreCat::Layers');
     }
 
     sub layers {
