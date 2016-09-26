@@ -47,6 +47,7 @@ requires 'Dancer::Session::PSGI';
 requires 'Template';
 requires 'Template::Plugin::Date';
 requires 'Template::Plugin::JSON';
+requires 'Template::Plugin::Gravatar';
 requires 'Furl';
 requires 'HTML::Entities';
 requires 'Syntax::Keyword::Junction';

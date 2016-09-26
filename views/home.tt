@@ -18,12 +18,13 @@
 
       <div class="row">
 	<div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme helpme-md" data-placement="top" title="[% h.loc("help.pevz_photo") %]">
-	  [% IF thisPerson.photo %]
+	  [%- IF thisPerson.photo %]
 	  [%- photo_url=thisPerson.photo.replace('http:','') -%]
 	  <img src="[% photo_url %]" style="max-width:140px;" class="img-thumbnail" >
-	  [% ELSE %]
-	  <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail" title="[% backend ? h.loc("home.you_have_no_photo") : h.loc("home.they_have_no_photo") %]">
-	  [% END %]
+	  [%- ELSE %]
+      [% USE Gravatar %]
+      <img src="[% Gravatar( email => thisPerson.email ) | html %]" alt="[% thisPerson.full_name | html %]" />
+	  [%- END %]
 	</div>
 
 	<div class="col-md-6 col-sm-5 col-xs-12">
@@ -51,7 +52,7 @@
 	[% IF backend AND session.role == 'super_admin' %]
 	  <li class="helpme[% IF backend AND modus == "admin" %] active[% END %]" title="[% h.loc("help.publication_admin") %]"><a href="/librecat/search/admin">[% h.loc("tabs.all_publications") %]</a></li>
 	[% END %]
-	[% IF session.role == 'user' OR session.role == 'award_admin' OR !backend %]
+	[% IF session.role == 'user' OR !backend %]
 	  <li class="helpme[% IF modus == "user" %] active[% END %]" title="[% h.loc("help.publication_user") %]"><a href="[% IF backend %]/librecat/search[% ELSE %]/person/[% id %][% END %]">[% h.loc("tabs.publications") %]</a></li>
 	  [% IF researchhits AND researchhits.total != 0 %]
 	    <li class="helpme[% IF modus == "data" %] active[% END %]" title="[% h.loc("help.publication_user_rd") %]"><a href="[% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% h.loc("tabs.data_publications") %]</a></li>
@@ -102,7 +103,7 @@
 	    </div>
 	  </div>
       [% END %]
-      [% IF !backend OR session.role == 'user' OR session.role == "award_admin" %]
+      [% IF !backend OR session.role == 'user'%]
       <!-- frontend or user -->
       <div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ-user">
       <!-- publication -->
