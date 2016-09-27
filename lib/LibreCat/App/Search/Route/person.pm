@@ -52,7 +52,6 @@ research data and author IDs.
 get qr{/person/(\d+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+)*/*} => sub {
     my ($id, $modus) = splat;
     my $p = h->extract_params();
-
     my @orig_q = @{$p->{q}};
 
     push @{$p->{q}}, ("person=$id", "status=public");
@@ -72,6 +71,18 @@ get qr{/person/(\d+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+)*/*
 
     my $hits = h->search_publication($p);
 
+    unless ($hits->total) {
+        $hits = h->search_researcher({q => ["alias=$id"]});
+        if (!$hits->{total}) {
+            status '404';
+            template 'websites/404', {path => request->path};
+        }
+        else {
+            my $person = $hits->first;
+            forward "/person/$person->{_id}";
+        }
+    }
+
     # search for research hits (only to see if present and to display tab)
     my $researchhits;
     @{$p->{q}} = @orig_q;
@@ -87,37 +98,11 @@ get qr{/person/(\d+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+)*/*
     $hits->{id}    = $id;
     $hits->{modus} = $modus || "user";
 
-    my $marked = session 'marked';
-    $marked ||= [];
+    my $marked = session 'marked' // [];
     $hits->{marked} = @$marked;
 
-    if ($p->{fmt} ne 'html') {
-        h->export_publication($hits, $p->{fmt});
-    }
-    else {
-        template 'home', $hits;
-    }
-};
+    template 'home', $hits;
 
-=head2 GET /person/alias
-
-Find a person's ID via alias.
-Forwards to /person/:ID
-
-=cut
-
-get qr{/person/(\w+)/*} => sub {
-    my ($alias) = splat;
-
-    my $hits = h->search_researcher({q => ["alias=$alias"]});
-    if (!$hits->{total}) {
-        status '404';
-        template 'websites/404', {path => request->path};
-    }
-    else {
-        my $person = $hits->first;
-        forward "/person/$person->{_id}";
-    }
 };
 
 1;

@@ -22,8 +22,8 @@
 	  [%- photo_url=thisPerson.photo.replace('http:','') -%]
 	  <img src="[% photo_url %]" style="max-width:140px;" class="img-thumbnail" >
 	  [%- ELSE %]
-      [% USE Gravatar %]
-      <img src="[% Gravatar( email => thisPerson.email ) | html %]" alt="[% thisPerson.full_name | html %]" />
+      [%- USE Gravatar %]
+      <img src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c' ) | html %]" alt="[% thisPerson.full_name | html %]" />
 	  [%- END %]
 	</div>
 

@@ -1,51 +1,52 @@
-
 <!-- BEGIN person_profile.tt -->
+[%- IF thisPerson.department.0.name %]
+<a class="helpme helpme-md" data-placement="top">[% thisPerson.department.0.name %]</a><br>
+[%- END %]
+[%- IF thisPerson.email_encoded || thisPerson.email %]
+<a class="helpme helpme-md" data-placement="top" title="[% h.loc("help.email") %]" href="mailto:[% thisPerson.email_encoded || thisPerson.email %]" itemprop="email">[% thisPerson.email_encoded.replace('@|&#64;', ' [at] ') || thisPerson.email %]</a><br>
+[%- END %]
 
-[% IF thisPerson.email_encoded || thisPerson.email %]
-<a class="helpme helpme-md" data-placement="top" title="[% h.loc("help.pevz_email") %]" href="mailto:[% thisPerson.email_encoded || thisPerson.email %]" itemprop="email">[% thisPerson.email_encoded.replace('@|&#64;', ' [at] ') || thisPerson.email %]</a><br>
-[% END %]
-
-[% IF !thisPerson %]
+[%- IF !thisPerson %]
   <p>[% h.loc("person_profile.id_not_found") %]</p>
-[% ELSE %]
-  [% IF thisPerson.former == "1" %]
+[%- ELSE %]
+  [%- IF thisPerson.former == "1" %]
     <p>[% h.loc("person_profile.former_researcher") %]</p>
-  [% ELSE %]
+  [%- ELSE %]
     <div class="col-md-12 row">
       <div class="row">
 	<div class="col-md-4">[% h.loc("person_profile.local_id") %]</div>
-	<div class="col-md-6"><a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% thisPerson._id %]">[% thisPerson._id %]</a></div>
+	<div class="col-md-6"><a href="/person/[% thisPerson._id %]">[% thisPerson._id %]</a></div>
       </div>
     </div>
 
     <div class="col-md-12 row hidden-xs">
     <form action="/librecat/person/author_id" id="author_id_form" method="POST">
     <input type="hidden" name="_id" value="[% session.personNumber %]" />
-    [% IF backend AND !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire OR thisPerson.alias) %]
+    [%- IF backend AND !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire OR thisPerson.alias) %]
     <div class="row col-md-12">
       <span class="text-muted">[% h.loc("person_profile.no_author_ids") %]</span>
       <a href="#" class="helpme helpme-md" data-placement="right" title="[% h.loc("help.author_id") %]" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
     </div>
-    [% END %]
+    [%- END %]
 
-    [% FOREACH  k IN h.config.lists.author_id.keys.sort %]
-    [% IF thisPerson.$k %]
+    [%- FOREACH  k IN h.config.lists.author_id.keys.sort %]
+    [%- IF thisPerson.$k %]
     <div class="row authorIds">
       <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
       <div class="col-md-6">
-      [% IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]">[% thisPerson.$k %][% h.config.lists.author_id.$k.icon %]</a>
-      [% ELSE %][% thisPerson.$k %][% END %]
-      [% IF backend %]
+      [%- IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]">[% thisPerson.$k %][% h.config.lists.author_id.$k.icon %]</a>
+      [%- ELSE %][% thisPerson.$k %][% END %]
+      [%- IF backend %]
       <a href="#" class="helpme helpme-md" data-placement="right" [% IF loop.first %]title="[% h.loc("help.author_id_edit") %]"[% END %] onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
-      [% END %]
+      [%- END %]
       </div>
     </div>
-    [% END %]<!-- end if -->
+    [%- END %]<!-- end if -->
     <div class="row authorIds_input form-group" style="display:none;">
       <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
       <div class="col-md-6"><input type="text" class="form-control input-sm check_[% k %]" data-id="[% thisPerson._id %]" name="[% k %]" id="[% k %]" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
     </div>
-    [% END %]<!-- END foreach -->
+    [%- END %]<!-- END foreach -->
 
     <div class="row authorIds_input" style="display:none;">
       <div class="col-md-4">

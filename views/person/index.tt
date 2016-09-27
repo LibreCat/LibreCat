@@ -19,7 +19,7 @@
     </div>
 
     <div class="ltIEten">
-      <h3>Please note that PUB no longer supports Internet Explorer versions 8 or 9 (or earlier).</h3>
+      <h3>Please note that we no longer supports Internet Explorer versions 8 or 9 (or earlier).</h3>
       <p>We recommend upgrading to the latest <a href="http://windows.microsoft.com/ie" target="_blank">Internet Explorer</a>, <a href="https://chrome.google.com" target="_blank">Google Chrome</a>, or <a href="https=//mozilla.org/firefox/" target="_blank">Firefox</a>.</p>
     </div>
 
@@ -29,21 +29,8 @@
           <li><a href="/">[% lf.tabs.home %]</a></li>
           <li><a href="/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.publications %]</a></li>
           <li><a href="/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.data_publications %]</a></li>
-          <!--
           <li><a href="/project[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.projects %]</a></li>
-          -->
           <li class="active"><a href="/person[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.authors %]</a></li>
-          <li class="dropdown[% IF bag == 'about' || bag == 'faq' || bag == 'contact' || bag == 'policy' %] active[% END %]"><a href="#" class="dropdown-toggle" data-toggle="dropdown">[% lf.tabs.about %] <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="/docs/howto/start">[% lf.tabs.start %]</a></li>
-              <li><a href="/docs/howto/login">[% lf.tabs.login %]</a></li>
-              <li><a href="/docs/howto/features">[% lf.tabs.features %]</a></li>
-              <li><a href="/docs/howto/policy">[% lf.tabs.policy %]</a></li>
-              <li><a href="/docs/howto/contact">[% lf.tabs.contact %]</a></li>
-              <li><a href="/docs/api">[% lf.tabs.documentation %]</a></li>
-            </ul>
-          </li>
-          <li><a href="/policy" data-toggle="tab" style="display:none;">[% lf.tabs.policy %]</a></li>
           <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="[% lf.main_page.logout %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% lf.main_page.logout %]</span></a>[% ELSE %]<a href="/login" title="[% lf.main_page.login %]"><span class="glyphicon glyphicon-log-in fw"></span>[% lf.main_page.login %]</a>[% END %]</li>
           [% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
         </ul>
@@ -62,30 +49,6 @@
               [% INCLUDE filters.tt %]
             </div>
           </div>
-        </div>
-
-        <div class="tab-pane[% bag == 'about' ? ' active' : '' %]" id="about">
-          [% IF bag == 'about' %]
-            [% INCLUDE docs/howto.tt %]
-          [% END %]
-        </div>
-
-        <div class="tab-pane[% bag == 'policy' ? ' active' : '' %]" id="policy">
-          [% IF bag == 'policy' %]
-            [% INCLUDE docs/howto/policy.tt %]
-          [% END %]
-        </div>
-
-        <div class="tab-pane[% bag == 'faq' ? ' active ' : '' %]" id="faq">
-          [% IF bag == 'faq' %]
-            [% INCLUDE docs/howto.tt %]
-          [% END %]
-        </div>
-
-        <div class="tab-pane[% bag == 'contact' ? ' active' : '' %]" id="contact">
-          [% IF bag == 'contact' %]
-            [% INCLUDE docs/howto/contact.tt %]
-          [% END %]
         </div>
 
       </div><!-- tab-content -->

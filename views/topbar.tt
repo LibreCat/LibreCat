@@ -16,7 +16,7 @@
 	  <span class="icon-bar"></span>
 	  <span class="icon-bar"></span>
 	</button>
-	<a class="navbar-brand helpme" data-placement="bottom" title="[% h.loc("help.home") %]" href="/"><img src="/images/logo_navbar.png" style="height:30px" alt="" /></a>
+	<a class="navbar-brand helpme" data-placement="bottom" title="[% h.loc("help.home") %]" href="/"><img src="/images/brand_logo.png" style="height:30px" alt="" /></a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -32,9 +32,6 @@
 	    <!--<li><a href="/librecat/admin/import"><span class="glyphicon glyphicon-import"></span>[% h.loc("header.admin_menu.import") %]</a></li>-->
 	    <li><a href="/librecat/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% h.loc("header.admin_menu.manage_projects") %]</a></li>
 	    <li><a href="/librecat/admin/research_group"><span class="fa fa-group fw"></span>[% h.loc("header.admin_menu.manage_research_groups") %]</a></li>
-	    <!--<li><a href="/librecat/admin/department"><span class="glyphicon glyphicon-home"></span>[% h.loc("header.admin_menu.manage_department") %]</a></li>-->
-	    <!--<li><a href="/librecat/admin/journal"><span class="glyphicon glyphicon-user"></span>[% h.loc("header.admin_menu.manage_journals") %]</a></li>-->
-	    <li><a href="/librecat/admin/award"><span class="glyphicon glyphicon-star"></span>[% h.loc("header.admin_menu.manage_awards") %]</a></li>
 	  </ul>
 	  </li>
 	[%- END %]

@@ -1,16 +1,12 @@
-[% PROCESS header.tt %]
-<!-- get IP of user  and set localUser -->
-[% ip = request.env.HTTP_X_FORWARDED_FOR %]
-[% localUser = ip.match('^129.70').0 %]
-
+[%- PROCESS header.tt %]
 <!-- BEGIN frontdoor/record.tt -->
 
 <script src="/javascripts/frontend.js"></script>
 <script type="text/javascript">
-[% PROCESS frontdoor/javascriptShowHide.tt %]
+[%- PROCESS frontdoor/javascriptShowHide.tt %]
 </script>
 
-[% IF status != "public" AND _id %]
+[%- IF status != "public" AND _id %]
 <div id="preview">[% h.loc("frontdoor.preview") %]</div>
 [% END %]
 
@@ -28,7 +24,6 @@
   [% epmc_ref = h.get_metrics('epmc_references',external_id.pmid) %]
   [% ebi_data = h.get_metrics('epmc_dblinks',external_id.pmid) %]
 [% END %]
-[% toolkit = h.get_metrics('toolkit', _id) %]
 
 [% FOREACH key IN related_material.keys %]
   [% IF key == "record" %]
@@ -179,18 +174,15 @@
 
       </div><!-- end left col -->
 
+      [%- IF fi %]
       <div class="col-xs-2 col-sm-3 col-sm-offset-1 text-sm-right">
-	<div class="img-thumbnail img-thumbnail-fh">
-	[% IF fi %]
-	<a href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]" itemprop="thumbnailUrl" class="fulltext">
-	  <img src="/thumbnail/[% _id %]" itemprop="image" alt="[% h.loc("frontdoor.fulltext.view") %]" title="[% h.loc("frontdoor.fulltext.view") %]">
-	</a>
-	[% ELSE %]
-	<p class="nofile">[% h.loc("frontdoor.fulltext.not_available") %]</p>
-	[% END %]
-	</div>
+	     <div class="img-thumbnail img-thumbnail-fh">
+	        <a href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]" itemprop="thumbnailUrl" class="fulltext">
+	           <img src="/thumbnail/[% _id %]" itemprop="image" alt="[% h.loc("frontdoor.fulltext.view") %]" title="[% h.loc("frontdoor.fulltext.view") %]">
+	        </a>
+	     </div>
       </div>
-
+      [%- END %]
     </div><!-- row -->
 
     <div class="row">
@@ -347,48 +339,34 @@
         </div><!-- end modal -->
 
     <!-- Sources -->
-        [% IF external_id %]
+    [%- IF external_id %]
 
-          [% IF external_id.isi %]
+          [%- IF external_id.isi %]
           <h3 id="wos">Web of Science</h3>
           <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">[% h.loc("frontdoor.view_wos") %]&reg;</a>
-          [% END %]
+          [%- END %]
 
-	  [% IF external_id.pmid OR  external_id.arxiv OR external_id.inspire OR external_id.scoap3 OR external_id.ahf OR external_id.opac OR external_id.phillister %]
+	  [%- IF external_id.pmid OR  external_id.arxiv OR external_id.inspire OR external_id.scoap3 %]
 	    <h3>[% h.loc("frontdoor.sources") %]</h3>
 
-	    [% IF external_id.pmid %]
+	    [%- IF external_id.pmid %]
 	    <p><img src="/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% external_id.pmid %]<br>
 	    <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% external_id.pmid %]">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% external_id.pmid %]">Europe PMC</a></p>
-	    [% END %]
+	    [%- END %]
 
-	    [% IF external_id.arxiv %]
+	    [%- IF external_id.arxiv %]
 	    <p><img src="/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="http://arxiv.org/abs/[% external_id.arxiv %]">[% external_id.arxiv %]</a></p>
-	    [% END %]
+	    [%- END %]
 
-	    [% IF external_id.inspire %]
+	    [%- IF external_id.inspire %]
 	    <p><img src="/images/icon_inspire.png" class="img-thumbnail" alt="">Inspire <a href="https://inspirehep.net/record/[% external_id.inspire %]">[% external_id.inspire %]</a></p>
-	    [% END %]
+	    [%- END %]
 
-	    [% IF external_id.scoap3 %]
+	    [%- IF external_id.scoap3 %]
 	    <p><img src="/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="http://repo.scoap3.org/record/[% external_id.scoap3 %]">[% external_id.scoap3 %]</a></p>
-	    [% END %]
-
-	    [% IF external_id.ahf %]
-	    <p>AHF: <a href="http://www.oldenbourg.de/verlag/ahf/hbo.php?F=titel&amp;T=HB&amp;ID=[% external_id.ahf %]">[% external_id.ahf %]</a></p>
-	    [% END %]
-
-	    [% IF external_id.opac %]
-	    <p><img src="/images/icon_ub.png" class="img-thumbnail" alt=""><a href="http://katalogplus.ub.uni-bielefeld.de/title/[% external_id.opac %]">[% h.loc("frontdoor.catalogue") %]</a></p>
-	    [% END %]
-
-	    [% IF external_id.phillister %]
-	    <p><img src="/images/icon_uni.png" class="img-thumbnail" alt="">PhilLister: <a href="http://phillister.ub.uni-bielefeld.de/publication/[% external_id.phillister %]">[% external_id.phillister %]</a></p>
-	    [% END %]
-
-          [% END %]
-
-        [% END %]
+	    [%- END %]
+	  [%- END %]
+    [%- END %]
 
 
         <!-- Supplements -->
@@ -425,22 +403,13 @@
 
         <!-- Search title in -->
         <h3>[% h.loc("frontdoor.search_this") %]</h3>
-
         <p>
           <a href="http://scholar.google.com/scholar?q=allintitle%3A[% title | uri %]"><img src="/images/icon_gs.png" alt="" class="img-thumbnail">Google Scholar</a><br>
-          [% IF publication_identifier.isbn %]
+          [%- IF publication_identifier.isbn %]
           <a href="http://de.wikipedia.org/wiki/Spezial:ISBN-Suche/[% publication_identifier.isbn.0 %]"><img src="/images/icon_wikipedia.png" alt="" class="img-thumbnail">[% h.loc("frontdoor.isbn_search") %]</a><br>
-          [% END %]
-          [% IF localUser && !external_id.opac %]
-            [% SWITCH type %]
-            [% CASE ['book', 'book_chapter', 'dissertation', 'book_editor', 'working_paper', 'conference_abstract', 'conference_editor', 'journal_article' ] %]
-              <a href="http://katalogplus.ub.uni-bielefeld.de/cgi-bin/new_search.cgi?kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=[% IF type == 'book_chapter' %][% publication %][% ELSE %][% title | uri %][% END %]&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;bestand=[% IF type == 'journal_article' OR type == 'conference_abstract' %]ext[% ELSE %]lok[% END %]&amp;sprache=ENG&amp;art=f&amp;fsubmit=1&amp;vr=1&amp;pagesize=10"><img src="/images/icon_ub.png" alt="" class="img-thumbnail">[% h.loc("frontdoor.catalogue") %]</a>
-            [% END %]
-          [% END %]
+          [%- END %]
         </p>
-
       </div>
-
     </div><!-- row tabs and right info menu -->
 
     [% END %]<!-- _id -->
