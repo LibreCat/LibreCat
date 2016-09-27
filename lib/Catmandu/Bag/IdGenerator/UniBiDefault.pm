@@ -5,15 +5,25 @@ use Moo;
 
 with 'Catmandu::Bag::IdGenerator';
 
-sub generate {
-    my ($self, $bag) = @_;
+has id_store => (is => 'lazy');
 
-    $bag->store->transaction(sub {
-        my $rec = $bag->get_or_add('1', {latest => '0'});
-        my $id = ++$rec->{latest};
-        $bag->add($rec);
-        $id;
-    });
+sub _build_id_store {
+    Catmandu->store('default');
 }
+
+sub generate {
+    my ($self) = @_;
+
+    my $id = undef;
+
+    $self->id_store->transaction(sub {
+        my $rec = $self->id_store->bag->get_or_add('1', {latest => '0'});
+        $id = ++$rec->{latest};
+        $self->id_store->bag->add($rec);
+    });
+
+    "$id";
+}
+
 
 1;

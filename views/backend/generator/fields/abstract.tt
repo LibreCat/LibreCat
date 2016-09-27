@@ -15,10 +15,10 @@
         <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
           <div class="input-group-addon">[% h.loc("forms.${type}.field.abstract.label2") %]</div>
           <select name="abstract.0.lang" id="id_abstract_language_0" class="sticky form-control">
+          <option value="" selected="selected">--- [% h.loc("forms.button.select") %] ---</option>
           [% FOREACH lang IN language_preselect %]
-          <option value="[% lang %]" [% IF lang == "eng" %]selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
+          <option value="[% lang %]">[% h.loc("forms.language.${lang}") %]</option>
           [% END %]
-          <option value="2436687"></option>
           [% FOREACH lang IN language_list.sort %]
           <option value="[% lang %]">[% h.loc("forms.language.${lang}") %]</option>
           [% END %]
@@ -41,10 +41,10 @@
           <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
             <div class="input-group-addon">[% h.loc("forms.${type}.field.abstract.label2") %]</div>
             <select name="abstract.[% loop.index %].lang" id="id_abstract_language_[% loop.index %]" class="sticky form-control">
+            <option value="">--- [% h.loc("forms.button.select") %] ---</option>
             [% FOREACH lang IN language_preselect %]
             <option value="[% lang %]" [% IF ab.lang == lang %]selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
             [% END %]
-            <option value="2436687"></option>
             [% FOREACH lang IN language_list.sort %]
             <option value="[% lang %]" [% IF ab.lang == lang %]selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
             [% END %]
@@ -68,10 +68,10 @@
         <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
           <div class="input-group-addon">[% h.loc("forms.${type}.field.abstract.label2") %]</div>
           <select name="abstract.0.lang" id="id_abstract_language_0" class="sticky form-control">
+          <option value="" [% IF !language %]selected="selected" [% END %]>--- [% h.loc("forms.button.select") %] ---</option>
           [% FOREACH lang IN language_preselect %]
           <option value="[% lang %]" [% IF abstract.0.lang == lang %]selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
           [% END %]
-          <option value="2436687"></option>
           [% FOREACH lang IN language_list.sort %]
           <option value="[% lang %]" [% IF abstract.0.lang == lang %]selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
           [% END %]

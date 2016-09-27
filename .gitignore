@@ -1,5 +1,4 @@
 !Build/
-*.json
 *.log
 *.pid
 *.swp
@@ -23,11 +22,15 @@ layers.yml
 config/catmandu.local.yml
 cover_db/
 cpanfile.snapshot
+data/temp_uploads/**
+data/file_uploads/**
 inc/
 local
 local/
 logs/
+node_modules/
 nytprof.out
+package.json
 pm_to_blib
 profiledata/
 public/RePEc/*

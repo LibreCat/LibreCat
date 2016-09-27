@@ -22,13 +22,12 @@ has authorization_url => (
     default => sub { '/' },
     required => 1
 );
-has id => (
-    is => 'ro',
-    lazy => 1,
-    required => 1,
-    default => sub{ __PACKAGE__ }
-);
+has id => ( lazy => 1 );
 requires 'to_app';
+
+sub _build_id {
+    ref($_[0]);
+}
 
 #check if $env->{psgix.session} is stored Plack::Session->session
 sub _check_plack_session {

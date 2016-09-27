@@ -155,14 +155,12 @@ publication:
       properties:
          iso:
              type: string
-             #enum: ["ara","chi","cze","dan","dut","eng","fin","fre","ger","gre","heb","hrv","hun","ice","ita","jpn","kor","lat","lav","mon","nor","other","pol","por","rum","rus","spa","srp","swe","tur"]
 
     abstract: &abstract
       type: object
       properties:
         lang:
           type: string
-          #enum: ["ara","chi","cze","dan","dut","eng","fin","fre","ger","gre","heb","hrv","hun","ice","ita","jpn","kor","lat","lav","mon","nor","other","pol","por","rum","rus","spa","srp","swe","tur"]
           description: "Abstract used language"
         text:
           type: string
@@ -516,6 +514,16 @@ publication:
       items:
         type: string
       description: "Alternative title"
+    data_reuse_license:
+       type: string
+       description: "Data re-use license"
+    open_data_release:
+      oneOf:
+        - type: string
+          minLength: 1
+        - type: integer
+          minimum: 0
+      description: "Flag agree with the copyright and license"
     #required when type = 'journalArticle'
     publication:
       type: string
@@ -828,6 +836,13 @@ publication:
         - type: string
         - type: integer
       description: "Universal Resource Name"
+    accept:
+      oneOf:
+          - type: string
+            minLength: 1
+          - type: integer
+            minimum: 0
+      description: "Flag agree with the copyright and license"
     cc_license:
       enum: ["cc_0","cc_by","cc_by_sa"]
       description: "Files copyright"
@@ -917,7 +932,7 @@ publication:
       description: "Citation"
 
   # A author|editor is required..can this be expressed in JSONSchema?
-  required: ["_id","type","title","year"]
+  required: ["_id","type","title","year","status"]
   additionalProperties: true
 
 #used in LibreCat::Validator::Researcher

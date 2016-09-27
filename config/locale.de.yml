@@ -89,6 +89,7 @@ tabs:
   policy: "Leitlinien"
   login: "Wie logge ich mich ein?"
 hits:
+  id: "PUB-ID"
   author: "Autorin / Autor"
   authors: "Autorinnen / Autoren"
   publication: "Publikation"
@@ -493,6 +494,11 @@ forms:
         info:
           text: "Fragen zur Policy / Lizenz?"
           contact: "Support Publikationsdienste, Tel.: 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
+        open_data_release:
+          label: "Open Data Release - Declaration"
+          disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
+          accept_text: "I have read and agree with the information above about releasing data under the selected license."
+          alert: "You need to accept the Open Data Release Statement because you have attached files to this record."
         cc_license:
           label: "Creative Commons Lizenzen"
           select_text: "Falls Ihr hochgeladenes Dokument unter einer Creative Commons Lizenz steht, k&ouml;nnen Sie diese hier ausw&auml;hlen:<br>"
@@ -1269,7 +1275,7 @@ forms:
       publication_date:
         label: "Ver&ouml;ffentlichungsdatum"
         label_short: "Ver&ouml;ff.datum"
-        placeholder: "JJJJ-MM-TT" 
+        placeholder: "JJJJ-MM-TT"
       publication:
         label: "Zeitschriftentitel"
         placeholder: "z.B. Nature Genetics"
@@ -1357,6 +1363,8 @@ forms:
             description: "Beschreibung"
       license:
         heading: "Copyright und Lizenzen"
+        pub_license:
+            label: "Copyright Disclaimer"
         data_reuse_license:
           label: "Data Re-Use License"
           select_license: "W&auml;hlen Sie eine Lizenz aus unter der Ihre Daten verf&uuml;gbar sein sollen:<br>"
