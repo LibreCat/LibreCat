@@ -155,14 +155,12 @@ publication:
       properties:
          iso:
              type: string
-             #enum: ["ara","chi","cze","dan","dut","eng","fin","fre","ger","gre","heb","hrv","hun","ice","ita","jpn","kor","lat","lav","mon","nor","other","pol","por","rum","rus","spa","srp","swe","tur"]
 
     abstract: &abstract
       type: object
       properties:
         lang:
           type: string
-          #enum: ["ara","chi","cze","dan","dut","eng","fin","fre","ger","gre","heb","hrv","hun","ice","ita","jpn","kor","lat","lav","mon","nor","other","pol","por","rum","rus","spa","srp","swe","tur"]
           description: "Abstract used language"
         text:
           type: string
