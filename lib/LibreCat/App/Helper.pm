@@ -429,11 +429,6 @@ sub get_metrics {
     my ($self, $bag, $id) = @_;
     return {} unless $bag and $id;
 
-    if ($bag eq 'oa_stats') {
-        return Catmandu->store('metrics')->bag($bag)
-            ->select("identifier", "oai:pub.uni-bielefeld.de:$id")->to_array;
-    }
-
     return Catmandu->store('metrics')->bag($bag)->get($id);
 }
 

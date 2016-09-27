@@ -10,18 +10,9 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-	<div class="col-md-4 col-sm-5">
-	  <p>&copy;[% USE date %][% date.format(date.now, '%Y') %] <a href="https://librecat.org">LibreCat</a></p>
-	  <ul class="list-inline">
-	    <li><a href="http://www.openaire.eu/"><img src="/images/logo_openaire_val.png" alt="[% h.loc("footer.openaire_alt") %]" title="[% h.loc("footer.openaire_title") %]" /></a></li>
-	    <li><a href="http://www.openarchives.org/Register/BrowseSites"><img src="/images/logo_oai.gif" alt="[% h.loc("footer.openarchives_alt") %] " title="[% h.loc("footer.openarchives_title") %]" style="height:40px;"/></a></li>
-	    <li><a href="http://www.datacite.org/"><img src="/images/logo_datacite.png" alt="[% h.loc("footer.datacite_alt") %]" title="[% h.loc("footer.datacite_title") %]" style="height:40px;"/></a></li>
-	  </ul>
-	</div>
-	<div class="col-lg-offset-1 col-lg-4 col-sm-4">
-	  <ul class="list-inline">
-	    <li>[% h.loc("footer.powered_by") %]</li>
-	  </ul>
+	  <div class="col-md-4 col-sm-5">
+	    <p>&copy;[% USE date %][% date.format(date.now, '%Y') %] <a href="https://github.com/LibreCat/LibreCat">LibreCat</a></p>
+	  </div>
 	</div>
     </div>
     </div>

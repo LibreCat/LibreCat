@@ -94,31 +94,4 @@ sub bibtex {
     )->first;
 }
 
-# Bielefeld specific, bis=bielefeld information system!
-sub bis {
-    my ($self, $id) = @_;
-
-    my $furl = Furl->new(agent => "Chrome 35.1", timeout => 10);
-
-    my $base_url = 'http://ekvv.uni-bielefeld.de/ws/pevz';
-    my $url      = $base_url . "/PersonKerndaten.xml?persId=$id";
-    my $url2     = $base_url . "/PersonKontaktdaten.xml?persId=$id";
-
-    my $res = $furl->get($url);
-    my $p1  = Catmandu->importer(
-        'XML',
-        file => $res->content,
-        fix  => [join_path('fixes', 'pevz_mapping.fix')],
-    )->first;
-
-    $res = $furl->get($url2);
-    my $p2 = Catmandu->importer(
-        'XML',
-        file => $res->content,
-        fix  => [join_path('fixes', 'pevz_mapping.fix')],
-    )->first;
-
-    hash_merge($p1, $p2);
-}
-
 1;
