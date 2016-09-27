@@ -838,6 +838,13 @@ publication:
         - type: string
         - type: integer
       description: "Universal Resource Name"
+    accept:
+      oneOf:
+          - type: string
+            minLength: 1
+          - type: integer
+            minimum: 0
+      description: "Flag agree with the copyright and license"
     cc_license:
       enum: ["cc_0","cc_by","cc_by_sa"]
       description: "Files copyright"
