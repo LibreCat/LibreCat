@@ -1,11 +1,9 @@
 $icon-font-path: '/fonts/';
 
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-@import "bootstrap-select";
+/*@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";*/
+@import "bielestrap";
 @import "bootstrap-theme";
-@import "bootstrapAwards";
+@import "bootstrap-select";
 @import "font-awesome";
-@import "jquery.ui.datepicker";
-@import "ltIE10";
 @import "mypub";
 
