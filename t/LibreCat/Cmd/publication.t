@@ -69,9 +69,12 @@ require_ok $pkg;
     ok ! $result->error , 'ok threw no exception';
 
     my $output = $result->stdout;
+
     ok $output , 'got an output';
 
-    my $importer = Catmandu->importer('YAML', file => \$output);
+    utf8::decode($output);
+
+    my $importer = Catmandu->importer('YAML', file => \$output );
 
     my $record = $importer->first;
 
@@ -89,7 +92,16 @@ require_ok $pkg;
     like $output , qr/^purged 999999999/ , 'purged 999999999';
 }
 
-done_testing 16;
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['publication','get','999999999']);
+
+    ok $result->error , 'ok no exception';
+
+    my $output = $result->stdout;
+    ok length($output) == 0 , 'got no result';
+}
+
+done_testing 18;
 
 sub count_publication {
     my $str = shift;
