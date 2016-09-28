@@ -11,6 +11,7 @@ on 'test' => sub {
     requires 'IO::File';
     requires 'File::Path';
     requires 'Test::Code::TidyAll', '0.20';
+    requires 'App::Cmd::Tester';
 };
 
 requires 'Business::ISBN', 0;
@@ -66,7 +67,6 @@ requires 'Starman';
 
 # others
 requires 'all';
-requires 'App::Cmd::Tester';
 requires 'Business::ISBN10';
 requires 'Business::ISBN13';
 requires 'App::bmkpasswd', '2.010001';

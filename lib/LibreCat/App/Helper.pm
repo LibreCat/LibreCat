@@ -543,6 +543,20 @@ sub delete_record {
     return $saved;
 }
 
+sub purge_record {
+    my ($self, $bag, $id) = @_;
+
+    if ($bag eq 'publication') {
+        my $rec = $self->publication->delete($id);
+    }
+
+    my $bagname = "backup_$bag";
+    $self->$bagname->delete($id);
+    $self->$bag->commit;
+
+    return 1;
+}
+
 sub default_facets {
     return {
         author      => {terms => {field => 'author.id',        size => 20,}},

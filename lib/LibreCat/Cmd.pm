@@ -27,7 +27,9 @@ sub execute {
         exit;
     }
 
-    $self->command($opts, $args);
+    my $ret = $self->command($opts, $args) // 2;
+
+    exit($ret) if $ret != 0;
 }
 
 # these should be implemented by the LibreCat::Cmd's
