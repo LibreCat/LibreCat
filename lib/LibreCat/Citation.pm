@@ -85,10 +85,11 @@ sub _request {
 
     if ($res->{_rc} eq '200') {
         $self->log->debug("200 OK for " . $uri->as_string());
-        my $cont = $res->{_content};
-        $cont =~ s/<div class="csl-left-margin">.*?<\/div>//g;
-        $cont =~ s/<div.*?>|<\/div>//g;
-        return $cont;
+        my $content = $res->{_content};
+        $content =~ s/<div class="csl-left-margin">.*?<\/div>//g;
+        $content =~ s/<div.*?>|<\/div>//g;
+        utf8::decode($content);
+        return $content;
     }
     else {
         $self->log->error("Error: " . $res->{_rc});
