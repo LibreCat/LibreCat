@@ -87,7 +87,7 @@ get '/livecitation' => sub {
     }
     else {
         utf8::decode($response);
-        template "websites/livecitation", {citation => $response};
+        template "api/livecitation", {citation => $response};
     }
 };
 
