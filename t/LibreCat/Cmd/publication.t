@@ -48,12 +48,12 @@ require_ok $pkg;
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['publication','add','t/invalid-publication.yml']);
+    my $result = test_app(qq|LibreCat::CLI| => ['publication','add','t/records/invalid-publication.yml']);
     ok $result->error , 'ok threw an exception';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['publication','add','t/valid-publication.yml']);
+    my $result = test_app(qq|LibreCat::CLI| => ['publication','add','t/records/valid-publication.yml']);
 
     ok ! $result->error , 'ok threw no exception';
 
