@@ -5,101 +5,88 @@
 <script type="text/javascript">
 [%- PROCESS frontdoor/javascriptShowHide.tt %]
 </script>
-
 [%- IF status != "public" AND _id %]
 <div id="preview">[% h.loc("frontdoor.preview") %]</div>
-[% END %]
+[%- END %]
+[%- mainFile = [] %]
+[%- relMat = [] %]
+[%- relPubl = [] %]
+[%- relResData = [] %]
+[%- confLetter = [] %]
+[%- relLink = [] %]
+[%- relLinkRd = [] %]
+[%- relLinkSw = [] %]
+[%- relFile = [] %]
+[%- IF external_id.pmid %]
+  [%- epmc_cit = h.get_metrics('epmc_citations',external_id.pmid) %]
+  [%- epmc_ref = h.get_metrics('epmc_references',external_id.pmid) %]
+  [%- ebi_data = h.get_metrics('epmc_dblinks',external_id.pmid) %]
+[%- END -%]
 
-[% mainFile = [] %]
-[% relMat = [] %]
-[% relPubl = [] %]
-[% relResData = [] %]
-[% confLetter = [] %]
-[% relLink = [] %]
-[% relLinkRd = [] %]
-[% relLinkSw = [] %]
-[% relFile = [] %]
-[% IF external_id.pmid %]
-  [% epmc_cit = h.get_metrics('epmc_citations',external_id.pmid) %]
-  [% epmc_ref = h.get_metrics('epmc_references',external_id.pmid) %]
-  [% ebi_data = h.get_metrics('epmc_dblinks',external_id.pmid) %]
-[% END %]
-
-[% FOREACH key IN related_material.keys %]
-  [% IF key == "record" %]
-    [% FOREACH rel_rec IN related_material.$key %]
-    [% IF rel_rec.relation == "is_cited_by" %]
-      [% relPubl.push(rel_rec) %]
-    [% ELSIF rel_rec.relation == "cites" %]
-      [% relResData.push(rel_rec) %]
-    [% ELSE %]
-      [% IF rel_rec.status == "public" %]
-      [% relMat.push(rel_rec) %]
-      [% END %]
-    [% END %]
-    [% END %]
-  [% ELSIF key == "link" %]
-    [% FOREACH linkentry IN related_material.$key %]
-      [% IF linkentry.relation == "research_data" %]
-        [% relLinkRd.push(linkentry) %]
-      [% ELSIF linkentry.relation == "software" %]
-        [% relLinkSw.push(linkentry) %]
-      [% ELSE %]
-        [% relLink.push(linkentry) %]
-      [% END %]
-    [% END %]
-  [% END %]
-[% END %]
-[% FOREACH fi IN file %]
-  [% SWITCH fi.relation %]
-    [% CASE "confirmation" %]
-    [% confLetter.push(fi) %]
-    [% CASE "main_file" %]
-    [% mainFile.push(fi) %]
-    [% CASE "hidden" %]
-
-    [% CASE %]
-    [% relFile.push(fi) %]
-  [% END %]
-[% END %]
-
-[% qp = request.params.hash %]
-[% style = style || qp.style || 'default' %]
+[%- FOREACH key IN related_material.keys %]
+  [%- IF key == "record" %]
+    [%- FOREACH rel_rec IN related_material.$key %]
+    [%- IF rel_rec.relation == "is_cited_by" %]
+      [%- relPubl.push(rel_rec) %]
+    [%- ELSIF rel_rec.relation == "cites" %]
+      [%- relResData.push(rel_rec) %]
+    [%- ELSE %]
+      [%- IF rel_rec.status == "public" %]
+      [%- relMat.push(rel_rec) %]
+      [%- END %]
+    [%- END %]
+    [%- END %]
+  [%- ELSIF key == "link" %]
+    [%- FOREACH linkentry IN related_material.$key %]
+      [%- IF linkentry.relation == "research_data" %]
+        [%- relLinkRd.push(linkentry) %]
+      [%- ELSIF linkentry.relation == "software" %]
+        [%- relLinkSw.push(linkentry) %]
+      [%- ELSE %]
+        [%- relLink.push(linkentry) %]
+      [%- END %]
+    [%- END %]
+  [%- END %]
+[%- END %]
+[%- FOREACH fi IN file %]
+  [%- SWITCH fi.relation %]
+    [%- CASE "confirmation" %]
+    [%- confLetter.push(fi) %]
+    [%- CASE "main_file" %]
+    [%- mainFile.push(fi) %]
+    [%- CASE "hidden" %]
+    [%- CASE %]
+    [%- relFile.push(fi) %]
+  [%- END %]
+[%- END %]
+[%- IF h.config.citation.engine == 'csl' AND citation %][% display_citation = 1 %][% END %]
+[%- qp = request.params.hash %]
+[%- style = style || qp.style || 'default' %]
 
 <div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/publication/[% _id %]"><!-- outer row-->
-
   <div class="col-md-11 col-sm-12"><!-- outer col -->
-
     <div class="page-header" id="banner">
-
       <ul class="breadcrumb">
         <li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>[% h.loc("frontdoor.crumb_back") %]</a></li>
         <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% h.loc("main_page.logout") %]</span></a>[% ELSE %]<a href="/login" title="[% h.loc("main_page.login") %]"><span class="glyphicon glyphicon-log-in fw"></span>[% h.loc("main_page.login") %]</a>[% END %]</li>
         [% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% h.loc("main_page.logged_in_as") %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
       </ul>
-
-      [% UNLESS _id %]
+      [%- UNLESS _id %]
         <h1>[% h.loc("frontdoor.no_record") %]</h1>
-      [% END %]
+      [%- STOP %]
+      [%- END %]
     </div>
-
     [% IF _id %]
-
     <div class="row margin-bottom1">
-
       <div class="col-xs-10 col-sm-8"><!-- begin left col -->
-
         <h1 class="cmark" itemprop="name">[% title  | html %]</h1>
-
-        [% IF citation %]
+        [%- IF display_citation %]
         <div class="row">
           <div class="col-md-12">
-          <!-- This citation is displayed in "[% style %]" style. -->
           <p>[% citation.$style %]</p>
           </div>
         </div>
-        [% END %]
-
+        [%- END %]
         <!-- fulltext -->
         [% FOREACH fi IN mainFile %]
           [% IF fi.file_name %]
@@ -130,27 +117,24 @@
             [% END %]
           [% END %]
         [% END %]
-
-        [% IF doi %]
+        [%- IF doi %]
         <div class="row">
           <div class="col-xs-2 text-muted">[% h.loc("forms.${type}.field.doi.label") %]</div>
           <div class="col-xs-10"><a itemprop="url" href="http://doi.org/[% doi %]" title="[% doi %]">[% doi | html %]</a></div>
         </div>
-        [% END %]
-
-        [% IF urn %]
+        [%- END %]
+        [%- IF urn %]
         <div class="row">
           <div class="col-xs-2 text-muted">[% h.loc("forms.${type}.field.urn.label") %]</div>
           <div class="col-xs-10"><a href="http://nbn-resolving.de/[% urn %]">[% urn | html %]</a></div>
         </div>
-        [% END %]
-
-        [% IF link.0 %]
+        [%- END %]
+        [%- IF link.0 %]
         <div class="row">
           <div class="col-xs-2 text-muted">URL</div>
           <div class="col-xs-10"><a itemprop="url" href="[% link.0 %]">[% link.0.substr(0,80) %][% IF link.0.length > 80%][...][% END %]</a></div>
         </div>
-        [% END %]
+        [%- END %]
 
         <div class="row">
           <div class="col-xs-12">
