@@ -47,7 +47,7 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
         #return redirect "$bag/$hits->first->{_id}", 301 if $altid;
         #$hits->{hits}->[0]->{bag} = $bag;
         $hits->{total} ? status 200 : status 404;
-        template "publication/record", $hits->first;
+        template "frontdoor/record", $hits->first;
     #}
 };
 
