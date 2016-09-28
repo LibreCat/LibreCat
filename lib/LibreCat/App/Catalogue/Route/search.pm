@@ -44,8 +44,6 @@ Performs search for admin.
         my $p = h->extract_params();
         $p->{facets} = h->default_facets();
 
-        # foda: Bielefeld specific!!
-        $p->{facets}->{foda} = {terms => {field => 'foda', size => 1}};
         push @{$p->{q}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
@@ -84,7 +82,6 @@ Performs search for similar titles, admin only
         }
 
         $p->{facets} = h->default_facets();
-        $p->{facets}->{foda} = {terms => {field => 'foda', size => 1}};
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');

@@ -1,0 +1,63 @@
+[% path = request.path %]
+[% qp = request.params.hash %]
+[% qp.delete('splat') %]
+
+[% PROCESS header.tt %]
+
+<!-- BEGIN person/index.tt -->
+
+<span id="language_id" style="display:none;">[% lang %]</span>
+
+<div class="row"><!-- outer border -->
+
+  <div class="col-md-11 col-sm-12"><!-- main content -->
+
+    <div id="banner">
+	<h1>
+	    [% lf.header.title %]
+	</h1>
+    </div>
+
+    <div class="ltIEten">
+      <h3>Please note that we no longer supports Internet Explorer versions 8 or 9 (or earlier).</h3>
+      <p>We recommend upgrading to the latest <a href="http://windows.microsoft.com/ie" target="_blank">Internet Explorer</a>, <a href="https://chrome.google.com" target="_blank">Google Chrome</a>, or <a href="https=//mozilla.org/firefox/" target="_blank">Firefox</a>.</p>
+    </div>
+
+    <div class="row margin-top1">
+      <div class="col-md-12">
+        <ul class="nav nav-tabs" id="indexTab">
+          <li><a href="/">[% lf.tabs.home %]</a></li>
+          <li><a href="/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.publications %]</a></li>
+          <li><a href="/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.data_publications %]</a></li>
+          <li><a href="/project[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.projects %]</a></li>
+          <li class="active"><a href="/person[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% lf.tabs.authors %]</a></li>
+          <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="[% lf.main_page.logout %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% lf.main_page.logout %]</span></a>[% ELSE %]<a href="/login" title="[% lf.main_page.login %]"><span class="glyphicon glyphicon-log-in fw"></span>[% lf.main_page.login %]</a>[% END %]</li>
+          [% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% lf.main_page.logged_in_as %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 tab-content">
+
+        <div class="tab-pane active" id="people">
+          <div class="row">
+            <div class="col-sm-8">
+              [% INCLUDE person/hits.tt %]
+            </div>
+            <div class="col-sm-4 col-md-3 col-md-offset-1 facets">
+              [% INCLUDE filters.tt %]
+            </div>
+          </div>
+        </div>
+
+      </div><!-- tab-content -->
+    </div>
+
+  </div><!-- main content left -->
+
+</div><!-- outer border -->
+
+<!-- END person/index.tt -->
+
+[% INCLUDE footer.tt %]

@@ -3,27 +3,18 @@ _prefix:
 
 # engine for citation generation
 # possible values are 'template' or 'csl'
-engine: template
+engine: csl
 
 template:
   template_path: 'views/citation.tt'
 
 csl:
-  url: 'http://::/CiteprocPhp/CiteProc.php' #absolute url
-  default_style: 'default'
+  url: 'http://localhost:8085'
+  default_style: apa
   styles:
-    - ama
+    - modern-language-association
+    - chicago-fullnote-bibliography
+    - american-medical-association
     - angewandte-chemie
     - apa
-    - apa_indent
-    - aps
-    - bio1
-    - chicago
-    - default
-    - dgps
-    - frontiers
-    - harvard1
     - ieee
-    - lncs
-    - mla
-    - wels

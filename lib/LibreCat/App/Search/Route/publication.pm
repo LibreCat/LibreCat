@@ -18,11 +18,12 @@ Splash page for :id.
 
 get qr{/(data|publication)/(\d{1,})/*} => sub {
     my ($bag, $id) = splat;
+
     my $p = h->extract_params();
     my $altid;
     push @{$p->{q}}, ("status=public", "id=$id");
     push @{$p->{q}},
-        ($bag eq 'data') ? "type=researchData" : "type<>researchData";
+        ($bag eq 'data') ? "type=research_data" : "type<>research_data";
 
     my $hits = h->search_publication($p);
 
@@ -30,26 +31,24 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
         $p->{q} = [];
         push @{$p->{q}}, ("status=public", "altid=$id");
         push @{$p->{q}},
-            ($bag eq 'data') ? "type=researchData" : "type<>researchData";
+            ($bag eq 'data') ? "type=research_data" : "type<>research_data";
         $hits = h->search_publication($p);
-        $altid = 1 if $hits->{total};
+        return redirect "$bag/$hits->first->{_id}", 301 if $hits->{total};
     }
 
-    $hits->{bag} = $bag;
+    #$hits->{bag} = $bag;
 
-    my $marked = session 'marked';
-    $marked ||= [];
-    $hits->{hits}->[0]->{marked} = @$marked;
+    #$hits->{hits}->[0]->{marked} = session 'marked' // [];
 
-    if ($p->{fmt} ne 'html') {
-        h->export_publication($hits, $p->{fmt});
-    }
-    else {
-        return redirect "$bag/$hits->{hits}->[0]->{_id}", 301 if $altid;
-        $hits->{hits}->[0]->{bag} = $bag;
+    #if ($p->{fmt} ne 'html') {
+    #    h->export_publication($hits, $p->{fmt});
+    #}
+    #else {
+        #return redirect "$bag/$hits->first->{_id}", 301 if $altid;
+        #$hits->{hits}->[0]->{bag} = $bag;
         $hits->{total} ? status 200 : status 404;
-        template "frontdoor/record", $hits->{hits}->[0];
-    }
+        template "frontdoor/record", $hits->first;
+    #}
 };
 
 =head2 GET /{data|publication}
@@ -67,37 +66,36 @@ get qr{/(data|publication)/*} => sub {
 
     ($bag eq 'data')
         ? push @{$p->{q}},
-        ("status=public", "(type=researchData OR type=dara)")
+        ("status=public", "type=research_data")
         : push @{$p->{q}},
-        ("status=public", "type<>researchData", "type<>dara");
+        ("status=public", "type<>research_data");
 
     my $hits = h->search_publication($p);
 
     $hits->{style}         = $sort_style->{style};
     $hits->{sort}          = $p->{sort};
     $hits->{user_settings} = $sort_style;
-    $hits->{bag}           = $bag;
+    #$hits->{bag}           = $bag;
 
-    if ($p->{fmt} ne 'html') {
-        h->export_publication($hits, $p->{fmt});
-    }
-    elsif ($p->{embed} or ($p->{ftyp} and $p->{ftyp} eq "iframe")) {
-        my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
-        $hits->{lang}  = $lang;
-        $hits->{embed} = 1;
-        template "iframe", $hits;
-    }
-    else {
-        my $template = "websites/index_publication";
-        if ($p->{ftyp} and $p->{ftyp} =~ /ajx|js|pln/) {
-            $template .= "_" . $p->{ftyp};
-            $template .= "_num" if ($p->{enum} and $p->{enum} eq "1");
-            $template .= "_numasc" if ($p->{enum} and $p->{enum} eq "2");
-            header("Content-Type" => "text/plain")
-                unless ($p->{ftyp} eq 'iframe' || $p->{ftyp} eq 'pln');
-        }
-        template $template, $hits;
-    }
+    #if ($p->{fmt} ne 'html') {
+    #    h->export_publication($hits, $p->{fmt});
+    #}
+    #elsif ($p->{embed} or ($p->{ftyp} and $p->{ftyp} eq "iframe")) {
+    #    my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
+    #    $hits->{lang}  = $lang;
+    #    $hits->{embed} = 1;
+    #    template "iframe", $hits;
+    #}
+    #else {
+        #my $template = 'publication/list';
+        #if ($p->{ftyp} and $p->{ftyp} =~ /js/) {
+        #$template .= "_" . $p->{ftyp};
+        #$template .= "_num" if ($p->{enum} and $p->{enum} eq "1");
+        #$template .= "_numasc" if ($p->{enum} and $p->{enum} eq "2");
+        #header("Content-Type" => "text/plain")
+        #}
+        template 'publication/list', $hits;
+    #}
 };
 
 =head2 GET /{data|publication}/embed
@@ -141,8 +139,8 @@ get qr{/embed/*} => sub {
     $hits->{bag}   = "publication";
     $hits->{embed} = 1;
     $hits->{ttyp}  = $p->{ttyp} if $p->{ttyp};
-    $hits->{style} = $sort_style->{style}
-        ;    #$p->{style} ? $p->{style} : h->config->{default_style};
+    $hits->{style} = $sort_style->{style};
+
     my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
     $hits->{lang} = $lang;
     template "iframe", $hits;

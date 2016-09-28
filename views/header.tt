@@ -4,68 +4,53 @@
 [% lf = h.config.locale.$lang -%]
 
 <!-- BEGIN header.tt -->
-
   <head>
     <title>
-      [% IF title %][% title | html %]
-      [% ELSIF request.path.match("publication") %]PUB &ndash; [% h.loc("tabs.publications") %]
-      [% ELSIF request.path.match("data") %][% h.loc("tabs.data_publications") %] ([% h.loc("header.title_long") %])
-      [% ELSIF request.path.match("person/") %][% h.loc("header.title_person") %] [% thisPerson.first_name %] [% thisPerson.last_name %]
-      [% ELSIF request.path.match("person") %][% h.loc("tabs.authors") %] ([% h.loc("header.title_long") %])
-      [% ELSIF request.path.match("about") %][% h.loc("tabs.about") %] ([% h.loc("header.title_long") %])
-      [% ELSIF request.path.match("faq") %][% h.loc("tabs.faq") %] ([% h.loc("header.title_long") %])
-      [% ELSIF request.path.match("contact") %][% h.loc("tabs.contact") %] ([% h.loc("header.title_long") %])
-      [% ELSIF request.path.match("policy") %][% h.loc("tabs.policy") %] ([% h.loc("header.title_long") %])
-      [% ELSIF request.path.match("pubtheses") %]PUB Theses ([% h.loc("header.title") %])
-      [% ELSE %][% h.loc("header.title_long") %]
-      [% END %]
+      [%- IF title %][% title | html %][% END %]
     </title>
-
     <link rel="icon" href="/images/icon_uni.png" type="image/png">
-    [% IF title AND !backend %]
+    [%- IF title AND !backend %]
       <!-- Google Scholar -->
-      [% IF title %]<meta name="citation_title" content="[% title | html %]">[% END %]
-      [% FOREACH author_entry IN author %]<meta name="citation_author" content="[% author_entry.full_name | html %]">
+      [%- IF title %]<meta name="citation_title" content="[% title | html %]">[% END %]
+      [%- FOREACH author_entry IN author %]<meta name="citation_author" content="[% author_entry.full_name | html %]">
       [% END -%]
-      [% IF year %]<meta name="citation_date" content="[% year | html %]">[% END %]
-      [% IF file %][% FOREACH fi IN file %][% IF fi.file_name %]
+      [%- IF year %]<meta name="citation_date" content="[% year | html %]">[% END %]
+      [%- IF file %][% FOREACH fi IN file %][% IF fi.file_name %]
       <meta name="citation_pdf_url" content="[% h.host %][% request.path %]/download/[% _id %]/[% fi.file_id %]">[% END %][% END %][% END %]
-      [% IF doi %]<meta name="citation_pdf_url" content="http://doi.org/[% doi | html %]">[% ELSIF link %]<meta name="citation_pdf_url" content="[% link.0.url | html %]">[% END %]
-      [% IF publication %]<meta name="citation_journal_title" content="[% publication | html %]" />[% END %]
-      [% IF volume %]<meta name="citation_volume" content="[% volume | html %]" />[% END %]
-      [% IF issue %]<meta name="citation_issue" content="[% issue | html %]" />[% END %]
-      [% IF pagesStart %]<meta name="citation_startpage" content="[% pagesStart | html %]" />[% END %]
-      [% IF pagesEnd %]<meta name="citation_lastpage" content="[% pagesEnd | html %]" />[% END %]
-      [% IF issn %]<meta name="citation_issn" content="[% issn.0 | html %]">[% END %]
-      [% IF isbn %]<meta name="citation_isbn" content="[% isbn.0 | html %]">[% END %]
+      [%- IF doi %]<meta name="citation_pdf_url" content="http://doi.org/[% doi | html %]">[% ELSIF link %]<meta name="citation_pdf_url" content="[% link.0.url | html %]">[% END %]
+      [%- IF publication %]<meta name="citation_journal_title" content="[% publication | html %]" />[% END %]
+      [%- IF volume %]<meta name="citation_volume" content="[% volume | html %]" />[% END %]
+      [%- IF issue %]<meta name="citation_issue" content="[% issue | html %]" />[% END %]
+      [%- IF publication_identifier.issn.0 %]<meta name="citation_issn" content="[% publication_identifier.issn.0 | html %]">[% END %]
+      [%- IF publication_identifier.isbn.0 %]<meta name="citation_isbn" content="[% publication_identifier.isbn.0 | html %]">[% END %]
       <!-- DC-Tags -->
       <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
       <meta name="DC.title" content="[% IF personPageTitle %][% personPageTitle | html %][% ELSE %][% title | html %][% END %]">
-      [% FOREACH author_entry IN author %]<meta name="DC.creator" content="[% author_entry.full_name %]">
-      [% END %]
-      [% IF year %]<meta name="DC.date" content="[% year | html %]">[% END %]
-      [% IF language %]<meta name="DC.language" content="[% language.0.iso | html %]">[% END %]
+      [%- FOREACH author_entry IN author %]<meta name="DC.creator" content="[% author_entry.full_name %]">
+      [% END -%]
+      [%- IF year %]<meta name="DC.date" content="[% year | html %]">[% END %]
+      [%- IF language %]<meta name="DC.language" content="[% language.0.iso | html %]">[% END %]
       <meta name="DC.identifier" content="[% h.host %][% request.path %]/[% _id %]">
-      [% IF abstract %][% FOREACH abstract_entry IN abstract %][% UNLESS loop.first %][% END %]<meta name="DC.description" content="[% abstract_entry.text | html %]">[% END %][% END %]
-      [% IF cc_license %]<meta name="DC.rights" scheme="DCTERMS.URI" content="http://creativecommons.org/[% SWITCH cc_license %][% CASE 'cc_by' %]licenses/by/4.0/[% CASE 'cc_by_sa' %]licenses/by-sa/4.0/[% CASE 'cc_0' %]publicdomain/zero/1.0/[% END %]">[% END %]
-      [% FOREACH rel_entry IN entry.host %][% IF rel_entry.issn %]<meta name="DC.source.ISSN" content="[% rel_entry.issn.0 | html %]">[% END %][% IF rel_entry.isbn %]<meta name="DC.source.ISBN" content="[% rel_entry.isbn.0 | html %]">[% END %][% END %]
-      [% lowtype = type.lower %]
+      [%- IF abstract %][% FOREACH abstract_entry IN abstract %][% UNLESS loop.first %][% END %]<meta name="DC.description" content="[% abstract_entry.text | html %]">[% END %][% END %]
+      [%- IF cc_license %]<meta name="DC.rights" scheme="DCTERMS.URI" content="http://creativecommons.org/[% SWITCH cc_license %][% CASE 'cc_by' %]licenses/by/4.0/[% CASE 'cc_by_sa' %]licenses/by-sa/4.0/[% CASE 'cc_0' %]publicdomain/zero/1.0/[% END %]">[% END %]
+      [%- FOREACH rel_entry IN entry.host %][% IF rel_entry.issn %]<meta name="DC.source.ISSN" content="[% rel_entry.issn.0 | html %]">[% END %][% IF rel_entry.isbn %]<meta name="DC.source.ISBN" content="[% rel_entry.isbn.0 | html %]">[% END %][% END %]
+      [%- lowtype = type.lower %]
       <meta name="DC.type" content="[% h.get_list('gs_doc_type').$lowtype %]">
-      [% IF doi %]<link rel="DC.relation" href="http://doi.org/[% doi | html %]">[% END %]
-      [% IF urn %]<link rel="DC.relation" href="http://nbn-resolving.de/[% urn | html %]">[% END %]
-      [% IF issn %]<link rel="DC.relation" href="urn:ISSN:[% issn.0 | html %]">[% END %]
-      [% IF isbn %]<link rel="DC.relation" href="urn:ISBN:[% isbn.0 | html %]">[% END %]
-    [% END %]
+      [%- IF doi %]<link rel="DC.relation" href="http://doi.org/[% doi | html %]">[% END %]
+      [%- IF urn %]<link rel="DC.relation" href="http://nbn-resolving.de/[% urn | html %]">[% END %]
+      [%- IF publication_identifier.issn.0 %]<link rel="DC.relation" href="urn:ISSN:[% publication_identifier.issn.0 | html %]">[% END %]
+      [%- IF publication_identifier.isbn.0 %]<link rel="DC.relation" href="urn:ISBN:[% publication_identifier.isbn.0 | html %]">[% END %]
+    [%- END %]
     [% reqpath = request.path -%]
     [% personid = reqpath.search('person/(\d{1,})') -%]
     [% query = qp.q | replace('"', '&quot;') -%]
-    [% IF request.path.match("person/") %]
+    [%- IF request.path.match("person/") %]
       <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/daily', qp, q="person%2D$personid") %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (today)">
       <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/weekly', qp, q="person%2D$personid") %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last week)">
       <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/monthly', qp, q="person%2D$personid") %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last month)">
-    [% ELSIF request.path.match("text") %]
+    [%- ELSIF request.path.match("text") %]
       <link rel="alternate" type="application/rss+xml" href="[% h.newuri_for('/feed/monthly', qp, q="$query") %]" title="Publications last month">
-    [% END %]
+    [%- END %]
     [% UNLESS backend %]
     <meta name="robots" content="index,follow,noimageindex" />
     [% ELSE -%]
@@ -75,7 +60,6 @@
   </head>
 
   <body[% IF bag == 'home' %] ng-controller="angularSearch"[% END %] itemscope itemtype="http://schema.org/WebPage">
-
-  [% INCLUDE navbar.tt %]
+  [% INCLUDE topbar.tt %]
 
 <!-- END header.tt -->

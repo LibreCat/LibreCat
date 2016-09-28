@@ -16,6 +16,7 @@ on 'test' => sub {
 
 requires 'Business::ISBN', 0;
 requires 'Search::Elasticsearch', '==1.19';
+requires 'Module::Install', '1.16';
 
 # Catmandu
 requires 'Catmandu', '>=1.03';
@@ -48,6 +49,7 @@ requires 'Dancer::Session::PSGI';
 requires 'Template';
 requires 'Template::Plugin::Date';
 requires 'Template::Plugin::JSON';
+requires 'Template::Plugin::Gravatar';
 requires 'Furl';
 requires 'HTML::Entities';
 requires 'Syntax::Keyword::Junction';

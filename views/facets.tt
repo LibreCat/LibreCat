@@ -186,14 +186,6 @@
 [% END %]
 [% END %]
 
-[% IF session.role == "super_admin" AND backend %]
-<ul class="nav nav-tabs nav-stacked margin-top1 ul2">
-  <li>
-    <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="foda" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.foda.terms.0.count %] FoDa Records</a>
-  </li>
-</ul>
-[% END %]
-
 [% IF (facets.popular_science.terms.size || 0) > 0
    OR (facets.extern.terms.size || 0) > 0
    OR (facets.open_access.terms.size || 0) > 0

@@ -11,12 +11,14 @@
     [% END %]
   </div>
 
-  [% IF next_page or previous_page %]
   <div class="row">
-    [% INCLUDE pagination.tt %]
-  [% ELSE %]
-  <div class="row margin-top1">
-  [% END %]
+  <div class="col-md-12">
+    <ul class="pagination">
+    [%- FOREACH c IN h.alphabet %]
+    <li [% IF request.path.match("/person/$c")%]class="active"[% END %]><a href="/person/[% c %]">[% c %]</a></li>
+    [%- END %]
+    </ul>
+  </div>
   </div>
 
   [% IF error %]
