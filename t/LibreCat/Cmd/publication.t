@@ -54,6 +54,7 @@ require_ok $pkg;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['publication','add','t/valid-publication.yml']);
+
     ok ! $result->error , 'ok threw no exception';
 
     my $output = $result->stdout;
