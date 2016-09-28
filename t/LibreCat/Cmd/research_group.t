@@ -23,48 +23,48 @@ use Cpanel::JSON::XS;
 my $pkg;
 
 BEGIN {
-    $pkg = 'LibreCat::Cmd::publication';
+    $pkg = 'LibreCat::Cmd::research_group';
     use_ok $pkg;
 };
 
 require_ok $pkg;
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['publication']);
+    my $result = test_app(qq|LibreCat::CLI| => ['research_group']);
     ok $result->error , 'ok threw an exception';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['publication','list']);
+    my $result = test_app(qq|LibreCat::CLI| => ['research_group','list']);
 
     ok ! $result->error , 'ok threw no exception';
 
     my $output = $result->stdout;
     ok $output , 'got an output';
 
-    my $count = count_publication($output);
+    my $count = count_research_group($output);
 
-    ok $count > 0 , 'got more than one publication';
+    ok $count > 0 , 'got more than one research_group';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['publication','add','t/records/invalid-publication.yml']);
+    my $result = test_app(qq|LibreCat::CLI| => ['research_group','add','t/records/invalid-research_group.yml']);
     ok $result->error , 'ok threw an exception';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['publication','add','t/records/valid-publication.yml']);
+    my $result = test_app(qq|LibreCat::CLI| => ['research_group','add','t/records/valid-research_group.yml']);
 
     ok ! $result->error , 'ok threw no exception';
 
     my $output = $result->stdout;
     ok $output , 'got an output';
 
-    like $output , qr/^added 999999999/ , 'added 999999999';
+    like $output , qr/^added RG999000999/ , 'added RG999000999';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['publication','get','999999999']);
+    my $result = test_app(qq|LibreCat::CLI| => ['research_group','get','RG999000999']);
 
     ok ! $result->error , 'ok threw no exception';
 
@@ -78,22 +78,22 @@ require_ok $pkg;
 
     my $record = $importer->first;
 
-    is $record->{_id} , 999999999 , 'got really a 999999999 record';
+    is $record->{_id} , 'RG999000999' , 'got really a RG999000999 record';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['publication','purge','999999999']);
+    my $result = test_app(qq|LibreCat::CLI| => ['research_group','delete','RG999000999']);
 
     ok ! $result->error , 'ok threw no exception';
 
     my $output = $result->stdout;
     ok $output , 'got an output';
 
-    like $output , qr/^purged 999999999/ , 'purged 999999999';
+    like $output , qr/^deleted RG999000999/ , 'deleted RG999000999';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['publication','get','999999999']);
+    my $result = test_app(qq|LibreCat::CLI| => ['research_group','get','RG999000999']);
 
     ok $result->error , 'ok no exception';
 
@@ -103,7 +103,7 @@ require_ok $pkg;
 
 done_testing 18;
 
-sub count_publication {
+sub count_research_group {
     my $str = shift;
     my @lines = grep {!/(^count:|.*\sdeleted\s.*)/ } split(/\n/,$str);
     int(@lines);

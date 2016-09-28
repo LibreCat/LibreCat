@@ -117,7 +117,7 @@ sub create {
     }
     else {
         my $csl_json = export_to_string($data, 'JSON',
-            {line_delimited => 1, fix => "$load_path/fixes/to_csl.fix"});
+            {line_delimited => 1, fix => "fixes/to_csl.fix"});
         foreach my $s (@{$self->styles}) {
             my $locale = ($s eq 'dgps') ? 'de' : $self->locale;
             $cite->{$s} = $self->_request({

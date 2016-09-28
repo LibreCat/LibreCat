@@ -112,16 +112,17 @@ sub _add {
     my $records = $importer->select(sub {
         my $rec = $_[0];
 
-        $rec->{_id} //= $helper->new_record('project');
-
         if ($validator->is_valid($rec)) {
+            $rec->{_id} //= $helper->new_record('project');
             $helper->store_record('project', $rec);
             print "added $rec->{_id}\n";
             return 1;
         }
-
-        print STDERR join("\n", "ERROR: not a valid project", @{$validator->last_errors}), "\n";
-        return 0;
+        else {
+            print STDERR join("\n", "ERROR: not a valid project", @{$validator->last_errors}), "\n";
+            $ret = 2;
+            return 0;
+        }
     });
 
     my $index = $helper->project;
