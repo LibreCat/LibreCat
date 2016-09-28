@@ -125,9 +125,11 @@ sub _add {
             print "added $rec->{_id}\n";
             return 1;
         }
-
-        print STDERR join("\n", "ERROR: not a valid researcher", @{$validator->last_errors}), "\n";
-        return 0;
+        else {
+            print STDERR join("\n", "ERROR: not a valid researcher", @{$validator->last_errors}), "\n";
+            $ret = 2;
+            return 0;
+        }
     });
 
     my $index = $helper->researcher;
