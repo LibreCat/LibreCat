@@ -22,7 +22,7 @@ has authorization_url => (
     default => sub { '/' },
     required => 1
 );
-has id => ( lazy => 1 );
+has id => ( is => 'ro', lazy => 1 );
 requires 'to_app';
 
 sub _build_id {
