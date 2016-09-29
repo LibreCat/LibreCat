@@ -72,8 +72,6 @@ require_ok $pkg;
 
     ok $output , 'got an output';
 
-    diag $output;
-
     my $importer = Catmandu->importer('YAML', file => \$output );
 
     my $record = $importer->first;
