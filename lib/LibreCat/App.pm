@@ -164,7 +164,7 @@ Throws 'page not found'.
 
 any qr{.*} => sub {
     status 'not_found';
-    template 'websites/404', {path => request->{referer}};
+    #template 'websites/404', {path => request->{referer}};
 };
 
 1;
