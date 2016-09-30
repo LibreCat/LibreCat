@@ -1,0 +1,18 @@
+---
+_id: '999111999'
+_version: 16
+account_status: active
+account_type: external
+date_created: 2016-09-23T05:30:16Z
+date_updated: 2016-09-23T05:30:16Z
+department:
+- _id: '9996'
+edit_mode: expert
+email: test.user@physics.com
+first_name: Test
+full_name: User, Test
+last_name: User
+login: test
+password: $2a$08$.KUz2FWVorFXU0LegJcozeHMEmemitkURaMmH9w4.8SmuxZDVdOoe
+style: default
+...

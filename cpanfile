@@ -11,10 +11,12 @@ on 'test' => sub {
     requires 'IO::File';
     requires 'File::Path';
     requires 'Test::Code::TidyAll', '0.20';
+    requires 'App::Cmd::Tester';
 };
 
 requires 'Business::ISBN', 0;
 requires 'Search::Elasticsearch', '==1.19';
+requires 'Module::Install', '1.16';
 
 # Catmandu
 requires 'Catmandu', '>=1.03';
@@ -47,6 +49,7 @@ requires 'Dancer::Session::PSGI';
 requires 'Template';
 requires 'Template::Plugin::Date';
 requires 'Template::Plugin::JSON';
+requires 'Template::Plugin::Gravatar';
 requires 'Furl';
 requires 'HTML::Entities';
 requires 'Syntax::Keyword::Junction';
@@ -66,7 +69,6 @@ requires 'Starman';
 
 # others
 requires 'all';
-requires 'App::Cmd::Tester';
 requires 'Business::ISBN10';
 requires 'Business::ISBN13';
 requires 'App::bmkpasswd', '2.010001';

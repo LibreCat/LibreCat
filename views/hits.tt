@@ -84,20 +84,21 @@
     [% IF style == 'default' %]
 	<a href="[% h.host %]/[% IF backend %]librecat/record/edit[% ELSE %][% bag %][% END %]/[% entry._id %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title | html %]</strong></a><br>
     [% END %]
-    [% IF backend AND ((!entry.locked AND !entry.type.match("^bi")) OR session.role == "super_admin") %]
+    [%- IF backend AND ((!entry.locked AND !entry.type.match("^bi")) OR session.role == "super_admin") %]
       <a href="/librecat/record/edit/[% entry._id %]" onclick="window.top.location='/librecat/record/edit/[% entry._id %]'" class="citation-block-link"></a>
-    [% ELSIF backend AND entry.status != "public" %]
+    [%- ELSIF backend AND entry.status != "public" %]
       <a href="/librecat/record/preview/[% entry._id %]" onclick="window.top.location='/librecat/record/preview/[% entry._id %]'" class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="[% h.loc("main_page.links.view_details") %]"></a>
-    [% END %]
-    [% IF entry.citation.$style %]
-      [% entry.citation.$style %][% IF style != "apa_indent" %]<br>[% END %]
-    [% END %]
+    [%- END %]
+    [%- IF h.config.citation.engine == 'csl' AND entry.citation.$style %]
+      [% entry.citation.$style %]
+    [%- ELSE %][% PROCESS citation.tt entry=entry %]
+    [%- END %]
     </div>
     [% INCLUDE links.tt %]
-    [% IF backend %]
+    [%- IF backend %]
     [% INCLUDE backend/rec_details.tt %]
-    [% IF session.role == 'super_admin' %][% IF entry.message %]<p class="bg-success"><em>[% entry.message | html %]</em></p>[% END %][% END %]
-    [% END %]
+    [%- IF session.role == 'super_admin' %][% IF entry.message %]<p class="bg-success"><em>[% entry.message | html %]</em></p>[% END %][% END %]
+    [%- END %]
   </div>
 </div>
 
@@ -107,19 +108,18 @@
 [% END %]
 [% IF request.path == "/marked" %]</ul>[% END %]
 
-[% IF error %]
+[%- IF error %]
 <div class="row">
   <div class="col-md-10">
     <div  class="alert alert-danger"><strong>[% error %]</strong></div>
   </div>
 </div>
-[% END %]
-
-[% IF next_page or previous_page %]
+[%- END %]
+[%- IF next_page or previous_page %]
 <div class="row">
   [% INCLUDE pagination.tt %]
 </div>
-[% END %]
+[%- END %]
 
 <script>
   $('.citation-block-link').tooltip();

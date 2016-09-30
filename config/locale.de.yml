@@ -28,7 +28,6 @@ header:
     delegate: "Delegate"
     reviewer: "Reviewer"
     project_reviewer: "Projekt Reviewer"
-    award_admin: "Award Admin"
     data_manager: "Data Manager"
     super_admin: "Admin"
   admin_menu:
@@ -38,7 +37,6 @@ header:
     manage_projects: "Projekte verwalten"
     manage_research_groups: "Forschungsgruppen verwalten"
     manage_journals: "Journale verwalten"
-    manage_awards: "Preise verwalten"
     manage_department: "Einrichtungen verwalten"
   lang: "English"
   lang_short: "EN"
@@ -157,13 +155,11 @@ main_page:
     return: "Zur&uuml;ckstellen"
     search_similar: "Nach &auml;hnlichen Titeln suchen"
 person_profile:
-  id_not_found: "PEVZ-ID nicht gefunden."
+  id_not_found: "ID nicht gefunden."
   former_researcher: "Ehemaliger Bielefelder Forscher"
   view: ""
   view_in: "Eintrag im"
-  directory_of_staff: "PEVZ-ID"
-  other_profile: "SFB882-GK Profil"
-  other_profile_url: "http://www.sfb882.uni-bielefeld.de/en/staff/"
+  local_id: "ID"
   no_author_ids: "Keine Autoren-IDs gesetzt."
   person_id_title: "Diese IDs werden direkt nach dem Speichern auf Ihrer Personenseite sichtbar sein."
 project:

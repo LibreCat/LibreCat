@@ -17,6 +17,7 @@ librecat publication [options] export
 librecat publication [options] get <id>
 librecat publication [options] add <FILE>
 librecat publication [options] delete <id>
+librecat publication [options] purge <id>
 librecat publication [options] valid <FILE>
 librecat publication [options] files [ID]|[<FILE>]
 
@@ -31,7 +32,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|export|get|add|delete|valid|files/;
+    my $commands = qr/list|export|get|add|delete|purge|valid|files/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -57,6 +58,9 @@ sub command {
     }
     elsif ($cmd eq 'delete') {
         return $self->_delete(@$args);
+    }
+    elsif ($cmd eq 'purge') {
+        return $self->_purge(@$args);
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
@@ -121,16 +125,17 @@ sub _add {
     my $records = $importer->select(sub {
         my $rec = $_[0];
 
-        $rec->{_id} //= $helper->new_record('publication');
-
         if ($validator->is_valid($rec)) {
+            $rec->{_id} //= $helper->new_record('publication');
             $helper->store_record('publication', $rec);
             print "added $rec->{_id}\n";
             return 1;
         }
-
-        print STDERR join("\n", "ERROR: not a valid publication", @{$validator->last_errors}), "\n";
-        return 0;
+        else {
+            print STDERR join("\n", $rec->{_id}, "ERROR: not a valid publication", @{$validator->last_errors}), "\n";
+            $ret = 2;
+            return 0;
+        }
     });
 
     my $index = $helper->publication;
@@ -153,6 +158,23 @@ sub _delete {
     }
     else {
         print STDERR "ERROR: delete $id failed";
+        return 2;
+    }
+}
+
+sub _purge {
+    my ($self, $id) = @_;
+
+    croak "usage: $0 purge <id>" unless defined($id);
+
+    my $result = LibreCat::App::Helper::Helpers->new->purge_record('publication', $id);
+
+    if ($result) {
+        print "purged $id\n";
+        return 0;
+    }
+    else {
+        print STDERR "ERROR: purge $id failed";
         return 2;
     }
 }
@@ -355,6 +377,7 @@ LibreCat::Cmd::publication - manage librecat publications
 	librecat publication get <id>
 	librecat publication add <FILE>
 	librecat publication delete <id>
+    librecat publication purge <id>
     librecat publication valid <FILE>
     librecat publication files [ID]|[<FILE>]
 

@@ -24,6 +24,10 @@ sub config {
     state $config = hash_merge(Catmandu->config, Dancer::config);
 }
 
+sub alphabet {
+    return ['A'..'Z'];
+}
+
 sub bag {
     state $bag = Catmandu->store->bag;
 }
@@ -48,10 +52,6 @@ sub backup_project {
     state $bag = Catmandu->store('backup')->bag('project');
 }
 
-sub backup_award {
-    state $bag = Catmandu->store('backup')->bag('award');
-}
-
 sub backup_researcher {
     state $bag = Catmandu->store('backup')->bag('researcher');
 }
@@ -70,10 +70,6 @@ sub publication {
 
 sub project {
     state $bag = Catmandu->store('search')->bag('project');
-}
-
-sub award {
-    state $bag = Catmandu->store('search')->bag('award');
 }
 
 sub researcher {
@@ -373,10 +369,6 @@ sub get_person {
     return {error => "something went wrong"} if !$hits->{hits};
 }
 
-sub get_award {
-    $_[0]->award->get($_[1]);
-}
-
 sub get_project {
     $_[0]->project->get($_[1]);
 }
@@ -423,14 +415,12 @@ sub get_statistics {
     );
     my $disshits
         = $self->search_publication({q => ["status=public", "type=bi*"]});
-    my $people = $self->search_researcher({q => ["publcount>0"]});
 
     return {
         publications => $hits->{total},
         researchdata => $reshits->{total},
         oahits       => $oahits->{total},
         theseshits   => $disshits->{total},
-        pubpeople    => $people->{total},
     };
 
 }
@@ -438,11 +428,6 @@ sub get_statistics {
 sub get_metrics {
     my ($self, $bag, $id) = @_;
     return {} unless $bag and $id;
-
-    if ($bag eq 'oa_stats') {
-        return Catmandu->store('metrics')->bag($bag)
-            ->select("identifier", "oai:pub.uni-bielefeld.de:$id")->to_array;
-    }
 
     return Catmandu->store('metrics')->bag($bag)->get($id);
 }
@@ -541,6 +526,20 @@ sub delete_record {
     sleep 1;
 
     return $saved;
+}
+
+sub purge_record {
+    my ($self, $bag, $id) = @_;
+
+    if ($bag eq 'publication') {
+        my $rec = $self->publication->delete($id);
+    }
+
+    my $bagname = "backup_$bag";
+    $self->$bagname->delete($id);
+    $self->$bag->commit;
+
+    return 1;
 }
 
 sub default_facets {
@@ -721,17 +720,13 @@ sub search_researcher {
         sru_sortkeys => $p->{'sort'} || "fullname,,1",
     );
 
-    foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-        $hits->{$_} = $hits->$_;
-    }
-
-    if ($p->{get_person}) {
-        my $personlist;
-        foreach my $hit (@{$hits->{hits}}) {
-            $personlist->{$hit->{_id}} = $hit->{full_name};
-        }
-        return $personlist;
-    }
+    # if ($p->{get_person}) {
+    #     my $personlist;
+    #     foreach my $hit (@{$hits->{hits}}) {
+    #         $personlist->{$hit->{_id}} = $hit->{full_name};
+    #     }
+    #     return $personlist;
+    # }
 
     return $hits;
 }
@@ -878,19 +873,6 @@ sub search_research_group {
         return $hits;
     }
 
-}
-
-sub search_award {
-    my ($self, $p) = @_;
-
-    my $hits = award->search(
-        cql_query => $p->{q},
-        limit     => $p->{limit} ||= config->{default_page_size},
-        facets    => $p->{facets} ||= {},
-        start     => $p->{start} ||= 0,
-    );
-
-    return $hits;
 }
 
 sub get_file_store {

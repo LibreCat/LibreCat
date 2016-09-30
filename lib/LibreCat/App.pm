@@ -92,13 +92,11 @@ post '/login' => sub {
         my $super_admin  = "super_admin"  if $user->{super_admin};
         my $reviewer     = "reviewer"     if $user->{reviewer};
         my $project_reviewer = "project_reviewer" if $user->{project_reviewer};
-        my $award_admin  = "award_admin"  if $user->{award_admin};
         my $data_manager = "data_manager" if $user->{data_manager};
         my $delegate     = "delegate"     if $user->{delegate};
         session role => $super_admin
             || $reviewer
             || $project_reviewer
-            || $award_admin
             || $data_manager
             || $delegate
             || "user";
@@ -166,7 +164,7 @@ Throws 'page not found'.
 
 any qr{.*} => sub {
     status 'not_found';
-    template 'websites/404', {path => request->{referer}};
+    #template 'websites/404', {path => request->{referer}};
 };
 
 1;

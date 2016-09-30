@@ -2,7 +2,7 @@ package LibreCat::Cmd::research_group;
 
 use Catmandu::Sane;
 use LibreCat::App::Helper;
-use LibreCat::Validator::ResearchGroup;
+use LibreCat::Validator::Research_group;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -84,7 +84,7 @@ sub _export {
     my $h = LibreCat::App::Helper::Helpers->new;
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many($h->award);
+    $exporter->add_many($h->research_group);
     $exporter->commit;
 
     return 0;
@@ -109,46 +109,31 @@ sub _add {
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
     my $ret = 0;
-
-    Catmandu->importer('YAML', file => $file)->each(
-        sub {
-            my $item = $_[0];
-            $ret += $self->_adder($item);
-        }
-    );
-
-    return $ret == 0;
-}
-
-sub _adder {
-    my ($self, $data) = @_;
-    my $is_new = 0;
-
+    my $importer = Catmandu->importer('YAML', file => $file);
     my $helper = LibreCat::App::Helper::Helpers->new;
+    my $validator = LibreCat::Validator::Research_group->new;
 
-    unless (exists $data->{_id} && defined $data->{_id}) {
-        $is_new = 1;
-        $data->{_id} = $helper->new_record('research_group');
-    }
+    my $records = $importer->select(sub {
+        my $rec = $_[0];
 
-    my $validator = LibreCat::Validator::ResearchGroup->new;
-
-    if ($validator->is_valid($data)) {
-        my $result = $helper->update_record('research_group', $data);
-        if ($result) {
-            print "added " . $data->{_id} . "\n";
-            return 0;
+        if ($validator->is_valid($rec)) {
+            $rec->{_id} //= $helper->new_record('research_group');
+            $helper->store_record('research_group', $rec);
+            print "added $rec->{_id}\n";
+            return 1;
         }
         else {
-            print "ERROR: add " . $data->{_id} . " failed\n";
-            return 2;
+            print STDERR join("\n", "ERROR: not a valid research_group", @{$validator->last_errors}), "\n";
+            $ret = 2;
+            return 0;
         }
-    }
-    else {
-        print STDERR "ERROR: not a valid research_group\n";
-        print STDERR join("\n", @{$validator->last_errors}), "\n";
-        return 2;
-    }
+    });
+
+    my $index = $helper->research_group;
+    $index->add_many($records);
+    $index->commit;
+
+    $ret;
 }
 
 sub _delete {
@@ -174,7 +159,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::ResearchGroup->new;
+    my $validator = LibreCat::Validator::Research_group->new;
 
     my $ret = 0;
 

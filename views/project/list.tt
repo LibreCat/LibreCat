@@ -1,0 +1,64 @@
+[%- path = request.path %]
+[%- qp = request.params.hash %]
+[%- qp.delete('splat') %]
+[%- PROCESS header.tt %]
+
+<!-- BEGIN project/list.tt -->
+<span id="language_id" style="display:none;">[% lang %]</span>
+<div class="row"><!-- outer border -->
+  <div class="col-md-11 col-sm-12"><!-- main content -->
+    <div id="banner">
+	<h1>
+	    [% h.loc("header.title") %]
+	</h1>
+    </div>
+
+    <div class="ltIEten">
+      <h3>Please note that PUB no longer supports Internet Explorer versions 8 or 9 (or earlier).</h3>
+      <p>We recommend upgrading to the latest <a href="http://windows.microsoft.com/ie" target="_blank">Internet Explorer</a>, <a href="https://chrome.google.com" target="_blank">Google Chrome</a>, or <a href="https=//mozilla.org/firefox/" target="_blank">Firefox</a>.</p>
+    </div>
+
+    <div class="row margin-top1">
+      <div class="col-md-12">
+        <ul class="nav nav-tabs" id="indexTab">
+          <li><a href="/">[% h.loc("tabs.home") %]</a></li>
+          <li><a href="/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.publications") %]</a></li>
+          <li><a href="/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.data_publications") %]</a></li>
+          <li><a href="/person[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.authors") %]</a></li>
+          <li class="active"><a href="/project[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.projects") %]</a></li>
+          <!-- <li><a href="/department[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.departments") %]</a></li> -->
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 tab-content">
+
+        <div class="tab-pane active" id="publ">
+          <div class="row">
+            <div class="col-sm-8 col-md-8">
+              [%- FOREACH project IN hits %]
+              <a href="/project/[% project._id %]">[% project.name %][% IF project.acronym %] ([% project.acronym %])[% END %]</a><br />
+                <p class="text-muted">
+                [%- IF project.start_date AND project.end_date %]
+                  [% project.start_date %] &ndash; [% project.end_date %]<br />
+                [%- END %]
+
+                [%- IF project.description %]
+                  [% project.description.length() > 200 ? project.description.substr(0, 200) _ '...' : project.description %]
+                [%- ELSE %]
+                  [% project.call_identifier %]
+                [%- END %]
+                </p>
+            [%- END %]
+            </div>
+          </div>
+        </div>
+      </div><!-- tab-content -->
+    </div>
+  </div><!-- main content left -->
+</div><!-- outer border -->
+
+<!-- END project/list.tt -->
+
+[% INCLUDE footer.tt %]

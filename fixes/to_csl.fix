@@ -124,4 +124,5 @@ end
 move_field(_id, res.recordid)
 
 retain_field(res)
-move_field(res, .)
+move_field(res,items.ITEM-1)
+add_field(items.ITEM-1.id,'ITEM-1')

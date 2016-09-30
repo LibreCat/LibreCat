@@ -1,0 +1,103 @@
+[%- stats = h.get_statistics %]
+[%- qp = request.params.hash %]
+[%- qp.delete('splat') %]
+[%- PROCESS header.tt %]
+<!-- BEGIN index.tt -->
+<span id="language_id" style="display:none;">[% lang %]</span>
+<div class="row"><!-- outer border -->
+
+  <div class="col-md-11 col-sm-12"><!-- main content -->
+
+    <div id="banner">
+	<h1>
+	    [% h.loc("header.title") %]
+	</h1>
+    </div>
+
+    <div class="ltIEten">
+      <h3>Please note that we no longer support Internet Explorer versions 8 or 9 (or earlier).</h3>
+      <p>We recommend upgrading to the latest <a href="http://windows.microsoft.com/ie" target="_blank">Internet Explorer</a>, <a href="https://chrome.google.com" target="_blank">Google Chrome</a>, or <a href="https=//mozilla.org/firefox/" target="_blank">Firefox</a>.</p>
+    </div>
+
+    <div class="row margin-top1">
+      <div class="col-md-12">
+        <ul class="nav nav-tabs" id="indexTab">
+          <li class="active"><a href="/">[% h.loc("tabs.home") %]</a></li>
+          <li><a href="/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.publications") %]</a></li>
+          <li><a href="/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.data_publications") %]</a></li>
+          <li><a href="/person[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.authors") %]</a></li>
+          <li><a href="/project[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.projects") %]</a></li>
+          <!-- <li><a href="/department[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.departments") %]</a></li> -->
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 tab-content">
+
+        <div class="tab-pane[% IF !bag || bag == 'home' %] active[% END %]" id="home">
+        <div class="row"><!-- begin outer row -->
+
+          <div class="col-sm-9"><!-- begin left col -->
+
+            <div class="row">
+              <div class="col-md-12">
+          <div class="row">
+          <form action="/publication" method="get">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+              <div class="input-group">
+                <input type="text" name="cql_query" id="q_id" ng-model="yourQuery" ng-init="yourQuery='[% qp.cql_query %]'" value="[% qp.q %]" class="form-control" placeholder="[% h.loc("home.search_placeholder") %]">
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-default">[% h.loc("facets.go_button") %]</button>
+                </span>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-5 col-sm-6 hidden-xs">
+              <div class="btn-group">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  [% h.loc("home.fields") %] <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li ng-repeat="field in fields"><a href="" class="ngadd" ng-click="addField(field.value)">{{field.text}}</a></li>
+                  </ul>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    [% h.loc("home.operators") %] <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li ng-repeat="operator in operators"><a href="" class="ngadd" ng-click="addOperator(operator.value)">{{operator.text}}</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </form>
+          </div>
+              </div>
+            </div>
+
+            <div class="row margin-top2">
+              <div class="col-md-12">
+              <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.publications %]</span> <a href="/publication">[% h.loc("home.stats.publications") %]</a></p>
+              <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researchdata %]</span> <a href="/data">[% h.loc("home.stats.data_publications") %]</a></p>
+              <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.oahits %]</span> <a href="/publication?q=fulltext=1">[% h.loc("home.stats.oa_publications") %]</a></p>
+              <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.theseshits %]</span> <a href="/publication?q=type=bi*">[% h.loc("home.stats.theses") %]</a></p>
+              </div>
+            </div>
+
+          </div><!-- end left col -->
+
+        </div><!-- end outer row -->
+        </div><!-- end tab-pane -->
+
+      </div><!-- tab-content -->
+    </div>
+
+  </div><!-- main content left -->
+
+</div><!-- outer border -->
+
+<!-- END websites/index_publication.tt -->
+
+[% INCLUDE footer.tt %]

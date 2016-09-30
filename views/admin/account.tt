@@ -33,30 +33,15 @@
       </div>
     </form>
 
-    <form role="form" action="/librecat/admin/account/import" method="GET" class="margin-top1">
-      <div class="row">
-      <div class="col-md-5">
-	<label for="id_id"><span class="glyphicon glyphicon-upload"></span> Import by PEVZ-ID</label>
-	<div class="input-group">
-	  <input type="text" class="form-control" name="id" id="id_id" placeholder="12345" value="[% qp.id %]" required>
-	  <span class="input-group-btn">
-	    <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-upload"></span> </i>Import</button>
-	  </span>
-	</div><!-- /input-group -->
-      </div>
-      </div>
-    </form>
-
-    [% IF error %]
+    [%- IF error %]
     <p class="text-danger">[% error %] <a href="/librecat/admin/account/edit/[% qp.id %]"><span class="glyphicon glyphicon-pencil fw"></span>Edit</a></p>
-    [% END %]
+    [%- END %]
 
     <div class="row col-md-12 margin-top1 margin-bottom2">
       <a href="/librecat/admin/account/new" class="btn btn-primary"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new account</a>
     </div>
 
-    [% IF hits %]
-
+    [%- IF hits %]
     <div class="row">
       <div class="col-md-12">
 	<h3>[% total ? total : "0" %] Results</h3>
@@ -68,23 +53,22 @@
     </div>
 
     <dl class="hitlist">
-    [% FOREACH p IN hits %]
+    [%- FOREACH p IN hits %]
 	<dt>
 	<a href="/librecat/admin/account/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% p.full_name %]</a>
 	<span [% IF p.account_status == 'active' %]class="label label-success"[% ELSE %]class="label label-danger"[% END %]>
-	[% p.account_status || 'inactive' %]</span> | <span class="text-muted">BIS-ID: <a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% p._id %]">[% p._id %]</a></span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="http://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: </span><span data-id="[% p._id %]" class="num_publ"></span><br />
+	[% p.account_status || 'inactive' %]</span> | <span class="text-muted">ID: <a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% p._id %]">[% p._id %]</a></span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="http://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: </span><span data-id="[% p._id %]" class="num_publ"></span><br />
 	</dt>
 	<dd>
 	<span class="text-muted">[% FOREACH dep IN p.department %][% IF dep._id %][% h.get_department(dep._id).display %][% END %][% UNLESS loop.last %] | [% END %][% END %]</span>
 	</dd>
-    [% END %]
+    [%- END %]
     </dl>
 
     <div class="row">
       [% INCLUDE pagination.tt %]
     </div>
-
-    [% END %]
+    [%- END %]
 
   </div><!-- main content (left) -->
 
