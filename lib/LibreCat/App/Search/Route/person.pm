@@ -15,23 +15,18 @@ use LibreCat::App::Helper;
 List persons alphabetically
 
 =cut
+
 get qr{/person/([a-z,A-Z])} => sub {
     my ($c) = splat;
 
-    my $hits = h->search_researcher({
-        q => ["lastname=". lc $c ."*"],
-        start => 0,
-        limit => 1000,
-    });
+    my $hits = h->search_researcher(
+        {q => ["lastname=" . lc $c . "*"], start => 0, limit => 1000,});
 
     my $result;
     @{$hits->{hits}} = map {
         my $rec = $_;
-        my $pub = h->search_publication({
-            q => ["person=$rec->{_id}"],
-            start => 0,
-            limit => 1,
-        });
+        my $pub = h->search_publication(
+            {q => ["person=$rec->{_id}"], start => 0, limit => 1,});
         ($pub->{total} > 0) ? $rec : undef;
     } @{$hits->{hits}};
 
@@ -52,9 +47,12 @@ Returns a person's profile page, including publications,
 research data and author IDs.
 
 =cut
-get qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+)*/*} => sub {
+
+get
+    qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+)*/*}
+    => sub {
     my ($id, $modus) = splat;
-    my $p = h->extract_params();
+    my $p      = h->extract_params();
     my @orig_q = @{$p->{q}};
 
     push @{$p->{q}}, ("person=$id", "status=public");
@@ -78,6 +76,7 @@ get qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+
         $hits = h->search_researcher({q => ["alias=$id"]});
         if (!$hits->{total}) {
             status '404';
+
             #template 'websites/404', {path => request->path};
         }
         else {
@@ -89,8 +88,7 @@ get qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+
     # search for research hits (only to see if present and to display tab)
     my $researchhits;
     @{$p->{q}} = @orig_q;
-    push @{$p->{q}},
-        ("type=research_data", "person=$id", "status=public");
+    push @{$p->{q}}, ("type=research_data", "person=$id", "status=public");
     $p->{limit} = 1;
 
     $hits->{researchhits} = h->search_publication($p);
@@ -106,6 +104,6 @@ get qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+
 
     template 'home', $hits;
 
-};
+    };
 
 1;

@@ -7,12 +7,12 @@ use Moo;
 
 with 'Catmandu::Exporter';
 
-has style => (is => 'ro', builder => 'default_style');
+has style    => (is => 'ro', builder => 'default_style');
 has explinks => (is => 'ro', builder => 'has_explinks');
-has numbered => (is => 'ro', lazy => 1, builder => '_build_numbered');
+has numbered => (is => 'ro', lazy    => 1, builder => '_build_numbered');
 
-sub default_style { 'ama' }
-sub exp_links { '' }
+sub default_style {'ama'}
+sub exp_links     {''}
 
 sub _build_numbered {
     my ($self) = @_;
@@ -43,7 +43,8 @@ sub _add_cite {
 sub _cite {
     my ($self, $pub) = @_;
     if (my $cite = $pub->{citation}{$self->style}) {
-    	# remove tabs, newlines
+
+        # remove tabs, newlines
         #$pub->{citation}{$self->style} =~ s/[\t\r\n]+//go;
         #return $self->_renumber($cite) if $self->numbered;
         return $pub;

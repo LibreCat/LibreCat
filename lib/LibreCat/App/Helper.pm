@@ -25,7 +25,7 @@ sub config {
 }
 
 sub alphabet {
-    return ['A'..'Z'];
+    return ['A' .. 'Z'];
 }
 
 sub bag {
@@ -297,7 +297,7 @@ sub get_sort_style {
 
 sub now {
     my $time = $_[1] // time;
-    my $now  = strftime($_[0]->config->{time_format}, gmtime($time));
+    my $now = strftime($_[0]->config->{time_format}, gmtime($time));
     return $now;
 }
 
@@ -361,9 +361,10 @@ sub get_publication {
 
 sub get_person {
     my $hits;
-    if ( $_[1] ) {
+    if ($_[1]) {
         $hits = $_[0]->search_researcher({q => ["id=$_[1]"]});
-        $hits = $_[0]->search_researcher({q => ["login=$_[1]"]}) if !$hits->{total};
+        $hits = $_[0]->search_researcher({q => ["login=$_[1]"]})
+            if !$hits->{total};
     }
     return $hits->{hits}->[0] if $hits->{hits};
     return {error => "something went wrong"} if !$hits->{hits};
@@ -447,20 +448,20 @@ sub update_record {
         $self->log->debug(Dancer::to_json($rec));
     }
 
-    my $validator_pkg
-        = Catmandu::Util::require_package(ucfirst($bag), 'LibreCat::Validator');
+    my $validator_pkg = Catmandu::Util::require_package(ucfirst($bag),
+        'LibreCat::Validator');
 
     if ($validator_pkg) {
         my @white_list = $validator_pkg->new->white_list;
         for my $key (keys %$rec) {
-            delete $rec->{$key} unless grep(/^$key$/,@white_list);
+            delete $rec->{$key} unless grep(/^$key$/, @white_list);
         }
     }
 
     $rec = $self->store_record($bag, $rec);
     $self->index_record($bag, $rec);
 
-    sleep 1; # bad hack!
+    sleep 1;    # bad hack!
 
     $rec;
 }
@@ -484,7 +485,8 @@ sub store_record {
 
     # memoize fixes
     state $fixes = {};
-    my $fix = $fixes->{$bag} //= Catmandu::Fix->new(fixes => [join_path('fixes', "update_$bag.fix")]);
+    my $fix = $fixes->{$bag} //= Catmandu::Fix->new(
+        fixes => [join_path('fixes', "update_$bag.fix")]);
     $fix->fix($rec);
 
     my $bagname = "backup_$bag";
@@ -513,7 +515,8 @@ sub delete_record {
             if ($rec->{oai_deleted} or $rec->{status} eq 'public');
         require LibreCat::App::Catalogue::Controller::File;
         require LibreCat::App::Catalogue::Controller::Material;
-        LibreCat::App::Catalogue::Controller::Material::update_related_material($del);
+        LibreCat::App::Catalogue::Controller::Material::update_related_material(
+            $del);
         LibreCat::App::Catalogue::Controller::File::handle_file($del);
         delete $del->{related_material};
     }
@@ -616,6 +619,7 @@ sub search_publication {
     }
 
     my $hits;
+
     #$cql =~ tr/äöüß/aous/;
 
     try {

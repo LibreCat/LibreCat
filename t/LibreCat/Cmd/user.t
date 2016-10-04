@@ -25,48 +25,50 @@ my $pkg;
 BEGIN {
     $pkg = 'LibreCat::Cmd::user';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['user']);
-    ok $result->error , 'ok threw an exception';
+    ok $result->error, 'ok threw an exception';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['user','list']);
+    my $result = test_app(qq|LibreCat::CLI| => ['user', 'list']);
 
-    ok ! $result->error , 'ok threw no exception';
+    ok !$result->error, 'ok threw no exception';
 
     my $output = $result->stdout;
     ok $output , 'got an output';
 
     my $count = count_user($output);
 
-    ok $count > 0 , 'got more than one user';
+    ok $count > 0, 'got more than one user';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['user','add','t/records/invalid-user.yml']);
-    ok $result->error , 'ok threw an exception';
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['user', 'add', 't/records/invalid-user.yml']);
+    ok $result->error, 'ok threw an exception';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['user','add','t/records/valid-user.yml']);
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['user', 'add', 't/records/valid-user.yml']);
 
-    ok ! $result->error , 'ok threw no exception';
+    ok !$result->error, 'ok threw no exception';
 
     my $output = $result->stdout;
     ok $output , 'got an output';
 
-    like $output , qr/^added 999111999/ , 'added 999111999';
+    like $output , qr/^added 999111999/, 'added 999111999';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['user','get','999111999']);
+    my $result = test_app(qq|LibreCat::CLI| => ['user', 'get', '999111999']);
 
-    ok ! $result->error , 'ok threw no exception';
+    ok !$result->error, 'ok threw no exception';
 
     my $output = $result->stdout;
 
@@ -74,37 +76,38 @@ require_ok $pkg;
 
     utf8::decode($output);
 
-    my $importer = Catmandu->importer('YAML', file => \$output );
+    my $importer = Catmandu->importer('YAML', file => \$output);
 
     my $record = $importer->first;
 
-    is $record->{_id} , '999111999' , 'got really a 999111999 record';
+    is $record->{_id}, '999111999', 'got really a 999111999 record';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['user','delete','999111999']);
+    my $result
+        = test_app(qq|LibreCat::CLI| => ['user', 'delete', '999111999']);
 
-    ok ! $result->error , 'ok threw no exception';
+    ok !$result->error, 'ok threw no exception';
 
     my $output = $result->stdout;
     ok $output , 'got an output';
 
-    like $output , qr/^deleted 999111999/ , 'deleted 999111999';
+    like $output , qr/^deleted 999111999/, 'deleted 999111999';
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['user','get','999111999']);
+    my $result = test_app(qq|LibreCat::CLI| => ['user', 'get', '999111999']);
 
-    ok $result->error , 'ok no exception';
+    ok $result->error, 'ok no exception';
 
     my $output = $result->stdout;
-    ok length($output) == 0 , 'got no result';
+    ok length($output) == 0, 'got no result';
 }
 
 done_testing 18;
 
 sub count_user {
     my $str = shift;
-    my @lines = grep {!/(^count:|.*\sdeleted\s.*)/ } split(/\n/,$str);
+    my @lines = grep {!/(^count:|.*\sdeleted\s.*)/} split(/\n/, $str);
     int(@lines);
 }

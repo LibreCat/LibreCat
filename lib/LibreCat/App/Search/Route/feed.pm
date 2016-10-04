@@ -48,7 +48,7 @@ sub feed {
         }
     );
 
-    my $hits = h->search_publication({ q => $query });
+    my $hits = h->search_publication({q => $query});
 
     $hits->each(
         sub {
@@ -73,9 +73,9 @@ get '/feed' => sub {
 };
 
 get '/feed/:period' => sub {
-    my $param = h->extract_params;
+    my $param  = h->extract_params;
     my $period = param('period');
-    return feed($param->{q},$period);
+    return feed($param->{q}, $period);
 };
 
 1;

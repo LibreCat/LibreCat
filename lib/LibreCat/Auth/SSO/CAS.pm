@@ -11,22 +11,16 @@ use namespace::clean;
 
 with 'LibreCat::Auth::SSO';
 
-has cas_url => (
-    is => 'ro',
-    isa => sub { check_string($_[0]); },
-    required => 1
-);
-has _cas => (
-    is => 'ro',
-    lazy => 1,
-    builder => '_build_cas'
-);
+has cas_url => (is => 'ro', isa => sub {check_string($_[0]);}, required => 1);
+has _cas => (is => 'ro', lazy => 1, builder => '_build_cas');
+
 sub _build_cas {
     my $self = $_[0];
+
     #TODO
-    local $ENV{SSL_VERIFY_NONE} = 1;
+    local $ENV{SSL_VERIFY_NONE}              = 1;
     local $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
-    Authen::CAS::Client->new( $self->cas_url() );
+    Authen::CAS::Client->new($self->cas_url());
 }
 
 sub to_app {
@@ -36,51 +30,59 @@ sub to_app {
         my $env = $_[0];
 
         my $request = Plack::Request->new($env);
-        my $session = Plack::Session->new( $env );
-        my $params = $request->query_parameters();
+        my $session = Plack::Session->new($env);
+        my $params  = $request->query_parameters();
 
         my $auth_sso = $self->get_auth_sso($session);
 
         #already got here before
-        if ( is_hash_ref($auth_sso) ){
+        if (is_hash_ref($auth_sso)) {
 
-            return [302,[Location => $self->authorization_url],[]];
+            return [302, [Location => $self->authorization_url], []];
 
         }
 
         #ticket?
-        my $ticket  = $params->get('ticket');
+        my $ticket = $params->get('ticket');
 
-        my $service = uri_for($env,$request->script_name);
+        my $service = uri_for($env, $request->script_name);
 
-        if( is_string($ticket) ){
+        if (is_string($ticket)) {
 
             my $cas = $self->_cas();
 
-            my $r = $cas->service_validate( $service, $ticket );
+            my $r = $cas->service_validate($service, $ticket);
 
-            if ( $r->is_success ) {
+            if ($r->is_success) {
 
                 my $doc = $r->doc();
                 $doc = $doc->toString();
 
-                $self->set_auth_sso($session,{ package => __PACKAGE__, package_id => $self->id, response => $doc });
+                $self->set_auth_sso(
+                    $session,
+                    {
+                        package    => __PACKAGE__,
+                        package_id => $self->id,
+                        response   => $doc
+                    }
+                );
 
-                return [302,[Location => $self->authorization_url],[]];
+                return [302, [Location => $self->authorization_url], []];
 
             }
 
         }
 
         #no ticket or ticket validation failed
-        my $login_url = $self->_cas()->login_url( $service )->as_string;
+        my $login_url = $self->_cas()->login_url($service)->as_string;
 
-        [302,[ Location => $login_url ],[]];
+        [302, [Location => $login_url], []];
 
     };
 }
 
 1;
+
 =pod
 
 =head1 NAME

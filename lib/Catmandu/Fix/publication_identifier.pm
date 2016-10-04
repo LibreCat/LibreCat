@@ -7,10 +7,12 @@ sub fix {
     my ($self, $data) = @_;
 
     if ($data->{publication_identifier}
-        and ref $data->{publication_identifier} eq "ARRAY") {
+        and ref $data->{publication_identifier} eq "ARRAY")
+    {
         my $publid_hash;
         foreach my $publid (@{$data->{publication_identifier}}) {
-            $publid->{type} = 'unknown' unless $publid->{type} && length $publid->{type};
+            $publid->{type} = 'unknown'
+                unless $publid->{type} && length $publid->{type};
             $publid_hash->{$publid->{type}} = []
                 if !$publid_hash->{$publid->{type}};
             push @{$publid_hash->{$publid->{type}}}, $publid->{value};

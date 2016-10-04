@@ -16,14 +16,15 @@ sub generate {
 
     my $id = undef;
 
-    $self->id_store->transaction(sub {
-        my $rec = $self->id_store->bag->get_or_add('1', {latest => '0'});
-        $id = ++$rec->{latest};
-        $self->id_store->bag->add($rec);
-    });
+    $self->id_store->transaction(
+        sub {
+            my $rec = $self->id_store->bag->get_or_add('1', {latest => '0'});
+            $id = ++$rec->{latest};
+            $self->id_store->bag->add($rec);
+        }
+    );
 
     "$id";
 }
-
 
 1;

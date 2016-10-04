@@ -3,7 +3,7 @@ BEGIN {
     use Path::Tiny;
     use LibreCat::Layers;
     LibreCat::Layers->new->load;
-};
+}
 
 use strict;
 use warnings;
