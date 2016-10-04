@@ -12,6 +12,7 @@ on 'test' => sub {
     requires 'File::Path';
     requires 'Test::Code::TidyAll', '0.20';
     requires 'App::Cmd::Tester';
+    requires 'Devel::Cover';
 };
 
 requires 'Business::ISBN', 0;

@@ -295,10 +295,10 @@ Prints the frontdoor for every record.
         $hits->{style} = h->config->{default_fd_style} || "default";
         $hits->{marked} = 0;
 
-        template 'frontdoor/record.tt', $hits;
+        template 'publication/record.tt', $hits;
     };
 
-=head2 GET /internal_view/:id/:dumper
+=head2 GET /internal_view/:id
 
 Prints internal view, optionally as data dumper.
 
