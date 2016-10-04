@@ -76,6 +76,7 @@ requires 'App::bmkpasswd', '2.010001';
 requires 'Clone';
 requires 'DateTime';
 requires 'DBD::mysql';
+requires 'DBD::SQLite';
 requires 'Crypt::Digest::MD5';
 requires 'Crypt::SSLeay';
 requires 'File::Basename';
