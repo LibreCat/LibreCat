@@ -17,7 +17,7 @@ use Catmandu;
 use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
-use App::Cmd::Tester::CaptureExternal;
+use App::Cmd::Tester;
 use Cpanel::JSON::XS;
 
 my $pkg;
@@ -72,8 +72,6 @@ require_ok $pkg;
 
     ok $output , 'got an output';
 
-    utf8::decode($output);
-
     my $importer = Catmandu->importer('YAML', file => \$output );
 
     my $record = $importer->first;
@@ -101,7 +99,7 @@ require_ok $pkg;
     ok length($output) == 0 , 'got no result';
 }
 
-done_testing 18;
+done_testing;
 
 sub count_project {
     my $str = shift;

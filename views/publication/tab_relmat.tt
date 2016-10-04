@@ -1,4 +1,4 @@
-<!-- BEGIN frontdoor/tab_relmat.tt -->
+<!-- BEGIN publication/tab_relmat.tt -->
 
 <div class="tab-pane" id="relMat">
   [% IF relMat.size %]
@@ -63,4 +63,4 @@
   [% END %] <!-- IF relLink -->
 </div><!-- tab-pane relMat -->
 
-<!-- END frontdoor/tab_relmat.tt -->
+<!-- END publication/tab_relmat.tt -->
