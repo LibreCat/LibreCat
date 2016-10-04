@@ -213,6 +213,6 @@ LibreCat::Cmd::user - manage librecat users
     librecat user add <FILE>
     librecat user get <id>
     librecat user delete <id>
-    librecat user valud <FILE>
+    librecat user valid <FILE>
 
 =cut

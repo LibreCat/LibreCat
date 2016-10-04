@@ -1,12 +1,10 @@
-my $layers;
-
 BEGIN {
     use Catmandu::Sane;
     use Path::Tiny;
     use lib path(__FILE__)->parent->parent->child('lib')->stringify;
     use LibreCat::Layers;
 
-    $layers = LibreCat::Layers->new->load;
+    LibreCat::Layers->new(layer_paths => [qw(t/layer)])->load;
 }
 
 use strict;
@@ -35,19 +33,6 @@ require_ok $pkg;
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['research_group', 'list']);
-
-    ok !$result->error, 'ok threw no exception';
-
-    my $output = $result->stdout;
-    ok $output , 'got an output';
-
-    my $count = count_research_group($output);
-
-    ok $count > 0, 'got more than one research_group';
-}
-
-{
     my $result
         = test_app(qq|LibreCat::CLI| =>
             ['research_group', 'add', 't/records/invalid-research_group.yml']
@@ -65,6 +50,19 @@ require_ok $pkg;
     ok $output , 'got an output';
 
     like $output , qr/^added RG999000999/, 'added RG999000999';
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['research_group', 'list']);
+
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    ok $output, 'got an output';
+
+    my $count = count_research_group($output);
+
+    ok $count > 0, 'got more than one research_group';
 }
 
 {

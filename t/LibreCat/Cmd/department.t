@@ -1,12 +1,10 @@
-my $layers;
-
 BEGIN {
     use Catmandu::Sane;
     use Path::Tiny;
     use lib path(__FILE__)->parent->parent->child('lib')->stringify;
     use LibreCat::Layers;
 
-    $layers = LibreCat::Layers->new->load;
+    LibreCat::Layers->new(layer_paths => [qw(t/layer)])->load;
 }
 
 use strict;

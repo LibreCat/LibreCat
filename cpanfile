@@ -20,11 +20,11 @@ requires 'Search::Elasticsearch', '==1.19';
 requires 'Module::Install', '1.16';
 
 # Catmandu
-requires 'Catmandu', '>=1.03';
+requires 'Catmandu', '>=1.0302';
 requires 'Catmandu::Exporter::Table';
 requires 'Catmandu::Store::ElasticSearch';
 requires 'Catmandu::Store::MongoDB', '>=0.0403';
-requires 'Catmandu::DBI';
+requires 'Catmandu::DBI', '>=0.0510';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::XML';
 requires 'Catmandu::ArXiv';
