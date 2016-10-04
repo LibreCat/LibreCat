@@ -9,7 +9,7 @@ BEGIN {
 }
 require_ok $pkg;
 
-my $store = $pkg->new(root => 't/test-store');
+my $store = $pkg->new(root => 't/tmp/file_store');
 
 ok $store , 'filestore->new';
 
@@ -19,7 +19,7 @@ note("add container");
 
     ok $container , 'filestore->add';
 
-    ok -r 't/test-store/000/000/001/235', 'found a new bag';
+    ok -r 't/tmp/file_store/000/000/001/235', 'found a new bag';
 }
 
 note("get container");
@@ -62,7 +62,7 @@ note("update container with files");
 
     ok $container->commit, 'container->commit';
 
-    ok -r 't/test-store/000/000/001/235/data/poem.txt',
+    ok -r 't/tmp/file_store/000/000/001/235/data/poem.txt',
         'found a poem.txt on disk';
 
     $file = $container->get("poem.txt");
@@ -85,9 +85,9 @@ note("update container with files");
 
     ok $container->commit, 'container->commit';
 
-    ok -r 't/test-store/000/000/001/235/data/poem.txt',
+    ok -r 't/tmp/file_store/000/000/001/235/data/poem.txt',
         'found a poem.txt on disk';
-    ok -r 't/test-store/000/000/001/235/data/poem2.txt',
+    ok -r 't/tmp/file_store/000/000/001/235/data/poem2.txt',
         'found a poem2.txt on disk';
 
     $file = $container->get("poem2.txt");
@@ -104,12 +104,12 @@ note("delete container");
 {
     ok $store->delete('1235'), 'filestore->delete';
 
-    ok !-r 't/test-store/000/000/001/235', 'deleted the bag';
+    ok !-r 't/tmp/file_store/000/000/001/235', 'deleted the bag';
 }
 
 note("open existing container");
 {
-    my $store = $pkg->new(root => 't/local-store/bagit');
+    my $store = $pkg->new(root => 't/file_store/bagit');
 
     ok $store , 'new';
 
@@ -132,7 +132,7 @@ note("open existing container");
 
 done_testing;
 
-remove_path("t/test-store");
+remove_path("t/tmp/file_store");
 
 sub remove_path {
     my $path = shift;
