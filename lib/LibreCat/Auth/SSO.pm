@@ -9,20 +9,20 @@ use namespace::clean;
 with 'Catmandu::Logger';
 
 has session_key => (
-    is => 'ro',
-    isa => sub { check_string($_[0]); },
-    lazy => 1,
-    default => sub { 'auth_sso' },
+    is       => 'ro',
+    isa      => sub {check_string($_[0]);},
+    lazy     => 1,
+    default  => sub {'auth_sso'},
     required => 1
 );
 has authorization_url => (
-    is => 'ro',
-    isa => sub { check_string($_[0]); },
-    lazy => 1,
-    default => sub { '/' },
+    is       => 'ro',
+    isa      => sub {check_string($_[0]);},
+    lazy     => 1,
+    default  => sub {'/'},
     required => 1
 );
-has id => ( is => 'ro', lazy => 1 );
+has id => (is => 'ro', lazy => 1);
 requires 'to_app';
 
 sub _build_id {
@@ -35,14 +35,15 @@ sub _check_plack_session {
 }
 
 sub get_auth_sso {
-    my ( $self, $session ) = @_;
-    _check_plack_session( $session );
-    $session->get( $self->session_key );
+    my ($self, $session) = @_;
+    _check_plack_session($session);
+    $session->get($self->session_key);
 }
+
 sub set_auth_sso {
-    my ( $self, $session, $value ) = @_;
-    _check_plack_session( $session );
-    $session->set( $self->session_key, $value );
+    my ($self, $session, $value) = @_;
+    _check_plack_session($session);
+    $session->set($self->session_key, $value);
 }
 
 1;

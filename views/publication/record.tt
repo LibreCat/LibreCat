@@ -1,9 +1,9 @@
 [%- PROCESS header.tt %]
-<!-- BEGIN frontdoor/record.tt -->
+<!-- BEGIN publication/record.tt -->
 
 <script src="/javascripts/frontend.js"></script>
 <script type="text/javascript">
-[%- PROCESS frontdoor/javascriptShowHide.tt %]
+[%- PROCESS publication/javascriptShowHide.tt %]
 </script>
 [%- IF status != "public" AND _id %]
 <div id="preview">[% h.loc("frontdoor.preview") %]</div>
@@ -66,11 +66,6 @@
 <div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/publication/[% _id %]"><!-- outer row-->
   <div class="col-md-11 col-sm-12"><!-- outer col -->
     <div class="page-header" id="banner">
-      <ul class="breadcrumb">
-        <li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>[% h.loc("frontdoor.crumb_back") %]</a></li>
-        <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% h.loc("main_page.logout") %]</span></a>[% ELSE %]<a href="/login" title="[% h.loc("main_page.login") %]"><span class="glyphicon glyphicon-log-in fw"></span>[% h.loc("main_page.login") %]</a>[% END %]</li>
-        [% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% h.loc("main_page.logged_in_as") %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
-      </ul>
       [%- UNLESS _id %]
         <h1>[% h.loc("frontdoor.no_record") %]</h1>
       [%- STOP %]
@@ -94,14 +89,14 @@
             <div class="row">
               <div class="col-xs-2 text-muted">[% h.loc("frontdoor.download") %]</div>
               <div class="col-xs-10">
-                  [% PROCESS frontdoor/oa_lock.tt %] <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
+                  [% PROCESS publication/oa_lock.tt %] <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
                   <span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
-                  [% PROCESS frontdoor/modal_requestcopy.tt %]
+                  [% PROCESS publication/modal_requestcopy.tt %]
             [% END %]
             [% IF loop.count > 1 %]
-                  <br>[% PROCESS frontdoor/oa_lock.tt %] <a href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
+                  <br>[% PROCESS publication/oa_lock.tt %] <a href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
                   <span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
-                  [% PROCESS frontdoor/modal_requestcopy.tt %]
+                  [% PROCESS publication/modal_requestcopy.tt %]
             [% END %]
             [% IF loop.count > 2 && loop.size > 3 %]
                   <span id="showFiles">
@@ -229,30 +224,30 @@
 
         <div class="tab tab-content">
 
-          [% PROCESS frontdoor/tab_details.tt %]
+          [% PROCESS publication/tab_details.tt %]
 
-          [% IF file AND file.size %] [% PROCESS frontdoor/tab_filedetails.tt %] [% END %]
+          [% IF file AND file.size %] [% PROCESS publication/tab_filedetails.tt %] [% END %]
 
-          [% IF relPubl %] [% PROCESS frontdoor/tab_relpubl.tt %] [% END %]
+          [% IF relPubl %] [% PROCESS publication/tab_relpubl.tt %] [% END %]
 
-          [% IF relResData %] [% PROCESS frontdoor/tab_relresdata.tt %] [% END %]
+          [% IF relResData %] [% PROCESS publication/tab_relresdata.tt %] [% END %]
 
-          [% IF toolkit %] [% PROCESS frontdoor/tab_toolkit.tt %] [% END %]
+          [% IF toolkit %] [% PROCESS publication/tab_toolkit.tt %] [% END %]
 
-          [% IF ebi_data %] [% PROCESS frontdoor/tab_ebi_links.tt %] [% END %]
+          [% IF ebi_data %] [% PROCESS publication/tab_ebi_links.tt %] [% END %]
 
-          [% IF epmc_cit %] [% PROCESS frontdoor/tab_ebi_cit.tt %] [% END %]
+          [% IF epmc_cit %] [% PROCESS publication/tab_ebi_cit.tt %] [% END %]
 
-          [% IF epmc_ref %] [% PROCESS frontdoor/tab_ebi_ref.tt %] [% END %]
+          [% IF epmc_ref %] [% PROCESS publication/tab_ebi_ref.tt %] [% END %]
 
           [% IF relMat.size OR relLink.size %]
-            [% PROCESS frontdoor/tab_relmat.tt %]
+            [% PROCESS publication/tab_relmat.tt %]
           [% END %]
 
-          [% IF relLinkRd.size OR relLinkSw.size %] [% PROCESS frontdoor/tab_extrd.tt %] [% END %]
+          [% IF relLinkRd.size OR relLinkSw.size %] [% PROCESS publication/tab_extrd.tt %] [% END %]
 
           [% IF confLetter.size %]
-            [% PROCESS frontdoor/tab_confletter.tt %]
+            [% PROCESS publication/tab_confletter.tt %]
           [% END %]
 
         </div><!-- tab-content -->
@@ -277,7 +272,7 @@
 
         <!-- Export -->
         <h3 id="export">[% h.loc("frontdoor.export") %]</h3>
-        <a class="label label-default total-marked" href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]">[% marked %]</a> <a href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]" rel="nofollow">[% h.loc("frontdoor.marked") %]</a>
+        <a class="label label-default total-marked" href="/marked">[% marked %]</a> <a href="/marked" rel="nofollow">[% h.loc("frontdoor.marked") %]</a>
 
         <!-- trigger modal -->
         <p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o fw1"></span>Open Data PUB</a></p>
@@ -418,6 +413,6 @@ $.getJSON("/ris/[% _id %]").done(function(data) {
 </script>
 [% END %]
 
-<!-- END frontdoor/record.tt -->
+<!-- END publication/record.tt -->
 
 [% PROCESS footer.tt %]

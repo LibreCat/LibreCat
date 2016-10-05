@@ -5,30 +5,30 @@
 <div class="col-md-12">
   <ul class="pagination">
     [% IF previous_page %]
-    [% s = start-limit < 0 ? 0 : start-limit %]
+    [% s = start-limit < 0 ? 0 : start-limit; qp.start = s %]
     <li>
-      <a href="[% h.newuri_for("$path", qp, start="$s") %]" aria-label="Previous">
+      <a href="[% request.uri_for(path, qp) %]" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
     [%- END %]
-  
+
     [% FOREACH p IN pages_in_spread %]
     [% IF p == page %]
     [% s =  limit * (p - 1) %]
     <li class="active"><a href="#">[% p %] <span class="sr-only">(current)</span></a></li>
     [% ELSIF p.defined %]
-    [% s = limit * (p - 1) %]
-    <li><a href='[% h.newuri_for("$path", qp, start="$s") %]'>[% p %]</a></li>
+    [% s = limit * (p - 1); qp.start = s %]
+    <li><a href='[% request.uri_for(path, qp) %]'>[% p %]</a></li>
     [% ELSE %]
     <li class="disabled"><a href="">&hellip;</a></li>
     [% END %]
     [% END %]
-  
+
     [% IF next_page %]
-    [% s = start+limit %]
+    [% s = start+limit; qp.start = s %]
     <li>
-      <a href="[% h.newuri_for("$path", qp, start="$s") %]" aria-label="Next">
+      <a href="[% request.uri_for(path, qp) %]" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

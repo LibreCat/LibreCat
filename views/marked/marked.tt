@@ -35,30 +35,7 @@
   <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
 
     <div class="page-header" id="banner">
-
-      <ul class="breadcrumb">
-        <li><span class="glyphicon glyphicon-chevron-left"></span>
-          [% IF qp.person AND qp.person != "" %]
-          <a href="[% h.newuri_for("/person/$qp.person", qp, person="") %]">[% h.loc("mark.back_person") %]</a>
-          [% ELSIF qp.department AND qp.department != "" %]
-          <a href="[% h.newuri_for("/department/$qp.department", qp, department="") %]">[% h.loc("mark.back_general") %]</a>
-          [% ELSIF qp.publication AND qp.publication != "" %]
-          <a href="[% h.newuri_for("/publication/$qp.publication", qp, publication="") %]">[% h.loc("mark.back_general") %]</a>
-          [% ELSIF qp.data AND qp.data != "" %]
-          <a href="[% h.newuri_for("/data/$qp.data", qp, data="") %]">[% h.loc("mark.back_general") %]</a>
-          [% ELSE %]
-          [% qp.delete('fmt') %]
-          <a href="javascript:history.back()">[% h.loc("mark.back_general") %]</a>
-          [% END %]
-        </li>
-        <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="[% h.loc("main_page.logout") %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% h.loc("main_page.logout") %]</span></a>[% ELSE %]<a href="/login" title="[% h.loc("main_page.login") %]"><span class="glyphicon glyphicon-log-in fw"></span>[% h.loc("main_page.login") %]</a>[% END %]</li>
-        [% IF session AND session.user %]
-        <li class="navbar-right"><a href="/librecat" title="[% h.loc("main_page.logged_in_as") %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>
-        [% END %]
-      </ul>
-
-      <h1>[% h.loc("mark.marked_publication") %]</h1>
-
+        <h1>[% h.loc("mark.marked_publication") %]</h1>
     </div>
 
     [% IF total %]

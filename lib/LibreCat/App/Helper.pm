@@ -25,7 +25,7 @@ sub config {
 }
 
 sub alphabet {
-    return ['A'..'Z'];
+    return ['A' .. 'Z'];
 }
 
 sub bag {
@@ -297,7 +297,7 @@ sub get_sort_style {
 
 sub now {
     my $time = $_[1] // time;
-    my $now  = strftime($_[0]->config->{time_format}, gmtime($time));
+    my $now = strftime($_[0]->config->{time_format}, gmtime($time));
     return $now;
 }
 
@@ -361,9 +361,10 @@ sub get_publication {
 
 sub get_person {
     my $hits;
-    if ( $_[1] ) {
+    if ($_[1]) {
         $hits = $_[0]->search_researcher({q => ["id=$_[1]"]});
-        $hits = $_[0]->search_researcher({q => ["login=$_[1]"]}) if !$hits->{total};
+        $hits = $_[0]->search_researcher({q => ["login=$_[1]"]})
+            if !$hits->{total};
     }
     return $hits->{hits}->[0] if $hits->{hits};
     return {error => "something went wrong"} if !$hits->{hits};
@@ -447,20 +448,20 @@ sub update_record {
         $self->log->debug(Dancer::to_json($rec));
     }
 
-    my $validator_pkg
-        = Catmandu::Util::require_package(ucfirst($bag), 'LibreCat::Validator');
+    my $validator_pkg = Catmandu::Util::require_package(ucfirst($bag),
+        'LibreCat::Validator');
 
     if ($validator_pkg) {
         my @white_list = $validator_pkg->new->white_list;
         for my $key (keys %$rec) {
-            delete $rec->{$key} unless grep(/^$key$/,@white_list);
+            delete $rec->{$key} unless grep(/^$key$/, @white_list);
         }
     }
 
     $rec = $self->store_record($bag, $rec);
     $self->index_record($bag, $rec);
 
-    sleep 1; # bad hack!
+    sleep 1;    # bad hack!
 
     $rec;
 }
@@ -484,7 +485,8 @@ sub store_record {
 
     # memoize fixes
     state $fixes = {};
-    my $fix = $fixes->{$bag} //= Catmandu::Fix->new(fixes => [join_path('fixes', "update_$bag.fix")]);
+    my $fix = $fixes->{$bag} //= Catmandu::Fix->new(
+        fixes => [join_path('fixes', "update_$bag.fix")]);
     $fix->fix($rec);
 
     my $bagname = "backup_$bag";
@@ -513,7 +515,8 @@ sub delete_record {
             if ($rec->{oai_deleted} or $rec->{status} eq 'public');
         require LibreCat::App::Catalogue::Controller::File;
         require LibreCat::App::Catalogue::Controller::Material;
-        LibreCat::App::Catalogue::Controller::Material::update_related_material($del);
+        LibreCat::App::Catalogue::Controller::Material::update_related_material(
+            $del);
         LibreCat::App::Catalogue::Controller::File::handle_file($del);
         delete $del->{related_material};
     }
@@ -616,6 +619,7 @@ sub search_publication {
     }
 
     my $hits;
+
     #$cql =~ tr/äöüß/aous/;
 
     try {
@@ -906,231 +910,6 @@ sub uri_for {
     }
     $uri =~ s/&$//;    #delete trailing "&"
     $uri;
-}
-
-sub newuri_for {
-    my ($self, $path, $uri_params, $passedparam) = @_;
-    my $passed_key;
-    my $passed_value;
-    foreach (keys %{$passedparam}) {
-        $passed_key   = $_;
-        $passed_value = $passedparam->{$_};
-    }
-
-    my $uri = $path . "?";
-
-    $uri_params = () if $uri_params eq "";
-
-    if (defined $uri_params->{$passed_key}) {
-        foreach my $urikey (keys %{$uri_params}) {
-            if ($urikey ne $passed_key) {
-                next if $urikey eq "start";
-                if (ref $uri_params->{$urikey} eq 'ARRAY') {
-                    foreach (@{$uri_params->{$urikey}}) {
-                        $uri .= "$urikey=$_&";
-                    }
-                }
-                elsif ($uri_params->{$urikey}) {
-                    $uri .= "$urikey=$uri_params->{$urikey}&";
-                }
-            }
-            else {    # $urikey eq $passed_key
-                if (   $passed_key eq "person"
-                    or $passed_key eq "author"
-                    or $passed_key eq "editor"
-                    or $passed_key eq "publicationtype"
-                    or $passed_key eq "publishingyear"
-                    or $passed_key eq "sort")
-                {
-                    if (ref $uri_params->{$urikey} eq 'ARRAY') {
-                        foreach (@{$uri_params->{$urikey}}) {
-                            if ($passed_value ne "") {
-                                if (
-                                    $passed_value !~ /^del_.*/
-                                    or (    $passed_value =~ /^del_(.*)/
-                                        and $_ ne $1)
-                                    )
-                                {
-                                    $uri .= "$urikey=$_&";
-                                }
-                            }
-
-                        }
-                    }
-                    else {
-                        $uri .= "$urikey=$uri_params->{$urikey}&"
-                            unless $passed_value eq "";
-                    }
-                    $uri .= "$passed_key=$passed_value&"
-                        unless $passed_value eq ""
-                        or $passed_value =~ /^del_.*/;
-                }
-                else {
-                    $uri .= "$passed_key=$passed_value&"
-                        unless $passed_value eq "";
-                }
-            }
-        }
-    }
-    else {
-        foreach my $urikey (keys %{$uri_params}) {
-            next if $urikey eq "start";
-            if (ref $uri_params->{$urikey} eq 'ARRAY') {
-                foreach (@{$uri_params->{$urikey}}) {
-                    $uri .= "$urikey=$_&";
-                }
-            }
-            elsif ($uri_params->{$urikey}) {
-                $uri .= "$urikey=$uri_params->{$urikey}&";
-            }
-        }
-        $uri .= "$passed_key=$passed_value&";
-    }
-
-    $uri =~ s/&$//;
-    $uri;
-}
-
-sub is_portal_default {
-    my ($self, $portal_name) = @_;
-
-    # get portal default from config
-    my $portal = $self->config->{portal}->{$portal_name};
-
-    # get params from web
-    my $p = $self->extract_params();
-
-    my $return_hash;
-    my $default_query;
-    my $full_query;
-
-    # Create default portal query hash
-    foreach my $key (keys %$portal) {
-        if ($key ne "q") {
-            $default_query->{$key} = $portal->{$key};
-            $full_query->{$key}    = $portal->{$key};
-        }
-        else {
-            foreach my $entry (@{$portal->{q}}) {
-                my $q;
-                if (ref $entry->{or} eq "ARRAY") {
-                    $q = "(" . join(" OR ", @{$entry->{or}}) . ")";
-                }
-                else {
-                    $q = $entry->{or};
-                }
-                push @{$default_query->{q}},
-                    $entry->{param} . $entry->{op} . $q;
-                push @{$full_query->{q}}, $entry->{param} . $entry->{op} . $q;
-            }
-        }
-        $return_hash->{default_query} = $default_query;
-    }
-
-    if (!$p) {
-
-        # if no params, it must be the default portal query root
-        $return_hash->{'default'} = 1;
-    }
-    else {
-        foreach my $key (keys %$p) {
-
-            # look at each key in the query, q is the hardest to handle
-            if ($key eq "q") {
-                foreach my $query (@{$p->{q}}) {
-
-                    # in case the query comes as one q, split it
-                    # so we can check the parts separately
-                    my @parts = split(' AND ', $query);
-
-                    # usually this will only be one $part
-                    foreach my $part (@parts) {
-
-             # get the three different parts of the query
-             # parameter (e.g. "department"), operator (e.g. "=") and value(s)
-                        if (
-                            lc $part
-                            =~ /^(\w{1,})(<=|>=|=|<|>|<>| exact | all | any | within )(.*)$/
-                            )
-                        {
-                   # check if each of the three parts is in the portal default
-                   # First the parameter
-                            my $param
-                                = grep {$1 eq $_->{param}} @{$portal->{q}};
-
-                            # Second the operator
-                            my $op = grep {$2 eq $_->{op}} @{$portal->{q}};
-
-# Third all values (be careful: several values will be joined by OR and
-# enclosed in parentheses, a single value won't be in array form in the config
-# and won't be enclosed in parentheses)
-                            my $val = grep {
-                                my $or
-                                    = ref $_->{or} eq "ARRAY"
-                                    ? join(' OR ', @{$_->{or}})
-                                    : $_->{or};
-                                $or = "(" . $or . ")"
-                                    if ref $_->{or} eq "ARRAY";
-                                $3 eq $or
-                            } @{$portal->{q}};
-
-         # e.g. if there is no parameter "department", this is not part of the
-         # default query, so add it to the return params that may be deletable
-                            if (!$param) {
-                                push @{$return_hash->{delete_them}->{q}},
-                                    $part;
-                            }
-
-       # e.g. if there IS a parameter "department" but the operator is not "="
-       # but "<>", this is not part of the default query
-                            elsif (!$op) {
-                                push @{$return_hash->{delete_them}->{q}},
-                                    $part;
-                            }
-
-           # e.g. if there IS a parameter "department" AND the operator IS "="
-           # but the values don't match, this is not part of the default query
-                            elsif (!$val) {
-                                push @{$return_hash->{delete_them}->{q}},
-                                    $part;
-                            }
-                        }
-                        else {
-                            push @{$return_hash->{delete_them}->{q}}, $part;
-                        }
-                    }
-                }
-            }
-
-            # all other keys are easy
-            else {
-# if the key doesn't exist in the portal config, it's not default query
-# if the key DOES exist but the value does not match, it's not default query either
-                if (!$portal->{$key}
-                    or ($portal->{$key} and $portal->{$key} ne $p->{$key}))
-                {
-                    $return_hash->{delete_them}->{$key} = $p->{$key};
-                }
-            }
-        }
-    }
-
-    if ($return_hash->{delete_them}) {
-        foreach my $key (keys %{$return_hash->{delete_them}}) {
-            if ($key eq "q") {
-                foreach my $q (@{$return_hash->{delete_them}->{q}}) {
-                    push @{$full_query->{q}}, $q;
-                }
-            }
-            else {
-                $full_query->{$key} = $return_hash->{delete_them}->{$key};
-            }
-        }
-    }
-
-    $return_hash->{full_query} = $full_query;
-
-    return $return_hash;
 }
 
 # TODO don't store in session, make it a param

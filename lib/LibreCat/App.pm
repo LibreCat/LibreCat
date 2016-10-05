@@ -89,9 +89,10 @@ post '/login' => sub {
     my $user = _authenticate(params->{user}, params->{pass});
 
     if ($user) {
-        my $super_admin  = "super_admin"  if $user->{super_admin};
-        my $reviewer     = "reviewer"     if $user->{reviewer};
-        my $project_reviewer = "project_reviewer" if $user->{project_reviewer};
+        my $super_admin = "super_admin" if $user->{super_admin};
+        my $reviewer    = "reviewer"    if $user->{reviewer};
+        my $project_reviewer = "project_reviewer"
+            if $user->{project_reviewer};
         my $data_manager = "data_manager" if $user->{data_manager};
         my $delegate     = "delegate"     if $user->{delegate};
         session role => $super_admin
@@ -100,7 +101,7 @@ post '/login' => sub {
             || $data_manager
             || $delegate
             || "user";
-        session user => $user->{login};
+        session user         => $user->{login};
         session personNumber => $user->{_id};
         session lang         => $user->{lang} || h->config->{default_lang};
 
@@ -120,8 +121,8 @@ The logout route. Destroys session.
 
 any '/logout' => sub {
 
-    session role => undef;
-    session user => undef;
+    session role         => undef;
+    session user         => undef;
     session personNumber => undef;
 
     redirect '/';
@@ -164,7 +165,8 @@ Throws 'page not found'.
 
 any qr{.*} => sub {
     status 'not_found';
-    template 'websites/404', {path => request->{referer}};
+
+    #template 'websites/404', {path => request->{referer}};
 };
 
 1;

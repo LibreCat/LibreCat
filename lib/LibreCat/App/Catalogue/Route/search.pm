@@ -131,13 +131,17 @@ Performs search for reviewer.
 
     get '/reviewer/:department_id' => needs role => 'reviewer' => sub {
 
-        my $p         = h->extract_params();
-        my $id        = session 'personNumber';
-        my $account   = h->get_person(session->{user});
+        my $p       = h->extract_params();
+        my $id      = session 'personNumber';
+        my $account = h->get_person(session->{user});
 
         # if user not reviewer or not allowed to access chosen department
-        unless ($account->{reviewer} and grep {params->{department_id} eq $_->{_id}} @{$account->{reviewer}}){
-            return redirect "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
+        unless ($account->{reviewer}
+            and grep {params->{department_id} eq $_->{_id}}
+            @{$account->{reviewer}})
+        {
+            return redirect
+                "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
         }
 
         my $dep_query = "department=" . params->{department_id};
@@ -166,7 +170,6 @@ Performs search for reviewer.
 
     };
 
-
 =head2 GET /reviewer
 
 Performs search for reviewer.
@@ -175,43 +178,51 @@ Performs search for reviewer.
 
     get '/project_reviewer' => needs role => "project_reviewer" => sub {
         my $account = h->get_person(session->{user});
-        redirect "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}";
+        redirect
+            "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}";
     };
 
-    get '/project_reviewer/:project_id' => needs role => 'project_reviewer' => sub {
+    get '/project_reviewer/:project_id' => needs role =>
+        'project_reviewer'              => sub {
 
-        my $p = h->extract_params();
-        my $id = session 'personNumber';
+        my $p       = h->extract_params();
+        my $id      = session 'personNumber';
         my $account = h->get_person(session->{user});
 
         # if user not project_reviewer or not allowed to access chosen project
-        unless ($account->{project_reviewer} and grep {params->{project_id} eq $_->{_id}} @{$account->{project_reviewer}}){
-            return redirect "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}";
+        unless ($account->{project_reviewer}
+            and grep {params->{project_id} eq $_->{_id}}
+            @{$account->{project_reviewer}})
+        {
+            return redirect
+                "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}";
         }
 
         my $dep_query = "project=" . params->{project_id};
         push @{$p->{q}}, $dep_query;
 
         $p->{facets} = h->default_facets();
-        my $sort_style = h->get_sort_style( $p->{sort} || '', $p->{style} || '');
+        my $sort_style
+            = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
-        push @{$p->{q}}, "status=public" if $p->{fmt} and $p->{fmt} eq "autocomplete";
+        push @{$p->{q}}, "status=public"
+            if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         my $hits = h->search_publication($p);
-        $hits->{style} = $sort_style->{style};
-        $hits->{sort} = $p->{sort};
+        $hits->{style}         = $sort_style->{style};
+        $hits->{sort}          = $p->{sort};
         $hits->{user_settings} = $sort_style;
-        $hits->{modus} = "project_reviewer_" . params->{project_id};
-        $hits->{project_id} = params->{project_id};
+        $hits->{modus}         = "project_reviewer_" . params->{project_id};
+        $hits->{project_id}    = params->{project_id};
 
         if ($p->{fmt} ne 'html') {
             h->export_publication($hits, $p->{fmt});
-        } else {
+        }
+        else {
             template "home", $hits;
         }
 
-    };
-
+        };
 
 =head2 GET /datamanager
 

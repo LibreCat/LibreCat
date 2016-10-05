@@ -32,8 +32,8 @@ sub _authenticate {
         && passwdcmp($password, $user->{$self->password_attr}))
     {
         return +{
-            uid => $username,
-            package => __PACKAGE__,
+            uid        => $username,
+            package    => __PACKAGE__,
             package_id => $self->id
         };
     }

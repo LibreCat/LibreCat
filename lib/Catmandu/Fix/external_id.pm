@@ -9,7 +9,8 @@ sub fix {
     if ($data->{external_id} and ref $data->{external_id} eq "ARRAY") {
         my $extid_hash;
         foreach my $extid (@{$data->{external_id}}) {
-            $extid->{type} = 'unknown' unless $extid->{type} && length $extid->{type};
+            $extid->{type} = 'unknown'
+                unless $extid->{type} && length $extid->{type};
             next if $extid_hash->{$extid->{type}};
             $extid_hash->{$extid->{type}} = $extid->{value};
         }

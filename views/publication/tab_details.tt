@@ -1,5 +1,5 @@
 
-<!-- BEGIN frontdoor/tab_details.tt -->
+<!-- BEGIN publication/tab_details.tt -->
 
 <div class="tab-pane active" id="details">
 
@@ -107,7 +107,7 @@
   </div>
 [%- END %]
   <div class="row">
-    <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.year.label") || h.loc("forms.${type}.field.year_extern.label") %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.${type}.field.year.label || h.loc("forms.${type}.field.year_extern.label") %]</div>
     <div class="col-lg-10 col-md-9"><span itemprop="copyrightYear"><a href="/[% bag %]?q=year=[% year %]">[% year %]</a></span></div>
   </div>
 [%- IF !display_citation %]
@@ -231,4 +231,4 @@
   [%- END %]
 </div>
 
-<!-- END frontdoor/tab_details.tt -->
+<!-- END publication/tab_details.tt -->

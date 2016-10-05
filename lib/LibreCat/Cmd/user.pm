@@ -109,28 +109,34 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret = 0;
-    my $importer = Catmandu->importer('YAML', file => $file);
-    my $helper = LibreCat::App::Helper::Helpers->new;
+    my $ret       = 0;
+    my $importer  = Catmandu->importer('YAML', file => $file);
+    my $helper    = LibreCat::App::Helper::Helpers->new;
     my $validator = LibreCat::Validator::Researcher->new;
 
-    my $records = $importer->select(sub {
-        my $rec = $_[0];
+    my $records = $importer->select(
+        sub {
+            my $rec = $_[0];
 
-        $rec->{_id} //= $helper->new_record('researcher');
-        $rec->{password} = mkpasswd($rec->{password}) if exists $rec->{password};
+            $rec->{_id} //= $helper->new_record('researcher');
+            $rec->{password} = mkpasswd($rec->{password})
+                if exists $rec->{password};
 
-        if ($validator->is_valid($rec)) {
-            $helper->store_record('researcher', $rec);
-            print "added $rec->{_id}\n";
-            return 1;
+            if ($validator->is_valid($rec)) {
+                $helper->store_record('researcher', $rec);
+                print "added $rec->{_id}\n";
+                return 1;
+            }
+            else {
+                print STDERR join("\n",
+                    "ERROR: not a valid researcher",
+                    @{$validator->last_errors}),
+                    "\n";
+                $ret = 2;
+                return 0;
+            }
         }
-        else {
-            print STDERR join("\n", "ERROR: not a valid researcher", @{$validator->last_errors}), "\n";
-            $ret = 2;
-            return 0;
-        }
-    });
+    );
 
     my $index = $helper->researcher;
     $index->add_many($records);
@@ -172,7 +178,7 @@ sub _valid {
 
             unless ($validator->is_valid($item)) {
                 my $errors = $validator->last_errors();
-                my $id     = $item->{_id} // '';
+                my $id = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
                         print STDERR "ERROR $id: $err\n";
@@ -207,6 +213,6 @@ LibreCat::Cmd::user - manage librecat users
     librecat user add <FILE>
     librecat user get <id>
     librecat user delete <id>
-    librecat user valud <FILE>
+    librecat user valid <FILE>
 
 =cut

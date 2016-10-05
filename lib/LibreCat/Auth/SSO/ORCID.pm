@@ -12,107 +12,117 @@ use LWP::UserAgent;
 
 with 'LibreCat::Auth::SSO';
 
-has sandbox => (
-    is => 'ro',
-    required => 0
-);
-has client_id => (
-    is => 'ro',
-    isa => sub { check_string($_[0]); },
-    required => 1
-);
-has client_secret => (
-    is => 'ro',
-    isa => sub { check_string($_[0]); },
-    required => 1
-);
+has sandbox => (is => 'ro', required => 0);
+has client_id =>
+    (is => 'ro', isa => sub {check_string($_[0]);}, required => 1);
+has client_secret =>
+    (is => 'ro', isa => sub {check_string($_[0]);}, required => 1);
 has _lwp => (
-    is => 'ro',
-    lazy => 1,
-    default => sub { LWP::UserAgent->new( cookie_jar => {} ); }
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {LWP::UserAgent->new(cookie_jar => {});}
 );
 
-my $base_url = "https://orcid.org";
+my $base_url         = "https://orcid.org";
 my $sandbox_base_url = "https://sandbox.orcid.org";
 
 sub to_app {
     my $self = $_[0];
-
 
     sub {
 
         my $env = $_[0];
 
         my $request = Plack::Request->new($env);
-        my $session = Plack::Session->new( $env );
-        my $params = $request->query_parameters();
+        my $session = Plack::Session->new($env);
+        my $params  = $request->query_parameters();
 
         my $auth_sso = $self->get_auth_sso($session);
 
         #already got here before
-        if ( is_hash_ref($auth_sso) ){
+        if (is_hash_ref($auth_sso)) {
 
-            return [302,[Location => $self->authorization_url],[]];
+            return [302, [Location => $self->authorization_url], []];
 
         }
 
         my $callback = $params->get('_callback');
 
         #callback phase
-        if( is_string($callback) ){
+        if (is_string($callback)) {
 
-            my $error = $params->get('error');
+            my $error             = $params->get('error');
             my $error_description = $params->get('error_description');
 
-            if(is_string($error)){
+            if (is_string($error)) {
 
-                return [500,["Content-Type" => "text/html"],[$error_description]];
-
-            }
-
-            my $token_url = ( $self->sandbox ? $sandbox_base_url : $base_url )."/oauth/token";
-
-            my $res = $self->_lwp->post( $token_url,[
-                client_id => $self->client_id,
-                client_secret => $self->client_secret,
-                grant_type => "authorization_code",
-                code => $params->get('code')
-            ], "Accept" => "application/json" );
-
-            unless ( $res->is_success() ) {
-
-                return [500,["Content-Type" => "text/html"],[ $res->content ]];
+                return [
+                    500, ["Content-Type" => "text/html"],
+                    [$error_description]
+                ];
 
             }
 
-            $self->set_auth_sso($session,{ package => __PACKAGE__, package_id => $self->id, response => $res->content });
+            my $token_url = ($self->sandbox ? $sandbox_base_url : $base_url)
+                . "/oauth/token";
 
-            return [302,[Location => $self->authorization_url],[]];
-        }
-        #request phase
-        else{
-
-            my $redirect_uri = URI->new(uri_for($env,$request->script_name));
-            $redirect_uri->query_form({ _callback => "true" });
-
-            my $auth_url = URI->new(
-                ( $self->sandbox ? $sandbox_base_url : $base_url )."/oauth/authorize"
+            my $res = $self->_lwp->post(
+                $token_url,
+                [
+                    client_id     => $self->client_id,
+                    client_secret => $self->client_secret,
+                    grant_type    => "authorization_code",
+                    code          => $params->get('code')
+                ],
+                "Accept" => "application/json"
             );
-            $auth_url->query_form({
-                show_login => 'true',
-                client_id => $self->client_id,
-                scope => '/authenticate',
-                response_type => 'code',
-                redirect_uri => $redirect_uri,
-            });
 
-            [302,[Location => $auth_url->as_string()],[]];
+            unless ($res->is_success()) {
+
+                return [500, ["Content-Type" => "text/html"],
+                    [$res->content]];
+
+            }
+
+            $self->set_auth_sso(
+                $session,
+                {
+                    package    => __PACKAGE__,
+                    package_id => $self->id,
+                    response   => $res->content
+                }
+            );
+
+            return [302, [Location => $self->authorization_url], []];
+        }
+
+        #request phase
+        else {
+
+            my $redirect_uri = URI->new(uri_for($env, $request->script_name));
+            $redirect_uri->query_form({_callback => "true"});
+
+            my $auth_url
+                = URI->new(($self->sandbox ? $sandbox_base_url : $base_url)
+                . "/oauth/authorize");
+            $auth_url->query_form(
+                {
+                    show_login    => 'true',
+                    client_id     => $self->client_id,
+                    scope         => '/authenticate',
+                    response_type => 'code',
+                    redirect_uri  => $redirect_uri,
+                }
+            );
+
+            [302, [Location => $auth_url->as_string()], []];
 
         }
     };
 }
 
 1;
+
 =pod
 
 =head1 NAME

@@ -13,7 +13,7 @@ use Dancer ':syntax';
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Importer;
 use Dancer::Plugin::Auth::Tiny;
-use Syntax::Keyword::Junction 'any' => { -as => 'any_of' };
+use Syntax::Keyword::Junction 'any' => {-as => 'any_of'};
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -29,10 +29,10 @@ Dancer::Plugin::Auth::Tiny->extend(
     },
 
     any_role => sub {
-        my $coderef = pop;
+        my $coderef         = pop;
         my @requested_roles = @_;
         return sub {
-            if ( any_of(@requested_roles) eq session->{role}) {
+            if (any_of(@requested_roles) eq session->{role}) {
                 goto $coderef;
             }
             else {
@@ -107,8 +107,10 @@ Saves the data in the authority database.
         my $p = params;
 
         $p = h->nested_params($p);
+
         # if password and not yet encrypted
-        $p->{password} = mkpasswd($p->{password}) if ($p->{password} and $p->{password} !~ /\$.{15,}/);
+        $p->{password} = mkpasswd($p->{password})
+            if ($p->{password} and $p->{password} !~ /\$.{15,}/);
 
         h->update_record('researcher', $p);
         template 'admin/account';

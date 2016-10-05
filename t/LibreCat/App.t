@@ -2,15 +2,14 @@ BEGIN {
     use Catmandu::Sane;
     use Path::Tiny;
     use LibreCat::Layers;
-    LibreCat::Layers->new->load;
-};
+    LibreCat::Layers->new(layer_paths => [qw(t/layer)])->load;
+}
 
 use strict;
 use warnings;
 use lib qw(./lib);
-use Test::More tests => 21;
+use Test::More;
 
-use Dancer ':syntax';
 use Dancer::Test;
 use LibreCat::App;
 use LibreCat::App::Helper;
@@ -52,3 +51,5 @@ route_exists          [GET => '/login'], "GET /login is handled";
 response_status_is    [GET => '/login'], 200, 'GET /login status is ok';
 response_content_like [GET => '/login'], qr/Login/,
     "content looks good for /login";
+
+done_testing;

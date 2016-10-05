@@ -3,9 +3,8 @@
 [%- qp.delete('splat') %]
 [%- PROCESS header.tt %]
 
-<!-- BEGIN publication/list.tt -->
+<!-- BEGIN person/list.tt -->
 <span id="language_id" style="display:none;">[% lang %]</span>
-
 <div class="row"><!-- outer border -->
   <div class="col-md-11 col-sm-12"><!-- main content -->
     <div id="banner">
@@ -15,7 +14,7 @@
     </div>
 
     <div class="ltIEten">
-      <h3>Please note that PUB no longer supports Internet Explorer versions 8 or 9 (or earlier).</h3>
+      <h3>Please note that we no longer supports Internet Explorer versions 8 or 9 (or earlier).</h3>
       <p>We recommend upgrading to the latest <a href="http://windows.microsoft.com/ie" target="_blank">Internet Explorer</a>, <a href="https://chrome.google.com" target="_blank">Google Chrome</a>, or <a href="https=//mozilla.org/firefox/" target="_blank">Firefox</a>.</p>
     </div>
 
@@ -23,20 +22,20 @@
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
           <li><a href="/">[% h.loc("tabs.home") %]</a></li>
-          <li [% IF path.match('publication')%]class="active"[% END %]><a href="/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.publications") %]</a></li>
-          <li [% IF path.match('data')%]class="active"[% END %]><a href="/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.data_publications") %]</a></li>
-          <li><a href="/person[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.authors") %]</a></li>
+          <li><a href="/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.publications") %]</a></li>
+          <li><a href="/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.data_publications") %]</a></li>
+          <li class="active"><a href="/person[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.authors") %]</a></li>
           <li><a href="/project[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.projects") %]</a></li>
-          <!-- <li><a href="/department[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.departments") %]</a></li> -->
         </ul>
       </div>
     </div>
+
     <div class="row">
       <div class="col-md-12 tab-content">
-        <div class="tab-pane active" id="publ">
+        <div class="tab-pane active" id="people">
           <div class="row">
-            <div class="col-sm-8 col-md-8">
-              [% INCLUDE hits.tt %]
+            <div class="col-sm-8">
+              [% INCLUDE person/hits.tt %]
             </div>
             <div class="col-sm-4 col-md-3 col-md-offset-1 facets">
               [% INCLUDE filters.tt %]
@@ -48,6 +47,6 @@
   </div><!-- main content left -->
 </div><!-- outer border -->
 
-<!-- END publication/list.tt -->
+<!-- END person/list.tt -->
 
 [% INCLUDE footer.tt %]

@@ -4,7 +4,8 @@ use Path::Tiny;
 use Plack::Util;
 use HTTP::Request;
 
-my $app = Plack::Util::load_psgi(path(__FILE__)->parent->parent->child('bin')->child('app.pl')->stringify);
+my $app = Plack::Util::load_psgi(
+    path(__FILE__)->parent->parent->child('bin')->child('app.pl')->stringify);
 
 # test CSRF
 
@@ -19,8 +20,7 @@ test_psgi $app, sub {
 
     $req = HTTP::Request->new(POST => 'http://localhost/login');
     $res = $cb->($req);
-    is $res->code, 403,
-        'POST without csrf token is forbidden';
+    is $res->code, 403, 'POST without csrf token is forbidden';
 };
 
 done_testing;
