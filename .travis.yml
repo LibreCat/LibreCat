@@ -7,8 +7,8 @@ perl:
   - "5.22"
 
 before_install:
-#  - curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.2.4.deb && sudo dpkg -i --force-confnew elasticsearch-1.2.4.deb && sudo service elasticsearch restart
-  - sudo apt-get install --yes --force-yes gearman-job-server libgearman7 libgearman-dev
+  - curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.0.deb && sudo dpkg -i --force-confnew elasticsearch-1.7.0.deb && sudo service elasticsearch restart
+  - sudo apt-get install --yes --force-yes gearman-job-server libgearman-dev
   - cpanm --notest Perl::Tidy
   - cpanm --notest Test::Code::TidyAll
 
