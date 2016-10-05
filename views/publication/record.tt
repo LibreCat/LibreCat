@@ -66,11 +66,6 @@
 <div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/publication/[% _id %]"><!-- outer row-->
   <div class="col-md-11 col-sm-12"><!-- outer col -->
     <div class="page-header" id="banner">
-      <ul class="breadcrumb">
-        <li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>[% h.loc("frontdoor.crumb_back") %]</a></li>
-        <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% h.loc("main_page.logout") %]</span></a>[% ELSE %]<a href="/login" title="[% h.loc("main_page.login") %]"><span class="glyphicon glyphicon-log-in fw"></span>[% h.loc("main_page.login") %]</a>[% END %]</li>
-        [% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% h.loc("main_page.logged_in_as") %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
-      </ul>
       [%- UNLESS _id %]
         <h1>[% h.loc("frontdoor.no_record") %]</h1>
       [%- STOP %]
@@ -277,7 +272,7 @@
 
         <!-- Export -->
         <h3 id="export">[% h.loc("frontdoor.export") %]</h3>
-        <a class="label label-default total-marked" href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]">[% marked %]</a> <a href="[% h.newuri_for("/marked", qp2, $bag="$_id") %]&amp;style=[% qp.style %]" rel="nofollow">[% h.loc("frontdoor.marked") %]</a>
+        <a class="label label-default total-marked" href="/marked">[% marked %]</a> <a href="/marked" rel="nofollow">[% h.loc("frontdoor.marked") %]</a>
 
         <!-- trigger modal -->
         <p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o fw1"></span>Open Data PUB</a></p>

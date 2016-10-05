@@ -4,11 +4,6 @@
 <div class="row" itemscope itemtype="http://schema.org/webpage" itemid="/project/[% _id %]"><!-- outer border -->
   <div class="col-md-11 col-sm-12">
     <div class="page-header" id="banner">
-      <ul class="breadcrumb">
-        <li><a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span>[% h.loc("frontdoor.crumb_back") %]</a></li>
-        <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% h.loc("main_page.logout") %]</span></a>[% ELSE %]<a href="/login" title="[% h.loc("main_page.login") %]"><span class="glyphicon glyphicon-log-in fw"></span>[% h.loc("main_page.login") %]</a>[% END %]</li>
-        [%- IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% h.loc("main_page.logged_in_as") %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
-      </ul>
       [%- UNLESS name %]
         <h1>[% h.loc("frontdoor.no_record") %]</h1>
       [%- END %]

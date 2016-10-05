@@ -17,11 +17,12 @@
 
 <div class="hidden-sm hidden-md hidden-lg"><hr></div>
 
-[% IF request.path.match("person") AND bag != 'person' %]
+[%- IF request.path.match("person") AND bag != 'person' %]
 <div class="margin-bottom1">
-  <a href="[% h.newuri_for("/marked", qp, person="$id") %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>[% h.loc("mark.marked_publication") %]</a>
+  [%- qp.person = id %]
+  <a href="[% request.uri_for("/marked", qp) %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>[% h.loc("mark.marked_publication") %]</a>
 </div>
-[% END %]
+[%- END -%]
 
 [%- IF (qp.q.size > 0 AND !qp.embed) OR pd.delete_them %]
   <h3 class="filters margin-top0">[% h.loc("facets.filters_and_searchterms") %]</h3>
@@ -76,7 +77,8 @@
 
 [% IF qp.item('sort') %]
   <div class="text-muted">
-    <a href="[% h.newuri_for("$path", qp, sort="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    [%- qp.sort = '' %]
+    <a href="[% request.uri_for(path, qp) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
     <strong>[% h.loc("facets.sorted_by") %]:</strong>
     [% FOREACH setting IN qp.item('sort') %]
     [% h.loc("facets.sort_text.${setting}") %][% UNLESS loop.last %], [% END %]
@@ -86,7 +88,8 @@
 
 [% IF qp.style AND !user_settings.style_eq_userstyle %]
   <div class="text-muted">
-    <a href="[% h.newuri_for("$path", qp, style="") %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    [%- qp.sort = '' %]
+    <a href="[% request.uri_for(path, qp) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
     <strong>[% h.loc("facets.citation_style") %]:</strong>
     [% style %]
 
@@ -102,13 +105,14 @@
     <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.hits_per_page") %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.default_page_size %][% END %]</button>
     <div class="facettecollapse">
     <ul id="hitsperpage_[% tabmodus %][% menu %]" class="collapse">
-      [% FOREACH lim IN h.config.pagination_options %]
-        [% IF (qp.limit AND qp.limit == lim) OR (!qp.limit AND lim == h.config.default_page_size) %]
+      [%- FOREACH lim IN h.config.pagination_options %]
+        [%- IF (qp.limit AND qp.limit == lim) OR (!qp.limit AND lim == h.config.default_page_size) %]
         <li>[% lim %]</li>
-        [% ELSE %]
-          <li><a href="[% h.newuri_for($path, qp,limit="$lim") %]" rel="nofollow">[% lim %]</a></li>
-        [% END %]
-      [% END %]
+        [%- ELSE %]
+          [% pq.limit = lim %]
+          <li><a href="[% request.uri_for(path, qp) %]" rel="nofollow">[% lim %]</a></li>
+        [%- END %]
+      [%- END %]
     </ul>
     </div>
   </li>
@@ -139,24 +143,25 @@
   </li>
   [% END %]
 
-  [% IF hits.0.citation %]
+  [%- IF hits.0.citation %]
   <li>
     <button data-toggle="collapse" data-target="#style_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.citation_style") %][% IF style != "default" AND style != "" %]: [% style %][% ELSIF style == "default" %]: default[% END %]</button>
     <div class="facettecollapse">
     <ul id="style_[% tabmodus %][% menu %]" class="collapse">
-      [% FOREACH dstyle IN h.config.citation.csl.styles %]
-        [% IF dstyle == style %]
+      [%- FOREACH dstyle IN h.config.citation.csl.styles %]
+        [%- IF dstyle == style %]
         <li><span class="text-muted">[% dstyle %]</span></li>
-        [% ELSE %]
-        <li><a href="[% h.newuri_for("$path", qp, style="$dstyle") %]" rel="nofollow">[% dstyle %]</a></li>
-        [% END %]
-      [% END %]
+        [%- ELSE %]
+        [%- qp.style = dstyle %]
+        <li><a href="[% request.uri_for(path, qp) %]" rel="nofollow">[% dstyle %]</a></li>
+        [%- END %]
+      [%- END %]
     </ul>
     </div>
   </li>
-  [% END %]
+  [%- END %]
 </ul>
-[% END %]
+[%- END -%]
 
 [% UNLESS bag == "person" %]
 <h3>[% h.loc("facets.export") %][% UNLESS backend OR request.path.match('marked') OR request.path.match('embed') OR qp.ftyp %] / [% h.loc("facets.embed") %][% END %]</h3>
@@ -209,8 +214,10 @@
 	     <h3 id="ModalExport">[% h.loc("facets.export_options") %]</h3>
       </div>
       <div class="modal-body">
-	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]&amp;explinks=yes" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
-	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% h.newuri_for("$bag", qp, fmt="rtf") %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
+        [%- qp2 = qp; qp2.fmt = 'rft'; qp2.explinks = 'yes' %]
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% request.uri_for(path, qp2) %]&amp;explinks=yes" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
+         [%-  qp2.delete('explinks') %]
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% request.uri_for(path, qp2) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
       </div>
     </div>
   </div>
