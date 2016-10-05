@@ -42,7 +42,7 @@ require_ok $pkg;
 
     my $count = count_user($output);
 
-    ok $count > 0, 'got more than one user';
+    ok $count == 0, 'got no users';
 }
 
 {
@@ -71,8 +71,6 @@ require_ok $pkg;
     my $output = $result->stdout;
 
     ok $output , 'got an output';
-
-    utf8::decode($output);
 
     my $importer = Catmandu->importer('YAML', file => \$output);
 
