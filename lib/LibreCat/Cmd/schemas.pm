@@ -52,7 +52,7 @@ sub command {
 }
 
 sub _list {
-    my $h     = LibreCat::App::Helper::Helpers->new;
+    my $h = LibreCat::App::Helper::Helpers->new;
 
     my $schemas = $h->config->{schemas};
 
@@ -64,17 +64,18 @@ sub _list {
 }
 
 sub _get {
-    my ($self,$name) = @_;
+    my ($self, $name) = @_;
 
     croak "get - need a schema name" unless $name;
 
-    my $h     = LibreCat::App::Helper::Helpers->new;
+    my $h = LibreCat::App::Helper::Helpers->new;
 
     my $schema = $h->config->{schemas}->{$name};
 
     croak "get - no such schema '$name'" unless $schema;
 
-    my $json = Catmandu->export_to_string($schema,'JSON', pretty => 1 , array => 0);
+    my $json = Catmandu->export_to_string($schema, 'JSON', pretty => 1,
+        array => 0);
 
     print "$json\n";
 
@@ -82,11 +83,11 @@ sub _get {
 }
 
 sub _markdown {
-    my $h     = LibreCat::App::Helper::Helpers->new;
+    my $h = LibreCat::App::Helper::Helpers->new;
 
     my $schemas = $h->config->{schemas};
     my $date    = localtime time;
-    my @fields  = ('machine name' , 'data type' , 'description' , 'mandatory');
+    my @fields  = ('machine name', 'data type', 'description', 'mandatory');
 
     print "{*Generated on $date by '$0 schemas markdown'*}\n\n";
 
@@ -96,7 +97,7 @@ sub _markdown {
         my $definitions = $schemas->{$section}->{'definitions'} // {};
 
         table_header(@fields);
-        print_properties($schemas->{$section},'',$definitions);
+        print_properties($schemas->{$section}, '', $definitions);
 
         print "\n";
     }
@@ -105,42 +106,43 @@ sub _markdown {
 }
 
 sub print_properties {
-    my ($section,$prefix,$definitions) = @_;
+    my ($section, $prefix, $definitions) = @_;
 
     $prefix = '' unless $prefix;
 
-    my $properties  = $section->{'properties'} // {};
-    my $required    = $section->{'required'} // [];
+    my $properties = $section->{'properties'} // {};
+    my $required   = $section->{'required'}   // [];
 
     for my $name (sort keys %$properties) {
-        my $prop         = $properties->{$name};
-        my $type         = prop_type($prop);
-        my $pattern      = prop_pattern($prop);
+        my $prop    = $properties->{$name};
+        my $type    = prop_type($prop);
+        my $pattern = prop_pattern($prop);
 
         $type .= " ($pattern)" if $pattern;
 
-        my $enumeration  = prop_enumeration($prop);
+        my $enumeration = prop_enumeration($prop);
 
         $type .= " $enumeration" if $enumeration;
 
-        my $description  = $prop->{description} // '';
-        my $mandatory    = grep({ $_ eq $name } @$required) ? 'Y' : '';
+        my $description = $prop->{description} // '';
+        my $mandatory = grep({$_ eq $name} @$required) ? 'Y' : '';
 
-        table_row("$prefix$name",$type,$description,$mandatory);
+        table_row("$prefix$name", $type, $description, $mandatory);
 
         if ($prop->{items}) {
             if ($prop->{items}->{properties}) {
-                print_properties($prop->{items},"-$name.",$definitions);
+                print_properties($prop->{items}, "-$name.", $definitions);
             }
             elsif ($prop->{items}->{'$ref'}) {
                 my $def = $prop->{items}->{'$ref'};
                 $def =~ s/.*\///;
                 die "can't find $def" unless $definitions->{$def};
-                print_properties($definitions->{$def},"-$prefix$name.",$definitions);
+                print_properties($definitions->{$def}, "-$prefix$name.",
+                    $definitions);
             }
         }
         elsif ($prop->{properties}) {
-            print_properties($prop,"-$name.",$definitions);
+            print_properties($prop, "-$name.", $definitions);
         }
     }
 }
@@ -149,7 +151,7 @@ sub table_header {
     my (@data) = @_;
 
     print "| " . join(" | ", @data) . " |\n";
-    print "| " . join(" | ", map( '---', @data)) . " |\n";
+    print "| " . join(" | ", map('---', @data)) . " |\n";
 }
 
 sub table_row {
@@ -172,7 +174,7 @@ sub prop_type {
             elsif ($_->{enum}) {
                 prop_enumeration($_);
             }
-        }  @{$prop->{oneOf}};
+        } @{$prop->{oneOf}};
         return join(" or ", @types);
     }
 }
@@ -180,8 +182,8 @@ sub prop_type {
 sub prop_pattern {
     my ($prop) = @_;
 
-    $prop->{pattern} && length($prop->{pattern}) < 15 ?
-        $prop->{pattern} : undef;
+    $prop->{pattern}
+        && length($prop->{pattern}) < 15 ? $prop->{pattern} : undef;
 }
 
 sub prop_enumeration {
@@ -191,7 +193,7 @@ sub prop_enumeration {
 
     my $str = "<ul type=\"square\">";
 
-    for (@{$prop->{enum}}){
+    for (@{$prop->{enum}}) {
         $str .= "<li>$_</li>";
     }
 

@@ -53,7 +53,7 @@ sub command_opt_spec {
         ],
         ["zip=s",   "zipper",   {default => '/usr/bin/zip'}],
         ["unzip=s", "unzipper", {default => '/usr/bin/unzip'}],
-        ["csv" ,        "to CSV (get)"] ,
+        ["csv",     "to CSV (get)"],
     );
 }
 
@@ -163,7 +163,8 @@ sub _list {
     my $gen   = $store->list;
 
     if ($self->app->global_options->{csv}) {
-        printf join("\t",qw(id file_name access_level relation embargo)) . "\n";
+        printf join("\t", qw(id file_name access_level relation embargo))
+            . "\n";
     }
 
     while (my $key = $gen->()) {
@@ -182,7 +183,7 @@ sub _list {
         if ($self->app->global_options->{csv}) {
             for (@files) {
                 next if $_->key eq 'thumbnail.png';
-                printf join("\t",$key, $_->key,'','','') . "\n";
+                printf join("\t", $key, $_->key, '', '', '') . "\n";
             }
         }
         else {
@@ -192,8 +193,9 @@ sub _list {
                 }
             }
             else {
-                printf "%-40.40s %4d %9d %-20.20s %-20.20s\n", $key, int(@files),
-                    $size, strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)),
+                printf "%-40.40s %4d %9d %-20.20s %-20.20s\n", $key,
+                    int(@files), $size,
+                    strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)),
                     strftime("%Y-%m-%dT%H:%M:%S", localtime($created));
             }
         }
@@ -226,11 +228,12 @@ sub _get {
     my @files = $container->list;
 
     if ($self->app->global_options->{csv}) {
-        printf join("\t",qw(id file_name access_level relation embargo)) . "\n";
+        printf join("\t", qw(id file_name access_level relation embargo))
+            . "\n";
 
         for my $file (@files) {
             next if $file->key eq 'thumbnail.png';
-            printf join("\t",$key,$file->key,'','','') . "\n";
+            printf join("\t", $key, $file->key, '', '', '') . "\n";
         }
     }
     else {

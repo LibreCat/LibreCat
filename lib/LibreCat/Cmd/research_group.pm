@@ -66,7 +66,7 @@ sub _list {
     my $h     = LibreCat::App::Helper::Helpers->new;
     my $count = $h->research_group->each(
         sub {
-            my ($item) = @_;
+            my ($item)  = @_;
             my $id      = $item->{_id};
             my $name    = $item->{name};
             my $acronym = $item->{acronym};
@@ -108,26 +108,31 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret = 0;
-    my $importer = Catmandu->importer('YAML', file => $file);
-    my $helper = LibreCat::App::Helper::Helpers->new;
+    my $ret       = 0;
+    my $importer  = Catmandu->importer('YAML', file => $file);
+    my $helper    = LibreCat::App::Helper::Helpers->new;
     my $validator = LibreCat::Validator::Research_group->new;
 
-    my $records = $importer->select(sub {
-        my $rec = $_[0];
+    my $records = $importer->select(
+        sub {
+            my $rec = $_[0];
 
-        if ($validator->is_valid($rec)) {
-            $rec->{_id} //= $helper->new_record('research_group');
-            $helper->store_record('research_group', $rec);
-            print "added $rec->{_id}\n";
-            return 1;
+            if ($validator->is_valid($rec)) {
+                $rec->{_id} //= $helper->new_record('research_group');
+                $helper->store_record('research_group', $rec);
+                print "added $rec->{_id}\n";
+                return 1;
+            }
+            else {
+                print STDERR join("\n",
+                    "ERROR: not a valid research_group",
+                    @{$validator->last_errors}),
+                    "\n";
+                $ret = 2;
+                return 0;
+            }
         }
-        else {
-            print STDERR join("\n", "ERROR: not a valid research_group", @{$validator->last_errors}), "\n";
-            $ret = 2;
-            return 0;
-        }
-    });
+    );
 
     my $index = $helper->research_group;
     $index->add_many($records);
@@ -169,7 +174,7 @@ sub _valid {
 
             unless ($validator->is_valid($item)) {
                 my $errors = $validator->last_errors();
-                my $id     = $item->{_id} // '';
+                my $id = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
                         print STDERR "ERROR $id: $err\n";

@@ -44,7 +44,7 @@ use namespace::clean;
 
 with 'Catmandu::Logger';
 
-my $conf = Catmandu->config->{citation};
+my $conf      = Catmandu->config->{citation};
 my $load_path = Catmandu->default_load_path;
 
 has style => (is => 'ro');
@@ -69,17 +69,12 @@ sub _build_styles {
 sub _request {
     my ($self, $data) = @_;
 
-    my $ua = LWP::UserAgent->new();
+    my $ua  = LWP::UserAgent->new();
     my $uri = URI->new($conf->{csl}->{url});
-    $uri->query_form({
-        responseformat => 'html',
-        linkwrap => 1,
-        style => $data->{style},
-    });
-    my $res = $ua->post(
-        $uri->as_string(),
-        Content => encode_utf8($data->{content}),
-    );
+    $uri->query_form(
+        {responseformat => 'html', linkwrap => 1, style => $data->{style},});
+    my $res = $ua->post($uri->as_string(),
+        Content => encode_utf8($data->{content}),);
 
     return $res if $self->debug;
 
@@ -94,7 +89,7 @@ sub _request {
     else {
         $self->log->error("Error: " . $res->{_rc});
         return 0;
-    };
+    }
 
 }
 
@@ -120,11 +115,8 @@ sub create {
             {line_delimited => 1, fix => "fixes/to_csl.fix"});
         foreach my $s (@{$self->styles}) {
             my $locale = ($s eq 'dgps') ? 'de' : $self->locale;
-            $cite->{$s} = $self->_request({
-                locale => $locale,
-                style  => $s,
-                content  => $csl_json,
-                });
+            $cite->{$s} = $self->_request(
+                {locale => $locale, style => $s, content => $csl_json,});
 
         }
 

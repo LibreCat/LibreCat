@@ -117,26 +117,32 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret = 0;
-    my $importer = Catmandu->importer('YAML', file => $file);
-    my $helper = LibreCat::App::Helper::Helpers->new;
+    my $ret       = 0;
+    my $importer  = Catmandu->importer('YAML', file => $file);
+    my $helper    = LibreCat::App::Helper::Helpers->new;
     my $validator = LibreCat::Validator::Publication->new;
 
-    my $records = $importer->select(sub {
-        my $rec = $_[0];
+    my $records = $importer->select(
+        sub {
+            my $rec = $_[0];
 
-        if ($validator->is_valid($rec)) {
-            $rec->{_id} //= $helper->new_record('publication');
-            $helper->store_record('publication', $rec);
-            print "added $rec->{_id}\n";
-            return 1;
+            if ($validator->is_valid($rec)) {
+                $rec->{_id} //= $helper->new_record('publication');
+                $helper->store_record('publication', $rec);
+                print "added $rec->{_id}\n";
+                return 1;
+            }
+            else {
+                print STDERR join("\n",
+                    $rec->{_id},
+                    "ERROR: not a valid publication",
+                    @{$validator->last_errors}),
+                    "\n";
+                $ret = 2;
+                return 0;
+            }
         }
-        else {
-            print STDERR join("\n", $rec->{_id}, "ERROR: not a valid publication", @{$validator->last_errors}), "\n";
-            $ret = 2;
-            return 0;
-        }
-    });
+    );
 
     my $index = $helper->publication;
     $index->add_many($records);
@@ -150,7 +156,9 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result = LibreCat::App::Helper::Helpers->new->delete_record('publication', $id);
+    my $result
+        = LibreCat::App::Helper::Helpers->new->delete_record('publication',
+        $id);
 
     if ($result) {
         print "deleted $id\n";
@@ -167,7 +175,9 @@ sub _purge {
 
     croak "usage: $0 purge <id>" unless defined($id);
 
-    my $result = LibreCat::App::Helper::Helpers->new->purge_record('publication', $id);
+    my $result
+        = LibreCat::App::Helper::Helpers->new->purge_record('publication',
+        $id);
 
     if ($result) {
         print "purged $id\n";
@@ -194,7 +204,7 @@ sub _valid {
 
             unless ($validator->is_valid($item)) {
                 my $errors = $validator->last_errors();
-                my $id     = $item->{_id} // '';
+                my $id = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
                         print STDERR "ERROR $id: $err\n";
@@ -213,7 +223,7 @@ sub _valid {
 }
 
 sub _files {
-    my ($self,$file) = @_;
+    my ($self, $file) = @_;
 
     if ($file && $file =~ /^\d+$/) {
         $self->_files_list($file);
@@ -229,22 +239,19 @@ sub _files {
 }
 
 sub _files_list {
-    my ($self,$id) = @_;
-    printf "%-9s\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n"
-        , qw(id access_level relation embargo file_name);
+    my ($self, $id) = @_;
+    printf "%-9s\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n",
+        qw(id access_level relation embargo file_name);
 
     my $printer = sub {
-            my ($item) = @_;
-            return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
+        my ($item) = @_;
+        return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
 
-            for my $file (@{$item->{file}}) {
-                printf "%-9d\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n"
-                            , $item->{_id}
-                            , $file->{access_level}
-                            , $file->{relation}
-                            , $file->{embargo} // 'NA'
-                            , $file->{file_name};
-            }
+        for my $file (@{$item->{file}}) {
+            printf "%-9d\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n", $item->{_id},
+                $file->{access_level}, $file->{relation},
+                $file->{embargo} // 'NA', $file->{file_name};
+        }
     };
 
     if ($id) {
@@ -257,16 +264,16 @@ sub _files_list {
 }
 
 sub _files_load {
-    my ($self,$filename) = @_;
+    my ($self, $filename) = @_;
     $filename = '/dev/stdin' if $filename eq '-';
 
     croak "list - can't open $filename for reading" unless -r $filename;
-    local(*FH);
+    local (*FH);
 
     my $importer = Catmandu->importer('TSV', file => $filename);
 
     my $prev_id = undef;
-    my $files  = [];
+    my $files   = [];
 
     my @allowed_fields = qw(
         id
@@ -278,43 +285,45 @@ sub _files_load {
 
     my $checked = 0;
 
-    $importer->each(sub {
-        my $record = $_[0];
+    $importer->each(
+        sub {
+            my $record = $_[0];
 
-        my $file = {};
+            my $file = {};
 
-        for my $key (keys %$record) {
-            my $new_key = $key;
-            $new_key =~ s{^\s*|\s*$}{}g;
-            $file->{$new_key} = $record->{$key};
-            $file->{$new_key} =~ s{^\s*|\s*$}{}g;
-            croak "file - field '$new_key' not allowed in file"
+            for my $key (keys %$record) {
+                my $new_key = $key;
+                $new_key =~ s{^\s*|\s*$}{}g;
+                $file->{$new_key} = $record->{$key};
+                $file->{$new_key} =~ s{^\s*|\s*$}{}g;
+                croak "file - field '$new_key' not allowed in file"
                     unless $checked || grep {/^$new_key$/} @allowed_fields;
+            }
+
+            $checked = 1;
+
+            my $id = $file->{id};
+
+            croak "file - no id column found?" unless defined($id);
+
+            delete $file->{id};
+
+            if ($prev_id && $prev_id ne $id) {
+                $self->_file_process($prev_id, $files);
+                $files = [];
+            }
+
+            push @$files, $file;
+
+            $prev_id = $id;
         }
+    );
 
-        $checked = 1;
-
-        my $id = $file->{id};
-
-        croak "file - no id column found?" unless defined($id);
-
-        delete $file->{id};
-
-        if ($prev_id && $prev_id ne $id) {
-            $self->_file_process($prev_id,$files);
-            $files = [];
-        }
-
-        push @$files , $file;
-
-        $prev_id = $id;
-    });
-
-    $self->_file_process($prev_id,$files) if $files;
+    $self->_file_process($prev_id, $files) if $files;
 }
 
 sub _file_process {
-    my ($self,$id,$files) = @_;
+    my ($self, $id, $files) = @_;
 
     my $data = LibreCat::App::Helper::Helpers->new->get_publication($id);
 
@@ -323,7 +332,7 @@ sub _file_process {
         return;
     }
 
-    my %file_map = map  { $_->{file_name} => $_ } @{$data->{file}};
+    my %file_map = map {$_->{file_name} => $_} @{$data->{file}};
 
     # Update the files with stored data
     my $nr = 0;
@@ -336,7 +345,7 @@ sub _file_process {
         # Copy the old metadata if available
         if ($old) {
             for my $key (keys %$old) {
-                if (! exists $file->{$key} || ! length $file->{$key}) {
+                if (!exists $file->{$key} || !length $file->{$key}) {
                     $file->{$key} = $old->{$key};
                 }
             }
@@ -347,11 +356,15 @@ sub _file_process {
             delete $file->{$key} if $file->{$key} eq 'NA';
         }
 
-        unless (
-            $file->{file_id} && $file->{date_created} && $file->{date_updated} &&
-            $file->{content_type} && $file->{creator}
-        ) {
-            $file = LibreCat::App::Catalogue::Controller::File::update_file($id,$file);
+        unless ($file->{file_id}
+            && $file->{date_created}
+            && $file->{date_updated}
+            && $file->{content_type}
+            && $file->{creator})
+        {
+            $file
+                = LibreCat::App::Catalogue::Controller::File::update_file($id,
+                $file);
         }
     }
 

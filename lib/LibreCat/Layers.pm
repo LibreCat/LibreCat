@@ -11,18 +11,19 @@ use Moo;
 use namespace::clean;
 
 has loaded => (is => 'rwp', default => sub {0});
-has root_path => (is => 'lazy');
+has root_path   => (is => 'lazy');
 has layer_paths => (is => 'lazy');
-has config => (is => 'lazy', init_arg => undef);
-has css_paths => (is => 'lazy', init_arg => undef);
-for (qw(paths lib_paths config_paths public_paths scss_paths template_paths)) {
+has config      => (is => 'lazy', init_arg => undef);
+has css_paths   => (is => 'lazy', init_arg => undef);
+for (qw(paths lib_paths config_paths public_paths scss_paths template_paths))
+{
     has $_ => (is => 'ro', init_arg => undef, default => sub {[]});
 }
 
 sub BUILD {
     my ($self, $args) = @_;
 
-    my $root_path = $self->root_path;
+    my $root_path   = $self->root_path;
     my $layer_paths = $self->layer_paths;
 
     for (($self->root_path, reverse @$layer_paths)) {
@@ -57,7 +58,8 @@ sub BUILD {
 
         if ($view_path->is_dir) {
             unshift @{$self->template_paths}, $view_path->stringify;
-        } elsif ($template_path->is_dir) {
+        }
+        elsif ($template_path->is_dir) {
             unshift @{$self->template_paths}, $template_path->stringify;
         }
     }
@@ -68,7 +70,7 @@ sub load {
 
     return $self if $self->loaded;
 
-    my $config = $self->config;
+    my $config    = $self->config;
     my $lib_paths = $self->lib_paths;
 
     if (my $log_config = $config->{log4perl}) {
@@ -100,9 +102,11 @@ sub _build_layer_paths {
 
     if ($ENV{LIBRECAT_LAYERS}) {
         [split ',', $ENV{LIBRECAT_LAYERS}];
-    } elsif (path($self->root_path, 'layers.yml')->is_file) {
+    }
+    elsif (path($self->root_path, 'layers.yml')->is_file) {
         read_yaml(path($self->root_path, 'layers.yml')->stringify) // [];
-    } else {
+    }
+    else {
         [];
     }
 }
@@ -110,14 +114,17 @@ sub _build_layer_paths {
 sub _build_css_paths {
     my ($self) = @_;
 
-    [map { $_->stringify} grep { $_->is_dir } map { path($_)->child('css') } @{$self->public_paths}];
+    [map {$_->stringify}
+        grep {$_->is_dir}
+        map  {path($_)->child('css')} @{$self->public_paths}];
 }
 
 sub _build_config {
     my ($self) = @_;
 
     my $config = Config::Onion->new(prefix_key => '_prefix');
-    $config->load_glob(map { path($_)->child('*.yml')->stringify } reverse @{$self->config_paths});
+    $config->load_glob(map {path($_)->child('*.yml')->stringify}
+            reverse @{$self->config_paths});
     $config->get;
 }
 

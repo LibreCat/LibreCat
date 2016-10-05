@@ -39,7 +39,9 @@ public/javascripts/MathJax/*
 public/javascripts/commonmarkjs/*
 public/pub_index.txt
 sessions/
-tmp/
+tmp/*
+t/tmp/*
+!t/tmp/.gitkeep
 uploads/
 vendor/
 views/admin/forms/

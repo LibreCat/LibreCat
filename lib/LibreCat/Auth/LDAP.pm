@@ -72,8 +72,9 @@ sub _authenticate {
     $self->log->debug("unbind");
     $self->ldap->unbind;
 
-    $bind->code == Net::LDAP::LDAP_SUCCESS ?
-        +{ uid => $username, package => __PACKAGE__, package_id => $self->id } : undef;
+    $bind->code == Net::LDAP::LDAP_SUCCESS
+        ? +{uid => $username, package => __PACKAGE__, package_id => $self->id}
+        : undef;
 }
 
 # TODO use exception objects

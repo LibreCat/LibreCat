@@ -17,13 +17,17 @@ sub can_edit {
 
     if ($user_role eq 'super_admin') {
         return 1;
-    } elsif ($user_role eq 'reviewer') {
+    }
+    elsif ($user_role eq 'reviewer') {
         my @deps = map {"department=$_->{_id}"} @{$user->{reviewer}};
-        $cql .= " OR " .join(' OR ', @deps) .")";
-    } elsif ($user_role eq 'project_reviewer') {
+        $cql .= " OR " . join(' OR ', @deps) . ")";
+    }
+    elsif ($user_role eq 'project_reviewer') {
         my @projs = map {"project=$_->{_id}"} @{$user->{project_reviewer}};
         $cql .= " OR " . join(' OR ', @projs) . ")";
-    } elsif ($user_role eq 'data_manager') {
+    }
+    elsif ($user_role eq 'data_manager') {
+
         # not yet correct/enough!!!
         my @deps = map {"department=$_->{_id}"} @{$user->{data_manager}};
         $cql .= " OR " . join(' OR ', @deps) . ")";
@@ -35,8 +39,9 @@ sub can_edit {
     else {
         $cql .= " OR creator=$user->{_id})";
     }
-    if($user_role ne 'super_admin'){
-        $cql .= " AND type<>bidissertation AND type<>bimasterthesis AND type<>bibachelorthesis AND type<>bipostdocthesis AND locked<>1";
+    if ($user_role ne 'super_admin') {
+        $cql
+            .= " AND type<>bidissertation AND type<>bimasterthesis AND type<>bibachelorthesis AND type<>bipostdocthesis AND locked<>1";
     }
 
     my $hits = h->publication->search(cql_query => $cql, limit => 1);

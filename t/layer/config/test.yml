@@ -1,0 +1,19 @@
+store:
+  backup:
+    package: DBI
+    options:
+      data_source: "dbi:SQLite:dbname=t/tmp/librecat_test.sqlite3"
+      sqlite_use_immediate_transaction: 1
+      bags:
+        publication: &backup_settings
+          plugins: ['Datestamps', 'Versioning']
+          id_generator: UniBiDefault
+        project:
+          plugins: ['Datestamps', 'Versioning']
+          id_generator: UniBiProject
+        researcher: *backup_settings
+        department: *backup_settings
+        research_group:
+          plugins: ['Datestamps', 'Versioning']
+          id_generator: UniBiResearchGroup
+

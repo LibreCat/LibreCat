@@ -65,10 +65,8 @@ get qr{/(data|publication)/*} => sub {
     $p->{sort} = $sort_style->{sort};
 
     ($bag eq 'data')
-        ? push @{$p->{q}},
-        ("status=public", "type=research_data")
-        : push @{$p->{q}},
-        ("status=public", "type<>research_data");
+        ? push @{$p->{q}}, ("status=public", "type=research_data")
+        : push @{$p->{q}}, ("status=public", "type<>research_data");
 
     my $hits = h->search_publication($p);
 
