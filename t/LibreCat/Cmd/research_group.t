@@ -7,8 +7,6 @@ BEGIN {
     LibreCat::Layers->new(layer_paths => [qw(t/layer)])->load;
 }
 
-use strict;
-use warnings;
 use Catmandu::Sane;
 use Catmandu;
 
