@@ -31,8 +31,6 @@ script:
 
 notifications:
   email: false
-#  slack:
-#    on_success: always
-#    on_failure: change
+  slack: librecat:2Rvl147KSMvEdivUg88Ktrbk
 
 env: AUTOMATED_TESTING=1
