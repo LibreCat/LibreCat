@@ -1,7 +1,5 @@
-use Test::Lib;
-use TestHeader;
-
-Catmandu->load('.');
+use Catmandu::Sane;
+use Test::More;
 
 my $pkg;
 

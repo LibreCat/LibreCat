@@ -1,5 +1,6 @@
-use Test::Lib;
-use TestHeader;
+use strict;
+use warnings FATAL => 'all';
+use Test::More;
 
 my $pkg;
 

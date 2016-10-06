@@ -1,5 +1,6 @@
-use Test::Lib;
-use TestHeader;
+use Catmandu::Sane;
+use Test::More;
+use Test::Exception;
 
 my $pkg;
 
@@ -14,8 +15,8 @@ can_ok $mailer, 'work';
 lives_ok {
     $mailer->work(
         {
-            from    => "me@example.com",
-            to      => "you@example.com",
+            from    => 'me@example.com',
+            to      => 'you@example.com',
             subject => "Mail!"
         }
         )
