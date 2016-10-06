@@ -16,4 +16,6 @@ store:
         research_group:
           plugins: ['Datestamps', 'Versioning']
           id_generator: UniBiResearchGroup
-
+  search:
+    options:
+      index_name: test
