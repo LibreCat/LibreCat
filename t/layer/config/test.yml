@@ -3,12 +3,10 @@ store:
     package: DBI
     options:
       data_source: "dbi:SQLite:dbname=t/tmp/librecatsystem_test.sqlite3"
-      sqlite_use_immediate_transaction: 1
   backup:
     package: DBI
     options:
       data_source: "dbi:SQLite:dbname=t/tmp/librecat_test.sqlite3"
-      sqlite_use_immediate_transaction: 1
       bags:
         publication: &backup_settings
           plugins: ['Datestamps', 'Versioning']
