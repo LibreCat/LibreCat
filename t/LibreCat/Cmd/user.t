@@ -25,6 +25,10 @@ BEGIN {
 
 require_ok $pkg;
 
+# empty db
+Catmandu->store('backup')->bag('researcher')->delete_all;
+Catmandu->store('search')->bag('researcher')->delete_all;
+
 {
     my $result = test_app(qq|LibreCat::CLI| => ['user']);
     ok $result->error, 'ok threw an exception';
