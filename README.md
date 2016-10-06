@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/LibreCat/LibreCat.svg?branch=master)](https://travis-ci.org/LibreCat/LibreCat)
+
 # LibreCat - an institutional repository
 
 LibreCat is a new institutional repository system developed by [LibreCat Group](http://librecat.org) which has as its key features:

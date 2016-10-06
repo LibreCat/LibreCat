@@ -1,5 +1,5 @@
-use Test::Lib;
-use TestHeader;
+use Catmandu::Sane;
+use Test::More;
 
 my $pkg;
 

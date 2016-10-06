@@ -23,10 +23,16 @@ install:
   - cpanm --quiet --notest --skip-satisfied Devel::Cover
 
 script:
-  - prove -lr
+  - prove -lr t/
 
 # after_success:
 #   - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls
 #   - cover -report coveralls
 
-env: RELEASE_TESTING=1 AUTOMATED_TESTING=1
+notifications:
+  email: false
+#  slack:
+#    on_success: always
+#    on_failure: change
+
+env: AUTOMATED_TESTING=1

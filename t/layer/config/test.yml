@@ -1,4 +1,8 @@
 store:
+  default:
+    package: DBI
+    options:
+      data_source: "dbi:SQLite:dbname=t/tmp/librecatsystem_test.sqlite3"
   backup:
     package: DBI
     options:
