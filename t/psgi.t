@@ -1,3 +1,10 @@
+BEGIN {
+    use Catmandu::Sane;
+    use Path::Tiny;
+    use LibreCat::Layers;
+    LibreCat::Layers->new(layer_paths => [qw(t/layer)])->load;
+}
+
 use Plack::Test;
 use Test::More;
 use Path::Tiny;

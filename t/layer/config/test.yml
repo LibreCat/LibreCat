@@ -3,6 +3,7 @@ store:
     package: DBI
     options:
       data_source: "dbi:SQLite:dbname=t/tmp/librecatsystem_test.sqlite3"
+      sqlite_use_immediate_transaction: 1
   backup:
     package: DBI
     options:
