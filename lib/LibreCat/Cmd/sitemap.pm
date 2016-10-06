@@ -3,8 +3,7 @@ package LibreCat::Cmd::sitemap;
 use Catmandu::Sane;
 use Catmandu::Util qw(io join_path);
 use Catmandu;
-use DateTime;
-
+use POSIX qw(strftime);
 use parent 'LibreCat::Cmd';
 
 sub command_opt_spec {
@@ -16,7 +15,7 @@ sub command {
 
     my $config = Catmandu->config;
     my $bag    = Catmandu->store('search')->bag('publication');
-    my $today  = DateTime->now->ymd;
+    my $today  = strftime "%Y-%m-%d", gmtime;
     my $n      = 0;
 
     $bag->select(sub {$_[0]->{status} && $_[0]->{status} eq 'public'})
