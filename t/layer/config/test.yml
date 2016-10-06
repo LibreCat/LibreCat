@@ -8,9 +8,11 @@ store:
     options:
       data_source: "dbi:SQLite:dbname=t/tmp/librecat_test.sqlite3"
       bags:
+        project:
+          plugins: ['Datestamps']
         publication: &backup_settings
           plugins: ['Datestamps', 'Versioning']
-          id_generator: UniBiDefault
+          id_generator: Incremental
         project:
           plugins: ['Datestamps', 'Versioning']
           id_generator: UniBiProject
