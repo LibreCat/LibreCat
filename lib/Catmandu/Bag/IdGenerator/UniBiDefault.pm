@@ -5,22 +5,32 @@ use Moo;
 
 with 'Catmandu::Bag::IdGenerator';
 
-has id_store => (is => 'lazy');
-
-sub _build_id_store {
-    Catmandu->store('default');
-}
-
 sub generate {
-    my ($self) = @_;
+    my ($self, $bag) = @_;
 
-    my $id = undef;
+    my $id;
 
-    $self->id_store->transaction(
+    $bag->store->transaction(
         sub {
-            my $rec = $self->id_store->bag->get_or_add('1', {latest => '0'});
+            my $info_bag = $bag->store->bag($bag->name.'_info');
+
+            # TODO this is temporary, there's no more need for the default store after this
+            # migration
+            #my $rec = $info_bag->get_or_add('id', {latest => '0'});
+            my $rec = $info_bag->get('id');
+            unless ($rec) {
+                my $old_store = Catmandu->store;
+                $old_store->transaction(sub {
+                    if ($rec = $old_store->bag->get('1')) {
+                        $old_store->bag->delete_all;
+                    }
+                });
+                $rec ||= {latest => '0'};
+                $rec->{_id} = 'id';
+            }
+
             $id = ++$rec->{latest};
-            $self->id_store->bag->add($rec);
+            $info_bag->add($rec);
         }
     );
 
