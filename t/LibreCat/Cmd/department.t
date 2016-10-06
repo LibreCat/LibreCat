@@ -7,15 +7,13 @@ BEGIN {
     LibreCat::Layers->new(layer_paths => [qw(t/layer)])->load;
 }
 
-use strict;
-use warnings;
 use Catmandu::Sane;
 use Catmandu;
 
 use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
-use App::Cmd::Tester::CaptureExternal;
+use App::Cmd::Tester;
 use Cpanel::JSON::XS;
 
 my $pkg;
@@ -26,6 +24,10 @@ BEGIN {
 }
 
 require_ok $pkg;
+
+# delete db
+Catmandu->store('backup')->bag('department')->delete_all;
+Catmandu->store('search')->bag('deparment')->delete_all;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['department']);
@@ -42,7 +44,7 @@ require_ok $pkg;
 
     my $count = count_department($output);
 
-    ok $count > 0, 'got more than one department';
+    ok $count == 0, 'got no departments';
 }
 
 {
@@ -73,8 +75,6 @@ require_ok $pkg;
 
     ok $output , 'got an output';
 
-    utf8::decode($output);
-
     my $importer = Catmandu->importer('YAML', file => \$output);
 
     my $record = $importer->first;
@@ -104,7 +104,7 @@ require_ok $pkg;
     ok length($output) == 0, 'got no result';
 }
 
-done_testing 18;
+done_testing;
 
 sub count_department {
     my $str = shift;

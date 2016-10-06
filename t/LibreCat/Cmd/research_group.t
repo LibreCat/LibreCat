@@ -15,7 +15,7 @@ use Catmandu;
 use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
-use App::Cmd::Tester::CaptureExternal;
+use App::Cmd::Tester;
 use Cpanel::JSON::XS;
 
 my $pkg;
@@ -27,9 +27,26 @@ BEGIN {
 
 require_ok $pkg;
 
+# delete db
+Catmandu->store('backup')->bag('research_group')->delete_all;
+Catmandu->store('search')->bag('research_group')->delete_all;
+
 {
     my $result = test_app(qq|LibreCat::CLI| => ['research_group']);
     ok $result->error, 'ok threw an exception';
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['research_group', 'list']);
+
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    ok $output , 'got an output';
+
+    my $count = count_research_group($output);
+
+    ok $count == 0, 'got no research groups';
 }
 
 {
