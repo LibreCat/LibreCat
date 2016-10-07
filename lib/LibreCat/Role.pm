@@ -34,13 +34,7 @@ sub {
 
             # TODO hardcoded for now
             if ($filter) {
-                if ($filter eq 'locked') {
-                    unshift @$conditions, "\$object->{locked}";
-                }
-                elsif ($filter eq 'status') {
-                    unshift @$conditions, "\$object->{status} && \$object->{status} eq '$param'";
-                }
-                elsif ($filter eq 'own') {
+                if ($filter eq 'own') {
                     # TODO
                 }
                 elsif ($filter eq 'owned_by') {
@@ -48,6 +42,12 @@ sub {
                 }
                 elsif ($filter eq 'affiliated_with') {
                     # TODO
+                }
+                elsif (defined $param) {
+                    unshift @$conditions, "\$object->{'$filter'} && \$object->{'$filter'} eq '$param'";
+                }
+                else {
+                    unshift @$conditions, "\$object->{'$filter'}";
                 }
             }
         }

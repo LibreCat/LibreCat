@@ -36,9 +36,32 @@ $role = LibreCat::Role->new(rules => [
 ]);
 
 is $role->may($user, 'eat'), 0;
+is $role->may($user, 'eat', {_type => 'shoe'}), 0;
 is $role->may($user, 'eat', {_type => 'food'}), 1;
 is $role->may($user, 'eat', {_type => 'food/cookie'}), 0;
 is $role->may($user, 'eat', {_type => 'food/carrot'}), 1;
+
+$role = LibreCat::Role->new(rules => [
+    [qw(can eat food)],
+    [qw(cannot eat food/cookie)],
+    [qw(can eat food/cookie healthy)],
+]);
+
+is $role->may($user, 'eat', {_type => 'food'}), 1;
+is $role->may($user, 'eat', {_type => 'food/cookie'}), 0;
+is $role->may($user, 'eat', {_type => 'food/carrot', healthy => 0}), 1;
+is $role->may($user, 'eat', {_type => 'food/cookie', healthy => 1}), 1;
+
+$role = LibreCat::Role->new(rules => [
+    [qw(can eat fruit)],
+    [qw(can eat vegetable)],
+    [qw(cannot eat fruit color red)],
+]);
+
+is $role->may($user, 'eat', {_type => 'fruit/apple'}), 1;
+is $role->may($user, 'eat', {_type => 'fruit/apple', color => 'yellow'}), 1;
+is $role->may($user, 'eat', {_type => 'fruit/apple', color => 'red'}), 0;
+is $role->may($user, 'eat', {_type => 'vegetable/tomato', color => 'red'}), 1;
 
 done_testing;
 
