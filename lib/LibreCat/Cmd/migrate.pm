@@ -23,15 +23,22 @@ sub command {
         for my $bag (keys %{$conf->{options}{bags}}) {
             my $c = $conf->{options}{bags}{$bag};
             if ($c->{id_generator} && $c->{id_generator} eq 'UniBiDefault') {
-                say "Error in config for store $store, bag $bag. id_generator UnibiDefault has been renamed to Incremental.";
+                say
+                    "Error in config for store $store, bag $bag. id_generator UnibiDefault has been renamed to Incremental.";
                 $warns++;
             }
         }
     }
 
-    if (!$store_config->{backup}{options}{bags}{session} ||
-        !$store_config->{backup}{options}{bags}{session}{plugins} ||
-        !array_includes($store_config->{backup}{options}{bags}{session}{plugins}, 'Datestamps')) {
+    if (
+           !$store_config->{backup}{options}{bags}{session}
+        || !$store_config->{backup}{options}{bags}{session}{plugins}
+        || !array_includes(
+            $store_config->{backup}{options}{bags}{session}{plugins},
+            'Datestamps'
+        )
+        )
+    {
         say q|Error in config for store backup. session bag config should be:
   session:
     plugins: ['Datestamps']|;
@@ -42,7 +49,9 @@ sub command {
 
     # migrate latest publication id from system store to backup store
     my $info_bag = Catmandu->store('backup')->bag('info');
-    if (!$info_bag->get('publication_id') && exists Catmandu->config->{store}{default}) {
+    if (!$info_bag->get('publication_id')
+        && exists Catmandu->config->{store}{default})
+    {
         if (my $rec = Catmandu->store->bag->get('1')) {
 
             say "Migrating lastest publication id";
@@ -57,7 +66,10 @@ sub command {
 
     # migrate sessions from system store to backup store
     my $session_bag = Catmandu->store('backup')->bag('session');
-    if (!$session_bag->count && Catmandu->config->{store}{default} && Catmandu->store->bag('session')->count) {
+    if (   !$session_bag->count
+        && Catmandu->config->{store}{default}
+        && Catmandu->store->bag('session')->count)
+    {
         say "Migrating sessions";
 
         my $old_session_bag = Catmandu->store->bag('session');

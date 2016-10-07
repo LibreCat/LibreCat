@@ -44,10 +44,11 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
     #    h->export_publication($hits, $p->{fmt});
     #}
     #else {
-        #return redirect "$bag/$hits->first->{_id}", 301 if $altid;
-        #$hits->{hits}->[0]->{bag} = $bag;
-        $hits->{total} ? status 200 : status 404;
-        template "publication/record", $hits->first;
+    #return redirect "$bag/$hits->first->{_id}", 301 if $altid;
+    #$hits->{hits}->[0]->{bag} = $bag;
+    $hits->{total} ? status 200 : status 404;
+    template "publication/record", $hits->first;
+
     #}
 };
 
@@ -74,24 +75,25 @@ get qr{/(data|publication)/*} => sub {
     $hits->{sort}          = $p->{sort};
     $hits->{user_settings} = $sort_style;
 
-    #if ($p->{fmt} ne 'html') {
-    #    h->export_publication($hits, $p->{fmt});
-    #}
-    #elsif ($p->{embed} or ($p->{ftyp} and $p->{ftyp} eq "iframe")) {
-    #    my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
-    #    $hits->{lang}  = $lang;
-    #    $hits->{embed} = 1;
-    #    template "iframe", $hits;
-    #}
-    #else {
-        #my $template = 'publication/list';
-        #if ($p->{ftyp} and $p->{ftyp} =~ /js/) {
-        #$template .= "_" . $p->{ftyp};
-        #$template .= "_num" if ($p->{enum} and $p->{enum} eq "1");
-        #$template .= "_numasc" if ($p->{enum} and $p->{enum} eq "2");
-        #header("Content-Type" => "text/plain")
-        #}
+   #if ($p->{fmt} ne 'html') {
+   #    h->export_publication($hits, $p->{fmt});
+   #}
+   #elsif ($p->{embed} or ($p->{ftyp} and $p->{ftyp} eq "iframe")) {
+   #    my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
+   #    $hits->{lang}  = $lang;
+   #    $hits->{embed} = 1;
+   #    template "iframe", $hits;
+   #}
+   #else {
+   #my $template = 'publication/list';
+   #if ($p->{ftyp} and $p->{ftyp} =~ /js/) {
+   #$template .= "_" . $p->{ftyp};
+   #$template .= "_num" if ($p->{enum} and $p->{enum} eq "1");
+   #$template .= "_numasc" if ($p->{enum} and $p->{enum} eq "2");
+   #header("Content-Type" => "text/plain")
+   #}
     template 'publication/list', $hits;
+
     #}
 };
 
