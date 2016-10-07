@@ -29,6 +29,7 @@
 
 	<div class="col-md-6 col-sm-5 col-xs-12">
 	  <h3 class="margin-top0">[% UNLESS !thisPerson %][% IF thisPerson.idm_title %]<span itemprop="honorificPrefix">[% thisPerson.idm_title %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span>[% IF backend %] ([% h.loc("header.role.${session.role}") %])[% END %][% ELSE %][% h.loc("person_profile.id_not_found") %][% END %]</h3>
+      <div class="text-muted">[% h.get_department(thisPerson.department.0._id).display | html %]</div>
 	[% INCLUDE person_profile.tt %]
 	</div>
 
