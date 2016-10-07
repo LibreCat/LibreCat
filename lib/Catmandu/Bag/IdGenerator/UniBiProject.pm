@@ -8,7 +8,7 @@ with 'Catmandu::Bag::IdGenerator';
 sub generate {
     my ($self, $bag) = @_;
 
-    my $all = [sort { $b->{_id} cmp $a->{_id} } @{$bag->to_array}];
+    my $all = [sort {$b->{_id} cmp $a->{_id}} @{$bag->to_array}];
 
     if (@$all > 0) {
         my $id = $all->[0]->{_id};

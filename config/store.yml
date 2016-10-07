@@ -18,9 +18,11 @@ backup:
     username: librecat
     password: librecat
     bags:
+      session:
+        plugins: ['Datestamps']
       publication: &backup_settings
         plugins: ['Datestamps', 'Versioning']
-        id_generator: UniBiDefault
+        id_generator: Incremental
       project:
         plugins: ['Datestamps', 'Versioning']
         id_generator: UniBiProject

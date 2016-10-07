@@ -2,8 +2,8 @@ BEGIN {
     use Catmandu::Sane;
     use Path::Tiny;
     use LibreCat::Layers;
-    LibreCat::Layers->new->load;
-};
+    LibreCat::Layers->new(layer_paths => [qw(t/layer)])->load;
+}
 
 use strict;
 use warnings;

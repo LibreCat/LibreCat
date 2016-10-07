@@ -47,7 +47,7 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
         #return redirect "$bag/$hits->first->{_id}", 301 if $altid;
         #$hits->{hits}->[0]->{bag} = $bag;
         $hits->{total} ? status 200 : status 404;
-        template "frontdoor/record", $hits->first;
+        template "publication/record", $hits->first;
     #}
 };
 
@@ -65,17 +65,14 @@ get qr{/(data|publication)/*} => sub {
     $p->{sort} = $sort_style->{sort};
 
     ($bag eq 'data')
-        ? push @{$p->{q}},
-        ("status=public", "type=research_data")
-        : push @{$p->{q}},
-        ("status=public", "type<>research_data");
+        ? push @{$p->{q}}, ("status=public", "type=research_data")
+        : push @{$p->{q}}, ("status=public", "type<>research_data");
 
     my $hits = h->search_publication($p);
 
     $hits->{style}         = $sort_style->{style};
     $hits->{sort}          = $p->{sort};
     $hits->{user_settings} = $sort_style;
-    #$hits->{bag}           = $bag;
 
     #if ($p->{fmt} ne 'html') {
     #    h->export_publication($hits, $p->{fmt});
@@ -94,7 +91,7 @@ get qr{/(data|publication)/*} => sub {
         #$template .= "_numasc" if ($p->{enum} and $p->{enum} eq "2");
         #header("Content-Type" => "text/plain")
         #}
-        template 'publication/list', $hits;
+    template 'publication/list', $hits;
     #}
 };
 

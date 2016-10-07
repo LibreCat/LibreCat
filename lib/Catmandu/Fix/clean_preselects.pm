@@ -16,15 +16,15 @@ sub fix {
         }
     }
 
-    if($pub->{related_material} and $pub->{related_material}->{link}){
+    if ($pub->{related_material} and $pub->{related_material}->{link}) {
         my $i = 0;
-        foreach my $rm (@{$pub->{related_material}->{link}}){
-            if($rm->{relation} and !$rm->{url}){
+        foreach my $rm (@{$pub->{related_material}->{link}}) {
+            if ($rm->{relation} and !$rm->{url}) {
                 splice @{$pub->{related_material}->{link}}, $i, 1;
             }
             $i++;
         }
-        if(!$pub->{related_material}->{link}->[0]){
+        if (!$pub->{related_material}->{link}->[0]) {
             delete $pub->{related_material}->{link};
         }
     }

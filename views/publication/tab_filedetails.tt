@@ -1,30 +1,30 @@
-<!-- BEGIN frontdoor/tab_filedetails.tt -->
+<!-- BEGIN publication/tab_filedetails.tt -->
 
 <div class="tab-pane" id="fileDetails">
-  [% IF data_reuse_license OR cc_license OR other_data_license %]
+  [%- IF data_reuse_license OR cc_license OR other_data_license %]
   <div class="row">
     <div class="col-md-12">
       <strong>[% h.loc("frontdoor.license_heading") %]</strong><br />
       <div class="alert alert-green">
-      [% IF data_reuse_license %]
+      [%- IF data_reuse_license %]
         [% h.loc("forms.$type.field.license.data_reuse_license.label") %]
-        [% SWITCH data_reuse_license %]
-          [% CASE 'PDDL' %]<a href="http://opendatacommons.org/licenses/pddl/" target="_blank">[% h.loc("forms.$type.field.license.data_reuse_license.pddl.name") %]</a>
-	      [% CASE 'ODC-By' %]<a href="http://opendatacommons.org/licenses/by/" target="_blank">[% h.loc("forms.$type.field.license.data_reuse_license.odcby.name") %]</a>
-	      [% CASE 'ODbL' %]<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">[% h.loc("forms.$type.field.license.data_reuse_license.odbl.name") %]</a>
-        [% END %]
-      [% END %]
-      [% IF cc_license %]
+        [%- SWITCH data_reuse_license %]
+          [%- CASE 'PDDL' %]<a href="http://opendatacommons.org/licenses/pddl/" target="_blank">[% h.loc("forms.$type.field.license.data_reuse_license.pddl.name") %]</a>
+	      [%- CASE 'ODC-By' %]<a href="http://opendatacommons.org/licenses/by/" target="_blank">[% h.loc("forms.$type.field.license.data_reuse_license.odcby.name") %]</a>
+	      [%- CASE 'ODbL' %]<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">[% h.loc("forms.$type.field.license.data_reuse_license.odbl.name") %]</a>
+        [%- END %]
+      [%- END %]
+      [%- IF cc_license %]
         <strong>[% h.loc("forms.${type}.field.license.cc_license.label") %]:</strong><br />
 	    <a href="http://creativecommons.org/[% SWITCH cc_license %][% CASE 'cc_by' %]licenses/by/4.0/"><img src="/images/cc_by.png" alt="CC-BY"[% CASE 'cc_by_sa' %]licenses/by-sa/4.0/"><img src="/images/cc_by_sa.png" alt="CC-BY-SA"[% CASE 'cc_0' %]publicdomain/zero/1.0/"><img src="/images/cc0.png" alt="CC0"[% END %] class="img-thumbnail pull-left" /></a>[% h.loc("forms.${type}.field.license.cc_license.${cc_license}.name") %]
-      [% END %]
-      [% IF other_data_license %]
-        [% other_data_license %]
-      [% END %]
+      [%- END %]
+      [%- IF other_data_license %]
+        [%- other_data_license %]
+      [%- END %]
       </div>
     </div>
   </div>
-  [% END %]
+  [%- END %]
 
   [% IF mainFile.size %]
   <div class="row">
@@ -66,13 +66,13 @@
     <div class="col-md-9">
       [% SWITCH fi.access_level %]
         [% CASE 'open_access' %]
-        [% INCLUDE frontdoor/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.open_access") %]
+        [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.open_access") %]
 
         [% CASE 'local' %]
-        [% INCLUDE frontdoor/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.local") %]
+        [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.local") %]
 
         [% CASE 'closed' %]
-        [% INCLUDE frontdoor/oa_lock.tt %][% IF fi.request_a_copy %] [% h.loc("frontdoor.tabs.file_details.access_level.request_a_copy") %][% ELSE %] [% h.loc("frontdoor.tabs.file_details.access_level.closed") %][% END %]
+        [% INCLUDE publication/oa_lock.tt %][% IF fi.request_a_copy %] [% h.loc("frontdoor.tabs.file_details.access_level.request_a_copy") %][% ELSE %] [% h.loc("frontdoor.tabs.file_details.access_level.closed") %][% END %]
       [% END %]
     </div>
   </div>
@@ -136,13 +136,13 @@
     <div class="col-md-9">
       [% SWITCH fi.access_level %]
         [% CASE 'open_access' %]
-        [% INCLUDE frontdoor/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.open_access") %]
+        [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.open_access") %]
 
         [% CASE 'local' %]
-        [% INCLUDE frontdoor/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.local") %]
+        [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.local") %]
 
         [% CASE 'closed' %]
-        [% INCLUDE frontdoor/oa_lock.tt %][% IF fi.request_a_copy %] [% h.loc("frontdoor.tabs.file_details.access_level.request_a_copy") %][% ELSE %] [% h.loc("frontdoor.tabs.file_details.access_level.closed") %][% END %]
+        [% INCLUDE publication/oa_lock.tt %][% IF fi.request_a_copy %] [% h.loc("frontdoor.tabs.file_details.access_level.request_a_copy") %][% ELSE %] [% h.loc("frontdoor.tabs.file_details.access_level.closed") %][% END %]
       [% END %]
     </div>
   </div>
@@ -167,4 +167,4 @@
   [% END %] <!-- IF relFile -->
 </div><!-- tab-pane fileDetails -->
 
-<!-- END frontdoor/tab_filedetails.tt -->
+<!-- END publication/tab_filedetails.tt -->

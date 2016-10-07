@@ -31,7 +31,7 @@ $(function () {
             });
         }
         else {
-            prev = "[% IF qp.person AND qp.person != "" %][% h.newuri_for("/person/$qp.person", qp, person="") %][% ELSIF qp.department AND qp.department != "" %][% h.newuri_for("/department/$qp.department", qp, department="") %][% ELSIF qp.publication AND qp.publication != "" %][% h.newuri_for("/publication/$qp.publication", qp, publication="") %][% END %]";
+            prev = "[% IF qp.person AND qp.person != "" %][% qp.delete('person')%][% request.uri_for("/person/$qp.person", qp) %][% ELSIF qp.department AND qp.department != "" %][% qp.delete('department') %][% request.uri_for("/department/$qp.department", qp) %][% ELSIF qp.publication AND qp.publication != "" %][% qp.delete('publication') %][% request.uri_for("/publication/$qp.publication", qp) %][% END %]  ";
             // TODO post requests shouldn't contain url params
             $.ajax({
                 type: '/marked?x-tunneled-method=DELETE',

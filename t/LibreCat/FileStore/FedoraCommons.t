@@ -1,5 +1,10 @@
-use Test::Lib;
-use TestHeader;
+use Catmandu::Sane;
+use Catmandu;
+use Test::More;
+use Test::Exception;
+use File::Slurp;
+use IO::File;
+use File::Path qw(remove_tree);
 
 Catmandu->load('.');
 

@@ -1,5 +1,5 @@
 
-<!-- BEGIN frontdoor/tab_relpubl.tt -->
+<!-- BEGIN publication/tab_relpubl.tt -->
 
 <div class="tab-pane" id="relPubl">
   [% h.loc("frontdoor.tabs.publication.cited_by") %]<br />
@@ -16,4 +16,4 @@
   [% END %]
 </div><!-- tab-pane relPubl -->
 
-<!-- END frontdoor/tab_relpubl.tt -->
+<!-- END publication/tab_relpubl.tt -->

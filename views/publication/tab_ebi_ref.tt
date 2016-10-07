@@ -1,4 +1,4 @@
-<!-- BEGIN frontdoor/tab_ebi_ref.tt -->
+<!-- BEGIN publication/tab_ebi_ref.tt -->
 <div class="tab-pane" id="ebi_references">
 
   <h3 class="margin-top0">[% epmc_ref.total %] Reference[% IF epmc_ref.total != "1" %]s[% END %]</h3>
@@ -18,4 +18,4 @@
   [% END %]
 
 </div>
-<!-- END frontdoor/tab_ebi_ref.tt -->
+<!-- END publication/tab_ebi_ref.tt -->

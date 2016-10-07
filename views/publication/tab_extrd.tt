@@ -1,5 +1,5 @@
 
-<!-- BEGIN frontdoor/tab_relmat.tt -->
+<!-- BEGIN publication/tab_relmat.tt -->
 
 <div class="tab-pane" id="relLinkRd">
 
@@ -61,4 +61,4 @@
 
 </div><!-- tab-pane relMat -->
 
-<!-- END frontdoor/tab_relmat.tt -->
+<!-- END publication/tab_relmat.tt -->

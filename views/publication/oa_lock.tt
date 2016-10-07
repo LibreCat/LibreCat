@@ -1,4 +1,4 @@
-<!-- BEGIN frontdoor/oa_lock.tt -->
+<!-- BEGIN publication/oa_lock.tt -->
 [% SWITCH fi.access_level %]
 [% CASE "open_access" %]
 <img src="/images/access_open.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Open access file" alt="OA">
@@ -12,4 +12,4 @@
 <script>
   $('img.description').tooltip();
 </script>
-<!-- END frontdoor/oa_lock.tt -->
+<!-- END publication/oa_lock.tt -->

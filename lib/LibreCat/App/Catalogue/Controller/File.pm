@@ -62,7 +62,7 @@ sub upload_temp_file {
         return {
             success       => 0,
             error_message => 'Sorry! The file upload failed.'
-            };
+        };
     }
 
     # Gather all file metadata...
@@ -99,7 +99,7 @@ sub upload_temp_file {
         return {
             success       => 0,
             error_message => 'Sorry! The file upload failed.'
-            };
+        };
     }
 
     # Copy the upload into the new temporary storage...
@@ -118,7 +118,7 @@ sub upload_temp_file {
         return {
             success       => 0,
             error_message => 'Sorry! The file upload failed.'
-            };
+        };
     }
 
     # Store a copy of the file metadata next to the upload file...
@@ -208,7 +208,7 @@ failure.
 =cut
 
 sub update_file {
-    my ($key,$data) = @_;
+    my ($key, $data) = @_;
     my $file     = clone($data);
     my $filename = $file->{file_name};
 
@@ -222,8 +222,9 @@ sub update_file {
     my $file_store = h->config->{filestore}->{default}->{package};
     my $file_opt   = h->config->{filestore}->{default}->{options};
 
-    my $pkg    = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
-    my $store  = $pkg->new(%$file_opt);
+    my $pkg
+        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+    my $store = $pkg->new(%$file_opt);
 
     h->log->info("loading container $key");
     my $container = $store->get($key);
@@ -240,16 +241,16 @@ sub update_file {
         return undef;
     }
 
-    $file->{file_size}     = int($res->{size});
-    $file->{content_type}  = $res->{content_type};
-    $file->{date_created}  = h->now($res->{created});
-    $file->{date_updated}  = h->now($res->{modified});
-    $file->{creator}       //= 'system';
-    $file->{file_id}       //= h->new_record('publication');
+    $file->{file_size}    = int($res->{size});
+    $file->{content_type} = $res->{content_type};
+    $file->{date_created} = h->now($res->{created});
+    $file->{date_updated} = h->now($res->{modified});
+    $file->{creator} //= 'system';
+    $file->{file_id} //= h->new_record('publication');
 
-    $file->{access_level}  //= 'open_access';
-    $file->{open_access}   //= 1;
-    $file->{relation}      //= 'main_file';
+    $file->{access_level} //= 'open_access';
+    $file->{open_access}  //= 1;
+    $file->{relation}     //= 'main_file';
 
     return $file;
 }

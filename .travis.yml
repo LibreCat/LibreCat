@@ -1,0 +1,36 @@
+sudo: required
+
+language: perl
+
+perl:
+  - "5.24"
+  - "5.22"
+
+before_install:
+  - curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.0.deb && sudo dpkg -i --force-confnew elasticsearch-1.7.0.deb && sudo service elasticsearch restart
+  - sudo apt-get install --yes --force-yes gearman-job-server libgearman-dev
+  - cpanm --notest Perl::Tidy
+  - cpanm --notest Test::Code::TidyAll
+
+before_script:
+  - sleep 10
+
+service:
+  - sqlite3
+
+install:
+  - cpanm --quiet --installdeps --notest --force --skip-satisfied .
+  - cpanm --quiet --notest --skip-satisfied Devel::Cover
+
+script:
+  - prove -lr t/
+
+# after_success:
+#   - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls
+#   - cover -report coveralls
+
+notifications:
+  email: false
+  slack: librecat:2Rvl147KSMvEdivUg88Ktrbk
+
+env: AUTOMATED_TESTING=1

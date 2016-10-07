@@ -25,7 +25,7 @@ Dancer::Plugin::Auth::Tiny->extend(
             else {
                 return do_error('NOT_ALLOWED', 'access denied', 404);
             }
-        }
+            }
     }
 );
 
