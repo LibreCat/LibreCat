@@ -7,11 +7,11 @@ use LibreCat::Role;
 use Moo;
 use namespace::clean;
 
-has sources         => (is => 'ro', default => sub {[]},);
-has username_attr   => (is => 'ro', default => sub {'username'},);
+has sources       => (is => 'ro', default => sub {[]},);
+has username_attr => (is => 'ro', default => sub {'username'},);
 has _bags           => (is => 'lazy', builder => '_build_bags',);
 has _username_attrs => (is => 'lazy', builder => '_build_username_attrs',);
-has _roles          => (is => 'ro', default => sub {+{}},);
+has _roles          => (is => 'ro',   default => sub {+{}},);
 
 sub _build_username_attrs {
     my ($self) = @_;
@@ -26,7 +26,7 @@ sub _build_bags {
 sub _get_rules {
     my ($self, $config) = @_;
     my $rules = $config->{rules} || return [];
-    [map { is_array_ref($_) ? $_ : [split ' ', $_] } @$rules];
+    [map {is_array_ref($_) ? $_ : [split ' ', $_]} @$rules];
 }
 
 # TODO parametric roles
@@ -35,7 +35,7 @@ sub _get_role {
     my $roles = $self->_roles;
     $roles->{$name} ||= do {
         my $config = Catmandu->config->{roles}{$name};
-        my $rules = $self->_get_rules($config);
+        my $rules  = $self->_get_rules($config);
         while ($config->{inherit}) {
             $config = Catmandu->config->{roles}{$config->{inherit}};
             unshift @$rules, @{$self->_get_rules($config)};
@@ -80,7 +80,7 @@ sub may {
 
 sub rules {
     my ($self, $user) = @_;
-    [map { @{$_->rules} } map { $self->_get_role($_) } @{$user->{roles} || []}];
+    [map {@{$_->rules}} map {$self->_get_role($_)} @{$user->{roles} || []}];
 }
 
 1;

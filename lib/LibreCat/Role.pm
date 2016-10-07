@@ -4,7 +4,7 @@ use Catmandu::Sane;
 use Moo;
 use namespace::clean;
 
-has rules      => (is => 'ro', default => sub { [] });
+has rules => (is => 'ro', default => sub {[]});
 has match_code => (is => 'lazy');
 has matcher    => (is => 'lazy');
 
@@ -29,22 +29,28 @@ sub {
         unshift @$conditions, "\$verb eq '$verb'";
         if ($type) {
             my $type_pattern = quotemeta($type);
+
             unshift @$conditions, "\$object";
-            unshift @$conditions, "\$object->{_type} && \$object->{_type} =~ /^$type_pattern/";
+            unshift @$conditions,
+                "\$object->{_type} && \$object->{_type} =~ /^$type_pattern/";
 
             # TODO some filters hardcoded for now
             if ($filter) {
                 if ($filter eq 'own') {
+
                     # TODO
                 }
                 elsif ($filter eq 'owned_by') {
+
                     # TODO
                 }
                 elsif ($filter eq 'affiliated_with') {
+
                     # TODO
                 }
                 elsif (defined $param) {
-                    unshift @$conditions, "\$object->{'$filter'} && \$object->{'$filter'} eq '$param'";
+                    unshift @$conditions,
+                        "\$object->{'$filter'} && \$object->{'$filter'} eq '$param'";
                 }
                 else {
                     unshift @$conditions, "\$object->{'$filter'}";
@@ -53,7 +59,7 @@ sub {
         }
         my $indent = scalar(@$conditions) * 4;
         my $spaces = ' ' x $indent;
-        my $code = qq|    \$match = $toggle;|;
+        my $code   = qq|    \$match = $toggle;|;
         for my $cond (@$conditions) {
             $code = qq|    if ($cond) {\n$spaces$code\n$spaces}|;
             $indent -= 4;
