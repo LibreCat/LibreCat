@@ -1,18 +1,15 @@
 package LibreCat::Role;
 
 use Catmandu::Sane;
-use Sub::Quote;
 use Moo;
 use namespace::clean;
 
-has name       => (is => 'ro', required => 1);
 has rules      => (is => 'ro', default => sub { [] });
 has match_code => (is => 'lazy');
 has matcher    => (is => 'lazy');
 
 sub may {
-    my ($self, $user, $action) = @_;
-    $self->matcher->($action);
+    $_[0]->matcher->($_[1], $_[2], $_[3]);
 }
 
 sub _build_match_code {
@@ -20,57 +17,57 @@ sub _build_match_code {
     my $rules = $self->rules;
 
     my $sub = q|
-        my ($user, $verb, $data) = @_;
-        my $match = 0;
-    |;
+sub {
+    my ($subject, $verb, $object) = @_;
+    my $match = 0;
+|;
 
     for my $rule (@$rules) {
         my ($can, $verb, $type, $filter, $param) = @$rule;
-        my $toggle = $can == 'can';
-        my $type_pattern = quotemeta($type);
+        my $toggle = $can eq 'can' ? '1' : '0';
         my $conditions = [];
-        unshift @$conditions, "\$verb == '$verb'";
-        unshift @$conditions, "\$data->{_type} && \$data->{_type} =~ /^$type_pattern/";
-        # TODO hardcoded for now
-        if ($filter) {
-            if ($filter eq 'locked') {
-                unshift @$conditions, "\$data->{locked}";
-            }
-            elsif ($filter eq 'status') {
-                unshift @$conditions, "\$data->{status} && \$data->{status} eq '$param'";
-            }
-            elsif ($filter eq 'own') {
-                # TODO
-            }
-            elsif ($filter eq 'owned_by') {
-                # TODO
-            }
-            elsif ($filter eq 'affiliated_with') {
-                # TODO
-            }
-        }
-        my $code = qq|
-            \$match = $toggle;
-        |;
-        for my $cond (@$conditions) {
-            $code = qq|
-                if ($cond) {
-                    $code;
+        unshift @$conditions, "\$verb eq '$verb'";
+        if ($type) {
+            my $type_pattern = quotemeta($type);
+            unshift @$conditions, "\$object";
+            unshift @$conditions, "\$object->{_type} && \$object->{_type} =~ /^$type_pattern/";
+
+            # TODO hardcoded for now
+            if ($filter) {
+                if ($filter eq 'locked') {
+                    unshift @$conditions, "\$object->{locked}";
                 }
-            |;
+                elsif ($filter eq 'status') {
+                    unshift @$conditions, "\$object->{status} && \$object->{status} eq '$param'";
+                }
+                elsif ($filter eq 'own') {
+                    # TODO
+                }
+                elsif ($filter eq 'owned_by') {
+                    # TODO
+                }
+                elsif ($filter eq 'affiliated_with') {
+                    # TODO
+                }
+            }
         }
-        $sub += $code;
+        my $indent = scalar(@$conditions) * 4;
+        my $spaces = ' ' x $indent;
+        my $code = qq|    \$match = $toggle;|;
+        for my $cond (@$conditions) {
+            $code = qq|    if ($cond) {\n$spaces$code\n$spaces}|;
+            $indent -= 4;
+            $spaces = ' ' x $indent;
+        }
+        $sub .= qq|$code\n|;
     }
-    $sub += q|
-        $match;
-    |;
+    $sub .= qq|    \$match;\n}\n|;
 
     $sub;
 }
 
 sub _build_matcher {
-    my ($self) = @_;
-    quote_sub($self->match_code, {}, {no_defer => 1});
+    eval $_[0]->match_code;
 }
 
 1;

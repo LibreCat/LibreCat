@@ -40,10 +40,7 @@ sub _get_role {
             $config = Catmandu->config->{roles}{$config->{inherit}};
             unshift @$rules, @{$self->_get_rules($config)};
         }
-        LibreCat::Role->new(
-            name  => $name,
-            rules => $rules,
-        );
+        LibreCat::Role->new(rules => $rules);
     };
 }
 
@@ -70,12 +67,11 @@ sub find_by_username {
 }
 
 sub may {
-    my ($self, $user, $action) = @_;
-    $action = [split ' ', $action] unless is_array_ref($action);
+    my ($self, $user, $verb, $data) = @_;
     my $role_names = $user->{roles} || [];
     for my $name (@$role_names) {
         my $role = $self->_get_role($name);
-        if ($role->may($action)) {
+        if ($role->may($user, $verb, $data)) {
             return 1;
         }
     }
