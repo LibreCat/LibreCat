@@ -32,7 +32,7 @@ sub {
             unshift @$conditions, "\$object";
             unshift @$conditions, "\$object->{_type} && \$object->{_type} =~ /^$type_pattern/";
 
-            # TODO hardcoded for now
+            # TODO some filters hardcoded for now
             if ($filter) {
                 if ($filter eq 'own') {
                     # TODO
