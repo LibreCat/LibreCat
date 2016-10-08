@@ -1,3 +1,12 @@
+BEGIN {
+    use Catmandu::Sane;
+    use Path::Tiny;
+    use LibreCat::Layers;
+    $ENV{LIBRECAT_LAYERS} = 't/layer';
+    LibreCat::Layers->new->load;
+}
+
+use Catmandu::Sane;
 use Plack::Test;
 use Test::More;
 use Path::Tiny;

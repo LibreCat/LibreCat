@@ -27,6 +27,10 @@ BEGIN {
 
 require_ok $pkg;
 
+# empty db
+Catmandu->store('backup')->bag('publication')->delete_all;
+Catmandu->store('search')->bag('publication')->delete_all;
+
 {
     my $result = test_app(qq|LibreCat::CLI| => ['publication']);
     ok $result->error, 'ok threw an exception';
@@ -42,7 +46,7 @@ require_ok $pkg;
 
     my $count = count_publication($output);
 
-    ok $count > 0, 'got more than one publication';
+    ok $count == 0, 'got no publications';
 }
 
 {

@@ -1,5 +1,8 @@
-use Test::Lib;
-use TestHeader;
+use Catmandu::Sane;
+use Test::More;
+use File::Slurp;
+use IO::File;
+use File::Path qw(remove_tree);
 
 my $pkg;
 
@@ -82,8 +85,9 @@ note("update container with files");
 
     ok $container->commit, 'container->commit';
 
-    ok -r 't/tmp/file_store/000/001/235/poem.txt',  'found a poem.txt on disk';
-    ok -r 't/tmp/file_store/000/001/235/poem2.txt', 'found a poem2.txt on disk';
+    ok -r 't/tmp/file_store/000/001/235/poem.txt', 'found a poem.txt on disk';
+    ok -r 't/tmp/file_store/000/001/235/poem2.txt',
+        'found a poem2.txt on disk';
 
     $file = $container->get("poem2.txt");
 

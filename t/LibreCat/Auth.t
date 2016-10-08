@@ -1,5 +1,6 @@
-use Test::Lib;
-use TestHeader;
+use Catmandu::Sane;
+use Test::More;
+use File::Slurp;
 use Role::Tiny;
 
 my $pkg;

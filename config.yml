@@ -19,7 +19,7 @@ session_state:
 session_store:
   package: "Plack::Session::Store::Catmandu"
   options:
-    store: default
+    store: backup
     bag: session
 
 plugins:

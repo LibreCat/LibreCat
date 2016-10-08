@@ -1,5 +1,7 @@
-use Test::Lib;
-use TestHeader;
+use strict;
+use warnings FATAL => 'all';
+use Test::More;
+use File::Slurp;
 
 my $pkg;
 my @worker_pkg;
