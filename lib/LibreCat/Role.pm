@@ -1,6 +1,7 @@
 package LibreCat::Role;
 
 use Catmandu::Sane;
+use Catmandu::Util qw(require_package);
 use Moo;
 use namespace::clean;
 
@@ -15,6 +16,7 @@ sub may {
 sub _build_match_code {
     my ($self) = @_;
     my $rules = $self->rules;
+    my $captures = {};
 
     my $sub = q|
 sub {
@@ -24,9 +26,11 @@ sub {
 
     for my $rule (@$rules) {
         my ($can, $verb, $type, $filter, $param) = @$rule;
-        my $toggle = $can eq 'can' ? '1' : '0';
+        my $toggle     = $can eq 'can' ? '1' : '0';
         my $conditions = [];
+
         unshift @$conditions, "\$verb eq '$verb'";
+
         if ($type) {
             my $type_pattern = quotemeta($type);
 
@@ -34,19 +38,16 @@ sub {
             unshift @$conditions,
                 "\$object->{_type} && \$object->{_type} =~ /^$type_pattern/";
 
-            # TODO some filters hardcoded for now
             if ($filter) {
-                if ($filter eq 'own') {
+                unless ($captures->{$filter}) {
+                    $captures->{$filter} = 1 if eval {require_package($filter, 'LibreCat::Rule')};
+                };
 
-                    # TODO
+                if ($captures->{$filter} && defined $param) {
+                    unshift @$conditions, "\$_${filter}->test(\$subject, \$object, '$param')";
                 }
-                elsif ($filter eq 'owned_by') {
-
-                    # TODO
-                }
-                elsif ($filter eq 'affiliated_with') {
-
-                    # TODO
+                elsif ($captures->{$filter}) {
+                    unshift @$conditions, "\$_${filter}->test(\$subject, \$object)";
                 }
                 elsif (defined $param) {
                     unshift @$conditions,
@@ -69,11 +70,16 @@ sub {
     }
     $sub .= qq|    \$match;\n}\n|;
 
+    for my $var (keys %$captures) {
+        $sub = qq|\nmy \$_$var = LibreCat::Rule::${var}->new;$sub|;
+    }
+
     $sub;
 }
 
 sub _build_matcher {
-    eval $_[0]->match_code;
+    my ($self) = @_;
+    eval $self->match_code;
 }
 
 1;

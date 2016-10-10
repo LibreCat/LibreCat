@@ -1,11 +1,19 @@
+BEGIN {
+    use Catmandu::Sane;
+    use Path::Tiny;
+    use LibreCat::Layers;
+    LibreCat::Layers->new(layer_paths => [qw(t/layer)])->load;
+}
+
 use Catmandu::Sane;
 use Test::More;
 use Test::Exception;
 use Catmandu::Util qw(is_string is_code_ref);
+use LibreCat;
 use LibreCat::Role;
 
 my $role;
-my $user = {};
+my $user = LibreCat->user->find_by_username('user1');
 
 lives_ok {$role = LibreCat::Role->new};
 is_deeply $role->rules, [];
@@ -58,6 +66,39 @@ is $role->may($user, 'eat', {_type => 'fruit/apple'}), 1;
 is $role->may($user, 'eat', {_type => 'fruit/apple', color => 'yellow'}), 1;
 is $role->may($user, 'eat', {_type => 'fruit/apple', color => 'red'}),    0;
 is $role->may($user, 'eat', {_type => 'vegetable/tomato', color => 'red'}), 1;
+
+$role = LibreCat::Role->new(
+    rules => [
+        [qw(can edit publication own)],
+    ]
+);
+
+is $role->may($user, 'edit', {_type => 'publication'}), 0;
+is $role->may($user, 'edit', {_type => 'publication', creator => {login => 'user2'}}), 0;
+is $role->may($user, 'edit', {_type => 'publication', creator => {login => 'user1'}}), 1;
+is $role->may($user, 'edit', {_type => 'project', creator => {login => 'user1'}}), 0;
+
+$role = LibreCat::Role->new(
+    rules => [
+        [qw(can edit publication owned_by user2)],
+    ]
+);
+
+is $role->may($user, 'edit', {_type => 'publication'}), 0;
+is $role->may($user, 'edit', {_type => 'publication', creator => {login => 'user1'}}), 0;
+is $role->may($user, 'edit', {_type => 'publication', creator => {login => 'user2'}}), 1;
+
+$role = LibreCat::Role->new(
+    rules => [
+        [qw(can edit publication affiliated_with dep1)],
+        [qw(can edit publication affiliated_with fac2)],
+    ]
+);
+
+is $role->may($user, 'edit', {_type => 'publication'}), 0;
+is $role->may($user, 'edit', {_type => 'publication', department => {_id => 'dep2'}}), 0;
+is $role->may($user, 'edit', {_type => 'publication', department => {_id => 'dep1'}}), 1;
+is $role->may($user, 'edit', {_type => 'publication', department => {_id => 'dep2', tree => [{_id => 'fac2'}]}}), 1;
 
 done_testing;
 

@@ -169,7 +169,7 @@ publication:
             content_type:
                 type: string
                 description: "MIME Type"
-            creator:
+            creator: # TODO this should be an id
                 type: string
                 description: "User name"
             date_created:
@@ -281,6 +281,7 @@ publication:
     creator:
       type: object
       properties:
+        # TODO should be an id
         login:
           type: string
           description: "Creator user name"

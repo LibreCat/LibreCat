@@ -34,7 +34,7 @@ BEGIN {
 
 use Catmandu;
 use Catmandu::Util;
-use LibreCat::User;
+use LibreCat;
 use Getopt::Long;
 use Log::Log4perl;
 
@@ -63,8 +63,7 @@ else {
 my $pkg    = Catmandu::Util::require_package($package);
 my $auth   = $pkg->new(%$param);
 
-my $users   = LibreCat::User->new(Catmandu->config->{user});
-my $userobj = $users->find_by_username($user);
+my $userobj = LibreCat->user->find_by_username($user);
 my $verify  = $auth->authenticate( { username => $user , password => $password });
 
 my $exporter = Catmandu->exporter('YAML');

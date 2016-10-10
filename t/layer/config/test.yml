@@ -21,6 +21,24 @@ store:
         research_group:
           plugins: ['Datestamps', 'Versioning']
           id_generator: UniBiResearchGroup
+  builtin_users:
+    package: Hash
+    options:
+      init_data:
+        - login: user1
+          password: '$2a$08$s3xWEQdQBpGACV33EOIyxuxPmudWhHdRZK6Cn0KsJoh1DSKhLoEDK'
+          _id: 1
+        - login: user2
+          password: '$2a$08$/7dsTAQfq0Q5ZJDy0dirKegR3hkXZ7X6X2/pHx66yqw.4Gnbfuuxu'
+          _id: 2
+        - login: admin
+          password: '$2a$08$tWvf3XgXLfRxtfFlGmOCfe7T7O4McvDNOfflZhJJd9.qA5fJuuF8i'
+          _id: 3
   search:
     options:
       index_name: test
+
+user:
+  sources:
+    - store: builtin_users
+      username_attr: login
