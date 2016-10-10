@@ -1,17 +1,39 @@
-use strict;
-use warnings FATAL => 'all';
-use Test::More;
-use Test::Exception;
-
-my $pkg;
-
 BEGIN {
-    $pkg = 'LibreCat::User';
-    use_ok $pkg;
+    use Catmandu::Sane;
+    use Path::Tiny;
+    use LibreCat::Layers;
+    LibreCat::Layers->new(layer_paths => [qw(t/layer)])->load;
 }
 
-require_ok $pkg;
+use Catmandu::Sane;
+use Test::More;
+use Test::Exception;
+use Catmandu;
+use LibreCat::User;
 
-lives_ok {$pkg->new()} 'lives_ok';
+my $users;
+my $user1 = Catmandu->store('builtin_users_1')->bag->get('1');
+my $user2 = Catmandu->store('builtin_users_2')->bag->get('2');
+
+lives_ok {$users=LibreCat::User->new};
+lives_ok {$users=LibreCat::User->new(Catmandu->config->{user})};
+
+my $user;
+
+$user = $users->find_by_username('user1');
+is_deeply $user, $user1;
+$user = $users->find_by_username('user2');
+is_deeply $user, $user2;
+
+$user = $users->get(1);
+is_deeply $user, $user1;
+$user = $users->get(2);
+is_deeply $user, $user2;
+
+$user = $users->find_by_username('user1');
+is $users->may($user, 'view', {_type => 'publication'}), 0;
+is $users->may($user, 'view', {_type => 'publication', status => 'public'}), 1;
+is $users->may($user, 'view', {_type => 'publication', creator => {login => 'user2'}}), 0;
+is $users->may($user, 'view', {_type => 'publication', creator => {login => 'user1'}}), 1;
 
 done_testing;

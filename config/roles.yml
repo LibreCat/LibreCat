@@ -14,7 +14,7 @@ user:
     - cannot edit publication locked
 
 delegate:
-  inherit: guest
+  inherit: user
   params:
     - owner
   rules:
@@ -22,7 +22,7 @@ delegate:
     - can edit publication owned_by owner
 
 reviewer:
-  inherit: guest
+  inherit: user
   params:
     - department
   rules:
@@ -36,6 +36,4 @@ reviewer:
 #data_manager:
 
 #super_admin:
-  #rules:
-    #- can * * *
 
