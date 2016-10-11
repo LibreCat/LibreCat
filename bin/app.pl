@@ -10,9 +10,8 @@ BEGIN {
 
     $layers = LibreCat::Layers->new->load;
 
-    use Dancer::ModuleLoader;
-
     # TODO very dirty, this prevents Dancer from prepending lib/ in @INC
+    use Dancer::ModuleLoader;
     {
         no warnings 'redefine';
 
