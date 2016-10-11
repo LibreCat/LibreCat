@@ -10,7 +10,6 @@ use Catmandu::Sane;
 
 our $VERSION = '0.01';
 
-use Catmandu::Util;
 use LibreCat;
 
 use Dancer qw(:syntax);
@@ -34,15 +33,9 @@ sub _authenticate {
     # Clean dirties .. in loginname
     $username =~ s{[^a-zA-Z0-9_]*}{}mg;
 
-    my $auth = do {
-        my $pkg = Catmandu::Util::require_package(
-            h->config->{authentication}->{package});
-        my $param = h->config->{authentication}->{options} // {};
-        $pkg->new($param);
-    };
-
     my $user = LibreCat->user->find_by_username($username) || return;
-    $auth->authenticate({username => $username, password => $password})
+    
+    LibreCat->auth->authenticate({username => $username, password => $password})
         || return;
 
     $user;
