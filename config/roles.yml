@@ -1,39 +1,45 @@
 _prefix:
-  roles:
+  user:
 
-guest:
-  rules:
-    - can view publication status public
+rules:
+  affiliated_with: {}
+  own: {}
+  owned_by: {}
 
-user:
-  inherit: guest
-  rules:
-    - can add publication
-    - can view publication own
-    - can edit publication own
-    - cannot edit publication locked
+roles:
+  guest:
+    rules:
+      - can view publication status public
 
-delegate:
-  inherit: user
-  params:
-    - owner
-  rules:
-    - can view publication owned_by owner
-    - can edit publication owned_by owner
+  user:
+    inherit: guest
+    rules:
+      - can add publication
+      - can view publication own
+      - can edit publication own
+      - cannot edit publication locked
 
-reviewer:
-  inherit: user
-  params:
-    - department
-  rules:
-    - can view publication affiliated_with department
-    - can edit publication affiliated_with department
+  delegate:
+    inherit: user
+    params:
+      - owner
+    rules:
+      - can view publication owned_by owner
+      - can edit publication owned_by owner
 
-#project_reviewer:
+  reviewer:
+    inherit: user
+    params:
+      - department
+    rules:
+      - can view publication affiliated_with department
+      - can edit publication affiliated_with department
 
-#award_admin:
+  #project_reviewer:
 
-#data_manager:
+  #award_admin:
 
-#super_admin:
+  #data_manager:
+
+  #super_admin:
 

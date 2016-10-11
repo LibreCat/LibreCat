@@ -28,10 +28,11 @@ store:
         - login: user1
           password: '$2a$08$s3xWEQdQBpGACV33EOIyxuxPmudWhHdRZK6Cn0KsJoh1DSKhLoEDK'
           _id: 1
-          roles: [user]
-        - login: admin
-          password: '$2a$08$tWvf3XgXLfRxtfFlGmOCfe7T7O4McvDNOfflZhJJd9.qA5fJuuF8i'
+          roles: [{role: user}]
+        - login: user3
+          password: '$2a$08$QgPOp/1zEBkcAsmAqL6cH.AVflVrgRRAvURHwp0L3KwbTC8vjj8Bm'
           _id: 3
+          roles: [{role: reviewer, department: dep1}]
   builtin_users_2:
     package: Hash
     options:
@@ -43,6 +44,7 @@ store:
         - login: user2
           password: '$2a$08$/7dsTAQfq0Q5ZJDy0dirKegR3hkXZ7X6X2/pHx66yqw.4Gnbfuuxu'
           _id: 2
+          roles: [{role: user}]
   search:
     options:
       index_name: test
@@ -64,4 +66,10 @@ roles:
       - can view publication own
       - can edit publication own
       - cannot edit publication locked
+  reviewer:
+    inherit: user
+    params:
+      - department
+    rules:
+      - can edit publication affiliated_with department
 

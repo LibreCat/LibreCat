@@ -11,7 +11,12 @@ sub test {
     my ($self, $subject, $object, $param) = @_;
 
     my $dep = $object->{department};
-    $dep && ($dep->{_id} eq $param || ($dep->{tree} && array_any($dep->{tree}, sub { $_[0]->{_id} eq $param })));
+    $dep
+        && (
+        $dep->{_id} eq $param
+        || ($dep->{tree}
+            && array_any($dep->{tree}, sub {$_[0]->{_id} eq $param}))
+        );
 }
 
 1;

@@ -2,13 +2,15 @@ package LibreCat::User;
 
 use Catmandu::Sane;
 use Catmandu;
-use Catmandu::Util qw(is_array_ref);
+use Catmandu::Util qw(is_array_ref array_includes);
 use LibreCat::Role;
 use Moo;
 use namespace::clean;
 
-has sources       => (is => 'ro', default => sub {[]},);
-has username_attr => (is => 'ro', default => sub {'username'},);
+has rule_config     => (is => 'ro', default => sub {+{}},init_arg => 'rules');
+has role_config     => (is => 'ro', default => sub {+{}},init_arg => 'roles');
+has sources         => (is => 'ro', default => sub {[]},);
+has username_attr   => (is => 'ro', default => sub {'username'},);
 has _bags           => (is => 'lazy', builder => '_build_bags',);
 has _username_attrs => (is => 'lazy', builder => '_build_username_attrs',);
 has _roles          => (is => 'ro',   default => sub {+{}},);
@@ -29,18 +31,28 @@ sub _get_rules {
     [map {is_array_ref($_) ? $_ : [split ' ', $_]} @$rules];
 }
 
-# TODO parametric roles
 sub _get_role {
     my ($self, $name) = @_;
     my $roles = $self->_roles;
     $roles->{$name} ||= do {
-        my $config = Catmandu->config->{roles}{$name};
+        my $config = $self->role_config->{$name};
         my $rules  = $self->_get_rules($config);
+        my $params = $config->{params};
         while ($config->{inherit}) {
-            $config = Catmandu->config->{roles}{$config->{inherit}};
+            $config = $self->role_config->{$config->{inherit}};
+            if ($config->{params}) {
+                for my $param (@{$config->{params}}) {
+                    if (array_includes($params, $param)) {
+                        Catmandu::BadVal->throw(
+                            "Can't inherit from a role that already uses param '$param'"
+                        );
+                    }
+                    unshift @$params, $param;
+                }
+            }
             unshift @$rules, @{$self->_get_rules($config)};
         }
-        LibreCat::Role->new(rules => $rules);
+        LibreCat::Role->new(rule_config => $self->rule_config, rules => $rules, params => $params);
     };
 }
 
@@ -68,10 +80,9 @@ sub find_by_username {
 
 sub may {
     my ($self, $user, $verb, $data) = @_;
-    my $role_names = $user->{roles} || [];
-    for my $name (@$role_names) {
-        my $role = $self->_get_role($name);
-        if ($role->may($user, $verb, $data)) {
+    for my $params (@{$user->{roles} || []}) {
+        my $role = $self->_get_role($params->{role});
+        if ($role->may($user, $verb, $data, $params)) {
             return 1;
         }
     }
