@@ -9,6 +9,16 @@ BEGIN {
     use LibreCat::Layers;
 
     $layers = LibreCat::Layers->new->load;
+
+    # TODO very dirty, this prevents Dancer from prepending lib/ in @INC
+    use Dancer::ModuleLoader;
+    {
+        no warnings 'redefine';
+
+        sub Dancer::ModuleLoader::use_lib {
+            1;
+        }
+    }
 };
 
 use Catmandu::Sane;
