@@ -5,8 +5,6 @@ use Catmandu::Util qw(:array);
 use LibreCat::App::Helper;
 use Moo;
 
-use Data::Dumper;
-
 has 'array_fields' => (is => 'lazy');
 
 sub _build_array_fields {

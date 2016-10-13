@@ -2,8 +2,8 @@ _prefix:
   citation:
 
 # engine for citation generation
-# possible values are 'template' or 'csl'
-engine: csl
+# possible values are 'template' or 'csl' or 'none'
+engine: none
 
 template:
   template_path: 'views/citation.tt'
