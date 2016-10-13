@@ -77,6 +77,7 @@ requires 'Clone';
 requires 'DateTime';
 requires 'DBD::mysql', '>= 4.037';
 requires 'DBD::SQLite';
+requires 'Config::Onion', '>=1.007';
 requires 'Crypt::Digest::MD5';
 requires 'Crypt::SSLeay';
 requires 'File::Basename';
