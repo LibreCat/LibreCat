@@ -122,7 +122,7 @@ sub _add {
     my $helper    = LibreCat::App::Helper::Helpers->new;
     my $validator = LibreCat::Validator::Publication->new;
 
-    my $records = $importer->select(
+    my $records = $importer->benchmark->select(
         sub {
             my $rec = $_[0];
 
@@ -198,7 +198,7 @@ sub _valid {
 
     my $ret = 0;
 
-    Catmandu->importer('YAML', file => $file)->each(
+    Catmandu->importer('YAML', file => $file)->benchmark->each(
         sub {
             my $item = $_[0];
 
