@@ -23,7 +23,6 @@ if exists(department)
     end
   end
 end
-fix_too_many_departments()
 
 if exists(project)
   do list(path:project, var:loop)
