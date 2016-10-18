@@ -4,6 +4,9 @@
     </div>
     <div class="form-group col-md-8">
       <div class="btn-group">
+
+        <button style="display:none;" disabled="disabled"></button>
+
         [% IF !edit_mode OR edit_mode == "normal" %]
         <button class="btn btn-default" disabled="disabled"><span class="fa fa-angle-double-left"></span><span class="hidden-xxs"> [% h.loc("forms.button.back") %]</span></button>
         [% END %]
