@@ -165,10 +165,6 @@ gs_doc_type:
   report: 'report'
   translation: 'translation'
   working_paper: 'working Paper'
-  bi_dissertation: 'Bi Dissertation'
-  bi_bachelor_thesis: 'Bi BachelorThesis'
-  bi_master_thesis: 'Bi MasterThesis'
-  bi_postdoc_thesis: 'Bi PostdocThesis'
   research_data: 'Research Data'
 
 relations_rd:

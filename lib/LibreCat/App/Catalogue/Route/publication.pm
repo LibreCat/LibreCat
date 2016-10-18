@@ -312,13 +312,7 @@ Publishes private records, returns to the list.
         my $old_status = $record->{status};
 
         #check if all mandatory fields are filled
-        my $publtype;
-        if ($record->{type} =~ /^bi[A-Z]/) {
-            $publtype = "bithesis";
-        }
-        else {
-            $publtype = lc($record->{type});
-        }
+        my $publtype = lc($record->{type});
 
         my $basic_fields
             = h->config->{forms}->{publication_types}->{$publtype}->{fields}
@@ -327,7 +321,6 @@ Publishes private records, returns to the list.
 
         foreach my $conf_key (keys %$basic_fields) {
             next if $conf_key eq "tab_name";
-            next if $conf_key eq "bi_doctype";
             if ($conf_key =~ /(author|editor|translator|supervisor)/)
             {    # also matches author_solo
                 my $rec_key = $1
@@ -380,27 +373,6 @@ Publishes private records, returns to the list.
 
             if ($record->{status} ne $old_status) {
                 h->update_record('publication', $record);
-
-                if (    $record->{type} =~ /^bi/
-                    and $record->{status} eq "public"
-                    and $old_status ne "public")
-                {
-                    $record->{host} = h->host;
-                    my $mail_body = export_to_string($record, 'Template',
-                        template => 'views/email/thesis_published.tt');
-
-                    try {
-                        email {
-                            to       => $record->{email},
-                            subject  => h->config->{thesis}->{subject},
-                            body     => $mail_body,
-                            reply_to => h->config->{thesis}->{to},
-                        };
-                    }
-                    catch {
-                        error "Could not send email: $_";
-                    }
-                }
 
                 if ($record->{type} eq "researchData") {
                     if ($record->{status} eq "submitted") {

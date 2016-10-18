@@ -414,14 +414,11 @@ sub get_statistics {
             ]
         }
     );
-    my $disshits
-        = $self->search_publication({q => ["status=public", "type=bi*"]});
 
     return {
         publications => $hits->{total},
         researchdata => $reshits->{total},
         oahits       => $oahits->{total},
-        theseshits   => $disshits->{total},
     };
 
 }
