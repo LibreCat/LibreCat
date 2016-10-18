@@ -175,6 +175,10 @@ Checks if the user has the rights to update this record.
             $p->{doi} = h->config->{doi}->{prefix} . "/" . $p->{_id};
         }
 
+        if ($p->{finalSubmit} eq 'recSubmit') {
+            $p->{status} = 'submitted';
+        }
+
         my $result = h->update_record('publication', $p);
 
         #return to_dumper $result; # leave this here to make debugging easier
