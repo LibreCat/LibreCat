@@ -40,7 +40,7 @@
                 <input type="radio" name="supervisor_idm.0" id="supervisor_idm_extern_0" checked="checked"> [% h.loc("forms.${type}.field.supervisor.idm_extern") %]
               </label>
               <label class="radio-inline">
-                <input type="radio" style="margin-top:5px;" name="supervisor_idm.0" id="supervisor_idm_intern_0"> <img id="supervisor_Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% h.loc("forms.${type}.field.supervisor.tooltip") %]" />
+                <input type="radio" style="margin-top:5px;" name="supervisor_idm.0" id="supervisor_idm_intern_0"> <img id="supervisor_Authorized0" src="/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% h.loc("forms.${type}.field.supervisor.tooltip") %]" />
               </label>
               </span>
             </div>

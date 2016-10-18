@@ -270,7 +270,7 @@ $(document).on('click', '.author', function(){
   });
   container.find('img').each(function(){
     this.title = "";
-    this.src = "/images/biNotAuthorized.png";
+    this.src = "/images/authorized_no.png";
   });
 });
 $(document).on('click', '.connect', function(){

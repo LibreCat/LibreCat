@@ -42,7 +42,7 @@
                 <input type="radio" name="idm.0" id="idm_extern_0" checked="checked"> [% lf.$type.field.author.idm_extern || lf.$type.field.author_secondary.idm_extern %]
               </label>
               <label class="radio-inline">
-                <input type="radio" style="margin-top:5px;" name="idm.0" id="idm_intern_0"> <img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" />
+                <input type="radio" style="margin-top:5px;" name="idm.0" id="idm_intern_0"> <img id="Authorized0" src="/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" />
               </label>
               </span>
             </div>
@@ -143,7 +143,7 @@
                 <input type="radio" name="idm.0" id="idm_extern_0" checked="checked"> [% lf.$type.field.author.idm_extern || lf.$type.field.author_secondary.idm_extern %]
               </label>
               <label class="radio-inline">
-                <input type="radio" style="margin-top:5px;" name="idm.0" id="idm_intern_0"> <img id="Authorized0" src="/images/biNotAuthorized.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" />
+                <input type="radio" style="margin-top:5px;" name="idm.0" id="idm_intern_0"> <img id="Authorized0" src="/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.author.tooltip || lf.$type.field.author_secondary.tooltip %]" />
               </label>
               </span>
             </div>
