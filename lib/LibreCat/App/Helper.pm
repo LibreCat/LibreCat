@@ -414,14 +414,11 @@ sub get_statistics {
             ]
         }
     );
-    my $disshits
-        = $self->search_publication({q => ["status=public", "type=bi*"]});
 
     return {
         publications => $hits->{total},
         researchdata => $reshits->{total},
         oahits       => $oahits->{total},
-        theseshits   => $disshits->{total},
     };
 
 }
@@ -446,16 +443,6 @@ sub update_record {
 
     if ($self->log->is_debug) {
         $self->log->debug(Dancer::to_json($rec));
-    }
-
-    my $validator_pkg = Catmandu::Util::require_package(ucfirst($bag),
-        'LibreCat::Validator');
-
-    if ($validator_pkg) {
-        my @white_list = $validator_pkg->new->white_list;
-        for my $key (keys %$rec) {
-            delete $rec->{$key} unless grep(/^$key$/, @white_list);
-        }
     }
 
     $rec = $self->store_record($bag, $rec);
@@ -488,6 +475,17 @@ sub store_record {
     my $fix = $fixes->{$bag} //= Catmandu::Fix->new(
         fixes => [join_path('fixes', "update_$bag.fix")]);
     $fix->fix($rec);
+
+    # clean all the fields that are not part of the JSON schema
+    state $validator_pkg = Catmandu::Util::require_package(ucfirst($bag),
+        'LibreCat::Validator');
+
+    if ($validator_pkg) {
+        my @white_list = $validator_pkg->new->white_list;
+        for my $key (keys %$rec) {
+            delete $rec->{$key} unless grep(/^$key$/, @white_list);
+        }
+    }
 
     my $bagname = "backup_$bag";
 

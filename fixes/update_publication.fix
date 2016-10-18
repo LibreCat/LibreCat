@@ -23,7 +23,6 @@ if exists(department)
     end
   end
 end
-fix_too_many_departments()
 
 if exists(project)
   do list(path:project, var:loop)
@@ -51,19 +50,12 @@ trim(genbank.*)
 split_field(keyword, ';|,')
 trim(keyword.*)
 
-if all_match('finalSubmit','recPublish')
-    set_field('status','public')
-    remove_field(oai_deleted)
-end
-if all_match('finalSubmit','recSubmit')
-    set_field('status','submitted')
-end
-
-if all_match(status, returned)
+if all_match(status,"returned|deleted")
   add_field(oai_deleted, 1)
+else
+  remove_field(oai_deleted)
 end
 
-remove_field('finalSubmit')
 remove_field('idm')
 remove_field('editor_idm')
 remove_field('translator_idm')

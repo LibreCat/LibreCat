@@ -29,7 +29,7 @@
 	    <div class="input-group-addon">{% honoree.last_name.label %}</div>
 	    <input type="text" name="honoree.[% loop.index %].last_name" id="last_name_[% loop.index %]" value="[% hon.last_name %]" class="form-control sticky"{% IF honoree.last_name.mandatory %} required{% END %} [% IF hon._id %]readonly="readonly"[% END %] >
 	    {% IF honoree.idm %}
-        <div class="input-group-addon"><span id="link_person_[% loop.index %]" onclick="link_person(this);" data-type=""><img id="Authorized[% loop.index %]" [% IF hon._id %]src="/images/biAuthorized.png"[% ELSE %]src="/images/biNotAuthorized.png"[% END %] [% IF hon._id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% honoree.tooltip %}" /></span></div>
+        <div class="input-group-addon"><span id="link_person_[% loop.index %]" onclick="link_person(this);" data-type=""><img id="Authorized[% loop.index %]" [% IF hon._id %]src="/images/authorized_yes.png"[% ELSE %]src="/images/authorized_no.png"[% END %] [% IF hon._id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="left" title="{% honoree.tooltip %}" /></span></div>
         {% ELSE %}
         <div class="input-group-addon"></div>
         {% END %}

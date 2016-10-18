@@ -48,7 +48,7 @@ GetOptions("package=s" => \$package, "param=s%" => \$param, "p" => \$password);
 
 my $user = shift;
 
-die "usage: $0 [--package=MODULE] [[--param=...]] login" unless defined $user;
+die "usage: $0 [--package=MODULE] [[--param=...]] -p login" unless defined $user;
 
 if ($password) {
     print "Password: ";
@@ -57,7 +57,7 @@ if ($password) {
     system('/bin/stty', 'echo');
 }
 else {
-    die "need a password";
+    die "need a password. Try `$0 -p $user'";
 }
 
 my $pkg    = Catmandu::Util::require_package($package);

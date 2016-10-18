@@ -275,7 +275,6 @@ publication:
         - translation
         - translation_chapter
         - working_paper
-        - bi_dissertation
         - research_data
       description: "Publication type"
     creator:
@@ -299,7 +298,6 @@ publication:
       description: "Record last update date"
     document_type:
       enum:
-        - bi_dissertation
         - book
         - book_chapter
         - book_editor

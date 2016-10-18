@@ -19,7 +19,7 @@ LibreCat::Citation - creates citations via a CSL engine or template
     prefix:
       _citation:
 
-    engine: {template|csl}
+    engine: {template|csl|none}
     template:
       template_path: views/citation.tt
     csl:
