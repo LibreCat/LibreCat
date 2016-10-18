@@ -85,17 +85,6 @@ my $session_state_package = is_string($config->{session_state}->{package}) ?
 my $session_state_options = is_hash_ref($config->{session_state}->{options}) ?
     $config->{session_state}->{options} : {};
 
-# check if one created a local configuration or a layers
-unless (exists $config->{authentication} && exists $config->{user}) {
-    die <<EOF;
-Oops! You didn't create a local configuration file or the local layer
-containing a local configuration wasn't found. No definitions found
-for 'authentication' and 'user'.
-
-Check: did you create a config/catmandu.local.yml file?
-EOF
-}
-
 builder {
     enable 'ReverseProxy';
     enable 'Deflater';
