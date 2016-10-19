@@ -277,6 +277,15 @@ publication:
         - working_paper
         - research_data
       description: "Publication type"
+    article_type:
+      enum:
+        - original
+        - review
+        - letter_note
+      description: "Article type"
+    article_number:
+      type: string
+      description: "Article number"
     creator:
       type: object
       properties:
@@ -625,6 +634,9 @@ publication:
                 '$ref': '#/definitions/related_record'
              description: "Related records"
       description: "Links to related materials"
+    link:
+      type: string
+      description: "URL to resource"
     ddc:
       type: array
       items:
