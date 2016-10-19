@@ -766,59 +766,6 @@ publication:
       description: "Returned Record Ids"
     citation:
       type: object
-      properties:
-        ama:
-          type: string
-          description: "Citation in AMA (American Medical Association) style"
-        apa:
-          type: string
-          description: "Citation in APA (American Psychological Association) style"
-        apa_indent:
-          type: string
-          description: "Citation in indented APA style"
-        aps:
-          type: string
-          description: "Citation in APA (American Psychological Society) style"
-        bio1:
-          type: string
-          description: "???"
-        default:
-          type: string
-          description: "???"
-        dgps:
-          type: string
-          description: "Citation in DGPS (Deutsche Gesellschaft fur Psychologie) style"
-        ewi:
-          type: string
-          description: "???"
-        frontShortTitle:
-          type: string
-          description: "???"
-        frontiers:
-          type: string
-          description: "Citation in Frontiers journals style"
-        harvard1:
-          type: string
-          description: "Citation in 'Harvard Reference format 1' style"
-        ieee:
-          type: string
-          description: "Citation in IEEE (Institute of Electrical and Electronics Engineers) style"
-        lncs:
-          type: string
-          description: "???"
-        mla:
-          type: string
-          description: "Citation in MLA (Modern Language Association) style"
-        pub:
-          type: string
-          description: "???"
-        sfb882:
-          type: string
-          description: "???"
-        wels:
-          type: string
-          description: "???"
-      description: "Citation"
 
   # A author|editor is required..can this be expressed in JSONSchema?
   required: ["_id","type","title","year","status"]

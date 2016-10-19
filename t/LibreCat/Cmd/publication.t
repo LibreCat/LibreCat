@@ -94,6 +94,25 @@ Catmandu->store('search')->bag('publication')->drop;
 }
 
 {
+    my $result = test_app(qq|LibreCat::CLI| =>
+            ['publication', '--no-citation','add', 't/records/valid-publication.yml']);
+
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    ok $output , 'got an output';
+
+    like $output , qr/^added 999999999/, 'added 999999999';
+
+    $result
+        = test_app(qq|LibreCat::CLI| => ['publication', 'get', '999999999']);
+    $output = $result->stdout;
+    unlike $output, qr/citation/, "got no citation";
+    $result = test_app(
+        qq|LibreCat::CLI| => ['publication', 'purge', '999999999']);
+}
+
+{
     my $result
         = test_app(qq|LibreCat::CLI| => ['publication', 'get', '999999999']);
 

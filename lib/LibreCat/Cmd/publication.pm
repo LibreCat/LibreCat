@@ -53,7 +53,7 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    ();
+    (['no-citation|nc', ""]);
 }
 
 sub command {
@@ -81,7 +81,8 @@ sub command {
         return $self->_get(@$args);
     }
     elsif ($cmd eq 'add') {
-        return $self->_add(@$args);
+        my $make_citation = $opts->{'no-citation'} ? 1 : 0;
+        return $self->_add($make_citation, @$args);
     }
     elsif ($cmd eq 'delete') {
         return $self->_delete(@$args);
@@ -159,7 +160,7 @@ sub _get {
 }
 
 sub _add {
-    my ($self, $file) = @_;
+    my ($self, $make_citation, $file) = @_;
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
@@ -174,7 +175,7 @@ sub _add {
 
             if ($validator->is_valid($rec)) {
                 $rec->{_id} //= $helper->new_record('publication');
-                $helper->store_record('publication', $rec);
+                $helper->store_record('publication', $rec, $make_citation);
                 print "added $rec->{_id}\n";
                 return 1;
             }
