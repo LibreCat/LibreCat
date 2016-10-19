@@ -12,6 +12,7 @@ clean_preselects()
 maybe_add_urn()
 person()
 volume_sort()
+research_data_doi()
 
 if exists(department)
   do list(path:department, var:loop)

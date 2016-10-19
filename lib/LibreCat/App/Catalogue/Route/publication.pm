@@ -15,7 +15,6 @@ use Dancer qw(:syntax);
 use Encode qw(encode);
 use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::Email;
-use LibreCat::Worker::DataCite;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -27,7 +26,7 @@ Dancer::Plugin::Auth::Tiny->extend(
             else {
                 redirect '/access_denied';
             }
-            }
+        }
     }
 );
 
@@ -165,64 +164,24 @@ Checks if the user has the rights to update this record.
             status '403';
             forward '/access_denied';
         }
+
         delete $p->{new_record};
 
         $p = h->nested_params($p);
-
-        my $old_status = $p->{status};
-
-        if ($p->{type} eq "researchData" && !$p->{doi}) {
-            $p->{doi} = h->config->{doi}->{prefix} . "/" . $p->{_id};
-        }
 
         if ($p->{finalSubmit} eq 'recSubmit') {
             $p->{status} = 'submitted';
         }
 
+        # Use config/hooks.yml to register functions
+        # that should run before/after updating publications
+        state $hook = h->hook('publication-update');
+
+        $hook->fix_before($p);
+
         my $result = h->update_record('publication', $p);
 
-        if ($result->{type} eq "research_data") {
-            if ($result->{status} eq "submitted") {
-                $result->{host} = h->host;
-                my $mail_body = export_to_string($result, 'Template',
-                    template => 'views/email/rd_submitted.tt');
-
-                try {
-                    email {
-                        to       => h->config->{research_data}->{to},
-                        subject  => h->config->{research_data}->{subject},
-                        body     => $mail_body,
-                        reply_to => h->config->{research_data}->{to},
-                    };
-                }
-                catch {
-                    error "Could not send email: $_";
-                }
-            }
-            elsif ( $result->{status} eq 'public'
-                and $result->{doi} =~ /unibi\/\d+$/)
-            {
-                try {
-                    my $registry = LibreCat::Worker::DataCite->new(
-                        user     => h->config->{doi}->{user},
-                        password => h->config->{doi}->{passwd}
-                    );
-                    $result->{host} = h->host;
-                    my $datacite_xml = export_to_string($result, 'Template',
-                        template => 'views/export/datacite.tt');
-                    $registry->work(
-                        {
-                            doi          => $result->{doi},
-                            landing_url  => h->host . "/data/$result->{_id}",
-                            datacite_xml => $datacite_xml
-                        }
-                    );
-                }
-                catch {
-                    error "Could not register DOI: $_ -- $result->{_id}";
-                }
-            }
-        }
+        $hook->fix_after($result);
 
         redirect '/librecat';
     };

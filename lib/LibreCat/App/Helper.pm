@@ -11,6 +11,7 @@ use Dancer::FileUtils qw(path);
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
 use LibreCat::I18N;
+use LibreCat;
 use Log::Log4perl ();
 use Moo;
 
@@ -22,6 +23,10 @@ sub log {
 
 sub config {
     state $config = hash_merge(Catmandu->config, Dancer::config);
+}
+
+sub hook {
+    LibreCat->hook($_[1]);
 }
 
 sub alphabet {
