@@ -24,3 +24,9 @@ store:
   search:
     options:
       index_name: test
+
+hooks:
+  eat:
+   before_fixes: [HookPeckish,HookHungry]
+   after_fixes: [HookSatisfied]
+
