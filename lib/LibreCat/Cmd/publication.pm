@@ -12,14 +12,18 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat publication [options] list
-librecat publication [options] export
+librecat publication [options] list [<cql-query>]
+librecat publication [options] export [<cql-query>]
 librecat publication [options] get <id>
 librecat publication [options] add <FILE>
 librecat publication [options] delete <id>
 librecat publication [options] purge <id>
 librecat publication [options] valid <FILE>
 librecat publication [options] files [ID]|[<FILE>]
+
+E.g.
+
+librecat publication list 'status exact private'
 
 EOF
 }
@@ -45,10 +49,10 @@ sub command {
     }
 
     if ($cmd eq 'list') {
-        return $self->_list;
+        return $self->_list(@$args);
     }
     elsif ($cmd eq 'export') {
-        return $self->_export;
+        return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
         return $self->_get(@$args);
@@ -71,8 +75,14 @@ sub command {
 }
 
 sub _list {
-    my ($self) = @_;
-    my $count = LibreCat::App::Helper::Helpers->new->publication->each(
+    my ($self,$query) = @_;
+
+    my $it =
+        defined($query) ?
+        LibreCat::App::Helper::Helpers->new->publication->searcher(cql_query => $query) :
+        LibreCat::App::Helper::Helpers->new->publication;
+
+    my $count = $it->each(
         sub {
             my ($item) = @_;
             my $id = $item->{_id};
@@ -91,10 +101,15 @@ sub _list {
 }
 
 sub _export {
-    my $h = LibreCat::App::Helper::Helpers->new;
+    my ($self,$query) = @_;
+
+    my $it =
+        defined($query) ?
+        LibreCat::App::Helper::Helpers->new->publication->searcher(cql_query => $query) :
+        LibreCat::App::Helper::Helpers->new->publication;
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many($h->publication);
+    $exporter->add_many($it);
     $exporter->commit;
 
     return 0;
@@ -385,7 +400,7 @@ LibreCat::Cmd::publication - manage librecat publications
 
 =head1 SYNOPSIS
 
-    librecat publication list
+    librecat publication list [<cql-query>]
     librecat publication export
 	librecat publication get <id>
 	librecat publication add <FILE>

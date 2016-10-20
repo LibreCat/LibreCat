@@ -10,12 +10,16 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat project [options] list
-librecat project [options] export
+librecat project [options] list [<cql-query>]
+librecat project [options] export [<cql-query>]
 librecat project [options] add <FILE>
 librecat project [options] get <id>
 librecat project [options] delete <id>
 librecat project [options] valid <FILE>
+
+E.g.
+
+librecat project export 'id = P1'
 
 EOF
 }
@@ -46,7 +50,7 @@ sub command {
         return $self->_list(@$args);
     }
     elsif ($cmd eq 'export') {
-        return $self->_export;
+        return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
         return $self->_get(@$args);
@@ -63,7 +67,14 @@ sub command {
 }
 
 sub _list {
-    my $count = LibreCat::App::Helper::Helpers->new->project->each(
+    my ($self,$query) = @_;
+
+    my $it =
+        defined($query) ?
+        LibreCat::App::Helper::Helpers->new->project->searcher(cql_query => $query) :
+        LibreCat::App::Helper::Helpers->new->project;
+
+    my $count = $it->each(
         sub {
             my ($item) = @_;
             my $id     = $item->{_id};
@@ -78,10 +89,15 @@ sub _list {
 }
 
 sub _export {
-    my $h = LibreCat::App::Helper::Helpers->new;
+    my ($self,$query) = @_;
+
+    my $it =
+        defined($query) ?
+        LibreCat::App::Helper::Helpers->new->project->searcher(cql_query => $query) :
+        LibreCat::App::Helper::Helpers->new->project;
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many($h->project);
+    $exporter->add_many($it);
     $exporter->commit;
 
     return 0;
@@ -201,8 +217,8 @@ LibreCat::Cmd::project - manage librecat projects
 
 =head1 SYNOPSIS
 
-    librecat project list
-    librecat project export
+    librecat project list [<cql-query>]
+    librecat project export [<cql-query>]
     librecat project add <FILE>
     librecat project get <id>
     librecat project delete <id>

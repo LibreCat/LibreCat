@@ -11,11 +11,16 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat user [options] list
+librecat user [options] list [<cql-query>]
+librecat user [options] export [<cql-query>]
 librecat user [options] add <FILE>
 librecat user [options] get <id>
 librecat user [options] delete <id>
 librecat user [options] valid <FILE>
+
+E.g.
+
+librecat user list 'id = 1234'
 
 EOF
 }
@@ -45,8 +50,8 @@ sub command {
     if ($cmd eq 'list') {
         return $self->_list(@$args);
     }
-    elsif ($cmd eq 'publication') {
-        return $self->_export;
+    elsif ($cmd eq 'export') {
+        return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
         return $self->_get(@$args);
@@ -63,7 +68,14 @@ sub command {
 }
 
 sub _list {
-    my $count = LibreCat::App::Helper::Helpers->new->researcher->each(
+    my ($self,$query) = @_;
+
+    my $it =
+        defined($query) ?
+        LibreCat::App::Helper::Helpers->new->researcher->searcher(cql_query => $query) :
+        LibreCat::App::Helper::Helpers->new->researcher;
+
+    my $count = $it->each(
         sub {
             my ($item)   = @_;
             my $id       = $item->{_id};
@@ -83,10 +95,15 @@ sub _list {
 }
 
 sub _export {
-    my $h = LibreCat::App::Helper::Helpers->new;
+    my ($self,$query) = @_;
+
+    my $it =
+        defined($query) ?
+        LibreCat::App::Helper::Helpers->new->researcher->searcher(cql_query => $query) :
+        LibreCat::App::Helper::Helpers->new->researcher;
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many($h->researcher);
+    $exporter->add_many($it);
     $exporter->commit;
 
     return 0;
@@ -208,8 +225,8 @@ LibreCat::Cmd::user - manage librecat users
 
 =head1 SYNOPSIS
 
-    librecat user list
-    librecat user export
+    librecat user list [<cql-query>]
+    librecat user export [<cql-query>]
     librecat user add <FILE>
     librecat user get <id>
     librecat user delete <id>
