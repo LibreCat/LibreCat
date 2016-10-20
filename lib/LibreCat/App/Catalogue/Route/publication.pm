@@ -234,9 +234,8 @@ Prints the frontdoor for every record.
         my $id = params->{id};
 
         my $hits = h->publication->get($id);
-        $hits->{bag}
-            = $hits->{type} eq "researchData" ? "data" : "publication";
-        $hits->{style} = h->config->{default_fd_style} || "default";
+        $hits->{bag}    = $hits->{type} eq "research_data" ? "data" : "publication";
+        $hits->{style}  = h->config->{default_fd_style} || "default";
         $hits->{marked} = 0;
 
         template 'publication/record.tt', $hits;
@@ -325,7 +324,7 @@ Publishes private records, returns to the list.
                 $record->{status} = "public";
             }
             else {
-                if ($record->{type} eq "researchData") {
+                if ($record->{type} eq "research_data") {
                     $record->{status} = "submitted"
                         if $old_status eq "private";
                 }
@@ -337,7 +336,7 @@ Publishes private records, returns to the list.
             if ($record->{status} ne $old_status) {
                 h->update_record('publication', $record);
 
-                if ($record->{type} eq "researchData") {
+                if ($record->{type} eq "research_data") {
                     if ($record->{status} eq "submitted") {
                         $record->{host} = h->host;
                         my $mail_body = export_to_string($record, 'Template',

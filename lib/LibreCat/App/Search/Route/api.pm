@@ -42,7 +42,7 @@ oai_provider '/oai', deleted => sub {
     push @$specs, "ddc:$_" for @{$pub->{ddc}};
 
     if ($pub->{ec_funded} && $pub->{ec_funded} eq '1') {
-        if ($pub->{type} eq 'researchData') {
+        if ($pub->{type} eq 'research_data') {
             push @$specs, "openaire_data";
         }
         else {

@@ -35,7 +35,7 @@ sub command {
                 sub {
                     my $rec = $_[0];
                     my $type
-                        = $rec->{type} eq 'researchData'
+                        = $rec->{type} eq 'research_data'
                         ? 'data'
                         : 'publication';
                     my $loc = "$config->{host}/$type/$rec->{_id}";
@@ -78,4 +78,3 @@ __END__
 LibreCat::Cmd::sitemap - generate siteindex and sitemaps
 
 =cut
-

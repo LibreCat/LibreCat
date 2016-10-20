@@ -243,7 +243,7 @@ Performs search for data manager.
         my $id        = session 'personNumber';
         my $account   = h->get_person(session->{user});
         my $dep_query = "department=" . params->{department_id};
-        push @{$p->{q}}, "(type=researchData OR type=dara)";
+        push @{$p->{q}}, "(type=research_data OR type=data)";
         push @{$p->{q}}, $dep_query;
         push @{$p->{q}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
@@ -353,7 +353,7 @@ Performs search for user.
         my @orig_q = @{$p->{q}};
 
         push @{$p->{q}}, "(person=$id OR creator=$id)";
-        push @{$p->{q}}, "type<>researchData";
+        push @{$p->{q}}, "type<>research_data";
         push @{$p->{q}}, "type<>dara";
         push @{$p->{q}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
@@ -374,7 +374,7 @@ Performs search for user.
         my $researchhits;
         @{$p->{q}} = @orig_q;
         push @{$p->{q}}, "(person=$id OR creator=$id)";
-        push @{$p->{q}}, "(type=researchData OR type=dara)";
+        push @{$p->{q}}, "(type=research_data OR type=data)";
         push @{$p->{q}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
         $researchhits = h->search_publication($p);
@@ -400,7 +400,7 @@ Performs search for user.
         my @orig_q = @{$p->{q}};
 
         push @{$p->{q}}, "(person=$id OR creator=$id)";
-        push @{$p->{q}}, "(type=researchData OR type=dara)";
+        push @{$p->{q}}, "(type=research_data OR type=data)";
         push @{$p->{q}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
@@ -420,7 +420,7 @@ Performs search for user.
         my $researchhits;
         @{$p->{q}} = @orig_q;
         push @{$p->{q}}, "(person=$id OR creator=$id)";
-        push @{$p->{q}}, "(type=researchData OR type=dara)";
+        push @{$p->{q}}, "(type=research_data OR type=data)";
         $researchhits = h->search_publication($p);
         $hits->{researchhits} = $researchhits if $researchhits;
 
