@@ -590,6 +590,17 @@ search:
                 'exact': true
                 '<>': true
               field: 'file.open_access'
+            embargo:
+              op:
+                '=': true
+                'exact': true
+                'within': true
+                '>': true
+                '>=' : true
+                '<': true
+                '<=' : true
+              field: 'file.embargo'
+              sort: 'true'
             publication:
               op:
                 'any': true
