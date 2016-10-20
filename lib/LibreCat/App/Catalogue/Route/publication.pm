@@ -172,6 +172,9 @@ Checks if the user has the rights to update this record.
         if ($p->{finalSubmit} eq 'recSubmit') {
             $p->{status} = 'submitted';
         }
+        elsif ($p->{finalSubmit} eq 'recPublish') {
+            $p->{status} = 'public';
+        }
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
