@@ -87,9 +87,10 @@ Some fields are pre-filled.
             }
         }
 
-        if ($type eq "researchData") {
+        if ($type eq "research_data" && h->config->{doi}) {
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
         }
+
         if (params->{lang}) {
             $data->{lang} = params->{lang};
         }
@@ -273,7 +274,7 @@ Publishes private records, returns to the list.
         my $record     = h->publication->get($id);
         my $old_status = $record->{status};
 
-        #check if all mandatory fields are filled
+        # check if all mandatory fields are filled
         my $publtype = lc($record->{type});
 
         my $basic_fields
