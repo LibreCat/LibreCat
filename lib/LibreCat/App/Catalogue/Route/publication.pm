@@ -14,7 +14,6 @@ use LibreCat::App::Catalogue::Controller::Permission;
 use Dancer qw(:syntax);
 use Encode qw(encode);
 use Dancer::Plugin::Auth::Tiny;
-use Dancer::Plugin::Email;
 
 Dancer::Plugin::Auth::Tiny->extend(
     role => sub {
@@ -64,6 +63,15 @@ Some fields are pre-filled.
                 {id => session->{personNumber}, login => session->{user},},
         };
 
+        # Use config/hooks.yml to register functions
+        # that should run before/after adding new publications
+        # E.g. create a hooks to change the default fields
+        state $hook = h->hook('publication-new');
+
+        $hook->fix_before($data);
+
+        #-- Fill out default fields ---
+
         if (session->{role} eq "user") {
             my $person = {
                 first_name => $user->{first_name},
@@ -105,6 +113,10 @@ Some fields are pre-filled.
 
         $data->{new_record} = 1;
 
+        # -- end default fields ---
+
+        $hook->fix_after($data);
+
         template "$templatepath/$type", $data;
     };
 
@@ -123,14 +135,30 @@ Checks if the user has permission the see/edit this record.
             status '403';
             forward '/access_denied', {referer => request->{referer}};
         }
-        my $person = h->get_person(session->{personNumber});
-        my $edit_mode = params->{edit_mode} || $person->{edit_mode};
+
 
         forward '/' unless $id;
+
         my $rec = h->publication->get($id);
 
+        unless ($rec) {
+            return template 'error', {
+                message => "No publication found with ID $id."
+            };
+        }
+
+        # Use config/hooks.yml to register functions
+        # that should run before/after edit publications
+        state $hook = h->hook('publication-edit');
+
+        $hook->fix_before($rec);
+
+        # --- Setting the edit mode ---
+        my $person       = h->get_person(session->{personNumber});
+        my $edit_mode    = params->{edit_mode} || $person->{edit_mode};
         my $templatepath = "backend/forms";
         my $template     = $rec->{type} . ".tt";
+
         if (   ($edit_mode and $edit_mode eq "expert")
             or (!$edit_mode and session->{role} eq "super_admin"))
         {
@@ -139,13 +167,13 @@ Checks if the user has permission the see/edit this record.
         }
 
         $rec->{return_url} = request->{referer} if request->{referer};
-        if ($rec) {
-            $rec->{edit_mode} = $edit_mode if $edit_mode;
-            template "$templatepath/$template", $rec;
-        }
-        else {
-            template 'error', {error => "No publication with ID $id."};
-        }
+
+        $rec->{edit_mode} = $edit_mode if $edit_mode;
+        # --- End setting edit mode
+
+        $hook->fix_after($rec);
+
+        template "$templatepath/$template", $rec;
     };
 
 =head2 POST /update
@@ -207,8 +235,18 @@ Checks if the user has the rights to edit this record.
         }
 
         my $rec = h->publication->get($id);
+
         $rec->{status} = "returned";
-        h->update_record('publication', $rec);
+
+        # Use config/hooks.yml to register functions
+        # that should run before/after returning publications
+        state $hook = h->hook('publication-return');
+
+        $hook->fix_before($rec);
+
+        my $res = h->update_record('publication', $rec);
+
+        $hook->fix_after($res);
 
         redirect '/librecat';
     };
@@ -220,7 +258,19 @@ Deletes record with id. For admins only.
 =cut
 
     get '/delete/:id' => needs role => 'super_admin' => sub {
-        h->delete_record('publication', params->{id});
+        my $id         = params->{id};
+        my $record     = h->publication->get($id);
+
+        # Use config/hooks.yml to register functions
+        # that should run before/after deleting publications
+        state $hook = h->hook('publication-delete');
+
+        $hook->fix_before($record);
+
+        my $res = h->delete_record('publication', $id);
+
+        $hook->fix_after($res);
+
         redirect '/librecat';
     };
 
@@ -234,6 +284,7 @@ Prints the frontdoor for every record.
         my $id = params->{id};
 
         my $hits = h->publication->get($id);
+
         $hits->{bag}    = $hits->{type} eq "research_data" ? "data" : "publication";
         $hits->{style}  = h->config->{default_fd_style} || "default";
         $hits->{marked} = 0;
@@ -252,8 +303,9 @@ For admins only!
     get qr{/internal_view/(\w{1,})/*} => needs role => 'super_admin' => sub {
         my ($id) = splat;
 
-        return template 'backend/internal_view',
-            {data => to_yaml h->publication->get($id)};
+        return template 'backend/internal_view', {
+                data => to_yaml h->publication->get($id)
+        };
     };
 
 =head2 GET /publish/:id
@@ -273,113 +325,26 @@ Publishes private records, returns to the list.
         my $record     = h->publication->get($id);
         my $old_status = $record->{status};
 
-        # check if all mandatory fields are filled
-        my $publtype = lc($record->{type});
-
-        my $basic_fields
-            = h->config->{forms}->{publication_types}->{$publtype}->{fields}
-            ->{basic_fields};
-        my $field_check = 1;
-
-        foreach my $conf_key (keys %$basic_fields) {
-            next if $conf_key eq "tab_name";
-            if ($conf_key =~ /(author|editor|translator|supervisor)/)
-            {    # also matches author_solo
-                my $rec_key = $1
-                    ; # contains only "author", not "author_solo", so that it will match the key in the record
-                if (    $basic_fields->{$conf_key}
-                    and $basic_fields->{$conf_key}->{mandatory})
-                {
-                    if (!$record->{$rec_key}) {
-                        $field_check = 0;
-                    }
-                    elsif ($basic_fields->{$conf_key}->{multiple}) {
-                        foreach my $entry (@{$record->{$rec_key}}) {
-                            unless ($entry->{first_name}
-                                and $entry->{last_name})
-                            {
-                                $field_check = 0;
-                            }
-                        }
-                    }
-                    else {
-                        unless ($record->{$rec_key}->{first_name}
-                            and $record->{$rec_key}->{last_name})
-                        {
-                            $field_check = 0;
-                        }
-                    }
-                }
-            }
-            elsif ( $basic_fields->{$conf_key}->{mandatory}
-                and $basic_fields->{$conf_key}->{mandatory} eq "1"
-                and (!$record->{$conf_key} || $record->{$conf_key} eq ""))
-            {
-                $field_check = 0;
-            }
+        if (session->{role} eq "super_admin") {
+            $record->{status} = "public";
+        }
+        elsif ($record->{type} eq "research_data") {
+            $record->{status} = "submitted" if $old_status eq "private";
+        }
+        else {
+            $record->{status} = "public";
         }
 
-        if ($field_check) {
-            if (session->{role} eq "super_admin") {
-                $record->{status} = "public";
-            }
-            else {
-                if ($record->{type} eq "research_data") {
-                    $record->{status} = "submitted"
-                        if $old_status eq "private";
-                }
-                else {
-                    $record->{status} = "public";
-                }
-            }
+        if ($record->{status} ne $old_status) {
+            # Use config/hooks.yml to register functions
+            # that should run before/after publishing publications
+            state $hook = h->hook('publication-publish');
 
-            if ($record->{status} ne $old_status) {
-                h->update_record('publication', $record);
+            $hook->fix_before($record);
 
-                if ($record->{type} eq "research_data") {
-                    if ($record->{status} eq "submitted") {
-                        $record->{host} = h->host;
-                        my $mail_body = export_to_string($record, 'Template',
-                            template => 'views/email/rd_submitted.tt');
+            my $res = h->update_record('publication', $record);
 
-                        try {
-                            email {
-                                to => h->config->{research_data}->{to},
-                                subject =>
-                                    h->config->{research_data}->{subject},
-                                body     => $mail_body,
-                                reply_to => h->config->{research_data}->{to},
-                            };
-                        }
-                        catch {
-                            error "Could not send email: $_";
-                        }
-                    }
-                    elsif ( $record->{status} eq 'public'
-                        and $record->{doi} =~ /unibi\/\d+$/)
-                    {
-                        try {
-                            my $registry = LibreCat::Worker::DataCite->new(
-                                user     => h->config->{doi}->{user},
-                                password => h->config->{doi}->{passwd}
-                            );
-                            $record->{host} = h->host;
-                            my $datacite_xml
-                                = export_to_string($record, 'Template',
-                                template => 'views/export/datacite.tt');
-                            $registry->do_work($record->{doi},
-                                h->host . "/data/$record->{_id}",
-                                $datacite_xml);
-
-                          #$registry->metadata($result->{doi}, $datacite_xml);
-                        }
-                        catch {
-                            error
-                                "Could not register DOI: $_ -- $record->{_id}";
-                        }
-                    }
-                }
-            }
+            $hook->fix_after($res);
         }
 
         redirect '/librecat';
@@ -407,6 +372,12 @@ Changes the layout of the edit form.
             }
         }
 
+        # Use config/hooks.yml to register functions
+        # that should run before/after changing the edit mode
+        state $hook = h->hook('publication-change-mode');
+
+        $hook->fix_before($params);
+
         Catmandu::Fix->new(
             fixes => [
                 'publication_identifier()',
@@ -429,6 +400,8 @@ Changes the layout of the edit form.
         my $path = "backend/forms/";
         $path .= "expert/" if $mode eq "expert";
         $path .= params->{type} . ".tt";
+
+        $hook->fix_after($params);
 
         template $path, $params;
     };
