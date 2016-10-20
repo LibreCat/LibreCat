@@ -1,11 +1,11 @@
-package HookHungry;
+package LibreCat::Hook::peckish;
 
 use Catmandu::Sane;
 use Moo;
 
 sub fix {
     my ($self, $data) = @_;
-    $data->{hungry} = 1;
+    $data->{peckish} = 1;
 }
 
 1;

@@ -1,4 +1,4 @@
-package HookSatisfied;
+package LibreCat::Hook::satisfied;
 
 use Catmandu::Sane;
 use Moo;

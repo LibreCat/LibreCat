@@ -179,13 +179,9 @@ Checks if the user has the rights to update this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
-        state $hook = h->hook('publication-update');
-
-        $hook->fix_before($p);
-
-        my $result = h->update_record('publication', $p);
-
-        $hook->fix_after($result);
+        h->hook('publication_update')->fix_around($p, sub {
+            h->update_record('publication', $p);
+        });
 
         redirect '/librecat';
     };

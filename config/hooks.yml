@@ -1,7 +1,7 @@
 ---
 hooks:
-  publication-update:
+  publication_update:
    before_fixes: []
    after_fixes:
-       - 'LibreCat::Hook::new_research_data_email'
-       - 'LibreCat::Hook::new_research_data_datacite'
+       - new_research_data_email
+       - new_research_data_datacite

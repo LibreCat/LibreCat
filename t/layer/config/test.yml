@@ -27,8 +27,8 @@ store:
 
 hooks:
   eat:
-   before_fixes: [HookPeckish,HookHungry]
-   after_fixes: [HookSatisfied]
+   before_fixes: [peckish, hungry]
+   after_fixes: [satisfied]
 i18n:
   lexicon:
     en:
