@@ -408,14 +408,14 @@ sub get_statistics {
     my ($self) = @_;
 
     my $hits = $self->search_publication(
-        {q => ["status=public", "type<>researchData", "type<>dara"]});
+        {q => ["status=public", "type<>research_data", "type<>data"]});
     my $reshits = $self->search_publication(
-        {q => ["status=public", "(type=researchData OR type=dara)"]});
+        {q => ["status=public", "(type=research_data OR type=data)"]});
     my $oahits = $self->search_publication(
         {
             q => [
                 "status=public",      "fulltext=1",
-                "type<>researchData", "type<>dara"
+                "type<>research_data", "type<>data"
             ]
         }
     );

@@ -39,7 +39,7 @@ sub _add_cite {
         $cite = $pub->{citation}{$self->style};
     }
 
-    my $bag = $pub->{type} eq "researchData" ? "data" : "publication";
+    my $bag = $pub->{type} eq "research_data" ? "data" : "publication";
 
     if ($self->explinks and $self->explinks eq "yes") {
         $links

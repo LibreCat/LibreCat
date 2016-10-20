@@ -87,9 +87,10 @@ Some fields are pre-filled.
             }
         }
 
-        if ($type eq "researchData") {
+        if ($type eq "research_data" && h->config->{doi}) {
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
         }
+
         if (params->{lang}) {
             $data->{lang} = params->{lang};
         }
@@ -172,6 +173,9 @@ Checks if the user has the rights to update this record.
         if ($p->{finalSubmit} eq 'recSubmit') {
             $p->{status} = 'submitted';
         }
+        elsif ($p->{finalSubmit} eq 'recPublish') {
+            $p->{status} = 'public';
+        }
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
@@ -230,9 +234,8 @@ Prints the frontdoor for every record.
         my $id = params->{id};
 
         my $hits = h->publication->get($id);
-        $hits->{bag}
-            = $hits->{type} eq "researchData" ? "data" : "publication";
-        $hits->{style} = h->config->{default_fd_style} || "default";
+        $hits->{bag}    = $hits->{type} eq "research_data" ? "data" : "publication";
+        $hits->{style}  = h->config->{default_fd_style} || "default";
         $hits->{marked} = 0;
 
         template 'publication/record.tt', $hits;
@@ -270,7 +273,7 @@ Publishes private records, returns to the list.
         my $record     = h->publication->get($id);
         my $old_status = $record->{status};
 
-        #check if all mandatory fields are filled
+        # check if all mandatory fields are filled
         my $publtype = lc($record->{type});
 
         my $basic_fields
@@ -321,7 +324,7 @@ Publishes private records, returns to the list.
                 $record->{status} = "public";
             }
             else {
-                if ($record->{type} eq "researchData") {
+                if ($record->{type} eq "research_data") {
                     $record->{status} = "submitted"
                         if $old_status eq "private";
                 }
@@ -333,7 +336,7 @@ Publishes private records, returns to the list.
             if ($record->{status} ne $old_status) {
                 h->update_record('publication', $record);
 
-                if ($record->{type} eq "researchData") {
+                if ($record->{type} eq "research_data") {
                     if ($record->{status} eq "submitted") {
                         $record->{host} = h->host;
                         my $mail_body = export_to_string($record, 'Template',
