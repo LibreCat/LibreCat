@@ -29,4 +29,11 @@ hooks:
   eat:
    before_fixes: [HookPeckish,HookHungry]
    after_fixes: [HookSatisfied]
-
+i18n:
+  lexicon:
+    en:
+      - CatmanduConfig
+      - ['en']
+locale:
+  en:
+    hello: How are you?
