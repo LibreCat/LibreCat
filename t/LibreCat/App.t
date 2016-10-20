@@ -7,7 +7,6 @@ BEGIN {
 
 use strict;
 use warnings;
-use lib qw(./lib);
 use Test::More;
 
 use Dancer::Test;
@@ -16,7 +15,7 @@ use LibreCat::App::Helper;
 
 h->config->{default_lang} = 'en';
 
-route_exists          [GET => '/'], "GET /publications is handled";
+route_exists          [GET => '/'], "GET / is handled";
 response_status_is    [GET => '/'], 200, 'GET / status is ok';
 response_content_like [GET => '/'], qr/Search Publications/,
     "content looks good for /";
@@ -36,6 +35,11 @@ route_exists          [GET => '/data'], "GET /data is handled";
 response_status_is    [GET => '/data'], 200, 'GET /data status is ok';
 response_content_like [GET => '/data'], qr/Data Publications/,
     "content looks good for /data";
+
+route_exists          [GET => '/project'], "GET /data is handled";
+response_status_is    [GET => '/project'], 200, 'GET /data status is ok';
+response_content_like [GET => '/project'], qr/Project/,
+    "content looks good for /project";
 
 route_exists          [GET => '/oai'], "GET /oai is handled";
 response_status_is    [GET => '/oai'], 200, 'GET /oai status is ok';
