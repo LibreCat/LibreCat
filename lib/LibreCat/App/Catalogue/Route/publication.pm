@@ -232,17 +232,12 @@ Checks if the user has the rights to edit this record.
 
         my $rec = h->publication->get($id);
 
-        $rec->{status} = "returned";
-
         # Use config/hooks.yml to register functions
         # that should run before/after returning publications
-        state $hook = h->hook('publication-return');
-
-        $hook->fix_before($rec);
-
-        my $res = h->update_record('publication', $rec);
-
-        $hook->fix_after($res);
+        h->hook('publication-return')->fix_around($rec, sub {
+            $rec->{status} = "returned";
+            h->update_record('publication', $rec);
+        });
 
         redirect '/librecat';
     };
@@ -254,18 +249,14 @@ Deletes record with id. For admins only.
 =cut
 
     get '/delete/:id' => needs role => 'super_admin' => sub {
-        my $id         = params->{id};
-        my $record     = h->publication->get($id);
+        my $id     = params->{id};
+        my $record = h->publication->get($id);
 
         # Use config/hooks.yml to register functions
         # that should run before/after deleting publications
-        state $hook = h->hook('publication-delete');
-
-        $hook->fix_before($record);
-
-        my $res = h->delete_record('publication', $id);
-
-        $hook->fix_after($res);
+        h->hook('publication-delete')->fix_around($record, sub {
+            h->delete_record('publication', $id);
+        });
 
         redirect '/librecat';
     };
