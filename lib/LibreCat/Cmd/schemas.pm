@@ -13,7 +13,6 @@ Usage:
 librecat schemas [options] list
 librecat schemas [options] get SCHEMA
 librecat schemas [options] markdown
-librecat schemas [options]
 
 EOF
 }

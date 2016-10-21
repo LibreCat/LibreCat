@@ -16,6 +16,4 @@ BEGIN {
 
 require_ok $_ for @worker_pkg;
 
-#isa_ok $_, "Catmandu::Validator" for @worker_pkg;
-
 done_testing;
