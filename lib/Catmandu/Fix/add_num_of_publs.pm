@@ -11,13 +11,13 @@ sub fix {
     if ($rec->{_id}) {
         my $hits = $bag->search(
             cql_query =>
-                "person=$rec->{_id} AND status=public AND type<>researchData AND type<>dara",
+                "person=$rec->{_id} AND status=public AND type<>research_data AND type<>data",
             limit => 1,
             start => 0,
         );
         my $resHits = $bag->search(
             cql_query =>
-                "person=$rec->{_id} AND status=public AND (type=researchData OR type=dara)",
+                "person=$rec->{_id} AND status=public AND (type=research_data OR type=data)",
             limit => 1,
             start => 0,
         );

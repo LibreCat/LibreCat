@@ -47,7 +47,22 @@ store:
           roles: [{role: user}]
   search:
     options:
-      index_name: test
+      index_name: librecat_test
+
+hooks:
+  eat:
+   before_fixes: [peckish, hungry]
+   after_fixes: [satisfied]
+
+i18n:
+  lexicon:
+    en:
+      - CatmanduConfig
+      - ['en']
+
+locale:
+  en:
+    hello: How are you?
 
 user:
   username_attr: login
@@ -72,4 +87,3 @@ roles:
       - department
     rules:
       - can edit publication affiliated_with department
-

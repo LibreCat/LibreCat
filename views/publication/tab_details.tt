@@ -128,7 +128,7 @@
 [%- END %]
 [%- IF conference.name %]
   <div class="row">
-    <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.${conference.name}.label") %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.${type}.field.item('conference.name').label %]</div>
     <div class="col-lg-10 col-md-9">
       [% conference.name | html %]
     </div>
@@ -136,7 +136,7 @@
 [%- END %]
 [%- IF conference.location %]
   <div class="row">
-    <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.${conference.location}.label_short") %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.${type}.field.item('conference.location').label %]</div>
     <div class="col-lg-10 col-md-9">
       [% conference.location | html %]
     </div>
@@ -144,7 +144,7 @@
 [%- END %]
 [%- IF conference.start_date %]
   <div class="row">
-    <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.${conference.date}.label") %]</div>
+    <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.${type}.field.item('conference.date').label %]</div>
     <div class="col-lg-10 col-md-9">
       [% conference.start_date | html %][% IF conference.end_date %] &ndash; [% conference.end_date | html %][% END %]
     </div>

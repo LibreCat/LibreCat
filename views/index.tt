@@ -82,7 +82,6 @@
               <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.publications %]</span> <a href="/publication">[% h.loc("home.stats.publications") %]</a></p>
               <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researchdata %]</span> <a href="/data">[% h.loc("home.stats.data_publications") %]</a></p>
               <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.oahits %]</span> <a href="/publication?q=fulltext=1">[% h.loc("home.stats.oa_publications") %]</a></p>
-              <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.theseshits %]</span> <a href="/publication?q=type=bi*">[% h.loc("home.stats.theses") %]</a></p>
               </div>
             </div>
 

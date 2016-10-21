@@ -4,19 +4,34 @@ use Catmandu::Sane;
 use LibreCat::JobQueue;
 use parent qw(LibreCat::Cmd);
 
+sub description {
+    return <<EOF;
+Usage:
+
+librecat [--background] [--id=...] index [bag]
+
+EOF
+}
+
 sub command_opt_spec {
     my ($class) = @_;
-    (['background|bg', ""], ['bag=s', "", {required => 1}], ['id=s', ""],);
+    (['background|bg', ""], ['id=s', ""],);
 }
 
 sub command {
     my ($self, $opts, $args) = @_;
 
+    my $bag = shift @$args;
+
+    unless ($bag) {
+        $self->usage_error("need a bag as argument");
+    }
+
     my $queue = LibreCat::JobQueue->new;
 
     if ($opts->id) {
         my $job_id = $queue->add_job('index_record',
-            {bag => $opts->bag, id => $opts->bag});
+            {bag => $bag, id => $opts->bag});
         return $job_id if $opts->background;
         while (1) {
             my $job = $queue->job_status($job_id);
@@ -25,7 +40,7 @@ sub command {
         return;
     }
 
-    my $job_id = $queue->add_job('index_all', {bag => $opts->bag});
+    my $job_id = $queue->add_job('index_all', {bag => $bag});
 
     if ($opts->background) {
         say $job_id;
@@ -66,5 +81,8 @@ __END__
 
 LibreCat::Cmd::index - manage index jobs
 
-=cut
+=head1 SYNOPSIS
 
+    librecat [--background] [--id=...] index [bag]
+
+=cut

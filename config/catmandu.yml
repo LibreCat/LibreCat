@@ -10,11 +10,16 @@ thesis:
   subject: '[PUB] New thesis submitted'
   urn_prefix: 'urn:thesis-'
 
-# datacite test prefix!
-doi:
-  prefix: "10.5072/test"
-  user: user
-  passwd: secret
+## Uncomment when you want to send emails when new research data becomes available
+#research_data:
+#  to: 'send@me.org'
+#  subject: '[PUB] New research data submitted'
+
+## Uncomment when you want to register your research_data DOI at DataCite
+#doi:
+#  prefix: "10.5072/test"
+#  user: user
+#  passwd: secret
 
 # default settings
 default_lang: en

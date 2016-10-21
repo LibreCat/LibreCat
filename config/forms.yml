@@ -24,15 +24,13 @@ publication_type_order:
     - translation
     - translation_chapter
     - working_paper
-  column_admin:
-    - bi_dissertation
+  column_admin: []
   column_rd:
     - research_data
 # sort order of fields for all types
 field_order:
   basic_fields:
     - document_type
-    - bi_doctype
     - doi
     - translator
     - author
@@ -927,66 +925,6 @@ publication_types:
         message: *message
         jel: *jel
         thematic_area: *thematic_area
-        alternative_id: *alternative_id
-        link: *link
-      related_material: *related_material
-  bi_dissertation:
-    fields:
-      basic_fields:
-        document_type: *document_type
-        bi_doctype:
-          label: "Documenttype"
-          mandatory: 1
-        author: &author
-          mandatory: 1
-          multiple: 1
-          idm: 1
-        email: &email
-          mandatory: 1
-        department: &department_diss
-          mandatory: 1
-          multiple: 1
-        supervisor: &supervisor
-          multiple: 1
-          idm: 1
-        title: *title
-        language: &language_diss
-          default: "eng"
-          mandatory: 1
-        year:
-         label: "Year"
-         mandatory: 1
-        defense_date: &defense_date
-          mandatory: 0
-        publisher: &publisher_diss
-          mandatory: 1
-        place: &place_diss
-          mandatory: 1
-        alternative_title: *alternative_title
-        page: *pages
-        locked: *locked
-      file_upload: &file_upload
-        dropzone:
-          mandatory: 0
-        license:
-          pub_license:
-            mandatory: 1
-          urn:
-            mandatory: 1
-          ddc:
-            mandatory: 1
-            multiple: 1
-      supplementary_fields:
-        abstract: *abstract
-        keyword: *keyword
-        pacs_class: &pacs
-          multiple: 1
-        msc_class: &msc
-          multiple: 1
-        ccs_class: &ccs
-          multiple: 1
-        message: *message
-        jel: *jel
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material

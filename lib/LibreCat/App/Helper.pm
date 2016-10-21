@@ -11,6 +11,7 @@ use Dancer::FileUtils qw(path);
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
 use LibreCat::I18N;
+use LibreCat;
 use Log::Log4perl ();
 use Moo;
 
@@ -22,6 +23,10 @@ sub log {
 
 sub config {
     state $config = hash_merge(Catmandu->config, Dancer::config);
+}
+
+sub hook {
+    LibreCat->hook($_[1]);
 }
 
 sub alphabet {
@@ -403,25 +408,22 @@ sub get_statistics {
     my ($self) = @_;
 
     my $hits = $self->search_publication(
-        {q => ["status=public", "type<>researchData", "type<>dara"]});
+        {q => ["status=public", "type<>research_data", "type<>data"]});
     my $reshits = $self->search_publication(
-        {q => ["status=public", "(type=researchData OR type=dara)"]});
+        {q => ["status=public", "(type=research_data OR type=data)"]});
     my $oahits = $self->search_publication(
         {
             q => [
                 "status=public",      "fulltext=1",
-                "type<>researchData", "type<>dara"
+                "type<>research_data", "type<>data"
             ]
         }
     );
-    my $disshits
-        = $self->search_publication({q => ["status=public", "type=bi*"]});
 
     return {
         publications => $hits->{total},
         researchdata => $reshits->{total},
         oahits       => $oahits->{total},
-        theseshits   => $disshits->{total},
     };
 
 }
@@ -446,16 +448,6 @@ sub update_record {
 
     if ($self->log->is_debug) {
         $self->log->debug(Dancer::to_json($rec));
-    }
-
-    my $validator_pkg = Catmandu::Util::require_package(ucfirst($bag),
-        'LibreCat::Validator');
-
-    if ($validator_pkg) {
-        my @white_list = $validator_pkg->new->white_list;
-        for my $key (keys %$rec) {
-            delete $rec->{$key} unless grep(/^$key$/, @white_list);
-        }
     }
 
     $rec = $self->store_record($bag, $rec);
@@ -488,6 +480,17 @@ sub store_record {
     my $fix = $fixes->{$bag} //= Catmandu::Fix->new(
         fixes => [join_path('fixes', "update_$bag.fix")]);
     $fix->fix($rec);
+
+    # clean all the fields that are not part of the JSON schema
+    state $validator_pkg = Catmandu::Util::require_package(ucfirst($bag),
+        'LibreCat::Validator');
+
+    if ($validator_pkg) {
+        my @white_list = $validator_pkg->new->white_list;
+        for my $key (keys %$rec) {
+            delete $rec->{$key} unless grep(/^$key$/, @white_list);
+        }
+    }
 
     my $bagname = "backup_$bag";
 

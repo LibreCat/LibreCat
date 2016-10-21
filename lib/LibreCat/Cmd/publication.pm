@@ -12,14 +12,38 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat publication [options] list
-librecat publication [options] export
+librecat publication [options] list [<cql-query>]
+librecat publication [options] export [<cql-query>]
 librecat publication [options] get <id>
 librecat publication [options] add <FILE>
 librecat publication [options] delete <id>
 librecat publication [options] purge <id>
 librecat publication [options] valid <FILE>
-librecat publication [options] files [ID]|[<FILE>]
+librecat publication [options] files [<id>]|[<cql-query>]|[<FILE>]
+librecat publication [options] embargo ['update']
+
+E.g.
+
+# Search all publications with status 'private'
+librecat publication list 'status exact private'
+
+# Get the metadata for publication '2737383'
+librecat publication get 2737383 > /tmp/data.yml
+
+# Check if the YAML metadata is valid against the JSON scheme config/schema.yml
+librecat publication valid /tmp/data.yml
+
+# Update/add the metadata for a publication from a YAML file
+librecat publication add /tmp/data.yml
+
+# Find all files with an expired embargo date
+librecat publication embargo
+
+# Create a file update script to delete the embargo
+librecat publication embargo update > /tmp/update.txt
+
+# Update the file metadata
+librecat publication file /tmp/update.txt
 
 EOF
 }
@@ -32,7 +56,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|export|get|add|delete|purge|valid|files/;
+    my $commands = qr/list|export|get|add|delete|purge|valid|files|embargo$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -45,10 +69,10 @@ sub command {
     }
 
     if ($cmd eq 'list') {
-        return $self->_list;
+        return $self->_list(@$args);
     }
     elsif ($cmd eq 'export') {
-        return $self->_export;
+        return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
         return $self->_get(@$args);
@@ -68,11 +92,20 @@ sub command {
     elsif ($cmd eq 'files') {
         return $self->_files(@$args);
     }
+    elsif ($cmd eq 'embargo') {
+        return $self->_embargo(@$args);
+    }
 }
 
 sub _list {
-    my ($self) = @_;
-    my $count = LibreCat::App::Helper::Helpers->new->publication->each(
+    my ($self,$query) = @_;
+
+    my $it =
+        defined($query) ?
+        LibreCat::App::Helper::Helpers->new->publication->searcher(cql_query => $query) :
+        LibreCat::App::Helper::Helpers->new->publication;
+
+    my $count = $it->each(
         sub {
             my ($item) = @_;
             my $id = $item->{_id};
@@ -91,10 +124,15 @@ sub _list {
 }
 
 sub _export {
-    my $h = LibreCat::App::Helper::Helpers->new;
+    my ($self,$query) = @_;
+
+    my $it =
+        defined($query) ?
+        LibreCat::App::Helper::Helpers->new->publication->searcher(cql_query => $query) :
+        LibreCat::App::Helper::Helpers->new->publication;
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many($h->publication);
+    $exporter->add_many($it);
     $exporter->commit;
 
     return 0;
@@ -122,7 +160,7 @@ sub _add {
     my $helper    = LibreCat::App::Helper::Helpers->new;
     my $validator = LibreCat::Validator::Publication->new;
 
-    my $records = $importer->select(
+    my $records = $importer->benchmark->select(
         sub {
             my $rec = $_[0];
 
@@ -198,7 +236,7 @@ sub _valid {
 
     my $ret = 0;
 
-    Catmandu->importer('YAML', file => $file)->each(
+    Catmandu->importer('YAML', file => $file)->benchmark->each(
         sub {
             my $item = $_[0];
 
@@ -222,6 +260,39 @@ sub _valid {
     return $ret == 0;
 }
 
+sub _embargo {
+    my ($self,@args) = @_;
+
+    my $update = $args[0] && $args[0] eq 'update';
+
+    my $helper = LibreCat::App::Helper::Helpers->new;
+    my $now    = $helper->now;
+    $now =~ s/T.*//;
+
+    my $query  = "embargo < $now";
+    my $it     = $helper->publication->searcher(cql_query => $query);
+
+    printf "%-9s\t%-9s\t%-12.12s\t%-14.14s\t%-15.15s\t%s\n",
+        qw(id file_id access_level request_a_copy embargo file_name);
+
+    my $printer = sub {
+        my ($item) = @_;
+        return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
+
+        for my $file (@{$item->{file}}) {
+            printf "%-9d\t%-9d\t%-12.12s\t%-14.14s\t%-15.15s\t%s\n",
+                $item->{_id},
+                $file->{file_id},
+                $update ? 'open_access' : $file->{access_level},
+                $update ? 0             : $file->{request_a_copy},
+                $update ? 'NA'          : $file->{embargo} // 'NA',
+                $file->{file_name};
+        }
+    };
+
+    $it->each($printer);
+}
+
 sub _files {
     my ($self, $file) = @_;
 
@@ -232,7 +303,7 @@ sub _files {
         $self->_files_load($file);
     }
     else {
-        $self->_files_list;
+        $self->_files_list($file);
     }
 
     return 0;
@@ -240,23 +311,30 @@ sub _files {
 
 sub _files_list {
     my ($self, $id) = @_;
-    printf "%-9s\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n",
-        qw(id access_level relation embargo file_name);
+    printf "%-9s\t%-9s\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n",
+        qw(id file_id access_level relation embargo file_name);
 
     my $printer = sub {
         my ($item) = @_;
         return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
 
         for my $file (@{$item->{file}}) {
-            printf "%-9d\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n", $item->{_id},
-                $file->{access_level}, $file->{relation},
-                $file->{embargo} // 'NA', $file->{file_name};
+            printf "%-9d\t%-9d\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n",
+                $item->{_id},
+                $file->{file_id},
+                $file->{access_level},
+                $file->{relation},
+                $file->{embargo} // 'NA',
+                $file->{file_name};
         }
     };
 
-    if ($id) {
+    if ($id =~ /^\d+$/) {
         my $data = LibreCat::App::Helper::Helpers->new->get_publication($id);
         $printer->($data);
+    }
+    elsif (defined($id)) {
+        LibreCat::App::Helper::Helpers->new->publication->searcher(cql_query => $id)->each($printer);
     }
     else {
         LibreCat::App::Helper::Helpers->new->publication->each($printer);
@@ -270,6 +348,7 @@ sub _files_load {
     croak "list - can't open $filename for reading" unless -r $filename;
     local (*FH);
 
+    my $helper   = LibreCat::App::Helper::Helpers->new;
     my $importer = Catmandu->importer('TSV', file => $filename);
 
     my $prev_id = undef;
@@ -280,6 +359,7 @@ sub _files_load {
         access_level creator content_type
         date_created date_updated file_id
         file_name file_size open_access
+        request_a_copy
         relation title description embargo
     );
 
@@ -309,7 +389,17 @@ sub _files_load {
             delete $file->{id};
 
             if ($prev_id && $prev_id ne $id) {
-                $self->_file_process($prev_id, $files);
+                my $data = $helper->get_publication($id);
+
+                if ($data) {
+                    $self->_file_process($data, $files)
+                    &&
+                    $helper->update_record('publication', $data);
+                }
+                else {
+                    warn "$id - no such publication";
+                }
+
                 $files = [];
             }
 
@@ -319,19 +409,26 @@ sub _files_load {
         }
     );
 
-    $self->_file_process($prev_id, $files) if $files;
+    if ($files) {
+        my $data = $helper->get_publication($prev_id);
+
+        if ($data) {
+            $self->_file_process($data,$files)
+            &&
+            $helper->update_record('publication', $data);
+        }
+        else {
+            warn "$prev_id - no such publication";
+        }
+    }
 }
 
 sub _file_process {
-    my ($self, $id, $files) = @_;
+    my ($self, $data, $files) = @_;
 
-    my $data = LibreCat::App::Helper::Helpers->new->get_publication($id);
+    return undef unless $data;
 
-    unless ($data) {
-        warn "$id - no such publication";
-        return;
-    }
-
+    my $id       = $data->{_id};
     my %file_map = map {$_->{file_name} => $_} @{$data->{file}};
 
     # Update the files with stored data
@@ -370,7 +467,7 @@ sub _file_process {
 
     $data->{file} = $files;
 
-    $self->_adder($data);
+    1;
 }
 
 1;
@@ -385,13 +482,14 @@ LibreCat::Cmd::publication - manage librecat publications
 
 =head1 SYNOPSIS
 
-    librecat publication list
+    librecat publication list [<cql-query>]
     librecat publication export
 	librecat publication get <id>
 	librecat publication add <FILE>
 	librecat publication delete <id>
     librecat publication purge <id>
     librecat publication valid <FILE>
-    librecat publication files [ID]|[<FILE>]
+    librecat publication files [<id>]|[<cql-query>]|[<FILE>]
+    librecat publication embargo ['update']
 
 =cut
