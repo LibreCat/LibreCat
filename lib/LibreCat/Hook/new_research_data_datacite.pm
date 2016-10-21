@@ -17,7 +17,7 @@ sub fix {
                 $data->{status} eq "public";
 
 
-    h->log->debug("Register the publication at DataCite");
+    h->log->info("Register the publication at DataCite");
 
     try {
         my $registry = LibreCat::Worker::DataCite->new(

@@ -10,12 +10,16 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat department [options] list
-librecat department [options] export
+librecat department [options] list [<cql-query>]
+librecat department [options] export [<cql-query>]
 librecat department [options] add <FILE>
 librecat department [options] get <id>
 librecat department [options] delete <id>
 librecat department [options] valid <FILE>
+
+E.g.
+
+librecat department list 'layer = 1'
 
 EOF
 }
@@ -46,7 +50,7 @@ sub command {
         return $self->_list(@$args);
     }
     elsif ($cmd eq 'export') {
-        return $self->_export;
+        return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
         return $self->_get(@$args);
@@ -63,7 +67,14 @@ sub command {
 }
 
 sub _list {
-    my $count = LibreCat::App::Helper::Helpers->new->department->each(
+    my ($self,$query) = @_;
+
+    my $it =
+        defined($query) ?
+        LibreCat::App::Helper::Helpers->new->department->searcher(cql_query => $query) :
+        LibreCat::App::Helper::Helpers->new->department;
+
+    my $count = $it->each(
         sub {
             my ($item)  = @_;
             my $id      = $item->{_id};
@@ -80,10 +91,15 @@ sub _list {
 }
 
 sub _export {
-    my $h = LibreCat::App::Helper::Helpers->new;
+    my ($self,$query) = @_;
+
+    my $it =
+        defined($query) ?
+        LibreCat::App::Helper::Helpers->new->department->searcher(cql_query => $query) :
+        LibreCat::App::Helper::Helpers->new->department;
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many($h->department);
+    $exporter->add_many($it);
     $exporter->commit;
 
     return 0;
@@ -203,8 +219,8 @@ LibreCat::Cmd::department - manage librecat departments
 
 =head1 SYNOPSIS
 
-    librecat department list
-    librecat department export
+    librecat department list [<cql-query>]
+    librecat department export [<cql-query>]
     librecat department add <FILE>
     librecat department get <id>
     librecat department delete <id>

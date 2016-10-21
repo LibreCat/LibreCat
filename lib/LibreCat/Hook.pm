@@ -18,4 +18,11 @@ sub fix_after {
     $data;
 }
 
+sub fix_around {
+    my ($self, $data, $sub) = @_;
+    $self->fix_before($data);
+    $data = $sub->($data);
+    $self->fix_after($data);
+}
+
 1;

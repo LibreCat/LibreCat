@@ -7,6 +7,7 @@ use Catmandu;
 use namespace::clean;
 
 {
+    my $hook_ns = 'LibreCat::Hook';
     my $hooks = {};
 
     sub hook {
@@ -21,7 +22,7 @@ use namespace::clean;
             for my $key (qw(before_fixes after_fixes)) {
                 my $fixes = $hook->{$key} || [];
                 for my $fix (@$fixes) {
-                    push @{$args->{$key}}, require_package($fix)->new;
+                    push @{$args->{$key}}, require_package($fix, $hook_ns)->new;
                 }
             }
 

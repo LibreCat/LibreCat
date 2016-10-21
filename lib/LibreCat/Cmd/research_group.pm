@@ -10,8 +10,8 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat research_group [options] list
-librecat research_group [options] export
+librecat research_group [options] list [<cql-query>]
+librecat research_group [options] export [<cql-query>]
 librecat research_group [options] add <FILE>
 librecat research_group [options] get <id>
 librecat research_group [options] delete <id>
@@ -46,7 +46,7 @@ sub command {
         return $self->_list(@$args);
     }
     elsif ($cmd eq 'export') {
-        return $self->_export();
+        return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
         return $self->_get(@$args);
@@ -63,8 +63,14 @@ sub command {
 }
 
 sub _list {
-    my $h     = LibreCat::App::Helper::Helpers->new;
-    my $count = $h->research_group->each(
+    my ($self,$query) = @_;
+
+    my $it =
+        defined($query) ?
+        LibreCat::App::Helper::Helpers->new->research_group->searcher(cql_query => $query) :
+        LibreCat::App::Helper::Helpers->new->research_group;
+
+    my $count = $it->each(
         sub {
             my ($item)  = @_;
             my $id      = $item->{_id};
@@ -81,10 +87,15 @@ sub _list {
 }
 
 sub _export {
-    my $h = LibreCat::App::Helper::Helpers->new;
+    my ($self,$query) = @_;
+
+    my $it =
+        defined($query) ?
+        LibreCat::App::Helper::Helpers->new->research_group->searcher(cql_query => $query) :
+        LibreCat::App::Helper::Helpers->new->research_group;
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many($h->research_group);
+    $exporter->add_many($it);
     $exporter->commit;
 
     return 0;
@@ -204,8 +215,8 @@ LibreCat::Cmd::research_group - manage librecat research_group-s
 
 =head1 SYNOPSIS
 
-    librecat research_group list
-    librecat research_group export
+    librecat research_group list [<cql-query>]
+    librecat research_group export [<cql-query>]
     librecat research_group add <FILE>
     librecat research_group get <id>
     librecat research_group delete <id>
