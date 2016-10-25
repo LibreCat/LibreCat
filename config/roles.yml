@@ -41,5 +41,7 @@ roles:
 
   #data_manager:
 
-  #super_admin:
+  super_admin:
+    rules:
+      - can * *
 

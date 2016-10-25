@@ -16,28 +16,27 @@ sub user {
 
 sub auth {
     state $auth = do {
-        my $pkg = require_package(Catmandu->config->{authentication}->{package});
+        my $pkg
+            = require_package(Catmandu->config->{authentication}->{package});
         $pkg->new(Catmandu->config->{authentication}->{options} // {});
     };
 }
 
 {
     my $hook_ns = 'LibreCat::Hook';
-    my $hooks = {};
+    my $hooks   = {};
 
     sub hook {
         my ($self, $name) = @_;
         $hooks->{$name} ||= do {
-            my $args = {
-                before_fixes => [],
-                after_fixes  => [],
-            };
+            my $args = {before_fixes => [], after_fixes => [],};
 
             my $hook = (Catmandu->config->{hooks} || {})->{$name} || {};
             for my $key (qw(before_fixes after_fixes)) {
                 my $fixes = $hook->{$key} || [];
                 for my $fix (@$fixes) {
-                    push @{$args->{$key}}, require_package($fix, $hook_ns)->new;
+                    push @{$args->{$key}},
+                        require_package($fix, $hook_ns)->new;
                 }
             }
 

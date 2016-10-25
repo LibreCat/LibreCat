@@ -13,7 +13,7 @@ sub fix {
 
     h->log->debug("entering nothing() hook");
     h->log->debug(to_yaml $data);
-    
+
     $data;
 }
 

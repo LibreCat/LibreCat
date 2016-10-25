@@ -414,7 +414,7 @@ sub get_statistics {
     my $oahits = $self->search_publication(
         {
             q => [
-                "status=public",      "fulltext=1",
+                "status=public",       "fulltext=1",
                 "type<>research_data", "type<>data"
             ]
         }

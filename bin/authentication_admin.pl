@@ -63,7 +63,7 @@ else {
 my $pkg    = Catmandu::Util::require_package($package);
 my $auth   = $pkg->new(%$param);
 
-my $userobj = LibreCat->user->find_by_username($user);
+my $userobj = LibreCat->user->get_by_username($user);
 my $verify  = $auth->authenticate( { username => $user , password => $password });
 
 my $exporter = Catmandu->exporter('YAML');

@@ -33,9 +33,10 @@ sub _authenticate {
     # Clean dirties .. in loginname
     $username =~ s{[^a-zA-Z0-9_]*}{}mg;
 
-    my $user = LibreCat->user->find_by_username($username) || return;
-    
-    LibreCat->auth->authenticate({username => $username, password => $password})
+    my $user = LibreCat->user->get_by_username($username) || return;
+
+    LibreCat->auth->authenticate(
+        {username => $username, password => $password})
         || return;
 
     $user;

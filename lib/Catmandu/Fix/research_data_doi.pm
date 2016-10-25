@@ -7,7 +7,8 @@ use Moo;
 sub fix {
     my ($self, $data) = @_;
 
-    if ($data->{type} eq "research_data" && h->config->{doi} && ! $data->{doi}) {
+    if ($data->{type} eq "research_data" && h->config->{doi} && !$data->{doi})
+    {
         $data->{doi} = h->config->{doi}->{prefix} . "/" . $data->{_id};
     }
 

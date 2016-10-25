@@ -25,7 +25,7 @@ Dancer::Plugin::Auth::Tiny->extend(
             else {
                 redirect '/access_denied';
             }
-        }
+            }
     }
 );
 
@@ -136,15 +136,13 @@ Checks if the user has permission the see/edit this record.
             forward '/access_denied', {referer => request->{referer}};
         }
 
-
         forward '/' unless $id;
 
         my $rec = h->publication->get($id);
 
         unless ($rec) {
-            return template 'error', {
-                message => "No publication found with ID $id."
-            };
+            return template 'error',
+                {message => "No publication found with ID $id."};
         }
 
         # Use config/hooks.yml to register functions
@@ -169,6 +167,7 @@ Checks if the user has permission the see/edit this record.
         $rec->{return_url} = request->{referer} if request->{referer};
 
         $rec->{edit_mode} = $edit_mode if $edit_mode;
+
         # --- End setting edit mode
 
         $hook->fix_after($rec);
@@ -207,9 +206,12 @@ Checks if the user has the rights to update this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
-        h->hook('publication-update')->fix_around($p, sub {
-            h->update_record('publication', $p);
-        });
+        h->hook('publication-update')->fix_around(
+            $p,
+            sub {
+                h->update_record('publication', $p);
+            }
+        );
 
         redirect '/librecat';
     };
@@ -234,10 +236,13 @@ Checks if the user has the rights to edit this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after returning publications
-        h->hook('publication-return')->fix_around($rec, sub {
-            $rec->{status} = "returned";
-            h->update_record('publication', $rec);
-        });
+        h->hook('publication-return')->fix_around(
+            $rec,
+            sub {
+                $rec->{status} = "returned";
+                h->update_record('publication', $rec);
+            }
+        );
 
         redirect '/librecat';
     };
@@ -254,9 +259,12 @@ Deletes record with id. For admins only.
 
         # Use config/hooks.yml to register functions
         # that should run before/after deleting publications
-        h->hook('publication-delete')->fix_around($record, sub {
-            h->delete_record('publication', $id);
-        });
+        h->hook('publication-delete')->fix_around(
+            $record,
+            sub {
+                h->delete_record('publication', $id);
+            }
+        );
 
         redirect '/librecat';
     };
@@ -272,8 +280,9 @@ Prints the frontdoor for every record.
 
         my $hits = h->publication->get($id);
 
-        $hits->{bag}    = $hits->{type} eq "research_data" ? "data" : "publication";
-        $hits->{style}  = h->config->{default_fd_style} || "default";
+        $hits->{bag}
+            = $hits->{type} eq "research_data" ? "data" : "publication";
+        $hits->{style} = h->config->{default_fd_style} || "default";
         $hits->{marked} = 0;
 
         template 'publication/record.tt', $hits;
@@ -290,9 +299,8 @@ For admins only!
     get qr{/internal_view/(\w{1,})/*} => needs role => 'super_admin' => sub {
         my ($id) = splat;
 
-        return template 'backend/internal_view', {
-                data => to_yaml h->publication->get($id)
-        };
+        return template 'backend/internal_view',
+            {data => to_yaml h->publication->get($id)};
     };
 
 =head2 GET /publish/:id
@@ -323,6 +331,7 @@ Publishes private records, returns to the list.
         }
 
         if ($record->{status} ne $old_status) {
+
             # Use config/hooks.yml to register functions
             # that should run before/after publishing publications
             state $hook = h->hook('publication-publish');

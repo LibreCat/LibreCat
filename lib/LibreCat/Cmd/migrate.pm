@@ -3,6 +3,7 @@ package LibreCat::Cmd::migrate;
 use Catmandu::Sane;
 use Catmandu::Util qw(array_includes);
 use Catmandu;
+use LibreCat;
 use parent qw(LibreCat::Cmd);
 
 sub command_opt_spec {
@@ -78,6 +79,38 @@ sub command {
         $old_session_bag->delete_all;
         $old_session_bag->commit;
     }
+
+    # migrate user roles
+    say "Migrating user roles";
+    for my $bag (@{LibreCat->user->bags}) {
+        $bag->each(sub {
+            my $user  = $_[0];
+            my $roles = $user->{roles} ||= [];
+            if ($user->{award_admin}) {
+                say 'award_admin';
+            }
+            if ($user->{data_manager}) {
+                say 'data_manager';
+            }
+            if ($user->{delegate}) {
+                say 'delegate';
+            }
+            if ($user->{project_reviewer}) {
+                say 'project_reviewer';
+            }
+            if ($user->{reviewer}) {
+                say 'reviewer';
+            }
+            if ($user->{super_admin}) {
+                say 'super_admin';
+            }
+            if ($user->{user}) {
+                say 'user';
+            }
+        });
+    }
+
+    # TODO reindex users
 }
 
 1;

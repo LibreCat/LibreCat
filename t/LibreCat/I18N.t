@@ -4,6 +4,7 @@ use Test::More;
 use Test::Exception;
 
 my $pkg;
+
 BEGIN {
     use Catmandu::Sane;
     use Path::Tiny;
@@ -18,8 +19,8 @@ BEGIN {
 
 require_ok $pkg;
 
-dies_ok { $pkg->new() } "required argumentes missing";
-lives_ok { $pkg->new(locale => 'en') } "lives_ok";
+dies_ok {$pkg->new()} "required argumentes missing";
+lives_ok {$pkg->new(locale => 'en')} "lives_ok";
 
 my $i18n = $pkg->new(locale => 'en');
 can_ok $i18n, "localize";

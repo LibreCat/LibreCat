@@ -7,13 +7,15 @@ use LibreCat::Role;
 use Moo;
 use namespace::clean;
 
-has rule_config     => (is => 'ro', default => sub {+{}},init_arg => 'rules');
-has role_config     => (is => 'ro', default => sub {+{}},init_arg => 'roles');
+with 'Catmandu::Iterable';
+
+has rule_config     => (is => 'ro', default => sub {+{}}, init_arg => 'rules');
+has role_config     => (is => 'ro', default => sub {+{}}, init_arg => 'roles');
 has sources         => (is => 'ro', default => sub {[]},);
+has bags            => (is => 'lazy');
 has username_attr   => (is => 'ro', default => sub {'username'},);
-has _bags           => (is => 'lazy', builder => '_build_bags',);
 has _username_attrs => (is => 'lazy', builder => '_build_username_attrs',);
-has _roles          => (is => 'ro',   default => sub {+{}},);
+has _roles          => (is => 'ro',  default => sub {+{}},);
 
 sub _build_username_attrs {
     my ($self) = @_;
@@ -52,13 +54,30 @@ sub _get_role {
             }
             unshift @$rules, @{$self->_get_rules($config)};
         }
-        LibreCat::Role->new(rule_config => $self->rule_config, rules => $rules, params => $params);
+        LibreCat::Role->new(
+            rule_config => $self->rule_config,
+            rules       => $rules,
+            params      => $params
+        );
+    };
+}
+
+sub generator {
+    my ($self) = @_;
+    sub {
+        state $generators = [map {$_->generator} @$self];
+        while (@$generators) {
+            my $data = $generators->[0]->();
+            return $data if defined $data;
+            shift @$generators;
+        }
+        return;
     };
 }
 
 sub get {
     my ($self, $id) = @_;
-    for my $bag (@{$self->_bags}) {
+    for my $bag (@{$self->bags}) {
         if (my $user = $bag->get($id)) {
             return $user;
         }
@@ -66,9 +85,9 @@ sub get {
     return;
 }
 
-sub find_by_username {
+sub get_by_username {
     my ($self, $username) = @_;
-    my $bags  = $self->_bags;
+    my $bags  = $self->bags;
     my $attrs = $self->_username_attrs;
     for (my $i = 0; $i < @$bags; $i++) {
         if (my $user = $bags->[$i]->detect($attrs->[$i] => $username)) {
