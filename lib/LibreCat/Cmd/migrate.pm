@@ -87,26 +87,28 @@ sub command {
             my $user  = $_[0];
             my $roles = $user->{roles} ||= [];
             if ($user->{award_admin}) {
-                say 'award_admin';
+                # TODO
             }
             if ($user->{data_manager}) {
-                say 'data_manager';
+                # TODO
             }
             if ($user->{delegate}) {
-                say 'delegate';
+                # TODO
             }
             if ($user->{project_reviewer}) {
-                say 'project_reviewer';
+                # TODO
             }
             if ($user->{reviewer}) {
-                say 'reviewer';
+                # TODO
             }
             if ($user->{super_admin}) {
-                say 'super_admin';
+                push @$roles, 'super_admin';
             }
             if ($user->{user}) {
-                say 'user';
+                # TODO
             }
+
+            $bag->add($user);
         });
     }
 

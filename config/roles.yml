@@ -43,5 +43,5 @@ roles:
 
   super_admin:
     rules:
-      - can * *
+      - can *
 
