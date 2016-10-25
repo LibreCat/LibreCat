@@ -1,7 +1,10 @@
 use strict;
-use warnings;
+use warnings FATAL => 'all';
 use Test::More;
 use Test::Exception;
+use Catmandu::Store::Hash;
+use LibreCat::Search;
+use Data::Dumper;
 
 my $pkg;
 
@@ -18,23 +21,33 @@ BEGIN {
 }
 
 require_ok $pkg;
-
 dies_ok { $pkg->new() } "params required";
-dies_ok { $pkg->new(unknown => 1) } "unknown parameter";
-lives_ok { $pkg->new(bag => 'publication') } "lives ok: param bag";
+#dies_ok { $pkg->new(store => 'blabla') } "is Catmandu store";
+lives_ok { $pkg->new(store => Catmandu::Store::Hash->new()) } "store param";
 
-my $searcher = $pkg->new(bag => 'publication');
-can_ok $searcher, $_ for qw(search default_facets sru_sort);
+my $store = Catmandu->store('search');
+my $searcher = $pkg->new(store => $store);
+can_ok $searcher, 'search';
 
-is ref $searcher->default_facets, 'HASH', "default facets return hash";
+# prepare test index
+$store->drop;
+my $importer = Catmandu->importer('YAML', file => 't/records/valid-publication.yml');
+my $res = $store->bag('publication')->add($importer->first);
+ok $store->bag('publication')->get('999999999'), "can get record";
 
-is $searcher->sru_sort("title.asc"), "title,,1", "title asc";
-is $searcher->sru_sort("year.desc"), "year,,0", "year desc";
-ok ! $searcher->sru_sort("field.whatever"), "no match";
-ok ! $searcher->sru_sort("field:whatever"), "no match";
-is $searcher->sru_sort(["title.asc","year.desc"]), "title,,1 year,,0", "title asc and year desc";
+ok ! $searcher->search('',{q => ["id=999999999"]});
+ok ! $searcher->search('',{});
 
-#my $hits = $searcher->search({});
-#isa_ok $hits, 'Catmandu::Hits';
+$store->drop;
+
+is ref $searcher->_default_facets, 'HASH', "default facets return hash";
+ok $searcher->_default_facets->{author}, "has author facet";
+
+is $searcher->_sru_sort(""), "", "empty sort argument";
+is $searcher->_sru_sort("title.asc"), "title,,1", "title asc";
+is $searcher->_sru_sort("year.desc"), "year,,0", "year desc";
+ok ! $searcher->_sru_sort("field.whatever"), "no match";
+ok ! $searcher->_sru_sort("field:whatever"), "no match";
+is $searcher->_sru_sort(["title.asc","year.desc"]), "title,,1 year,,0", "title asc and year desc";
 
 done_testing;
