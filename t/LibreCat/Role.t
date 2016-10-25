@@ -131,6 +131,41 @@ is $role->may(
     ),
     1;
 
+# wildcards
+$role = LibreCat::Role->new(
+    rule_config => $rule_config,
+    rules       => [
+        [qw(can drink *)],
+    ]
+);
+
+is $role->may($user, 'drink', {_type => 'slurm'}), 1;
+is $role->may($user, 'drink', {}), 1;
+is $role->may($user, 'drink', undef), 0;
+is $role->may($user, 'eat', {}), 0;
+
+$role = LibreCat::Role->new(
+    rule_config => $rule_config,
+    rules       => [
+        [qw(can * *)],
+    ]
+);
+
+is $role->may($user, 'drink', {}), 1;
+is $role->may($user, 'drink', undef), 0;
+is $role->may($user, 'eat', {}), 1;
+
+$role = LibreCat::Role->new(
+    rule_config => $rule_config,
+    rules       => [
+        [qw(can *)],
+    ]
+);
+
+is $role->may($user, 'drink', {}), 1;
+is $role->may($user, 'drink', undef), 1;
+is $role->may($user, 'eat', {}), 1;
+
 done_testing;
 
 1;
