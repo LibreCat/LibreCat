@@ -1,23 +1,18 @@
 [% PROCESS header.tt %]
-[% path = request.path %]
-[% qp = request.params.hash %]
-[% qp.delete('splat') %]
 
-<!-- BEGIN websites/418.tt -->
+<!-- BEGIN 418.tt -->
 
 <div class="row"><!-- outer border -->
 
   <div class="col-md-11 col-sm-12"><!-- main content -->
 
     <div id="banner">
-	<h1>[% lf.418.heading %]</h1>
+	<h1>[% h.loc("418.heading") %]</h1>
     </div>
 
     <div class="row margin-top1">
       <div class="col-md-12">
-	  <p>[% lf.418.text %]<br /><br />
-	     <a href="[% path %]">[% lf.frontdoor.crumb_back %]</a>
-	  </p>
+	  <p>[% h.loc("418.text") %]</p>
       </div>
     </div>
 
@@ -25,6 +20,6 @@
 
 </div>
 
-<!-- END websites/418.tt -->
+<!-- END 418.tt -->
 
 [% INCLUDE footer.tt %]

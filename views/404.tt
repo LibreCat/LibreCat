@@ -1,6 +1,6 @@
 [% PROCESS header.tt %]
 
-<!-- BEGIN websites/404.tt -->
+<!-- BEGIN 404.tt -->
 
 <div class="row"><!-- outer border -->
 
@@ -8,22 +8,14 @@
 
     <div id="banner">
 	<h1>
-	  [% lf.404.heading %]
+	  [% h.loc("404.heading") %]
 	</h1>
-    </div>
-
-    <div class="row margin-top1">
-      <div class="col-md-12">
-	  <p>[% lf.404.text %]<br /><br />
-	     <a href="[% path %]">[% lf.frontdoor.crumb_back %]</a>
-	  </p>
-      </div>
     </div>
 
   </div>
 
 </div>
 
-<!-- END websites/404.tt -->
+<!-- END 404.tt -->
 
 [% INCLUDE footer.tt %]
