@@ -2,13 +2,44 @@ package LibreCat;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(require_package);
+use LibreCat::Layers;
 use LibreCat::Hook;
 use Catmandu;
 use namespace::clean;
 
+sub import {
+    my $self = shift;
+    my $load = shift;
+    if ($load && $load =~ /^:?load$/) {
+        $self->load(@_);
+    }
+}
+
 {
-    my $hook_ns = 'LibreCat::Hook';
+    my $layers;
     my $hooks = {};
+
+    sub check_loaded {
+        $layers || Catmandu::Error->throw("LibreCat must be loaded first");
+    }
+
+    sub layers {
+        $_[0]->check_loaded;
+    }
+
+    sub loaded {
+        defined $layers;
+    }
+
+    sub load {
+        my ($self, @args) = @_;
+        $layers ||= LibreCat::Layers->new(@args)->load;
+        $self;
+    }
+
+    sub config {
+        state $config = $_[0]->layers->config;
+    }
 
     sub hook {
         my ($self, $name) = @_;
@@ -22,7 +53,7 @@ use namespace::clean;
             for my $key (qw(before_fixes after_fixes)) {
                 my $fixes = $hook->{$key} || [];
                 for my $fix (@$fixes) {
-                    push @{$args->{$key}}, require_package($fix, $hook_ns)->new;
+                    push @{$args->{$key}}, require_package($fix, 'LibreCat::Hook')->new;
                 }
             }
 
