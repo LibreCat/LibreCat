@@ -3,7 +3,6 @@ package LibreCat::Cmd::generate;
 use Catmandu::Sane;
 use Catmandu;
 use LibreCat;
-use LibreCat::CLI;
 use Path::Tiny;
 use parent qw(LibreCat::Cmd);
 
@@ -42,7 +41,7 @@ sub command {
 }
 
 sub _generate_package_json {
-    my $layers         = LibreCat::CLI->layers;
+    my $layers         = LibreCat->layers;
     my $css_path       = $layers->css_paths->[0];
     my $root_css_path  = $layers->css_paths->[-1];
     my $scss_path      = $layers->scss_paths->[0];
