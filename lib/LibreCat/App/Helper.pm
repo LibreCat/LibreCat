@@ -30,16 +30,12 @@ sub hook {
     LibreCat->hook($_[1]);
 }
 
-sub layers {
-    state $layers = LibreCat::Layers->new->load;
-}
-
 sub create_fixer {
     my ($self,$file) = @_;
 
     $self->log->debug("searching for fix `$file'");
 
-    for my $p (@{$self->layers->fixes_paths}) {
+    for my $p (@{LibreCat->layers->fixes_paths}) {
         $self->log->debug("testing `$p/$file'");
         if (-r "$p/$file") {
             $self->log->debug("found `$p/$file'");
