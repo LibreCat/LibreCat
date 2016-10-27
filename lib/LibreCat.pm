@@ -44,16 +44,14 @@ sub import {
     sub hook {
         my ($self, $name) = @_;
         $hooks->{$name} ||= do {
-            my $args = {
-                before_fixes => [],
-                after_fixes  => [],
-            };
+            my $args = {before_fixes => [], after_fixes => [],};
 
             my $hook = (Catmandu->config->{hooks} || {})->{$name} || {};
             for my $key (qw(before_fixes after_fixes)) {
                 my $fixes = $hook->{$key} || [];
                 for my $fix (@$fixes) {
-                    push @{$args->{$key}}, require_package($fix, 'LibreCat::Hook')->new;
+                    push @{$args->{$key}},
+                        require_package($fix, 'LibreCat::Hook')->new;
                 }
             }
 

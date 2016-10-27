@@ -63,12 +63,13 @@ sub command {
 }
 
 sub _list {
-    my ($self,$query) = @_;
+    my ($self, $query) = @_;
 
-    my $it =
-        defined($query) ?
-        LibreCat::App::Helper::Helpers->new->research_group->searcher(cql_query => $query) :
-        LibreCat::App::Helper::Helpers->new->research_group;
+    my $it
+        = defined($query)
+        ? LibreCat::App::Helper::Helpers->new->research_group->searcher(
+        cql_query => $query)
+        : LibreCat::App::Helper::Helpers->new->research_group;
 
     my $count = $it->each(
         sub {
@@ -87,12 +88,13 @@ sub _list {
 }
 
 sub _export {
-    my ($self,$query) = @_;
+    my ($self, $query) = @_;
 
-    my $it =
-        defined($query) ?
-        LibreCat::App::Helper::Helpers->new->research_group->searcher(cql_query => $query) :
-        LibreCat::App::Helper::Helpers->new->research_group;
+    my $it
+        = defined($query)
+        ? LibreCat::App::Helper::Helpers->new->research_group->searcher(
+        cql_query => $query)
+        : LibreCat::App::Helper::Helpers->new->research_group;
 
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($it);

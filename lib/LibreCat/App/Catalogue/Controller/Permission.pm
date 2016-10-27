@@ -40,8 +40,7 @@ sub can_edit {
         $cql .= " OR creator=$user->{_id})";
     }
     if ($user_role ne 'super_admin') {
-        $cql
-            .= " AND locked<>1";
+        $cql .= " AND locked<>1";
     }
 
     my $hits = h->publication->search(cql_query => $cql, limit => 1);
