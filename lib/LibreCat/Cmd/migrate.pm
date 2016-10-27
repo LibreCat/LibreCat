@@ -86,33 +86,24 @@ sub command {
         $bag->each(
             sub {
                 my $user = $_[0];
-                my $roles = $user->{roles} ||= [];
+                my $roles = $user->{roles} ||= [{role => 'user'}];
                 if ($user->{award_admin}) {
-
                     # TODO
                 }
                 if ($user->{data_manager}) {
-
-                    # TODO
+                    push @$roles, {role => 'data_manager', _id => $_->{_id}} for @{$user->{data_manager}};
                 }
                 if ($user->{delegate}) {
-
-                    # TODO
+                    push @$roles, {role => 'delegate', _id => $_} for @{$user->{delegate}};
                 }
                 if ($user->{project_reviewer}) {
-
-                    # TODO
+                    push @$roles, {role => 'project_reviewer', _id => $_->{_id}} for @{$user->{project_reviewer}};
                 }
                 if ($user->{reviewer}) {
-
-                    # TODO
+                    push @$roles, {role => 'reviewer', _id => $_->{_id}} for @{$user->{reviewer}};
                 }
                 if ($user->{super_admin}) {
                     push @$roles, {role => 'super_admin'};
-                }
-                if ($user->{user}) {
-
-                    # TODO
                 }
 
                 $bag->add($user);

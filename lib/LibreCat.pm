@@ -63,15 +63,15 @@ sub hook {
 
 sub user {
     state $user = do {
-        my $config = $self->config->{user};
+        my $config = $_[0]->config->{user};
         LibreCat::User->new($config);
     };
 }
 
 sub auth {
     state $auth = do {
-        my $pkg = require_package($self->config->{authentication}->{package});
-        $pkg->new($self->config->{authentication}->{options} // {});
+        my $pkg = require_package($_[0]->config->{authentication}->{package});
+        $pkg->new($_[0]->config->{authentication}->{options} // {});
     };
 }
 
