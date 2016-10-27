@@ -23,7 +23,7 @@ require_ok $pkg;
 }
 
 {
-    foreach my $cmd ( ('', 'help', '--help', '-h') ) {
+    foreach my $cmd (('', 'help', '--help', '-h')) {
         my $result = test_app(qq|LibreCat::CLI| => [$cmd]);
         ok !$result->error, 'ok threw no exception';
         like $result->stdout, qr/Available commands/, 'displays help page';

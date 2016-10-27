@@ -6,6 +6,7 @@ use App::Cmd::Tester;
 use LibreCat::CLI;
 
 my $pkg;
+
 BEGIN {
     use Catmandu::Sane;
     use Path::Tiny;
@@ -33,7 +34,8 @@ require_ok $pkg;
     my $output = $result->stdout;
     ok $output , 'got an output';
 
-    like $output, qr/$_/, "$_ is listed" for qw(publication research_group project researcher department)
+    like $output, qr/$_/, "$_ is listed"
+        for qw(publication research_group project researcher department)
 }
 
 {
@@ -43,7 +45,8 @@ require_ok $pkg;
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['schemas', 'get','publication']);
+    my $result
+        = test_app(qq|LibreCat::CLI| => ['schemas', 'get', 'publication']);
     ok !$result->error, 'ok threw no exception';
     like $result->stdout, qr/title/, 'content looks good';
 }

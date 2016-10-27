@@ -98,12 +98,13 @@ sub command {
 }
 
 sub _list {
-    my ($self,$query) = @_;
+    my ($self, $query) = @_;
 
-    my $it =
-        defined($query) ?
-        LibreCat::App::Helper::Helpers->new->publication->searcher(cql_query => $query) :
-        LibreCat::App::Helper::Helpers->new->publication;
+    my $it
+        = defined($query)
+        ? LibreCat::App::Helper::Helpers->new->publication->searcher(
+        cql_query => $query)
+        : LibreCat::App::Helper::Helpers->new->publication;
 
     my $count = $it->each(
         sub {
@@ -124,12 +125,13 @@ sub _list {
 }
 
 sub _export {
-    my ($self,$query) = @_;
+    my ($self, $query) = @_;
 
-    my $it =
-        defined($query) ?
-        LibreCat::App::Helper::Helpers->new->publication->searcher(cql_query => $query) :
-        LibreCat::App::Helper::Helpers->new->publication;
+    my $it
+        = defined($query)
+        ? LibreCat::App::Helper::Helpers->new->publication->searcher(
+        cql_query => $query)
+        : LibreCat::App::Helper::Helpers->new->publication;
 
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($it);
@@ -261,7 +263,7 @@ sub _valid {
 }
 
 sub _embargo {
-    my ($self,@args) = @_;
+    my ($self, @args) = @_;
 
     my $update = $args[0] && $args[0] eq 'update';
 
@@ -269,8 +271,8 @@ sub _embargo {
     my $now    = $helper->now;
     $now =~ s/T.*//;
 
-    my $query  = "embargo < $now";
-    my $it     = $helper->publication->searcher(cql_query => $query);
+    my $query = "embargo < $now";
+    my $it = $helper->publication->searcher(cql_query => $query);
 
     printf "%-9s\t%-9s\t%-12.12s\t%-14.14s\t%-15.15s\t%s\n",
         qw(id file_id access_level request_a_copy embargo file_name);
@@ -281,12 +283,10 @@ sub _embargo {
 
         for my $file (@{$item->{file}}) {
             printf "%-9d\t%-9d\t%-12.12s\t%-14.14s\t%-15.15s\t%s\n",
-                $item->{_id},
-                $file->{file_id},
+                $item->{_id}, $file->{file_id},
                 $update ? 'open_access' : $file->{access_level},
                 $update ? 0             : $file->{request_a_copy},
-                $update ? 'NA'          : $file->{embargo} // 'NA',
-                $file->{file_name};
+                $update ? 'NA' : $file->{embargo} // 'NA', $file->{file_name};
         }
     };
 
@@ -320,11 +320,8 @@ sub _files_list {
 
         for my $file (@{$item->{file}}) {
             printf "%-9d\t%-9d\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n",
-                $item->{_id},
-                $file->{file_id},
-                $file->{access_level},
-                $file->{relation},
-                $file->{embargo} // 'NA',
+                $item->{_id}, $file->{file_id}, $file->{access_level},
+                $file->{relation}, $file->{embargo} // 'NA',
                 $file->{file_name};
         }
     };
@@ -334,7 +331,8 @@ sub _files_list {
         $printer->($data);
     }
     elsif (defined($id)) {
-        LibreCat::App::Helper::Helpers->new->publication->searcher(cql_query => $id)->each($printer);
+        LibreCat::App::Helper::Helpers->new->publication->searcher(
+            cql_query => $id)->each($printer);
     }
     else {
         LibreCat::App::Helper::Helpers->new->publication->each($printer);
@@ -348,7 +346,7 @@ sub _files_load {
     croak "list - can't open $filename for reading" unless -r $filename;
     local (*FH);
 
-    my $helper   = LibreCat::App::Helper::Helpers->new;
+    my $helper = LibreCat::App::Helper::Helpers->new;
     my $importer = Catmandu->importer('TSV', file => $filename);
 
     my $prev_id = undef;
@@ -393,8 +391,7 @@ sub _files_load {
 
                 if ($data) {
                     $self->_file_process($data, $files)
-                    &&
-                    $helper->update_record('publication', $data);
+                        && $helper->update_record('publication', $data);
                 }
                 else {
                     warn "$id - no such publication";
@@ -413,9 +410,8 @@ sub _files_load {
         my $data = $helper->get_publication($prev_id);
 
         if ($data) {
-            $self->_file_process($data,$files)
-            &&
-            $helper->update_record('publication', $data);
+            $self->_file_process($data, $files)
+                && $helper->update_record('publication', $data);
         }
         else {
             warn "$prev_id - no such publication";
@@ -428,7 +424,7 @@ sub _file_process {
 
     return undef unless $data;
 
-    my $id       = $data->{_id};
+    my $id = $data->{_id};
     my %file_map = map {$_->{file_name} => $_} @{$data->{file}};
 
     # Update the files with stored data

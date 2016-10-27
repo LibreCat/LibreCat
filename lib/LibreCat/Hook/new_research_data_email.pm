@@ -10,19 +10,16 @@ use Moo;
 sub fix {
     my ($self, $data) = @_;
 
-    return $data unless
-                h->config->{research_data} &&
-                $data->{type} eq "research_data" &&
-                $data->{status} eq "submitted";
+    return $data
+        unless h->config->{research_data}
+        && $data->{type} eq "research_data"
+        && $data->{status} eq "submitted";
 
-    my $to        = h->config->{research_data}->{to};
-    my $subject   = h->config->{research_data}->{subject};
+    my $to      = h->config->{research_data}->{to};
+    my $subject = h->config->{research_data}->{subject};
 
-    my $mail_body = Catmandu->export_to_string(
-                        { %$data , host => h->host },
-                        'Template',
-                        template => 'views/email/rd_submitted.tt'
-                    );
+    my $mail_body = Catmandu->export_to_string({%$data, host => h->host},
+        'Template', template => 'views/email/rd_submitted.tt');
 
     h->log->info("Sending research_data submitted email to $to");
 

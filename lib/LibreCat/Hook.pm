@@ -3,8 +3,8 @@ package LibreCat::Hook;
 use Catmandu::Sane;
 use Moo;
 
-has before_fixes => (is => 'ro', default => sub{[]});
-has after_fixes  => (is => 'ro', default => sub{[]});
+has before_fixes => (is => 'ro', default => sub {[]});
+has after_fixes  => (is => 'ro', default => sub {[]});
 
 sub fix_before {
     my ($self, $data) = @_;

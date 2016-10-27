@@ -31,7 +31,7 @@ sub hook {
 }
 
 sub create_fixer {
-    my ($self,$file) = @_;
+    my ($self, $file) = @_;
 
     $self->log->debug("searching for fix `$file'");
 
@@ -39,7 +39,7 @@ sub create_fixer {
         $self->log->debug("testing `$p/$file'");
         if (-r "$p/$file") {
             $self->log->debug("found `$p/$file'");
-            return Catmandu::Fix->new( fixes => ["$p/$file"] );
+            return Catmandu::Fix->new(fixes => ["$p/$file"]);
         }
     }
 
@@ -433,7 +433,7 @@ sub get_statistics {
     my $oahits = $self->search_publication(
         {
             q => [
-                "status=public",      "fulltext=1",
+                "status=public",       "fulltext=1",
                 "type<>research_data", "type<>data"
             ]
         }
