@@ -102,7 +102,7 @@ sub command {
                 # TODO
             }
             if ($user->{super_admin}) {
-                push @$roles, 'super_admin';
+                push @$roles, {role => 'super_admin'};
             }
             if ($user->{user}) {
                 # TODO
