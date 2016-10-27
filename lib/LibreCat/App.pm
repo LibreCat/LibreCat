@@ -134,12 +134,12 @@ User sees this one if access is denied.
 
 any '/access_denied' => sub {
     status '403';
-    template 'websites/403', {path => params->{referer}};
+    template '403';
 };
 
-any qr{(/en)*/coffee} => sub {
+any '/coffee' => sub {
     status '418';
-    template 'websites/418', {path => request->{referer}};
+    template '418';
 };
 
 =head1 ANY {other route....}
@@ -150,8 +150,7 @@ Throws 'page not found'.
 
 any qr{.*} => sub {
     status 'not_found';
-
-    #template 'websites/404', {path => request->{referer}};
+    template '404';
 };
 
 1;
