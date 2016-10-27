@@ -23,23 +23,17 @@ L<log4perl.conf>
 
 =cut
 
-BEGIN {
-    use Catmandu::Sane;
-    use Path::Tiny;
-    use lib path(__FILE__)->parent->parent->child('lib')->stringify;
-    use LibreCat::Layers;
-
-    LibreCat::Layers->new->load;
-}
-
+use Catmandu::Sane;
+use Path::Tiny;
+use lib path(__FILE__)->parent->parent->child('lib')->stringify;
+use LibreCat qw(:load);
 use Catmandu;
 use Catmandu::Util;
-use LibreCat;
 use Getopt::Long;
 use Log::Log4perl;
 
-my $package  = Catmandu->config->{authentication}{package};
-my $param    = Catmandu->config->{authentication}{options} // {};
+my $package  = LibreCat->config->{authentication}{package};
+my $param    = LibreCat->config->{authentication}{options} // {};
 my $password;
 
 my $logger = Log::Log4perl->get_logger('authentication_admin');
