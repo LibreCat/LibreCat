@@ -15,7 +15,7 @@ has root_path   => (is => 'lazy');
 has layer_paths => (is => 'lazy');
 has config      => (is => 'lazy', init_arg => undef);
 has css_paths   => (is => 'lazy', init_arg => undef);
-for (qw(paths lib_paths config_paths public_paths scss_paths template_paths))
+for (qw(paths lib_paths config_paths public_paths scss_paths template_paths fixes_paths))
 {
     has $_ => (is => 'ro', init_arg => undef, default => sub {[]});
 }
@@ -39,6 +39,7 @@ sub BUILD {
         my $scss_path     = $path->child('scss');
         my $template_path = $path->child('templates');
         my $view_path     = $path->child('views');
+        my $fixes_path    = $path->child('fixes');
 
         if ($config_path->is_dir) {
             unshift @{$self->config_paths}, $config_path->stringify;
@@ -61,6 +62,10 @@ sub BUILD {
         }
         elsif ($template_path->is_dir) {
             unshift @{$self->template_paths}, $template_path->stringify;
+        }
+
+        if ($fixes_path->is_dir) {
+            unshift @{$self->fixes_paths}, $fixes_path->stringify;
         }
     }
 }
