@@ -1,15 +1,10 @@
 _prefix:
   user:
 
-rules:
-  affiliated_with: {}
-  own: {}
-  owned_by: {}
-
 roles:
   guest:
     rules:
-      - can view publication status public
+      - can view publication if status public
 
   user:
     inherit: guest
@@ -17,23 +12,19 @@ roles:
       - can add publication
       - can view publication own
       - can edit publication own
-      - cannot edit publication locked
+      - cannot edit publication if locked
 
   delegate:
     inherit: user
-    params:
-      - owner
     rules:
-      - can view publication owned_by owner
-      - can edit publication owned_by owner
+      - can view publication owned_by
+      - can edit publication owned_by
 
   reviewer:
     inherit: user
-    params:
-      - department
     rules:
-      - can view publication affiliated_with department
-      - can edit publication affiliated_with department
+      - can view publication affiliated_with
+      - can edit publication affiliated_with
 
   #project_reviewer:
 

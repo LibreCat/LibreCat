@@ -7,15 +7,22 @@ use namespace::clean;
 
 with 'LibreCat::Rule';
 
-sub test {
-    my ($self, $subject, $object, $param) = @_;
+has key => (is => 'lazy');
 
+sub _build_key {
+    my ($self) = @_;
+    $self->args->[0] // '_id';
+}
+
+sub test {
+    my ($self, $subject, $object, $params) = @_;
+    my $id  = $params->{$self->key};
     my $dep = $object->{department};
     $dep
         && (
-        $dep->{_id} eq $param
+        $dep->{_id} eq $id
         || ($dep->{tree}
-            && array_any($dep->{tree}, sub {$_[0]->{_id} eq $param}))
+            && array_any($dep->{tree}, sub {$_[0]->{_id} eq $id}))
         );
 }
 

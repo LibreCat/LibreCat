@@ -32,7 +32,7 @@ store:
         - login: user3
           password: '$2a$08$QgPOp/1zEBkcAsmAqL6cH.AVflVrgRRAvURHwp0L3KwbTC8vjj8Bm'
           _id: 3
-          roles: [{role: reviewer, department: dep1}]
+          roles: [{role: reviewer, department_id: dep1}]
   builtin_users_2:
     package: Hash
     options:
@@ -73,17 +73,15 @@ user:
 roles:
   guest:
     rules:
-      - can view publication status public
+      - can view publication if status public
   user:
     inherit: guest
     rules:
       - can add publication
       - can view publication own
       - can edit publication own
-      - cannot edit publication locked
+      - cannot edit publication if locked
   reviewer:
     inherit: user
-    params:
-      - department
     rules:
-      - can edit publication affiliated_with department
+      - can edit publication affiliated_with department_id

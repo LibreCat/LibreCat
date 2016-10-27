@@ -9,7 +9,6 @@ use namespace::clean;
 
 with 'Catmandu::Iterable';
 
-has rule_config => (is => 'ro', default => sub {+{}}, init_arg => 'rules');
 has role_config => (is => 'ro', default => sub {+{}}, init_arg => 'roles');
 has sources     => (is => 'ro', default => sub {[]},);
 has bags        => (is => 'lazy');
@@ -39,25 +38,12 @@ sub _get_role {
     $roles->{$name} ||= do {
         my $config = $self->role_config->{$name};
         my $rules  = $self->_get_rules($config);
-        my $params = $config->{params};
         while ($config->{inherit}) {
             $config = $self->role_config->{$config->{inherit}};
-            if ($config->{params}) {
-                for my $param (@{$config->{params}}) {
-                    if (array_includes($params, $param)) {
-                        Catmandu::BadVal->throw(
-                            "Can't inherit from a role that already uses param '$param'"
-                        );
-                    }
-                    unshift @$params, $param;
-                }
-            }
             unshift @$rules, @{$self->_get_rules($config)};
         }
         LibreCat::Role->new(
-            rule_config => $self->rule_config,
             rules       => $rules,
-            params      => $params
         );
     };
 }
