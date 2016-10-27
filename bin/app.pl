@@ -28,7 +28,6 @@ use Plack::App::File;
 use Plack::App::Cascade;
 use Dancer;
 use LibreCat::App;
-use Data::Dumper;
 
 # setup template paths
 config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->template_paths;
