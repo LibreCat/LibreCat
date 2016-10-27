@@ -9,13 +9,13 @@ use namespace::clean;
 
 with 'Catmandu::Iterable';
 
-has rule_config     => (is => 'ro', default => sub {+{}}, init_arg => 'rules');
-has role_config     => (is => 'ro', default => sub {+{}}, init_arg => 'roles');
-has sources         => (is => 'ro', default => sub {[]},);
-has bags            => (is => 'lazy');
-has username_attr   => (is => 'ro', default => sub {'username'},);
+has rule_config => (is => 'ro', default => sub {+{}}, init_arg => 'rules');
+has role_config => (is => 'ro', default => sub {+{}}, init_arg => 'roles');
+has sources     => (is => 'ro', default => sub {[]},);
+has bags        => (is => 'lazy');
+has username_attr => (is => 'ro', default => sub {'username'},);
 has _username_attrs => (is => 'lazy', builder => '_build_username_attrs',);
-has _roles          => (is => 'ro',  default => sub {+{}},);
+has _roles => (is => 'ro', default => sub {+{}},);
 
 sub _build_username_attrs {
     my ($self) = @_;

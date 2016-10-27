@@ -2,47 +2,77 @@ package LibreCat;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(require_package);
-use Catmandu;
+use LibreCat::Layers;
 use LibreCat::Hook;
 use LibreCat::User;
+use Catmandu;
 use namespace::clean;
+
+sub import {
+    my $self = shift;
+    my $load = shift;
+    if ($load && $load =~ /^:?load$/) {
+        $self->load(@_);
+    }
+}
+
+{
+    my $layers;
+
+    sub check_loaded {
+        $layers || Catmandu::Error->throw("LibreCat must be loaded first");
+    }
+
+    sub layers {
+        $_[0]->check_loaded;
+    }
+
+    sub loaded {
+        defined $layers;
+    }
+
+    sub load {
+        my ($self, @args) = @_;
+        $layers ||= LibreCat::Layers->new(@args)->load;
+        $self;
+    }
+
+    sub config {
+        state $config = $_[0]->layers->config;
+    }
+}
+
+sub hook {
+    my ($self, $name) = @_;
+    state $hooks = {};
+    $hooks->{$name} ||= do {
+        my $args = {before_fixes => [], after_fixes => [],};
+
+        my $hook = ($self->config->{hooks} || {})->{$name} || {};
+        for my $key (qw(before_fixes after_fixes)) {
+            my $fixes = $hook->{$key} || [];
+            for my $fix (@$fixes) {
+                push @{$args->{$key}},
+                    require_package($fix, 'LibreCat::Hook')->new;
+            }
+        }
+
+        LibreCat::Hook->new($args);
+    };
+}
 
 sub user {
     state $user = do {
-        my $config = Catmandu->config->{user};
+        my $config = $self->config->{user};
         LibreCat::User->new($config);
     };
 }
 
 sub auth {
     state $auth = do {
-        my $pkg
-            = require_package(Catmandu->config->{authentication}->{package});
-        $pkg->new(Catmandu->config->{authentication}->{options} // {});
+        my $pkg = require_package($self->config->{authentication}->{package});
+        $pkg->new($self->config->{authentication}->{options} // {});
     };
-}
-
-{
-    my $hook_ns = 'LibreCat::Hook';
-    my $hooks   = {};
-
-    sub hook {
-        my ($self, $name) = @_;
-        $hooks->{$name} ||= do {
-            my $args = {before_fixes => [], after_fixes => [],};
-
-            my $hook = (Catmandu->config->{hooks} || {})->{$name} || {};
-            for my $key (qw(before_fixes after_fixes)) {
-                my $fixes = $hook->{$key} || [];
-                for my $fix (@$fixes) {
-                    push @{$args->{$key}},
-                        require_package($fix, $hook_ns)->new;
-                }
-            }
-
-            LibreCat::Hook->new($args);
-        };
-    }
 }
 
 1;

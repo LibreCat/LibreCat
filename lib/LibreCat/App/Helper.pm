@@ -11,6 +11,7 @@ use Dancer::FileUtils qw(path);
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
 use LibreCat::I18N;
+use LibreCat::Layers;
 use LibreCat;
 use Log::Log4perl ();
 use Moo;
@@ -27,6 +28,24 @@ sub config {
 
 sub hook {
     LibreCat->hook($_[1]);
+}
+
+sub create_fixer {
+    my ($self, $file) = @_;
+
+    $self->log->debug("searching for fix `$file'");
+
+    for my $p (@{LibreCat->layers->fixes_paths}) {
+        $self->log->debug("testing `$p/$file'");
+        if (-r "$p/$file") {
+            $self->log->debug("found `$p/$file'");
+            return Catmandu::Fix->new(fixes => ["$p/$file"]);
+        }
+    }
+
+    $self->log->error("can't find a fixer for: `$file'");
+
+    return Catmandu::Fix->new();
 }
 
 sub alphabet {
@@ -435,7 +454,6 @@ sub get_metrics {
     return Catmandu->store('metrics')->bag($bag)->get($id);
 }
 
-# TODO Race conditions! This should only be called inside a transaction.
 sub new_record {
     my ($self, $bag) = @_;
     Catmandu->store('backup')->bag($bag)->generate_id;
@@ -477,8 +495,7 @@ sub store_record {
 
     # memoize fixes
     state $fixes = {};
-    my $fix = $fixes->{$bag} //= Catmandu::Fix->new(
-        fixes => [join_path('fixes', "update_$bag.fix")]);
+    my $fix = $fixes->{$bag} //= $self->create_fixer("update_$bag.fix");
     $fix->fix($rec);
 
     # clean all the fields that are not part of the JSON schema

@@ -552,7 +552,7 @@ search:
                 '<>': true
               field: 'date_updated'
               sort: true
-              values: "date in the form yyyy-MM-dd HH:mm:ss or yyyy-MM-dd HH:mm"
+              values: "date in the form yyyy-MM-ddTHH:mm:ssZ"
             datelastchanged: *date_updated
             publication_status: &publication_status
               op:

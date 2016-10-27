@@ -83,33 +83,41 @@ sub command {
     # migrate user roles
     say "Migrating user roles";
     for my $bag (@{LibreCat->user->bags}) {
-        $bag->each(sub {
-            my $user  = $_[0];
-            my $roles = $user->{roles} ||= [];
-            if ($user->{award_admin}) {
-                # TODO
-            }
-            if ($user->{data_manager}) {
-                # TODO
-            }
-            if ($user->{delegate}) {
-                # TODO
-            }
-            if ($user->{project_reviewer}) {
-                # TODO
-            }
-            if ($user->{reviewer}) {
-                # TODO
-            }
-            if ($user->{super_admin}) {
-                push @$roles, {role => 'super_admin'};
-            }
-            if ($user->{user}) {
-                # TODO
-            }
+        $bag->each(
+            sub {
+                my $user = $_[0];
+                my $roles = $user->{roles} ||= [];
+                if ($user->{award_admin}) {
 
-            $bag->add($user);
-        });
+                    # TODO
+                }
+                if ($user->{data_manager}) {
+
+                    # TODO
+                }
+                if ($user->{delegate}) {
+
+                    # TODO
+                }
+                if ($user->{project_reviewer}) {
+
+                    # TODO
+                }
+                if ($user->{reviewer}) {
+
+                    # TODO
+                }
+                if ($user->{super_admin}) {
+                    push @$roles, {role => 'super_admin'};
+                }
+                if ($user->{user}) {
+
+                    # TODO
+                }
+
+                $bag->add($user);
+            }
+        );
     }
 
     # TODO reindex users

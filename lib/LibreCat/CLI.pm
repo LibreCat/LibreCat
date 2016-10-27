@@ -12,19 +12,6 @@ sub global_opt_spec {
     ();
 }
 
-{
-    my $layers;
-
-    sub set_layers {
-        $layers && die 'layers already set';
-        $layers = check_instance(pop, 'LibreCat::Layers');
-    }
-
-    sub layers {
-        $layers || die 'layers not set';
-    }
-}
-
 1;
 
 __END__

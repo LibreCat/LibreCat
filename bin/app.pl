@@ -1,37 +1,28 @@
 #!/usr/bin/env perl
 
-my $layers;
+# TODO very dirty, this prevents Dancer from prepending lib/ in @INC
+use Dancer::ModuleLoader;
+{
+    no warnings 'redefine';
 
-BEGIN {
-    use Catmandu::Sane;
-    use Path::Tiny;
-    use lib path(__FILE__)->parent->parent->child('lib')->stringify;
-    use LibreCat::Layers;
-
-    $layers = LibreCat::Layers->new->load;
-
-    # TODO very dirty, this prevents Dancer from prepending lib/ in @INC
-    use Dancer::ModuleLoader;
-    {
-        no warnings 'redefine';
-
-        sub Dancer::ModuleLoader::use_lib {
-            1;
-        }
+    sub Dancer::ModuleLoader::use_lib {
+        1;
     }
-};
+}
 
 use Catmandu::Sane;
+use Path::Tiny;
+use lib path(__FILE__)->parent->parent->child('lib')->stringify;
+use LibreCat qw(:load);
 use Catmandu::Util qw(require_package :is);
 use Plack::Builder;
 use Plack::App::File;
 use Plack::App::Cascade;
 use Dancer;
 use LibreCat::App;
-use Data::Dumper;
 
 # setup template paths
-config->{engines}{template_toolkit}{INCLUDE_PATH} = $layers->template_paths;
+config->{engines}{template_toolkit}{INCLUDE_PATH} = LibreCat->layers->template_paths;
 config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{template_debug};
 
 # Overwrite the default Dancer template for finding the
@@ -44,7 +35,7 @@ config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{template_d
     sub Dancer::Template::Abstract::view {
         my ($self, $view) = @_;
 
-        my $views_dir = $layers->template_paths;
+        my $views_dir = LibreCat->layers->template_paths;
 
         for my $template ($self->_template_name($view)) {
             if (is_array_ref($views_dir)) {
@@ -66,7 +57,7 @@ config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{template_d
 
 # setup static file serving
 my $app = Plack::App::Cascade->new;
-$app->add(map {Plack::App::File->new(root => $_)->to_app} @{$layers->public_paths});
+$app->add(map {Plack::App::File->new(root => $_)->to_app} @{LibreCat->layers->public_paths});
 
 # dancer app
 $app->add(sub {
