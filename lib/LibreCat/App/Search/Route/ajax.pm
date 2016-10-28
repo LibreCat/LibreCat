@@ -49,7 +49,7 @@ ajax '/search_researcher' => sub {
     my $q;
     push @$q, params->{'term'};
 
-    to_json h->search_researcher({q => $q})->{hits};
+    to_json h->LibreCat->searcher->search('researcher', {q => $q})->{hits};
 };
 
 =head2 AJAX /get_person
@@ -62,7 +62,7 @@ ajax '/authority_user/:id' => sub {
 
 ajax '/num_of_publ/:id' => sub {
     my $id = params->{id};
-    my $hits = h->search_publication({q => ["person=$id"]});
+    my $hits = LibreCat->searcher->search('publication', {q => ["person=$id"]});
     return to_json {total => $hits->{total}};
 };
 
@@ -73,7 +73,7 @@ ajax '/num_of_publ/:id' => sub {
 ajax '/get_alias/:id/:alias' => sub {
     my $term = params->{'alias'} || "";
     my $id   = params->{'id'};
-    my $hits = h->search_researcher({q => ["alias=$term", "id<>$id"]});
+    my $hits = LibreCat->searcher->search('researcher', {q => ["alias=$term", "id<>$id"]});
 
     return to_json {ok => $hits->{total} ? 0 : 1};
 };
@@ -89,7 +89,7 @@ ajax '/get_project' => sub {
         $_ .= '*';
     } split(' ', lc params->{term});
 
-    my $hits = h->search_project({q => $q, limit => 100});
+    my $hits = LibreCat->searcher->search('project', {q => $q, limit => 100});
 
     if ($hits->{total}) {
         my $map;
@@ -116,7 +116,7 @@ ajax '/get_department' => sub {
 
     push @$q, "inactive<>1";
 
-    my $hits = h->search_department({q => $q, limit => 100});
+    my $hits = LibreCat->searcher->search('department', {q => $q, limit => 100});
 
     if ($hits->{total}) {
         my $map;
@@ -140,7 +140,7 @@ ajax '/get_research_group' => sub {
         $_ .= '*';
     } split(' ', lc params->{term});
 
-    my $hits = h->search_research_group({q => $q, limit => 100});
+    my $hits = LibreCat->searcher->search('research_group', {q => $q, limit => 100});
 
     if ($hits->{total}) {
         my $map;

@@ -30,20 +30,34 @@ my $searcher = $pkg->new(store => $store);
 can_ok $searcher, 'search';
 
 # prepare test index
-$store->drop;
+my $bag = $store->bag('publication');
+$bag->delete_all;
 my $importer = Catmandu->importer('YAML', file => 't/records/valid-publication.yml');
-my $res = $store->bag('publication')->add($importer->first);
+$bag->add_many($importer);
+$bag->commit;
 ok $store->bag('publication')->get('999999999'), "can get record";
 
-ok ! $searcher->search('',{q => ["id=999999999"]});
-ok ! $searcher->search('',{});
+ok ! $searcher->search('', {q => ["id=999999999"]}), "bag required";
+ok ! $searcher->search('', {}), "bag and query required";
+my $hits = $searcher->search('publication', {q => ["id=999999999"]});
+isa_ok $hits, "Catmandu::Hits";
+ok $hits->first, "can search record";
+is $hits->first->{_id}, "999999999", "correct id";
 
-$store->drop;
+$hits = $searcher->search('publication', {q => []});
+ok $hits->first, "ok for empty query";
+is $hits->first->{_id}, "999999999", "correct id";
+
+$hits = $searcher->search('publication', {});
+ok $hits->first, "ok for empty parameter";
+is $hits->first->{_id}, "999999999", "correct id";
+
+$bag->delete_all;
 
 is ref $searcher->_default_facets, 'HASH', "default facets return hash";
 ok $searcher->_default_facets->{author}, "has author facet";
 
-is $searcher->_sru_sort(""), "", "empty sort argument";
+is $searcher->_sru_sort(), "", "empty sort argument";
 is $searcher->_sru_sort("title.asc"), "title,,1", "title asc";
 is $searcher->_sru_sort("year.desc"), "year,,0", "year desc";
 ok ! $searcher->_sru_sort("field.whatever"), "no match";

@@ -1,7 +1,7 @@
 package LibreCat::Search;
 
 use Catmandu::Sane;
-use Catmandu::Util qw(trim);
+use Catmandu::Util qw(trim :is);
 use LibreCat::App::Helper;
 use Try::Tiny;
 use Moo;
@@ -19,17 +19,17 @@ sub search {
     return undef unless $bag_name;
     my $cql;
 
-    #@{$p->{q}} = h->string_array($p->{q});
+    $p->{q} = $self->_string_array($p->{q});
     $cql = join(' AND ', @{$p->{q}}) if $p->{q};
     my $store = $self->store;
     my $bag = $store->bag($bag_name);
 
     $bag->search(
-        cql_query => $cql ||= '',
-        #sru_sortkeys => $self->_sru_sort($p->{sort}) ||= '',
-        limit => $p->{limit} ||= 0,#h->config->{default_page_size},
-        start => $p->{start} ||= 0,
-        facets => $p->{facets} ||= $self->_default_facets,
+        cql_query => $cql // '',
+        sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
+        limit => $p->{limit} // Catmandu->config->{default_page_size},
+        start => $p->{start} // 0,
+        facets => $p->{facets} // $self->_default_facets,
     );
 }
 
@@ -54,21 +54,33 @@ sub _default_facets {
 sub _sru_sort {
     my ($self, $sort) = @_;
 
-# return empty string or undef??
     return '' unless $sort;
-    $sort = h->string_array($sort);
+    $sort = $self->_string_array($sort);
 
     return join (' ', map {
-            my $s = $_;
-            my $r;
+        my $s = trim $_;
+        unless ( $self->_is_sru_sort($s) ) {
             if ($s =~ /(\w{1,})\.(asc|desc)/) {
-                $r = "$1,," . ($2 eq "asc" ? "1" : "0");
+                "$1,," . ($2 eq "asc" ? "1" : "0");
             }
-            elsif ($s =~ /\w{1,},,(0|1)/) {
-                $r = $s;
-            }
-            trim $r
-        } @$sort );
+        }
+    } @$sort );
+}
+
+sub _string_array {
+    my ($self, $val) = @_;
+    return [grep {is_string $_ } @$val] if is_array_ref $val;
+    return [$val] if is_string $val;
+    [];
+}
+
+sub _is_sru_sort {
+    my ($self, $s) = @_;
+    if ($s && $s =~ /\w{1,},,(0|1)/) {
+        return $s;
+    } else {
+        return undef;
+    }
 }
 
 1;

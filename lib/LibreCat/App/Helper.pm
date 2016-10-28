@@ -345,7 +345,7 @@ sub all_marked {
     my $sort_style
         = $self->get_sort_style($p->{sort} || '', $p->{style} || '');
     $p->{sort} = $sort_style->{'sort'};
-    my $hits       = $self->search_publication($p);
+    my $hits       = LibreCat->searcher->search('publication', $p);
     my $marked     = Dancer::session 'marked';
     my $all_marked = 1;
 
@@ -367,8 +367,8 @@ sub get_publication {
 sub get_person {
     my $hits;
     if ($_[1]) {
-        $hits = $_[0]->search_researcher({q => ["id=$_[1]"]});
-        $hits = $_[0]->search_researcher({q => ["login=$_[1]"]})
+        $hits = LibreCat->searcher->search('researcher', {q => ["id=$_[1]"]});
+        $hits = LibreCat->searcher->search('researcher', {q => ["login=$_[1]"]})
             if !$hits->{total};
     }
     return $hits->{hits}->[0] if $hits->{hits};
@@ -382,7 +382,7 @@ sub get_project {
 sub get_department {
     if ($_[1] && length $_[1]) {
         my $result = $_[0]->department->get($_[1]);
-        $result = $_[0]->search_department({q => ["name=\"$_[1]\""]})->first
+        $result = LibreCat->searcher->search('department', {q => ["name=\"$_[1]\""]})->first
             if !$result;
         return $result;
     }
@@ -407,11 +407,11 @@ sub get_relation {
 sub get_statistics {
     my ($self) = @_;
 
-    my $hits = $self->search_publication(
+    my $hits = LibreCat->searcher->search('publication',
         {q => ["status=public", "type<>research_data"]});
-    my $reshits = $self->search_publication(
+    my $reshits = LibreCat->searcher->search('publication',
         {q => ["status=public", "type=research_data"]});
-    my $oahits = $self->search_publication(
+    my $oahits = LibreCat->searcher->search('publication',
         {
             q => [
                 "status=public",      "fulltext=1",
@@ -424,6 +424,7 @@ sub get_statistics {
         publications => $hits->{total},
         researchdata => $reshits->{total},
         oahits       => $oahits->{total},
+        projects => $self->project->count(),
     };
 
 }
@@ -633,6 +634,7 @@ sub export_autocomplete_json {
     return Dancer::to_json($jsonhash);
 }
 
+# get_department_tree
 # sub search_department {
 
 #         my $hierarchy;

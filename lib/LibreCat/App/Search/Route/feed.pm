@@ -48,7 +48,7 @@ sub feed {
         }
     );
 
-    my $hits = h->search_publication({q => $query});
+    my $hits = LibreCat->searcher->search('publication', {q => $query});
 
     $hits->each(
         sub {

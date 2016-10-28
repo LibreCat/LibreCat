@@ -94,7 +94,7 @@ sub update_related_material {
 
             $q->{limit} = 1000;
 
-            my $hits = h->search_publication($q);
+            my $hits = LibreCat->searcher->search('publication', $q);
             my $return_hit;
 
             if ($hits->{total}) {
