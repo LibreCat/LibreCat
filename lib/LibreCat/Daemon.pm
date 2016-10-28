@@ -116,6 +116,8 @@ sub command {
     elsif ($cmd eq 'status') {
         say $self->daemon_status($manager, $supervisor);
     }
+
+    return 0;
 }
 
 sub daemon {
