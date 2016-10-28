@@ -1,7 +1,11 @@
 package LibreCat::Search;
 
 use Catmandu::Sane;
+<<<<<<< HEAD
 use Catmandu::Util qw(trim :is);
+=======
+use Catmandu::Util qw(trim);
+>>>>>>> 534312ef0057721a59c6cfbd728a3016b6f82d96
 use LibreCat::App::Helper;
 use Try::Tiny;
 use Moo;
@@ -19,17 +23,29 @@ sub search {
     return undef unless $bag_name;
     my $cql;
 
+<<<<<<< HEAD
     $p->{q} = $self->_string_array($p->{q});
+=======
+    #@{$p->{q}} = h->string_array($p->{q});
+>>>>>>> 534312ef0057721a59c6cfbd728a3016b6f82d96
     $cql = join(' AND ', @{$p->{q}}) if $p->{q};
     my $store = $self->store;
     my $bag = $store->bag($bag_name);
 
     $bag->search(
+<<<<<<< HEAD
         cql_query => $cql // '',
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
         limit => $p->{limit} // Catmandu->config->{default_page_size},
         start => $p->{start} // 0,
         facets => $p->{facets} // $self->_default_facets,
+=======
+        cql_query => $cql ||= '',
+        #sru_sortkeys => $self->_sru_sort($p->{sort}) ||= '',
+        limit => $p->{limit} ||= 0,#h->config->{default_page_size},
+        start => $p->{start} ||= 0,
+        facets => $p->{facets} ||= $self->_default_facets,
+>>>>>>> 534312ef0057721a59c6cfbd728a3016b6f82d96
     );
 }
 
@@ -54,6 +70,7 @@ sub _default_facets {
 sub _sru_sort {
     my ($self, $sort) = @_;
 
+<<<<<<< HEAD
     return '' unless $sort;
     $sort = $self->_string_array($sort);
 
@@ -81,6 +98,23 @@ sub _is_sru_sort {
     } else {
         return undef;
     }
+=======
+# return empty string or undef??
+    return '' unless $sort;
+    $sort = h->string_array($sort);
+
+    return join (' ', map {
+            my $s = $_;
+            my $r;
+            if ($s =~ /(\w{1,})\.(asc|desc)/) {
+                $r = "$1,," . ($2 eq "asc" ? "1" : "0");
+            }
+            elsif ($s =~ /\w{1,},,(0|1)/) {
+                $r = $s;
+            }
+            trim $r
+        } @$sort );
+>>>>>>> 534312ef0057721a59c6cfbd728a3016b6f82d96
 }
 
 1;

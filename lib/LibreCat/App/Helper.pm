@@ -634,7 +634,6 @@ sub export_autocomplete_json {
     return Dancer::to_json($jsonhash);
 }
 
-# get_department_tree
 # sub search_department {
 
 #         my $hierarchy;
