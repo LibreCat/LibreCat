@@ -19,13 +19,13 @@ List persons alphabetically
 get qr{/person/([a-z,A-Z])} => sub {
     my ($c) = splat;
 
-    my $hits = h->search_researcher(
+    my $hits = LibreCat->searcher->search('researcher',
         {q => ["lastname=" . lc $c . "*"], start => 0, limit => 1000,});
 
     my $result;
     @{$hits->{hits}} = map {
         my $rec = $_;
-        my $pub = h->search_publication(
+        my $pub = LibreCat->searcher->search('publication',
             {q => ["person=$rec->{_id}"], start => 0, limit => 1,});
         ($pub->{total} > 0) ? $rec : undef;
     } @{$hits->{hits}};
@@ -70,10 +70,10 @@ get
     $p->{facets} = h->default_facets();
     $p->{limit}  = h->config->{maximum_page_size};
 
-    my $hits = h->search_publication($p);
+    my $hits = LibreCat->searcher->search('publication', $p);
 
     unless ($hits->total) {
-        $hits = h->search_researcher({q => ["alias=$id"]});
+        $hits = LibreCat->searcher->search('researcher', {q => ["alias=$id"]});
         if (!$hits->{total}) {
             status '404';
 
@@ -91,7 +91,7 @@ get
     push @{$p->{q}}, ("type=research_data", "person=$id", "status=public");
     $p->{limit} = 1;
 
-    $hits->{researchhits} = h->search_publication($p);
+    $hits->{researchhits} = LibreCat->searcher->search('publication', $p);
 
     $p->{limit}    = h->config->{maximum_page_size};
     $hits->{style} = $sort_style->{style};

@@ -3,6 +3,7 @@ package Catmandu::Fix::add_orcid_to_pub;
 use Catmandu::Sane;
 use Catmandu;
 use LibreCat::App::Helper;
+use LibreCat;
 use Moo;
 
 sub fix {
@@ -11,7 +12,7 @@ sub fix {
     my $q;
     push @$q, "person=$data->{_id}";
 
-    my $hits = h->search_publication({q => $q, limit => 1000,});
+    my $hits = LibreCat->searcher->search('publication', {q => $q, limit => 1000,});
 
     if ($hits and $hits->{total}) {
         $hits->each(

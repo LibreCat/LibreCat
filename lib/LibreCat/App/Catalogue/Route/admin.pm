@@ -81,7 +81,7 @@ Searches the authority database. Prints the search form + result list.
         my $p = params;
 
         $p->{q} = h->string_array($p->{q});
-        my $hits = h->search_researcher($p);
+        my $hits = LibreCat->searcher->search('researcher', $p);
         template 'admin/account', $hits;
     };
 
@@ -151,7 +151,7 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/project' => needs role => 'super_admin' => sub {
-        my $hits = h->search_project(
+        my $hits = LibreCat->searcher->search('project',
             {q => "", limit => 100, start => params->{start} || 0});
         template 'admin/project', $hits;
     };
@@ -164,7 +164,7 @@ Input is person id. Returns warning if person is already in the database.
     get '/project/search' => sub {
         my $p = h->extract_params();
 
-        my $hits = h->search_project($p);
+        my $hits = hLibreCat->searcher->search('project', $p);
 
         template 'admin/project', $hits;
     };
@@ -181,7 +181,7 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/research_group' => needs role => 'super_admin' => sub {
-        my $hits = h->search_research_group(
+        my $hits = LibreCat->searcher->search('research_group',
             {q => "", limit => 100, start => params->{start} || 0});
         template 'admin/research_group', $hits;
     };
@@ -194,7 +194,7 @@ Input is person id. Returns warning if person is already in the database.
     get '/research_group/search' => sub {
         my $p = h->extract_params();
 
-        my $hits = h->search_research_group($p);
+        my $hits = LibreCat->searcher->search('research_group', $p);
 
         template 'admin/research_group', $hits;
     };
@@ -211,7 +211,7 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/department' => needs role => 'super_admin' => sub {
-        my $hits = h->search_department(
+        my $hits = LibreCat->searcher->search('department',
             {q => "", limit => 100, start => params->{start} || 0});
         template 'admin/department', $hits;
     };
@@ -224,7 +224,7 @@ Input is person id. Returns warning if person is already in the database.
     get '/department/search' => sub {
         my $p = h->extract_params();
 
-        my $hits = h->search_department($p);
+        my $hits = LibreCat->searcher->search('department', $p);
 
         template 'admin/department', $hits;
     };
