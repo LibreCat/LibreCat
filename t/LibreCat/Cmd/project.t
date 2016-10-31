@@ -3,9 +3,6 @@ use Path::Tiny;
 use lib path(__FILE__)->parent->parent->child('lib')->stringify;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
-use strict;
-use warnings;
-use Catmandu::Sane;
 use Catmandu;
 
 use LibreCat::CLI;
