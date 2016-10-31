@@ -634,39 +634,39 @@ sub export_autocomplete_json {
     return Dancer::to_json($jsonhash);
 }
 
-# sub search_department {
+sub get_department_tree {
+    my ($self) = @_;
+        my $tree;
+        LibreCat->searcher->search('department', {})
+        ->each(
+            sub {
+                my $hit = $_[0];
+                push @$tree, $hit if $hit->{layer} == 1;
+                #$tree->{$hit->{name}}->{display} = $hit->{display}
+                #    if $hit->{layer} eq "1";
+                # if ($hit->{layer} eq "2") {
+                #     my $layer
+                #         = $self->get_department($hit->{tree}->[0]->{_id});
+                #     $tree->{$layer->{name}}->{$hit->{name}}->{id}
+                #         = $hit->{tree}->[1]->{_id};
+                #     $tree->{$layer->{name}}->{$hit->{name}}->{display}
+                #         = $hit->{display};
+                # }
+                # if ($hit->{layer} eq "3") {
+                #     my $layer2
+                #         = $self->get_department($hit->{tree}->[0]->{_id});
+                #     my $layer3
+                #         = $self->get_department($hit->{tree}->[1]->{_id});
+                #     $tree->{$layer2->{name}}->{$layer3->{name}}
+                #         ->{$hit->{name}}->{id} = $hit->{tree}->[2]->{_id};
+                #     $tree->{$layer2->{name}}->{$layer3->{name}}
+                #         ->{$hit->{name}}->{display} = $hit->{display};
+                # }
+            }
+        );
 
-#         my $hierarchy;
-#         $hits->each(
-#             sub {
-#                 my $hit = $_[0];
-#                 $hierarchy->{$hit->{name}}->{oId} = $hit->{tree}->[0]->{_id}
-#                     if $hit->{layer} eq "1";
-#                 $hierarchy->{$hit->{name}}->{display} = $hit->{display}
-#                     if $hit->{layer} eq "1";
-#                 if ($hit->{layer} eq "2") {
-#                     my $layer
-#                         = $self->get_department($hit->{tree}->[0]->{_id});
-#                     $hierarchy->{$layer->{name}}->{$hit->{name}}->{oId}
-#                         = $hit->{tree}->[1]->{_id};
-#                     $hierarchy->{$layer->{name}}->{$hit->{name}}->{display}
-#                         = $hit->{display};
-#                 }
-#                 if ($hit->{layer} eq "3") {
-#                     my $layer2
-#                         = $self->get_department($hit->{tree}->[0]->{_id});
-#                     my $layer3
-#                         = $self->get_department($hit->{tree}->[1]->{_id});
-#                     $hierarchy->{$layer2->{name}}->{$layer3->{name}}
-#                         ->{$hit->{name}}->{oId} = $hit->{tree}->[2]->{_id};
-#                     $hierarchy->{$layer2->{name}}->{$layer3->{name}}
-#                         ->{$hit->{name}}->{display} = $hit->{display};
-#                 }
-#             }
-#         );
-#
-#         return $hierarchy;
-
+        return $tree;
+}
 
 sub get_file_store {
     my ($self) = @_;
