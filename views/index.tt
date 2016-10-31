@@ -97,6 +97,9 @@
 
 </div><!-- outer border -->
 
+<script src="/javascripts/angular-1.2.14.min.js"></script>
+<script src="/javascripts/angularSearch.js"></script>
+
 <!-- END websites/index_publication.tt -->
 
 [% INCLUDE footer.tt %]

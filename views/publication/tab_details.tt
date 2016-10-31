@@ -14,7 +14,7 @@
     [% FOREACH person IN $item %]
       [% IF loop.first %]
       <div class="row">
-        <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.${item}.label") || h.loc("forms.${type}.field.${item}_secondary.label") %]</div>
+        <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.${item}.label") || h.loc("forms.${type}.field.${item}_secondary.label") || h.loc("forms.${type}.field.${item}_solo.label") %]</div>
         <div class="col-lg-10 col-md-9">
       [%- ELSE %];[% END %]
       [%- IF person.id %]
