@@ -13,11 +13,13 @@ sub import {
     my $load = shift;
     if ($load && $load =~ /^:?load$/) {
         $self->load(@_);
+    }
+}
 
 sub searcher {
     state $searcher = do {
         LibreCat::Search->new(store => Catmandu->store('search'));
-    }
+    };
 }
 
 {
