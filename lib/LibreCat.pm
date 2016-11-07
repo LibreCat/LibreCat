@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(require_package);
 use LibreCat::Layers;
 use LibreCat::Hook;
+use LibreCat::Search;
 use Catmandu;
 use namespace::clean;
 
@@ -13,6 +14,12 @@ sub import {
     if ($load && $load =~ /^:?load$/) {
         $self->load(@_);
     }
+}
+
+sub searcher {
+    state $searcher = do {
+        LibreCat::Search->new(store => Catmandu->store('search'));
+    };
 }
 
 {

@@ -25,14 +25,15 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
     push @{$p->{q}},
         ($bag eq 'data') ? "type=research_data" : "type<>research_data";
 
-    my $hits = h->search_publication($p);
+    my $hits = LibreCat->searcher->search('publication', $p);
+
 
     if (!$hits->{total}) {
         $p->{q} = [];
         push @{$p->{q}}, ("status=public", "altid=$id");
         push @{$p->{q}},
             ($bag eq 'data') ? "type=research_data" : "type<>research_data";
-        $hits = h->search_publication($p);
+        $hits = LibreCat->searcher->search('publication', $p);
         return redirect "$bag/$hits->first->{_id}", 301 if $hits->{total};
     }
 
@@ -61,7 +62,7 @@ Search API to (data) publications.
 get qr{/(data|publication)/*} => sub {
     my ($bag) = splat;
     my $p = h->extract_params();
-    $p->{facets} = h->default_facets();
+    #$p->{facets} = h->default_facets();
     my $sort_style = h->get_sort_style($p->{sort} || '', $p->{style} || '');
     $p->{sort} = $sort_style->{sort};
 
@@ -69,7 +70,7 @@ get qr{/(data|publication)/*} => sub {
         ? push @{$p->{q}}, ("status=public", "type=research_data")
         : push @{$p->{q}}, ("status=public", "type<>research_data");
 
-    my $hits = h->search_publication($p);
+    my $hits = LibreCat->searcher->search('publication', $p);
 
     $hits->{style}         = $sort_style->{style};
     $hits->{sort}          = $p->{sort};
@@ -121,7 +122,7 @@ get qr{/embed/*} => sub {
         $p  = $pq->{full_query};
     }
     push @{$p->{q}}, ("status=public");
-    $p->{facets} = h->default_facets();
+    #$p->{facets} = h->default_facets();
 
     # override default facets
     $p->{facets}->{author}->{terms}->{size} = 100;
@@ -134,7 +135,7 @@ get qr{/embed/*} => sub {
 
     $p->{sort}  = $sort_style->{sort};
     $p->{start} = params->{start};
-    my $hits = h->search_publication($p);
+    my $hits = LibreCat->searcher->search('publication', $p);
     $hits->{bag}   = "publication";
     $hits->{embed} = 1;
     $hits->{ttyp}  = $p->{ttyp} if $p->{ttyp};

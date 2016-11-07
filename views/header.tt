@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html[% IF bag == 'home' %] ng-app="angularController"[% END %]>
+<html ng-app="angularController">
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
 [% lf = h.config.locale.$lang -%]
 
@@ -16,7 +16,7 @@
       [% END -%]
       [%- IF year %]<meta name="citation_date" content="[% year | html %]">[% END %]
       [%- IF file %][% FOREACH fi IN file %][% IF fi.file_name %]
-      <meta name="citation_pdf_url" content="[% h.host %][% request.path %]/download/[% _id %]/[% fi.file_id %]">[% END %][% END %][% END %]
+      <meta name="citation_pdf_url" content="[% h.host %]/download/[% _id %]/[% fi.file_id %]">[% END %][% END %][% END %]
       [%- IF doi %]<meta name="citation_pdf_url" content="http://doi.org/[% doi | html %]">[% ELSIF link %]<meta name="citation_pdf_url" content="[% link.0.url | html %]">[% END %]
       [%- IF publication %]<meta name="citation_journal_title" content="[% publication | html %]" />[% END %]
       [%- IF volume %]<meta name="citation_volume" content="[% volume | html %]" />[% END %]
@@ -61,7 +61,7 @@
     [% INCLUDE head_meta.tt %]
   </head>
 
-  <body[% IF bag == 'home' %] ng-controller="angularSearch"[% END %] itemscope itemtype="http://schema.org/WebPage">
+  <body ng-controller="angularSearch" itemscope itemtype="http://schema.org/WebPage">
   [% INCLUDE topbar.tt %]
 
 <!-- END header.tt -->

@@ -77,8 +77,8 @@
 
 [% IF qp.item('sort') %]
   <div class="text-muted">
-    [%- qp.sort = '' %]
-    <a href="[% request.uri_for(path, qp) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    [%- tmp = request.params; tmp.sort = '' %]
+    <a href="[% request.uri_for(path, tmp) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
     <strong>[% h.loc("facets.sorted_by") %]:</strong>
     [% FOREACH setting IN qp.item('sort') %]
     [% h.loc("facets.sort_text.${setting}") %][% UNLESS loop.last %], [% END %]

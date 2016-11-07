@@ -364,7 +364,7 @@ sub all_marked {
     my $sort_style
         = $self->get_sort_style($p->{sort} || '', $p->{style} || '');
     $p->{sort} = $sort_style->{'sort'};
-    my $hits       = $self->search_publication($p);
+    my $hits       = LibreCat->searcher->search('publication', $p);
     my $marked     = Dancer::session 'marked';
     my $all_marked = 1;
 
@@ -386,8 +386,8 @@ sub get_publication {
 sub get_person {
     my $hits;
     if ($_[1]) {
-        $hits = $_[0]->search_researcher({q => ["id=$_[1]"]});
-        $hits = $_[0]->search_researcher({q => ["login=$_[1]"]})
+        $hits = LibreCat->searcher->search('researcher', {q => ["id=$_[1]"]});
+        $hits = LibreCat->searcher->search('researcher', {q => ["login=$_[1]"]})
             if !$hits->{total};
     }
     return $hits->{hits}->[0] if $hits->{hits};
@@ -401,7 +401,7 @@ sub get_project {
 sub get_department {
     if ($_[1] && length $_[1]) {
         my $result = $_[0]->department->get($_[1]);
-        $result = $_[0]->search_department({q => ["name=\"$_[1]\""]})->first
+        $result = LibreCat->searcher->search('department', {q => ["name=\"$_[1]\""]})->first
             if !$result;
         return $result;
     }
@@ -426,15 +426,15 @@ sub get_relation {
 sub get_statistics {
     my ($self) = @_;
 
-    my $hits = $self->search_publication(
-        {q => ["status=public", "type<>research_data", "type<>data"]});
-    my $reshits = $self->search_publication(
-        {q => ["status=public", "(type=research_data OR type=data)"]});
-    my $oahits = $self->search_publication(
+    my $hits = LibreCat->searcher->search('publication',
+        {q => ["status=public", "type<>research_data"]});
+    my $reshits = LibreCat->searcher->search('publication',
+        {q => ["status=public", "type=research_data"]});
+    my $oahits = LibreCat->searcher->search('publication',
         {
             q => [
-                "status=public",       "fulltext=1",
-                "type<>research_data", "type<>data"
+                "status=public",      "fulltext=1",
+                "type<>research_data",
             ]
         }
     );
@@ -443,6 +443,7 @@ sub get_statistics {
         publications => $hits->{total},
         researchdata => $reshits->{total},
         oahits       => $oahits->{total},
+        projects => $self->project->count(),
     };
 
 }
@@ -565,43 +566,6 @@ sub purge_record {
     return 1;
 }
 
-sub default_facets {
-    return {
-        author      => {terms => {field => 'author.id',        size => 20,}},
-        editor      => {terms => {field => 'editor.id',        size => 20,}},
-        open_access => {terms => {field => 'file.open_access', size => 1}},
-        popular_science => {terms => {field => 'popular_science', size => 1}},
-        extern          => {terms => {field => 'extern',          size => 2}},
-        status          => {terms => {field => 'status',          size => 8}},
-        year            => {
-            terms => {field => 'year', size => 100, order => 'reverse_term'}
-        },
-        type => {terms => {field => 'type', size => 25}},
-        isi  => {terms => {field => 'isi',  size => 1}},
-        pmid => {terms => {field => 'pmid', size => 1}},
-    };
-}
-
-sub sort_to_sru {
-    my ($self, $sort) = @_;
-
-    my $cql_sort;
-    if ($sort and ref $sort ne "ARRAY") {
-        $sort = [$sort];
-    }
-    foreach my $s (@$sort) {
-        if ($s =~ /(\w{1,})\.(asc|desc)/) {
-            $cql_sort .= "$1,,";
-            $cql_sort .= $2 eq "asc" ? "1 " : "0 ";
-        }
-        elsif ($s =~ /\w{1,},,(0|1)/) {
-            $cql_sort .= $s;
-        }
-    }
-    $cql_sort = trim($cql_sort);
-    return $cql_sort;
-}
-
 sub display_doctypes {
     my $type = lc $_[1];
     my $lang = $_[2] || "en";
@@ -623,50 +587,6 @@ sub display_name_from_value {
 
 sub host {
     $_[0]->config->{host};
-}
-
-sub search_publication {
-    my ($self, $p) = @_;
-
-    my $sort = $self->sort_to_sru($p->{sort});
-    my $cql  = "";
-    if ($p->{q}) {
-        push @{$p->{q}}, "status<>deleted";
-        $cql = join(' AND ', @{$p->{q}});
-    }
-    else {
-        $cql = "status<>deleted";
-    }
-
-    my $hits;
-
-    #$cql =~ tr/äöüß/aous/;
-
-    try {
-        $hits = publication->search(
-            cql_query    => $cql,
-            sru_sortkeys => $sort,
-            limit => $p->{limit} ||= $self->config->{default_page_size},
-            start  => $p->{start}  ||= 0,
-            facets => $p->{facets} ||= {},
-        );
-
-        foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-            $hits->{$_} = $hits->$_;
-        }
-    }
-    catch {
-        my $error;
-        if ($_ =~ /(cql error\: unknown index .*?) at/) {
-            $error = $1;
-        }
-        else {
-            $error = "An error has occurred: $_";
-        }
-        $hits = {total => 0, error => $error};
-    };
-
-    return $hits;
 }
 
 sub export_publication {
@@ -731,172 +651,38 @@ sub export_autocomplete_json {
     return Dancer::to_json($jsonhash);
 }
 
-sub search_researcher {
-    my ($self, $p) = @_;
-
-    my $cql = "";
-    $cql = join(' AND ', @{$p->{q}}) if $p->{q};
-
-    my $hits = researcher->search(
-        cql_query    => $cql,
-        limit        => $p->{limit} ||= config->{maximum_page_size},
-        start        => $p->{start} ||= 0,
-        sru_sortkeys => $p->{'sort'} || "fullname,,1",
-    );
-
-    # if ($p->{get_person}) {
-    #     my $personlist;
-    #     foreach my $hit (@{$hits->{hits}}) {
-    #         $personlist->{$hit->{_id}} = $hit->{full_name};
-    #     }
-    #     return $personlist;
-    # }
-
-    return $hits;
-}
-
-sub search_department {
-    my ($self, $p) = @_;
-
-    my $cql = "";
-    $cql = join(' AND ', @{$p->{q}}) if $p->{q};
-
-    if ($p->{hierarchy}) {
-        my $hits = department->search(
-            cql_query => $cql,
-            limit     => config->{maximum_page_size},
-            start     => 0,
-        );
-
-        my $hierarchy;
-        $hits->each(
+sub get_department_tree {
+    my ($self) = @_;
+        my $tree;
+        LibreCat->searcher->search('department', {})
+        ->each(
             sub {
                 my $hit = $_[0];
-                $hierarchy->{$hit->{name}}->{oId} = $hit->{tree}->[0]->{_id}
-                    if $hit->{layer} eq "1";
-                $hierarchy->{$hit->{name}}->{display} = $hit->{display}
-                    if $hit->{layer} eq "1";
-                if ($hit->{layer} eq "2") {
-                    my $layer
-                        = $self->get_department($hit->{tree}->[0]->{_id});
-                    $hierarchy->{$layer->{name}}->{$hit->{name}}->{oId}
-                        = $hit->{tree}->[1]->{_id};
-                    $hierarchy->{$layer->{name}}->{$hit->{name}}->{display}
-                        = $hit->{display};
-                }
-                if ($hit->{layer} eq "3") {
-                    my $layer2
-                        = $self->get_department($hit->{tree}->[0]->{_id});
-                    my $layer3
-                        = $self->get_department($hit->{tree}->[1]->{_id});
-                    $hierarchy->{$layer2->{name}}->{$layer3->{name}}
-                        ->{$hit->{name}}->{oId} = $hit->{tree}->[2]->{_id};
-                    $hierarchy->{$layer2->{name}}->{$layer3->{name}}
-                        ->{$hit->{name}}->{display} = $hit->{display};
-                }
+                push @$tree, $hit if $hit->{layer} == 1;
+                #$tree->{$hit->{name}}->{display} = $hit->{display}
+                #    if $hit->{layer} eq "1";
+                # if ($hit->{layer} eq "2") {
+                #     my $layer
+                #         = $self->get_department($hit->{tree}->[0]->{_id});
+                #     $tree->{$layer->{name}}->{$hit->{name}}->{id}
+                #         = $hit->{tree}->[1]->{_id};
+                #     $tree->{$layer->{name}}->{$hit->{name}}->{display}
+                #         = $hit->{display};
+                # }
+                # if ($hit->{layer} eq "3") {
+                #     my $layer2
+                #         = $self->get_department($hit->{tree}->[0]->{_id});
+                #     my $layer3
+                #         = $self->get_department($hit->{tree}->[1]->{_id});
+                #     $tree->{$layer2->{name}}->{$layer3->{name}}
+                #         ->{$hit->{name}}->{id} = $hit->{tree}->[2]->{_id};
+                #     $tree->{$layer2->{name}}->{$layer3->{name}}
+                #         ->{$hit->{name}}->{display} = $hit->{display};
+                # }
             }
         );
 
-        return $hierarchy;
-    }
-    else {
-        my $hits = department->search(
-            cql_query    => $cql,
-            limit        => $p->{limit} ||= 20,
-            start        => $p->{start} ||= 0,
-            sru_sortkeys => "display,,1",
-        );
-        return $hits;
-    }
-}
-
-sub search_project {
-    my ($self, $p) = @_;
-
-    my $cql = "";
-    $cql = join(' AND ', @{$p->{q}}) if $p->{q};
-
-    if ($p->{hierarchy}) {
-        $cql = $cql ? " AND funded=1" : "funded=1";
-        my $hits = project->search(
-            cql_query => $cql,
-            limit     => config->{maximum_page_size},
-            start     => 0,
-        );
-
-        my $hierarchy;
-        $hits->each(
-            sub {
-                my $hit = $_[0];
-                my $display
-                    = $hit->{acronym}
-                    ? $hit->{acronym} . " | " . $hit->{name}
-                    : $hit->{name};
-                $hierarchy->{$display}->{oId} = $hit->{id};
-            }
-        );
-
-        return $hierarchy;
-    }
-    else {
-        my $hits = project->search(
-            cql_query    => $cql,
-            limit        => $p->{limit} ||= config->{default_page_size},
-            start        => $p->{start} ||= 0,
-            sru_sortkeys => $p->{sorting} ||= "name,,1",
-        );
-
-        foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-            $hits->{$_} = $hits->$_;
-        }
-
-        return $hits;
-    }
-
-}
-
-sub search_research_group {
-    my ($self, $p) = @_;
-
-    my $cql = "";
-    $cql = join(' AND ', @{$p->{q}}) if $p->{q};
-
-    if ($p->{hierarchy}) {
-        my $hits = research_group->search(
-            cql_query => $cql,
-            limit     => config->{maximum_page_size},
-            start     => 0,
-        );
-
-        my $hierarchy;
-        $hits->each(
-            sub {
-                my $hit = $_[0];
-                my $display
-                    = $hit->{acronym}
-                    ? $hit->{acronym} . " | " . $hit->{name}
-                    : $hit->{name};
-                $hierarchy->{$display}->{oId} = $hit->{_id};
-            }
-        );
-
-        return $hierarchy;
-    }
-    else {
-        my $hits = research_group->search(
-            cql_query    => $cql,
-            limit        => $p->{limit} ||= config->{default_page_size},
-            start        => $p->{start} ||= 0,
-            sru_sortkeys => $p->{sort} ||= "name,,1",
-        );
-
-        foreach (qw(next_page last_page page previous_page pages_in_spread)) {
-            $hits->{$_} = $hits->$_;
-        }
-
-        return $hits;
-    }
-
+        return $tree;
 }
 
 sub get_file_store {

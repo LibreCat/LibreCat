@@ -65,6 +65,8 @@ sub command {
     }
     $file->say('</sitemap>');
     $file->close;
+
+    return 0;
 }
 
 1;

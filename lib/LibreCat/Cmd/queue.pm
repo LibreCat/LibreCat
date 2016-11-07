@@ -54,6 +54,8 @@ sub command {
         fields => 'function,queued,busy,free,running',
     );
     say $status;
+
+    return 0;
 }
 
 1;

@@ -76,6 +76,7 @@ tabs:
   data_publications: "Data Publications"
   publications_by: "Publ. by"
   projects: "Projects"
+  departments: "Departments"
   authors: "Authors"
   authors_title: "Authors"
   start: "What is PUB?"
@@ -107,7 +108,7 @@ home:
     authors: "Individual Author Pages"
     data_publications: "Data Publications"
     oa_publications: "Open Access Publications"
-    theses: "Theses"
+    projects: "Projects"
   logos:
     oa: "Open Access at<br>Bielefeld University"
     rd_management: "Research Data Management"

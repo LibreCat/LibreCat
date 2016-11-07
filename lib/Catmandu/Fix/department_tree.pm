@@ -3,6 +3,7 @@ package Catmandu::Fix::department_tree;
 use Catmandu::Sane;
 use Moo;
 use LibreCat::App::Helper;
+use LibreCat;
 use Dancer qw(:syntax session);
 
 sub fix {
@@ -12,11 +13,10 @@ sub fix {
 
     foreach my $d (@{$data->{department}}) {
         my $dep;
-        $dep = h->search_department({q => [$d->{_id}]})->{hits}->[0];
+        $dep = LibreCat->searcher->search('department', {q => [$d->{_id}]})->{hits}->[0];
         $d->{tree}    = $dep->{tree};
         $d->{display} = $dep->{display};
 
-        #my $full_dep = h->get_department($d->{_id});
         if ($dep->{layer} eq "2" or $dep->{layer} eq "3") {
             push @$delete_em, $dep->{tree}->[0]->{_id};
         }

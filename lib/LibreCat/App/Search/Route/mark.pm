@@ -35,7 +35,7 @@ get '/marked' => sub {
         while (my @chunks = splice(@$marked, 0, 100)) {
             $p->{q}     = ["(id=" . join(' OR id=', @chunks) . ")"];
             $p->{limit} = 100;
-            $hits       = h->search_publication($p);
+            $hits       = LibreCat->searcher->search('publication', $p);
             push @tmp_hits, @{$hits->{hits}};
         }
         $hits->{explinks} = $explinks;
@@ -101,7 +101,7 @@ post '/marked' => sub {
         return to_json {ok => true, total => 0,};
     }
 
-    my $hits = h->search_publication($p);
+    my $hits = LibreCat->searcher->search('publication', $p);
 
     if ($hits->{total} > $hits->{limit} && @$marked == 500) {
         return to_json {
