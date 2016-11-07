@@ -1,19 +1,12 @@
-BEGIN {
-    use Catmandu::Sane;
-    use Path::Tiny;
-    use LibreCat::Layers;
-    LibreCat::Layers->new(layer_paths => [qw(t/layer)])->load;
-}
-
-use strict;
-use warnings;
+use Catmandu::Sane;
+use Path::Tiny;
+use lib path(__FILE__)->parent->parent->parent->child('lib')->stringify;
+use LibreCat load => (layer_paths => [qw(t/layer)]);
 use Test::More;
-
 use Dancer::Test;
 use LibreCat::App;
-use LibreCat::App::Helper;
 
-h->config->{default_lang} = 'en';
+Catmandu->config->{default_lang} = 'en';
 
 route_exists          [GET => '/'], "GET / is handled";
 response_status_is    [GET => '/'], 200, 'GET / status is ok';
