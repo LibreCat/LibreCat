@@ -29,9 +29,9 @@ install:
 script:
   - prove -lr t/
 
-# after_success:
-#   - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls
-#   - cover -report coveralls
+after_success:
+  - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls
+  - cover -report coveralls
 
 notifications:
   email: false
