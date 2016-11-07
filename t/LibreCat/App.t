@@ -4,7 +4,14 @@ use lib path(__FILE__)->parent->parent->parent->child('lib')->stringify;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 use Test::More;
 use Dancer::Test;
-use LibreCat::App;
+
+my $pkg;
+BEGIN {
+    $pkg = "LibreCat::App";
+    use_ok $pkg;
+}
+
+require_ok $pkg;
 
 Catmandu->config->{default_lang} = 'en';
 
@@ -34,15 +41,15 @@ response_status_is    [GET => '/project'], 200, 'GET /data status is ok';
 response_content_like [GET => '/project'], qr/Project/,
     "content looks good for /project";
 
-route_exists          [GET => '/oai'], "GET /oai is handled";
-response_status_is    [GET => '/oai'], 200, 'GET /oai status is ok';
-response_content_like [GET => '/oai'], qr/OAI-PMH/,
-    "content looks good for /oai";
-
-route_exists          [GET => '/sru'], "GET /sru is handled";
-response_status_is    [GET => '/sru'], 200, 'GET /sru status is ok';
-response_content_like [GET => '/sru'], qr/explainResponse/,
-    "content looks good for /sru";
+# route_exists          [GET => '/oai'], "GET /oai is handled";
+# response_status_is    [GET => '/oai'], 200, 'GET /oai status is ok';
+# response_content_like [GET => '/oai'], qr/OAI-PMH/,
+#     "content looks good for /oai";
+#
+# route_exists          [GET => '/sru'], "GET /sru is handled";
+# response_status_is    [GET => '/sru'], 200, 'GET /sru status is ok';
+# response_content_like [GET => '/sru'], qr/explainResponse/,
+#     "content looks good for /sru";
 
 route_exists          [GET => '/login'], "GET /login is handled";
 response_status_is    [GET => '/login'], 200, 'GET /login status is ok';

@@ -13,8 +13,6 @@ Build.bat
 MANIFEST.bak
 META.yml
 MYMETA.yml
-Makefile
-Makefile.old
 Vagrantfile
 _build/
 blib/
