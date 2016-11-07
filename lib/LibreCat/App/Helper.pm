@@ -10,9 +10,8 @@ use Dancer qw(:syntax params request session vars);
 use Dancer::FileUtils qw(path);
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
-use LibreCat::I18N;
-use LibreCat::Layers;
 use LibreCat;
+use LibreCat::I18N;
 use Log::Log4perl ();
 use Moo;
 
