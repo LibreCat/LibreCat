@@ -22,13 +22,16 @@ Returns a form with imported data.
 post '/librecat/record/import' => needs login => sub {
     my $p = params;
     trim($p, 'id', 'whitespace');
+
     my $pub;
-    my $user = h->get_person(session->{personNumber});
+    my $user      = h->get_person(session->{personNumber});
     my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
     try {
+        my $data = request->upload('data') ? request->upload('data')->content : $p->{data};
+
         $pub = LibreCat::App::Catalogue::Controller::Importer->new(
-            id     => $p->{id} || $p->{data},
+            id     => $p->{id} // $data ,
             source => $p->{source},
         )->fetch;
 
