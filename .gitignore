@@ -18,8 +18,6 @@ Makefile.old
 Vagrantfile
 _build/
 blib/
-layers.yml
-config/catmandu.local.yml
 cover_db/
 cpanfile.snapshot
 data/temp_uploads/**
