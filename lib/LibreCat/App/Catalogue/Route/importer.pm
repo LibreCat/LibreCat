@@ -28,7 +28,7 @@ post '/librecat/record/import' => needs login => sub {
 
     try {
         $pub = LibreCat::App::Catalogue::Controller::Importer->new(
-            id => $p->{id} || $p->{bibtex_input},
+            id     => $p->{id} || $p->{data},
             source => $p->{source},
         )->fetch;
 
@@ -49,15 +49,17 @@ post '/librecat/record/import' => needs login => sub {
             return template "$templatepath/$type", $pub;
         }
         else {
+            my $id = $p->{id} // '<data>';
             return template "backend/add_new",
                 {error =>
-                    "No record found with ID $p->{id} in $p->{source}."};
+                    "No record found with ID $id in $p->{source}."};
         }
     }
     catch {
+        my $id = $p->{id} // '<data>';
         return template "backend/add_new",
             {error =>
-                "Could not import ID $p->{id} from source $p->{source}."};
+                "Could not import ID $id from source $p->{source}."};
     };
 
 };
