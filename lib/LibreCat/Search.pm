@@ -2,8 +2,6 @@ package LibreCat::Search;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(trim :is);
-use LibreCat::App::Helper;
-use Try::Tiny;
 use Moo;
 use namespace::clean;
 
