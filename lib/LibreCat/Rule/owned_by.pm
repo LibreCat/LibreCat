@@ -10,7 +10,7 @@ has key => (is => 'lazy');
 
 sub _build_key {
     my ($self) = @_;
-    $self->args->[0] // '_id';
+    $self->args->[0] // 'login';
 }
 
 sub test {

@@ -84,30 +84,32 @@ $role = LibreCat::Role->new(
     rules       => [[qw(can edit publication owned_by)],]
 );
 
-is $role->may($user, 'edit', {_type => 'publication'}, {_id => 'user2'}), 0;
+is $role->may($user, 'edit', {_type => 'publication'}, {login => 'user2'}), 0;
 is $role->may($user, 'edit',
-    {_type => 'publication', creator => {login => 'user1'}}),
-    0;
+    {_type => 'publication', creator => {login => 'user1'}},
+    {login => 'user2'}), 0;
 is $role->may($user, 'edit',
-    {_type => 'publication', creator => {login => 'user2'}}),
-    1;
+    {_type => 'publication', creator => {login => 'user2'}},
+    {login => 'user2'}), 1;
 
+# with custom _id param
 $role = LibreCat::Role->new(
     rules       => [
         [qw(can edit publication affiliated_with department_id)],
     ]
 );
 
-is $role->may($user, 'edit', {_type => 'publication'}), 0;
-is $role->may($user, 'edit',
-    {_type => 'publication', department => {_id => 'dep2'}}, {department_id => 'dep1'}),
-    0;
+throws_ok { $role->may($user, 'edit', {_type => 'publication'}) } qr/missing role parameter/i;
 is $role->may($user, 'edit',
     {_type => 'publication', department => {_id => 'dep1'}}, {department_id => 'dep2'}),
-    1;
-is $role->may($user, 'edit',
-    {_type => 'publication', department => {_id => 'dep1'}}, {_id => 'dep2'}),
     0;
+is $role->may($user, 'edit',
+    {_type => 'publication', department => {_id => 'dep1'}}, {department_id => 'dep1'}),
+    1;
+
+throws_ok { $role->may($user, 'edit',
+    {_type => 'publication', department => {_id => 'dep1'}}, {_id => 'dep1'})}
+    qr/missing role parameter/i;
 is $role->may(
     $user, 'edit',
     {

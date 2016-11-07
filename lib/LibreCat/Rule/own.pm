@@ -9,7 +9,7 @@ with 'LibreCat::Rule';
 sub test {
     my ($self, $subject, $object) = @_;
 
-    $object->{creator} && $object->{creator}{login} eq $subject->{_id};
+    $object->{creator} && $object->{creator}{login} eq $subject->{login};
 }
 
 1;
