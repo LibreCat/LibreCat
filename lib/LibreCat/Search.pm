@@ -2,6 +2,7 @@ package LibreCat::Search;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(trim :is);
+use Catmandu;
 use Moo;
 use namespace::clean;
 
