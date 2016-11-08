@@ -14,8 +14,6 @@ MANIFEST.bak
 META.yml
 MYMETA.yml
 catmandu.local.yml
-Makefile
-Makefile.old
 Vagrantfile
 _build/
 blib/

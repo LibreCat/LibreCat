@@ -4,9 +4,24 @@ use lib path(__FILE__)->parent->parent->parent->child('lib')->stringify;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 use Test::More;
 use Dancer::Test;
-use LibreCat::App;
+use App::Cmd::Tester;
+use LibreCat::CLI;
+
+my $pkg;
+BEGIN {
+    $pkg = "LibreCat::App";
+    use_ok $pkg;
+}
+require_ok $pkg;
 
 Catmandu->config->{default_lang} = 'en';
+Catmandu->store('backup')->bag('publication')->delete_all;
+Catmandu->store('search')->bag('publication')->drop;
+
+foreach my $obj (qw(publication project researcher)) {
+    my $result = test_app(qq|LibreCat::CLI| =>
+            [$obj, "add", "t/records/valid-$obj.yml"]);
+}
 
 route_exists          [GET => '/'], "GET / is handled";
 response_status_is    [GET => '/'], 200, 'GET / status is ok';
