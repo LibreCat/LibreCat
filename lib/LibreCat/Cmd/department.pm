@@ -83,7 +83,7 @@ sub _list {
             my $display = $item->{display};
             my $layer   = $item->{layer};
 
-            printf "%-2.2d %9d %-40.40s %s\n", $layer, $id, $name, $display;
+            printf "%-2.2d %-40.40s %-40.40s %s\n", $layer, $id, $name, $display;
         }
     );
     print "count: $count\n";

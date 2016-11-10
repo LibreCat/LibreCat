@@ -81,7 +81,7 @@ sub _list {
             my $id     = $item->{_id};
             my $name   = $item->{name};
 
-            printf "%-2.2s %s\n", $id, $name;
+            printf "%-40.40s %s\n", $id, $name;
         }
     );
     print "count: $count\n";
