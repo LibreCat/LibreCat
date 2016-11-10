@@ -296,6 +296,14 @@ publication:
     creator:
       type: object
       properties:
+          id:
+            oneOf:
+              - type: string
+                #pattern: "^[0-9]+$"
+                minLength: 1
+              - type: integer
+                minimum: 0
+            description: "Creator id"
         login:
           type: string
           description: "Creator user name"
