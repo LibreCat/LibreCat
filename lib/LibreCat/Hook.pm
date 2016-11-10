@@ -21,7 +21,7 @@ sub fix_after {
 sub fix_around {
     my ($self, $data, $sub) = @_;
     $self->fix_before($data);
-    $data = $sub->($data);
+    $data = $sub->($data) if defined $sub;
     $self->fix_after($data);
 }
 
