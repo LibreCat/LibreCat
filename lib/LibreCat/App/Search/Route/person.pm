@@ -9,6 +9,7 @@ LibreCat::App::Search::Route::person - handles routes for person sites
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
+use URI::Escape;
 
 =head2 GET /person
 
@@ -105,5 +106,24 @@ get
     template 'home', $hits;
 
     };
+
+=head2 GET /staffdirectory/:id
+
+Redirects the user to the local staff directory page
+
+=cut
+get '/staffdirectory/:id' => sub {
+    my $id = param('id');
+
+    if (h->config->{person} && h->config->{person}->{staffdirectory}) {
+        redirect sprintf "%s%s"
+                    , h->config->{person}->{staffdirectory}
+                    , uri_escape($id);
+    }
+    else {
+        redirect sprintf "/person/%s"
+                    , uri_escape($id);
+    }
+};
 
 1;

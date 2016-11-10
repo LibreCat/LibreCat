@@ -10,6 +10,11 @@ thesis:
   subject: '[PUB] New thesis submitted'
   urn_prefix: 'urn:thesis-'
 
+# Use this link to lookup a personId in a staff directory. Required
+# to differentiate between different users with the same name
+person:
+  staffdirectory: "https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId="
+
 ## Uncomment when you want to send emails when new research data becomes available
 #research_data:
 #  to: 'send@me.org'
