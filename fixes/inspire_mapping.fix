@@ -18,6 +18,7 @@ if exists('rec.abstract')
 	set_field('rec.abstract.0.lang','eng')
   else
     remove_field('rec.abstract')
+  end
 end
 move_field('rec.keywords.keyword','rec.keyword')
 remove_field('rec.keywords')
@@ -33,9 +34,9 @@ end
 add_field('rec.ddc','530')
 
 move_field('rec.electronic-resource-num','rec.doi')
-if_any_match('rec.number','\d+|\w+');
+if any_match('rec.number','\d+|\w+')
     move_field('rec.number','rec.issue')
-end();
+end
 remove_field('rec.number')
 
 if exists('rec.doi')

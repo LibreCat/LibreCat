@@ -8,6 +8,8 @@ with 'LibreCat::FetchRecord';
 sub fetch {
     my ($self, $id) = @_;
 
+    $id =~ s{^\D+}{};
+
     $self->log->debug("requesting $id from inspire");
 
     my $data = Catmandu->importer(
@@ -24,3 +26,19 @@ sub fetch {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::FetchRecord::inspire - Create a LibreCat publication based on an Inspire id
+
+=head1 SYNOPSIS
+
+    use LibreCat::FetchRecord::inspire;
+
+    my $pub = LibreCat::FetchRecord::inspire->new->fetch('1496182');
+
+=cut

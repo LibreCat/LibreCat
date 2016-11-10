@@ -49,6 +49,7 @@ LibreCat::FetchRecord - LibreCat record creator
     sub fetch {
         my ($self, $id) = @_;
 
+        # given the $id fetch/generate/create one valid publication record
         return +{
             ...
             ...
@@ -60,6 +61,16 @@ LibreCat::FetchRecord - LibreCat record creator
 
 =head1 DESCRIPTION
 
-Created one publication record given an id or textual input.
+Create one publication record given an id or textual input.
+
+=head1 SEE ALSO
+
+L<LibreCat::FetchRecord::arxiv> ,
+L<LibreCat::FetchRecord::bibtex> ,
+L<LibreCat::FetchRecord::crossref> ,
+L<LibreCat::FetchRecord::datacite> ,
+L<LibreCat::FetchRecord::epmc> ,
+L<LibreCat::FetchRecord::inspire> ,
+L<LibreCat::FetchRecord::wos>
 
 =cut

@@ -9,7 +9,8 @@ with 'LibreCat::FetchRecord';
 sub fetch {
     my ($self, $id) = @_;
 
-    $id =~ s{^doi:}{}i;
+    # Clean up data
+    $id =~ s{^\D+[:\/]}{};
 
     $self->log->debug("requesting $id from crossref");
 
@@ -32,3 +33,19 @@ sub fetch {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::FetchRecord::crossref - Create a LibreCat publication based on a DOI
+
+=head1 SYNOPSIS
+
+    use LibreCat::FetchRecord::crossref;
+
+    my $pub = LibreCat::FetchRecord::crossref->new->fetch('doi:10.1002/0470841559.ch1');
+
+=cut

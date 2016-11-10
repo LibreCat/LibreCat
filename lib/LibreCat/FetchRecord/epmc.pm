@@ -9,7 +9,7 @@ with 'LibreCat::FetchRecord';
 sub fetch {
     my ($self, $id) = @_;
 
-    $id =~ s/^pmid.*?(\d+)/$1/i;
+    $id =~ s/^\D+(\d+)/$1/i;
 
     $self->log->debug("requesting $id from epmc");
 
@@ -27,3 +27,19 @@ sub fetch {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::FetchRecord::epmc - Create a LibreCat publication based on a PubMed id
+
+=head1 SYNOPSIS
+
+    use LibreCat::FetchRecord::epmc;
+
+    my $pub = LibreCat::FetchRecord::epmc->new->fetch('27740824');
+
+=cut

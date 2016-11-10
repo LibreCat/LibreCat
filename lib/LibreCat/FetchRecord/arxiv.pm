@@ -9,8 +9,8 @@ with 'LibreCat::FetchRecord';
 sub fetch {
     my ($self, $id) = @_;
 
-    $id =~ s/ar[Xx]iv://;
-    $id =~ s/.*\///;
+    # Clean the identifier and keep only the part with the id
+    $id =~ s{\S+[:\/]}{};
 
     $self->log->debug("requesting $id from arXiv");
 
@@ -27,3 +27,19 @@ sub fetch {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::FetchRecord::arxiv - Create a LibreCat publication based on an Arxiv id
+
+=head1 SYNOPSIS
+
+    use LibreCat::FetchRecord::arxiv;
+
+    my $pub = LibreCat::FetchRecord::arxiv->new->fetch('arXiv:1609.01725');
+
+=cut
