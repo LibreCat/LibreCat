@@ -180,6 +180,10 @@ publication:
                 type: string
                 format: date-time
                 description: "Last modification date"
+            embargo:
+                type: string
+                format: date-time
+                description: "Date when the embargo period ends and the file becomes open access"
             file_id:
                 oneOf:
                   - type: string
@@ -195,12 +199,13 @@ publication:
                   - type: string
                   - type: integer
                 description: "File size"
-            open_access:
-                oneOf:
-                  - type: string
-                    pattern: "^[01]$"
-                  - type: integer
-                description: "Flag when file is open_access"
+            # TODO should be added at index time
+            #open_access:
+                #oneOf:
+                  #- type: string
+                    #pattern: "^[01]$"
+                  #- type: integer
+                #description: "Flag when file is open_access"
             title:
                 type: string
                 description: "File title"
@@ -218,7 +223,7 @@ publication:
                     #- hidden
                 type: string
                 description: "Relation upload to main record"
-        required: ["access_level","content_type","creator","date_created","date_updated","file_id","open_access","relation"]
+        required: ["access_level","content_type","creator","date_created","date_updated","file_id","relation"]
 
     project: &project
       type: object
