@@ -9,9 +9,7 @@ use Moo;
 sub fix {
     my ($self, $data) = @_;
 
-    # TODO check if citation contains the same styles as config
-    # TODO check if citations need updating
-    unless ($data->{citation} || h->config->{citation}->{engine} eq 'none') {
+    unless (h->config->{citation}->{engine} eq 'none') {
         state $citation_engine = LibreCat::Citation->new(all => 1);
 
         my $d = clone $data;
