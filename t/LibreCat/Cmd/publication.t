@@ -78,6 +78,7 @@ Catmandu->store('search')->bag('publication')->drop;
     my $record = $importer->first;
 
     is $record->{_id}, 999999999, 'got really a 999999999 record';
+    is $record->{title}, 'Valid Test Publication', 'got a valid title';
 }
 
 {

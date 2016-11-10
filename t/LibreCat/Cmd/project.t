@@ -75,6 +75,7 @@ Catmandu->store('search')->bag('project')->drop;
     my $record = $importer->first;
 
     is $record->{_id}, 'P9999999', 'got really a P9999999 record';
+    is $record->{description} , 'Librecat project. What else?' , 'got a valid description';
 }
 
 {
