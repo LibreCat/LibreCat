@@ -11,7 +11,7 @@ thesis:
   urn_prefix: 'urn:thesis-'
 
 # Use this link to lookup a personId in a staff directory. Required
-# to differentiate between different users with the same name
+# to differentiate between different users with the same name (homonym,namesake)
 person:
   staffdirectory: "https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId="
 
