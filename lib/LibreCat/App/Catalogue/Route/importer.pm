@@ -22,18 +22,28 @@ Returns a form with imported data.
 post '/librecat/record/import' => needs login => sub {
     my $p = params;
     trim($p, 'id', 'whitespace');
+    trim($p, 'source', 'whitespace');
 
     my $pub;
     my $user      = h->get_person(session->{personNumber});
     my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
     try {
-        my $data = request->upload('data') ? request->upload('data')->content : $p->{data};
+        my $id     = $p->{id};
+        my $data   = request->upload('data') ? request->upload('data')->content : $p->{data};
+        my $source = $p->{source};
+
+        # Use config/hooks.yml to register functions
+        # that should run before/after adding new publications
+        # E.g. create a hooks to change the default fields
+        state $hook = h->hook('import-new-' . $source);
 
         $pub = LibreCat::App::Catalogue::Controller::Importer->new(
-            id     => $p->{id} // $data ,
-            source => $p->{source},
+            id     => $id // $data ,
+            source => $source,
         )->fetch;
+
+        $hook->fix_before($pub);
 
         if ($pub) {
             $pub->{_id} = h->new_record('publication');
@@ -48,6 +58,8 @@ post '/librecat/record/import' => needs login => sub {
             }
 
             $pub->{new_record} = 1;
+
+            $hook->fix_after($pub);
 
             return template "$templatepath/$type", $pub;
         }
