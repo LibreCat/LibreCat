@@ -223,7 +223,7 @@ publication:
                     #- hidden
                 type: string
                 description: "Relation upload to main record"
-        required: ["access_level","content_type","creator","date_created","date_updated","file_id","relation"]
+        required: ["access_level","content_type","date_created","date_updated","file_id","relation"]
 
     project: &project
       type: object
