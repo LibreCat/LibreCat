@@ -28,12 +28,15 @@ SKIP: {
         skip("No network. Set NETWORK_TEST to run these tests.", 5);
     }
 
-    my $pub = $x->fetch('doi:10.1002/0470841559.ch1');
+    my @dois =("doi:10.1002/0470841559.ch1", "http://doi.org/10.1002/0470841559.ch1");
+    for (@dois) {
+        my $pub = $x->fetch($_);
 
-    ok $pub , 'got a publication';
+        ok $pub , 'got a publication for ' . $_;
 
-    is $pub->{title} , 'Network Concepts' , 'got a title';
-    is $pub->{type} , 'book_chapter', 'type == book_chapter';
+        is $pub->{title} , 'Network Concepts' , 'got a title';
+        is $pub->{type} , 'book_chapter', 'type == book_chapter';
+    }
 }
 
 done_testing;

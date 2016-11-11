@@ -17,17 +17,11 @@ sub fetch {
     my $data = Catmandu->importer(
         'getJSON',
         from    => url_decode("http://api.crossref.org/works/$id"),
-        timeout => 10,
     )->first;
 
     my $fixer = $self->create_fixer('crossref_mapping.fix');
 
     $data = $fixer->fix($data);
-
-    # try @datacite if crossref has no data
-    if (!$data or lc $data->{doi} ne lc $id) {
-        $data = $self->datacite($id);
-    }
 
     return $data;
 }

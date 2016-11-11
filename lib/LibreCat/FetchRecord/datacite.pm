@@ -16,7 +16,6 @@ sub fetch {
 
     my $furl = Furl->new(
         agent   => "Chrome 35.1",
-        timeout => 10,
         headers => [Accept => 'application/x-datacite+xml'],
     );
 
