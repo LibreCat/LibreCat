@@ -224,7 +224,7 @@ function link_person(element){
                                 $('#' + type + 'first_name_' + lineId).val(first_name);
                                 $('#' + type + 'last_name_' + lineId).val(last_name);
                                 $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly", "readonly");
-                                $('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
+                                $('#' + type + 'Authorized' + lineId).attr('src','/images/authorized_yes.png');
                                 $('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
                                 $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 
@@ -283,15 +283,15 @@ function link_person(element){
                                         });
 
                                         if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase()) || (firstname == old_first_name.toLowerCase() && lastname == "") || (lastname == old_last_name.toLowerCase() && firstname == "") || (lastname == old_last_name.toLowerCase() && firstname == old_first_name.toLowerCase())){
-                                                rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
+                                                rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
                                                 if(old_first_name || old_last_name){
-                                                        rows += '<tr data-id="' + personId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                                                        rows += '<tr data-id="' + personId + '"><td><a href="/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
                                                 }
                                         }
                                         else {
-                                                rows2 += '<tr data-id="' + personId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
+                                                rows2 += '<tr data-id="' + personId + '"><td><a href="/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
                                                 if(old_first_name || old_last_name){
-                                                        rows2 += '<tr data-id="' + personId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                                                        rows2 += '<tr data-id="' + personId + '"><td><a href="/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
                                                 }
                                         }
 
@@ -328,7 +328,7 @@ function link_person(element){
                                         $('#' + type + 'last_name_' + lineId).val("");
                                         $('#' + type + 'last_name_' + lineId).val(last_name);
                                         $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
-                                        $('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
+                                        $('#' + type + 'Authorized' + lineId).attr('src','/images/authorized_yes.png');
                                         $('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
                                         $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 
@@ -370,7 +370,7 @@ function link_person(element){
 
         if($('#' + type + 'idm_extern_' + lineId).is(':checked') && $('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
                         // Uncheck, release input fields and change img back to gray
-                        $('#' + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
+                        $('#' + type + 'Authorized' + lineId).attr('src','/images/authorized_no.png');
                         $('#' + type + 'Authorized' + lineId).attr('alt','Not Authorized');
                         $('#' + type + 'id_' + lineId).val("");
                         $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
@@ -405,7 +405,7 @@ function edit_file(fileId, id){
         $('#id_fileName').val(json.file_name);
         $('#id_creator').val(json.creator);
         $('#id_fileSize').val(json.file_size);
-        $('#id_contentType').val(json.content_type); 
+        $('#id_contentType').val(json.content_type);
 
         if(json.title){
                 $('#id_fileTitle').val(json.title);
@@ -549,7 +549,7 @@ function add_field(name, placeholder){
                         $(this).val('');
                 }
                 if($(this).prop('tagName') == "IMG"){
-                        $(this).attr('src','/images/biNotAuthorized.png');
+                        $(this).attr('src','/images/authorized_no.png');
                         $(this).attr('alt', 'Not Authorized');
                         $(this).tooltip();
                 }
@@ -632,7 +632,7 @@ function remove_field(object){
                                 $(this).prop('checked', true);
                         }
                         if($(this).prop('tagName') == "IMG"){
-                                $(this).attr('src','/images/biNotAuthorized.png');
+                                $(this).attr('src','/images/authorized_no.png');
                                 $(this).attr('alt', 'Not Authorized');
                         }
                 });

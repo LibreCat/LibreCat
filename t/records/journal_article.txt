@@ -1,0 +1,61 @@
+FN Thomson Reuters Web of Science™
+VR 1.0
+PT J
+AU Schubbert, C
+   Eraerds, P
+   Richter, M
+   Parisi, J
+   Riedel, I
+   Dalibor, T
+   Palm, J
+AF Schubbert, Christian
+   Eraerds, Patrick
+   Richter, Michael
+   Parisi, Juergen
+   Riedel, Ingo
+   Dalibor, Thomas
+   Palm, Joerg
+TI Performance ratio study based on a device simulation of a 2D monolithic
+   interconnected Cu(In,Ga)(Se,S)(2) solar cell
+SO SOLAR ENERGY MATERIALS AND SOLAR CELLS
+LA English
+DT Article
+DE CIGS; 2D simulation; Performance ratio; Low light; P1; Shunt resistance;
+   Barrier
+ID CU(IN,GA)SE-2; HETEROJUNCTION; MODULE
+AB We use a calibrated realistic 2D device simulation structure of a single cell from a monolithic interconnected Cu(In,Ga)(Se,S)(2) solar module to investigate the impact of modifications of the patterning laser scribe P1 and the trench properties on the energy yield. This particularly includes examining the change of the low light behaviour and the performance ratio (PR). In order to study the effects of the P1 characteristics, we performed a variation, of the P1 width, the absorber doping concentration within the P1 trench as well as a variation of the Mo(Se,S)(2) band gap and the doping concentration. We simulated temperature-dependent current-voltage characteristics for different irradiances and apply the weather data of three different locations to calculate the PRs.
+   An increased P1 width and decreased absorber doping concentration was found to increase the P1 (parallel) shunt resistance due to a reduced horizontal hole current component between the separated back electrodes. A higher shunt resistance enhances the low light behaviour of the solar cell and consequently leads to an improvement of the PR. A decreased Mo(Se,S)(2) band gap and doping concentration increases the valence band barrier at the Cu(ln,Ga)(Se,S)(2)/Mo(Se,S)(2) interface and we obtained a moderate P1 shunt improvement accompanied by a strong PR enhancement. The increased barrier height enhanced the low light and temperature behaviour of the fill factor finally leading to the PR enhancement. (C) 2016 Elsevier B.V. All rights reserved.
+C1 [Schubbert, Christian; Eraerds, Patrick; Dalibor, Thomas; Palm, Joerg] AVANCIS GmbH, Otto Hahn Ring 6, D-81739 Munich, Germany.
+   [Schubbert, Christian; Richter, Michael; Parisi, Juergen; Riedel, Ingo] Carl von Ossietzky Univ Oldenburg, Dept Phys, Energy & Semicond Res Lab EHF, Lab Chalcogenide Photovolta, Carl von Ossietzky Str 9-11, D-26129 Oldenburg, Germany.
+RP Schubbert, C (reprint author), AVANCIS GmbH, Otto Hahn Ring 6, D-81739 Munich, Germany.
+FU "EWE Nachwuchsgruppe Dunnschichtphotovoltaik" by the EWE AG Oldenburg -
+   Germany
+FX The authors (CS, MR, IR, JPar) gratefully acknowledge funding of the
+   "EWE Nachwuchsgruppe Dunnschichtphotovoltaik" by the EWE AG Oldenburg -
+   Germany.
+NR 22
+TC 0
+Z9 0
+U1 8
+U2 8
+PU ELSEVIER SCIENCE BV
+PI AMSTERDAM
+PA PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS
+SN 0927-0248
+EI 1879-3398
+J9 SOL ENERG MAT SOL C
+JI Sol. Energy Mater. Sol. Cells
+PD DEC
+PY 2016
+VL 157
+BP 146
+EP 153
+DI 10.1016/j.solmat2016.05.002
+PG 8
+WC Energy & Fuels; Materials Science, Multidisciplinary; Physics, Applied
+SC Energy & Fuels; Materials Science; Physics
+GA DX5AH
+UT WOS:000384391700020
+ER
+
+EF

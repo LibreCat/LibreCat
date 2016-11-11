@@ -78,7 +78,7 @@ sub _list {
             my $name    = $item->{name};
             my $acronym = $item->{acronym};
 
-            printf "%-2.2s %5.5s %-40.40s %s\n", " "    # not used
+            printf "%-40.40s %5.5s %-40.40s %s\n", " "    # not used
                 , $id, $acronym, $name;
         }
     );

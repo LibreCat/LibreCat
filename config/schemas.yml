@@ -180,6 +180,10 @@ publication:
                 type: string
                 format: date-time
                 description: "Last modification date"
+            embargo:
+                type: string
+                format: date-time
+                description: "Date when the embargo period ends and the file becomes open access"
             file_id:
                 oneOf:
                   - type: string
@@ -195,12 +199,13 @@ publication:
                   - type: string
                   - type: integer
                 description: "File size"
-            open_access:
-                oneOf:
-                  - type: string
-                    pattern: "^[01]$"
-                  - type: integer
-                description: "Flag when file is open_access"
+            # TODO should be added at index time
+            #open_access:
+                #oneOf:
+                  #- type: string
+                    #pattern: "^[01]$"
+                  #- type: integer
+                #description: "Flag when file is open_access"
             title:
                 type: string
                 description: "File title"
@@ -208,16 +213,17 @@ publication:
                 type: string
                 description: "File description"
             relation:
-                enum:
-                    - main_file
-                    - confirmation
-                    - table_of_contents
-                    - erratum
-                    - supplementary_material
-                    - other
-                    - hidden
+                #enum:
+                    #- main_file
+                    #- confirmation
+                    #- table_of_contents
+                    #- erratum
+                    #- supplementary_material
+                    #- other
+                    #- hidden
+                type: string
                 description: "Relation upload to main record"
-        required: ["access_level","content_type","creator","date_created","date_updated","file_id","open_access","relation"]
+        required: ["access_level","content_type","date_created","date_updated","file_id","relation"]
 
     project: &project
       type: object
@@ -278,10 +284,11 @@ publication:
         - research_data
       description: "Publication type"
     article_type:
-      enum:
-        - original
-        - review
-        - letter_note
+      #enum:
+        #- original
+        #- review
+        #- letter_note
+      type: string
       description: "Article type"
     article_number:
       type: string
@@ -289,6 +296,14 @@ publication:
     creator:
       type: object
       properties:
+        id:
+          oneOf:
+            - type: string
+              #pattern: "^[0-9]+$"
+              minLength: 1
+            - type: integer
+              minimum: 0
+          description: "Creator id"
         login:
           type: string
           description: "Creator user name"
@@ -824,7 +839,7 @@ researcher:
       enum: ["active","inactive"]
       description: "Account status"
     account_type:
-      enum: ["external","unib"]
+      enum: ["external","unibi"]
       description: "Account type"
     password:
       type: string

@@ -115,7 +115,7 @@ sub _list {
             my $status  = $item->{status};
             my $type    = $item->{type}             // '---';
 
-            printf "%-2.2s %9d %-10.10s %-60.60s %-10.10s %s\n", " " # not use
+            printf "%-2.2s %-40.40s %-10.10s %-60.60s %-10.10s %s\n", " " # not use
                 , $id, $creator, $title, $status, $type;
         }
     );

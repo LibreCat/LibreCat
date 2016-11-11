@@ -54,32 +54,48 @@ Returns a form with imported data.
 post '/librecat/record/import' => needs login => sub {
     my $p = params;
     trim($p, 'id', 'whitespace');
+    trim($p, 'source', 'whitespace');
 
     my $pub;
     my $user = h->get_person(session->{personNumber});
     my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
     try {
-        my $data = request->upload('data') ? request->upload('data')->content : $p->{data};
+        my $id     = $p->{id};
+        my $data   = request->upload('data') ? request->upload('data')->content : $p->{data};
+        my $source = $p->{source};
 
-        $pub = _fetch_record( $p->{id} // $data, $p->{source} );
+        # Use config/hooks.yml to register functions
+        # that should run before/after adding new publications
+        # E.g. create a hooks to change the default fields
+        state $hook = h->hook('import-new-' . $source);
+
+
+        $pub = _fetch_record( $p->{id} // $data, $source );
+
+        $hook->fix_before($pub);
 
         unless ($pub) {
             my $id = $p->{id} // '<data>';
             return template "backend/add_new",
-            {error =>  "No record found with ID $id in $p->{source}."};
+            {error =>  "No record found with ID $id in $source."};
         }
 
         $pub->{_id} = h->new_record('publication');
         my $type = $pub->{type} || 'journal_article';
         my $templatepath = "backend/forms";
         $pub->{department} = $user->{department};
+
         if (   ($edit_mode and $edit_mode eq "expert")
             or (!$edit_mode and session->{role} eq "super_admin"))
         {
             $templatepath .= "/expert";
         }
+
         $pub->{new_record} = 1;
+
+        $hook->fix_after($pub);
+
         return template "$templatepath/$type", $pub;
     }
     catch {
