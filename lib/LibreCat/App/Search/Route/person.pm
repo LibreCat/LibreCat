@@ -67,7 +67,6 @@ get
     my $sort_style
         = h->get_sort_style($p->{sort} || '', $p->{style} || '', $id);
     $p->{sort}   = $sort_style->{sort};
-    $p->{facets} = h->default_facets();
     $p->{limit}  = h->config->{maximum_page_size};
 
     my $hits = LibreCat->searcher->search('publication', $p);
