@@ -109,7 +109,7 @@
         [%- IF (qp.limit AND qp.limit == lim) OR (!qp.limit AND lim == h.config.default_page_size) %]
         <li>[% lim %]</li>
         [%- ELSE %]
-          [% pq.limit = lim %]
+          [% qp.limit = lim %]
           <li><a href="[% request.uri_for(path, qp) %]" rel="nofollow">[% lim %]</a></li>
         [%- END %]
       [%- END %]
