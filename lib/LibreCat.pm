@@ -3,8 +3,6 @@ package LibreCat;
 use Catmandu::Sane;
 use Catmandu::Util qw(require_package);
 use LibreCat::Layers;
-use LibreCat::Hook;
-use LibreCat::Search;
 use Catmandu;
 use namespace::clean;
 
@@ -16,15 +14,8 @@ sub import {
     }
 }
 
-sub searcher {
-    state $searcher = do {
-        LibreCat::Search->new(store => Catmandu->store('search'));
-    };
-}
-
 {
     my $layers;
-    my $hooks = {};
 
     sub check_loaded {
         $layers || Catmandu::Error->throw("LibreCat must be loaded first");
@@ -47,24 +38,40 @@ sub searcher {
     sub config {
         state $config = $_[0]->layers->config;
     }
+}
 
-    sub hook {
-        my ($self, $name) = @_;
-        $hooks->{$name} ||= do {
-            my $args = {before_fixes => [], after_fixes => [],};
+sub user {
+    state $user = do {
+        require_package('LibreCat::User')->new($_[0]->config->{user});
+    };
+}
 
-            my $hook = (Catmandu->config->{hooks} || {})->{$name} || {};
-            for my $key (qw(before_fixes after_fixes)) {
-                my $fixes = $hook->{$key} || [];
-                for my $fix (@$fixes) {
-                    push @{$args->{$key}},
-                        require_package($fix, 'LibreCat::Hook')->new;
-                }
+sub hook {
+    my ($self, $name) = @_;
+
+    state $hooks = {};
+
+    $hooks->{$name} ||= do {
+        my $args = {before_fixes => [], after_fixes => [],};
+
+        my $hook = ($self->config->{hooks} || {})->{$name} || {};
+
+        for my $key (qw(before_fixes after_fixes)) {
+            my $fixes = $hook->{$key} || [];
+            for my $fix (@$fixes) {
+                push @{$args->{$key}},
+                    require_package($fix, 'LibreCat::Hook')->new;
             }
+        }
 
-            LibreCat::Hook->new($args);
-        };
-    }
+        require_package('LibreCat::Hook')->new($args);
+    };
+}
+
+sub searcher {
+    state $searcher = do {
+        require_package('LibreCat::Search')->new(store => Catmandu->store('search'));
+    };
 }
 
 1;
