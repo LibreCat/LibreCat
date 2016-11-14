@@ -13,6 +13,16 @@ has store => (
     # TODO: check if this is a Catmandu::Store
 );
 
+sub quick_search {
+    my ($self, $bag_name, $p) = @_;
+
+    return undef unless $bag_name;
+
+    $self->store->bag($bag_name)->search(
+        query => $p->{query} // '',
+    );
+}
+
 sub search {
     my ($self, $bag_name, $p) = @_;
 
@@ -32,9 +42,10 @@ sub search {
         facets => merge($p->{facets}, $self->_default_facets),
     );
 
-    for (qw(next_page previous_page)) {
+    foreach (qw(next_page last_page page previous_page pages_in_spread)) {
         $hits->{$_} = $hits->$_;
     }
+
     $hits;
 }
 
