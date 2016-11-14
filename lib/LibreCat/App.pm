@@ -11,7 +11,7 @@ use Catmandu::Sane;
 our $VERSION = '0.01';
 
 use Catmandu::Util;
-use LibreCat::User;
+use LibreCat;
 
 use Dancer qw(:syntax);
 
@@ -34,15 +34,6 @@ sub _authenticate {
     # Clean dirties .. in loginname
     $username =~ s{[^a-zA-Z0-9_]*}{}mg;
 
-    my $user_config = Catmandu->config->{user};
-
-    unless ($user_config) {
-        warning "No user_config found. Did you configure catmandu.local.yml?";
-        return undef;
-    }
-
-    my $users = LibreCat::User->new($user_config);
-
     my $auth = do {
         my $pkg = Catmandu::Util::require_package(
             h->config->{authentication}->{package});
@@ -50,7 +41,7 @@ sub _authenticate {
         $pkg->new($param);
     };
 
-    my $user = $users->find_by_username($username) || return;
+    my $user = LibreCat->user->find_by_username($username) || return;
     $auth->authenticate({username => $username, password => $password})
         || return;
 
