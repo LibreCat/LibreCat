@@ -28,7 +28,6 @@ requires 'Catmandu::DBI', '>=0.0510';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::XML';
 requires 'Catmandu::ArXiv';
-requires 'Catmandu::Inspire';
 requires 'Catmandu::EuropePMC';
 requires 'Catmandu::Importer::getJSON';
 requires 'Catmandu::Identifier', '>=0.05';

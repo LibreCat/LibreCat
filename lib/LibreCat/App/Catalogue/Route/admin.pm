@@ -11,7 +11,6 @@ use Catmandu::Util qw(trim);
 use App::bmkpasswd qw(mkpasswd);
 use Dancer ':syntax';
 use LibreCat::App::Helper;
-use LibreCat::App::Catalogue::Controller::Importer;
 use Dancer::Plugin::Auth::Tiny;
 use Syntax::Keyword::Junction 'any' => {-as => 'any_of'};
 
@@ -134,20 +133,8 @@ Input is person id. Returns warning if person is already in the database.
 =cut
 
     get '/account/import' => needs role => 'super_admin' => sub {
-        my $id = trim params->{id};
-
-        my $person_in_db = h->researcher->get($id);
-        if ($person_in_db) {
-            template 'admin/account',
-                {error => "There is already an account with ID $id."};
-        }
-        else {
-            my $p = LibreCat::App::Catalogue::Controller::Importer->new(
-                id     => $id,
-                source => 'bis',
-            )->fetch;
-            template 'admin/forms/edit_account', $p;
-        }
+        # todo: was Bielefeld specific....
+        template 'admin/account';
     };
 
     get '/project' => needs role => 'super_admin' => sub {

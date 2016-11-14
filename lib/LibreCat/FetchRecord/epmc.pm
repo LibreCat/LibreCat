@@ -16,7 +16,6 @@ sub fetch {
     my $data = Catmandu->importer(
         'EuropePMC',
         query => $id,
-        fix   => [join_path('fixes', 'epmc_mapping.fix')],
     )->first;
 
     my $fixer = $self->create_fixer('epmc_mapping.fix');

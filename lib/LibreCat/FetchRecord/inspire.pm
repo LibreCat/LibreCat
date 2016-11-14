@@ -13,9 +13,8 @@ sub fetch {
     $self->log->debug("requesting $id from inspire");
 
     my $data = Catmandu->importer(
-        'Inspire',
-        id  => $id,
-        fix => [join_path('fixes', 'inspire_mapping.fix')],
+        'getJSON',
+        from => "http://inspirehep.net/record/$id?of=recjson",
     )->first;
 
     my $fixer = $self->create_fixer('inspire_mapping.fix');

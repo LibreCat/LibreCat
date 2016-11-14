@@ -1,7 +1,6 @@
 [% path = request.path %]
 [% backend = path.match('librecat') ? 1 : 0 %]
 [% lang = session.lang %]
-[% lf = h.config.locale.$lang %]
 
 [% INCLUDE header.tt %]
 
@@ -24,7 +23,7 @@
 	          <option value="crossref" selected="selected">[% h.loc("add_new.ids.doi") %]</option>
 	          <option value="epmc">[% h.loc("add_new.ids.pmid") %]</option>
 	          <option value="arxiv">[% h.loc("add_new.ids.arxiv") %]</option>
-	         <!-- <option value="inspire">[% h.loc("add_new.ids.inspire") %]</option> -->
+	         <option value="inspire">[% h.loc("add_new.ids.inspire") %]</option>
 	        </select>
 	      </div>
 	      <input type="hidden" id="input_source" name="source">
