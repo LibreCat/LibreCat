@@ -260,6 +260,9 @@ publication:
         - type: integer
           minimum: 0
       description: "Publication identifier"
+    _version:
+      type: integer
+      minimum: 0
     type:
       enum:
         - original
@@ -831,6 +834,9 @@ researcher:
         - type: integer
           minimum: 0
       description: "Researcher identifier"
+    _version:
+      type: integer
+      minimum: 0
     account_status:
       enum: ["active","inactive"]
       description: "Account status"
@@ -1031,6 +1037,9 @@ department:
         - type: integer
           minimum: 0
       description: "Department identifier"
+    _version:
+      type: integer
+      minimum: 0
     display:
       type: string
       description: "Displayed name"
@@ -1078,6 +1087,9 @@ project:
       type: string
       #pattern: "^P[0-9]+$"
       description: "Project identifier"
+    _version:
+      type: integer
+      minimum: 0
     name:
       type: string
       minLength: 1
@@ -1222,6 +1234,9 @@ research_group:
       type: string
       #pattern: "^RG[0-9]+$"
       description: "Research group identifier"
+    _version:
+      type: integer
+      minimum: 0
     name:
       type: string
       minLength: 1
