@@ -1,3 +1,10 @@
+package main;
+
+use Catmandu::Sane;
+use Test::More;
+use Test::Exception;
+use LibreCat load => (layer_paths => [qw(t/layer)]);
+
 package LibreCat::Hook::foo;
 
 use Moo;
@@ -24,14 +31,10 @@ sub fix {
 
 package main;
 
-use strict;
-use warnings FATAL => 'all';
+use Catmandu::Sane;
 use Test::More;
 use Test::Exception;
-
-use Path::Tiny;
-use lib path(__FILE__)->parent->parent->child('lib')->stringify;
-use LibreCat qw(:load);
+use LibreCat load => (layer_paths => [qw(t/layer)]);
 
 my $pkg;
 
