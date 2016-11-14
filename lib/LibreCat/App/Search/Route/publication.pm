@@ -62,7 +62,6 @@ Search API to (data) publications.
 get qr{/(data|publication)/*} => sub {
     my ($bag) = splat;
     my $p = h->extract_params();
-    #$p->{facets} = h->default_facets();
     my $sort_style = h->get_sort_style($p->{sort} || '', $p->{style} || '');
     $p->{sort} = $sort_style->{sort};
 
@@ -122,9 +121,7 @@ get qr{/embed/*} => sub {
         $p  = $pq->{full_query};
     }
     push @{$p->{q}}, ("status=public");
-    #$p->{facets} = h->default_facets();
 
-    # override default facets
     $p->{facets}->{author}->{terms}->{size} = 100;
     $p->{facets}->{editor}->{terms}->{size} = 100;
 
