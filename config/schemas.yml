@@ -169,9 +169,14 @@ publication:
             content_type:
                 type: string
                 description: "MIME Type"
-            creator:
-                type: string
-                description: "User name"
+            creator_id:
+                oneOf:
+                    - type: string
+                      #pattern: "^[0-9]+$"
+                      minLength: 1
+                    - type: integer
+                      minimum: 0
+                description: "File creator id"
             date_created:
                 type: string
                 format: date-time
@@ -188,7 +193,7 @@ publication:
                 oneOf:
                   - type: string
                   - type: integer
-                description: "Persistent File Id"
+                description: "Persistent file id"
             file_name:
                 oneOf:
                   - type: string
