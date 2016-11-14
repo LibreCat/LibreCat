@@ -42,7 +42,6 @@ Performs search for admin.
     get '/admin' => needs role => 'super_admin' => sub {
 
         my $p = h->extract_params();
-        #$p->{facets} = h->default_facets();
 
         push @{$p->{q}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
@@ -80,8 +79,6 @@ Performs search for similar titles, admin only
         unless ($p->{q} and ref $p->{q} eq "ARRAY" and $p->{q}->[0]) {
             return redirect '/librecat';
         }
-
-        #$p->{facets} = h->default_facets();
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
@@ -147,7 +144,6 @@ Performs search for reviewer.
         my $dep_query = "department=" . params->{department_id};
         push @{$p->{q}}, $dep_query;
 
-        #$p->{facets} = h->default_facets();
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -201,7 +197,6 @@ Performs search for reviewer.
         my $dep_query = "project=" . params->{project_id};
         push @{$p->{q}}, $dep_query;
 
-        #$p->{facets} = h->default_facets();
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -248,7 +243,6 @@ Performs search for data manager.
         push @{$p->{q}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
-        #$p->{facets} = h->default_facets();
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -313,7 +307,6 @@ publications.
         push @{$p->{q}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
-        #$p->{facets} = h->default_facets;
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '', $id);
         $p->{sort} = $sort_style->{sort_backend};
@@ -358,7 +351,6 @@ Performs search for user.
         push @{$p->{q}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
-        #$p->{facets} = h->default_facets();
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
@@ -404,7 +396,6 @@ Performs search for user.
         push @{$p->{q}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
-        #$p->{facets} = h->default_facets();
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
