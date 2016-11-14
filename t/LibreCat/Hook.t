@@ -1,3 +1,10 @@
+package main;
+
+use Catmandu::Sane;
+use Test::More;
+use Test::Exception;
+use LibreCat load => (layer_paths => [qw(t/layer)]);
+
 package LibreCat::Hook::foo;
 
 use Moo;
