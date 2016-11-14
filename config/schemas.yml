@@ -312,10 +312,6 @@ publication:
       type: string
       format: date-time
       description: "Record creation date"
-    date_submitted:
-      type: string
-      format: date-time
-      description: "?not in use?"
     date_updated:
       type: string
       format: date-time
@@ -1013,11 +1009,11 @@ researcher:
     date_created:
       type: string
       format: date-time
-      description: "The record creation date"
+      description: "The user creation date"
     date_updated:
       type: string
       format: date-time
-      description: "The record's last modification date"
+      description: "The user last modification date"
 
   required: ["_id","account_status","account_type","first_name","last_name","full_name"]
   additionalProperties: true
@@ -1048,6 +1044,14 @@ department:
     name:
       type: string
       description: "Department name"
+    date_created:
+      type: string
+      format: date-time
+      description: "Department creation date"
+    date_updated:
+      type: string
+      format: date-time
+      description: "Department last update date"
     tree:
       type: array
       items:
@@ -1118,11 +1122,11 @@ project:
     date_created:
       type: string
       format: date-time
-      description: "The record creation date"
+      description: "The project creation date"
     date_updated:
       type: string
       format: date-time
-      description: "The record's last modification date"
+      description: "The project last modification date"
     affiliation:
       type: string
       description: "Project's affiliation"
@@ -1237,11 +1241,11 @@ research_group:
     date_created:
       type: string
       format: date-time
-      description: "The research group's ending date"
+      description: "The research group creation date"
     date_updated:
       type: string
       format: date-time
-      description: "The record's last modification date"
+      description: "The research group last modification date"
     department:
       type: array
       items:
