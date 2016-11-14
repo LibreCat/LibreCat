@@ -1,10 +1,9 @@
-use strict;
-use warnings FATAL => 'all';
-use Test::More;
-use Test::Exception;
+use Catmandu::Sane;
 use Catmandu::Store::Hash;
 use LibreCat::Search;
-use Data::Dumper;
+use LibreCat load => (layer_paths => [qw(t/layer)]);
+use Test::More;
+use Test::Exception;
 
 my $pkg;
 

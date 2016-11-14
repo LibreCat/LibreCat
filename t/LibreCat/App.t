@@ -1,6 +1,4 @@
 use Catmandu::Sane;
-use Path::Tiny;
-use lib path(__FILE__)->parent->parent->parent->child('lib')->stringify;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 use Test::More;
 use Dancer::Test;
