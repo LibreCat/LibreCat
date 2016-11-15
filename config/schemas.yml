@@ -260,6 +260,9 @@ publication:
         - type: integer
           minimum: 0
       description: "Publication identifier"
+    _version:
+      type: integer
+      minimum: 0
     type:
       enum:
         - original
@@ -312,10 +315,6 @@ publication:
       type: string
       format: date-time
       description: "Record creation date"
-    date_submitted:
-      type: string
-      format: date-time
-      description: "?not in use?"
     date_updated:
       type: string
       format: date-time
@@ -835,6 +834,9 @@ researcher:
         - type: integer
           minimum: 0
       description: "Researcher identifier"
+    _version:
+      type: integer
+      minimum: 0
     account_status:
       enum: ["active","inactive"]
       description: "Account status"
@@ -1013,11 +1015,11 @@ researcher:
     date_created:
       type: string
       format: date-time
-      description: "The record creation date"
+      description: "The user creation date"
     date_updated:
       type: string
       format: date-time
-      description: "The record's last modification date"
+      description: "The user last modification date"
 
   required: ["_id","account_status","account_type","first_name","last_name","full_name"]
   additionalProperties: true
@@ -1035,6 +1037,9 @@ department:
         - type: integer
           minimum: 0
       description: "Department identifier"
+    _version:
+      type: integer
+      minimum: 0
     display:
       type: string
       description: "Displayed name"
@@ -1048,6 +1053,14 @@ department:
     name:
       type: string
       description: "Department name"
+    date_created:
+      type: string
+      format: date-time
+      description: "Department creation date"
+    date_updated:
+      type: string
+      format: date-time
+      description: "Department last update date"
     tree:
       type: array
       items:
@@ -1074,6 +1087,9 @@ project:
       type: string
       #pattern: "^P[0-9]+$"
       description: "Project identifier"
+    _version:
+      type: integer
+      minimum: 0
     name:
       type: string
       minLength: 1
@@ -1118,11 +1134,11 @@ project:
     date_created:
       type: string
       format: date-time
-      description: "The record creation date"
+      description: "The project creation date"
     date_updated:
       type: string
       format: date-time
-      description: "The record's last modification date"
+      description: "The project last modification date"
     affiliation:
       type: string
       description: "Project's affiliation"
@@ -1218,6 +1234,9 @@ research_group:
       type: string
       #pattern: "^RG[0-9]+$"
       description: "Research group identifier"
+    _version:
+      type: integer
+      minimum: 0
     name:
       type: string
       minLength: 1
@@ -1237,11 +1256,11 @@ research_group:
     date_created:
       type: string
       format: date-time
-      description: "The research group's ending date"
+      description: "The research group creation date"
     date_updated:
       type: string
       format: date-time
-      description: "The record's last modification date"
+      description: "The research group last modification date"
     department:
       type: array
       items:
