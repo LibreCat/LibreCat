@@ -84,22 +84,22 @@
         <a href="#licenses" data-target="#cc_0" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span>[% h.loc("forms.${type}.field.license.cc_license.cc_0.name") %]</a><br />
         <div id="cc_0" class="collapse reuse-license">
           <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_0.legal_code_url") %]" target="_blank"><img src="/images/cc0.png" alt="CC-0" /></a><br />
-          [% h.loc("forms.$type.field.license.cc_license.license_deed") %] <a href="[% h.loc("forms.$type.field.license.cc_license.cc_0.deed_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_0.deed_url") %]</a><br />
-          <a href="[% h.loc("forms.$type.field.license.cc_license.cc_0.legal_code_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_0.legal_code_url") %]</a>
+          [% h.loc("forms.${type}.field.license.cc_license.license_deed") %] <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_0.deed_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_0.deed_url") %]</a><br />
+          <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_0.legal_code_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_0.legal_code_url") %]</a>
         </div>
 
         <a href="#licenses" data-target="#cc_by" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span>[% h.loc("forms.${type}.field.license.cc_license.cc_by.name") %]</a><br />
         <div id="cc_by" class="collapse reuse-license">
           <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_by.legal_code_url") %]" target="_blank"><img src="/images/cc_by.png" alt="CC-BY" /></a><br />
-          [% h.loc("forms.$type.field.license.cc_license.license_deed") %] <a href="[% h.loc("forms.$type.field.license.cc_license.cc_by.deed_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_by.deed_url") %]</a><br />
-          <a href="[% h.loc("forms.$type.field.license.cc_license.cc_by.legal_code_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_by.legal_code_url") %]</a>
+          [% h.loc("forms.${type}.field.license.cc_license.license_deed") %] <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_by.deed_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_by.deed_url") %]</a><br />
+          <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_by.legal_code_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_by.legal_code_url") %]</a>
         </div>
 
         <a href="#licenses" data-target="#cc_by_sa" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span>[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.name") %]</a><br />
         <div id="cc_by_sa" class="collapse reuse-license">
           <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.legal_code_url") %]" target="_blank"><img src="/images/cc_by_sa.png" alt="CC-BY-SA" /></a><br />
-          [% h.loc("forms.$type.field.license.cc_license.license_deed") %] <a href="[% h.loc("forms.$type.field.license.cc_license.cc_by_sa.deed_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.deed_url") %]</a><br />
-          <a href="[% h.loc("forms.$type.field.license.cc_license.cc_by_sa.legal_code_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.legal_code_url") %]</a>
+          [% h.loc("forms.${type}.field.license.cc_license.license_deed") %] <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.deed_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.deed_url") %]</a><br />
+          <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.legal_code_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.legal_code_url") %]</a>
         </div>
         {% END %}
         </div>
