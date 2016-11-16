@@ -12,9 +12,10 @@ default: &filestore_settings
 api:
     buffer_size: 8192
     access:
+        # Which ip-ranges can access the file api (not for end-users)
         ip_ranges:
             - 127.0.0.1
-            - 10.*.*.*
+            - 10.0.0.0/8
 
 uploader:
     package: 'LibreCat::Worker::FileUploader'

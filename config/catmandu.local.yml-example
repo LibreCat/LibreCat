@@ -2,8 +2,11 @@ default_lang: en
 
 host: "http://localhost:5001"
 
-thesis:
-    urn_prefix: 'urn:thesis-'
+# Specity the ipranges which can download (local) files
+ip_range:
+    - 157.193.0.0/16
+    - 127.0.0.1
+    - 10.0.0.0/8
 
 store:
   builtin_users:

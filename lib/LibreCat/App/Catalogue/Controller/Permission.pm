@@ -76,7 +76,7 @@ sub can_download {
     if ($access eq 'open_access') {
         return (1, $file_name);
     }
-    elsif ($access eq 'local' && $ip =~ /$ip_range/) {
+    elsif ($access eq 'local' && h->within_ip_range($ip,$ip_range)) {
         return (1, $file_name);
     }
     elsif ($access eq 'closed') {
@@ -89,7 +89,6 @@ sub can_download {
     else {
         return (0, '');
     }
-
 }
 
 package LibreCat::App::Catalogue::Controller::Permission;

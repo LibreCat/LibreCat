@@ -13,6 +13,7 @@ use JSON::MaybeXS qw(encode_json);
 use LibreCat;
 use LibreCat::I18N;
 use Log::Log4perl ();
+use NetAddr::IP::Lite;
 use Moo;
 
 sub log {
@@ -105,6 +106,21 @@ sub department {
 
 sub research_group {
     state $bag = Catmandu->store('search')->bag('research_group');
+}
+
+sub within_ip_range {
+    my ($self, $ip, $range) = @_;
+
+    $range = [] unless defined $range;
+    $range = [ $range ] unless is_array_ref($range);
+
+    my $needle = NetAddr::IP::Lite->new($ip);
+
+    for my $haystack (@$range) {
+        return 1 if $needle->within( NetAddr::IP::Lite->new($haystack) );
+    }
+
+    return undef;
 }
 
 sub string_array {

@@ -274,7 +274,7 @@ get qr{/download/(\d+)/(\d+)} => sub {
 
     unless ($ok) {
         status 403;
-        return template 'websites/403', {path => request->path};
+        return template '403', {path => request->path};
     }
 
     if (my $file = _file_exists($id, $file_name)) {
@@ -282,7 +282,7 @@ get qr{/download/(\d+)/(\d+)} => sub {
     }
     else {
         status 404;
-        template 'websites/error',
+        template 'error',
             {message => "The file does not exist anymore. We're sorry."};
     }
 };

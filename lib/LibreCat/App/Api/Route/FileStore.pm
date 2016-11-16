@@ -38,12 +38,7 @@ sub ip_match {
     my $access    = h->config->{filestore}->{api}->{access} // {};
     my $ip_ranges = $access->{ip_ranges} // [];
 
-    for my $range (@$ip_ranges) {
-        $range =~ s{\*}{\\w+}g;
-        return 1 if ($ip =~ /^$range$/);
-    }
-
-    return 0;
+    h->within_ip_range($ip,$ip_ranges);
 }
 
 sub do_error {

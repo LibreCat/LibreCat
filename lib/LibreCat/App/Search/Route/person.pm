@@ -77,7 +77,7 @@ get
         if (!$hits->{total}) {
             status '404';
 
-            #template 'websites/404', {path => request->path};
+            #template '404', {path => request->path};
         }
         else {
             my $person = $hits->first;
