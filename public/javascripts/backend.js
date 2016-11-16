@@ -298,7 +298,7 @@ function link_person(element){
                                 }
 
                                 if(rows == ""){
-                                        table = "<p>Several possible matches for <em>" + firstname + " " + lastname + "</em> were found in the staff directory (PEVZ). Click on the number (Person ID) to view the person\'s profile in the PEVZ. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p>";
+                                        table = "<p>Several possible matches for <em>" + firstname + " " + lastname + "</em> were found in the staff directory. Click on the number (Person ID) to view the person\'s profile in the directory. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p>";
                                 }
                                 else{
                                         table += rows + "</table>";
@@ -354,7 +354,7 @@ function link_person(element){
                                 var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
                                 container.html('');
                                 container_title.html('');
-                                container.append('<p class="has-error">No matching entry in staff directory (PEVZ) found. Please check, if first and last name of the author are entered correctly. You can omit letters (e.g. just enter the last name, or the last name and first letter of first name).</p>');
+                                container.append('<p class="has-error">No matching entry in staff directory found. Please check, if first and last name of the author are entered correctly. You can omit letters (e.g. just enter the last name, or the last name and first letter of first name).</p>');
                                 container_title.append(title);
                                 $('#' + type + 'link_person_modal').modal("show");
                                 $('#' + type + 'idm_intern_' + lineId).prop("checked", false);
