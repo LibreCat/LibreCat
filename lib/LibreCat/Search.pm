@@ -19,7 +19,7 @@ sub quick_search {
     return undef unless $bag_name;
 
     $self->store->bag($bag_name)->search(
-        query => $p->{query} // '',
+        query => $p->{q} // '',
     );
 }
 
