@@ -408,7 +408,7 @@ sub get_person {
         $hits = LibreCat->searcher->search('researcher', {q => ["login=$_[1]"]})
             if !$hits->{total};
     }
-    return $hits->{hits}->[0] if @{$hits->{hits}};
+    return $hits->{hits}->[0] if $hits->{total};
     if (my $user = LibreCat->user->get($_[1]) || LibreCat->user->find_by_username($_[1])) {
         return $user;
     }
