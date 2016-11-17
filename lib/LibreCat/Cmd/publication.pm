@@ -5,6 +5,7 @@ use Catmandu;
 use LibreCat::App::Helper;
 use LibreCat::Validator::Publication;
 use LibreCat::App::Catalogue::Controller::File;
+use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -278,6 +279,7 @@ sub _fetch {
         croak "failed to load LibreCat::FetchRecord::$source";
     }
 
+    $id = path($id)->slurp_utf8 if -r $id;
     my $perl = $pkg->new->fetch($id);
 
     my $exporter = Catmandu->exporter('YAML');
