@@ -2,8 +2,8 @@ package LibreCat::Cmd::user;
 
 use Catmandu::Sane;
 use LibreCat::App::Helper;
-use App::bmkpasswd qw(mkpasswd);
 use LibreCat::Validator::Researcher;
+use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -17,6 +17,7 @@ librecat user [options] add <FILE>
 librecat user [options] get <id>
 librecat user [options] delete <id>
 librecat user [options] valid <FILE>
+librecat user [options] passwd <id>
 
 E.g.
 
@@ -33,7 +34,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|export|get|add|delete|valid/;
+    my $commands = qr/list|export|get|add|delete|valid|passwd/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -64,6 +65,9 @@ sub command {
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
+    }
+    elsif ($cmd eq 'passwd') {
+        return $self->_passwd(@$args);
     }
 }
 
@@ -215,6 +219,50 @@ sub _valid {
     return $ret == 0;
 }
 
+sub _passwd {
+    my ($seld, $id) = @_;
+
+    croak "usage: $0 get <id>" unless defined($id);
+
+    my $data = LibreCat::App::Helper::Helpers->new->get_person($id);
+
+    my $name = $data->{full_name};
+    my $make_external = undef;
+
+    unless ($data->{account_type} eq 'external') {
+        print "The account of `$name' isn't external\n";
+        print "Do you want convert it to an external account? [y/N]";
+        my $answer = <STDIN>; chop($answer);
+        $make_external = 1 if ($answer =~ /^[yY]$/);
+    }
+
+    print "Password: ";
+    system('/bin/stty', '-echo');
+    my $password1 = <STDIN> ; chop($password1);
+    system('/bin/stty', 'echo');
+
+    print "\nRepeat password: ";
+    system('/bin/stty', '-echo');
+    my $password2 = <STDIN> ; chop($password2);
+    system('/bin/stty', 'echo');
+
+    unless ($password1 eq $password2) {
+        print STDERR "Passwords don't match\n";
+        return 2;
+    }
+
+    $data->{password} = mkpasswd($password2);
+
+    my $helper = LibreCat::App::Helper::Helpers->new;
+    $data = $helper->store_record('researcher', $data);
+
+    my $index = $helper->researcher;
+    $index->add($data);
+    $index->commit;
+
+    return 0;
+}
+
 1;
 
 __END__
@@ -233,5 +281,6 @@ LibreCat::Cmd::user - manage librecat users
     librecat user get <id>
     librecat user delete <id>
     librecat user valid <FILE>
+    librecat user [options] passwd <id>
 
 =cut

@@ -11,7 +11,6 @@ email: einstein@physics.com
 first_name: Albert
 full_name: Einstein, Albert
 last_name: Einstein
-combined_hits: 1
 ...
 ---
 _id: '4321'
@@ -19,12 +18,11 @@ account_status: active
 account_type: external
 password: secret
 login: test
-super_admin: 1
+super_admin: 0
 department:
 - _id: 9996
 email: test.user@physics.com
 first_name: Test
 full_name: User, Test
 last_name: User
-combined_hits: 1
 ...

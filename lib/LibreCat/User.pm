@@ -48,4 +48,3 @@ sub find_by_username {
 1;
 
 __END__
-
