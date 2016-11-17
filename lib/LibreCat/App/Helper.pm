@@ -512,7 +512,8 @@ sub store_record {
                 $rec);
         }
 
-        if (my $user_id = session->{personNumber}) {
+        # TODO this is also called from outside web context
+        if (config->{session} and my $user_id = session->{personNumber}) {
             $rec->{user_id} = $user_id;
         }
     }
