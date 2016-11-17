@@ -398,6 +398,9 @@ sub get_publication {
     $_[0]->publication->get($_[1]);
 }
 
+# TODO clean this up
+# db should have an index on username
+# so that we can just use get and find_by_username
 sub get_person {
     my $hits;
     if ($_[1]) {
@@ -405,8 +408,11 @@ sub get_person {
         $hits = LibreCat->searcher->search('researcher', {q => ["login=$_[1]"]})
             if !$hits->{total};
     }
-    return $hits->{hits}->[0] if $hits->{hits};
-    return {error => "something went wrong"} if !$hits->{hits};
+    return $hits->{hits}->[0] if @{$hits->{hits}};
+    if (my $user = LibreCat->user->get($_[1]) || LibreCat->user->find_by_username($_[1])) {
+        return $user;
+    }
+    return +{error => "something went wrong"};
 }
 
 sub get_project {
