@@ -11,10 +11,11 @@ use Data::Dumper;
 
 my $pkg;
 BEGIN {
-    unless (-d 't/tmp/sitemap') {
+    if (-d 't/tmp/sitemap') {
+        unlink glob "'t/tmp/sitemap/*.*'";
+    } else {
         mkdir 't/tmp/sitemap';
     }
-    unlink glob "'t/tmp/sitemap/*.*'";
 
     $pkg = 'LibreCat::Cmd::sitemap';
     use_ok $pkg;
@@ -48,7 +49,8 @@ require_ok $pkg;
 }
 
 END {
-    rmdir 't/tmp/sitemap'
+    unlink glob "'t/tmp/sitemap/*.*'";
+    rmdir 't/tmp/sitemap';
 }
 
 done_testing;
