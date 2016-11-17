@@ -1,6 +1,9 @@
 time_format: "%Y-%m-%dT%H:%M:%SZ"
 
-ip_range: '8.8'
+# Specity the ipranges which can download (local) files
+ip_range:
+    - 127.0.0.1
+    - 10.0.0.0/8
 
 urn_prefix: 'urn:whatever-'
 
@@ -11,7 +14,7 @@ thesis:
   urn_prefix: 'urn:thesis-'
 
 # Use this link to lookup a personId in a staff directory. Required
-# to differentiate between different users with the same name
+# to differentiate between different users with the same name (homonym,namesake)
 person:
   staffdirectory: "https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId="
 

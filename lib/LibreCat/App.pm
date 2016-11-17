@@ -35,13 +35,31 @@ sub _authenticate {
     $username =~ s{[^a-zA-Z0-9_]*}{}mg;
 
     my $auth = do {
-        my $pkg = Catmandu::Util::require_package(
-            h->config->{authentication}->{package});
-        my $param = h->config->{authentication}->{options} // {};
-        $pkg->new($param);
+        my $package_name = Catmandu->config->{authentication}->{package};
+        my $package_opts = Catmandu->config->{authentication}->{options} // {};
+
+        if ($package_name) {
+            my $pkg = Catmandu::Util::require_package($package_name);
+
+            if ($pkg) {
+                $pkg->new($package_opts);
+            }
+            else {
+                h->log->error("failed to create a new $package_name authenticator");
+                undef;
+            }
+        }
+        else {
+            h->log->error('No authentication.package defined');
+            h->log->error('Did you create a catmandu.local.yml?');
+            undef;
+        }
     };
 
+    return unless $auth;
+
     my $user = LibreCat->user->find_by_username($username) || return;
+
     $auth->authenticate({username => $username, password => $password})
         || return;
 

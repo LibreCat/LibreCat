@@ -96,8 +96,6 @@ field_order:
   file_upload:
     - external_file
     - dropzone
-    - ddc
-    - urn
     - license
   supplementary_fields:
     - article_type

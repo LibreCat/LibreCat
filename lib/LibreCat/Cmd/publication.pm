@@ -20,6 +20,7 @@ librecat publication [options] delete <id>
 librecat publication [options] purge <id>
 librecat publication [options] valid <FILE>
 librecat publication [options] files [<id>]|[<cql-query>]|[<FILE>]
+librecat publication [options] fetch <source> <id>
 librecat publication [options] embargo ['update']
 
 E.g.
@@ -56,7 +57,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|export|get|add|delete|purge|valid|files|embargo$/;
+    my $commands = qr/list|export|get|add|delete|purge|valid|files|fetch|embargo$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -91,6 +92,9 @@ sub command {
     }
     elsif ($cmd eq 'files') {
         return $self->_files(@$args);
+    }
+    elsif ($cmd eq 'fetch') {
+        return $self->_fetch(@$args);
     }
     elsif ($cmd eq 'embargo') {
         return $self->_embargo(@$args);
@@ -260,6 +264,27 @@ sub _valid {
     );
 
     return $ret == 0;
+}
+
+sub _fetch {
+    my ($self, $source, $id) = @_;
+
+    croak "need a source (axiv,crossref,epmc,...)" unless defined($source);
+    croak "need an identifier" unless defined($id);
+
+    my $pkg = Catmandu::Util::require_package($source, 'LibreCat::FetchRecord');
+
+    unless ($pkg) {
+        croak "failed to load LibreCat::FetchRecord::$source";
+    }
+
+    my $perl = $pkg->new->fetch($id);
+
+    my $exporter = Catmandu->exporter('YAML');
+    $exporter->add($perl);
+    $exporter->commit;
+
+    return 0;
 }
 
 sub _embargo {
@@ -486,6 +511,7 @@ LibreCat::Cmd::publication - manage librecat publications
     librecat publication purge <id>
     librecat publication valid <FILE>
     librecat publication files [<id>]|[<cql-query>]|[<FILE>]
+    librecat publication fetch <source> <id>
     librecat publication embargo ['update']
 
 =cut

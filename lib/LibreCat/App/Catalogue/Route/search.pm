@@ -43,6 +43,7 @@ Performs search for admin.
 
         my $p = h->extract_params();
 
+        push @{$p->{q}}, "status<>deleted";
         push @{$p->{q}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
@@ -79,6 +80,8 @@ Performs search for similar titles, admin only
         unless ($p->{q} and ref $p->{q} eq "ARRAY" and $p->{q}->[0]) {
             return redirect '/librecat';
         }
+
+        push @{$p->{q}}, "status<>deleted";
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
@@ -141,6 +144,8 @@ Performs search for reviewer.
                 "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
         }
 
+        push @{$p->{q}}, "status<>deleted";
+
         my $dep_query = "department=" . params->{department_id};
         push @{$p->{q}}, $dep_query;
 
@@ -194,6 +199,8 @@ Performs search for reviewer.
                 "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}";
         }
 
+        push @{$p->{q}}, "status<>deleted";
+
         my $dep_query = "project=" . params->{project_id};
         push @{$p->{q}}, $dep_query;
 
@@ -238,6 +245,7 @@ Performs search for data manager.
         my $id        = session 'personNumber';
         my $account   = h->get_person(session->{user});
         my $dep_query = "department=" . params->{department_id};
+
         push @{$p->{q}}, "(type=research_data OR type=data)";
         push @{$p->{q}}, $dep_query;
         push @{$p->{q}}, "status=public"
@@ -274,7 +282,9 @@ according to first delegate ID.
         my $account = h->get_person(session->{user});
         if (params->{fmt} and params->{fmt} eq "autocomplete") {
             my $p = h->extract_params();
+
             push @{$p->{q}}, "status=public";
+
             if ($account->{delegate}) {
                 my $delegate_search = "";
                 foreach my $delegate (@{$account->{delegate}}) {
@@ -347,7 +357,6 @@ Performs search for user.
 
         push @{$p->{q}}, "(person=$id OR creator=$id)";
         push @{$p->{q}}, "type<>research_data";
-        push @{$p->{q}}, "type<>dara";
         push @{$p->{q}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
