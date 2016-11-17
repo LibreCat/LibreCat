@@ -70,15 +70,15 @@ post '/librecat/record/import' => needs login => sub {
         # E.g. create a hooks to change the default fields
         state $hook = h->hook('import-new-' . $source);
 
-
         $pub = _fetch_record( $p->{id} // $data, $source );
 
         $hook->fix_before($pub);
 
         unless ($pub) {
             my $id = $p->{id} // '<data>';
+            h->log->error("import failed for $id in $source");
             return template "backend/add_new",
-            {error =>  "No record found with ID $id in $source."};
+                    {error =>  "No record found with ID $id in $source."};
         }
 
         $pub->{_id} = h->new_record('publication');
@@ -100,6 +100,7 @@ post '/librecat/record/import' => needs login => sub {
     }
     catch {
         my $id = $p->{id} // '<data>';
+        h->log->error("import failed: $_");
         return template "backend/add_new",
             {error =>
                 "Could not import ID $id from source $p->{source}."};
