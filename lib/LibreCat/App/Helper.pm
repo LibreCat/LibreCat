@@ -491,6 +491,10 @@ sub store_record {
             LibreCat::App::Catalogue::Controller::Material::update_related_material(
                 $rec);
         }
+
+        if (my $user_id = session->{personNumber}) {
+            $rec->{user_id} = $user_id;
+        }
     }
 
     # memoize fixes

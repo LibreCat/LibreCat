@@ -308,6 +308,14 @@ publication:
           type: string
           description: "Creator user name"
       description: "Creator"
+    user_id:
+      oneOf:
+        - type: string
+          #pattern: "^[0-9]+$"
+          minLength: 1
+        - type: integer
+          minimum: 0
+      description: "Id of the user that saved this version"
     date_created:
       type: string
       format: date-time
