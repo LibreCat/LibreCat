@@ -512,9 +512,10 @@ sub store_record {
                 $rec);
         }
 
-        # TODO this is also called from outside web context
-        if (config->{session} and my $user_id = session->{personNumber}) {
-            $rec->{user_id} = $user_id;
+        unless ($rec->{user_id}) {
+            # Edit by a user via the command line?
+            my $super_id = $self->config->{store}->{builtin_users}->{options}->{init_data}->[0]->{_id};
+            $rec->{user_id} = $super_id;
         }
     }
 
