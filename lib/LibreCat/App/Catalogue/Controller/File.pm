@@ -395,6 +395,7 @@ sub _update_file_metadata {
         }
     }
 
+    delete $fi->{embargo} unless $fi->{emnbargo} && $fi->{emnbargo} =~ /^\d{4}-\d{2}-\d{2}$/;
     $fi->{open_access} = $fi->{access_level} eq 'open_access' ? 1 : 0;
     $fi->{date_created} = h->now unless $fi->{date_created};
     $fi->{date_updated} = h->now;
