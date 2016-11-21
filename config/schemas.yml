@@ -473,7 +473,7 @@ publication:
         - type: integer
       description: "Flag of APC co-financed by DFG"
     status:
-      enum: ["new","submitted","public","returned","private"]
+      enum: ["new","submitted","public","returned","private", "deleted"]
       description: "Record status"
     locked:
       oneOf:
