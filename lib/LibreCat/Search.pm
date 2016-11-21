@@ -39,7 +39,7 @@ sub search {
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
         limit => $p->{limit} // Catmandu->config->{default_page_size},
         start => $p->{start} // 0,
-        facets => merge($p->{facets}, $self->_default_facets),
+        facets => merge($p->{facets}, Catmandu->config->{default_facets}),
     );
 
     foreach (qw(next_page last_page page previous_page pages_in_spread)) {
@@ -47,11 +47,6 @@ sub search {
     }
 
     $hits;
-}
-
-
-sub _default_facets {
-    state $facets = Catmandu->config->{default_facets};
 }
 
 sub _sru_sort {
