@@ -531,7 +531,7 @@ search:
                 'exact': true
                 '<>': true
                 'any' : true
-              field: ['type','type_old']
+              field: ['type']
               sort: true
               values: "see the list of publication types"
             documenttype: *type
