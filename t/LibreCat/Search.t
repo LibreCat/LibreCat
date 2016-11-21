@@ -51,9 +51,6 @@ $hits = $searcher->search('publication', {});
 ok $hits->first, "ok for empty parameter";
 is $hits->first->{_id}, "999999999", "correct id";
 
-is ref $searcher->_default_facets, 'HASH', "default facets return hash";
-ok $searcher->_default_facets->{author}, "has author facet";
-
 is $searcher->_sru_sort(""), "", "empty sort argument";
 is $searcher->_sru_sort("title.asc"), "title,,1", "title asc";
 is $searcher->_sru_sort("year.desc"), "year,,0", "year desc";
