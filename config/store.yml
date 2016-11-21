@@ -1051,6 +1051,7 @@ search:
           alternative_id: {type: string, analyzer: tag}
           defense_date: {type: date, index: no}
           locked: {type: byte}
+          user_id: {type: string, index: no}
 
       researcher:
         include_in_all: false

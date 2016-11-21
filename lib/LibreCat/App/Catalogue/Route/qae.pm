@@ -43,6 +43,7 @@ post '/librecat/upload/qae/submit' => needs login => sub {
             department => $department || $person->{department},
             creator =>
                 {id => session->{personNumber}, login => session->{user}},
+            user_id => session->{personNumber} ,
             file => [
                 {
                     # Required for managing the upload

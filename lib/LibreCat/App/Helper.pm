@@ -522,6 +522,7 @@ sub store_record {
     # memoize fixes
     state $fixes = {};
     my $fix = $fixes->{$bag} //= $self->create_fixer("update_$bag.fix");
+    $self->log->debug("fixing usig update_$bag.fix");
     $fix->fix($rec);
 
     # clean all the fields that are not part of the JSON schema
@@ -531,12 +532,16 @@ sub store_record {
     if ($validator_pkg) {
         my @white_list = $validator_pkg->new->white_list;
         for my $key (keys %$rec) {
-            delete $rec->{$key} unless grep(/^$key$/, @white_list);
+            unless (grep(/^$key$/, @white_list)) {
+                $self->log->debug("deleting invalid key: $key");
+                delete $rec->{$key}
+            }
         }
     }
 
     my $bagname = "backup_$bag";
-
+    $self->log->debug("storing record in $bagname...");
+    $self->log->debug(Dancer::to_json($rec));
     $self->$bagname->add($rec);
 }
 
@@ -544,6 +549,8 @@ sub index_record {
     my ($self, $bag, $rec) = @_;
 
     #compare version! through _version or through date_updated
+    $self->log->debug("indexing record in $bag...");
+    $self->log->debug(Dancer::to_json($rec));
     $self->$bag->add($rec);
     $self->$bag->commit;
     $rec;
