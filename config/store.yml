@@ -488,7 +488,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-                'exact': {field: 'creator.id'}
+                'exact': {field: 'creator.id.exact'}
               field: 'creator.id'
             person:
               op:
@@ -496,7 +496,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-                'exact': {field: ['author.full_name.exact', 'author.id', 'editor.full_name.exact', 'editor.id', 'translator.full_name.exact', 'translator.id']}
+                'exact': {field: ['author.full_name.exact', 'author.id.exact', 'editor.full_name.exact', 'editor.id.exact', 'translator.full_name.exact', 'translator.id.exact']}
               field: ['author.full_name', 'author.id', 'editor.full_name', 'editor.id', 'translator.full_name', 'translator.id']
             supervisor:
               op:
@@ -514,7 +514,7 @@ search:
                 'any': true
                 'all': true
                 '>': true
-              field: ['department._id', 'department.tree._id']
+              field: ['department._id.exact', 'department.tree._id.exact']
               values: 'see the list of affiliations'
               description: 'will also find any subunits of the given organizationial unit'
             language:
@@ -873,7 +873,7 @@ search:
       project:
         include_in_all: false
         properties:
-          _id: {type: string, include_in_all: true}
+          _id: {type: string, include_in_all: true, index: not_analyzed}
           name:
             type: multi_field
             fields:
@@ -906,7 +906,7 @@ search:
           cooperator: {type: string, analyzer: tag, include_in_all: true}
           department:
             properties:
-              _id: {type: string, analyzer: tag}
+              _id: {type: string, index: not_analyzed}
               name:
                 type: multi_field
                 fields:
@@ -914,7 +914,7 @@ search:
                   exact: {type: string, analyzer: tag}
           owner: &personField2
             properties:
-              id: {type: string, analyzer: tag}
+              id: {type: string, index: not_analyzed}
               name:
                 properties:
                   full_name:
@@ -929,7 +929,7 @@ search:
       publication:
         include_in_all: false
         properties:
-          _id: {type: string, include_in_all: true}
+          _id: {type: string, include_in_all: true, index: not_analyzed}
           title: &titleField
             type: multi_field
             fields:
@@ -939,7 +939,7 @@ search:
           author: &personField
             type: object
             properties:
-              id: {type: string, include_in_all: true}
+              id: {type: string, include_in_all: true, index: not_analyzed}
               full_name:
                 type: multi_field
                 fields:
@@ -950,7 +950,7 @@ search:
           supervisor: *personField
           creator:
             properties:
-              id: {type: string, analyzer: tag}
+              id: {type: string, index: not_analyzed}
               login: {type: string, analyzer: tag}
           type: {type: string, analyzer: tag}
           type_old: {type: string, analyzer: tag}
@@ -1001,17 +1001,17 @@ search:
               exact: {type: string, analyzer: tag}
           department:
             properties:
-              _id: {type: string, analyzer: tag}
+              _id: {type: string, index: not_analyzed}
               tree:
                 properties:
-                  _id: {type: string, analyzer: tag}
+                  _id: {type: string, index: not_analyzed}
           proj: {type: byte}
           metrics:
             properties:
               timesCited: {type: integer}
           project:
             properties:
-              _id: {type: string, analyzer: tag}
+              _id: {type: string, index: not_analyzed}
           publication:
             type: multi_field
             fields:
@@ -1056,7 +1056,7 @@ search:
       researcher:
         include_in_all: false
         properties:
-          _id: {type: string, include_in_all: true}
+          _id: {type: string, include_in_all: true, index: not_analyzed}
           publication_hits: {type: integer}
           research_hits: {type: integer}
           combined_hits: {type: integer}
@@ -1082,21 +1082,21 @@ search:
           photo: {type: string, index: not_analyzed}
           department:
             properties:
-              _id: {type: string, analyzer: tag}
+              _id: {type: string, index: not_analyzed}
           reviewer:
             properties:
-              _id: {type: string, analyzer: tag}
+              _id: {type: string, index: not_analyzed}
           project_reviewer:
             properties:
-              _id: {type: string, analyzer: tag}
+              _id: {type: string, index: not_analyzed}
           access:
             properties:
-              id: {type: string, anylzer: tag}
+              id: {type: string, index: not_analyzed}
               name: {type: string}
           delegate: {type: string, analyzer: tag}
           data_manager:
             properties:
-              _id: {type: string, anylzer: tag}
+              _id: {type: string, index: not_analyzed}
               name: {type: string}
           date_updated: {type: string, analyzer: datestring}
           account_status: {type: string, analyzer: tag}
@@ -1118,7 +1118,7 @@ search:
       department:
         include_in_all: false
         properties:
-          _id: {type: string, include_in_all: true}
+          _id: {type: string, include_in_all: true, index: not_analyzed}
           date_created: {type: date, format: date_time_no_millis}
           date_updated: {type: date, format: date_time_no_millis}
           name:
@@ -1133,7 +1133,7 @@ search:
               exact:  {type: string, analyzer: tag}
           tree:
             properties:
-              _id: {type: string, analyzer: tag}
+              _id: {type: string, index: not_analyzed}
           layer: {type: string, analyzer: tag}
           inactive: {type: byte}
           display:
@@ -1145,7 +1145,7 @@ search:
       research_group:
         include_in_all: false
         properties:
-          _id: {type: string, include_in_all: true}
+          _id: {type: string, include_in_all: true, index: not_analyzed}
           name:
             type: multi_field
             fields:
@@ -1164,7 +1164,7 @@ search:
               exact: {type: string, analyzer: tag}
           department:
             properties:
-              id: {type: string, analyzer: tag}
+              id: {type: string, index: not_analyzed}
               name:
                 type: multi_field
                 fields:
