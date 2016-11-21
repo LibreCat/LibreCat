@@ -709,15 +709,7 @@ search:
                 '=': true
                 '<>': true
                 'exact': true
-              field: last_name
-            oldlastname:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-                'exact': true
-              field: old_last_name
+              field: ["last_name","old_last_name"]
             firstname:
               op:
                 'any': true
@@ -725,14 +717,7 @@ search:
                 '=': true
                 '<>': true
                 'exact': true
-              field: first_name
-            oldfirstname:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-              field: old_first_name
+              field: ["first_name","old_first_name"]
             id:
               op:
                 '=': true
