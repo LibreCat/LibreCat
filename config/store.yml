@@ -1037,6 +1037,7 @@ search:
           defense_date: {type: date, index: no}
           locked: {type: byte}
           user_id: {type: string, index: no}
+          citation: {index: not_analyzed, type: object}
 
       researcher:
         include_in_all: false

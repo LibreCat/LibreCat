@@ -177,7 +177,7 @@ sub _add {
                 $rec->{_id} //= $helper->new_record('publication');
                 $helper->store_record('publication', $rec, $skip_citation);
                 print "added $rec->{_id}\n";
-                return 0;
+                return 1;
             }
             else {
                 print STDERR join("\n",
