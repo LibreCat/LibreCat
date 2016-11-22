@@ -43,6 +43,7 @@ sub can_edit {
         $cql .= " AND locked<>1";
     }
 
+    h->log->debug("can_edit cql: $cql");
     my $hits = h->publication->search(cql_query => $cql, limit => 1);
 
     ($hits->{total} == 1) ? return 1 : return 0;
