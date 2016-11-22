@@ -512,6 +512,7 @@ sub store_record {
                 $rec);
         }
 
+        # Set for every update the user-id of the last editor
         unless ($rec->{user_id}) {
             # Edit by a user via the command line?
             my $super_id = $self->config->{store}->{builtin_users}->{options}->{init_data}->[0]->{_id};
