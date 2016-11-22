@@ -2,6 +2,7 @@ package LibreCat::Cmd::publication;
 
 use Catmandu::Sane;
 use Catmandu;
+use Catmandu::Util;
 use LibreCat::App::Helper;
 use LibreCat::Validator::Publication;
 use LibreCat::App::Catalogue::Controller::File;
@@ -309,11 +310,14 @@ sub _embargo {
         return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
 
         for my $file (@{$item->{file}}) {
+            my $embargo = Catmandu::Util::trim($file->{embargo});
+            next unless (length($embargo) && $embargo le $now); 
             printf "%-9d\t%-9d\t%-12.12s\t%-14.14s\t%-15.15s\t%s\n",
                 $item->{_id}, $file->{file_id},
                 $update ? 'open_access' : $file->{access_level},
                 $update ? 0             : $file->{request_a_copy},
-                $update ? 'NA' : $file->{embargo} // 'NA', $file->{file_name};
+                $update ? 'NA' : $embargo // 'NA',
+                $file->{file_name};
         }
     };
 
