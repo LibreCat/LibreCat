@@ -169,7 +169,6 @@
 </ul>
 [%- END -%]
 
-[% UNLESS bag == "person" %]
 <h3>[% h.loc("facets.export") %][% UNLESS backend OR request.path.match('marked') OR request.path.match('embed') OR qp.ftyp %] / [% h.loc("facets.embed") %][% END %]</h3>
 
 <ul class="nav nav-tabs nav-stacked ul4">
@@ -180,36 +179,37 @@
     <div class="facettecollapse">
     <ul id="export_[% tabmodus %][% menu %]" class="collapse">
       <li><a href="#modal_[% tabmodus %]" data-key="fmt" data-value="rtf" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.rtf") %]</a></li>
-      <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="bibtex" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
+      <li><a href="/export[% qp.fmt='bibtex'; request.uri_for(path, qp) %]" class="facet_[% tabmodus %]" data-key="fmt" data-value="bibtex" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
       <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="ris" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.ris") %]</a></li>
       <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="json" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.json") %]</a></li>
       <li><a href="#" class="facet_[% tabmodus %]" data-key="fmt" data-value="yaml" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.yaml") %]</a></li>
     </ul>
     </div>
   </li>
-  [% UNLESS backend OR request.path.match('marked') OR request.path.match('embed') OR qp.ftyp %]
+  [%- UNLESS backend OR request.path.match('marked') OR request.path.match('embed') OR qp.ftyp %]
   <li>
     <button data-toggle="collapse" data-target="#embed_[% tabmodus %][% menu %]" id="id_button_embed_[% tabmodus %][% menu %]" class="btn-link">
       <span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.embed") %]
     </button>
     <div class="facettecollapse">
     <ul id="embed_[% tabmodus %][% menu %]" class="collapse">
-    [% FOREACH emb IN ['js', 'iframe', 'link'] %]
-    <li><span class="fa fa-fw fa-arrow-circle-o-down"></span><strong>[% emb %]</strong>
-      <textarea class="form-control embed-facet_[% tabmodus %]" name="[% emb %]text" rows="2" id="id_[% emb %]text_[% tabmodus %][% menu %]" onclick="this.focus();this.select()" readonly="readonly" style="cursor:pointer;"></textarea>
-    </li>
-    [% END %]
+    [%- FOREACH emb IN ['js', 'iframe', 'link'] %]
+        <li><span class="fa fa-fw fa-arrow-circle-o-down"></span><strong>[% emb %]</strong>
+        <span class="input-group">
+          <input id="id_[% emb %]text" class="form-control" readonly="1">
+          <span class="input-group-btn">
+            <button class="btn btn-default" data-clipboard-target="#id_[% emb %]text">
+              <span class="fa fa-clipboard"></span>
+            </button>
+          </span>
+        </span>
+        </li>
+    [%- END %]
     </ul>
     </div>
   </li>
-  [% END %]
+  [%- END %]
 </ul>
-[% END %] <!-- unless bag person -->
-
-[% IF bag == 'data' %]
-<p class="margin-top1"><a href="http://service.re3data.org/repository/r3d100010750"><img src="/images/logo_re3data_big.png" alt="[% h.loc("footer.re3data_alt") %]" title="[% h.loc("footer.re3data_title") %]" style="width:100%;max-width:280px;" /></a></p>
-[% END %]
-
 
 <!-- Modal -->
 <div id="modal_[% tabmodus %]" class="modal">
@@ -229,9 +229,13 @@
   </div>
 </div>
 
+<script src="javascripts/clipboard.min.js">
+</script>
 <script>
+var clipboard = new Clipboard('.btn');
+
 $('.rtfmodal').click(function(){
-  $('#[% bag == "data" ? "myRdModal" : "myModal" %]').modal('hide');
+  $('myModal').modal('hide');
 });
 var path = '[% request.path %]',
 searchParams = [% qp.json %];
@@ -250,9 +254,9 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ embed_link +'&ftyp=js"><\/script><noscript><a href="'+ embed_link +'" target="_blank">[% h.loc("facets.embed_linktext") %]</a></noscript></div>';
     var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="' + embed_link + '&ftyp=iframe"></iframe>';
     var emb_link = '<a href="'+ window.location.href +'">[% h.loc("facets.embed_linktext") %]</a>';
-    $('#id_jstext_[% tabmodus %][% menu %]').val(emb_js);
-    $('#id_iframetext_[% tabmodus %][% menu %]').val(emb_iframe);
-    $('#id_linktext_[% tabmodus %][% menu %]').val(emb_link);
+    $('#id_jstext').val(emb_js);
+    $('#id_iframetext').val(emb_iframe);
+    $('#id_linktext').val(emb_link);
 });
 
 $('a.facet_[% tabmodus %]').click(function() {
