@@ -390,13 +390,6 @@ sub _update_file_metadata {
         }
     }
 
-    if (Catmandu::Util::is_string($fi->{embargo}) && length($fi->{embargo})) {
-        unless ($fi->{embargo} =~ /^\d{4}-\d{2}-\d{2}$/) {
-            h->log->debug("...deleting embargo from file (invalid)");
-            delete $fi->{embargo};
-        }
-    }
-
     $fi->{open_access}  = $fi->{access_level} eq 'open_access' ? 1 : 0;
     $fi->{date_created} = h->now unless $fi->{date_created};
     $fi->{date_updated} = h->now;
