@@ -37,9 +37,9 @@
 	[%- END %]
       </ul>
       <ul class="nav navbar-nav navbar-right">
-	<li class="helpme helpme-md" data-placement="left" title="[% h.loc("help.change_language") %]">
-	  <a href="/librecat/person/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]"><span class="glyphicon glyphicon-flag"></span><span class="hidden-sm">[% h.loc("header.lang") %]</span><span class="hidden-md hidden-xs hidden-lg">[% h.loc("header.lang_short") %]</span></a>
-	</li>
+	    <li class="helpme helpme-md" data-placement="left" title="[% h.loc("help.change_language") %]">
+	      <a href="[% IF session.user %]/librecat/person[% END %]/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]"><span class="glyphicon glyphicon-flag"></span><span class="hidden-sm">[% h.loc("header.lang") %]</span><span class="hidden-md hidden-xs hidden-lg">[% h.loc("header.lang_short") %]</span></a>
+	    </li>
     [%- IF session.user %]
 	<li class="dropdown"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% h.loc("help.user_settings") %]" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> [% h.loc("header.settings") %] <span class="glyphicon glyphicon-chevron-down"></span></a>
 	  <div class="dropdown-menu" style="width:550px">
@@ -48,9 +48,9 @@
 	</li>
     [%- END %]
     [%- IF session.user %]
-	<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% h.loc("main_page.logout") %]</span></a></li>
+	  <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% h.loc("main_page.logout") %]</span></a></li>
     [%- ELSE %]
-    <li><a href="/login"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% h.loc("main_page.login") %]</span></a></li>
+      <li><a href="/login"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% h.loc("main_page.login") %]</span></a></li>
     [%- END %]
     </ul>
     </div><!-- /.navbar-collapse -->
