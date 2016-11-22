@@ -2,6 +2,7 @@ package LibreCat::Cmd::publication;
 
 use Catmandu::Sane;
 use Catmandu;
+use Catmandu::Util;
 use LibreCat::App::Helper;
 use LibreCat::Validator::Publication;
 use LibreCat::App::Catalogue::Controller::File;
@@ -45,7 +46,7 @@ librecat publication embargo
 librecat publication embargo update > /tmp/update.txt
 
 # Update the file metadata
-librecat publication file /tmp/update.txt
+librecat publication files /tmp/update.txt
 
 EOF
 }
@@ -308,12 +309,25 @@ sub _embargo {
         my ($item) = @_;
         return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
 
+        my $process = 0;
         for my $file (@{$item->{file}}) {
+            my $embargo = Catmandu::Util::trim($file->{embargo});
+
+            if ($update && length($embargo) && $embargo le $now) {
+                $process = 1;
+            }
+            else {
+                $process = 0;
+            }
+
+            # Show __all__ file files and indicate which ones should
+            # be switched to open_access. 
             printf "%-9d\t%-9d\t%-12.12s\t%-14.14s\t%-15.15s\t%s\n",
                 $item->{_id}, $file->{file_id},
-                $update ? 'open_access' : $file->{access_level},
-                $update ? 0             : $file->{request_a_copy},
-                $update ? 'NA' : $file->{embargo} // 'NA', $file->{file_name};
+                $process ? 'open_access' : $file->{access_level},
+                $process ? 0             : $file->{request_a_copy},
+                $process ? 'NA' : $embargo // 'NA',
+                $file->{file_name};
         }
     };
 
