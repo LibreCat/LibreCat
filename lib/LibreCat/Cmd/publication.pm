@@ -81,8 +81,8 @@ sub command {
         return $self->_get(@$args);
     }
     elsif ($cmd eq 'add') {
-        my $make_citation = $opts->{'no-citation'} ? 1 : 0;
-        return $self->_add($make_citation, @$args);
+        my $skip_citation = $opts->{'no-citation'} ? 1 : 0;
+        return $self->_add($skip_citation, @$args);
     }
     elsif ($cmd eq 'delete') {
         return $self->_delete(@$args);
@@ -160,7 +160,7 @@ sub _get {
 }
 
 sub _add {
-    my ($self, $make_citation, $file) = @_;
+    my ($self, $skip_citation, $file) = @_;
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
@@ -175,9 +175,9 @@ sub _add {
 
             if ($validator->is_valid($rec)) {
                 $rec->{_id} //= $helper->new_record('publication');
-                $helper->store_record('publication', $rec, $make_citation);
+                $helper->store_record('publication', $rec, $skip_citation);
                 print "added $rec->{_id}\n";
-                return 1;
+                return 0;
             }
             else {
                 print STDERR join("\n",
@@ -322,7 +322,7 @@ sub _embargo {
             }
 
             # Show __all__ file files and indicate which ones should
-            # be switched to open_access. 
+            # be switched to open_access.
             printf "%-9d\t%-9d\t%-12.12s\t%-14.14s\t%-15.15s\t%s\n",
                 $item->{_id}, $file->{file_id},
                 $process ? 'open_access' : $file->{access_level},
