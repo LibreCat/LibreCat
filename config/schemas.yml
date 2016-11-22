@@ -733,7 +733,7 @@ publication:
             minimum: 0
       description: "Flag agree with the copyright and license"
     cc_license:
-      enum: ["cc_0","cc_by","cc_by_sa"]
+      type: string
       description: "Files copyright"
     conference:
       type: object
