@@ -528,7 +528,7 @@ sub store_record {
     $fix->fix($rec);
 
     my $cite_fix = Catmandu::Fix->new(fixes => ["add_citation()"]);
-    unless ($skip_citation) {
+    if ($bag eq 'publication' && !$skip_citation) {
         $cite_fix->fix($rec);
     }
 
