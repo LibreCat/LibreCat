@@ -85,12 +85,9 @@ ajax '/get_alias/:id/:alias' => sub {
 
 ajax '/get_project' => sub {
     my $q;
-    @$q = map {
-        $_ =~ tr/äöüß/aous/;
-        $_ .= '*';
-    } split(' ', lc params->{term});
+    @$q = map { $_ . "*" } split(' ', params->{term});
 
-    my $hits = LibreCat->searcher->search('project', {q => $q, limit => 100});
+    my $hits = LibreCat->searcher->search('project', {q => $q, limit => 10});
 
     if ($hits->{total}) {
         my $map;
@@ -107,17 +104,13 @@ ajax '/get_project' => sub {
 =head2 AJAX /get_department
 
 =cut
-
 ajax '/get_department' => sub {
     my $q;
-    @$q = map {
-        $_ =~ tr/äöüß/aous/;
-        $_ .= '*';
-    } split(' ', lc params->{term});
+    @$q = map { $_ . "*" } split(' ', params->{term});
 
     push @$q, "inactive<>1";
 
-    my $hits = LibreCat->searcher->search('department', {q => $q, limit => 100});
+    my $hits = LibreCat->searcher->search('department', {q => $q, limit => 10});
 
     if ($hits->{total}) {
         my $map;
@@ -136,12 +129,9 @@ ajax '/get_department' => sub {
 
 ajax '/get_research_group' => sub {
     my $q;
-    @$q = map {
-        $_ =~ tr/äöüß/aous/;
-        $_ .= '*';
-    } split(' ', lc params->{term});
+    @$q = map { $_ . "*" } split(' ', params->{term});
 
-    my $hits = LibreCat->searcher->search('research_group', {q => $q, limit => 100});
+    my $hits = LibreCat->searcher->search('research_group', {q => $q, limit => 10});
 
     if ($hits->{total}) {
         my $map;
