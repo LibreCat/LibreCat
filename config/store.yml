@@ -842,11 +842,11 @@ search:
           default:
             type: custom
             tokenizer: standard
-            filter: [standard, lowercase, asciifolding]
+            filter: [standard, lowercase, my_asciifolding]
           name:
             type: custom
             tokenizer: keyword
-            filter: [lowercase, asciifolding]
+            filter: [lowercase, my_asciifolding]
           tag:
             type: custom
             tokenizer: keyword
@@ -854,6 +854,10 @@ search:
           datestring:
             type: custom
             tokenizer: keyword
+        filter:
+            my_asciifolding:
+                type: asciifolding
+                preserve_original: true
     index_mappings:
       project:
         include_in_all: false
@@ -875,7 +879,7 @@ search:
             type: multi_field
             fields:
               funder: {type: string, include_in_all: true}
-              exact: {type: string, analyzer: tag}
+              exact: {type: string, analyzer: name}
           funded: {type: string, analyzer: tag}
           sc39: {type: string, anlyzer: tag}
           start_date:
@@ -888,7 +892,7 @@ search:
             fields:
               end_date: {type: string, analyzer: datestring}
               exact: {type: string, analyzer: tag}
-          cooperator: {type: string, analyzer: tag, include_in_all: true}
+          cooperator: {type: string, analyzer: name, include_in_all: true}
           department:
             properties:
               _id: {type: string, index: not_analyzed}
@@ -1055,10 +1059,10 @@ search:
             fields:
               old_full_name: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
-          last_name: {type: string}
-          old_last_name: {type: string}
-          first_name: {type: string}
-          old_first_name: {type: string}
+          last_name: {type: string, analyzer: name}
+          old_last_name: {type: string, analyzer: name}
+          first_name: {type: string, analyzer: name}
+          old_first_name: {type: string, analyzer: name}
           idm_title: {type: string}
           former: {type: byte}
           nonexist: {type: byte}
