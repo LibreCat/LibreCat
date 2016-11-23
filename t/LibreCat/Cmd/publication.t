@@ -1,18 +1,10 @@
 use Catmandu::Sane;
-use Path::Tiny;
-use lib path(__FILE__)->parent->parent->child('lib')->stringify;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
-
-use strict;
-use warnings;
-use Catmandu::Sane;
 use Catmandu;
-
+use LibreCat load => (layer_paths => [qw(t/layer)]);
 use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
 use App::Cmd::Tester;
-use Cpanel::JSON::XS;
 
 my $pkg;
 
@@ -48,14 +40,14 @@ Catmandu->store('search')->bag('publication')->drop;
 {
     my $result = test_app(qq|LibreCat::CLI| =>
             ['publication', 'add', 't/records/invalid-publication.yml']);
-    ok $result->error, 'ok threw an exception';
+    ok $result->error, 'add threw an exception';
 }
 
 {
     my $result = test_app(qq|LibreCat::CLI| =>
             ['publication', 'add', 't/records/valid-publication.yml']);
 
-    ok !$result->error, 'ok threw no exception';
+    ok !$result->error, 'add threw no exception';
 
     my $output = $result->stdout;
     ok $output , 'got an output';
@@ -66,8 +58,7 @@ Catmandu->store('search')->bag('publication')->drop;
 {
     my $result
         = test_app(qq|LibreCat::CLI| => ['publication', 'get', '999999999']);
-
-    ok !$result->error, 'ok threw no exception';
+    ok !$result->error, 'get threw no exception';
 
     my $output = $result->stdout;
 
@@ -85,12 +76,33 @@ Catmandu->store('search')->bag('publication')->drop;
     my $result = test_app(
         qq|LibreCat::CLI| => ['publication', 'purge', '999999999']);
 
-    ok !$result->error, 'ok threw no exception';
+    ok !$result->error, 'purge threw no exception';
 
     my $output = $result->stdout;
     ok $output , 'got an output';
 
     like $output , qr/^purged 999999999/, 'purged 999999999';
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| =>
+            ['publication', '--no-citation','add', 't/records/valid-publication.yml']);
+
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    ok $output , 'got an output';
+
+    like $output , qr/^added 999999999/, 'added 999999999';
+
+    $result
+        = test_app(qq|LibreCat::CLI| => ['publication', 'get', '999999999']);
+    $output = $result->stdout;
+
+    like $output, qr/Valid Test Publication/, "got an ouput";
+    unlike $output, qr/citation/, "got no citation";
+    $result = test_app(
+        qq|LibreCat::CLI| => ['publication', 'purge', '999999999']);
 }
 
 {

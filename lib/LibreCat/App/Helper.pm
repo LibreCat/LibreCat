@@ -497,7 +497,7 @@ sub update_record {
 }
 
 sub store_record {
-    my ($self, $bag, $rec) = @_;
+    my ($self, $bag, $rec, $skip_citation) = @_;
 
     # don't know where to put it, should find better place to handle this
     # especially the async stuff
@@ -523,8 +523,14 @@ sub store_record {
     # memoize fixes
     state $fixes = {};
     my $fix = $fixes->{$bag} //= $self->create_fixer("update_$bag.fix");
-    $self->log->debug("fixing usig update_$bag.fix");
+    $self->log->debug("fixing using update_$bag.fix");
+
     $fix->fix($rec);
+
+    my $cite_fix = Catmandu::Fix->new(fixes => ["add_citation()"]);
+    if ($bag eq 'publication' && !$skip_citation) {
+        $cite_fix->fix($rec);
+    }
 
     # clean all the fields that are not part of the JSON schema
     state $validator_pkg = Catmandu::Util::require_package(ucfirst($bag),
