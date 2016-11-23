@@ -48,6 +48,7 @@ ajax '/ris/:id' => sub {
 ajax '/search_researcher' => sub {
     my $q;
     push @$q, params->{'term'};
+    h->log->debug("query for researcher: " . to_dumper($q));
     my $hits = LibreCat->searcher->search('researcher', {q => $q, limit => 100})->{hits};
     return to_json $hits;
 };

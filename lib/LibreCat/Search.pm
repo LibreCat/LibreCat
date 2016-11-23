@@ -3,9 +3,12 @@ package LibreCat::Search;
 use Catmandu::Sane;
 use Catmandu::Util qw(trim :is);
 use Catmandu;
+use Dancer qw(:syntax);
 use Moo;
 use Hash::Merge::Simple qw(merge);
 use namespace::clean;
+
+with 'Catmandu::Logger';
 
 has store => (
     is => 'ro',
@@ -18,9 +21,10 @@ sub quick_search {
 
     return undef unless $bag_name;
 
-    $self->store->bag($bag_name)->search(
-        query => $p->{q} // '',
-    );
+    my %search_params = (query => $p->{q} // '');
+
+    $self->log->debug("executing $bag_name->search: " . to_dumper(\%search_params));
+    $self->store->bag($bag_name)->search(%search_params);
 }
 
 sub search {
@@ -31,16 +35,19 @@ sub search {
 
     $p->{q} = $self->_string_array($p->{q});
     $cql = join(' AND ', @{$p->{q}}) if $p->{q};
+
     my $store = $self->store;
     my $bag = $store->bag($bag_name);
-
-    my $hits = $bag->search(
+    my %search_params = (
         cql_query => $cql // '',
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
         limit => $p->{limit} // Catmandu->config->{default_page_size},
         start => $p->{start} // 0,
         facets => merge($p->{facets}, Catmandu->config->{default_facets}),
     );
+
+    $self->log->debug("executing $bag_name->search: " . to_dumper(\%search_params));
+    my $hits = $bag->search(%search_params);
 
     foreach (qw(next_page last_page page previous_page pages_in_spread)) {
         $hits->{$_} = $hits->$_;
