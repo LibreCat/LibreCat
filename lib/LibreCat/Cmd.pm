@@ -1,12 +1,23 @@
 package LibreCat::Cmd;
 
 use Catmandu::Sane;
+use I18N::Langinfo qw(langinfo CODESET);
+use Encode qw(decode);
 use namespace::clean;
 
 our $VERSION = '0.01';
 
 use parent 'App::Cmd::Command';
 
+# Internal required by App::Cmd;
+sub prepare {
+    my ($self, $app, @args) = @_;
+    my $codeset = langinfo(CODESET);
+    my @utf8_args = map { decode $codeset, $_ } @args;
+    $self->SUPER::prepare($app,@utf8_args);
+}
+
+# Internal required by App::Cmd;
 sub opt_spec {
     my ($class, $cli) = @_;
     (
@@ -15,6 +26,7 @@ sub opt_spec {
     );
 }
 
+# Internal required by App::Cmd;
 sub execute {
     my ($self, $opts, $args) = @_;
 
