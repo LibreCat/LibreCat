@@ -1114,13 +1114,8 @@ search:
           name:
             type: multi_field
             fields:
-              name: {type: string}
+              name: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
-          name_lc:
-            type: multi_field
-            fields:
-              name_lc: {type: string}
-              exact:  {type: string, analyzer: tag}
           tree:
             properties:
               _id: {type: string, index: not_analyzed}
@@ -1139,7 +1134,7 @@ search:
           name:
             type: multi_field
             fields:
-              name: {type: string}
+              name: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
           acronym: {type: string, analyzer: tag}
           start_date:
