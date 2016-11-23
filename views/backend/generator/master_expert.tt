@@ -68,7 +68,6 @@
   <h3>[% h.loc("forms.${type}.tab.file_upload") %]</h3>
   {% FOREACH key IN field_order.file_upload %}
     {% IF fields.file_upload.$key %}
-    {% key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
