@@ -153,10 +153,6 @@ function link_person(element){
             if(firstname.indexOf(" ") > -1){
                 narrowurl += 'firstname exact "' + firstname + '"';
             }
-            // if name contains [-äöüß], truncating won't work, so use literal search
-            else if(firstname.indexOf("-") > -1 || firstname.indexOf("\u00E4") > -1 || firstname.indexOf("\u00F6") > -1 || firstname.indexOf("\u00FC")> -1 || firstname.indexOf("\u00DF") > -1){
-                narrowurl += "firstname=" + firstname;
-            }
             else {
                 narrowurl += "firstname=" + firstname + "*";
             }
@@ -168,10 +164,6 @@ function link_person(element){
             // if name consists of more than one word, use any and ''
             if(lastname.indexOf(" ") > -1){
                 narrowurl += 'lastname exact "' + lastname + '"';
-            }
-            // if name contains [-äöüß], truncating won't work, so use literal search
-            else if(lastname.indexOf("-") > -1 || lastname.indexOf("\u00E4") > -1 || lastname.indexOf("\u00F6") > -1 || lastname.indexOf("\u00FC") > -1 || lastname.indexOf("\u00DF") > -1){
-                narrowurl += "lastname=" + lastname;
             }
             else{
                 narrowurl += "lastname=*" + lastname + "*";
