@@ -187,6 +187,8 @@ Checks if the user has the rights to update this record.
     post '/update' => needs login => sub {
         my $p = params;
 
+        h->log->debug("Params:" . to_dumper($p));
+
         unless ($p->{new_record}
             or p->can_edit($p->{_id}, session->{user}, session->{role}))
         {
