@@ -78,9 +78,11 @@ Searches the authority database. Prints the search form + result list.
 
     get '/account/search' => needs role => 'super_admin' => sub {
         my $p = params;
-
-        $p->{q} = h->string_array($p->{q});
-        my $hits = LibreCat->searcher->search('researcher', $p);
+        my %search_params = (
+          %$p , q => h->string_array("fullname=\"".$p->{q}."\"")
+        );
+        h->log->debug("query for researcher: " . to_dumper(\%search_params));
+        my $hits = LibreCat->searcher->search('researcher', \%search_params);
         template 'admin/account', $hits;
     };
 
