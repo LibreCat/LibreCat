@@ -523,11 +523,9 @@ sub store_record {
     # memoize fixes
     state $fixes = {};
     my $fix = $fixes->{$bag} //= $self->create_fixer("update_$bag.fix");
-    $self->log->debug("fixing using update_$bag.fix");
-
     $fix->fix($rec);
 
-    my $cite_fix = Catmandu::Fix->new(fixes => ["add_citation()"]);
+    state $cite_fix = Catmandu::Fix->new(fixes => ["add_citation()"]);
     if ($bag eq 'publication' && !$skip_citation) {
         $cite_fix->fix($rec);
     }
