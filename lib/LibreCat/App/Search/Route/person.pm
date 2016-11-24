@@ -20,9 +20,16 @@ List persons alphabetically
 get qr{/person/([a-z,A-Z])} => sub {
     my ($c) = splat;
 
-    my $hits = LibreCat->searcher->search('researcher',
-        {q => ["lastname=" . lc $c . "*"], start => 0, limit => 1000,});
+    my %search_params = (
+        q => ["lastname=" . lc $c . "*"],
+        start => 0,
+        limit => 1000
+    );
 
+    h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
+
+    my $hits = LibreCat->searcher->search('researcher', \%search_params);
+    
     my $result;
     @{$hits->{hits}} = map {
         my $rec = $_;
@@ -35,6 +42,7 @@ get qr{/person/([a-z,A-Z])} => sub {
 
     # override the total number since we deleted some entries
     $hits->{total} = scalar @{$hits->{hits}};
+
     template 'person/list', $hits;
 };
 
@@ -70,10 +78,14 @@ get
     $p->{sort}   = $sort_style->{sort};
     $p->{limit}  = h->config->{maximum_page_size};
 
+    h->log->debug("executing publication->search: " . to_dumper($p));
     my $hits = LibreCat->searcher->search('publication', $p);
 
     unless ($hits->total) {
-        $hits = LibreCat->searcher->search('researcher', {q => ["alias=$id"]});
+        my %search_params = (q => ["alias=$id"]);
+        h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
+
+        $hits = LibreCat->searcher->search('researcher', \%search_params);
         if (!$hits->{total}) {
             status '404';
 
@@ -91,6 +103,7 @@ get
     push @{$p->{q}}, ("type=research_data", "person=$id", "status=public");
     $p->{limit} = 1;
 
+    h->log->debug("executing publication->search: " . to_dumper($p));
     $hits->{researchhits} = LibreCat->searcher->search('publication', $p);
 
     $p->{limit}    = h->config->{maximum_page_size};
