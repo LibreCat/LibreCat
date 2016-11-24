@@ -2,7 +2,7 @@ _prefix:
   citation:
 
 # engine for citation generation
-# possible values are 'template' or 'csl' or 'none'
+# possible values are 'csl' or 'none'
 engine: none
 
 template:
@@ -12,9 +12,8 @@ csl:
   url: 'http://localhost:8085'
   default_style: apa
   styles:
-    - modern-language-association
-    - chicago-fullnote-bibliography
-    - american-medical-association
-    - angewandte-chemie
     - apa
+    - american-medical-association
+    - chicago-fullnote-bibliography
     - ieee
+    - modern-language-association

@@ -764,6 +764,8 @@ publication:
                 - type: string
                 - type: integer
       description: "Returned Record Ids"
+    citation:
+      type: object
 
   # A author|editor is required..can this be expressed in JSONSchema?
   required: ["_id","type","title","year","status"]

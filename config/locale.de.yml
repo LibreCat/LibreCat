@@ -237,7 +237,18 @@ facets:
     "publcount.desc": "Anzahl der Publikationen absteigend"
     "fullname.asc": "Alphabetisch aufsteigend"
     "fullname.desc": "Alphabetisch absteigend"
+citation:
+  apa: APA
+  american-medical-association: AMA
+  chicago-fullnote-bibliography: Chicago
+  ieee: IEEE
+  modern-language-association: MLA
 frontdoor:
+  publication: Zeitschriftentitel
+  volume: Band
+  Issue: Ausgabe
+  page: "Seite(n)"
+  article_number: Artikelnr.
   preview: "Vorschau"
   crumb_back: "Zur&uuml;ck"
   no_record: "Dieser Eintrag exisitert nicht oder wurde gel&ouml;scht"

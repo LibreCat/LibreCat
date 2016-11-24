@@ -237,7 +237,18 @@ facets:
     "publcount.desc": "Number of publications descending"
     "fullname.asc": "Alphabetically ascending"
     "fullname.desc": "Alphabetically descending"
+citation:
+  apa: APA
+  american-medical-association: AMA
+  chicago-fullnote-bibliography: Chicago
+  ieee: IEEE
+  modern-language-association: MLA
 frontdoor:
+  publication: Journal Title
+  volume: Volume
+  Issue: Issue
+  page: Page
+  article_number: Article no.
   preview: "Preview"
   crumb_back: "Back"
   no_record: "This record does not exist or was deleted"
