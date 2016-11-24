@@ -149,7 +149,7 @@ ajax '/get_research_group' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
     my @q = map { $_ . "*" } split(' ', params->{term});
 
-    my %search_params = (q => $q, limit => $limit, sort => 'name.asc');
+    my %search_params = (q => \@q, limit => $limit, sort => 'name.asc');
     h->log->debug("executing research_group->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('research_group', \%search_params);
