@@ -97,10 +97,10 @@ ajax '/get_alias/:id/:alias' => sub {
 =cut
 
 ajax '/get_project' => sub {
-    my $q;
-    @$q = map { $_ . "*" } split(' ', params->{term});
+    my $limit = length(params->{term}) ? 10 : 1000;
+    my @q = map { $_ . "*" } split(' ', params->{term});
 
-    my %search_params = (q => $q, limit => 10);
+    my %search_params = (q => \@q, limit => $limit, sort => 'name.asc');
     h->log->debug("executing project->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('project', \%search_params);
@@ -121,12 +121,11 @@ ajax '/get_project' => sub {
 
 =cut
 ajax '/get_department' => sub {
-    my $q;
-    @$q = map { $_ . "*" } split(' ', params->{term});
+    my $limit = length(params->{term}) ? 10 : 1000;
+    my @q     = map { $_ . "*" } split(' ', params->{term});
+    push @q, "inactive<>1";
 
-    push @$q, "inactive<>1";
-
-    my %search_params = (q => $q, limit => 10);
+    my %search_params = (q => \@q, limit => $limit, sort => 'display.asc');
     h->log->debug("executing department->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('department', \%search_params);
@@ -147,10 +146,10 @@ ajax '/get_department' => sub {
 =cut
 
 ajax '/get_research_group' => sub {
-    my $q;
-    @$q = map { $_ . "*" } split(' ', params->{term});
+    my $limit = length(params->{term}) ? 10 : 1000;
+    my @q = map { $_ . "*" } split(' ', params->{term});
 
-    my %search_params = (q => $q, limit => 10);
+    my %search_params = (q => $q, limit => $limit, sort => 'name.asc');
     h->log->debug("executing research_group->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('research_group', \%search_params);

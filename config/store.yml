@@ -765,6 +765,11 @@ search:
                 '<>': true
               field: '_all'
               description: "index with common fields..."
+            id:
+              op:
+                '=': true
+                '<>': true
+              field: _id
             name:
               op:
                 'any': true
@@ -802,6 +807,11 @@ search:
                 '=': true
                 '<>': true
               field: '_all'
+            id:
+              op:
+                '=': true
+                '<>': true
+              field: _id
             name:
               op:
                 'any': true
@@ -1124,7 +1134,7 @@ search:
           display:
             type: multi_field
             fields:
-              display: {type: string}
+              display: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
 
       research_group:
