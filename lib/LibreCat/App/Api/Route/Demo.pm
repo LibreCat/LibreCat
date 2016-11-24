@@ -99,6 +99,9 @@ sub do_file_upload {
 # Execute a worker to generate a thumbnail to the access repository
 sub do_create_thumbnail {
     my ($key, $filename) = @_;
+
+    return unless h->config->{filestore}->{accesss_thumbnailer};
+    
     my $thumbnailer_package
         = h->config->{filestore}->{accesss_thumbnailer}->{package};
     my $thumbnailer_options
