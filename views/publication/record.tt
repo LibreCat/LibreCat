@@ -60,10 +60,10 @@
   [%- END %]
 [%- END %]
 [%- IF h.config.citation.engine == 'csl' AND citation %][% display_citation = 1 %][% END %]
-[%- qp = request.params.hash %]
-[%- style = style || qp.style || 'default' %]
+[%- style = h.config.citation.csl.default_style %]
 
-<div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/publication/[% _id %]"><!-- outer row-->
+[% mypath = request.path.match('/publication') ? 'publication' : 'data' %]
+<div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/[% mypath %]/[% _id %]"><!-- outer row-->
   <div class="col-md-11 col-sm-12"><!-- outer col -->
     <div class="page-header" id="banner">
       [%- UNLESS _id %]

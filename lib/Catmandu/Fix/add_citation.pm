@@ -9,8 +9,8 @@ use Moo;
 sub fix {
     my ($self, $data) = @_;
 
-    unless (h->config->{citation}->{engine} eq 'none') {
-        state $citation_engine = LibreCat::Citation->new(all => 1);
+    if (h->config->{citation}->{engine} eq 'csl') {
+        my $citation_engine = LibreCat::Citation->new(all => 1);
 
         my $d = clone $data;
         $data->{citation} = $citation_engine->create($d);
