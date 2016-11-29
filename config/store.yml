@@ -514,7 +514,7 @@ search:
                 'any': true
                 'all': true
                 '>': true
-              field: ['department._id.exact', 'department.tree._id.exact']
+              field: ['department._id', 'department.tree._id']
               values: 'see the list of affiliations'
               description: 'will also find any subunits of the given organizationial unit'
             language:
