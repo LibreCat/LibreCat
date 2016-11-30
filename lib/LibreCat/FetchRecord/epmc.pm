@@ -1,8 +1,8 @@
 package LibreCat::FetchRecord::epmc;
 
 use Catmandu::Util qw(:io);
+use URL::Encode qw(url_decode);
 use Moo;
-use Dancer qw(:syntax);
 
 with 'LibreCat::FetchRecord';
 
@@ -14,8 +14,8 @@ sub fetch {
     $self->log->debug("requesting $id from epmc");
 
     my $data = Catmandu->importer(
-        'EuropePMC',
-        query => $id,
+        'getJSON',
+        from => url_decode sprintf("http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%s&format=json", $id),
     )->first;
 
     my $fixer = $self->create_fixer('epmc_mapping.fix');
