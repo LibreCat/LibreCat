@@ -24,7 +24,7 @@ sub list {
         state $io;
 
         unless (defined($io)) {
-            open($io, "find $root -mindepth 3 -maxdepth 4 -type d|");
+            open($io, "find -L $root -mindepth 3 -maxdepth 4 -type d|");
         }
 
         my $line = <$io>;

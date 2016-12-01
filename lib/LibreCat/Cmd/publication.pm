@@ -71,6 +71,8 @@ sub command {
         $self->usage_error("should be one of $commands");
     }
 
+    binmode(STDOUT, ":encoding(utf-8)");
+
     if ($cmd eq 'list') {
         return $self->_list(@$args);
     }
