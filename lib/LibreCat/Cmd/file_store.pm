@@ -122,6 +122,8 @@ sub command {
         }
     );
 
+    binmode(STDOUT, ":encoding(utf-8)");
+    
     if ($cmd eq 'list') {
         return $self->_list(@$args);
     }
