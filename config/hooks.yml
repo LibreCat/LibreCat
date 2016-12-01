@@ -45,6 +45,11 @@ hooks:
    before_fixes: []
    after_fixes: []
 
+  # Code that runs when importing a Quick and Easy publication
+  qae-new:
+   before_fixes: []
+   after_fixes: []
+
   # Code that runs when importing a new aXiv record
   import-new-arxiv:
    before_fixes: []
