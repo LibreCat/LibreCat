@@ -58,13 +58,7 @@ Performs search for admin.
         $hits->{user_settings} = $sort_style;
         $hits->{modus}         = "admin";
 
-        if ($p->{fmt} ne 'html') {
-            h->export_publication($hits, $p->{fmt});
-        }
-        else {
-            template "home", $hits;
-        }
-
+        template "home", $hits;
     };
 
 =head2 GET /admin/similar_search
@@ -116,6 +110,7 @@ Performs search for similar titles, admin only
         $hits->{modus}         = "admin";
 
         template "home", $hits;
+
     };
 
 =head2 GET /reviewer
@@ -162,12 +157,7 @@ Performs search for reviewer.
         $hits->{modus}         = "reviewer_" . params->{department_id};
         $hits->{department_id} = params->{department_id};
 
-        if ($p->{fmt} ne 'html') {
-            h->export_publication($hits, $p->{fmt});
-        }
-        else {
-            template "home", $hits;
-        }
+        template "home", $hits;
 
     };
 
@@ -217,12 +207,7 @@ Performs search for reviewer.
         $hits->{modus}         = "project_reviewer_" . params->{project_id};
         $hits->{project_id}    = params->{project_id};
 
-        if ($p->{fmt} ne 'html') {
-            h->export_publication($hits, $p->{fmt});
-        }
-        else {
-            template "home", $hits;
-        }
+        template "home", $hits;
 
         };
 
@@ -262,12 +247,7 @@ Performs search for data manager.
         $hits->{modus}         = "data_manager_" . params->{department_id};
         $hits->{department_id} = params->{department_id};
 
-        if ($p->{fmt} ne 'html') {
-            h->export_publication($hits, $p->{fmt});
-        }
-        else {
-            template "home", $hits;
-        }
+        template "home", $hits;
 
         };
 
@@ -334,12 +314,7 @@ publications.
         $hits->{modus}         = "delegate_" . $id;
         $hits->{delegate_id}   = $id;
 
-        if ($p->{fmt} ne 'html') {
-            h->export_publication($hits, $p->{fmt});
-        }
-        else {
-            template "home", $hits;
-        }
+        template "home", $hits;
 
     };
 
@@ -386,12 +361,7 @@ Performs search for user.
         $hits->{user_settings} = $sort_style;
         $hits->{modus}         = "user";
 
-        if ($p->{fmt} ne 'html') {
-            h->export_publication($hits, $p->{fmt});
-        }
-        else {
-            template "home", $hits;
-        }
+        template "home", $hits;
 
     };
 
@@ -429,12 +399,7 @@ Performs search for user.
         $hits->{user_settings} = $sort_style;
         $hits->{modus}         = "data";
 
-        if ($p->{fmt} ne 'html') {
-            h->export_publication($hits, $p->{fmt});
-        }
-        else {
-            template "home", $hits;
-        }
+        template "home", $hits;
 
     };
 };

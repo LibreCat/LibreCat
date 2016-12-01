@@ -375,6 +375,7 @@ add_new:
   drop_oa: "Option 3:<br />Ziehen Sie Ihren Open-Access-Volltext hier her"
   paste_bibtex: "Option 4:<br />F&uuml;gen Sie Ihren BibTex Eintrag hier ein"
   paste_bibtex_placeholder: "Bitte f&uuml;gen Sie nur jeweils einen Datensatz ein"
+  qae_title: "New Quick And Easy Publication - Will be edited by PUB-Team"
 forms:
   book:
     label: "Monographie"

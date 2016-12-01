@@ -376,6 +376,7 @@ add_new:
   drop_oa: "Option 3:<br />Drop your Open Access fulltext here"
   paste_bibtex: "Option 4:<br />Paste your BibTex record here"
   paste_bibtex_placeholder: "Please paste only one record at a time"
+  qae_title: "New Quick And Easy Publication - Will be edited by PUB-Team"
 forms:
   book:
     label: "Book"
