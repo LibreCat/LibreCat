@@ -162,10 +162,6 @@ sub extract_params {
     $p->{ftyp}  = $params->{ftyp}  if $params->{ftyp};
     $p->{enum}  = $params->{enum}  if $params->{enum};
 
-    if ($p->{ftyp} and $p->{ftyp} =~ /ajx|js|pln/ and !$p->{limit}) {
-        $p->{limit} = $self->config->{maximum_page_size};
-    }
-
     $p->{q} = array_uniq($self->string_array($params->{q}));
 
     my $cql = $params->{cql_query} ||= '';

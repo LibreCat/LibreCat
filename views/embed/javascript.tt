@@ -1,0 +1,12 @@
+<!-- BEGIN websites/index_publication_js.tt -->
+[% qp = request.params.hash %]
+document.write ('<ul[% IF qp.listyle %] style="[% qp.listyle %]"[% END %]>') ;
+[% FOREACH entry IN hits %]
+[% cite_string = entry.citation.$style %]
+[% cite_string.replace("'", "&apos;") %]
+document.write('<li>');
+document.write('[% cite_string %]<br />[% INCLUDE embed/links_js.tt %]');
+document.write('</li>');
+[% END %]
+document.write ('</ul>') ;
+<!-- END websites/index_publication_js.tt -->

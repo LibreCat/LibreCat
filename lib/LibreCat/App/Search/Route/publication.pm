@@ -15,7 +15,6 @@ use LibreCat::App::Helper;
 Splash page for :id.
 
 =cut
-
 get qr{/(data|publication)/(\d{1,})/*} => sub {
     my ($bag, $id) = splat;
 
@@ -47,7 +46,6 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 Search API to (data) publications.
 
 =cut
-
 get qr{/(data|publication)/*} => sub {
     my ($bag) = splat;
     my $p = h->extract_params();
@@ -64,23 +62,8 @@ get qr{/(data|publication)/*} => sub {
     $hits->{sort}          = $p->{sort};
     $hits->{user_settings} = $sort_style;
 
-   #elsif ($p->{embed} or ($p->{ftyp} and $p->{ftyp} eq "iframe")) {
-   #    my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
-   #    $hits->{lang}  = $lang;
-   #    $hits->{embed} = 1;
-   #    template "iframe", $hits;
-   #}
-   #else {
-   #my $template = 'publication/list';
-   #if ($p->{ftyp} and $p->{ftyp} =~ /js/) {
-   #$template .= "_" . $p->{ftyp};
-   #$template .= "_num" if ($p->{enum} and $p->{enum} eq "1");
-   #$template .= "_numasc" if ($p->{enum} and $p->{enum} eq "2");
-   #header("Content-Type" => "text/plain")
-   #}
     template 'publication/list', $hits;
 
-    #}
 };
 
 =head2 GET /{data|publication}/embed
@@ -88,17 +71,9 @@ get qr{/(data|publication)/*} => sub {
 Embed API to (data) publications
 
 =cut
-
-get qr{/(data|publication)/embed/*} => sub {
-    my ($bag) = splat;
-
-    my $p = params;
-    $p->{embed} = 1;
-    forward "/$bag", $p;
-};
-
 get qr{/embed/*} => sub {
     my $p = h->extract_params();
+
     my $portal = h->config->{portal}->{$p->{ttyp}} if $p->{ttyp};
     my $pq;
 
@@ -126,7 +101,17 @@ get qr{/embed/*} => sub {
 
     my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
     $hits->{lang} = $lang;
-    template "iframe", $hits;
+
+    if (params->{fmt} && params->{fmt} eq 'js') {
+        my $template = "embed/javascript";
+        $template .= "_num_desc" if ($p->{enum} and $p->{enum} eq "1");
+        $template .= "_num_asc" if ($p->{enum} and $p->{enum} eq "2");
+        header("Content-Type" => "text/plain");
+        template $template, $hits;
+    }
+    else {
+        template "embed/iframe", $hits;
+    }
 };
 
 1;
