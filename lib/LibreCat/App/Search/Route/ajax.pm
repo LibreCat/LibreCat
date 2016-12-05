@@ -49,7 +49,7 @@ ajax '/search_researcher' => sub {
     my $q;
     push @$q, params->{'term'};
 
-    my %search_params = (q => $q, limit => 100);
+    my %search_params = (q => $q, limit => 100 , sort => 'fullname.asc');
     h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('researcher', \%search_params)->{hits};
