@@ -370,7 +370,7 @@ sub _files_list {
         }
     };
 
-    if ($id =~ /^\d+$/) {
+    if (defined($id) && $id =~ /^[0-9A-Za-z-]+$/) {
         my $data = LibreCat::App::Helper::Helpers->new->get_publication($id);
         $printer->($data);
     }
