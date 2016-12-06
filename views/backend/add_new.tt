@@ -10,6 +10,13 @@
 
   <div class="page-header" id="banner">
     <h1>[% h.loc("add_new.heading") %]</h1>
+    <h2>[% IF error %]<p class="text-danger">[% error %]</p>[% END %]</h2>
+    <h2>[% IF ok %]<p class="text-success">[% ok %]</p>[% END %]</h2>
+    <ul>
+    [% FOREACH rec IN imported %]
+       <li>[% rec.title | html %]<br><a href="/librecat/record/edit/[% rec._id %]">Edit</a></li>
+    [% END %]
+    </ul>
   </div>
 
   <div class="col-md-12">
@@ -34,7 +41,6 @@
 	        </span>
 	      </div>
 	    </form>
-        [% IF error %]<p class="text-danger">[% error %]</p>[% END %]
       </div>
     </div>
 

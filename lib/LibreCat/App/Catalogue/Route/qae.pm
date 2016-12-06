@@ -65,9 +65,14 @@ post '/librecat/upload/qae/submit' => needs login => sub {
                 my $response = h->update_record('publication', $record);
             }
         );
+
+        return template "backend/add_new",  {
+            ok => "Imported 1 record(s) from dropzone" ,
+            imported => [ $record ]
+        };
     }
 
-    redirect request->{referer};
+    return template "backend/add_new";
 };
 
 1;

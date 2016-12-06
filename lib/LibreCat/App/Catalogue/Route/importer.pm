@@ -56,14 +56,15 @@ post '/librecat/record/import' => needs login => sub {
     trim($p, 'id', 'whitespace');
     trim($p, 'source', 'whitespace');
 
-    my $user       = h->get_person(session->{personNumber});
+    my $user   = h->get_person(session->{personNumber});
+    my $id     = $p->{id};
+    my $data   = request->upload('data') ? request->upload('data')->content : $p->{data};
+    my $source = $p->{source};
 
     try {
-        my $id     = $p->{id};
-        my $data   = request->upload('data') ? request->upload('data')->content : $p->{data};
-        my $source = $p->{source};
-
         my @imported_records = _fetch_record( $p->{id} // $data, $source );
+
+        die "no records imported" unless @imported_records;
 
         for my $pub (@imported_records) {
             $pub->{_id}        = h->new_record('publication');
@@ -86,14 +87,17 @@ post '/librecat/record/import' => needs login => sub {
             );
         }
 
-        redirect '/librecat';
+        return template "backend/add_new",  {
+            ok => "Imported " . int(@imported_records) . " record(s) from $source" ,
+            imported => \@imported_records
+        };
     }
     catch {
-        my $id = $p->{id} // '<data>';
+        $id //= substr($data,0,40) . '...';
         h->log->error("import failed: $_");
         return template "backend/add_new",
             {error =>
-                "Could not import ID $id from source $p->{source}."};
+                "Could not import $id from source $p->{source}."};
     };
 
 };
