@@ -21,7 +21,7 @@ librecat publication [options] add <FILE>
 librecat publication [options] delete <id>
 librecat publication [options] purge <id>
 librecat publication [options] valid <FILE>
-librecat publication [options] files [<id>]|[<cql-query>]|[<FILE>]
+librecat publication [options] files [<id>]|[<cql-query>]|[<FILE>]|REPORT
 librecat publication [options] fetch <source> <id>
 librecat publication [options] embargo ['update']
 
@@ -340,7 +340,10 @@ sub _embargo {
 sub _files {
     my ($self, $file) = @_;
 
-    if ($file && $file =~ /^\d+$/) {
+    if ($file && $file eq 'REPORT') {
+        $self->_files_reporter();
+    }
+    elsif ($file && $file =~ /^\d+$/) {
         $self->_files_list($file);
     }
     elsif ($file && -r $file) {
@@ -510,6 +513,55 @@ sub _file_process {
     1;
 }
 
+sub _files_reporter {
+    my $file_store = Catmandu->config->{filestore}->{default}->{package};
+    my $file_opt   = Catmandu->config->{filestore}->{default}->{options};
+
+    my $pkg
+        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+    my $files = $pkg->new(%$file_opt);
+
+    my $exporter = Catmandu->exporter('TSV'
+                            , header  => 1
+                            , fields => [qw(status container filename error)]);
+
+    LibreCat::App::Helper::Helpers->new->publication->each(sub {
+        my ($item) = @_;
+        return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
+
+        for my $file (@{$item->{file}}) {
+            my $pub_id    = $item->{_id};
+            my $file_name = $file->{file_name};
+
+            my $status = 'OK';
+            my $error  = '';
+
+            if (my $container = $files->get($pub_id)) {
+                if ($container->exists($file_name)) {
+                    $status = 'OK'
+                }
+                else {
+                    $status = 'ERROR';
+                    $error = 'no such file';
+                }
+            }
+            else {
+                $status = 'ERROR';
+                $error = 'no such container';
+            }
+
+            $exporter->add({
+                status    => $status ,
+                container => $pub_id ,
+                filename  => $file_name ,
+                error     => $error
+            });
+        }
+    });
+
+    $exporter->commit;
+}
+
 1;
 
 __END__
@@ -529,7 +581,7 @@ LibreCat::Cmd::publication - manage librecat publications
 	librecat publication delete <id>
     librecat publication purge <id>
     librecat publication valid <FILE>
-    librecat publication files [<id>]|[<cql-query>]|[<FILE>]
+    librecat publication files [<id>]|[<cql-query>]|[<FILE>]|REPORT
     librecat publication fetch <source> <id>
     librecat publication embargo ['update']
 

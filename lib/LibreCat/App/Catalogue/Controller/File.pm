@@ -299,7 +299,7 @@ sub _remove_thumbnail {
         h->log->info("no access_thumbnailer defined");
         return undef;
     }
-    
+
     my $thumbnailer_package
         = h->config->{filestore}->{accesss_thumbnailer}->{package};
     my $thumbnailer_options
@@ -409,6 +409,8 @@ sub _update_file_metadata {
 # points to the same file.
 sub _find_deleted_files {
     my ($prev, $curr) = @_;
+
+    return () unless defined($prev) && defined($curr);
 
     my %curr_ids = map {$_->{file_id} // 'undef' => 1} @{$curr->{file}};
 
