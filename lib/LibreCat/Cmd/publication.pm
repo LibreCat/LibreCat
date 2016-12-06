@@ -284,10 +284,11 @@ sub _fetch {
     }
 
     $id = path($id)->slurp_utf8 if -r $id;
-    my $perl = $pkg->new->fetch($id);
+
+    my @perl = $pkg->new->fetch($id);
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add($perl);
+    $exporter->add_many(\@perl);
     $exporter->commit;
 
     return 0;

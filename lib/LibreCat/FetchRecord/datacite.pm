@@ -25,7 +25,7 @@ sub fetch {
 
     my $xml = $res->content;
 
-    return undef unless $xml;
+    return wantarray ? () : undef unless $xml;
 
     my $data = Catmandu->importer(
         'XML',
@@ -36,7 +36,7 @@ sub fetch {
 
     $data = $fixer->fix($data);
 
-    $data;
+    wantarray ? ($data) : $data;
 }
 
 1;

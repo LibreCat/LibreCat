@@ -23,7 +23,7 @@ sub fetch {
 
     $data = $fixer->fix($data);
 
-    return $data;
+    wantarray ? ($data) : $data;
 }
 
 1;
