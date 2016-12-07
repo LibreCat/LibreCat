@@ -68,9 +68,9 @@ post '/librecat/record/import' => needs login => sub {
 
         for my $pub (@imported_records) {
             $pub->{_id}        = h->new_record('publication');
-            $pub->{status}     = 'private';
+            $pub->{status}     = 'new'; # new is the status of records not checked by users/reviewers
             $pub->{creator}    = {
-                    id => session->{personNumber},
+                    id    => session->{personNumber},
                     login => session->{user}
             };
             $pub->{user_id}    = session->{personNumber};
