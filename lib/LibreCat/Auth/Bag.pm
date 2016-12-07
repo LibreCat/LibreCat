@@ -36,9 +36,8 @@ sub _authenticate {
     if ($bag->does('Catmandu::Searchable')) {
         # For now we assume the Searchable store are ElasticSearch implementations...
         my $query = sprintf "%s:%s" , $username_attr , $username;
-
+        
         $self->log->debug("..query $query");
-
         $user = $bag->search(query => $query)->first;
     }
     else {
