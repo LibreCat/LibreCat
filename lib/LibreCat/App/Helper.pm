@@ -406,7 +406,6 @@ sub get_person {
             return $user;
         }
     }
-    return {error => "something went wrong"};
 }
 
 sub get_project {
