@@ -218,10 +218,10 @@
 	     <h3 id="ModalExport">[% h.loc("facets.export_options") %]</h3>
       </div>
       <div class="modal-body">
-        [%- qp2 = qp; qp2.fmt = 'rft'; qp2.explinks = 'yes' %]
-	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% request.uri_for(path, qp2) %]&amp;explinks=yes" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
-         [%-  qp2.delete('explinks') %]
-	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% request.uri_for(path, qp2) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
+        [%- tmp = {}; tmp.import(qp); tmp.bag = 'publication'; tmp.fmt = 'rtf'; tmp.explinks = 'yes' %]
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% request.uri_for('export', tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
+         [%-  tmp.delete('explinks') %]
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% request.uri_for('export', tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
       </div>
     </div>
   </div>
