@@ -20,9 +20,11 @@ get qr{/project/([^/]+)/*} => sub {
     my ($id) = splat;
     my $proj = h->project->get($id);
 
-    my $pub = LibreCat->searcher->search('project',
-        cql_query => "project=$id AND status=public",
-        limit     => 100
+    my $pub = LibreCat->searcher->search('publication',
+        {
+            q => "project=$id AND status=public",
+            limit => 100,
+        }
     );
     $proj->{project_publication} = $pub if $pub->{total} > 0;
 
