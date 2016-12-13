@@ -377,6 +377,7 @@ add_new:
   paste_bibtex: "Option 4:<br />Paste your BibTex record here"
   paste_bibtex_placeholder: "Please paste only one record at a time"
   qae_title: "New Quick And Easy Publication - Will be edited by PUB-Team"
+  wos_import: "Web of Science Import"
 forms:
   book:
     label: "Book"

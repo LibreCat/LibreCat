@@ -376,6 +376,7 @@ add_new:
   paste_bibtex: "Option 4:<br />F&uuml;gen Sie Ihren BibTex Eintrag hier ein"
   paste_bibtex_placeholder: "Bitte f&uuml;gen Sie nur jeweils einen Datensatz ein"
   qae_title: "New Quick And Easy Publication - Will be edited by PUB-Team"
+  wos_import: "Web of Science Import"
 forms:
   book:
     label: "Monographie"

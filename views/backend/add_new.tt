@@ -107,6 +107,22 @@
         </form>
       </div>
     </div>
+
+    <div class="row">
+     <h3>[% h.loc("add_new.wos_import") %]</h3>
+     <div class="row">
+       <form role="form" action="/librecat/record/import" enctype="multipart/form-data" method="POST">
+         <input type="hidden" id="wos_source" name="source" value="wos">
+         <div class="input-group col-md-5 col-xs-8">
+           <input type="file" class="form-control" id="input_id" name="data" required/>
+           <span class="input-group-btn">
+             <button type="submit" class="btn btn-default">[% h.loc("facets.go_button") %]</button>
+           </span>
+         </div>
+       </form>
+     </div>
+   </div>
+    
   </div>
 </div>
 
