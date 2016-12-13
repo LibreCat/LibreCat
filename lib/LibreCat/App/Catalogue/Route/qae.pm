@@ -23,10 +23,10 @@ post '/librecat/upload/qae/submit' => needs login => sub {
         my $now = h->now();
 
         my $record = {
-            _id    => $id,
-            status => "new",
-            accept => 1,
-            title  => h->loc('add_new.qae_title'),
+            _id         => $id,
+            status      => "new", # new is the status of records not checked by users/reviewers
+            accept      => 1,
+            title       => h->loc('add_new.qae_title'),
             publication => "Quick And Easy Journal Title",
             type        => "journal_article",
             message     => params->{description},
@@ -65,9 +65,14 @@ post '/librecat/upload/qae/submit' => needs login => sub {
                 my $response = h->update_record('publication', $record);
             }
         );
+
+        return template "backend/add_new",  {
+            ok => "Imported 1 record(s) from dropzone" ,
+            imported => [ $record ]
+        };
     }
 
-    redirect request->{referer};
+    return template "backend/add_new";
 };
 
 1;

@@ -61,7 +61,8 @@ LibreCat::FetchRecord - LibreCat record creator
 
 =head1 DESCRIPTION
 
-Create one publication record given an id or textual input.
+Create one publication record given an id or textual input. When called in a
+list context possible more than one record can be returned.
 
 =head1 SEE ALSO
 

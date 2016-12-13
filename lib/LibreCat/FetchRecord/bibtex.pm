@@ -10,16 +10,13 @@ sub fetch {
 
     $self->log->debug("parsing bibtex $bibtex");
 
-    my $data = Catmandu->importer(
-        'BibTeX',
-        file => \$bibtex,
-    )->first;
-
     my $fixer = $self->create_fixer('bibtex_mapping.fix');
 
-    $data = $fixer->fix($data);
+    my $data = $fixer->fix(
+                Catmandu->importer('BibTeX',file => \$bibtex)
+               )->to_array;
 
-    $data;
+    wantarray ? @$data : $data->[0];
 }
 
 1;

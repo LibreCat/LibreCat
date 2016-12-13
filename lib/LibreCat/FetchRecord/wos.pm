@@ -11,16 +11,13 @@ sub fetch {
 
     $self->log->debug("parsing WOS data: $ris");
 
-    my $data = Catmandu->importer(
-         'RIS',
-         file => \$ris,
-    )->first;
-
     my $fixer = $self->create_fixer('wos_mapping.fix');
 
-    $data = $fixer->fix($data);
+    my $data = $fixer->fix(
+            Catmandu->importer('RIS',file => \$ris)
+        )->to_array;
 
-    $data;
+    wantarray ? @$data : $data->[0];
 }
 
 1;

@@ -56,54 +56,48 @@ post '/librecat/record/import' => needs login => sub {
     trim($p, 'id', 'whitespace');
     trim($p, 'source', 'whitespace');
 
-    my $pub;
-    my $user = h->get_person(session->{personNumber});
-    my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
+    my $user   = h->get_person(session->{personNumber});
+    my $id     = $p->{id};
+    my $data   = request->upload('data') ? request->upload('data')->content : $p->{data};
+    my $source = $p->{source};
 
     try {
-        my $id     = $p->{id};
-        my $data   = request->upload('data') ? request->upload('data')->content : $p->{data};
-        my $source = $p->{source};
+        my @imported_records = _fetch_record( $p->{id} // $data, $source );
 
-        # Use config/hooks.yml to register functions
-        # that should run before/after adding new publications
-        # E.g. create a hooks to change the default fields
-        state $hook = h->hook('import-new-' . $source);
+        die "no records imported" unless @imported_records;
 
-        $pub = _fetch_record( $p->{id} // $data, $source );
+        for my $pub (@imported_records) {
+            $pub->{_id}        = h->new_record('publication');
+            $pub->{status}     = 'new'; # new is the status of records not checked by users/reviewers
+            $pub->{creator}    = {
+                    id    => session->{personNumber},
+                    login => session->{user}
+            };
+            $pub->{user_id}    = session->{personNumber};
+            $pub->{department} = $user->{department};
 
-        $hook->fix_before($pub);
+            # Use config/hooks.yml to register functions
+            # that should run before/after uploading QAE publications
 
-        unless ($pub) {
-            my $id = $p->{id} // '<data>';
-            h->log->error("import failed for $id in $source");
-            return template "backend/add_new",
-                    {error =>  "No record found with ID $id in $source."};
+            h->hook('import-new-')->fix_around(
+                $pub,
+                sub {
+                    h->update_record('publication', $pub);
+                }
+            );
         }
 
-        $pub->{_id} = h->new_record('publication');
-        my $type = $pub->{type} || 'journal_article';
-        my $templatepath = "backend/forms";
-        $pub->{department} = $user->{department};
-
-        if (   ($edit_mode and $edit_mode eq "expert")
-            or (!$edit_mode and session->{role} eq "super_admin"))
-        {
-            $templatepath .= "/expert";
-        }
-
-        $pub->{new_record} = 1;
-
-        $hook->fix_after($pub);
-
-        return template "$templatepath/$type", $pub;
+        return template "backend/add_new",  {
+            ok => "Imported " . int(@imported_records) . " record(s) from $source" ,
+            imported => \@imported_records
+        };
     }
     catch {
-        my $id = $p->{id} // '<data>';
+        $id //= substr($data,0,40) . '...';
         h->log->error("import failed: $_");
         return template "backend/add_new",
             {error =>
-                "Could not import ID $id from source $p->{source}."};
+                "Could not import $id from source $p->{source}."};
     };
 
 };
