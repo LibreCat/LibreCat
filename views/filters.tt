@@ -24,16 +24,17 @@
 </div>
 [%- END -%]
 
-[%- IF (qp.q AND qp.q.size > 0 AND !qp.embed) OR pd.delete_them %]
+[%- IF (qp.cql AND qp.cql.size > 0 AND !qp.embed) OR pd.delete_them %]
   <h3 class="filters margin-top0">[% h.loc("facets.filters_and_searchterms") %]</h3>
   [% other = {} %]
   [% CALL other.import(qp) %]
-  [% CALL other.delete('q') %]
-  [%- FOREACH val IN qp.q %]
+  [% CALL other.delete('cql') %]
+  [%- FOREACH val IN qp.cql %]
     [%- removed = [] -%]
-    [%- CALL removed.import(qp.q) -%]
+    [%- CALL removed.import(qp.cql) -%]
     [%- CALL removed.splice(loop.index, 1) -%]
-    <p class="text-muted"><a href="[% path %]?q=[% removed.join('&q=') %][% h.hash_to_url(other) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
+    [% USE Dumper; Dumper.dump(removed) %]
+    <p class="text-muted"><a href="[% request.uri_for(path, removed) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
   [%- END %]
 [%- END %]
 
@@ -41,7 +42,7 @@
 <h3[%- IF qp.q.size == 0 %] class="margin-top0"[% END %]>[% h.loc("facets.search") %]</h3>
 <form action="#" method="get" role="form" class="helpme helpme-md" data-placement="left" title="[% h.loc("help.search") %]">
   <span class="input-group">
-    <input type="text" value='' class="form-control" name="cql_query" placeholder="[% h.loc("facets.search") %]" />
+    <input type="text" class="form-control" name="q" value="[% qp.q %]" placeholder="[% h.loc("facets.search") %]" />
     <span class="input-group-btn">
       <button type="submit" class="btn btn-default">[% h.loc("facets.go_button") %]</button>
     </span>
@@ -238,6 +239,8 @@ $('.rtfmodal').click(function(){
 var path = '[% request.path %]',
 searchParams = [% qp.json %];
 
+console.log(searchParams);
+
 $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var embed_link = window.location.href;
     delete searchParams.fmt;
@@ -259,21 +262,19 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
 
 $('a.facet_[% tabmodus %]').click(function() {
   var par_key = $(this).data('key');
+  if(!searchParams[par_key]){
+    searchParams[par_key] = [];
+  }
   if(par_key == "sort"){
-    if(!searchParams[par_key]){
-      searchParams[par_key] = [];
-    }
     searchParams[par_key].push($(this).data('value'));
   }
-  else if(par_key == "q"){
+  else if(par_key == "cql"){
     searchParams[par_key].push($(this).data('param') + "=" + $(this).data('value'));
+    delete searchParams.start;
+    delete searchParams.fmt;
   }
   else {
     searchParams[par_key] = $(this).data('value');
-  }
-  if(par_key == "q"){
-    delete searchParams.start;
-    delete searchParams.fmt;
   }
   var url = path+'?'+ $.param($.extend({}, searchParams), true);
   window.location.replace(url);

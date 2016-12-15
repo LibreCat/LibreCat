@@ -22,7 +22,7 @@ get qr{/project/([^/]+)/*} => sub {
 
     my $pub = LibreCat->searcher->search('publication',
         {
-            q => "project=$id AND status=public",
+            cql => ["project=$id", "status=public"],
             limit => 100,
         }
     );
@@ -33,7 +33,7 @@ get qr{/project/([^/]+)/*} => sub {
 
 get qr{/project/*} => sub {
     my $p = h->extract_params();
-    
+
     my $hits = LibreCat->searcher->search('project', $p);
     return template 'project/list', $hits;
 };
