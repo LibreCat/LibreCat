@@ -9,8 +9,8 @@ log4perl: |
   log4perl.appender.STDERR.stderr=1
   log4perl.appender.STDERR.utf8=1
   log4perl.appender.STDERR.layout=PatternLayout
-  log4perl.appender.STDERR.layout.ConversionPattern=%d [%P] - %c[%L] : %m%n
+  log4perl.appender.STDERR.layout.ConversionPattern=%d %p [%P] - %c[%L] : %m%n
   log4perl.appender.FILE=Log::Log4perl::Appender::File
   log4perl.appender.FILE.filename=app.log
   log4perl.appender.FILE.layout=PatternLayout
-  log4perl.appender.FILE.layout.ConversionPattern=%d [%P] - %c[%L] : %m%n
+  log4perl.appender.FILE.layout.ConversionPattern=%d %p [%P] - %c[%L] : %m%n
