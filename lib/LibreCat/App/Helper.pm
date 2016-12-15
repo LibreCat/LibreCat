@@ -156,53 +156,13 @@ sub extract_params {
 
     $p->{start} = $params->{start} if is_natural $params->{start};
     $p->{limit} = $params->{limit} if is_natural $params->{limit};
-    $p->{embed} = $params->{embed} if is_natural $params->{embed};
+#    $p->{embed} = $params->{embed} if is_natural $params->{embed};
     $p->{lang}  = $params->{lang}  if $params->{lang};
     $p->{ttyp}  = $params->{ttyp}  if $params->{ttyp};
     $p->{ftyp}  = $params->{ftyp}  if $params->{ftyp};
     $p->{enum}  = $params->{enum}  if $params->{enum};
-
-    $p->{q} = array_uniq($self->string_array($params->{q}));
-
-    my $cql = $params->{cql_query} ||= '';
-
-    if ($cql) {
-        my $deletedq;
-
-        if (
-            @$deletedq = (
-                $cql
-                    =~ /((?=AND |OR |NOT )?[0-9a-zA-Zäöüß]+\=\s|(?=AND |OR |NOT )?[0-9a-zA-Zäöüß]+\=$)/g
-            )
-            )
-        {
-            $cql
-                =~ s/((AND |OR |NOT )?[0-9a-zA-Zäöüß]+\=\s|(AND |OR |NOT )?[0-9a-zA-Zäöüß]+\=$)/ /g;
-        }
-        $cql =~ s/^\s*(AND|OR)//g;
-        $cql =~ s/,//g;
-        $cql =~ s/\://g;
-        $cql =~ s/\.//g;
-        $cql =~ s/(NOT )(.*?)=/$2<>/g;
-        $cql =~ s/(NOT )([^=]*?)/basic<>$2/g;
-        $cql =~ s/(?<!")\b([^\s]+)\b, \b([^\s]+)\b(?!")/"$1, $2"/g;
-        $cql =~ s/^\s+//;
-        $cql =~ s/\s+$//;
-        $cql =~ s/\s{2,}/ /;
-
-        if ($cql
-            !~ /^("[^"]*"|'[^']*'|[0-9a-zA-Zäöüß]+(=| ANY | ALL | EXACT )"[^"]*")$/
-            and $cql
-            !~ /^(([0-9a-zA-Zäöüß]+\=(?:[0-9a-zA-Zäöüß\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)(?<!ANY)(?<!ALL)(?<!EXACT)|"[^"]*"|'[^']*') (AND|OR) ([0-9a-zA-Zäöüß]+\=(?:[0-9a-zA-Zäöüß\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))$/
-            and $cql
-            !~ /^(([0-9a-zA-Zäöüß]+( ANY | ALL | EXACT )"[^"]*"|"[^"]*"|'[^']*'|[0-9a-zA-Zäöüß]+\=(?:[0-9a-zA-Zäöüß\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR))( (AND|OR) (([0-9a-zA-Zäöüß]+( ANY | ALL | EXACT )"[^"]*")|"[^"]*"|'[^']*'|[0-9a-zA-Zäöüß]+\=(?:[0-9a-zA-Zäöüß\-\*]+|"[^"]*"|'[^']*')+\**))*)$/
-            )
-        {
-            $cql
-                =~ s/((?:(?:(?:[0-9a-zA-Zäöüß\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*') (?:AND|OR) )+(?:[0-9a-zA-Zäöüß\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))|[0-9a-zA-Zäöüß\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*')\s(?!AND )(?!OR )("[^"]*"|'[^']*'|.*?)/$1 AND $2/g;
-        }
-        push @{$p->{q}}, lc $cql;
-    }
+    $p->{q} = $params->{q} if $params->{q};
+    $p->{cql} = $self->string_array($params->{cql}) if $params->{cql};
 
     ($params->{text} =~ /^".*"$/)
         ? (push @{$p->{q}}, $params->{text})
@@ -210,26 +170,26 @@ sub extract_params {
         if $params->{text};
 
     # autocomplete functionality
-    if ($params->{term}) {
-        my $search_terms = join("* AND ", split(" ", $params->{term})) . "*"
-            if $params->{term} !~ /^\d{1,}$/;
-        my $search_id = $params->{term} if $params->{term} =~ /^\d{1,}$/;
-        push @{$p->{q}},
-              "title=("
-            . lc $search_terms
-            . ") OR person=("
-            . lc $search_terms . ")"
-            if $search_terms;
-        push @{$p->{q}}, "id=$search_id OR person=$search_id" if $search_id;
-        $p->{fmt} = $params->{fmt};
-    }
-    else {
-        my $formats = $self->config->{exporter}->{publication};
-        $p->{fmt}
-            = ($params->{fmt} && $formats->{$params->{fmt}})
-            ? $params->{fmt}
-            : 'html';
-    }
+    # if ($params->{term}) {
+    #     my $search_terms = join("* AND ", split(" ", $params->{term})) . "*"
+    #         if $params->{term} !~ /^\d{1,}$/;
+    #     my $search_id = $params->{term} if $params->{term} =~ /^\d{1,}$/;
+    #     push @{$p->{q}},
+    #           "title=("
+    #         . lc $search_terms
+    #         . ") OR person=("
+    #         . lc $search_terms . ")"
+    #         if $search_terms;
+    #     push @{$p->{q}}, "id=$search_id OR person=$search_id" if $search_id;
+    #     $p->{fmt} = $params->{fmt};
+    # }
+    # else {
+    #     my $formats = $self->config->{exporter}->{publication};
+    #     $p->{fmt}
+    #         = ($params->{fmt} && $formats->{$params->{fmt}})
+    #         ? $params->{fmt}
+    #         : 'html';
+    # }
 
     $p->{style} = $params->{style} if $params->{style};
     $p->{sort} = $self->string_array($params->{'sort'}) if $params->{'sort'};

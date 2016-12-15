@@ -24,7 +24,7 @@
 </div>
 [%- END -%]
 
-[%- IF (qp.q.size > 0 AND !qp.embed) OR pd.delete_them %]
+[%- IF (qp.q AND qp.q.size > 0 AND !qp.embed) OR pd.delete_them %]
   <h3 class="filters margin-top0">[% h.loc("facets.filters_and_searchterms") %]</h3>
   [% other = {} %]
   [% CALL other.import(qp) %]
@@ -46,7 +46,7 @@
       <button type="submit" class="btn btn-default">[% h.loc("facets.go_button") %]</button>
     </span>
   </span>
-  [%- IF qp.q.size > 0 AND total > 0 %]
+  [%- IF qp.q AND qp.q.size > 0 AND total > 0 %]
     [%- FOREACH val IN qp.q %]
     <input type="hidden" name="q" value="[% val %]" />
     [% END %]

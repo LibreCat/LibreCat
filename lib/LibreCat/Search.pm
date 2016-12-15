@@ -49,13 +49,13 @@ sub search {
     return undef unless $bag_name;
     my $cql;
 
-    $p->{q} = $self->_string_array($p->{q});
-    $cql = join(' AND ', @{$p->{q}}) if $p->{q};
+#    $p->{q} = $self->_string_array($p->{q});
+#    $cql = join(' AND ', @{$p->{q}}) if $p->{q};
 
     my $store = $self->store;
     my $bag = $store->bag($bag_name);
     my %search_params = (
-        cql_query => $cql // '',
+        cql_query => $self->_cql_query($p),
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
         limit => $p->{limit} // Catmandu->config->{default_page_size},
         start => $p->{start} // 0,
@@ -85,6 +85,20 @@ sub search {
     }
 
     $hits;
+}
+
+sub _cql_query {
+    my ($self, $p) = @_;
+
+#    return '' unless $p->{q} and $p->{cql};
+
+    my @cql;
+    push @cql, "basic=\"$p->{q}\"" if $p->{q};
+
+    $p->{cql} = $self->_string_array($p->{cql});
+    push @cql, @{$p->{cql}};
+
+    return join(' AND ', @cql) if @cql;
 }
 
 sub _sru_sort {
