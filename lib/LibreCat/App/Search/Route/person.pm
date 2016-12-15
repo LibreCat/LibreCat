@@ -21,7 +21,7 @@ get qr{/person/([a-z,A-Z])} => sub {
     my ($c) = splat;
 
     my %search_params = (
-        q => ["lastname=" . lc $c . "*"],
+        cql => ["lastname=" . lc $c . "*"],
         start => 0,
         limit => 1000
     );
@@ -29,12 +29,12 @@ get qr{/person/([a-z,A-Z])} => sub {
     h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('researcher', \%search_params);
-    
+
     my $result;
     @{$hits->{hits}} = map {
         my $rec = $_;
         my $pub = LibreCat->searcher->search('publication',
-            {q => ["person=$rec->{_id}"], start => 0, limit => 1,});
+            {cql => ["person=$rec->{_id}"], start => 0, limit => 1,});
         ($pub->{total} > 0) ? $rec : undef;
     } @{$hits->{hits}};
 
