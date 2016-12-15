@@ -532,6 +532,9 @@ sub store_record {
                                                         'LibreCat::Validator');
     if ($validator_pkg) {
         my @white_list = $validator_pkg->new->white_list;
+
+        $self->log->fatal("no white_list found for $validator_pkg ??!") unless @white_list;
+        
         for my $key (keys %$rec) {
             unless (grep(/^$key$/, @white_list)) {
                 $self->log->debug("deleting invalid key: $key");
