@@ -6,6 +6,7 @@ use Catmandu;
 use Dancer qw(:syntax);
 use Moo;
 use Hash::Merge::Simple qw(merge);
+use Try::Tiny;
 use namespace::clean;
 
 with 'Catmandu::Logger';
@@ -24,7 +25,22 @@ sub quick_search {
     my %search_params = (query => $p->{q} // '');
 
     $self->log->debug("executing $bag_name->search: " . to_dumper(\%search_params));
-    $self->store->bag($bag_name)->search(%search_params);
+
+    my $hits;
+    try {
+        $hits = $self->store->bag($bag_name)->search(%search_params);
+    }
+    catch {
+        $self->log->error("$bag_name->search failed: " . to_dumper(\%search_params));
+        $hits = Catmandu::Hits->new(
+                    start => $search_params{start},
+                    limit => $search_params{limit},
+                    total => 0,
+                    hits  => [],
+                );
+    };
+
+    $hits;
 }
 
 sub search {
@@ -47,7 +63,22 @@ sub search {
     );
 
     $self->log->debug("executing $bag_name->search: " . to_dumper(\%search_params));
-    my $hits = $bag->search(%search_params);
+    my $hits;
+
+    try {
+        $hits = $bag->search(%search_params);
+    }
+    catch {
+        $self->log->error("$bag_name->search failed: " . to_dumper(\%search_params));
+        $hits = Catmandu::Hits->new(
+                    start => $search_params{start},
+                    limit => $search_params{limit},
+                    total => 0,
+                    hits  => [],
+                );
+    };
+
+    $self->log->debug("found: " . $hits->total . " hits");
 
     foreach (qw(next_page last_page page previous_page pages_in_spread)) {
         $hits->{$_} = $hits->$_;
