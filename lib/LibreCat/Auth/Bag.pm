@@ -50,12 +50,14 @@ sub _authenticate {
         return undef;
     }
 
-    if ($user->{account_status} eq 'active') {
-        $self->log->debug("$username is active");
-    }
-    else {
+    # Explicitly test for inactive users ...built-in users might not
+    # have all the fields set
+    if ($user->{account_status} && $user->{account_status} eq 'inactive') {
         $self->log->debug("$username isn't active");
         return undef;
+    }
+    else {
+        $self->log->debug("$username is active");
     }
 
     $self->log->debug("checking $password_attr for $username");

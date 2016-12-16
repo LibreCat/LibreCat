@@ -4,8 +4,6 @@ use Catmandu::Sane;
 use Catmandu::Util qw(require_package);
 use LibreCat::Layers;
 use LibreCat::Hook;
-use LibreCat::User;
-use LibreCat::Search;
 use Catmandu;
 use namespace::clean;
 
@@ -45,7 +43,7 @@ sub import {
 }
 
 sub user {
-    state $user = LibreCat::User->new($_[0]->config->{user});
+    state $user = require_package('LibreCat::User')->new($_[0]->config->{user});
 }
 
 sub hook {
@@ -71,7 +69,7 @@ sub hook {
 }
 
 sub searcher {
-    state $searcher = LibreCat::Search->new(store => Catmandu->store('search'));
+    state $searcher = require_package('LibreCat::Search')->new(store => Catmandu->store('search'));
 }
 
 1;
