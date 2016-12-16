@@ -19,10 +19,12 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
     my ($bag, $id) = splat;
 
     my $p = h->extract_params();
-    delete $p->{q}; # frontdoor: do not allow search queries for user
+    # frontdoor: do not allow search queries for user
+    delete $p->{q};
+    delete $p->{cql};
 
-    push @{$p->{q}}, ("status=public", "id=$id");
-    push @{$p->{q}},
+    push @{$p->{cql}}, ("status=public", "id=$id");
+    push @{$p->{cql}},
         ($bag eq 'data') ? "type=research_data" : "type<>research_data";
 
     my $hits = LibreCat->searcher->search('publication', $p);

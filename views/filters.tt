@@ -24,49 +24,9 @@
 </div>
 [%- END -%]
 
-[%- IF (qp.cql AND qp.cql.size > 0 AND !qp.embed) OR pd.delete_them %]
-  <h3 class="filters margin-top0">[% h.loc("facets.filters_and_searchterms") %]</h3>
-  [%- my_del_link = {} %]
-  [%- CALL my_del_link.import(qp) %]
-  [%- CALL my_del_link.delete('cql') %]
-  [%- FOREACH val IN qp.cql %]
-    [%- removed = [] -%]
-    [%- CALL removed.import(qp.cql) -%]
-    [%- CALL removed.splice(loop.index, 1) -%]
-    [%- my_del_link.cql = removed -%]
-    <p class="text-muted"><a href="[% request.uri_for(path, other) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
-  [%- END %]
-[%- END -%]
+[% INCLUDE search_box.tt %]
 
-[%- UNLESS request.path.match('marked') %]
-<h3[%- IF qp.q.size == 0 %] class="margin-top0"[% END %]>[% h.loc("facets.search") %]</h3>
-<form action="#" method="get" role="form" class="helpme helpme-md" data-placement="left" title="[% h.loc("help.search") %]">
-  <span class="input-group">
-    <input type="text" class="form-control" name="q" value="[% qp.q %]" placeholder="[% h.loc("facets.search") %]" />
-    <span class="input-group-btn">
-      <button type="submit" class="btn btn-default">[% h.loc("facets.go_button") %]</button>
-    </span>
-  </span>
-  [%- IF qp.cql AND qp.cql.size > 0 AND total > 0 %]
-    [%- FOREACH val IN qp.cql %]
-    <input type="hidden" name="cql" value="[% val %]" />
-    [%- END %]
-  [%- END %]
-  [%- FOREACH key IN qp.keys %]
-    [%- NEXT IF key == "q" OR key == "cql" OR key == "start" OR key == "sort" %]
-    <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
-  [%- END %]
-  [%- IF qp.item('sort') %]
-    [%- FOREACH sorting IN qp.item('sort') %]
-    <input type="hidden" name="sort" value="[% sorting %]" />
-    [%- END %]
-  [%- END %]
-</form>
-[%- END -%]
-
-<!-- include facets.tt here -->
-  [% INCLUDE facets.tt %]
-<!-- end include facets.tt -->
+[% INCLUDE facets.tt %]
 
 
 [%- IF hits.0.citation OR total > 1 %]

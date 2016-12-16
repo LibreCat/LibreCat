@@ -156,7 +156,6 @@ sub extract_params {
 
     $p->{start} = $params->{start} if is_natural $params->{start};
     $p->{limit} = $params->{limit} if is_natural $params->{limit};
-#    $p->{embed} = $params->{embed} if is_natural $params->{embed};
     $p->{lang}  = $params->{lang}  if $params->{lang};
     $p->{ttyp}  = $params->{ttyp}  if $params->{ttyp};
     $p->{ftyp}  = $params->{ftyp}  if $params->{ftyp};
@@ -169,51 +168,10 @@ sub extract_params {
         : (push @{$p->{q}}, join(" AND ", split(/ |-/, $params->{text})))
         if $params->{text};
 
-    # autocomplete functionality
-    # if ($params->{term}) {
-    #     my $search_terms = join("* AND ", split(" ", $params->{term})) . "*"
-    #         if $params->{term} !~ /^\d{1,}$/;
-    #     my $search_id = $params->{term} if $params->{term} =~ /^\d{1,}$/;
-    #     push @{$p->{q}},
-    #           "title=("
-    #         . lc $search_terms
-    #         . ") OR person=("
-    #         . lc $search_terms . ")"
-    #         if $search_terms;
-    #     push @{$p->{q}}, "id=$search_id OR person=$search_id" if $search_id;
-    #     $p->{fmt} = $params->{fmt};
-    # }
-    # else {
-    #     my $formats = $self->config->{exporter}->{publication};
-    #     $p->{fmt}
-    #         = ($params->{fmt} && $formats->{$params->{fmt}})
-    #         ? $params->{fmt}
-    #         : 'html';
-    # }
-
     $p->{style} = $params->{style} if $params->{style};
     $p->{sort} = $self->string_array($params->{'sort'}) if $params->{'sort'};
 
     $p;
-}
-
-sub hash_to_url {
-    my ($self, $params) = @_;
-
-    my $p = "";
-    return $p if ref $params ne 'HASH';
-
-    foreach my $key (keys %$params) {
-        if (ref $params->{$key} eq "ARRAY") {
-            foreach my $item (@{$params->{$key}}) {
-                $p .= "&$key=$item";
-            }
-        }
-        else {
-            $p .= "&$key=$params->{$key}";
-        }
-    }
-    return $p;
 }
 
 sub get_sort_style {
@@ -493,7 +451,7 @@ sub store_record {
         my @white_list = $validator_pkg->new->white_list;
 
         $self->log->fatal("no white_list found for $validator_pkg ??!") unless @white_list;
-        
+
         for my $key (keys %$rec) {
             unless (grep(/^$key$/, @white_list)) {
                 $self->log->debug("deleting invalid key: $key");
@@ -587,10 +545,6 @@ sub host {
 sub export_publication {
     my ($self, $hits, $fmt, $to_string) = @_;
 
-    if ($fmt eq 'autocomplete') {
-        return $self->export_autocomplete_json($hits);
-    }
-
     if (my $spec = config->{exporter}->{publication}->{$fmt}) {
         my $package = $spec->{package};
         my $options = $spec->{options} || {};
@@ -609,41 +563,6 @@ sub export_publication {
             filename     => "publications.$extension"
         );
     }
-}
-
-sub export_autocomplete_json {
-    my ($self, $hits) = @_;
-
-    my $jsonhash = [];
-    $hits->each(
-        sub {
-            my $hit = $_[0];
-            if ($hit->{title} && $hit->{year}) {
-                my $label = "$hit->{title} ($hit->{year}";
-                my $author = $hit->{author} || $hit->{editor} || [];
-                if (   $author
-                    && $author->[0]->{first_name}
-                    && $author->[0]->{last_name})
-                {
-                    $label
-                        .= ", "
-                        . $author->[0]->{first_name} . " "
-                        . $author->[0]->{last_name} . ")";
-                }
-                else {
-                    $label .= ")";
-                }
-                push @$jsonhash,
-                    {
-                    id    => $hit->{_id},
-                    label => $label,
-                    title => "$hit->{title}"
-                    };
-            }
-        }
-    );
-
-    return Dancer::to_json($jsonhash);
 }
 
 sub get_department_tree {

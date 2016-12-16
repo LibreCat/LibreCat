@@ -13,9 +13,9 @@
 
 [%- UNLESS request.path == "/marked" -%]
 
-[%- IF facets.status.terms.size > 1 OR facets.type.terms.size > 1 OR
-    facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR
-    facets.year.terms.size > 1 OR (bag == "person" AND !qp.q.grep('^former').0) -%]
+[%- IF (facets.status.terms.size || 0) > 1 OR (facets.type.terms.size || 0) > 1 OR
+    (facets.author.terms.size || 0) > 1 OR (facets.editor.terms.size || 0) > 1 OR
+    (facets.year.terms.size || 0) > 1 OR (bag == "person" AND !qp.q.grep('^former').0) -%]
 
 <h3>[% IF bag == "data" %][% h.loc("facets.filter_data_publications") %]
     [% ELSIF bag == "person" %][% h.loc("facets.filter_authorlist") %]
@@ -36,7 +36,9 @@
   </ul>
 [%- END %]
 
-[%- IF backend AND (session.role == "super_admin" OR session.role == "reviewer") OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR  facets.year.terms.size > 1 %]
+[%- IF backend AND (session.role == "super_admin" OR session.role == "reviewer")
+    OR (facets.type.terms.size || 0) > 1 OR  (facets.author.terms.size || 0) > 1
+    OR (facets.editor.terms.size || 0) > 1 OR  (facets.year.terms.size || 0) > 1 -%]
 <ul class="nav nav-tabs nav-stacked ul1 helpme" data-placement="left">
   [% IF backend AND (session.role == "super_admin" OR session.role == "reviewer") %]
   <li>
@@ -139,7 +141,6 @@
   [%- END %]
 </ul>
 [%- END -%]
-
 
 [%- END -%]
 
