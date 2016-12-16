@@ -533,7 +533,7 @@ sub store_record {
         my @white_list = $validator_pkg->new->white_list;
 
         $self->log->fatal("no white_list found for $validator_pkg ??!") unless @white_list;
-        
+
         for my $key (keys %$rec) {
             unless (grep(/^$key$/, @white_list)) {
                 $self->log->debug("deleting invalid key: $key");
@@ -711,17 +711,6 @@ sub get_access_store {
     my $pkg
         = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
     $pkg->new(%$file_opts);
-}
-
-sub uri_for {
-    my ($self, $path, $uri_params) = @_;
-    $uri_params ||= {};
-    my $uri = $path . "?";
-    foreach (keys %{$uri_params}) {
-        $uri .= "$_=$uri_params->{$_}&";
-    }
-    $uri =~ s/&$//;    #delete trailing "&"
-    $uri;
 }
 
 # TODO don't store in session, make it a param
