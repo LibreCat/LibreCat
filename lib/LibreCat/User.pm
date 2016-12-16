@@ -29,7 +29,7 @@ sub _build_bags {
 sub _get_rules {
     my ($self, $config) = @_;
     my $rules = $config->{rules} || return [];
-    [map {is_array_ref($_) ? $_ : [split ' ', $_]} @$rules];
+    [map {is_array_ref($_) ? [@$_] : [split ' ', $_]} @$rules];
 }
 
 sub _get_role {
@@ -42,9 +42,7 @@ sub _get_role {
             $config = $self->role_config->{$config->{inherit}};
             unshift @$rules, @{$self->_get_rules($config)};
         }
-        LibreCat::Role->new(
-            rules       => $rules,
-        );
+        LibreCat::Role->new(rules => $rules);
     };
 }
 
@@ -94,9 +92,21 @@ sub may {
     0;
 }
 
-sub rules {
+sub rules_for {
     my ($self, $user) = @_;
-    [map {@{$_->rules}} map {$self->_get_role($_)} @{$user->{roles} || []}];
+    [map {
+            my $role = $_;
+            my $role_engine = $self->_get_role($_->{role});
+            map {
+                join ' ', map {
+                    if (my $param = $role->{$_}) {
+                        "$_:$param";
+                    } else {
+                        $_;
+                    }
+                } @$_;
+            } @{$role_engine->rules};
+    } @{$user->{roles} || []}];
 }
 
 1;

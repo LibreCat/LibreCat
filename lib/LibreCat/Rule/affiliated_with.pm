@@ -16,6 +16,7 @@ sub _build_key {
 
 sub test {
     my ($self, $subject, $object, $params) = @_;
+
     my $key = $self->key;
     my $id  = $params->{$key} // Catmandu::Error->throw("Missing role parameter '$key'");
     my $dep = $object->{department};

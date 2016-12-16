@@ -69,19 +69,18 @@ user:
   sources:
     - store: builtin_users_1
     - store: builtin_users_2
-
-roles:
-  guest:
-    rules:
-      - can view publication if status public
-  user:
-    inherit: guest
-    rules:
-      - can add publication
-      - can view publication own
-      - can edit publication own
-      - cannot edit publication if locked
-  reviewer:
-    inherit: user
-    rules:
-      - can edit publication affiliated_with department_id
+  roles:
+    guest:
+      rules:
+        - can view publication if status public
+    user:
+      inherit: guest
+      rules:
+        - can add publication
+        - can view publication own
+        - can edit publication own
+        - cannot edit publication if locked
+    reviewer:
+      inherit: user
+      rules:
+        - can edit publication affiliated_with department_id
