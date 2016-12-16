@@ -9,7 +9,7 @@ page_range_number()
 join_field(keyword, ';') #needs to stay here so that hash_array won't kill keywords when using publish button on frontdoor
 hash_array()
 clean_preselects()
-maybe_add_urn()
+add_urn()
 person()
 volume_sort()
 research_data_doi()

@@ -341,27 +341,6 @@ sub pretty_byte_size {
     return $number ? human_byte_size($number) : '';
 }
 
-sub generate_urn {
-    my ($self, $prefix, $id) = @_;
-    my $nbn        = $prefix . $id;
-    my $weighting  = ' 012345678 URNBDE:AC FGHIJLMOP QSTVWXYZ- 9K_ / . +#';
-    my $faktor     = 1;
-    my $productSum = 0;
-    my $lastcifer;
-    foreach my $char (split //, uc($nbn)) {
-        my $weight = index($weighting, $char);
-        if ($weight > 9) {
-            $productSum += int($weight / 10) * $faktor++;
-            $productSum += $weight % 10 * $faktor++;
-        }
-        else {
-            $productSum += $weight * $faktor++;
-        }
-        $lastcifer = $weight % 10;
-    }
-    return $nbn . (int($productSum / $lastcifer) % 10);
-}
-
 sub is_marked {
     my ($self, $id) = @_;
     my $marked = Dancer::session 'marked';
