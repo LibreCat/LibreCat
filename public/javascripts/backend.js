@@ -124,262 +124,233 @@ $(function () {
  * Link author name to person account
  */
 function link_person(element){
-        var type = "";
-        type = $(element).attr('data-type');
-        var lineId = $(element).attr('id').replace(type + 'link_person_','');
+    var type = "";
+    type = $(element).attr('data-type');
+    var lineId = $(element).attr('id').replace(type + 'link_person_','');
 
-        if(!$('#' + type + 'first_name_' + lineId).val() && !$('#' + type + 'last_name_' + lineId).val()){
-                $('#' + type + 'idm_intern_' + lineId).prop("checked", false);
-                $('#' + type + 'idm_extern_' + lineId).prop("checked", true);
-                return;
-        }
-        if($('#' + type + 'idm_intern_' + lineId).is(':checked') && $('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
-                return;
-        }
+    if(!$('#' + type + 'first_name_' + lineId).val() && !$('#' + type + 'last_name_' + lineId).val()){
+        $('#' + type + 'idm_intern_' + lineId).prop("checked", false);
+        $('#' + type + 'idm_extern_' + lineId).prop("checked", true);
+        return;
+    }
+    if($('#' + type + 'idm_intern_' + lineId).is(':checked') && $('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
+        return;
+    }
 
     if($('#' + type + 'idm_intern_' + lineId).is(':checked')){
-        //if($('#' + type + 'Authorized' + lineId).attr('alt') == "Not Authorized"){
-                var puburl = '/search_researcher?term=';
-                var narrowurl = "";
-                var longurl = "";
-                var first_name = $('#' + type + 'first_name_' + lineId).val();
-                $('#' + type + 'orig_first_name_' + lineId).val(first_name);
-                var firstname = first_name.toLowerCase();
-                firstname = firstname.replace('\.','');
-                var last_name = $('#' + type + 'last_name_' + lineId).val();
-                $('#' + type + 'orig_last_name_' + lineId).val(last_name);
-                var lastname = last_name.toLowerCase();
-                lastname = lastname.replace('\.','');
-                if(firstname){
-                        // if name consists of more than one word, use any and ""
-                        if(firstname.indexOf(" ") > -1){
-                                narrowurl += 'firstname any "' + firstname + '"';
-                                longurl += 'oldfirstname any "' + firstname + '"';
-                        }
-                        // if name contains [-äöüß], truncating won't work, so use literal search
-                        else if(firstname.indexOf("-") > -1 || firstname.indexOf("\u00E4") > -1 || firstname.indexOf("\u00F6") > -1 || firstname.indexOf("\u00FC")> -1 || firstname.indexOf("\u00DF") > -1){
-                                narrowurl += "firstname=" + firstname;
-                                longurl += "oldfirstname=" + firstname;
-                        }
-                        else {
-                                narrowurl += "firstname=" + firstname + "*";
-                                longurl += "oldfirstname=" + firstname + "*";
-                        }
-                }
-                if(firstname && lastname){
-                        narrowurl += " AND ";
-                        longurl += " AND ";
-                }
-                if(lastname){
-                        // if name consists of more than one word, use any and ''
-                        if(lastname.indexOf(" ") > -1){
-                                narrowurl += 'lastname any "' + lastname + '"';
-                                longurl += 'oldlastname any "' + lastname + '"';
-                        }
-                        // if name contains [-äöüß], truncating won't work, so use literal search
-                        else if(lastname.indexOf("-") > -1 || lastname.indexOf("\u00E4") > -1 || lastname.indexOf("\u00F6") > -1 || lastname.indexOf("\u00FC") > -1 || lastname.indexOf("\u00DF") > -1){
-                                narrowurl += "lastname=" + lastname;
-                                longurl += "oldlastname=" + lastname;
-                        }
-                        else{
-                                narrowurl += "lastname=*" + lastname + "*";
-                                longurl += "oldlastname=*" + lastname + "*";
-                        }
-                }
-                if(narrowurl != "" && longurl != ""){
-                        narrowurl = puburl + "(" + narrowurl + ")" + " OR " + "(" + longurl + ")";
-                }
-                else if(narrowurl != "" && longurl == ""){
-                        narrowurl = puburl + narrowurl;
-                }
-                else if(narrowurl == "" && longurl != ""){
-                        narrowurl = puburl + longurl;
-                }
-
-                $.get(narrowurl, function(objJSON) {
-
-                        // If only one hit... fill out fields and change img to green
-                        if(objJSON.length == 1 && (!objJSON[0].old_full_name || !objJSON[0].full_name)){
-                                var data = objJSON[0];
-                                var personId = "";
-                                var orcid = "";
-                                var first_name = "";
-                                var last_name = "";
-
-                                $.each(data, function(key, value){
-                                        if(key == "_id"){
-                                                personId = value;
-                                        }
-                                        if(key == "first_name"){
-                                                first_name = value;
-                                        }
-                                        if(key == "last_name"){
-                                                last_name = value;
-                                        }
-                                        if(key == "orcid"){
-                                                orcid = value;
-                                        }
-                                });
-
-                                $('#' + type + 'first_name_' + lineId).val(first_name);
-                                $('#' + type + 'last_name_' + lineId).val(last_name);
-                                $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly", "readonly");
-                                $('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
-                                $('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
-                                $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
-
-                                $('#' + type + 'id_' + lineId).val(personId);
-                                $('#' + type + 'orcid_' + lineId).val(orcid);
-
-                                personId = "";
-                                orcid = "";
-                                first_name = "";
-                                last_name = "";
-                        }
-
-                        // If more than one hit... show modal with choices
-                        else if(objJSON.length > 1 || (objJSON.length == 1 && objJSON[0].old_full_name && objJSON[0].full_name)){
-                                var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
-                                container_title.html('');
-                                var title = '<span class="glyphicon glyphicon-indent-left text-default"></span> UniBi author: Choose name';
-                                var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
-                                container.html('');
-                                var table = '<p>Several exact matches for <em>' + firstname + ' ' + lastname + '</em> were found in the staff directory (PEVZ). Click on the number (Person ID) to view the person\'s profile in the PEVZ. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
-                                var rows = "";
-                                var table2 = '<table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
-                                var rows2 = "";
-
-                                for(var i=0;i<objJSON.length;i++){
-                                        var data = objJSON[i];
-                                        var personId = "";
-                                        var orcid = "";
-                                        var first_name = "";
-                                        var old_first_name = "";
-                                        var last_name = "";
-                                        var old_last_name = "";
-                                        $.each(data, function(key, value){
-                                                if(key == "_id"){
-                                                        personId = value;
-                                                }
-                                                if(key == "orcid"){
-                                                        orcid = value;
-                                                }
-                                                if(key == "first_name"){
-                                                        first_name = value;
-                                                        first_nameLc = value.toLowerCase();
-                                                }
-                                                if(key == "old_first_name"){
-                                                        old_first_name = value;
-                                                        old_first_nameLc = value.toLowerCase();
-                                                }
-                                                if(key == "last_name"){
-                                                        last_name = value;
-                                                        last_nameLc = value.toLowerCase();
-                                                }
-                                                if(key == "old_last_name"){
-                                                        old_last_name = value;
-                                                        old_last_nameLc = value.toLowerCase();
-                                                }
-                                        });
-
-                                        if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase()) || (firstname == old_first_name.toLowerCase() && lastname == "") || (lastname == old_last_name.toLowerCase() && firstname == "") || (lastname == old_last_name.toLowerCase() && firstname == old_first_name.toLowerCase())){
-                                                rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
-                                                if(old_first_name || old_last_name){
-                                                        rows += '<tr data-id="' + personId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
-                                                }
-                                        }
-                                        else {
-                                                rows2 += '<tr data-id="' + personId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
-                                                if(old_first_name || old_last_name){
-                                                        rows2 += '<tr data-id="' + personId + '"><td><a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
-                                                }
-                                        }
-
-                                }
-
-                                if(rows == ""){
-                                        table = "<p>Several possible matches for <em>" + firstname + " " + lastname + "</em> were found in the staff directory (PEVZ). Click on the number (Person ID) to view the person\'s profile in the PEVZ. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p>";
-                                }
-                                else{
-                                        table += rows + "</table>";
-                                }
-
-                                if(rows2 == ""){
-                                        table2 = "";
-                                }
-                                else {
-                                        table2 += rows2 + "</table>";
-                                }
-
-                                container_title.append(title);
-                                container.append(table);
-                                container.append(table2);
-
-                                $('.person_link').bind("click", function() {
-                                        var personId = $(this).parent().parent().attr('data-id');
-                                        var orcid = $(this).parent().parent().attr('data-orcid');
-                                        var first_name = $(this).parent().parent().find('.name').attr('data-firstname');
-                                        var last_name = $(this).parent().parent().find('.name').attr('data-lastname');
-
-                                        var lineId = $(this).parents('.table').attr('id').replace('lineId','');
-
-                                        $('#' + type + 'first_name_' + lineId).val("");
-                                        $('#' + type + 'first_name_' + lineId).val(first_name);
-                                        $('#' + type + 'last_name_' + lineId).val("");
-                                        $('#' + type + 'last_name_' + lineId).val(last_name);
-                                        $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
-                                        $('#' + type + 'Authorized' + lineId).attr('src','/images/biAuthorized.png');
-                                        $('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
-                                        $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
-
-                                        $('#' + type + 'id_' + lineId).val(personId);
-                                        $('#' + type + 'orcid_' + lineId).val(orcid);
-
-                                        $('#' + type + 'link_person_modal').modal("hide");
-                                        $('#' + type + 'link_person_modal').find('.modal-body').first().html('');
-                                });
-
-                                $('#' + type + 'link_person_modal_dismiss').bind("click", function() {
-                                        $('#' + type + 'idm_intern_' + lineId).prop("checked", false);
-                                        $('#' + type + 'idm_extern_' + lineId).prop("checked", true);
-                                });
-
-                                $('#' + type + 'link_person_modal').modal("show");
-                        }
-
-                        // No results found
-                        else {
-                                var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
-                                var title = '<span class="glyphicon glyphicon-remove-circle text-danger"></span> No UniBi author found';
-                                var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
-                                container.html('');
-                                container_title.html('');
-                                container.append('<p class="has-error">No matching entry in staff directory (PEVZ) found. Please check, if first and last name of the author are entered correctly. You can omit letters (e.g. just enter the last name, or the last name and first letter of first name).</p>');
-                                container_title.append(title);
-                                $('#' + type + 'link_person_modal').modal("show");
-                                $('#' + type + 'idm_intern_' + lineId).prop("checked", false);
-                                $('#' + type + 'idm_extern_' + lineId).prop("checked", true);
-                        }
-                }, "json");
+        var baseURL = '/search_researcher?term=';
+        var narrowurl = "";
+        var first_name = $('#' + type + 'first_name_' + lineId).val();
+        $('#' + type + 'orig_first_name_' + lineId).val(first_name);
+        var firstname = first_name.toLowerCase();
+        firstname = firstname.replace('\.','');
+        var last_name = $('#' + type + 'last_name_' + lineId).val();
+        $('#' + type + 'orig_last_name_' + lineId).val(last_name);
+        var lastname = last_name.toLowerCase();
+        lastname = lastname.replace('\.','');
+        if(firstname){
+            // if name consists of more than one word, use any and ""
+            if(firstname.indexOf(" ") > -1){
+                narrowurl += 'firstname exact "' + firstname + '"';
+            }
+            else {
+                narrowurl += "firstname=" + firstname + "*";
+            }
         }
-        else {
-                var orig_first_name = "";
-                orig_first_name = $('#' + type + 'orig_first_name_' + lineId).val();
-                var orig_last_name = "";
-                orig_last_name = $('#' + type + 'orig_last_name_' + lineId).val();
+        if(firstname && lastname){
+            narrowurl += " AND ";
+        }
+        if(lastname){
+            // if name consists of more than one word, use any and ''
+            if(lastname.indexOf(" ") > -1){
+                narrowurl += 'lastname exact "' + lastname + '"';
+            }
+            else{
+                narrowurl += "lastname=*" + lastname + "*";
+            }
+        }
+
+        narrowurl = baseURL + narrowurl;
+
+        $.get(narrowurl, function(objJSON) {
+            // If only one hit... fill out fields and change img to green
+            if(objJSON.length == 1 && (!objJSON[0].old_full_name || !objJSON[0].full_name)){
+                var data = objJSON[0];
+                var personId = "";
+                var orcid = "";
+                var first_name = "";
+                var last_name = "";
+
+                $.each(data, function(key, value){
+                    if(key == "_id"){
+                        personId = value;
+                    }
+                    if(key == "first_name"){
+                        first_name = value;
+                    }
+                    if(key == "last_name"){
+                        last_name = value;
+                    }
+                    if(key == "orcid"){
+                        orcid = value;
+                    }
+                });
+
+                $('#' + type + 'first_name_' + lineId).val(first_name);
+                $('#' + type + 'last_name_' + lineId).val(last_name);
+                $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly", "readonly");
+                $('#' + type + 'Authorized' + lineId).attr('src','/images/authorized_yes.png');
+                $('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
+                $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
+
+                $('#' + type + 'id_' + lineId).val(personId);
+                $('#' + type + 'orcid_' + lineId).val(orcid);
+
+                personId = "";
+                orcid = "";
+                first_name = "";
+                last_name = "";
+            }
+            // If more than one hit... show modal with choices
+            else if(objJSON.length > 1 || (objJSON.length == 1 && objJSON[0].old_full_name && objJSON[0].full_name)) {
+                var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
+                container_title.html('');
+                var title = '<span class="glyphicon glyphicon-indent-left text-default"></span>Author: Choose name';
+                var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
+                container.html('');
+                var table = '<p>Several exact matches for <em>' + firstname + ' ' + lastname + '</em> were found in the staff directory. Click on the number (Person ID) to view the person\'s profile in the directory. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
+                var rows = "";
+                var table2 = '<table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
+                var rows2 = "";
+
+                for(var i=0;i<objJSON.length;i++){
+                    var data = objJSON[i];
+                    var personId = "";
+                    var orcid = "";
+                    var first_name = "";
+                    var old_first_name = "";
+                    var last_name = "";
+                    var old_last_name = "";
+                    $.each(data, function(key, value){
+                        if(key == "_id"){
+                            personId = value;
+                        }
+                        if(key == "orcid"){
+                            orcid = value;
+                        }
+                        if(key == "first_name"){
+                            first_name = value;
+                            first_nameLc = value.toLowerCase();
+                        }
+                        if(key == "old_first_name"){
+                            old_first_name = value;
+                            old_first_nameLc = value.toLowerCase();
+                        }
+                        if(key == "last_name"){
+                            last_name = value;
+                            last_nameLc = value.toLowerCase();
+                        }
+                        if(key == "old_last_name"){
+                            old_last_name = value;
+                            old_last_nameLc = value.toLowerCase();
+                        }
+                    });
+
+                    if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase()) || (firstname == old_first_name.toLowerCase() && lastname == "") || (lastname == old_last_name.toLowerCase() && firstname == "") || (lastname == old_last_name.toLowerCase() && firstname == old_first_name.toLowerCase())){
+                        rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
+                        if(old_first_name || old_last_name){
+                            rows += '<tr data-id="' + personId + '"><td><a href="/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                        }
+                    }
+                    else {
+                        rows2 += '<tr data-id="' + personId + '"><td><a href="/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
+                        if(old_first_name || old_last_name){
+                            rows2 += '<tr data-id="' + personId + '"><td><a href="/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                        }
+                    }
+
+                }
+
+                if(rows == ""){
+                    table = "<p>Several possible matches for <em>" + firstname + " " + lastname + "</em> were found in the staff directory. Click on the number (Person ID) to view the person\'s profile in the directory. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p>";
+                }
+                else{
+                    table += rows + "</table>";
+                }
+                if(rows2 == ""){
+                    table2 = "";
+                }
+                else {
+                    table2 += rows2 + "</table>";
+                }
+
+                container_title.append(title);
+                container.append(table);
+                container.append(table2);
+
+                $('.person_link').bind("click", function() {
+                    var personId = $(this).parent().parent().attr('data-id');
+                    var orcid = $(this).parent().parent().attr('data-orcid');
+                    var first_name = $(this).parent().parent().find('.name').attr('data-firstname');
+                    var last_name = $(this).parent().parent().find('.name').attr('data-lastname');
+                    var lineId = $(this).parents('.table').attr('id').replace('lineId','');
+
+                    $('#' + type + 'first_name_' + lineId).val("");
+                    $('#' + type + 'first_name_' + lineId).val(first_name);
+                    $('#' + type + 'last_name_' + lineId).val("");
+                    $('#' + type + 'last_name_' + lineId).val(last_name);
+                    $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
+                    $('#' + type + 'Authorized' + lineId).attr('src','/images/authorized_yes.png');
+                    $('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
+                    $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
+
+                    $('#' + type + 'id_' + lineId).val(personId);
+                    $('#' + type + 'orcid_' + lineId).val(orcid);
+
+                    $('#' + type + 'link_person_modal').modal("hide");
+                    $('#' + type + 'link_person_modal').find('.modal-body').first().html('');
+                });
+
+                $('#' + type + 'link_person_modal_dismiss').bind("click", function() {
+                    $('#' + type + 'idm_intern_' + lineId).prop("checked", false);
+                    $('#' + type + 'idm_extern_' + lineId).prop("checked", true);
+                });
+
+                $('#' + type + 'link_person_modal').modal("show");
+            }
+            // No results found
+            else {
+                var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
+                var title = '<span class="glyphicon glyphicon-remove-circle text-danger"></span> No author found';
+                var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
+                container.html('');
+                container_title.html('');
+                container.append('<p class="has-error">No matching entry in staff directory found. Please check, if first and last name of the author are entered correctly. You can omit letters (e.g. just enter the last name, or the last name and first letter of first name).</p>');
+                container_title.append(title);
+                $('#' + type + 'link_person_modal').modal("show");
+                $('#' + type + 'idm_intern_' + lineId).prop("checked", false);
+                $('#' + type + 'idm_extern_' + lineId).prop("checked", true);
+            }
+        }, "json");
+    }
+    else {
+        var orig_first_name = "";
+        orig_first_name = $('#' + type + 'orig_first_name_' + lineId).val();
+        var orig_last_name = "";
+        orig_last_name = $('#' + type + 'orig_last_name_' + lineId).val();
 
         if($('#' + type + 'idm_extern_' + lineId).is(':checked') && $('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
-                        // Uncheck, release input fields and change img back to gray
-                        $('#' + type + 'Authorized' + lineId).attr('src','/images/biNotAuthorized.png');
-                        $('#' + type + 'Authorized' + lineId).attr('alt','Not Authorized');
-                        $('#' + type + 'id_' + lineId).val("");
-                        $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
-                        $('#' + type + 'first_name_' + lineId).val(orig_first_name);
-                        $('#' + type + 'orig_first_name_' + lineId).val("");
-                        $('#' + type + 'last_name_' + lineId).val(orig_last_name);
-                        $('#' + type + 'orig_last_name_' + lineId).val("");
-                }
+            // Uncheck, release input fields and change img back to gray
+            $('#' + type + 'Authorized' + lineId).attr('src','/images/authorized_no.png');
+            $('#' + type + 'Authorized' + lineId).attr('alt','Not Authorized');
+            $('#' + type + 'id_' + lineId).val("");
+            $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
+            $('#' + type + 'first_name_' + lineId).val(orig_first_name);
+            $('#' + type + 'orig_first_name_' + lineId).val("");
+            $('#' + type + 'last_name_' + lineId).val(orig_last_name);
+            $('#' + type + 'orig_last_name_' + lineId).val("");
         }
+    }
 }
 
 
@@ -405,7 +376,7 @@ function edit_file(fileId, id){
         $('#id_fileName').val(json.file_name);
         $('#id_creator').val(json.creator);
         $('#id_fileSize').val(json.file_size);
-        $('#id_contentType').val(json.content_type); 
+        $('#id_contentType').val(json.content_type);
 
         if(json.title){
                 $('#id_fileTitle').val(json.title);
@@ -549,7 +520,7 @@ function add_field(name, placeholder){
                         $(this).val('');
                 }
                 if($(this).prop('tagName') == "IMG"){
-                        $(this).attr('src','/images/biNotAuthorized.png');
+                        $(this).attr('src','/images/authorized_no.png');
                         $(this).attr('alt', 'Not Authorized');
                         $(this).tooltip();
                 }
@@ -632,7 +603,7 @@ function remove_field(object){
                                 $(this).prop('checked', true);
                         }
                         if($(this).prop('tagName') == "IMG"){
-                                $(this).attr('src','/images/biNotAuthorized.png');
+                                $(this).attr('src','/images/authorized_no.png');
                                 $(this).attr('alt', 'Not Authorized');
                         }
                 });

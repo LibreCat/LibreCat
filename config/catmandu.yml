@@ -1,6 +1,9 @@
 time_format: "%Y-%m-%dT%H:%M:%SZ"
 
-ip_range: '8.8'
+# Specity the ipranges which can download (local) files
+ip_range:
+    - 127.0.0.1
+    - 10.0.0.0/8
 
 urn_prefix: 'urn:whatever-'
 
@@ -9,6 +12,11 @@ thesis:
   from: 'from@you.org'
   subject: '[PUB] New thesis submitted'
   urn_prefix: 'urn:thesis-'
+
+# Use this link to lookup a personId in a staff directory. Required
+# to differentiate between different users with the same name (homonym,namesake)
+person:
+  staffdirectory: "https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId="
 
 ## Uncomment when you want to send emails when new research data becomes available
 #research_data:
@@ -54,6 +62,49 @@ default_sort_backend:
 default_style: 'default'
 default_fd_style: 'default'
 default_format: html
+
+default_facets:
+  author:
+    terms:
+      field: 'author.id'
+      size: 20
+  editor:
+    terms:
+      field: 'editor.id'
+      size: 20
+  open_access:
+    terms:
+      field: 'file.open_access'
+      size: 1
+  popular_science:
+    terms:
+      field: 'popular_science'
+      size: 1
+  extern:
+    terms:
+      field: 'extern'
+      size: 2
+  status:
+    terms:
+      field: 'status'
+      size: 8
+  year:
+    terms:
+      field: 'year'
+      size: 100
+      order: 'reverse_term'
+  type:
+    terms:
+      field: 'type'
+      size: 25
+  isi:
+    terms:
+      field: 'isi'
+      size: 1
+  pmid:
+    terms:
+      field: 'pmid'
+      size: 1
 
 request_copy:
 # period in days

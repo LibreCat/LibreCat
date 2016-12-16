@@ -1,19 +1,25 @@
-BEGIN {
-    use Catmandu::Sane;
-    use Path::Tiny;
-    use LibreCat::Layers;
-    LibreCat::Layers->new(layer_paths => [qw(t/layer)])->load;
-}
-
-use strict;
-use warnings;
+use Catmandu::Sane;
+use LibreCat load => (layer_paths => [qw(t/layer)]);
 use Test::More;
-
 use Dancer::Test;
-use LibreCat::App;
-use LibreCat::App::Helper;
+use App::Cmd::Tester;
+use LibreCat::CLI;
 
-h->config->{default_lang} = 'en';
+my $pkg;
+BEGIN {
+    $pkg = "LibreCat::App";
+    use_ok $pkg;
+}
+require_ok $pkg;
+
+Catmandu->config->{default_lang} = 'en';
+Catmandu->store('backup')->bag('publication')->delete_all;
+Catmandu->store('search')->bag('publication')->drop;
+
+foreach my $obj (qw(publication project researcher)) {
+    my $result = test_app(qq|LibreCat::CLI| =>
+            [$obj, "add", "t/records/valid-$obj.yml"]);
+}
 
 route_exists          [GET => '/'], "GET / is handled";
 response_status_is    [GET => '/'], 200, 'GET / status is ok';

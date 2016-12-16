@@ -4,21 +4,21 @@ use Test::More;
 use File::Slurp;
 
 my $pkg;
-my @worker_pkg;
+my @fs_pkg;
 
 BEGIN {
     $pkg = 'LibreCat::FileStore';
     use_ok $pkg;
-    @worker_pkg = map {
+    @fs_pkg = map {
         $_ =~ s/\.pm$//;
-        'LibreCat::Worker::' . $_;
-    } read_dir('lib/LibreCat/Worker/');
+        'LibreCat::FileStore::' . $_;
+    } read_dir('lib/LibreCat/FileStore/');
 
-    use_ok $_ for @worker_pkg;
+    use_ok $_ for @fs_pkg;
 }
 
 require_ok $pkg;
 
-require_ok $_ for @worker_pkg;
+require_ok $_ for @fs_pkg;
 
 done_testing;

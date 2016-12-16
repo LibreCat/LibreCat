@@ -1,7 +1,7 @@
 package Catmandu::Fix::add_citation;
 
 use Catmandu::Sane;
-use Catmandu::Fix::clone as => 'clone';
+use Clone qw(clone);
 use LibreCat::App::Helper;
 use LibreCat::Citation;
 use Moo;
@@ -9,12 +9,14 @@ use Moo;
 sub fix {
     my ($self, $data) = @_;
 
-    unless (h->config->{citation}->{engine} eq 'none') {
+    if (h->config->{citation}->{engine} eq 'csl') {
+        my $citation_engine = LibreCat::Citation->new(all => 1);
+
         my $d = clone $data;
-        $data->{citation} = LibreCat::Citation->new(all => 1)->create($d);
+        $data->{citation} = $citation_engine->create($d);
     }
 
-    return $data;
+    $data;
 }
 
 1;

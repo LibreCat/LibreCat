@@ -7,57 +7,97 @@ LibreCat::App::Catalogue::Route::importer - central handler for import routes
 =cut
 
 use Catmandu::Sane;
+use Catmandu::Util;
+use Catmandu::Fix::trim as => 'trim';
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
 use LibreCat::App::Helper;
-use LibreCat::App::Catalogue::Controller::Importer;
-use Catmandu::Fix::trim as => 'trim';
+use URL::Encode qw(url_decode);
+
+sub _fetch_record {
+    my ($id, $source) = @_;
+
+    return undef unless ($source =~ /^[a-zA-Z0-9]+$/);
+
+    # check agency: crossref or datacite
+    if ($source eq 'crossref') {
+        $id =~ s{^\D+[:\/]}{};
+
+        my $data = Catmandu->importer(
+            'getJSON',
+            from    => url_decode("http://api.crossref.org/works/$id/agency"),
+            timeout => 10,
+        )->first;
+
+        if ( $data->{message} && $data->{message}->{agency}->{id} eq "datacite" ) {
+            $source = "datacite";
+        }
+    }
+
+    my $pkg = Catmandu::Util::require_package($source, 'LibreCat::FetchRecord');
+
+    unless ($pkg) {
+        h->log->error("failed to load LibreCat::FetchRecord::$source");
+        return undef;
+    }
+
+    h->log->debug("Processing LibreCat::FetchRecord::$source $id");
+
+    $pkg->new->fetch($id);
+}
 
 =head2 POST /librecat/record/import
 
 Returns a form with imported data.
 
 =cut
-
 post '/librecat/record/import' => needs login => sub {
     my $p = params;
     trim($p, 'id', 'whitespace');
-    my $pub;
-    my $user = h->get_person(session->{personNumber});
-    my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
+    trim($p, 'source', 'whitespace');
+
+    my $user   = h->get_person(session->{personNumber});
+    my $id     = $p->{id};
+    my $data   = request->upload('data') ? request->upload('data')->content : $p->{data};
+    my $source = $p->{source};
 
     try {
-        $pub = LibreCat::App::Catalogue::Controller::Importer->new(
-            id => $p->{id} || $p->{bibtex_input},
-            source => $p->{source},
-        )->fetch;
+        my @imported_records = _fetch_record( $p->{id} // $data, $source );
 
-        if ($pub) {
-            $pub->{_id} = h->new_record('publication');
-            my $type = $pub->{type} || 'journal_article';
-            my $templatepath = "backend/forms";
+        die "no records imported" unless @imported_records;
+
+        for my $pub (@imported_records) {
+            $pub->{_id}        = h->new_record('publication');
+            $pub->{status}     = 'new'; # new is the status of records not checked by users/reviewers
+            $pub->{creator}    = {
+                    id    => session->{personNumber},
+                    login => session->{user}
+            };
+            $pub->{user_id}    = session->{personNumber};
             $pub->{department} = $user->{department};
 
-            if (   ($edit_mode and $edit_mode eq "expert")
-                or (!$edit_mode and session->{role} eq "super_admin"))
-            {
-                $templatepath .= "/expert";
-            }
+            # Use config/hooks.yml to register functions
+            # that should run before/after uploading QAE publications
 
-            $pub->{new_record} = 1;
+            h->hook('import-new-')->fix_around(
+                $pub,
+                sub {
+                    h->update_record('publication', $pub);
+                }
+            );
+        }
 
-            return template "$templatepath/$type", $pub;
-        }
-        else {
-            return template "backend/add_new",
-                {error =>
-                    "No record found with ID $p->{id} in $p->{source}."};
-        }
+        return template "backend/add_new",  {
+            ok => "Imported " . int(@imported_records) . " record(s) from $source" ,
+            imported => \@imported_records
+        };
     }
     catch {
+        $id //= substr($data,0,40) . '...';
+        h->log->error("import failed: $_");
         return template "backend/add_new",
             {error =>
-                "Could not import ID $p->{id} from source $p->{source}."};
+                "Could not import $id from source $p->{source}."};
     };
 
 };

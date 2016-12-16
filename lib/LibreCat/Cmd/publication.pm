@@ -2,9 +2,11 @@ package LibreCat::Cmd::publication;
 
 use Catmandu::Sane;
 use Catmandu;
+use Catmandu::Util;
 use LibreCat::App::Helper;
 use LibreCat::Validator::Publication;
 use LibreCat::App::Catalogue::Controller::File;
+use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -19,7 +21,8 @@ librecat publication [options] add <FILE>
 librecat publication [options] delete <id>
 librecat publication [options] purge <id>
 librecat publication [options] valid <FILE>
-librecat publication [options] files [<id>]|[<cql-query>]|[<FILE>]
+librecat publication [options] files [<id>]|[<cql-query>]|[<FILE>]|REPORT
+librecat publication [options] fetch <source> <id>
 librecat publication [options] embargo ['update']
 
 E.g.
@@ -43,20 +46,20 @@ librecat publication embargo
 librecat publication embargo update > /tmp/update.txt
 
 # Update the file metadata
-librecat publication file /tmp/update.txt
+librecat publication files /tmp/update.txt
 
 EOF
 }
 
 sub command_opt_spec {
     my ($class) = @_;
-    ();
+    (['no-citation|nc', ""]);
 }
 
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|export|get|add|delete|purge|valid|files|embargo$/;
+    my $commands = qr/list|export|get|add|delete|purge|valid|files|fetch|embargo$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -68,6 +71,8 @@ sub command {
         $self->usage_error("should be one of $commands");
     }
 
+    binmode(STDOUT, ":encoding(utf-8)");
+
     if ($cmd eq 'list') {
         return $self->_list(@$args);
     }
@@ -78,7 +83,8 @@ sub command {
         return $self->_get(@$args);
     }
     elsif ($cmd eq 'add') {
-        return $self->_add(@$args);
+        my $skip_citation = $opts->{'no-citation'} ? 1 : 0;
+        return $self->_add($skip_citation, @$args);
     }
     elsif ($cmd eq 'delete') {
         return $self->_delete(@$args);
@@ -91,6 +97,9 @@ sub command {
     }
     elsif ($cmd eq 'files') {
         return $self->_files(@$args);
+    }
+    elsif ($cmd eq 'fetch') {
+        return $self->_fetch(@$args);
     }
     elsif ($cmd eq 'embargo') {
         return $self->_embargo(@$args);
@@ -115,7 +124,7 @@ sub _list {
             my $status  = $item->{status};
             my $type    = $item->{type}             // '---';
 
-            printf "%-2.2s %9d %-10.10s %-60.60s %-10.10s %s\n", " " # not use
+            printf "%-2.2s %-40.40s %-10.10s %-60.60s %-10.10s %s\n", " " # not use
                 , $id, $creator, $title, $status, $type;
         }
     );
@@ -153,7 +162,7 @@ sub _get {
 }
 
 sub _add {
-    my ($self, $file) = @_;
+    my ($self, $skip_citation, $file) = @_;
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
@@ -168,7 +177,7 @@ sub _add {
 
             if ($validator->is_valid($rec)) {
                 $rec->{_id} //= $helper->new_record('publication');
-                $helper->store_record('publication', $rec);
+                $helper->store_record('publication', $rec, $skip_citation);
                 print "added $rec->{_id}\n";
                 return 1;
             }
@@ -262,6 +271,29 @@ sub _valid {
     return $ret == 0;
 }
 
+sub _fetch {
+    my ($self, $source, $id) = @_;
+
+    croak "need a source (axiv,crossref,epmc,...)" unless defined($source);
+    croak "need an identifier" unless defined($id);
+
+    my $pkg = Catmandu::Util::require_package($source, 'LibreCat::FetchRecord');
+
+    unless ($pkg) {
+        croak "failed to load LibreCat::FetchRecord::$source";
+    }
+
+    $id = path($id)->slurp_utf8 if -r $id;
+
+    my @perl = $pkg->new->fetch($id);
+
+    my $exporter = Catmandu->exporter('YAML');
+    $exporter->add_many(\@perl);
+    $exporter->commit;
+
+    return 0;
+}
+
 sub _embargo {
     my ($self, @args) = @_;
 
@@ -281,12 +313,25 @@ sub _embargo {
         my ($item) = @_;
         return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
 
+        my $process = 0;
         for my $file (@{$item->{file}}) {
+            my $embargo = Catmandu::Util::trim($file->{embargo});
+
+            if ($update && length($embargo) && $embargo le $now) {
+                $process = 1;
+            }
+            else {
+                $process = 0;
+            }
+
+            # Show __all__ file files and indicate which ones should
+            # be switched to open_access.
             printf "%-9d\t%-9d\t%-12.12s\t%-14.14s\t%-15.15s\t%s\n",
                 $item->{_id}, $file->{file_id},
-                $update ? 'open_access' : $file->{access_level},
-                $update ? 0             : $file->{request_a_copy},
-                $update ? 'NA' : $file->{embargo} // 'NA', $file->{file_name};
+                $process ? 'open_access' : $file->{access_level},
+                $process ? 0             : $file->{request_a_copy},
+                $process ? 'NA' : $embargo // 'NA',
+                $file->{file_name};
         }
     };
 
@@ -296,7 +341,10 @@ sub _embargo {
 sub _files {
     my ($self, $file) = @_;
 
-    if ($file && $file =~ /^\d+$/) {
+    if ($file && $file eq 'REPORT') {
+        $self->_files_reporter();
+    }
+    elsif ($file && $file =~ /^\d+$/) {
         $self->_files_list($file);
     }
     elsif ($file && -r $file) {
@@ -326,7 +374,7 @@ sub _files_list {
         }
     };
 
-    if ($id =~ /^\d+$/) {
+    if (defined($id) && $id =~ /^[0-9A-Za-z-]+$/) {
         my $data = LibreCat::App::Helper::Helpers->new->get_publication($id);
         $printer->($data);
     }
@@ -466,6 +514,55 @@ sub _file_process {
     1;
 }
 
+sub _files_reporter {
+    my $file_store = Catmandu->config->{filestore}->{default}->{package};
+    my $file_opt   = Catmandu->config->{filestore}->{default}->{options};
+
+    my $pkg
+        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+    my $files = $pkg->new(%$file_opt);
+
+    my $exporter = Catmandu->exporter('TSV'
+                            , header  => 1
+                            , fields => [qw(status container filename error)]);
+
+    LibreCat::App::Helper::Helpers->new->publication->each(sub {
+        my ($item) = @_;
+        return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
+
+        for my $file (@{$item->{file}}) {
+            my $pub_id    = $item->{_id};
+            my $file_name = $file->{file_name};
+
+            my $status = 'OK';
+            my $error  = '';
+
+            if (my $container = $files->get($pub_id)) {
+                if ($container->exists($file_name)) {
+                    $status = 'OK'
+                }
+                else {
+                    $status = 'ERROR';
+                    $error = 'no such file';
+                }
+            }
+            else {
+                $status = 'ERROR';
+                $error = 'no such container';
+            }
+
+            $exporter->add({
+                status    => $status ,
+                container => $pub_id ,
+                filename  => $file_name ,
+                error     => $error
+            });
+        }
+    });
+
+    $exporter->commit;
+}
+
 1;
 
 __END__
@@ -485,7 +582,8 @@ LibreCat::Cmd::publication - manage librecat publications
 	librecat publication delete <id>
     librecat publication purge <id>
     librecat publication valid <FILE>
-    librecat publication files [<id>]|[<cql-query>]|[<FILE>]
+    librecat publication files [<id>]|[<cql-query>]|[<FILE>]|REPORT
+    librecat publication fetch <source> <id>
     librecat publication embargo ['update']
 
 =cut

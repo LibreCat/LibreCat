@@ -23,11 +23,10 @@ post '/librecat/upload/qae/submit' => needs login => sub {
         my $now = h->now();
 
         my $record = {
-            _id    => $id,
-            status => "new",
-            accept => 1,
-            title =>
-                "New Quick And Easy Publication - Will be edited by PUB-Team",
+            _id         => $id,
+            status      => "new", # new is the status of records not checked by users/reviewers
+            accept      => 1,
+            title       => h->loc('add_new.qae_title'),
             publication => "Quick And Easy Journal Title",
             type        => "journal_article",
             message     => params->{description},
@@ -43,6 +42,7 @@ post '/librecat/upload/qae/submit' => needs login => sub {
             department => $department || $person->{department},
             creator =>
                 {id => session->{personNumber}, login => session->{user}},
+            user_id => session->{personNumber} ,
             file => [
                 {
                     # Required for managing the upload
@@ -57,10 +57,22 @@ post '/librecat/upload/qae/submit' => needs login => sub {
             ]
         };
 
-        my $response = h->update_record('publication', $record);
+        # Use config/hooks.yml to register functions
+        # that should run before/after uploading QAE publications
+        h->hook('qae-new')->fix_around(
+            $record,
+            sub {
+                my $response = h->update_record('publication', $record);
+            }
+        );
+
+        return template "backend/add_new",  {
+            ok => "Imported 1 record(s) from dropzone" ,
+            imported => [ $record ]
+        };
     }
 
-    redirect request->{referer};
+    return template "backend/add_new";
 };
 
 1;

@@ -13,13 +13,10 @@ Build.bat
 MANIFEST.bak
 META.yml
 MYMETA.yml
-Makefile
-Makefile.old
+catmandu.local.yml
 Vagrantfile
 _build/
 blib/
-layers.yml
-config/catmandu.local.yml
 cover_db/
 cpanfile.snapshot
 data/temp_uploads/**

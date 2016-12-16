@@ -76,6 +76,7 @@ tabs:
   data_publications: "Data Publications"
   publications_by: "Publ. by"
   projects: "Projects"
+  departments: "Departments"
   authors: "Authors"
   authors_title: "Authors"
   start: "What is PUB?"
@@ -107,7 +108,7 @@ home:
     authors: "Individual Author Pages"
     data_publications: "Data Publications"
     oa_publications: "Open Access Publications"
-    theses: "Theses"
+    projects: "Projects"
   logos:
     oa: "Open Access at<br>Bielefeld University"
     rd_management: "Research Data Management"
@@ -236,7 +237,18 @@ facets:
     "publcount.desc": "Number of publications descending"
     "fullname.asc": "Alphabetically ascending"
     "fullname.desc": "Alphabetically descending"
+citation:
+  apa: APA
+  american-medical-association: AMA
+  chicago-fullnote-bibliography: Chicago
+  ieee: IEEE
+  modern-language-association: MLA
 frontdoor:
+  publication: Journal Title
+  volume: Volume
+  Issue: Issue
+  page: Page
+  article_number: Article no.
   preview: "Preview"
   crumb_back: "Back"
   no_record: "This record does not exist or was deleted"
@@ -364,6 +376,8 @@ add_new:
   drop_oa: "Option 3:<br />Drop your Open Access fulltext here"
   paste_bibtex: "Option 4:<br />Paste your BibTex record here"
   paste_bibtex_placeholder: "Please paste only one record at a time"
+  qae_title: "New Quick And Easy Publication - Will be edited by PUB-Team"
+  wos_import: "Web of Science Import"
 forms:
   book:
     label: "Book"

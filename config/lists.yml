@@ -168,9 +168,6 @@ gs_doc_type:
   research_data: 'Research Data'
 
 relations_rd:
-#  -
-#    relation: "cites"
-#    opposite: "is_cited_by"
   -
     relation: "is_cited_by"
     opposite: "cites"

@@ -1,5 +1,7 @@
 # pmc mapping...
 
+move_field(resultList.result.$first,.)
+
 #default type
 add_field(type,journal_article)
 
@@ -21,12 +23,3 @@ move_field('authorString','author')
 split_field(author, ',|;')
 trim(author.*, 'nonword')
 split_author()
-#do list (var:loop, path => author)
-#  do identity()
-#    copy_field(loop,tmp)
-#    split_field(tmp, ' ')
-#    move_field(tmp.$last,loop.first_name)
-#    join_field(tmp, ' ')
-#    move_field(tmp,loop.last_name)
- # end
-#end

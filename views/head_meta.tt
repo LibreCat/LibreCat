@@ -13,13 +13,9 @@
     <script src="/javascripts/bootstrap.min.js"></script><!-- main bootstrap file -->
     <script src="/javascripts/bootstrap-select.min.js"></script><!-- dropdown-like selects -->
     <script src="/javascripts/[% IF backend %]backend[% ELSE %]frontend[% END %].js"></script>
-    [% IF backend OR bag == 'pubtheses' %]
+    [% IF backend %]
     <script src="/javascripts/dropzone.min.js"></script>
     <script src="/javascripts/pub_dropzones.js"></script>
-    [% END %]
-    [% IF bag == 'home' %]
-	<script src="/javascripts/angular-1.2.14.min.js"></script>
-	<script src="/javascripts/angularSearch.js"></script>
     [% END %]
 
 <!-- END head_meta.tt -->

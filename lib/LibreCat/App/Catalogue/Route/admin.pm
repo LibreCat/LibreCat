@@ -11,7 +11,6 @@ use Catmandu::Util qw(trim);
 use App::bmkpasswd qw(mkpasswd);
 use Dancer ':syntax';
 use LibreCat::App::Helper;
-use LibreCat::App::Catalogue::Controller::Importer;
 use Dancer::Plugin::Auth::Tiny;
 use Syntax::Keyword::Junction 'any' => {-as => 'any_of'};
 
@@ -79,9 +78,11 @@ Searches the authority database. Prints the search form + result list.
 
     get '/account/search' => needs role => 'super_admin' => sub {
         my $p = params;
-
-        $p->{q} = h->string_array($p->{q});
-        my $hits = h->search_researcher($p);
+        my %search_params = (
+          %$p , q => h->string_array("fullname=\"".$p->{q}."\"")
+        );
+        h->log->debug("query for researcher: " . to_dumper(\%search_params));
+        my $hits = LibreCat->searcher->search('researcher', \%search_params);
         template 'admin/account', $hits;
     };
 
@@ -134,24 +135,12 @@ Input is person id. Returns warning if person is already in the database.
 =cut
 
     get '/account/import' => needs role => 'super_admin' => sub {
-        my $id = trim params->{id};
-
-        my $person_in_db = h->researcher->get($id);
-        if ($person_in_db) {
-            template 'admin/account',
-                {error => "There is already an account with ID $id."};
-        }
-        else {
-            my $p = LibreCat::App::Catalogue::Controller::Importer->new(
-                id     => $id,
-                source => 'bis',
-            )->fetch;
-            template 'admin/forms/edit_account', $p;
-        }
+        # todo: was Bielefeld specific....
+        template 'admin/account';
     };
 
     get '/project' => needs role => 'super_admin' => sub {
-        my $hits = h->search_project(
+        my $hits = LibreCat->searcher->search('project',
             {q => "", limit => 100, start => params->{start} || 0});
         template 'admin/project', $hits;
     };
@@ -164,7 +153,7 @@ Input is person id. Returns warning if person is already in the database.
     get '/project/search' => sub {
         my $p = h->extract_params();
 
-        my $hits = h->search_project($p);
+        my $hits = hLibreCat->searcher->search('project', $p);
 
         template 'admin/project', $hits;
     };
@@ -181,7 +170,7 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/research_group' => needs role => 'super_admin' => sub {
-        my $hits = h->search_research_group(
+        my $hits = LibreCat->searcher->search('research_group',
             {q => "", limit => 100, start => params->{start} || 0});
         template 'admin/research_group', $hits;
     };
@@ -194,7 +183,7 @@ Input is person id. Returns warning if person is already in the database.
     get '/research_group/search' => sub {
         my $p = h->extract_params();
 
-        my $hits = h->search_research_group($p);
+        my $hits = LibreCat->searcher->search('research_group', $p);
 
         template 'admin/research_group', $hits;
     };
@@ -211,7 +200,7 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/department' => needs role => 'super_admin' => sub {
-        my $hits = h->search_department(
+        my $hits = LibreCat->searcher->search('department',
             {q => "", limit => 100, start => params->{start} || 0});
         template 'admin/department', $hits;
     };
@@ -224,7 +213,7 @@ Input is person id. Returns warning if person is already in the database.
     get '/department/search' => sub {
         my $p = h->extract_params();
 
-        my $hits = h->search_department($p);
+        my $hits = LibreCat->searcher->search('department', $p);
 
         template 'admin/department', $hits;
     };

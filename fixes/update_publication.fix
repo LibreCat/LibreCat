@@ -40,10 +40,6 @@ if exists(project)
   end
 end
 
-copy_field(bi_doctype,type)
-copy_field(type, type_old)
-lookup(type_old, fixes/lookup/types.csv)
-
 split_field(nasc, ';|,')
 trim(nasc.*)
 split_field(genbank, ';|,')
@@ -63,5 +59,3 @@ remove_field('translator_idm')
 remove_field('supervisor_idm')
 
 delete_empty()
-
-add_citation()

@@ -3,9 +3,6 @@ use Path::Tiny;
 use lib path(__FILE__)->parent->parent->child('lib')->stringify;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
-use strict;
-use warnings;
-use Catmandu::Sane;
 use Catmandu;
 
 use LibreCat::CLI;
@@ -78,6 +75,7 @@ Catmandu->store('search')->bag('project')->drop;
     my $record = $importer->first;
 
     is $record->{_id}, 'P9999999', 'got really a P9999999 record';
+    is $record->{description} , 'Librecat project. What else?' , 'got a valid description';
 }
 
 {

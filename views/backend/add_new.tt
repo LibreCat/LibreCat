@@ -1,7 +1,6 @@
 [% path = request.path %]
 [% backend = path.match('librecat') ? 1 : 0 %]
 [% lang = session.lang %]
-[% lf = h.config.locale.$lang %]
 
 [% INCLUDE header.tt %]
 
@@ -11,6 +10,13 @@
 
   <div class="page-header" id="banner">
     <h1>[% h.loc("add_new.heading") %]</h1>
+    <h2>[% IF error %]<p class="text-danger">[% error %]</p>[% END %]</h2>
+    <h2>[% IF ok %]<p class="text-success">[% ok %]</p>[% END %]</h2>
+    <ul>
+    [% FOREACH rec IN imported %]
+       <li>[% rec.title | html %]<br><a href="/librecat/record/edit/[% rec._id %]">Edit</a></li>
+    [% END %]
+    </ul>
   </div>
 
   <div class="col-md-12">
@@ -24,7 +30,7 @@
 	          <option value="crossref" selected="selected">[% h.loc("add_new.ids.doi") %]</option>
 	          <option value="epmc">[% h.loc("add_new.ids.pmid") %]</option>
 	          <option value="arxiv">[% h.loc("add_new.ids.arxiv") %]</option>
-	         <!-- <option value="inspire">[% h.loc("add_new.ids.inspire") %]</option> -->
+	         <option value="inspire">[% h.loc("add_new.ids.inspire") %]</option>
 	        </select>
 	      </div>
 	      <input type="hidden" id="input_source" name="source">
@@ -35,7 +41,6 @@
 	        </span>
 	      </div>
 	    </form>
-        [% IF error %]<p class="text-danger">[% error %]</p>[% END %]
       </div>
     </div>
 
@@ -95,13 +100,29 @@
         <h3 class="margin-top0">[% h.loc("add_new.paste_bibtex") %]</h3>
         <form role="form" action="/librecat/record/import" method="POST">
 	  <div class="well col-xs-11 col-md-12">
-            <textarea class="form-control" rows="3" name="bibtex_input" placeholder="[% h.loc("add_new.paste_bibtex_placeholder") %]"></textarea>
+            <textarea class="form-control" rows="3" name="data" placeholder="[% h.loc("add_new.paste_bibtex_placeholder") %]"></textarea>
             <input type="hidden" id="bibtex_source" name="source" value="bibtex">
             <button type="submit" class="btn btn-default margin-top1-2"><span class="glyphicon glyphicon-upload"></span> [% h.loc("forms.button.import") %]</button>
           </div>
         </form>
       </div>
     </div>
+
+    <div class="row">
+     <h3>[% h.loc("add_new.wos_import") %]</h3>
+     <div class="row">
+       <form role="form" action="/librecat/record/import" enctype="multipart/form-data" method="POST">
+         <input type="hidden" id="wos_source" name="source" value="wos">
+         <div class="input-group col-md-5 col-xs-8">
+           <input type="file" class="form-control" id="input_id" name="data" required/>
+           <span class="input-group-btn">
+             <button type="submit" class="btn btn-default">[% h.loc("facets.go_button") %]</button>
+           </span>
+         </div>
+       </form>
+     </div>
+   </div>
+    
   </div>
 </div>
 

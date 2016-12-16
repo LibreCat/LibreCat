@@ -20,7 +20,7 @@ requires 'Search::Elasticsearch', '==1.19';
 requires 'Module::Install', '1.16';
 
 # Catmandu
-requires 'Catmandu', '>=1.0302';
+requires 'Catmandu', '>=1.0304';
 requires 'Catmandu::Exporter::Table';
 requires 'Catmandu::Store::ElasticSearch';
 requires 'Catmandu::Store::MongoDB', '>=0.0403';
@@ -28,8 +28,6 @@ requires 'Catmandu::DBI', '>=0.0510';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::XML';
 requires 'Catmandu::ArXiv';
-requires 'Catmandu::Inspire';
-requires 'Catmandu::EuropePMC';
 requires 'Catmandu::Importer::getJSON';
 requires 'Catmandu::Identifier', '>=0.05';
 requires 'Catmandu::RIS', '>=0.04';

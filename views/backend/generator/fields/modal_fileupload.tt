@@ -63,7 +63,7 @@
           <label class="checkbox control-label">
             <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />[% h.loc("forms.${type}.field.dropzone.edit_modal.access.embargo") %]<br />
           </label>
-          <input type="text" class="form-control" name="embargo" id="id_embargo" placeholder="YYYY-MM-DD" value="">
+          <input type="text" class="form-control" name="embargo" id="id_embargo" placeholder="YYYY-MM-DD" value="" size="10" maxlength="10">
         </div>
 
         <h4>[% h.loc("forms.${type}.field.dropzone.edit_modal.additional_information.heading") %]</h4>

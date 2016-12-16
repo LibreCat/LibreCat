@@ -60,10 +60,10 @@
   [%- END %]
 [%- END %]
 [%- IF h.config.citation.engine == 'csl' AND citation %][% display_citation = 1 %][% END %]
-[%- qp = request.params.hash %]
-[%- style = style || qp.style || 'default' %]
+[%- style = h.config.citation.csl.default_style %]
 
-<div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/publication/[% _id %]"><!-- outer row-->
+[% mypath = request.path.match('/publication') ? 'publication' : 'data' %]
+<div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/[% mypath %]/[% _id %]"><!-- outer row-->
   <div class="col-md-11 col-sm-12"><!-- outer col -->
     <div class="page-header" id="banner">
       [%- UNLESS _id %]
@@ -286,29 +286,17 @@
               <h3 id="myModalLabel">Open Data PUB</h3>
             </div>
             <div class="modal-body">
-              [% FOREACH f IN h.config.exporter.publication.keys %]
-              [% NEXT IF f == "datacite" %]
-              <div class="row">
-                <div class="col-xs-4">
-                [% h.config.exporter.publication.$f.label %]:
-                </div>
-                <div class="col-xs-8">
-                  <a href="/[% bag %]/[% _id %]?fmt=[% f %]"> [% h.config.exporter.publication.$f.content_type %]</a>
-                </div>
-              </div>
-              <div class="row"><div class="col-xs-12">&nbsp;</div></div>
-              [% END %]
-              [% uri = request.path %]
-              [% IF bag == "data" %]
-              <div class="row">
-                <div class="col-xs-4">
-                [% h.config.exporter.publication.datacite.label %]:
-                </div>
-                <div class="col-xs-8">
-                  <a href="/data/[% _id %]?fmt=datacite">[% h.config.exporter.publication.datacite.content_type %]</a>
-                </div>
-              </div>
-              [% END %]
+              [%- FOREACH f IN h.config.exporter.publication.keys %]
+                  <div class="row">
+                    <div class="col-xs-4">
+                    [% h.config.exporter.publication.$f.label %]:
+                    </div>
+                    <div class="col-xs-8">
+                      <a href="/export[% request.path %]?fmt=[% f %]"> [% h.config.exporter.publication.$f.content_type %]</a>
+                    </div>
+                  </div>
+                  <div class="row"><div class="col-xs-12">&nbsp;</div></div>
+              [%- END %]
             </div>
             <div class="modal-footer">
               For more information see our <a href="/docs/api">API documentation</a>.

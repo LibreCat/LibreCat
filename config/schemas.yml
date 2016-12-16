@@ -180,6 +180,10 @@ publication:
                 type: string
                 format: date-time
                 description: "Last modification date"
+            embargo:
+                type: string
+                pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                description: "Date when the embargo period ends and the file becomes open access"
             file_id:
                 oneOf:
                   - type: string
@@ -195,12 +199,13 @@ publication:
                   - type: string
                   - type: integer
                 description: "File size"
-            open_access:
-                oneOf:
-                  - type: string
-                    pattern: "^[01]$"
-                  - type: integer
-                description: "Flag when file is open_access"
+            # TODO should be added at index time
+            #open_access:
+                #oneOf:
+                  #- type: string
+                    #pattern: "^[01]$"
+                  #- type: integer
+                #description: "Flag when file is open_access"
             title:
                 type: string
                 description: "File title"
@@ -208,16 +213,17 @@ publication:
                 type: string
                 description: "File description"
             relation:
-                enum:
-                    - main_file
-                    - confirmation
-                    - table_of_contents
-                    - erratum
-                    - supplementary_material
-                    - other
-                    - hidden
+                #enum:
+                    #- main_file
+                    #- confirmation
+                    #- table_of_contents
+                    #- erratum
+                    #- supplementary_material
+                    #- other
+                    #- hidden
+                type: string
                 description: "Relation upload to main record"
-        required: ["access_level","content_type","creator","date_created","date_updated","file_id","open_access","relation"]
+        required: ["access_level","content_type","date_created","date_updated","file_id","relation"]
 
     project: &project
       type: object
@@ -254,6 +260,9 @@ publication:
         - type: integer
           minimum: 0
       description: "Publication identifier"
+    _version:
+      type: integer
+      minimum: 0
     type:
       enum:
         - original
@@ -278,10 +287,11 @@ publication:
         - research_data
       description: "Publication type"
     article_type:
-      enum:
-        - original
-        - review
-        - letter_note
+      #enum:
+        #- original
+        #- review
+        #- letter_note
+      type: string
       description: "Article type"
     article_number:
       type: string
@@ -294,14 +304,18 @@ publication:
           type: string
           description: "Creator user name"
       description: "Creator"
+    user_id:
+      oneOf:
+        - type: string
+          #pattern: "^[0-9]+$"
+          minLength: 1
+        - type: integer
+          minimum: 0
+      description: "Id of the user that saved this version"
     date_created:
       type: string
       format: date-time
       description: "Record creation date"
-    date_submitted:
-      type: string
-      format: date-time
-      description: "?not in use?"
     date_updated:
       type: string
       format: date-time
@@ -452,7 +466,7 @@ publication:
         - type: integer
       description: "Flag of APC co-financed by DFG"
     status:
-      enum: ["new","submitted","public","returned","private"]
+      enum: ["new","submitted","public","returned","private", "deleted"]
       description: "Record status"
     locked:
       oneOf:
@@ -712,7 +726,7 @@ publication:
             minimum: 0
       description: "Flag agree with the copyright and license"
     cc_license:
-      enum: ["cc_0","cc_by","cc_by_sa"]
+      type: string
       description: "Files copyright"
     conference:
       type: object
@@ -745,59 +759,6 @@ publication:
       description: "Returned Record Ids"
     citation:
       type: object
-      properties:
-        ama:
-          type: string
-          description: "Citation in AMA (American Medical Association) style"
-        apa:
-          type: string
-          description: "Citation in APA (American Psychological Association) style"
-        apa_indent:
-          type: string
-          description: "Citation in indented APA style"
-        aps:
-          type: string
-          description: "Citation in APA (American Psychological Society) style"
-        bio1:
-          type: string
-          description: "???"
-        default:
-          type: string
-          description: "???"
-        dgps:
-          type: string
-          description: "Citation in DGPS (Deutsche Gesellschaft fur Psychologie) style"
-        ewi:
-          type: string
-          description: "???"
-        frontShortTitle:
-          type: string
-          description: "???"
-        frontiers:
-          type: string
-          description: "Citation in Frontiers journals style"
-        harvard1:
-          type: string
-          description: "Citation in 'Harvard Reference format 1' style"
-        ieee:
-          type: string
-          description: "Citation in IEEE (Institute of Electrical and Electronics Engineers) style"
-        lncs:
-          type: string
-          description: "???"
-        mla:
-          type: string
-          description: "Citation in MLA (Modern Language Association) style"
-        pub:
-          type: string
-          description: "???"
-        sfb882:
-          type: string
-          description: "???"
-        wels:
-          type: string
-          description: "???"
-      description: "Citation"
 
   # A author|editor is required..can this be expressed in JSONSchema?
   required: ["_id","type","title","year","status"]
@@ -821,11 +782,14 @@ researcher:
         - type: integer
           minimum: 0
       description: "Researcher identifier"
+    _version:
+      type: integer
+      minimum: 0
     account_status:
       enum: ["active","inactive"]
       description: "Account status"
     account_type:
-      enum: ["external","unib"]
+      enum: ["external","unibi"]
       description: "Account type"
     password:
       type: string
@@ -999,11 +963,11 @@ researcher:
     date_created:
       type: string
       format: date-time
-      description: "The record creation date"
+      description: "The user creation date"
     date_updated:
       type: string
       format: date-time
-      description: "The record's last modification date"
+      description: "The user last modification date"
 
   required: ["_id","account_status","account_type","first_name","last_name","full_name"]
   additionalProperties: true
@@ -1021,6 +985,9 @@ department:
         - type: integer
           minimum: 0
       description: "Department identifier"
+    _version:
+      type: integer
+      minimum: 0
     display:
       type: string
       description: "Displayed name"
@@ -1034,6 +1001,14 @@ department:
     name:
       type: string
       description: "Department name"
+    date_created:
+      type: string
+      format: date-time
+      description: "Department creation date"
+    date_updated:
+      type: string
+      format: date-time
+      description: "Department last update date"
     tree:
       type: array
       items:
@@ -1060,6 +1035,9 @@ project:
       type: string
       #pattern: "^P[0-9]+$"
       description: "Project identifier"
+    _version:
+      type: integer
+      minimum: 0
     name:
       type: string
       minLength: 1
@@ -1104,11 +1082,11 @@ project:
     date_created:
       type: string
       format: date-time
-      description: "The record creation date"
+      description: "The project creation date"
     date_updated:
       type: string
       format: date-time
-      description: "The record's last modification date"
+      description: "The project last modification date"
     affiliation:
       type: string
       description: "Project's affiliation"
@@ -1204,6 +1182,9 @@ research_group:
       type: string
       #pattern: "^RG[0-9]+$"
       description: "Research group identifier"
+    _version:
+      type: integer
+      minimum: 0
     name:
       type: string
       minLength: 1
@@ -1223,11 +1204,11 @@ research_group:
     date_created:
       type: string
       format: date-time
-      description: "The research group's ending date"
+      description: "The research group creation date"
     date_updated:
       type: string
       format: date-time
-      description: "The record's last modification date"
+      description: "The research group last modification date"
     department:
       type: array
       items:

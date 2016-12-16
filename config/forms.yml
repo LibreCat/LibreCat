@@ -96,8 +96,6 @@ field_order:
   file_upload:
     - external_file
     - dropzone
-    - ddc
-    - urn
     - license
   supplementary_fields:
     - article_type
@@ -123,6 +121,28 @@ field_order:
     - related_material.record
     - related_material.rd
     - related_material.link
+
+# file dropzone fields that may be changed/edited
+dropzone_fields:
+    # all these fields will be automatically updated
+    administrative:
+        - file_id
+        - file_name
+        - file_size
+        - content_type
+        - creator
+        - date_created
+        - date_updated
+    # all the descriptive fields below can be edited
+    # all other fields not in these two lists will be deleted
+    descriptive:
+        - relation
+        - access_level
+        - request_a_copy
+        - title
+        - description
+        - open_access
+        - embargo
 
 # form definitions for every publication type
 publication_types:

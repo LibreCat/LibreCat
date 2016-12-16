@@ -25,8 +25,6 @@ Returns list of marked records.
 get '/marked' => sub {
 
     my $p        = h->extract_params();
-    my $fmt      = $p->{fmt};
-    my $explinks = $p->{explinks};
     my $marked   = session 'marked';
     my ($hits, @tmp_hits, @result_hits);
 
@@ -35,13 +33,12 @@ get '/marked' => sub {
         while (my @chunks = splice(@$marked, 0, 100)) {
             $p->{q}     = ["(id=" . join(' OR id=', @chunks) . ")"];
             $p->{limit} = 100;
-            $hits       = h->search_publication($p);
+            $hits       = LibreCat->searcher->search('publication', $p);
             push @tmp_hits, @{$hits->{hits}};
         }
-        $hits->{explinks} = $explinks;
-        $hits->{style} = params->{style} || h->config->{default_style};
+            $hits->{style} = params->{style} || h->config->{default_style};
 
-# sort hits according to id-order in session (making drag and drop sorting possible)
+        # sort hits according to id-order in session (making drag and drop sorting possible)
         foreach my $sh (@{session 'marked'}) {
             my @hit = grep {$sh eq $_->{_id}} @tmp_hits;
             push @result_hits, @hit;
@@ -51,12 +48,7 @@ get '/marked' => sub {
     $hits->{hits}  = \@result_hits;
     $hits->{total} = scalar @tmp_hits;
 
-    if ($fmt and $fmt ne 'html' and $hits->{total} ne "0") {
-        h->export_publication($hits, $fmt);
-    }
-    else {
-        template 'marked/marked.tt', $hits;
-    }
+    template 'marked/marked.tt', $hits;
 
 };
 
@@ -101,7 +93,7 @@ post '/marked' => sub {
         return to_json {ok => true, total => 0,};
     }
 
-    my $hits = h->search_publication($p);
+    my $hits = LibreCat->searcher->search('publication', $p);
 
     if ($hits->{total} > $hits->{limit} && @$marked == 500) {
         return to_json {

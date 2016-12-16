@@ -60,7 +60,8 @@ Some fields are pre-filled.
             type       => $type,
             department => $user->{department},
             creator =>
-                {id => session->{personNumber}, login => session->{user},},
+                {id => session->{personNumber}, login => session->{user},} ,
+            user_id => session->{personNumber},
         };
 
         # Use config/hooks.yml to register functions
@@ -186,6 +187,8 @@ Checks if the user has the rights to update this record.
     post '/update' => needs login => sub {
         my $p = params;
 
+        h->log->debug("Params:" . to_dumper($p));
+
         unless ($p->{new_record}
             or p->can_edit($p->{_id}, session->{user}, session->{role}))
         {
@@ -203,6 +206,8 @@ Checks if the user has the rights to update this record.
         elsif ($p->{finalSubmit} eq 'recPublish') {
             $p->{status} = 'public';
         }
+
+        $p->{user_id} = session->{personNumber};
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
@@ -234,6 +239,8 @@ Checks if the user has the rights to edit this record.
 
         my $rec = h->publication->get($id);
 
+        $rec->{user_id} = session->{personNumber};
+
         # Use config/hooks.yml to register functions
         # that should run before/after returning publications
         h->hook('publication-return')->fix_around(
@@ -256,6 +263,8 @@ Deletes record with id. For admins only.
     get '/delete/:id' => needs role => 'super_admin' => sub {
         my $id     = params->{id};
         my $record = h->publication->get($id);
+
+        $record->{user_id} = session->{personNumber};
 
         # Use config/hooks.yml to register functions
         # that should run before/after deleting publications

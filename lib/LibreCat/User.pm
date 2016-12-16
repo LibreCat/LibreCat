@@ -16,6 +16,8 @@ has username_attr => (is => 'ro', default => sub {'username'},);
 has _username_attrs => (is => 'lazy', builder => '_build_username_attrs',);
 has _roles => (is => 'ro', default => sub {+{}},);
 
+with 'Catmandu::Logger';
+
 sub _build_username_attrs {
     my ($self) = @_;
     [map {$_->{username_attr} // $self->username_attr;} @{$self->sources}];
@@ -61,23 +63,55 @@ sub generator {
 
 sub get {
     my ($self, $id) = @_;
+
+    $self->log->debug("get($id)");
+
     for my $bag (@{$self->bags}) {
+        $self->log->debug("..probing $bag");
         if (my $user = $bag->get($id)) {
+            $self->log->debug("..found $user");
             return $user;
         }
     }
+
+    $self->log->debug("..no results");
+
     return;
 }
 
 sub get_by_username {
     my ($self, $username) = @_;
+
+    $self->log->debug("find_by_username($username)");
+
     my $bags  = $self->bags;
     my $attrs = $self->_username_attrs;
+
     for (my $i = 0; $i < @$bags; $i++) {
-        if (my $user = $bags->[$i]->detect($attrs->[$i] => $username)) {
+        my $bag = $bags->[$i];
+        $self->log->debug("..probing $bag");
+
+        if ($bag->does('Catmandu::Searchable')) {
+            # For now we assume the Searchable store are ElasticSearch implementations...
+            my $query = sprintf "%s:%s" , $attrs->[$i] , $username;
+
+            $self->log->debug("..query $query");
+
+            my $hits = $bag->search(query => $query);
+
+            if (my $user = $hits->first) {
+                $self->log->debug("..found $user");
+                return $user;
+            }
+        }
+        elsif (my $user = $bags->[$i]->detect($attrs->[$i] => $username)) {
+            $self->log->debug("..found $user");
             return $user;
         }
     }
+
+    $self->log->debug("..no results");
+
     return;
 }
 
@@ -112,4 +146,3 @@ sub rules_for {
 1;
 
 __END__
-

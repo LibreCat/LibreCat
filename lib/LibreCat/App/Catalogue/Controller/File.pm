@@ -260,6 +260,11 @@ sub _make_thumbnail {
 
     h->log->info("creating thumbnail for $filename in record $key");
 
+    unless (h->config->{filestore}->{accesss_thumbnailer}) {
+        h->log->info("no access_thumbnailer defined");
+        return undef;
+    }
+
     my $thumbnailer_package
         = h->config->{filestore}->{accesss_thumbnailer}->{package};
     my $thumbnailer_options
@@ -289,6 +294,11 @@ sub _remove_thumbnail {
     my ($key, $filename) = @_;
 
     h->log->info("deleting $filename thumbnail for record $key");
+
+    unless (h->config->{filestore}->{accesss_thumbnailer}) {
+        h->log->info("no access_thumbnailer defined");
+        return undef;
+    }
 
     my $thumbnailer_package
         = h->config->{filestore}->{accesss_thumbnailer}->{package};
@@ -332,6 +342,8 @@ sub _decode_file {
 sub _update_tech_metadata {
     my ($fi, $filename, $path) = @_;
 
+    h->log->debug("updating the technical metadata");
+
     my $config_file = "$path.json";
 
     unless (-r $config_file) {
@@ -342,15 +354,12 @@ sub _update_tech_metadata {
     my $importer = Catmandu->importer('JSON', file => $config_file);
     my $data = $importer->first;
 
-    my @tech_fields = qw(
-        content_type creator date_created date_updated
-        file_name file_size
-    );
+    my $administrative_fields = h->config->{forms}->{dropzone_fields}->{administrative} // [];
 
-    for my $name (@tech_fields) {
+    for my $name (@$administrative_fields) {
         my $value = $data->{$name};
-        h->log->debug("setting $name = $value for $filename");
-        $fi->{$name} = $value;
+        h->log->debug("setting $name = " . ($value ? $value : 'null') . " for $filename");
+        $fi->{$name} = $value if $value;
     }
 
     return 1;
@@ -359,43 +368,39 @@ sub _update_tech_metadata {
 sub _update_file_metadata {
     my ($fi, $pub) = @_;
 
+    h->log->debug("updating the file metadata");
+
     return unless $fi;
     return unless $pub;
 
     my ($prev_fi) = grep {$_->{file_id} eq $fi->{file_id}} @{$pub->{file}};
 
-    my @important_fields = qw(
-        file_id file_name file_size content_type
-        creator date_created
-    );
-
-    my @changeable_fields = qw(
-        title description access_level request_a_copy
-        open_access embargo relation
-    );
+    my $administrative_fields = h->config->{forms}->{dropzone_fields}->{administrative} // [];
+    my $descriptive_fields    = h->config->{forms}->{dropzone_fields}->{descriptive} // [];
 
     # Throw away the unimportant stuff
     for my $name (keys %$fi) {
-        if (grep(/^$name$/, @important_fields)) {
-
+        if (grep(/^$name$/, @$administrative_fields)) {
             # do nothing
         }
-        elsif (!grep(/^$name$/, @changeable_fields)) {
+        elsif (!grep(/^$name$/, @$descriptive_fields)) {
+            h->log->debug("...deleting $name from file (unknown field)");
             delete $fi->{$name};
         }
         elsif (!defined $fi->{$name}) {
+            h->log->debug("...deleting $name from file (null field)");
             delete $fi->{$name};
         }
     }
 
     # Keep important stuff that can be written only once
     if ($prev_fi) {
-        for my $name (@important_fields) {
+        for my $name (@$administrative_fields) {
             $fi->{$name} = $prev_fi->{$name};
         }
     }
 
-    $fi->{open_access} = $fi->{access_level} eq 'open_access' ? 1 : 0;
+    $fi->{open_access}  = $fi->{access_level} eq 'open_access' ? 1 : 0;
     $fi->{date_created} = h->now unless $fi->{date_created};
     $fi->{date_updated} = h->now;
 }
@@ -404,6 +409,8 @@ sub _update_file_metadata {
 # points to the same file.
 sub _find_deleted_files {
     my ($prev, $curr) = @_;
+
+    return () unless defined($prev) && defined($curr);
 
     my %curr_ids = map {$_->{file_id} // 'undef' => 1} @{$curr->{file}};
 

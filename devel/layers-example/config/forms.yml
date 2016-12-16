@@ -100,3 +100,6 @@ publication_types:
             supplementary_fields:
                 foobar_list:
                     multiple: 0
+            # Example how to delete a section from a configuration
+            # file. In this case we don't want 'Links' to be edited
+            related_material: '!DELETE!'

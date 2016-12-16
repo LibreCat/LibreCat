@@ -36,12 +36,7 @@ sub ip_match {
     my $access    = h->config->{filestore}->{api}->{access} // {};
     my $ip_ranges = $access->{ip_ranges} // [];
 
-    for my $range (@$ip_ranges) {
-        $range =~ s{\*}{\\w+}g;
-        return 1 if ($ip =~ /^$range$/);
-    }
-
-    return 0;
+    h->within_ip_range($ip,$ip_ranges);
 }
 
 sub do_error {
@@ -104,6 +99,9 @@ sub do_file_upload {
 # Execute a worker to generate a thumbnail to the access repository
 sub do_create_thumbnail {
     my ($key, $filename) = @_;
+
+    return unless h->config->{filestore}->{accesss_thumbnailer};
+    
     my $thumbnailer_package
         = h->config->{filestore}->{accesss_thumbnailer}->{package};
     my $thumbnailer_options

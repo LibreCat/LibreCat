@@ -1,0 +1,31 @@
+Revision history for LibreCat
+
+{{$NEXT}}
+
+0.04 2016-12-02
+    - author-linking bug  fix
+    - exports in frontend
+    - utf-8 encodings
+    - more flexible schema
+    - more flexible citation options
+
+0.03 2016-11-17 15:45:31 CET
+    - tests added
+    - a lot a bug fixes
+    - improved importers: Inspire, DOI, etc.
+    - introducing Hooks
+    - more flexible data schema
+
+0.02 2016-10-06 14:20:37 CET
+    - display projects tab on startpage
+    - add gravatar support
+    - re-organization of views directory
+    - generic views without code/layout from Bielefeld
+    - add citeproc node support
+    - working test environment + travis integration
+
+0.01_felix 2016-09-21 15:53:18 CET
+    Welcome to this project. Starting off from this point we will release new
+    versions on a regular basis.
+    Main release versions will be extended with a cat name.
+    So may I introduce you to felix?

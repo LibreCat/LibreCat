@@ -4,7 +4,6 @@ use Catmandu::Sane;
 use Catmandu::Util qw(require_package);
 use LibreCat::Layers;
 use LibreCat::Hook;
-use LibreCat::User;
 use Catmandu;
 use namespace::clean;
 
@@ -28,7 +27,7 @@ sub import {
     }
 
     sub loaded {
-        defined $layers;
+        $layers ? 1 : 0;
     }
 
     sub load {
@@ -38,17 +37,25 @@ sub import {
     }
 
     sub config {
-        state $config = $_[0]->layers->config;
+        $_[0]->check_loaded;
+        Catmandu->config;
     }
+}
+
+sub user {
+    state $user = require_package('LibreCat::User')->new($_[0]->config->{user});
 }
 
 sub hook {
     my ($self, $name) = @_;
+
     state $hooks = {};
+
     $hooks->{$name} ||= do {
         my $args = {before_fixes => [], after_fixes => [],};
 
         my $hook = ($self->config->{hooks} || {})->{$name} || {};
+
         for my $key (qw(before_fixes after_fixes)) {
             my $fixes = $hook->{$key} || [];
             for my $fix (@$fixes) {
@@ -61,18 +68,8 @@ sub hook {
     };
 }
 
-sub user {
-    state $user = do {
-        my $config = $_[0]->config->{user};
-        LibreCat::User->new($config);
-    };
-}
-
-sub auth {
-    state $auth = do {
-        my $pkg = require_package($_[0]->config->{authentication}->{package});
-        $pkg->new($_[0]->config->{authentication}->{options} // {});
-    };
+sub searcher {
+    state $searcher = require_package('LibreCat::Search')->new(store => Catmandu->store('search'));
 }
 
 1;
@@ -87,25 +84,19 @@ LibreCat - Librecat helper functions
 
 =head1 SYNOPSIS
 
-    use LibreCat;
+   use LibreCat;
 
-    # given a configuration file like hooks.yml:
-    # --
-    # hooks:
-    #   myhook:
-    #      before_fixes: [BeforeFix1,BeforeFix2]
-    #      after_fixes:  [AfterFix]
+   # Given a 'catmandu' configuration file, like: catmandu.hooks.yml
+   # --
+   # hooks:
+   #   myhook:
+   #      before_fixes: [BeforeFix1,BeforeFix2]
+   #      after_fixes:  [AfterFix]
 
-    my $hook = LibreCat->hook('eat');
+   my $hook = LibreCat->hook('eat');
 
-    $hook->fix_before($data);  # BeforeFix1->fix($data) and
-                               # BeforeFix2->fix($data) will be executed
-    # do stuff ...
-    $hook->fix_after($data);   # AfterFix->fix($data) will be executed
-
-    # more concise:
-    $hook->fix_around($data, sub {
-        # do stuff ...
-    });
+   $hook->fix_before($data);  # BeforeFix1->fix($data) and
+                              # BeforeFix2->fix($data) will be executed
+   $hook->fix_after($data);   # AfterFix->fix($data) will be executed
 
 =cut

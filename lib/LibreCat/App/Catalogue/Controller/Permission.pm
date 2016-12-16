@@ -43,6 +43,7 @@ sub can_edit {
         $cql .= " AND locked<>1";
     }
 
+    h->log->debug("can_edit cql: $cql");
     my $hits = h->publication->search(cql_query => $cql, limit => 1);
 
     ($hits->{total} == 1) ? return 1 : return 0;
@@ -76,7 +77,7 @@ sub can_download {
     if ($access eq 'open_access') {
         return (1, $file_name);
     }
-    elsif ($access eq 'local' && $ip =~ /$ip_range/) {
+    elsif ($access eq 'local' && h->within_ip_range($ip,$ip_range)) {
         return (1, $file_name);
     }
     elsif ($access eq 'closed') {
@@ -89,7 +90,6 @@ sub can_download {
     else {
         return (0, '');
     }
-
 }
 
 package LibreCat::App::Catalogue::Controller::Permission;

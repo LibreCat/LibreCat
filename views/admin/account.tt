@@ -24,7 +24,7 @@
 	<div class="col-md-5">
 	  <label for="id_q"><span class="glyphicon glyphicon-search"></span> Search by name or PEVZ-ID</label>
 	  <div class="input-group">
-	    <input type="text" class="form-control" name="q" id="id_q" placeholder="Einstein, A" value="[% qp.q.join(' ') %]">
+	    <input type="text" class="form-control" name="q" id="id_q" placeholder="Einstein, A" value="[% qp.q %]">
 	    <span class="input-group-btn">
 	      <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-search"></span> </i>Search</button>
 	    </span>

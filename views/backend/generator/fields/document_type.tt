@@ -9,7 +9,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky mandatory">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.document_type.label_short || lf.$type.field.document_type.label %]</div>
-          <select id="id_select_document_type" name="document_type" class="sticky form-control">
+          <select id="id_select_document_type" class="sticky form-control">
             [% FOREACH ptype IN h.config.forms.publication_type_order.column_left %]
               <option value="[% ptype %]"[% IF ptype == type %] selected="selected"[% END %]>[% h.config.locale.$lang.forms.$ptype.label %]</option>
             [% END %]
@@ -41,9 +41,11 @@ $('#id_select_document_type').on('change', function() {
   if(sure){
     var newtype = $(this).val();
     $('#id_type').val(newtype);
-    $('#id_select_document_type').remove();
     $('#edit_form').attr('action','/librecat/record/change_mode');
     $('#edit_form').submit();
+  }
+  else {
+    $("#id_select_document_type").val("[% type %]");
   }
 });
 </script>

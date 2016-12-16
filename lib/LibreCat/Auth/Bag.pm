@@ -2,7 +2,7 @@ package LibreCat::Auth::Bag;
 
 use Catmandu::Sane;
 use Catmandu;
-use App::bmkpasswd qw(passwdcmp);
+use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Moo;
 use namespace::clean;
 
@@ -18,27 +18,65 @@ sub _authenticate {
     my $username = $params->{username} // return 0;
     my $password = $params->{password} // return 0;
 
+    my $store_name    = $self->store;
+    my $bag_name      = $self->bag;
+    my $username_attr = $self->username_attr;
+    my $password_attr = $self->password_attr;
+
     $self->log->debugf("authenticating: %s", $username);
 
-    my $bag = Catmandu->store($self->store)->bag($self->bag);
-    my $user = $bag->detect($self->username_attr => $username);
+    $self->log->debugf("store: %s bag: %s $username_attr = $username"
+                        , $store_name
+                        , $bag_name);
+
+    my $bag  = Catmandu->store($store_name)->bag($bag_name);
+
+    my $user;
+
+    if ($bag->does('Catmandu::Searchable')) {
+        # For now we assume the Searchable store are ElasticSearch implementations...
+        my $query = sprintf "%s:%s" , $username_attr , $username;
+
+        $self->log->debug("..query $query");
+        $user = $bag->search(query => $query)->first;
+    }
+    else {
+        $self->log->debug("..scanning for $username_attr => $username");
+        $user = $bag->detect($username_attr => $username);
+    }
 
     unless ($user) {
         $self->log->debug("$username not found");
         return undef;
     }
 
-    if (exists $user->{$self->password_attr}
-        && passwdcmp($password, $user->{$self->password_attr}))
-    {
-        return +{
-            uid        => $username,
-            package    => __PACKAGE__,
-            package_id => $self->id
-        };
+    # Explicitly test for inactive users ...built-in users might not
+    # have all the fields set
+    if ($user->{account_status} && $user->{account_status} eq 'inactive') {
+        $self->log->debug("$username isn't active");
+        return undef;
     }
     else {
-        $self->log->debug("$username password doesn't match");
+        $self->log->debug("$username is active");
+    }
+
+    $self->log->debug("checking $password_attr for $username");
+
+    if (exists $user->{$password_attr}) {
+        if (passwdcmp($password, $user->{$password_attr})) {
+            return +{
+                uid        => $username,
+                package    => __PACKAGE__,
+                package_id => $self->id
+            };
+        }
+        else {
+            $self->log->debug("$username password doesn't match");
+            return undef;
+        }
+    }
+    else {
+        $self->log->error("no password set for $username");
         return undef;
     }
 }

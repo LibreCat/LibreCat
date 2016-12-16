@@ -10,6 +10,7 @@ use Catmandu::Sane;
 
 our $VERSION = '0.01';
 
+use Catmandu::Util;
 use LibreCat;
 
 use Dancer qw(:syntax);
@@ -33,10 +34,33 @@ sub _authenticate {
     # Clean dirties .. in loginname
     $username =~ s{[^a-zA-Z0-9_]*}{}mg;
 
-    my $user = LibreCat->user->get_by_username($username) || return;
+    my $auth = do {
+        my $package_name = Catmandu->config->{authentication}->{package};
+        my $package_opts = Catmandu->config->{authentication}->{options} // {};
 
-    LibreCat->auth->authenticate(
-        {username => $username, password => $password})
+        if ($package_name) {
+            my $pkg = Catmandu::Util::require_package($package_name);
+
+            if ($pkg) {
+                $pkg->new($package_opts);
+            }
+            else {
+                h->log->error("failed to create a new $package_name authenticator");
+                undef;
+            }
+        }
+        else {
+            h->log->error('No authentication.package defined');
+            h->log->error('Did you create a catmandu.local.yml?');
+            undef;
+        }
+    };
+
+    return unless $auth;
+
+    my $user = LibreCat->user->find_by_username($username) || return;
+
+    $auth->authenticate({username => $username, password => $password})
         || return;
 
     $user;

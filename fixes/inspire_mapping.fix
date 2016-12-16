@@ -1,53 +1,27 @@
-# maps Inspire data to the local repository
+# map InspireHEP data to the local repository
 
-move_field('record','rec')
-# default type
-add_field(rec.type,journal_article)
-move_field('rec.titles.title','rec.title')
-trim('rec.title')
-move_field('rec.titles.secondary-title','rec.publication')
-remove_field('rec.titles')
-move_field('rec.dates.year','rec.year')
-remove_field('rec.dates')
-
-# abstract, keywords
-if exists('rec.abstract')
-  if all_match('rec.abstract', '\w+')
-	move_field('rec.abstract','rec.abstract.0.text')
-    trim('rec.abstract.0.text')
-	set_field('rec.abstract.0.lang','eng')
-  else
-    remove_field('rec.abstract')
-end
-move_field('rec.keywords.keyword','rec.keyword')
-remove_field('rec.keywords')
-
-move_field('rec.pages','rec.page')
-if any_match(rec.page, '-')
-  nothing()
-else
-  move_field('rec.page','rec.article_number')
+add_field(_r.type, journal_article)
+move_field(title.title, _r.title)
+move_field(recid, _r.external_id.inspire)
+do list(path:primary_report_number, var:c)
+  if all_match(c, 'arXiv')
+    replace_all(c, 'arXiv:', '')
+    copy_field(c, _r.external_id.arxiv)
+  end
 end
 
-# set default ddc 'physics' for inspire
-add_field('rec.ddc','530')
+move_field(authors., _r.author)
+remove_field(_r.author.*.full_name)
+remove_field(_r.author.*.affiliation)
+remove_field(_r.author.*.INSPIRE_number)
 
-move_field('rec.electronic-resource-num','rec.doi')
-if_any_match('rec.number','\d+|\w+');
-    move_field('rec.number','rec.issue')
-end();
-remove_field('rec.number')
+move_field(abstract.summary, _r.abstract.0.text)
+move_field(keywords.*.term, _r.keyword.$append)
 
-if exists('rec.doi')
-	add_field('rec.publication_status','published')
-	add_field('rec.quality_controlled','1')
-end
+move_field(publication_info.title, _r.publication)
+move_field(publication_info.year, _r.year)
+move_field(publication_info.volume, _r.volume)
+move_field(publication_info.pagination, _r.page)
 
-# author
-move_field('rec.contributors.authors.author', 'rec.author')
-remove_field('rec.contributors')
-flatten(rec.author)
-
-retain_field('rec')
-move_field('rec','')
-split_author()
+retain_field(_r)
+move_field(_r, .)

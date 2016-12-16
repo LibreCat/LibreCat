@@ -76,6 +76,7 @@ tabs:
   data_publications: "Datenpublikationen"
   publications_by: "Publ. von"
   projects: "Projekte"
+  departments: "Einrichtungen"
   authors: "Autoren"
   authors_title: "Autorinnen und Autoren"
   start: "Was ist PUB?"
@@ -106,7 +107,7 @@ home:
     authors: "Pers<span class='xxs-only'>.</span><span class='hidden-xxs'>&ouml;nliche</span> Publikationslisten"
     data_publications: "Datenpublikationen"
     oa_publications: "Open-Access-Publikationen"
-    theses: "Hochschulschriften"
+    projects: "Projekte"
   logos:
     oa: "Open Access an der<br>Universit&auml;t Bielefeld"
     rd_management: "Forschungsdaten&shy;management"
@@ -236,7 +237,18 @@ facets:
     "publcount.desc": "Anzahl der Publikationen absteigend"
     "fullname.asc": "Alphabetisch aufsteigend"
     "fullname.desc": "Alphabetisch absteigend"
+citation:
+  apa: APA
+  american-medical-association: AMA
+  chicago-fullnote-bibliography: Chicago
+  ieee: IEEE
+  modern-language-association: MLA
 frontdoor:
+  publication: Zeitschriftentitel
+  volume: Band
+  Issue: Ausgabe
+  page: "Seite(n)"
+  article_number: Artikelnr.
   preview: "Vorschau"
   crumb_back: "Zur&uuml;ck"
   no_record: "Dieser Eintrag exisitert nicht oder wurde gel&ouml;scht"
@@ -363,6 +375,8 @@ add_new:
   drop_oa: "Option 3:<br />Ziehen Sie Ihren Open-Access-Volltext hier her"
   paste_bibtex: "Option 4:<br />F&uuml;gen Sie Ihren BibTex Eintrag hier ein"
   paste_bibtex_placeholder: "Bitte f&uuml;gen Sie nur jeweils einen Datensatz ein"
+  qae_title: "New Quick And Easy Publication - Will be edited by PUB-Team"
+  wos_import: "Web of Science Import"
 forms:
   book:
     label: "Monographie"
@@ -1597,7 +1611,7 @@ forms:
   form_sort_item: "Drag & drop, um die Position des Autors in der Autorenliste zu &auml;ndern"
   form_add_field: "Feld hinzuf&uuml;gen (+) or dieses Feld l&ouml;schen (-)"
   form_relmat_record: "Eigene Publikation aus PUB mit dieser verbinden. Nach Auswahl w&auml;hlen Sie die Art der Verbindung (z.B. fr&uuml;here Version). Der Link erscheint unter Zusatzmaterial."
-  form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf [+] w&auml;hlen Sie die Art der Verbindung (z.B. fr&uuml;here Version). Der Link erscheint unter Zusatzmaterial."
+  form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf (+) w&auml;hlen Sie die Art der Verbindung (z.B. fr&uuml;here Version). Der Link erscheint unter Zusatzmaterial."
   confirm_return: "M&ouml;chten Sie diesen Datensatz wirklich zur&uuml;ckstellen und damit von &ouml;ffentlichen Publikationsliste entfernen?"
   confirm_delete: "M&ouml;chten Sie diesen Datensatz wirklich l&ouml;schen?"
   confirm_submit: "Sie senden Ihre Daten jetzt an uns. Nachdem wir die Metadaten &uuml;berpr&uuml;ft haben, werden wir den Datensatz public stellen."

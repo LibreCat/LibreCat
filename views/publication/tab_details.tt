@@ -14,7 +14,7 @@
     [% FOREACH person IN $item %]
       [% IF loop.first %]
       <div class="row">
-        <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.${item}.label") || h.loc("forms.${type}.field.${item}_secondary.label") %]</div>
+        <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.${item}.label") || h.loc("forms.${type}.field.${item}_secondary.label") || h.loc("forms.${type}.field.${item}_solo.label") %]</div>
         <div class="col-lg-10 col-md-9">
       [%- ELSE %];[% END %]
       [%- IF person.id %]
@@ -106,14 +106,20 @@
     </div>
   </div>
 [%- END %]
+
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.${type}.field.year.label || h.loc("forms.${type}.field.year_extern.label") %]</div>
     <div class="col-lg-10 col-md-9"><span itemprop="copyrightYear"><a href="/[% bag %]?q=year=[% year %]">[% year %]</a></span></div>
   </div>
-[%- IF !display_citation %]
   [%- FOREACH item IN ['publication', 'volume', 'issue', 'article_number', 'page'] %]
+    [%- IF $item %]
+      <div class="row">
+        <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.${item}") %]</div>
+        <div class="col-lg-10 col-md-9"><span>[% $item %]</span></div>
+      </div>
+    [%- END %]
   [%- END %]
-[%- END %]
+
 [%- IF data_reuse_license %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.license.data_reuse_license.label") %]</div>
@@ -202,32 +208,23 @@
     </div>
   </div>
   [%- IF display_citation %]
-  <!-- Citations -->
-  <div id="citethis">
-  <h3 id="cite">[% h.loc("frontdoor.cite_this") %]</h3>
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#ama" data-toggle="tab">AMA</a></li>
-    <li><a href="#apa" data-toggle="tab">APA</a></li>
-    <li><a href="#frontiers" data-toggle="tab">Frontiers</a></li>
-    <li><a href="#harvard1" data-toggle="tab">Harvard</a></li>
-    <li><a href="#ieee" data-toggle="tab">IEEE</a></li>
-    <li><a href="#lncs" data-toggle="tab">LNCS</a></li>
-    <li><a href="#mla" data-toggle="tab">MLA</a></li>
-    <li><a href="#bibtex" data-toggle="tab">BibTeX</a></li>
-    <li><a href="#ris" data-toggle="tab">RIS</a></li>
-  </ul>
-  <div class="tab-content">
-    <div id="ama" class="tab-pane active cmark">[% citation.ama %]</div>
-    <div id="apa" class="tab-pane cmark">[% citation.apa %]</div>
-    <div id="frontiers" class="tab-pane cmark">[% citation.frontiers %]</div>
-    <div id="harvard1" class="tab-pane cmark">[% citation.harvard1 %]</div>
-    <div id="ieee" class="tab-pane cmark">[% citation.ieee %]</div>
-    <div id="lncs" class="tab-pane cmark">[% citation.lncs %]</div>
-    <div id="mla" class="tab-pane cmark">[% citation.mla %]</div>
-    <div id="bibtex" class="tab-pane"></div>
-    <div id="ris" class="tab-pane"></div>
-  </div>
-  </div><!-- citethis -->
+    <div id="citethis">
+      <h3 id="cite">[% h.loc("frontdoor.cite_this") %]</h3>
+      <ul class="nav nav-tabs">
+        [%- FOREACH style IN h.config.citation.csl.styles %]
+          <li [% IF loop.first %]class="active"[% END %]><a href="#[% style %]" data-toggle="tab">[% h.loc("citation.${style}")%]</a></li>
+        [% END %]
+        <li><a href="#bibtex" data-toggle="tab">BibTeX</a></li>
+        <li><a href="#ris" data-toggle="tab">RIS</a></li>
+      </ul>
+      <div class="tab-content">
+        [%- FOREACH style IN h.config.citation.csl.styles %]
+          <div id="[% style %]" class="tab-pane[% IF loop.first %] active[% END %] cmark">[% citation.$style %]</div>
+        [% END %]
+        <div id="bibtex" class="tab-pane"></div>
+        <div id="ris" class="tab-pane"></div>
+      </div>
+    </div>
   [%- END %]
 </div>
 
