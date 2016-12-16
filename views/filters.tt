@@ -26,19 +26,19 @@
 
 [%- IF (qp.cql AND qp.cql.size > 0 AND !qp.embed) OR pd.delete_them %]
   <h3 class="filters margin-top0">[% h.loc("facets.filters_and_searchterms") %]</h3>
-  [% other = {} %]
-  [% CALL other.import(qp) %]
-  [% CALL other.delete('cql') %]
+  [%- my_del_link = {} %]
+  [%- CALL my_del_link.import(qp) %]
+  [%- CALL my_del_link.delete('cql') %]
   [%- FOREACH val IN qp.cql %]
     [%- removed = [] -%]
     [%- CALL removed.import(qp.cql) -%]
     [%- CALL removed.splice(loop.index, 1) -%]
-    [% USE Dumper; Dumper.dump(removed) %]
-    <p class="text-muted"><a href="[% request.uri_for(path, removed) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
+    [%- my_del_link.cql = removed -%]
+    <p class="text-muted"><a href="[% request.uri_for(path, other) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
   [%- END %]
-[%- END %]
+[%- END -%]
 
-[% UNLESS request.path.match('marked') %]
+[%- UNLESS request.path.match('marked') %]
 <h3[%- IF qp.q.size == 0 %] class="margin-top0"[% END %]>[% h.loc("facets.search") %]</h3>
 <form action="#" method="get" role="form" class="helpme helpme-md" data-placement="left" title="[% h.loc("help.search") %]">
   <span class="input-group">
@@ -47,25 +47,22 @@
       <button type="submit" class="btn btn-default">[% h.loc("facets.go_button") %]</button>
     </span>
   </span>
-  [%- IF qp.q AND qp.q.size > 0 AND total > 0 %]
-    [%- FOREACH val IN qp.q %]
-    <input type="hidden" name="q" value="[% val %]" />
-    [% END %]
-  [% END %]
-  [% FOREACH key IN qp.keys %]
-    [% NEXT IF key == "q" %]
-    [% NEXT IF key == "start" %]
-    [% NEXT IF key == "sort" %]
+  [%- IF qp.cql AND qp.cql.size > 0 AND total > 0 %]
+    [%- FOREACH val IN qp.cql %]
+    <input type="hidden" name="cql" value="[% val %]" />
+    [%- END %]
+  [%- END %]
+  [%- FOREACH key IN qp.keys %]
+    [%- NEXT IF key == "q" OR key == "cql" OR key == "start" OR key == "sort" %]
     <input type="hidden" name="[% key %]" value="[% qp.$key %]" />
-  [% END %]
-  [% IF qp.item('sort') %]
-    [% FOREACH sorting IN qp.item('sort') %]
+  [%- END %]
+  [%- IF qp.item('sort') %]
+    [%- FOREACH sorting IN qp.item('sort') %]
     <input type="hidden" name="sort" value="[% sorting %]" />
-    [% END %]
-  [% END %]
+    [%- END %]
+  [%- END %]
 </form>
-[% END %]
-
+[%- END -%]
 
 <!-- include facets.tt here -->
   [% INCLUDE facets.tt %]

@@ -44,8 +44,8 @@ Performs search for admin.
         my $p = h->extract_params();
 
         push @{$p->{cql}}, "status<>deleted";
-        push @{$p->{cql}}, "status=public"
-            if $p->{fmt} and $p->{fmt} eq "autocomplete";
+        # push @{$p->{cql}}, "status=public"
+        #     if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
@@ -147,8 +147,8 @@ Performs search for reviewer.
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
-        push @{$p->{cql}}, "status=public"
-            if $p->{fmt} and $p->{fmt} eq "autocomplete";
+        # push @{$p->{cql}}, "status=public"
+        #     if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         my $hits = LibreCat->searcher->search('publication', $p);
         $hits->{style}         = $sort_style->{style};
@@ -197,8 +197,8 @@ Performs search for reviewer.
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
-        push @{$p->{cql}}, "status=public"
-            if $p->{fmt} and $p->{fmt} eq "autocomplete";
+        # push @{$p->{cql}}, "status=public"
+        #     if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         my $hits = LibreCat->searcher->search('publication', $p);
         $hits->{style}         = $sort_style->{style};
@@ -233,8 +233,8 @@ Performs search for data manager.
 
         push @{$p->{cql}}, "(type=research_data OR type=data)";
         push @{$p->{cql}}, $dep_query;
-        push @{$p->{cql}}, "status=public"
-            if $p->{fmt} and $p->{fmt} eq "autocomplete";
+        # push @{$p->{cql}}, "status=public"
+        #     if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');

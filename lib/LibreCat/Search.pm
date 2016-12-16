@@ -22,7 +22,7 @@ sub quick_search {
 
     return undef unless $bag_name;
 
-    my %search_params = (query => $p->{q} // '');
+    my %search_params = (cql_query => $self->_cql_query($p));
 
     $self->log->debug("executing $bag_name->search: " . to_dumper(\%search_params));
 
@@ -47,13 +47,7 @@ sub search {
     my ($self, $bag_name, $p) = @_;
 
     return undef unless $bag_name;
-    my $cql;
 
-#    $p->{q} = $self->_string_array($p->{q});
-#    $cql = join(' AND ', @{$p->{q}}) if $p->{q};
-
-    my $store = $self->store;
-    my $bag = $store->bag($bag_name);
     my %search_params = (
         cql_query => $self->_cql_query($p),
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
@@ -66,7 +60,7 @@ sub search {
     my $hits;
 
     try {
-        $hits = $bag->search(%search_params);
+        $hits = $self->store->bag($bag_name)->search(%search_params);
     }
     catch {
         $self->log->error("$bag_name->search failed: " . to_dumper(\%search_params));
@@ -80,6 +74,7 @@ sub search {
 
     $self->log->debug("found: " . $hits->total . " hits");
 
+    # hack for now: refactor facets, then this can be removed
     foreach (qw(next_page last_page page previous_page pages_in_spread)) {
         $hits->{$_} = $hits->$_;
     }
@@ -98,7 +93,7 @@ sub _cql_query {
     $p->{cql} = $self->_string_array($p->{cql});
     push @cql, @{$p->{cql}};
 
-    return join(' AND ', @cql) if @cql;
+    return join(' AND ', @cql) // '';
 }
 
 sub _sru_sort {
