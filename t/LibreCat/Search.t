@@ -36,14 +36,14 @@ $bag->add_many($importer);
 $bag->commit;
 ok $store->bag('publication')->get('999999999'), "can get record";
 
-ok ! $searcher->search('', {q => ["id=999999999"]}), "bag required";
+ok ! $searcher->search('', {cql => ["id=999999999"]}), "bag required";
 ok ! $searcher->search('', {}), "bag and query required";
-my $hits = $searcher->search('publication', {q => ["id=999999999"]});
+my $hits = $searcher->search('publication', {cql => ["id=999999999"]});
 isa_ok $hits, "Catmandu::Hits";
 ok $hits->first, "can search record";
 is $hits->first->{_id}, "999999999", "correct id";
 
-$hits = $searcher->search('publication', {q => []});
+$hits = $searcher->search('publication', {cql => []});
 ok $hits->first, "ok for empty query";
 is $hits->first->{_id}, "999999999", "correct id";
 

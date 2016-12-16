@@ -401,12 +401,12 @@ sub get_statistics {
     my ($self) = @_;
 
     my $hits = LibreCat->searcher->search('publication',
-        {q => ["status=public", "type<>research_data"]});
+        {cql => ["status=public", "type<>research_data"]});
     my $reshits = LibreCat->searcher->search('publication',
-        {q => ["status=public", "type=research_data"]});
+        {cql => ["status=public", "type=research_data"]});
     my $oahits = LibreCat->searcher->search('publication',
         {
-            q => [
+            cql => [
                 "status=public",      "fulltext=1",
                 "type<>research_data",
             ]
