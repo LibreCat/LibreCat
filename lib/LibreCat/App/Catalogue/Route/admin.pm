@@ -150,7 +150,7 @@ Input is person id. Returns warning if person is already in the database.
     get '/project/search' => sub {
         my $p = h->extract_params();
 
-        my $hits = hLibreCat->searcher->search('project', $p);
+        my $hits = LibreCat->searcher->search('project', $p);
 
         template 'admin/project', $hits;
     };

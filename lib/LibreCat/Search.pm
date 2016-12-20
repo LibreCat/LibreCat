@@ -49,11 +49,11 @@ sub search {
     return undef unless $bag_name;
 
     my %search_params = (
-        cql_query => $self->_cql_query($p),
+        cql_query    => $self->_cql_query($p),
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
-        limit => $p->{limit} // Catmandu->config->{default_page_size},
-        start => $p->{start} // 0,
-        facets => merge($p->{facets}, Catmandu->config->{default_facets}),
+        limit        => $p->{limit} // Catmandu->config->{default_page_size},
+        start        => $p->{start} // 0,
+        facets       => merge($p->{facets}, Catmandu->config->{default_facets}),
     );
 
     $self->log->debug("executing $bag_name->search: " . to_dumper(\%search_params));
@@ -90,7 +90,7 @@ sub _cql_query {
     my $q = is_array_ref($p->{q}) ? $p->{q} : [ $p->{q} ];
 
     for (@$q) {
-        push @cql, "basic=\"$_\"" if defined $_;
+        push @cql, "basic any \"$_\"" if defined $_;
     }
 
     $p->{cql} = $self->_string_array($p->{cql});
