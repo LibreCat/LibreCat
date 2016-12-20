@@ -44,7 +44,7 @@ sub can_edit {
     }
 
     h->log->debug("can_edit cql: $cql");
-    my $hits = h->publication->search(cql_query => $cql, limit => 1);
+    my $hits = h->publication->search(cql => $cql, limit => 1);
 
     ($hits->{total} == 1) ? return 1 : return 0;
 }

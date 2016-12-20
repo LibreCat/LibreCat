@@ -316,8 +316,8 @@ sub get_publication {
 sub get_person {
     my ($self, $id) = @_;
     if ($id) {
-        my $hits = LibreCat->searcher->search('researcher', {q => ["id=$id"]});
-        $hits = LibreCat->searcher->search('researcher', {q => ["login=$id"]})
+        my $hits = LibreCat->searcher->search('researcher', {cql => ["id=$id"]});
+        $hits = LibreCat->searcher->search('researcher', {cql => ["login=$id"]})
             if !$hits->{total};
         return $hits->{hits}->[0] if $hits->{total};
         if (my $user = LibreCat->user->get($id) || LibreCat->user->find_by_username($id)) {

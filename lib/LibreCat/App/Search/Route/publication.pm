@@ -29,11 +29,10 @@ get qr{/(data|publication)/(\d{1,})/*} => sub {
 
     my $hits = LibreCat->searcher->search('publication', $p);
 
-
     unless ($hits->{total}) {
-        $p->{q} = [];
-        push @{$p->{q}}, ("status=public", "altid=$id");
-        push @{$p->{q}},
+        $p->{cql} = [];
+        push @{$p->{cql}}, ("status=public", "altid=$id");
+        push @{$p->{cql}},
             ($bag eq 'data') ? "type=research_data" : "type<>research_data";
         $hits = LibreCat->searcher->search('publication', $p);
         return redirect "$bag/$hits->first->{_id}", 301 if $hits->{total};

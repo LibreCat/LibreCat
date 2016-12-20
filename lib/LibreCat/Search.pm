@@ -85,10 +85,13 @@ sub search {
 sub _cql_query {
     my ($self, $p) = @_;
 
-#    return '' unless $p->{q} and $p->{cql};
-
     my @cql;
-    push @cql, "basic=\"$p->{q}\"" if $p->{q};
+
+    my $q = is_array_ref($p->{q}) ? $p->{q} : [ $p->{q} ];
+
+    for (@$q) {
+        push @cql, "basic=\"$_\"" if defined $_;
+    }
 
     $p->{cql} = $self->_string_array($p->{cql});
     push @cql, @{$p->{cql}};

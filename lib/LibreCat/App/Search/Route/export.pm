@@ -20,7 +20,7 @@ Exports data.
 get qr{/export/(\w+)/([^/]+)} => sub {
     my ($bag, $id) = splat;
     forward "/export",
-        {q => "id=$id", bag => $bag, fmt => params->{fmt}};
+        {cql => "id=$id", bag => $bag, fmt => params->{fmt}};
 };
 
 =head2 GET /export/:bag

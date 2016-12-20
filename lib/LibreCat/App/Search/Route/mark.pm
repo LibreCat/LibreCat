@@ -31,7 +31,7 @@ get '/marked' => sub {
     if ($marked and ref $marked eq "ARRAY") {
         $marked = [@$marked];
         while (my @chunks = splice(@$marked, 0, 100)) {
-            $p->{q}     = ["(id=" . join(' OR id=', @chunks) . ")"];
+            $p->{cql}   = ["(id=" . join(' OR id=', @chunks) . ")"];
             $p->{limit} = 100;
             $hits       = LibreCat->searcher->search('publication', $p);
             push @tmp_hits, @{$hits->{hits}};
@@ -72,7 +72,7 @@ post '/mark/:id' => sub {
         return to_json {ok => true, total => scalar @$marked,};
     }
 
-    forward '/marked', {q => "id=$id"};
+    forward '/marked', {cql => "id=$id"};
 
 };
 
