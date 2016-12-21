@@ -161,7 +161,7 @@ sub extract_params {
     $p->{ftyp}  = $params->{ftyp}  if $params->{ftyp};
     $p->{enum}  = $params->{enum}  if $params->{enum};
     $p->{q} = $params->{q} if $params->{q};
-    $p->{cql} = $self->string_array($params->{cql}) if $params->{cql};
+    $p->{cql} = $self->string_array($params->{cql});
 
     ($params->{text} =~ /^".*"$/)
         ? (push @{$p->{q}}, $params->{text})

@@ -271,12 +271,6 @@ publications.
             = h->get_sort_style($p->{sort} || '', $p->{style} || '', $id);
         $p->{sort} = $sort_style->{sort_backend};
 
-        # override default author/editor facet
-        # $p->{facets}->{author}
-        #     = {terms => {field => 'author.id', size => 20, exclude => [$id]}};
-        # $p->{facets}->{editor}
-        #     = {terms => {field => 'editor.id', size => 20, exclude => [$id]}};
-
         my $hits = LibreCat->searcher->search('publication', $p);
         $hits->{style}         = $sort_style->{style};
         $hits->{sort}          = $p->{sort};
@@ -298,7 +292,6 @@ Performs search for user.
 
         my $p      = h->extract_params();
         my $id     = session 'personNumber';
-        my @orig_q = @{$p->{q}};
 
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
         push @{$p->{cql}}, "type<>research_data";
@@ -309,16 +302,9 @@ Performs search for user.
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
 
-        # override default author/editor facet
-        # $p->{facets}->{author}
-        #     = {terms => {field => 'author.id', size => 20, exclude => [$id]}};
-        # $p->{facets}->{editor}
-        #     = {terms => {field => 'editor.id', size => 20, exclude => [$id]}};
-
         my $hits = LibreCat->searcher->search('publication', $p);
 
         my $researchhits;
-        @{$p->{q}} = @orig_q;
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
         push @{$p->{cql}}, "type=research_data";
 
@@ -345,12 +331,6 @@ Performs search for user.
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
-
-        # override default author/editor facet
-        # $p->{facets}->{author}
-        #     = {terms => {field => 'author.id', size => 20, exclude => [$id]}};
-        # $p->{facets}->{editor}
-        #     = {terms => {field => 'editor.id', size => 20, exclude => [$id]}};
 
         my $hits = LibreCat->searcher->search('publication', $p);
 

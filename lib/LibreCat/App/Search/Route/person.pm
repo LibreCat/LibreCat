@@ -62,15 +62,14 @@ get
     => sub {
     my ($id, $modus) = splat;
     my $p      = h->extract_params();
-    my @orig_q = @{$p->{q}};
 
-    push @{$p->{q}}, ("person=$id", "status=public");
+    push @{$p->{cql}}, ("person=$id", "status=public");
 
     if ($modus and $modus eq "data") {
-        push @{$p->{q}}, "type=research_data";
+        push @{$p->{cql}}, "type=research_data";
     }
     else {
-        push @{$p->{q}}, "type<>research_data";
+        push @{$p->{cql}}, "type<>research_data";
     }
 
     my $sort_style
@@ -82,7 +81,7 @@ get
     my $hits = LibreCat->searcher->search('publication', $p);
 
     unless ($hits->total) {
-        my %search_params = (q => ["alias=$id"]);
+        my %search_params = (cql => ["alias=$id"]);
         h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
 
         $hits = LibreCat->searcher->search('researcher', \%search_params);
@@ -99,8 +98,7 @@ get
 
     # search for research hits (only to see if present and to display tab)
     my $researchhits;
-    @{$p->{q}} = @orig_q;
-    push @{$p->{q}}, ("type=research_data", "person=$id", "status=public");
+    push @{$p->{cql}}, ("type=research_data", "person=$id", "status=public");
     $p->{limit} = 1;
 
     h->log->debug("executing publication->search: " . to_dumper($p));
