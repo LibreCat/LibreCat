@@ -90,7 +90,7 @@ sub _cql_query {
     my $q = is_array_ref($p->{q}) ? $p->{q} : [ $p->{q} ];
 
     for (@$q) {
-        push @cql, "basic any \"$_\"" if defined $_;
+        push @cql, "basic = \"$_\"" if defined $_;
     }
 
     $p->{cql} = $self->_string_array($p->{cql});
