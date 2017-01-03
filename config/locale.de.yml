@@ -183,9 +183,9 @@ facets:
   filter_authorlist: "Autorenliste filtern"
   filter_publications: "Publikationen filtern"
   visibility_status: "Status"
-  current_authors: "UniBi Autoren"
-  current_editors: "UniBi Herausgeber"
-  former_authors: "Ehemalige UniBi Autoren"
+  current_authors: "LibreCat Autoren"
+  current_editors: "LibreCat Herausgeber"
+  former_authors: "Ehemalige LibreCat Autoren"
   department: "Einrichtung"
   publication_type: "Publikationstyp"
   publishing_year: "Publikationsjahr"
@@ -255,7 +255,7 @@ frontdoor:
   download: "Download"
   cc_license: "Creative Commons Lizenz"
   show_all: "Alle"
-  local_brand: "UniBi"
+  local_brand: "LibreCat"
   export: "Export"
   marked: "Markierte Publikationen"
   cite_this: "Zitieren"
@@ -304,7 +304,7 @@ frontdoor:
       access_level:
         label: "Access Level"
         open_access: "Open Access"
-        local: "UniBi Only"
+        local: "LibreCat Only"
         request_a_copy: "Request a Copy"
         closed: "Closed Access"
       last_uploaded: "Zuletzt Hochgeladen"
@@ -439,7 +439,7 @@ forms:
           placeholder: "z.B. 2015"
         extern:
           label_short: "Extern"
-          placeholder: "Ver&ouml;ffentlicht vor/nach Besch&auml;ftigung an der UniBi"
+          placeholder: "Ver&ouml;ffentlicht vor/nach Besch&auml;ftigung an der LibreCat"
       page: &pages
         label_short: "Seiten"
         label: "Anzahl Seiten"
@@ -477,7 +477,7 @@ forms:
           closed: "Autor/Reviewer"
           until: "bis"
           request_a_copy: "Kopie anfordern"
-          local: "Nur UniBi"
+          local: "Nur LibreCat"
           open_access: "Open Access"
         edit_modal:
           heading: "Hochgeladene Datei bearbeiten"
@@ -486,7 +486,7 @@ forms:
           relation: "Relation (\"Hochgeladenes Dokument ist...\")"
           access:
             open_access: "Open Access (Datei ist frei verf&uuml;gbar, ab sofort)"
-            local: "Local Access (Nur UniBi)"
+            local: "Local Access (Nur LibreCat)"
             closed: "Closed Access (Nur Autor/Reviewer)"
             request_a_copy: "Request a Copy (Closed Access au&szlig;er auf Anfrage)"
             embargo: "Zu Open Access wechseln am:"
@@ -1354,7 +1354,7 @@ forms:
           closed: "Autor/Reviewer"
           until: "bis"
           request_a_copy: "Kopie anfordern"
-          local: "Nur UniBi"
+          local: "Nur LibreCat"
           open_access: "Open Access"
         edit_modal:
           heading: "Hochgeladene Datei bearbeiten"
@@ -1363,7 +1363,7 @@ forms:
           relation: "Relation (\"Hochgeladenes Dokument ist...\")"
           access:
             open_access: "Open Access (Datei ist frei verf&uuml;gbar, ab sofort)"
-            local: "Local Access (Nur UniBi)"
+            local: "Local Access (Nur LibreCat)"
             closed: "Closed Access (Nur Autor/Reviewer)"
             request_a_copy: "Request a Copy (Closed Access au&szlig;er auf Anfrage)"
             embargo: "Zu Open Access wechseln am:"

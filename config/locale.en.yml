@@ -183,9 +183,9 @@ facets:
   filter_authorlist: "Filter Authorlist"
   filter_publications: "Filter Publications"
   visibility_status: "Status"
-  current_authors: "UniBi Authors"
-  current_editors: "UniBi Editors"
-  former_authors: "Former UniBi Authors"
+  current_authors: "LibreCat Authors"
+  current_editors: "LibreCat Editors"
+  former_authors: "Former LibreCat Authors"
   department: "Department"
   publication_type: "Publication Type"
   publishing_year: "Publishing Year"
@@ -255,7 +255,7 @@ frontdoor:
   download: "Download"
   cc_license: "Creative Commons license"
   show_all: "All"
-  local_brand: "UniBi"
+  local_brand: "LibreCat"
   export: "Export"
   marked: "Marked Publications"
   cite_this: "Cite this"
@@ -305,7 +305,7 @@ frontdoor:
       access_level:
         label: "Access Level"
         open_access: "Open Access"
-        local: "UniBi Only"
+        local: "LibreCat Only"
         request_a_copy: "Request a Copy"
         closed: "Closed Access"
       last_uploaded: "Last Uploaded"
@@ -402,7 +402,7 @@ forms:
         placeholder: "e.g. Handbuch der eBook-Ver&ouml;ffentlichung"
       author: &author_translator
         label: "Author"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
         idm_extern: "extern"
         first_name:
           label: "First Name"
@@ -440,7 +440,7 @@ forms:
           placeholder: "e.g. 2015"
         extern:
           label_short: "Extern"
-          placeholder: "Published while not employed at UniBi"
+          placeholder: "Published while not employed at LibreCat"
       page: &pages
         label_short: "Pages"
         label: "Number of Pages"
@@ -478,7 +478,7 @@ forms:
           closed: "Author/Reviewer"
           until: "until"
           request_a_copy: "Request a Copy"
-          local: "UniBi Only"
+          local: "LibreCat Only"
           open_access: "Open Access"
         edit_modal:
           heading: "Edit Uploaded File"
@@ -487,7 +487,7 @@ forms:
           relation: "Relation (\"Uploaded document is...\")"
           access:
             open_access: "Open Access (File is freely available, effective immediately)"
-            local: "Local Access (UniBi only)"
+            local: "Local Access (LibreCat only)"
             closed: "Closed Access (Author/Reviewer only)"
             request_a_copy: "Request a Copy (Closed Access except upon request)"
             embargo: "Switch to Open Access on:"
@@ -612,7 +612,7 @@ forms:
         label: "Editor"
         label_short: "Ed."
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       corporate_editor_solo: &corporate_editor_solo
         label: "Corporate Editor"
         label_short: "Copr. Ed."
@@ -687,7 +687,7 @@ forms:
         label: "Book Editor"
         label_short: "Ed."
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       corporate_editor: &corporate_editor
         label: "Corporate Editor"
         label_short: "Corp. Ed."
@@ -751,7 +751,7 @@ forms:
         label: "Editor"
         label_short: "Ed."
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       corporate_editor: *corporate_editor
       department: *department
       project: *project
@@ -1151,7 +1151,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Inventor"
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       applicant:
         label: "Applicant"
         label_short: "Appl."
@@ -1329,7 +1329,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Creator"
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       department: *department
       project: *project
       research_group: *research_group
@@ -1354,7 +1354,7 @@ forms:
           closed: "Author/Reviewer"
           until: "until"
           request_a_copy: "Request a Copy"
-          local: "UniBi Only"
+          local: "LibreCat Only"
           open_access: "Open Access"
         edit_modal:
           heading: "Edit Uploaded File"
@@ -1363,7 +1363,7 @@ forms:
           relation: "Relation (\"Uploaded document is...\")"
           access:
             open_access: "Open Access (File is freely available, effective immediately)"
-            local: "Local Access (UniBi only)"
+            local: "Local Access (LibreCat only)"
             closed: "Closed Access (Author/Reviewer only)"
             request_a_copy: "Request a Copy (Closed Access except upon request)"
             embargo: "Switch to Open Access on:"
@@ -1439,7 +1439,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Translator"
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       author_secondary:
         first_name:
           label: "First Name"
@@ -1451,7 +1451,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Author (Original)"
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       edition: *edition
       department: *department
       project: *project
@@ -1509,7 +1509,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Translator"
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       author_secondary:
         first_name:
           label: "First Name"
@@ -1521,7 +1521,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Author"
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       alternative_title:
         label: "Title (Original)"
         label_short: "Title (Orig)"
