@@ -29,7 +29,7 @@ get qr{/person/([a-z,A-Z])} => sub {
     h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('researcher', \%search_params);
-    
+
     my $result;
     @{$hits->{hits}} = map {
         my $rec = $_;
@@ -46,7 +46,7 @@ get qr{/person/([a-z,A-Z])} => sub {
     template 'person/list', $hits;
 };
 
-get qr{/person/*} => sub {
+get '/person' => sub {
     forward '/person/A';
 };
 
@@ -57,8 +57,7 @@ research data and author IDs.
 
 =cut
 
-get
-    qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+)*/*}
+get qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+)*/*}
     => sub {
     my ($id, $modus) = splat;
     my $p      = h->extract_params();

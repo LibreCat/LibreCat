@@ -15,7 +15,7 @@ use LibreCat::App::Helper;
 Splash page for :id.
 
 =cut
-get qr{/(data|publication)/(\d{1,})/*} => sub {
+get qr{/(data|publication)/(\S+)} => sub {
     my ($bag, $id) = splat;
 
     my $p = h->extract_params();
