@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PUB &ndash; Publications at Bielefeld University</title>
+    <title>PUB &ndash; Publications at LibreCat University</title>
     <link rel="icon" href="/images/icon_uni.png" type="image/png">
     [% INCLUDE head_meta.tt %]
   </head>

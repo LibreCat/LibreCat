@@ -84,7 +84,7 @@ angularController.controller('angularSearch', function ($scope) {
 					about:"About PUB",
 				},
 				home: {
-					heading: "PUB – The Publication Server at Bielefeld University",
+					heading: "PUB – The Publication Server at LibreCat University",
 					stats_publication:{
 						text:"Publications",
 						link:"/publication?lang=en",
@@ -125,7 +125,7 @@ angularController.controller('angularSearch', function ($scope) {
 					about:"Über PUB",
 				},
 				home: {
-					heading: "PUB – Der Publikationenserver der Universität Bielefeld",
+					heading: "PUB – Der Publikationenserver der Universität LibreCat",
 					stats_publication:{
 						text:"Publikationen",
 						link:"/publication",

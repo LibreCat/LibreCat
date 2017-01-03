@@ -13,10 +13,10 @@ login:
   password_placeholder: "HRZ Password (used e.g. for Webmailer and Stud.IP)"
   login_button: "Login"
   login_help: "HRZ Username and Password (used e.g. for Webmailer and Stud.IP)"
-  contact_us: "<strong>Login failed?</strong><br>If you are a member of Bielefeld University but you still cannot log in to PUB, please <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>contact us</a></strong> or call 106-4058."
+  contact_us: "<strong>Login failed?</strong><br>If you are a member of LibreCat University but you still cannot log in to PUB, please <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>contact us</a></strong> or call 106-4058."
 header:
-  title: "Publications at Bielefeld University"
-  title_long: "PUB &ndash; Publications at Bielefeld University"
+  title: "Publications at LibreCat University"
+  title_long: "PUB &ndash; Publications at LibreCat University"
   title_person: "PUB  &ndash; Publication list of"
   my_author_page: "My Publication List"
   brand: "Home"
@@ -49,7 +49,7 @@ header:
   default_language: "Default Language"
   beta: "The new backend of PUB is in open beta phase"
 footer:
-  this_is_us: "Bielefeld University Library"
+  this_is_us: "LibreCat University Library"
   language_url: "english/"
   dini_alt: "DINI-Certificate 2010"
   dini_title: "PUB has been honoured with the DINI-Certificate 2010"
@@ -110,10 +110,10 @@ home:
     oa_publications: "Open Access Publications"
     projects: "Projects"
   logos:
-    oa: "Open Access at<br>Bielefeld University"
+    oa: "Open Access at<br>LibreCat University"
     rd_management: "Research Data Management"
     brand: "PUB"
-    brand_long: "PUB &ndash; Publications at Bielefeld University"
+    brand_long: "PUB &ndash; Publications at BieleLibreCatfeld University"
     theses: "PUB Theses"
   you_have_no_photo: "You have not uploaded a picture to the directory of staff and departments."
   they_have_no_photo: "This person has not uploaded a picture to the directory of staff and departments."
@@ -157,7 +157,7 @@ main_page:
     search_similar: "Search similar titles"
 person_profile:
   id_not_found: "Person ID not found."
-  former_researcher: "Former Bielefeld University Researcher"
+  former_researcher: "Former LibreCat University Researcher"
   view: "View "
   view_in: "View in"
   local_id: "ID"
@@ -283,8 +283,8 @@ frontdoor:
       ipn: "Int. Patent Number"
       ipc: "Int. Patent Classification"
       financial_disclosure: "Financial disclosure"
-      ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href='http://oa.uni-bielefeld.de/publikationsfonds.html'>Open Access Publication Fund</a> of Bielefeld University."
-      scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University."
+      ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href=''>Open Access Publication Fund</a> of LibreCat University."
+      scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and LibreCat University."
       grantnumber: "Grant Number"
       alt_name: "Alternative Name"
       acronym: "Acronym"
@@ -499,12 +499,12 @@ forms:
         heading: "Copyright and Licenses"
         pub_license:
           label: "Copyright Disclaimer"
-          disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
+          disclaimer_text: "I herewith place this document at LibreCat University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
           accept_text: "I accept"
           alert: "You need to accept the Copyright Disclaimer because you have attached files to this record."
         info:
           text: "Questions about policy / license?"
-          contact: "Contact our support: Phone 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
+          contact: "Contact our support: Phone 999/9999, E-Mail: <a href=''>helpdesk@librecat.org</a>"
         open_data_release:
           label: "Open Data Release - Declaration"
           disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
@@ -1336,7 +1336,7 @@ forms:
       publisher:
         label: "Publisher"
         placeholder: "Publisher"
-        defaultvalue: "Bielefeld University"
+        defaultvalue: "LibreCat University"
       year_extern: *year_extern
       external_file:
         label: "External File(s)"
@@ -1402,7 +1402,7 @@ forms:
           label: "Other license"
         info:
           text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br>"
-          contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
+          contact: "<strong><a href='' target='_blank'>LibreCat</a><br>999/99999<br><a href=''>helpdesk@librecat.org</a><br></strong>"
       abstract: *abstract
       keyword: *keyword
       jel: *jel
@@ -1786,7 +1786,7 @@ help:
   change_language: "Change language"
   user_settings: "Change role,<br>department,<br>edit mode<br>default language."
   role: "Your user role<br>If you are reviewer/delegate you can change your role here to work with publications allocated for that role."
-  photo: "Your photo. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp?lang=en' target='_blank'>Change it?</a>"
+  photo: "Your photo. <a href='' target='_blank'>Change it?</a>"
   email_encoded: "Your Email address from BIS/PEVZ."
   author_id: "Enter alias (for your public author page), or author IDs (e.g. ORCID)."
   author_id_edit: "Edit ID, add more IDs."
