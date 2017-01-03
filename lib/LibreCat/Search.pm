@@ -89,8 +89,12 @@ sub _cql_query {
 
     my $q = is_array_ref($p->{q}) ? $p->{q} : [ $p->{q} ];
 
-    for (@$q) {
-        push @cql, "basic = \"$_\"" if defined $_;
+    for my $part (@$q) {
+        if (defined($part)) {
+            # auto-escape wildcards
+            $part =~ s{([\*\?])}{\\$1}g;
+            push @cql, "basic = \"$part\"";
+        }
     }
 
     $p->{cql} = $self->_string_array($p->{cql});

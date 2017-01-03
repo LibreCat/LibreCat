@@ -120,12 +120,6 @@ external_identifier:
   opac:
     name: "Katalog.plus!"
     prefix: "UB-OPAC:"
-#  fp7:
-#    name: "FP7"
-#    prefix: "fp7/"
-#  fp6:
-#    name: "FP6"
-#    prefix: "fp6/"
 
 publication_identifier:
   issn: "ISSN"
