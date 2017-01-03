@@ -38,10 +38,10 @@ $bag->commit;
 }
 
 {
-    route_exists [GET => '/export/publication/999999999?fmt=json'],
-        "GET /export/publication/:ID is handled";
-    response_status_is [GET => '/export/publication/999999999?fmt=json'], 200,
-        "GET /export/publication/:ID status is ok";
+    route_exists [GET => '/publication/999999999.json'],
+        "GET /publication/:ID is handled";
+    response_status_is [GET => '/publication/999999999.json'], 200,
+        "GET /publication/:ID status is ok";
 }
 
 done_testing;
