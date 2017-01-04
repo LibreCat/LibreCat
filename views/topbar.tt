@@ -31,7 +31,6 @@
 	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% h.loc("header.admin_menu.admin") %] <span class="glyphicon glyphicon-chevron-down"></span></a>
 	  <ul class="dropdown-menu" role="menu">
 	    <li><a href="/librecat/admin/account"><span class="glyphicon glyphicon-user"></span>[% h.loc("header.admin_menu.manage_accounts") %]</a></li>
-	    <!--<li><a href="/librecat/admin/import"><span class="glyphicon glyphicon-import"></span>[% h.loc("header.admin_menu.import") %]</a></li>-->
 	    <li><a href="/librecat/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% h.loc("header.admin_menu.manage_projects") %]</a></li>
 	    <li><a href="/librecat/admin/research_group"><span class="fa fa-group fw"></span>[% h.loc("header.admin_menu.manage_research_groups") %]</a></li>
 	  </ul>

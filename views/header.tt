@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="angularController">
+<html>
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
 [% lf = h.config.locale.$lang -%]
 
@@ -61,7 +61,7 @@
     [% INCLUDE head_meta.tt %]
   </head>
 
-  <body ng-controller="angularSearch" itemscope itemtype="http://schema.org/WebPage">
+  <body itemscope itemtype="http://schema.org/WebPage">
   [% INCLUDE topbar.tt %]
 
 <!-- END header.tt -->

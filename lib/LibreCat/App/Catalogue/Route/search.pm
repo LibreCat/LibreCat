@@ -43,9 +43,7 @@ Performs search for admin.
 
         my $p = h->extract_params();
 
-        push @{$p->{q}}, "status<>deleted";
-        push @{$p->{q}}, "status=public"
-            if $p->{fmt} and $p->{fmt} eq "autocomplete";
+        push @{$p->{cql}}, "status<>deleted";
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
@@ -75,7 +73,7 @@ Performs search for similar titles, admin only
             return redirect '/librecat';
         }
 
-        push @{$p->{q}}, "status<>deleted";
+        push @{$p->{cql}}, "status<>deleted";
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
@@ -142,13 +140,11 @@ Performs search for reviewer.
         push @{$p->{q}}, "status<>deleted";
 
         my $dep_query = "department=" . params->{department_id};
-        push @{$p->{q}}, $dep_query;
+        push @{$p->{cql}}, $dep_query;
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
-        push @{$p->{q}}, "status=public"
-            if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         my $hits = LibreCat->searcher->search('publication', $p);
         $hits->{style}         = $sort_style->{style};
@@ -192,13 +188,11 @@ Performs search for reviewer.
         push @{$p->{q}}, "status<>deleted";
 
         my $dep_query = "project=" . params->{project_id};
-        push @{$p->{q}}, $dep_query;
+        push @{$p->{cql}}, $dep_query;
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
-        push @{$p->{q}}, "status=public"
-            if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         my $hits = LibreCat->searcher->search('publication', $p);
         $hits->{style}         = $sort_style->{style};
@@ -231,10 +225,8 @@ Performs search for data manager.
         my $account   = h->get_person(session->{user});
         my $dep_query = "department=" . params->{department_id};
 
-        push @{$p->{q}}, "(type=research_data OR type=data)";
-        push @{$p->{q}}, $dep_query;
-        push @{$p->{q}}, "status=public"
-            if $p->{fmt} and $p->{fmt} eq "autocomplete";
+        push @{$p->{cql}}, "(type=research_data OR type=data)";
+        push @{$p->{cql}}, $dep_query;
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
@@ -260,27 +252,7 @@ according to first delegate ID.
 
     get '/delegate' => needs role => "delegate" => sub {
         my $account = h->get_person(session->{user});
-        if (params->{fmt} and params->{fmt} eq "autocomplete") {
-            my $p = h->extract_params();
-
-            push @{$p->{q}}, "status=public";
-
-            if ($account->{delegate}) {
-                my $delegate_search = "";
-                foreach my $delegate (@{$account->{delegate}}) {
-                    $delegate_search
-                        .= "person=$delegate OR creator=$delegate OR ";
-                }
-                $delegate_search =~ s/ OR $//g;
-                push @{$p->{q}}, "(" . $delegate_search . ")"
-                    if $delegate_search ne "";
-            }
-            my $hits = LibreCat->searcher->search('publication', $p);
-            h->export_publication($hits, params->{fmt});
-        }
-        else {
-            redirect "/librecat/search/delegate/$account->{delegate}->[0]";
-        }
+        redirect "/librecat/search/delegate/$account->{delegate}->[0]";
     };
 
 =head2 GET '/delegate/:delegate_id'
@@ -293,19 +265,11 @@ publications.
     get '/delegate/:delegate_id' => needs role => "delegate" => sub {
         my $p  = h->extract_params();
         my $id = params->{delegate_id};
-        push @{$p->{q}}, "(person=$id OR creator=$id)";
-        push @{$p->{q}}, "status=public"
-            if $p->{fmt} and $p->{fmt} eq "autocomplete";
+        push @{$p->{cql}}, "(person=$id OR creator=$id)";
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '', $id);
         $p->{sort} = $sort_style->{sort_backend};
-
-        # override default author/editor facet
-        $p->{facets}->{author}
-            = {terms => {field => 'author.id', size => 20, exclude => [$id]}};
-        $p->{facets}->{editor}
-            = {terms => {field => 'editor.id', size => 20, exclude => [$id]}};
 
         my $hits = LibreCat->searcher->search('publication', $p);
         $hits->{style}         = $sort_style->{style};
@@ -328,31 +292,22 @@ Performs search for user.
 
         my $p      = h->extract_params();
         my $id     = session 'personNumber';
-        my @orig_q = @{$p->{q}};
 
-        push @{$p->{q}}, "(person=$id OR creator=$id)";
-        push @{$p->{q}}, "type<>research_data";
-        push @{$p->{q}}, "status=public"
+        push @{$p->{cql}}, "(person=$id OR creator=$id)";
+        push @{$p->{cql}}, "type<>research_data";
+        push @{$p->{cql}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
 
-        # override default author/editor facet
-        $p->{facets}->{author}
-            = {terms => {field => 'author.id', size => 20, exclude => [$id]}};
-        $p->{facets}->{editor}
-            = {terms => {field => 'editor.id', size => 20, exclude => [$id]}};
-
         my $hits = LibreCat->searcher->search('publication', $p);
 
         my $researchhits;
-        @{$p->{q}} = @orig_q;
-        push @{$p->{q}}, "(person=$id OR creator=$id)";
-        push @{$p->{q}}, "(type=research_data OR type=data)";
-        push @{$p->{q}}, "status=public"
-            if $p->{fmt} and $p->{fmt} eq "autocomplete";
+        push @{$p->{cql}}, "(person=$id OR creator=$id)";
+        push @{$p->{cql}}, "type=research_data";
+
         $researchhits = LibreCat->searcher->search('publication', $p);
         $hits->{researchhits} = $researchhits if $researchhits;
 
@@ -370,27 +325,19 @@ Performs search for user.
         my $id     = session 'personNumber';
         my @orig_q = @{$p->{q}};
 
-        push @{$p->{q}}, "(person=$id OR creator=$id)";
-        push @{$p->{q}}, "(type=research_data OR type=data)";
-        push @{$p->{q}}, "status=public"
-            if $p->{fmt} and $p->{fmt} eq "autocomplete";
+        push @{$p->{cql}}, "(person=$id OR creator=$id)";
+        push @{$p->{cql}}, "(type=research_data OR type=data)";
 
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
 
-        # override default author/editor facet
-        $p->{facets}->{author}
-            = {terms => {field => 'author.id', size => 20, exclude => [$id]}};
-        $p->{facets}->{editor}
-            = {terms => {field => 'editor.id', size => 20, exclude => [$id]}};
-
         my $hits = LibreCat->searcher->search('publication', $p);
 
         my $researchhits;
         @{$p->{q}} = @orig_q;
-        push @{$p->{q}}, "(person=$id OR creator=$id)";
-        push @{$p->{q}}, "(type=research_data OR type=data)";
+        push @{$p->{cql}}, "(person=$id OR creator=$id)";
+        push @{$p->{cql}}, "(type=research_data OR type=data)";
         $researchhits = LibreCat->searcher->search('publication', $p);
         $hits->{researchhits} = $researchhits if $researchhits;
 

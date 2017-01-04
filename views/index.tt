@@ -35,7 +35,7 @@
     <div class="row">
       <div class="col-md-12 tab-content">
 
-        <div class="tab-pane[% IF !bag || bag == 'home' %] active[% END %]" id="home">
+        <div class="tab-pane active" id="home">
         <div class="row"><!-- begin outer row -->
 
           <div class="col-sm-9"><!-- begin left col -->
@@ -46,36 +46,16 @@
           <form action="/publication" method="get">
             <div class="col-lg-8 col-md-7 col-sm-6">
               <div class="input-group">
-                <input type="text" name="cql_query" id="q_id" ng-model="yourQuery" ng-init="yourQuery='[% qp.cql_query %]'" value="[% qp.q %]" class="form-control" placeholder="[% h.loc("home.search_placeholder") %]">
+                <input type="text" name="q" class="form-control" placeholder="[% h.loc("home.search_placeholder") %]">
                 <span class="input-group-btn">
                   <button type="submit" class="btn btn-default">[% h.loc("facets.go_button") %]</button>
                 </span>
               </div>
             </div>
-            <div class="col-lg-4 col-md-5 col-sm-6 hidden-xs">
-              <div class="btn-group">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  [% h.loc("home.fields") %] <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li ng-repeat="field in fields"><a href="" class="ngadd" ng-click="addField(field.value)">{{field.text}}</a></li>
-                  </ul>
-                </div>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    [% h.loc("home.operators") %] <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li ng-repeat="operator in operators"><a href="" class="ngadd" ng-click="addOperator(operator.value)">{{operator.text}}</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
           </form>
           </div>
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div class="row margin-top2">
               <div class="col-md-12">
@@ -97,9 +77,6 @@
   </div><!-- main content left -->
 
 </div><!-- outer border -->
-
-<script src="/javascripts/angular-1.2.14.min.js"></script>
-<script src="/javascripts/angularSearch.js"></script>
 
 <!-- END websites/index_publication.tt -->
 

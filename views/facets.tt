@@ -1,60 +1,44 @@
-[%- If !facets -%][% RETURN %][% END %]
+[%- IF !facets -%][% RETURN %][% END %]
 
 <!-- BEGIN facets.tt -->
-
 <div id="facets"></div>
-
 <div class="hidden-sm hidden-md hidden-lg"><hr></div>
-
-[% UNLESS request.path == "/marked" %]
-[% IF qp.q.size == 0 %]
-<div class="row hidden-md hidden-lg hidden-sm">
-  <div class="col-xs-12">
-    <h2 class="margin-xs">[% h.loc("facets.search_filter") %]</h2>
+[%- IF qp.q.size == 0 %]
+  <div class="row hidden-md hidden-lg hidden-sm">
+    <div class="col-xs-12">
+      <h2 class="margin-xs">[% h.loc("facets.search_filter") %]</h2>
+    </div>
   </div>
-</div>
-[% END %]
-[% END %]
+[%- END %]
 
+[%- UNLESS request.path == "/marked" -%]
 
-[% UNLESS request.path == "/marked" %]
-
-[% IF facets.status.terms.size > 1 OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR facets.year.terms.size > 1 OR (bag == "person" AND !qp.q.grep('^former').0) %]
+[%- IF (facets.status.terms.size || 0) > 1 OR (facets.type.terms.size || 0) > 1 OR
+    (facets.author.terms.size || 0) > 1 OR (facets.editor.terms.size || 0) > 1 OR
+    (facets.year.terms.size || 0) > 1 OR (bag == "person" AND !qp.q.grep('^former').0) -%]
 
 <h3>[% IF bag == "data" %][% h.loc("facets.filter_data_publications") %]
     [% ELSIF bag == "person" %][% h.loc("facets.filter_authorlist") %]
     [% ELSE %][% h.loc("facets.filter_publications") %][% END %]</h3>
 
-[% IF bag == "person" AND !qp.q.grep('^former').0 %]
-  [% other = {} %]
-  [% CALL other.import(qp) -%]
-  <ul class="nav nav-tabs nav-stacked margin-bottom1">
-    <li>
-      <a href="[% path %]?[% h.hash_to_url(other) %]&q=former<>1" rel="nofollow"><span class="fa fa-chevron-right"></span> [% h.loc("facets.current_authors") %]</a>
-    </li>
-    <li>
-      <a href="[% path %]?[% h.hash_to_url(other) %]&q=former=1" rel="nofollow"><span class="fa fa-chevron-right"></span> [% h.loc("facets.former_authors") %]</a>
-    </li>
-  </ul>
-[% END %]
-
-
-[% IF facets.status.terms.size > 1 && backend %]
+[%- IF facets.status.terms.size > 1 && backend %]
   <ul class="nav nav-tabs nav-stacked margin-bottom1 ul0">
     <li>
       <button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left"><span class="glyphicon glyphicon-chevron-down"></span> [% h.loc("facets.visibility_status") %]</button>
       <div class="facettecollapse">
-	<ul id="status_[% tabmodus %][% menu %]" class="collapse">
-	  [% FOREACH stat IN facets.status.terms %]
-	  <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="status" data-value="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
-	  [% END %]
-	</ul>
+	    <ul id="status_[% tabmodus %][% menu %]" class="collapse">
+	    [%- FOREACH stat IN facets.status.terms %]
+	      <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="status" data-value="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
+	    [%- END %]
+	    </ul>
       </div>
     </li>
   </ul>
-[% END %]
+[%- END %]
 
-[% IF backend AND (session.role == "super_admin" OR session.role == "reviewer") OR facets.type.terms.size > 1 OR  facets.author.terms.size > 1 OR facets.editor.terms.size > 1 OR  facets.year.terms.size > 1 %]
+[%- IF backend AND (session.role == "super_admin" OR session.role == "reviewer")
+    OR (facets.type.terms.size || 0) > 1 OR  (facets.author.terms.size || 0) > 1
+    OR (facets.editor.terms.size || 0) > 1 OR  (facets.year.terms.size || 0) > 1 -%]
 <ul class="nav nav-tabs nav-stacked ul1 helpme" data-placement="left">
   [% IF backend AND (session.role == "super_admin" OR session.role == "reviewer") %]
   <li>
@@ -68,7 +52,7 @@
       [%- departments = h.get_department_tree %]
       [%- FOREACH dep IN departments.sort %]
 	    <li>
-	      <a href="#" class="facet_[% tabmodus %]" data-key="q" data-param="department" data-value="[% dep._id %]"><strong>[% dep.name %]</strong></a>
+	      <a href="#" class="facet_[% tabmodus %]" data-key="cql" data-param="department" data-value="[% dep._id %]"><strong>[% dep.name %]</strong></a>
 	    </li>
       [%- END %]
       [%- END %]
@@ -77,99 +61,101 @@
   </li>
   [% END %]
 
-  [% IF facets.type.terms.size > 1 %]
+  [% IF facets.type AND facets.type.terms.size > 1 %]
   <li>
     <button data-toggle="collapse" data-target="#type_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.publication_type") %]</button>
     <div class="facettecollapse">
       <ul id="type_[% tabmodus %][% menu %]" class="collapse">
 	[% FOREACH type IN facets.type.terms %]
 	[% typeName = lf.forms.item(type.term).label %]
-	<li><a class="facet_[%tabmodus %][% menu %]" data-key="q" data-param="type" data-value="[% type.term %]" href="#" rel="nofollow">[% typeName %] ([% type.count %])</a></li>
+	<li><a class="facet_[%tabmodus %][% menu %]" data-key="cql" data-param="type" data-value="[% type.term %]" href="#" rel="nofollow">[% typeName %] ([% type.count %])</a></li>
 	[% END %]
       </ul>
     </div>
   </li>
  [% END %]
 
- [% IF facets.author.terms.size > 1 %]
+    [%- IF (facets.author AND facets.author.terms.size || 0) > 1 -%]
 
- [% query = "id=(" %]
- [% FOREACH au IN facets.author.terms %]
-   [% query = query _ au.term %]
-   [% UNLESS loop.last %]
-     [% query = query _  " OR " %]
-   [% END %]
- [% END %]
- [% query = query _ ")" %]
- [% p.q = []; p.q.push(query); p.get_person = 1 %]
- [% authors = h.search_researcher(p) %]
+     [%- query = "id=(" %]
+       [%- FOREACH au IN facets.author.terms %]
+         [%- query = query _ au.term %]
+         [%- UNLESS loop.last %]
+           [%- query = query _  " OR " %]
+         [%- END %]
+       [%- END %]
+     [%- query = query _ ")" %]
+     [%- p.q = []; p.q.push(query); p.get_person = 1 %]
+     [%- authors = h.search_researcher(p) %]
   <li>
     <button data-toggle="collapse" data-target="#authors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.current_authors") %]</button>
     <div class="facettecollapse">
       <ul id="authors_[% tabmodus %][% menu %]" class="collapse">
-	[% FOREACH au IN facets.author.terms %]
-	[% name = authors.item(au.term) %]
-	<li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="author" data-value="[% au.term %]" href="#" rel="nofollow">[% name %] ([% au.count %])</a></li>
-	[% END %]
+	  [%- FOREACH au IN facets.author.terms %]
+	    [%- name = authors.item(au.term) %]
+	    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="author" data-value="[% au.term %]" href="#" rel="nofollow">[% name %] ([% au.count %])</a></li>
+	  [%- END %]
       </ul>
     </div>
   </li>
-  [% END %]
+   [%- END %]
 
-  [% IF facets.editor.terms.size > 1 %]
+  [%- IF (facets.editor.terms.size || 0) > 1 -%]
 
-  [% query = "id=(" %]
-  [% FOREACH ed IN facets.editor.terms %]
-   [% query = query _ ed.term %]
-   [% UNLESS loop.last %]
-     [% query = query _  " OR " %]
-   [% END %]
-  [% END %]
-  [% query = query _ ")" -%]
-  [% p.q = []; p.q.push(query); p.get_person = 1 -%]
-  [% editors = h.search_researcher(p) -%]
+      [%- query = "id=(" %]
+      [%- FOREACH ed IN facets.editor.terms %]
+        [%- query = query _ ed.term %]
+        [%- UNLESS loop.last %]
+          [%- query = query _  " OR " %]
+        [%- END %]
+      [%- END %]
+      [%- query = query _ ")" -%]
+      [%- p.q = []; p.q.push(query); p.get_person = 1 -%]
+      [%- editors = h.search_researcher(p) -%]
   <li>
     <button data-toggle="collapse" data-target="#editors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.current_editors") %]</button>
     <div class="facettecollapse">
     <ul id="editors_[% tabmodus %][% menu %]" class="collapse">
-      [% FOREACH ed IN facets.editor.terms %]
-      [% name = editors.item(ed.term) %]
-      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="editor" data-value="[% ed.term %]" href="#" rel="nofollow">[% name %] ([% ed.count %])</a></li>
-      [% END %]
+      [%- FOREACH ed IN facets.editor.terms %]
+        [%- name = editors.item(ed.term) %]
+      <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="editor" data-value="[% ed.term %]" href="#" rel="nofollow">[% name %] ([% ed.count %])</a></li>
+      [%- END %]
     </ul>
     </div>
   </li>
-  [% END %]
+  [%- END -%]
 
-  [% IF facets.year.terms.size > 1 %]
+  [%- IF facets.year.terms.size > 1 %]
   <li>
     <button data-target="#year_[% tabmodus %][% menu %]" data-toggle="collapse" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.publishing_year") %]</button>
     <div class="facettecollapse">
     <ul id="year_[% tabmodus %][% menu %]" class="collapse">
-      [% FOREACH y IN facets.year.terms %]
-      [%- year = (y.term) / 1000; -%]
-      [%- IF year == '0' -%] [%- yf = '1970' -%][%- ELSE -%][%- yf = date.format(year); -%][%- END -%]
-      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="year" data-value="[% yf %]" href="#" rel="nofollow">[% yf %] ([% y.count %])</a></li>
-      [% END %]
+      [%- FOREACH y IN facets.year.terms %]
+        [%- year = (y.term) / 1000; -%]
+        [%- IF year == 0 -%] [%- yf = '1970' -%][%- ELSE -%][%- yf = date.format(year); -%][%- END -%]
+        <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="year" data-value="[% yf %]" href="#" rel="nofollow">[% yf %] ([% y.count %])</a></li>
+      [%- END %]
     </ul>
     </div>
   </li>
-  [% END %]
+  [%- END %]
 </ul>
-[% END %]
-[% END %]
+[%- END -%]
+
+[%- END -%]
 
 [% IF (facets.popular_science.terms.size || 0) > 0
    OR (facets.extern.terms.size || 0) > 0
    OR (facets.open_access.terms.size || 0) > 0
    OR (facets.isi.terms.size || 0) > 0
    OR (facets.pmid.terms.size || 0) > 0 %]
+
 <ul class="nav nav-tabs nav-stacked margin-top1 ul2 helpme" data-placement="left">
   [% IF (facets.popular_science.terms.size || 0) > 0 %]
   <li class="ul2li1">
     [% FOREACH t IN facets.popular_science.terms %]
       [% IF t.count < total %]
-      <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="popularscience" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% h.loc("facets.popular_science") %]</a>
+      <a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="popularscience" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% h.loc("facets.popular_science") %]</a>
       [% ELSE %]
       <div class="text-success"><span class="glyphicon glyphicon-ok"></span> <strong>[% h.loc("facets.all_popular_science") %]</strong></div>
       [% END %]
@@ -181,7 +167,7 @@
   <li class="ul2li2">
     [% FOREACH t IN facets.extern.terms %]
       [% IF t.count < total %]
-      <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="extern" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% h.loc("facets.external_publication") %]</a>
+      <a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="extern" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% h.loc("facets.external_publication") %]</a>
       [% ELSE %]
       <div class="text-success"><span class="glyphicon glyphicon-ok"></span> <strong>[% h.loc("facets.all_external_publication") %]</strong></div>
       [% END %]
@@ -193,7 +179,7 @@
   <li class="ul2li3">
     [% FOREACH t IN facets.open_access.terms %]
       [% IF t.count < total %]
-      <a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="fulltext" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% h.loc("facets.fulltext") %]</a>
+      <a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="fulltext" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% h.loc("facets.fulltext") %]</a>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% h.loc("facets.all_fulltext") %]</strong></div>
       [% END %]
@@ -208,14 +194,14 @@
     <ul id="extid_[% tabmodus %][% menu %]" class="collapse">
     [% IF facets.isi.terms.0.count %]
       [% IF facets.isi.terms.0.count < total %]
-      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="isi" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.isi.terms.0.count %] Web of Science</a></li>
+      <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="isi" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.isi.terms.0.count %] Web of Science</a></li>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% h.loc("facets.all_isi") %]</strong></div>
       [% END %]
     [% END %]
     [% IF facets.pmid.terms.0.count %]
       [% IF facets.pmid.terms.0.count < total %]
-      <li><a class="facet_[% tabmodus %][% menu %]" data-key="q" data-param="pmid" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.pmid.terms.0.count %] Pubmed</a></li>
+      <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="pmid" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.pmid.terms.0.count %] Pubmed</a></li>
       [% ELSE %]
       <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% h.loc("facets.all_pubmed") %]</strong></div>
       [% END %]
@@ -225,8 +211,7 @@
   </li>
   [% END %]
 </ul>
-[% END %]
+[%- END -%]
 
-[% END %] <!-- marked -->
-
+[%- END %]
 <!-- END facets.tt -->

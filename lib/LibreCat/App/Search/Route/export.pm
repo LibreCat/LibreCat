@@ -22,7 +22,7 @@ get '/publication/:id.:fmt' => sub {
     my $fmt = params->{fmt} // 'yaml';
 
     forward "/export",
-        {q => "id=$id", bag => 'publication', fmt => $fmt};
+        {cql => "id=$id", bag => $bag, fmt => params->{fmt}};
 };
 
 =head2 GET /export

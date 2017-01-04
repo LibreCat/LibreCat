@@ -1065,12 +1065,12 @@ search:
           full_name:
             type: multi_field
             fields:
-              full_name: {type: string, include_in_all: true}
+              full_name: {type: string, include_in_all: true, analyzer: name}
               exact: {type: string, analyzer: tag}
           old_full_name:
             type: multi_field
             fields:
-              old_full_name: {type: string, include_in_all: true}
+              old_full_name: {type: string, include_in_all: true, analyzer: name}
               exact: {type: string, analyzer: tag}
           last_name: {type: string, analyzer: name}
           old_last_name: {type: string, analyzer: name}
