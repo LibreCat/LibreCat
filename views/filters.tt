@@ -157,7 +157,7 @@
           <li><span class="text-muted">[% dstyle %]</span></li>
         [%- ELSE %]
           [%- tmp = {}; tmp.import(qp); tmp.style = dstyle %]
-          <li><a href="[% request.uri_for(path, tmp) %]" rel="nofollow">[% dstyle %]</a></li>
+          <li><a href="[% request.uri_for(request.path, tmp) %]" rel="nofollow">[% dstyle %]</a></li>
         [%- END %]
       [%- END %]
     </ul>
