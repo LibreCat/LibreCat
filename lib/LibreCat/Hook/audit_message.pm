@@ -43,6 +43,18 @@ sub fix {
             message => "editing a $record_type by $user_id" ,
         });
     }
+    elsif ($name eq 'publication-change-mode') {
+        my $id          = $data->{_id};
+        my $record_type = $data->{type}    // '<unknown>';
+        my $user_id     = $data->{user_id} // '<unknown>';
+        h->queue->add_job('audit',{
+            id      => $id ,
+            bag     => 'publication' ,
+            process => 'LibreCat::App::Catalogue::Route::publication' ,
+            action  => "post /librecat/record/change_mode" ,
+            message => "change mode to a $record_type by $user_id" ,
+        });
+    }
     elsif ($name eq 'publication-update') {
         my $id          = $data->{_id};
         my $record_type = $data->{type}    // '<unknown>';
