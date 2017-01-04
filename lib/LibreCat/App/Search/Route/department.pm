@@ -16,7 +16,7 @@ Display departments list.
 
 =cut
 
-get qr{/department/*} => sub {
+get '/department' => sub {
     return template 'department/list', {hits => h->get_department_tree};
 };
 

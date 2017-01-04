@@ -292,7 +292,7 @@
                     [% h.config.exporter.publication.$f.label %]:
                     </div>
                     <div class="col-xs-8">
-                      <a href="/export[% request.path %]?fmt=[% f %]"> [% h.config.exporter.publication.$f.content_type %]</a>
+                      <a href="[% request.path %].[% f %]"> [% h.config.exporter.publication.$f.content_type %]</a>
                     </div>
                   </div>
                   <div class="row"><div class="col-xs-12">&nbsp;</div></div>

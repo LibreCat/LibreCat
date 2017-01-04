@@ -79,7 +79,7 @@ post '/librecat/record/import' => needs login => sub {
             # Use config/hooks.yml to register functions
             # that should run before/after uploading QAE publications
 
-            h->hook('import-new-')->fix_around(
+            h->hook('import-new-'. $source)->fix_around(
                 $pub,
                 sub {
                     h->update_record('publication', $pub);

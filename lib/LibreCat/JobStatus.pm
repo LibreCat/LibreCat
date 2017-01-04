@@ -8,19 +8,16 @@ sub new {
 }
 
 sub queued {
-
     # known && not running
     $_[0]->[0] && !$_[0]->[1];
 }
 
 sub running {
-
     # known && running
     $_[0]->[0] && $_[0]->[1];
 }
 
 sub done {
-
     # not known
     !$_[0]->[0];
 }

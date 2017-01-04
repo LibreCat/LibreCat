@@ -12,31 +12,33 @@ use Dancer qw/:syntax/;
 use LibreCat;
 use LibreCat::App::Helper;
 
-=head2 GET /export/:bag/:ID
+=head2 GET /publication/:id.:fmt
 
 Exports data.
 
 =cut
-get qr{/export/(\w+)/([^/]+)} => sub {
-    my ($bag, $id) = splat;
+get '/publication/:id.:fmt' => sub {
+    my $id  = params->{id};
+    my $fmt = params->{fmt} // 'yaml';
+
     forward "/export",
-        {q => "id=$id", bag => $bag, fmt => params->{fmt}};
+        {q => "id=$id", bag => 'publication', fmt => $fmt};
 };
 
-=head2 GET /export/:bag
+=head2 GET /export
 
 Exports data.
 
 =cut
-get qr{/export/*} => sub {
+get '/export' => sub {
 
     unless (params->{bag} && params->{fmt}) {
         content_type 'json';
         status '406';
         return to_json {error => "Parameters bag or fmt are missing."};
     }
-    my $bag = params->{bag} eq 'data' ?
-        'publication' : params->{bag};
+
+    my $bag = params->{bag} eq 'data' ? 'publication' : params->{bag};
     my $fmt = params->{fmt};
 
     my $export_config = LibreCat->config->{exporter}->{$bag};
@@ -50,14 +52,16 @@ get qr{/export/*} => sub {
     my $spec = $export_config->{$fmt};
 
     my $p = h->extract_params();
+
     my $hits = LibreCat->searcher->search('publication', $p);
 
     my $package = $spec->{package};
     my $options = $spec->{options} || {};
-    $options->{style} = params->{style};
+    $options->{style}    = params->{style};
     $options->{explinks} = params->{explinks};
+
     my $content_type = $spec->{content_type} || mime->for_name($fmt);
-    my $extension = $spec->{extension} || $fmt;
+    my $extension    = $spec->{extension} || $fmt;
 
     my $f = export_to_string($hits, $package, $options);
 
@@ -66,7 +70,6 @@ get qr{/export/*} => sub {
         content_type => $content_type,
         filename     => "$bag.$extension"
     );
-
 };
 
 1;

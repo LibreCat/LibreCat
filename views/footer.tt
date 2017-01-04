@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-sm-12">
 	  <div class="col-md-4 col-sm-5">
-	    <p>&copy;[% USE date %][% date.format(date.now, '%Y') %] <a href="https://github.com/LibreCat/LibreCat">LibreCat</a></p>
+	    <p>[% h.loc("footer.powered_by") %]</p>
 	  </div>
 	</div>
     </div>

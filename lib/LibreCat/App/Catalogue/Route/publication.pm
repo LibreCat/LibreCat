@@ -25,7 +25,7 @@ Dancer::Plugin::Auth::Tiny->extend(
             else {
                 redirect '/access_denied';
             }
-            }
+        }
     }
 );
 
@@ -130,7 +130,7 @@ Checks if the user has permission the see/edit this record.
 =cut
 
     get '/edit/:id' => needs login => sub {
-        my $id = param 'id';
+        my $id = params->{id};
 
         unless (p->can_edit($id, session->{user}, session->{role})) {
             status '403';
@@ -305,8 +305,8 @@ For admins only!
 
 =cut
 
-    get qr{/internal_view/(\w{1,})/*} => needs role => 'super_admin' => sub {
-        my ($id) = splat;
+    get '/internal_view/:id' => needs role => 'super_admin' => sub {
+        my $id = params->{id};
 
         return template 'backend/internal_view',
             {data => to_yaml h->publication->get($id)};

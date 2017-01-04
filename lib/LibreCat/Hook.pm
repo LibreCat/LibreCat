@@ -3,6 +3,7 @@ package LibreCat::Hook;
 use Catmandu::Sane;
 use Moo;
 
+has name         => (is => 'ro');
 has before_fixes => (is => 'ro', default => sub {[]});
 has after_fixes  => (is => 'ro', default => sub {[]});
 
