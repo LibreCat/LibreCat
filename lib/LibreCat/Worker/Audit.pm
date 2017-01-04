@@ -20,7 +20,7 @@ sub work {
     $self->log->debugf("audit message: %s", $opts);
 
     my $rec = {
-        pid     => $opts->{id} ,
+        id      => $opts->{id} ,
         bag     => $opts->{bag} ,
         process => $opts->{process} ,
         action  => $opts->{action} ,

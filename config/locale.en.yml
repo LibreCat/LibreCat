@@ -278,6 +278,7 @@ add_new:
   paste_bibtex: "Option 4:<br />Paste your BibTex record here"
   paste_bibtex_placeholder: "Please paste only one record at a time"
   wos_import: "Web of Science Import"
+  qae_title: "New Quick And Easy Publication - Will be edited by LibreCat team"
 forms:
   book:
     label: "Book"

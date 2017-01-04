@@ -52,7 +52,7 @@ sub hook {
     state $hooks = {};
 
     $hooks->{$name} ||= do {
-        my $args = {before_fixes => [], after_fixes => [],};
+        my $args = {before_fixes => [], after_fixes => []};
 
         my $hook = ($self->config->{hooks} || {})->{$name} || {};
 
@@ -60,7 +60,7 @@ sub hook {
             my $fixes = $hook->{$key} || [];
             for my $fix (@$fixes) {
                 push @{$args->{$key}},
-                    require_package($fix, 'LibreCat::Hook')->new;
+                    require_package($fix, 'LibreCat::Hook')->new( name => $name , type => $key );
             }
         }
 

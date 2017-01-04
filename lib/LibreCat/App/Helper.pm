@@ -12,6 +12,7 @@ use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
 use LibreCat;
 use LibreCat::I18N;
+use LibreCat::JobQueue;
 use Log::Log4perl ();
 use NetAddr::IP::Lite;
 use Moo;
@@ -28,6 +29,10 @@ sub config {
 
 sub hook {
     LibreCat->hook($_[1]);
+}
+
+sub queue {
+    state $config = LibreCat::JobQueue->new;
 }
 
 sub create_fixer {
@@ -54,6 +59,10 @@ sub alphabet {
 
 sub bag {
     state $bag = Catmandu->store->bag;
+}
+
+sub backup_audit {
+    state $bag = Catmandu->store('backup')->bag('audit');
 }
 
 sub backup_publication {

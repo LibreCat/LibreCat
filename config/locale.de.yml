@@ -278,6 +278,7 @@ add_new:
   paste_bibtex: "Option 4:<br />F&uuml;gen Sie Ihren BibTex Eintrag hier ein"
   paste_bibtex_placeholder: "Bitte f&uuml;gen Sie nur jeweils einen Datensatz ein"
   wos_import: "Web of Science Import"
+  qae_title: "New Quick And Easy Publication - Will be edited by LibreCat team"
 forms:
   book:
     label: "Monographie"

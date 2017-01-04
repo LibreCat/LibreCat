@@ -45,11 +45,11 @@ __END__
 
 =head1 NAME
 
-LibreCat::Worker::JobQueue - a job queue for LibreCat processes
+LibreCat::JobQueue - a job queue for LibreCat processes
 
 =head1 SYNOPSIS
 
-    use LibreCat::Worker::JobQueue;
+    use LibreCat::JobQueue;
 
     my $queue = LibreCat::JobQueue->new;
 
