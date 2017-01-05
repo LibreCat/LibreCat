@@ -77,13 +77,13 @@ $bag->commit;
     response_content_like [GET => '/export?fmt=bla'], qr/error/,
         "GET /export?fmt=bla&bag=publication error message ok";
 
-    response_content_like [GET => '/export?fmt=json&cql_query=id%3D999999999'],
+    response_content_like [GET => '/export?fmt=json&cql=id%3D999999999'],
         qr/"title":"Valid Test Publication"/,
-        "GET /export?fmt=json&cql_query=id%3D999999999json looks like JSON";
+        "GET /export?fmt=json&cql=id%3D999999999json looks like JSON";
 
-    response_content_like [GET => '/export?fmt=json&cql_query=id%3DBLABLABLA'],
+    response_content_like [GET => '/export?fmt=json&cql=id%3DBLABLABLA'],
         qr/^\[\]$/,
-        "GET /export?fmt=json&cql_query=id%3DBLABLABLA looks like JSON";
+        "GET /export?fmt=json&cql=id%3DBLABLABLA looks like JSON";
 }
 
 {
