@@ -84,7 +84,7 @@ post '/marked' => sub {
     $marked     = session 'marked';
     $p->{limit} = h->config->{maximum_page_size};
     $p->{start} = 0;
-    push @{$p->{q}}, "status exact public";
+    push @{$p->{cql}}, "status exact public";
 
     if ($del) {
         if (session 'marked') {

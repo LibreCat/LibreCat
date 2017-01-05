@@ -50,6 +50,12 @@ get '/export' => sub {
 
     my $p = h->extract_params();
 
+    # export from marked page
+    if (request->referer =~ /marked$/) {
+        my $marked = session 'marked';
+        $p->{cql} = ["(id=" . join(' OR id=', @$marked) . ")"];
+    }
+
     h->log->debug("searching for publications:" . Dancer::to_json($p));
     my $hits = LibreCat->searcher->search('publication', $p);
 
