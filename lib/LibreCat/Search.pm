@@ -51,7 +51,7 @@ sub search {
     my %search_params = (
         cql_query    => $self->_cql_query($p),
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
-        limit        => $p->{limit} // Catmandu->config->{default_page_size},
+        limit        => $self->_set_limit($p->{limit}),
         start        => $p->{start} // 0,
         facets       => merge($p->{facets}, Catmandu->config->{default_facets}),
     );
@@ -101,6 +101,19 @@ sub _cql_query {
     push @cql, @{$p->{cql}};
 
     return join(' AND ', @cql) // '';
+}
+
+sub _set_limit {
+    my ($self, $limit) = @_;
+
+    if ($limit) {
+        ($limit > Catmandu->config->{maximum_page_size}) ?
+            return Catmandu->config->{maximum_page_size} :
+                return $limit;
+    }
+    else {
+        return Catmandu->config->{default_page_size};
+    }
 }
 
 sub _sru_sort {
