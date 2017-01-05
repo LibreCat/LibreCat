@@ -21,8 +21,7 @@ get '/publication/:id.:fmt' => sub {
     my $id  = params->{id};
     my $fmt = params->{fmt} // 'yaml';
 
-    forward "/export",
-        {cql => "id=$id", bag => $bag, fmt => params->{fmt}};
+    forward "/export", {cql => "id=$id", bag => 'publication', fmt => $fmt};
 };
 
 =head2 GET /export
@@ -31,44 +30,45 @@ Exports data.
 
 =cut
 get '/export' => sub {
-
-    unless (params->{bag} && params->{fmt}) {
+    unless (params->{fmt}) {
         content_type 'json';
         status '406';
-        return to_json {error => "Parameters bag or fmt are missing."};
+        return to_json {error => "Parameter fmt is missing."};
     }
 
-    my $bag = params->{bag} eq 'data' ? 'publication' : params->{bag};
     my $fmt = params->{fmt};
 
-    my $export_config = LibreCat->config->{exporter}->{$bag};
+    my $export_config = h->config->{exporter}->{'publication'};
 
     unless ($export_config->{$fmt}) {
         content_type 'json';
         status '406';
-        return to_json {error => sprintf("Export format '%s' not supported for entity '%s'.", $fmt, $bag)};
+        return to_json {error => sprintf("Export format '%s' not supported.", $fmt)};
     }
 
     my $spec = $export_config->{$fmt};
 
     my $p = h->extract_params();
 
+    h->log->debug("searching for publications:" . Dancer::to_json($p));
     my $hits = LibreCat->searcher->search('publication', $p);
 
     my $package = $spec->{package};
     my $options = $spec->{options} || {};
-    $options->{style}    = params->{style};
-    $options->{explinks} = params->{explinks};
+    $options->{style}    = params->{style} if params->{style};
+    $options->{explinks} = params->{explinks} if params->{explinks};
 
     my $content_type = $spec->{content_type} || mime->for_name($fmt);
     my $extension    = $spec->{extension} || $fmt;
 
+    h->log->debug("exporting $package:" . Dancer::to_json($options));
     my $f = export_to_string($hits, $package, $options);
 
+    h->log->debug($f);
     return Dancer::send_file(
         \$f,
         content_type => $content_type,
-        filename     => "$bag.$extension"
+        filename     => "publication.$extension"
     );
 };
 

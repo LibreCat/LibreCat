@@ -39,7 +39,6 @@
               [% INCLUDE person/hits.tt %]
             </div>
             <div class="col-sm-4 col-md-3 col-md-offset-1 facets">
-              [% INCLUDE filters.tt %]
             </div>
           </div>
         </div>

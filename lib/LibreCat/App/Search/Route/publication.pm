@@ -69,12 +69,12 @@ get qr{/(data|publication)/*} => sub {
 
 };
 
-=head2 GET /{data|publication}/embed
+=head2 GET /embed
 
 Embed API to (data) publications
 
 =cut
-get qr{/embed/*} => sub {
+get '/embed' => sub {
     my $p = h->extract_params();
 
     my $portal = h->config->{portal}->{$p->{ttyp}} if $p->{ttyp};
