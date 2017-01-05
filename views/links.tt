@@ -29,22 +29,6 @@
   [% IF entry.external_id.arxiv %] | <a href="http://arxiv.org/abs/[% entry.external_id.arxiv %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>arXiv</a>[% END %]
   [% IF entry.external_id.inspire %] | <a href="http://inspirebeta.net/record/[% entry.external_id.inspire %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>Inspire</a>[% END %]
 
-
-<!--
-    [% IF bag == "data" %]
-  	[% IF entry.externalFiles == "1" %]
-	  | <a href="/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% h.loc("main_page.links.files") %]</a>
-	[% ELSE %]
-	  [% FOREACH file IN entry.file %]
-	    [% IF file.open_access == 1 %]
-	      | <a href="/[% bag %]/[% entry.item('_id') %]" class="label label-primary">[% h.loc("main_page.links.files") %]</a>
-	      [% LAST %]
-	    [% END %]
-	  [% END %]
-	[% END %]
-  [% END %]
--->
-
 [% IF backend %]
   <br />
   [% IF (!entry.locked AND !entry.type.match("^bi")) OR session.role == "super_admin" %]<a href="/librecat/record/edit/[% entry._id %]">[% h.loc("main_page.links.edit") %]</a>
