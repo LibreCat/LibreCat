@@ -88,7 +88,7 @@ sub command {
                 my $user = $_[0];
                 my $roles = $user->{roles} ||= [{role => 'user'}];
                 if ($user->{award_admin}) {
-                    # TODO
+                    push @$roles, {role => 'award_admin'};
                 }
                 if ($user->{data_manager}) {
                     push @$roles, {role => 'data_manager', _id => $_->{_id}} for @{$user->{data_manager}};
