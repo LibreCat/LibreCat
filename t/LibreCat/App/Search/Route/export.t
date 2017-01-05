@@ -26,12 +26,12 @@ $bag->commit;
 
 {
     route_exists [GET => '/export?fmt=json&bag=publication'],
-        "GET /export/publication is handled";
+        "GET /export is handled";
     response_status_is [GET => '/export?fmt=json&bag=publication'], 200,
-        "GET /export/publication status is ok";
+        "GET /export status is ok";
 
     response_status_is [GET => '/export?fmt=bla&bag=publication'], 406,
-        "GET /export/publication status is ok";
+        "GET /export status is ok";
     response_content_like [GET => '/export?fmt=bla&bag=publication'], qr/error/,
         "GET /export?fmt=bla&bag=publication error message ok";
 

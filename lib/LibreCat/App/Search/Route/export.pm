@@ -21,8 +21,7 @@ get '/publication/:id.:fmt' => sub {
     my $id  = params->{id};
     my $fmt = params->{fmt} // 'yaml';
 
-    forward "/export",
-        {q => "id=$id", bag => 'publication', fmt => $fmt};
+    forward "/export", {q => "id=$id", bag => 'publication', fmt => $fmt};
 };
 
 =head2 GET /export
@@ -31,7 +30,6 @@ Exports data.
 
 =cut
 get '/export' => sub {
-
     unless (params->{bag} && params->{fmt}) {
         content_type 'json';
         status '406';
@@ -41,7 +39,7 @@ get '/export' => sub {
     my $bag = params->{bag} eq 'data' ? 'publication' : params->{bag};
     my $fmt = params->{fmt};
 
-    my $export_config = LibreCat->config->{exporter}->{$bag};
+    my $export_config = h->config->{exporter}->{$bag};
 
     unless ($export_config->{$fmt}) {
         content_type 'json';
