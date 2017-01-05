@@ -17,6 +17,10 @@ librecat department [options] get <id>
 librecat department [options] delete <id>
 librecat department [options] valid <FILE>
 
+options:
+    --total=NUM   (total number of items to list/export)
+    --start=NUM   (start list/export at this item)
+
 E.g.
 
 librecat department list 'layer = 1'
@@ -26,11 +30,20 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    ();
+    (
+    ['total=i', ""] ,
+    ['start=i',""] ,
+    );
+}
+
+sub opts {
+    state $opts = $_[1];
 }
 
 sub command {
     my ($self, $opts, $args) = @_;
+
+    $self->opts($opts);
 
     my $commands = qr/list|export|get|add|delete|valid/;
 
@@ -69,11 +82,12 @@ sub command {
 sub _list {
     my ($self, $query) = @_;
 
-    my $it
-        = defined($query)
-        ? LibreCat::App::Helper::Helpers->new->department->searcher(
-        cql_query => $query)
-        : LibreCat::App::Helper::Helpers->new->department;
+    my $total = $self->opts->{total} // undef;
+    my $start = $self->opts->{start} // undef;
+
+    my $it = LibreCat::App::Helper::Helpers->new->department->searcher(
+        cql_query => $query , total => $total , start => $start
+    );
 
     my $count = $it->each(
         sub {
@@ -94,11 +108,12 @@ sub _list {
 sub _export {
     my ($self, $query) = @_;
 
-    my $it
-        = defined($query)
-        ? LibreCat::App::Helper::Helpers->new->department->searcher(
-        cql_query => $query)
-        : LibreCat::App::Helper::Helpers->new->department;
+    my $total = $self->opts->{total} // undef;
+    my $start = $self->opts->{start} // undef;
+
+    my $it = LibreCat::App::Helper::Helpers->new->department->searcher(
+        cql_query => $query , total => $total , start => $start
+    );
 
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($it);
@@ -228,4 +243,7 @@ LibreCat::Cmd::department - manage librecat departments
     librecat department delete <id>
     librecat department valid <FILE>
 
+    options:
+        --total=NUM   (total number of items to list/export)
+        --start=NUM   (start list/export at this item)
 =cut

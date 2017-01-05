@@ -165,104 +165,22 @@ sub extract_params {
 
     $p->{start} = $params->{start} if is_natural $params->{start};
     $p->{limit} = $params->{limit} if is_natural $params->{limit};
-    $p->{embed} = $params->{embed} if is_natural $params->{embed};
     $p->{lang}  = $params->{lang}  if $params->{lang};
     $p->{ttyp}  = $params->{ttyp}  if $params->{ttyp};
     $p->{ftyp}  = $params->{ftyp}  if $params->{ftyp};
     $p->{enum}  = $params->{enum}  if $params->{enum};
-
-    $p->{q} = array_uniq($self->string_array($params->{q}));
-
-    my $cql = $params->{cql_query} ||= '';
-
-    if ($cql) {
-        my $deletedq;
-
-        if (
-            @$deletedq = (
-                $cql
-                    =~ /((?=AND |OR |NOT )?[0-9a-zA-Zäöüß]+\=\s|(?=AND |OR |NOT )?[0-9a-zA-Zäöüß]+\=$)/g
-            )
-            )
-        {
-            $cql
-                =~ s/((AND |OR |NOT )?[0-9a-zA-Zäöüß]+\=\s|(AND |OR |NOT )?[0-9a-zA-Zäöüß]+\=$)/ /g;
-        }
-        $cql =~ s/^\s*(AND|OR)//g;
-        $cql =~ s/,//g;
-        $cql =~ s/\://g;
-        $cql =~ s/\.//g;
-        $cql =~ s/(NOT )(.*?)=/$2<>/g;
-        $cql =~ s/(NOT )([^=]*?)/basic<>$2/g;
-        $cql =~ s/(?<!")\b([^\s]+)\b, \b([^\s]+)\b(?!")/"$1, $2"/g;
-        $cql =~ s/^\s+//;
-        $cql =~ s/\s+$//;
-        $cql =~ s/\s{2,}/ /;
-
-        if ($cql
-            !~ /^("[^"]*"|'[^']*'|[0-9a-zA-Zäöüß]+(=| ANY | ALL | EXACT )"[^"]*")$/
-            and $cql
-            !~ /^(([0-9a-zA-Zäöüß]+\=(?:[0-9a-zA-Zäöüß\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)(?<!ANY)(?<!ALL)(?<!EXACT)|"[^"]*"|'[^']*') (AND|OR) ([0-9a-zA-Zäöüß]+\=(?:[0-9a-zA-Zäöüß\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))$/
-            and $cql
-            !~ /^(([0-9a-zA-Zäöüß]+( ANY | ALL | EXACT )"[^"]*"|"[^"]*"|'[^']*'|[0-9a-zA-Zäöüß]+\=(?:[0-9a-zA-Zäöüß\-\*]+|"[^"]*"|'[^']*')+\**(?<!AND)(?<!OR))( (AND|OR) (([0-9a-zA-Zäöüß]+( ANY | ALL | EXACT )"[^"]*")|"[^"]*"|'[^']*'|[0-9a-zA-Zäöüß]+\=(?:[0-9a-zA-Zäöüß\-\*]+|"[^"]*"|'[^']*')+\**))*)$/
-            )
-        {
-            $cql
-                =~ s/((?:(?:(?:[0-9a-zA-Zäöüß\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*') (?:AND|OR) )+(?:[0-9a-zA-Zäöüß\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*'))|[0-9a-zA-Zäöüß\=\-\*]+(?<!AND)(?<!OR)|"[^"]*"|'[^']*')\s(?!AND )(?!OR )("[^"]*"|'[^']*'|.*?)/$1 AND $2/g;
-        }
-        push @{$p->{q}}, lc $cql;
-    }
+    $p->{q} = $params->{q} if $params->{q};
+    $p->{cql} = $self->string_array($params->{cql});
 
     ($params->{text} =~ /^".*"$/)
         ? (push @{$p->{q}}, $params->{text})
         : (push @{$p->{q}}, join(" AND ", split(/ |-/, $params->{text})))
         if $params->{text};
 
-    # autocomplete functionality
-    if ($params->{term}) {
-        my $search_terms = join("* AND ", split(" ", $params->{term})) . "*"
-            if $params->{term} !~ /^\d{1,}$/;
-        my $search_id = $params->{term} if $params->{term} =~ /^\d{1,}$/;
-        push @{$p->{q}},
-              "title=("
-            . lc $search_terms
-            . ") OR person=("
-            . lc $search_terms . ")"
-            if $search_terms;
-        push @{$p->{q}}, "id=$search_id OR person=$search_id" if $search_id;
-        $p->{fmt} = $params->{fmt};
-    }
-    else {
-        my $formats = $self->config->{exporter}->{publication};
-        $p->{fmt}
-            = ($params->{fmt} && $formats->{$params->{fmt}})
-            ? $params->{fmt}
-            : 'html';
-    }
-
     $p->{style} = $params->{style} if $params->{style};
     $p->{sort} = $self->string_array($params->{'sort'}) if $params->{'sort'};
 
     $p;
-}
-
-sub hash_to_url {
-    my ($self, $params) = @_;
-
-    my $p = "";
-    return $p if ref $params ne 'HASH';
-
-    foreach my $key (keys %$params) {
-        if (ref $params->{$key} eq "ARRAY") {
-            foreach my $item (@{$params->{$key}}) {
-                $p .= "&$key=$item";
-            }
-        }
-        else {
-            $p .= "&$key=$params->{$key}";
-        }
-    }
-    return $p;
 }
 
 sub get_sort_style {
@@ -386,8 +304,8 @@ sub get_publication {
 sub get_person {
     my ($self, $id) = @_;
     if ($id) {
-        my $hits = LibreCat->searcher->search('researcher', {q => ["id=$id"]});
-        $hits = LibreCat->searcher->search('researcher', {q => ["login=$id"]})
+        my $hits = LibreCat->searcher->search('researcher', {cql => ["id=$id"]});
+        $hits = LibreCat->searcher->search('researcher', {cql => ["login=$id"]})
             if !$hits->{total};
         return $hits->{hits}->[0] if $hits->{total};
         if (my $user = LibreCat->user->get($id) || LibreCat->user->find_by_username($id)) {
@@ -429,12 +347,12 @@ sub get_statistics {
     my ($self) = @_;
 
     my $hits = LibreCat->searcher->search('publication',
-        {q => ["status=public", "type<>research_data"]});
+        {cql => ["status=public", "type<>research_data"]});
     my $reshits = LibreCat->searcher->search('publication',
-        {q => ["status=public", "type=research_data"]});
+        {cql => ["status=public", "type=research_data"]});
     my $oahits = LibreCat->searcher->search('publication',
         {
-            q => [
+            cql => [
                 "status=public",      "fulltext=1",
                 "type<>research_data",
             ]
@@ -611,10 +529,6 @@ sub host {
 sub export_publication {
     my ($self, $hits, $fmt, $to_string) = @_;
 
-    if ($fmt eq 'autocomplete') {
-        return $self->export_autocomplete_json($hits);
-    }
-
     if (my $spec = config->{exporter}->{publication}->{$fmt}) {
         my $package = $spec->{package};
         my $options = $spec->{options} || {};
@@ -633,41 +547,6 @@ sub export_publication {
             filename     => "publications.$extension"
         );
     }
-}
-
-sub export_autocomplete_json {
-    my ($self, $hits) = @_;
-
-    my $jsonhash = [];
-    $hits->each(
-        sub {
-            my $hit = $_[0];
-            if ($hit->{title} && $hit->{year}) {
-                my $label = "$hit->{title} ($hit->{year}";
-                my $author = $hit->{author} || $hit->{editor} || [];
-                if (   $author
-                    && $author->[0]->{first_name}
-                    && $author->[0]->{last_name})
-                {
-                    $label
-                        .= ", "
-                        . $author->[0]->{first_name} . " "
-                        . $author->[0]->{last_name} . ")";
-                }
-                else {
-                    $label .= ")";
-                }
-                push @$jsonhash,
-                    {
-                    id    => $hit->{_id},
-                    label => $label,
-                    title => "$hit->{title}"
-                    };
-            }
-        }
-    );
-
-    return Dancer::to_json($jsonhash);
 }
 
 sub get_department_tree {

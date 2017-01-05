@@ -22,7 +22,7 @@ get '/project/:id' => sub {
 
     my $pub = LibreCat->searcher->search('publication',
         {
-            q => "project=$id AND status=public",
+            cql => ["project=$id", "status=public"],
             limit => 100,
         }
     );

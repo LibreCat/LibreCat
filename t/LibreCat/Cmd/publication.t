@@ -86,7 +86,7 @@ Catmandu->store('search')->bag('publication')->drop;
 
 {
     my $result = test_app(qq|LibreCat::CLI| =>
-            ['publication', '--no-citation','add', 't/records/valid-publication.yml']);
+            ['publication', '--no-citation','add', 't/records/valid-publication-no-citation.yml']);
 
     ok !$result->error, 'ok threw no exception';
 

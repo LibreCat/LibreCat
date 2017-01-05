@@ -24,7 +24,7 @@
 	<div class="col-md-5">
 	  <label for="id_q">Search Projects</label>
 	  <div class="input-group">
-	    <input type="text" class="form-control" name="cql_query" id="id_q" value="[% qp.cql_query || qp.q %]">
+	    <input type="text" class="form-control" name="q" id="id_q" value="[% qp.q %]">
 	    <span class="input-group-btn">
 	      <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-search"></span> </i>Search</button>
 	    </span>
@@ -32,7 +32,7 @@
 	</div>
       </div>
     </form>
-    
+
     <div class="row col-md-12 margin-top1 margin-bottom2">
       <a href="/librecat/admin/project/new" class="btn btn-primary"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new project</a>
     </div>
