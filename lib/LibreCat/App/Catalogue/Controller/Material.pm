@@ -90,7 +90,7 @@ sub update_related_material {
             $query =~ s/^ OR //g;
             $query = "(" . $query . ")";
 
-            push @{$q->{q}}, $query;
+            push @{$q->{cql_quey}}, $query;
 
             $q->{limit} = 1000;
 

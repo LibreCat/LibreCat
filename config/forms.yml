@@ -1073,9 +1073,7 @@ other_items:
       - alternative_name
       - url
       - grant_number
-      - psp_element
       - description
-#      - active
       - start_date
       - end_date
       - department
@@ -1103,12 +1101,8 @@ other_items:
       label: "URL"
     grant_number:
       label: "Grant Number"
-    psp_element:
-      label: "PSP Element"
     description:
       label: "Description"
-#    active:
-#      label: "Active"
     start_date:
       label: "Start Date"
       placeholder: "YYYY-MM-DD"
@@ -1184,16 +1178,3 @@ other_items:
       placeholder: "YYYY-MM-DD"
     department:
       label: "Affiliation"
-  department:
-    department_field_order:
-      - id
-      - name
-      - tree
-    id:
-      label: "ID (or replace with Person-ID)"
-      mandatory: 1
-    name:
-      label: "Name"
-      mandatory: 1
-    tree:
-      label: "Department Hierarchy"

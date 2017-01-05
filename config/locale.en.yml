@@ -8,16 +8,10 @@ general:
 login:
   login_heading: "Login"
   username: "Username"
-  username_placeholder: "HRZ Username"
   password: "Password"
-  password_placeholder: "HRZ Password (used e.g. for Webmailer and Stud.IP)"
   login_button: "Login"
-  login_help: "HRZ Username and Password (used e.g. for Webmailer and Stud.IP)"
-  contact_us: "<strong>Login failed?</strong><br>If you are a member of Bielefeld University but you still cannot log in to PUB, please <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>contact us</a></strong> or call 106-4058."
 header:
-  title: "Publications at Bielefeld University"
-  title_long: "PUB &ndash; Publications at Bielefeld University"
-  title_person: "PUB  &ndash; Publication list of"
+  title: "Publications at LibreCat University"
   my_author_page: "My Publication List"
   brand: "Home"
   role_label: "Role"
@@ -36,8 +30,6 @@ header:
     import: "Import"
     manage_projects: "Manage Projects"
     manage_research_groups: "Manage Research Groups"
-    manage_journals: "Manage Journals"
-    manage_department: "Manage Departments"
   lang: "Deutsch"
   lang_short: "DE"
   lang_select:
@@ -45,48 +37,16 @@ header:
     ger: "German"
   department_affiliation: "Department Affiliation"
   logged_in_as: "Logged in as"
-  default_edit_mode: "Default Edit Mode"
-  default_language: "Default Language"
-  beta: "The new backend of PUB is in open beta phase"
 footer:
-  this_is_us: "Bielefeld University Library"
-  language_url: "english/"
-  dini_alt: "DINI-Certificate 2010"
-  dini_title: "PUB has been honoured with the DINI-Certificate 2010"
-  openaire_alt: "OpenAIRE valid"
-  openaire_title: "PUB is 100% OpenAIRE valid"
-  openarchives_alt: "Open Archives Data Provider"
-  openarchives_title: "PUB is registered Data Provider of the Open Archives Initiative"
-  dci_alt: "Data Citation Index"
-  dci_title: "PUB is included in the Thomson Reuters Data Citation Index"
-  datacite_alt: "DataCite"
-  datacite_title: "PUB registers Research Data with DataCite"
-  re3data_alt: "re3data.org"
-  re3data_title: "PUB is included in Re3Data (Registry of Research Data Repositories)"
-  faq: "FAQ"
-  contact: "Contact"
-  policy: "Policy"
-  imprint: "Imprint"
-  powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat<img src='/images/librecat.png' alt=''></a>"
-  support: "<strong>Support Publication Services</strong><br>Susanne Riedel<br>Phone: 0521/106-4058<br><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>"
+  powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"
 tabs:
   home: "Home"
   all_publications: "All Publications"
   publications: "Publications"
   data_publications: "Data Publications"
-  publications_by: "Publ. by"
   projects: "Projects"
   departments: "Departments"
   authors: "Authors"
-  authors_title: "Authors"
-  start: "What is PUB?"
-  about: "About PUB"
-  features: "Features"
-  documentation: "API Documentation"
-  faq: "FAQ"
-  contact: "Contact"
-  policy: "Policy"
-  login: "How to log in?"
 hits:
   id: "PUB-ID"
   author: "Author"
@@ -94,51 +54,26 @@ hits:
   publication: "Publication"
   publications: "Publications"
   data_publication: "Data Publication"
-  data_publications: "Data Publications"
-  project: "Project"
-  projects: "Projects"
-  links_pub: "Show complete bibliographic and access information"
 home:
   search_placeholder: "Search Publications in PUB"
   fields: "Fields"
   operators: "Operators"
-  help: "Help"
   stats:
     publications: "Publications"
-    authors: "Individual Author Pages"
     data_publications: "Data Publications"
     oa_publications: "Open Access Publications"
     projects: "Projects"
-  logos:
-    oa: "Open Access at<br>Bielefeld University"
-    rd_management: "Research Data Management"
-    brand: "PUB"
-    brand_long: "PUB &ndash; Publications at Bielefeld University"
-    theses: "PUB Theses"
-  you_have_no_photo: "You have not uploaded a picture to the directory of staff and departments."
-  they_have_no_photo: "This person has not uploaded a picture to the directory of staff and departments."
 main_page:
   login: "Login"
   logout: "Logout"
   add_new_button: "Add new Publication"
-  capital_or: "OR"
   qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Drop Open Access fulltext (PDF)<br>here and we'll do the rest."
-  theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Drop your thesis here &hellip; or click."
-  theses_success_text: "You have successfully submitted your thesis!<br />All that's left to do is print and fill out this form: <a href='/pdf/revers_hochschulschriften.pdf'>Statement on the Granting of Exploitation Rights (PDF, only in German)</a> and send it to us. And we will contact you with further information.<br>Thank you!<br>Back to <a href='/pubtheses'>PUBTheses</a>"
-  theses_explain: "Please upload only ONE file (preferably .pdf). If you want to submit a document that consists of several parts (e.g. chapters) you need to put the files into an archive file (.zip or .gz)."
-  depositpolicy: "PUB Deposity Policy"
-  ddc: "DDC list"
-  heading_admin: "Admin"
-  heading_user: "User"
-  heading_reviewer: "Reviewer"
-  heading_project_reviewer: "Project Reviewer"
-  heading_delegate: "Delegate"
   logged_in_as: "Logged in as"
   by: "by"
   statuses:
     public: "Public"
-    returned: "Re-<br>turned"
-    submitted: "Sub-<br>mitted"
+    returned: "Returned"
+    submitted: "Submitted"
     invalid: "Invalid"
     qae: "New QaE"
     private: "Private"
@@ -157,20 +92,13 @@ main_page:
     search_similar: "Search similar titles"
 person_profile:
   id_not_found: "Person ID not found."
-  former_researcher: "Former Bielefeld University Researcher"
-  view: "View "
-  view_in: "View in"
+  former_researcher: "Former LibreCat University Researcher"
   local_id: "ID"
   no_author_ids: "No Author IDs set."
   person_id_title: "These IDs will be visible on your public person page immediately after saving."
 project:
-  heading: "Projects"
-  not_found: "Project ID not found"
   funded_ext: "Externally Funded"
   period: "Project Period"
-  filter: "Filter"
-  filter_remove: "Remove Current Filters"
-  filter_help: "You can combine search and filter options"
   start_year: "Start Year"
   end_year: "End Year"
   funder: "Funding Organisation"
@@ -183,9 +111,9 @@ facets:
   filter_authorlist: "Filter Authorlist"
   filter_publications: "Filter Publications"
   visibility_status: "Status"
-  current_authors: "UniBi Authors"
-  current_editors: "UniBi Editors"
-  former_authors: "Former UniBi Authors"
+  current_authors: "LibreCat Authors"
+  current_editors: "LibreCat Editors"
+  former_authors: "Former LibreCat Authors"
   department: "Department"
   publication_type: "Publication Type"
   publishing_year: "Publishing Year"
@@ -245,17 +173,11 @@ citation:
   modern-language-association: MLA
 frontdoor:
   publication: Journal Title
-  volume: Volume
-  Issue: Issue
-  page: Page
-  article_number: Article no.
   preview: "Preview"
-  crumb_back: "Back"
   no_record: "This record does not exist or was deleted"
   download: "Download"
-  cc_license: "Creative Commons license"
   show_all: "All"
-  local_brand: "UniBi"
+  local_brand: "LibreCat"
   export: "Export"
   marked: "Marked Publications"
   cite_this: "Cite this"
@@ -268,7 +190,6 @@ frontdoor:
   sources: "Sources"
   search_this: "Search this title in"
   isbn_search: "ISBN Search"
-  catalogue: "Catalogue.<em>plus!</em>"
   item: "Item"
   items: "Items"
   tabs:
@@ -278,34 +199,30 @@ frontdoor:
       reviewed_work: "Reviewed Work"
       isbn: "ISBN"
       issn: "ISSN"
-      eisbn: "eISBN"
       eissn: "eISSN"
       ipn: "Int. Patent Number"
       ipc: "Int. Patent Classification"
       financial_disclosure: "Financial disclosure"
-      ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href='http://oa.uni-bielefeld.de/publikationsfonds.html'>Open Access Publication Fund</a> of Bielefeld University."
-      scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University."
-      grantnumber: "Grant Number"
+      ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href=''>Open Access Publication Fund</a> of LibreCat University."
+      scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and LibreCat University."
       alt_name: "Alternative Name"
       acronym: "Acronym"
       coordinator: "Coordinator"
       investigator: "Principal Investigator"
       member: "Member"
-      funder: "Funder"
       cooperator: "Cooperator"
     file_details:
       label: "Files"
       external_material: "External material:"
       internal_material: "Material in PUB:"
       name: "File Name"
-      relation: "Relation (to PUB document)"
       title: "File Title"
       description: "Description"
       url: "URL"
       access_level:
         label: "Access Level"
         open_access: "Open Access"
-        local: "UniBi Only"
+        local: "LibreCat Only"
         request_a_copy: "Request a Copy"
         closed: "Closed Access"
       last_uploaded: "Last Uploaded"
@@ -318,7 +235,6 @@ frontdoor:
       cites: "This publication cites the following data publications:"
     toolkit:
       label: "Cognitive Interaction Toolkit"
-      data_by: "Data provided by the <a href='http://toolkit.cit-ec.uni-bielefeld.de/'>Cognitive Interaction Toolkit</a>."
     ebi_links:
       label: "EBI BioEntities"
       data_by: "Data provided by the <a href='http://www.ebi.ac.uk/'>European Bioinformatics Institute (EBI)</a>"
@@ -340,7 +256,6 @@ frontdoor:
     export_search: "Export / Search"
   fulltext:
     view: "View fulltext"
-    not_available: "No fulltext has been uploaded"
   id_title: "Link to this page, e.g. for bookmarking"
   license_heading: "All files available under the following license(s):"
 mark:
@@ -349,21 +264,7 @@ mark:
   mark_all: "Mark all"
   unmark_all: "Unmark all"
   mark_unmark: "Mark/Unmark publication"
-  back_general: "Back"
-  back_person: "Back to person page"
   display_export: "Display / Export"
-sort_options:
-  year: "Publishing year"
-  date_updated: Date updated
-  title: "Title"
-  author: "First Author"
-  type: "Publication Type"
-  publication: "Publ./ Series/ Journal"
-  fullname: "Alphabetically"
-  publcount: "Number of publications"
-  name: "Name"
-  acronym: "Acronym"
-  startyear: "Start Year"
 add_new:
   heading: "Add New Publication"
   import: "Option 1:<br />Enter a publication ID to import"
@@ -376,8 +277,8 @@ add_new:
   drop_oa: "Option 3:<br />Drop your Open Access fulltext here"
   paste_bibtex: "Option 4:<br />Paste your BibTex record here"
   paste_bibtex_placeholder: "Please paste only one record at a time"
-  qae_title: "New Quick And Easy Publication - Will be edited by PUB-Team"
   wos_import: "Web of Science Import"
+  qae_title: "New Quick And Easy Publication - Will be edited by LibreCat team"
 forms:
   book:
     label: "Book"
@@ -402,7 +303,7 @@ forms:
         placeholder: "e.g. Handbuch der eBook-Ver&ouml;ffentlichung"
       author: &author_translator
         label: "Author"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
         idm_extern: "extern"
         first_name:
           label: "First Name"
@@ -440,7 +341,7 @@ forms:
           placeholder: "e.g. 2015"
         extern:
           label_short: "Extern"
-          placeholder: "Published while not employed at UniBi"
+          placeholder: "Published while not employed at LibreCat"
       page: &pages
         label_short: "Pages"
         label: "Number of Pages"
@@ -478,7 +379,7 @@ forms:
           closed: "Author/Reviewer"
           until: "until"
           request_a_copy: "Request a Copy"
-          local: "UniBi Only"
+          local: "LibreCat Only"
           open_access: "Open Access"
         edit_modal:
           heading: "Edit Uploaded File"
@@ -487,7 +388,7 @@ forms:
           relation: "Relation (\"Uploaded document is...\")"
           access:
             open_access: "Open Access (File is freely available, effective immediately)"
-            local: "Local Access (UniBi only)"
+            local: "Local Access (LibreCat only)"
             closed: "Closed Access (Author/Reviewer only)"
             request_a_copy: "Request a Copy (Closed Access except upon request)"
             embargo: "Switch to Open Access on:"
@@ -499,12 +400,12 @@ forms:
         heading: "Copyright and Licenses"
         pub_license:
           label: "Copyright Disclaimer"
-          disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
+          disclaimer_text: "I herewith place this document at LibreCat University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
           accept_text: "I accept"
           alert: "You need to accept the Copyright Disclaimer because you have attached files to this record."
         info:
           text: "Questions about policy / license?"
-          contact: "Contact our support: Phone 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
+          contact: "Contact our support: Phone 999/9999, E-Mail: <a href=''>helpdesk@librecat.org</a>"
         open_data_release:
           label: "Open Data Release - Declaration"
           disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
@@ -612,7 +513,7 @@ forms:
         label: "Editor"
         label_short: "Ed."
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       corporate_editor_solo: &corporate_editor_solo
         label: "Corporate Editor"
         label_short: "Copr. Ed."
@@ -687,7 +588,7 @@ forms:
         label: "Book Editor"
         label_short: "Ed."
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       corporate_editor: &corporate_editor
         label: "Corporate Editor"
         label_short: "Corp. Ed."
@@ -751,7 +652,7 @@ forms:
         label: "Editor"
         label_short: "Ed."
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       corporate_editor: *corporate_editor
       department: *department
       project: *project
@@ -1151,7 +1052,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Inventor"
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       applicant:
         label: "Applicant"
         label_short: "Appl."
@@ -1329,14 +1230,14 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Creator"
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       department: *department
       project: *project
       research_group: *research_group
       publisher:
         label: "Publisher"
         placeholder: "Publisher"
-        defaultvalue: "Bielefeld University"
+        defaultvalue: "LibreCat University"
       year_extern: *year_extern
       external_file:
         label: "External File(s)"
@@ -1354,7 +1255,7 @@ forms:
           closed: "Author/Reviewer"
           until: "until"
           request_a_copy: "Request a Copy"
-          local: "UniBi Only"
+          local: "LibreCat Only"
           open_access: "Open Access"
         edit_modal:
           heading: "Edit Uploaded File"
@@ -1363,7 +1264,7 @@ forms:
           relation: "Relation (\"Uploaded document is...\")"
           access:
             open_access: "Open Access (File is freely available, effective immediately)"
-            local: "Local Access (UniBi only)"
+            local: "Local Access (LibreCat only)"
             closed: "Closed Access (Author/Reviewer only)"
             request_a_copy: "Request a Copy (Closed Access except upon request)"
             embargo: "Switch to Open Access on:"
@@ -1402,7 +1303,7 @@ forms:
           label: "Other license"
         info:
           text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br>"
-          contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
+          contact: "<strong><a href='' target='_blank'>LibreCat</a><br>999/99999<br><a href=''>helpdesk@librecat.org</a><br></strong>"
       abstract: *abstract
       keyword: *keyword
       jel: *jel
@@ -1439,7 +1340,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Translator"
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       author_secondary:
         first_name:
           label: "First Name"
@@ -1451,7 +1352,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Author (Original)"
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       edition: *edition
       department: *department
       project: *project
@@ -1509,7 +1410,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Translator"
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       author_secondary:
         first_name:
           label: "First Name"
@@ -1521,7 +1422,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Author"
         idm_extern: "extern"
-        tooltip: "Activate if UniBi author."
+        tooltip: "Activate if LibreCat author."
       alternative_title:
         label: "Title (Original)"
         label_short: "Title (Orig)"
@@ -1767,27 +1668,16 @@ forms:
       select: "Supplementary Material (for embedding only, hidden on frontdoor)"
 403:
   heading: "Access denied (403)"
-  text: "You don't have access to this file / folder."
 404:
   heading: "Page not found (404)"
-  text: "The page you requested couldn't be found."
 418:
   heading: "I'm a teapot (418)"
-  text: "You have requested coffee from this server. The server's response was: <strong>I'm a teapot</strong><br><br><a href='https://en.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
-500:
-  heading: "A problem occured (500)"
-  text: "Uuuppps - this shouldn't happen, but it did."
 help:
   home: "PUB home"
   brand: "Backend<br>start page"
   my_author_page: "Your publication list<br>(public records only)"
-  help: "How to use PUB."
-  howto: "PUB How-to"
   change_language: "Change language"
   user_settings: "Change role,<br>department,<br>edit mode<br>default language."
-  role: "Your user role<br>If you are reviewer/delegate you can change your role here to work with publications allocated for that role."
-  photo: "Your photo. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp?lang=en' target='_blank'>Change it?</a>"
-  email_encoded: "Your Email address from BIS/PEVZ."
   author_id: "Enter alias (for your public author page), or author IDs (e.g. ORCID)."
   author_id_edit: "Edit ID, add more IDs."
   add_new_button: "Create a new record in PUB: Import existing data e.g. via DOI or enter data via a form."
@@ -1802,7 +1692,4 @@ help:
   statuses: "Visibility  status<br>of publication.<br>To change it, click on 'Edit'."
   citation: "Data of publication in selected citation style."
   search: "Search this publication list."
-  visibility_status: "Filter publications by certain status like 'public' or 'private'."
-  author_block: "Filter publications by type, author, year. You can select multiple authors/editors and create co-authorship lists."
-  fulltext_block: "Filter publications by access, e.g. open access fulltext."
   display_block: "Change display settings of publication list (hits per page, sorting, citation style)."

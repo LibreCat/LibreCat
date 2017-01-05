@@ -7,12 +7,6 @@ ip_range:
 
 urn_prefix: 'urn:whatever-'
 
-thesis:
-  to: 'send@me.org'
-  from: 'from@you.org'
-  subject: '[PUB] New thesis submitted'
-  urn_prefix: 'urn:thesis-'
-
 # Use this link to lookup a personId in a staff directory. Required
 # to differentiate between different users with the same name (homonym,namesake)
 person:
@@ -64,14 +58,14 @@ default_fd_style: 'default'
 default_format: html
 
 default_facets:
-  author:
-    terms:
-      field: 'author.id'
-      size: 20
-  editor:
-    terms:
-      field: 'editor.id'
-      size: 20
+  # author:
+  #   terms:
+  #     field: 'author.id'
+  #     size: 20
+  # editor:
+  #   terms:
+  #     field: 'editor.id'
+  #     size: 20
   open_access:
     terms:
       field: 'file.open_access'

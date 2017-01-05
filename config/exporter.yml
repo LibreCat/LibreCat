@@ -92,11 +92,3 @@ publication:
     content_type: 'application/vnd.citationstyles.csl+json'
     extension: json
     label: 'CSL JSON'
-  redif:
-    package: 'Template'
-    content_type: text/plain
-    options:
-      fix: ["nothing()"]
-      template: views/export/redif_paper.tt
-    extension: rdf
-    label: 'ReDIF'

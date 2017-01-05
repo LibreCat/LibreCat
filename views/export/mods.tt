@@ -235,9 +235,9 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
   </location>
 </relatedItem>
 [% END %]
-[%- IF extern %]<note type="nonBielefeld">yes</note>[% END %]
+[%- IF extern %]<note type="extern">yes</note>[% END %]
 [%- IF ubi_funded %]
-<note><funding type="UNIBI">We acknowledge support for the Article Processing Charge by the Deutsche Forschungsgemeinschaft and the Open Access Publication Funds of Bielefeld University Library.</funding></note>
+<note><funding type="UNIBI">We acknowledge support for the Article Processing Charge by the Deutsche Forschungsgemeinschaft and the Open Access Publication Funds of LibreCat University Library.</funding></note>
 [%- END %]
 [%- IF defense_date %]
 <dateOther encoding="w3cdtf" type="defenseDate">[% defense_date | xml_strict %]</dateOther>

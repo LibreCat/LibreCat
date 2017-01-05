@@ -23,12 +23,6 @@ if(navigator.userAgent.indexOf('MSIE') != -1){
   });
 }
 
-$(document).keypress(function(e){
-    if (e.which == 13){
-        $("#oneToTwo").click();
-    }
-});
-
 // Tab forward one to two
 $('.change_tab').click(function(e){
   var this_button = $(this);
@@ -51,7 +45,8 @@ $('.change_tab').click(function(e){
       oneauthor=1;
     }
   });
-  if(!oneauthor){
+
+  if (!oneauthor) {
     check = 0;
     var $first_person = $('.creator').children('div.row:first').find('input[type!="hidden"]');
     if($first_person.eq(0).hasClass('required') && !$first_person.eq(0).val()){
@@ -83,24 +78,6 @@ $('.change_tab').click(function(e){
       $(this).closest('div.input-group.mandatory').removeClass("has-error");
     }
   });
-
-  var year = $('#id_year').val();
-  var currentYear = (new Date).getFullYear();
-  var maxYear = currentYear + 5;
-  if(year.length < 4 || !year.match(/^\d+$/) || year < 1930 || year > maxYear){
-    check = 0;
-    $('#id_year').addClass('has-error');
-    $('#id_year').val("");
-    $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
-  }
-
-  var volume = $('#id_volume').val();
-  if(volume && !volume.match(/^\d*$/)){
-    check = 0;
-    $('#id_volume').addClass('has-error');
-    $('#id_volume').val("");
-    $('#id_volume').attr("placeholder","Numbers only!");
-  }
 
   if((this_button.attr('href') && (this_button.attr('href') == "#supplementary_fields" || this_button.attr('href') == "#related_material")) || ($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish"))){
     if($('#id_data_reuse_license').length || $('#id_open_data_release').length){
@@ -186,13 +163,6 @@ $('.change_tab').click(function(e){
         check_license = 0;
         e.preventDefault();
       }
-//      else {
-//        if($('.dropzone').first().children().length == 1){
-//          if($('#select_ddc_0').val() && $('#select_ddc_0').val() != ""){
-//            $('#select_ddc_0').val("");
-//          }
-//        }
-//      }
     }
   }
 
@@ -245,10 +215,6 @@ $('#authedtrans_0').change(function() {
   $('.authedtrans:not(#authedtrans_0)').append('<option value="' + selected + '">' + seltext + '</option>');
 });
 
-// minus
-//$(document).on('click', '.multirow', function(){
-//  $(this).closest('div.multirow').remove();
-//});
 $(document).on('click', '.fullrow', function(){
   //var index = $(this).parent().parent().parent().parent().index();
   var index = $(this).closest('.row.authorspan').index();
@@ -257,6 +223,7 @@ $(document).on('click', '.fullrow', function(){
     $(this).closest('.row.authorspan').remove();
   }
 });
+
 $(document).on('click', '.author', function(){
   var container = $(this).closest('div.creator');
   container.find('input').each(function(){
@@ -273,11 +240,11 @@ $(document).on('click', '.author', function(){
     this.src = "/images/authorized_no.png";
   });
 });
+
 $(document).on('click', '.connect', function(){
   var index = $(this).parent().parent().parent().index();
   $(this).parent().parent().parent().remove();
 });
-
 
 // Select author, editor, translator
 function selectAuthedtrans(element){
@@ -286,11 +253,9 @@ function selectAuthedtrans(element){
   $('#id_au_type_'+index).val(selected);
 }
 
-
 $('button.cancel-button').click(function() {
   window.location.href = '[% return_url || "/librecat" %]';
 });
-
 
 $("#id_conference_location").autocomplete({
   messages: {
@@ -319,35 +284,6 @@ $("#id_conference_location").autocomplete({
   }
 });
 $("#id_conference_location").autocomplete("option", "delay", 100);
-
-//$("#id_place").autocomplete({
-//  messages: {
-//	noResults: '',
-//	results: function() {}
-//  },
-//  source: function (request, response) {
-//    jQuery.getJSON(
-//      "http://gd.geobytes.com/AutoCompleteCity?callback=?&q="+request.term,
-//      function (data) {
-//        response(data);
-//      }
-//    );
-//  },
-//  minLength: 3,
-//  select: function (event, ui) {
-//    var selectedObj = ui.item.value.replace(/, .*/,'');
-//    $("#id_place").val(selectedObj);
-//    return false;
-//  },
-//  open: function () {
-//    $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
-//  },
-//  close: function () {
-//    $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
-//  }
-//});
-//$("#id_place").autocomplete("option", "delay", 100);
-
 
 // connect publications
 $(function() {

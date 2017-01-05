@@ -1,0 +1,95 @@
+---
+_id: '999999999'
+abstract:
+- lang: eng
+  text: Glutathione peroxidases (Gpxs) are antioxidant enzymes not studied so far
+    in legume nodules, despite the fact that reactive oxygen species are produced
+    at different steps of the symbiosis. The function of two Gpxs that are highly
+    expressed in nodules of the model legume Lotus japonicus was examined. Gene expression
+    analysis, enzymatic and nitrosylation assays, yeast cell complementation, in situ
+    mRNA hybridization, immunoelectron microscopy, and LjGpx-green fluorescent protein
+    (GFP) fusions were used to characterize the enzymes and to localize each transcript
+    and isoform in nodules. The LjGpx1 and LjGpx3 genes encode thioredoxin-dependent
+    phospholipid hydroperoxidases and are differentially regulated in response to
+    nitric oxide (NO) and hormones. LjGpx1 and LjGpx3 are nitrosylated in vitro or
+    in plants treated with S-nitrosoglutathione (GSNO). Consistent with the modification
+    of the peroxidatic cysteine of LjGpx3, in vitro assays demonstrated that this
+    modification results in enzyme inhibition. The enzymes are highly expressed in
+    the infected zone, but the LjGpx3 mRNA is also detected in the cortex and vascular
+    bundles. LjGpx1 is localized to the plastids and nuclei, and LjGpx3 to the cytosol
+    and endoplasmic reticulum. Based on yeast complementation experiments, both enzymes
+    protect against oxidative stress, salt stress, and membrane damage. It is concluded
+    that both LjGpxs perform major antioxidative functions in nodules, preventing
+    lipid peroxidation and other oxidative processes at different subcellular sites
+    of vascular and infected cells. The enzymes are probably involved in hormone and
+    NO signalling, and may be regulated through nitrosylation of the peroxidatic cysteine
+    essential for catalytic function.
+accept: '1'
+article_type: original
+author:
+- first_name: Manuel A.
+  full_name: Matamoros, Manuel A.
+  last_name: Matamoros
+- first_name: Ana
+  full_name: Saiz, Ana
+  last_name: Saiz
+- first_name: Maria
+  full_name: Peñuelas, Maria
+  last_name: Peñuelas
+- first_name: Pilar
+  full_name: Bustos-Sanmamed, Pilar
+  last_name: Bustos-Sanmamed
+- first_name: Jose M.
+  full_name: Mulet, Jose M.
+  last_name: Mulet
+- first_name: Maria V.
+  full_name: Barja, Maria V.
+  last_name: Barja
+- first_name: Nicolas
+  full_name: Rouhier, Nicolas
+  last_name: Rouhier
+- first_name: Marten
+  full_name: Moore, Marten
+  id: '37183414'
+  last_name: Moore
+- first_name: Euan K.
+  full_name: James, Euan K.
+  last_name: James
+- first_name: Karl-Josef
+  full_name: Dietz, Karl-Josef
+  id: '21935'
+  last_name: Dietz
+- first_name: Manuel
+  full_name: Becana, Manuel
+  last_name: Becana
+creator:
+  login: riedel
+date_created: 2015-05-22T08:35:10Z
+date_submitted: 2015-05-22T08:36:49Z
+date_updated: 2015-09-10T13:35:40Z
+department:
+- _id: '2685177'
+doi: 10.1093/jxb/erv066
+external_id:
+  isi: '000356223900015'
+  pmid: '25740929'
+intvolume: '        66'
+isi: 1
+issue: '10'
+language:
+- iso: eng
+  name: English
+page: 2979-2990
+pmid: 1
+publication: Journal of Experimental Botany
+publication_identifier:
+  issn:
+  - 1460-2431
+publication_status: published
+quality_controlled: '1'
+status: public
+title: Valid Test Publication
+type: journal_article
+volume: 66
+year: '2015'
+...

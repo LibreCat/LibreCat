@@ -17,16 +17,29 @@ librecat research_group [options] get <id>
 librecat research_group [options] delete <id>
 librecat research_group [options] valid <FILE>
 
+options:
+    --total=NUM   (total number of items to list/export)
+    --start=NUM   (start list/export at this item)
+
 EOF
 }
 
 sub command_opt_spec {
     my ($class) = @_;
-    ();
+    (
+    ['total=i', ""] ,
+    ['start=i',""] ,
+    );
+}
+
+sub opts {
+    state $opts = $_[1];
 }
 
 sub command {
     my ($self, $opts, $args) = @_;
+
+    $self->opts($opts);
 
     my $commands = qr/list|export|get|add|delete|valid/;
 
@@ -65,11 +78,12 @@ sub command {
 sub _list {
     my ($self, $query) = @_;
 
-    my $it
-        = defined($query)
-        ? LibreCat::App::Helper::Helpers->new->research_group->searcher(
-        cql_query => $query)
-        : LibreCat::App::Helper::Helpers->new->research_group;
+    my $total = $self->opts->{total} // undef;
+    my $start = $self->opts->{start} // undef;
+
+    my $it = LibreCat::App::Helper::Helpers->new->research_group->searcher(
+        cql_query => $query , total => $total , start => $start
+    );
 
     my $count = $it->each(
         sub {
@@ -90,11 +104,12 @@ sub _list {
 sub _export {
     my ($self, $query) = @_;
 
-    my $it
-        = defined($query)
-        ? LibreCat::App::Helper::Helpers->new->research_group->searcher(
-        cql_query => $query)
-        : LibreCat::App::Helper::Helpers->new->research_group;
+    my $total = $self->opts->{total} // undef;
+    my $start = $self->opts->{start} // undef;
+
+    my $it = LibreCat::App::Helper::Helpers->new->research_group->searcher(
+        cql_query => $query , total => $total , start => $start
+    );
 
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($it);
@@ -224,4 +239,7 @@ LibreCat::Cmd::research_group - manage librecat research_group-s
     librecat research_group delete <id>
     librecat research_group valid <FILE>
 
+    options:
+        --total=NUM   (total number of items to list/export)
+        --start=NUM   (start list/export at this item)
 =cut

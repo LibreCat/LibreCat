@@ -21,7 +21,7 @@ get qr{/person/([a-z,A-Z])} => sub {
     my ($c) = splat;
 
     my %search_params = (
-        q => ["lastname=" . lc $c . "*"],
+        cql => ["lastname=" . lc $c . "*"],
         start => 0,
         limit => 1000
     );
@@ -29,12 +29,12 @@ get qr{/person/([a-z,A-Z])} => sub {
     h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('researcher', \%search_params);
-    
+
     my $result;
     @{$hits->{hits}} = map {
         my $rec = $_;
         my $pub = LibreCat->searcher->search('publication',
-            {q => ["person=$rec->{_id}"], start => 0, limit => 1,});
+            {cql => ["person=$rec->{_id}"], start => 0, limit => 1,});
         ($pub->{total} > 0) ? $rec : undef;
     } @{$hits->{hits}};
 
@@ -46,7 +46,7 @@ get qr{/person/([a-z,A-Z])} => sub {
     template 'person/list', $hits;
 };
 
-get qr{/person/*} => sub {
+get '/person' => sub {
     forward '/person/A';
 };
 
@@ -57,20 +57,18 @@ research data and author IDs.
 
 =cut
 
-get
-    qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+)*/*}
+get qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+)*/*}
     => sub {
     my ($id, $modus) = splat;
     my $p      = h->extract_params();
-    my @orig_q = @{$p->{q}};
 
-    push @{$p->{q}}, ("person=$id", "status=public");
+    push @{$p->{cql}}, ("person=$id", "status=public");
 
     if ($modus and $modus eq "data") {
-        push @{$p->{q}}, "type=research_data";
+        push @{$p->{cql}}, "type=research_data";
     }
     else {
-        push @{$p->{q}}, "type<>research_data";
+        push @{$p->{cql}}, "type<>research_data";
     }
 
     my $sort_style
@@ -82,7 +80,7 @@ get
     my $hits = LibreCat->searcher->search('publication', $p);
 
     unless ($hits->total) {
-        my %search_params = (q => ["alias=$id"]);
+        my %search_params = (cql => ["alias=$id"]);
         h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
 
         $hits = LibreCat->searcher->search('researcher', \%search_params);
@@ -99,8 +97,7 @@ get
 
     # search for research hits (only to see if present and to display tab)
     my $researchhits;
-    @{$p->{q}} = @orig_q;
-    push @{$p->{q}}, ("type=research_data", "person=$id", "status=public");
+    push @{$p->{cql}}, ("type=research_data", "person=$id", "status=public");
     $p->{limit} = 1;
 
     h->log->debug("executing publication->search: " . to_dumper($p));

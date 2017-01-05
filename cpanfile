@@ -22,7 +22,7 @@ requires 'Module::Install', '1.16';
 # Catmandu
 requires 'Catmandu', '>=1.0304';
 requires 'Catmandu::Exporter::Table';
-requires 'Catmandu::Store::ElasticSearch';
+requires 'Catmandu::Store::ElasticSearch', '>=0.0504';
 requires 'Catmandu::Store::MongoDB', '>=0.0403';
 requires 'Catmandu::DBI', '>=0.0510';
 requires 'Catmandu::BibTeX';
@@ -32,6 +32,8 @@ requires 'Catmandu::Importer::getJSON';
 requires 'Catmandu::Identifier', '>=0.05';
 requires 'Catmandu::RIS', '>=0.04';
 requires 'Catmandu::Fix::Date';
+requires 'Catmandu::SRU';
+requires 'Catmandu::OAI';
 
 #Dancer
 requires 'Dancer';

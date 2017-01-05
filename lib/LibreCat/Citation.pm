@@ -47,7 +47,7 @@ with 'Catmandu::Logger';
 my $conf      = Catmandu->config->{citation};
 my $load_path = Catmandu->default_load_path;
 
-has style => (is => 'ro');
+has style  => (is => 'ro');
 has styles => (is => 'ro', lazy => 1, builder => '_build_styles');
 has locale => (is => 'ro', default => sub {'en'});
 has all    => (is => 'ro');

@@ -16,20 +16,22 @@ Project splash page for :id.
 
 =cut
 
-get qr{/project/([^/]+)/*} => sub {
-    my ($id) = splat;
+get '/project/:id' => sub {
+    my $id   = params->{id};
     my $proj = h->project->get($id);
 
-    my $pub = LibreCat->searcher->search('project',
-        cql_query => "project=$id AND status=public",
-        limit     => 100
+    my $pub = LibreCat->searcher->search('publication',
+        {
+            cql => ["project=$id", "status=public"],
+            limit => 100,
+        }
     );
     $proj->{project_publication} = $pub if $pub->{total} > 0;
 
     template 'project/record', $proj;
 };
 
-get qr{/project/*} => sub {
+get '/project' => sub {
     my $p = h->extract_params();
 
     my $hits = LibreCat->searcher->search('project', $p);

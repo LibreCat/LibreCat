@@ -265,7 +265,6 @@ publication:
       minimum: 0
     type:
       enum:
-        - original
         - book
         - book_editor
         - book_chapter
@@ -320,27 +319,6 @@ publication:
       type: string
       format: date-time
       description: "Record last update date"
-    document_type:
-      enum:
-        - book
-        - book_chapter
-        - book_editor
-        - conference
-        - conference_abstract
-        - conference_editor
-        - dissertation
-        - encyclopedia_article
-        - journal_article
-        - journal_editor
-        - newspaper_article
-        - patent
-        - preprint
-        - report
-        - research_data
-        - review
-        - translation
-        - translation_chapter
-        - working_paper
     doi:
       oneOf:
         - type: string
@@ -667,9 +645,6 @@ publication:
       description: "Keywords"
     thematic_area:
       type: array
-      items:
-         enum:
-             - diversity
       description: "Thematic publication area"
     jel:
       type: array
@@ -760,8 +735,8 @@ publication:
     citation:
       type: object
 
-  # A author|editor is required..can this be expressed in JSONSchema?
-  required: ["_id","type","title","year","status"]
+  # Requirements for absolute minimal record
+  required: ["_id","type","title","status"]
   additionalProperties: true
 
 #used in LibreCat::Validator::Researcher

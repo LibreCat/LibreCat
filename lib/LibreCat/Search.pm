@@ -22,7 +22,7 @@ sub quick_search {
 
     return undef unless $bag_name;
 
-    my %search_params = (query => $p->{q} // '');
+    my %search_params = (cql_query => $self->_cql_query($p));
 
     $self->log->debug("executing $bag_name->search: " . to_dumper(\%search_params));
 
@@ -47,26 +47,20 @@ sub search {
     my ($self, $bag_name, $p) = @_;
 
     return undef unless $bag_name;
-    my $cql;
 
-    $p->{q} = $self->_string_array($p->{q});
-    $cql = join(' AND ', @{$p->{q}}) if $p->{q};
-
-    my $store = $self->store;
-    my $bag = $store->bag($bag_name);
     my %search_params = (
-        cql_query => $cql // '',
+        cql_query    => $self->_cql_query($p),
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
-        limit => $p->{limit} // Catmandu->config->{default_page_size},
-        start => $p->{start} // 0,
-        facets => merge($p->{facets}, Catmandu->config->{default_facets}),
+        limit        => $self->_set_limit($p->{limit}),
+        start        => $p->{start} // 0,
+        facets       => merge($p->{facets}, Catmandu->config->{default_facets}),
     );
 
     $self->log->debug("executing $bag_name->search: " . to_dumper(\%search_params));
     my $hits;
 
     try {
-        $hits = $bag->search(%search_params);
+        $hits = $self->store->bag($bag_name)->search(%search_params);
     }
     catch {
         $self->log->error("$bag_name->search failed: " . to_dumper(\%search_params));
@@ -80,11 +74,46 @@ sub search {
 
     $self->log->debug("found: " . $hits->total . " hits");
 
+    # hack for now: refactor facets, then this can be removed
     foreach (qw(next_page last_page page previous_page pages_in_spread)) {
         $hits->{$_} = $hits->$_;
     }
 
     $hits;
+}
+
+sub _cql_query {
+    my ($self, $p) = @_;
+
+    my @cql;
+
+    my $q = is_array_ref($p->{q}) ? $p->{q} : [ $p->{q} ];
+
+    for my $part (@$q) {
+        if (defined($part) && length($part)) {
+            # auto-escape wildcards
+            $part =~ s{(["\*\?])}{\\$1}g;
+            push @cql, "basic = \"$part\"";
+        }
+    }
+
+    $p->{cql} = $self->_string_array($p->{cql});
+    push @cql, @{$p->{cql}};
+
+    return join(' AND ', @cql) // '';
+}
+
+sub _set_limit {
+    my ($self, $limit) = @_;
+
+    if ($limit) {
+        ($limit > Catmandu->config->{maximum_page_size}) ?
+            return Catmandu->config->{maximum_page_size} :
+                return $limit;
+    }
+    else {
+        return Catmandu->config->{default_page_size};
+    }
 }
 
 sub _sru_sort {
