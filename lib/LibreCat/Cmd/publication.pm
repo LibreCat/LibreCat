@@ -25,6 +25,11 @@ librecat publication [options] files [<id>]|[<cql-query>]|[<FILE>]|REPORT
 librecat publication [options] fetch <source> <id>
 librecat publication [options] embargo ['update']
 
+options:
+    --total=NUM   (total number of items to list/export)
+    --start=NUM   (start list/export at this item)
+    --no-citation (skip calculating citations when adding records)
+
 E.g.
 
 # Search all publications with status 'private'
@@ -53,11 +58,21 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    (['no-citation|nc', ""]);
+    (
+        ['no-citation|nc', ""] ,
+        ['total=i', ""] ,
+        ['start=i',""] ,
+    );
+}
+
+sub opts {
+    state $opts = $_[1];
 }
 
 sub command {
     my ($self, $opts, $args) = @_;
+
+    $self->opts($opts);
 
     my $commands = qr/list|export|get|add|delete|purge|valid|files|fetch|embargo$/;
 
@@ -83,8 +98,7 @@ sub command {
         return $self->_get(@$args);
     }
     elsif ($cmd eq 'add') {
-        my $skip_citation = $opts->{'no-citation'} ? 1 : 0;
-        return $self->_add($skip_citation, @$args);
+        return $self->_add(@$args);
     }
     elsif ($cmd eq 'delete') {
         return $self->_delete(@$args);
@@ -109,11 +123,12 @@ sub command {
 sub _list {
     my ($self, $query) = @_;
 
-    my $it
-        = defined($query)
-        ? LibreCat::App::Helper::Helpers->new->publication->searcher(
-        cql_query => $query)
-        : LibreCat::App::Helper::Helpers->new->publication;
+    my $total = $self->opts->{total} // undef;
+    my $start = $self->opts->{start} // undef;
+
+    my $it = LibreCat::App::Helper::Helpers->new->publication->searcher(
+        cql_query => $query , total => $total , start => $start
+    );
 
     my $count = $it->each(
         sub {
@@ -136,11 +151,12 @@ sub _list {
 sub _export {
     my ($self, $query) = @_;
 
-    my $it
-        = defined($query)
-        ? LibreCat::App::Helper::Helpers->new->publication->searcher(
-        cql_query => $query)
-        : LibreCat::App::Helper::Helpers->new->publication;
+    my $total = $self->opts->{total} // undef;
+    my $start = $self->opts->{start} // undef;
+
+    my $it = LibreCat::App::Helper::Helpers->new->publication->searcher(
+        cql_query => $query , total => $total , start => $start
+    );
 
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($it);
@@ -162,7 +178,7 @@ sub _get {
 }
 
 sub _add {
-    my ($self, $skip_citation, $file) = @_;
+    my ($self, $file) = @_;
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
@@ -170,6 +186,8 @@ sub _add {
     my $importer  = Catmandu->importer('YAML', file => $file);
     my $helper    = LibreCat::App::Helper::Helpers->new;
     my $validator = LibreCat::Validator::Publication->new;
+
+    my $skip_citation = $self->opts->{'no-citation'} ? 1 : 0;
 
     my $records = $importer->benchmark->select(
         sub {
@@ -586,4 +604,8 @@ LibreCat::Cmd::publication - manage librecat publications
     librecat publication fetch <source> <id>
     librecat publication embargo ['update']
 
+    options:
+        --total=NUM   (total number of items to list/export)
+        --start=NUM   (start list/export at this item)
+        --no-citation (skip calculating citations when adding records)
 =cut
