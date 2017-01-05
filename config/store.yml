@@ -19,7 +19,20 @@ backup:
     password: librecat
     bags:
       audit:
-        plugins: ['Datestamps']
+        mapping:
+            id:
+                type: string
+                column: pid
+            bag:
+                type: string
+            process:
+                type: string
+            action:
+                type: string
+            message:
+                type: string
+            time:
+                type: integer
       session:
         plugins: ['Datestamps']
       publication: &backup_settings

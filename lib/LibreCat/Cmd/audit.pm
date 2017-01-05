@@ -3,14 +3,15 @@ package LibreCat::Cmd::audit;
 use Catmandu::Sane;
 use LibreCat::App::Helper;
 use Carp;
+use POSIX qw(strftime);
 use parent qw(LibreCat::Cmd);
 
 sub description {
     return <<EOF;
 Usage:
 
-librecat audit [options] list
-librecat audit [options] get <ID>
+librecat audit [options] list [<RECORD-ID>]
+librecat audit [options] get <AUDIT-ID>
 
 EOF
 }
@@ -46,23 +47,31 @@ sub command {
 }
 
 sub _list {
-    my ($self) = @_;
+    my ($self, $pid) = @_;
 
     my $it = LibreCat::App::Helper::Helpers->new->backup_audit();
+
+    if ($pid) {
+        $it = $it->select( id => $pid )->sorted(sub {
+            $_[0]->{time} cmp $_[1]->{time}
+        });
+    }
 
     my $count = $it->each(
         sub {
             my ($item)   = @_;
             my $id       = $item->{id}  // '';
             my $message  = $item->{message} // '';
+            my $time     = strftime("%Y-%m-%dT%H:%M:%S",localtime($item->{time} // 0));
 
             printf "%s %s %-36.36s %s\n"
                     , $item->{_id}
-                    , $item->{date_created}
+                    , $time
                     , $id
                     , $message;
         }
     );
+
     print "count: $count\n";
 
     return 0;
@@ -93,7 +102,7 @@ LibreCat::Cmd::audit - manage librecat audit messages
 
 =head1 SYNOPSIS
 
-    librecat audit list
-    librecat audit get <ID>
+    librecat audit list [<RECORD-ID>]
+    librecat audit get <AUDIT-ID>
 
 =cut
