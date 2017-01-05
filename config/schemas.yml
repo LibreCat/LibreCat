@@ -265,7 +265,6 @@ publication:
       minimum: 0
     type:
       enum:
-        - original
         - book
         - book_editor
         - book_chapter
@@ -327,27 +326,6 @@ publication:
       type: string
       format: date-time
       description: "Record last update date"
-    document_type:
-      enum:
-        - book
-        - book_chapter
-        - book_editor
-        - conference
-        - conference_abstract
-        - conference_editor
-        - dissertation
-        - encyclopedia_article
-        - journal_article
-        - journal_editor
-        - newspaper_article
-        - patent
-        - preprint
-        - report
-        - research_data
-        - review
-        - translation
-        - translation_chapter
-        - working_paper
     doi:
       oneOf:
         - type: string
