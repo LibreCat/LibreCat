@@ -12,6 +12,7 @@ use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
 use LibreCat;
 use LibreCat::I18N;
+use LibreCat::JobQueue;
 use Log::Log4perl ();
 use NetAddr::IP::Lite;
 use Moo;
@@ -28,6 +29,10 @@ sub config {
 
 sub hook {
     LibreCat->hook($_[1]);
+}
+
+sub queue {
+    state $config = LibreCat::JobQueue->new;
 }
 
 sub create_fixer {
@@ -54,6 +59,10 @@ sub alphabet {
 
 sub bag {
     state $bag = Catmandu->store->bag;
+}
+
+sub backup_audit {
+    state $bag = Catmandu->store('backup')->bag('audit');
 }
 
 sub backup_publication {
@@ -541,23 +550,19 @@ sub index_record {
 sub delete_record {
     my ($self, $bag, $id) = @_;
 
-    my $del = {_id => $id, date_deleted => $self->now, status => 'deleted',};
+    my $del_record = $self->$bag->get($id);
 
-    if ($bag eq 'publication') {
-        my $rec = $self->publication->get($id);
-        $del->{date_created} = $rec->{date_created};
-        $del->{oai_deleted}  = 1
-            if ($rec->{oai_deleted} or $rec->{status} eq 'public');
-        require LibreCat::App::Catalogue::Controller::File;
-        require LibreCat::App::Catalogue::Controller::Material;
-        LibreCat::App::Catalogue::Controller::Material::update_related_material(
-            $del);
-        LibreCat::App::Catalogue::Controller::File::handle_file($del);
-        delete $del->{related_material};
+    if ($bag eq 'publication' &&
+            ($del_record->{oai_deleted} || $del_record->{status} eq 'public')
+            ) {
+        $del_record ->{oai_deleted}  = 1
     }
 
+    $del_record->{date_deleted} = $self->now;
+    $del_record->{status}       = 'deleted';
+
     my $bagname = "backup_$bag";
-    my $saved   = $self->$bagname->add($del);
+    my $saved   = $self->$bagname->add($del_record);
     $self->$bag->add($saved);
     $self->$bag->commit;
 

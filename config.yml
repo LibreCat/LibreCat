@@ -15,7 +15,9 @@ session_state:
   package: "Plack::Session::State::Cookie"
   options:
     path: "/"
-    expires: 7200
+    ## Turn in in https installations
+    # secure: 1
+    expires: 1209600
 session_store:
   package: "Plack::Session::Store::Catmandu"
   options:

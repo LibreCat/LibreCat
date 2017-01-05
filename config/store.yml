@@ -18,6 +18,8 @@ backup:
     username: librecat
     password: librecat
     bags:
+      audit:
+        plugins: ['Datestamps']
       session:
         plugins: ['Datestamps']
       publication: &backup_settings

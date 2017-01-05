@@ -21,7 +21,7 @@ sub command_opt_spec {
 
 sub pid_dir {
     my ($class) = @_;
-    my $path = '/var/run';
+    my $path = Catmandu->config->{worker}->{logdir};
     $path = Cwd::getcwd unless -d -w $path;
     $path;
 }

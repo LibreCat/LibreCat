@@ -52,4 +52,3 @@ LibreCat::Worker::Mailer - a worker for sending mails
     });
 
 =cut
-

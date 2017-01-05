@@ -8,16 +8,10 @@ general:
 login:
   login_heading: "Anmelden"
   username: "Benutzername"
-  username_placeholder: "HRZ Benutzername"
   password: "Passwort"
-  password_placeholder: "HRZ Passwort (wie z.B. f&uuml;r den Webmailer und Stud.IP)"
   login_button: "Anmelden"
-  login_help: "HRZ Benutzername und Passwort (wie z.B. f&uuml;r den Webmailer und Stud.IP)"
-  contact_us: "<strong>Login fehlgeschlagen?</strong><br>Falls Sie der Universit&auml;t Bielefeld angeh&ouml;ren, sich aber trotzdem nicht in PUB einloggen k&ouml;nnen, <strong><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>schreiben Sie uns</a></strong> oder rufen Sie uns an unter 106-4058."
 header:
-  title: "Publikationen an der Universit&auml;t Bielefeld"
-  title_long: "PUB &ndash; Publikationen an der Universit&auml;t Bielefeld"
-  title_person: "PUB  &ndash; Publikationsliste von"
+  title: "Publikationen an der Universit&auml;t LibreCat"
   my_author_page: "Meine Publikationsliste"
   brand: "Start"
   role_label: "Rolle"
@@ -36,8 +30,6 @@ header:
     import: "Import"
     manage_projects: "Projekte verwalten"
     manage_research_groups: "Forschungsgruppen verwalten"
-    manage_journals: "Journale verwalten"
-    manage_department: "Einrichtungen verwalten"
   lang: "English"
   lang_short: "EN"
   lang_select:
@@ -45,48 +37,16 @@ header:
     ger: "Deutsch"
   department_affiliation: "Fakult&auml;t/ Zugeh&ouml;rigkeit"
   logged_in_as: "Eingeloggt als"
-  default_edit_mode: "Standard Editiermodus"
-  default_language: "Standardsprache"
-  beta: "Das neue Backend von PUB befindet sich noch im Beta-Stadium"
 footer:
-  this_is_us: "Universit&auml;tsbibliothek Bielefeld"
-  language_url: ""
-  dini_alt: "DINI-Zertifikat 2010"
-  dini_title: "PUB ist mit dem DINI-Zertifikat 2010 ausgezeichnet"
-  openaire_alt: "OpenAIRE valide"
-  openaire_title: "PUB ist 100% OpenAIRE-valide"
-  openarchives_alt: "Open Archives Data Provider"
-  openarchives_title: "PUB ist registrierter Daten-Provider der Open Archives Initiative"
-  dci_alt: "Data Citation Index"
-  dci_title: "PUB ist im Thomson Reuters Data Citation Index enthalten"
-  datacite_alt: "DataCite"
-  datacite_title: "PUB registriert Forschungsdaten bei DataCite"
-  re3data_alt: "re3data.org"
-  re3data_title: "PUB ist in Re3Data (Registry of Research Data Repositories) enthalten"
-  faq: "FAQ"
-  contact: "Kontakt"
-  policy: "Leitlinien"
-  imprint: "Impressum"
-  powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat<img src='/images/librecat.png' alt=''></a>"
-  support: "<strong>Support Publikationsdienste</strong><br>Susanne Riedel<br>Tel.: 0521/106-4058<br><a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;'>&#112;&#117;&#98;&#108;&#105;&#107;&#97;&#116;&#105;&#111;&#110;&#115;&#100;&#105;&#101;&#110;&#115;&#116;&#101;&#46;&#117;&#98;&#64;&#117;&#110;&#105;&#45;&#98;&#105;&#101;&#108;&#101;&#102;&#101;&#108;&#100;&#46;&#100;&#101;</a>"
+  powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"
 tabs:
   home: "Startseite"
   all_publications: "Alle Publikationen"
   publications: "Publikationen"
   data_publications: "Datenpublikationen"
-  publications_by: "Publ. von"
   projects: "Projekte"
   departments: "Einrichtungen"
   authors: "Autoren"
-  authors_title: "Autorinnen und Autoren"
-  start: "Was ist PUB?"
-  about: "&Uuml;ber PUB"
-  features: "Features"
-  documentation: "API Dokumentation"
-  faq: "FAQ"
-  contact: "Kontakt"
-  policy: "Leitlinien"
-  login: "Wie logge ich mich ein?"
 hits:
   id: "PUB-ID"
   author: "Autorin / Autor"
@@ -94,51 +54,26 @@ hits:
   publication: "Publikation"
   publications: "Publikationen"
   data_publication: "Datenpublikation"
-  data_publications: "Datenpublikationen"
-  project: "Projekt"
-  projects: "Projekte"
 home:
   search_placeholder: "Publikationen in PUB suchen"
   fields: "Felder"
   operators: "Operatoren"
-  help: "Hilfe"
   stats:
     publications: "Publikationen"
-    authors: "Pers<span class='xxs-only'>.</span><span class='hidden-xxs'>&ouml;nliche</span> Publikationslisten"
     data_publications: "Datenpublikationen"
     oa_publications: "Open-Access-Publikationen"
     projects: "Projekte"
-  logos:
-    oa: "Open Access an der<br>Universit&auml;t Bielefeld"
-    rd_management: "Forschungsdaten&shy;management"
-    brand: "PUB"
-    brand_long: "PUB &ndash; Publikationen an der Universit&auml;t Bielefeld"
-    theses: "PUB Theses"
-  you_have_no_photo: "Sie haben kein Bild im PEVZ hinterlegt."
-  they_have_no_photo: "Diese Person hat kein Bild im PEVZ hinterlegt."
 main_page:
   login: "Anmelden"
   logout: "Abmelden"
   add_new_button: "Neue Publikation"
-  capital_or: "ODER"
   qae_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Open-Access-Volltext (PDF)<br>hier her ziehen und wir machen den Rest"
-  theses_drop_text: "<span class='fa fa-hand-o-right fa-2x'></span> <span class='fa fa-file-pdf-o fa-3x'></span><br>Pr&uuml;fungsarbeit hier her ziehen &hellip; oder klicken."
-  theses_success_text: "You have successfully submitted your thesis!<br />All that's left to do is print and fill out this form: <a href='/pdf/revers_hochschulschriften.pdf'>Statement on the Granting of Exploitation Rights (PDF, only in German)</a> and send it to us. And we will contact you with further information.<br>Thank you!<br>Back to <a href='/pubtheses'>PUBTheses</a>"
-  theses_success_text: "Sie haben Ihre Pr&uuml;fungsschrift erfolgreich hochgeladen.<br />F&uuml;llen Sie bitte noch dieses Formular aus: <a href='/pdf/revers_hochschulschriften.pdf'>Schriftliche Erkl&auml;rung zur Einr&auml;umung von Nutzungsrechten (PDF-Formular)</a> und senden Sie es an uns. Wir kontaktieren Sie mit weiteren Informationen.<br>Vielen Dank!<br>Zur&uuml;ck zu <a href='/pubtheses'>PUBTheses</a>"
-  theses_explain: "Bitte laden Sie EINE Datei (bevorzugt .pdf) hoch. Wenn Sie ein Dokument einbringen wollen, das aus mehreren Teildokumenten (z.B. Kapitel) besteht, m&uuml;ssen die Dateien in eine Archivdatei gepackt werden (.zip oder .gz)."
-  depositpolicy: "Rechtliche Rahmenbedingungen (PUB Deposity Policy)"
-  ddc: "Liste der DDC-Klassen"
-  heading_admin: "Admin"
-  heading_user: "User"
-  heading_reviewer: "Reviewer"
-  heading_project_reviewer: "Projekt Reviewer"
-  heading_delegate: "Delegate"
   logged_in_as: "Angemeldet als"
   by: "von"
   statuses:
     public: "Public"
-    returned: "Re-<br>turned"
-    submitted: "Sub-<br>mitted"
+    returned: "Returned"
+    submitted: "Submitted"
     invalid: "Invalid"
     qae: "New QaE"
     private: "Private"
@@ -157,20 +92,13 @@ main_page:
     search_similar: "Nach &auml;hnlichen Titeln suchen"
 person_profile:
   id_not_found: "ID nicht gefunden."
-  former_researcher: "Ehemaliger Bielefelder Forscher"
-  view: ""
-  view_in: "Eintrag im"
+  former_researcher: "Ehemaliger LibreCat Forscher"
   local_id: "ID"
   no_author_ids: "Keine Autoren-IDs gesetzt."
   person_id_title: "Diese IDs werden direkt nach dem Speichern auf Ihrer Personenseite sichtbar sein."
 project:
-  heading: "Projekte"
-  not_found: "Unter dieser ID existiert kein Projekt"
   funded_ext: "Drittmittelprojekt"
   period: "Projektzeitraum"
-  filter: "Filtern"
-  filter_remove: "Filteroptionen entfernen"
-  filter_help: "Sie k&ouml;nnen Suche und Filteroptionen kombinieren"
   start_year: "Startjahr"
   end_year: "Endjahr"
   funder: "F&ouml;rderer"
@@ -183,9 +111,9 @@ facets:
   filter_authorlist: "Autorenliste filtern"
   filter_publications: "Publikationen filtern"
   visibility_status: "Status"
-  current_authors: "UniBi Autoren"
-  current_editors: "UniBi Herausgeber"
-  former_authors: "Ehemalige UniBi Autoren"
+  current_authors: "LibreCat Autoren"
+  current_editors: "LibreCat Herausgeber"
+  former_authors: "Ehemalige LibreCat Autoren"
   department: "Einrichtung"
   publication_type: "Publikationstyp"
   publishing_year: "Publikationsjahr"
@@ -245,17 +173,11 @@ citation:
   modern-language-association: MLA
 frontdoor:
   publication: Zeitschriftentitel
-  volume: Band
-  Issue: Ausgabe
-  page: "Seite(n)"
-  article_number: Artikelnr.
   preview: "Vorschau"
-  crumb_back: "Zur&uuml;ck"
   no_record: "Dieser Eintrag exisitert nicht oder wurde gel&ouml;scht"
   download: "Download"
-  cc_license: "Creative Commons Lizenz"
   show_all: "Alle"
-  local_brand: "UniBi"
+  local_brand: "LibreCat"
   export: "Export"
   marked: "Markierte Publikationen"
   cite_this: "Zitieren"
@@ -268,7 +190,6 @@ frontdoor:
   sources: "Quellen"
   search_this: "Suchen in"
   isbn_search: "ISBN Suche"
-  catalogue: "Katalog.<em>plus!</em>"
   item: "Eintrag"
   items: "Eintr&auml;ge"
   tabs:
@@ -278,14 +199,12 @@ frontdoor:
       reviewed_work: "Rezensiertes Werk"
       isbn: "ISBN"
       issn: "ISSN"
-      eisbn: "eISBN"
       eissn: "eISSN"
       ipn: "Int. Patentnummer"
       ipc: "Internationale Patent<br>Klassifikation"
       financial_disclosure: "Finanzierungs-Informationen"
-      ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href='http://oa.uni-bielefeld.de/publikationsfonds.html'>Open Access Publication Fund</a> of Bielefeld University."
-      scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and Bielefeld University."
-      grantnumber: "Grant Number"
+      ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href=''>Open Access Publication Fund</a> of LibreCat University."
+      scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and LibreCat University."
       alt_name: "Alternativer Name"
       acronym: "Akronym"
       coordinator: "Koordinator"
@@ -297,14 +216,13 @@ frontdoor:
       external_material: "Externes Material:"
       internal_material: "Material in PUB:"
       name: "Name"
-      relation: "Relation (zum PUB-Eintrag)"
       title: "Titel"
       description: "Beschreibung"
       url: "URL"
       access_level:
         label: "Access Level"
         open_access: "Open Access"
-        local: "UniBi Only"
+        local: "LibreCat Only"
         request_a_copy: "Request a Copy"
         closed: "Closed Access"
       last_uploaded: "Zuletzt Hochgeladen"
@@ -317,7 +235,6 @@ frontdoor:
       cites: "Diese Publikation zitiert die folgenden Datenpublikationen:"
     toolkit:
       label: "Cognitive Interaction Toolkit"
-      data_by: "Daten bereitgestellt vom <a href='http://toolkit.cit-ec.uni-bielefeld.de/'>Cognitive Interaction Toolkit</a>."
     ebi_links:
       label: "EBI BioEntities"
       data_by: "Daten bereitgestellt von <a href='http://www.ebi.ac.uk/'>European Bioinformatics Institute (EBI)</a>"
@@ -339,7 +256,6 @@ frontdoor:
     export_search: "Export / Suche"
   fulltext:
     view: "Volltext &ouml;ffnen"
-    not_available: "Kein Volltext in PUB hochgeladen"
   id_title: "Auf diese Seite verlinken, z.B. f&uuml;r Bookmarks"
   license_heading: "Alle Dateien verf&uuml;gbar unter der/den folgenden Lizenz(en):"
 mark:
@@ -348,21 +264,7 @@ mark:
   mark_all: "Alle markieren"
   unmark_all: "Alle Markierungen l&ouml;schen"
   mark_unmark: "Markieren/ Markierung l&ouml;schen"
-  back_general: "Zur&uuml;ck"
-  back_person: "Zur&uuml;ck zur Personenseite"
   display_export: "Darstellung / Sortierung"
-sort_options:
-  year: "Publikationsjahr"
-  date_updated: "Update-Datum"
-  title: "Titel"
-  author: "Erstautor"
-  type: "Publikationstyp"
-  publication: "Reihe/ Journal"
-  fullname: "Alphabetisch"
-  publcount: "Anzahl der Publikationen"
-  name: "Name"
-  acronym: "Akronym"
-  startyear: "Startjahr"
 add_new:
   heading: "Neue Publikation anlegen"
   import: "Option 1:<br />Geben Sie einen Publikations-Identifier zum Import ein"
@@ -375,8 +277,8 @@ add_new:
   drop_oa: "Option 3:<br />Ziehen Sie Ihren Open-Access-Volltext hier her"
   paste_bibtex: "Option 4:<br />F&uuml;gen Sie Ihren BibTex Eintrag hier ein"
   paste_bibtex_placeholder: "Bitte f&uuml;gen Sie nur jeweils einen Datensatz ein"
-  qae_title: "New Quick And Easy Publication - Will be edited by PUB-Team"
   wos_import: "Web of Science Import"
+  qae_title: "New Quick And Easy Publication - Will be edited by LibreCat team"
 forms:
   book:
     label: "Monographie"
@@ -401,7 +303,7 @@ forms:
         placeholder: "z.B. Handbook of eBook Publishing"
       author: &author_translator
         label: "Autor"
-        tooltip: "Autor arbeitet an der Uni Bielefeld."
+        tooltip: "Autor arbeitet an der Uni LibreCat."
         idm_extern: "extern"
         first_name:
           label: "Vorname"
@@ -439,7 +341,7 @@ forms:
           placeholder: "z.B. 2015"
         extern:
           label_short: "Extern"
-          placeholder: "Ver&ouml;ffentlicht vor/nach Besch&auml;ftigung an der UniBi"
+          placeholder: "Ver&ouml;ffentlicht vor/nach Besch&auml;ftigung an der LibreCat"
       page: &pages
         label_short: "Seiten"
         label: "Anzahl Seiten"
@@ -477,7 +379,7 @@ forms:
           closed: "Autor/Reviewer"
           until: "bis"
           request_a_copy: "Kopie anfordern"
-          local: "Nur UniBi"
+          local: "Nur LibreCat"
           open_access: "Open Access"
         edit_modal:
           heading: "Hochgeladene Datei bearbeiten"
@@ -486,7 +388,7 @@ forms:
           relation: "Relation (\"Hochgeladenes Dokument ist...\")"
           access:
             open_access: "Open Access (Datei ist frei verf&uuml;gbar, ab sofort)"
-            local: "Local Access (Nur UniBi)"
+            local: "Local Access (Nur LibreCat)"
             closed: "Closed Access (Nur Autor/Reviewer)"
             request_a_copy: "Request a Copy (Closed Access au&szlig;er auf Anfrage)"
             embargo: "Zu Open Access wechseln am:"
@@ -498,12 +400,12 @@ forms:
         heading: "Urheberrecht / Lizenzen"
         pub_license:
           label: "Hinweise zum Urheberrecht"
-          disclaimer_text: "Hiermit stelle ich der Universit&auml;t Bielefeld dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf PUB, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r PUB dargestellt sind, zur Verf&uuml;gung.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy / Rechtliche Rahmenbedingungen</a>"
+          disclaimer_text: "Hiermit stelle ich der Universit&auml;t LibreCat dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf PUB, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r PUB dargestellt sind, zur Verf&uuml;gung.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy / Rechtliche Rahmenbedingungen</a>"
           accept_text: "Ich stimme zu"
           alert: "Sie m&uuml;ssen den Hinweisen zum Urheberrecht zustimmen, wenn Sie eine Datei angeh&auml;ngt haben."
         info:
           text: "Fragen zur Policy / Lizenz?"
-          contact: "Support Publikationsdienste, Tel.: 0521/106-4058, E-Mail: <a href='mailto:publikationsdienste.ub@uni-bielefeld.de'>publikationsdienste.ub@uni-bielefeld.de</a>"
+          contact: "Support Publikationsdienste, Tel.: 999/9999999, E-Mail: <a href=''>helpdesk@librecat.org</a>"
         open_data_release:
           label: "Open Data Release - Declaration"
           disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
@@ -611,7 +513,7 @@ forms:
         label: "Herausgeber"
         label_short: "Hrsg."
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni Bielefeld."
+        tooltip: "Autor arbeitet an der Uni LibreCat."
       corporate_editor_solo: &corporate_editor_solo
         label: "K&ouml;rperschaftlicher Herausgeber"
         label_short: "K&ouml;rp. Hrsg."
@@ -686,7 +588,7 @@ forms:
         label: "Herausgeber"
         label_short: "Hrsg."
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni Bielefeld."
+        tooltip: "Autor arbeitet an der Uni LibreCat."
       corporate_editor: &corporate_editor
         label: "K&ouml;rperschaftlicher Herausgeber"
         label_short: "K&ouml;rp. Hrsg."
@@ -750,7 +652,7 @@ forms:
         label: "Herausgeber"
         label_short: "Hrsg."
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni Bielefeld."
+        tooltip: "Autor arbeitet an der Uni LibreCat."
       corporate_editor: *corporate_editor
       department: *department
       project: *project
@@ -1150,7 +1052,7 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "Erfinder"
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni Bielefeld."
+        tooltip: "Autor arbeitet an der Uni LibreCat."
       applicant:
         label: "Antragsteller"
         label_short: "Antr.steller"
@@ -1329,14 +1231,14 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "Creator"
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni Bielefeld."
+        tooltip: "Autor arbeitet an der Uni LibreCat."
       department: *department
       project: *project
       research_group: *research_group
       publisher:
         label: "Verlag"
         placeholder: "Verlag"
-        defaultvalue: "Bielefeld University"
+        defaultvalue: "LibreCat University"
       year_extern: *year_extern
       external_file:
         label: "Externe Datei(en)"
@@ -1354,7 +1256,7 @@ forms:
           closed: "Autor/Reviewer"
           until: "bis"
           request_a_copy: "Kopie anfordern"
-          local: "Nur UniBi"
+          local: "Nur LibreCat"
           open_access: "Open Access"
         edit_modal:
           heading: "Hochgeladene Datei bearbeiten"
@@ -1363,7 +1265,7 @@ forms:
           relation: "Relation (\"Hochgeladenes Dokument ist...\")"
           access:
             open_access: "Open Access (Datei ist frei verf&uuml;gbar, ab sofort)"
-            local: "Local Access (Nur UniBi)"
+            local: "Local Access (Nur LibreCat)"
             closed: "Closed Access (Nur Autor/Reviewer)"
             request_a_copy: "Request a Copy (Closed Access au&szlig;er auf Anfrage)"
             embargo: "Zu Open Access wechseln am:"
@@ -1402,7 +1304,7 @@ forms:
           label: "Andere Lizenz"
         info:
           text: "Wenn keine der oben genannten Lizenzen zu Ihren Daten passt oder wenn Sie andere Fragen haben, kontaktieren Sie bitte:<br>"
-          contact: "<strong><a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=18935713' target='_blank'>Dr. Johanna Vompras</a><br>0521 106-2694<br><a href='mailto:data@uni-bielefeld.de'>data@uni-bielefeld.de</a><br></strong>"
+          contact: "<strong><a href='' target='_blank'>LibreCat</a><br>999/999999<br><a href=''>helpdesk@librecat.org</a><br></strong>"
       abstract: *abstract
       keyword: *keyword
       jel: *jel
@@ -1439,7 +1341,7 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "&Uuml;bersetzer"
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni Bielefeld."
+        tooltip: "Autor arbeitet an der Uni LibreCat."
       author_secondary:
         first_name:
           label: "Vorname"
@@ -1451,7 +1353,7 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "Autor (Original)"
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni Bielefeld."
+        tooltip: "Autor arbeitet an der Uni LibreCat."
       edition: *edition
       department: *department
       project: *project
@@ -1508,7 +1410,7 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "&Uuml;bersetzer"
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni Bielefeld."
+        tooltip: "Autor arbeitet an der Uni LibreCat."
       author_secondary:
         first_name:
           label: "Vorname"
@@ -1520,7 +1422,7 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "Autor"
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni Bielefeld."
+        tooltip: "Autor arbeitet an der Uni LibreCat."
       alternative_title:
         label: "Titel (Original)"
         label_short: "Titel (Orig)"
@@ -1766,27 +1668,16 @@ forms:
       select: "Zusatzmaterial (nur zur Einbettung, keine Anzeige auf Frontdoor)"
 403:
   heading: "Kein Zugriff (403)"
-  text: "Sie haben keinen Zugriff auf diese Seite / dieses Verzeichnis."
 404:
   heading: "Seite nicht gefunden (404)"
-  text: "Die Seite wurde nicht gefunden"
 418:
   heading: "I'm a teapot (418)"
-  text: "Sie haben Kaffee von diesem Server angefordert. Die Antwort des Servers war: <strong>I'm a teapot</strong><br><br><a href='https://de.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol' target='_blank'>The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)</a>"
-500:
-  heading: "Fehler beim Aufruf (500)"
-  text: "Huch - das h&auml;tte nicht passieren sollen. Leider ist bei Ihrer Anfrage ein Problem aufgetreten."
 help:
   home: "Startseite"
   brand: "Backend<br>Startseite"
   my_author_page: "Ihre &ouml;ffentliche<br>Publikationsliste"
-  help: "Die Funktionen von PUB im &Uuml;berblick."
-  howto: "PUB Howto"
   change_language: "Sprache wechseln"
   user_settings: "Rolle, Fakult&auml;t,<br>Editiermodus,<br>Standardsprache<br>&auml;ndern"
-  role: "Ihre Rolle<br>im System<br>Ggf. wechseln und mit Publikationen arbeiten, f&uuml;r die Sie z.B. Reviewer-Rechte haben."
-  photo: "Ihr Foto. <a href='http://ekvv.uni-bielefeld.de/pers_publ/publ/Einwilligung.jsp' target='_blank'>&Auml;ndern?</a>"
-  email_encoded: "Ihre E-Mail-Adresse aus dem BIS/PEVZ."
   author_id: "Alias (zus&auml;tzlicher Name) und Autoren IDs (ORIC etc.) eintragen."
   author_id_edit: "ID &auml;ndern / IDs erg&auml;nzen."
   add_new_button: "Neuen Eintrag in PUB anlegen: Bestehende Daten z.B. via DOI importieren oder &uuml;ber Formular selbst eintragen."
@@ -1801,7 +1692,4 @@ help:
   statuses: "Sichtbarkeitsstatus<br> der Publikation.<br>&Auml;nderung &uuml;ber den Link 'Editieren'."
   citation: "Publikationsdaten im ausgew&auml;hlten Zitationsstil."
   search: "In dieser Publikationsliste suchen."
-  visibility_status: "Auf Publikationen mit bestimmten Status einschr&auml;nken, z.B. 'public' oder 'private'."
-  author_block: "Auf Publikationstyp, Autor oder Jahr einschr&auml;nken. Autoren/Herausgeber k&ouml;nnen Sie mehrfach ausw&auml;hlen und so Co-Autorenschafts-Listen erstellen."
-  fulltext_block: "Auf Publikations-/Zugangsart einschr&auml;nken, z.B. Open-Access-Volltexte."
   display_block: "Darstellung der Publikationsliste &auml;ndern (Treffer pro Seite, Sortierung, Zitationsstil)."

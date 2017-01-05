@@ -225,7 +225,7 @@ $(document).ready(function(){
                 );
                 form.appendChild(hidden);
 
-                var buttons = Dropzone.createElement("<div class='form-group'><div class='col-sm-10 col-sm-offset-2'><input type='submit' class='btn btn-success' name='submit_or_cancel' onclick='return confirm(\"I herewith place this document at the disposal of Bielefeld University for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.\");' value='Submit'/> <input type='button' class='btn btn-warning' onclick='location.reload();' value='Cancel' /></div></div>");
+                var buttons = Dropzone.createElement("<div class='form-group'><div class='col-sm-10 col-sm-offset-2'><input type='submit' class='btn btn-success' name='submit_or_cancel' onclick='return confirm(\"I herewith place this document at the disposal of LibreCat University for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.\");' value='Submit'/> <input type='button' class='btn btn-warning' onclick='location.reload();' value='Cancel' /></div></div>");
                 form.appendChild(buttons);
 
                 well.appendChild(form);

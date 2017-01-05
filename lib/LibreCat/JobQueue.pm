@@ -39,3 +39,32 @@ sub job_status {
 
 1;
 
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::JobQueue - a job queue for LibreCat processes
+
+=head1 SYNOPSIS
+
+    use LibreCat::JobQueue;
+
+    my $queue = LibreCat::JobQueue->new;
+
+    my $job = $queue->add_job('mailer', {
+            to => 'patrick.hochstenbach@ugent.be' ,
+            from => 'patrick.hochstenbach@ugent.be' ,
+            subject => 'test' ,
+            body => 'test' ,
+    });
+
+    while (1) {
+        my $s        = $queue->job_status($job);
+        my $running  = $s->running;
+        print "%s is running? %s\n" , $job , $running ? 'YES' : NO;
+        sleep(1);
+    }
+
+=cut

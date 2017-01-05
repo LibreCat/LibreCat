@@ -16,8 +16,8 @@ Project splash page for :id.
 
 =cut
 
-get qr{/project/([^/]+)/*} => sub {
-    my ($id) = splat;
+get '/project/:id' => sub {
+    my $id   = params->{id};
     my $proj = h->project->get($id);
 
     my $pub = LibreCat->searcher->search('publication',
@@ -31,7 +31,7 @@ get qr{/project/([^/]+)/*} => sub {
     template 'project/record', $proj;
 };
 
-get qr{/project/*} => sub {
+get '/project' => sub {
     my $p = h->extract_params();
 
     my $hits = LibreCat->searcher->search('project', $p);
