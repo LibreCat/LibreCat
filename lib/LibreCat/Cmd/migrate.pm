@@ -82,6 +82,9 @@ sub command {
 
     # migrate user roles
     say "Migrating user roles";
+
+    my $search_bag = Catmandu->store('backup')->bag('researcher');
+
     for my $bag (@{LibreCat->user->bags}) {
         $bag->each(
             sub {
@@ -109,9 +112,12 @@ sub command {
                 $bag->add($user);
             }
         );
+
+        $bag->commit;
+        $search_bag->add_many($bag);
+        $search_bag->commit;
     }
 
-    # TODO reindex users
 }
 
 1;
