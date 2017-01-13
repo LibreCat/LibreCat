@@ -26,9 +26,12 @@ librecat publication [options] fetch <source> <id>
 librecat publication [options] embargo ['update']
 
 options:
-    --total=NUM   (total number of items to list/export)
-    --start=NUM   (start list/export at this item)
-    --no-citation (skip calculating citations when adding records)
+    --total=NUM        (total number of items to list/export)
+    --start=NUM        (start list/export at this item)
+    --no-citation      (skip calculating citations when adding records)
+    --version=NUM      (get a specific record version)
+    --previous-version (get previous record version)
+    --history          (get all record versions)
 
 E.g.
 
@@ -166,15 +169,30 @@ sub _export {
 }
 
 sub _get {
-    my ($self, $id) = @_;
+    my ($self, $id, @opts) = @_;
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat::App::Helper::Helpers->new->get_publication($id);
+    my $bag = Catmandu->store('backup')->bag('publication');
+    my $rec;
 
-    Catmandu->export($data, 'YAML') if $data;
+    if (@opts && $opts[0] eq '--version') {
+        my $version = $opts[1];
+        $rec = $bag->get($id);
+        if ($rec && $rec->{_version} && $rec->{_version} > $version) {
+            $rec = $bag->get_version($id, $version);
+        }
+    } elsif (@opts && $opts[0] eq '--previous-version') {
+        $rec = $bag->get_previous_version($id);
+    } elsif (@opts && $opts[0] eq '--history') {
+        $rec = $bag->get_history($id);
+    } else {
+        $rec = $bag->get($id);
+    }
 
-    return $data ? 0 : 2;
+    Catmandu->export($rec, 'YAML') if $rec;
+
+    return $rec ? 0 : 2;
 }
 
 sub _add {
