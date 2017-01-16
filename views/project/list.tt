@@ -8,16 +8,12 @@
 <div class="row"><!-- outer border -->
   <div class="col-md-11 col-sm-12"><!-- main content -->
     <div id="banner">
-	<h1>
-	    [% h.loc("header.title") %]
-	</h1>
+      <h1>[% h.loc("header.title") %]</h1>
     </div>
-
     <div class="ltIEten">
       <h3>Please note that PUB no longer supports Internet Explorer versions 8 or 9 (or earlier).</h3>
       <p>We recommend upgrading to the latest <a href="http://windows.microsoft.com/ie" target="_blank">Internet Explorer</a>, <a href="https://chrome.google.com" target="_blank">Google Chrome</a>, or <a href="https=//mozilla.org/firefox/" target="_blank">Firefox</a>.</p>
     </div>
-
     <div class="row margin-top1">
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
@@ -30,27 +26,24 @@
         </ul>
       </div>
     </div>
-
     <div class="row">
       <div class="col-md-12 tab-content">
-
         <div class="tab-pane active" id="publ">
           <div class="row">
             <div class="col-sm-8 col-md-8">
               [%- FOREACH project IN hits %]
               <a href="/project/[% project._id %]">[% project.name %][% IF project.acronym %] ([% project.acronym %])[% END %]</a><br />
                 <p class="text-muted">
-                [%- IF project.start_date AND project.end_date %]
-                  [% project.start_date %] &ndash; [% project.end_date %]<br />
-                [%- END %]
-
-                [%- IF project.description %]
-                  [% project.description.length() > 200 ? project.description.substr(0, 200) _ '...' : project.description %]
-                [%- ELSE %]
-                  [% project.call_identifier %]
-                [%- END %]
+                  [%- IF project.start_date AND project.end_date %]
+                    [% project.start_date %] &ndash; [% project.end_date %]<br />
+                  [%- END %]
+                  [%- IF project.description %]
+                    [% project.description.length() > 200 ? project.description.substr(0, 200) _ '...' : project.description %]
+                  [%- ELSE %]
+                    [% project.call_identifier %]
+                  [%- END %]
                 </p>
-            [%- END %]
+              [%- END %]
             </div>
           </div>
         </div>

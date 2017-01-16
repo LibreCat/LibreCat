@@ -8,16 +8,12 @@
 <div class="row"><!-- outer border -->
   <div class="col-md-11 col-sm-12"><!-- main content -->
     <div id="banner">
-	<h1>
-	    [% h.loc("header.title") %]
-	</h1>
+      <h1>[% h.loc("header.title") %]</h1>
     </div>
-
     <div class="ltIEten">
       <h3>Please note that we no longer supports Internet Explorer versions 8 or 9 (or earlier).</h3>
       <p>We recommend upgrading to the latest <a href="http://windows.microsoft.com/ie" target="_blank">Internet Explorer</a>, <a href="https://chrome.google.com" target="_blank">Google Chrome</a>, or <a href="https=//mozilla.org/firefox/" target="_blank">Firefox</a>.</p>
     </div>
-
     <div class="row margin-top1">
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
@@ -30,7 +26,6 @@
         </ul>
       </div>
     </div>
-
     <div class="row">
       <div class="col-md-12 tab-content">
         <div class="tab-pane active" id="people">

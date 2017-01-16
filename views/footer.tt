@@ -10,11 +10,10 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-	  <div class="col-md-4 col-sm-5">
-	    <p>[% h.loc("footer.powered_by") %]</p>
-	  </div>
-	</div>
-    </div>
+        <div class="col-md-4 col-sm-5">
+          <p>[% h.loc("footer.powered_by") %]</p>
+        </div>
+      </div>
     </div>
   </div>
 </footer>
