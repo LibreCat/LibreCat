@@ -522,6 +522,7 @@ forms:
         label_short: "Ed."
         idm_extern: "extern"
         tooltip: "Activate if LibreCat author."
+      editor: *editor_solo
       corporate_editor_solo: &corporate_editor_solo
         label: "Corporate Editor"
         label_short: "Copr. Ed."
@@ -953,6 +954,7 @@ forms:
         label: "Title"
         label_short: "Title"
         placeholder: "e.g. Handbook of eBook Publishing"
+      editor: *editor_solo
       editor_solo: *editor_solo
       corporate_editor_solo: *corporate_editor_solo
       alternative_title: *alternative_title

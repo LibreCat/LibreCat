@@ -522,6 +522,7 @@ forms:
         label_short: "Hrsg."
         idm_extern: "extern"
         tooltip: "Autor arbeitet an der Uni LibreCat."
+      editor: *editor_solo
       corporate_editor_solo: &corporate_editor_solo
         label: "K&ouml;rperschaftlicher Herausgeber"
         label_short: "K&ouml;rp. Hrsg."
@@ -954,6 +955,7 @@ forms:
         label_short: "Titel"
         placeholder: "z.B. Handbook of eBook Publishing"
       editor_solo: *editor_solo
+      editor: *editor_solo
       corporate_editor_solo: *corporate_editor_solo
       alternative_title: *alternative_title
       department: *department

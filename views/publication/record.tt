@@ -298,9 +298,6 @@
                   <div class="row"><div class="col-xs-12">&nbsp;</div></div>
               [%- END %]
             </div>
-            <div class="modal-footer">
-              For more information see our <a href="/docs/api">API documentation</a>.
-            </div>
           </div>
           </div>
         </div><!-- end modal -->
