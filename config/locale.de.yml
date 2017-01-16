@@ -84,6 +84,7 @@ main_page:
     files: "Dateien verf&uuml;gbar"
     file: "Datei"
     internal_view: "Interne Sicht"
+    audit_view: "Audit"
     request_a_copy: "Exemplar anfordern"
     request_a_copy_title: "Generiert teilbare Links zu Dateien mit Status 'Request a copy'"
     request_a_copy_not_public: "Nur Datens&auml;tze mit Status 'public' k&ouml;nnen geteilt werden! Klicken Sie auf \"Public stellen\" und versuchen Sie es erneut."
@@ -102,6 +103,13 @@ project:
   start_year: "Startjahr"
   end_year: "Endjahr"
   funder: "F&ouml;rderer"
+audit:
+  title: Audit
+  id: Id
+  bag: Bag
+  process: Process
+  date: Date
+  message: Message
 facets:
   filters_and_searchterms: "Filter und Suchbegriffe"
   search_filter: "Suche / Filtern"

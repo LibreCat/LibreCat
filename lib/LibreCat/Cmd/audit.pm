@@ -13,6 +13,13 @@ Usage:
 librecat audit [options] list [<RECORD-ID>]
 librecat audit [options] get <AUDIT-ID>
 
+An 'audit' worker should be up and running to
+store messages:
+
+Hint:
+
+bin/librecat worker audit start --workers 1 --supervise
+
 EOF
 }
 
@@ -105,4 +112,10 @@ LibreCat::Cmd::audit - manage librecat audit messages
     librecat audit list [<RECORD-ID>]
     librecat audit get <AUDIT-ID>
 
+    An 'audit' worker should be up and running to
+    store messages:
+
+    Hint:
+
+    bin/librecat worker audit start --workers 1 --supervise
 =cut

@@ -10,6 +10,7 @@ use Catmandu::Sane;
 use Catmandu::Util;
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
+use Dancer::Serializer::Mutable qw(template_or_serialize);
 use LibreCat::App::Helper;
 use POSIX qw(strftime);
 use URL::Encode qw(url_decode);
@@ -43,7 +44,7 @@ List all audit messages for an :id in the store :bag
 
             my $array = $it->to_array;
 
-            return to_json($array);
+            template_or_serialize 'backend/audit' ,  { audit => $array };
         };
 
         post '/audit/*/*' => needs role => 'super_admin' => sub {

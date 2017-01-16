@@ -84,6 +84,7 @@ main_page:
     files: "Files available"
     file: "File"
     internal_view: "Internal View"
+    audit: "Audit"
     request_a_copy: "Request a Copy"
     request_a_copy_title: "Generate sharable links for files with 'Request a copy' status"
     request_a_copy_not_public: "Only pulic records can be shared! Click \"Make public\" and try again."
@@ -102,6 +103,13 @@ project:
   start_year: "Start Year"
   end_year: "End Year"
   funder: "Funding Organisation"
+audit:
+  title: Audit
+  id: Id
+  bag: Bag
+  process: Process
+  date: Date
+  message: Message
 facets:
   filters_and_searchterms: "Filters and Search Terms"
   search_filter: "Search / Filter"

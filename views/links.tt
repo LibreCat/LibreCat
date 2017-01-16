@@ -55,6 +55,9 @@
 
   [% IF session.role == "super_admin" %]
   | <a href="/librecat/record/internal_view/[% entry._id %]" target="_blank">[% h.loc("main_page.links.internal_view") %]</a>
+   [% IF h.config.audit %]
+   | <a href="/librecat/audit/publication/[% entry._id %]" target="_blank">[% h.loc("main_page.links.audit") %]</a>
+   [% END %]
   [% END %]
   [% FOREACH fi IN entry.file %]
     [% IF fi.request_a_copy %]
