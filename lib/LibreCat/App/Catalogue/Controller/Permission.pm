@@ -3,6 +3,7 @@ package LibreCat::App::Catalogue::Controller::Permission::Permissions;
 use Catmandu::Sane;
 use Catmandu;
 use LibreCat::App::Helper;
+use Dancer qw(:syntax);
 use Carp;
 use Exporter qw/import/;
 
@@ -44,7 +45,10 @@ sub can_edit {
     }
 
     h->log->debug("can_edit cql: $cql");
-    my $hits = h->publication->search(cql => $cql, limit => 1);
+
+    debug $cql;
+
+    my $hits = h->publication->search(cql_query => $cql, limit => 1);
 
     ($hits->{total} == 1) ? return 1 : return 0;
 }
