@@ -23,14 +23,12 @@ if(navigator.userAgent.indexOf('MSIE') != -1){
   });
 }
 
-
-
 // Select button (dept, proj, rg)
 function selectButton(element){
 	var type = $(element).attr('class').replace('btn select_button', '').trim();
 	var type_short;
 	var type_name;
-	
+
 	var index = $(element).attr('id').replace(type + '_select_','').trim();
 	var modal = $('#selectModal');
 	var container = $('#selectModal').find('.modal-body').first();
@@ -61,42 +59,6 @@ function selectButton(element){
 	});
 	modal.modal('show');
 }
-
-$('.change_tab').click(function(e){
-  var this_button = $(this);
-  var check = 1;
-
-  $('.required').each(function(){
-    if(!$(this).val()){
-      $(this).addClass('has-error');
-      $(this).closest('div.input-group.mandatory').addClass("has-error");
-      check = 0;
-    }
-    else if($(this).val() && ($(this).val() == "Publication Title" || $(this).val() == "First Name" || $(this).val() == "Last Name" || $(this).val() == "YYYY")){
-      $(this).addClass('has-error');
-      $(this).closest('div.input-group.mandatory').addClass("has-error");
-      check = 0;
-    }
-    else{
-      $(this).removeClass('has-error');
-      $(this).closest('div.input-group.mandatory').removeClass("has-error");
-    }
-  });
-  
-  var year = $('#id_year').val();
-  var currentYear = (new Date).getFullYear();
-  var maxYear = currentYear + 5;
-  if(year.length < 4 || !year.match(/^\d+$/) || year < 1930 || year > maxYear){
-    check = 0;
-    $('#id_year').addClass('has-error');
-    $('#id_year').val("");
-    $('#id_year').attr("placeholder", "1930 < YYYY < " + maxYear);
-  }
-  
-  if(!check){
-    e.preventDefault();
-  }
-});
 
 $('button.cancel-button').click(function() {
   window.location.href = '/librecat';
