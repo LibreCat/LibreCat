@@ -1,11 +1,6 @@
 [% qp = {} -%]
 [% qp = h.extract_params -%]
-[% pd = {} -%]
-[% IF embed AND qp.ttyp %]
-  [% pd = h.is_portal_default(qp.ttyp) -%]
-[% ELSE %]
-  [% lang = session.lang ? session.lang : h.config.default_lang -%]
-[% END %]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
 [% lf = h.config.locale.$lang -%]
 
 <!-- BEGIN filters.tt -->
@@ -124,7 +119,7 @@
 </ul>
 [%- END -%]
 
-<h3>[% h.loc("facets.export") %][% UNLESS backend OR request.path.match('marked') OR request.path.match('embed') OR qp.ftyp %] / [% h.loc("facets.embed") %][% END %]</h3>
+<h3>[% h.loc("facets.export") %][% UNLESS backend OR request.path.match('marked') OR request.path.match('embed') %] / [% h.loc("facets.embed") %][% END %]</h3>
 
 <ul class="nav nav-tabs nav-stacked ul4">
   <li>
@@ -142,7 +137,7 @@
     </ul>
     </div>
   </li>
-  [%- UNLESS backend OR request.path.match('marked') OR request.path.match('embed') OR qp.ftyp %]
+  [%- UNLESS backend OR request.path.match('marked') OR request.path.match('embed') %]
   <li>
     <button data-toggle="collapse" data-target="#embed_[% tabmodus %][% menu %]" id="id_button_embed_[% tabmodus %][% menu %]" class="btn-link">
       <span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.embed") %]
@@ -200,18 +195,30 @@ console.log(searchParams);
 
 $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var embed_link = window.location.href;
-    delete searchParams.fmt;
-    var regex = /\/person\/(\d{1,})/;
-    var match = regex.exec(embed_link);
-    if(match){
-      embed_link = embed_link.replace(/\/person\/\d{1,}\/data\.*/,"/data?");
-      embed_link = embed_link.replace(/\/person\/\d{1,}.*/,"/publication?");
+    var person_id  = embed_link.match(/\/person\/([0-9ABCDEF-]{1,})/);
+
+    if (embed_link.match(/\/publication/)) {
+      searchParams['cql'] = "type<>research_data";
+      embed_link = embed_link.replace(/\/publication.*/,"/embed?");
       embed_link = embed_link + $.param($.extend({}, searchParams), true);
     }
-    if ( !embed_link.match(/\?/) ) { embed_link += '?';}
-    var emb_js = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ embed_link +'&ftyp=js"><\/script><noscript><a href="'+ embed_link +'" target="_blank">[% h.loc("facets.embed_linktext") %]</a></noscript></div>';
-    var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="' + embed_link + '&ftyp=iframe"></iframe>';
-    var emb_link = '<a href="'+ window.location.href +'">[% h.loc("facets.embed_linktext") %]</a>';
+
+    if (person_id) {
+      searchParams['q'] = person_id[1];
+      embed_link = embed_link.replace(/\/person\/.*/,"/embed?");
+      embed_link = embed_link + $.param($.extend({}, searchParams), true);
+    }
+
+    if (embed_link.match(/\/data/)) {
+      searchParams['cql'] = "type=research_data";
+      embed_link = embed_link.replace(/\/data.*/,"/embed?");
+      embed_link = embed_link + $.param($.extend({}, searchParams), true);
+    }
+
+    var emb_js     = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ embed_link +'&fmt=js"><\/script><noscript><a href="'+ embed_link +'" target="_blank">[% h.loc("facets.embed_linktext") %]</a></noscript></div>';
+    var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="' + embed_link + '&fmt=iframe"></iframe>';
+    var emb_link   = '<a href="'+ window.location.href +'">[% h.loc("facets.embed_linktext") %]</a>';
+
     $('#id_jstext').val(emb_js);
     $('#id_iframetext').val(emb_iframe);
     $('#id_linktext').val(emb_link);

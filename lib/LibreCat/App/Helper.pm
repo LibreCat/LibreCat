@@ -166,11 +166,8 @@ sub extract_params {
     $p->{start} = $params->{start} if is_natural $params->{start};
     $p->{limit} = $params->{limit} if is_natural $params->{limit};
     $p->{lang}  = $params->{lang}  if $params->{lang};
-    $p->{ttyp}  = $params->{ttyp}  if $params->{ttyp};
-    $p->{ftyp}  = $params->{ftyp}  if $params->{ftyp};
-    $p->{enum}  = $params->{enum}  if $params->{enum};
-    $p->{q} = $params->{q} if $params->{q};
-    $p->{cql} = $self->string_array($params->{cql});
+    $p->{q}     = $params->{q} if $params->{q};
+    $p->{cql}   = $self->string_array($params->{cql});
 
     ($params->{text} =~ /^".*"$/)
         ? (push @{$p->{q}}, $params->{text})
