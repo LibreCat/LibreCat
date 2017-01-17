@@ -30,10 +30,6 @@ sub opt_spec {
 sub execute {
     my ($self, $opts, $args) = @_;
 
-    if ($opts->{version}) {
-        print $VERSION;
-        exit;
-    }
     if ($opts->{help}) {
         print $self->usage->text;
         exit;

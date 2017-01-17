@@ -5,12 +5,12 @@
         <h1>[% h.loc("audit.title") %]</h1>
     </div>
 
-    <div class="col-md-12">
-     <table border="1" width="800">
+    <table border="1">
         <tr>
          <th>[% h.loc("audit.id") %]</th>
          <th>[% h.loc("audit.bag") %]</th>
          <th>[% h.loc("audit.process") %]</th>
+         <th>[% h.loc("audit.action") %]</th>
          <th>[% h.loc("audit.date") %]</th>
          <th>[% h.loc("audit.message") %]</th>
         </tr>
@@ -18,14 +18,13 @@
         <tr>
          <td>[% au.id  %]</td>
          <td>[% au.bag %]</td>
-         <td>[% au.process %]</td>
-         <td>[% au.date %]</td>
+         <td nowrap="nowrap">[% au.process %]</td>
+         <td>[% au.action %]</td>
+         <td nowrap="nowrap">[% au.date %]</td>
          <td>[% au.message %]</td>
         </tr>
         [% END %]
      </table>
-    </div>
-
 </div>
 
 [% INCLUDE footer.tt %]

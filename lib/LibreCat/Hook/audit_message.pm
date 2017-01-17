@@ -34,10 +34,13 @@ sub fix {
         $login       = $person->{login} if $person;
     }
 
-    my $action = $type;
+    my $action;
 
     if (request && request->{path}) {
         $action = request->{path};
+    }
+    else {
+        $action = 'batch';
     }
 
     h->queue->add_job('audit',{

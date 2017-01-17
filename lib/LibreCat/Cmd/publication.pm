@@ -32,6 +32,7 @@ options:
     --version=NUM      (get a specific record version)
     --previous-version (get previous record version)
     --history          (get all record versions)
+    --log=STR          (write an audit message)
 
 E.g.
 
@@ -65,6 +66,10 @@ sub command_opt_spec {
         ['no-citation|nc', ""] ,
         ['total=i', ""] ,
         ['start=i',""] ,
+        ['log=s',""] ,
+        ['version=i', ""] ,
+        ['previous-version', ""] ,
+        ['history',""] ,
     );
 }
 
@@ -123,6 +128,17 @@ sub command {
     }
 }
 
+sub audit_message {
+    my ($id,$action,$message) = @_;
+    LibreCat::App::Helper::Helpers->new->queue->add_job('audit',{
+        id      => $id ,
+        bag     => 'publication' ,
+        process => 'librecat publication' ,
+        action  => $action ,
+        message => $message ,
+    });
+}
+
 sub _list {
     my ($self, $query) = @_;
 
@@ -176,18 +192,21 @@ sub _get {
     my $bag = Catmandu->store('backup')->bag('publication');
     my $rec;
 
-    if (@opts && $opts[0] eq '--version') {
-        my $version = $opts[1];
+    if (defined(my $version = $self->opts->{'version'})) {
         $rec = $bag->get($id);
         if ($rec && $rec->{_version} && $rec->{_version} > $version) {
             $rec = $bag->get_version($id, $version);
         }
-    } elsif (@opts && $opts[0] eq '--previous-version') {
+    } elsif ($self->opts->{'previous-version'}) {
         $rec = $bag->get_previous_version($id);
-    } elsif (@opts && $opts[0] eq '--history') {
+    } elsif ($self->opts->{'history'}) {
         $rec = $bag->get_history($id);
     } else {
         $rec = $bag->get($id);
+    }
+
+    if (my $msg = $self->opts->{log}) {
+        audit_message($id,'get',$msg);
     }
 
     Catmandu->export($rec, 'YAML') if $rec;
@@ -215,6 +234,11 @@ sub _add {
                 $rec->{_id} //= $helper->new_record('publication');
                 $helper->store_record('publication', $rec, $skip_citation);
                 print "added $rec->{_id}\n";
+
+                if (my $msg = $self->opts->{log}) {
+                    audit_message($rec->{_id},'add',$msg);
+                }
+
                 return 1;
             }
             else {
@@ -245,6 +269,10 @@ sub _delete {
         = LibreCat::App::Helper::Helpers->new->delete_record('publication',
         $id);
 
+    if (my $msg = $self->opts->{log}) {
+        audit_message($id,'delete',$msg);
+    }
+
     if ($result) {
         print "deleted $id\n";
         return 0;
@@ -263,6 +291,10 @@ sub _purge {
     my $result
         = LibreCat::App::Helper::Helpers->new->purge_record('publication',
         $id);
+
+    if (my $msg = $self->opts->{log}) {
+        audit_message($id,'purge',$msg);
+    }
 
     if ($result) {
         print "purged $id\n";
@@ -297,6 +329,10 @@ sub _valid {
                 }
                 else {
                     print STDERR "ERROR $id: not valid\n";
+                }
+
+                if (my $msg = $self->opts->{log}) {
+                    audit_message($id,'valid',$msg);
                 }
             }
 
@@ -481,6 +517,10 @@ sub _files_load {
                     warn "$id - no such publication";
                 }
 
+                if (my $msg = $self->opts->{log}) {
+                    audit_message($id,'files',$msg);
+                }
+
                 $files = [];
             }
 
@@ -499,6 +539,10 @@ sub _files_load {
         }
         else {
             warn "$prev_id - no such publication";
+        }
+
+        if (my $msg = $self->opts->{log}) {
+            audit_message($prev_id,'files',$msg);
         }
     }
 }
@@ -623,7 +667,11 @@ LibreCat::Cmd::publication - manage librecat publications
     librecat publication embargo ['update']
 
     options:
-        --total=NUM   (total number of items to list/export)
-        --start=NUM   (start list/export at this item)
-        --no-citation (skip calculating citations when adding records)
+        --total=NUM        (total number of items to list/export)
+        --start=NUM        (start list/export at this item)
+        --no-citation      (skip calculating citations when adding records)
+        --version=NUM      (get a specific record version)
+        --previous-version (get previous record version)
+        --history          (get all record versions)
+        --log=STR          (write an audit message)
 =cut

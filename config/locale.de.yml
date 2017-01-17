@@ -108,6 +108,7 @@ audit:
   id: Id
   bag: Bag
   process: Process
+  action: Action
   date: Date
   message: Message
 facets:
