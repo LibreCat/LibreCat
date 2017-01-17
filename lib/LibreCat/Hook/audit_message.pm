@@ -18,18 +18,33 @@ sub fix {
     my $type = $self->type;
 
     h->log->debug("entering audit_message() hook from : $name ($type)");
+    h->log->debug(to_yaml($data));
+
+    unless ($name =~ /^(publication|import)/) {
+        h->log->debug("only handling publication|import hooks");
+        return $data;
+    }
 
     my $id          = $data->{_id}     // '<new>';
-    my $record_type = $data->{type}    // '<unknown>';
     my $user_id     = $data->{user_id} // '<unknown>';
-    my $person      = h->get_person($user_id);
-    my $login       = $person->{login};
+    my $login       = '<unknown>';
+
+    if (defined $data->{user_id}) {
+        my $person   = h->get_person($user_id);
+        $login       = $person->{login} if $person;
+    }
+
+    my $action = $type;
+
+    if (request && request->{path}) {
+        $action = request->{path};
+    }
 
     h->queue->add_job('audit',{
         id      => $id ,
         bag     => 'publication' ,
         process => "hook($name)" ,
-        action  => "$type" ,
+        action  => "$action" ,
         message => "activated by $login ($user_id)" ,
     });
 

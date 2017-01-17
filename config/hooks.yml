@@ -45,6 +45,11 @@ hooks:
    before_fixes: []
    after_fixes: []
 
+  # Code that runs when a publication access is tried without credentials
+  publication-access-denied:
+   before_fixes: []
+   after_fixes: []
+
   # Code that runs when importing a Quick and Easy publication
   qae-new:
    before_fixes: []

@@ -23,11 +23,22 @@ Dancer::Plugin::Auth::Tiny->extend(
                 goto $coderef;
             }
             else {
-                redirect '/access_denied';
+                access_denied_hook();
+                forward '/access_denied';
             }
         }
     }
 );
+
+sub access_denied_hook {
+    h->hook('publication-access-denied')->fix_around(
+        {
+            _id => params->{id} ,
+            user_id => session->{personNumber} ,
+        }
+    );
+}
+
 
 =head1 PREFIX /record
 
@@ -133,6 +144,7 @@ Checks if the user has permission the see/edit this record.
         my $id = params->{id};
 
         unless (p->can_edit($id, session->{user}, session->{role})) {
+            access_denied_hook();
             status '403';
             forward '/access_denied', {referer => request->{referer}};
         }
@@ -192,6 +204,7 @@ Checks if the user has the rights to update this record.
         unless ($p->{new_record}
             or p->can_edit($p->{_id}, session->{user}, session->{role}))
         {
+            access_denied_hook();
             status '403';
             forward '/access_denied';
         }
@@ -233,6 +246,7 @@ Checks if the user has the rights to edit this record.
         my $id = params->{id};
 
         unless (p->can_edit($id, session->{user}, session->{role})) {
+            access_denied_hook();
             status '403';
             forward '/access_denied';
         }
@@ -322,6 +336,7 @@ Publishes private records, returns to the list.
         my $id = params->{id};
 
         unless (p->can_edit($id, session->{user}, session->{role})) {
+            access_denied_hook();
             status '403';
             forward '/access_denied';
         }
@@ -410,7 +425,6 @@ Changes the layout of the edit form.
 
         template $path, $params;
     };
-
 };
 
 1;
