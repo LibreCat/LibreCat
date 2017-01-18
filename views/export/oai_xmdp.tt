@@ -80,7 +80,7 @@
 	[%- IF file %]
 	<ddb:fileNumber>1</ddb:fileNumber>
 	<ddb:fileProperties ddb:fileName="[% file.0.file_name %]" ddb:fileID="[% file.0.file_id %]">aus: Praesentationsformat</ddb:fileProperties>
-	<ddb:transfer ddb:type="dcterms:URI">[% host %]/download/[% _id %]/[% file.0.file_id %]</ddb:transfer>
+	<ddb:transfer ddb:type="dcterms:URI">[% host %]/download/[% _id %]/[% file.0.file_id %]/[% file.0.file_name | xml %]</ddb:transfer>
 	[%- END %]
 	<ddb:identifier ddb:type="URL">[% host %]/publication/[% _id %]</ddb:identifier>
 	<ddb:rights ddb:kind="free"/>

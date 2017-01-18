@@ -39,7 +39,7 @@
   <div class="row[% UNLESS i==0 %] margin-top1[% END %]">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.name") %]</div>
     <div class="col-md-9">
-      <a href="/download/[% _id %]/[% fi.file_id %]">
+      <a href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]">
         [% fi.file_name | html %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
     </div>
@@ -110,7 +110,7 @@
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.name") %]</div>
     <div class="col-md-9">
-      <a href="/download/[% _id %]/[% fi.file_id %]">
+      <a href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]">
         [% fi.file_name | html %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
     </div>

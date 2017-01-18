@@ -268,7 +268,7 @@ and user rights will be checked before.
 
 =cut
 
-get qr{/download/(\d+)/(\d+)} => sub {
+get qr{/download/(\d+)/(\d+).*} => sub {
     my ($id, $file_id) = splat;
 
     my ($ok, $file_name)

@@ -13,15 +13,15 @@
     [% IF counter > 1 %]
       | <a href="[% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% h.loc("main_page.links.files") %]</a>
     [% ELSIF counter == 1 %]
-      | <a href="/download/[% entry._id %]/[% display_file.0.file_id %]">[% display_file.0.file_name.match("(?i).pdf$") ? "PDF" : lf.main_page.links.file %]</a>
+      | <a href="/download/[% entry._id %]/[% display_file.0.file_id %]/[% display_file.0.file_name | uri %]">[% display_file.0.file_name.match("(?i).pdf$") ? "PDF" : lf.main_page.links.file %]</a>
     [% END %]
   [% ELSIF entry.type != "research_data" AND entry.file AND entry.file.size == 1 %]
     [% IF entry.file.0.open_access %]
-    | <a href="/download/[% entry._id %]/[% entry.file.0.file_id %]">[% entry.file.0.file_name.match("(?i).pdf$") ? "PDF" : lf.main_page.links.file %]</a>
+    | <a href="/download/[% entry._id %]/[% entry.file.0.file_id %]/[% entry.file.0.file_name | uri %]">[% entry.file.0.file_name.match("(?i).pdf$") ? "PDF" : lf.main_page.links.file %]</a>
     [% END %]
   [% END %]
 
-  [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="/download/[% entry._id  %]/[% supp.file.file_id %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
+  [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="/download/[% entry._id  %]/[% supp.file.file_id %]/[% supp.file.file_name | uri %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
 
   [% IF entry.doi %]| <a href="http://doi.org/[% entry.doi %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>DOI</a>[% END %]
   [% IF entry.external_id.isi %] | <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% entry.external_id.isi %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]>WoS</a>[% END %]
