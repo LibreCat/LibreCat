@@ -43,13 +43,17 @@ sub fix {
         $action = 'batch';
     }
 
-    h->queue->add_job('audit',{
-        id      => $id ,
-        bag     => 'publication' ,
-        process => "hook($name)" ,
-        action  => "$action" ,
-        message => "activated by $login ($user_id)" ,
-    });
+    try {
+        h->queue->add_job('audit',{
+            id      => $id ,
+            bag     => 'publication' ,
+            process => "hook($name)" ,
+            action  => "$action" ,
+            message => "activated by $login ($user_id)" ,
+        });
+    } catch {
+        h->log->trace("caught a : $_");
+    };
 
     $data;
 }

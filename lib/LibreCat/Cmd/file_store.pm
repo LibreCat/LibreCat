@@ -79,7 +79,7 @@ sub load {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|exists|get|add|delete|purge|export|import/;
+    my $commands = qr/list|exists|get|add|delete|purge|export|import|thumbnail/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -110,7 +110,7 @@ sub command {
 
     unless ($file_opt) {
         $file_opt = $self->file_opt;
-    }
+    } 
 
     $self->app->set_global_options(
         {
@@ -123,7 +123,7 @@ sub command {
     );
 
     binmode(STDOUT, ":encoding(utf-8)");
-    
+
     if ($cmd eq 'list') {
         return $self->_list(@$args);
     }
@@ -272,7 +272,9 @@ sub _fetch {
 
     my $io = $file->fh;
 
-    while (!$io->eof) {
+    binmode(STDOUT,':raw');
+
+    while (defined($io) && !$io->eof) {
         my $buffer;
         my $len = $io->read($buffer, 1024);
         syswrite(STDOUT, $buffer, $len);
@@ -460,17 +462,19 @@ sub _thumbnail {
     croak "get - need a key"  unless defined($key);
     croak "get - need a file" unless defined($filename);
 
-    my $store  = $self->app->global_options->{store};
-    my $client = REST::Client->new();
-    my $url    = sprintf "%s/librecat/api/access/%s/%s/thumbnail",
-        Catmandu->config->{host}, uri_escape($key), uri_escape($filename);
-    $client->POST($url);
+    my $h = LibreCat::App::Helper::Helpers->new;
 
-    unless ($client->responseCode() eq '200') {
-        print STDERR "Failed to create a thumbail for $key $filename\n";
-        print STDERR $client->responseContent();
-        exit(2);
-    }
+    my $thumbnailer_package
+        = $h->config->{filestore}->{access_thumbnailer}->{package};
+    my $thumbnailer_options
+        = $h->config->{filestore}->{access_thumbnailer}->{options};
+
+    my $pkg    = Catmandu::Util::require_package($thumbnailer_package,'LibreCat::Worker');
+    my $worker = $pkg->new(%$thumbnailer_options);
+
+    my $response = $worker->work({key => $key, filename => $filename,});
+
+    $response && $response->{ok};
 }
 
 sub find_subdirectory {

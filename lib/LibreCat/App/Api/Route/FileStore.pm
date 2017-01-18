@@ -345,11 +345,10 @@ E.g.
 
 =cut
 
-    get '/access/:key/:filename/thumbnail' => needs role => 'api_access' =>
-        sub {
+    get '/access/:key/:filename/thumbnail' => needs role => 'api_access' => sub {
         my $key = param('key');
 
-   # For now stay backwards compatible and keep one thumbnail per container...
+        # For now stay backwards compatible and keep one thumbnail per container...
         my $filename = 'thumbnail.png';
 
         my $container = h->get_access_store()->get($key);
@@ -411,7 +410,7 @@ E.g.
         else {
             return do_error('NOT_FOUND', 'no thumbnails for this key', 404);
         }
-        };
+    };
 
 =head2 POST /librecat/api/access/:key/:filename/thumbnail
 
@@ -429,11 +428,11 @@ E.g.
         my $filename = param('filename');
 
         my $thumbnailer_package
-            = h->config->{accessstore_thumbnailer}->{package};
+            = h->config->{filestore}->{access_thumbnailer}->{package};
         my $thumbnailer_options
-            = h->config->{accessstore_thumbnailer}->{options};
+            = h->config->{filestore}->{access_thumbnailer}->{options};
 
-        my $pkg    = Catmandu::Util::require_package($thumbnailer_package);
+        my $pkg    = Catmandu::Util::require_package($thumbnailer_package,'LibreCat::Worker');
         my $worker = $pkg->new(%$thumbnailer_options);
 
         my $response = $worker->work({key => $key, filename => $filename,});
@@ -456,7 +455,7 @@ E.g.
         sub {
         my $key = param('key');
 
-   # For now stay backwards compatible and keep one thumbnail per container...
+        # For now stay backwards compatible and keep one thumbnail per container...
         my $filename = 'thumbnail.png';
 
         content_type 'application/json';
@@ -482,7 +481,7 @@ E.g.
             return do_error('NOT_FOUND', 'no thumbnails in this countainer',
                 404);
         }
-        };
+    };
 };
 
 1;
