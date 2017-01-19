@@ -3,6 +3,9 @@
 retain_field('message')
 move_field('message','')
 
+# set default type
+add_field('type','journal_article')
+
 #title
 #move_field('subtitle.0','title.1')
 join_field('title',' ')
