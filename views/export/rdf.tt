@@ -7,9 +7,9 @@
          xmlns:owl="http://www.w3.org/2002/07/owl#"
          xmlns:event="http://purl.org/NET/c4dm/event.owl#"
          xmlns:ore="http://www.openarchives.org/ore/terms/">
-    <rdf:Description rdf:about="/publication/[% oId %]">
-        <ore:isDescribedBy rdf:resource="/publication/[% oId %]"/>
-        <dc:title>[% mainTitle | xml_strict %]</dc:title>
+    <rdf:Description rdf:about="[% h.host %]/publication/[% _id %]">
+        <ore:isDescribedBy rdf:resource="[% h.host %]/publication/[% _id %]"/>
+        <dc:title>[% title | xml_strict %]</dc:title>
         [%- IF author %]
         <bibo:authorList rdf:parseType="Collection">
             [%- FOREACH person IN author %]
@@ -57,7 +57,7 @@
         [%- IF file.size %]
         <dc:format>[% file.0.content_type %]</dc:format>
         [%- FOREACH f IN file %]
-        <ore:aggregates rdf:resource="[% h.host %]/download/[% oId | xml_strict %]/[% f.fileOId | xml_strict %]"/>
+        <ore:aggregates rdf:resource="[% h.host %]/download/[% _id | xml_strict %]/[% f.file_id | xml_strict %]/[% f.file_name | uri %]"/>
         [%- END %]
         [%- END %]
         [%- FOREACH val IN issn %]
