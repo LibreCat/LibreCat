@@ -100,12 +100,12 @@ sub do_file_upload {
 sub do_create_thumbnail {
     my ($key, $filename) = @_;
 
-    return unless h->config->{filestore}->{accesss_thumbnailer};
-    
+    return unless h->config->{filestore}->{access_thumbnailer};
+
     my $thumbnailer_package
-        = h->config->{filestore}->{accesss_thumbnailer}->{package};
+        = h->config->{filestore}->{access_thumbnailer}->{package};
     my $thumbnailer_options
-        = h->config->{filestore}->{accesss_thumbnailer}->{options};
+        = h->config->{filestore}->{access_thumbnailer}->{options};
 
     my $pkg    = Catmandu::Util::require_package($thumbnailer_package);
     my $worker = $pkg->new(%$thumbnailer_options);

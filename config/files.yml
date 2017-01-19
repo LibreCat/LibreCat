@@ -28,7 +28,7 @@ access: &accessstore_settings
     options:
         root: data/file_uploads
 
-accesss_thumbnailer:
+access_thumbnailer:
     package: 'LibreCat::Worker::ImageResizer'
     options:
         files: *filestore_settings

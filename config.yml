@@ -1,5 +1,5 @@
 # main configuration file for Dancer
-appname: "PUB - Publications at Bielefeld University"
+appname: "PUB - Publications at LibreCat University"
 charset: "UTF-8"
 
 # Template Engine
@@ -38,8 +38,8 @@ plugins:
   Email:
     type: 'html'
     headers:
-      sender: 'publikationsdienste.ub@uni-bielefeld.de'
-      from: 'publikationsdienste.ub@uni-bielefeld.de'
+      sender: 'helpdesk@librecat.org'
+      from: 'helpdesk@librecat.org'
       X-Mailer: 'PUB Dancer Mailer'
       X-Accept-Language: 'en'
     transport:
@@ -62,17 +62,17 @@ plugins:
     store: search
     bag: publication
     datestamp_field: date_updated
-    repositoryName: 'PUB - Publications at Bielefeld University'
-    uri_base: "https://pub.uni-bielefeld.de/oai"
-    adminEmail: vitali.peil@uni-bielefeld.de
+    repositoryName: 'PUB - Publications at LibreCat University'
+    uri_base: "http://localhost:5001/oai"
+    adminEmail: helpdesk@librecat.org
     earliestDatestamp: "1970-01-01T00:00:01Z"
     deletedRecord: persistent
-    repositoryIdentifier: pub.uni-bielefeld.de
+    repositoryIdentifier: pub.librecat.org
     get_record_cql_pattern: 'id exact "%s"'
     cql_filter: 'status exact public OR oai_deleted=1'
     limit: 200
     delimiter: ":"
-    sampleIdentifier: "oai:pub.uni-bielefeld.de:1585315"
+    sampleIdentifier: "oai:pub.librecat.org:1585315"
     metadata_formats:
       -
         metadataPrefix: oai_dc
@@ -94,7 +94,7 @@ plugins:
         metadataNamespace: urn:nbn:de:1111-2004033116
         template: views/export/oai_epicur.tt
         cql: 'status exact public AND fulltext exact 1'
-        fix: ["add_field('host','https://pub.uni-bielefeld.de')"]
+        fix: ["add_field('host','http://localhost:5001')"]
       -
         metadataPrefix: xMetaDissPlus
         schema: http://files.dnb.de/standards/xmetadissplus/xmetadissplus.xsd
@@ -108,7 +108,7 @@ plugins:
         metadataNamespace: http://www.datacite.org/schema/namespace
         template: views/export/datacite.tt
         cql: 'status exact public AND type=researchData'
-        fix: ["add_field('host','https://pub.uni-bielefeld.de')"]
+        fix: ["add_field('host','http://localhost:5001')"]
       -
         metadataPrefix: rdf
         template: views/export/rdf.tt

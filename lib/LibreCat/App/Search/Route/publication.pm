@@ -77,43 +77,28 @@ Embed API to (data) publications
 get '/embed' => sub {
     my $p = h->extract_params();
 
-    my $portal = h->config->{portal}->{$p->{ttyp}} if $p->{ttyp};
-    my $pq;
+    push @{$p->{cql}}, ("status=public");
 
-    if ($portal) {
-        $pq = h->is_portal_default($p->{ttyp});
-        $p  = $pq->{full_query};
-    }
-    push @{$p->{q}}, ("status=public");
-
-    $p->{facets}->{author}->{terms}->{size} = 100;
-    $p->{facets}->{editor}->{terms}->{size} = 100;
-
-    my $sort_style = h->get_sort_style(
-        params->{sort}  || $pq->{default_query}->{'sort'} || '',
-        params->{style} || $pq->{default_query}->{style}  || ''
-    );
+    my $sort_style = h->get_sort_style($p->{sort} || '', $p->{style} || '');
 
     $p->{sort}  = $sort_style->{sort};
     $p->{start} = params->{start};
+
     my $hits = LibreCat->searcher->search('publication', $p);
+
     $hits->{bag}   = "publication";
     $hits->{embed} = 1;
-    $hits->{ttyp}  = $p->{ttyp} if $p->{ttyp};
     $hits->{style} = $sort_style->{style};
 
     my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
     $hits->{lang} = $lang;
 
     if (params->{fmt} && params->{fmt} eq 'js') {
-        my $template = "embed/javascript";
-        $template .= "_num_desc" if ($p->{enum} and $p->{enum} eq "1");
-        $template .= "_num_asc" if ($p->{enum} and $p->{enum} eq "2");
-        header("Content-Type" => "text/plain");
-        template $template, $hits;
+        header("Content-Type" => "application/javascript");
+        template 'embed/javascript', $hits;
     }
     else {
-        template "embed/iframe", $hits;
+        template 'embed/iframe', $hits;
     }
 };
 

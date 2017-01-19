@@ -5,10 +5,9 @@ document.write ('<ul[% IF qp.listyle %] style="[% qp.listyle %]"[% END %]>') ;
 document.write('<li>');
   [%- IF entry.citation.$style %]
     [%- cite_string = entry.citation.$style %]
-    [%- cite_string.replace("'", "&apos;") %]
-document.write('[% cite_string %]<br />[% INCLUDE embed/links_js.tt %]');
+document.write('[% cite_string FILTER replace("'", "\\'")  %]<br />[% INCLUDE embed/links_js.tt %]');
   [%- ELSE %]
-document.write('[% PROCESS citation.tt entry=entry %]<br />[% INCLUDE embed/links_js.tt %]');
+document.write('[% PROCESS citation.tt entry=entry FILTER replace("'", "\\'") %]<br />[% INCLUDE embed/links_js.tt %]');
   [%- END %]
 document.write('</li>');
 [%- END %]

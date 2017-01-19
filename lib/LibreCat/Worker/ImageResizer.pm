@@ -86,6 +86,7 @@ sub do_upload {
     $self->log->info("loading container $key");
     my $container = $self->file_store->get($key);
 
+
     unless (defined $container) {
         $self->log->error("no container $key found");
         return {error => 'no such container'};
@@ -109,8 +110,9 @@ sub do_upload {
 
     # Calculate the thumbnail
     my $max_size  = $self->thumbnail_size;
-    my $exit_code = system
-        "convert -resize x${max_size} ${tmpfile}[0] $tmpdir/thumb.png";
+    my $cmd       = "convert -resize x${max_size} ${tmpfile}[0] $tmpdir/thumb.png";
+    $self->log->debug($cmd);
+    my $exit_code = system($cmd);
 
     unless ($exit_code == 0 && -r "$tmpdir/thumb.png") {
         $self->log->error(
@@ -129,13 +131,19 @@ sub do_upload {
         $container = $self->access_store->add($key);
     }
 
-    $self->log->info("storing $filename in access container $key");
+    unless (defined $container) {
+        $self->log->error("failed to create access container for $key");
+        return {error => 'failed to create thumbnail'};
+    }
+
+    $self->log->info("storing $tmpdir/thumb.png in access container $key");
     my $ret = $container->add($thumbnail_name,
         IO::File->new("$tmpdir/thumb.png"));
 
     unless ($ret) {
         $self->log->error(
             "failed to create a thumbail for $filename in container $key");
+        return {error => 'failed to create thumbnail'};
     }
 
     $self->log->info("cleaning tmpdir $tmpdir");
@@ -150,21 +158,28 @@ sub extract_to_tmpdir {
 
     my $tmpdir = $self->tmpdir . '/' . Data::Uniqid::suniqid;
 
+    $self->log->debug("creating $tmpdir");
+
     unless (mkdir $tmpdir) {
         return (undef, undef);
     }
 
     my $tmpfile = "$tmpdir/" . Data::Uniqid::suniqid;
 
-    open(my $out, '>:raw', $tmpfile);
+    open(my $out, '>', $tmpfile);
 
     my $io = $file->fh;
 
-    while (!$io->eof) {
+    binmode($out, ':raw');
+
+    while (defined($io) && !$io->eof) {
         my $buffer;
         my $len = $io->read($buffer, $self->buffer_size);
         syswrite($out, $buffer, $len);
     }
+
+    $io->flush();
+    $io->close();
 
     return ($tmpdir, $tmpfile);
 }

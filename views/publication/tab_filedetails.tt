@@ -7,11 +7,11 @@
       <strong>[% h.loc("frontdoor.license_heading") %]</strong><br />
       <div class="alert alert-green">
       [%- IF data_reuse_license %]
-        [% h.loc("forms.$type.field.license.data_reuse_license.label") %]
+        [% h.loc("forms.${type}.field.license.data_reuse_license.label") %] : 
         [%- SWITCH data_reuse_license %]
-          [%- CASE 'PDDL' %]<a href="http://opendatacommons.org/licenses/pddl/" target="_blank">[% h.loc("forms.$type.field.license.data_reuse_license.pddl.name") %]</a>
-	      [%- CASE 'ODC-By' %]<a href="http://opendatacommons.org/licenses/by/" target="_blank">[% h.loc("forms.$type.field.license.data_reuse_license.odcby.name") %]</a>
-	      [%- CASE 'ODbL' %]<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">[% h.loc("forms.$type.field.license.data_reuse_license.odbl.name") %]</a>
+          [%- CASE 'PDDL' %]<a href="http://opendatacommons.org/licenses/pddl/" target="_blank">[% h.loc("forms.${type}.field.license.data_reuse_license.pddl.name") %]</a>
+	      [%- CASE 'ODC-By' %]<a href="http://opendatacommons.org/licenses/by/" target="_blank">[% h.loc("forms.${type}.field.license.data_reuse_license.odcby.name") %]</a>
+	      [%- CASE 'ODbL' %]<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">[% h.loc("forms.${type}.field.license.data_reuse_license.odbl.name") %]</a>
         [%- END %]
       [%- END %]
       [%- IF cc_license %]
@@ -39,7 +39,7 @@
   <div class="row[% UNLESS i==0 %] margin-top1[% END %]">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.name") %]</div>
     <div class="col-md-9">
-      <a href="/download/[% _id %]/[% fi.file_id %]">
+      <a href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]">
         [% fi.file_name | html %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
     </div>
@@ -110,7 +110,7 @@
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.name") %]</div>
     <div class="col-md-9">
-      <a href="/download/[% _id %]/[% fi.file_id %]">
+      <a href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]">
         [% fi.file_name | html %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
     </div>

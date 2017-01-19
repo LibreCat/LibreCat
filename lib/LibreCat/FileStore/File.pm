@@ -52,6 +52,7 @@ sub io_from_callback {
     elsif (defined($pid)) {    # child
         $pipe->writer;
         $callback->($pipe);
+        exit;
     }
 }
 

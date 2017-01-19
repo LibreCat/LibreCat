@@ -260,15 +260,15 @@ sub _make_thumbnail {
 
     h->log->info("creating thumbnail for $filename in record $key");
 
-    unless (h->config->{filestore}->{accesss_thumbnailer}) {
+    unless (h->config->{filestore}->{access_thumbnailer}) {
         h->log->info("no access_thumbnailer defined");
         return undef;
     }
 
     my $thumbnailer_package
-        = h->config->{filestore}->{accesss_thumbnailer}->{package};
+        = h->config->{filestore}->{access_thumbnailer}->{package};
     my $thumbnailer_options
-        = h->config->{filestore}->{accesss_thumbnailer}->{options};
+        = h->config->{filestore}->{access_thumbnailer}->{options};
 
     my $pkg    = Catmandu::Util::require_package($thumbnailer_package);
     my $worker = $pkg->new(%$thumbnailer_options);
@@ -295,15 +295,15 @@ sub _remove_thumbnail {
 
     h->log->info("deleting $filename thumbnail for record $key");
 
-    unless (h->config->{filestore}->{accesss_thumbnailer}) {
+    unless (h->config->{filestore}->{access_thumbnailer}) {
         h->log->info("no access_thumbnailer defined");
         return undef;
     }
 
     my $thumbnailer_package
-        = h->config->{filestore}->{accesss_thumbnailer}->{package};
+        = h->config->{filestore}->{access_thumbnailer}->{package};
     my $thumbnailer_options
-        = h->config->{filestore}->{accesss_thumbnailer}->{options};
+        = h->config->{filestore}->{access_thumbnailer}->{options};
 
     my $pkg    = Catmandu::Util::require_package($thumbnailer_package);
     my $worker = $pkg->new(%$thumbnailer_options);

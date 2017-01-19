@@ -9,7 +9,7 @@
       </div>
       <div class="col-md-10">
         [% FOREACH conf IN confLetter %]
-          <a href="/download/[% _id %]/[% conf.file_id %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF conf.description %]<i>Description:</i><br />[% conf.description | html %]<br /><br />[% END %]<i>Filename:</i><br />[% conf.file_name | html %]">[% h.loc("frontdoor.tabs.confirmation_letter.label") %]</a><br />
+          <a href="/download/[% _id %]/[% conf.file_id %]/[% conf.file_name %]" class="description" data-html="true" data-placement="right" rel="tooltip" title="[% IF conf.description %]<i>Description:</i><br />[% conf.description | html %]<br /><br />[% END %]<i>Filename:</i><br />[% conf.file_name | html %]">[% h.loc("frontdoor.tabs.confirmation_letter.label") %]</a><br />
           <script>
             $('a.description').tooltip();
           </script>

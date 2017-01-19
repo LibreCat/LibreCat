@@ -89,12 +89,12 @@
             <div class="row">
               <div class="col-xs-2 text-muted">[% h.loc("frontdoor.download") %]</div>
               <div class="col-xs-10">
-                  [% PROCESS publication/oa_lock.tt %] <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
+                  [% PROCESS publication/oa_lock.tt %] <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
                   <span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
                   [% PROCESS publication/modal_requestcopy.tt %]
             [% END %]
             [% IF loop.count > 1 %]
-                  <br>[% PROCESS publication/oa_lock.tt %] <a href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
+                  <br>[% PROCESS publication/oa_lock.tt %] <a href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
                   <span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
                   [% PROCESS publication/modal_requestcopy.tt %]
             [% END %]
@@ -156,7 +156,7 @@
       [%- IF fi %]
       <div class="col-xs-2 col-sm-3 col-sm-offset-1 text-sm-right">
 	     <div class="img-thumbnail img-thumbnail-fh">
-	        <a href="/download/[% _id %]/[% fi.file_id %]" title="[% fi.file_name %]" itemprop="thumbnailUrl" class="fulltext">
+	        <a href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]" itemprop="thumbnailUrl" class="fulltext">
 	           <img src="/thumbnail/[% _id %]" itemprop="image" alt="[% h.loc("frontdoor.fulltext.view") %]" title="[% h.loc("frontdoor.fulltext.view") %]">
 	        </a>
 	     </div>

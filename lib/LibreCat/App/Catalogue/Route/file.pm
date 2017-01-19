@@ -19,9 +19,11 @@ use LibreCat::App::Catalogue::Controller::Permission;
 use DateTime;
 
 sub _file_exists {
-    my ($key, $filename) = @_;
+    my ($key, $filename, %opts) = @_;
 
-    my $container = h->get_file_store()->get($key);
+    my $store     = $opts{access} ? h->get_access_store() : h->get_file_store();
+
+    my $container = $store->get($key);
 
     if (defined $container) {
         my $file = $container->get($filename);
@@ -33,9 +35,10 @@ sub _file_exists {
 }
 
 sub _send_it {
-    my ($key, $filename) = @_;
+    my ($key, $filename, %opts) = @_;
 
-    my $container = h->get_file_store()->get($key);
+    my $store     = $opts{access} ? h->get_access_store() : h->get_file_store();
+    my $container = $store->get($key);
 
     send_file(
         \"dummy",    # anything, as long as it's a scalar-ref
@@ -265,7 +268,7 @@ and user rights will be checked before.
 
 =cut
 
-get qr{/download/(\d+)/(\d+)} => sub {
+get qr{/download/(\d+)/(\d+).*} => sub {
     my ($id, $file_id) = splat;
 
     my ($ok, $file_name)
@@ -297,8 +300,8 @@ get '/thumbnail/:id' => sub {
     my $key            = params->{id};
     my $thumbnail_name = 'thumbnail.png';
 
-    if (my $file = _file_exists($key, $thumbnail_name)) {
-        _send_it($key, $file->key);
+    if (my $file = _file_exists($key, $thumbnail_name, access => 1)) {
+        _send_it($key, $file->key, access => 1);
     }
     else {
         redirect '/images/thumbnail_dummy.png';

@@ -16,7 +16,7 @@
       [% END -%]
       [%- IF year %]<meta name="citation_date" content="[% year | html %]">[% END %]
       [%- IF file %][% FOREACH fi IN file %][% IF fi.file_name %]
-      <meta name="citation_pdf_url" content="[% h.host %]/download/[% _id %]/[% fi.file_id %]">[% END %][% END %][% END %]
+      <meta name="citation_pdf_url" content="[% h.host %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]">[% END %][% END %][% END %]
       [%- IF doi %]<meta name="citation_pdf_url" content="http://doi.org/[% doi | html %]">[% ELSIF link %]<meta name="citation_pdf_url" content="[% link.0.url | html %]">[% END %]
       [%- IF publication %]<meta name="citation_journal_title" content="[% publication | html %]" />[% END %]
       [%- IF volume %]<meta name="citation_volume" content="[% volume | html %]" />[% END %]

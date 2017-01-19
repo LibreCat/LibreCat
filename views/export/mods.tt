@@ -149,7 +149,7 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 [%- IF fi.relation != 'hidden' %]
 <relatedItem type="constituent">
   <location>
-    <url displayLabel="[% fi.file_name | xml_strict %]">[% host %]/download/[% _id %]/[% fi.file_id | xml_strict %]</url>
+    <url displayLabel="[% fi.file_name | xml_strict %]">[% host %]/download/[% _id %]/[% fi.file_id | xml_strict %]/[% fi.file_name | xml_strict %]</url>
   </location>
   [%- IF fi.content_type %]
   <physicalDescription><internetMediaType>[% fi.content_type | xml_strict %]</internetMediaType></physicalDescription>
