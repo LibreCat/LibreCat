@@ -7,11 +7,11 @@
       <strong>[% h.loc("frontdoor.license_heading") %]</strong><br />
       <div class="alert alert-green">
       [%- IF data_reuse_license %]
-        [% h.loc("forms.$type.field.license.data_reuse_license.label") %]
+        [% h.loc("forms.${type}.field.license.data_reuse_license.label") %] : 
         [%- SWITCH data_reuse_license %]
-          [%- CASE 'PDDL' %]<a href="http://opendatacommons.org/licenses/pddl/" target="_blank">[% h.loc("forms.$type.field.license.data_reuse_license.pddl.name") %]</a>
-	      [%- CASE 'ODC-By' %]<a href="http://opendatacommons.org/licenses/by/" target="_blank">[% h.loc("forms.$type.field.license.data_reuse_license.odcby.name") %]</a>
-	      [%- CASE 'ODbL' %]<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">[% h.loc("forms.$type.field.license.data_reuse_license.odbl.name") %]</a>
+          [%- CASE 'PDDL' %]<a href="http://opendatacommons.org/licenses/pddl/" target="_blank">[% h.loc("forms.${type}.field.license.data_reuse_license.pddl.name") %]</a>
+	      [%- CASE 'ODC-By' %]<a href="http://opendatacommons.org/licenses/by/" target="_blank">[% h.loc("forms.${type}.field.license.data_reuse_license.odcby.name") %]</a>
+	      [%- CASE 'ODbL' %]<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">[% h.loc("forms.${type}.field.license.data_reuse_license.odbl.name") %]</a>
         [%- END %]
       [%- END %]
       [%- IF cc_license %]
