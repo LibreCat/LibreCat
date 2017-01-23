@@ -50,7 +50,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.department.label") %]</div>
     <div class="col-lg-10 col-md-9">
   [%- ELSE -%]<br />[% END %]
-  <a href="/[% bag %]?q=department=[% dep._id %]" class="long">[% h.get_department(dep._id).display %]</a>
+  <a href="/[% IF type == 'research_data' %]data[% ELSE %]publication[% END %]?cql=department=[% dep._id %]" class="long">[% h.get_department(dep._id).display %]</a>
   [%- IF loop.last %]</div></div>[% END %]
 [%- END %]
 
@@ -100,7 +100,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.keyword.label") %]</div>
     <div class="col-lg-10 col-md-9" itemprop="keywords">
     [%- FOREACH kw IN keyword %]
-        <a href='/[% bag %]?q=keyword="[% kw %]"'>[% kw | html %]</a>
+        <a href='/[% IF type == 'research_data' %]data[% ELSE %]publication[% END %]?cql=keyword="[% kw %]"'>[% kw | html %]</a>
       [%- UNLESS loop.last %]; [% END %]
     [%- END %]
     </div>
@@ -109,7 +109,7 @@
 
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.${type}.field.year.label || h.loc("forms.${type}.field.year_extern.label") %]</div>
-    <div class="col-lg-10 col-md-9"><span itemprop="copyrightYear"><a href="/[% bag %]?q=year=[% year %]">[% year %]</a></span></div>
+    <div class="col-lg-10 col-md-9"><span itemprop="copyrightYear"><a href="/[% IF type == 'research_data' %]data[% ELSE %]publication[% END %]?cql=year=[% year %]">[% year %]</a></span></div>
   </div>
   [%- FOREACH item IN ['publication', 'volume', 'issue', 'article_number', 'page'] %]
     [%- IF $item %]
@@ -161,7 +161,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.isbn") %]</div>
     <div class="col-lg-10 col-md-9" itemprop="isbn">
     [%- FOREACH ib IN publication_identifier.isbn %]
-      <a href='/publication?q=isbn=[% ib | uri %]'>[% ib | html %]</a>
+      <a href='/publication?cql=isbn=[% ib | uri %]'>[% ib | html %]</a>
       [%- UNLESS loop.last %], [% END %]
     [%- END %]
     </div>
@@ -170,13 +170,13 @@
 [%- IF publication_identifier.issn %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.issn") %]</div>
-    <div class="col-lg-10 col-md-9">[% FOREACH is IN publication_identifier.issn %]<a href="/publication?q=issn=[% is | uri %]">[% is | html %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
+    <div class="col-lg-10 col-md-9">[% FOREACH is IN publication_identifier.issn %]<a href="/publication?cql=issn=[% is | uri %]">[% is | html %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [%- END %]
 [%- IF publication_identifier.eissn %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.eissn") %]</div>
-    <div class="col-lg-10 col-md-9">[% FOREACH es IN publication_identifier.eissn %]<a href="/publication?q=eissn=[% es | uri %]">[% es | html %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
+    <div class="col-lg-10 col-md-9">[% FOREACH es IN publication_identifier.eissn %]<a href="/publication?cql=eissn=[% es | uri %]">[% es | html %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [%- END %]
 [%- IF ipn %]
