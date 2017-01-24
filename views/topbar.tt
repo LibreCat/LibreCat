@@ -7,80 +7,75 @@
 [% style = qp.style || 'default' -%]
 
 <!-- BEGIN navbar.tt -->
-  <header>
+<header>
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="navbar-header">
-	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-	  <span class="sr-only">Toggle navigation</span>
-	  <span class="icon-bar"></span>
-	  <span class="icon-bar"></span>
-	  <span class="icon-bar"></span>
-	</button>
-	<a class="navbar-brand helpme" data-placement="bottom" title="[% h.loc("help.home") %]" href="/"><img src="/images/brand_logo.png" style="height:30px" alt="" /></a>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse navbar-ex1-collapse">
-      <ul class="nav navbar-nav">
-	  [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
-	  <li class="helpme" data-placement="bottom" title="[% h.loc("help.brand") %]"><a href="/[% IF session.user %]librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span>[% IF session.role == 'super_admin' %]<span class="hidden-sm">[% END %][% h.loc("header.brand") %][% IF session.role == 'super_admin' %]</span>[% END %]</a></li>
-      [%- IF session.user %]
-	    <li class="helpme" data-placement="bottom" title="[% h.loc("help.my_author_page") %]"><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span>[% h.loc("header.my_author_page") %]</a></li>
-      [%- END %]
-      [%- IF session.role && session.role == 'super_admin' %]
-	  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% h.loc("header.admin_menu.admin") %] <span class="glyphicon glyphicon-chevron-down"></span></a>
-	  <ul class="dropdown-menu" role="menu">
-	    <li><a href="/librecat/admin/account"><span class="glyphicon glyphicon-user"></span>[% h.loc("header.admin_menu.manage_accounts") %]</a></li>
-	    <li><a href="/librecat/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% h.loc("header.admin_menu.manage_projects") %]</a></li>
-	    <li><a href="/librecat/admin/research_group"><span class="fa fa-group fw"></span>[% h.loc("header.admin_menu.manage_research_groups") %]</a></li>
-	  </ul>
-	  </li>
-	[%- END %]
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-	    <li class="helpme helpme-md" data-placement="left" title="[% h.loc("help.change_language") %]">
-	      <a href="[% IF session.user %]/librecat/person[% END %]/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]"><span class="glyphicon glyphicon-flag"></span><span class="hidden-sm">[% h.loc("header.lang") %]</span><span class="hidden-md hidden-xs hidden-lg">[% h.loc("header.lang_short") %]</span></a>
-	    </li>
-    [%- IF session.user %]
-	<li class="dropdown"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% h.loc("help.user_settings") %]" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> [% h.loc("header.settings") %] <span class="glyphicon glyphicon-chevron-down"></span></a>
-	  <div class="dropdown-menu" style="width:550px">
-	    [% INCLUDE backend/user_settings.tt %]
-	  </div>
-	</li>
-    [%- END %]
-    [%- IF session.user %]
-	  <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% h.loc("main_page.logout") %]</span></a></li>
-    [%- ELSE %]
-      <li><a href="/login"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% h.loc("main_page.login") %]</span></a></li>
-    [%- END %]
-    </ul>
-    </div><!-- /.navbar-collapse -->
-    <div class="container">
-	<div class="row">
-	  <div class="col-xs-1 col-sm-2 col-md-offset-1">
-	    [% thisLang = session.lang ? session.lang : h.config.default_lang %]
-	  </div>
-	</div>
-      </div><!-- /container -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand helpme" data-placement="bottom" title="[% h.loc("help.home") %]" href="/"><img src="/images/brand_logo.png" style="height:30px" alt="" /></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
+                <li class="helpme" data-placement="bottom" title="[% h.loc("help.brand") %]"><a href="/[% IF session.user %]librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span>[% IF session.role == 'super_admin' %]<span class="hidden-sm">[% END %][% h.loc("header.brand") %][% IF session.role == 'super_admin' %]</span>[% END %]</a></li>
+                [%- IF session.user %]
+                <li class="helpme" data-placement="bottom" title="[% h.loc("help.my_author_page") %]"><a href="/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span>[% h.loc("header.my_author_page") %]</a></li>
+                [%- END %]
+                [%- IF session.role && session.role == 'super_admin' %]
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% h.loc("header.admin_menu.admin") %] <span class="glyphicon glyphicon-chevron-down"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/librecat/admin/account"><span class="glyphicon glyphicon-user"></span>[% h.loc("header.admin_menu.manage_accounts") %]</a></li>
+                        <li><a href="/librecat/admin/project"><span class="glyphicon glyphicon-tasks"></span>[% h.loc("header.admin_menu.manage_projects") %]</a></li>
+                        <li><a href="/librecat/admin/research_group"><span class="fa fa-group fw"></span>[% h.loc("header.admin_menu.manage_research_groups") %]</a></li>
+                    </ul>
+                </li>
+                [%- END %]
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="helpme helpme-md" data-placement="left" title="[% h.loc("help.change_language") %]">
+                    <a href="[% IF session.user %]/librecat/person[% END %]/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]"><span class="glyphicon glyphicon-flag"></span><span class="hidden-sm">[% h.loc("header.lang") %]</span><span class="hidden-md hidden-xs hidden-lg">[% h.loc("header.lang_short") %]</span></a>
+                </li>
+                [%- IF session.user %]
+                <li class="dropdown"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% h.loc("help.user_settings") %]" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> [% h.loc("header.settings") %] <span class="glyphicon glyphicon-chevron-down"></span></a>
+                    <div class="dropdown-menu" style="width:550px">
+                        [% INCLUDE backend/user_settings.tt %]
+                    </div>
+                </li>
+                [%- END %]
+                [%- IF session.user %]
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% h.loc("main_page.logout") %]</span></a></li>
+                [%- ELSE %]
+                <li><a href="/login"><span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">[% h.loc("main_page.login") %]</span></a></li>
+                [%- END %]
+            </ul>
+        </div><!-- /.navbar-collapse -->
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-1 col-sm-2 col-md-offset-1">
+                    [% thisLang = session.lang ? session.lang : h.config.default_lang %]
+                </div>
+            </div>
+        </div><!-- /container -->
     </nav>
-
     <div class="modal" id="selectAFF">
-      <div class="modal-dialog">
-	<div class="modal-content">
-	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	    <h4 class="modal-title">Title</h4>
-	    <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
-	  </div>
-	  <div class="modal-body">
-	  </div>
-	</div>
-      </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Title</h4>
+                    <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
     </div>
-
-  </header>
-
-  <main class="front"[% IF backend %] class="backend"[% END %]>
-
-  <div class="container[% IF title OR name %] title[%END %][% IF _id %] publication[% END %]">
+</header>
+<main class="front"[% IF backend %] class="backend"[% END %]>
+    <div class="container[% IF title OR name %] title[%END %][% IF _id %] publication[% END %]">
 <!-- END navbar.tt -->
