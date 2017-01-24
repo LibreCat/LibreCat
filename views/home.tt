@@ -11,188 +11,173 @@
 
 <!-- BEGIN home.tt -->
 <div class="row" itemscope itemtype="http://schema.org/Person"><!-- outer border -->
-
-  <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
-
-    <div class="page-header">
-
-      <div class="row">
-	<div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme helpme-md" data-placement="top" title="[% h.loc("help.pevz_photo") %]">
-	  [%- IF thisPerson.photo %]
-	  [%- photo_url=thisPerson.photo.replace('http:','') -%]
-	  <img src="[% photo_url %]" style="max-width:140px;" class="img-thumbnail" >
-	  [%- ELSE %]
-      [%- USE Gravatar %]
-      <img src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c' ) | html %]" alt="[% thisPerson.full_name | html %]" />
-	  [%- END %]
-	</div>
-
-	<div class="col-md-6 col-sm-5 col-xs-12">
-	  <h3 class="margin-top0">[% UNLESS !thisPerson %][% IF thisPerson.idm_title %]<span itemprop="honorificPrefix">[% thisPerson.idm_title %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span>[% IF backend %] ([% h.loc("header.role.${session.role}") %])[% END %][% ELSE %][% h.loc("person_profile.id_not_found") %][% END %]</h3>
-      <div class="text-muted">[% h.get_department(thisPerson.department.0._id).display | html %]</div>
-	[% INCLUDE person_profile.tt %]
-	</div>
-
-	[% IF backend %]
-	<div class="col-md-3 col-md-offset-1 col-sm-4 col-xs-12">
-	  <div class="well">
-	      [% INCLUDE backend/add_new_button.tt %]
-	  </div>
-	</div>
-	[% END %]
-
-      </div>
-
+    <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme helpme-md" data-placement="top" title="[% h.loc("help.pevz_photo") %]">
+                    [%- IF thisPerson.photo %]
+                    [%- photo_url=thisPerson.photo.replace('http:','') -%]
+                    <img src="[% photo_url %]" style="max-width:140px;" class="img-thumbnail" >
+                    [%- ELSE %]
+                    [%- USE Gravatar %]
+                    <img src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c' ) | html %]" alt="[% thisPerson.full_name | html %]" />
+                    [%- END %]
+                </div>
+                <div class="col-md-6 col-sm-5 col-xs-12">
+                    <h3 class="margin-top0">[% UNLESS !thisPerson %][% IF thisPerson.idm_title %]<span itemprop="honorificPrefix">[% thisPerson.idm_title %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span>[% IF backend %] ([% h.loc("header.role.${session.role}") %])[% END %][% ELSE %][% h.loc("person_profile.id_not_found") %][% END %]</h3>
+                    <div class="text-muted">[% h.get_department(thisPerson.department.0._id).display | html %]</div>
+                    [% INCLUDE person_profile.tt %]
+                </div>
+                [% IF backend %]
+                <div class="col-md-3 col-md-offset-1 col-sm-4 col-xs-12">
+                    <div class="well">
+                        [% INCLUDE backend/add_new_button.tt %]
+                    </div>
+                </div>
+                [% END %]
+            </div>
+        </div>
+        [% UNLESS !thisPerson %]
+        <div class="row margin-xs-top"> <!-- row span11 publications, projects, departments -->
+            <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                    [% IF backend AND session.role == 'super_admin' %]
+                    <li class="helpme[% IF backend AND modus == "admin" %] active[% END %]" title="[% h.loc("help.publication_admin") %]"><a href="/librecat/search/admin">[% h.loc("tabs.all_publications") %]</a></li>
+                    [% END %]
+                    [% IF session.role == 'user' OR !backend %]
+                    <li class="helpme[% IF modus == "user" %] active[% END %]" title="[% h.loc("help.publication_user") %]"><a href="[% IF backend %]/librecat/search[% ELSE %]/person/[% id %][% END %]">[% h.loc("tabs.publications") %]</a></li>
+                    [% IF researchhits AND researchhits.total != 0 %]
+                    <li class="helpme[% IF modus == "data" %] active[% END %]" title="[% h.loc("help.publication_user_rd") %]"><a href="[% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% h.loc("tabs.data_publications") %]</a></li>
+                    [% END %]
+                    [% END %]
+                    [% IF backend AND session.role == 'reviewer' %]
+                    [% FOREACH department IN thisPerson.reviewer %]
+                    <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% h.loc("help.publication_reviewer") %]"><a href="/librecat/search/reviewer/[% department._id %]">[% h.get_department(department._id).display %]</a></li>
+                    [% END %]
+                    [% END %]
+                    [% IF backend AND session.role == "project_reviewer" %]
+                    [% FOREACH project IN thisPerson.project_reviewer %]
+                    <li class="helpme[% IF modus.match(project._id) %] active[% END %]" title="[% lf.help.publication_project_reviewer %]"><a href="/librecat/search/project_reviewer/[% project._id %]">[% h.get_project(project._id).name %]</a></li>
+                    [% END %]
+                    [% END %]
+                    [% IF backend AND session.role == "data_manager" %]
+                    [% FOREACH department IN thisPerson.data_manager %]
+                    <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% h.loc("help.publication_data_manager") %]"><a href="/librecat/search/data_manager/[% department._id %]">[% h.get_department(department._id).display %]</a></li>
+                    [% END %]
+                    [% END %]
+                    [% IF backend AND session.role == "delegate" %]
+                    [% FOREACH delegate_id IN thisPerson.delegate %]
+                    <li class="[% IF loop.first %]helpme[% END %][% IF modus.match(delegate_id) %] active[% END %]"[% IF loop.first %] title="[% h.loc("help.publication_delegate") %]"[% END %]><a href="/librecat/search/delegate/[% delegate_id %]">[% h.get_person(delegate_id).full_name %]</a></li>
+                    [% END %]
+                    [% END %]
+                    [% UNLESS backend %]
+                    <li class="hidden-md hidden-lg hidden-sm"><a href="#facets">[% h.loc("facets.search_filter") %]</a></li>
+                    <li class="hidden-md hidden-lg hidden-sm"><a href="#export">[% h.loc("facets.export_marked") %]</a></li>
+                    <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="[% h.loc("main_page.logout") %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% h.loc("main_page.logout") %]</span></a>[% ELSE %]<a href="/login" title="[% h.loc("main_page.login") %]"><span class="glyphicon glyphicon-log-in fw"></span>[% h.loc("main_page.login") %]</a>[% END %]</li>
+                    [% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% h.loc("main_page.logged_in_as") %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
+                </ul>
+                [% END %]
+            </ul>
+        </div>
     </div>
-
-    [% UNLESS !thisPerson %]
-
-    <div class="row margin-xs-top"> <!-- row span11 publications, projects, departments -->
-      <div class="col-md-12">
-	<ul class="nav nav-tabs">
-	[% IF backend AND session.role == 'super_admin' %]
-	  <li class="helpme[% IF backend AND modus == "admin" %] active[% END %]" title="[% h.loc("help.publication_admin") %]"><a href="/librecat/search/admin">[% h.loc("tabs.all_publications") %]</a></li>
-	[% END %]
-	[% IF session.role == 'user' OR !backend %]
-	  <li class="helpme[% IF modus == "user" %] active[% END %]" title="[% h.loc("help.publication_user") %]"><a href="[% IF backend %]/librecat/search[% ELSE %]/person/[% id %][% END %]">[% h.loc("tabs.publications") %]</a></li>
-	  [% IF researchhits AND researchhits.total != 0 %]
-	    <li class="helpme[% IF modus == "data" %] active[% END %]" title="[% h.loc("help.publication_user_rd") %]"><a href="[% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% h.loc("tabs.data_publications") %]</a></li>
-	  [% END %]
-	[% END %]
-	[% IF backend AND session.role == 'reviewer' %]
-	  [% FOREACH department IN thisPerson.reviewer %]
-	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% h.loc("help.publication_reviewer") %]"><a href="/librecat/search/reviewer/[% department._id %]">[% h.get_department(department._id).display %]</a></li>
-	  [% END %]
-	[% END %]
-    [% IF backend AND session.role == "project_reviewer" %]
-      [% FOREACH project IN thisPerson.project_reviewer %]
-      <li class="helpme[% IF modus.match(project._id) %] active[% END %]" title="[% lf.help.publication_project_reviewer %]"><a href="/librecat/search/project_reviewer/[% project._id %]">[% h.get_project(project._id).name %]</a></li>
-      [% END %]
-    [% END %]
-	[% IF backend AND session.role == "data_manager" %]
-	  [% FOREACH department IN thisPerson.data_manager %]
-	  <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% h.loc("help.publication_data_manager") %]"><a href="/librecat/search/data_manager/[% department._id %]">[% h.get_department(department._id).display %]</a></li>
-	  [% END %]
-    [% END %]
-	[% IF backend AND session.role == "delegate" %]
-	  [% FOREACH delegate_id IN thisPerson.delegate %]
-	  <li class="[% IF loop.first %]helpme[% END %][% IF modus.match(delegate_id) %] active[% END %]"[% IF loop.first %] title="[% h.loc("help.publication_delegate") %]"[% END %]><a href="/librecat/search/delegate/[% delegate_id %]">[% h.get_person(delegate_id).full_name %]</a></li>
-	  [% END %]
-	[% END %]
-	[% UNLESS backend %]
-	<li class="hidden-md hidden-lg hidden-sm"><a href="#facets">[% h.loc("facets.search_filter") %]</a></li>
-	<li class="hidden-md hidden-lg hidden-sm"><a href="#export">[% h.loc("facets.export_marked") %]</a></li>
-	<li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="[% h.loc("main_page.logout") %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% h.loc("main_page.logout") %]</span></a>[% ELSE %]<a href="/login" title="[% h.loc("main_page.login") %]"><span class="glyphicon glyphicon-log-in fw"></span>[% h.loc("main_page.login") %]</a>[% END %]</li>
-	[% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% h.loc("main_page.logged_in_as") %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
-	</ul>
-	[% END %]
-	</ul>
-      </div>
-    </div>
-
     <div class="row">
-      <div class="tab-content">
-	  [% IF backend AND session.role == 'super_admin' %]
-	  <!-- backend + superadmin -->
-	  <div class="tab-pane[% IF modus == 'admin' %] active[% END %]" id="publ-admin">
-	    <div class="col-sm-8">
-	      [% tabmodus = 'admin' %]
-	      [% INCLUDE hits.tt %]
-	    </div>
-	    <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	      [% INCLUDE filters.tt %]
-	    </div>
-	  </div>
-      [% END %]
-      [% IF !backend OR session.role == 'user'%]
-      <!-- frontend or user -->
-      <div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ-user">
-      <!-- publication -->
-        <div class="col-sm-8">
-          [% tabmodus = 'user' %]
-          [% INCLUDE hits.tt %]
+        <div class="tab-content">
+            [% IF backend AND session.role == 'super_admin' %]
+            <!-- backend + superadmin -->
+            <div class="tab-pane[% IF modus == 'admin' %] active[% END %]" id="publ-admin">
+                <div class="col-sm-8">
+                    [% tabmodus = 'admin' %]
+                    [% INCLUDE hits.tt %]
+                </div>
+                <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
+                    [% INCLUDE filters.tt %]
+                </div>
+            </div>
+            [% END %]
+            [% IF !backend OR session.role == 'user'%]
+            <!-- frontend or user -->
+            <div class="tab-pane[% IF modus == 'user' %] active[% END %]" id="publ-user">
+                <!-- publication -->
+                <div class="col-sm-8">
+                    [% tabmodus = 'user' %]
+                    [% INCLUDE hits.tt %]
+                </div>
+                <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
+                    [% INCLUDE filters.tt %]
+                </div>
+            </div>
+            <div class="tab-pane[% IF modus == 'data' %] active[% END %]" id="publ-data">
+                <!-- data -->
+                <div class="col-sm-8">
+                    [% tabmodus = 'data' %]
+                    [% INCLUDE hits.tt %]
+                </div>
+                <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
+                    [% INCLUDE filters.tt %]
+                </div>
+            </div>
+            [% END %]
+            [% IF backend AND session.role == "reviewer" %]
+            <!-- backend + reviewer -->
+            <div class="tab-pane[% IF modus.match(department_id) %] active[%END %]" id="publ-reviewer">
+                <div class="col-sm-8">
+                    [% tabmodus = 'reviewer' %]
+                    [% INCLUDE hits.tt %]
+                </div>
+                <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
+                    [% INCLUDE filters.tt %]
+                </div>
+            </div>
+            [% END %]
+            [% IF backend AND (session.role == "project_reviewer" OR (session.role == "super_admin" AND modus == "project_reviewer")) %]
+            <!-- backend + project_reviewer -->
+            <div class="tab-pane[% IF session.role == 'project_reviewer' %] active[%END %]" id="publ-projectmanager">
+                <div class="col-sm-8">
+                    [% tabmodus = 'project_reviewer' %]
+                    [% INCLUDE hits.tt %]
+                </div>
+                <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
+                    [% INCLUDE filters.tt %]
+                </div>
+            </div>
+            [% END %]
+            [% IF backend AND (session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager")) %]
+            <!-- backend + data_manager -->
+            <div class="tab-pane[% IF session.role == 'data_manager' %] active[%END %]" id="publ-datamanager">
+                <div class="col-sm-8">
+                    [% tabmodus = 'data_manager' %]
+                    [% INCLUDE hits.tt %]
+                </div>
+            </div>
+            [% END %]
+            [% IF backend AND session.role == "delegate" %]
+            <!-- backend + delegate -->
+            [% FOREACH delegate_id IN thisPerson.delegate %]
+            <div class="tab-pane[% IF modus.match(delegate_id) %] active[%END %]" id="publ-delegate_[% delegate_id %]">
+                <div class="col-sm-8">
+                    [% USE String; tabmodus = String.new('delegate_'); tabmodus = tabmodus.append(delegate_id).text %]
+                    [% delegate_name = h.get_person(delegate_id).full_name %]
+                    [% INCLUDE hits.tt %]
+                </div>
+                <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
+                    [% INCLUDE filters.tt %]
+                </div>
+            </div>
+            [% END %]
+            [% END %]
         </div>
-        <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-          [% INCLUDE filters.tt %]
-        </div>
-      </div>
-      <div class="tab-pane[% IF modus == 'data' %] active[% END %]" id="publ-data">
-      <!-- data -->
-        <div class="col-sm-8">
-	      [% tabmodus = 'data' %]
-	      [% INCLUDE hits.tt %]
-        </div>
-        <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	      [% INCLUDE filters.tt %]
-        </div>
-      </div>
-      [% END %]
-	  [% IF backend AND session.role == "reviewer" %]
-	  <!-- backend + reviewer -->
-	  <div class="tab-pane[% IF modus.match(department_id) %] active[%END %]" id="publ-reviewer">
-	    <div class="col-sm-8">
-	      [% tabmodus = 'reviewer' %]
-	      [% INCLUDE hits.tt %]
-	    </div>
-	    <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	      [% INCLUDE filters.tt %]
-	    </div>
-	  </div>
-      [% END %]
-      [% IF backend AND (session.role == "project_reviewer" OR (session.role == "super_admin" AND modus == "project_reviewer")) %]
-	  <!-- backend + project_reviewer -->
-	  <div class="tab-pane[% IF session.role == 'project_reviewer' %] active[%END %]" id="publ-projectmanager">
-	    <div class="col-sm-8">
-	      [% tabmodus = 'project_reviewer' %]
-	      [% INCLUDE hits.tt %]
-	    </div>
-	    <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	      [% INCLUDE filters.tt %]
-	    </div>
-	  </div>
-	  [% END %]
-	  [% IF backend AND (session.role == "data_manager" OR (session.role == "super_admin" AND modus == "data_manager")) %]
-	  <!-- backend + data_manager -->
-	  <div class="tab-pane[% IF session.role == 'data_manager' %] active[%END %]" id="publ-datamanager">
-	    <div class="col-sm-8">
-	      [% tabmodus = 'data_manager' %]
-	      [% INCLUDE hits.tt %]
-	    </div>
-      </div>
-      [% END %]
-	  [% IF backend AND session.role == "delegate" %]
-	  <!-- backend + delegate -->
-	  [% FOREACH delegate_id IN thisPerson.delegate %]
-	  <div class="tab-pane[% IF modus.match(delegate_id) %] active[%END %]" id="publ-delegate_[% delegate_id %]">
-	    <div class="col-sm-8">
-	      [% USE String; tabmodus = String.new('delegate_'); tabmodus = tabmodus.append(delegate_id).text %]
-	      [% delegate_name = h.get_person(delegate_id).full_name %]
-	      [% INCLUDE hits.tt %]
-	    </div>
-	    <div class="col-md-3 col-md-offset-1 col-sm-4 facets">
-	      [% INCLUDE filters.tt %]
-	    </div>
-	  </div>
-	  [% END %]
-	  [% END %]
-      </div>
-
-      <script>
-      $('#myTab a').click(function (e) {
-	e.preventDefault();
-	$(this).tab('show');
-      })
-      </script>
+        <script>
+            $('#myTab a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            })
+        </script>
     </div>
-
     [% END %]
-
-  </div> <!-- main content (left) -->
-
+    </div> <!-- main content (left) -->
 </div><!-- row outer border -->
 
 <!-- END home.tt -->
 
 [% INCLUDE mark_all_js.tt %]
-
 [% INCLUDE footer.tt %]
