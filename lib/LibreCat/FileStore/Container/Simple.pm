@@ -69,7 +69,7 @@ sub get {
         key          => $key,
         size         => $size,
         md5          => '',
-        content_type => "$content_type", # Need explicit string answer!
+        content_type => $content_type,
         created      => $created,
         modified     => $modified,
         data         => $data

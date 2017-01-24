@@ -18,7 +18,14 @@ sub content_type {
 
     my ($ext) = $filename =~ /\.(.+?)$/;
 
-    return $self->types->mimeTypeOf($ext) // 'application/octet-stream';
+    my $type = 'application/octet-stream';
+
+    my $mime =  $self->types->mimeTypeOf($ext);
+
+    # Require explicit stringification!
+    $type = sprintf "%s" , $mime->type if $mime;
+
+    return $type;
 }
 
 1;
