@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Bash script used for executing crontab command
+# Bash script used for executing crontab commands
 #
 # E.g. bin/exec.sh bin/librecat publication export
 
