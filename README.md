@@ -37,3 +37,9 @@ Project, Award, Research Group
 ## Install
 
 See our Wiki at: https://github.com/LibreCat/LibreCat/wiki
+
+## Misc
+
+<a href="https://codeclimate.com/github/LibreCat/LibreCat"><img src="https://codeclimate.com/github/LibreCat/LibreCat/badges/gpa.svg" /></a>
+<a href="https://codeclimate.com/github/LibreCat/LibreCat"><img src="https://codeclimate.com/github/LibreCat/LibreCat/badges/issue_count.svg" /></a>
+<a href="https://codeclimate.com/github/LibreCat/LibreCat/coverage"><img src="https://codeclimate.com/github/LibreCat/LibreCat/badges/coverage.svg" /></a>
