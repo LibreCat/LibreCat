@@ -37,17 +37,17 @@ case "${CMD}" in
         echo "ids..."
         carton exec bin/librecat delete default --bag data
         echo "researcher..."
-        carton exec bin/librecat delete default --bag researcher
+        carton exec bin/librecat delete backup  --bag researcher
         echo "publication..."
-        carton exec bin/librecat delete default --bag publication
+        carton exec bin/librecat delete backup  --bag publication
         echo "department..."
-        carton exec bin/librecat delete default --bag department
+        carton exec bin/librecat delete backup  --bag department
         echo "project..."
-        carton exec bin/librecat delete default --bag project
+        carton exec bin/librecat delete backup  --bag project
         echo "research_group..."
-        carton exec bin/librecat delete default --bag research_group
+        carton exec bin/librecat delete backup  --bag research_group
         echo "award..."
-        carton exec bin/librecat delete default --bag award
+        carton exec bin/librecat delete backup  --bag award
         echo "Done"
         ;;
     export)
