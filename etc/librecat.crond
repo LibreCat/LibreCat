@@ -1,0 +1,2 @@
+# Enforce embargos switch file access level when needed 
+30 0 * * * librecat /opt/librecat/bin/exec.sh 'bin/librecat publication embargo update' | /opt/librecat/bin/exec.sh 'bin/librecat publication files -' > /dev/null 2>&1
