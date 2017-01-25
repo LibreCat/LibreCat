@@ -2,6 +2,20 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
+0.1.0 2016-25-01
+    - fix embeds
+    - fix frontend templates
+    - fix thumbnail generation
+    - introduce audit functionality
+
+
+0.05 2016-05-01
+    - search refactored
+    - mutliple imports, UI for WoS data
+    - Audit workers added
+    - exports refactored
+    - a lot of cleanup
+
 0.04 2016-12-02
     - author-linking bug  fix
     - exports in frontend

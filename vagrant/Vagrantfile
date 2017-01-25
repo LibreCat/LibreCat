@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+$script = <<SCRIPT
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo "deb http://packages.elastic.co/elasticsearch/1.7/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch.list
+apt update && apt upgrade -y
+apt install -y libapparmor1 ca-certificates software-properties-common build-essential ca-certificates wget gcc make xz-utils git imagemagick libexpat1-dev libssl-dev libxml2-dev libxslt1-dev libgdbm-dev zlib1g-dev curl telnet cpanminus openjdk-7-jre gearman gearman-server gearman-tools libgearman-dev
+curl -O https://apt.dockerproject.org/repo/pool/main/d/docker-engine/docker-engine_1.12.5-0~debian-jessie_amd64.deb
+dpkg -i docker-engine_1.12.5-0~debian-jessie_amd64.deb
+rm docker-engine_*
+apt install -y elasticsearch
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable elasticsearch.service
+sudo systemctl start elasticsearch.service
+debconf-set-selections <<< 'mysql-server mysql-server/root_password password librecat'
+debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password librecat'
+apt install mysql-client mysql-server mysql-utilities libmysqlclient-dev
+cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+cpanm Carton
+echo "export PATH=$PATH:/home/vagrant/perl5/bin" >> /home/vagrant/.bashrc
+echo "export PERL5LIB=/home/vagrant/perl5/lib/perl5" >> /home/vagrant/.bashrc
+SCRIPT
+
+Vagrant.configure(2) do |config|
+
+    config.vm.box = "debian/jessie64"
+    config.vm.box_check_update = false
+
+    config.vm.provision "shell", inline: $script
+    config.vm.synced_folder "../", "/home/vagrant/LibreCat"
+    config.vm.network "forwarded_port", guest: 5001, host: 5001
+
+end

@@ -35,7 +35,7 @@ get qr{/(data|publication)/([A-Fa-f0-9-]+)} => sub {
         push @{$p->{cql}},
             ($bag eq 'data') ? "type=research_data" : "type<>research_data";
         $hits = LibreCat->searcher->search('publication', $p);
-        return redirect "$bag/$hits->first->{_id}", 301 if $hits->{total};
+        return redirect "/" . $bag. "/" . $hits->first->{_id}, 301 if $hits->{total};
     }
 
     $hits->{total} ? status 200 : status 404;

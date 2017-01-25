@@ -14,7 +14,6 @@ MANIFEST.bak
 META.yml
 MYMETA.yml
 catmandu.local.yml
-Vagrantfile
 _build/
 blib/
 cover_db/
