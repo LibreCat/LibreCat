@@ -60,7 +60,7 @@
   [%- ELSE %]
   <role><roleTerm type="text">author</roleTerm> </role>
   [%- END %]
-  [%- IF au.id %]<identifier type="unibi">[% au.id %]</identifier>[% END -%]
+  [%- IF au.id %]<identifier type="local">[% au.id %]</identifier>[% END -%]
   [%- IF au.orcid %]<description xsi:type="identifierDefinition" type="orcid">[% au.orcid %]</description>[% END -%]
 </name>
 [%- END %]
@@ -85,7 +85,7 @@
   [%- IF ed.first_name %]<namePart type="given">[% ed.first_name | xml_strict %]</namePart>[% END %]
   [%- IF ed.last_name %]<namePart type="family">[% ed.last_name | xml_strict %]</namePart>[% END %]
   <role> <roleTerm type="text">editor</roleTerm> </role>
-  [%- IF ed.id %]<identifier type="unibi">[% ed.id %]</identifier>[% END %]
+  [%- IF ed.id %]<identifier type="local">[% ed.id %]</identifier>[% END %]
   [%- IF ed.orcid %]<description xsi:type="identifierDefinition" type="orcid">[% ed.orcid %]</description>[% END -%]
 </name>
 [%- END %]
@@ -105,7 +105,7 @@
 [% FOREACH dp IN department %]
 <name type="corporate">
   <namePart>[% dp.name | xml_strict %]</namePart>
-  <identifier type="unibi">[% dp._id | xml_strict %]</identifier>
+  <identifier type="local">[% dp._id | xml_strict %]</identifier>
   <role>
     <roleTerm type="text">department</roleTerm>
   </role>
@@ -236,9 +236,6 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 </relatedItem>
 [% END %]
 [%- IF extern %]<note type="extern">yes</note>[% END %]
-[%- IF ubi_funded %]
-<note><funding type="UNIBI">We acknowledge support for the Article Processing Charge by the Deutsche Forschungsgemeinschaft and the Open Access Publication Funds of LibreCat University Library.</funding></note>
-[%- END %]
 [%- IF defense_date %]
 <dateOther encoding="w3cdtf" type="defenseDate">[% defense_date | xml_strict %]</dateOther>
 [%- END %]

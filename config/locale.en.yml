@@ -301,7 +301,7 @@ forms:
         label: "Publication Type"
       doi: &doi
         label: "DOI"
-        placeholder: "e.g. 10.4119/unibi/2695161"
+        placeholder: "e.g. 10.4119/xyz/2695161"
         title: "The DOI will be generated automatically and cannot be changed."
       title: &booktitle
         label: "Title"

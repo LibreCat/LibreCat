@@ -771,7 +771,7 @@ researcher:
       enum: ["active","inactive"]
       description: "Account status"
     account_type:
-      enum: ["external","unibi"]
+      enum: ["external","local"]
       description: "Account type"
     password:
       type: string

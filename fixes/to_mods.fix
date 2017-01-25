@@ -13,7 +13,7 @@ do list(path => file)
       add_field(accessRestriction,yes)
     end
     if any_match(access_level,local)
-      add_field(accessRestriction,'UniBi access only')
+      add_field(accessRestriction,'local access only')
     end
     if any_match(access_level,open_access)
       add_field(accessRestriction,no)

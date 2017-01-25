@@ -1006,8 +1006,8 @@ other_items:
       label: "Account Type"
       mandatory: 1
       values:
-        unibi:
-          label: "UniBi"
+        local:
+          label: "Local"
           default: 1
         external:
           label: "External"
