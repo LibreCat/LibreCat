@@ -70,7 +70,7 @@ sub do_delete {
 sub do_upload {
     my ($self, $key, $filename, $path, %opts) = @_;
 
-    return -1 unless length $key && $key =~ /^\d+$/;
+    return -1 unless length $key && $key =~ /^[0-9A-F-]+$/;
     return -1 unless length $filename;
     return -1 unless length $path && -f $path && -r $path;
 
@@ -119,7 +119,7 @@ LibreCat::Worker::FileUploader - a worker for uploading files into the repostito
 
     my $uploader = LibreCat::Worker::FileUploader->new(
                     files => {
-                        package => 'Simple', 
+                        package => 'Simple',
                         options => {
                             root => '/data2/librecat/file_uploads'
                         }
