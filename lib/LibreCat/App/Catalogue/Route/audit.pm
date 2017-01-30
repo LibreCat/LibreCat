@@ -15,6 +15,20 @@ use LibreCat::App::Helper;
 use POSIX qw(strftime);
 use URL::Encode qw(url_decode);
 
+Dancer::Plugin::Auth::Tiny->extend(
+   role => sub {
+       my ($role, $coderef) = @_;
+       return sub {
+           if (session->{role} && $role eq session->{role}) {
+               goto $coderef;
+           }
+           else {
+               redirect '/access_denied';
+           }
+           }
+   }
+);
+
 =head2 PREFIX /librecat/audit
 
 All publication searches are handled within the prefix search.
