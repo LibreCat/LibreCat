@@ -108,7 +108,7 @@ sub path_string {
         return undef;
     }
 
-    my $long_key = sprintf "%-12.12d", $key;
+    my $long_key = sprintf "%-9.9d", $key;
     my $path = $root . "/" . join("/", unpack('(A3)*', $long_key));
 
     $path;

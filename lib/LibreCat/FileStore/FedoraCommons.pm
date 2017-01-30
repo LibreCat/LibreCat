@@ -136,7 +136,7 @@ sub delete {
 sub _long_key {
     my ($selk, $key) = @_;
     if ($key =~ /^\d+$/) {
-        return sprintf "%-12.12d", $key;
+        return sprintf "%-9.9d", $key;
     }
     else {
         return $key;
