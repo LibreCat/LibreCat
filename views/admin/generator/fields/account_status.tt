@@ -1,10 +1,13 @@
 <div class="row innerrow">
   <div class="col-md-2">
     <label for="id_active">{% account_status.label %}</label>
+    {% IF account_status.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10">
     <div class="form-group col-md-1">
-      <input type="checkbox" name="account_status" id="id_active" value="active" [% IF account_status == 'active' %]checked="checked"[% END %]>
+        <input type="checkbox" name="account_status"
+               id="id_active" value="active"
+               [% IF account_status == 'active' %]checked="checked"[% END %]>
     </div>
   </div>
 </div>

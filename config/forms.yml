@@ -981,14 +981,13 @@ other_items:
     account_field_order:
       - id
       - account_type
-      - ext_institution
+      - login
       - password
       - names
-      - old_name
-      - email
-      - login
-      - department
       - account_status
+      - email
+      - ext_institution
+      - department
       - super_admin
       - delegate
       - data_manager
@@ -1016,6 +1015,7 @@ other_items:
       label_short: "Ext. Institution"
     password:
       label: "Password"
+      mandatory: 1
     names:
       label: "Name"
       first_name:
@@ -1033,13 +1033,14 @@ other_items:
     email:
       label: "Email"
     login:
-      label: "Login Name (LDAP)"
-      mandatory: 0
+      label: "Login"
+      mandatory: 1
     department:
       label: "Affiliation"
       multiple: 1
     account_status:
       label: "Active"
+      mandatory: 1
     super_admin:
       label: "Library Admin"
     delegate:
