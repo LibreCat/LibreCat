@@ -110,7 +110,7 @@ sub command {
 
     unless ($file_opt) {
         $file_opt = $self->file_opt;
-    } 
+    }
 
     $self->app->set_global_options(
         {
@@ -302,7 +302,7 @@ sub _add {
 
     $container->commit;
 
-    return $self->_get($key);
+    return $self->_get($container->key);
 }
 
 sub _delete {
