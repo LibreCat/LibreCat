@@ -22,7 +22,7 @@ Dancer::Plugin::Auth::Tiny->extend(
             else {
                 redirect '/access_denied';
             }
-            }
+         }
     }
 );
 
