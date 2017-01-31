@@ -120,12 +120,7 @@ sub create {
         foreach my $s (@{$self->styles}) {
             my $locale = ($s eq 'dgps') ? 'de' : $self->locale;
             $cite->{$s} = $self->_request(
-<<<<<<< HEAD
-                {locale => $locale, style => $s, content => $csl_json,});
-=======
                 {locale => $locale, style => $conf->{csl}->{zotero_styles}->{$s}, content => $csl_json,});
->>>>>>> 9bb71c6... Running citeproc-node as citation processor.
-
         }
 
         return $cite;
