@@ -2,22 +2,22 @@
 
 copy_field(type, res.type)
 set_field(res.type, book)
-if any_match(type, 'bookChapter|translationChapter|encyclopediaArticle')
+if any_match(type, 'book_chapter|translation_chapter|encyclopedia_article')
   set_field(res.type, chapter)
 end
 
-if any_match(type, 'preprint|journalArticle|review|patent')
+if any_match(type, 'preprint|journal_article|review|patent')
   set_field(res.type, article)
 end
-if any_match(type, 'journalArticle')
+if any_match(type, 'journal_article')
   set_field(res.type, article-journal)
 end
 
-if any_match(type, 'newspaperArticle')
+if any_match(type, 'newspaper_article')
   set_field(res.type, article-newspaper)
 end
 
-if any_match(type, 'conferenceAbstract|^conference$')
+if any_match(type, 'conference_abstract|^conference$')
   set_field(res.type, paper-conference)
   if exists(series_title)
     unless exists(publication)
@@ -43,7 +43,7 @@ if any_match(page, '-')
   join_field(page, '-')
   copy_field(page, res.page)
 else
-  if any_match(type, 'bookChapter|conferenceAbstract|conferenceEditor|^conference$|encyclopediaArticle|journalArticle|review|translationChapter')
+  if any_match(type, 'book_chapter|conference_abstract|conference_editor|^conference$|encyclopedia_article|journal_article|review|translation_chapter')
     copy_field(page, res.page)
   else
     copy_field(page, res.number-of-pages)
