@@ -8,12 +8,17 @@ use Net::Telnet::Gearman;
 
 use parent 'LibreCat::Cmd';
 
+sub command_opt_spec {
+    my ($class) = @_;
+    (['background|bg', ""], ['id=s', ""],);
+}
+
 sub description {
     return <<EOF;
 Usage:
 
 librecat queue status
-librecat queue add_job WORKER FILE
+librecat [--background] queue add_job WORKER FILE
 
 EOF
 }
@@ -37,12 +42,12 @@ sub command {
         $self->_status;
     }
     elsif ($cmd eq 'add_job') {
-        $self->_add_job(@$args);
+        $self->_add_job(@$args, background => $opts->background);
     }
 }
 
 sub _add_job {
-    my ($self,$worker,$file) = @_;
+    my ($self,$worker,$file, %opts) = @_;
 
     croak "usage: $0 add_job <worker> <file>" unless defined($worker) && -r $file;
 
@@ -53,13 +58,22 @@ sub _add_job {
     $importer->each(sub {
         my $job = $_[0];
 
-        my $response = $queue->add_job("audit",$job);
+        my $job_id = $queue->add_job("audit",$job);
 
-        print "Adding job\n";
-
-        $job->{'_response'} = $response;
+        print "Adding job:\n";
 
         $exporter->add($job);
+
+        unless ($opts{background}) {
+            print "[$job_id]:";
+            while (1) {
+                print "+";
+                my $job = $queue->job_status($job_id);
+                last if $job->done;
+                sleep 1;
+            }
+            print "DONE\n";
+        }
     });
 
     $exporter->commit;
@@ -122,6 +136,6 @@ LibreCat::Cmd::queue - show job queue status
     librecat queue status
 
     # Submit a YAML file job to the WORKER
-    librecat queue add_job WORKER FILE
+    librecat [--background] queue add_job WORKER FILE
 
 =cut
