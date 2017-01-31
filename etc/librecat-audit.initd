@@ -16,6 +16,8 @@ SERVER_USER="biblio"
 SERVER_GROUP="biblio"
 WORKERS=1
 LIBRECAT_DIR="/opt/librecat"
+# If a config.yml is in a layers directory, use this line:
+# LIBRECAT_LAYERS="/opt/librecat-ugent"
 
 lock_file=/var/lock/subsys/audit.librecat
 
@@ -24,7 +26,7 @@ do_start()
         if [ ! -f "$lock_file" ] ; then
                 cd $LIBRECAT_DIR
                 echo -n $"Starting ${SCRIPT}: "
-                sudo -u ${SERVER_USER} -g ${SERVER_GROUP} $CARTON exec "bin/librecat worker audit start --workers ${WORKERS} --supervise" > /dev/null 2>&1
+                sudo -u ${SERVER_USER} -g ${SERVER_GROUP} $CARTON exec "LIBRECAT_LAYERS=${LIBRECAT_LAYERS} bin/librecat worker audit start --workers ${WORKERS} --supervise" > /dev/null 2>&1
                 RETVAL=$?
                 if [ $RETVAL -eq 0 ]; then
                     touch $lock_file
@@ -43,7 +45,7 @@ do_stop()
 {
         cd $LIBRECAT_DIR
         echo -n $"Stopping $SCRIPT: "
-        sudo -u ${SERVER_USER} -g ${SERVER_GROUP} $CARTON exec "bin/librecat worker audit stop --workers ${WORKERS} --supervise" > /dev/null 2>&1
+        sudo -u ${SERVER_USER} -g ${SERVER_GROUP} $CARTON exec "LIBRECAT_LAYERS=${LIBRECAT_LAYERS} bin/librecat worker audit stop --workers ${WORKERS} --supervise" > /dev/null 2>&1
         RETVAL=$?
         if [ $RETVAL -eq 0 ]; then
            touch $lock_file
@@ -58,7 +60,7 @@ do_stop()
 do_status()
 {
         cd $LIBRECAT_DIR
-        sudo -u ${SERVER_USER} -g ${SERVER_GROUP} $CARTON exec "bin/librecat queue"
+        sudo -u ${SERVER_USER} -g ${SERVER_GROUP} $CARTON exec "LIBRECAT_LAYERS=${LIBRECAT_LAYERS} bin/librecat queue status"
 }
 
 case "$1" in

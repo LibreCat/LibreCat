@@ -43,14 +43,17 @@ sub fix {
         $action = 'batch';
     }
 
+    my $job = {
+        id      => $id ,
+        bag     => 'publication' ,
+        process => "hook($name)" ,
+        action  => "$action" ,
+        message => "activated by $login ($user_id)" ,
+    };
+
+    h->log->debug("adding job: " . to_yaml($job));
     try {
-        h->queue->add_job('audit',{
-            id      => $id ,
-            bag     => 'publication' ,
-            process => "hook($name)" ,
-            action  => "$action" ,
-            message => "activated by $login ($user_id)" ,
-        });
+        h->queue->add_job('audit', $job);
     } catch {
         h->log->trace("caught a : $_");
     };

@@ -5,7 +5,7 @@
         <h1>[% h.loc("audit.title") %]</h1>
     </div>
 
-    <table border="1">
+    <table border="1" width="800">
         <tr>
          <th>[% h.loc("audit.id") %]</th>
          <th>[% h.loc("audit.bag") %]</th>
@@ -16,7 +16,7 @@
         </tr>
         [% FOREACH au in audit %]
         <tr>
-         <td>[% au.id  %]</td>
+         <td nowrap="nowrap">[% au.id  %]</td>
          <td>[% au.bag %]</td>
          <td nowrap="nowrap">[% au.process %]</td>
          <td>[% au.action %]</td>
