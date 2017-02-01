@@ -29,9 +29,15 @@ sub list {
     my $pid         = "$ns_prefix:" . $self->key;
     my $dsnamespace = $fedora->{dsnamespace};
 
+    $self->log->debug("Listing datastreams for $pid");
+
     my $response = $fedora->listDatastreams(pid => $pid);
 
-    return () unless $response->is_ok;
+    unless ($response->is_ok) {
+        $self->log->error("Failed to list datastreams for $pid");
+        $self->log->error($response->error);
+        return ();
+    }
 
     my $obj = $response->parse_content;
 
@@ -39,7 +45,12 @@ sub list {
 
     for my $ds (@{$obj->{datastream}}) {
         my $dsid = $ds->{dsid};
-        next unless $dsid =~ /^$dsnamespace\./;
+        unless ($dsid =~ /^$dsnamespace\./) {
+            $self->log->debug("skipping $dsid (not in $dsnamespace)");
+            next;
+        }
+
+        $self->log->debug("adding $dsid");
         my $file = $self->_get($dsid);
         push @result, $self->_get($dsid) if $file;
     }
@@ -54,9 +65,15 @@ sub _list_dsid {
     my $pid         = "$ns_prefix:" . $self->key;
     my $dsnamespace = $fedora->{dsnamespace};
 
+    $self->log->debug("Listing datastreams for $pid");
+
     my $response = $fedora->listDatastreams(pid => $pid);
 
-    return () unless $response->is_ok;
+    unless ($response->is_ok) {
+        $self->log->error("Failed to list datastreams for $pid");
+        $self->log->error($response->error);
+        return ();
+    }
 
     my $obj = $response->parse_content;
 
@@ -65,7 +82,13 @@ sub _list_dsid {
     for my $ds (@{$obj->{datastream}}) {
         my $dsid  = $ds->{dsid};
         my $label = $ds->{label};
-        next unless $dsid =~ /^$dsnamespace\./;
+
+        unless ($dsid =~ /^$dsnamespace\./) {
+            $self->log->debug("skipping $dsid (not in $dsnamespace)");
+            next;
+        }
+
+        $self->log->debug("adding $dsid");
         my $cnt = $dsid;
         $cnt =~ s/^$dsnamespace\.//;
         push @result, {n => $cnt, dsid => $dsid, label => $label};
@@ -80,9 +103,14 @@ sub _dsid_by_label {
     my $ns_prefix = $fedora->{namespace};
     my $pid       = "$ns_prefix:" . $self->key;
 
+    $self->log->debug("Listing datastreams for $pid");
     my $response = $fedora->listDatastreams(pid => $pid);
 
-    return undef unless $response->is_ok;
+    unless ($response->is_ok) {
+        $self->log->error("Failed to list datastreams for $pid");
+        $self->log->error($response->error);
+        return ();
+    }
 
     my $obj = $response->parse_content;
 
@@ -116,9 +144,14 @@ sub _get {
     my $ns_prefix = $fedora->{namespace};
     my $pid       = "$ns_prefix:" . $self->key;
 
+    $self->log->debug("Get datastream history for $pid:$dsid");
     my $response = $fedora->getDatastreamHistory(pid => $pid, dsID => $dsid);
 
-    return undef unless $response->is_ok;
+    unless ($response->is_ok) {
+        $self->log->error("Failed to get datastream history for $pid:$dsid");
+        $self->log->error($response->error);
+        return undef;
+    }
 
     my $object = $response->parse_content;
 
@@ -193,6 +226,7 @@ sub _add_filename {
     my $response;
 
     if ($operation eq 'ADD') {
+        $self->log->debug("Add datastream $pid:$dsid $filename $key $mimeType");
         $response = $fedora->addDatastream(
             pid      => $pid,
             dsID     => $dsid,
@@ -203,6 +237,7 @@ sub _add_filename {
         );
     }
     else {
+        $self->log->debug("Modify datastream $pid:$dsid $filename $key $mimeType");
         $response = $fedora->modifyDatastream(
             pid      => $pid,
             dsID     => $dsid,
@@ -213,7 +248,11 @@ sub _add_filename {
         );
     }
 
-    return undef unless $response->is_ok;
+    unless ($response->is_ok) {
+        $self->log->error("Failed to add/modify datastream history for $pid:$dsid");
+        $self->log->error($response->error);
+        return undef;
+    }
 
     1;
 }
@@ -262,6 +301,7 @@ sub _add_stream {
     my $response;
 
     if ($operation eq 'ADD') {
+        $self->log->debug("Add datastream $pid:$dsid $filename $key $mimeType");
         $response = $fedora->addDatastream(
             pid      => $pid,
             dsID     => $dsid,
@@ -272,6 +312,7 @@ sub _add_stream {
         );
     }
     else {
+        $self->log->debug("Modify datastream $pid:$dsid $filename $key $mimeType");
         $response = $fedora->modifyDatastream(
             pid      => $pid,
             dsID     => $dsid,
@@ -284,7 +325,11 @@ sub _add_stream {
 
     unlink $filename;
 
-    return undef unless $response->is_ok;
+    unless ($response->is_ok) {
+        $self->log->error("Failed to add/modify datastream history for $pid:$dsid");
+        $self->log->error($response->error);
+        return undef;
+    }
 
     1;
 }
@@ -334,9 +379,11 @@ sub delete {
     my $response;
 
     if ($fedora->{purge}) {
+        $self->log->debug("Purge datastream $pid:$dsid");
         $response = $fedora->purgeDatastream(pid => $pid, dsID => $dsid);
     }
     else {
+        $self->log->debug("Set datastream state D $pid:$dsid");
         $response = $fedora->setDatastreamState(
             pid     => $pid,
             dsID    => $dsid,
@@ -344,7 +391,13 @@ sub delete {
         );
     }
 
-    return $response->is_ok ? 1 : undef;
+    unless ($response->is_ok) {
+        $self->log->error("Failed to purge/set datastream for $pid:$dsid");
+        $self->log->error($response->error);
+        return undef;
+    }
+
+    1;
 }
 
 sub commit {
@@ -359,13 +412,18 @@ sub read_container {
 
     my $ns_prefix = $fedora->{namespace};
 
+    my $inst = $class->new(key => $key);
+
+    $inst->log->debug("Get object profile $ns_prefix:$key");
     my $response = $fedora->getObjectProfile(pid => "$ns_prefix:$key");
 
-    return undef unless $response->is_ok;
+    unless ($response->is_ok) {
+        $inst->log->error("Failed get object profile $ns_prefix:$key");
+        $inst->log->error($response->error);
+        return undef;
+    }
 
     my $object = $response->parse_content;
-
-    my $inst = $class->new(key => $key);
 
     $inst->{created}  = str2time($object->{objCreateDate});
     $inst->{modified} = str2time($object->{objLastModDate});
@@ -384,13 +442,21 @@ sub create_container {
 
     my $xml = Catmandu::Store::FedoraCommons::FOXML->new->serialize();
 
+    my $inst = $class->new(key => $key);
+
+    $inst->log->debug("Ingest object $ns_prefix:$key");
+
     my $response = $fedora->ingest(
         pid    => "$ns_prefix:$key",
         xml    => $xml,
         format => 'info:fedora/fedora-system:FOXML-1.1'
     );
 
-    return undef unless $response->is_ok;
+    unless ($response->is_ok) {
+        $inst->log->error("Failed ingest object $ns_prefix:$key");
+        $inst->log->error($response->error);
+        return undef;
+    }
 
     my $obj = $response->parse_content;
 
@@ -405,17 +471,25 @@ sub delete_container {
 
     my $ns_prefix = $fedora->{namespace};
 
+    my $inst = $class->new(key => $key);
+
     my $response;
 
     if ($fedora->{purge}) {
+        $class->log->debug("Purge object $ns_prefix:$key");
         $response = $fedora->purgeObject(pid => "$ns_prefix:$key");
     }
     else {
+        $class->log->debug("Modify object state D $ns_prefix:$key");
         $response
             = $fedora->modifyObject(pid => "$ns_prefix:$key", state => 'D');
     }
 
-    return undef unless $response->is_ok;
+    unless ($response->is_ok) {
+        $inst->log->error("Failed purge/modify object $ns_prefix:$key");
+        $inst->log->error($response->error);
+        return undef;
+    }
 
     1;
 }
