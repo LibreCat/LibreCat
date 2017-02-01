@@ -3,7 +3,7 @@ _prefix:
 
 # engine for citation generation
 # possible values are 'csl' or 'none'
-engine: none
+engine: csl
 
 template:
   template_path: 'views/citation.tt'
@@ -17,3 +17,10 @@ csl:
     - chicago-fullnote-bibliography
     - ieee
     - modern-language-association
+
+zotero_styles:
+  american-medical-association: american-medical-association
+  apa: apa
+  chicago-fullnote-bibliography: chicago-fullnote-bibliography
+  ieee: ieee
+  mla: modern-language-association

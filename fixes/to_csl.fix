@@ -1,22 +1,36 @@
 # map fields to csl
 
 copy_field(type, res.type)
-#lookup(res.type, fixes/lookup/csl_types.csv, default:'book')
 set_field(res.type, book)
-if any_match(type, 'bookChapter|conferenceAbstract|conference|encyclopediaArticle|translationChapter')
+if any_match(type, 'book_chapter|translation_chapter|encyclopedia_article')
   set_field(res.type, chapter)
 end
-if any_match(type, 'conferenceEditor')
-  set_field(res.type, book)
-end
-if any_match(type, 'default|review|journalArticle|journalEditor|newspaperArticle|patent|preprint')
+
+if any_match(type, 'preprint|journal_article|review|patent')
   set_field(res.type, article)
+end
+if any_match(type, 'journal_article')
+  set_field(res.type, article-journal)
+end
+
+if any_match(type, 'newspaper_article')
+  set_field(res.type, article-newspaper)
+end
+
+if any_match(type, 'conference_abstract|^conference$')
+  set_field(res.type, paper-conference)
+  if exists(series_title)
+    unless exists(publication)
+      set_field(res.type, article)
+    end
+  end
 end
 
 move_field(title, res.title)
 move_field(alternative_title.0, res.originalTitle)
 move_field(publication, res.container-title)
 move_field(series_title, res.collection-title)
+
 move_field(publisher, res.publisher)
 move_field(volume, res.volume)
 move_field(issue, res.issue)
@@ -29,42 +43,37 @@ if any_match(page, '-')
   join_field(page, '-')
   copy_field(page, res.page)
 else
-  copy_field(page, res.number-of-pages)
+  if any_match(type, 'book_chapter|conference_abstract|conference_editor|^conference$|encyclopedia_article|journal_article|review|translation_chapter')
+    copy_field(page, res.page)
+  else
+    copy_field(page, res.number-of-pages)
+  end
 end
 move_field(article_number, res.number)
 
 move_field(year, res.sort-year)
 
-move_field(publication_status, res.status)
-copy_field(res.status, res.publstatus)
+#move_field(publication_status, res.status)
+#copy_field(res.status, res.publstatus)
 add_field(res.tmp_status, '0000')
-copy_field(res.status, res.tmp_status)
-#lookup(res.tmp_status, fixes/lookup/csl_status.csv, default:'0000')
-#if any_match(res.tmp_status, '0000')
-#  copy_field(res.sort-year, res.issued.date-parts.0.0)
-#else
-#  copy_field(res.tmp_status,res.issued.date-parts.0.0)
-#end
+#copy_field(res.status, res.tmp_status)
+copy_field(publication_status, res.tmp_status)
+
 if any_match(res.tmp_status, 'submitted|accepted|inpress|unpublished|draft')
   if any_match(res.tmp_status, 'submitted')
-    set_field(res.tmp_status, 'Submitted')
-    move_field(res.tmp_status, res.issued.date-parts.0.0)
+    set_field(res.issued.date-parts.0.0, 'Submitted')
   end
   if any_match(res.tmp_status, 'accepted')
-    set_field(res.tmp_status, 'Accepted')
-    move_field(res.tmp_status, res.issued.date-parts.0.0)
+    set_field(res.issued.date-parts.0.0, 'Accepted')
   end
   if any_match(res.tmp_status, 'inpress')
-    set_field(res.tmp_status, 'In Press')
-    move_field(res.tmp_status, res.issued.date-parts.0.0)
+    set_field(res.issued.date-parts.0.0, 'In Press')
   end
   if any_match(res.tmp_status, 'unpublished')
-    set_field(res.tmp_status, 'Unpublished')
-    move_field(res.tmp_status, res.issued.date-parts.0.0)
+    set_field(res.issued.date-parts.0.0, 'Unpublished')
   end
   if any_match(res.tmp_status, 'draft')
-    set_field(res.tmp_status, 'Draft')
-    move_field(res.tmp_status, res.issued.date-parts.0.0)
+    set_field(res.issued.date-parts.0.0, 'Draft')
   end
 else
   copy_field(res.sort-year, res.issued.date-parts.0.0)

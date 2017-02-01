@@ -1,3 +1,6 @@
+citation:
+  engine: none
+
 store:
   default:
     package: DBI

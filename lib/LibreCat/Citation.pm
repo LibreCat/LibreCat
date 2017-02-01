@@ -83,6 +83,10 @@ sub _request {
         my $content = $res->{_content};
         $content =~ s/<div class="csl-left-margin">.*?<\/div>//g;
         $content =~ s/<div.*?>|<\/div>//g;
+        # More regexes for backwards compatibility
+        $content =~ s/^\s+//g;
+        $content =~ s/\s+$//g;
+        $content =~ s/__LINE_BREAK__/\<br \/\>/g;
         utf8::decode($content);
         return $content;
     }
@@ -116,8 +120,7 @@ sub create {
         foreach my $s (@{$self->styles}) {
             my $locale = ($s eq 'dgps') ? 'de' : $self->locale;
             $cite->{$s} = $self->_request(
-                {locale => $locale, style => $s, content => $csl_json,});
-
+                {locale => $locale, style => $conf->{csl}->{zotero_styles}->{$s}, content => $csl_json,});
         }
 
         return $cite;
