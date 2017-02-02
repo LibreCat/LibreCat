@@ -129,6 +129,9 @@ sub _tree_parse {
     my $HASH      = $importer->first;
     my $helper    = LibreCat::App::Helper::Helpers->new;
 
+    print "deleting previous departments...\n";
+    $helper->department->delete_all;
+
     _tree_parse_parser($HASH->{tree}, sub {
         my $rec = shift;
         $helper->store_record('department', $rec);
