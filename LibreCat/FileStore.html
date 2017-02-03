@@ -1,0 +1,46 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::FileStore - Abstract definition of a file storage implementation</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::FileStore::XYZ;
+
+    my $filestore =&gt; LibreCat::FileStore::XYZ-&gt;new(%options);
+
+    my $generator = $filestore-&gt;list;
+
+    while (my $key = $generator-&gt;()) {
+        my $container = $filestore-&gt;get($key);
+
+        for my $file ($container-&gt;list) {
+            my $filename = $file-&gt;key;
+            my $size     = $file-&gt;size;
+            my $checksum = $file-&gt;md5;
+            my $created  = $file-&gt;created;
+            my $modified = $file-&gt;modified;
+            my $io       = $file-&gt;data;
+        }
+    }
+
+    my $container = $filestore-&gt;get(&#39;1234&#39;);
+
+    if ($filestore-&gt;exists(&#39;1234&#39;)) {
+        ...
+    }
+
+    my $container = $filestore-&gt;add(&#39;1235&#39;);
+
+    $filestore-&gt;delete(&#39;1234&#39;);</code></pre>
+<h1 id="description">DESCRIPTION</h1>
+<p>LibreCat::FileStore is an abstract definition of a file storage. File content is stored in a container given by an identifier. Each container can contain zero or more files.</p>
+<h1 id="methods">METHODS</h1>
+<h2 id="newoptions">new(%options)</h2>
+<p>Create a new LibreCat::FileStore.</p>
+<h2 id="list">list()</h2>
+<p>Provide a listing of all available container keys. Returns an iterator with keys.</p>
+<h2 id="getkey">get($key)</h2>
+<p>Return a LibreCat::FileStore::Container given a $key.</p>
+<h2 id="addkey">add($key)</h2>
+<p>Creates a new container and returns a LibreCat::FileStore::Container.</p>
+<h2 id="deletekey">delete($key)</h2>
+<p>Removed a container from the system.</p>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat/FileStore/Container.html" title="LibreCat::FileStore::Container">LibreCat::FileStore::Container</a> , <a href="LibreCat/FileStore/File.html" title="LibreCat::FileStore::File">LibreCat::FileStore::File</a></p>

@@ -1,0 +1,27 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::Worker::DataCite - a worker for registering and minting at DataCite</p>
+<h2 id="synopsis">SYNOPSIS</h2>
+<pre><code>    use LibreCat::Worker::DataCite;
+
+    my $registry = LibreCat::Worker::DataCite-&gt;new(user =&gt; &#39;me&#39;, password =&gt; &#39;secret&#39;);
+
+    $registry-&gt;work({
+        doi          =&gt; &#39;...&#39; ,
+        landing_url  =&gt; &#39;...&#39; ,
+        datacite_xml =&gt; &#39;...&#39; ,
+    })
+
+    # or call them separately
+    $registry-&gt;metadata()
+    $registry-&gt;mint(&#39;&#39;)</code></pre>
+<h2 id="configuration">CONFIGURATION</h2>
+<dl>
+<dt>user</dt>
+<dd><p>Required.</p>
+</dd>
+<dt>password</dt>
+<dd><p>Required.</p>
+</dd>
+</dl>
+<h2 id="see-also">SEE ALSO</h2>
+<p><a href="LibreCat/Worker.html" title="LibreCat::Worker">LibreCat::Worker</a></p>

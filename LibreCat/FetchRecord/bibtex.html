@@ -1,0 +1,20 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::FetchRecord::bibtex - Create a LibreCat publication based on BibTex input</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::FetchRecord::bibtex;
+
+    my $pub = LibreCat::FetchRecord::bibtex-&gt;new-&gt;fetch(&lt;&lt;EOF);
+    @book{book,
+      author    = {Peter Babington},
+      title     = {The title of the work},
+      publisher = {The name of the publisher},
+      year      = 1993,
+      volume    = 4,
+      series    = 10,
+      address   = {The address},
+      edition   = 3,
+      month     = 7,
+      note      = {An optional note},
+      isbn      = {3257227892}
+    }
+    EOF</code></pre>

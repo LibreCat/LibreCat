@@ -1,0 +1,45 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::Auth::SSO::CAS - implementation of LibreCat::Auth::SSO for CAS</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    #in your app.psgi
+
+    builder {
+
+        mount &#39;/auth/cas&#39; =&gt; LibreCat::Auth::SSO::CAS-&gt;new(
+
+            session_key =&gt; &quot;auth_sso&quot;,
+            authorization_url =&gt; &quot;/auth/cas/callback&quot;
+
+        )-&gt;to_app;
+
+        mount &quot;/auth/cas/callback&quot; =&gt; sub {
+
+            my $env = shift;
+            my $session = Plack::Session-&gt;new($env);
+            my $auth_sso = $session-&gt;get(&#39;auth_sso&#39;);
+
+            #not authenticated yet
+            unless($auth_sso){
+
+                return [403,[&quot;Content-Type&quot; =&gt; &quot;text/html&quot;],[&quot;forbidden&quot;]];
+
+            }
+
+            #process auth_sso (white list, roles ..)
+
+            [200,[&quot;Content-Type&quot; =&gt; &quot;text/html&quot;],[&quot;logged in!&quot;]];
+
+        };
+
+    };</code></pre>
+<h1 id="description">DESCRIPTION</h1>
+<p>This is an implementation of <a href="LibreCat/Auth/SSO.html" title="LibreCat::Auth::SSO">LibreCat::Auth::SSO</a> to authenticate against a CAS server.</p>
+<p>It inherits all configuration options from its parent.</p>
+<h1 id="config">CONFIG</h1>
+<dl>
+<dt>cas_url</dt>
+<dd><p>base url of the CAS service</p>
+</dd>
+</dl>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat/Auth/SSO.html" title="LibreCat::Auth::SSO">LibreCat::Auth::SSO</a></p>

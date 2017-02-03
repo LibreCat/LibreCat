@@ -1,0 +1,74 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::Auth::SSO::ORCID - implementation of LibreCat::Auth::SSO for ORCID</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    #in your app.psgi
+
+    builder {
+
+
+        #Register THIS URI in ORCID as a new redirect_uri
+
+        mount &#39;/auth/orcid&#39; =&gt; LibreCat::Auth::SSO::ORCID-&gt;new(
+            client_id =&gt; &quot;APP-1&quot;,
+            client_secret =&gt; &quot;mypassword&quot;,
+            sandbox =&gt; 1,
+            authorization_url =&gt; &quot;${base_url}/auth/orcid/callback&quot;
+        )-&gt;to_app;
+
+        #DO NOT register this uri as new redirect_uri in ORCID
+
+        mount &quot;/auth/orcid/callback&quot; =&gt; sub {
+
+            my $env = shift;
+            my $session = Plack::Session-&gt;new($env);
+            my $auth_sso = $session-&gt;get(&#39;auth_sso&#39;);
+
+            #not authenticated yet
+            unless($auth_sso){
+
+                return [403,[&quot;Content-Type&quot; =&gt; &quot;text/html&quot;],[&quot;forbidden&quot;]];
+
+            }
+
+            #process auth_sso (white list, roles ..)
+
+            #auth_sso is a hash reference:
+            #{ type =&gt; &quot;ORCID&quot;, response =&gt; &quot;&lt;response-from-orcid&gt;&quot; }
+            #the response from orcid is in this case a json string containing the following data:
+            #
+            #{
+            #    &#39;orcid&#39; =&gt; &#39;&lt;orcid&gt;&#39;,
+            #    &#39;access_token&#39; =&gt; &#39;&lt;access_token&gt;&#39;,
+            #    &#39;refresh_token&#39; =&gt; &#39;&lt;refresh-token&gt;&#39;,
+            #    &#39;name&#39; =&gt; &#39;&lt;name&gt;&#39;,
+            #    &#39;scope&#39; =&gt; &#39;/orcid-profile/read-limited&#39;,
+            #    &#39;token_type&#39; =&gt; &#39;bearer&#39;,
+            #    &#39;expires_in&#39; =&gt; &#39;&lt;expiration-date&gt;&#39;
+            #}
+
+            #you can reuse the &#39;orcid&#39; and &#39;access_token&#39; to get the user profile
+
+            [200,[&quot;Content-Type&quot; =&gt; &quot;text/html&quot;],[&quot;logged in!&quot;]];
+
+        };
+
+    };</code></pre>
+<h1 id="description">DESCRIPTION</h1>
+<p>This is an implementation of <a href="LibreCat/Auth/SSO.html" title="LibreCat::Auth::SSO">LibreCat::Auth::SSO</a> to authenticate against a ORCID (OAuth) server.</p>
+<p>It inherits all configuration options from its parent.</p>
+<h1 id="config">CONFIG</h1>
+<p>Register the uri of this application in ORCID as a new redirect_uri.</p>
+<p>DO NOT register the authorization_url in ORCID as the redirect_uri!</p>
+<dl>
+<dt>client_id</dt>
+<dd><p>client_id for your application (see developer credentials from ORCID)</p>
+</dd>
+<dt>client_secret</dt>
+<dd><p>client_secret for your application (see developer credentials from ORCID)</p>
+</dd>
+<dt>sandbox</dt>
+<dd><p>0|1. Defaults to '0'. When set to '1', this api makes use of http://sandbox.orcid.org instead of http://orcid.org.</p>
+</dd>
+</dl>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat/Auth/SSO.html" title="LibreCat::Auth::SSO">LibreCat::Auth::SSO</a></p>

@@ -1,0 +1,17 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat - Librecat helper functions</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>   use LibreCat;
+
+   # Given a &#39;catmandu&#39; configuration file, like: catmandu.hooks.yml
+   # --
+   # hooks:
+   #   myhook:
+   #      before_fixes: [BeforeFix1,BeforeFix2]
+   #      after_fixes:  [AfterFix]
+
+   my $hook = LibreCat-&gt;hook(&#39;eat&#39;);
+
+   $hook-&gt;fix_before($data);  # BeforeFix1-&gt;fix($data) and
+                              # BeforeFix2-&gt;fix($data) will be executed
+   $hook-&gt;fix_after($data);   # AfterFix-&gt;fix($data) will be executed</code></pre>

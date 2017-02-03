@@ -1,0 +1,24 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::Citation - creates citations via a CSL engine or template</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::Citation;
+
+    my $data = {};
+    my $styles = LibreCat::Citation-&gt;new(all =&gt; 1)-&gt;create($data);
+    # or
+    LibreCat::Citation-&gt;new(style =&gt; &#39;apa&#39;)-&gt;creat($data);</code></pre>
+<h1 id="configuration">CONFIGURATION</h1>
+<pre><code>    # config/citation.yml
+    prefix:
+      _citation:
+
+    engine: {template|csl|none}
+    template:
+      template_path: views/citation.tt
+    csl:
+      url: &#39;http://localhost:8085&#39;
+      default_style: chicago
+      styles:
+        - modern-language-association
+        - chicago
+        - ...</code></pre>

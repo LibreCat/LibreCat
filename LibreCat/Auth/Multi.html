@@ -1,0 +1,34 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::Auth::Multi - A LibreCat authentication package that tries multiple authentication methods.</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::Auth::Multi;
+
+    my $auth = Auth::Multi-&gt;new(
+        methods =&gt; [
+            {
+                package =&gt; &#39;LibreCat::Auth::Simple&#39;,
+                options =&gt; {
+                    users =&gt; { demo =&gt; {password =&gt; &#39;demo&#39;} },
+                },
+            },
+            {
+                package =&gt; &#39;LibreCat::Auth::LDAP&#39;,
+                options =&gt; {
+                    # ...
+                },
+            },
+        ]
+    );
+
+    if ($auth-&gt;authenticate({username =&gt; $username,
+            password =&gt; $password})) {
+        say &quot;logged in&quot;;
+    }
+    else {
+        say &quot;error&quot;;
+    }</code></pre>
+<h1 id="config">CONFIG</h1>
+<h2 id="methods">methods</h2>
+<p>See synopsis.</p>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat/Auth.html" title="LibreCat::Auth">LibreCat::Auth</a></p>

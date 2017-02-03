@@ -1,0 +1,12 @@
+<h1 id="name">NAME</h1>
+<p>Locale::Maketext::Lexicon::CatmanduConfig - Use Catmandu config files as a Maketext lexicon</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    Catmandu-&gt;{config}{locale}{en} = {
+        hello =&gt; &quot;Hello&quot;,
+    };
+
+    package MyI18N;
+    use parent &#39;Locale::Maketext&#39;;
+    use Locale::Maketext::Lexicon {
+        en =&gt; [ CatmanduConfig =&gt; [&#39;en&#39;] ],
+    };</code></pre>

@@ -1,0 +1,19 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::FileStore::File::BagIt - A BagIt implementation of a stored file</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::FileStore::BagIt;
+
+    my $filestore =&gt; LibreCat::FileStore::BagIt-&gt;new(%options);
+
+    my $file = $filestore-&gt;get(&#39;1234&#39;)-&gt;get(&#39;myfile.txt&#39;);
+
+    my $filename     = $file-&gt;key;
+    my $content_type = $file-&gt;content_type;
+    my $size         = $file-&gt;size;
+    my $created      = $file-&gt;created;
+    my $modified     = $file-&gt;modified;
+    my $data         = $file-&gt;data;
+
+    my $fh = $file-&gt;data-&gt;fh;</code></pre>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat/FileStore/File.html" title="LibreCat::FileStore::File">LibreCat::FileStore::File</a></p>

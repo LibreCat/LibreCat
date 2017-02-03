@@ -1,0 +1,20 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::Cmd::file_store - manage librecat file stores</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    librecat file_store list [recursive]
+    librecat file_store get &lt;key&gt; [&lt;file&gt;]
+    librecat file_store add &lt;key&gt; &lt;file&gt;
+    librecat file_store delete &lt;key&gt; &lt;file&gt;
+    librecat file_store purge &lt;key&gt;
+    librecat file_store export &lt;key&gt; &lt;zip&gt;
+    librecat file_store import &lt;key&gt; &lt;zip&gt;
+
+    librecat store thumbnail &lt;key&gt; &lt;file&gt;
+
+    options:
+        --store=...       - Store name
+        --file_store=...  - LibreCat::FileStore class
+        --file_opt=...    - LibreCat::FileStore option
+        --tmp_dir=...     - Temporary directory
+        --zip=...         - Zip program
+        --unzip=...       - Unzip program</code></pre>

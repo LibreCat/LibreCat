@@ -1,0 +1,15 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::I18N - localizaton class</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    # lexicon entries can be any that Locale::Maketext::Lexicon understands
+    Catmandu-&gt;config-&gt;{i18n}{lexicon} = {
+        de =&gt; [&#39;CatmanduConfig&#39;, [&#39;de&#39;]],
+        fr =&gt; [
+            Gettext =&gt; &#39;hello_fr.po&#39;,
+            Gettext =&gt; &#39;local/hello/fr.po&#39;,
+        ],
+        en =&gt; [&#39;CSV&#39;, &#39;en.csv&#39;],
+    };
+
+    my $i18n = LibreCat::I18N-&gt;new(locale =&gt; &#39;de&#39;);
+    my $hallo = $i18n-&gt;localize(&#39;hello&#39;);</code></pre>

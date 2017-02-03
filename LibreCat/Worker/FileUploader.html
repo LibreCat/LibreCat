@@ -1,0 +1,27 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::Worker::FileUploader - a worker for uploading files into the repostitory</p>
+<h2 id="synopsis">SYNOPSIS</h2>
+<pre><code>    use LibreCat::Worker::FileUploader;
+
+    my $uploader = LibreCat::Worker::FileUploader-&gt;new(
+                    files =&gt; {
+                        package =&gt; &#39;Simple&#39;, 
+                        options =&gt; {
+                            root =&gt; &#39;/data2/librecat/file_uploads&#39;
+                        }
+                   });
+
+    $uploader-&gt;work({
+        key      =&gt; $key,
+        filename =&gt; $filename,
+        filepath =&gt; $filepath,
+        [ delete =&gt; 1]
+    });</code></pre>
+<h2 id="configuration">CONFIGURATION</h2>
+<dl>
+<dt>files</dt>
+<dd><p>Required. The LibreCat::FileStore implementation to use.</p>
+</dd>
+</dl>
+<h2 id="see-also">SEE ALSO</h2>
+<p><a href="LibreCat/Worker.html" title="LibreCat::Worker">LibreCat::Worker</a></p>

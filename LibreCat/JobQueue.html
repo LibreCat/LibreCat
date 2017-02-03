@@ -1,0 +1,20 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::JobQueue - a job queue for LibreCat processes</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::JobQueue;
+
+    my $queue = LibreCat::JobQueue-&gt;new;
+
+    my $job = $queue-&gt;add_job(&#39;mailer&#39;, {
+            to =&gt; &#39;patrick.hochstenbach@ugent.be&#39; ,
+            from =&gt; &#39;patrick.hochstenbach@ugent.be&#39; ,
+            subject =&gt; &#39;test&#39; ,
+            body =&gt; &#39;test&#39; ,
+    });
+
+    while (1) {
+        my $s        = $queue-&gt;job_status($job);
+        my $running  = $s-&gt;running;
+        print &quot;%s is running? %s\n&quot; , $job , $running ? &#39;YES&#39; : NO;
+        sleep(1);
+    }</code></pre>

@@ -1,0 +1,12 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::Worker::Mailer - a worker for sending mails</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::Worker::Mailer;
+
+    my $mailer = LibreCat::Worker::Mailer-&gt;new;
+    $mailer-&gt;work({
+        to =&gt; &#39;me&#39;,
+        from =&gt; &#39;system_mailer&#39;,
+        subject =&gt; &#39;important&#39;,
+        body =&gt; &#39;hello world&#39;,
+    });</code></pre>

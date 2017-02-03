@@ -1,0 +1,114 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::Auth::SSO - LibreCat role for Single Sign On (SSO) authentication</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    package MySSOAuth;
+
+    use Moo;
+    use Catmandu::Util qw(:is);
+
+    with &#39;LibreCat::Auth::SSO&#39;;
+
+    sub to_app {
+        my $self = shift;
+        sub {
+            my $env = shift;
+            my $request = Plack::Request-&gt;new($env);
+            my $session = Plack::Session-&gt;new($env);
+
+            #did this app already authenticate you?
+            #implementation of LibreCat::Auth::SSO should write hash to session key,
+            #configured by &#39;session_key&#39;
+            my $auth_sso = $self-&gt;get_auth_sso($session);
+
+            #already authenticated: what are you doing here?
+            if( is_hash_ref($auth_sso)){
+
+                return [302,[Location =&gt; $self-&gt;authorization_url],[]];
+
+            }
+
+            #not authenticated: do your internal work
+            #..
+
+            #everything ok: set auth_sso
+            $self-&gt;set_auth_sso( $session, { package =&gt; __PACKAGE__, package_id =&gt; $self-&gt;id, response =&gt; &quot;Long response from external SSO application&quot; } );
+
+            #redirect to other application for authorization:
+            return [302,[Location =&gt; $self-&gt;authorization_url],[]];
+
+        };
+    }
+
+    1;
+
+
+    #in your app.psgi
+
+    builder {
+
+        mount &#39;/auth/myssoauth&#39; =&gt; MySSOAuth-&gt;new(
+
+            session_key =&gt; &quot;auth_sso&quot;,
+            authorization_url =&gt; &quot;/auth/myssoauth/callback&quot;
+
+        )-&gt;to_app;
+
+        mount &quot;/auth/myssoauth/callback&quot; =&gt; sub {
+
+            my $env = shift;
+            my $session = Plack::Session-&gt;new($env);
+            my $auth_sso = $session-&gt;get(&#39;auth_sso&#39;);
+
+            #not authenticated yet
+            unless($auth_sso){
+
+                return [403,[&quot;Content-Type&quot; =&gt; &quot;text/html&quot;],[&quot;forbidden&quot;]];
+
+            }
+
+            #process auth_sso (white list, roles ..)
+
+            [200,[&quot;Content-Type&quot; =&gt; &quot;text/html&quot;],[&quot;logged in!&quot;]];
+
+        };
+
+    };</code></pre>
+<h1 id="description">DESCRIPTION</h1>
+<p>This is a Moo::Role for all Single Sign On Authentication packages. It requires <code>to_app</code> method, that returns a valid Plack application</p>
+<p>An implementation is expected is to do all communication with the external SSO application (e.g. CAS). When it succeeds, it should save the response from the external service in the session, and redirect to the authorization url (see below).</p>
+<p>The authorization route must pick up the response from the session, and log the user in.</p>
+<h1 id="config">CONFIG</h1>
+<dl>
+<dt>session_key</dt>
+<dd><p>When authentication succeeds, the implementation saves the response from the SSO application in this session key.</p>
+<p>The response should look like this:</p>
+<pre><code>    {
+        package =&gt; &quot;&lt;package-name&gt;&quot;,
+        package_id =&gt; &quot;&lt;package-id&gt;&quot;,
+        response =&gt; &quot;Long response from external SSO application like CAS&quot;
+    }</code></pre>
+<p>This is usefull for two reasons:</p>
+<pre><code>    * this application can distinguish between authenticated and not authenticated users
+
+    * the authorization application can pick up the saved response from the session</code></pre>
+</dd>
+<dt>authorization_url</dt>
+<dd><p>URL of the authorization route.</p>
+<p>When authentication succeeds, this application should redirect you here</p>
+</dd>
+<dt>id</dt>
+<dd><p>identifier of the authentication module. Defaults to the package name. This is handy when using multiple SSO instances, and you need to known exactly which package authenticated the user.</p>
+</dd>
+</dl>
+<h1 id="methods">METHODS</h1>
+<h2 id="to_app">to_app</h2>
+<p>returns a Plack application</p>
+<p>This must be implemented by subclasses</p>
+<h2 id="get_auth_ssoplack_session">get_auth_sso($plack_session)</h2>
+<p>get saved SSO response from your session</p>
+<h2 id="set_auth_ssoplack_sessionhash">set_auth_sso($plack_session,$hash)</h2>
+<p>save SSO response to your session</p>
+<p>$hash should be a hash ref, and look like this:</p>
+<pre><code>    { package =&gt; __PACKAGE__, package_id =&gt; __PACKAGE__ , response =&gt; &quot;Long response from external SSO application like CAS&quot; }</code></pre>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat/Auth/SSO/CAS.html" title="LibreCat::Auth::SSO::CAS">LibreCat::Auth::SSO::CAS</a></p>

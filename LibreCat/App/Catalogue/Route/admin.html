@@ -1,0 +1,18 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::App::Catalogue::Route::admin - Route handler for admin actions</p>
+<h1 id="prefix-librecatadmin">PREFIX /librecat/admin</h1>
+<p>Permission: for admins only. Every other user will get a 403.</p>
+<h2 id="get-account">GET /account</h2>
+<p>Prints a search form for the authority database.</p>
+<h2 id="get-accountnew">GET /account/new</h2>
+<p>Opens an empty form. The ID is automatically generated.</p>
+<h2 id="get-accountsearch">GET /account/search</h2>
+<p>Searches the authority database. Prints the search form + result list.</p>
+<h2 id="get-accounteditid">GET /account/edit/:id</h2>
+<p>Opens the record with ID id. Cancel returns to /account. Save does a POST on /account/update.</p>
+<h2 id="post-accountupdate">POST /account/update</h2>
+<p>Saves the data in the authority database.</p>
+<h2 id="get-accountdeleteid">GET /account/delete/:id</h2>
+<p>Deletes the account with ID :id.</p>
+<h2 id="get-accountimport">GET /account/import</h2>
+<p>Input is person id. Returns warning if person is already in the database.</p>

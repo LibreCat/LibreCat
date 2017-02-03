@@ -1,0 +1,17 @@
+<h1 id="name">NAME</h1>
+<p>Catmandu::Fix::external_id - transform external_id array into a hash</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    # Transform an array of external_ids into a uniq list of hashes
+    # external_id:
+    #    - type: opac
+    #      value: 12345
+    #    - type: opac
+    #      value: 6789   (copy)
+    #    - type: arxiv
+    #      value: 0001
+
+    external_id()
+
+    # external_id:
+    #      opac: 12345
+    #      arxiv: 0001</code></pre>

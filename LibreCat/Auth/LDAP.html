@@ -1,0 +1,38 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::Auth::LDAP - A LibreCat LDAP authentication package</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::Auth::LDAP;
+
+    my $auth = LibreCat::Auth::LDAP-&gt;new(
+        host =&gt; &#39;ldaps://ldaps.ugent.be&#39;
+        auth_base =&gt; &#39;ugentID=%s,ou=people,dc=UGent,dc=be&#39;
+    );
+
+    if ($auth-&gt;authenticate({username =&gt; $username,
+            password =&gt; $password})) {
+        say &quot;logged in&quot;;
+    }
+    else {
+        say &quot;error&quot;;
+    }</code></pre>
+<h1 id="config">CONFIG</h1>
+<h2 id="host">host</h2>
+<p>The URL to the LDAP server. Use ldaps:// for a secure connection. Required</p>
+<h2 id="auth_base">auth_base</h2>
+<p>The base to use when authenticating user credentials. Required</p>
+<h2 id="base">base</h2>
+<p>When a double binding is required, the the bind parameters before checking user credentials.</p>
+<h2 id="password">password</h2>
+<p>An optional password required when doing a double binding.</p>
+<h2 id="search_filter">search_filter</h2>
+<p>Some LDAP servers may require you to lookup a user identifier. Set a search filter to lookup a user. E.g.</p>
+<pre><code>     search_filter =&gt; &#39;(uid=%s)&#39;</code></pre>
+<h2 id="search_base">search_base</h2>
+<p>The base to search with a search_filter. E.g.</p>
+<pre><code>     search_base =&gt; &#39;dc=ugent, dc=be&#39;</code></pre>
+<h2 id="search_attr">search_attr</h2>
+<p>The attribute to return from a search filter. E.g.</p>
+<pre><code>     search_attr: &#39;ugentID&#39;</code></pre>
+<p>In the examples above a user name like 'einstein' will be searched as (uid=einstein) in the base 'dc=ugent, dc=be'. When a search result is found, then the login name will be translated to the 'ugentID' of the user.</p>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat/Auth.html" title="LibreCat::Auth">LibreCat::Auth</a></p>

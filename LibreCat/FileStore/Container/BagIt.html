@@ -1,0 +1,25 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::FileStore::Container::BagIt - A BagIt implementation of a file storage container</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::FileStore::BagIt;
+
+    my $filestore =&gt; LibreCat::FileStore::BagIt-&gt;new(%options);
+
+    my $container = $filestore-&gt;get(&#39;1234&#39;);
+
+    my @list_files = $container-&gt;list;
+
+    if ($container-&gt;exists($filename)) {
+        ....
+    }
+
+    $container-&gt;add($filename, IO::File-&gt;new(&#39;/path/to/file&#39;));
+
+    my $file = $container-&gt;get($filename);
+
+    $container-&gt;delete($filename);
+
+    # write all changes to disk (network , database , ...)
+    $container-&gt;commit;</code></pre>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat/FileStore/Container.html" title="LibreCat::FileStore::Container">LibreCat::FileStore::Container</a></p>

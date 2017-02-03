@@ -1,0 +1,21 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::Daemon - base class for librecat daemons</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    package LibreCat::Cmd::mydaemon;
+
+    use parent &#39;LibreCat::Daemon&#39;;
+
+    sub daemon {
+        sub {
+            while (1) {
+                log &quot;hard at work... &quot;;
+                sleep 5;
+            }
+        };
+
+    1;</code></pre>
+<h1 id="command-line-usage">COMMAND LINE USAGE</h1>
+<pre><code>    librecat mydaemon start --workers 10 --supervise
+    librecat mydaemon stop --workers 10</code></pre>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="https://metacpan.org/pod/Proc::Launcher">Proc::Launcher</a></p>

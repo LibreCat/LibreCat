@@ -1,0 +1,46 @@
+<h1 id="name">NAME</h1>
+<p>LibreCat::Worker - a base role for workers</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    # the default worker function is the underscored package name mapped to the
+    # &#39;work&#39; method
+    package LibreCat::Worker::Drink;
+
+    use Catmandu::Sane;
+    use Moo;
+
+    with &#39;LibreCat::Worker&#39;;
+
+    sub work {
+        my ($workload) = @_;
+        log &quot;drinking $workload-&gt;{beverage} ... &quot;;
+        sleep 3;
+    }
+
+    # $queue-&gt;add_job(&#39;drink&#39;, {beverage =&gt; &#39;beer&#39;})
+
+    # with custom worker_functions
+    package LibreCat::Worker::drunkard;
+
+    use Catmandu::Sane;
+    use Moo;
+
+    with &#39;LibreCat::Worker&#39;;
+
+    sub worker_functions {
+        [&#39;drink&#39;, {&#39;have_hangover&#39; =&gt; &#39;do_have_hangover&#39;}];
+    }
+
+    sub drink {
+        my ($workload) = @_;
+        log &quot;drinking $workload-&gt;{beverage} ... &quot;;
+        sleep 3;
+    }
+
+    sub do_have_hangover {
+        log &quot;aargh ... &quot;;
+        sleep 9;
+    }
+
+    # $queue-&gt;add_job(&#39;drink&#39;, {beverage =&gt; &#39;wine&#39;})
+    # $queue-&gt;add_job(&#39;drink&#39;, {beverage =&gt; &#39;beer&#39;})
+    # $queue-&gt;add_job(&#39;have_hangover&#39;)</code></pre>
