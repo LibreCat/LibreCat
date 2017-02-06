@@ -270,14 +270,19 @@ sub _fetch {
 
     my $file = $container->get($filename);
 
-    my $io = $file->fh;
-
     binmode(STDOUT,':raw');
 
-    while (defined($io) && !$io->eof) {
-        my $buffer;
-        my $len = $io->read($buffer, 1024);
-        syswrite(STDOUT, $buffer, $len);
+    # Avoid forking processes and check for callbacks
+    if ($file->is_callback) {
+        $file->data->(*STDOUT);
+    }
+    else {
+        my $io = $file->fh;
+        while (defined($io) && !$io->eof) {
+            my $buffer;
+            my $len = $io->read($buffer, 1024);
+            syswrite(STDOUT, $buffer, $len);
+        }
     }
 }
 

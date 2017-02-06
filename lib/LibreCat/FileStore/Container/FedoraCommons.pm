@@ -174,7 +174,14 @@ sub _get {
             dsID     => $dsid,
             callback => sub {
                 my ($data, $response, $protocol) = @_;
-                print $io $data;
+
+                # Support the Dancer send_file "write" callback
+                if ($io->can('syswrite')) {
+                    $io->syswrite($data);
+                }
+                else {
+                    $io->write($data);
+                }
             }
         );
         $io->close;

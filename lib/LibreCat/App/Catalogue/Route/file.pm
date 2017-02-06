@@ -51,8 +51,8 @@ sub _send_it {
 
                 my $http_status_code = 200;
 
-              # Tech.note: This is a hash of HTTP header/values, but the
-              #            function below requires an even-numbered array-ref.
+                # Tech.note: This is a hash of HTTP header/values, but the
+                #            function below requires an even-numbered array-ref.
                 my @http_headers = (
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
@@ -60,22 +60,29 @@ sub _send_it {
                     'Pragma' => 'no-cache'
                 );
 
-         # Send the HTTP headers
-         # (back to either the user or the upstream HTTP web-server front-end)
+                # Send the HTTP headers
+                # (back to either the user or the upstream HTTP web-server front-end)
                 my $writer = $respond->([$http_status_code, \@http_headers]);
 
-                my $io = $file->fh;
-                my $buffer_size
-                    = h->config->{filestore}->{api}->{buffer_size} // 1024;
-
-                while (!$io->eof) {
-                    my $buffer;
-                    $io->read($buffer, $buffer_size);
-                    $writer->write($buffer);
+                # Avoid creating forks whenever possible...
+                if ($file->is_callback) {
+                    $file->data->($writer);
+                    $writer->close();
                 }
+                else {
+                    my $io = $file->fh;
+                    my $buffer_size
+                        = h->config->{filestore}->{api}->{buffer_size} // 1024;
 
-                $writer->close();
-                $io->close();
+                    while (!$io->eof) {
+                        my $buffer;
+                        $io->read($buffer, $buffer_size);
+                        $writer->write($buffer);
+                    }
+
+                    $writer->close();
+                    $io->close();
+                }
             },
         },
     );
