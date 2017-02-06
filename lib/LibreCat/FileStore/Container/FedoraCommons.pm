@@ -177,6 +177,7 @@ sub _get {
                 print $io $data;
             }
         );
+        $io->close;
     };
 
     LibreCat::FileStore::File::FedoraCommons->new(

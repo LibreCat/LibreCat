@@ -6,6 +6,8 @@ use IO::String;
 use IO::Pipe;
 use namespace::clean;
 
+$SIG{CHLD} = 'IGNORE';
+
 has key => (is => 'ro', required => 1);
 has content_type => (is => 'ro');
 has size         => (is => 'ro');
@@ -52,6 +54,7 @@ sub io_from_callback {
     elsif (defined($pid)) {    # child
         $pipe->writer;
         $callback->($pipe);
+        $pipe->close;
         exit;
     }
 }
