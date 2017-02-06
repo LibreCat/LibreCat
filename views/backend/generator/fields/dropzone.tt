@@ -64,7 +64,7 @@
           </div>
         </div>
         [% IF session.role == "super_admin" OR type != "research_data" OR (type == "research_data" AND status != "public" AND status != "submitted") %]
-        <div class="corner_up" id="corup_[% fi.file_id %]" onclick="delete_file([% fi.file_id %]);return false;"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></div>
+        <div class="corner_up" id="corup_[% fi.file_id %]" onclick="delete_file('[% fi.file_id %]');return false;"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></div>
         <div class="corner_down" id="cordown_[% fi.file_id %]" onclick="javascript:edit_file('[% fi.file_id %]', '[% _id %]');"><a href="#" onclick="return false;"><span class="glyphicon glyphicon-pencil"></span></a></div>
         [% END %]
 
