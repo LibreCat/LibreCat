@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::App::Catalogue::Route::file</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::App::Catalogue::Route::file</span>
+                <span class="doc-subtitle">routes for file handling: upload & download files, request-a-copy. All these must be public.</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::App::Catalogue::Route::file - routes for file handling: upload &amp; download files, request-a-copy. All these must be public.</p>
+<h2 id="get-rcapprovekey">GET /rc/approve/:key</h2>
+<p>Author approves the request. Email will be sent to user.</p>
+<h2 id="get-rcdenykey">GET /rc/deny/:key</h2>
+<p>Author refuses the request for a copy. Email will be sent to user. Delete request key from database.</p>
+<h2 id="get-rckey">GET /rc/:key</h2>
+<p>User received permission for downloading. Now get the document if time has not expired yet.</p>
+<h2 id="post-rcidfile_id">POST /rc/:id/:file_id</h2>
+<p>Request a copy of the publication. Email will be sent to the author.</p>
+<h2 id="get-downloadidfile_id">GET /download/:id/:file_id</h2>
+<p>Download a document. Access level of the document and user rights will be checked before.</p>
+<h2 id="get-thumbnailid">GET /thumbnail/:id</h2>
+<p>Download the thumbnail of the document</p>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>LibreCat</title>
+  <title>LibreCat::Daemon</title>
   <style type="text/css">code{white-space: pre;}</style>
   <link rel="stylesheet" href="template.css">
   <!--[if lt IE 9]>
@@ -15,8 +15,8 @@
     <div class="navbar navbar-static-top">
     <div class="navbar-inner">
       <div class="container">
-        <span class="doc-title">LibreCat</span>
-                <span class="doc-subtitle">Librecat helper functions</span>
+        <span class="doc-title">LibreCat::Daemon</span>
+                <span class="doc-subtitle">base class for librecat daemons</span>
                 <ul class="nav pull-right doc-info">
                             </ul>
       </div>
@@ -26,22 +26,26 @@
     <div class="row">
             <div class="span12">
             <h1 id="name">NAME</h1>
-<p>LibreCat - Librecat helper functions</p>
+<p>LibreCat::Daemon - base class for librecat daemons</p>
 <h1 id="synopsis">SYNOPSIS</h1>
-<pre><code>   use LibreCat;
+<pre><code>    package LibreCat::Cmd::mydaemon;
 
-   # Given a &#39;catmandu&#39; configuration file, like: catmandu.hooks.yml
-   # --
-   # hooks:
-   #   myhook:
-   #      before_fixes: [BeforeFix1,BeforeFix2]
-   #      after_fixes:  [AfterFix]
+    use parent &#39;LibreCat::Daemon&#39;;
 
-   my $hook = LibreCat-&gt;hook(&#39;eat&#39;);
+    sub daemon {
+        sub {
+            while (1) {
+                log &quot;hard at work... &quot;;
+                sleep 5;
+            }
+        };
 
-   $hook-&gt;fix_before($data);  # BeforeFix1-&gt;fix($data) and
-                              # BeforeFix2-&gt;fix($data) will be executed
-   $hook-&gt;fix_after($data);   # AfterFix-&gt;fix($data) will be executed</code></pre>
+    1;</code></pre>
+<h1 id="command-line-usage">COMMAND LINE USAGE</h1>
+<pre><code>    librecat mydaemon start --workers 10 --supervise
+    librecat mydaemon stop --workers 10</code></pre>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="https://metacpan.org/pod/Proc::Launcher">Proc::Launcher</a></p>
             </div>
     </div>
   </div>

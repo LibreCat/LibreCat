@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::App::Catalogue::Controller::File</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::App::Catalogue::Controller::File</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name-librecatappcataloguecontrollerfile">NAME LibreCat::App::Catalogue::Controller::File</h1>
+<p>Helper methods for handling file uploads.</p>
+<h1 id="methods">METHODS</h1>
+<h2 id="upload_temp_fileparams-filecreator">upload_temp_file(params-&gt;{file},$creator)</h2>
+<p>Given an upload file handle and a creator string this function will create a temporary storage file for the upload. Returns a JSON document containing the file details:</p>
+<pre><code>    {
+        # Fields needed for managing the upload
+        &#39;tempid&#39;       =&gt; &#39;LJCyFMzwjN&#39;,
+        &#39;file_name&#39;    =&gt; &#39;find.gif&#39;,
+
+        # Metadata fields that can be overwritten by the user
+        &#39;access_level&#39; =&gt; &#39;open_access&#39;,
+        &#39;open_access&#39;  =&gt; 1,
+        &#39;relation&#39;     =&gt; &#39;main_file&#39;,
+
+        # Read-only fields
+        &#39;content_type&#39; =&gt; &#39;image/gif&#39;,
+        &#39;creator&#39;      =&gt; &#39;einstein&#39;,
+        &#39;date_created&#39; =&gt; &#39;2016-05-31T11:05:22Z&#39;,
+        &#39;date_updated&#39; =&gt; &#39;2016-05-31T11:05:22Z&#39;,
+        &#39;file_size&#39;    =&gt; &#39;66658&#39;,
+
+        # Success/failure indicator
+        &#39;success&#39;      =&gt; 1,
+    }</code></pre>
+<h2 id="handle_filepub">handle_file($pub)</h2>
+<p>For the given publication HASH update the file section (upload files, generate thumbnails) when required. Metadata (but not the technical metadata) of existing files will be changed when required. New files should at least contain 'tempid' and 'file_name'</p>
+<h2 id="update_filefile">update_file($file)</h2>
+<p>Update one $pub-&gt;{file}-&gt;[&lt;item&gt;] with technical metadata found in the file store. Returns the updated file on success or undef on failure.</p>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

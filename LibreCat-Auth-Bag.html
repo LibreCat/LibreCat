@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::Auth::Bag</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::Auth::Bag</span>
+                <span class="doc-subtitle">A LibreCat authentication package backed by a Catmandu::Store::Bag</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::Auth::Bag - A LibreCat authentication package backed by a Catmandu::Store::Bag</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use Catmandu;
+    use LibreCat::Auth::Bag;
+
+    Catmandu-&gt;config-&gt;{store}{users} = {
+        package =&gt; Hash,
+        options =&gt; {
+            init_data =&gt; {
+                login =&gt; &#39;demo&#39;
+                password =&gt; &#39;s3cret&#39;,
+            },
+        },
+    };
+
+    my $auth = LibreCat::Auth::Bag-&gt;new(
+        store =&gt; &#39;users&#39;,
+        username_param =&gt; &#39;login&#39;,
+    );
+
+    if ($auth-&gt;authenticate({username =&gt; &#39;demo&#39;,
+            password =&gt; &#39;s3cret&#39;)) {
+        say &quot;logged in&quot;;
+    }
+    else {
+        say &quot;error&quot;;
+    }</code></pre>
+<h1 id="config">CONFIG</h1>
+<h2 id="store">store</h2>
+<p>Name of the store in the Catmandu config. Default is the Catmandu default store.</p>
+<h2 id="bag">bag</h2>
+<p>Name of the bag. Default is the store's default bag.</p>
+<h2 id="username_attr">username_attr</h2>
+<p>Name of the attribute containing the username. Default is 'username'.</p>
+<h2 id="password_attr">password_attr</h2>
+<p>Name of the attribute containing the password. Default is 'password'.</p>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat-Auth.html" title="LibreCat::Auth">LibreCat::Auth</a></p>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

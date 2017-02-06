@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::FileStore::File</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::FileStore::File</span>
+                <span class="doc-subtitle">Abstract definition of a stored file</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::FileStore::File - Abstract definition of a stored file</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::FileStore::Simple;
+
+    my $filestore =&gt; LibreCat::FileStore::Simple-&gt;new(%options);
+
+    my $file = $filestore-&gt;get(&#39;1234&#39;)-&gt;get(&#39;myfile.txt&#39;);
+
+    my $filename     = $file-&gt;key;
+    my $content_type = $file-&gt;content_type;
+    my $size         = $file-&gt;size;
+    my $created      = $file-&gt;created;
+    my $modified     = $file-&gt;modified;
+
+    my $fh = $file-&gt;fh;</code></pre>
+<h1 id="methods">METHODS</h1>
+<h2 id="key">key()</h2>
+<p>Return the filename.</p>
+<h2 id="content_type">content_type()</h2>
+<p>Return the content type of the file.</p>
+<h2 id="size">size</h2>
+<p>Return the byte size of the file.</p>
+<h2 id="created">created</h2>
+<p>Return the UNIX creation date of the file.</p>
+<h2 id="modified">modified</h2>
+<p>Return the UNIX modification date of the file.</p>
+<h2 id="data">data</h2>
+<p>Return a IO::Handle for the file.</p>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat-FileStore.html" title="LibreCat::FileStore">LibreCat::FileStore</a> , <a href="LibreCat-FileStore-Container.html" title="LibreCat::FileStore::Container">LibreCat::FileStore::Container</a></p>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>LibreCat</title>
+  <title>LibreCat::Cmd::user</title>
   <style type="text/css">code{white-space: pre;}</style>
   <link rel="stylesheet" href="template.css">
   <!--[if lt IE 9]>
@@ -15,8 +15,8 @@
     <div class="navbar navbar-static-top">
     <div class="navbar-inner">
       <div class="container">
-        <span class="doc-title">LibreCat</span>
-                <span class="doc-subtitle">Librecat helper functions</span>
+        <span class="doc-title">LibreCat::Cmd::user</span>
+                <span class="doc-subtitle">manage librecat users</span>
                 <ul class="nav pull-right doc-info">
                             </ul>
       </div>
@@ -26,22 +26,19 @@
     <div class="row">
             <div class="span12">
             <h1 id="name">NAME</h1>
-<p>LibreCat - Librecat helper functions</p>
+<p>LibreCat::Cmd::user - manage librecat users</p>
 <h1 id="synopsis">SYNOPSIS</h1>
-<pre><code>   use LibreCat;
+<pre><code>    librecat user list [&lt;cql-query&gt;]
+    librecat user export [&lt;cql-query&gt;]
+    librecat user add &lt;FILE&gt;
+    librecat user get &lt;id&gt;
+    librecat user delete &lt;id&gt;
+    librecat user valid &lt;FILE&gt;
+    librecat user [options] passwd &lt;id&gt;
 
-   # Given a &#39;catmandu&#39; configuration file, like: catmandu.hooks.yml
-   # --
-   # hooks:
-   #   myhook:
-   #      before_fixes: [BeforeFix1,BeforeFix2]
-   #      after_fixes:  [AfterFix]
-
-   my $hook = LibreCat-&gt;hook(&#39;eat&#39;);
-
-   $hook-&gt;fix_before($data);  # BeforeFix1-&gt;fix($data) and
-                              # BeforeFix2-&gt;fix($data) will be executed
-   $hook-&gt;fix_after($data);   # AfterFix-&gt;fix($data) will be executed</code></pre>
+    options:
+        --total=NUM   (total number of items to list/export)
+        --start=NUM   (start list/export at this item)</code></pre>
             </div>
     </div>
   </div>

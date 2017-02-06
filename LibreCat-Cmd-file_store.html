@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::Cmd::file_store</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::Cmd::file_store</span>
+                <span class="doc-subtitle">manage librecat file stores</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::Cmd::file_store - manage librecat file stores</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    librecat file_store list [recursive]
+    librecat file_store get &lt;key&gt; [&lt;file&gt;]
+    librecat file_store add &lt;key&gt; &lt;file&gt;
+    librecat file_store delete &lt;key&gt; &lt;file&gt;
+    librecat file_store purge &lt;key&gt;
+    librecat file_store export &lt;key&gt; &lt;zip&gt;
+    librecat file_store import &lt;key&gt; &lt;zip&gt;
+
+    librecat store thumbnail &lt;key&gt; &lt;file&gt;
+
+    options:
+        --store=...       - Store name
+        --file_store=...  - LibreCat::FileStore class
+        --file_opt=...    - LibreCat::FileStore option
+        --tmp_dir=...     - Temporary directory
+        --zip=...         - Zip program
+        --unzip=...       - Unzip program</code></pre>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

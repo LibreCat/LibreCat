@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::App</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::App</span>
+                <span class="doc-subtitle">a webapp that runs an awesome institutional repository.</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::App - a webapp that runs an awesome institutional repository.</p>
+<h2 id="get-login">GET /login</h2>
+<p>Route the user will be sent to if login is required.</p>
+<h2 id="post-login">POST /login</h2>
+<p>Route where login data is sent to. On success redirects to '/librecat' or to the path requested before</p>
+<h2 id="any-logout">ANY /logout</h2>
+<p>The logout route. Destroys session.</p>
+<h2 id="get-set_language">GET /set_language</h2>
+<p>Route to call when changing language in session</p>
+<h2 id="any-access_denied">ANY /access_denied</h2>
+<p>User sees this one if access is denied.</p>
+<h1 id="any-other-route.">ANY {other route….}</h1>
+<p>Throws 'page not found'.</p>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

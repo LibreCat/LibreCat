@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::FetchRecord</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::FetchRecord</span>
+                <span class="doc-subtitle">LibreCat record creator</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::FetchRecord - LibreCat record creator</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    package LibreCat::FetchRecord::bla;
+
+    use Moo;
+
+    with &#39;LibreCat::FetchRecord&#39;;
+
+    sub fetch {
+        my ($self, $id) = @_;
+
+        # given the $id fetch/generate/create one valid publication record
+        return +{
+            ...
+            ...
+            ...
+        };
+    }
+
+    1;</code></pre>
+<h1 id="description">DESCRIPTION</h1>
+<p>Create one publication record given an id or textual input. When called in a list context possible more than one record can be returned.</p>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat-FetchRecord-arxiv.html" title="LibreCat::FetchRecord::arxiv">LibreCat::FetchRecord::arxiv</a> , <a href="LibreCat-FetchRecord-bibtex.html" title="LibreCat::FetchRecord::bibtex">LibreCat::FetchRecord::bibtex</a> , <a href="LibreCat-FetchRecord-crossref.html" title="LibreCat::FetchRecord::crossref">LibreCat::FetchRecord::crossref</a> , <a href="LibreCat-FetchRecord-datacite.html" title="LibreCat::FetchRecord::datacite">LibreCat::FetchRecord::datacite</a> , <a href="LibreCat-FetchRecord-epmc.html" title="LibreCat::FetchRecord::epmc">LibreCat::FetchRecord::epmc</a> , <a href="LibreCat-FetchRecord-inspire.html" title="LibreCat::FetchRecord::inspire">LibreCat::FetchRecord::inspire</a> , <a href="LibreCat-FetchRecord-wos.html" title="LibreCat::FetchRecord::wos">LibreCat::FetchRecord::wos</a></p>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

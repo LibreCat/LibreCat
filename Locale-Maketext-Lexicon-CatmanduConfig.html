@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>LibreCat</title>
+  <title>Locale::Maketext::Lexicon::CatmanduConfig</title>
   <style type="text/css">code{white-space: pre;}</style>
   <link rel="stylesheet" href="template.css">
   <!--[if lt IE 9]>
@@ -15,8 +15,8 @@
     <div class="navbar navbar-static-top">
     <div class="navbar-inner">
       <div class="container">
-        <span class="doc-title">LibreCat</span>
-                <span class="doc-subtitle">Librecat helper functions</span>
+        <span class="doc-title">Locale::Maketext::Lexicon::CatmanduConfig</span>
+                <span class="doc-subtitle">Use Catmandu config files as a Maketext lexicon</span>
                 <ul class="nav pull-right doc-info">
                             </ul>
       </div>
@@ -26,22 +26,17 @@
     <div class="row">
             <div class="span12">
             <h1 id="name">NAME</h1>
-<p>LibreCat - Librecat helper functions</p>
+<p>Locale::Maketext::Lexicon::CatmanduConfig - Use Catmandu config files as a Maketext lexicon</p>
 <h1 id="synopsis">SYNOPSIS</h1>
-<pre><code>   use LibreCat;
+<pre><code>    Catmandu-&gt;{config}{locale}{en} = {
+        hello =&gt; &quot;Hello&quot;,
+    };
 
-   # Given a &#39;catmandu&#39; configuration file, like: catmandu.hooks.yml
-   # --
-   # hooks:
-   #   myhook:
-   #      before_fixes: [BeforeFix1,BeforeFix2]
-   #      after_fixes:  [AfterFix]
-
-   my $hook = LibreCat-&gt;hook(&#39;eat&#39;);
-
-   $hook-&gt;fix_before($data);  # BeforeFix1-&gt;fix($data) and
-                              # BeforeFix2-&gt;fix($data) will be executed
-   $hook-&gt;fix_after($data);   # AfterFix-&gt;fix($data) will be executed</code></pre>
+    package MyI18N;
+    use parent &#39;Locale::Maketext&#39;;
+    use Locale::Maketext::Lexicon {
+        en =&gt; [ CatmanduConfig =&gt; [&#39;en&#39;] ],
+    };</code></pre>
             </div>
     </div>
   </div>

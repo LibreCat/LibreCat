@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::FileStore::Container::FedoraCommons</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::FileStore::Container::FedoraCommons</span>
+                <span class="doc-subtitle">A FedoraCommons implementation of a file storage container</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::FileStore::Container::FedoraCommons - A FedoraCommons implementation of a file storage container</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::FileStore::FedoraCommons;
+
+    my %options = (
+        url =&gt; &#39;...&#39;,
+        user =&gt; &#39;...&#39;,
+        password =&gt; &#39;...&#39; ,
+        namespace =&gt; &#39;demo&#39; ,
+        dsnamespace =&gt; &#39;DS&#39; ,
+        md5enabled =&gt; 1 ,
+        versionable =&gt; 0 ,
+    );
+
+    my $filestore =&gt; LibreCat::FileStore::FedoraCommons-&gt;new(%options);
+
+    my $container = $filestore-&gt;get(&#39;demo:1234&#39;);
+
+    my @list_files = $container-&gt;list;
+
+    if ($container-&gt;exists($filename)) {
+        ....
+    }
+
+    $container-&gt;add($filename, IO::File-&gt;new(&#39;/path/to/file&#39;));
+
+    my $file = $container-&gt;get($filename);
+
+    $container-&gt;delete($filename);
+
+    # write all changes to disk (network , database , ...)
+    $container-&gt;commit;</code></pre>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat-FileStore-Container.html" title="LibreCat::FileStore::Container">LibreCat::FileStore::Container</a></p>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

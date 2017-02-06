@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::FileStore::BagIt</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::FileStore::BagIt</span>
+                <span class="doc-subtitle">A BagIt implementation of a file storage</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::FileStore::BagIt - A BagIt implementation of a file storage</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::FileStore::BagIt;
+
+    my $filestore =&gt;LibreCat::FileStore::BagIt-&gt;new(root =&gt; &#39;/data2/librecat/bag_uploads&#39;);
+
+    my $generator = $filestore-&gt;list;
+
+    while (my $key = $generator-&gt;()) {
+        my $container = $filestore-&gt;get($key);
+
+        for my $file ($container-&gt;list) {
+            my $filename = $file-&gt;key;
+            my $size     = $file-&gt;size;
+            my $checksum = $file-&gt;md5;
+            my $created  = $file-&gt;created;
+            my $modified = $file-&gt;modified;
+            my $io       = $file-&gt;data;
+        }
+    }
+
+    my $container = $filestore-&gt;get(&#39;1234&#39;);
+
+    if ($filestore-&gt;exists(&#39;1234&#39;)) {
+        ...
+    }
+
+    my $container = $filestore-&gt;add(&#39;1235&#39;);
+
+    $filestore-&gt;delete(&#39;1234&#39;);</code></pre>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat-FileStore.html" title="LibreCat::FileStore">LibreCat::FileStore</a></p>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

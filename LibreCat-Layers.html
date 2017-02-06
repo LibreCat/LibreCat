@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::Layers</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::Layers</span>
+                <span class="doc-subtitle">A mechanism to load custom config, templates, assets and code on top of LibreCat</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::Layers - A mechanism to load custom config, templates, assets and code on top of LibreCat</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::Layers;
+    my $layers = LibreCat::Layers-&gt;new;
+    my $config = $layers-&gt;config;
+    $layers-&gt;load;</code></pre>
+<p>The <a href="LibreCat.html" title="LibreCat">LibreCat</a> web application, commandline tool and tests are already layers aware.</p>
+<h1 id="description">DESCRIPTION</h1>
+<p>This module provides a mechanism to load configuration, templates, static assets and code to customize the stock <a href="LibreCat.html" title="LibreCat">LibreCat</a> application. All you need to do is write a <code>layers.yml</code> configuration file at the root of the application listing the directories where <a href="LibreCat.html" title="LibreCat">LibreCat</a> can find your customizations.</p>
+<p>This is a sample <code>layers.yml</code> file with 2 customization layers:</p>
+<pre><code>    - /path/to/layer2
+    - /path/to/layer1</code></pre>
+<p><code>layer2</code> will override <code>layer1</code> which will in turn override the stock application.</p>
+<p>Relative paths to layers are searched from the root of the application.</p>
+<h1 id="layer-structure">LAYER STRUCTURE</h1>
+<p>Custom YAML configuration files can be placed in a <strong>config</strong> directory.</p>
+<p>Custom templates can be placed in either a <strong>views</strong> or <strong>templates</strong> directory.</p>
+<p>Custom static assets can be placed in a <strong>public</strong> directory.</p>
+<p>Custom code can be placed in a <strong>lib</strong> directory.</p>
+<h1 id="environment-variables">ENVIRONMENT VARIABLES</h1>
+<p>You can also configure layers through the <code>LIBRECAT_LAYERS</code> environment variable, in which case the <code>layers.yml</code> file will be ignored.</p>
+<pre><code>    LIBRECAT_LAYERS=/path/to/layer2,/path/to/layer1 bin/librecat</code></pre>
+<h1 id="methods">METHODS</h1>
+<h2 id="new">new</h2>
+<h3 id="parameters">PARAMETERS</h3>
+<dl>
+<dt>root_path</dt>
+<dd>
+</dd>
+<dt>layer_paths</dt>
+<dd>
+</dd>
+</dl>
+<h2 id="css_paths">css_paths</h2>
+<h2 id="config">config</h2>
+<h2 id="config_paths">config_paths</h2>
+<h2 id="lib_paths">lib_paths</h2>
+<h2 id="layer_paths">layer_paths</h2>
+<h2 id="paths">paths</h2>
+<h2 id="public_paths">public_paths</h2>
+<h2 id="root_path">root_path</h2>
+<h2 id="scss_paths">scss_paths</h2>
+<h2 id="template_paths">template_paths</h2>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::Worker::ImageResizer</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::Worker::ImageResizer</span>
+                <span class="doc-subtitle">a worker for creating thumbnails</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::Worker::ImageResizer - a worker for creating thumbnails</p>
+<h2 id="synopsis">SYNOPSIS</h2>
+<pre><code>    use LibreCat::Worker::ImageResizer;
+
+    my $resizer = LibreCat::Worker::ImageResizer-&gt;new(
+        files =&gt; {
+            package =&gt; &#39;Simple&#39;,
+            options =&gt; {
+                root =&gt; &#39;/data2/librecat/file_uploads&#39;
+            } ,
+        access =&gt; {
+            package =&gt; &#39;Simple&#39;,
+            options =&gt; {
+                root =&gt; &#39;/data2/librecat/access_uploads&#39;
+            }
+        });
+
+    $resizer-&gt;work({key =&gt; $key, filename =&gt; $filename});</code></pre>
+<h2 id="configuration">CONFIGURATION</h2>
+<dl>
+<dt>files</dt>
+<dd><p>Required. The LibreCat::FileStore implementation to use for files</p>
+</dd>
+<dt>access</dt>
+<dd>
+</dd>
+<dt>files</dt>
+<dd><p>Required. The LibreCat::FileStore implementation to use for access files.</p>
+</dd>
+<dt>tmpdir</dt>
+<dd><p>Optional. The temporary directory. Default /tmp</p>
+</dd>
+<dt>buffer_size</dt>
+<dd><p>Optional. The buffer_size used for downloading files. Defautlt 8192.</p>
+</dd>
+<dt>thumbnail_size</dt>
+<dd><p>Optiona. The size of the thumbnails. Default 200.</p>
+</dd>
+</dl>
+<h2 id="see-also">SEE ALSO</h2>
+<p><a href="LibreCat-Worker.html" title="LibreCat::Worker">LibreCat::Worker</a></p>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

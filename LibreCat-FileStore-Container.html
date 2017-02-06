@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::FileStore::Container</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::FileStore::Container</span>
+                <span class="doc-subtitle">Abstract definition of a file storage container</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::FileStore::Container - Abstract definition of a file storage container</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::FileStore::Simple;
+
+    my $filestore =&gt; LibreCat::FileStore::Simple-&gt;new(%options);
+
+    my $container = $filestore-&gt;get(&#39;1234&#39;);
+
+    my @list_files = $container-&gt;list;
+
+    if ($container-&gt;exists($filename)) {
+                ....
+    }
+
+    $container-&gt;add($filename, IO::File-&gt;new(&#39;/path/to/file&#39;));
+
+    my $file = $container-&gt;get($filename);
+
+    $container-&gt;delete($filename);
+
+    # write all changes to disk (network , database , ...)
+    $container-&gt;commit;</code></pre>
+<h1 id="description">DESCRIPTION</h1>
+<p>LibreCat::FileStore::Container is an abstract definition of a storage container. These container are used to store zero or more LibreCat::FileStore::Files.</p>
+<h1 id="methods">METHODS</h1>
+<h2 id="getkey">get($key)</h2>
+<p>Retrieve a LibreCat::FileStore::File based on a $key. Returns a LibreCat::FileStore::File on success or undef on failure.</p>
+<h2 id="addfilename-iofile-new">add($filename, IO::File-&gt;new(…))</h2>
+<p>Add a new LibreCat::FileStore::File file to the container. Return 1 on success or undef on failure.</p>
+<p>Based on the implementation of LibreCat::FileStore, the files might only be available when changes have been committed.</p>
+<h2 id="commit">commit()</h2>
+<p>Commit all changes to the container (write to disk).</p>
+<h2 id="deletefilename">delete($filename)</h2>
+<p>Delete a $filename from the container.</p>
+<h2 id="existsfilename">exists($filename)</h2>
+<p>Check if a $filename exists in the container.</p>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat-FileStore.html" title="LibreCat::FileStore">LibreCat::FileStore</a> , <a href="LibreCat-FileStore-File.html" title="LibreCat::FileStore::File">LibreCat::FileStore::File</a></p>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

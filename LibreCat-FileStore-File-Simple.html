@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::FileStore::File::Simple</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::FileStore::File::Simple</span>
+                <span class="doc-subtitle">A default implementation of a stored file</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::FileStore::File::Simple - A default implementation of a stored file</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    use LibreCat::FileStore::Simple;
+
+    my $filestore =&gt; LibreCat::FileStore::Simple-&gt;new(%options);
+
+    my $file = $filestore-&gt;get(&#39;1234&#39;)-&gt;get(&#39;myfile.txt&#39;);
+
+    my $filename     = $file-&gt;key;
+    my $content_type = $file-&gt;content_type;
+    my $size         = $file-&gt;size;
+    my $created      = $file-&gt;created;
+    my $modified     = $file-&gt;modified;
+    my $data         = $file-&gt;data;
+
+    my $fh = $file-&gt;data-&gt;fh;</code></pre>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat-FileStore-File.html" title="LibreCat::FileStore::File">LibreCat::FileStore::File</a></p>
+            </div>
+    </div>
+  </div>
+</body>
+</html>

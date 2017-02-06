@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LibreCat::Auth</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="template.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">LibreCat::Auth</span>
+                <span class="doc-subtitle">LibreCat authentication role</span>
+                <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+            <h1 id="name">NAME</h1>
+<p>LibreCat::Auth - LibreCat authentication role</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<pre><code>    package MyAuth;
+
+    use Moo;
+
+    with &#39;LibreCat::Auth&#39;;
+
+    sub authenticate {
+        my ($self, $params) = @_;
+        my $authenticated = $params-&gt;{password} eq &#39;secret&#39;;
+
+        $authenticated ?
+            +{ uid =&gt; $params-&gt;{username}, package =&gt; __PACKAGE__, package_id =&gt; $self-&gt;id } :
+            undef;
+    }
+
+    1;</code></pre>
+<h1 id="description">DESCRIPTION</h1>
+<p>This is a Moo::Role for all authentication packages. It requires <code>authenticate</code> method.</p>
+<h1 id="config">CONFIG</h1>
+<dl>
+<dt>obfuscate_params</dt>
+<dd><p>An array ref of params to obfuscate in logging or error reporting with '********'. The default obfuscates 'password'.</p>
+</dd>
+<dt>id</dt>
+<dd><p>identifier of the authentication module. Defaults to the package name. This is handy when using LibreCat::Auth::Multi ( where multiple versions of the same authentication package can be used ) and you need to known exactly which package authenticated the user.</p>
+</dd>
+</dl>
+<h1 id="methods">METHODS</h1>
+<h2 id="authenticateparams">authenticate(\%params)</h2>
+<p>All authentication packages need to implement this method. Returns a hash on success, undef on failure.</p>
+<p>This hash contains information about the user, and the module that authenticated:</p>
+<pre><code>    { uid =&gt; &quot;njfranck&quot;, package =&gt; &quot;LibreCat::Auth::Bag&quot;, package_id =&gt; &quot;LibreCat::Auth::Bag&quot; }</code></pre>
+<p>This &quot;package_id&quot; is used to distinguish between instances of the same package.</p>
+<h1 id="see-also">SEE ALSO</h1>
+<p><a href="LibreCat-Auth-Multi.html" title="LibreCat::Auth::Multi">LibreCat::Auth::Multi</a>, <a href="LibreCat-Auth-LDAP.html" title="LibreCat::Auth::LDAP">LibreCat::Auth::LDAP</a>, <a href="LibreCat-Auth-Bag.html" title="LibreCat::Auth::Bag">LibreCat::Auth::Bag</a></p>
+            </div>
+    </div>
+  </div>
+</body>
+</html>
