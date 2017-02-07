@@ -31,7 +31,7 @@ case "${CMD}" in
         echo "Done"
         ;;
     drop_backup)
-        echo "Dropping index.."
+        echo "Dropping backup.."
         echo "ids..."
         carton exec bin/librecat delete default --bag data
         echo "researcher..."
@@ -44,6 +44,20 @@ case "${CMD}" in
         carton exec bin/librecat delete backup  --bag project
         echo "research_group..."
         carton exec bin/librecat delete backup  --bag research_group
+        echo "Done"
+        ;;
+    drop_version)
+        echo "Dropping backup.."
+        echo "researcher..."
+        carton exec bin/librecat delete backup  --bag researcher_version
+        echo "publication..."
+        carton exec bin/librecat delete backup  --bag publication_version
+        echo "department..."
+        carton exec bin/librecat delete backup  --bag department_version
+        echo "project..."
+        carton exec bin/librecat delete backup  --bag project_version
+        echo "research_group..."
+        carton exec bin/librecat delete backup  --bag research_group_version
         echo "Done"
         ;;
     export)
@@ -108,6 +122,6 @@ case "${CMD}" in
         echo "Done"
         ;;
     *)
-        echo "usage: $0 {create|drop|drop_backup|export|import}"
+        echo "usage: $0 {create|drop|drop_backup|drop_version|export|import}"
         exit 1
 esac
