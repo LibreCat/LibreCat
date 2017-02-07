@@ -230,8 +230,9 @@ sub _add {
         sub {
             my $rec = $_[0];
 
-            if ($validator->is_valid($rec)) {
-                $rec->{_id} //= $helper->new_record('publication');
+            $rec->{_id} //= $helper->new_record('publication');
+
+            if ($validator->is_valid($rec)) {    
                 $helper->store_record('publication', $rec, $skip_citation);
                 print "added $rec->{_id}\n";
 
