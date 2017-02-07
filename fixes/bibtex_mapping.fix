@@ -1,5 +1,7 @@
 # Mapping: Import BibTex to PUB
 
+add_field('status','new')
+
 move_field(_type,type)
 lookup(type, fixes/lookup/bibtex.csv, default: journal_article)
 replace_all(title,'^\{','')

@@ -3,6 +3,8 @@
 retain_field('message')
 move_field('message','')
 
+add_field('status','new')
+
 # set default type
 add_field('type','journal_article')
 

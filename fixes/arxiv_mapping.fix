@@ -1,5 +1,7 @@
 # mapping data from ArXiv to the local repository
 
+add_field('status','new')
+
 # default type
 add_field('type','preprint')
 replace_all('id','http://arxiv.org/abs/(.*)v[0-9]','$1')

@@ -1,5 +1,6 @@
 # map InspireHEP data to the local repository
 
+add_field(_r.status,new)
 add_field(_r.type, journal_article)
 move_field(title.title, _r.title)
 move_field(recid, _r.external_id.inspire)

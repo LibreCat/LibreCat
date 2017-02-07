@@ -2,6 +2,8 @@
 
 move_field(resultList.result.$first,.)
 
+add_field('status','new')
+
 #default type
 add_field(type,journal_article)
 

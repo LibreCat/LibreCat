@@ -1,5 +1,6 @@
 # publication type
 # set default type
+add_field(_r.status,new)
 add_field(_r.type,journal_article)
 if all_match(DT,'Book Review')
   set_field(_r.type,review)
