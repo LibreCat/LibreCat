@@ -78,6 +78,7 @@ main_page:
     qae: "New QaE"
     private: "Private"
   links:
+    clone: "Klonen"
     edit: "Editieren"
     details: "Details"
     view_details: "Publikationsseite in PUB anzeigen (Frontdoor)"

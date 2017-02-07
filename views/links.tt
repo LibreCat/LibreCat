@@ -38,7 +38,7 @@
   | <a data-toggle="collapse" href="#[% tabmodus %]_[% entry._id %]">[% h.loc("main_page.links.details") %]</a>
 
   [% IF session.role == "super_admin" %]
-  | <a href="/librecat/record/internal_view/[% entry._id %]" target="_blank">[% h.loc("main_page.links.internal_view") %]</a>
+  | <a href="/librecat/record/internal_view/[% entry._id %]" target="_blank">[% h.loc("main_page.links.internal_view") %]</a> | <a href="/librecat/record/clone/[% entry._id %]" target="_blank">[% h.loc("main_page.links.clone") %]</a>
    [% IF h.config.audit %]
    | <a href="/librecat/audit/publication/[% entry._id %]" target="_blank">[% h.loc("main_page.links.audit") %]</a>
    [% END %]

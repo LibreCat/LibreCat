@@ -78,6 +78,7 @@ main_page:
     qae: "New QaE"
     private: "Private"
   links:
+    clone: Clone
     edit: "Edit"
     details: "Details"
     view_details: "Show complete bibliographic information and access options."

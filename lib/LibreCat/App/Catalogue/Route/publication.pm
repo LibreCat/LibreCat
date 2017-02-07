@@ -326,6 +326,25 @@ For admins only!
             {data => to_yaml h->publication->get($id)};
     };
 
+=head2 GET /clone/:id
+
+Clones the record with ID :id and returns a form with a different ID.
+
+=cut
+
+    get '/clone/:id' => sub {
+        my $rec = h->publication->get(params->{id});
+
+        delete $rec->{file};
+        delete $rec->{related_material};
+        $rec->{_id} = h->new_record('publication');
+
+        my $templatepath = "backend/forms/expert/";
+        my $template     = $rec->{type} . ".tt";
+
+        return template $templatepath . $template, $rec;
+    };
+
 =head2 GET /publish/:id
 
 Publishes private records, returns to the list.
