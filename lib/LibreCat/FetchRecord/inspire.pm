@@ -12,10 +12,17 @@ sub fetch {
 
     $self->log->debug("requesting $id from inspire");
 
+    my $url  = "http://inspirehep.net/record/$id?of=recjson";
+
     my $data = Catmandu->importer(
         'getJSON',
-        from => "http://inspirehep.net/record/$id?of=recjson",
+        from => $url
     )->first;
+
+    unless ($data) {
+        $self->log->error("failed to request $url");
+        return wantarray ? () : undef;
+    }
 
     my $fixer = $self->create_fixer('inspire_mapping.fix');
 

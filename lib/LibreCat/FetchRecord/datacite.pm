@@ -32,6 +32,11 @@ sub fetch {
         file => \$xml,
     )->first;
 
+    unless ($data) {
+        $self->log->error("failed to parse xml : $xml");
+        return wantarray ? () : undef;
+    }
+
     my $fixer = $self->create_fixer('from_datacite.fix');
 
     $data = $fixer->fix($data);

@@ -13,10 +13,17 @@ sub fetch {
 
     $self->log->debug("requesting $id from epmc");
 
+    my $url = url_decode sprintf("http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%s&format=json", $id);
+
     my $data = Catmandu->importer(
         'getJSON',
-        from => url_decode sprintf("http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%s&format=json", $id),
+        from => $url
     )->first;
+
+    unless ($data) {
+        $self->log->error("failed to request $url");
+        return wantarray ? () : undef;
+    }
 
     my $fixer = $self->create_fixer('epmc_mapping.fix');
 

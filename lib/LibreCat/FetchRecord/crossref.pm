@@ -19,11 +19,16 @@ sub fetch {
         from    => url_decode("http://api.crossref.org/works/$id"),
     )->first;
 
+    unless ($data) {
+        $self->log->error("failed to request http://api.crossref.org/works/$id");
+        return wantarray ? () : undef;
+    }
+
     my $fixer = $self->create_fixer('crossref_mapping.fix');
 
     $data = $fixer->fix($data);
 
-    wantarray ? ($data) : $data;
+    return wantarray ? ($data) : $data;
 }
 
 1;
