@@ -149,7 +149,7 @@ sub handle_file {
     my $pub = shift;
     my $key = $pub->{_id};
 
-    h->log->info("updating file metadata for record $key");
+    h->log->debug("updating file metadata for record $key");
 
     $pub->{file} = _decode_file($pub->{file});
 
@@ -177,7 +177,7 @@ sub handle_file {
             my $path     = path(h->config->{filestore}->{tmp_dir},
                 $fi->{tempid}, $filename);
 
-            h->log->info("new upload with temp-id -> $path");
+            h->log->debug("new upload with temp-id -> $path");
             _make_file($key, $filename, $path);
 
             h->log->debug(

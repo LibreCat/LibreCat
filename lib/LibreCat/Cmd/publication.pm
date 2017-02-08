@@ -224,7 +224,7 @@ sub _add {
     my $helper    = LibreCat::App::Helper::Helpers->new;
     my $validator = LibreCat::Validator::Publication->new;
 
-    my $skip_citation = $self->opts->{'no-citation'} ? 1 : 0;
+    my $skip_citation = $self->opts->{'no_citation'} ? 1 : 0;
 
     my $records = $importer->benchmark->select(
         sub {
@@ -232,7 +232,7 @@ sub _add {
 
             $rec->{_id} //= $helper->new_record('publication');
 
-            if ($validator->is_valid($rec)) {    
+            if ($validator->is_valid($rec)) {
                 $helper->store_record('publication', $rec, $skip_citation);
                 print "added $rec->{_id}\n";
 
