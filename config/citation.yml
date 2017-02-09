@@ -2,15 +2,11 @@ _prefix:
   citation:
 
 # engine for citation generation
-# possible values are 'csl' , 'template' or 'none'
+# possible values are 'csl' or 'none'
 engine: csl
 
-# example 'template' style citation generation
-template:
-  template_path: 'views/citation.tt'
-
 # example 'csl' style citation generation
-# see: https://github.com/LibreCat/LibreCat/wiki/Citation-Style-Language 
+# see: https://github.com/LibreCat/LibreCat/wiki/Citation-Style-Language
 csl:
   url: 'http://localhost:8085'
   default_style: apa

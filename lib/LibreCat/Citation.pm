@@ -19,9 +19,8 @@ LibreCat::Citation - creates citations via a CSL engine or template
     prefix:
       _citation:
 
-    engine: {template|csl|none}
-    template:
-      template_path: views/citation.tt
+    engine: {csl|none}
+
     csl:
       url: 'http://localhost:8085'
       default_style: chicago
@@ -118,13 +117,6 @@ sub create {
     my $engine = $self->conf->{engine} // 'none';
 
     if (0) {}
-    elsif ($engine eq 'template') {
-        my $d        = clone $data;
-        my $template = $self->conf->{template}->{template_path};
-        my $cite->{default} = export_to_string($d, 'Template', $template);
-
-        return $cite;
-    }
     elsif ($engine eq 'csl') {
         my $d         = clone $data;
         my $csl_fixer = $self->csl_fixer;
