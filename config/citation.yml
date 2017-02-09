@@ -17,10 +17,9 @@ csl:
     - chicago-fullnote-bibliography
     - ieee
     - modern-language-association
-
-zotero_styles:
-  american-medical-association: american-medical-association
-  apa: apa
-  chicago-fullnote-bibliography: chicago-fullnote-bibliography
-  ieee: ieee
-  mla: modern-language-association
+  zotero_styles:
+    american-medical-association: american-medical-association
+    apa: apa
+    chicago-fullnote-bibliography: chicago-fullnote-bibliography
+    ieee: ieee
+    mla: modern-language-association

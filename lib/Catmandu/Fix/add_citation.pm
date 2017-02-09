@@ -1,19 +1,23 @@
 package Catmandu::Fix::add_citation;
 
 use Catmandu::Sane;
-use Clone qw(clone);
-use LibreCat::App::Helper;
 use LibreCat::Citation;
 use Moo;
+
+has citation_engine => (is => 'lazy');
+
+sub _build_citation_engine {
+    LibreCat::Citation->new(all => 1);
+}
 
 sub fix {
     my ($self, $data) = @_;
 
-    if (h->config->{citation}->{engine} eq 'csl') {
-        my $citation_engine = LibreCat::Citation->new(all => 1);
+    my $citation_engine = $self->citation_engine;
+    my $citation = $citation_engine->create($data);
 
-        my $d = clone $data;
-        $data->{citation} = $citation_engine->create($d);
+    if ($citation) {
+        $data->{citation} = $citation;
     }
 
     $data;

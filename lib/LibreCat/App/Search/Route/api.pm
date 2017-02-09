@@ -60,35 +60,6 @@ oai_provider '/oai', deleted => sub {
     }
 
     $specs;
-    };
-
-get '/livecitation' => sub {
-    my $params = params;
-    my $debug = $params->{debug} ? 1 : 0;
-    unless (($params->{id} and $params->{style})
-        or $params->{info}
-        or $params->{styles})
-    {
-        return "Required parameters are 'id' and 'style'.";
-    }
-
-    if ($params->{styles}) {
-        return to_json h->config->{citation}->{csl}->{styles};
-    }
-
-    my $pub = h->publication->get($params->{id});
-
-    my $response = LibreCat::Citation->new(
-        styles => [$params->{style}],
-        debug  => $debug
-    )->create($pub)->{$params->{style}};
-
-    if ($debug) {
-        return to_dumper $response;
-    }
-    else {
-        template "api/livecitation", {citation => $response};
-    }
 };
 
 1;
