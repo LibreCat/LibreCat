@@ -167,7 +167,7 @@ sub handle_file {
     for my $fi (@{$pub->{file}}) {
 
         # Generate a new file_id if not one existed
-        $fi->{file_id} = h->new_record('publication') if !$fi->{file_id};
+        $fi->{file_id} = h->new_record('publication') if ! defined($fi->{file_id});
 
         h->log->debug("processing file-id: " . $fi->{file_id});
 
