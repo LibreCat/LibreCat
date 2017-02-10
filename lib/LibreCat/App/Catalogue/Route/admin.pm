@@ -85,8 +85,7 @@ Searches the authority database. Prints the search form + result list.
 
 =head2 GET /account/edit/:id
 
-Opens the record with ID id. Cancel returns to /account.
-Save does a POST on /account/update.
+Opens the record with ID id.
 
 =cut
 

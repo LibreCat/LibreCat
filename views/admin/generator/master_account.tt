@@ -22,10 +22,6 @@
       <input type="hidden" name="idm_title" value="[% idm_title %]" />
       <input type="hidden" name="former" value="[% former %]" />
       <input type="hidden" name="researcher" value="[% researcher %]" />
-      <input type="hidden" name="nonexist" value="[% nonexist %]" />
-      <input type="hidden" name="publication_hits" value="[% publication_hits %]" />
-      <input type="hidden" name="research_hits" value="[% research_hits %]" />
-      <input type="hidden" name="combined_hits" value="[% combined_hits %]" />
 
       {% FOREACH key IN account_field_order %}
 {% template = "fields/" _ key _ ".tt" %}
@@ -162,17 +158,6 @@ function addDelegate(element){
 $('.del_del').click(function(){
   var id = $(this).attr('id').replace('delegate_span_','');
   $('#delegate_' + id).remove();
-});
-
-$("input[name='account_type']").change(function(){
-  if($("input[name='account_type']:checked").val() == "external"){
-    $('#ext_institution').show();
-    $('#password').show();
-  }
-  else {
-    $('#ext_institution').hide();
-    $('#password').hide();
-  }
 });
 
 </script>
