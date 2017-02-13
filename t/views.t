@@ -41,16 +41,4 @@ foreach my $tmpl ( @{file_index()} ) {
 }
 
 
-done_testing();
-
-
-
-=head1 AUTHOR
-
-Koha Development Team <http://koha-community.org>
-
-Chris Cormack <chrisc@catalyst.net.nz>
-
-=cut
-
 done_testing;
