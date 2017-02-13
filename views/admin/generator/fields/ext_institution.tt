@@ -1,4 +1,4 @@
-<div class="row innerrow" id="ext_institution" [% IF account_type != 'external' %]style="display:none;"[% END %]>
+<div class="row innerrow" id="ext_institution">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="id_ext_institution">
       {% ext_institution.label %}

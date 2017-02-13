@@ -980,7 +980,6 @@ other_items:
   account:
     account_field_order:
       - id
-      - account_type
       - login
       - password
       - names
@@ -1001,15 +1000,6 @@ other_items:
       label: "ID"
       readonly: 1
       mandatory: 1
-    account_type:
-      label: "Account Type"
-      mandatory: 1
-      values:
-        local:
-          label: "Local"
-          default: 1
-        external:
-          label: "External"
     ext_institution:
       label: "External Institution"
       label_short: "Ext. Institution"

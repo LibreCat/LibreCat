@@ -101,11 +101,10 @@ sub _list {
             my $login    = $item->{login} // '';
             my $name     = $item->{full_name};
             my $status   = $item->{account_status};
-            my $type     = $item->{account_type};
             my $is_admin = $item->{super_admin};
 
             printf "%-2.2s %-40.40s %-20.20s %-40.40s %-10.10s %s\n",
-                $is_admin ? "*" : " ", $id, $login, $name, $status, $type;
+                $is_admin ? "*" : " ", $id, $login, $name, $status;
         }
     );
     print "count: $count\n";
@@ -242,14 +241,6 @@ sub _passwd {
     my $data = LibreCat::App::Helper::Helpers->new->get_person($id);
 
     my $name = $data->{full_name};
-    my $make_external = undef;
-
-    unless ($data->{account_type} eq 'external') {
-        print "The account of `$name' isn't external\n";
-        print "Do you want convert it to an external account? [y/N]";
-        my $answer = <STDIN>; chop($answer);
-        $make_external = 1 if ($answer =~ /^[yY]$/);
-    }
 
     print "Password: ";
     system('/bin/stty', '-echo');

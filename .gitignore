@@ -44,3 +44,5 @@ views/admin/forms/
 views/backend/forms/
 views/docs
 ~$
+docs/
+wiki/

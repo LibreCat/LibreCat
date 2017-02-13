@@ -770,9 +770,6 @@ researcher:
     account_status:
       enum: ["active","inactive"]
       description: "Account status"
-    account_type:
-      enum: ["external","local"]
-      description: "Account type"
     password:
       type: string
       minLength: 1
@@ -951,7 +948,7 @@ researcher:
       format: date-time
       description: "The user last modification date"
 
-  required: ["_id","account_status","account_type","first_name","last_name","full_name"]
+  required: ["_id","account_status","first_name","last_name","full_name"]
   additionalProperties: true
 
 department:

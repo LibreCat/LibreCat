@@ -1117,7 +1117,6 @@ search:
           account_status: {type: string, analyzer: tag}
           super_admin: {type: byte}
           login: {type: string, analyzer: tag}
-          account_type: {type: string}
           ext_institution: {type: string}
           password: {type: string}
           orcid: {type: string, analyzer: tag}
