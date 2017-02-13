@@ -18,7 +18,7 @@
         <div class="col-lg-10 col-md-9">
       [%- ELSE %];[% END %]
       [%- IF person.id %]
-      <a itemprop="author" href="/person/[% person._id | html %]">[% person.full_name | html %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
+      <a itemprop="author" href="/person/[% person.id | html %]">[% person.full_name | html %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
       [%- ELSE %]
       <span itemprop="author">[% person.full_name | html %]</span>
       [%- END %]
