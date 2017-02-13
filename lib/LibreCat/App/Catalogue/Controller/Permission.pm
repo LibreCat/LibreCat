@@ -70,7 +70,7 @@ sub can_download {
     my $access   = "";
     my $file_name;
     map {
-        if ($_->{file_id} == $file_id) {
+        if ($_->{file_id} eq $file_id) {
             $access    = $_->{access_level};
             $file_name = $_->{file_name};
         }
