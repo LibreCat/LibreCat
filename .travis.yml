@@ -30,10 +30,7 @@ install:
   - cpanm --quiet --notest --skip-satisfied Devel::Cover
 
 script:
-  - cover -delete
-  - HARNESS_PERL_SWITCHES=-MDevel::Cover make test
-  - cover
-
+  - perl Build.PL && ./Build build && cover -test
 after_success:
   - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls
   - cover -report coveralls

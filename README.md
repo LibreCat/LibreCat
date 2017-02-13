@@ -1,45 +1,28 @@
-[![Build Status](https://travis-ci.org/LibreCat/LibreCat.svg?branch=master)](https://travis-ci.org/LibreCat/LibreCat)
+# NAME
 
-# LibreCat - an institutional repository
+LibreCat - Librecat helper functions
 
-LibreCat is a new institutional repository system developed by [LibreCat Group](http://librecat.org) which has as its key features:
+# SYNOPSIS
 
-* institutional repository
-* publication list manager for reseachers
-* institutional research data archive.
+    use LibreCat;
 
-The development started in 2013 in Bielefeld and was made available on GitHub
-from the start. Since 2015 the code is in production at Bielefeld and is currently
-being in heavy development to allow for local adaptations.
+    # Given a 'catmandu' configuration file, like: catmandu.hooks.yml
+    # --
+    # hooks:
+    #   myhook:
+    #      before_fixes: [BeforeFix1,BeforeFix2]
+    #      after_fixes:  [AfterFix]
 
-## Features
+    my $hook = LibreCat->hook('eat');
 
-* Cataloging of many record types: Book, Book (Editor), Book Chapter, Book Review,
-Conference Abstract, Conference (Editor), Conference Paper, Dissertation,
-Encyclopedia Article, Journal Article, Special Issue, Newspaper Article, Preprint,
-Report, Translation, Translation (Section), Working Paper, Thesis, Research Data,
-Project, Award, Research Group
-* Drag and drop upload of full-text publications
-* Copycat from DOI, PubMED, Arxiv and Web of Science
-* Google Scholar indexation support
-* Citation Styles for  AMA, APA, Frontiers, Harvard, IEEE, LNCS, MLA, BibTeX, RIS
-* Full MathJAX Latex support to add mathematical formulas in abstracts and titles
-* Pluggable authentication modules
-* Delegate input and management to user others
-* Multilingual support
-* ElasticSearch indexing
-* Pluggable file store backend
-* Command line support using 'Catmandu'
-* OAI-PMH and SRU
-* REST / content negotiation
-* The LibreCat is open source and shipped with the same license as the Perl language: http://dev.perl.org/licenses/
+    $hook->fix_before($data);  # BeforeFix1->fix($data) and
+                               # BeforeFix2->fix($data) will be executed
+    $hook->fix_after($data);   # AfterFix->fix($data) will be executed
 
-## Install
+# LICENSE AND COPYRIGHT
 
-See our Wiki at: https://github.com/LibreCat/LibreCat/wiki
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
 
-## Misc
-
-<a href="https://codeclimate.com/github/LibreCat/LibreCat"><img src="https://codeclimate.com/github/LibreCat/LibreCat/badges/gpa.svg" /></a>
-<a href="https://codeclimate.com/github/LibreCat/LibreCat"><img src="https://codeclimate.com/github/LibreCat/LibreCat/badges/issue_count.svg" /></a>
-<a href="https://codeclimate.com/github/LibreCat/LibreCat/coverage"><img src="https://codeclimate.com/github/LibreCat/LibreCat/badges/coverage.svg" /></a>
+See [http://dev.perl.org/licenses/](http://dev.perl.org/licenses/) for more information.
