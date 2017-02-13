@@ -11,6 +11,7 @@ use Catmandu::Util;
 use URI::Escape;
 use LibreCat::MimeType;
 use namespace::clean;
+use utf8;
 
 with 'LibreCat::FileStore::Container';
 
@@ -151,13 +152,16 @@ sub delete_container {
 sub pack_key {
     my $self = shift;
     my $key  = shift;
+    utf8::encode($key);
     uri_escape($key);
 }
 
 sub unpack_key {
     my $self = shift;
     my $key  = shift;
-    uri_unescape($key);
+    my $str = uri_unescape($key);
+    utf8::decode($str);
+    $str;
 }
 
 1;
