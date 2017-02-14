@@ -73,6 +73,7 @@ plugins:
     limit: 200
     delimiter: ":"
     sampleIdentifier: "oai:pub.librecat.org:1585315"
+    xsl_stylesheet: "/oai.xsl"
     metadata_formats:
       -
         metadataPrefix: oai_dc

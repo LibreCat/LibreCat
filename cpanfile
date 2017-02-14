@@ -40,7 +40,7 @@ requires 'Catmandu::OAI';
 requires 'Dancer';
 requires 'Dancer::Plugin';
 requires 'Dancer::FileUtils';
-requires 'Dancer::Plugin::Catmandu::OAI';
+requires 'Dancer::Plugin::Catmandu::OAI', '>=0.04';
 requires 'Dancer::Plugin::Catmandu::SRU';
 requires 'Dancer::Plugin::Email';
 requires 'Dancer::Plugin::Auth::Tiny';
