@@ -40,5 +40,4 @@ foreach my $tmpl ( @{file_index()} ) {
     create_template_test($tmpl);
 }
 
-
 done_testing;
