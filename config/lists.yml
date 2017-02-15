@@ -286,7 +286,7 @@ relations_record:
     opposite: "other"
 
 thematic_area:
-  diversity: Diversity
+  - diversity
 
 sort_text:
   "year.asc": "Publishing Year ascending"
