@@ -26,10 +26,7 @@ sub create_template_test {
 
     my $vars;
     my $output;
-    if ($tmpl =~ /generator/) {
-        diag ("Skip $tmpl due to content which is correct only after generating forms script.");
-    }
-    else {
+    unless ($tmpl =~ /generator/) {
         if ( !ok( $tt->process( $tmpl, $vars, \$output ), $tmpl ) ) {
             diag( $tt->error );
         }
