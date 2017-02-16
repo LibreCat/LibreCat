@@ -15,8 +15,8 @@
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.thematic_area.label_short || lf.$type.field.thematic_area.label %]</div>
           <select name="thematic_area.0" id="select_thematic_area" class="sticky form-control{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} required{% END %}">
             <option value="" selected="selected">[% h.loc("forms.${type}.field.thematic_area.select_thematic_area") %]</option>
-            [% FOREACH ta IN thematic_area_list.keys %]
-              <option value="[% ta %]">[% thematic_area_list.$ta %]</option>
+            [% FOREACH ta IN thematic_area_list %]
+              <option value="[% ta %]">[% ta %]</option>
             [% END %]
           </select>
           <div class="input-group-addon" onclick="add_field('thematic_area'[% IF lf.$type.field.thematic_area.placeholder %],'[% h.loc("forms.${type}.field.thematic_area.placeholder") %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
@@ -32,8 +32,8 @@
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.thematic_area.label_short || lf.$type.field.thematic_area.label %]</div>
           <select name="thematic_area.[% loop.index %]" class="sticky form-control{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} required{% END %}">
             <option value="">[% h.loc("forms.${type}.field.thematic_area.select_thematic_area") %]</option>
-            [% FOREACH ta IN thematic_area_list.keys %]
-              <option value="[% ta %]"[% IF th_ar == ta %] selected="selected"[% END %]>[% thematic_area_list.$ta %]</option>
+            [% FOREACH ta IN thematic_area_list %]
+              <option value="[% ta %]"[% IF th_ar == ta %] selected="selected"[% END %]>[% ta %]</option>
             [% END %]
           </select>
           <div class="input-group-addon" onclick="add_field('thematic_area'[% IF lf.$type.field.thematic_area.placeholder %],'[% h.loc("forms.${type}.field.thematic_area.placeholder") %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
@@ -50,8 +50,8 @@
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.thematic_area.label_short || lf.$type.field.thematic_area.label %]</div>
           <select name="thematic_area.0" id="select_thematic_area" class="sticky form-control{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} required{% END %}">
             <option value=""[% IF !thematic_area %] selected="selected"[% END %]>[% h.loc("forms.${type}.field.thematic_area.select_thematic_area") %]</option>
-            [% FOREACH ta IN thematic_area_list.keys %]
-              <option value="[% ta %]"[% IF thematic_area.0 == ta %] selected="selected"[% END %]>[% thematic_area_list.$ta %]</option>
+            [% FOREACH ta IN thematic_area_list%]
+              <option value="[% ta %]"[% IF thematic_area.0 == ta %] selected="selected"[% END %]>[% ta %]</option>
             [% END %]
           </select>
           <div class="input-group-addon"></div>
