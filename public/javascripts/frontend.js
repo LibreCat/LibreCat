@@ -3,15 +3,11 @@ $(function () {
                 evt.preventDefault();
                 var a = $(this);
                 var marked = a.data('marked');
-                var csrfToken = $("meta[name='csrf_token']").attr("content");
 
                 if (marked == 0) {
                         $.ajax({
                             type: 'POST',
                             url: '/mark/'+a.data('id'),
-                            headers: {
-                               "X-CSRF-Token": csrfToken
-                            },
                             dataType: 'json',
                             success: function(res) {
                                 $('.total-marked').text(res.total);
@@ -25,9 +21,6 @@ $(function () {
                         $.ajax({
                             type: 'POST',
                             url: '/mark/'+a.data('id')+'?x-tunneled-method=DELETE',
-                            headers: {
-                               "X-CSRF-Token": csrfToken
-                            },
                             dataType: 'json',
                             success: function(res) {
                                 $('.total-marked').text(res.total);

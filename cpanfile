@@ -65,7 +65,6 @@ requires 'Plack::Middleware::Negotiate', '>= 0.20';
 requires 'Plack::Middleware::Debug';
 requires 'Plack::Middleware::Debug::Dancer::Settings';
 requires 'Plack::Middleware::Session';
-requires 'Plack::Middleware::CSRFBlock';
 requires 'Plack::Session::Store::Catmandu', '>= 0.03';
 requires 'Starman';
 

@@ -10,16 +10,12 @@ $(function () {
     $('.mark_all').click(function(evt){
         evt.preventDefault();
         var a = $(this);
-        var csrfToken = $("meta[name='csrf_token']").attr("content");
         var marked_all = a.data('marked');
 
         if(marked_all == 0){
             $.ajax({
                 type: 'POST',
                 url: url,
-                headers: {
-                   "X-CSRF-Token": csrfToken
-                },
                 dataType: 'json',
                 success: function(res) {
                     $('.total-marked').text(res.total);
@@ -36,9 +32,6 @@ $(function () {
             $.ajax({
                 type: '/marked?x-tunneled-method=DELETE',
                 url: url,
-                headers: {
-                   "X-CSRF-Token": csrfToken
-                },
                 dataType: 'json',
                 success: function(res) {
                     if(prev){
