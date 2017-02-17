@@ -2,6 +2,15 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
+0.3.0 2017-02-17
+    - GH #166, GH #165, GH #160: fix author links, add generic author icons to forms,
+        fix "All" link of frontdoor
+    - GH #164: fix storage of links
+    - GH #114: add OAI stylesheet
+    - fix filename handling and id comparison (UUID)
+    - override thematic area in layer
+    - templates cleanup + test
+
 0.2.0 2017-02-10
     - GH #138, GH #150, GH #156: fix and improve CSL mapping, use citeproc node,
         make citation processing optional
