@@ -24,7 +24,7 @@
 [% INCLUDE facets.tt %]
 
 
-[%- IF hits.0.citation OR total > 1 %]
+[%- IF hits.0.citation OR (total AND total > 1) %]
 <h3[% IF request.path.match('marked') %] class="margin-top0"[% END %]>[% h.loc("facets.display") %][% UNLESS request.path.match('marked') %] / [% lf.facets.item('sort') %][% END %]</h3>
 
 [%- IF qp.item('sort') %]

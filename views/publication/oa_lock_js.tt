@@ -1,1 +1,8 @@
-[% SWITCH fi.access_level %][% CASE "open_access" %]<img src="/images/access_open.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Open access file" alt="OA">[% CASE "local" %]<img src="/images/access_[% IF localUser %]open[% ELSE %]restricted[% END %].png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Accessible from local campus (or via VPN)" alt="Campus/VPN">[% CASE "closed" %]<img src="/images/access_restricted[% IF fi.request_a_copy %]_blue[% END %].png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Restricted access[% IF fi.request_a_copy %]. Request a copy from the author.[% ELSE %] for author/reviewer only.[% END %]" alt="Restricted">[% END %]
+[%- SWITCH fi.access_level -%]
+    [%- CASE "open_access" -%]
+        <img src="/images/access_open.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Open access file" alt="OA">
+    [%- CASE "local" -%]
+        <img src="/images/access_[% IF localUser %]open[% ELSE %]restricted[% END %].png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Accessible from local campus (or via VPN)" alt="Campus/VPN">
+    [%- CASE "closed" -%]
+        <img src="/images/access_restricted[% IF fi.request_a_copy %]_blue[% END %].png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Restricted access[% IF fi.request_a_copy %]. Request a copy from the author.[% ELSE %] for author/reviewer only.[% END %]" alt="Restricted">
+[%- END -%]

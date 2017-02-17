@@ -18,7 +18,7 @@
 </div>
 [% END %]
 
-[% IF !backend AND total > 1 %]
+[% IF !backend AND total AND total > 1 %]
 [% IF request.path.match("/person") %]
 [% all_marked = h.all_marked(request.params) %]
     <p>

@@ -73,9 +73,6 @@ field_order:
     - ddc
     - jel
     - keyword
-    - pacs_class
-    - msc_class
-    - ccs_class
     - conference.divider
     - conference.name
     - conference.location
@@ -101,9 +98,6 @@ field_order:
     - article_type
     - abstract
     - keyword
-    - pacs_class
-    - msc_class
-    - ccs_class
     - genbank
     - nasc
     - ddc
@@ -948,33 +942,6 @@ publication_types:
         alternative_id: *alternative_id
         link: *link
       related_material: *related_material
-array_field:
-  - abstract
-  - alternative_title
-  - applicant
-  - author
-  - author_secondary
-  - ccs_class
-  - corporate_editor
-  - corporate_editor_solo
-  - ddc
-  - department
-  - editor
-  - editor_solo
-  - file
-  - language
-  - msc_class
-  - original_language
-  - pacs_class
-  - project
-  - research_group
-  - supervisor
-  - thematic_area
-  - translator
-  - alternative_id
-  - jel
-  - link
-  - related_material.link
 
 other_items:
   account:

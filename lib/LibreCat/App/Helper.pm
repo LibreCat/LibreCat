@@ -557,6 +557,8 @@ sub get_file_store {
     my $file_store = $self->config->{filestore}->{default}->{package};
     my $file_opts = $self->config->{filestore}->{default}->{options} // {};
 
+    return undef unless $file_store;
+    
     my $pkg
         = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
     $pkg->new(%$file_opts);
@@ -565,12 +567,14 @@ sub get_file_store {
 sub get_access_store {
     my ($self) = @_;
 
-    my $file_store = $self->config->{filestore}->{access}->{package};
-    my $file_opts = $self->config->{filestore}->{access}->{options} // {};
+    my $access_store = $self->config->{filestore}->{access}->{package};
+    my $access_opts  = $self->config->{filestore}->{access}->{options} // {};
+
+    return undef unless $access_store;
 
     my $pkg
-        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
-    $pkg->new(%$file_opts);
+        = Catmandu::Util::require_package($access_store, 'LibreCat::FileStore');
+    $pkg->new(%$access_opts);
 }
 
 # TODO don't store in session, make it a param
