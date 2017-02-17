@@ -1,0 +1,2 @@
+Branch: dev of https://github.com/LibreCat/LibreCat.
+Commit: 50c60f8343197f9e1723e7f8564ec6b1e048e412 Merge branch 'dev' of github.com:LibreCat/LibreCat into dev
