@@ -2,7 +2,25 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
-0.1.0 2016-25-01
+0.3.0 2017-02-17
+    - GH #166, GH #165, GH #160: fix author links, add generic author icons to forms,
+        fix "All" link of frontdoor
+    - GH #164: fix storage of links
+    - GH #114: add OAI stylesheet
+    - fix filename handling and id comparison (UUID)
+    - override thematic area in layer
+    - templates cleanup + test
+
+0.2.0 2017-02-10
+    - GH #138, GH #150, GH #156: fix and improve CSL mapping, use citeproc node,
+        make citation processing optional
+    - GH #153: RD upload bug fix
+    - extend departmend command
+    - remove pretty useless 'account_type' field from user information
+    - GH #141: introduce clone records functionality
+    - update dependencies
+
+0.1.0 2017-25-01
     - fix embeds
     - fix frontend templates
     - fix thumbnail generation
@@ -17,7 +35,7 @@ Revision history for LibreCat
     - a lot of cleanup
 
 0.04 2016-12-02
-    - author-linking bug  fix
+    - author-linking bug fix
     - exports in frontend
     - utf-8 encodings
     - more flexible schema
