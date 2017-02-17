@@ -2,6 +2,9 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
+0.3.1 2017-02-17
+    - remove csrf middleware
+
 0.3.0 2017-02-17
     - GH #166, GH #165, GH #160: fix author links, add generic author icons to forms,
         fix "All" link of frontdoor
