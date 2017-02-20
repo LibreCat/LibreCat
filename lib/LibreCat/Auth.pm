@@ -1,6 +1,7 @@
 package LibreCat::Auth;
 
 use Catmandu::Sane;
+use Catmandu::Util qw(array_includes);
 use Moo::Role;
 use namespace::clean;
 
@@ -10,6 +11,8 @@ requires '_authenticate';
 
 has obfuscate_params => (is => 'lazy');
 has id               => (is => 'lazy');
+has whitelist        => (is => 'ro');
+has blacklist        => (is => 'ro');
 
 sub _build_obfuscate_params {
     [qw(password)];
@@ -21,6 +24,7 @@ sub _build_id {
 
 sub authenticate {
     my ($self, $params) = @_;
+
     if ($self->log->is_debug) {
         my $p = {%$params};
         for my $k (@{$self->obfuscate_params}) {
@@ -28,6 +32,17 @@ sub authenticate {
         }
         $self->log->debugf("authenticating: %s", $p);
     }
+
+    # check against optional whitelist and blacklist
+    if ($params->{username}) {
+        if (my $wl = $self->whitelist) {
+            return 0 unless array_includes($wl, $params->{username});
+        }
+        if (my $bl = $self->blacklist) {
+            return 0 if array_includes($bl, $params->{username});
+        }
+    }
+
     $self->_authenticate($params);
 }
 
@@ -80,6 +95,14 @@ identifier of the authentication module. Defaults to the package name.
 This is handy when using LibreCat::Auth::Multi ( where multiple versions
 of the same authentication package can be used ) and you need to known
 exactly which package authenticated the user.
+
+=item whitelist
+
+An array ref of usernames that can authenticate.
+
+=item blacklist
+
+An array ref of usernames that are blacklisted and can't authenticate.
 
 =back
 
