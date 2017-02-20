@@ -137,6 +137,7 @@ dropzone_fields:
         - description
         - open_access
         - embargo
+        - embargo_to
 
 # form definitions for every publication type
 publication_types:

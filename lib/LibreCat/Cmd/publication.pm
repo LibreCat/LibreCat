@@ -409,12 +409,14 @@ sub _embargo {
                 $process = 0;
             }
 
+            my $embargo_to = $file->{embargo_to} // 'open_access';
+
             # Show __all__ file files and indicate which ones should
             # be switched to open_access.
             printf "%-9d\t%-9d\t%-12.12s\t%-14.14s\t%-15.15s\t%s\n",
                 $item->{_id}, $file->{file_id},
-                $process ? 'open_access' : $file->{access_level},
-                $process ? 0             : $file->{request_a_copy},
+                $process ? $embargo_to : $file->{access_level},
+                $process ? 0           : $file->{request_a_copy},
                 $process ? 'NA' : $embargo // 'NA',
                 $file->{file_name};
         }
