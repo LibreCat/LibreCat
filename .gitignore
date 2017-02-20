@@ -1,6 +1,7 @@
 !Build/
 *.log
 *.pid
+*.spec
 *.swp
 .DS_Store
 .build/
