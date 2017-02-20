@@ -126,7 +126,7 @@ $('#fileSubmit').click( function() {
   }
 
   // Add an embargo?
-  if ($('#id_embargo').val().match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/) && $('#id_accessEmbargo').is(':checked')) {
+  if ($('#id_embargo').val() && $('#id_embargo').val().match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/) && $('#id_accessEmbargo').is(':checked')) {
     data.embargo        = $('#id_embargo').val();
   }
   if ($('#id_embargo_to').val() && data.embargo) {
