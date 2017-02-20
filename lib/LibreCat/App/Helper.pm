@@ -8,6 +8,7 @@ use Catmandu::Fix qw(expand);
 use Catmandu::Store::DBI;
 use Dancer qw(:syntax params request session vars);
 use Dancer::FileUtils qw(path);
+use File::Basename;
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
 use LibreCat;
@@ -591,6 +592,17 @@ sub localize {
 }
 
 *loc = \&localize;
+
+sub file_extension {
+    my ($self, $path) = @_;
+    (fileparse($path, qr/\.[^\.]*/))[2];
+}
+
+sub uri_for_file {
+    my ($self, $pub_id, $file_id, $file_name) = @_;
+    my $ext = $self->file_extension($file_name);
+    request->uri_base . "/download/$pub_id/$file_id$ext";
+}
 
 package LibreCat::App::Helper;
 
