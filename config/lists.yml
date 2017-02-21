@@ -1,6 +1,11 @@
 _prefix:
   lists:
 
+cc_licenses:
+  - cc_0
+  - cc_by
+  - cc_by_sa
+
 author_id:
   inspire:
     label: INSPIRE ID
