@@ -199,7 +199,7 @@ sub get_sort_style {
     if (
         $param_style
         && array_includes(
-            $self->config->{citation}->{csl}->{styles}, $param_style
+            keys %{$self->config->{citation}->{csl}->{styles}}, $param_style
         )
         )
     {
@@ -208,7 +208,7 @@ sub get_sort_style {
     elsif (
         $user_style
         && array_includes(
-            $self->config->{citation}->{csl}->{styles}, $user_style
+            keys %{$self->config->{citation}->{csl}->{styles}}, $user_style
         )
         )
     {
@@ -559,7 +559,7 @@ sub get_file_store {
     my $file_opts = $self->config->{filestore}->{default}->{options} // {};
 
     return undef unless $file_store;
-    
+
     my $pkg
         = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
     $pkg->new(%$file_opts);

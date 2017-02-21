@@ -14,7 +14,6 @@ use LibreCat::Citation;
 
 get '/livecitation' => sub {
     my $params = params;
-    my $debug = $params->{debug} ? 1 : 0;
     unless (($params->{id} and $params->{style})
         or $params->{info}
         or $params->{styles})
@@ -30,20 +29,15 @@ get '/livecitation' => sub {
 
     my $response = LibreCat::Citation->new(
         styles => [$params->{style}],
-        debug  => $debug
     )->create($pub);
-
+return to_dumper $response;
     my $citation = $response ? $response->{$params->{style}} : undef;
 
     if (!defined $citation) {
         content_type 'application/json';
         return to_json { error => 'Null response from citation generator'};
     }
-    elsif ($debug) {
-        content_type 'application/json';
-        return to_json $citation;
-    }
     else {
-        template "api/livecitation", {citation => $response};
+        template "api/livecitation", {citation => $response->{$params->{style}}};
     }
 };
