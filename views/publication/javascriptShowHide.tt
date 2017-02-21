@@ -39,7 +39,7 @@ function ShowFiles (){
     [% NEXT IF fi.relation != "main_file" %]
     [% index = index + 1 %]
     [% IF index > 3 %]
-    str +=  '<br>[%- INCLUDE publication/oa_lock_js.tt | trim %] <a href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a><span class="text-muted"> [% h.get_file_size(_id, fi.file_name) %]</span>[% INCLUDE publication/modal_requestcopy.tt | trim %]' ;
+    str +=  '<br>[%- INCLUDE publication/oa_lock_js.tt | trim %] <a href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>[% INCLUDE publication/modal_requestcopy.tt | trim %]' ;
     [% END -%]
   [% END %]
   str += '<br><a href="#" onclick="ReduceFiles();"><span class="glyphicon glyphicon-minus fw"></span>Less</a>' ;
