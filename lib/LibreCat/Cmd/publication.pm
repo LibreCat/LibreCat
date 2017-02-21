@@ -17,7 +17,7 @@ Usage:
 librecat publication [options] list [<cql-query>]
 librecat publication [options] export [<cql-query>]
 librecat publication [options] get <id>
-librecat publication [options] add <FILE>
+librecat publication [options] add <FILE> <OUTFILE>
 librecat publication [options] delete <id>
 librecat publication [options] purge <id>
 librecat publication [options] valid <FILE>
@@ -215,7 +215,7 @@ sub _get {
 }
 
 sub _add {
-    my ($self, $file) = @_;
+    my ($self, $file, $out_file) = @_;
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
@@ -223,6 +223,10 @@ sub _add {
     my $importer  = Catmandu->importer('YAML', file => $file);
     my $helper    = LibreCat::App::Helper::Helpers->new;
     my $validator = LibreCat::Validator::Publication->new;
+    my $exporter;
+    if (defined $out_file) {
+        $exporter = Catmandu->exporter('YAML', file => $out_file);
+    }
 
     my $skip_citation = $self->opts->{'no_citation'} ? 1 : 0;
 
@@ -234,7 +238,11 @@ sub _add {
 
             if ($validator->is_valid($rec)) {
                 $helper->store_record('publication', $rec, $skip_citation);
-                print "added $rec->{_id}\n";
+                if ($exporter) {
+                    $exporter->add($rec);
+                } else {
+                    print "added $rec->{_id}\n";
+                }
 
                 if (my $msg = $self->opts->{log}) {
                     audit_message($rec->{_id},'add',$msg);
@@ -257,6 +265,10 @@ sub _add {
     my $index = $helper->publication;
     $index->add_many($records);
     $index->commit;
+
+    if ($exporter) {
+        $exporter->commit;
+    }
 
     $ret;
 }
@@ -397,12 +409,14 @@ sub _embargo {
                 $process = 0;
             }
 
+            my $embargo_to = $file->{embargo_to} // 'open_access';
+
             # Show __all__ file files and indicate which ones should
             # be switched to open_access.
             printf "%-9d\t%-9d\t%-12.12s\t%-14.14s\t%-15.15s\t%s\n",
                 $item->{_id}, $file->{file_id},
-                $process ? 'open_access' : $file->{access_level},
-                $process ? 0             : $file->{request_a_copy},
+                $process ? $embargo_to : $file->{access_level},
+                $process ? 0           : $file->{request_a_copy},
                 $process ? 'NA' : $embargo // 'NA',
                 $file->{file_name};
         }

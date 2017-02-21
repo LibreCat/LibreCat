@@ -63,6 +63,10 @@
           <label class="checkbox control-label">
             <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />[% h.loc("forms.${type}.field.dropzone.edit_modal.access.embargo") %]<br />
           </label>
+          <select id="id_embargo_to" name="embargo_to" class="form-control">
+            <option value="open_access">[% h.loc("forms.${type}.field.dropzone.edit_modal.access.open_access") %]</option>
+            <option value="local">[% h.loc("forms.${type}.field.dropzone.edit_modal.access.local") %]</option>
+          </select>
           <input type="text" class="form-control" name="embargo" id="id_embargo" placeholder="YYYY-MM-DD" value="" size="10" maxlength="10">
         </div>
 
@@ -122,8 +126,11 @@ $('#fileSubmit').click( function() {
   }
 
   // Add an embargo?
-  if ($('#id_embargo').val() && $('#id_accessEmbargo').is(':checked')) {
+  if ($('#id_embargo').val() && $('#id_embargo').val().match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/) && $('#id_accessEmbargo').is(':checked')) {
     data.embargo        = $('#id_embargo').val();
+  }
+  if ($('#id_embargo_to').val() && data.embargo) {
+    data.embargo_to     = $('#id_embargo_to').val();
   }
 
   var use_file_id = data.file_id ? data.file_id : data.tempid;

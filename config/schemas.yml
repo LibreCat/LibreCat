@@ -184,6 +184,9 @@ publication:
                 type: string
                 pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
                 description: "Date when the embargo period ends and the file becomes open access"
+            embargo_to:
+                type: string
+                description: "The new access level after the end of the embargo date"
             file_id:
                 oneOf:
                   - type: string
