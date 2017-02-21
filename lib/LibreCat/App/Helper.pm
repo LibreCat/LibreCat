@@ -199,7 +199,7 @@ sub get_sort_style {
     if (
         $param_style
         && array_includes(
-            $self->config->{citation}->{csl}->{styles}, $param_style
+            keys %{$self->config->{citation}->{csl}->{styles}}, $param_style
         )
         )
     {
@@ -208,7 +208,7 @@ sub get_sort_style {
     elsif (
         $user_style
         && array_includes(
-            $self->config->{citation}->{csl}->{styles}, $user_style
+            keys %{$self->config->{citation}->{csl}->{styles}}, $user_style
         )
         )
     {

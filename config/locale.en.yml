@@ -39,6 +39,12 @@ header:
   logged_in_as: "Logged in as"
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"
+styles:
+  apa: APA
+  mla: MLA
+  chicago: Chicago
+  ieee: IEEE
+  ama: AMA
 tabs:
   home: "Home"
   all_publications: "All Publications"
