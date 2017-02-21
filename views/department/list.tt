@@ -33,7 +33,7 @@
             <div class="col-sm-8 col-md-8">
               <ul>
                 [% TRY %]
-                   [% USE File('department/nodes.tt') %]
+                   [% USE File('views/department/nodes.tt') %]
                    [% INCLUDE department/nodes.tt %]
                 [% CATCH File %]
                     You might want to execute 'bin/librecat generate departments'...
