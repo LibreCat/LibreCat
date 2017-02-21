@@ -559,7 +559,7 @@ sub get_file_store {
     my $file_opts = $self->config->{filestore}->{default}->{options} // {};
 
     return undef unless $file_store;
-    
+
     my $pkg
         = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
     $pkg->new(%$file_opts);
