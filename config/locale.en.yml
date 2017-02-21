@@ -1711,3 +1711,8 @@ help:
   citation: "Data of publication in selected citation style."
   search: "Search this publication list."
   display_block: "Change display settings of publication list (hits per page, sorting, citation style)."
+cc_licenses:
+  cc_0: CC0 (1.0)
+  cc_by: CC BY (4.0)
+  cc_by_sa: CC BY-SA (4.0)
+
