@@ -20,7 +20,7 @@
         <button type="submit" name="finalSubmit" value="recSubmit" onclick="return confirm('[% h.loc("forms.confirm_submit") %]');" class="btn btn-success change_tab"><span class="glyphicon glyphicon-upload"></span> [% h.loc("forms.button.submitted") %]</button>
         [% END %]
         [% IF status == "public" AND (type != "research_data" OR (type == "research_data" AND session.role == "super_admin")) %]
-        <a class="btn btn-danger" href="/librecat/record/return/[% _id %]" onclick="return confirm('[% h.loc("forms.confirm_return") %]');" name="return"><span class="glyphicon glyphicon-download"></span> [% h.loc("forms.button.return") %]</a>
+        <button type="submit" name="finalSubmit" value="recReturn" onclick="return confirm('[% h.loc("forms.confirm_return") %]');" class="btn btn-danger change_tab"><span class="glyphicon glyphicon-download"></span> [% h.loc("forms.button.return") %]</button>
         [% END %]
         [% IF session.role == "super_admin" %]
         <a class="btn btn-danger" href="/librecat/record/delete/[% _id %]" onclick="return confirm('[% h.loc("forms.confirm_delete") %]');" name="delete"><span class="glyphicon glyphicon-trash"></span> [% h.loc("forms.button.delete") %]</a>

@@ -79,7 +79,7 @@ $('.change_tab').click(function(e){
     }
   });
 
-  if((this_button.attr('href') && (this_button.attr('href') == "#supplementary_fields" || this_button.attr('href') == "#related_material")) || ($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish"))){
+  if((this_button.attr('href') && (this_button.attr('href') == "#supplementary_fields" || this_button.attr('href') == "#related_material")) || ($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish" || $(this).val() == "recReturn"))){
     if($('#id_data_reuse_license').length || $('#id_open_data_release').length){
       if ($('.dropzone').first().children().length > 1 && $($('.dropzone').first().children()[1]).attr('class') != "fallback" && (!$('#id_open_data_release').is(':checked') || ($('#id_data_reuse_license').val() == ''))){
         if($('#id_data_reuse_license').val() == '' && (!$('#id_other_data_license').length || $('#id_other_data_license').val() == '')){
@@ -183,7 +183,7 @@ $('.change_tab').click(function(e){
     window.scrollTo(0, 0);
     e.preventDefault(); // prevents submission of form
   }
-  else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish")){
+  else if($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish" || $(this).val() == "recReturn")){
     //window.scrollTo(0, 0);
     //e.preventDefault();
   }
