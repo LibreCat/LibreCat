@@ -32,7 +32,12 @@
           <div class="row">
             <div class="col-sm-8 col-md-8">
               <ul>
-                [% INCLUDE department/nodes.tt %]
+                [% TRY %]
+                   [% USE File('department/nodes.tt') %]
+                   [% INCLUDE department/nodes.tt %]
+                [% CATCH File %]
+                    You might want to execute 'bin/librecat generate departments'...
+                [% END %]
               </ul>
             </div>
           </div>
