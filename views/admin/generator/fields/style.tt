@@ -8,7 +8,7 @@
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% style.label %}</div>
           <select id="style_select" name="style" class="form-control">
-            [% FOREACH sty IN h.config.citation.csl.styles %]
+            [% FOREACH sty IN h.config.citation.csl.styles.keys %]
 	        <option value="[% sty %]"[% IF (style AND style == sty) OR (!style AND sty == "default") %] selected="selected"[% END %]>[% sty %]</option>
 	        [% END %]
 	      </select>

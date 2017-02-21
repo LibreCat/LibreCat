@@ -76,9 +76,9 @@
         [% h.loc("forms.${type}.field.license.cc_license.select_text") %]
         <select name="cc_license" id="id_cc_license" class="form-control">
           <option value="">[% h.loc("forms.${type}.field.license.cc_license.select_a_license") %]</option>
-          <option value="cc_0"[% IF cc_license == "cc_0" %] selected="selected"[% END %]>CC0 (1.0)</option>
-          <option value="cc_by"[% IF cc_license == "cc_by" %] selected="selected"[% END %]>CC BY (4.0)</option>
-          <option value="cc_by_sa"[% IF cc_license == "cc_by_sa" %] selected="selected"[% END %]>CC BY-SA (4.0)</option>
+          [% FOR lic IN h.config.lists.cc_licenses %]
+          <option value="[% lic %]"[% IF cc_license == lic %] selected="selected"[% END %]>[% h.loc("cc_licenses.${lic}") %]</option>
+          [% END %]
         </select><br />
 
         <a href="#licenses" data-target="#cc_0" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span>[% h.loc("forms.${type}.field.license.cc_license.cc_0.name") %]</a><br />
