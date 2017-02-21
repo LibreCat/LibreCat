@@ -2,6 +2,14 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
+0.3.2 2017-02-21
+    - new feature: embargo_to (local, open_access)
+    - add whitelist, blacklist support to auth
+    - new hook: read-only-fields
+    - GH #174: fix pagination bug
+    - GH #175: fix file size bug
+    - GH #168, GH #169: fix citation engine
+
 0.3.1 2017-02-17
     - remove csrf middleware
 
