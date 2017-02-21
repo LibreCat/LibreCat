@@ -59,7 +59,7 @@ sub _build_conf {
 sub _build_styles {
     my ($self) = @_;
     if ($self->all) {
-        return keys %{$self->conf->{csl}->{styles}};
+        return [keys %{$self->conf->{csl}->{styles}}];
     }
     elsif ($self->style) {
         return [$self->style];
