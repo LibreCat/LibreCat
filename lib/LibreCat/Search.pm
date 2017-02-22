@@ -43,6 +43,38 @@ sub quick_search {
     $hits;
 }
 
+sub native_search {
+    my ($self, $bag_name, $search_params) = @_;
+
+    return undef unless $bag_name;
+
+    $self->log->debug("executing $bag_name->search: " . to_dumper($search_params));
+    my $hits;
+
+    try {
+        $hits = $self->store->bag($bag_name)->search(%$search_params);
+    }
+    catch {
+        $self->log->error($_);
+        $self->log->error("$bag_name->search failed: " . to_dumper($search_params));
+        $hits = Catmandu::Hits->new(
+                    start => $search_params->{start},
+                    limit => $search_params->{limit},
+                    total => 0,
+                    hits  => [],
+                );
+    };
+
+    $self->log->debug("found: " . $hits->total . " hits");
+
+    # hack for now: refactor facets, then this can be removed
+    foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+        $hits->{$_} = $hits->$_;
+    }
+
+    $hits;
+}
+
 sub search {
     my ($self, $bag_name, $p) = @_;
 
