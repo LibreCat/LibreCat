@@ -3,6 +3,8 @@
 [%- qp.delete('splat') %]
 [%- PROCESS header.tt %]
 
+
+
 <!-- BEGIN project/list.tt -->
 <span id="language_id" style="display:none;">[% lang %]</span>
 <div class="row"><!-- outer border -->
@@ -27,6 +29,9 @@
       </div>
     </div>
     <div class="row">
+      [% INCLUDE pagination.tt %]
+    </div>
+    <div class="row">
       <div class="col-md-12 tab-content">
         <div class="tab-pane active" id="publ">
           <div class="row">
@@ -48,6 +53,9 @@
           </div>
         </div>
       </div><!-- tab-content -->
+      <div class="row">
+        [% INCLUDE pagination.tt %]
+      </div>
     </div>
   </div><!-- main content left -->
 </div><!-- outer border -->
