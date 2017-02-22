@@ -45,7 +45,6 @@ vendor/
 views/admin/forms/
 views/backend/forms/
 views/docs
-views/department/nodes.tt
 ~$
 docs/
 wiki/
