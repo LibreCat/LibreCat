@@ -162,6 +162,10 @@ sub _generate_forms {
 sub _generate_departments {
     my ($self,$file) = @_;
 
+    my $layers          = LibreCat->layers;
+    my $template_paths  = $layers->template_paths;
+    my $output_path     = $template_paths->[0] . '/department';
+
     my $pubs = LibreCat::App::Helper::Helpers->new->publication;
     my $it   = LibreCat::App::Helper::Helpers->new->department->searcher();
 
@@ -197,7 +201,9 @@ sub _generate_departments {
         }
     );
 
-    open(my $fh, '>:encoding(UTF-8)', 'views/department/nodes.tt');
+    path($output_path)->mkpath unless -d $output_path;
+
+    open(my $fh, '>:encoding(UTF-8)', "$output_path/nodes.tt");
 
     croak "error - views/department/nodes.tt not writable!" unless $fh;
 
@@ -205,7 +211,7 @@ sub _generate_departments {
 
     close($fh);
 
-    print STDERR "Output written to views/department/nodes.tt\n";
+    print STDERR "Output written to $output_path/nodes.tt\n";
 }
 
 sub _template_printer {

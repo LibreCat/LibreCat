@@ -1,0 +1,35 @@
+---
+tree:
+  '1':
+    display: LibreCat University
+    name: LibreCat University
+    tree:
+      '10085':
+        display: University Library
+        name: University Library
+      '2685177':
+        display: Fakultät für Biologie
+        name: Fakultät für Biologie
+      '9997':
+        display: Department of Physics
+        name: Department of Physics
+        tree:
+          '9996':
+            display: Department of Physics -> Relativity Theory Group
+            name: Relativity Theory Group
+      '9999':
+        display: Department of Mathematics
+        name: Department of Mathematics
+        tree:
+          '9998':
+            display: Department of Mathematics -> Analysis Group
+            name: Analysis Group
+          '99991':
+            display: Department of Mathematics -> Applied Mathematics
+            name: Applied Mathematics
+            tree:
+              '99992':
+                display: Department of Mathematics -> Applied Mathematics -> Game
+                  Theory
+                name: Game Theory
+...
