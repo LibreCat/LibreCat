@@ -23,7 +23,7 @@ get qr{/project/([a-zA-Z])} => sub {
         query => {
             prefix => {
                 'name.exact' => lc($c)
-            } ,
+            } 
         } ,
         limit => 1000
     );
