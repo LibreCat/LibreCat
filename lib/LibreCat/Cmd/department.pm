@@ -244,7 +244,7 @@ sub _add {
 
             $rec->{_id} //= $helper->new_record('department');
 
-            if ($validator->is_valid($rec)) {    
+            if ($validator->is_valid($rec)) {
                 $helper->store_record('department', $rec);
                 print "added $rec->{_id}\n";
                 return 1;

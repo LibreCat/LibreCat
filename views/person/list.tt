@@ -26,18 +26,7 @@
         </ul>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12 tab-content">
-        <div class="tab-pane active" id="people">
-          <div class="row">
-            <div class="col-sm-8">
-              [% INCLUDE person/hits.tt %]
-            </div>
-            <div class="col-sm-4 col-md-3 col-md-offset-1 facets">
-            </div>
-          </div>
-        </div>
-      </div><!-- tab-content -->
+    [% INCLUDE person/hits.tt %]
     </div>
   </div><!-- main content left -->
 </div><!-- outer border -->

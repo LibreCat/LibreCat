@@ -59,7 +59,7 @@ sub _build_conf {
 sub _build_styles {
     my ($self) = @_;
     if ($self->all) {
-        return $self->conf->{csl}->{styles};
+        return [keys %{$self->conf->{csl}->{styles}}];
     }
     elsif ($self->style) {
         return [$self->style];
@@ -124,16 +124,22 @@ sub create {
                                 line_delimited => 1, fix => $csl_fixer
                         });
 
+        my $found = 0;
         foreach my $s (@{$self->styles}) {
             my $locale  = ($s eq 'dgps') ? 'de' : $self->locale;
-            $cite->{$s} = $self->_request({
+            my $citation = $self->_request({
                         locale  => $locale,
-                        style   => $self->conf->{csl}->{zotero_styles}->{$s},
+                        style   => $self->conf->{csl}->{styles}->{$s},
                         content => $csl_json,
                     });
+
+            if ($citation) {
+                $cite->{$s} = $citation;
+                $found = 1;
+            }
         }
 
-        return $cite;
+        return $found ? $cite : undef;
     }
     else {
         return undef;

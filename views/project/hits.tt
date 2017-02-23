@@ -1,0 +1,42 @@
+<!-- BEGIN project/hits.tt -->
+<div class="row">
+    <div class="col-md-12">
+      <ul class="pagination">
+      [%- FOREACH c IN h.alphabet %]
+      <li [% IF request.path.match("/project/$c")%]class="active"[% END %]><a href="/project/[% c %]">[% c %]</a></li>
+      [%- END %]
+      </ul>
+    </div>
+</div>
+
+[% IF error %]
+<div class="row">
+<div class="col-md-10">
+  <div  class="alert alert-danger"><strong>[% error %]</strong></div>
+</div>
+</div>
+[% END %]
+
+
+<div class="row">
+  <div class="col-md-12 tab-content">
+    <div class="tab-pane active" id="publ">
+      <div class="row">
+        <div class="col-sm-8 col-md-8">
+          [%- FOREACH project IN hits %]
+          <a href="/project/[% project._id %]">[% project.name %][% IF project.acronym %] ([% project.acronym %])[% END %]</a><br />
+            <p class="text-muted">
+              [%- IF project.start_date AND project.end_date %]
+                [% project.start_date %] &ndash; [% project.end_date %]<br />
+              [%- END %]
+              [%- IF project.description %]
+                [% project.description.length() > 200 ? project.description.substr(0, 200) _ '...' : project.description %]
+              [%- ELSE %]
+                [% project.call_identifier %]
+              [%- END %]
+            </p>
+          [%- END %]
+        </div>
+      </div>
+    </div>
+</div>

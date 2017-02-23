@@ -1,84 +1,76 @@
 ---
-_id: 9999
-name: 'Department of Mathematics'
-display: 'Department of Mathematics'
-date_created: 2016-11-14T14:19:16Z
-date_updated: 2016-11-14T14:19:16Z
-layer: 1
-tree:
-  - _id: 9999
-...
----
-_id: 99991
-name: 'Applied Mathematics'
-display: 'Department of Mathematics -> Applied Mathematics'
+_id: '9999'
+name: Department of Mathematics
+display: Department of Mathematics
 layer: 2
-date_created: 2016-11-14T14:19:16Z
-date_updated: 2016-11-14T14:19:16Z
 tree:
-  - _id: 9999
-  - _id: 99991
+- _id: '1'
 ...
 ---
-_id: 99992
-name: 'Game Theory'
-display: 'Department of Mathematics -> Applied Mathematics -> Game Theory'
+_id: '1'
+name: LibreCat University
+display: LibreCat University
+layer: 1
+tree: []
+...
+---
+_id: '10085'
+name: University Library
+display: University Library
+layer: 2
+tree:
+- _id: '1'
+...
+---
+_id: '9996'
+name: Relativity Theory Group
+display: Department of Physics -> Relativity Theory Group
 layer: 3
-date_created: 2016-11-14T14:19:16Z
-date_updated: 2016-11-14T14:19:16Z
 tree:
-  - _id: 9999
-  - _id: 99991
-  - _id: 99992
+- _id: '9997'
+- _id: '1'
+...
 ---
-_id: 9998
-name: 'Analysis Group'
-display: 'Department of Mathematics -> Analysis Group'
-date_created: 2016-11-14T14:19:16Z
-date_updated: 2016-11-14T14:19:16Z
+_id: '99991'
+name: Applied Mathematics
+display: Department of Mathematics -> Applied Mathematics
+layer: 3
+tree:
+- _id: '9999'
+- _id: '1'
+...
+---
+_id: '9997'
+name: Department of Physics
+display: Department of Physics
 layer: 2
 tree:
-  - _id: 9999
-  - _id: 9998
+- _id: '1'
 ...
 ---
-_id: 9997
-name: 'Department of Physics'
-display: 'Department of Physics'
-date_created: 2016-11-14T14:19:16Z
-date_updated: 2016-11-14T14:19:16Z
-layer: 1
+_id: '9998'
+name: Analysis Group
+display: Department of Mathematics -> Analysis Group
+layer: 3
 tree:
-  - _id: 9997
+- _id: '9999'
+- _id: '1'
 ...
 ---
-_id: 9996
-name: 'Relativity Theory Group'
-display: 'Department of Physics -> Relativity Theory Group'
-date_created: 2016-11-14T14:19:16Z
-date_updated: 2016-11-14T14:19:16Z
+_id: '99992'
+name: Game Theory
+display: Department of Mathematics -> Applied Mathematics -> Game Theory
+layer: 4
+tree:
+- _id: '99991'
+- _id: '9999'
+- _id: '1'
+...
+---
+_id: '2685177'
+name: Fakultät für Biologie
+display: Fakultät für Biologie
 layer: 2
 tree:
-  - _id: 9997
-  - _id: 9996
-...
----
-_id: 10085
-name: "University Library"
-display: "University Library"
-date_created: 2016-11-14T14:19:16Z
-date_updated: 2016-11-14T14:19:16Z
-layer: 1
-tree:
-  - _id: 10085
-...
----
-_id: 2685177
-name: "Fakultät für Biologie"
-display: "Fakultät für Biologie"
-date_created: 2016-11-14T14:19:16Z
-date_updated: 2016-11-14T14:19:16Z
-layer: 1
-tree:
-  - _id: 2685177
+- _id: '1'
 ...

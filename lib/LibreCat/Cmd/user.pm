@@ -98,12 +98,12 @@ sub _list {
         sub {
             my ($item)   = @_;
             my $id       = $item->{_id};
-            my $login    = $item->{login} // '';
-            my $name     = $item->{full_name};
-            my $status   = $item->{account_status};
-            my $is_admin = $item->{super_admin};
+            my $login    = $item->{login} // '---';
+            my $name     = $item->{full_name} // '---';
+            my $status   = $item->{account_status} // '---';
+            my $is_admin = $item->{super_admin} // 0;
 
-            printf "%-2.2s %-40.40s %-20.20s %-40.40s %-10.10s %s\n",
+            printf "%-2.2s %-40.40s %-20.20s %-40.40s %-10.10s\n",
                 $is_admin ? "*" : " ", $id, $login, $name, $status;
         }
     );

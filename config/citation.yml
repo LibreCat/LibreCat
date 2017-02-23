@@ -11,14 +11,8 @@ csl:
   url: 'http://localhost:8085'
   default_style: apa
   styles:
-    - apa
-    - american-medical-association
-    - chicago-fullnote-bibliography
-    - ieee
-    - modern-language-association
-  zotero_styles:
-    american-medical-association: american-medical-association
     apa: apa
-    chicago-fullnote-bibliography: chicago-fullnote-bibliography
+    ama: american-medical-association
+    chicago: chicago-fullnote-bibliography
     ieee: ieee
     mla: modern-language-association

@@ -23,6 +23,8 @@ sub _file_exists {
 
     my $store     = $opts{access} ? h->get_access_store() : h->get_file_store();
 
+    return undef unless $store;
+    
     my $container = $store->get($key);
 
     if (defined $container) {

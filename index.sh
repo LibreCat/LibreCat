@@ -11,9 +11,11 @@ case "${CMD}" in
         echo "publication..."
         carton exec bin/librecat publication add devel/publications.yml
         echo "department..."
-        carton exec bin/librecat department add devel/department.yml
+        carton exec bin/librecat department tree devel/department-tree.yml
         echo "project..."
         carton exec bin/librecat project add devel/project.yml
+        echo "Generating tree"
+        carton exec bin/librecat generate departments
         echo "Done"
         ;;
     drop)

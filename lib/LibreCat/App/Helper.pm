@@ -8,6 +8,7 @@ use Catmandu::Fix qw(expand);
 use Catmandu::Store::DBI;
 use Dancer qw(:syntax params request session vars);
 use Dancer::FileUtils qw(path);
+use File::Basename;
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
 use LibreCat;
@@ -198,7 +199,7 @@ sub get_sort_style {
     if (
         $param_style
         && array_includes(
-            $self->config->{citation}->{csl}->{styles}, $param_style
+            keys %{$self->config->{citation}->{csl}->{styles}}, $param_style
         )
         )
     {
@@ -207,7 +208,7 @@ sub get_sort_style {
     elsif (
         $user_style
         && array_includes(
-            $self->config->{citation}->{csl}->{styles}, $user_style
+            keys %{$self->config->{citation}->{csl}->{styles}}, $user_style
         )
         )
     {
@@ -557,6 +558,8 @@ sub get_file_store {
     my $file_store = $self->config->{filestore}->{default}->{package};
     my $file_opts = $self->config->{filestore}->{default}->{options} // {};
 
+    return undef unless $file_store;
+
     my $pkg
         = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
     $pkg->new(%$file_opts);
@@ -565,12 +568,14 @@ sub get_file_store {
 sub get_access_store {
     my ($self) = @_;
 
-    my $file_store = $self->config->{filestore}->{access}->{package};
-    my $file_opts = $self->config->{filestore}->{access}->{options} // {};
+    my $access_store = $self->config->{filestore}->{access}->{package};
+    my $access_opts  = $self->config->{filestore}->{access}->{options} // {};
+
+    return undef unless $access_store;
 
     my $pkg
-        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
-    $pkg->new(%$file_opts);
+        = Catmandu::Util::require_package($access_store, 'LibreCat::FileStore');
+    $pkg->new(%$access_opts);
 }
 
 # TODO don't store in session, make it a param
@@ -587,6 +592,17 @@ sub localize {
 }
 
 *loc = \&localize;
+
+sub file_extension {
+    my ($self, $path) = @_;
+    (fileparse($path, qr/\.[^\.]*/))[2];
+}
+
+sub uri_for_file {
+    my ($self, $pub_id, $file_id, $file_name) = @_;
+    my $ext = $self->file_extension($file_name);
+    request->uri_base . "/download/$pub_id/$file_id$ext";
+}
 
 package LibreCat::App::Helper;
 

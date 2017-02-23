@@ -2,7 +2,6 @@
  * Dropzones
  */
 $(document).ready(function(){
-    var csrfToken = $("meta[name='csrf_token']").attr("content");
     var htmlEscape = function(str) {
         return str
             .replace(/&/g, '&amp;')
@@ -17,7 +16,7 @@ $(document).ready(function(){
         maxFilesize: 500,
         maxFiles: 1,
         previewTemplate: "<span></span>",
-        params: {access_level: "open_access", accept: 1, quickandeasy: 1, csrf_token: csrfToken},
+        params: {access_level: "open_access", accept: 1, quickandeasy: 1},
         createImageThumbnails: false,
         addRemoveLinks: true,
         dictMaxFilesExceeded: "Please submit or cancel your upload first before uploading more files.",
@@ -42,7 +41,6 @@ $(document).ready(function(){
 "<strong>" + file.name + "</strong>" +
 "<textarea class='form-control' placeholder='Type details about your publication here' name='description'>" +
 "</textarea>" +
-'<input type="hidden" name="csrf_token" value="' + csrfToken + '"/>' +
 "<input type='hidden' name='reviewer' value='" + $('#qaeUpload').data('reviewer') + "' />" +
 "<input type='hidden' name='project_reviewer' value='" + $('#qaeUpload').data('project_reviewer') + "' />" +
 "<input type='hidden' name='delegate' value='" + $('#qaeUpload').data('delegate') + "'/>" +
@@ -76,7 +74,6 @@ $(document).ready(function(){
         previewTemplate: '<div class=\"col-md-11 dz-preview dz-file-preview\"></div>',
         createImageThumbnails: false,
         addRemoveLinks: true,
-        params: {csrf_token: csrfToken},
         init: function() {
             $('.dz-default.dz-message').addClass('col-md-11');
             this.on("addedfile", function(file) {
@@ -170,7 +167,7 @@ $(document).ready(function(){
         maxFiles: 1,
         previewTemplate: "<span></span>",
         previewsContainer: '#theses_dz_preview',
-        params: {access_level: "open_access", accept: 1, quickandeasy: 1, csrf_token: csrfToken},
+        params: {access_level: "open_access", accept: 1, quickandeasy: 1},
         createImageThumbnails: false,
         addRemoveLinks: true,
         dictMaxFilesExceeded: "Please submit or cancel your upload first before uploading more files.",
@@ -216,7 +213,6 @@ $(document).ready(function(){
 
                 var hidden = Dropzone.createElement(
                     "<div class='form-group'>" +
-                    '<input type="hidden" name="csrf_token" value="' + csrfToken + '"/>' +
                     "<input type='hidden' name='file_name' value='" + resp.file_name + "' />" +
                     "<input type='hidden' name='tempid' value='" + resp.tempid + "' />" +
                     "<input type='hidden' name='content_type' value='" + resp.content_type + "' />" +

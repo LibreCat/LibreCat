@@ -784,8 +784,6 @@ require.register("dropzone/lib/dropzone.js", function (exports, module) {
       if (this.options.dictFallbackText) {
         fieldsString += "<p>" + this.options.dictFallbackText + "</p>";
       }
-      var csrfToken = $("meta[name='csrf_token']").attr("content");
-      fieldsString += '<input type="hidden" name="csrf_token" value="' + csrfToken + '"/>';
       fieldsString += "<input type=\"file\" name=\"" + (this._getParamName(0)) + "\" " + (this.options.uploadMultiple ? 'multiple="multiple"' : void 0) + " /><input type=\"submit\" value=\"Upload!\"></div>";
       fields = Dropzone.createElement(fieldsString);
       if (this.element.tagName !== "FORM") {

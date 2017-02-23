@@ -1,48 +1,35 @@
 <!-- BEGIN person/hits.tt -->
+<div class="row">
+<div class="col-md-12">
+<ul class="pagination">
+[%- FOREACH c IN h.alphabet %]
+<li [% IF request.path.match("/person/$c")%]class="active"[% END %]><a href="/person/[% c %]">[% c %]</a></li>
+[%- END %]
+</ul>
+</div>
+</div>
 
-  <div class="row">
-    <div class="col-md-12[% UNLESS request.path.match("/person") OR total == 0 %] col-xs-9[% END %]">
-      <h3 class="margin-top0">[% total %] [% IF total == 1 %][% lf.hits.author %][% ELSE %][% lf.hits.authors %][% END %]</h3>
-    </div>
-    [% UNLESS request.path.match("/person") OR total == 0 %]
-    <div class="col-xs-3 hidden-md hidden-sm hidden-lg">
-      <a href="#facets"><span class="glyphicon glyphicon-filter fw"></span>[% lf.facets.search_filter %]</a>
-    </div>
-    [% END %]
-  </div>
+[% IF error %]
+<div class="row">
+<div class="col-md-10">
+  <div  class="alert alert-danger"><strong>[% error %]</strong></div>
+</div>
+</div>
+[% END %]
 
-  <div class="row">
-  <div class="col-md-12">
-    <ul class="pagination">
-    [%- FOREACH c IN h.alphabet %]
-    <li [% IF request.path.match("/person/$c")%]class="active"[% END %]><a href="/person/[% c %]">[% c %]</a></li>
-    [%- END %]
-    </ul>
-  </div>
-  </div>
-
-  [% IF error %]
-  <div class="row">
-    <div class="col-md-10">
-      <div  class="alert alert-danger"><strong>[% error %]</strong></div>
-    </div>
-  </div>
+<div class="row">
+<div class="col-md-12">
+<dl class="hitlist">
+[% FOREACH person IN hits %]
+<dt><a href="/person/[% person._id %]">[% person.full_name %][% IF person.idm_title %], [% person.idm_title %][% END %] ([% person.publication_hits %] [% lf.tabs.publications %][% IF person.research_hits %], [% person.research_hits %] [% lf.tabs.data_publications %][% END %])</a></dt>
+<dd>
+  [% FOREACH affil IN person.department %]
+<span class="text-muted">[% h.get_department(affil._id).name %]</span>[% IF !loop.last %], [% END %]
   [% END %]
-
-  <div class="row">
-    <div class="col-md-12">
-    <dl class="hitlist">
-    [% FOREACH person IN hits %]
-    <dt><a href="/person/[% person._id %]">[% person.full_name %][% IF person.idm_title %], [% person.idm_title %][% END %] ([% person.publication_hits %] [% lf.tabs.publications %][% IF person.research_hits %], [% person.research_hits %] [% lf.tabs.data_publications %][% END %])</a></dt>
-    <dd>
-      [% FOREACH affil IN person.department %]
-	<span class="text-muted">[% h.get_department(affil._id).name %]</span>[% IF !loop.last %], [% END %]
-      [% END %]
-    </dd>
-    [% END %]
-    </dl>
-    </div>
-  </div>
-
+</dd>
+[% END %]
+</dl>
+</div>
+</div>
 
 <!-- END person/hits.tt -->

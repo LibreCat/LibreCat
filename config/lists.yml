@@ -1,6 +1,11 @@
 _prefix:
   lists:
 
+cc_licenses:
+  - cc_0
+  - cc_by
+  - cc_by_sa
+
 author_id:
   inspire:
     label: INSPIRE ID
@@ -286,7 +291,7 @@ relations_record:
     opposite: "other"
 
 thematic_area:
-  diversity: Diversity
+  - diversity
 
 sort_text:
   "year.asc": "Publishing Year ascending"

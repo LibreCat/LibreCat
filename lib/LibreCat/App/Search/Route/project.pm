@@ -16,8 +16,27 @@ Project splash page for :id.
 
 =cut
 
-get '/project/:id' => sub {
-    my $id   = params->{id};
+get qr{/project/([a-zA-Z])} => sub {
+    my ($c) = splat;
+
+    my %search_params = (
+        query => {
+            prefix => {
+                'name.exact' => lc($c)
+            } 
+        } ,
+        limit => 1000
+    );
+
+    h->log->debug("executing project->native_search: " . to_dumper(\%search_params));
+
+    my $hits = LibreCat->searcher->native_search('project', \%search_params);
+
+    template 'project/list', $hits;
+};
+
+get qr{/project/([a-zA-Z0-9-]{2,})} => sub {
+    my ($id) = splat;
     my $proj = h->project->get($id);
 
     my $pub = LibreCat->searcher->search('publication',
@@ -32,10 +51,7 @@ get '/project/:id' => sub {
 };
 
 get '/project' => sub {
-    my $p = h->extract_params();
-
-    my $hits = LibreCat->searcher->search('project', $p);
-    return template 'project/list', $hits;
+    forward '/project/A';
 };
 
 1;

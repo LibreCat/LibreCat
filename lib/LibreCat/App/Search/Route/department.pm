@@ -17,7 +17,7 @@ Display departments list.
 =cut
 
 get '/department' => sub {
-    return template 'department/list', {hits => h->get_department_tree};
+    return template 'department/list';
 };
 
 1;

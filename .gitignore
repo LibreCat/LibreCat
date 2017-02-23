@@ -8,6 +8,7 @@ MYMETA.*
 !Build/
 *.log
 *.pid
+*.spec
 *.swp
 .DS_Store
 .last_cover_stats
@@ -25,6 +26,7 @@ data/temp_uploads/**
 data/file_uploads/**
 docs/
 inc/
+layers.yml
 local
 local/
 logs/

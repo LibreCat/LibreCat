@@ -1,2 +1,5 @@
-# Enforce embargos switch file access level when needed 
+# Enforce embargos switch file access level when needed
 30 0 * * * librecat /opt/librecat/bin/exec.sh 'bin/librecat publication embargo update' | /opt/librecat/bin/exec.sh 'bin/librecat publication files -' > /dev/null 2>&1
+
+# Update the departments page every hour
+0 * * * *  librecat /opt/librecat/bin/exec.sh 'bin/librecat generate departments' > /dev/null 2>&1

@@ -219,6 +219,9 @@ Checks if the user has the rights to update this record.
         elsif ($p->{finalSubmit} eq 'recPublish') {
             $p->{status} = 'public';
         }
+        elsif ($p->{finalSubmit} eq 'recReturn') {
+            $p->{status} = 'returned';
+        }
 
         $p->{user_id} = session->{personNumber};
 

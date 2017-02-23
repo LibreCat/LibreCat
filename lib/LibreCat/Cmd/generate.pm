@@ -5,6 +5,8 @@ use Catmandu;
 use LibreCat;
 use Path::Tiny;
 use Template;
+use LibreCat::App::Helper;
+use Carp;
 use parent qw(LibreCat::Cmd);
 
 sub description {
@@ -13,6 +15,7 @@ Usage:
 
 librecat generate package.json
 librecat generate forms
+librecat generate departments
 
 EOF
 }
@@ -25,7 +28,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/^(package\.json|forms)$/;
+    my $commands = qr/^(package\.json|forms|departments)$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -42,6 +45,9 @@ sub command {
     }
     elsif ($cmd eq 'forms') {
         return $self->_generate_forms;
+    }
+    elsif ($cmd eq 'departments') {
+        return $self->_generate_departments;
     }
 }
 
@@ -151,6 +157,80 @@ sub _generate_forms {
         print "Generating $output_path/edit_$item page\n";
         $tta->process( "master_$item.tt", $other_items->{$item}, "edit_$item.tt" ) || die $tta->error(), "\n";
     }
+}
+
+sub _generate_departments {
+    my ($self,$file) = @_;
+
+    my $layers          = LibreCat->layers;
+    my $template_paths  = $layers->template_paths;
+    my $output_path     = $template_paths->[0] . '/department';
+
+    my $pubs = LibreCat::App::Helper::Helpers->new->publication;
+    my $it   = LibreCat::App::Helper::Helpers->new->department->searcher();
+
+    my $HASH = {};
+
+    $it->each(
+        sub {
+            my ($item) = @_;
+
+            my $tree = $item->{tree} // [];
+
+            my $root = $HASH;
+
+            my @reversed = reverse @$tree;
+
+            for my $node (@reversed) {
+                my $id = $node->{_id};
+
+                $root->{tree}->{$id} //= {};
+
+                $root = $root->{tree}->{$id};
+            }
+
+            my $id    = $item->{_id};
+            my $hits  = $pubs->search(query => "department:$id" );
+            my $total = $hits->{total};
+
+            $root->{tree}->{$id}->{name}    = $item->{name};
+            $root->{tree}->{$id}->{display} = $item->{display};
+            $root->{tree}->{$id}->{total}   = $total;
+
+            print STDERR "Adding $id ($total)\n";
+        }
+    );
+
+    path($output_path)->mkpath unless -d $output_path;
+
+    open(my $fh, '>:encoding(UTF-8)', "$output_path/nodes.tt");
+
+    croak "error - views/department/nodes.tt not writable!" unless $fh;
+
+    $self->_template_printer($HASH,$fh);
+
+    close($fh);
+
+    print STDERR "Output written to $output_path/nodes.tt\n";
+}
+
+sub _template_printer {
+    my ($self,$tree,$io) = @_;
+
+    my $nodes = $tree->{tree};
+    return unless $nodes;
+
+    print $io "<ul>\n";
+    for my $node (sort {$nodes->{$a}->{name} cmp $nodes->{$b}->{name}} keys %$nodes) {
+        print  $io "<li>\n";
+        printf $io "<a href=\"/publication?q=department=%s\">%s</a> %d\n"
+                        , $node
+                        , $nodes->{$node}->{display}
+                        , $nodes->{$node}->{total};
+        $self->_template_printer($nodes->{$node},$io);
+        print  $io "</li>\n";
+    }
+    print $io "</ul>\n";
 }
 
 1;
