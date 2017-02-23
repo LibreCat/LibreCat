@@ -1,0 +1,6 @@
+_prefix:
+  features:
+
+views:
+  footer:
+    - template: powered_by
