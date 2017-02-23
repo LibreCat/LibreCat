@@ -3,6 +3,7 @@ sudo: required
 language: perl
 
 perl:
+  - "bleed"
   - "5.24"
   - "5.22"
 
@@ -30,7 +31,8 @@ install:
   - cpanm --quiet --notest --skip-satisfied Devel::Cover
 
 script:
-  - perl Build.PL && ./Build build && cover -test
+  - cover -t +select ^lib +ignore ^ -make 'prove -Ilib -r t; exit $?'
+
 after_success:
   - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls
   - cover -report coveralls
