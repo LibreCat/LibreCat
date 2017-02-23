@@ -11,7 +11,9 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="col-md-4 col-sm-5">
-          <p>[% h.loc("footer.powered_by") %]</p>
+          [% FOR feature IN h.config.features.views.footer %]
+          [% tmpl =  'features/footer/' _ feature.template _ '.tt'; INCLUDE $tmpl %]
+          [% END %]
         </div>
       </div>
     </div>

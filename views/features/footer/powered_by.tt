@@ -1,0 +1,2 @@
+<p>[% h.loc("footer.powered_by") %]</p>
+
