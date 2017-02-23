@@ -7,7 +7,7 @@ use LibreCat::Hook;
 use Catmandu;
 use namespace::clean;
 
-our $VERSION = '0.2.0';
+our $VERSION = '0.3.2';
 
 sub import {
     my $self = shift;

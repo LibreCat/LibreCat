@@ -1,5 +1,6 @@
 <VirtualHost *:80>
-  ServerName eliot1.ugent.be
+  ServerName demo.librecat.org
+  DocumentRoot /opt/librecat/public
   RewriteEngine On
   ProxyPass / http://localhost:5000/
   ProxyPassReverse / http://localhost:5000/
