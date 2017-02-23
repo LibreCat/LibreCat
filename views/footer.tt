@@ -12,7 +12,8 @@
       <div class="col-sm-12">
         <div class="col-md-4 col-sm-5">
           [% FOR feature IN h.config.features.views.footer %]
-          [% INCLUDE  "features/footer/" _ feature.template _ ".tt" %]
+          [% SET tmpl =  'features/footer/' _ feature.template _ '.tt' %]
+          [% INCLUDE tmpl %]
           [% END %]
         </div>
       </div>
