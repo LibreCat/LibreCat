@@ -1,0 +1,20 @@
+$('.required').each(function(){
+  if($(this).attr('name').match('ddc')){
+    return;
+  }
+  if(!$(this).val()){
+    $(this).addClass('has-error');
+    $(this).closest('div.input-group.mandatory').addClass("has-error");
+    check = 0;
+  }
+  else if($(this).val() && ($(this).val() == "Publication Title" || $(this).val() == "First Name" || $(this).val() == "Last Name" || $(this).val() == "YYYY")){
+    $(this).addClass('has-error');
+    $(this).closest('div.input-group.mandatory').addClass("has-error");
+    check = 0;
+  }
+  else{
+    $(this).removeClass('has-error');
+    $(this).closest('div.input-group.mandatory').removeClass("has-error");
+  }
+});
+

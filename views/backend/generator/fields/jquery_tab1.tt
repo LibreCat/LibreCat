@@ -59,25 +59,9 @@ $('.change_tab').click(function(e){
     }
   }
 
-  $('.required').each(function(){
-    if($(this).attr('name').match('ddc')){
-      return;
-    }
-    if(!$(this).val()){
-      $(this).addClass('has-error');
-      $(this).closest('div.input-group.mandatory').addClass("has-error");
-      check = 0;
-    }
-    else if($(this).val() && ($(this).val() == "Publication Title" || $(this).val() == "First Name" || $(this).val() == "Last Name" || $(this).val() == "YYYY")){
-      $(this).addClass('has-error');
-      $(this).closest('div.input-group.mandatory').addClass("has-error");
-      check = 0;
-    }
-    else{
-      $(this).removeClass('has-error');
-      $(this).closest('div.input-group.mandatory').removeClass("has-error");
-    }
-  });
+  [% FOR feature IN h.config.features.views.publication_edit.js.validation %]
+  [% tmpl =  'features/publication_edit/js/validation/' _ feature.template _ '.tt'; INCLUDE $tmpl %]
+  [% END %]
 
   if((this_button.attr('href') && (this_button.attr('href') == "#supplementary_fields" || this_button.attr('href') == "#related_material")) || ($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish" || $(this).val() == "recReturn"))){
     if($('#id_data_reuse_license').length || $('#id_open_data_release').length){
