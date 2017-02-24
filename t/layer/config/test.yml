@@ -16,14 +16,10 @@ store:
         publication: &backup_settings
           plugins: ['Datestamps', 'Versioning']
           id_generator: Incremental
-        project:
-          plugins: ['Datestamps', 'Versioning']
-          id_generator: UniBiProject
+        project: *backup_settings
         researcher: *backup_settings
         department: *backup_settings
-        research_group:
-          plugins: ['Datestamps', 'Versioning']
-          id_generator: UniBiResearchGroup
+        research_group: *backup_settings
   search:
     options:
       index_name: librecat_test

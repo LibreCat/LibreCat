@@ -12,8 +12,4 @@ copy_field(old_last_name, old_full_name.$append)
 copy_field(old_first_name, old_full_name.$append)
 join_field(old_full_name, ', ')
 
-if exists(orcid)
-    add_orcid_to_pub()
-end
-
 compact_array(department)

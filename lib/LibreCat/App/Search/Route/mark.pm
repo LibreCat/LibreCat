@@ -48,7 +48,7 @@ get '/marked' => sub {
     $hits->{hits}  = \@result_hits;
     $hits->{total} = scalar @tmp_hits;
 
-    template 'marked/marked.tt', $hits;
+    template 'marked/list.tt', $hits;
 
 };
 

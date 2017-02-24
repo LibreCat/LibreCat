@@ -12,6 +12,7 @@ cache:
 
 env:
   - NETWORK_TEST=1
+  - GEARMAN_NETWORK_TEST=1
 
 before_install:
   - curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.0.deb && sudo dpkg -i --force-confnew elasticsearch-1.7.0.deb && sudo service elasticsearch restart
