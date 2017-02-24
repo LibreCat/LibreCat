@@ -285,8 +285,8 @@ add_new:
   heading: "Neue Publikation anlegen"
   import: "Option 1:<br />Geben Sie einen Publikations-Identifier zum Import ein"
   ids:
-    doi: "DOI"
-    pmid: "PMID"
+    crossref: "DOI"
+    epmc: "PMID"
     arxiv: "ArXiv ID"
     inspire: "Inspire ID"
   do_it_yourself: "Option 2:<br />W&auml;hlen Sie einen Typ und f&uuml;llen Sie das Formular aus"

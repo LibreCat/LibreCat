@@ -25,28 +25,27 @@
       <h3>[% h.loc("add_new.import") %]</h3>
       <div class="row">
         <form role="form" action="/librecat/record/import" method="POST">
-	      <div class="col-xs-3 col-md-2">
-	        <select class="selectpicker form-control" id="select_source">
-	          <option value="crossref" selected="selected">[% h.loc("add_new.ids.doi") %]</option>
-	          <option value="epmc">[% h.loc("add_new.ids.pmid") %]</option>
-	          <option value="arxiv">[% h.loc("add_new.ids.arxiv") %]</option>
-	         <option value="inspire">[% h.loc("add_new.ids.inspire") %]</option>
-	        </select>
-	      </div>
-	      <input type="hidden" id="input_source" name="source">
-	      <div class="input-group col-md-5 col-xs-8">
-	        <input type="text" value="" class="form-control" id="input_id" name="id" placeholder="10.324/JHEP287432" required/>
-	        <span class="input-group-btn">
-	          <button type="submit" class="btn btn-default">[% h.loc("facets.go_button") %]</button>
-	        </span>
-	      </div>
-	    </form>
+          <div class="col-xs-3 col-md-2">
+            <select class="selectpicker form-control" id="select_source">
+              [% FOR source IN h.config.lists.import_sources %]
+              <option value="[% source %]">[% h.loc("add_new.ids.$source") %]</option>
+              [% END %]
+            </select>
+          </div>
+          <input type="hidden" id="input_source" name="source">
+          <div class="input-group col-md-5 col-xs-8">
+            <input type="text" value="" class="form-control" id="input_id" name="id" placeholder="10.324/JHEP287432" required/>
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-default">[% h.loc("facets.go_button") %]</button>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-6">
-	<h4 class="text-uppercase text-center">&nbsp;</h4>
+    <h4 class="text-uppercase text-center">&nbsp;</h4>
       </div>
     </div>
 
@@ -82,16 +81,16 @@
 
     <div class="row">
       <div class="col-md-6">
-	    <h4 class="text-uppercase text-center">&nbsp;</h4>
+        <h4 class="text-uppercase text-center">&nbsp;</h4>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-5">
         <h3 class="margin-top0">[% h.loc("add_new.drop_oa") %]</h3>
-	    <div class="well">
-	    [% INCLUDE backend/qae.tt %]
-	    </div>
+        <div class="well">
+        [% INCLUDE backend/qae.tt %]
+        </div>
       </div>
       <div class="col-md-1">
         &nbsp;
@@ -99,7 +98,7 @@
       <div class="col-md-5">
         <h3 class="margin-top0">[% h.loc("add_new.paste_bibtex") %]</h3>
         <form role="form" action="/librecat/record/import" method="POST">
-	  <div class="well col-xs-11 col-md-12">
+      <div class="well col-xs-11 col-md-12">
             <textarea class="form-control" rows="3" name="data" placeholder="[% h.loc("add_new.paste_bibtex_placeholder") %]"></textarea>
             <input type="hidden" id="bibtex_source" name="source" value="bibtex">
             <button type="submit" class="btn btn-default margin-top1-2"><span class="glyphicon glyphicon-upload"></span> [% h.loc("forms.button.import") %]</button>

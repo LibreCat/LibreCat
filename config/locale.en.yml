@@ -285,8 +285,8 @@ add_new:
   heading: "Add New Publication"
   import: "Option 1:<br />Enter a publication ID to import"
   ids:
-    doi: "DOI"
-    pmid: "PMID"
+    crossref: "DOI"
+    epmc: "PMID"
     arxiv: "ArXiv ID"
     inspire: "Inspire ID"
   do_it_yourself: "Option 2:<br />Select a type and fill out the form"
