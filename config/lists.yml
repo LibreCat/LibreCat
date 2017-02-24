@@ -1569,3 +1569,10 @@ jel:
       "Z13": "-- Z13 Economic Sociology &bull; Economic Anthropology &bull; Social and Economic Stratification"
       "Z18": "-- Z18 Public Policy"
       "Z19": "-- Z19 Other"
+
+import_sources:
+  - crossref
+  - epmc
+  - arxiv
+  - inspire
+
