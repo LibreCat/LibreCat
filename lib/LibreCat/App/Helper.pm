@@ -547,11 +547,6 @@ sub export_publication {
     }
 }
 
-sub get_department_tree {
-    my ($self) = @_;
-    LibreCat->searcher->search('department', { sort => 'name.desc'} )->to_array;
-}
-
 sub get_file_store {
     my ($self) = @_;
 

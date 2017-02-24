@@ -47,4 +47,5 @@ uploads/
 vendor/
 views/admin/forms/
 views/backend/forms/
+views/department/nodes*
 wiki/

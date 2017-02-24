@@ -40,25 +40,28 @@
     OR (facets.type.terms.size || 0) > 1 OR  (facets.author.terms.size || 0) > 1
     OR (facets.editor.terms.size || 0) > 1 OR  (facets.year.terms.size || 0) > 1 -%]
 <ul class="nav nav-tabs nav-stacked ul1 helpme" data-placement="left">
-  [% IF backend AND (session.role == "super_admin" OR session.role == "reviewer") %]
+  [% IF backend AND session.role == "super_admin" %]
   <li>
-    <button data-toggle="collapse" data-target="#department_new_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.department") %]</button>
-    <div class="facettecollapse normal">
-      <ul id="department_new_[% tabmodus %][% menu %]" class="collapse[% IF qp.department %] in[% END %]">
-      [%- IF qp.department %]
-	    [% dept = h.get_department(qp.department) %]
-	    <li>[% dept.name %]</li>
-      [%- ELSE %]
-      [%- departments = h.get_department_tree %]
-      [%- FOREACH dep IN departments.sort %]
-	    <li>
-	      <a href="#" class="facet_[% tabmodus %]" data-key="cql" data-param="department" data-value="[% dep._id %]"><strong>[% dep.name %]</strong></a>
-	    </li>
-      [%- END %]
-      [%- END %]
-      </ul>
-    </div>
+    <button href="#modal_department" data-toggle="modal" class="btn-link"><span class="glyphicon glyphicon-chevron-left fw"></span>[% h.loc("facets.department") %]</button>
   </li>
+  <!-- Modal -->
+  <div id="modal_department" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+  	     <button type="button" class="close" data-dismiss="modal"><span class="fa fa-fw fa-times"></span></button>
+  	     <h3 id="ModalExport">[% h.loc("facets.department") %]</h3>
+        </div>
+        <div class="modal-body">
+        [%- TRY %]
+          [%- INCLUDE department/nodes_backend.tt %]
+        [%- CATCH %]
+          You might want to execute 'bin/librecat generate departments'...
+        [%- END %]
+        </div>
+      </div>
+    </div>
+  </div>
   [% END %]
 
   [% IF facets.type AND facets.type.terms.size > 1 %]

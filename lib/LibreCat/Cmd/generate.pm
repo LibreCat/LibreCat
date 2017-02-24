@@ -207,15 +207,25 @@ sub _generate_departments {
 
     croak "error - views/department/nodes.tt not writable!" unless $fh;
 
-    $self->_template_printer($HASH,$fh);
+    $self->_template_printer($HASH, "publication", $fh);
 
     close($fh);
 
     print STDERR "Output written to $output_path/nodes.tt\n";
+
+    open($fh, '>:encoding(UTF-8)', "$output_path/nodes_backend.tt");
+
+    croak "error - views/department/nodes_backend.tt not writable!" unless $fh;
+
+    $self->_template_printer($HASH, "librecat", $fh);
+
+    close($fh);
+
+    print STDERR "Output written to $output_path/nodes_backend.tt\n";
 }
 
 sub _template_printer {
-    my ($self,$tree,$io) = @_;
+    my ($self, $tree, $path, $io) = @_;
 
     my $nodes = $tree->{tree};
     return unless $nodes;
@@ -223,11 +233,12 @@ sub _template_printer {
     print $io "<ul>\n";
     for my $node (sort {$nodes->{$a}->{name} cmp $nodes->{$b}->{name}} keys %$nodes) {
         print  $io "<li>\n";
-        printf $io "<a href=\"/publication?q=department=%s\">%s</a> %d\n"
+        printf $io "<a href=\"/%s?cql=department=%s\">%s</a> %d\n"
+                        , $path
                         , $node
                         , $nodes->{$node}->{display}
                         , $nodes->{$node}->{total};
-        $self->_template_printer($nodes->{$node},$io);
+        $self->_template_printer($nodes->{$node}, $path, $io);
         print  $io "</li>\n";
     }
     print $io "</ul>\n";
