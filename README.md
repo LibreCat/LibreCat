@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/LibreCat/LibreCat.svg)](https://travis-ci.org/LibreCat/LibreCat)
-
 [![Coverage Status](https://coveralls.io/repos/github/LibreCat/LibreCat/badge.svg)](https://coveralls.io/github/LibreCat/LibreCat)
 
 # LibreCat - an institutional repository

@@ -40,12 +40,12 @@ backup:
         id_generator: Incremental
       project:
         plugins: ['Datestamps', 'Versioning']
-        id_generator: UniBiProject
+        id_generator: Incremental
       researcher: *backup_settings
       department: *backup_settings
       research_group:
         plugins: ['Datestamps', 'Versioning']
-        id_generator: UniBiResearchGroup
+        id_generator: Incremental
 
 metrics:
   package: DBI
