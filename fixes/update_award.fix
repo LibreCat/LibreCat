@@ -1,7 +1,0 @@
-# fix award data at update
-
-copy_field('_id','sort_id')
-replace_all('sort_id', 'AW', '')
-compact_array('department')
-compact_array('einrichtung')
-person()

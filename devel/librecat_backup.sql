@@ -12,13 +12,6 @@ CREATE TABLE `publication` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `award`;
-CREATE TABLE `award` (
-  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `data` longblob NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project` (
   `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
