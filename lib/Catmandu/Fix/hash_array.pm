@@ -19,19 +19,25 @@ sub _build_array_fields {
         my $related_material = $forms->{$pub_type}->{fields}->{related_material};
 
         for my $field (keys %$basic_fields) {
-            my $multiple = $basic_fields->{$field}->{multiple} // 0;
+            my $multiple =
+                    $basic_fields->{$field}->{hash_array} //
+                    $basic_fields->{$field}->{multiple}   // 0;
             $lookup->{$pub_type}->{$field} = $multiple;
         }
 
         $lookup->{$pub_type}->{file} = 1;
 
         for my $field (keys %$supplementary_fields) {
-            my $multiple = $supplementary_fields->{$field}->{multiple} // 0;
+            my $multiple =
+                    $supplementary_fields->{$field}->{hash_array} //
+                    $supplementary_fields->{$field}->{multiple} // 0;
             $lookup->{$pub_type}->{$field} = $multiple;
         }
 
         for my $field (keys %$related_material) {
-            my $multiple = $related_material->{$field}->{multiple} // 0;
+            my $multiple =
+                    $related_material->{$field}->{hash_array} //
+                    $related_material->{$field}->{multiple} // 0;
             $lookup->{$pub_type}->{$field} = $multiple;
         }
     }
@@ -53,7 +59,7 @@ sub fix {
         my $multiple = $array_fields->{$pub_type}->{$key};
 
         next unless defined($multiple);
-        
+
         if ($ref eq "ARRAY" && $multiple == 0) {
             $data->{$key} = $data->{$key}->[0];
         }

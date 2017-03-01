@@ -191,6 +191,7 @@ publication_types:
         publication_identifier: &publication_identifier
           mandatory: 0
           multiple: 1
+          hash_array: 0
         publication_status_language: &publication_status_language
           language:
             mandatory: 0
