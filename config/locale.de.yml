@@ -10,6 +10,7 @@ login:
   username: "Benutzername"
   password: "Passwort"
   login_button: "Anmelden"
+  caps_lock_warning: "Feststelltaste aktiviert!"
 header:
   title: "Publikationen an der Universit&auml;t LibreCat"
   my_author_page: "Meine Publikationsliste"
@@ -1715,4 +1716,3 @@ cc_licenses:
   cc_0: CC0 (1.0)
   cc_by: CC BY (4.0)
   cc_by_sa: CC BY-SA (4.0)
-
