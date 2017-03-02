@@ -3,8 +3,7 @@ _prefix:
 
 views:
   footer:
-  # TODO move to footer/powered_by
-    - template: powered_by
+    - template: footer/powered_by
   frontend:
     publication:
       facets:
@@ -45,8 +44,7 @@ views:
           - template: facets/isi_pmid
             facet: [isi, pmid]
             min: 1
-  # TODO move to backend/publication/edit/
-  publication_edit:
-    js:
-      validation:
-        - template: check_required
+      edit:
+        js:
+          validation:
+            - template: backend/publication/edit/js/validation/check_required

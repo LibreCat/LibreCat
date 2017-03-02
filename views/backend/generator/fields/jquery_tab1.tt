@@ -59,8 +59,8 @@ $('.change_tab').click(function(e){
     }
   }
 
-  [% FOR feature IN h.config.features.views.publication_edit.js.validation %]
-  [% tmpl =  'features/publication_edit/js/validation/' _ feature.template _ '.tt'; INCLUDE $tmpl %]
+  [% FOR feature IN h.config.features.views.backend.publication.edit.js.validation %]
+    [% tmpl = feature.template _ '.tt'; INCLUDE $tmpl %]
   [% END %]
 
   if((this_button.attr('href') && (this_button.attr('href') == "#supplementary_fields" || this_button.attr('href') == "#related_material")) || ($(this).attr('name') == "finalSubmit" && ($(this).val() == "recSave" || $(this).val() == "recPublish" || $(this).val() == "recReturn"))){
