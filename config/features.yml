@@ -3,8 +3,48 @@ _prefix:
 
 views:
   footer:
-    - template: powered_by
-  publication_edit:
-    js:
-      validation:
-        - template: check_required
+    - template: footer/powered_by
+  frontend:
+    publication:
+      facets:
+        - - template: facets/popular_science
+            facet: popular_science
+          - template: facets/extern
+            facet: extern
+            min: 1
+          - template: facets/open_access
+            facet: open_access
+            min: 1
+          - template: facets/isi_pmid
+            facet: [isi, pmid]
+            min: 1
+  backend:
+    publication:
+      facets:
+        - - template: facets/status
+            facet: status
+        - - template: facets/department
+            facet: department
+            role: super_admin
+          - template: facets/type
+            facet: type
+          - template: facets/author
+            facet: author
+          - template: facets/editor
+            facet: editor
+          - template: facets/year
+            facet: year
+        - - template: facets/popular_science
+            facet: popular_science
+          - template: facets/extern
+            facet: extern
+          - template: facets/open_access
+            facet: open_access
+            min: 1
+          - template: facets/isi_pmid
+            facet: [isi, pmid]
+            min: 1
+      edit:
+        js:
+          validation:
+            - template: backend/publication/edit/js/validation/check_required

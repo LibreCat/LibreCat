@@ -1,0 +1,20 @@
+<button href="#modal_department" data-toggle="modal" class="btn-link"><span class="glyphicon glyphicon-chevron-left fw"></span>[% h.loc("facets.department") %]</button>
+<!-- Modal -->
+<div id="modal_department" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+	     <button type="button" class="close" data-dismiss="modal"><span class="fa fa-fw fa-times"></span></button>
+	     <h3 id="ModalExport">[% h.loc("facets.department") %]</h3>
+      </div>
+      <div class="modal-body">
+      [%- TRY %]
+        [%- INCLUDE department/nodes_backend.tt %]
+      [%- CATCH %]
+        You might want to execute 'bin/librecat generate departments'...
+      [%- END %]
+      </div>
+    </div>
+  </div>
+</div>
+

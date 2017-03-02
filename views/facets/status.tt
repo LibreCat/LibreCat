@@ -1,0 +1,8 @@
+<button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left"><span class="glyphicon glyphicon-chevron-down"></span> [% h.loc("facets.visibility_status") %]</button>
+<div class="facettecollapse">
+  <ul id="status_[% tabmodus %][% menu %]" class="collapse">
+  [%- FOREACH stat IN facets.status.terms %]
+    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="status" data-value="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
+  [%- END %]
+  </ul>
+</div>

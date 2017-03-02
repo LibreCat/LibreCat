@@ -1,0 +1,20 @@
+<button data-toggle="collapse" data-target="#extid_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.indexed_in") %]</button>
+<div class="facettecollapse">
+  <ul id="extid_[% tabmodus %][% menu %]" class="collapse">
+  [% IF facets.isi.terms.0.count %]
+    [% IF facets.isi.terms.0.count < total %]
+    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="isi" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.isi.terms.0.count %] Web of Science</a></li>
+    [% ELSE %]
+    <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% h.loc("facets.all_isi") %]</strong></div>
+    [% END %]
+  [% END %]
+  [% IF facets.pmid.terms.0.count %]
+    [% IF facets.pmid.terms.0.count < total %]
+    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="pmid" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% facets.pmid.terms.0.count %] Pubmed</a></li>
+    [% ELSE %]
+    <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% h.loc("facets.all_pubmed") %]</strong></div>
+    [% END %]
+  [% END %]
+  </ul>
+</div>
+
