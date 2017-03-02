@@ -27,7 +27,7 @@ requires 'Catmandu::Store::MongoDB', '>=0.0403';
 requires 'Catmandu::DBI', '>=0.0510';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::XML';
-requires 'Catmandu::ArXiv', '>=0.031';
+requires 'Catmandu::ArXiv', '>=0.100';
 requires 'Catmandu::LDAP';
 requires 'Catmandu::Importer::getJSON';
 requires 'Catmandu::Identifier', '>=0.05';

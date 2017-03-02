@@ -3,6 +3,7 @@ use warnings FATAL => 'all';
 use Test::More;
 use Test::Exception;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
+use Data::Dumper;
 
 my $pkg;
 
@@ -29,8 +30,14 @@ SKIP: {
 
     ok $pub , 'got a publication';
 
-    is $pub->{title} , 'The Good, the Bad, and the Ugly of Gravity and Information' , 'got a title';
-    is $pub->{type} , 'preprint', 'type == preprint';
+    like $pub->[0]->{title} , qr/Ugly of Gravity/, 'got correct title';
+    is $pub->[0]->{type} , 'preprint', 'type == preprint';
+
+    $pub = $x->fetch('0000-0002-7970-7855');
+
+    ok $pub , 'got some publications';
+    is $pub > 4, 1, 'more than one publication'
+
 }
 
 done_testing;

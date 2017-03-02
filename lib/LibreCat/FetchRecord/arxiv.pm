@@ -17,7 +17,7 @@ sub fetch {
     my $data = Catmandu->importer(
         'ArXiv',
         query => $id,
-    )->first;
+    )->to_array;
 
     unless ($data) {
         $self->log->error("failed query ArXiv");
@@ -28,7 +28,7 @@ sub fetch {
 
     $data = $fixer->fix($data);
 
-    return wantarray ? ($data) : $data;
+    return wantarray ? @$data : $data;
 }
 
 1;
