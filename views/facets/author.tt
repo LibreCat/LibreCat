@@ -1,0 +1,20 @@
+[%- query = "id=(" %]
+  [%- FOREACH au IN facets.author.terms %]
+    [%- query = query _ au.term %]
+    [%- UNLESS loop.last %]
+      [%- query = query _  " OR " %]
+    [%- END %]
+  [%- END %]
+[%- query = query _ ")" %]
+[%- p.q = []; p.q.push(query); p.get_person = 1 %]
+[%- authors = h.search_researcher(p) %]
+<button data-toggle="collapse" data-target="#authors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.current_authors") %]</button>
+<div class="facettecollapse">
+  <ul id="authors_[% tabmodus %][% menu %]" class="collapse">
+  [%- FOREACH au IN facets.author.terms %]
+    [%- name = authors.item(au.term) %]
+    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="author" data-value="[% au.term %]" href="#" rel="nofollow">[% name %] ([% au.count %])</a></li>
+  [%- END %]
+  </ul>
+</div>
+

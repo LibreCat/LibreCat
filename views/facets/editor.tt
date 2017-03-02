@@ -1,0 +1,20 @@
+[%- query = "id=(" %]
+[%- FOREACH ed IN facets.editor.terms %]
+  [%- query = query _ ed.term %]
+  [%- UNLESS loop.last %]
+    [%- query = query _  " OR " %]
+  [%- END %]
+[%- END %]
+[%- query = query _ ")" -%]
+[%- p.q = []; p.q.push(query); p.get_person = 1 -%]
+[%- editors = h.search_researcher(p) -%]
+<button data-toggle="collapse" data-target="#editors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.current_editors") %]</button>
+<div class="facettecollapse">
+<ul id="editors_[% tabmodus %][% menu %]" class="collapse">
+  [%- FOREACH ed IN facets.editor.terms %]
+    [%- name = editors.item(ed.term) %]
+  <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="editor" data-value="[% ed.term %]" href="#" rel="nofollow">[% name %] ([% ed.count %])</a></li>
+  [%- END %]
+</ul>
+</div>
+

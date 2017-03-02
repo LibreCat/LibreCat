@@ -1,0 +1,8 @@
+[% FOREACH t IN facets.extern.terms %]
+  [% IF t.count < total %]
+  <a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="extern" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% h.loc("facets.external_publication") %]</a>
+  [% ELSE %]
+  <div class="text-success"><span class="glyphicon glyphicon-ok"></span> <strong>[% h.loc("facets.all_external_publication") %]</strong></div>
+  [% END %]
+[% END %]
+

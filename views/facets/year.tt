@@ -1,0 +1,11 @@
+<button data-target="#year_[% tabmodus %][% menu %]" data-toggle="collapse" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.publishing_year") %]</button>
+<div class="facettecollapse">
+<ul id="year_[% tabmodus %][% menu %]" class="collapse">
+  [%- FOREACH y IN facets.year.terms %]
+    [%- year = (y.term) / 1000; -%]
+    [%- IF year == 0 -%] [%- yf = '1970' -%][%- ELSE -%][%- yf = date.format(year); -%][%- END -%]
+    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="year" data-value="[% yf %]" href="#" rel="nofollow">[% yf %] ([% y.count %])</a></li>
+  [%- END %]
+</ul>
+</div>
+

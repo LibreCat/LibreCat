@@ -3,7 +3,49 @@ _prefix:
 
 views:
   footer:
+  # TODO move to footer/powered_by
     - template: powered_by
+  frontend:
+    publication:
+      facets:
+        - - template: facets/popular_science
+            facet: popular_science
+          - template: facets/extern
+            facet: extern
+          - template: facets/open_access
+            facet: open_access
+          - template: facets/isi
+            facet: isi
+          - template: facets/pmid
+            facet: pmid
+  backend:
+    publication:
+      facets:
+        - - template: facets/status
+            facet: status
+        - - template: facets/department
+            facet: department
+            roles:
+              - super_admin
+          - template: facets/type
+            facet: type
+          - template: facets/author
+            facet: author
+          - template: facets/editor
+            facet: editor
+          - template: facets/year
+            facet: year
+        - - template: facets/popular_science
+            facet: popular_science
+          - template: facets/extern
+            facet: extern
+          - template: facets/open_access
+            facet: open_access
+          - template: facets/isi
+            facet: isi
+          - template: facets/pmid
+            facet: pmid
+  # TODO move to backend/publication/edit/
   publication_edit:
     js:
       validation:
