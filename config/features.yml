@@ -12,12 +12,13 @@ views:
             facet: popular_science
           - template: facets/extern
             facet: extern
+            min: 1
           - template: facets/open_access
             facet: open_access
-          - template: facets/isi
-            facet: isi
-          - template: facets/pmid
-            facet: pmid
+            min: 1
+          - template: facets/isi_pmid
+            facet: [isi, pmid]
+            min: 1
   backend:
     publication:
       facets:
@@ -25,8 +26,7 @@ views:
             facet: status
         - - template: facets/department
             facet: department
-            roles:
-              - super_admin
+            role: super_admin
           - template: facets/type
             facet: type
           - template: facets/author
@@ -41,10 +41,10 @@ views:
             facet: extern
           - template: facets/open_access
             facet: open_access
-          - template: facets/isi
-            facet: isi
-          - template: facets/pmid
-            facet: pmid
+            min: 1
+          - template: facets/isi_pmid
+            facet: [isi, pmid]
+            min: 1
   # TODO move to backend/publication/edit/
   publication_edit:
     js:
