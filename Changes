@@ -2,6 +2,15 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
+0.4.0 2017-03-02
+    - introduce features: configurable facets (see config/features.yml)
+    - introduce project A-Z list
+    - GH #157: Adding support for a department tree
+    - GH #103: Fixing departments in facets
+    - GH #182: Fix broken ISBN/ISSN editing field
+    - GH #180: fix similar search functionality
+    - GH #99: support arxiv import via ORCID iD
+
 0.3.2 2017-02-21
     - new feature: embargo_to (local, open_access)
     - add whitelist, blacklist support to auth
