@@ -69,23 +69,18 @@ Performs search for similar titles, admin only
 
         my $p = h->extract_params();
 
-        unless ($p->{q} and ref $p->{q} eq "ARRAY" and $p->{q}->[0]) {
-            return redirect '/librecat';
-        }
-
-        push @{$p->{cql}}, "status<>deleted";
-
         my $sort_style
             = h->get_sort_style($p->{sort} || '', $p->{style} || '');
         $p->{sort} = $sort_style->{sort_backend};
 
-        my $hits = h->publication->search(
-            query => {
+        # TODO filter out deleted recs
+        my $hits = LibreCat->searcher->native_search('publication',
+            {query => {
                 "bool" => {
                     "must" => {
                         "match" => {
                             "title" => {
-                                "query"                => $p->{q}->[0],
+                                "query"                => $p->{q},
                                 "minimum_should_match" => "70%"
                             }
                         }
@@ -93,14 +88,14 @@ Performs search for similar titles, admin only
                     "should" => {
                         "match_phrase" => {
                             "title" =>
-                                {"query" => $p->{q}->[0], "slop" => "50"}
+                                {"query" => $p->{q}, "slop" => "50"}
                         }
                     }
                 }
             },
             limit => $p->{limit} ||= h->config->{default_page_size},
             start => $p->{start} ||= 0,
-        );
+        });
 
         $hits->{style}         = $sort_style->{style};
         $hits->{sort}          = $p->{sort};

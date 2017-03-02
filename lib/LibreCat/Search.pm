@@ -14,34 +14,7 @@ with 'Catmandu::Logger';
 has store => (
     is => 'ro',
     required => 1,
-    # TODO: check if this is a Catmandu::Store
 );
-
-sub quick_search {
-    my ($self, $bag_name, $p) = @_;
-
-    return undef unless $bag_name;
-
-    my %search_params = (cql_query => $self->_cql_query($p));
-
-    $self->log->debug("executing $bag_name->search: " . to_dumper(\%search_params));
-
-    my $hits;
-    try {
-        $hits = $self->store->bag($bag_name)->search(%search_params);
-    }
-    catch {
-        $self->log->error("$bag_name->search failed: " . to_dumper(\%search_params));
-        $hits = Catmandu::Hits->new(
-                    start => $search_params{start},
-                    limit => $search_params{limit},
-                    total => 0,
-                    hits  => [],
-                );
-    };
-
-    $hits;
-}
 
 sub native_search {
     my ($self, $bag_name, $search_params) = @_;

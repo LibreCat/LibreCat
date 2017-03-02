@@ -21,12 +21,11 @@ BEGIN {
 
 require_ok $pkg;
 dies_ok { $pkg->new() } "params required";
-#dies_ok { $pkg->new(store => 'blabla') } "is Catmandu store";
 lives_ok { $pkg->new(store => Catmandu::Store::Hash->new()) } "store param";
 
 my $store = Catmandu->store('search');
 my $searcher = $pkg->new(store => $store);
-can_ok $searcher, 'search';
+can_ok $searcher, qw(native_search search);
 
 # prepare test index
 my $bag = $store->bag('publication');
