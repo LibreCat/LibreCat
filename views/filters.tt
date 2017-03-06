@@ -6,7 +6,6 @@
 <!-- BEGIN filters.tt -->
 
 [%- USE JSON -%]
-[%- USE date(format => '%Y') -%]
 <div id="filters"></div>
 <div id="export"></div>
 
