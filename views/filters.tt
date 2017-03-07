@@ -22,7 +22,6 @@
 
 [% INCLUDE facets.tt %]
 
-
 [%- IF hits.0.citation OR (total AND total > 1) %]
 <h3[% IF request.path.match('marked') %] class="margin-top0"[% END %]>[% h.loc("facets.display") %][% UNLESS request.path.match('marked') %] / [% lf.facets.item('sort') %][% END %]</h3>
 
@@ -46,7 +45,7 @@
 [%- IF qp.style AND !user_settings.style_eq_userstyle %]
   <div class="text-muted">
     [%- tmp = {}; tmp.import(qp); tmp.delete('style') %]
-    <a href="[% request.uri_for(path, tmp) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    <a href="[% request.uri_for(request.path, tmp) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
     <strong>[% h.loc("facets.citation_style") %]:</strong>
     [% h.loc("styles.${qp.style}") %]
 
