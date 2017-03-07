@@ -1,9 +1,9 @@
 <script>
 var path = '[% request.path %]',
 searchParams = [% h.extract_params.json %];
-[% IF !backend %]
-searchParams.q.push('person=[% id %]');
-[% END %]
+[%- IF !backend %]
+searchParams.cql.push('person=[% id %]');
+[%- END %]
 var url = '/marked?'+ $.param($.extend({}, searchParams), true);
 
 $(function () {

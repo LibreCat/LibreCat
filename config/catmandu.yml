@@ -53,19 +53,8 @@ default_sort:
 default_sort_backend:
   - date_updated.desc
   - year.desc
-default_style: 'default'
-default_fd_style: 'default'
-default_format: html
 
 default_facets:
-  # author:
-  #   terms:
-  #     field: 'author.id'
-  #     size: 20
-  # editor:
-  #   terms:
-  #     field: 'editor.id'
-  #     size: 20
   open_access:
     terms:
       field: 'file.open_access'

@@ -184,10 +184,10 @@ facets:
     "fullname.desc": "Alphabetisch absteigend"
 citation:
   apa: APA
-  american-medical-association: AMA
-  chicago-fullnote-bibliography: Chicago
+  ama: AMA
+  chicago: Chicago
   ieee: IEEE
-  modern-language-association: MLA
+  mla: MLA
 frontdoor:
   publication: Zeitschriftentitel
   preview: "Vorschau"

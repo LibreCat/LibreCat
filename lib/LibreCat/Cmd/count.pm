@@ -13,7 +13,7 @@ Usage:
 
 librecat count <STORE> <OPTIONS>
 
-librecat countsearch --bag publication --query 'title:Acme'
+librecat count search --bag publication --query 'title:Acme'
 
 Options:
 EOF

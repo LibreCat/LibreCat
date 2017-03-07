@@ -7,7 +7,7 @@
 
 <!-- BEGIN marked/marked.tt -->
 
-<script src="/javascripts/jquery-sortable.js"></script>
+<script src="/javascripts/jquery-sortable-min.js"></script>
 <script>
   $(function() {
     $( "#sortable" ).sortable({

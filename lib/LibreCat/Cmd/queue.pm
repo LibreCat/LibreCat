@@ -19,6 +19,8 @@ Usage:
 
 librecat queue status
 librecat [--background] queue add_job WORKER FILE
+librecat queue start
+librecat queue stop
 
 EOF
 }
@@ -26,11 +28,7 @@ EOF
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/status|add_job/;
-
-    unless (@$args) {
-        $args = ['status'];
-    }
+    my $commands = qr/status|add_job|start|stop/;
 
     my $cmd = shift @$args;
 
@@ -44,6 +42,34 @@ sub command {
     elsif ($cmd eq 'add_job') {
         $self->_add_job(@$args, background => $opts->background);
     }
+    elsif ($cmd eq 'start') {
+        $self->_daemon('start');
+    }
+    elsif ($cmd eq 'stop') {
+        $self->_daemon('stop');
+    }
+}
+
+sub _daemon {
+    my ($self,$startstop) = @_;
+
+     my $config = Catmandu->config->{queue} // {};
+
+     croak "no queue.workers configured" unless exists $config->{workers};
+
+     for my $worker (keys %{$config->{workers}}) {
+         my $count     = $config->{workers}->{$worker}->{count} // 0;
+         my $supervise = $config->{workers}->{$worker}->{supervise} // 0;
+
+         next unless $count > 0;
+
+         my $cmd = "$0 worker $worker $startstop --workers $count";
+         $cmd .= " --supervise" if $supervise;
+
+         printf STDERR "%s $worker..." , $startstop eq 'start' ? 'Starting' : 'Stopping';
+         system($cmd);
+         printf STDERR "OK\n";
+     }
 }
 
 sub _add_job {
@@ -137,5 +163,11 @@ LibreCat::Cmd::queue - show job queue status
 
     # Submit a YAML file job to the WORKER
     librecat [--background] queue add_job WORKER FILE
+
+    # Start all configured workers
+    librecat queue start
+
+    # Stop all configured workers
+    librecat queue stop
 
 =cut
