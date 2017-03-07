@@ -1,7 +1,6 @@
 [% qp = {} -%]
 [% qp = h.extract_params -%]
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
-[% lf = h.config.locale.$lang -%]
 
 <!-- BEGIN filters.tt -->
 
@@ -23,7 +22,7 @@
 [% INCLUDE facets.tt %]
 
 [%- IF hits.0.citation OR (total AND total > 1) %]
-<h3[% IF request.path.match('marked') %] class="margin-top0"[% END %]>[% h.loc("facets.display") %][% UNLESS request.path.match('marked') %] / [% lf.facets.item('sort') %][% END %]</h3>
+<h3[% IF request.path.match('marked') %] class="margin-top0"[% END %]>[% h.loc("facets.display") %][% UNLESS request.path.match('marked') %] / [% h.loc("facets.sort") %][% END %]</h3>
 
 [%- IF qp.item('sort') %]
   <div class="text-muted">
@@ -75,7 +74,7 @@
   [% END %]
   [%- IF !request.path.match('marked') AND total > 1 %]
   <li>
-    <button data-toggle="collapse" data-target="#sort_facet" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% lf.facets.item('sort') %]</button>
+    <button data-toggle="collapse" data-target="#sort_facet" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.sort") %]</button>
     <div class="facettecollapse">
     <ul id="sort_facet" class="collapse">
       [%- IF bag == "person" %]
@@ -189,29 +188,26 @@ $('.rtfmodal').click(function(){
 var path = '[% request.path %]',
 searchParams = [% qp.json %];
 
-console.log(searchParams);
-
 $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var embed_link = window.location.href;
     var person_id  = embed_link.match(/\/person\/([0-9ABCDEF-]{1,})/);
 
     if (embed_link.match(/\/publication/)) {
-      searchParams['cql'] = "type<>research_data";
+      searchParams.cql.push("type<>research_data");
       embed_link = embed_link.replace(/\/publication.*/,"/embed?");
-      embed_link = embed_link + $.param($.extend({}, searchParams), true);
     }
 
     if (person_id) {
-      searchParams['q'] = person_id[1];
+      searchParams.cql.push("person=" + person_id[1]);
       embed_link = embed_link.replace(/\/person\/.*/,"/embed?");
-      embed_link = embed_link + $.param($.extend({}, searchParams), true);
     }
 
     if (embed_link.match(/\/data/)) {
-      searchParams['cql'] = "type=research_data";
+      searchParams.cql.push("type=research_data");
       embed_link = embed_link.replace(/\/data.*/,"/embed?");
-      embed_link = embed_link + $.param($.extend({}, searchParams), true);
     }
+
+    embed_link = embed_link + $.param($.extend({}, searchParams), true);
 
     var emb_js     = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ embed_link +'&fmt=js"><\/script><noscript><a href="'+ embed_link +'" target="_blank">[% h.loc("facets.embed_linktext") %]</a></noscript></div>';
     var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="' + embed_link + '&fmt=iframe"></iframe>';
