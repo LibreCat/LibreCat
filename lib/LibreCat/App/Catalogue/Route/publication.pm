@@ -308,7 +308,7 @@ Prints the frontdoor for every record.
 
         $hits->{bag}
             = $hits->{type} eq "research_data" ? "data" : "publication";
-        $hits->{style} = h->config->{default_fd_style} || "default";
+        $hits->{style} = h->config->{citation}->{csl}->{default_style};
         $hits->{marked} = 0;
 
         template 'publication/record.tt', $hits;
