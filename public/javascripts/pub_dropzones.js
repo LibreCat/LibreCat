@@ -1,6 +1,28 @@
 /**
  * Dropzones
  */
+
+function remove_link(file) {
+    var remove_link = file.previewElement.getElementsByClassName('dz-remove');
+    $(remove_link).remove();
+}
+
+
+function showErrorMessage (file, errorMessage) {
+    var modal = Dropzone.createElement("<div class='alert alert-danger'>" + errorMessage + "</div>");
+    file.previewElement.appendChild(modal);
+}
+
+function showProgressBar (file, progress, bytesSent) {
+    var progressbar = document.getElementById(file.name + "_progress");
+    progressbar.style.width = progress + "%";
+}
+
+function showFileName (file) {
+    var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + file.name + "</span></div></div></div>");
+    file.previewElement.appendChild(fileName);
+}
+
 $(document).ready(function(){
     var htmlEscape = function(str) {
         return str
@@ -22,14 +44,8 @@ $(document).ready(function(){
         dictMaxFilesExceeded: "Please submit or cancel your upload first before uploading more files.",
         init: function(){
             $('.dz-default.dz-message').addClass('qae');
-            this.on("addedfile", function(file) {
-                var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + file.name + "</span></div></div></div>");
-                file.previewElement.appendChild(fileName);
-            });
-            this.on("uploadprogress", function(file,progress,bytesSent){
-                var progressbar = document.getElementById(file.name + "_progress");
-                progressbar.style.width = progress + "%";
-            });
+            this.on("addedfile", showFileName(file));
+            this.on("uploadprogress", showProgressBar(file,progress,bytesSent));
             this.on("success", function(file,response){
                 var progressbar = document.getElementById(file.name + "_progress");
                 var progresselement = progressbar.parentNode.parentNode;
@@ -57,15 +73,9 @@ $(document).ready(function(){
                 );
                 file.previewElement.appendChild(modal);
             });
-            this.on("error", function(file, errorMessage){
-                var modal = Dropzone.createElement("<div class='alert alert-danger'>" + errorMessage + "</div>");
-                file.previewElement.appendChild(modal);
-            });
-            this.on("complete", function(file){
-    		    var remove_link = file.previewElement.getElementsByClassName('dz-remove');
-    			$(remove_link).remove();
-    		});
-        },
+            this.on("error", showErrorMessage(file, errorMessage));
+            this.on("complete", remove_link(file));
+        }
     };
 
     Dropzone.options.uploadFiles = {
@@ -76,14 +86,8 @@ $(document).ready(function(){
         addRemoveLinks: true,
         init: function() {
             $('.dz-default.dz-message').addClass('col-md-11');
-            this.on("addedfile", function(file) {
-                var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + file.name + "</span></div></div></div>");
-                file.previewElement.appendChild(fileName);
-            });
-            this.on("uploadprogress", function(file,progress,bytesSent){
-                var progressbar = document.getElementById(file.name + "_progress");
-                progressbar.style.width = progress + "%";
-            });
+            this.on("addedfile", showFileName(file));
+            this.on("uploadprogress", showProgressBar(file,progress,bytesSent));
             this.on("success", function(file,response){
                 var progressbar = document.getElementById(file.name + "_progress");
                 var progresselement = progressbar.parentNode.parentNode;
@@ -150,15 +154,9 @@ $(document).ready(function(){
                     file.previewElement.appendChild(input_element);
                 }
             });
-            this.on("error", function(file, errorMessage){
-                var modal = Dropzone.createElement("<div class='alert alert-danger'>" + errorMessage + "</div>");
-                file.previewElement.appendChild(modal);
-            });
-            this.on("complete", function(file){
-    		    var remove_link = file.previewElement.getElementsByClassName('dz-remove');
-    			$(remove_link).remove();
-    		});
-        },
+            this.on("error", showErrorMessage(file, errorMessage));
+            this.on("complete", remove_link(file));
+        }
     };
 
     Dropzone.options.thesesUpload = {
@@ -173,14 +171,8 @@ $(document).ready(function(){
         dictMaxFilesExceeded: "Please submit or cancel your upload first before uploading more files.",
         init: function(){
             $('.dz-default.dz-message').addClass('qae');
-                this.on("addedfile", function(file) {
-                var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + file.name + "</span></div></div></div>");
-                file.previewElement.appendChild(fileName);
-            });
-            this.on("uploadprogress", function(file,progress,bytesSent){
-                var progressbar = document.getElementById(file.name + "_progress");
-                progressbar.style.width = progress + "%";
-            });
+                this.on("addedfile", showFileName(file));
+            this.on("uploadprogress", showProgressBar(file,progress,bytesSent));
             this.on("success", function(file,response){
                 var progressbar = document.getElementById(file.name + "_progress");
                 var progresselement = progressbar.parentNode.parentNode;
@@ -227,14 +219,8 @@ $(document).ready(function(){
                 well.appendChild(form);
                 file.previewElement.appendChild(well);
             });
-            this.on("error", function(file, errorMessage){
-                var modal = Dropzone.createElement("<div class='alert alert-danger'>" + errorMessage + "</div>");
-                file.previewElement.appendChild(modal);
-            });
-            this.on("complete", function(file){
-    		    var remove_link = file.previewElement.getElementsByClassName('dz-remove');
-    			$(remove_link).remove();
-    		});
-        },
+            this.on("error", showErrorMessage(file, errorMessage));
+            this.on("complete", remove_link(file));
+        }
     };
 });
