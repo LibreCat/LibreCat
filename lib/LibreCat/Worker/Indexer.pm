@@ -7,36 +7,70 @@ use namespace::clean;
 
 with 'LibreCat::Worker';
 
-sub worker_functions {[qw(index_record index_all)]}
+sub work {
+    my ($self, $opts, $job) = @_;
+
+    $self->log->debug("entering indexer");
+
+    if ($opts->{id}) {
+        return $self->index_record($opts, $job);
+    }
+    else {
+        return $self->index_all($opts, $job);
+    }
+}
 
 sub index_record {
-    my ($self, $opts) = @_;
-    my $bag        = Catmandu->store('backup')->bag($opts->{bag});
-    my $search_bag = Catmandu->store('search')->bag($opts->{bag});
-    if (my $rec = $bag->get($opts->{id})) {
-        $self->log->info("indexing $opts->{bag} $opts->{id}");
-        $search_bag->add($rec);
-        $search_bag->commit;
+    my ($self, $opts, $job) = @_;
+
+    my $bag        = $opts->{bag};
+    my $id         = $opts->{bag};
+
+    my $source     = Catmandu->store('backup')->bag($bag);
+    my $target     = Catmandu->store('search')->bag($bag);
+
+    $self->log->debug("index one $bag : $id");
+
+    if (my $rec = $source->get($id)) {
+        $self->log->info("indexing $bag 1/1");
+        $target->add($rec);
+        $target->commit;
+        $job->send_status(1,1);
+        $self->log->info("indexed 1");
+    }
+    else {
+        $self->log->error("no record $bag($id) found!");
     }
 }
 
 sub index_all {
     my ($self, $opts, $job) = @_;
-    my $bag        = Catmandu->store('backup')->bag($opts->{bag});
-    my $search_bag = Catmandu->store('search')->bag($opts->{bag});
-    my $total      = $bag->count;
+
+    my $bag        = $opts->{bag};
+    my $id         = $opts->{bag};
+
+    my $source     = Catmandu->store('backup')->bag($bag);
+    my $target     = Catmandu->store('search')->bag($bag);
+    my $total      = $source->count;
     my $n          = 0;
-    $search_bag->add_many(
-        $bag->tap(
+
+    $self->log->debug("index all $bag");
+
+    $target->add_many(
+        $source->tap(
             sub {
                 if (++$n % 500 == 0) {
-                    $self->log->info("indexing $opts->{bag} $n/$total");
+                    $self->log->info("indexing $bag $n/$total");
                     $job->send_status($n, $total);
                 }
             }
         )
     );
-    $search_bag->commit;
+
+    $job->send_status($total, $total);
+    $target->commit;
+
+    $self->log->info("indexed $n");
 }
 
 1;
