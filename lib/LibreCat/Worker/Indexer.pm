@@ -11,7 +11,7 @@ sub worker_functions {[qw(index_record index_all)]}
 
 sub index_record {
     my ($self, $opts) = @_;
-    my $bag        = Catmandu->store->bag($opts->{bag});
+    my $bag        = Catmandu->store('backup')->bag($opts->{bag});
     my $search_bag = Catmandu->store('search')->bag($opts->{bag});
     if (my $rec = $bag->get($opts->{id})) {
         $self->log->info("indexing $opts->{bag} $opts->{id}");
@@ -22,7 +22,7 @@ sub index_record {
 
 sub index_all {
     my ($self, $opts, $job) = @_;
-    my $bag        = Catmandu->store->bag($opts->{bag});
+    my $bag        = Catmandu->store('backup')->bag($opts->{bag});
     my $search_bag = Catmandu->store('search')->bag($opts->{bag});
     my $total      = $bag->count;
     my $n          = 0;
@@ -50,4 +50,3 @@ __END__
 LibreCat::Worker::Indexer - an indexing worker
 
 =cut
-

@@ -31,7 +31,7 @@ sub command {
 
     if ($opts->id) {
         my $job_id = $queue->add_job('index_record',
-            {bag => $bag, id => $opts->bag});
+            {bag => $bag, id => $opts->id});
         return $job_id if $opts->background;
         print "[$job_id]:";
         while (1) {
