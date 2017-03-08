@@ -202,13 +202,15 @@ frontdoor:
   citation_found: "gefunden, die diesen Artikel zitieren"
   display_10: "von denen 10 angezeigt werden"
   supplements: "Zusatzmaterialien"
-  show_all: "Alle"
   view_wos: "Dieser Datensatz im Web of Science"
   sources: "Quellen"
   search_this: "Suchen in"
   isbn_search: "ISBN Suche"
   item: "Eintrag"
   items: "Eintr&auml;ge"
+  volume: "Band"
+  issue: "Zeitschriftennummer"
+  page: "Seite"
   tabs:
     details:
       label: "Details"
@@ -725,6 +727,7 @@ forms:
     label: "Konferenzband"
     tab: *tab
     field:
+      editor.label: "Herausgeber"
       document_type: *document_type
       doi: *doi
       title: *booktitle
@@ -1228,6 +1231,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
+      editor.label: "Editor"
   research_data:
     label: "Datenpublikation"
     tab:
@@ -1447,7 +1451,6 @@ forms:
         label_short: "Titel (Orig)"
         placeholder: "z.B. Handbook of eBook Publishing"
       edition: *edition
-      editor: *editor_only
       corporate_editor: *corporate_editor
       department: *department
       project: *project
