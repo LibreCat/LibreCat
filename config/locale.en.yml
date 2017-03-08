@@ -46,6 +46,7 @@ styles:
   chicago: Chicago
   ieee: IEEE
   ama: AMA
+  short: Default
 tabs:
   home: "Home"
   all_publications: "All Publications"
@@ -82,7 +83,7 @@ main_page:
     returned: "Returned"
     submitted: "Submitted"
     invalid: "Invalid"
-    qae: "New QaE"
+    qae: "New"
     private: "Private"
   links:
     clone: Clone
@@ -165,23 +166,14 @@ facets:
     ris: "RIS"
     json: "JSON"
     yaml: "YAML"
-  sort_text:
-    "year.asc": "Publishing Year ascending"
-    "year.desc": "Publishing Year descending"
-    "date_updated.asc": "Date Updated ascending"
-    "date_updated.desc": "Date Updated descending"
-    "title.asc": "Title ascending"
-    "title.desc": "Title descending"
-    "author.asc": "First Author ascending"
-    "author.desc": "First Author descending"
-    "type.asc": "Publication Type ascending"
-    "type.desc": "Publication Type descending"
-    "publication.asc": "Publ./ Series/ Journal ascending"
-    "publication.desc": "Publ./ Series/ Journal descending"
-    "publcount.asc": "Number of publications ascending"
-    "publcount.desc": "Number of publications descending"
-    "fullname.asc": "Alphabetically ascending"
-    "fullname.desc": "Alphabetically descending"
+  sort_options:
+    year: "Publishing Year"
+    date_updated: "Date Updated"
+    title: Title
+    author: "First Author"
+    type: "Publication Type"
+    publication: "Publ./ Series/ Journal"
+    fullname: Alphabetically
 citation:
   apa: APA
   ama: AMA

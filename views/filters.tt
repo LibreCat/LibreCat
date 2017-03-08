@@ -36,7 +36,7 @@
     [% END %]
     [%- FOREACH setting IN qp.item('sort') %]
       [%- tmp = setting.split('\.') %]
-      [% h.loc("sort_options.${tmp.0}") %] <span class="glyphicon glyphicon-arrow-[% IF tmp.1 == 'asc' %]up[% ELSE %]down[% END %]"></span>[% UNLESS loop.last %], [% END %]
+      [% h.loc("facets.sort_options.${tmp.0}") %] <span class="glyphicon glyphicon-arrow-[% IF tmp.1 == 'asc' %]up[% ELSE %]down[% END %]"></span>[% UNLESS loop.last %], [% END %]
     [%- END %]
   </div>
 [%- END %]
@@ -86,9 +86,9 @@
         [%- gray = "" %]
         [%- FOREACH qs IN qp.item('sort') %][% IF qs == s _ ".asc" OR qs == s _ ".desc" %][% gray = "yes" %][% END %][% END %]
         [%- IF gray %]
-          <span class="text-muted">[% h.loc("sort_options.${s}") %]</span><br />
+          <span class="text-muted">[% h.loc("facets.sort_options.${s}") %]</span><br />
         [%- ELSE %]
-          <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].asc" rel="nofollow">[% h.loc("sort_options.${s}") %] <span class="glyphicon glyphicon-arrow-up"></span></a>
+          <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].asc" rel="nofollow">[% h.loc("facets.sort_options.${s}") %] <span class="glyphicon glyphicon-arrow-up"></span></a>
           <a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].desc" rel="nofollow">
           <span class="glyphicon glyphicon-arrow-down"></span></a></li>
         [%- END %]

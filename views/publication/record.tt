@@ -78,7 +78,7 @@
         [%- IF display_citation %]
         <div class="row">
           <div class="col-md-12">
-          <p>[% citation.$style %]</p>
+          <p>[% citation.short %]</p>
           </div>
         </div>
         [%- END %]

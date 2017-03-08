@@ -5,6 +5,9 @@ document.write ('<ul[% IF qp.listyle %] style="[% qp.listyle %]"[% END %]>') ;
 document.write('<li>');
   [%- IF entry.citation.$style %]
     [%- cite_string = entry.citation.$style %]
+    [%- IF style == "short" %]
+document.write('<a href="[% h.host %]/[% bag %]/[% entry._id %]">[% entry.title | html %]</a><br />');
+    [%- END %]
 document.write('[% cite_string FILTER replace("'", "\\'")  %]<br />[% INCLUDE embed/links_js.tt %]');
   [%- ELSE %]
 document.write('[% PROCESS citation.tt entry=entry FILTER replace("'", "\\'") %]<br />[% INCLUDE embed/links_js.tt %]');

@@ -46,6 +46,7 @@ styles:
   chicago: Chicago
   ieee: IEEE
   ama: AMA
+  short: Default
 tabs:
   home: "Startseite"
   all_publications: "Alle Publikationen"
@@ -82,7 +83,7 @@ main_page:
     returned: "Returned"
     submitted: "Submitted"
     invalid: "Invalid"
-    qae: "New QaE"
+    qae: "New"
     private: "Private"
   links:
     clone: "Klonen"
@@ -165,23 +166,14 @@ facets:
     ris: "RIS"
     json: "JSON"
     yaml: "YAML"
-  sort_text:
-    "year.asc": "Jahr aufsteigend"
-    "year.desc": "Jahr absteigend"
-    "date_updated.asc": "&Auml;nderungsdatum aufsteigend"
-    "date_updated.desc": "&Auml;nderungsdatum absteigend"
-    "title.asc": "Titel aufsteigend"
-    "title.desc": "Titel absteigend"
-    "author.asc": "Erstautor aufsteigend"
-    "author.desc": "Erstautor absteigend"
-    "type.asc": "Publikationstyp aufsteigend"
-    "type.desc": "Publikationstyp absteigend"
-    "publication.asc": "Publ./ Serie/ Journal aufsteigend"
-    "publication.desc": "Publ./ Serie/ Journal absteigend"
-    "publcount.asc": "Anzahl der Publikationen aufsteigend"
-    "publcount.desc": "Anzahl der Publikationen absteigend"
-    "fullname.asc": "Alphabetisch aufsteigend"
-    "fullname.desc": "Alphabetisch absteigend"
+  sort_options:
+    year: Jahr
+    date_updated: Änderungsdatum
+    title: Titel
+    author: Erstautor
+    type: Publikationstyp
+    publication: "Publ./ Serie/ Journal"
+    fullname: "Alphabetisch"
 citation:
   apa: APA
   ama: AMA
@@ -202,13 +194,15 @@ frontdoor:
   citation_found: "gefunden, die diesen Artikel zitieren"
   display_10: "von denen 10 angezeigt werden"
   supplements: "Zusatzmaterialien"
-  show_all: "Alle"
   view_wos: "Dieser Datensatz im Web of Science"
   sources: "Quellen"
   search_this: "Suchen in"
   isbn_search: "ISBN Suche"
   item: "Eintrag"
   items: "Eintr&auml;ge"
+  volume: "Band"
+  issue: "Zeitschriftennummer"
+  page: "Seite"
   tabs:
     details:
       label: "Details"
@@ -725,6 +719,7 @@ forms:
     label: "Konferenzband"
     tab: *tab
     field:
+      editor.label: "Herausgeber"
       document_type: *document_type
       doi: *doi
       title: *booktitle
@@ -1228,6 +1223,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
+      editor.label: "Editor"
   research_data:
     label: "Datenpublikation"
     tab:
@@ -1447,7 +1443,6 @@ forms:
         label_short: "Titel (Orig)"
         placeholder: "z.B. Handbook of eBook Publishing"
       edition: *edition
-      editor: *editor_only
       corporate_editor: *corporate_editor
       department: *department
       project: *project
