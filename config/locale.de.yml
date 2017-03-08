@@ -166,23 +166,14 @@ facets:
     ris: "RIS"
     json: "JSON"
     yaml: "YAML"
-  sort_text:
-    "year.asc": "Jahr aufsteigend"
-    "year.desc": "Jahr absteigend"
-    "date_updated.asc": "&Auml;nderungsdatum aufsteigend"
-    "date_updated.desc": "&Auml;nderungsdatum absteigend"
-    "title.asc": "Titel aufsteigend"
-    "title.desc": "Titel absteigend"
-    "author.asc": "Erstautor aufsteigend"
-    "author.desc": "Erstautor absteigend"
-    "type.asc": "Publikationstyp aufsteigend"
-    "type.desc": "Publikationstyp absteigend"
-    "publication.asc": "Publ./ Serie/ Journal aufsteigend"
-    "publication.desc": "Publ./ Serie/ Journal absteigend"
-    "publcount.asc": "Anzahl der Publikationen aufsteigend"
-    "publcount.desc": "Anzahl der Publikationen absteigend"
-    "fullname.asc": "Alphabetisch aufsteigend"
-    "fullname.desc": "Alphabetisch absteigend"
+  sort_options:
+    year: Jahr
+    date_updated: Änderungsdatum
+    title: Titel
+    author: Erstautor
+    type: Publikationstyp
+    publication: "Publ./ Serie/ Journal"
+    fullname: "Alphabetisch"
 citation:
   apa: APA
   ama: AMA

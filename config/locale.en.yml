@@ -166,23 +166,14 @@ facets:
     ris: "RIS"
     json: "JSON"
     yaml: "YAML"
-  sort_text:
-    "year.asc": "Publishing Year ascending"
-    "year.desc": "Publishing Year descending"
-    "date_updated.asc": "Date Updated ascending"
-    "date_updated.desc": "Date Updated descending"
-    "title.asc": "Title ascending"
-    "title.desc": "Title descending"
-    "author.asc": "First Author ascending"
-    "author.desc": "First Author descending"
-    "type.asc": "Publication Type ascending"
-    "type.desc": "Publication Type descending"
-    "publication.asc": "Publ./ Series/ Journal ascending"
-    "publication.desc": "Publ./ Series/ Journal descending"
-    "publcount.asc": "Number of publications ascending"
-    "publcount.desc": "Number of publications descending"
-    "fullname.asc": "Alphabetically ascending"
-    "fullname.desc": "Alphabetically descending"
+  sort_options:
+    year: "Publishing Year"
+    date_updated: "Date Updated"
+    title: Title
+    author: "First Author"
+    type: "Publication Type"
+    publication: "Publ./ Series/ Journal"
+    fullname: Alphabetically
 citation:
   apa: APA
   ama: AMA
@@ -203,15 +194,13 @@ frontdoor:
   citation_found: "found citing this article"
   display_10: "of which 10 are displayed"
   supplements: "Supplements"
+  show_all: "All"
   view_wos: "View record in Web of Science"
   sources: "Sources"
   search_this: "Search this title in"
   isbn_search: "ISBN Search"
   item: "Item"
   items: "Items"
-  volume: "Volume"
-  issue: "Issue"
-  page: "Page"
   tabs:
     details:
       label: "Details"
@@ -728,7 +717,6 @@ forms:
     label: "Conference (Editor)"
     tab: *tab
     field:
-      editor.label: "Editor"
       document_type: *document_type
       doi: *doi
       title: *booktitle
@@ -1231,7 +1219,6 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-      editor.lable: "Herausgeber"
   research_data:
     label: "Research Data"
     tab:
@@ -1452,6 +1439,7 @@ forms:
         label_short: "Title (Orig)"
         placeholder: "e.g. Handbook of eBook Publishing"
       edition: *edition
+      editor: *editor_only
       corporate_editor: *corporate_editor
       department: *department
       project: *project
