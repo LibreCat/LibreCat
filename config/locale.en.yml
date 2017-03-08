@@ -46,6 +46,7 @@ styles:
   chicago: Chicago
   ieee: IEEE
   ama: AMA
+  short: Default
 tabs:
   home: "Home"
   all_publications: "All Publications"
@@ -82,7 +83,7 @@ main_page:
     returned: "Returned"
     submitted: "Submitted"
     invalid: "Invalid"
-    qae: "New QaE"
+    qae: "New"
     private: "Private"
   links:
     clone: Clone
