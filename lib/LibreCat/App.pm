@@ -114,7 +114,7 @@ post '/login' => sub {
         session personNumber => $user->{_id};
         session lang         => $user->{lang} || h->config->{default_lang};
 
-        redirect '/librecat';
+        redirect uri_for('/librecat');
     }
     else {
         forward '/login', {error_message => 'Wrong username or password!'},
