@@ -223,6 +223,7 @@ publication_types:
         external_id: &external_id
           mandatory: 0
           multiple: 1
+          hash_array: 0
         message: &message
           multiple: 0
         popular_science_quality_controlled: &popular_science_quality_controlled
