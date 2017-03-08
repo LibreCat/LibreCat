@@ -239,7 +239,7 @@ search:
                 '=': true
                 '<>': true
                 'exact': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             abstract:
               op:
