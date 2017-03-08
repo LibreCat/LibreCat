@@ -238,14 +238,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
-              description: "index with common fields..."
-            _basic:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
+                'exact': true
               field: '_all'
               description: "index with common fields..."
             abstract:
@@ -324,20 +317,11 @@ search:
               field: 'extern'
               values: '0 or 1'
               description: '1 if not a UniBi publication'
-            nonlu: *extern
             oai_deleted:
               op:
                 '=': true
                 'exact': true
               field: 'oai_deleted'
-            fundedbyubi:
-              op:
-                '=': true
-                'exact': true
-                '<>': true
-              field: 'ubi_funded'
-              values: '0 or 1'
-              description: '1 if publication is funded by Publikationsfonds'
             qualitycontrolled:
               op:
                 '=': true
