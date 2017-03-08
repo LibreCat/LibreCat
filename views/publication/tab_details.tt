@@ -212,6 +212,7 @@
       <h3 id="cite">[% h.loc("frontdoor.cite_this") %]</h3>
       <ul class="nav nav-tabs">
         [%- FOREACH style IN h.config.citation.csl.styles.keys %]
+          [%- NEXT if style == 'short' %]
           <li [% IF loop.first %]class="active"[% END %]><a href="#[% style %]" data-toggle="tab">[% h.loc("citation.${style}") %]</a></li>
         [% END %]
         <li><a href="#bibtex" data-toggle="tab">BibTeX</a></li>
@@ -219,6 +220,7 @@
       </ul>
       <div class="tab-content">
         [%- FOREACH style IN h.config.citation.csl.styles.keys %]
+          [%- NEXT if style == 'short' %]
           <div id="[% style %]" class="tab-pane[% IF loop.first %] active[% END %] cmark">[% citation.$style %]</div>
         [% END %]
         <div id="bibtex" class="tab-pane"></div>
