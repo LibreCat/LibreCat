@@ -173,8 +173,12 @@ Throws 'page not found'.
 =cut
 
 any qr{.*} => sub {
-    status 'not_found';
-    template '404';
+    if (session->{user}) {
+        return redirect uri_for('/librecat');
+    } else {
+        status 'not_found';
+        return template '404';
+    }
 };
 
 1;
