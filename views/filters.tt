@@ -99,7 +99,7 @@
   [%- END %]
 
   <li>
-    <button data-toggle="collapse" data-target="#style" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.citation_style") %]: [% h.loc("styles.${style}") %]</button>
+    <button data-toggle="collapse" data-target="#style" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.citation_style") %]</button>
     <div class="facettecollapse">
     <ul id="style" class="collapse">
       [%- FOREACH dstyle IN h.config.citation.csl.styles.keys %]
