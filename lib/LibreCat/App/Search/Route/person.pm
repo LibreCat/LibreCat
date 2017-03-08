@@ -16,12 +16,12 @@ use URI::Escape;
 List persons alphabetically
 
 =cut
-
-get qr{/person/([a-z,A-Z])} => sub {
+get qr{/person/*([a-z,A-Z])*} => sub {
     my ($c) = splat;
 
+    my $cql = $c ? ["lastname=" . lc $c . "*"] : '';
     my %search_params = (
-        cql => ["lastname=" . lc $c . "*"],
+        cql => $cql,
         start => 0,
         limit => 1000
     );
@@ -30,7 +30,6 @@ get qr{/person/([a-z,A-Z])} => sub {
 
     my $hits = LibreCat->searcher->search('researcher', \%search_params);
 
-    my $result;
     @{$hits->{hits}} = map {
         my $rec = $_;
         my $pub = LibreCat->searcher->search('publication',
@@ -46,9 +45,6 @@ get qr{/person/([a-z,A-Z])} => sub {
     template 'person/list', $hits;
 };
 
-get '/person' => sub {
-    forward '/person/A';
-};
 
 =head2 GET /person/:id
 
