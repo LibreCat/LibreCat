@@ -97,8 +97,20 @@ sub _cql_query {
     for my $part (@$q) {
         if (defined($part) && length($part)) {
             # auto-escape wildcards
-            $part =~ s{(["\*\?])}{\\$1}g;
-            push @cql, "basic = \"$part\"";
+            my $mode   = '=';
+            my $search = '';
+
+            if ($part =~ /^"(.*)"$/) {
+                $mode   = 'exact';
+                $search = $1;
+            }
+            else {
+                $mode   = '=';
+                $search = $part;
+            }
+
+            $search =~ s{(["\*\?])}{\\$1}g;
+            push @cql, "basic $mode \"$search\"";
         }
     }
 
