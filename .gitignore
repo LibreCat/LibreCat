@@ -49,3 +49,5 @@ views/admin/forms/
 views/backend/forms/
 views/department/nodes*
 wiki/
+t/Selenium/run-selenium.sh
+t/Selenium/README.html
