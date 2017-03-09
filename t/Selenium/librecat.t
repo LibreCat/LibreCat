@@ -4,7 +4,6 @@ use strict;
 use warnings;
 use Selenium::Remote::Driver;
 use Test::More;
-use Syntax::Construct qw{ auto-deref };
 
 sub testHeader {
 

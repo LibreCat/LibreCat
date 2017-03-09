@@ -29,6 +29,14 @@ c. `./run-selenium.sh`
 
 If Selenium is running, on a different window you can run the tests:
 
+1. install `Selenium::Remote::Driver` Perl module
+
+```
+cpanm Selenium::Remote::Driver
+```
+
+2. run the tests
+
 ```
 perl -wT librecat.t
 ```
