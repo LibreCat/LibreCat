@@ -52,18 +52,12 @@ get qr{/(data|publication)/*} => sub {
     my ($bag) = splat;
 
     my $p = h->extract_params();
-    my $sort_style = h->get_sort_style($p->{sort} || '', $p->{style} || '');
-    $p->{sort} = $sort_style->{sort};
 
     ($bag eq 'data')
         ? push @{$p->{cql}}, ("status=public", "type=research_data")
         : push @{$p->{cql}}, ("status=public", "type<>research_data");
 
     my $hits = LibreCat->searcher->search('publication', $p);
-
-    $hits->{style}         = $sort_style->{style};
-    $hits->{sort}          = $p->{sort};
-    $hits->{user_settings} = $sort_style;
 
     template 'publication/list', $hits;
 
@@ -79,16 +73,12 @@ get '/embed' => sub {
 
     push @{$p->{cql}}, ("status=public");
 
-    my $sort_style = h->get_sort_style($p->{sort} || '', $p->{style} || '');
-
-    $p->{sort}  = $sort_style->{sort};
     $p->{start} = params->{start};
 
     my $hits = LibreCat->searcher->search('publication', $p);
 
     $hits->{bag}   = "publication";
     $hits->{embed} = 1;
-    $hits->{style} = $sort_style->{style};
 
     my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
     $hits->{lang} = $lang;

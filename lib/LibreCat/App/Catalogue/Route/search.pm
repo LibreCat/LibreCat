@@ -45,15 +45,8 @@ Performs search for admin.
 
         push @{$p->{cql}}, "status<>deleted";
 
-        my $sort_style
-            = h->get_sort_style($p->{sort} || '', $p->{style} || '');
-        $p->{sort} = $sort_style->{sort_backend};
-
         my $hits = LibreCat->searcher->search('publication', $p);
 
-        $hits->{style}         = $sort_style->{style};
-        $hits->{sort}          = $p->{sort};
-        $hits->{user_settings} = $sort_style;
         $hits->{modus}         = "admin";
 
         template "home", $hits;
@@ -68,10 +61,6 @@ Performs search for similar titles, admin only
     get '/admin/similar_search' => needs role => 'super_admin' => sub {
 
         my $p = h->extract_params();
-
-        my $sort_style
-            = h->get_sort_style($p->{sort} || '', $p->{style} || '');
-        $p->{sort} = $sort_style->{sort_backend};
 
         # TODO filter out deleted recs
         my $hits = LibreCat->searcher->native_search('publication',
@@ -97,9 +86,6 @@ Performs search for similar titles, admin only
             start => $p->{start} ||= 0,
         });
 
-        $hits->{style}         = $sort_style->{style};
-        $hits->{sort}          = $p->{sort};
-        $hits->{user_settings} = $sort_style;
         $hits->{modus}         = "admin";
 
         template "home", $hits;
@@ -137,14 +123,7 @@ Performs search for reviewer.
         my $dep_query = "department=" . params->{department_id};
         push @{$p->{cql}}, $dep_query;
 
-        my $sort_style
-            = h->get_sort_style($p->{sort} || '', $p->{style} || '');
-        $p->{sort} = $sort_style->{sort_backend};
-
         my $hits = LibreCat->searcher->search('publication', $p);
-        $hits->{style}         = $sort_style->{style};
-        $hits->{sort}          = $p->{sort};
-        $hits->{user_settings} = $sort_style;
         $hits->{modus}         = "reviewer_" . params->{department_id};
         $hits->{department_id} = params->{department_id};
 
@@ -185,14 +164,7 @@ Performs search for reviewer.
         my $dep_query = "project=" . params->{project_id};
         push @{$p->{cql}}, $dep_query;
 
-        my $sort_style
-            = h->get_sort_style($p->{sort} || '', $p->{style} || '');
-        $p->{sort} = $sort_style->{sort_backend};
-
         my $hits = LibreCat->searcher->search('publication', $p);
-        $hits->{style}         = $sort_style->{style};
-        $hits->{sort}          = $p->{sort};
-        $hits->{user_settings} = $sort_style;
         $hits->{modus}         = "project_reviewer_" . params->{project_id};
         $hits->{project_id}    = params->{project_id};
 
@@ -223,14 +195,7 @@ Performs search for data manager.
         push @{$p->{cql}}, "(type=research_data OR type=data)";
         push @{$p->{cql}}, $dep_query;
 
-        my $sort_style
-            = h->get_sort_style($p->{sort} || '', $p->{style} || '');
-        $p->{sort} = $sort_style->{sort_backend};
-
         my $hits = LibreCat->searcher->search('publication', $p);
-        $hits->{style}         = $sort_style->{style};
-        $hits->{sort}          = $p->{sort};
-        $hits->{user_settings} = $sort_style;
         $hits->{modus}         = "data_manager_" . params->{department_id};
         $hits->{department_id} = params->{department_id};
 
@@ -262,14 +227,7 @@ publications.
         my $id = params->{delegate_id};
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
 
-        my $sort_style
-            = h->get_sort_style($p->{sort} || '', $p->{style} || '', $id);
-        $p->{sort} = $sort_style->{sort_backend};
-
         my $hits = LibreCat->searcher->search('publication', $p);
-        $hits->{style}         = $sort_style->{style};
-        $hits->{sort}          = $p->{sort};
-        $hits->{user_settings} = $sort_style;
         $hits->{modus}         = "delegate_" . $id;
         $hits->{delegate_id}   = $id;
 
@@ -293,10 +251,6 @@ Performs search for user.
         push @{$p->{cql}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
 
-        my $sort_style
-            = h->get_sort_style($p->{sort} || '', $p->{style} || '');
-        $p->{sort} = $sort_style->{sort_backend};
-
         my $hits = LibreCat->searcher->search('publication', $p);
 
         my $researchhits;
@@ -306,9 +260,6 @@ Performs search for user.
         $researchhits = LibreCat->searcher->search('publication', $p);
         $hits->{researchhits} = $researchhits if $researchhits;
 
-        $hits->{style}         = $sort_style->{style};
-        $hits->{sort}          = $p->{sort};
-        $hits->{user_settings} = $sort_style;
         $hits->{modus}         = "user";
 
         template "home", $hits;
@@ -323,10 +274,6 @@ Performs search for user.
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
         push @{$p->{cql}}, "(type=research_data OR type=data)";
 
-        my $sort_style
-            = h->get_sort_style($p->{sort} || '', $p->{style} || '');
-        $p->{sort} = $sort_style->{sort_backend};
-
         my $hits = LibreCat->searcher->search('publication', $p);
 
         my $researchhits;
@@ -336,9 +283,6 @@ Performs search for user.
         $researchhits = LibreCat->searcher->search('publication', $p);
         $hits->{researchhits} = $researchhits if $researchhits;
 
-        $hits->{style}         = $sort_style->{style};
-        $hits->{sort}          = $p->{sort};
-        $hits->{user_settings} = $sort_style;
         $hits->{modus}         = "data";
 
         template "home", $hits;
