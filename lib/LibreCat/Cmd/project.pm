@@ -85,9 +85,17 @@ sub _list {
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
-    my $it = LibreCat::App::Helper::Helpers->new->project->searcher(
-        cql_query => $query , total => $total , start => $start
-    );
+    my $it;
+
+    if ($query) {
+        $it = LibreCat::App::Helper::Helpers->new->project->searcher(
+                cql_query => $query , total => $total , start => $start
+              );
+    }
+    else {
+        $it = LibreCat::App::Helper::Helpers->new->backup_project;
+        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+    }
 
     my $count = $it->each(
         sub {
@@ -109,9 +117,17 @@ sub _export {
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
-    my $it = LibreCat::App::Helper::Helpers->new->project->searcher(
-        cql_query => $query , total => $total , start => $start
-    );
+    my $it;
+
+    if ($query) {
+        $it = LibreCat::App::Helper::Helpers->new->project->searcher(
+                cql_query => $query , total => $total , start => $start
+              );
+    }
+    else {
+        $it = LibreCat::App::Helper::Helpers->new->backup_project;
+        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+    }
 
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($it);
@@ -148,7 +164,7 @@ sub _add {
 
             $rec->{_id} //= $helper->new_record('project');
 
-            if ($validator->is_valid($rec)) {    
+            if ($validator->is_valid($rec)) {
                 $helper->store_record('project', $rec);
                 print "added $rec->{_id}\n";
                 return 1;

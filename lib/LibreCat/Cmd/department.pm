@@ -89,9 +89,17 @@ sub _list {
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
-    my $it = LibreCat::App::Helper::Helpers->new->department->searcher(
-        cql_query => $query , total => $total , start => $start
-    );
+    my $it;
+
+    if ($query) {
+        $it = LibreCat::App::Helper::Helpers->new->department->searcher(
+                cql_query => $query , total => $total , start => $start
+              );
+    }
+    else {
+        $it = LibreCat::App::Helper::Helpers->new->backup_department;
+        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+    }
 
     my $count = $it->each(
         sub {
@@ -165,7 +173,7 @@ sub _tree_parse_parser {
 }
 
 sub _tree_display {
-    my $it = LibreCat::App::Helper::Helpers->new->department->searcher();
+    my $it = LibreCat::App::Helper::Helpers->new->backup_department;
 
     my $HASH = {};
 
@@ -205,9 +213,17 @@ sub _export {
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
-    my $it = LibreCat::App::Helper::Helpers->new->department->searcher(
-        cql_query => $query , total => $total , start => $start
-    );
+    my $it;
+
+    if ($query) {
+        $it = LibreCat::App::Helper::Helpers->new->department->searcher(
+                cql_query => $query , total => $total , start => $start
+              );
+    }
+    else {
+        $it = LibreCat::App::Helper::Helpers->new->backup_department;
+        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+    }
 
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($it);
