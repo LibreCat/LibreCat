@@ -4,7 +4,6 @@ use strict;
 use warnings;
 use Selenium::Remote::Driver;
 use Test::More;
-use Syntax::Construct qw{ auto-deref };
 
 sub testHeader {
 
@@ -18,7 +17,7 @@ sub testHeader {
   is($results->get_attribute('href'), 'http://demo.librecat.org/', ' - home link');
 
   my @results = $main::driver->find_elements('helpme', 'class');
-  my $hasSearchForm = !($main::driver->get_current_url() eq 'http://demo.librecat.org/' 
+  my $hasSearchForm = !($main::driver->get_current_url() eq 'http://demo.librecat.org/'
     || $main::driver->get_current_url() eq 'http://demo.librecat.org/person'
     || $main::driver->get_current_url() eq 'http://demo.librecat.org/project'
     || $main::driver->get_current_url() eq 'http://demo.librecat.org/department');
@@ -226,16 +225,16 @@ sub testLink {
 
 sub getCount {
   my $link = shift;
-  
+
   my $parent = $main::driver->find_child_element($link, 'parent::*');
   my $count = ($parent->get_text() =~ m/(\d+)$/) ? $1 : 0;
   return $count;
 }
 
 #my $driver = Selenium::Remote::Driver->new(
-#  browser_name => 'firefox', 
-#  version => 'Mozilla Firefox 52.0', 
-#  version => '1000.0 unknown', 
+#  browser_name => 'firefox',
+#  version => 'Mozilla Firefox 52.0',
+#  version => '1000.0 unknown',
 #  platform => "LINUX"
 #);
 our $driver = Selenium::Remote::Driver->new(browser_name => 'chrome');
