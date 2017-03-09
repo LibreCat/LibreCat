@@ -14,6 +14,25 @@ person()
 volume_sort()
 research_data_doi()
 
+add_field(person_entity, 'author,editor,translator')
+split_field(person_entity, ',')
+
+do list(path: person_entity, var: p)
+  do identity()
+    do list(path:p, var:loop)
+      do identity()
+        copy_field(loop._id,loop.tmp)
+        lookup_in_store(loop.tmp, search, bag:project)
+        move_field(loop.tmp.full_name, loop.full_name)
+        move_field(loop.tmp.first_name, loop.first_name)
+        move_field(loop.tmp.last_name, loop.last_name)
+        move_field(loop.tmp.orcid, loop.orcid)
+        remove_field(loop.tmp)
+      end
+    end
+  end
+end
+
 if exists(department)
   do list(path:department, var:loop)
     do identity()

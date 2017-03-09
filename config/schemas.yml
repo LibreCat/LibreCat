@@ -78,6 +78,9 @@ publication:
             - type: integer
               minimum: 0
           description: "Identifier of person"
+        orcid:
+          type: string
+          description: "Person's ORCID iD"
 
     related_link: &related_link
         type: object
