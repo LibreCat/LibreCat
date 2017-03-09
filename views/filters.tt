@@ -47,10 +47,6 @@
     <a href="[% request.uri_for(request.path, tmp) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
     <strong>[% h.loc("facets.citation_style") %]:</strong>
     [% h.loc("styles.${qp.style}") %]
-
-    [%- IF backend %]
-      <a type="button" href="/librecat/person/preference[% IF session.role == "delegate" %]/[% delegate_id %][% END %]?style=[% qp.style %]" name="save_settings" id="id_save_settings" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> [% h.loc("facets.save_style") %]</a><br />
-    [%- END %]
   </div>
 [%- END %]
 

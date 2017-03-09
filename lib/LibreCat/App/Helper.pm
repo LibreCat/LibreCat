@@ -181,80 +181,6 @@ sub extract_params {
     $p;
 }
 
-sub get_sort_style {
-    my ($self, $param_sort, $param_style, $id) = @_;
-
-    my $user = {};
-    $user = $self->get_person($id || Dancer::session->{personNumber});
-    my $return;
-    $param_sort = undef
-        if ($param_sort eq ""
-        or (ref $param_sort eq "ARRAY" and !$param_sort->[0]));
-    $param_style = undef if $param_style eq "";
-    my $user_style = "";
-    $user_style = $user->{style} if ($user && $user->{style});
-
-    # set default values - to be overridden by more important values
-    my $style;
-    if (
-        $param_style
-        && array_includes(
-            keys %{$self->config->{citation}->{csl}->{styles}}, $param_style
-        )
-        )
-    {
-        $style = $param_style;
-    }
-    elsif (
-        $user_style
-        && array_includes(
-            keys %{$self->config->{citation}->{csl}->{styles}}, $user_style
-        )
-        )
-    {
-        $style = $user_style;
-    }
-    else {
-        $style = $self->config->{citation}->{csl}->{default_style};
-    }
-
-    my $sort;
-    my $sort_backend;
-    if ($param_sort) {
-        $param_sort = [$param_sort] if ref $param_sort ne "ARRAY";
-        $sort = $sort_backend = $param_sort;
-    }
-    else {
-        $sort         = $self->config->{default_sort};
-        $sort_backend = $self->config->{default_sort_backend};
-    }
-
-    $return->{sort}                 = $sort;
-    $return->{sort_backend}         = $sort_backend;
-    $return->{user_style}           = $user_style if ($user_style);
-    $return->{default_sort}         = $self->config->{default_sort};
-    $return->{default_sort_backend} = $self->config->{default_sort_backend};
-
-    $return->{style} = $style // "";
-
-    Catmandu::Fix->new(fixes => ["vacuum()"])->fix($return);
-
-    $return->{sort_eq_default} = 0;
-    $return->{sort_eq_default} = is_same($return->{sort_backend},
-        $self->config->{default_sort_backend});
-
-    $return->{style_eq_userstyle} = 0;
-    $return->{style_eq_userstyle} = ($user_style eq $return->{style}) ? 1 : 0;
-    $return->{style_eq_default}   = 0;
-    $return->{style_eq_default}
-        = (
-        $return->{style} eq $self->config->{citation}->{csl}->{default_style})
-        ? 1
-        : 0;
-
-    return $return;
-}
-
 sub now {
     my $time = $_[1] // time;
     my $now = strftime($_[0]->config->{time_format}, gmtime($time));
@@ -276,9 +202,7 @@ sub all_marked {
     my ($self) = @_;
     my $p = $self->extract_params();
     push @{$p->{q}}, "status=public";
-    my $sort_style
-        = $self->get_sort_style($p->{sort} || '', $p->{style} || '');
-    $p->{sort} = $sort_style->{'sort'};
+
     my $hits       = LibreCat->searcher->search('publication', $p);
     my $marked     = Dancer::session 'marked';
     my $all_marked = 1;

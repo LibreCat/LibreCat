@@ -67,9 +67,6 @@ get qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+
         push @{$p->{cql}}, "type<>research_data";
     }
 
-    my $sort_style
-        = h->get_sort_style($p->{sort} || '', $p->{style} || '', $id);
-    $p->{sort}   = $sort_style->{sort};
     $p->{limit}  = h->config->{maximum_page_size};
 
     h->log->debug("executing publication->search: " . to_dumper($p));
@@ -100,8 +97,6 @@ get qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+
     $hits->{researchhits} = LibreCat->searcher->search('publication', $p);
 
     $p->{limit}    = h->config->{maximum_page_size};
-    $hits->{style} = $sort_style->{style};
-    $hits->{sort}  = $p->{sort};
     $hits->{id}    = $id;
     $hits->{modus} = $modus || "user";
 
