@@ -70,7 +70,8 @@ if exists (AB)
   add_field(_r.abstract.0.lang,eng)
 end
 
-move_field(DE,_r.keyword)
+move_field(DE,_r.keyword.$append)
+flatten(_r.keyword)
 split_field(_r.keyword.*, ';')
 flatten(_r.keyword)
 trim(_r.keyword.*)
