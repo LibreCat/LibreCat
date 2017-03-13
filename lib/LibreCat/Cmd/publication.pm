@@ -205,7 +205,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag = Catmandu->store('backup')->bag('publication');
+    my $bag = LibreCat::App::Helper::Helpers->new->backup_publication;
     my $rec;
 
     if (defined(my $version = $self->opts->{'version'})) {
