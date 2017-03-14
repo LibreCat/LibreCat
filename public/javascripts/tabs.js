@@ -25,7 +25,7 @@ $(document).ready(function() {
 			var contentLocation = $(this).attr('href');
 
 			//Let go if not a hashed one
-			if(contentLocation.charAt(0) === "#") {
+			if(contentLocation.charAt(0)=="#") {
 
 				e.preventDefault();
 

@@ -1,7 +1,7 @@
 <!-- BEGIN hits.tt -->
 [% path = request.path -%]
 [% num = total; n = 0 -%]
-[% UNLESS request.path.match("/marked") %]
+[%- UNLESS request.path.match("/marked") %]
 <div class="row">
   <div class="col-md-12[% UNLESS request.path.match("/person") OR total == 0 %] col-xs-8[% END %]">
     <h3 class="margin-top0">[% total %] [% IF total == 1 %][% IF bag == 'data' OR tabmodus == "data" OR tabmodus == "data_manager" %][% h.loc("hits.data_publication") %][% ELSE %][% h.loc("hits.publication") %][% END %][% ELSE %][% IF bag == 'data' OR tabmodus == "data" OR tabmodus == "data_manager" %][% h.loc("tabs.data_publications") %][% ELSE %][% h.loc("hits.publications") %][% END %][% END %]
@@ -10,28 +10,28 @@
     [% END %]
     </h3>
   </div>
-  [% UNLESS request.path.match("/person") OR total == 0 %]
+  [%- UNLESS request.path.match("/person") OR total == 0 %]
   <div class="col-xs-4 hidden-md hidden-sm hidden-lg">
      <a href="#facets"><span class="glyphicon glyphicon-filter"></span>[% h.loc("facets.search_filter") %]</a>
   </div>
-  [% END %]
+  [%- END %]
 </div>
-[% END %]
+[%- END -%]
 
-[% IF !backend AND total AND total > 1 %]
-[% IF request.path.match("/person") %]
-[% all_marked = h.all_marked(request.params) %]
+[%- IF !backend AND total AND total > 1 %]
+[%- IF request.path.match("/person") %]
+[%- all_marked = h.all_marked(request.params) %]
     <p>
-      [% IF all_marked %]
+      [%- IF all_marked %]
       <a class="btn btn-xs mark_all padding0" data-marked="1"><span class="fa fa-check-square-o fa-lg"></span> [% h.loc("mark.unmark_all") %]</a>
       [% ELSE %]
       <a class="btn btn-xs mark_all padding0" data-marked="0"><span class="fa fa-square-o fa-lg"></span> [% h.loc("mark.mark_all") %]</a>
-      [% END %]
+      [%- END %]
     </p>
-[% ELSIF request.path.match("/marked") %]
+[%- ELSIF request.path.match("/marked") %]
   <p><a class="btn btn-xs mark_all padding0" data-marked="1"><span class="fa fa-square-o fa-lg"></span> [% h.loc("mark.unmark_all") %]</a></p>
-[% END %]
-[% END %]
+[%- END %]
+[%- END %]
 
 [% UNLESS request.path.match("/marked") %]
 [% IF next_page or previous_page %]
@@ -81,6 +81,9 @@
 [% END %]
     <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% lf.forms.item(entry.type).label %] | [% h.loc("hits.id") %]: <span class="pubid">[% entry._id %]</span> </em>
     <div class="citation-block-div">
+    [%- IF style == 'short' %]
+	  <a href="[% h.host %]/[% IF backend %]librecat/record/edit[% ELSE %][% bag %][% END %]/[% entry._id %]"[% IF request.path.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title %]</strong></a><br>
+    [%- END %]
     [%- IF backend AND ((!entry.locked AND !entry.type.match("^bi")) OR session.role == "super_admin") %]
       <a href="/librecat/record/edit/[% entry._id %]" onclick="window.top.location='/librecat/record/edit/[% entry._id %]'" class="citation-block-link"></a>
     [%- ELSIF backend AND entry.status != "public" %]

@@ -36,7 +36,7 @@
     [% END %]
     [%- FOREACH setting IN qp.item('sort') %]
       [%- tmp = setting.split('\.') %]
-      [% h.loc("sort_options.${tmp.0}") %] <span class="glyphicon glyphicon-arrow-[% IF tmp.1 == 'asc' %]up[% ELSE %]down[% END %]"></span>[% UNLESS loop.last %], [% END %]
+      [% h.loc("facets.sort_options.${tmp.0}") %] <span class="glyphicon glyphicon-arrow-[% IF tmp.1 == 'asc' %]up[% ELSE %]down[% END %]"></span>[% UNLESS loop.last %], [% END %]
     [%- END %]
   </div>
 [%- END %]
@@ -47,10 +47,6 @@
     <a href="[% request.uri_for(request.path, tmp) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
     <strong>[% h.loc("facets.citation_style") %]:</strong>
     [% h.loc("styles.${qp.style}") %]
-
-    [%- IF backend %]
-      <a type="button" href="/librecat/person/preference[% IF session.role == "delegate" %]/[% delegate_id %][% END %]?style=[% qp.style %]" name="save_settings" id="id_save_settings" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> [% h.loc("facets.save_style") %]</a><br />
-    [%- END %]
   </div>
 [%- END %]
 
@@ -86,9 +82,9 @@
         [%- gray = "" %]
         [%- FOREACH qs IN qp.item('sort') %][% IF qs == s _ ".asc" OR qs == s _ ".desc" %][% gray = "yes" %][% END %][% END %]
         [%- IF gray %]
-          <span class="text-muted">[% h.loc("sort_options.${s}") %]</span><br />
+          <span class="text-muted">[% h.loc("facets.sort_options.${s}") %]</span><br />
         [%- ELSE %]
-          <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].asc" rel="nofollow">[% h.loc("sort_options.${s}") %] <span class="glyphicon glyphicon-arrow-up"></span></a>
+          <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].asc" rel="nofollow">[% h.loc("facets.sort_options.${s}") %] <span class="glyphicon glyphicon-arrow-up"></span></a>
           <a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].desc" rel="nofollow">
           <span class="glyphicon glyphicon-arrow-down"></span></a></li>
         [%- END %]
@@ -99,7 +95,7 @@
   [%- END %]
 
   <li>
-    <button data-toggle="collapse" data-target="#style" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.citation_style") %] [% h.loc("styles.${style}") %]</button>
+    <button data-toggle="collapse" data-target="#style" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.citation_style") %]</button>
     <div class="facettecollapse">
     <ul id="style" class="collapse">
       [%- FOREACH dstyle IN h.config.citation.csl.styles.keys %]

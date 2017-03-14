@@ -16,12 +16,12 @@ use URI::Escape;
 List persons alphabetically
 
 =cut
-
-get qr{/person/([a-z,A-Z])} => sub {
+get qr{/person/*([a-z,A-Z])*} => sub {
     my ($c) = splat;
 
+    my $cql = $c ? ["lastname=" . lc $c . "*"] : '';
     my %search_params = (
-        cql => ["lastname=" . lc $c . "*"],
+        cql => $cql,
         start => 0,
         limit => 1000
     );
@@ -30,7 +30,6 @@ get qr{/person/([a-z,A-Z])} => sub {
 
     my $hits = LibreCat->searcher->search('researcher', \%search_params);
 
-    my $result;
     @{$hits->{hits}} = map {
         my $rec = $_;
         my $pub = LibreCat->searcher->search('publication',
@@ -46,9 +45,6 @@ get qr{/person/([a-z,A-Z])} => sub {
     template 'person/list', $hits;
 };
 
-get '/person' => sub {
-    forward '/person/A';
-};
 
 =head2 GET /person/:id
 
@@ -71,9 +67,6 @@ get qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+
         push @{$p->{cql}}, "type<>research_data";
     }
 
-    my $sort_style
-        = h->get_sort_style($p->{sort} || '', $p->{style} || '', $id);
-    $p->{sort}   = $sort_style->{sort};
     $p->{limit}  = h->config->{maximum_page_size};
 
     h->log->debug("executing publication->search: " . to_dumper($p));
@@ -104,8 +97,6 @@ get qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+
     $hits->{researchhits} = LibreCat->searcher->search('publication', $p);
 
     $p->{limit}    = h->config->{maximum_page_size};
-    $hits->{style} = $sort_style->{style};
-    $hits->{sort}  = $p->{sort};
     $hits->{id}    = $id;
     $hits->{modus} = $modus || "user";
 

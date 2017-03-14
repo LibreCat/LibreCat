@@ -238,15 +238,8 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
-              description: "index with common fields..."
-            _basic:
-              op:
-                'any': true
-                'all': true
-                '=': true
-                '<>': true
-              field: '_all'
+                'exact': true
+              field: ['_all','_id']
               description: "index with common fields..."
             abstract:
               op:
@@ -324,20 +317,11 @@ search:
               field: 'extern'
               values: '0 or 1'
               description: '1 if not a UniBi publication'
-            nonlu: *extern
             oai_deleted:
               op:
                 '=': true
                 'exact': true
               field: 'oai_deleted'
-            fundedbyubi:
-              op:
-                '=': true
-                'exact': true
-                '<>': true
-              field: 'ubi_funded'
-              values: '0 or 1'
-              description: '1 if publication is funded by Publikationsfonds'
             qualitycontrolled:
               op:
                 '=': true
@@ -990,6 +974,7 @@ search:
               issn: {type: string, analyzer: tag, include_in_all: true}
               eissn: {type: string, analyzer: tag, include_in_all: true}
               eisbn: {type: string, analyzer: tag, include_in_all: true}
+              unknown: {type: string, analyzer: tag, include_in_all: true}
           status: {type: string, analyzer: tag}
           publication_status: {type: string, analyzer: tag}
           report_number: {type: string, analyzer: tag}
@@ -1015,17 +1000,17 @@ search:
               exact: {type: string, analyzer: tag}
           department:
             properties:
-              _id: {type: string, index: not_analyzed}
+              _id: {type: string, index: not_analyzed, include_in_all: true}
               tree:
                 properties:
-                  _id: {type: string, index: not_analyzed}
+                  _id: {type: string, index: not_analyzed, include_in_all: true}
           proj: {type: byte}
           metrics:
             properties:
               timesCited: {type: integer}
           project:
             properties:
-              _id: {type: string, index: not_analyzed}
+              _id: {type: string, index: not_analyzed, include_in_all: true}
           publication:
             type: multi_field
             fields:
@@ -1042,7 +1027,7 @@ search:
             fields:
               publisher: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
-          doi: {type: string, index: not_analyzed}
+          doi: {type: string, index: not_analyzed, include_in_all: true}
           ddc: {type: string}
           external_id:
             properties:
@@ -1062,7 +1047,7 @@ search:
               access_level: {type: string, analyzer: tag}
               year_last_uploaded: {type: date, format: "yyyy"}
               date_updated: {type: string}
-          alternative_id: {type: string, analyzer: tag}
+          alternative_id: {type: string, analyzer: tag, include_in_all: true}
           defense_date: {type: date, index: no}
           locked: {type: byte}
           user_id: {type: string, index: no}

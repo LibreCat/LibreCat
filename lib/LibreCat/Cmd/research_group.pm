@@ -81,9 +81,17 @@ sub _list {
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
-    my $it = LibreCat::App::Helper::Helpers->new->research_group->searcher(
-        cql_query => $query , total => $total , start => $start
-    );
+    my $it;
+
+    if ($query) {
+        $it = LibreCat::App::Helper::Helpers->new->research_group->searcher(
+                cql_query => $query , total => $total , start => $start
+              );
+    }
+    else {
+        $it = LibreCat::App::Helper::Helpers->new->backup_research_group;
+        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+    }
 
     my $count = $it->each(
         sub {
@@ -107,9 +115,17 @@ sub _export {
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
-    my $it = LibreCat::App::Helper::Helpers->new->research_group->searcher(
-        cql_query => $query , total => $total , start => $start
-    );
+    my $it;
+
+    if ($query) {
+        $it = LibreCat::App::Helper::Helpers->new->research_group->searcher(
+                cql_query => $query , total => $total , start => $start
+              );
+    }
+    else {
+        $it = LibreCat::App::Helper::Helpers->new->backup_research_group;
+        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+    }
 
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($it);
@@ -123,8 +139,8 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $h    = LibreCat::App::Helper::Helpers->new;
-    my $data = $h->get_research_group($id);
+    my $bag  = LibreCat::App::Helper::Helpers->new->backup_research_group;
+    my $data = $bag->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -147,7 +163,7 @@ sub _add {
 
             $rec->{_id} //= $helper->new_record('research_group');
 
-            if ($validator->is_valid($rec)) {    
+            if ($validator->is_valid($rec)) {
                 $helper->store_record('research_group', $rec);
                 print "added $rec->{_id}\n";
                 return 1;
@@ -175,17 +191,22 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $h      = LibreCat::App::Helper::Helpers->new;
-    my $result = $h->research_group->delete($id);
+    # Deleting backup
+    {
+        my $bag    = LibreCat::App::Helper::Helpers->new->backup_research_group;
+        $bag->delete($id);
+        $bag->commit;
+    }
 
-    if ($h->research_group->commit) {
-        print "deleted $id\n";
-        return 0;
+    # Deleting search
+    {
+        my $bag    = LibreCat::App::Helper::Helpers->new->research_group;
+        $bag->delete($id);
+        $bag->commit;
     }
-    else {
-        print STDERR "ERROR: delete $id failed";
-        return 2;
-    }
+
+    print "deleted $id\n";
+    return 0;
 }
 
 sub _valid {

@@ -145,9 +145,17 @@ sub _list {
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
-    my $it = LibreCat::App::Helper::Helpers->new->publication->searcher(
-        cql_query => $query , total => $total , start => $start
-    );
+    my $it;
+
+    if ($query) {
+        $it = LibreCat::App::Helper::Helpers->new->publication->searcher(
+                cql_query => $query , total => $total , start => $start
+              );
+    }
+    else {
+        $it = LibreCat::App::Helper::Helpers->new->backup_publication;
+        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+    }
 
     my $count = $it->each(
         sub {
@@ -173,9 +181,17 @@ sub _export {
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
-    my $it = LibreCat::App::Helper::Helpers->new->publication->searcher(
-        cql_query => $query , total => $total , start => $start
-    );
+    my $it;
+
+    if ($query) {
+        $it = LibreCat::App::Helper::Helpers->new->publication->searcher(
+                cql_query => $query , total => $total , start => $start
+              );
+    }
+    else {
+        $it = LibreCat::App::Helper::Helpers->new->backup_publication;
+        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+    }
 
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($it);
@@ -189,7 +205,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag = Catmandu->store('backup')->bag('publication');
+    my $bag = LibreCat::App::Helper::Helpers->new->backup_publication;
     my $rec;
 
     if (defined(my $version = $self->opts->{'version'})) {

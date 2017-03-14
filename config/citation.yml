@@ -9,10 +9,11 @@ engine: csl
 # see: https://github.com/LibreCat/LibreCat/wiki/Citation-Style-Language
 csl:
   url: 'http://localhost:8085'
-  default_style: apa
+  default_style: short
   styles:
     apa: apa
     ama: american-medical-association
     chicago: chicago-fullnote-bibliography
     ieee: ieee
     mla: modern-language-association
+    short: elsevier-without-titles

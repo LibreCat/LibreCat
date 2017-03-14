@@ -3,7 +3,7 @@ _prefix:
 
 workers:
   indexer:
-    count: 4
+    count: 2
     supervise: 1
   audit:
     count: 1

@@ -190,7 +190,7 @@ sub _generate_departments {
             }
 
             my $id    = $item->{_id};
-            my $hits  = $pubs->search(query => "department:$id" );
+            my $hits  = $pubs->search(cql_query => "department=$id" );
             my $total = $hits->{total};
 
             $root->{tree}->{$id}->{name}    = $item->{name};
