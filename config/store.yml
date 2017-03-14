@@ -974,6 +974,7 @@ search:
               issn: {type: string, analyzer: tag, include_in_all: true}
               eissn: {type: string, analyzer: tag, include_in_all: true}
               eisbn: {type: string, analyzer: tag, include_in_all: true}
+              unknown: {type: string, analyzer: tag, include_in_all: true}
           status: {type: string, analyzer: tag}
           publication_status: {type: string, analyzer: tag}
           report_number: {type: string, analyzer: tag}
@@ -999,17 +1000,17 @@ search:
               exact: {type: string, analyzer: tag}
           department:
             properties:
-              _id: {type: string, index: not_analyzed}
+              _id: {type: string, index: not_analyzed, include_in_all: true}
               tree:
                 properties:
-                  _id: {type: string, index: not_analyzed}
+                  _id: {type: string, index: not_analyzed, include_in_all: true}
           proj: {type: byte}
           metrics:
             properties:
               timesCited: {type: integer}
           project:
             properties:
-              _id: {type: string, index: not_analyzed}
+              _id: {type: string, index: not_analyzed, include_in_all: true}
           publication:
             type: multi_field
             fields:
@@ -1026,7 +1027,7 @@ search:
             fields:
               publisher: {type: string, include_in_all: true}
               exact: {type: string, analyzer: tag}
-          doi: {type: string, index: not_analyzed}
+          doi: {type: string, index: not_analyzed, include_in_all: true}
           ddc: {type: string}
           external_id:
             properties:
@@ -1046,7 +1047,7 @@ search:
               access_level: {type: string, analyzer: tag}
               year_last_uploaded: {type: date, format: "yyyy"}
               date_updated: {type: string}
-          alternative_id: {type: string, analyzer: tag}
+          alternative_id: {type: string, analyzer: tag, include_in_all: true}
           defense_date: {type: date, index: no}
           locked: {type: byte}
           user_id: {type: string, index: no}

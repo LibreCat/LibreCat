@@ -18,7 +18,6 @@ sub fix {
     my $type = $self->type;
 
     h->log->debug("entering audit_message() hook from : $name ($type)");
-    h->log->debug(to_yaml($data));
 
     unless ($name =~ /^(publication|import)/) {
         h->log->debug("only handling publication|import hooks");

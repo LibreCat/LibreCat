@@ -25,7 +25,7 @@
       <dt><a href="/person/[% person._id %]">[% person.full_name %][% IF person.idm_title %], [% person.idm_title %][% END %]</a></dt>
         <dd>
         [%- FOREACH affil IN person.department %]
-          <span class="text-muted">[% h.get_department(affil._id).name %]</span>[% IF !loop.last %], [% END %]
+          <span class="text-muted">[% h.get_department(affil._id).display %]</span>[% IF !loop.last %], [% END %]
         [%- END %]
         </dd>
     [%- END %]

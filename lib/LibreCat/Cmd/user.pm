@@ -149,7 +149,8 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat::App::Helper::Helpers->new->get_person($id);
+    my $bag  = LibreCat::App::Helper::Helpers->new->backup_researcher;
+    my $data = $bag->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -202,17 +203,22 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $h      = LibreCat::App::Helper::Helpers->new;
-    my $result = $h->researcher->delete($id);
+    # Deleting backup
+    {
+        my $bag    = LibreCat::App::Helper::Helpers->new->backup_researcher;
+        $bag->delete($id);
+        $bag->commit;
+    }
 
-    if ($h->researcher->commit) {
-        print "deleted $id\n";
-        return 0;
+    # Deleting search
+    {
+        my $bag    = LibreCat::App::Helper::Helpers->new->researcher;
+        $bag->delete($id);
+        $bag->commit;
     }
-    else {
-        print STDERR "ERROR: delete $id failed";
-        return 2;
-    }
+
+    print "deleted $id\n";
+    return 0;
 }
 
 sub _valid {

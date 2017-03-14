@@ -84,7 +84,7 @@ sub _add_job {
     $importer->each(sub {
         my $job = $_[0];
 
-        my $job_id = $queue->add_job("audit",$job);
+        my $job_id = $queue->add_job($worker,$job);
 
         print "Adding job:\n";
 

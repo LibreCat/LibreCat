@@ -1,5 +1,5 @@
 # main configuration file for Dancer
-appname: "PUB - Publications at LibreCat University"
+appname: "LibreCat"
 charset: "UTF-8"
 
 # Template Engine

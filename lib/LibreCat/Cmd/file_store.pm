@@ -389,6 +389,7 @@ sub _export {
         croak "Failed to remove existing $zip_file";
     }
 
+    $SIG{CHLD} = 'DEFAULT'; # required to avoid 'no child errors';
     system("cd $workdir && $zipper -r $zip_file $export_name/*");
 
     if ($? == -1) {
@@ -431,6 +432,7 @@ sub _import {
 
     my $unzipper = $self->app->global_options->{unzipper};
 
+    $SIG{CHLD} = 'DEFAULT'; # required to avoid 'no child errors';
     system("cd $workdir && $unzipper $zip_file");
 
     if ($? == -1) {
