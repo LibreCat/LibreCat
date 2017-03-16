@@ -1222,7 +1222,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       link: *link
-      editor.lable: "Editor"
+      editor.label: "Editor"
   research_data:
     label: "Research Data"
     tab:
