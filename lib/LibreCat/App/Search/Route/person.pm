@@ -16,7 +16,7 @@ use URI::Escape;
 List persons alphabetically
 
 =cut
-get qr{/person/*([a-z,A-Z])*} => sub {
+get qr{/person/?([a-z,A-Z]?)$} => sub {
     my ($c) = splat;
 
     my $cql = $c ? ["lastname=" . lc $c . "*"] : '';
@@ -53,7 +53,7 @@ research data and author IDs.
 
 =cut
 
-get qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+)*/*}
+get qr{/person/(.[^/]+)/?(\w+)?}
     => sub {
     my ($id, $modus) = splat;
     my $p      = h->extract_params();
