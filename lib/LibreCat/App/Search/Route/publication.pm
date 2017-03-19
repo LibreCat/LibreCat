@@ -74,6 +74,7 @@ get '/embed' => sub {
     push @{$p->{cql}}, ("status=public");
 
     $p->{start} = params->{start};
+    $p->{limit} = h->config->{maximum_page_size};
 
     my $hits = LibreCat->searcher->search('publication', $p);
 
