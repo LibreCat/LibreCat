@@ -42,7 +42,7 @@
 
     <div class="tab tab-content edit-form">
 
-      {% INCLUDE fields/buttonrow_tab1.tt %}
+      {% INCLUDE fields/buttonrow_tab.tt %}
 
       <!-- STEP 1 -->
       <div id="basic_fields" class="tab_section">
@@ -106,7 +106,7 @@
 
       </div><!-- tab-pane -->
 
-      {% INCLUDE fields/buttonrow_tab1.tt %}
+      {% INCLUDE fields/buttonrow_tab.tt %}
 
     </div><!-- tab-content -->
   </form>

@@ -77,14 +77,14 @@
       </div>
 
 {% IF fields.basic_fields %}
-  {% INCLUDE fields/buttonrow_tab1.tt %}
+  {% INCLUDE fields/buttonrow_tab.tt right_href="#file_upload" %}
   {% FOREACH key IN field_order.basic_fields %}
     {% IF fields.basic_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
   {% END %}
-  {% INCLUDE fields/buttonrow_tab1.tt %}
+  {% INCLUDE fields/buttonrow_tab.tt right_href="!!!!file_upload" %}
 {% END %}
 
       </div><!-- tab-pane -->
@@ -93,14 +93,14 @@
       <div class="tab-pane" id="file_upload">
 
 {% IF fields.file_upload %}
-  {% INCLUDE fields/buttonrow_tab2.tt %}
+  {% INCLUDE fields/buttonrow_tab.tt left_href="#basic_fields" right_href="#supplementary_fields" %}
   {% FOREACH key IN field_order.file_upload %}
     {% IF fields.file_upload.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
   {% END %}
-  {% INCLUDE fields/buttonrow_tab2.tt %}
+  {% INCLUDE fields/buttonrow_tab.tt left_href="#basic_fields" right_href="#supplementary_fields" %}
 {% END %}
 
       </div><!-- tab-pane -->
@@ -109,14 +109,14 @@
       <div class="tab-pane" id="supplementary_fields">
 
 {% IF fields.supplementary_fields %}
-  {% INCLUDE fields/buttonrow_tab3.tt %}
+  {% INCLUDE fields/buttonrow_tab.tt left_href="#file_upload" right_href="#related_material" %}
   {% FOREACH key IN field_order.supplementary_fields %}
     {% IF fields.supplementary_fields.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
   {% END %}
-  {% INCLUDE fields/buttonrow_tab3.tt %}
+  {% INCLUDE fields/buttonrow_tab.tt left_href="#file_upload" right_href="#related_material" %}
 {% END %}
 
       </div><!-- tab-pane -->
@@ -125,14 +125,14 @@
       <div class="tab-pane" id="related_material">
 
 {% IF fields.related_material %}
-  {% INCLUDE fields/buttonrow_tab4.tt %}
+  {% INCLUDE fields/buttonrow_tab.tt left_href="#supplementary_fields" %}
   {% FOREACH key IN field_order.related_material %}
     {% IF fields.related_material.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
   {% END %}
-  {% INCLUDE fields/buttonrow_tab4.tt %}
+  {% INCLUDE fields/buttonrow_tab.tt left_href="#supplementary_fields" %}
 {% END %}
 
       </div><!-- tab-pane -->
