@@ -26,6 +26,7 @@ librecat publication [options] fetch <source> <id>
 librecat publication [options] embargo ['update']
 
 options:
+    --sort=STR         (sorting results [only in combination with cql-query])
     --total=NUM        (total number of items to list/export)
     --start=NUM        (start list/export at this item)
     --no-citation      (skip calculating citations when adding records)
@@ -38,6 +39,9 @@ E.g.
 
 # Search all publications with status 'private'
 librecat publication list 'status exact private'
+
+# Sort all publications by tite (force a query using empty quotes)
+librecat publication list --sort "title,,1" list
 
 # Get the metadata for publication '2737383'
 librecat publication get 2737383 > /tmp/data.yml
@@ -66,6 +70,7 @@ sub command_opt_spec {
         ['no-citation|nc', ""] ,
         ['total=i', ""] ,
         ['start=i',""] ,
+        ['sort=s',""] ,
         ['log=s',""] ,
         ['version=i', ""] ,
         ['previous-version', ""] ,
@@ -142,14 +147,15 @@ sub audit_message {
 sub _list {
     my ($self, $query) = @_;
 
+    my $sort  = $self->opts->{sort}  // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
     my $it;
 
-    if ($query) {
+    if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->publication->searcher(
-                cql_query => $query , total => $total , start => $start
+                cql_query => $query , total => $total , start => $start , sru_sortkeys => $sort
               );
     }
     else {
@@ -170,7 +176,12 @@ sub _list {
                 , $id, $creator, $title, $status, $type;
         }
     );
+
     print "count: $count\n";
+
+    if (!defined($query) && defined($sort)) {
+        print STDERR "warning: sort only active in combination with a query\n";
+    }
 
     return 0;
 }
@@ -178,14 +189,15 @@ sub _list {
 sub _export {
     my ($self, $query) = @_;
 
+    my $sort  = $self->opts->{sort}  // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
     my $it;
 
-    if ($query) {
+    if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->publication->searcher(
-                cql_query => $query , total => $total , start => $start
+                cql_query => $query , total => $total , start => $start , sru_sortkeys => $sort
               );
     }
     else {
@@ -196,6 +208,10 @@ sub _export {
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($it);
     $exporter->commit;
+
+    if (!defined($query) && defined($sort)) {
+        print STDERR "warning: sort only active in combination with a query\n";
+    }
 
     return 0;
 }
@@ -698,6 +714,7 @@ LibreCat::Cmd::publication - manage librecat publications
     librecat publication embargo ['update']
 
     options:
+        --sort=STR         (sorting results [only in combination with cql-query])
         --total=NUM        (total number of items to list/export)
         --start=NUM        (start list/export at this item)
         --no-citation      (skip calculating citations when adding records)

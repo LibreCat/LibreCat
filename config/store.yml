@@ -75,6 +75,7 @@ search:
                 '=': true
                 'exact': true
               field: '_id'
+              sort: 'true'
             basic:
               op:
                 'any': true
@@ -709,6 +710,7 @@ search:
                 '<>': true
                 'exact': true
               field: ["last_name","old_last_name"]
+              sort: {field: 'last_name'}
             firstname:
               op:
                 'any': true
@@ -717,6 +719,7 @@ search:
                 '<>': true
                 'exact': true
               field: ["first_name","old_first_name"]
+              sort: {field: 'first_name'}
             id:
               op:
                 '=': true
@@ -744,6 +747,7 @@ search:
               op:
                 '=': true
               field: login
+              sort: 'true'
             alias:
               op:
                 '=': true

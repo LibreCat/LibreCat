@@ -20,12 +20,14 @@ librecat user [options] valid <FILE>
 librecat user [options] passwd <id>
 
 options:
+    --sort=STR    (sorting results [only in combination with cql-query])
     --total=NUM   (total number of items to list/export)
     --start=NUM   (start list/export at this item)
 
 E.g.
 
 librecat user list 'id = 1234'
+librecat user --sort "lastname,,1" list ""  # force to use an empty query
 
 EOF
 }
@@ -35,6 +37,7 @@ sub command_opt_spec {
     (
     ['total=i', ""] ,
     ['start=i',""] ,
+    ['sort=s',""]
     );
 }
 
@@ -87,13 +90,14 @@ sub command {
 sub _list {
     my ($self, $query) = @_;
 
+    my $sort  = $self->opts->{sort}  // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
     my $it;
-    if ($query) {
+    if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->researcher->searcher(
-                cql_query => $query , total => $total , start => $start
+                cql_query => $query , total => $total , start => $start , sru_sortkeys => $sort
               );
     }
     else {
@@ -116,20 +120,25 @@ sub _list {
     );
     print "count: $count\n";
 
+    if (!defined($query) && defined($sort)) {
+        print STDERR "warning: sort only active in combination with a query\n";
+    }
+
     return 0;
 }
 
 sub _export {
     my ($self, $query) = @_;
 
+    my $sort  = $self->opts->{sort}  // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
     my $it;
 
-    if ($query) {
+    if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->researcher->searcher(
-                cql_query => $query , total => $total , start => $start
+                cql_query => $query , total => $total , start => $start , sru_sortkeys => $sort
               );
     }
     else {
@@ -141,6 +150,10 @@ sub _export {
     $exporter->add_many($it);
     $exporter->commit;
 
+    if (!defined($query) && defined($sort)) {
+        print STDERR "warning: sort only active in combination with a query\n";
+    }
+    
     return 0;
 }
 
@@ -311,6 +324,7 @@ LibreCat::Cmd::user - manage librecat users
     librecat user [options] passwd <id>
 
     options:
+        --sort=STR    (sorting results [only in combination with cql-query])
         --total=NUM   (total number of items to list/export)
         --start=NUM   (start list/export at this item)
 
