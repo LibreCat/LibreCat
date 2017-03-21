@@ -18,12 +18,14 @@ librecat project [options] delete <id>
 librecat project [options] valid <FILE>
 
 options:
+    --sort=STR    (sorting results [only in combination with cql-query])
     --total=NUM   (total number of items to list/export)
     --start=NUM   (start list/export at this item)
 
 E.g.
 
 librecat project export 'id = P1'
+librecat user --sort "name,,1" list ""  # force to use an empty query
 
 EOF
 }
@@ -32,7 +34,8 @@ sub command_opt_spec {
     my ($class) = @_;
     (
     ['total=i', ""] ,
-    ['start=i',""] ,
+    ['start=i', ""] ,
+    ['sort=s', ""] ,
     );
 }
 
@@ -82,14 +85,15 @@ sub command {
 sub _list {
     my ($self, $query) = @_;
 
+    my $sort  = $self->opts->{sort}  // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
     my $it;
 
-    if ($query) {
+    if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->project->searcher(
-                cql_query => $query , total => $total , start => $start
+                cql_query => $query , total => $total , start => $start, sru_sortkeys => $sort
               );
     }
     else {
@@ -106,7 +110,12 @@ sub _list {
             printf "%-40.40s %s\n", $id, $name;
         }
     );
+
     print "count: $count\n";
+
+    if (!defined($query) && defined($sort)) {
+        print STDERR "warning: sort only active in combination with a query\n";
+    }
 
     return 0;
 }
@@ -114,14 +123,15 @@ sub _list {
 sub _export {
     my ($self, $query) = @_;
 
+    my $sort  = $self->opts->{sort}  // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
     my $it;
 
-    if ($query) {
+    if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->project->searcher(
-                cql_query => $query , total => $total , start => $start
+                cql_query => $query , total => $total , start => $start, sru_sortkeys => $sort
               );
     }
     else {
@@ -132,6 +142,10 @@ sub _export {
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many($it);
     $exporter->commit;
+
+    if (!defined($query) && defined($sort)) {
+        print STDERR "warning: sort only active in combination with a query\n";
+    }
 
     return 0;
 }
@@ -264,6 +278,7 @@ LibreCat::Cmd::project - manage librecat projects
     librecat project valid <FILE>
 
     options:
+        --sort=STR    (sorting results [only in combination with cql-query])
         --total=NUM   (total number of items to list/export)
         --start=NUM   (start list/export at this item)
 =cut

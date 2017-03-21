@@ -47,7 +47,7 @@ ajax '/search_researcher' => sub {
     my $cql;
     push @$cql, params->{'term'};
 
-    my %search_params = (cql => $cql, limit => 100 , sort => 'fullname.asc');
+    my %search_params = (cql => $cql, limit => 100 , sort => h->config->{default_person_sort});
     h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('researcher', \%search_params)->{hits};
