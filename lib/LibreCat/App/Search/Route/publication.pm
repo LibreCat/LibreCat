@@ -77,6 +77,7 @@ get '/embed' => sub {
 
     $p->{sort} = $p->{sort} // h->config->{default_sort};
     $p->{start} = params->{start};
+    $p->{limit} = h->config->{maximum_page_size};
 
     my $hits = LibreCat->searcher->search('publication', $p);
 
