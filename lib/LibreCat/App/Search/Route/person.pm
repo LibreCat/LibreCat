@@ -19,9 +19,12 @@ List persons alphabetically
 get qr{/person/*([a-z,A-Z])*} => sub {
     my ($c) = splat;
 
+    $c = 'A' unless defined($c) && length($c);
+
     my $cql = $c ? ["lastname=" . lc $c . "*"] : '';
     my %search_params = (
-        cql => $cql,
+        cql   => $cql,
+        sort  => 'lastname.asc',
         start => 0,
         limit => 1000
     );
