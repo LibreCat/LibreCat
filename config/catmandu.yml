@@ -49,7 +49,6 @@ project_sort_options:
   - startyear
 default_sort:
   - year.desc
-  - date_updated.desc
 default_sort_backend:
   - date_updated.desc
   - year.desc
