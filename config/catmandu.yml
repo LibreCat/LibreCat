@@ -52,6 +52,8 @@ default_sort:
 default_sort_backend:
   - date_updated.desc
   - year.desc
+default_person_sort:
+  - lastname.asc
 
 default_facets:
   open_access:

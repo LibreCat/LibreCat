@@ -24,7 +24,7 @@ get qr{/person/*([a-z,A-Z])*} => sub {
     my $cql = $c ? ["lastname=" . lc $c . "*"] : '';
     my %search_params = (
         cql   => $cql,
-        sort  => 'lastname.asc',
+        sort  => h->config->{default_person_sort},
         start => 0,
         limit => 1000
     );
