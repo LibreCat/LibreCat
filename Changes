@@ -1,6 +1,8 @@
 Revision history for LibreCat
 
 {{$NEXT}}
+
+0.5.3 2017-03-21
     - GH #208: default sort options
     - GH #219: bug fix in RTF exporter
     - GH #215: maximum page size in embeddings
