@@ -48,7 +48,7 @@ $bag->commit;
         "GET /export?fmt=bibtex like BIBTEX";
 
     response_content_like [GET => '/export?fmt=rtf'],
-        qr/\{\\pard \{\\field/,
+        qr/\{\\rtf1\\ansi/,
         "GET /export?fmt=rtf like RTF";
 
     response_content_like [GET => '/export?fmt=aref'],
