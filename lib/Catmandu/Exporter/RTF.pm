@@ -31,8 +31,8 @@ sub _add_cite {
     my $title;
     my $links;
 
-    if ($self->style eq "default") {
-        $cite  = $pub->{citation}{'default'};
+    if ($self->style eq "short") {
+        $cite  = $pub->{citation}{short};
         $title = $pub->{title};
     }
     else {
@@ -43,17 +43,17 @@ sub _add_cite {
 
     if ($self->explinks and $self->explinks eq "yes") {
         $links
-            = "\\line PUB: {\\field{\\*\\fldinst HYPERLINK http://pub.uni-bielefeld.de/$bag/$pub->{_id}}{\\fldrslt http://pub.uni-bielefeld.de/$bag/$pub->{_id}}}";
+            = "\\line PUB: {\\field{\\*\\fldinst HYPERLINK https://pub.uni-bielefeld.de/$bag/$pub->{_id}}{\\fldrslt https://pub.uni-bielefeld.de/$bag/$pub->{_id}}}";
 
         if ($pub->{doi}) {
             $links
-                .= "\\line DOI: {\\field{\\*\\fldinst HYPERLINK http://dx.doi.org/$pub->{doi}}{\\fldrslt $pub->{doi}}}";
+                .= "\\line DOI: {\\field{\\*\\fldinst HYPERLINK https://doi.org/$pub->{doi}}{\\fldrslt $pub->{doi}}}";
         }
 
         if (my $ext = $pub->{external_id}) {
             if ($ext->{isi}) {
                 $links
-                    .= "\\line WoS: {\\field{\\*\\fldinst HYPERLINK http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&rft_id=info:ut/$ext->{isi}}{\\fldrslt $ext->{isi}}}";
+                    .= "\\line WoS: {\\field{\\*\\fldinst HYPERLINK https://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&rft_id=info:ut/$ext->{isi}}{\\fldrslt $ext->{isi}}}";
             }
 
             if ($ext->{pmid}) {
@@ -83,7 +83,7 @@ sub _add_cite {
     }
     elsif ($self->explinks and $self->explinks eq "pub") {
         $links
-            = "\\line PUB: {\\field{\\*\\fldinst HYPERLINK http://pub.uni-bielefeld.de/$bag/$pub->{_id}}{\\fldrslt http://pub.uni-bielefeld.de/$bag/$pub->{_id}}}";
+            = "\\line PUB: {\\field{\\*\\fldinst HYPERLINK https://pub.uni-bielefeld.de/$bag/$pub->{_id}}{\\fldrslt https://pub.uni-bielefeld.de/$bag/$pub->{_id}}}";
     }
 
 # all those hexadecimal characters longer than 2 (\\' in rtf will treat the following two characters as hex - but only two!)
@@ -184,7 +184,7 @@ sub _add_cite {
         }
     }
     my $rtftitle
-        = "{\\field{\\*\\fldinst HYPERLINK http://pub.uni-bielefeld.de/$bag/$pub->{_id}}{\\fldrslt "
+        = "{\\field{\\*\\fldinst HYPERLINK https://pub.uni-bielefeld.de/$bag/$pub->{_id}}{\\fldrslt "
         . $title
         . "}}\\line "
         if $title;
