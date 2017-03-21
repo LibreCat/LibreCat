@@ -7,7 +7,7 @@ use Moo;
 
 with 'Catmandu::Exporter';
 
-has style    => (is => 'ro', default => sub { 'default' });
+has style    => (is => 'ro', default => sub { 'short' });
 has explinks => (is => 'ro', default => sub { '' });
 has numbered => (is => 'ro', lazy    => 1);
 

@@ -57,6 +57,8 @@ get qr{/(data|publication)/*} => sub {
         ? push @{$p->{cql}}, ("status=public", "type=research_data")
         : push @{$p->{cql}}, ("status=public", "type<>research_data");
 
+    $p->{sort} = $p->{sort} // h->config->{default_sort};
+
     my $hits = LibreCat->searcher->search('publication', $p);
 
     template 'publication/list', $hits;
@@ -73,6 +75,7 @@ get '/embed' => sub {
 
     push @{$p->{cql}}, ("status=public");
 
+    $p->{sort} = $p->{sort} // h->config->{default_sort};
     $p->{start} = params->{start};
 
     my $hits = LibreCat->searcher->search('publication', $p);

@@ -49,11 +49,13 @@ get '/export' => sub {
     my $spec = $export_config->{$fmt};
 
     my $p = h->extract_params();
+    $p->{sort} = $p->{sort} // h->config->{default_sort};
 
     # export from marked page
     if (request->referer =~ /marked$/) {
         my $marked = session 'marked';
         $p->{cql} = ["(id=" . join(' OR id=', @$marked) . ")"];
+        delete $p->{sort};
     }
 
     h->log->debug("searching for publications:" . Dancer::to_json($p));
