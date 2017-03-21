@@ -871,6 +871,15 @@ search:
             my_asciifolding:
                 type: asciifolding
                 preserve_original: true
+            # This requires the icu_collation plugin see our guidelines
+            # https://github.com/LibreCat/LibreCat/wiki/Installation
+            # To use this filter add it to the analyzers above. E.g.
+            # filter: [lowercase, my_language]
+            #
+            # my_language:
+            #    type: icu_collation
+            #    language: de
+            #    country: DE
     index_mappings:
       project:
         include_in_all: false
