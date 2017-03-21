@@ -1,6 +1,35 @@
 Revision history for LibreCat
 
 {{$NEXT}}
+    - GH #208: default sort options
+    - GH #219: bug fix in RTF exporter
+    - GH #215: maximum page size in embeddings
+    - fixing researcher index and sorting
+    - configurable sort options for person
+
+0.5.2 2017-03-13
+    - GH #195: fix count for department publications
+    - Making DOI and more identifiers searchable
+    - Update crossref mapping
+    - Grouping startup of all workers into one initd script
+
+0.5.1 2017-03-10
+    - fix WoS mapping for keywords
+
+0.5.0 2017-03-09
+    - do author lookup at update publication
+    - support searching records by id (basic field)
+    - GH #191: support exact matches in the `basic` field
+
+0.4.2 2017-03-08
+    - GH #183: re-introduce short citation option
+    - fix external_id in forms
+
+0.4.1 2017-03-08
+    - GH #159: delete citation style jumps to start page
+    - cleanup/refactor js, css
+    - facets as features configurable
+    - remove buggy date plugin
 
 0.4.0 2017-03-02
     - introduce features: configurable facets (see config/features.yml)
