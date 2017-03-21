@@ -44,6 +44,7 @@ Performs search for admin.
         my $p = h->extract_params();
 
         push @{$p->{cql}}, "status<>deleted";
+        $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = LibreCat->searcher->search('publication', $p);
 
@@ -119,6 +120,7 @@ Performs search for reviewer.
         }
 
         push @{$p->{q}}, "status<>deleted";
+        $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $dep_query = "department=" . params->{department_id};
         push @{$p->{cql}}, $dep_query;
@@ -160,6 +162,7 @@ Performs search for reviewer.
         }
 
         push @{$p->{q}}, "status<>deleted";
+        $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $dep_query = "project=" . params->{project_id};
         push @{$p->{cql}}, $dep_query;
@@ -194,6 +197,7 @@ Performs search for data manager.
 
         push @{$p->{cql}}, "(type=research_data OR type=data)";
         push @{$p->{cql}}, $dep_query;
+        $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = LibreCat->searcher->search('publication', $p);
         $hits->{modus}         = "data_manager_" . params->{department_id};
@@ -226,6 +230,7 @@ publications.
         my $p  = h->extract_params();
         my $id = params->{delegate_id};
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
+        $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = LibreCat->searcher->search('publication', $p);
         $hits->{modus}         = "delegate_" . $id;
@@ -250,6 +255,7 @@ Performs search for user.
         push @{$p->{cql}}, "type<>research_data";
         push @{$p->{cql}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
+        $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = LibreCat->searcher->search('publication', $p);
 
@@ -273,6 +279,7 @@ Performs search for user.
 
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
         push @{$p->{cql}}, "(type=research_data OR type=data)";
+        $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = LibreCat->searcher->search('publication', $p);
 
