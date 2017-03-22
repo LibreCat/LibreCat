@@ -26,18 +26,27 @@ SKIP: {
         skip("No network. Set NETWORK_TEST to run these tests.", 5);
     }
 
-    my $pub = $x->fetch('arXiv:1609.01725');
+    subtest 'one_publication' => sub {
+        my $pub = $x->fetch('arXiv:1609.01725');
 
-    ok $pub , 'got a publication';
+        ok $pub , 'got a publication';
 
-    like $pub->[0]->{title} , qr/Ugly of Gravity/, 'got correct title';
-    is $pub->[0]->{type} , 'preprint', 'type == preprint';
+        like $pub->[0]->{title} , qr/Ugly of Gravity/, 'got correct title';
+        is $pub->[0]->{type} , 'preprint', 'type == preprint';
+    };
 
-    $pub = $x->fetch('0000-0002-7970-7855');
+    subtest 'orcid' => sub {
+        $pub = $x->fetch('0000-0002-7970-7855');
 
-    ok $pub , 'got some publications';
-    is $pub > 4, 1, 'more than one publication'
+        ok $pub , 'got some publications';
+        is $pub > 4, 1, 'more than one publication'
+    };
 
+    subtest 'empty' => sub {
+        $pub = $x->fetch('hopefully, nothing to find here');
+
+        is_deeply $pub, [], "empty array for bad search";
+    };
 }
 
 done_testing;

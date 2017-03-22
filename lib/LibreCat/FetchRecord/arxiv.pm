@@ -28,7 +28,7 @@ sub fetch {
 
     $data = $fixer->fix($data);
 
-    return wantarray ? @$data : $data;
+    return wantarray ? @$data : $data->[0];
 }
 
 1;

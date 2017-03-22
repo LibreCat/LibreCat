@@ -9,6 +9,9 @@ sub fix {
     if ($pub->{volume} and $pub->{volume} =~ /^-?\d{1,}$/) {
         $pub->{intvolume} = sprintf("%10d", $pub->{volume});
     }
+    else {
+        delete $pub->{intvolume};
+    }
 
     $pub;
 }
