@@ -122,6 +122,7 @@ sub _add_cite {
 
     # replace all html tags in the citation with their rtf equivalent
     $cite =~ s/<em>(.*?)<\/em>/\{\\i $1}/g;
+    $cite =~ s/<i>(.*?)<\/i>/\{\\i $1}/g;
     $cite =~ s/&amp;/&/g;
     $cite
         =~ s/<span style="text-decoration:underline;">(.*?)<\/span>/{\\u $1}/g;
