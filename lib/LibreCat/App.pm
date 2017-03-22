@@ -82,6 +82,7 @@ get '/login' => sub {
         {
         error_message => params->{error_message} || '',
         login         => params->{login}         || '',
+        return_url    => params->{return_url}    || '',
         lang          => session->{lang}         || h->config->{default_lang}
         };
 };
@@ -94,8 +95,11 @@ Route where login data is sent to. On success redirects to
 =cut
 
 post '/login' => sub {
-
     my $user = _authenticate(params->{user}, params->{pass});
+    my $return_url = params->{return_url} // '/librecat';
+
+    # Deleting bad urls to external websites
+    $return_url =~ s{^[a-zA-Z:]+(\/\/)?[^\/]+}{};
 
     if ($user) {
         my $super_admin = "super_admin" if $user->{super_admin};
@@ -114,7 +118,7 @@ post '/login' => sub {
         session personNumber => $user->{_id};
         session lang         => $user->{lang} || h->config->{default_lang};
 
-        redirect uri_for('/librecat');
+        redirect uri_for($return_url);
     }
     else {
         forward '/login', {error_message => 'Wrong username or password!'},
