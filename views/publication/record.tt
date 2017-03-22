@@ -260,13 +260,13 @@
 
         <!-- Edit -->
         [% IF session.user AND session.role AND p.can_edit(_id, session.user, session.role) %]
-        <h3 id="edit">Editing Options</h3>
+        <h3 id="edit">[% h.loc("frontdoor.editing_options") %]</h3>
         <a href="/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> &nbsp;Edit this record</a><br />
         [% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "research_data" OR session.role == "super_admin") %]
-          <a href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span> Make this record public</a><br />
+          <a href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span>[% h.loc("frontdoor.make_public") %]</a><br />
         [% END %]
         [% IF type == "research_data" AND status != "public" AND status != "submitted" AND session.role != "super_admin" %]
-          <a href="/librecat/record/publish/[% _id %]">Submit this record</a>
+          <a href="/librecat/record/publish/[% _id %]">[% h.loc("frontdoor.submit") %]</a>
         [% END %]
         [% END %]
 
@@ -283,7 +283,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              <h3 id="myModalLabel">Open Data PUB</h3>
+              <h3 id="myModalLabel">[% h.loc("frontdoor.open_data_pub") %]</h3>
             </div>
             <div class="modal-body">
               [%- FOREACH f IN h.config.exporter.publication.keys %]
