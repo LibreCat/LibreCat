@@ -96,10 +96,10 @@ Route where login data is sent to. On success redirects to
 
 post '/login' => sub {
     my $user = _authenticate(params->{user}, params->{pass});
-    my $return_url = params->{return_url} // '/librecat';
+    my $return_url = params->{return_url} || '/librecat';
 
     # Deleting bad urls to external websites
-    $return_url =~ s{^[a-zA-Z:]+(\/\/)?[^\/]+}{};
+    $return_url =~ s{^[a-zA-Z:]+(\/\/)[^\/]+}{};
 
     if ($user) {
         my $super_admin = "super_admin" if $user->{super_admin};
