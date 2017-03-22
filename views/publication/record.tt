@@ -275,7 +275,7 @@
         <a class="label label-default total-marked" href="/marked">[% marked %]</a> <a href="/marked" rel="nofollow">[% h.loc("frontdoor.marked") %]</a>
 
         <!-- trigger modal -->
-        <p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o fw1"></span>Open Data PUB</a></p>
+        <p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o fw1"></span>[% h.loc("frontdoor.open_data_pub") %]</a></p>
 
         <!-- modal -->
         <div id="contentnegotiation" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
