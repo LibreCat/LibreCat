@@ -60,6 +60,7 @@ get qr{/person/(\d+|\w+|[a-fA-F\d]{8}(?:-[a-fA-F\d]{4}){3}-[a-fA-F\d]{12})/*(\w+
     => sub {
     my ($id, $modus) = splat;
     my $p      = h->extract_params();
+    $p->{sort} = $p->{sort} // h->config->{default_sort};
 
     push @{$p->{cql}}, ("person=$id", "status=public");
 
