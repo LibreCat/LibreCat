@@ -50,7 +50,7 @@ end
 
 if all_match('type','book-chapter')
     set_field('type','book_chapter')
-    move_field('container-title.0','book_title')
+    move_field('container-title.0','publication')
     move_field('container-title.0','series_title')
 end
 
