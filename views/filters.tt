@@ -186,7 +186,7 @@ searchParams = [% qp.json %];
 
 $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var embed_link = window.location.href;
-    var person_id  = embed_link.match(/\/person\/([0-9ABCDEF-]{1,})/);
+    var person_id  = embed_link.match(/\/person\/(.[^\/]{2,})/);
 
     if (embed_link.match(/\/publication/)) {
       searchParams.cql.push("type<>research_data");
