@@ -16,13 +16,12 @@ on 'test' => sub {
 };
 
 requires 'Business::ISBN', 0;
-requires 'Search::Elasticsearch', '==1.19';
 requires 'Module::Install', '1.16';
 
 # Catmandu
 requires 'Catmandu', '>=1.04';
 requires 'Catmandu::Exporter::Table';
-requires 'Catmandu::Store::ElasticSearch', '>=0.0508';
+requires 'Catmandu::Store::ElasticSearch', '>=0.0509';
 requires 'Catmandu::Store::MongoDB', '>=0.0403';
 requires 'Catmandu::DBI', '>=0.0510';
 requires 'Catmandu::BibTeX';
