@@ -29,8 +29,12 @@ SKIP: {
 
     ok $pub , 'got a publication';
 
-    is $pub->{title} , 'Gravity as Entanglement, and Entanglement as Gravity' , 'got a title';
-    is $pub->{type} , 'research_data', 'type == research_data';
+    is $pub->[0]{title} , 'Gravity as Entanglement, and Entanglement as Gravity' , 'got a title';
+    is $pub->[0]{type} , 'research_data', 'type == research_data';
+
+    $pub = $x->fetch('10.23432/3432');
+
+    ok !$pub, "empty record";
 }
 
 done_testing;

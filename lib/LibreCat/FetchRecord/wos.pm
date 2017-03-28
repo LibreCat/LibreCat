@@ -17,7 +17,12 @@ sub fetch {
             Catmandu->importer('RIS',file => \$ris)
         )->to_array;
 
-    wantarray ? @$data : $data->[0];
+    unless (@$data) {
+        $self->log->error("failed to import data from $ris");
+        return ();
+    }
+
+    return $data;
 }
 
 1;

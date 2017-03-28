@@ -39,8 +39,8 @@ EOF
 
     ok $pub , 'got a publication';
 
-    is $pub->{title} , 'The title of the work' , 'got a title';
-    is $pub->{type} , 'book', 'type == book';
+    is $pub->[0]->{title} , 'The title of the work' , 'got a title';
+    is $pub->[0]->{type} , 'book', 'type == book';
 };
 
 subtest 'more_recs' => sub {
@@ -59,7 +59,7 @@ subtest 'more_recs' => sub {
   isbn      = {3257227892}
 }
 
-\@book{book,
+\@article{article,
   author    = {Peter Junior},
   title     = {The title of the second item},
   publisher = {The name of the publisher},
@@ -75,13 +75,18 @@ subtest 'more_recs' => sub {
 EOF
 
     ok $pub;
-note Dumper $pub;
     ok $pub->[0];
     ok $pub->[1];
 
-    is $pub->[0]->{author}, 'Peter Babington', "first author";
+    is $pub->[0]->{title}, 'The title of the work', "title of the first item";
 
-    is $pub->[1]->{title}, 'The title of the second item', 'second title';
+    is $pub->[1]->{type}, 'journal_article', 'type of second item';
+};
+
+subtest 'no_rec' => sub {
+    my $pub = $x->fetch('');
+
+    ok !$pub;
 };
 
 done_testing;

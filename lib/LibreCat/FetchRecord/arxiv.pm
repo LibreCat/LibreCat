@@ -19,16 +19,16 @@ sub fetch {
         query => $id,
     )->to_array;
 
-    unless ($data) {
+    unless (@$data) {
         $self->log->error("failed query ArXiv");
-        return wantarray ? () : undef;
+        return ();
     }
 
     my $fixer = $self->create_fixer('arxiv_mapping.fix');
 
     $data = $fixer->fix($data);
 
-    return wantarray ? @$data : $data->[0];
+    return $data;
 }
 
 1;

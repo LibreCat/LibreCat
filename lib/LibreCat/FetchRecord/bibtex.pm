@@ -14,14 +14,14 @@ sub fetch {
 
     my $data = Catmandu->importer('BibTeX',file => \$bibtex)->to_array;
 
-    unless ($data) {
-        $self->log->error("failed to import bibtex");
-        return wantarray ? () : undef;
+    unless (@$data) {
+        $self->log->error("failed to import bibtex from $bibtex");
+        return ();
     }
 
     $data = $fixer->fix($data);
 
-    wantarray ? @$data : $data->[0];
+    return $data;
 }
 
 1;

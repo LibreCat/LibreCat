@@ -17,18 +17,18 @@ sub fetch {
     my $data = Catmandu->importer(
         'getJSON',
         from => $url
-    )->first;
+    )->to_array;
 
-    unless ($data) {
+    unless (@$data) {
         $self->log->error("failed to request $url");
-        return wantarray ? () : undef;
+        return ();
     }
 
     my $fixer = $self->create_fixer('inspire_mapping.fix');
 
     $data = $fixer->fix($data);
 
-    wantarray ? ($data) : $data;
+    return $data;
 }
 
 1;

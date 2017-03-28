@@ -36,16 +36,18 @@ SKIP: {
     };
 
     subtest 'orcid' => sub {
-        $pub = $x->fetch('0000-0002-7970-7855');
+        my $pub = $x->fetch('0000-0002-7970-7855');
 
         ok $pub , 'got some publications';
+        ok $pub->[0];
+        ok $pub->[1];
         is $pub > 4, 1, 'more than one publication'
     };
 
     subtest 'empty' => sub {
-        $pub = $x->fetch('hopefully, nothing to find here');
+        my $pub = $x->fetch('arXvi:sldkfjaslkdfjasödilfusaor');
 
-        is_deeply $pub, [], "empty array for bad search";
+        ok !$pub;
     };
 }
 
