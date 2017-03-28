@@ -17,18 +17,18 @@ sub fetch {
     my $data = Catmandu->importer(
         'getJSON',
         from    => url_decode("http://api.crossref.org/works/$id"),
-    )->first;
+    )->to_array;
 
-    unless ($data) {
+    unless (@$data) {
         $self->log->error("failed to request http://api.crossref.org/works/$id");
-        return wantarray ? () : undef;
+        return ();
     }
 
     my $fixer = $self->create_fixer('crossref_mapping.fix');
 
     $data = $fixer->fix($data);
 
-    return wantarray ? ($data) : $data;
+    return $data;
 }
 
 1;

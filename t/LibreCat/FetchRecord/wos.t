@@ -25,8 +25,10 @@ can_ok $pkg, $_ for qw(fetch);
 
     ok $pub , 'got a publication';
 
-    is $pub->{title} , 'Performance ratio study based on a device simulation of a 2D monolithic interconnected Cu(In,Ga)(Se,S)(2) solar cell' , 'got a title';
-    is $pub->{type} , 'journal_article', 'type == journal_article';
+    is $pub->[0]{title} , 'Performance ratio study based on a device simulation of a 2D monolithic interconnected Cu(In,Ga)(Se,S)(2) solar cell' , 'got a title';
+    is $pub->[0]{type} , 'journal_article', 'type == journal_article';
+
+    ok ! $x->fetch('t/does_not_exist.txt'), "empty record";
 }
 
 done_testing;

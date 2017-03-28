@@ -31,9 +31,14 @@ SKIP: {
 
         ok $pub , 'got a publication for ' . $_;
 
-        is $pub->{title} , 'Network Concepts' , 'got a title';
-        is $pub->{type} , 'book_chapter', 'type == book_chapter';
+        ok $pub->[0]->{title} , 'got a title';
+        ok $pub->[0]->{type} , 'got a type';
     }
+
+    my $rec = $x->fetch('doi:10.1002/1223455677889');
+
+    ok !$rec, "empty rec";
+
 }
 
 done_testing;

@@ -29,8 +29,12 @@ SKIP: {
 
     ok $pub , 'got a publication';
 
-    is $pub->{title} , 'Quantum scattering in one-dimensional systems satisfying the minimal length uncertainty relation' , 'got a title';
-    is $pub->{type} , 'journal_article', 'type == journal_article';
+    is $pub->[0]{title} , 'Quantum scattering in one-dimensional systems satisfying the minimal length uncertainty relation' , 'got a title';
+    is $pub->[0]{type} , 'journal_article', 'type == journal_article';
+
+    $pub = $x->fetch('123456789876543212345');
+
+    ok !$pub, "empty record";
 }
 
 done_testing;

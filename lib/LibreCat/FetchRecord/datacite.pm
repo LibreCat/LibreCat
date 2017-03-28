@@ -2,6 +2,7 @@ package LibreCat::FetchRecord::datacite;
 
 use Catmandu::Util qw(:io :hash);
 use Furl;
+use Try::Tiny;
 use Moo;
 
 with 'LibreCat::FetchRecord';
@@ -25,23 +26,26 @@ sub fetch {
 
     my $xml = $res->content;
 
-    return wantarray ? () : undef unless $xml;
+    return () unless $xml;
 
-    my $data = Catmandu->importer(
-        'XML',
-        file => \$xml,
-    )->first;
+    my $data = [];
+    try {
+        $data = Catmandu->importer(
+            'XML',
+            file => \$xml,
+        )->to_array;
+    };
 
-    unless ($data) {
+    unless (@$data) {
         $self->log->error("failed to parse xml : $xml");
-        return wantarray ? () : undef;
+        return ();
     }
 
     my $fixer = $self->create_fixer('from_datacite.fix');
 
     $data = $fixer->fix($data);
 
-    wantarray ? ($data) : $data;
+    return $data;
 }
 
 1;

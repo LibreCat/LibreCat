@@ -2,12 +2,17 @@ package Catmandu::Fix::add_urn;
 
 use Catmandu::Sane;
 use LibreCat::App::Helper;
+use Carp;
 use Moo;
 
 sub fix {
     my ($self, $pub) = @_;
 
     return $pub if $pub->{urn};
+
+    unless ($pub->{type} and $pub->{_id}) {
+        croak "type and _id are required.";
+    }
 
     if ($pub->{file}) {
         my $oa = 0;
