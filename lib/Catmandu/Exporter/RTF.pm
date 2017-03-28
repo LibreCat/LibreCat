@@ -122,6 +122,7 @@ sub _add_cite {
 
     # replace all html tags in the citation with their rtf equivalent
     $cite =~ s/<em>(.*?)<\/em>/\{\\i $1}/g;
+    $cite =~ s/<i>(.*?)<\/i>/\{\\i $1}/g;
     $cite =~ s/&amp;/&/g;
     $cite
         =~ s/<span style="text-decoration:underline;">(.*?)<\/span>/{\\u $1}/g;
@@ -141,9 +142,9 @@ sub _add_cite {
     $cite =~ s/<div>(.*?)<\/div>/$1/g;
 
     my $hyperlink;
-    if ($cite =~ /<a href\=\"(.*?)\" target\=\"_blank\">(.*?)<\/a>/) {
-        $cite =~ s/<a href\=\"(.*?)\" target\=\"_blank\">(.*?)<\/a>/____/g;
-        $hyperlink = "{\\field{\\*\\fldinst HYPERLINK $1}{\\fldrslt $2}}";
+    if ($cite =~ /<a href\=\"(.*?)\"(\starget\=\"_blank\")*>(.*?)<\/a>/) {
+        $cite =~ s/<a href\=\"(.*?)\"(\starget\=\"_blank\")*>(.*?)<\/a>/____/g;
+        $hyperlink = "{\\field{\\*\\fldinst HYPERLINK $1}{\\fldrslt $3}}";
     }
 
     $cite =~ s/ /___/g;

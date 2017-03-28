@@ -51,8 +51,13 @@ get '/export' => sub {
     my $p = h->extract_params();
     $p->{sort} = $p->{sort} // h->config->{default_sort};
 
-    # export from marked page
-    if (request->referer =~ /marked$/) {
+    if (request->referer =~ /\/publication/) {
+        push @{$p->{cql}}, "type<>research_data";
+    }
+    elsif (request->referer =~ /\/data/) {
+        push @{$p->{cql}}, "type=research_data";
+    }
+    elsif (request->referer =~ /\/marked$/) {
         my $marked = session 'marked';
         $p->{cql} = ["(id=" . join(' OR id=', @$marked) . ")"];
         delete $p->{sort};

@@ -121,7 +121,7 @@
     </button>
     <div class="facettecollapse">
     <ul id="export_facet" class="collapse">
-      [%- tmp = {}; tmp.import(qp); tmp.bag = 'publication' %]
+      [%- tmp = {}; tmp.import(qp) %]
       <li><a href="#modal" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.rtf") %]</a></li>
       <li><a href="[% tmp.fmt='bibtex'; request.uri_for('export', tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
       <li><a href="[% tmp.fmt='ris'; request.uri_for('export', tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.ris") %]</a></li>
@@ -186,7 +186,7 @@ searchParams = [% qp.json %];
 
 $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var embed_link = window.location.href;
-    var person_id  = embed_link.match(/\/person\/([0-9ABCDEF-]{1,})/);
+    var person_id  = embed_link.match(/\/person\/(.[^\/]{2,})/);
 
     if (embed_link.match(/\/publication/)) {
       searchParams.cql.push("type<>research_data");

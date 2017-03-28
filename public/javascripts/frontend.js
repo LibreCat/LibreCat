@@ -1,5 +1,5 @@
 $(function () {
-    ('.mark').click(function(evt) {
+    $('.mark').click(function(evt) {
         evt.preventDefault();
         var a = $(this);
         var marked = a.data('marked');
