@@ -2,6 +2,11 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
+0.5.4 2017-03-28
+    - PR #241: fix person routes
+    - fix return_url redirection
+    - GH #222: fix default sort on person page
+
 0.5.3 2017-03-21
     - GH #208: default sort options
     - GH #219: bug fix in RTF exporter
