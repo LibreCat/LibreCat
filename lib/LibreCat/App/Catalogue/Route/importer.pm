@@ -62,11 +62,11 @@ post '/librecat/record/import' => needs login => sub {
     my $source = $p->{source};
 
     try {
-        my @imported_records = _fetch_record( $p->{id} // $data, $source );
+        my $imported_records = _fetch_record( $p->{id} // $data, $source );
 
-        die "no records imported" unless @imported_records;
+        die "no records imported" unless $imported_records;
 
-        for my $pub (@imported_records) {
+        for my $pub (@$imported_records) {
             $pub->{_id}        = h->new_record('publication');
             $pub->{status}     = 'new'; # new is the status of records not checked by users/reviewers
             $pub->{creator}    = {
@@ -87,9 +87,9 @@ post '/librecat/record/import' => needs login => sub {
             );
         }
 
-        return template "backend/add_new",  {
-            ok => "Imported " . int(@imported_records) . " record(s) from $source" ,
-            imported => \@imported_records
+        return template "backend/add_new", {
+            ok => "Imported " . int(@$imported_records) . " record(s) from $source" ,
+            imported => $imported_records
         };
     }
     catch {
