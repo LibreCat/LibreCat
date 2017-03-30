@@ -231,12 +231,7 @@ sub getCount {
   return $count;
 }
 
-my $user = 'vpeil';
-my $access_key = '652994d3-4190-4b73-ae82-c5429e707dfa';
-our $driver = Selenium::Remote::Driver->new(
-    remote_server_addr =>  $user . ':' . $access_key . 'ondemand.saucelabs.com',
-    port => 80,
-    browser_name => 'chrome');
+our $driver = Selenium::Remote::Driver->new(browser_name => 'chrome');
 
 testHome();
 testSearch('einstein', '2 Publications');
