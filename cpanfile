@@ -13,6 +13,7 @@ on 'test' => sub {
     requires 'Test::Code::TidyAll', '0.20';
     requires 'App::Cmd::Tester';
     requires 'Devel::Cover';
+    requires 'Selenium::Remote::Driver', '1.12';
 };
 
 requires 'Business::ISBN', 0;

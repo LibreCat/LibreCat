@@ -231,13 +231,10 @@ sub getCount {
   return $count;
 }
 
-#my $driver = Selenium::Remote::Driver->new(
-#  browser_name => 'firefox',
-#  version => 'Mozilla Firefox 52.0',
-#  version => '1000.0 unknown',
-#  platform => "LINUX"
-#);
-our $driver = Selenium::Remote::Driver->new(browser_name => 'chrome');
+our $driver = Selenium::Remote::Driver->new(
+    remote_server_addr => 'ondemand.saucelabs.com',
+    port => 80,
+    browser_name => 'chrome');
 
 testHome();
 testSearch('einstein', '2 Publications');
