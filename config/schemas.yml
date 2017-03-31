@@ -887,7 +887,7 @@ researcher:
        enum: ["normal","expert"]
        description: "Preferred web form edit mode"
     style:
-       type: object
+       type: string
        description: "Preferred citation style"
     alias:
       type: string
