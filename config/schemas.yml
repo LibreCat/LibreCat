@@ -887,22 +887,7 @@ researcher:
        enum: ["normal","expert"]
        description: "Preferred web form edit mode"
     style:
-       enum:
-           - ama
-           - angewandte-chemie
-           - apa
-           - apa_indent
-           - aps
-           - bio1
-           - chicago
-           - default
-           - dgps
-           - frontiers
-           - harvard1
-           - ieee
-           - lncs
-           - mla
-           - wels
+       type: object
        description: "Preferred citation style"
     alias:
       type: string
