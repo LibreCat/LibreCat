@@ -39,7 +39,6 @@ sub access_denied_hook {
     );
 }
 
-
 =head1 PREFIX /record
 
 All actions related to a publication record are handled under this prefix.
