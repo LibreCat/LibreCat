@@ -7,7 +7,7 @@ Route handler for publications.
 =cut
 
 use Catmandu::Sane;
-use Catmandu qw(export_to_string);
+use Catmandu;
 use Catmandu::Fix qw(expand);
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
@@ -324,9 +324,12 @@ For admins only!
 
     get '/internal_view/:id' => needs role => 'super_admin' => sub {
         my $id = params->{id};
+        my $export_string;
+        my $exporter = Catmandu->exporter('YAML', file => \$export_string);
+        $exporter->add(h->publication->get($id));
 
         return template 'backend/internal_view',
-            {data => to_yaml h->publication->get($id)};
+            {data => $export_string};
     };
 
 =head2 GET /clone/:id
