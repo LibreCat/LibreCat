@@ -10,21 +10,6 @@ use Catmandu::Sane;
 use Catmandu::Util qw(:array);
 use Dancer qw(:syntax);
 use LibreCat::App::Helper;
-use Dancer::Plugin::Auth::Tiny;
-
-Dancer::Plugin::Auth::Tiny->extend(
-    role => sub {
-        my ($role, $coderef) = @_;
-        return sub {
-            if (session->{role} && $role eq session->{role}) {
-                goto $coderef;
-            }
-            else {
-                redirect '/access_denied';
-            }
-         }
-    }
-);
 
 =head1 PREFIX /librecat/person
 
@@ -41,7 +26,7 @@ for his own publication list.
 
 =cut
 
-    get '/preference/:delegate_id' => needs role => 'delegate' => sub {
+    get '/preference/:delegate_id' => sub {
         my $params;
         $params->{delegate_id} = params->{delegate_id};
         $params->{style} = params->{style} if params->{style};
@@ -49,7 +34,7 @@ for his own publication list.
         forward '/librecat/person/preference', $params;
     };
 
-    get '/preference' => needs login => sub {
+    get '/preference' => sub {
         my $person
             = h->get_person(params->{delegate_id} || session('personNumber'));
         my $sort;
@@ -94,7 +79,7 @@ be displayed on author's profile page.
 
 =cut
 
-    post '/author_id' => needs login => sub {
+    post '/author_id' => sub {
 
         my $id         = params->{_id};
         my $person     = h->get_person($id) || {_id => $id};
@@ -115,7 +100,7 @@ User can choose default language for the librecat backend
 
 =cut
 
-    get '/set_language' => needs login => sub {
+    get '/set_language' => sub {
 
         my $person = h->get_person(session('personNumber'));
         my $lang   = params->{lang};
@@ -136,7 +121,7 @@ new publication form.
 
 =cut
 
-    post '/affiliation' => needs login => sub {
+    post '/affiliation' => sub {
 
         my $fix
             = Catmandu::Fix->new(fixes => ['compact_array("department")']);

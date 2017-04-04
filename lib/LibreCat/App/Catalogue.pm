@@ -11,7 +11,6 @@ use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Util qw(:array);
 use Dancer ':syntax';
-use Dancer::Plugin::Auth::Tiny;
 use LibreCat::App::Helper;
 use all qw(LibreCat::App::Catalogue::Route::*);
 
@@ -22,7 +21,7 @@ to default search page for current role.
 
 =cut
 
-get '/librecat' => needs login => sub {
+get '/librecat' => sub {
     my $params = params;
 
     if (session->{role} eq "super_admin") {
@@ -51,7 +50,7 @@ Let the user change his role.
 
 =cut
 
-get '/librecat/change_role/:role' => needs login => sub {
+get '/librecat/change_role/:role' => sub {
     my $user = h->get_person(session->{user});
 
     # is user allowed to take this role?
@@ -75,6 +74,7 @@ get '/librecat/change_role/:role' => needs login => sub {
     else {
         session role => "user";
     }
+
     redirect '/librecat';
 };
 

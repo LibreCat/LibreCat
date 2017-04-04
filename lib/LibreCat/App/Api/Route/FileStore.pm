@@ -8,38 +8,12 @@ LibreCat::App::Catalogue::Route::FileStore - REST API for managing the repositor
 
 use Catmandu::Sane;
 use Dancer ':syntax';
-use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::StreamData;
 use LibreCat::App::Helper;
 use IO::File;
 use namespace::clean;
 
-Dancer::Plugin::Auth::Tiny->extend(
-    role => sub {
-        my ($role, $coderef) = @_;
-        return sub {
-            if ($role eq 'api_access' && ip_match(request->address)) {
-                goto $coderef;
-            }
-            elsif (session->{role} && $role eq session->{role}) {
-                goto $coderef;
-            }
-            else {
-                return do_error('NOT_ALLOWED', 'access denied', 404);
-            }
-        };
-    }
-);
-
 set serializer => 'JSON';
-
-sub ip_match {
-    my $ip        = shift;
-    my $access    = h->config->{filestore}->{api}->{access} // {};
-    my $ip_ranges = $access->{ip_ranges} // [];
-
-    h->within_ip_range($ip,$ip_ranges);
-}
 
 sub do_error {
     my ($code, $msg, $http_code) = @_;
@@ -64,7 +38,7 @@ E.g.
 
 =cut
 
-    get '/filestore' => needs role => 'api_access' => sub {
+    get '/filestore' => sub {
         my $gen = h->get_file_store()->list;
         send_file(
             \"dummy",    # anything, as long as it's a scalar-ref
@@ -121,7 +95,7 @@ E.g.
 
 =cut
 
-    get '/filestore/:key' => needs role => 'api_access' => sub {
+    get '/filestore/:key' => sub {
         my $key       = param('key');
         my $container = h->get_file_store()->get($key);
 
@@ -169,7 +143,7 @@ E.g.
 
 =cut
 
-    get '/filestore/:key/:filename' => needs role => 'api_access' => sub {
+    get '/filestore/:key/:filename' => sub {
         my $key      = param('key');
         my $filename = param('filename');
 
@@ -238,7 +212,7 @@ E.g.
 
 =cut
 
-    del '/filestore/:key' => needs role => 'api_access' => sub {
+    del '/filestore/:key' => sub {
         my $key = param('key');
 
         content_type 'application/json';
@@ -265,7 +239,7 @@ E.g.
 
 =cut
 
-    del '/filestore/:key/:filename' => needs role => 'api_access' => sub {
+    del '/filestore/:key/:filename' => sub {
         my $key      = param('key');
         my $filename = param('filename');
 
@@ -303,7 +277,7 @@ E.g.
 
 =cut
 
-    post '/filestore/:key' => needs role => 'api_access' => sub {
+    post '/filestore/:key' => sub {
         my $key = param('key');
 
         content_type 'application/json';
@@ -345,7 +319,7 @@ E.g.
 
 =cut
 
-    get '/access/:key/:filename/thumbnail' => needs role => 'api_access' => sub {
+    get '/access/:key/:filename/thumbnail' => sub {
         my $key = param('key');
 
         # For now stay backwards compatible and keep one thumbnail per container...
@@ -422,8 +396,7 @@ E.g.
 
 =cut
 
-    post '/access/:key/:filename/thumbnail' => needs role => 'api_access' =>
-        sub {
+    post '/access/:key/:filename/thumbnail' => sub {
         my $key      = param('key');
         my $filename = param('filename');
 
@@ -451,7 +424,7 @@ E.g.
 
 =cut
 
-    del '/access/:key/:filename/thumbnail' => needs role => 'api_access' =>
+    del '/access/:key/:filename/thumbnail' =>
         sub {
         my $key = param('key');
 

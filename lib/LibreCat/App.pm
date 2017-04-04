@@ -27,6 +27,115 @@ use Dancer::Plugin::DirectoryView;
 # otherwise they are considered private
 $Template::Stash::PRIVATE = 0;
 
+hook before => sub {
+    my $method    = request->method;
+    my $path_info = request->path_info;
+    my $conf      = h->config->{permissions};
+    my $routes    = $conf->{routes} // [];
+
+    my $login_route    = _login_route($conf);
+    my $redirect_route = _redirect_route($conf);
+    my $role_route     = _role_route($conf);
+    my $api_route      = _api_route($conf);
+
+    for my $route (@$routes) {
+        my ($_method,$_regex,$_role,$_params) = @$route;
+
+        next unless $_method eq 'ANY' || $_method eq $method;
+        next unless $path_info =~ /^${_regex}/;
+
+        if ($_role eq 'login') {
+            $login_route->($_params);
+        }
+        elsif ($_role eq 'redirect') {
+            $redirect_route->($_params);
+        }
+        elsif ($_role eq 'role') {
+            $role_route->($_params);
+        }
+        elsif ($_role eq 'api_access') {
+            $api_route->($_params);
+        }
+        else {
+            # ok no login needed
+        }
+    }
+};
+
+sub _login_route {
+    my $conf = shift;
+    sub {
+        if ( session $conf->{logged_in_key} ) {
+            # ok
+        }
+        else {
+             my $query_params = params("query");
+             my $data =
+               { $conf->{callback_key} => uri_for( request->path, $query_params ) };
+             for my $k ( @{ $conf->{passthrough} } ) {
+               $data->{$k} = params->{$k} if params->{$k};
+             }
+             return redirect uri_for( $conf->{login_route}, $data );
+        }
+    };
+}
+
+sub _redirect_route {
+    my $conf = shift;
+    sub {
+        my $url = shift;
+        return redirect $url ;
+    };
+}
+
+sub _role_route {
+    my $conf = shift;
+    sub {
+        my $role = shift;
+        if ( session $conf->{logged_in_key} ) {
+            if (session->{role} && $role eq session->{role}) {
+                # ok
+            }
+            else {
+                return redirect uri_for('/access_denied');
+            }
+        }
+        else {
+             my $query_params = params("query");
+             my $data =
+               { $conf->{callback_key} => uri_for( request->path, $query_params ) };
+             for my $k ( @{ $conf->{passthrough} } ) {
+               $data->{$k} = params->{$k} if params->{$k};
+             }
+             return redirect uri_for( $conf->{login_route}, $data );
+        }
+    };
+}
+
+sub _api_route {
+    my $conf = shift;
+    sub {
+        my $role = shift // '';
+        if (_ip_match(request->address)) {
+            # ok
+        }
+        elsif (session->{role} && $role eq session->{role}) {
+            # ok
+        }
+        else {
+            return return redirect uri_for('/access_denied');
+        }
+    };
+}
+
+sub _ip_match {
+    my $ip        = shift;
+    my $access    = h->config->{filestore}->{api}->{access} // {};
+    my $ip_ranges = $access->{ip_ranges} // [];
+
+    h->within_ip_range($ip,$ip_ranges);
+}
+
 # custom authenticate routine
 sub _authenticate {
     my ($username, $password) = @_;

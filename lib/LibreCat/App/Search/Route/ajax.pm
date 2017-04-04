@@ -55,7 +55,7 @@ ajax '/search_researcher' => sub {
     return to_json $hits;
 };
 
-=head2 AJAX /get_person
+=head2 AJAX /authority_user/:id
 
 =cut
 ajax '/authority_user/:id' => sub {
