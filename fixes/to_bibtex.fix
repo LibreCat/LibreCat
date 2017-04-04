@@ -4,7 +4,7 @@
 # url host/ID
 
 if any_match(type, '^bi')
-  set_field(r.school, 'Göttingen University')
+  set_field(r.school, 'Bielefeld University')
 end
 
 move_field(type, r._type)
