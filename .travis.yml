@@ -6,9 +6,9 @@ perl:
   - "5.24"
   - "5.22"
 
-cache:
-  directories:
-    - perl_modules
+# cache:
+#   directories:
+#     - perl_modules
 
 env:
   - NETWORK_TEST=1
@@ -28,7 +28,7 @@ service:
 
 install:
   - cpanm --quiet --installdeps --notest --force --skip-satisfied .
-  - cpanm --quiet --notest Devel::Cover
+  - cpanm --quiet --notest --skip-satisfied Devel::Cover
 
 script:
   - cover -t +select ^lib +ignore ^ -make 'prove -Ilib -r t; exit $?'
