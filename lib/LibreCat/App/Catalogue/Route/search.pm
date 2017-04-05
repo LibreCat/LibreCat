@@ -9,21 +9,6 @@ LibreCat::App::Catalog::Route::search
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
-use Dancer::Plugin::Auth::Tiny;
-
-Dancer::Plugin::Auth::Tiny->extend(
-    role => sub {
-        my ($role, $coderef) = @_;
-        return sub {
-            if (session->{role} && $role eq session->{role}) {
-                goto $coderef;
-            }
-            else {
-                redirect '/access_denied';
-            }
-        }
-    }
-);
 
 =head2 PREFIX /librecat/search
 
@@ -39,7 +24,7 @@ Performs search for admin.
 
 =cut
 
-    get '/admin' => needs role => 'super_admin' => sub {
+    get '/admin' => sub {
 
         my $p = h->extract_params();
 
@@ -59,7 +44,7 @@ Performs search for similar titles, admin only
 
 =cut
 
-    get '/admin/similar_search' => needs role => 'super_admin' => sub {
+    get '/admin/similar_search' => sub {
 
         my $p = h->extract_params();
 
@@ -99,12 +84,12 @@ Performs search for reviewer.
 
 =cut
 
-    get '/reviewer' => needs role => "reviewer" => sub {
+    get '/reviewer' => sub {
         my $account = h->get_person(session->{user});
         redirect "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
     };
 
-    get '/reviewer/:department_id' => needs role => 'reviewer' => sub {
+    get '/reviewer/:department_id' => sub {
 
         my $p       = h->extract_params();
         my $id      = session 'personNumber';
@@ -139,14 +124,13 @@ Performs search for reviewer.
 
 =cut
 
-    get '/project_reviewer' => needs role => "project_reviewer" => sub {
+    get '/project_reviewer' => sub {
         my $account = h->get_person(session->{user});
         redirect
             "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}";
     };
 
-    get '/project_reviewer/:project_id' => needs role =>
-        'project_reviewer'              => sub {
+    get '/project_reviewer/:project_id' => sub {
 
         my $p       = h->extract_params();
         my $id      = session 'personNumber';
@@ -181,15 +165,13 @@ Performs search for data manager.
 
 =cut
 
-    get '/data_manager' => needs role => 'data_manager' => sub {
+    get '/data_manager' => sub {
         my $account = h->get_person(session->{user});
         redirect
             "/librecat/search/data_manager/$account->{data_manager}->[0]->{_id}";
     };
 
-    get '/data_manager/:department_id' => needs role => 'data_manager' =>
-        sub {
-
+    get '/data_manager/:department_id' => sub {
         my $p         = h->extract_params();
         my $id        = session 'personNumber';
         my $account   = h->get_person(session->{user});
@@ -214,7 +196,7 @@ according to first delegate ID.
 
 =cut
 
-    get '/delegate' => needs role => "delegate" => sub {
+    get '/delegate' => sub {
         my $account = h->get_person(session->{user});
         redirect "/librecat/search/delegate/$account->{delegate}->[0]";
     };
@@ -226,7 +208,7 @@ publications.
 
 =cut
 
-    get '/delegate/:delegate_id' => needs role => "delegate" => sub {
+    get '/delegate/:delegate_id' => sub {
         my $p  = h->extract_params();
         my $id = params->{delegate_id};
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
@@ -246,8 +228,7 @@ Performs search for user.
 
 =cut
 
-    get '/' => needs login => sub {
-
+    get '/' => sub {
         my $p      = h->extract_params();
         my $id     = session 'personNumber';
 

@@ -13,32 +13,15 @@ use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 use Dancer qw(:syntax);
 use Encode qw(encode);
-use Dancer::Plugin::Auth::Tiny;
-
-Dancer::Plugin::Auth::Tiny->extend(
-    role => sub {
-        my ($role, $coderef) = @_;
-        return sub {
-            if (session->{role} && $role eq session->{role}) {
-                goto $coderef;
-            }
-            else {
-                access_denied_hook();
-                forward '/access_denied';
-            }
-        }
-    }
-);
 
 sub access_denied_hook {
     h->hook('publication-access-denied')->fix_around(
         {
-            _id => params->{id} ,
+            _id     => params->{id} ,
             user_id => session->{personNumber} ,
         }
     );
 }
-
 
 =head1 PREFIX /record
 
@@ -55,8 +38,7 @@ Prints a list of available publication types + import form.
 Some fields are pre-filled.
 
 =cut
-
-    get '/new' => needs login => sub {
+    get '/new' => sub {
         my $type      = params->{type};
         my $user      = h->get_person(session->{personNumber});
         my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
@@ -139,8 +121,7 @@ Displays record for id.
 Checks if the user has permission the see/edit this record.
 
 =cut
-
-    get '/edit/:id' => needs login => sub {
+    get '/edit/:id' => sub {
         my $id = params->{id};
 
         unless (p->can_edit($id, session->{user}, session->{role})) {
@@ -195,8 +176,7 @@ Saves the record in the database.
 Checks if the user has the rights to update this record.
 
 =cut
-
-    post '/update' => needs login => sub {
+    post '/update' => sub {
         my $p = params;
 
         h->log->debug("Params:" . to_dumper($p));
@@ -244,8 +224,7 @@ Set status to 'returned'.
 Checks if the user has the rights to edit this record.
 
 =cut
-
-    get '/return/:id' => needs login => sub {
+    get '/return/:id' => sub {
         my $id = params->{id};
 
         unless (p->can_edit($id, session->{user}, session->{role})) {
@@ -276,8 +255,7 @@ Checks if the user has the rights to edit this record.
 Deletes record with id. For admins only.
 
 =cut
-
-    get '/delete/:id' => needs role => 'super_admin' => sub {
+    get '/delete/:id' => sub {
         my $id     = params->{id};
         my $record = h->publication->get($id);
 
@@ -300,8 +278,7 @@ Deletes record with id. For admins only.
 Prints the frontdoor for every record.
 
 =cut
-
-    get '/preview/:id' => needs login => sub {
+    get '/preview/:id' => sub {
         my $id = params->{id};
 
         my $hits = h->publication->get($id);
@@ -321,8 +298,7 @@ Prints internal view, optionally as data dumper.
 For admins only!
 
 =cut
-
-    get '/internal_view/:id' => needs role => 'super_admin' => sub {
+    get '/internal_view/:id' => sub {
         my $id = params->{id};
         my $export_string;
         my $exporter = Catmandu->exporter('YAML', file => \$export_string);
@@ -337,7 +313,6 @@ For admins only!
 Clones the record with ID :id and returns a form with a different ID.
 
 =cut
-
     get '/clone/:id' => sub {
         my $rec = h->publication->get(params->{id});
 
@@ -356,8 +331,7 @@ Clones the record with ID :id and returns a form with a different ID.
 Publishes private records, returns to the list.
 
 =cut
-
-    get '/publish/:id' => needs login => sub {
+    get '/publish/:id' => sub {
         my $id = params->{id};
 
         unless (p->can_edit($id, session->{user}, session->{role})) {
@@ -400,8 +374,7 @@ Publishes private records, returns to the list.
 Changes the layout of the edit form.
 
 =cut
-
-    post '/change_mode' => needs login => sub {
+    post '/change_mode' => sub {
         my $mode   = params->{edit_mode};
         my $params = params;
 

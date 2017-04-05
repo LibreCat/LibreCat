@@ -1,0 +1,106 @@
+_prefix:
+  permissions:
+
+# Route to the login screen
+login_route: /login
+# Cookie key that contains the logged in user details
+logged_in_key: user
+# Parameter that can be added to the login path to redirect after login
+callback_key: return_url
+passthrough:
+    - user
+
+# Handlers available to test user credentials for a path
+# Demo is a demonstration how the internal handler can be extended
+handlers:
+    # login: requires a valid login
+    login: internal
+    # role: requires a valid login and a user in a specific role
+    role: internal
+    # api_access: requires api credentials (see filestore.api.access config)
+    api_access: internal
+    # no_access: this route is denied for all
+    no_access: internal
+    # default: no login or role requires
+    default: internal
+    # demo: demonstration extension, redirects a path to Google
+    demo: LibreCat::App::Permission::demo
+
+# List of all the routes that need authentication (or not)
+# Syntax:
+#   - [  GET|POST|HEAD|DELETE|PUT|PATCH|ANY  , <path-regex> , 'handler' [, param [...]] ]
+routes:
+    - [ 'GET'  , '/librecat/record/new'           , 'login' ]
+    - [ 'GET'  , '/librecat/record/edit'          , 'login' ]
+    - [ 'POST' , '/librecat/record/update'        , 'login' ]
+    - [ 'GET'  , '/librecat/record/return'        , 'login' ]
+    - [ 'GET'  , '/librecat/record/delete'        , 'role' , 'super_admin' ]
+    - [ 'GET'  , '/librecat/record/preview'       , 'login' ]
+    - [ 'GET'  , '/librecat/record/internal_view' , 'role' , 'super_admin' ]
+    - [ 'GET'  , '/librecat/record/clone'         , 'login' ]
+    - [ 'GET'  , '/librecat/record/publish'       , 'login' ]
+    - [ 'POST' , '/librecat/record/change_mode'   , 'login' ]
+    - [ 'POST' , '/librecat/record/import'        , 'login' ]
+
+    - [ 'GET'  , '/librecat/search/admin'         , 'role' , 'super_admin' ]
+    - [ 'GET'  , '/librecat/search/reviewer'      , 'role' , 'reviewer' ]
+    - [ 'GET'  , '/librecat/search/project_reviewer' , 'role' , 'project_reviewer' ]
+    - [ 'GET'  , '/librecat/search/data_manager'  , 'role' , 'data_manager' ]
+    - [ 'GET'  , '/librecat/search/delegate'      , 'role' , 'delegate' ]
+    - [ 'GET'  , '/librecat/search/data'          , 'login' ]
+    - [ 'GET'  , '/librecat/search'               , 'login' ]
+    - [ 'GET'  , '/librecat/change_role'          , 'login' ]
+
+    - [ 'POST' , '/librecat/upload'               , 'login' ]
+    - [ 'POST' , '/librecat/upload/qae/submit'    , 'login' ]
+
+    - [ 'GET'  , '/librecat/admin/project/search'          , 'login' ]
+    - [ 'GET'  , '/librecat/admin/department/search'       , 'login' ]
+    - [ 'GET'  , '/librecat/admin/research_group/search'   , 'login' ]
+    - [ 'ANY'  , '/librecat/admin'               , 'role' , 'super_admin' ]
+
+    - [ 'ANY'  , '/librecat/audit'               , 'role' , 'super_admin' ]
+
+    - [ 'GET'  , '/librecat/person/preference/\S+' , 'role' , 'delegate' ]
+    - [ 'GET'  , '/librecat/person/preference'   , 'login'  ]
+    - [ 'POST' , '/librecat/person/author_id'    , 'login'  ]
+    - [ 'GET'  , '/librecat/person/set_language' , 'login'  ]
+    - [ 'POST' , '/librecat/person/affiliation'  , 'login'  ]
+
+    - [ 'ANY'  , '/librecat/api'                 , 'api_access' ]
+
+    # catch all for security reasons
+    - [ 'ANY'  , '/librecat'                     , 'login' ]
+
+    - [ 'ANY'  , '/metrics'                      , 'default' ]
+    - [ 'ANY'  , '/bibtex '                      , 'default' ]
+    - [ 'ANY'  , '/ris '                         , 'default' ]
+    - [ 'ANY'  , '/search_researcher '           , 'default' ]
+    - [ 'ANY'  , '/authority_user'               , 'default' ]
+    - [ 'ANY'  , '/num_of_publ'                  , 'default' ]
+    - [ 'ANY'  , '/get_alias'                    , 'default' ]
+    - [ 'ANY'  , '/get_project'                  , 'default' ]
+    - [ 'ANY'  , '/get_department'               , 'default' ]
+    - [ 'ANY'  , '/get_research_group'           , 'default' ]
+
+    - [ 'ANY'  , '/department'                   , 'default' ]
+    - [ 'ANY'  , '/publication'                  , 'default' ]
+    - [ 'ANY'  , '/data'                         , 'default' ]
+    - [ 'ANY'  , '/person'                       , 'default' ]
+    - [ 'ANY'  , '/staffdirectory'               , 'default' ]
+    - [ 'ANY'  , '/project'                      , 'default' ]
+    - [ 'ANY'  , '/export'                       , 'default' ]
+    - [ 'ANY'  , '/feed'                         , 'default' ]
+    - [ 'ANY'  , '/mark'                         , 'default' ]
+    - [ 'ANY'  , '/reorder'                      , 'default' ]
+    - [ 'ANY'  , '/embed'                        , 'default' ]
+
+    - [ 'ANY'  , '/rc/'                          , 'default' ]
+    - [ 'ANY'  , '/download/'                    , 'default' ]
+    - [ 'ANY'  , '/thumbnail/'                   , 'default' ]
+    - [ 'ANY'  , '/livecitation'                 , 'defailt' ]
+
+    - [ 'ANY'  , '/sru'                          , 'default' ]
+    - [ 'ANY'  , '/oai'                          , 'default' ]
+
+    - [ 'ANY'  , '/$'                            , 'default' ]

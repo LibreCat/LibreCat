@@ -8,36 +8,10 @@ LibreCat::App::Catalogue::Route::Demo - REST API demonstrator for LibreCat coder
 
 use Catmandu::Sane;
 use Dancer ':syntax';
-use Dancer::Plugin::Auth::Tiny;
 use LibreCat::App::Helper;
 use REST::Client;
 
-Dancer::Plugin::Auth::Tiny->extend(
-    role => sub {
-        my ($role, $coderef) = @_;
-        return sub {
-            if ($role eq 'api_access' && ip_match(request->address)) {
-                goto $coderef;
-            }
-            elsif (session->{role} && $role eq session->{role}) {
-                goto $coderef;
-            }
-            else {
-                return do_error('NOT_ALLOWED', 'access denied', 404);
-            }
-            }
-    }
-);
-
 set serializer => 'JSON';
-
-sub ip_match {
-    my $ip        = shift;
-    my $access    = h->config->{filestore}->{api}->{access} // {};
-    my $ip_ranges = $access->{ip_ranges} // [];
-
-    h->within_ip_range($ip,$ip_ranges);
-}
 
 sub do_error {
     my ($code, $msg, $http_code) = @_;
@@ -53,11 +27,11 @@ Return a HTML page with demonstrators for file upload, file access , etc.
 
 =cut
 
-    get '/' => needs role => 'api_access' => sub {
+    get '/' => sub {
         template 'api/filestore';
     };
 
-    post '/' => needs role => 'api_access' => sub {
+    post '/' => sub {
         my $action = param "action";
         my $res    = {};
 

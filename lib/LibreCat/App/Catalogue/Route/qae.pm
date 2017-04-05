@@ -9,9 +9,8 @@ Route handler for uploading the Quick and Easy upload.
 use Catmandu::Sane;
 use LibreCat::App::Helper;
 use Dancer ':syntax';
-use Dancer::Plugin::Auth::Tiny;
 
-post '/librecat/upload/qae/submit' => needs login => sub {
+post '/librecat/upload/qae/submit' => sub {
     my $submit_or_cancel = params->{submit_or_cancel} || "Cancel";
 
     if ($submit_or_cancel eq "Submit") {

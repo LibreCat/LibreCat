@@ -9,25 +9,10 @@ LibreCat::App::Catalogue::Route::audit - controller for handling audit messages
 use Catmandu::Sane;
 use Catmandu::Util;
 use Dancer ':syntax';
-use Dancer::Plugin::Auth::Tiny;
 use Dancer::Serializer::Mutable qw(template_or_serialize);
 use LibreCat::App::Helper;
 use POSIX qw(strftime);
 use URL::Encode qw(url_decode);
-
-Dancer::Plugin::Auth::Tiny->extend(
-   role => sub {
-       my ($role, $coderef) = @_;
-       return sub {
-           if (session->{role} && $role eq session->{role}) {
-               goto $coderef;
-           }
-           else {
-               redirect '/access_denied';
-           }
-       }
-   }
-);
 
 =head2 PREFIX /librecat/audit
 
@@ -42,7 +27,7 @@ prefix '/librecat' => sub {
 List all audit messages for an :id in the store :bag
 
 =cut
-        get '/audit/*/*' => needs role => 'super_admin' => sub {
+        get '/audit/*/*' => sub {
             my ($bag,$id) = splat;
 
             my $it = h->backup_audit()
@@ -61,7 +46,7 @@ List all audit messages for an :id in the store :bag
             template_or_serialize 'backend/audit' ,  { audit => $array };
         };
 
-        post '/audit/*/*' => needs role => 'super_admin' => sub {
+        post '/audit/*/*' => sub {
             my ($bag,$id) = splat;
 
             my $user_id = session->{personNumber};

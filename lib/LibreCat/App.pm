@@ -27,6 +27,131 @@ use Dancer::Plugin::DirectoryView;
 # otherwise they are considered private
 $Template::Stash::PRIVATE = 0;
 
+hook before => sub {
+    my $method    = request->method;
+    my $path_info = request->path_info;
+    my $conf      = h->config->{permissions};
+    my $routes    = $conf->{routes} // [];
+
+    my $handlers = {
+            login      => _login_route($conf) ,
+            redirect   => _redirect_route($conf) ,
+            role       => _role_route($conf) ,
+            api_access => _api_route($conf) ,
+            no_access  => sub {
+                return redirect uri_for('/access_denied');
+            } ,
+            default    => sub { } ,
+    };
+
+    for my $h (keys %{$conf->{handlers}}) {
+        next if $h =~ m{^(login|redirect|role|api_access|no_access|default)$};
+        my $package_name = $conf->{handlers}->{$h};
+
+        h->log->info("loading $package_name for $h");
+        my $pkg = Catmandu::Util::require_package($package_name);
+
+        if ($pkg) {
+            $handlers->{$h} = $pkg->new()->route($conf);
+        }
+        else {
+            h->log->error("failed to create a new $package_name permission");
+            $handlers->{$h} = sub {};
+        }
+    }
+
+    for my $route (@$routes) {
+        my ($_method,$_regex,$_role,@_params) = @$route;
+
+        $_role = 'default' unless defined($_role) && $_role =~ /\S+/;
+
+        next unless $_method eq 'ANY' || $_method eq $method;
+        next unless $path_info =~ /^${_regex}/;
+
+        if (my $h = $handlers->{$_role}) {
+            h->log->info("excuting hander $_role for $_regex");
+            $h->(@_params);
+        }
+        else {
+            h->log->error("no handler found for $_role");
+        }
+    }
+};
+
+sub _login_route {
+    my $conf = shift;
+    sub {
+        if ( session $conf->{logged_in_key} ) {
+            # ok
+        }
+        else {
+             my $query_params = params("query");
+             my $data =
+               { $conf->{callback_key} => uri_for( request->path, $query_params ) };
+             for my $k ( @{ $conf->{passthrough} } ) {
+               $data->{$k} = params->{$k} if params->{$k};
+             }
+             return redirect uri_for( $conf->{login_route}, $data );
+        }
+    };
+}
+
+sub _redirect_route {
+    my $conf = shift;
+    sub {
+        my $url = shift;
+        return redirect $url ;
+    };
+}
+
+sub _role_route {
+    my $conf = shift;
+    sub {
+        my $role = shift;
+        if ( session $conf->{logged_in_key} ) {
+            if (session->{role} && $role eq session->{role}) {
+                # ok
+            }
+            else {
+                return redirect uri_for('/access_denied');
+            }
+        }
+        else {
+             my $query_params = params("query");
+             my $data =
+               { $conf->{callback_key} => uri_for( request->path, $query_params ) };
+             for my $k ( @{ $conf->{passthrough} } ) {
+               $data->{$k} = params->{$k} if params->{$k};
+             }
+             return redirect uri_for( $conf->{login_route}, $data );
+        }
+    };
+}
+
+sub _api_route {
+    my $conf = shift;
+    sub {
+        my $role = shift // '';
+        if (_ip_match(request->address)) {
+            # ok
+        }
+        elsif (session->{role} && $role eq session->{role}) {
+            # ok
+        }
+        else {
+            return return redirect uri_for('/access_denied');
+        }
+    };
+}
+
+sub _ip_match {
+    my $ip        = shift;
+    my $access    = h->config->{filestore}->{api}->{access} // {};
+    my $ip_ranges = $access->{ip_ranges} // [];
+
+    h->within_ip_range($ip,$ip_ranges);
+}
+
 # custom authenticate routine
 sub _authenticate {
     my ($username, $password) = @_;

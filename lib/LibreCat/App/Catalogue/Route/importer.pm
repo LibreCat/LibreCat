@@ -10,7 +10,6 @@ use Catmandu::Sane;
 use Catmandu::Util;
 use Catmandu::Fix::trim as => 'trim';
 use Dancer ':syntax';
-use Dancer::Plugin::Auth::Tiny;
 use LibreCat::App::Helper;
 use URL::Encode qw(url_decode);
 
@@ -51,7 +50,7 @@ sub _fetch_record {
 Returns a form with imported data.
 
 =cut
-post '/librecat/record/import' => needs login => sub {
+post '/librecat/record/import' => sub {
     my $p = params;
     trim($p, 'id', 'whitespace');
     trim($p, 'source', 'whitespace');

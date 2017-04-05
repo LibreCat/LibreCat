@@ -10,7 +10,6 @@ use Catmandu::Sane;
 use Catmandu::Util qw(:is);
 use LibreCat::App::Catalogue::Controller::File qw/upload_temp_file/;
 use Dancer ':syntax';
-use Dancer::Plugin::Auth::Tiny;
 
 =head1 REST METHODS
 
@@ -50,7 +49,7 @@ document on failure:
 
 =cut
 
-post '/librecat/upload' => needs login => sub {
+post '/librecat/upload' => sub {
     my $file    = request->upload('file');
     my $creator = session->{user};
     return to_json(upload_temp_file($file, $creator));
