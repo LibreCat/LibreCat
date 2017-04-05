@@ -15,12 +15,14 @@ on 'test' => sub {
     requires 'Devel::Cover';
 };
 
+requires 'Business::ISBN', 0;
 requires 'Module::Install', '1.16';
 
 # Catmandu
 requires 'Catmandu', '>=1.04';
 requires 'Catmandu::Exporter::Table';
 requires 'Catmandu::Store::ElasticSearch', '>=0.0509';
+requires 'Catmandu::Store::MongoDB', '>=0.0403';
 requires 'Catmandu::DBI', '>=0.0510';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::XML';
@@ -67,11 +69,14 @@ requires 'Starman';
 
 # others
 requires 'all';
+requires 'Business::ISBN10';
+requires 'Business::ISBN13';
 requires 'App::bmkpasswd', '2.010001';
 requires 'Clone';
 requires 'DateTime';
 requires 'DBD::mysql', '>= 4.037';
 requires 'DBD::SQLite';
+requires 'Config::Onion', '>=1.007';
 requires 'Crypt::Digest::MD5';
 requires 'Crypt::SSLeay';
 requires 'File::Basename';
