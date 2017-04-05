@@ -33,31 +33,44 @@ hook before => sub {
     my $conf      = h->config->{permissions};
     my $routes    = $conf->{routes} // [];
 
-    my $login_route    = _login_route($conf);
-    my $redirect_route = _redirect_route($conf);
-    my $role_route     = _role_route($conf);
-    my $api_route      = _api_route($conf);
+    my $handlers = {
+            login      => _login_route($conf) ,
+            redirect   => _redirect_route($conf) ,
+            role       => _role_route($conf) ,
+            api_access => _api_route($conf) ,
+            default    => sub { } ,
+    };
+
+    for my $h (keys %{$conf->{handlers}}) {
+        next if $h =~ m{^(login|redirect|role|api_access|default)$};
+        my $package_name = $conf->{handlers}->{$h};
+
+        h->log->info("loading $package_name for $h");
+        my $pkg = Catmandu::Util::require_package($package_name);
+
+        if ($pkg) {
+            $handlers->{$h} = $pkg->new()->route($conf);
+        }
+        else {
+            h->log->error("failed to create a new $package_name permission");
+            $handlers->{$h} = sub {};
+        }
+    }
 
     for my $route (@$routes) {
-        my ($_method,$_regex,$_role,$_params) = @$route;
+        my ($_method,$_regex,$_role,@_params) = @$route;
+
+        $_role = 'default' unless defined($_role) && $_role =~ /\S+/;
 
         next unless $_method eq 'ANY' || $_method eq $method;
         next unless $path_info =~ /^${_regex}/;
 
-        if ($_role eq 'login') {
-            $login_route->($_params);
-        }
-        elsif ($_role eq 'redirect') {
-            $redirect_route->($_params);
-        }
-        elsif ($_role eq 'role') {
-            $role_route->($_params);
-        }
-        elsif ($_role eq 'api_access') {
-            $api_route->($_params);
+        if (my $h = $handlers->{$_role}) {
+            h->log->info("excuting hander $_role for $_regex");
+            $h->(@_params);
         }
         else {
-            # ok no login needed
+            h->log->error("no handler found for $_role");
         }
     }
 };

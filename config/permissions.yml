@@ -6,6 +6,12 @@ logged_in_key: user
 callback_key: return_url
 passthrough:
     - user
+handlers:
+    login: internal
+    role: internal
+    api_access: internal
+    default: internal
+    demo: LibreCat::App::Permission::demo
 
 routes:
     - [ 'GET'  , '/librecat/record/new'           , 'login' ]
@@ -46,6 +52,9 @@ routes:
     - [ 'POST' , '/librecat/person/affiliation'  , 'login'  ]
 
     - [ 'ANY'  , '/librecat/api'                 , 'api_access' ]
+
+    # catch all secutiry
+    - [ 'ANY'  , '/librecat'                     , 'login' ]
 
     - [ 'ANY'  , '/metrics'                      , 'default' ]
     - [ 'ANY'  , '/bibtex '                      , 'default' ]

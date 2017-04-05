@@ -107,6 +107,10 @@ sub _generate_package_json {
     );
     $exporter->add($json);
     $exporter->commit;
+
+    print "created: $package_json\n";
+
+    return 0;
 }
 
 sub _generate_forms {
@@ -157,6 +161,8 @@ sub _generate_forms {
         print "Generating $output_path/edit_$item page\n";
         $tta->process( "master_$item.tt", $other_items->{$item}, "edit_$item.tt" ) || die $tta->error(), "\n";
     }
+
+    return 0;
 }
 
 sub _generate_departments {
@@ -222,6 +228,8 @@ sub _generate_departments {
     close($fh);
 
     print STDERR "Output written to $output_path/nodes_backend.tt\n";
+
+    return 0;
 }
 
 sub _template_printer {
