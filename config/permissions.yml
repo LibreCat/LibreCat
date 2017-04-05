@@ -19,6 +19,8 @@ handlers:
     role: internal
     # api_access: requires api credentials (see filestore.api.access config)
     api_access: internal
+    # no_access: this route is denied for all
+    no_access: internal
     # default: no login or role requires
     default: internal
     # demo: demonstration extension, redirects a path to Google

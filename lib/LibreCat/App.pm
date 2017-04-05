@@ -38,11 +38,14 @@ hook before => sub {
             redirect   => _redirect_route($conf) ,
             role       => _role_route($conf) ,
             api_access => _api_route($conf) ,
+            no_access  => sub {
+                return redirect uri_for('/access_denied');
+            } ,
             default    => sub { } ,
     };
 
     for my $h (keys %{$conf->{handlers}}) {
-        next if $h =~ m{^(login|redirect|role|api_access|default)$};
+        next if $h =~ m{^(login|redirect|role|api_access|no_access|default)$};
         my $package_name = $conf->{handlers}->{$h};
 
         h->log->info("loading $package_name for $h");
