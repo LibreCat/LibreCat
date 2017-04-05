@@ -62,6 +62,6 @@
   </div><!-- main content left -->
 </div><!-- outer border -->
 
-<!-- END websites/index_publication.tt -->
+<!-- END index_publication -->
 
 [% INCLUDE footer.tt %]
