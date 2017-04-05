@@ -1,18 +1,32 @@
 _prefix:
   permissions:
 
+# Route to the login screen
 login_route: /login
+# Cookie key that contains the logged in user details
 logged_in_key: user
+# Parameter that can be added to the login path to redirect after login
 callback_key: return_url
 passthrough:
     - user
+
+# Handlers available to test user credentials for a path
+# Demo is a demonstration how the internal handler can be extended
 handlers:
+    # login: requires a valid login
     login: internal
+    # role: requires a valid login and a user in a specific role
     role: internal
+    # api_access: requires api credentials (see filestore.api.access config)
     api_access: internal
+    # default: no login or role requires
     default: internal
+    # demo: demonstration extension, redirects a path to Google
     demo: LibreCat::App::Permission::demo
 
+# List of all the routes that need authentication (or not)
+# Syntax:
+#   - [  GET|POST|HEAD|DELETE|PUT|PATCH|ANY  , <path-regex> , 'handler' [, param [...]] ]
 routes:
     - [ 'GET'  , '/librecat/record/new'           , 'login' ]
     - [ 'GET'  , '/librecat/record/edit'          , 'login' ]
@@ -53,7 +67,7 @@ routes:
 
     - [ 'ANY'  , '/librecat/api'                 , 'api_access' ]
 
-    # catch all secutiry
+    # catch all for security reasons
     - [ 'ANY'  , '/librecat'                     , 'login' ]
 
     - [ 'ANY'  , '/metrics'                      , 'default' ]
