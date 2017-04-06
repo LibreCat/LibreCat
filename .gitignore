@@ -16,11 +16,8 @@ docs/
 inc/
 .last_cover_stats
 layers.yml
-/LC-LC-*
-local
 local/
-*.log
-logs/
+logs/*.log
 MANIFEST.bak
 META*
 MYMETA.*
