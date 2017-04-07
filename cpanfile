@@ -4,8 +4,7 @@ on 'test' => sub {
     requires 'Test::Lib';
     requires 'Test::More';
     requires 'Test::TCP';
-    requires 'Test::Exception';
-    requires 'Test::WWW::Mechanize';
+    requires 'Test::Exception', '0.43';
     requires 'Dancer::Test';
     requires 'File::Slurp';
     requires 'IO::File';
