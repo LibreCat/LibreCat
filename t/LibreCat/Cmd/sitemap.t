@@ -40,19 +40,18 @@ require_ok $pkg;
 
 {
     my $result = test_app(
-        qq|LibreCat::CLI| => ['sitemap', '--dir', 't/tmp/sitemap']);
+        qq|LibreCat::CLI| => ['sitemap', '--dir', '/tmp']);
 
     ok !$result->error, 'ok threw no exception';
 
     ok !$result->stdout, 'silent';
 
-    ok -f 't/tmp/sitemap/siteindex.xml',     'index site exists';
-    ok -f 't/tmp/sitemap/sitemap-00001.xml', 'first sitemap exists';
+    ok -f '/tmp/siteindex.xml',     'index site exists';
+    ok -f '/tmp/sitemap-00001.xml', 'first sitemap exists';
 }
 
 END {
-    unlink glob "'t/tmp/sitemap/*.*'";
-    rmdir 't/tmp/sitemap';
+    unlink glob "'/tmp/site*'";
 }
 
 done_testing;
